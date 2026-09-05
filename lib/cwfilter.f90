@@ -1,7 +1,7 @@
 subroutine cwfilter(swl,first,swlchanged)
 
   use ft8_mod1, only : cw,windowc1,windowx,pivalue,facx,mcq,m73,mrr73,mrrr,one,twopi,facc1,dt,csync,idtone25,csynccq, &
-                       NFILT1,NFILT2,endcorr,endcorrswl,ctwkw,ctwkn,ctwk256,LALLCALL7_FILTER
+                       NFILT1,NFILT2,endcorr,endcorrswl,ctwkw,ctwkn,ctwk256
   use jt65_mod9 ! callsign DB to memory
   use prog_args ! path to files
 
@@ -13,28 +13,17 @@ subroutine cwfilter(swl,first,swlchanged)
   integer*1 msgbits(77)
   logical(1), intent(in) :: swl
   logical, intent(in) :: first,swlchanged
-  logical lload
-  character*80 envval   ! roomy: a value longer than the buffer makes get_environment_variable return istat -1, i.e. read as unset
-  integer lenv,istat
 
 !pushing callsigns from ALLCALL to memory
-  lload=.false.
   if(first) then
-! CE3TSK 2026-09-05: parsed only when the lookup that reads it can run - the source switch
-! LALLCALL7_FILTER (chkflscall.f90 applies it) or JTDX_ALLCALL7_FILTER=1 in the environment,
-! read here as well because this runs before decoder.f90's hook block sets lallcall7. With
-! the lookup off - the shipped state - the 184 000-line parse at the first decode, the sixteen
-! tables and the "ALLCALL7.TXT is too short or broken?" message were all for nothing; worse,
-! status='unknown' CREATED an empty ALLCALL7.TXT wherever the share directory had none, and
-! that empty file is what an install without it then complained about on every start.
-! ldbvalid stays .true.: searchcalls, its only reader, is reached only through the lookup.
-    lload=LALLCALL7_FILTER
-    call get_environment_variable('JTDX_ALLCALL7_FILTER',envval,lenv,istat)
-    if(istat.eq.0 .and. lenv.gt.0) lload=lload .or. (envval(1:1).eq.'1')
-  endif
-  if(first .and. lload) then
-    open(24,file=trim(share_dir)//'/ALLCALL7.TXT',status='old',iostat=istat) ! accepting Australian 7-char callsigns
-    if(istat.eq.0) then   ! a missing file leaves every count at zero: the check below reports it
+! CE3TSK 2026-09-05: status='old' with iostat, not 'unknown' - the latter CREATED an empty
+! ALLCALL7.TXT wherever the share directory had none, and that empty file is what an install
+! without it then reported as broken on every start. A missing file now leaves every count at
+! zero, so the check below reports it once and sets ldbvalid false (searchcalls then accepts
+! every callsign, as JTDX does without the file). The parse itself stays unconditional: the
+! tables feed ft8b's /R acceptance and chkfalse's JT65 filter directly, not only chkflscall.
+    open(24,file=trim(share_dir)//'/ALLCALL7.TXT',status='old',iostat=ios) ! accepting Australian 7-char callsigns
+    if(ios.eq.0) then
     do i=1,MAXC
       read(24,1004,end=20) line
 1004  format(a80)
@@ -75,8 +64,6 @@ subroutine cwfilter(swl,first,swlchanged)
 4     format(a36,13x,a1)
       call flush(6)
     endif
-  endif
-  if(first) then
 
     pivalue=4.d0*atan(1.d0)
     twopi=8.d0*atan(1.d0)

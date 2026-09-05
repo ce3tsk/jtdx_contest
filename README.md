@@ -9,9 +9,7 @@ Designed, built and measured by **Tihomir Sokcevic, CE3TSK** — Santiago de Chi
 Version string: `v3.0.0-rc02` · derivative work of JTDX by UA3DJY, ES1JA and the
 HF community, WSJT-X by K1JT.
 
-\<a href='https://ko-fi.com/ce3tsk' target='\_blank'>\<img height='36' style='border:0px;height:36px;'
-src='https://storage.ko-fi.com/cdn/kofi6.png?v=6' border='0' alt='Buy Me a Coffee
-at ko-fi.com' />\</a>
+Support this work: https://ko-fi.com/ce3tsk
 
 ---
 
@@ -243,9 +241,7 @@ Resources: upstream project files [https://sourceforge.net/projects/jtdx/files/]
 ---
 
 If JTDX\_CONTEST gave you a QSO you would otherwise have missed, a coffee keeps the
-benchmarks running: \<a href='https://ko-fi.com/ce3tsk' target='\_blank'>\<img height='36'
-style='border:0px;height:36px;' src='https://storage.ko-fi.com/cdn/kofi6.png?v=6'
-border='0' alt='Buy Me a Coffee at ko-fi.com' />\</a>
+benchmarks running. Support this work: https://ko-fi.com/ce3tsk
 
 ---
 
