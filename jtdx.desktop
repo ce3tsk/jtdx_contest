@@ -1,0 +1,11 @@
+[Desktop Entry]
+Version=1.0
+Name=JTDX_contest
+Comment=JTDX Contest Edition by CE3TSK - FT8 decoder and WW Digi contest support
+Exec=jtdx
+Icon=jtdx_icon
+Terminal=false
+X-MultipleArgs=false
+Type=Application
+Categories=AudioVideo;Audio;HamRadio;
+StartupNotify=true
