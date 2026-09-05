@@ -49,6 +49,9 @@ module ft8_mod1
   ! on for tests of the rejection paths it gates - the FT4 /R rejection has no other way to
   ! fire (MERGE_ISSUES 5.2). Set once in decoder.f90's hook block, before any thread starts.
   logical :: lallcall7=.false.
+  ! CE3TSK 2026-09-05: the source switch itself, here so that cwfilter (the load) and chkflscall
+  ! (the lookup) agree on it; .true. restores JTDX's lookup and the load that feeds it.
+  logical, parameter :: LALLCALL7_FILTER=.false.
   logical one(0:511,0:8),lqsomsgdcd,first_osd
   logical(1) lapmyc,lagcc,lagccbail,lhound,lenabledxcsearch,lwidedxcsearch,lmultinst,lskiptx1,ltxing
 ! CE3TSK: the decoder now works in up to nmaxthreads band slices (several per thread, see

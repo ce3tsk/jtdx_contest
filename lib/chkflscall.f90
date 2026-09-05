@@ -1,6 +1,6 @@
 subroutine chkflscall(call_a,call_b,falsedec)
 
-  use ft8_mod1, only : lallcall7   ! CE3TSK: JTDX_ALLCALL7_FILTER, for tests of the gated paths
+  use ft8_mod1, only : lallcall7,LALLCALL7_FILTER   ! CE3TSK: JTDX_ALLCALL7_FILTER, for tests of the gated paths; the source switch (in the module since 2026-09-05, cwfilter's load reads it too)
   character*12 call_a,call_b
   logical(1) falsedec,lfound
 ! CE3TSK: source-level switch, not exposed in the GUI or the ini. The ALLCALL7.TXT lookup
@@ -9,8 +9,7 @@ subroutine chkflscall(call_a,call_b,falsedec)
 ! periods: 44 of 5267 classical decodes and 53 of 6095 light-preset decodes thrown away,
 ! all but three or four of them real - RI1FJL KN6JIB DM13, ER35MD N7EYE DM33 at -13 dB -
 ! for one or two false decodes an hour). Off: chkflscall never flags anything, the file
-! may stay in place. Set to .true. to restore the lookup.
-  logical, parameter :: LALLCALL7_FILTER=.false.
+! may stay in place. Set LALLCALL7_FILTER (ft8_mod1.f90) to .true. to restore the lookup.
 
   falsedec=.false.
   if(.not.(LALLCALL7_FILTER .or. lallcall7)) return
