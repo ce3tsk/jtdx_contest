@@ -322,7 +322,8 @@ subroutine jt9files(offset,nfiles,mode,ndepth,flow,fsplit,fhigh,nrxfreq,ncycles,
   use ft8_mod1, only : dd8
   use ft4_mod1, only : dd4
   include 'jt9com.f90'
-  integer, intent(in) :: offset,nfiles,mode,ndepth,flow,fsplit,fhigh,nrxfreq,     &
+  integer, intent(inout) :: mode   ! CE3TSK: JTDX_FILE_MODES may switch it per file
+  integer, intent(in) :: offset,nfiles,ndepth,flow,fsplit,fhigh,nrxfreq,     &
        ncycles,nswlcycles,nsens,nrxfsens,naggr,ncandthin,nthreads,nensemble,nbgeffort,nbgbudget,nrxbudget,   &
        nbgswl,nbgcycles,nbgswlcycles,nbgosd,nbgtwo,nbgalt,nbgens,nbgsens,nbgrxf,nbgclassic
   logical, intent(in) :: ldeeposd,learly,lhidedupes,ltwo,lalt,lagcccomp
@@ -341,12 +342,26 @@ subroutine jt9files(offset,nfiles,mode,ndepth,flow,fsplit,fhigh,nrxfreq,ncycles,
   integer, allocatable :: i4(:)
   character(len=500) :: infile
   integer :: iarg,arglen,i1,nutc,npts1,nsamp,nbytes,nblocks,nlastsam,ios
+  integer :: modeprev,lmodes,imodes   ! CE3TSK: JTDX_FILE_MODES
+  character(len=64) :: filemodes
 
   if(mode.ne.8 .and. mode.ne.4) then
      print*,'jt9files: file decoding supports FT8 (-8) and FT4 (-4) only'
      return
   endif
+! CE3TSK 2026-09-05: JTDX_FILE_MODES=844... - one digit per file, 8 or 4, overriding -8/-4 for
+! that file. The GUI switches modes inside one decoder process (the thread pool, every
+! threadprivate buffer, the FFTW plan cache and the hint memory all carry over, and the
+! decoder sees lmodechanged); file mode could only ever run one mode per process, so that
+! sequence was untestable under -fcheck or valgrind. Diagnostic hook, no effect unless set.
+  call get_environment_variable('JTDX_FILE_MODES',filemodes,lmodes,imodes)
+  if(imodes.ne.0) lmodes=0
   do iarg=offset+1,offset+nfiles
+     modeprev=mode
+     if(lmodes.ge.iarg-offset) then
+        if(filemodes(iarg-offset:iarg-offset).eq.'8') mode=8
+        if(filemodes(iarg-offset:iarg-offset).eq.'4') mode=4
+     endif
      call get_command_argument(iarg,infile,arglen)
      infile=infile(:arglen)
      call wav%read(infile)
@@ -445,6 +460,14 @@ subroutine jt9files(offset,nfiles,mode,ndepth,flow,fsplit,fhigh,nrxfreq,ncycles,
         read(envval(1:lenv),*,iostat=ienv) nbandfile; if(ienv.eq.0) params%nlasttx=max(0,min(6,nbandfile))
      endif
      params%ndelay=0
+! CE3TSK 2026-09-05: JTDX_NDELAY=n (tenths of a second, as the GUI's m_delay) - the partial
+! interval the GUI reports when monitoring starts mid-period (partintft4/partintft8 shuffle the
+! buffer and fill the gap with noise); never set by file mode otherwise, so the path was
+! untestable here. Diagnostic hook, decodes unchanged without it.
+     call get_environment_variable('JTDX_NDELAY',envval,lenv,ienv)
+     if(ienv.eq.0 .and. lenv.gt.0) then
+        read(envval(1:lenv),*,iostat=ienv) nbandfile; if(ienv.eq.0) params%ndelay=max(0,min(50,nbandfile))
+     endif
      params%nmt=nthreads
      params%nft8rxfsens=nrxfsens
      params%nft4depth=min(3,max(1,ndepth))   ! CE3TSK: -d applies to FT4 too (1: 1 pass, 2: BP only, 3: BP+OSD)
@@ -517,7 +540,7 @@ subroutine jt9files(offset,nfiles,mode,ndepth,flow,fsplit,fhigh,nrxfreq,ncycles,
      params%lmycallstd=(len_trim(mycall).gt.0)
      params%lhiscallstd=(len_trim(hiscall).gt.0)
      params%lapmyc=.false.
-     params%lmodechanged=.false.
+     params%lmodechanged=(mode.ne.modeprev)   ! CE3TSK: JTDX_FILE_MODES switched it, as the GUI reports a mode change
      params%lbandchanged=.false.
      ! CE3TSK test hook: JTDX_BANDCHANGE=n flags a band change on the n-th file of the list (the
      ! decoder then empties its hint and call/DT lists, as after a real band change)
