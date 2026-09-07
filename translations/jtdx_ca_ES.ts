@@ -49,6 +49,11 @@
         <source>OK</source>
         <translation>D&apos;acord</translation>
     </message>
+    <message>
+        <location filename="../about.ui"/>
+        <source>About JTDX_contest</source>
+        <translation>Quant a JTDX_contest</translation>
+    </message>
 </context>
 <context>
     <name>CallsignDialog</name>
@@ -330,6 +335,56 @@ Format:
         <location filename="../Configuration.cpp" line="6028"/>
         <source>Rig failure</source>
         <translation>Fallida del equip</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Contest defaults</source>
+        <translation>Valors per defecte del concurs</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>No default frequencies are defined for the selected contest.</source>
+        <translation>No hi ha freqüències per defecte definides per al concurs seleccionat.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Are you sure you want to discard your current contest frequencies and replace them with the selected contest's defaults?</source>
+        <translation>Segur que voleu descartar les freqüències de concurs actuals i substituir-les per les predeterminades del concurs seleccionat?</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Load Contest Frequencies</source>
+        <translation>Carrega les freqüències de concurs</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Replace Contest Frequencies</source>
+        <translation>Substitueix les freqüències de concurs</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Are you sure you want to discard your current contest frequencies and replace them with the loaded ones?</source>
+        <translation>Segur que voleu descartar les freqüències de concurs actuals i substituir-les per les carregades?</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Save Contest Frequencies</source>
+        <translation>Desa les freqüències de concurs</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Merge Contest Frequencies</source>
+        <translation>Combina les freqüències de concurs</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Reset Contest Frequencies</source>
+        <translation>Restableix les freqüències de concurs</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Are you sure you want to discard your current contest frequencies and replace them with the FT8 and FT4 entries from the working frequencies?</source>
+        <translation>Segur que voleu descartar les freqüències de concurs actuals i substituir-les per les entrades FT8 i FT4 de les freqüències de treball?</translation>
     </message>
 </context>
 <context>
@@ -2255,91 +2310,6 @@ Format:
         <location filename="../WSPRBandHopping.cpp" line="110"/>
         <source>Gray time:</source>
         <translation>Hora línia grisa:</translation>
-    </message>
-</context>
-<context>
-    <name>Directory</name>
-    <message>
-        <location filename="../SampleDownloader/Directory.cpp" line="111"/>
-        <location filename="../SampleDownloader/Directory.cpp" line="187"/>
-        <source>URL Error</source>
-        <translation>Error al URL</translation>
-    </message>
-    <message>
-        <location filename="../SampleDownloader/Directory.cpp" line="112"/>
-        <location filename="../SampleDownloader/Directory.cpp" line="188"/>
-        <source>Invalid URL:
-&quot;%1&quot;</source>
-        <translation>URL no vàlida:
-&quot;%1&quot;</translation>
-    </message>
-    <message>
-        <location filename="../SampleDownloader/Directory.cpp" line="130"/>
-        <location filename="../SampleDownloader/Directory.cpp" line="137"/>
-        <location filename="../SampleDownloader/Directory.cpp" line="205"/>
-        <location filename="../SampleDownloader/Directory.cpp" line="211"/>
-        <location filename="../SampleDownloader/Directory.cpp" line="217"/>
-        <location filename="../SampleDownloader/Directory.cpp" line="223"/>
-        <location filename="../SampleDownloader/Directory.cpp" line="230"/>
-        <source>JSON Error</source>
-        <translation>Error a JSON</translation>
-    </message>
-    <message>
-        <location filename="../SampleDownloader/Directory.cpp" line="131"/>
-        <source>Contents file syntax error %1 at character offset %2</source>
-        <translation>Error de sintaxi %1 a l&apos;arxiu de contingut, posició %2</translation>
-    </message>
-    <message>
-        <location filename="../SampleDownloader/Directory.cpp" line="138"/>
-        <source>Contents file top level must be a JSON array</source>
-        <translation>El nivell superior de l&apos;arxiu de contingut ha de ser una matriu JSON</translation>
-    </message>
-    <message>
-        <location filename="../SampleDownloader/Directory.cpp" line="149"/>
-        <source>File System Error</source>
-        <translation>Error al directori</translation>
-    </message>
-    <message>
-        <location filename="../SampleDownloader/Directory.cpp" line="150"/>
-        <source>Failed to open &quot;%1&quot;
-Error: %2 - %3</source>
-        <translation>Error a l&apos;obrir &quot;%1&quot;
-Error: %2 - %3</translation>
-    </message>
-    <message>
-        <location filename="../SampleDownloader/Directory.cpp" line="206"/>
-        <source>Contents entries must be a JSON array</source>
-        <translation>Les entrades de contingut han de ser una matriu JSON</translation>
-    </message>
-    <message>
-        <location filename="../SampleDownloader/Directory.cpp" line="212"/>
-        <source>Contents entries must have a valid type</source>
-        <translation>Les entrades de contingut han de tenir un tipus vàlid</translation>
-    </message>
-    <message>
-        <location filename="../SampleDownloader/Directory.cpp" line="218"/>
-        <source>Contents entries must have a valid name</source>
-        <translation>Les entrades de contingut han de tenir un nom vàlid</translation>
-    </message>
-    <message>
-        <location filename="../SampleDownloader/Directory.cpp" line="224"/>
-        <source>Contents entries must be JSON objects</source>
-        <translation>Les entrades de contingut han de ser objectes JSON</translation>
-    </message>
-    <message>
-        <location filename="../SampleDownloader/Directory.cpp" line="231"/>
-        <source>Contents directories must be relative and within &quot;%1&quot;</source>
-        <translation>Els directoris de contingut han de ser relatius i estar dins de &quot;%1&quot;</translation>
-    </message>
-    <message>
-        <location filename="../SampleDownloader/Directory.cpp" line="298"/>
-        <source>Network Error</source>
-        <translation>Error de xarxa</translation>
-    </message>
-    <message>
-        <location filename="../SampleDownloader/Directory.cpp" line="298"/>
-        <source>Authentication required</source>
-        <translation>Cal autenticació</translation>
     </message>
 </context>
 <context>
@@ -4353,16 +4323,6 @@ En fer clic amb el botó dret del ratolí, l&apos;hora interna de JTDX torna a l
         <translation>Desar espectre de referència</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5393"/>
-        <source>&amp;Download Samples ...</source>
-        <translation>&amp;Descarregar mostres ...</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="5396"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Download sample audio files demonstrating the various modes.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Descarrega una mostra d&apos;arxius d&apos;àudio. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
-    </message>
-    <message>
         <location filename="../mainwindow.ui" line="5404"/>
         <source>T10</source>
         <translation>T10</translation>
@@ -5337,6 +5297,597 @@ Servidor UDP %2:%3</translation>
         <source>WD %1m</source>
         <translation>WD %1m</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Band</source>
+        <translation>Banda</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Contest</source>
+        <translation>Concurs</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Lit while a contest is selected on the Contest tab of the settings</source>
+        <translation>Encès mentre hi ha un concurs seleccionat a la pestanya Concurs de la configuració</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Preset</source>
+        <translation>Predefinició</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>The FT8 decoding preset in force: 3 default, P best power, V best value, R recommended, E ensemble, B best results, M max effort, O most results; "Custom" when the controls match no preset - lit in the preset's menu colour</source>
+        <translation>La predefinició de descodificació FT8 en vigor: 3 per defecte, P millor potència, V millor relació, R recomanada, E conjunt, B millors resultats, M esforç màxim, O més resultats; «Custom» quan els controls no coincideixen amb cap predefinició - encès amb el color de menú de la predefinició</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>S&amp;WL</source>
+        <translation>S&amp;WL</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>FT8/FT4 threads</source>
+        <translation>Fils FT8/FT4</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Presets</source>
+        <translation>Predefinicions</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>expert</source>
+        <translation>expert</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>RX</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>ensemble effort</source>
+        <translation>esforç del conjunt</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>TX background</source>
+        <translation>Segon pla TX</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>effort</source>
+        <translation>esforç</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>ensemble effort: the TOTAL member count reached in the idle time (the members above the RX count run; with none left the extras below run alone)</source>
+        <translation>esforç del conjunt: el nombre TOTAL de membres assolit en el temps lliure (els membres per sobre del recompte RX s'executen; si no en queda cap, els extres de sota s'executen sols)</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>FT8/FT4 decode bandwidth</source>
+        <translation>Amplada de banda de descodificació FT8/FT4</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>About JTDX_contest</source>
+        <translation>Quant a JTDX_contest</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Convert bit depth (32/16)</source>
+        <translation>Converteix la profunditat de bits (32/16)</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Read a wav file, detect whether it is 32 or 16 bit, and save a converted copy with a _16 or _32 suffix. All embedded metadata is carried over.</source>
+        <translation>Llegeix un fitxer wav, detecta si és de 32 o 16 bits i desa una còpia convertida amb el sufix _16 o _32. Es conserven totes les metadades incrustades.</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>JTDX_contest Web site</source>
+        <translation>Lloc web de JTDX_contest</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>use low thresholds (1)</source>
+        <translation>utilitza llindars baixos (1)</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>OSD order 2 for every candidate (weakest signals, about 3x CPU)</source>
+        <translation>OSD ordre 2 per a cada candidat (senyals més febles, unes 3x de CPU)</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>second slicing pass (2 or more threads, about 2x time)</source>
+        <translation>segona passada de segmentació (2 fils o més, unes 2x de temps)</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>second slicing pass  (2 or more threads, about 2x time - FT4 needs it: 1715 messages with it, 1625 without)</source>
+        <translation>segona passada de segmentació  (2 fils o més, unes 2x de temps - FT4 la necessita: 1715 missatges amb ella, 1625 sense)</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>OSD order 2 for every candidate (weakest signals, about 2x CPU)</source>
+        <translation>OSD ordre 2 per a cada candidat (senyals més febles, unes 2x de CPU)</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>alternate pass on the residual  (+16, 11% - dominated: 5 members give more for less)</source>
+        <translation>passada alternativa sobre el residu  (+16, 11% - dominada: 5 membres donen més per menys)</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>off</source>
+        <translation>desactivat</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>1 member</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>2 members</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>3 members</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>4 members</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>5 members</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>6 members</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>1 member   (+20, 13% of the budget at 8 threads)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>2 members  (+48, 18%)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>3 members  (+72, 23% - the knee of the curve)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>4 members  (+86, 28%)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>5 members  (+98, 33% - all that is worth taking)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>6 members  (+100, 39% - only 2 more than five)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>alternate-approach pass: 7 cycles + OSD order 2 on the subtracted band (2 or more threads)</source>
+        <translation>passada d'enfocament alternatiu: 7 cicles + OSD ordre 2 sobre la banda restada (2 fils o més)</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>budget auto: fill the reply time (~2.7 s) - more members when the band is quiet</source>
+        <translation>pressupost automàtic: omplir el temps de resposta (~2,7 s) - més membres quan la banda és tranquil·la</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>auto: 3 members with 12 or more threads, 2 from 6, 1 from 3</source>
+        <translation>automàtic: 3 membres amb 12 fils o més, 2 a partir de 6, 1 a partir de 3</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>1 member  (+7 msgs, +1.2 s at 12 threads on the benchmark)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>2 members  (+10, +2.3 s)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>3 members  (+13, +5.3 s)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>4 members  (+15, +7.9 s)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>5 members  (+16, +11.5 s - too slow for a 15 s period on this machine, for replays)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>auto: as many members as fit before the next decode (1 s margin)</source>
+        <translation>automàtic: tants membres com hi càpiguen abans de la descodificació següent (1 s de marge)</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>pipeline ensemble: SWL-4 + 1 member (8 or more threads) in the period, SWL-5 + alternate pass + ensemble in the TX background</source>
+        <translation>conjunt en cadena: SWL-4 + 1 membre (8 fils o més) en el període, SWL-5 + passada alternativa + conjunt en el segon pla TX</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>TX background decoding: decode the period again in the decoder's idle time, with the settings below</source>
+        <translation>descodificació en segon pla TX: descodificar el període de nou en el temps lliure del descodificador, amb la configuració de sota</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>SWL mode</source>
+        <translation>mode SWL</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>minimum (0)</source>
+        <translation>mínima (0)</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>use low thresholds + subpass (2)</source>
+        <translation>utilitza llindars baixos + subpassada (2)</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>classic unit: the plain 6-cycle decode (standard thresholds) - what the old decoder still finds, about 0.5 s</source>
+        <translation>unitat clàssica: la descodificació simple de 6 cicles (llindars estàndard) - el que el descodificador antic encara troba, uns 0,5 s</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>pipeline ensemble full: the same, TX background effort auto - every member sample, about 2 s more for the same result on every capture measured</source>
+        <translation>conjunt en cadena complet: el mateix, esforç de segon pla TX automàtic - cada mostra de membre, uns 2 s més per al mateix resultat en cada captura mesurada</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>pipeline run: 5 cycles, sensitivity 2 in the period (the reply on time), SWL-5 + alternate pass + ensemble in the TX background</source>
+        <translation>execució en cadena: 5 cicles, sensibilitat 2 en el període (la resposta a temps), SWL-5 + passada alternativa + conjunt en el segon pla TX</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>100-3300 Hz</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>300-3300 Hz</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>50-3650 Hz</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Waterfall width (default)</source>
+        <translation>Amplada de la cascada (per defecte)</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>100-3200 Hz</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>100-3100 Hz</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>100-3000 Hz</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>200-3200 Hz</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>200-3100 Hz</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>200-3000 Hz</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>200-2800 Hz</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>200-2500 Hz</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>200-2400 Hz</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>0-5000 Hz (testing only)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>alternate pass on the residual, in the background</source>
+        <translation>passada alternativa sobre el residu, en segon pla</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>OSD order 2 for every candidate, in the background (about 2x the background's CPU)</source>
+        <translation>OSD ordre 2 per a cada candidat, en segon pla (unes 2x la CPU del segon pla)</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>second slicing pass, in the background (2 or more threads)</source>
+        <translation>segona passada de segmentació, en segon pla (2 fils o més)</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>standard (0): JTDX's candidate thresholds</source>
+        <translation>estàndard (0): els llindars de candidats de JTDX</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>low thresholds (1): sync minimum 1.0 + sync quality 16  (+1.2 % on a sparse band for +20 % reply time; -1 on a crowded band)</source>
+        <translation>llindars baixos (1): sincronisme mínim 1.0 + qualitat de sincronisme 16  (+1,2 % en una banda poc carregada a canvi de +20 % de temps de resposta; -1 en una banda congestionada)</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>residual unit: every known decode subtracted, the threshold lowered to 0.8, decoded once more  (+13/-0 on the night hour, ~0.12 s of idle time; runs only while the background runs, i.e. ensemble effort above the RX count)</source>
+        <translation>unitat residual: es resta cada descodificació coneguda, el llindar baixa a 0.8 i es descodifica un cop més  (+13/-0 en l'hora nocturna, ~0,12 s de temps lliure; només s'executa mentre corre el segon pla, és a dir, amb l'esforç del conjunt per sobre del recompte RX)</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>budget auto: as many members as fit the reply deadline, from this band's measured cost (1.3 s; the rest run in the TX background)</source>
+        <translation>pressupost automàtic: tants membres com càpiguen en el termini de resposta, segons el cost mesurat d'aquesta banda (1,3 s; la resta s'executa en el segon pla TX)</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>auto: by thread count - 6 members from 12 threads, 4 from 8, 3 from 6, 2 from 4, 1 from 3, none below</source>
+        <translation>automàtic: per nombre de fils - 6 membres a partir de 12 fils, 4 a partir de 8, 3 a partir de 6, 2 a partir de 4, 1 a partir de 3, cap per sota</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>auto: by thread count - 6 from 12 threads, 4 from 8, 3 from 3 up, none below (the clock cuts what does not fit)</source>
+        <translation>automàtic: per nombre de fils - 6 a partir de 12 fils, 4 a partir de 8, 3 a partir de 3 amunt, cap per sota (el rellotge retalla el que no hi cap)</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>low thresholds (1): sync minimum 1.0 + sync quality 16, in the background (the residual unit scales from it)</source>
+        <translation>llindars baixos (1): sincronisme mínim 1.0 + qualitat de sincronisme 16, en segon pla (la unitat residual s'hi escala)</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>low: the virtual candidate at the QSO frequency only from the last message received</source>
+        <translation>baix: el candidat virtual a la freqüència del QSO només a partir de l'últim missatge rebut</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>medium: also from the DT at which the DX call was last heard</source>
+        <translation>mitjà: també a partir del DT en què es va sentir per última vegada l'indicatiu DX</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>high: also a wider DT window and OSD depth 5 on it</source>
+        <translation>alt: també una finestra DT més ampla i profunditat OSD 5 sobre ella</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>fast: the shallow decoder, nothing added</source>
+        <translation>ràpid: el descodificador superficial, sense afegits</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>default: deep, 4 subtraction passes  (1748 messages on the night hour, 0.12 s at reply time)</source>
+        <translation>per defecte: profund, 4 passades de resta  (1748 missatges en l'hora nocturna, 0,12 s en el temps de resposta)</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>background 3: three ensemble members in the TX window, nothing at reply time  (+4.5 %, 0.12 s)</source>
+        <translation>segon pla 3: tres membres del conjunt en la finestra TX, res en el temps de resposta  (+4,5 %, 0,12 s)</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>background 6 with deep OSD, the alternate pass and the residual unit, all in the TX window, nothing at reply time  (+8.0 % on the night hour, +3.5 % on the day hour, 0.12 s; ~1 s of idle CPU a period)</source>
+        <translation>segon pla 6 amb OSD profund, la passada alternativa i la unitat residual, tot en la finestra TX, res en el temps de resposta  (+8,0 % en l'hora nocturna, +3,5 % en l'hora diürna, 0,12 s; ~1 s de CPU lliure per període)</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>most at reply time: all six members in the period, and the background's extras - deep OSD, the alternate pass, the residual unit - in the TX window  (+7.9 % in total, +5.5 % at reply time, 0.55 s mean, 1.3 s worst period)</source>
+        <translation>la majoria en el temps de resposta: els sis membres en el període, i els extres del segon pla - OSD profund, la passada alternativa, la unitat residual - en la finestra TX  (+7,9 % en total, +5,5 % en el temps de resposta, 0,55 s de mitjana, 1,3 s en el pitjor període)</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>max effort: as many members as fit the 1.3 s RX budget (six here) + low thresholds at reply time, the background's extras + low thresholds in the TX window until 0.5 s before it ends  (+8.4 % in total, +6.4 % at reply time, 0.69 s mean, 1.4 s worst period)</source>
+        <translation>esforç màxim: tants membres com càpiguen en el pressupost RX d'1,3 s (sis aquí) + llindars baixos en el temps de resposta, els extres del segon pla + llindars baixos en la finestra TX fins a 0,5 s abans que acabi  (+8,4 % en total, +6,4 % en el temps de resposta, 0,69 s de mitjana, 1,4 s en el pitjor període)</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>default: 3 cycles</source>
+        <translation>per defecte: 3 cicles</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>maximum efficiency: 5 cycles, decoder sensitivity 2 - the most decodes per second of decoding (no member, no passes)</source>
+        <translation>eficiència màxima: 5 cicles, sensibilitat del descodificador 2 - el màxim de descodificacions per segon de descodificació (cap membre, cap passada)</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>maximum decodes: 5 cycles, decoder sensitivity 2 (low thresholds + subpass), + 1 ensemble member with 8 or more threads</source>
+        <translation>màxim de descodificacions: 5 cicles, sensibilitat del descodificador 2 (llindars baixos + subpassada), + 1 membre del conjunt amb 8 fils o més</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>pipeline max decodes light: maximum decodes at reply time, then a ~6 s TX background - the plain 6-cycle pass, 2 members, the residual pass</source>
+        <translation>cadena màxim de descodificacions lleugera: màxim de descodificacions en el temps de resposta, després un segon pla TX d'uns 6 s - la passada simple de 6 cicles, 2 membres, la passada residual</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Support JTDX_contest on Ko-fi</source>
+        <translation>Dona suport a JTDX_contest a Ko-fi</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Contest multipliers x QSO points = score</source>
+        <translation>Multiplicadors del concurs x punts de QSO = puntuació</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>cannot be opened</source>
+        <translation>no es pot obrir</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>is not a mono 16 or 32 bit signed integer wav (%1 bit, %2 channel(s))</source>
+        <translation>no és un wav mono de 16 o 32 bits amb enters amb signe (%1 bits, %2 canal(s))</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>could not be written to %1</source>
+        <translation>no s'ha pogut escriure a %1</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Convert bit depth</source>
+        <translation>Converteix la profunditat de bits</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>WSJT Files (*.wav)</source>
+        <translation>Fitxers WSJT (*.wav)</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Save converted file</source>
+        <translation>Desa el fitxer convertit</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Cannot convert</source>
+        <translation>No es pot convertir</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Saved %1 bit copy as %2</source>
+        <translation>Còpia de %1 bits desada com a %2</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>%1 of %2 files converted</source>
+        <translation>%1 de %2 fitxers convertits</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>%1 skipped, the converted file already exists</source>
+        <translation>%1 omès, el fitxer convertit ja existeix</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>%1 failed:</source>
+        <translation>%1 ha fallat:</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>&lt;table cellspacing=1&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F1       &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Online User's Guide&lt;/td&gt;&lt;td&gt;&lt;b&gt;Ctrl+F1  &lt;/b&gt;&lt;/td&gt;&lt;td&gt;About JTDX_contest&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F2       &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Open configuration window&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F3       &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Display keyboard shortcuts&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F4       &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Clear DX Call/Grid and Tx messages&lt;/td&gt;&lt;td&gt;&lt;b&gt;Alt+F4   &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Exit program&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F5       &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Display special mouse commands&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F6       &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Open next file in directory&lt;/td&gt;&lt;td&gt;&lt;b&gt;Shift+F6 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Decode all remaining files in directory&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F7       &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Open log by assigned in the operating system viewer&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F11      &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Move Rx frequency down 1 Hz&lt;/td&gt;&lt;td&gt;&lt;b&gt;Ctrl+F11 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Move Rx and Tx frequencies down 1 Hz&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F12      &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Move Rx frequency up 1 Hz&lt;/td&gt;&lt;td&gt;&lt;b&gt;Ctrl+F12 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Move Rx and Tx frequencies up 1 Hz&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+1-6  &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Set now transmission to this number on Tab 1&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Ctl+1-6  &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Set next transmission to this number on Tab 1&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+Ctrl+A    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Clear wanted callsign list&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+B/C  &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Switch to FT8/FT4 mode&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+D    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Decode again at QSO frequency&lt;/td&gt;&lt;td&gt;&lt;b&gt;Shift+D  &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Full decode (both windows)&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+E    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Erase&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+F    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Toggle bypass all text filters&lt;/td&gt;&lt;td&gt;&lt;b&gt;Ctrl+F   &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Edit the free text message box&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+G    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Generate standard messages&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+H    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Halt Tx&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Ctrl+L   &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Lookup callsign in database, generate standard messages&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+M    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Monitor&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+N    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Enable Tx&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+Q    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Log QSO&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+S    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Stop monitoring&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+T    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Tune&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+V    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Save the most recently completed *.wav file&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+Z    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Filter, this shortcut is being supported in main UI and widegraph UI&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Esc    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Halt Tx&lt;/td&gt;&lt;/tr&gt;
+&lt;/table&gt;</source>
+        <translation>&lt;table cellspacing=1&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F1       &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Guia de l'usuari en línia&lt;/td&gt;&lt;td&gt;&lt;b&gt;Ctrl+F1  &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Quant a JTDX_contest&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F2       &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Obrir la finestra de configuració&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F3       &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Mostrar les dreceres del teclat&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F4       &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Esborrar l'Indicatiu DX, el Locator DX i el texte dels missatges&lt;/td&gt;&lt;td&gt;&lt;b&gt;Alt+F4   &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Sortir del programa&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F5       &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Mostrar els comanaments especials del ratolí&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F6       &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Obrir l'arxiu següent al directori&lt;/td&gt;&lt;td&gt;&lt;b&gt;Shift+F6 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Descodificar tots els arxius restants al directori&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F7       &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Obrir el registre assignat al visor del sistema operatiu&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F11      &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Baixar la freqüència de RX 1 Hz&lt;/td&gt;&lt;td&gt;&lt;b&gt;Ctrl+F11 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Moure les freqüències de RX i TX cap avall 1 Hz&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F12      &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Moure la freqüència de RX cap amunt 1 Hz&lt;/td&gt;&lt;td&gt;&lt;b&gt;Ctrl+F12 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Moure les freqüències de RX i TX cap amunt 1 Hz&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+1-6  &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Configurar ara la transmissió a aquest número a Tab 1&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Ctl+1-6  &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Configurar la propera transmissió a aquest número a Tab 1&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+Ctrl+A    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Esborrar la llista d'indicatius buscats&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+B/C  &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Canviar al mode FT8/FT4&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+D    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Descodificar de nou a la freqüència de QSO&lt;/td&gt;&lt;td&gt;&lt;b&gt;Shift+D  &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Descodificació completa (ambdues finestres)&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+E    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Esborrar&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+F    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Activar o desactivar tots els filtres de text&lt;/td&gt;&lt;td&gt;&lt;b&gt;Ctrl+F   &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Editar el quadre de missatges de text lliure&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+G    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Generar missatges estàndard&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+H    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Aturar TX&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Ctrl+L   &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Cercar indicatiu a la base de dades, generar missatges estàndard&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+M    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Monitor&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+N    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Activar TX&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+Q    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Log de QSO&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+S    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Deixar de monitoritzar&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+T    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Sintonitzar&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+V    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Desar l'arxiu * .wav completat més recentment&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+Z    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Filtre, aquest accés directe és compatible amb la interfície d'usuari principal i la interfície d'usuari de gràfic ample&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Esc    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Aturar TX&lt;/td&gt;&lt;/tr&gt;
+&lt;/table&gt;</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Are You sure to change UI Language to English? JTDX will close, please start it again.</source>
+        <translation>Estàs segur de canviar l'idioma de la interfície d'usuari al català? JTDX es tancarà, torna a obrir-lo.</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>
@@ -5650,94 +6201,6 @@ Verifica el nom del directori correcte.</translation>
         <location filename="../WFPalette.cpp" line="258"/>
         <source>Error writing waterfall palette file &quot;%1&quot;: %2.</source>
         <translation>Error d&apos;escriptura de l&apos;arxiu de paleta de la cascada &quot;%1&quot;: %2.</translation>
-    </message>
-</context>
-<context>
-    <name>RemoteFile</name>
-    <message>
-        <location filename="../SampleDownloader/RemoteFile.cpp" line="37"/>
-        <location filename="../SampleDownloader/RemoteFile.cpp" line="99"/>
-        <location filename="../SampleDownloader/RemoteFile.cpp" line="204"/>
-        <location filename="../SampleDownloader/RemoteFile.cpp" line="244"/>
-        <location filename="../SampleDownloader/RemoteFile.cpp" line="254"/>
-        <location filename="../SampleDownloader/RemoteFile.cpp" line="262"/>
-        <source>File System Error</source>
-        <translation>Error de directori</translation>
-    </message>
-    <message>
-        <location filename="../SampleDownloader/RemoteFile.cpp" line="38"/>
-        <source>Cannot rename file:
-&quot;%1&quot;
-to: &quot;%2&quot;
-Error(%3): %4</source>
-        <translation>No es pot renombrar l&apos;arxiu:
-&quot;%1&quot;
-a: &quot;%2&quot;
-Error (%3): %4</translation>
-    </message>
-    <message>
-        <location filename="../SampleDownloader/RemoteFile.cpp" line="100"/>
-        <source>Cannot delete file:
-&quot;%1&quot;</source>
-        <translation>No es pot esborrar l&apos;arxiu:
-&quot;%1&quot;</translation>
-    </message>
-    <message>
-        <location filename="../SampleDownloader/RemoteFile.cpp" line="172"/>
-        <location filename="../SampleDownloader/RemoteFile.cpp" line="181"/>
-        <location filename="../SampleDownloader/RemoteFile.cpp" line="196"/>
-        <source>Network Error</source>
-        <translation>Error de xarxa</translation>
-    </message>
-    <message>
-        <location filename="../SampleDownloader/RemoteFile.cpp" line="173"/>
-        <source>Too many redirects: %1</source>
-        <translation>Massa redireccionaments: %1</translation>
-    </message>
-    <message>
-        <location filename="../SampleDownloader/RemoteFile.cpp" line="182"/>
-        <source>Redirect not followed: %1</source>
-        <translation>No s&apos;ha seguit la redirecció: %1</translation>
-    </message>
-    <message>
-        <location filename="../SampleDownloader/RemoteFile.cpp" line="205"/>
-        <source>Cannot commit changes to:
-&quot;%1&quot;</source>
-        <translation>No es poden fer canvis a:
-&quot;%1&quot;</translation>
-    </message>
-    <message>
-        <location filename="../SampleDownloader/RemoteFile.cpp" line="245"/>
-        <source>Cannot open file:
-&quot;%1&quot;
-Error(%2): %3</source>
-        <translation>No es pot obrir l&apos;arxiu:
-&quot;%1&quot;
-Error (%2): %3</translation>
-    </message>
-    <message>
-        <location filename="../SampleDownloader/RemoteFile.cpp" line="255"/>
-        <source>Cannot make path:
-&quot;%1&quot;</source>
-        <translation>No es pot crear el directori:
-&quot;%1&quot;</translation>
-    </message>
-    <message>
-        <location filename="../SampleDownloader/RemoteFile.cpp" line="263"/>
-        <source>Cannot write to file:
-&quot;%1&quot;
-Error(%2): %3</source>
-        <translation>No es pot escriure a l&apos;arxiu:
-&quot;%1&quot;
-Error (%2): %3</translation>
-    </message>
-</context>
-<context>
-    <name>SampleDownloader::impl</name>
-    <message>
-        <location filename="../SampleDownloader.cpp" line="99"/>
-        <source>Download Samples</source>
-        <translation>Descarregar exemples</translation>
     </message>
 </context>
 <context>
@@ -8938,6 +9401,81 @@ canvi en la targeta de so</translation>
         <location filename="../Configuration.ui"/>
         <source>Contest</source>
         <translation>Competició</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Highlight messages with grid squares which do not exist in the wsjtx_log.adi log file.&lt;/p&gt;&lt;p&gt;With &lt;b&gt;WW Digi contest&lt;/b&gt; enabled in the Misc menu these settings match on the 2 character grid field instead of the 4 character square, because the field is the contest multiplier, and a new field then outranks a new DXCC or zone in the highlighting.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ressalta els missatges amb localitzadors que no existeixen al fitxer de registre wsjtx_log.adi.&lt;/p&gt;&lt;p&gt;Amb el &lt;b&gt;concurs WW Digi&lt;/b&gt; activat al menú Divers, aquesta configuració s'aplica al camp de localitzador de 2 caràcters en lloc del quadrat de 4 caràcters, perquè el camp és el multiplicador del concurs, i un camp nou passa llavors davant d'un DXCC o una zona nous en el ressaltat.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Restore the recommended notification colors for &lt;b&gt;both&lt;/b&gt; the light and the dark style.&lt;/p&gt;&lt;p&gt;Every text color has been checked against every background it can appear on, so nothing ends up unreadable - a message calling you on a new DXCC row, for instance.&lt;/p&gt;&lt;p&gt;Takes effect when the settings are accepted.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Restaura els colors de notificació recomanats per a &lt;b&gt;tots dos&lt;/b&gt; estils, el clar i el fosc.&lt;/p&gt;&lt;p&gt;Cada color de text s'ha comprovat contra cada fons on pot aparèixer, de manera que res no resulti il·legible - per exemple, un missatge que us crida en una fila de DXCC nou.&lt;/p&gt;&lt;p&gt;S'aplica en acceptar la configuració.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Recommended colors</source>
+        <translation>Colors recomanats</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Contest and event modes. Only one may be active at a time. Modes shown greyed out are declared but not implemented in this build.</source>
+        <translation>Modes de concurs i esdeveniment. Només un pot estar actiu alhora. Els modes en gris estan declarats però no implementats en aquesta compilació.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>WW Digi contest</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;World Wide Digi DX Contest. The exchange is the 4 character grid instead of a signal report, and the multiplier is the 2 character grid field.&lt;/p&gt;&lt;p&gt;While this is selected the grid highlighting below is set to per band on the grid field, and cannot be changed by hand. Your own settings are restored when you switch back to None.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;World Wide Digi DX Contest. L'intercanvi és el localitzador de 4 caràcters en lloc d'un informe de senyal, i el multiplicador és el camp de localitzador de 2 caràcters.&lt;/p&gt;&lt;p&gt;Mentre això estigui seleccionat, el ressaltat de localitzadors de sota es fixa per banda sobre el camp del localitzador i no es pot canviar a mà. La vostra configuració es restaura quan torneu a Cap.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>NA VHF contest</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>EU VHF contest</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>ARRL Field Day</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>ARRL RTTY Roundup</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>ARRL Digi contest</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Contest working frequencies</source>
+        <translation>Freqüències de treball del concurs</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>The frequencies offered by the band selector while a contest is running. Only FT8 and FT4 are accepted. Right click the table to insert, delete, load, save, merge or reset. The everyday list on the Frequencies tab is left alone.</source>
+        <translation>Les freqüències que ofereix el selector de banda mentre s'executa un concurs. Només s'accepten FT8 i FT4. Feu clic dret a la taula per inserir, esborrar, carregar, desar, combinar o restablir. La llista habitual de la pestanya Freqüències no es toca.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Contest &amp;defaults</source>
+        <translation>Valors per &amp;defecte del concurs</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Replace the table with the published default frequencies of the selected contest.</source>
+        <translation>Substitueix la taula per les freqüències per defecte publicades del concurs seleccionat.</translation>
     </message>
 </context>
 <context>

@@ -68,7 +68,6 @@ class SoundOutput;
 class Modulator;
 class SoundInput;
 class Detector;
-class SampleDownloader;
 class DecodedText;
 class MainWindow : public QMainWindow
 {
@@ -78,7 +77,6 @@ public:
   using Frequency = Radio::Frequency;
   using FrequencyDelta = Radio::FrequencyDelta;
   using Mode = Modes::Mode;
-  qint32  m_exitCode;
 
   // Multiple instances: call MainWindow() with *thekey
   explicit MainWindow(bool multiple, QSettings *, QSharedMemory *shdmem,
@@ -531,7 +529,6 @@ private:
   WSPRBandHopping m_WSPR_band_hopping;
   bool m_WSPR_tx_next;
   JTDXMessageBox m_rigErrorMessageBox;
-  QScopedPointer<SampleDownloader> m_sampleDownloader;
 
   QScopedPointer<WideGraph> m_wideGraph;
   QScopedPointer<LogQSO> m_logDlg;
@@ -553,6 +550,12 @@ private:
   int m_rx_audio_buffer_frames;
   int m_tx_audio_buffer_frames;
   int m_outAttenuation = 225;
+  /* CE3TSK: has m_outAttenuation actually reached the slider yet?  The stored power is only
+     applied once the rig reports a frequency (band_changed / displayDialFrequency), but it
+     used to be written back from the slider unconditionally - so a session where the rig
+     never came up saved the .ui default of 1 over it, and poisoned the per-band memories
+     with 1 as well.  Seen after an in-place language restart. */
+  bool m_outAttenuationRestored = false;
   QThread m_audioThread;
   QClipboard *clipboard = QGuiApplication::clipboard();
 
@@ -665,7 +668,7 @@ private:
   QString m_decodeLabelPrefix; // "UTC dB DT Freq Avg= Lag=" as set at <DecodeFinished>; the lag and the count follow
   QString m_decodeLag;         // the lag figure, coloured separately; empty while the decode runs
   QString m_decodeAvg;         // the average DT, coloured separately; empty while the decode runs
-  QString m_decodeLabelMid;    // " Lag=" between the two
+  QString m_decodeLabelMid;    // "Lag=" between the two (no leading space: see decodelabel.h)
   bool    m_bypassRxfFilters;
   bool    m_bypassAllFilters;
   bool    m_windowPopup;

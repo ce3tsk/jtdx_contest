@@ -2,19 +2,23 @@
 #define DECODELABEL_H
 #include <QString>
 
-/* CE3TSK: the decoder label's count (PIPELINED_DECODE_PLAN.md section 10): "/D -" while the
-   period's decode runs (D grows as lines arrive), "/D" when it is done, "/(D+N=S) |" while
-   the TX background runs (D from the decode, N from the background, S their sum), "/(D+N=S)"
-   when it is done: " -" means the RX phase is still running, " |" the TX background (the
-   pipe, the background decodes' own mark). Item 81: " X" after a background that did NOT
+/* CE3TSK: the decoder label's count (PIPELINED_DECODE_PLAN.md section 10): "/D-" while the
+   period's decode runs (D grows as lines arrive), "/D" when it is done, "/D+N=S|" while
+   the TX background runs (D from the decode, N from the background, S their sum), "/D+N=S"
+   when it is done: "-" means the RX phase is still running, "|" the TX background (the
+   pipe, the background decodes' own mark). Item 81: "X" after a background that did NOT
    finish - the next period's decode cut it short - the visual clue that the machine load or
-   the effort level wants a look; it stays until a background completes again. */
+   the effort level wants a look; it stays until a background completes again.
+
+   No spaces and no brackets anywhere in it: the label is clipped at the right on Windows
+   long before it is here, and every character dropped is one more that keeps the trailing
+   marker - the point of the whole line - on screen. The tints do the separating instead. */
 inline QString decode_count_label (bool rx_running, bool bg_running, bool bg_ran, int decodes, int decodes_rx, bool bg_cut = false)
 {
   int const D = decodes_rx, N = decodes - decodes_rx;
-  if (rx_running) return QString ("/%1 -").arg (decodes);
-  if (bg_running) return QString ("/(%1+%2=%3) |").arg (D).arg (N).arg (D + N);
-  if (bg_ran) return QString ("/(%1+%2=%3)%4").arg (D).arg (N).arg (D + N).arg (bg_cut ? " X" : "");
+  if (rx_running) return QString ("/%1-").arg (decodes);
+  if (bg_running) return QString ("/%1+%2=%3|").arg (D).arg (N).arg (D + N);
+  if (bg_ran) return QString ("/%1+%2=%3%4").arg (D).arg (N).arg (D + N).arg (bg_cut ? "X" : "");
   return QString ("/%1").arg (D);
 }
 
@@ -30,9 +34,9 @@ inline QString decode_count_label_html (bool rx_running, bool bg_running, bool b
   QString const d = tint (rx_running ? decodes : D, "#c4d8ff", "#1e3c8a");
   QString const n = tint (N, "#ffc4bc", "#8a2a1e");
   QString const s = tint (D + N, "#c4f0c4", "#1e6a1e");
-  if (rx_running) return "/" + d + " -";
-  if (bg_running) return "/(" + d + "+" + n + "=" + s + ") |";
-  if (bg_ran) return "/(" + d + "+" + n + "=" + s + ")" + (bg_cut ? QString (" <span style=\"background-color:%1;\">X</span>").arg (dark ? "#8a2a1e" : "#ffc4bc") : QString ());   // item 81: cut short, on the background's red
+  if (rx_running) return "/" + d + "-";
+  if (bg_running) return "/" + d + "+" + n + "=" + s + "|";
+  if (bg_ran) return "/" + d + "+" + n + "=" + s + (bg_cut ? QString ("<span style=\"background-color:%1;\">X</span>").arg (dark ? "#8a2a1e" : "#ffc4bc") : QString ());   // item 81: cut short, on the background's red
   return "/" + d;
 }
 

@@ -57,6 +57,11 @@ WideGraph::WideGraph(QSettings * settings, JTDXDateTime * jtdxtime, QWidget *par
   //Restore user's settings
   m_settings->beginGroup("WideGraph");
   restoreGeometry (m_settings->value ("geometry", saveGeometry ()).toByteArray ());
+  /* CE3TSK: a geometry saved when the window was dragged small, or with a smaller font,
+     can be below what the layout needs and Qt then crushes the children. sizeHint() is
+     what the layout wants and it tracks the application font; a larger saved size is
+     kept as it is. See UI_DARK_STYLE.md. */
+  resize (size ().expandedTo (sizeHint ()));
 
   if(m_settings->value("PlotZero").toInt()>=-50 && m_settings->value("PlotZero").toInt()<=50)
     ui->widePlot->setPlotZero(m_settings->value("PlotZero", 0).toInt());

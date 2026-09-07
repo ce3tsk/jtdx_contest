@@ -46,6 +46,11 @@
         <source>OK</source>
         <translation>OK</translation>
     </message>
+    <message>
+        <location filename="../about.ui"/>
+        <source>About JTDX_contest</source>
+        <translation>JTDX_contest について</translation>
+    </message>
 </context>
 <context>
     <name>CallsignDialog</name>
@@ -326,6 +331,56 @@ Format:
         <location filename="../Configuration.cpp" line="6028"/>
         <source>Rig failure</source>
         <translation>リグに障害あり</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Contest defaults</source>
+        <translation>コンテストの既定値</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>No default frequencies are defined for the selected contest.</source>
+        <translation>選択したコンテストには既定の周波数が定義されていません。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Are you sure you want to discard your current contest frequencies and replace them with the selected contest's defaults?</source>
+        <translation>現在のコンテスト周波数を破棄し、選択したコンテストの既定の周波数に置き換えてよろしいですか？</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Load Contest Frequencies</source>
+        <translation>コンテスト周波数を読み込む</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Replace Contest Frequencies</source>
+        <translation>コンテスト周波数を置き換える</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Are you sure you want to discard your current contest frequencies and replace them with the loaded ones?</source>
+        <translation>現在のコンテスト周波数を破棄し、読み込んだ周波数に置き換えてよろしいですか？</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Save Contest Frequencies</source>
+        <translation>コンテスト周波数を保存する</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Merge Contest Frequencies</source>
+        <translation>コンテスト周波数を統合する</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Reset Contest Frequencies</source>
+        <translation>コンテスト周波数をリセットする</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Are you sure you want to discard your current contest frequencies and replace them with the FT8 and FT4 entries from the working frequencies?</source>
+        <translation>現在のコンテスト周波数を破棄し、運用周波数の FT8 と FT4 の項目に置き換えてよろしいですか？</translation>
     </message>
 </context>
 <context>
@@ -2250,90 +2305,6 @@ Format:
         <location filename="../WSPRBandHopping.cpp" line="110"/>
         <source>Gray time:</source>
         <translation>グレイタイム：</translation>
-    </message>
-</context>
-<context>
-    <name>Directory</name>
-    <message>
-        <location filename="../SampleDownloader/Directory.cpp" line="111"/>
-        <location filename="../SampleDownloader/Directory.cpp" line="187"/>
-        <source>URL Error</source>
-        <translation>URLエラー</translation>
-    </message>
-    <message>
-        <location filename="../SampleDownloader/Directory.cpp" line="130"/>
-        <location filename="../SampleDownloader/Directory.cpp" line="137"/>
-        <location filename="../SampleDownloader/Directory.cpp" line="205"/>
-        <location filename="../SampleDownloader/Directory.cpp" line="211"/>
-        <location filename="../SampleDownloader/Directory.cpp" line="217"/>
-        <location filename="../SampleDownloader/Directory.cpp" line="223"/>
-        <location filename="../SampleDownloader/Directory.cpp" line="230"/>
-        <source>JSON Error</source>
-        <translation>JSON エラー</translation>
-    </message>
-    <message>
-        <location filename="../SampleDownloader/Directory.cpp" line="131"/>
-        <source>Contents file syntax error %1 at character offset %2</source>
-        <translation>文字オフセット%2のコンテンツファイルの構文エラー%1</translation>
-    </message>
-    <message>
-        <location filename="../SampleDownloader/Directory.cpp" line="138"/>
-        <source>Contents file top level must be a JSON array</source>
-        <translation>コンテンツファイルのトップレベルはJSON配列である必要があります</translation>
-    </message>
-    <message>
-        <location filename="../SampleDownloader/Directory.cpp" line="149"/>
-        <source>File System Error</source>
-        <translation>ファイルシステムエラー</translation>
-    </message>
-    <message>
-        <location filename="../SampleDownloader/Directory.cpp" line="112"/>
-        <location filename="../SampleDownloader/Directory.cpp" line="188"/>
-        <source>Invalid URL:
-&quot;%1&quot;</source>
-        <translation>無効なURL：
-&quot;%1&quot;</translation>
-    </message>
-    <message>
-        <location filename="../SampleDownloader/Directory.cpp" line="150"/>
-        <source>Failed to open &quot;%1&quot;
-Error: %2 - %3</source>
-        <translation>「%1」を開けませんでしたエラー： %2 - %3</translation>
-    </message>
-    <message>
-        <location filename="../SampleDownloader/Directory.cpp" line="206"/>
-        <source>Contents entries must be a JSON array</source>
-        <translation>コンテンツエントリはJSON配列である必要があります</translation>
-    </message>
-    <message>
-        <location filename="../SampleDownloader/Directory.cpp" line="212"/>
-        <source>Contents entries must have a valid type</source>
-        <translation>コンテンツエントリには有効なタイプが必要です</translation>
-    </message>
-    <message>
-        <location filename="../SampleDownloader/Directory.cpp" line="218"/>
-        <source>Contents entries must have a valid name</source>
-        <translation>コンテンツエントリには有効な名前が必要です</translation>
-    </message>
-    <message>
-        <location filename="../SampleDownloader/Directory.cpp" line="224"/>
-        <source>Contents entries must be JSON objects</source>
-        <translation>コンテンツエントリはJSONオブジェクトである必要があります</translation>
-    </message>
-    <message>
-        <location filename="../SampleDownloader/Directory.cpp" line="231"/>
-        <source>Contents directories must be relative and within &quot;%1&quot;</source>
-        <translation>コンテンツディレクトリは相対的で、「%1」内にある必要があります</translation>
-    </message>
-    <message>
-        <location filename="../SampleDownloader/Directory.cpp" line="298"/>
-        <source>Network Error</source>
-        <translation>ネットワークエラー</translation>
-    </message>
-    <message>
-        <location filename="../SampleDownloader/Directory.cpp" line="298"/>
-        <source>Authentication required</source>
-        <translation>認証が必要</translation>
     </message>
 </context>
 <context>
@@ -4363,16 +4334,6 @@ Click by right mouse&apos;s button sets JTDX internal time back to system time.&
         <translation>参照スペクトルを保存</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5393"/>
-        <source>&amp;Download Samples ...</source>
-        <translation>サンプルのダウンロード…</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="5396"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Download sample audio files demonstrating the various modes.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt; &lt;head /&gt; &lt;body&gt; &lt;p&gt;さまざまなモードのサンプル音声ファイルをダウンロードします。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
         <location filename="../mainwindow.ui" line="5404"/>
         <source>T10</source>
         <translation>T10</translation>
@@ -5307,6 +5268,597 @@ UDP server %2:%3</source>
         <source>WD %1m</source>
         <translation>WD %1m</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Band</source>
+        <translation>バンド</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Contest</source>
+        <translation>コンテスト</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Lit while a contest is selected on the Contest tab of the settings</source>
+        <translation>設定の「コンテスト」タブでコンテストが選択されている間、点灯します</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Preset</source>
+        <translation>プリセット</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>The FT8 decoding preset in force: 3 default, P best power, V best value, R recommended, E ensemble, B best results, M max effort, O most results; "Custom" when the controls match no preset - lit in the preset's menu colour</source>
+        <translation>有効な FT8 デコードプリセット: 3 既定、P 最良の電力、V 最良の費用対効果、R 推奨、E アンサンブル、B 最良の結果、M 最大の労力、O 最多の結果。どのプリセットにも一致しない場合は「Custom」- プリセットのメニュー色で点灯します</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>S&amp;WL</source>
+        <translation>S&amp;WL</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>FT8/FT4 threads</source>
+        <translation>FT8/FT4 スレッド</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Presets</source>
+        <translation>プリセット</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>expert</source>
+        <translation>エキスパート</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>RX</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>ensemble effort</source>
+        <translation>アンサンブルの労力</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>TX background</source>
+        <translation>送信バックグラウンド</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>effort</source>
+        <translation>労力</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>ensemble effort: the TOTAL member count reached in the idle time (the members above the RX count run; with none left the extras below run alone)</source>
+        <translation>アンサンブルの労力: 空き時間に到達するメンバーの合計数（RX 数を超えるメンバーが実行されます。残りがなければ、下の追加分が単独で実行されます）</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>FT8/FT4 decode bandwidth</source>
+        <translation>FT8/FT4 デコード帯域幅</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>About JTDX_contest</source>
+        <translation>JTDX_contest について</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Convert bit depth (32/16)</source>
+        <translation>ビット深度を変換 (32/16)</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Read a wav file, detect whether it is 32 or 16 bit, and save a converted copy with a _16 or _32 suffix. All embedded metadata is carried over.</source>
+        <translation>wav ファイルを読み込み、32 ビットか 16 ビットかを判定し、接尾辞 _16 または _32 を付けた変換済みのコピーを保存します。埋め込まれたメタデータはすべて引き継がれます。</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>JTDX_contest Web site</source>
+        <translation>JTDX_contest ウェブサイト</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>use low thresholds (1)</source>
+        <translation>低いしきい値を使う (1)</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>OSD order 2 for every candidate (weakest signals, about 3x CPU)</source>
+        <translation>すべての候補に OSD 次数 2（最も弱い信号、CPU 約 3 倍）</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>second slicing pass (2 or more threads, about 2x time)</source>
+        <translation>2 回目の分割パス（2 スレッド以上、時間約 2 倍）</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>second slicing pass  (2 or more threads, about 2x time - FT4 needs it: 1715 messages with it, 1625 without)</source>
+        <translation>2 回目の分割パス（2 スレッド以上、時間約 2 倍 - FT4 には必要: あり 1715 メッセージ、なし 1625）</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>OSD order 2 for every candidate (weakest signals, about 2x CPU)</source>
+        <translation>すべての候補に OSD 次数 2（最も弱い信号、CPU 約 2 倍）</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>alternate pass on the residual  (+16, 11% - dominated: 5 members give more for less)</source>
+        <translation>残差に対する代替パス（+16、11% - 劣位: メンバー 5 のほうが少ない代償で多く得られます）</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>off</source>
+        <translation>オフ</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>1 member</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>2 members</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>3 members</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>4 members</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>5 members</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>6 members</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>1 member   (+20, 13% of the budget at 8 threads)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>2 members  (+48, 18%)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>3 members  (+72, 23% - the knee of the curve)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>4 members  (+86, 28%)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>5 members  (+98, 33% - all that is worth taking)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>6 members  (+100, 39% - only 2 more than five)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>alternate-approach pass: 7 cycles + OSD order 2 on the subtracted band (2 or more threads)</source>
+        <translation>代替手法のパス: 7 サイクル + 減算後の帯域に OSD 次数 2（2 スレッド以上）</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>budget auto: fill the reply time (~2.7 s) - more members when the band is quiet</source>
+        <translation>バジェット自動: 応答時間を埋めます（約 2.7 秒）- バンドが空いているときはメンバーを増やします</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>auto: 3 members with 12 or more threads, 2 from 6, 1 from 3</source>
+        <translation>自動: 12 スレッド以上でメンバー 3、6 から 2、3 から 1</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>1 member  (+7 msgs, +1.2 s at 12 threads on the benchmark)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>2 members  (+10, +2.3 s)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>3 members  (+13, +5.3 s)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>4 members  (+15, +7.9 s)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>5 members  (+16, +11.5 s - too slow for a 15 s period on this machine, for replays)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>auto: as many members as fit before the next decode (1 s margin)</source>
+        <translation>自動: 次のデコードまでに収まるだけのメンバー（余裕 1 秒）</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>pipeline ensemble: SWL-4 + 1 member (8 or more threads) in the period, SWL-5 + alternate pass + ensemble in the TX background</source>
+        <translation>パイプラインアンサンブル: 期間内に SWL-4 + メンバー 1（8 スレッド以上）、送信バックグラウンドで SWL-5 + 代替パス + アンサンブル</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>TX background decoding: decode the period again in the decoder's idle time, with the settings below</source>
+        <translation>送信バックグラウンドでのデコード: 下の設定で、デコーダーの空き時間に期間をもう一度デコードします</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>SWL mode</source>
+        <translation>SWL モード</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>minimum (0)</source>
+        <translation>最小 (0)</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>use low thresholds + subpass (2)</source>
+        <translation>低いしきい値 + サブパスを使う (2)</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>classic unit: the plain 6-cycle decode (standard thresholds) - what the old decoder still finds, about 0.5 s</source>
+        <translation>クラシックユニット: 素の 6 サイクルデコード（標準しきい値）- 旧デコーダーが今も見つけるもの、約 0.5 秒</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>pipeline ensemble full: the same, TX background effort auto - every member sample, about 2 s more for the same result on every capture measured</source>
+        <translation>パイプラインアンサンブル完全版: 同じ内容で送信バックグラウンドの労力は自動 - 各メンバーの標本、測定したすべての録音で同じ結果を得るのに約 2 秒余分</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>pipeline run: 5 cycles, sensitivity 2 in the period (the reply on time), SWL-5 + alternate pass + ensemble in the TX background</source>
+        <translation>パイプライン実行: 期間内に 5 サイクル、デコーダー感度 2（応答は時間内）、送信バックグラウンドで SWL-5 + 代替パス + アンサンブル</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>100-3300 Hz</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>300-3300 Hz</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>50-3650 Hz</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Waterfall width (default)</source>
+        <translation>ウォーターフォール幅（既定）</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>100-3200 Hz</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>100-3100 Hz</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>100-3000 Hz</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>200-3200 Hz</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>200-3100 Hz</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>200-3000 Hz</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>200-2800 Hz</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>200-2500 Hz</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>200-2400 Hz</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>0-5000 Hz (testing only)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>alternate pass on the residual, in the background</source>
+        <translation>残差に対する代替パス、バックグラウンドで</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>OSD order 2 for every candidate, in the background (about 2x the background's CPU)</source>
+        <translation>すべての候補に OSD 次数 2、バックグラウンドで（バックグラウンドの CPU の約 2 倍）</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>second slicing pass, in the background (2 or more threads)</source>
+        <translation>2 回目の分割パス、バックグラウンドで（2 スレッド以上）</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>standard (0): JTDX's candidate thresholds</source>
+        <translation>標準 (0): JTDX の候補しきい値</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>low thresholds (1): sync minimum 1.0 + sync quality 16  (+1.2 % on a sparse band for +20 % reply time; -1 on a crowded band)</source>
+        <translation>低いしきい値 (1): 同期最小 1.0 + 同期品質 16（空いたバンドで +1.2 %、応答時間は +20 %。混雑したバンドでは -1）</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>residual unit: every known decode subtracted, the threshold lowered to 0.8, decoded once more  (+13/-0 on the night hour, ~0.12 s of idle time; runs only while the background runs, i.e. ensemble effort above the RX count)</source>
+        <translation>残差ユニット: 既知のデコードをすべて減算し、しきい値を 0.8 に下げてもう一度デコードします（夜間帯で +13/-0、空き時間 約 0.12 秒。バックグラウンドが動作している間のみ、つまりアンサンブルの労力が RX 数を超える場合のみ実行されます）</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>budget auto: as many members as fit the reply deadline, from this band's measured cost (1.3 s; the rest run in the TX background)</source>
+        <translation>バジェット自動: このバンドの実測コストに基づき、応答期限に収まるだけのメンバー（1.3 秒。残りは送信バックグラウンドで実行されます）</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>auto: by thread count - 6 members from 12 threads, 4 from 8, 3 from 6, 2 from 4, 1 from 3, none below</source>
+        <translation>自動: スレッド数に応じて - 12 スレッドからメンバー 6、8 から 4、6 から 3、4 から 2、3 から 1、それ未満はなし</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>auto: by thread count - 6 from 12 threads, 4 from 8, 3 from 3 up, none below (the clock cuts what does not fit)</source>
+        <translation>自動: スレッド数に応じて - 12 スレッドから 6、8 から 4、3 以上から 3、それ未満はなし（収まらない分は時間で打ち切られます）</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>low thresholds (1): sync minimum 1.0 + sync quality 16, in the background (the residual unit scales from it)</source>
+        <translation>低いしきい値 (1): 同期最小 1.0 + 同期品質 16、バックグラウンドで（残差ユニットはこれを基準に調整されます）</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>low: the virtual candidate at the QSO frequency only from the last message received</source>
+        <translation>低: 最後に受信したメッセージのみから QSO 周波数の仮想候補</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>medium: also from the DT at which the DX call was last heard</source>
+        <translation>中: DX コールサインを最後に受信した DT からも</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>high: also a wider DT window and OSD depth 5 on it</source>
+        <translation>高: さらに広い DT 窓と、それに対する OSD 深度 5 も</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>fast: the shallow decoder, nothing added</source>
+        <translation>高速: 浅いデコーダー、追加なし</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>default: deep, 4 subtraction passes  (1748 messages on the night hour, 0.12 s at reply time)</source>
+        <translation>既定: 深い、4 回の減算パス（夜間帯で 1748 メッセージ、応答時に 0.12 秒）</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>background 3: three ensemble members in the TX window, nothing at reply time  (+4.5 %, 0.12 s)</source>
+        <translation>バックグラウンド 3: 送信ウィンドウでアンサンブルメンバー 3、応答時には何もなし（+4.5 %、0.12 秒）</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>background 6 with deep OSD, the alternate pass and the residual unit, all in the TX window, nothing at reply time  (+8.0 % on the night hour, +3.5 % on the day hour, 0.12 s; ~1 s of idle CPU a period)</source>
+        <translation>バックグラウンド 6、深い OSD、代替パス、残差ユニットをすべて送信ウィンドウで実行、応答時には何もなし（夜間帯 +8.0 %、日中帯 +3.5 %、0.12 秒。1 期間あたり約 1 秒の空き CPU）</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>most at reply time: all six members in the period, and the background's extras - deep OSD, the alternate pass, the residual unit - in the TX window  (+7.9 % in total, +5.5 % at reply time, 0.55 s mean, 1.3 s worst period)</source>
+        <translation>応答時に最多: 期間内に 6 メンバー全員、バックグラウンドの追加分 - 深い OSD、代替パス、残差ユニット - は送信ウィンドウで（合計 +7.9 %、応答時 +5.5 %、平均 0.55 秒、最悪の期間 1.3 秒）</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>max effort: as many members as fit the 1.3 s RX budget (six here) + low thresholds at reply time, the background's extras + low thresholds in the TX window until 0.5 s before it ends  (+8.4 % in total, +6.4 % at reply time, 0.69 s mean, 1.4 s worst period)</source>
+        <translation>最大の労力: 1.3 秒の RX バジェットに収まるだけのメンバー（ここでは 6）+ 応答時に低いしきい値、バックグラウンドの追加分 + 送信ウィンドウ終了の 0.5 秒前まで低いしきい値（合計 +8.4 %、応答時 +6.4 %、平均 0.69 秒、最悪の期間 1.4 秒）</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>default: 3 cycles</source>
+        <translation>既定: 3 サイクル</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>maximum efficiency: 5 cycles, decoder sensitivity 2 - the most decodes per second of decoding (no member, no passes)</source>
+        <translation>最大効率: 5 サイクル、デコーダー感度 2 - デコード 1 秒あたりのデコード数が最多（メンバーなし、パスなし）</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>maximum decodes: 5 cycles, decoder sensitivity 2 (low thresholds + subpass), + 1 ensemble member with 8 or more threads</source>
+        <translation>最大デコード数: 5 サイクル、デコーダー感度 2（低いしきい値 + サブパス）、8 スレッド以上でアンサンブルメンバー 1</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>pipeline max decodes light: maximum decodes at reply time, then a ~6 s TX background - the plain 6-cycle pass, 2 members, the residual pass</source>
+        <translation>パイプライン最大デコード数（軽量）: 応答時に最大デコード数、その後 約 6 秒の送信バックグラウンド - 素の 6 サイクルパス、メンバー 2、残差パス</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Support JTDX_contest on Ko-fi</source>
+        <translation>Ko-fi で JTDX_contest を支援する</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Contest multipliers x QSO points = score</source>
+        <translation>コンテストのマルチプライヤー × QSO 点 = スコア</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>cannot be opened</source>
+        <translation>を開けません</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>is not a mono 16 or 32 bit signed integer wav (%1 bit, %2 channel(s))</source>
+        <translation>はモノラルの 16 ビットまたは 32 ビット符号付き整数 wav ではありません（%1 ビット、%2 チャンネル）</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>could not be written to %1</source>
+        <translation>%1 に書き込めませんでした</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Convert bit depth</source>
+        <translation>ビット深度を変換</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>WSJT Files (*.wav)</source>
+        <translation>WSJT ファイル (*.wav)</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Save converted file</source>
+        <translation>変換したファイルを保存</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Cannot convert</source>
+        <translation>変換できません</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Saved %1 bit copy as %2</source>
+        <translation>%1 ビットのコピーを %2 として保存しました</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>%1 of %2 files converted</source>
+        <translation>%2 個中 %1 個のファイルを変換しました</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>%1 skipped, the converted file already exists</source>
+        <translation>%1 をスキップしました。変換後のファイルは既に存在します</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>%1 failed:</source>
+        <translation>%1 が失敗しました:</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>&lt;table cellspacing=1&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F1       &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Online User's Guide&lt;/td&gt;&lt;td&gt;&lt;b&gt;Ctrl+F1  &lt;/b&gt;&lt;/td&gt;&lt;td&gt;About JTDX_contest&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F2       &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Open configuration window&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F3       &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Display keyboard shortcuts&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F4       &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Clear DX Call/Grid and Tx messages&lt;/td&gt;&lt;td&gt;&lt;b&gt;Alt+F4   &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Exit program&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F5       &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Display special mouse commands&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F6       &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Open next file in directory&lt;/td&gt;&lt;td&gt;&lt;b&gt;Shift+F6 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Decode all remaining files in directory&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F7       &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Open log by assigned in the operating system viewer&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F11      &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Move Rx frequency down 1 Hz&lt;/td&gt;&lt;td&gt;&lt;b&gt;Ctrl+F11 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Move Rx and Tx frequencies down 1 Hz&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F12      &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Move Rx frequency up 1 Hz&lt;/td&gt;&lt;td&gt;&lt;b&gt;Ctrl+F12 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Move Rx and Tx frequencies up 1 Hz&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+1-6  &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Set now transmission to this number on Tab 1&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Ctl+1-6  &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Set next transmission to this number on Tab 1&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+Ctrl+A    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Clear wanted callsign list&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+B/C  &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Switch to FT8/FT4 mode&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+D    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Decode again at QSO frequency&lt;/td&gt;&lt;td&gt;&lt;b&gt;Shift+D  &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Full decode (both windows)&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+E    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Erase&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+F    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Toggle bypass all text filters&lt;/td&gt;&lt;td&gt;&lt;b&gt;Ctrl+F   &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Edit the free text message box&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+G    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Generate standard messages&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+H    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Halt Tx&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Ctrl+L   &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Lookup callsign in database, generate standard messages&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+M    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Monitor&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+N    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Enable Tx&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+Q    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Log QSO&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+S    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Stop monitoring&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+T    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Tune&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+V    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Save the most recently completed *.wav file&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+Z    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Filter, this shortcut is being supported in main UI and widegraph UI&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Esc    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Halt Tx&lt;/td&gt;&lt;/tr&gt;
+&lt;/table&gt;</source>
+        <translation>&lt;table cellspacing="1"&gt;
+  &lt;tbody&gt;&lt;tr&gt;&lt;td&gt;&lt;strong&gt;F1 &lt;/strong&gt;&lt;/td&gt;&lt;td&gt;オンライン・ユーザー・ガイド&lt;/td&gt;&lt;td&gt;&lt;strong&gt;Ctrl+F1 &lt;/strong&gt;&lt;/td&gt;&lt;td&gt;JTDX_contestについて&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;strong&gt;F2 &lt;/strong&gt;&lt;/td&gt;&lt;td&gt;設定ウィンドウを開く&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;strong&gt;F3 &lt;/strong&gt;&lt;/td&gt;&lt;td&gt;キーボード・ショートカットの表示&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;strong&gt;F4 &lt;/strong&gt;&lt;/td&gt;&lt;td&gt;DXコール/グリッドおよびTxメッセージのクリア&lt;/td&gt;&lt;td&gt;&lt;strong&gt;Alt+F4 &lt;/strong&gt;&lt;/td&gt;&lt;td&gt;プログラムの終了&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;strong&gt;F5 &lt;/strong&gt;&lt;/td&gt;&lt;td&gt;スペシャル・マウス・コマンドの表示&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;strong&gt;F6 &lt;/strong&gt;&lt;/td&gt;&lt;td&gt;ディレクトリ内の次のファイルを開く&lt;/td&gt;&lt;td&gt;&lt;strong&gt;Shift+F6 &lt;/strong&gt;&lt;/td&gt;&lt;td&gt;ディレクトリ内の残りのすべてのファイルをデコードする&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;strong&gt;F7 &lt;/strong&gt;&lt;/td&gt;&lt;td&gt;OSのビューアでログを開く&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;strong&gt;F11 &lt;/strong&gt;&lt;/td&gt;&lt;td&gt;Rxの周波数を1Hz下に移動&lt;/td&gt;&lt;td&gt;&lt;strong&gt;Ctrl+F11 &lt;/strong&gt;&lt;/td&gt;&lt;td&gt;RxおよびTxの周波数を1Hz下に移動&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;strong&gt;F12 &lt;/strong&gt;&lt;/td&gt;&lt;td&gt;Rxの周波数を1Hz上に移動&lt;/td&gt;&lt;td&gt;&lt;strong&gt;Ctrl+F12 &lt;/strong&gt;&lt;/td&gt;&lt;td&gt;RxとTxの周波数を1Hz上に移動&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;strong&gt;Alt+1-6  &lt;/strong&gt;&lt;/td&gt;&lt;td&gt;タブ1でこの番号を今の送信に設定する&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;strong&gt;Ctl+1-6 &lt;/strong&gt;&lt;/td&gt;&lt;td&gt;タブ1でこの番号を次の送信に設定する&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;strong&gt;Alt+Ctrl+A &lt;/strong&gt;&lt;/td&gt;&lt;td&gt;wanted コールサインリストをクリアする&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;strong&gt;Alt+B/C &lt;/strong&gt;&lt;/td&gt;&lt;td&gt;FT8とFT4のモードに切り替え&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;strong&gt;Alt+D &lt;/strong&gt;&lt;/td&gt;&lt;td&gt;QSO周波数を再度デコード&lt;/td&gt;&lt;td&gt;&lt;strong&gt;Shift+D &lt;/strong&gt;&lt;/td&gt;&lt;td&gt;全てを再デコード(両ウィンドウ)&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;strong&gt;Alt+E &lt;/strong&gt;&lt;/td&gt;&lt;td&gt;消去&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;strong&gt;Alt+F &lt;/strong&gt;&lt;/td&gt;&lt;td&gt;すべてのテキストフィルタをバイパスするかどうかを切り替える&lt;/td&gt;&lt;td&gt;&lt;strong&gt;Ctrl+F &lt;/strong&gt;&lt;/td&gt;&lt;td&gt;フリーテキストメッセージボックスを編集する&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;strong&gt;Alt+G &lt;/strong&gt;&lt;/td&gt;&lt;td&gt;標準的なメッセージの生成&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;strong&gt;Alt+H &lt;/strong&gt;&lt;/td&gt;&lt;td&gt;送信停止&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;strong&gt;Ctrl+L &lt;/strong&gt;&lt;/td&gt;&lt;td&gt;データベースでコールサインを検索し、標準メッセージを生成する&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;strong&gt;Alt+M &lt;/strong&gt;&lt;/td&gt;&lt;td&gt;モニター&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;strong&gt;Alt+N &lt;/strong&gt;&lt;/td&gt;&lt;td&gt;送信開始&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;strong&gt;Alt+Q &lt;/strong&gt;&lt;/td&gt;&lt;td&gt;ログに記載&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;strong&gt;Alt+S &lt;/strong&gt;&lt;/td&gt;&lt;td&gt;モニターの停止&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;strong&gt;Alt+T &lt;/strong&gt;&lt;/td&gt;&lt;td&gt;チューン&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;
+  &lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;strong&gt;Alt+V &lt;/strong&gt;&lt;/td&gt;&lt;td&gt;直近に完成した*.wavファイルを保存する&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;strong&gt;Alt+Z &lt;/strong&gt;&lt;/td&gt;&lt;td&gt;フィルタ、このショートカットはメインUIとワイドグラフUIでサポートされています&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;strong&gt;Esc &lt;/strong&gt;&lt;/td&gt;&lt;td&gt;送信停止&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;&lt;/table&gt;</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Are You sure to change UI Language to English? JTDX will close, please start it again.</source>
+        <translation>言語を日本語に変更してもよろしいですか? JTDX は終了しますので、もう一度起動してください。</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>
@@ -5619,84 +6171,6 @@ Please verify the correct directory name was given.</source>
         <location filename="../WFPalette.cpp" line="258"/>
         <source>Error writing waterfall palette file &quot;%1&quot;: %2.</source>
         <translation>ウォーターフォールパレットファイル &quot;%1&quot;の書き込みエラー：%2。</translation>
-    </message>
-</context>
-<context>
-    <name>RemoteFile</name>
-    <message>
-        <location filename="../SampleDownloader/RemoteFile.cpp" line="37"/>
-        <location filename="../SampleDownloader/RemoteFile.cpp" line="99"/>
-        <location filename="../SampleDownloader/RemoteFile.cpp" line="204"/>
-        <location filename="../SampleDownloader/RemoteFile.cpp" line="244"/>
-        <location filename="../SampleDownloader/RemoteFile.cpp" line="254"/>
-        <location filename="../SampleDownloader/RemoteFile.cpp" line="262"/>
-        <source>File System Error</source>
-        <translation>ファイルシステムエラー</translation>
-    </message>
-    <message>
-        <location filename="../SampleDownloader/RemoteFile.cpp" line="38"/>
-        <source>Cannot rename file:
-&quot;%1&quot;
-to: &quot;%2&quot;
-Error(%3): %4</source>
-        <translation>ファイルの名前を変更できません：「%1」宛先： &quot;%2&quot;エラー（%3）：%4</translation>
-    </message>
-    <message>
-        <location filename="../SampleDownloader/RemoteFile.cpp" line="100"/>
-        <source>Cannot delete file:
-&quot;%1&quot;</source>
-        <translation>ファイルを削除できません：「%1」</translation>
-    </message>
-    <message>
-        <location filename="../SampleDownloader/RemoteFile.cpp" line="172"/>
-        <location filename="../SampleDownloader/RemoteFile.cpp" line="181"/>
-        <location filename="../SampleDownloader/RemoteFile.cpp" line="196"/>
-        <source>Network Error</source>
-        <translation>ネットワークエラー</translation>
-    </message>
-    <message>
-        <location filename="../SampleDownloader/RemoteFile.cpp" line="173"/>
-        <source>Too many redirects: %1</source>
-        <translation>リダイレクトが多すぎます：%1</translation>
-    </message>
-    <message>
-        <location filename="../SampleDownloader/RemoteFile.cpp" line="182"/>
-        <source>Redirect not followed: %1</source>
-        <translation>リダイレクトは続いていなかった：%1</translation>
-    </message>
-    <message>
-        <location filename="../SampleDownloader/RemoteFile.cpp" line="205"/>
-        <source>Cannot commit changes to:
-&quot;%1&quot;</source>
-        <translation>変更をコミットできません：「%1」</translation>
-    </message>
-    <message>
-        <location filename="../SampleDownloader/RemoteFile.cpp" line="245"/>
-        <source>Cannot open file:
-&quot;%1&quot;
-Error(%2): %3</source>
-        <translation>ファイルを開けません：「%1」エラー（%2）：%3</translation>
-    </message>
-    <message>
-        <location filename="../SampleDownloader/RemoteFile.cpp" line="255"/>
-        <source>Cannot make path:
-&quot;%1&quot;</source>
-        <translation>パスを作成できません：「%1」</translation>
-    </message>
-    <message>
-        <location filename="../SampleDownloader/RemoteFile.cpp" line="263"/>
-        <source>Cannot write to file:
-&quot;%1&quot;
-Error(%2): %3</source>
-        <translation>ファイルに書き込めません：「%1」エラー（%2）：%3</translation>
-    </message>
-</context>
-<context>
-    <name>SampleDownloader::impl</name>
-    <message>
-        <location filename="../SampleDownloader.cpp" line="99"/>
-        <source>Download Samples</source>
-        <translation>ダウンロードサンプル</translation>
     </message>
 </context>
 <context>
@@ -8849,6 +9323,81 @@ soundcard changes</source>
         <location filename="../Configuration.ui"/>
         <source>Contest</source>
         <translation>コンテスト</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Highlight messages with grid squares which do not exist in the wsjtx_log.adi log file.&lt;/p&gt;&lt;p&gt;With &lt;b&gt;WW Digi contest&lt;/b&gt; enabled in the Misc menu these settings match on the 2 character grid field instead of the 4 character square, because the field is the contest multiplier, and a new field then outranks a new DXCC or zone in the highlighting.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;ログファイル wsjtx_log.adi に存在しないグリッドを含むメッセージを強調表示します。&lt;/p&gt;&lt;p&gt;「その他」メニューで &lt;b&gt;WW Digi コンテスト&lt;/b&gt; を有効にすると、これらの設定は 4 文字のスクエアではなく 2 文字のグリッドフィールドに対して適用されます。フィールドがコンテストのマルチプライヤーであるため、強調表示では新しいフィールドが新しい DXCC やゾーンより優先されます。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Restore the recommended notification colors for &lt;b&gt;both&lt;/b&gt; the light and the dark style.&lt;/p&gt;&lt;p&gt;Every text color has been checked against every background it can appear on, so nothing ends up unreadable - a message calling you on a new DXCC row, for instance.&lt;/p&gt;&lt;p&gt;Takes effect when the settings are accepted.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;ライトとダークの &lt;b&gt;両方&lt;/b&gt; のスタイルについて、推奨される通知色を復元します。&lt;/p&gt;&lt;p&gt;各文字色は、表示されうるすべての背景に対して確認済みなので、読めなくなることはありません - たとえば新しい DXCC の行であなたを呼んでいるメッセージなど。&lt;/p&gt;&lt;p&gt;設定を確定したときに反映されます。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Recommended colors</source>
+        <translation>推奨される色</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Contest and event modes. Only one may be active at a time. Modes shown greyed out are declared but not implemented in this build.</source>
+        <translation>コンテストおよびイベントのモード。同時に有効にできるのは 1 つだけです。灰色で表示されているモードは宣言済みですが、このビルドでは実装されていません。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>WW Digi contest</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;World Wide Digi DX Contest. The exchange is the 4 character grid instead of a signal report, and the multiplier is the 2 character grid field.&lt;/p&gt;&lt;p&gt;While this is selected the grid highlighting below is set to per band on the grid field, and cannot be changed by hand. Your own settings are restored when you switch back to None.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;World Wide Digi DX Contest。交換内容はシグナルレポートではなく 4 文字のグリッドで、マルチプライヤーは 2 文字のグリッドフィールドです。&lt;/p&gt;&lt;p&gt;これが選択されている間、下のグリッド強調表示はグリッドフィールドに対するバンドごとの設定に固定され、手動では変更できません。「なし」に戻すと、ご自身の設定が復元されます。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>NA VHF contest</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>EU VHF contest</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>ARRL Field Day</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>ARRL RTTY Roundup</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>ARRL Digi contest</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Contest working frequencies</source>
+        <translation>コンテスト運用周波数</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>The frequencies offered by the band selector while a contest is running. Only FT8 and FT4 are accepted. Right click the table to insert, delete, load, save, merge or reset. The everyday list on the Frequencies tab is left alone.</source>
+        <translation>コンテスト中にバンドセレクターが提示する周波数です。FT8 と FT4 のみが受け付けられます。テーブルを右クリックすると、挿入、削除、読み込み、保存、統合、リセットができます。「周波数」タブの通常の一覧はそのまま残ります。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Contest &amp;defaults</source>
+        <translation>コンテストの既定値(&amp;D)</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Replace the table with the published default frequencies of the selected contest.</source>
+        <translation>選択したコンテストについて公表されている既定の周波数でテーブルを置き換えます。</translation>
     </message>
 </context>
 <context>

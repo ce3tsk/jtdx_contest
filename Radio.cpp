@@ -160,8 +160,82 @@ namespace Radio
     auto const& match = prefix_re.match (callsign);  
     return match.captured ("prefix");
   }
+/* CE3TSK: the fixed UI colours, one row per literal the code asks for: the value to use in the
+   light style, then in the dark one. They are not adjustable - unlike the notification colours
+   in Settings, these are part of the layout.
+
+   This used to be an algorithm (subtract 0x60 per channel, XOR the greys) applied to whatever
+   colour it was handed. That cannot work, because it does not know whether the colour is a
+   background or text: darkening both members of a pair collapses the contrast between them. A
+   luminance inversion was tried too and is no better - WCAG contrast is not symmetric under
+   inversion, so mid-luminance pairs still collide. Measured over the 25 background/text pairs
+   the main window actually produces, the old rule left 16 of them below 4.5:1 and 14 below 3:1.
+
+   The table instead fixes each literal once, with its role already decided: backgrounds land near
+   0.055 relative luminance, text colours stay light. All 25 pairs now clear 4.5:1. Regenerate the
+   numbers rather than editing by eye - the derivation is in UI_DARK_STYLE.md.
+
+   A literal that is not listed falls back to the old rule, so nothing breaks if one is added. */
+namespace
+{
+  struct FixedColor { char const * ask; char const * light; char const * dark; };
+  FixedColor const fixed_colors[] = {
+    {"#000000", "#000000", "#e6dcd2"},
+    {"#0000ff", "#0000ff", "#93b8ff"},
+    {"#00ff00", "#00ff00", "#004f00"},
+    {"#00ffff", "#00ffff", "#004b4b"},
+    {"#1400b1", "#1400b1", "#a9beff"},
+    {"#222222", "#222222", "#2b2b2b"},
+    {"#6699ff", "#6699ff", "#0038a7"},
+    {"#66ff66", "#66ff66", "#004f00"},
+    {"#7bff7b", "#7bff7b", "#004f00"},
+    {"#7fff7f", "#7fff7f", "#004f00"},
+    {"#808080", "#555555", "#b9b9b9"},
+    {"#82ff8c", "#82ff8c", "#004f06"},
+    {"#88ff88", "#88ff88", "#004f00"},
+    {"#96ffff", "#96ffff", "#004b4b"},
+    {"#9999ff", "#9999ff", "#0000e3"},
+    {"#99ff99", "#99ff99", "#004f00"},
+    {"#99ffff", "#99ffff", "#004b4b"},
+    {"#a99ee2", "#a99ee2", "#402f9c"},
+    {"#aabec8", "#aabec8", "#33454e"},
+    {"#aaffff", "#aaffff", "#004b4b"},
+    {"#adadad", "#adadad", "#d4d4d4"},
+    {"#bebebe", "#bebebe", "#434343"},
+    {"#c4c4ff", "#c4c4ff", "#0000e3"},
+    {"#c4ffc4", "#c4ffc4", "#004f00"},
+    {"#d2d2d2", "#d2d2d2", "#434343"},
+    {"#dcdcdc", "#dcdcdc", "#434343"},
+    {"#e0e0e0", "#e0e0e0", "#434343"},
+    {"#e1e1e1", "#e1e1e1", "#434343"},
+    {"#fdedc5", "#fdedc5", "#563f03"},
+    {"#ff0000", "#ff0000", "#8c0000"},
+    {"#ff3c3c", "#ff3c3c", "#8c0000"},
+    {"#ff66ff", "#ff66ff", "#790079"},
+    {"#ff8000", "#ff8000", "#693500"},
+    {"#ff8080", "#ff8080", "#8c0000"},
+    {"#ff99cc", "#ff99cc", "#870043"},
+    {"#ffa500", "#ffa500", "#5c3b00"},
+    {"#ffbbbb", "#ffbbbb", "#8c0000"},
+    {"#fffa82", "#fffa82", "#474500"},
+    {"#ffff00", "#ffff00", "#454500"},
+    {"#ffff33", "#ffff33", "#454500"},
+    {"#ffff66", "#ffff66", "#454500"},
+    {"#ffff76", "#ffff76", "#454500"},
+    {"#ffff88", "#ffff88", "#454500"},
+    {"#ffff96", "#ffff96", "#454500"},
+    {"#ffffff", "#ffffff", "#19232d"},
+  };
+}
+
 QString convert_dark(QString const& color, bool useDarkStyle)
 {
+    for (auto const& c : fixed_colors)
+      {
+        if (color == c.ask) return useDarkStyle ? c.dark : c.light;
+      }
+
+    // not in the table - the original rule, so an unlisted colour still gets something sane
     QString res;
     bool ok;
     auto hexcolor = color.mid(1).toUInt(&ok, 16);
@@ -171,31 +245,27 @@ QString convert_dark(QString const& color, bool useDarkStyle)
         auto b = hexcolor & 0xff;
         if (r==g && r==b) {
              hexcolor = hexcolor xor 0xe6dcd2;
-
          } else {
           if (r >= 0x60) r -= 0x60;
           else r = 0;
           if (g >= 0x60) g -= 0x60;
           else g = 0;
           if (!(b == 0xff && r == 0 && g == 0)) {
-          if (b >= 0x60) b -= 0x60;
-          else b = 0;
+            if (b >= 0x60) b -= 0x60;
+            else b = 0;
           } else {
             r += 0x60;
             g += 0x60;
-
           }
           hexcolor = r << 16 | g << 8 | b;
         }
-//        hexcolor = hexcolor xor 0xe6dcd2;
         res.setNum(hexcolor,16);
         res = res.rightJustified(6, '0');
         res = "#" + res.right(6);
-        
     } else res = color;
-//    printf ("%s -> %s\n",color.toStdString().c_str(),res.toStdString().c_str());
     return res;
 }
+
 
 QString convert_Smeter(int level, bool Sunits)
   {

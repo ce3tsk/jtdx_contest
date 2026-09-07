@@ -62,7 +62,6 @@ endif (WIN32)
 set (PROJECT_HOMEPAGE http://sourceforge.net/projects/jtdx/)
 set (PROJECT_MANUAL index.php/videos-guides)
 set (PROJECT_MANUAL_DIRECTORY_URL http://sourceforge.net/projects/jtdx/)
-set (PROJECT_SAMPLES_URL http://jtdx.tech/public_html/downloads/)
 set (PROJECT_SAMPLES_UPLOAD_DEST frs.sourceforge.net:/home/frs/project/wsjt/)
 set (PROJECT_SUMMARY_DESCRIPTION "${PROJECT_NAME} - Digital Modes for Amateur Radio.")
 set (PROJECT_DESCRIPTION "JTDX: Digital Modes for Weak Signal Communications in Amateur Radio")
@@ -202,11 +201,6 @@ set (wsjt_qt_CXXSRCS
   MessageClient.cpp
   LettersSpinBox.cpp
   HelpTextWindow.cpp
-  SampleDownloader.cpp
-  SampleDownloader/DirectoryDelegate.cpp
-  SampleDownloader/Directory.cpp
-  SampleDownloader/FileNode.cpp
-  SampleDownloader/RemoteFile.cpp
   DisplayManual.cpp
   FrequencyDelegate.cpp
   FrequencyDeltaDelegate.cpp
@@ -603,7 +597,10 @@ set (TOP_LEVEL_RESOURCES
   icons/Darwin/jtdx.iconset/icon_128x128.png
   contrib/decpasses.png
   contrib/dtrange.png
-  contrib/kofi6.png   # CE3TSK: the Ko-fi button shown in the About JTDX_contest dialog
+  contrib/support_dark.png        # CE3TSK: cup + wordmark for About  (tools/make_support_button.py)
+  contrib/support_light.png       # CE3TSK: the same for the light style
+  contrib/support_cup_dark.png    # CE3TSK: the cup alone, for the menu bar corner
+  contrib/support_cup_light.png   # CE3TSK: the same for the light style
   )
 
 set (PALETTE_FILES
@@ -1028,7 +1025,7 @@ qt5_wrap_ui (wsjtx_GENUISRCS ${wsjtx_UISRCS})
 # Resource generation
 qt5_add_resources (wsjtx_RESOURCES_RCC 
   ${CMAKE_BINARY_DIR}/jtdx.qrc
-  contrib/QDarkStyleSheet/qdarkstyle/style.qrc
+  contrib/QDarkStyleSheet/qdarkstyle/dark/darkstyle.qrc
 )
 
 # AX COM servers
@@ -1254,7 +1251,7 @@ add_resources (message_aggregator_RESOURCES /qss ${message_aggregator_STYLESHEET
 configure_file (message_aggregator.qrc.in message_aggregator.qrc @ONLY)
 qt5_add_resources (message_aggregator_RESOURCES_RCC 
   ${CMAKE_BINARY_DIR}/message_aggregator.qrc
-  contrib/QDarkStyleSheet/qdarkstyle/style.qrc
+  contrib/QDarkStyleSheet/qdarkstyle/dark/darkstyle.qrc
 )
 add_executable (message_aggregator
   ${message_aggregator_CXXSRCS}
@@ -1399,12 +1396,12 @@ if (NOT WIN32 AND NOT APPLE)
   # install a desktop file so wsjtx appears in the application start
   # menu with an icon
   install (
-    FILES jtdx.desktop
+    FILES jtdx_contest.desktop
     DESTINATION share/applications
     #COMPONENT runtime
     )
   install (
-    FILES icons/Unix/jtdx_icon.png
+    FILES icons/Unix/jtdx_contest_icon.png
     DESTINATION share/pixmaps
     #COMPONENT runtime
     )

@@ -46,6 +46,11 @@
         <source>OK</source>
         <translation>确定</translation>
     </message>
+    <message>
+        <location filename="../about.ui"/>
+        <source>About JTDX_contest</source>
+        <translation>关于 JTDX_contest</translation>
+    </message>
 </context>
 <context>
     <name>CallsignDialog</name>
@@ -326,6 +331,56 @@ Format:
         <location filename="../Configuration.cpp" line="6028"/>
         <source>Rig failure</source>
         <translation>无线电设备故障</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Contest defaults</source>
+        <translation>竞赛默认值</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>No default frequencies are defined for the selected contest.</source>
+        <translation>所选竞赛未定义默认频率。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Are you sure you want to discard your current contest frequencies and replace them with the selected contest's defaults?</source>
+        <translation>确定要放弃当前的竞赛频率，并用所选竞赛的默认频率替换吗？</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Load Contest Frequencies</source>
+        <translation>载入竞赛频率</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Replace Contest Frequencies</source>
+        <translation>替换竞赛频率</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Are you sure you want to discard your current contest frequencies and replace them with the loaded ones?</source>
+        <translation>确定要放弃当前的竞赛频率，并用载入的频率替换吗？</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Save Contest Frequencies</source>
+        <translation>保存竞赛频率</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Merge Contest Frequencies</source>
+        <translation>合并竞赛频率</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Reset Contest Frequencies</source>
+        <translation>重置竞赛频率</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Are you sure you want to discard your current contest frequencies and replace them with the FT8 and FT4 entries from the working frequencies?</source>
+        <translation>确定要放弃当前的竞赛频率，并用工作频率中的 FT8 和 FT4 条目替换吗？</translation>
     </message>
 </context>
 <context>
@@ -2250,91 +2305,6 @@ Format:
         <location filename="../WSPRBandHopping.cpp" line="110"/>
         <source>Gray time:</source>
         <translation>灰线时间:</translation>
-    </message>
-</context>
-<context>
-    <name>Directory</name>
-    <message>
-        <location filename="../SampleDownloader/Directory.cpp" line="111"/>
-        <location filename="../SampleDownloader/Directory.cpp" line="187"/>
-        <source>URL Error</source>
-        <translation>网址错误</translation>
-    </message>
-    <message>
-        <location filename="../SampleDownloader/Directory.cpp" line="112"/>
-        <location filename="../SampleDownloader/Directory.cpp" line="188"/>
-        <source>Invalid URL:
-&quot;%1&quot;</source>
-        <translation>无效的网址: 
-&quot;%1&quot;</translation>
-    </message>
-    <message>
-        <location filename="../SampleDownloader/Directory.cpp" line="130"/>
-        <location filename="../SampleDownloader/Directory.cpp" line="137"/>
-        <location filename="../SampleDownloader/Directory.cpp" line="205"/>
-        <location filename="../SampleDownloader/Directory.cpp" line="211"/>
-        <location filename="../SampleDownloader/Directory.cpp" line="217"/>
-        <location filename="../SampleDownloader/Directory.cpp" line="223"/>
-        <location filename="../SampleDownloader/Directory.cpp" line="230"/>
-        <source>JSON Error</source>
-        <translation>JSON错误</translation>
-    </message>
-    <message>
-        <location filename="../SampleDownloader/Directory.cpp" line="131"/>
-        <source>Contents file syntax error %1 at character offset %2</source>
-        <translation>内容文件语法错误 %1 字符偏移量 %2</translation>
-    </message>
-    <message>
-        <location filename="../SampleDownloader/Directory.cpp" line="138"/>
-        <source>Contents file top level must be a JSON array</source>
-        <translation>内容文件顶层必须是JSON数组</translation>
-    </message>
-    <message>
-        <location filename="../SampleDownloader/Directory.cpp" line="149"/>
-        <source>File System Error</source>
-        <translation>文件系统错误</translation>
-    </message>
-    <message>
-        <location filename="../SampleDownloader/Directory.cpp" line="150"/>
-        <source>Failed to open &quot;%1&quot;
-Error: %2 - %3</source>
-        <translation>未能打开 &quot;%1&quot;
-错误: %2 - %3</translation>
-    </message>
-    <message>
-        <location filename="../SampleDownloader/Directory.cpp" line="206"/>
-        <source>Contents entries must be a JSON array</source>
-        <translation>输入内容必须是JSON数组</translation>
-    </message>
-    <message>
-        <location filename="../SampleDownloader/Directory.cpp" line="212"/>
-        <source>Contents entries must have a valid type</source>
-        <translation>输入内容必须具有有效的类型</translation>
-    </message>
-    <message>
-        <location filename="../SampleDownloader/Directory.cpp" line="218"/>
-        <source>Contents entries must have a valid name</source>
-        <translation>输入内容必须具有有效的名称</translation>
-    </message>
-    <message>
-        <location filename="../SampleDownloader/Directory.cpp" line="224"/>
-        <source>Contents entries must be JSON objects</source>
-        <translation>输入内容必须是JSON对象</translation>
-    </message>
-    <message>
-        <location filename="../SampleDownloader/Directory.cpp" line="231"/>
-        <source>Contents directories must be relative and within &quot;%1&quot;</source>
-        <translation>目录内容必须是相对的并且在 &quot;%1&quot;</translation>
-    </message>
-    <message>
-        <location filename="../SampleDownloader/Directory.cpp" line="298"/>
-        <source>Network Error</source>
-        <translation>网络错误</translation>
-    </message>
-    <message>
-        <location filename="../SampleDownloader/Directory.cpp" line="298"/>
-        <source>Authentication required</source>
-        <translation>需要认证</translation>
     </message>
 </context>
 <context>
@@ -4346,16 +4316,6 @@ Click by right mouse&apos;s button sets JTDX internal time back to system time.&
         <translation>保存参考频谱</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5393"/>
-        <source>&amp;Download Samples ...</source>
-        <translation>下载样本(&amp;D) ...</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="5396"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Download sample audio files demonstrating the various modes.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;下载演示各种模式的示例音频文件.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
         <location filename="../mainwindow.ui" line="5404"/>
         <source>T10</source>
         <translation></translation>
@@ -5327,6 +5287,597 @@ UDP 服务器 %2:%3</translation>
         <source>Tx watchdog expired</source>
         <translation>发射监管计时器已过期</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Band</source>
+        <translation>波段</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Contest</source>
+        <translation>竞赛</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Lit while a contest is selected on the Contest tab of the settings</source>
+        <translation>当设置的“竞赛”选项卡中选中了竞赛时点亮</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Preset</source>
+        <translation>预设</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>The FT8 decoding preset in force: 3 default, P best power, V best value, R recommended, E ensemble, B best results, M max effort, O most results; "Custom" when the controls match no preset - lit in the preset's menu colour</source>
+        <translation>当前生效的 FT8 解码预设：3 默认，P 最佳功率，V 最佳性价比，R 推荐，E 集成，B 最佳结果，M 最大投入，O 最多结果；当各项控件与任何预设都不匹配时显示“Custom”- 以该预设的菜单颜色点亮</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>S&amp;WL</source>
+        <translation>S&amp;WL</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>FT8/FT4 threads</source>
+        <translation>FT8/FT4 线程</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Presets</source>
+        <translation>预设</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>expert</source>
+        <translation>专家</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>RX</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>ensemble effort</source>
+        <translation>集成投入</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>TX background</source>
+        <translation>发射后台</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>effort</source>
+        <translation>投入</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>ensemble effort: the TOTAL member count reached in the idle time (the members above the RX count run; with none left the extras below run alone)</source>
+        <translation>集成投入：空闲时间内达到的成员总数（超过 RX 数量的成员会运行；若一个都不剩，下面的附加项将单独运行）</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>FT8/FT4 decode bandwidth</source>
+        <translation>FT8/FT4 解码带宽</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>About JTDX_contest</source>
+        <translation>关于 JTDX_contest</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Convert bit depth (32/16)</source>
+        <translation>转换位深 (32/16)</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Read a wav file, detect whether it is 32 or 16 bit, and save a converted copy with a _16 or _32 suffix. All embedded metadata is carried over.</source>
+        <translation>读取一个 wav 文件，判断它是 32 位还是 16 位，并保存带 _16 或 _32 后缀的转换副本。所有内嵌元数据都会保留。</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>JTDX_contest Web site</source>
+        <translation>JTDX_contest 网站</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>use low thresholds (1)</source>
+        <translation>使用低门限 (1)</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>OSD order 2 for every candidate (weakest signals, about 3x CPU)</source>
+        <translation>对每个候选使用 OSD 二阶（最弱信号，约 3 倍 CPU）</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>second slicing pass (2 or more threads, about 2x time)</source>
+        <translation>第二次切分遍历（2 个或更多线程，约 2 倍时间）</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>second slicing pass  (2 or more threads, about 2x time - FT4 needs it: 1715 messages with it, 1625 without)</source>
+        <translation>第二次切分遍历（2 个或更多线程，约 2 倍时间 - FT4 需要它：有它 1715 条消息，没有它 1625 条）</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>OSD order 2 for every candidate (weakest signals, about 2x CPU)</source>
+        <translation>对每个候选使用 OSD 二阶（最弱信号，约 2 倍 CPU）</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>alternate pass on the residual  (+16, 11% - dominated: 5 members give more for less)</source>
+        <translation>对残差的替代遍历（+16，11% - 处于劣势：5 个成员以更小代价带来更多）</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>off</source>
+        <translation>关闭</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>1 member</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>2 members</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>3 members</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>4 members</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>5 members</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>6 members</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>1 member   (+20, 13% of the budget at 8 threads)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>2 members  (+48, 18%)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>3 members  (+72, 23% - the knee of the curve)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>4 members  (+86, 28%)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>5 members  (+98, 33% - all that is worth taking)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>6 members  (+100, 39% - only 2 more than five)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>alternate-approach pass: 7 cycles + OSD order 2 on the subtracted band (2 or more threads)</source>
+        <translation>替代方法遍历：7 个周期 + 对相减后波段使用 OSD 二阶（2 个或更多线程）</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>budget auto: fill the reply time (~2.7 s) - more members when the band is quiet</source>
+        <translation>预算自动：填满应答时间（约 2.7 秒）- 波段空闲时使用更多成员</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>auto: 3 members with 12 or more threads, 2 from 6, 1 from 3</source>
+        <translation>自动：12 线程及以上为 3 个成员，6 起为 2 个，3 起为 1 个</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>1 member  (+7 msgs, +1.2 s at 12 threads on the benchmark)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>2 members  (+10, +2.3 s)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>3 members  (+13, +5.3 s)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>4 members  (+15, +7.9 s)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>5 members  (+16, +11.5 s - too slow for a 15 s period on this machine, for replays)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>auto: as many members as fit before the next decode (1 s margin)</source>
+        <translation>自动：在下一次解码之前能容纳多少成员就用多少（1 秒余量）</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>pipeline ensemble: SWL-4 + 1 member (8 or more threads) in the period, SWL-5 + alternate pass + ensemble in the TX background</source>
+        <translation>流水线集成：周期内 SWL-4 + 1 个成员（8 线程及以上），发射后台中 SWL-5 + 替代遍历 + 集成</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>TX background decoding: decode the period again in the decoder's idle time, with the settings below</source>
+        <translation>发射后台解码：用下面的设置，在解码器的空闲时间里再次解码该周期</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>SWL mode</source>
+        <translation>SWL 模式</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>minimum (0)</source>
+        <translation>最小 (0)</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>use low thresholds + subpass (2)</source>
+        <translation>使用低门限 + 子遍历 (2)</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>classic unit: the plain 6-cycle decode (standard thresholds) - what the old decoder still finds, about 0.5 s</source>
+        <translation>经典单元：普通的 6 周期解码（标准门限）- 旧解码器现在仍能找到的部分，约 0.5 秒</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>pipeline ensemble full: the same, TX background effort auto - every member sample, about 2 s more for the same result on every capture measured</source>
+        <translation>流水线集成完整版：内容相同，发射后台投入为自动 - 每个成员样本，在每份实测录音上多花约 2 秒得到相同结果</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>pipeline run: 5 cycles, sensitivity 2 in the period (the reply on time), SWL-5 + alternate pass + ensemble in the TX background</source>
+        <translation>流水线运行：周期内 5 个周期、灵敏度 2（应答准时），发射后台中 SWL-5 + 替代遍历 + 集成</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>100-3300 Hz</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>300-3300 Hz</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>50-3650 Hz</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Waterfall width (default)</source>
+        <translation>瀑布宽度（默认）</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>100-3200 Hz</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>100-3100 Hz</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>100-3000 Hz</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>200-3200 Hz</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>200-3100 Hz</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>200-3000 Hz</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>200-2800 Hz</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>200-2500 Hz</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>200-2400 Hz</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>0-5000 Hz (testing only)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>alternate pass on the residual, in the background</source>
+        <translation>对残差的替代遍历，在后台</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>OSD order 2 for every candidate, in the background (about 2x the background's CPU)</source>
+        <translation>对每个候选使用 OSD 二阶，在后台（约为后台 CPU 的 2 倍）</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>second slicing pass, in the background (2 or more threads)</source>
+        <translation>第二次切分遍历，在后台（2 个或更多线程）</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>standard (0): JTDX's candidate thresholds</source>
+        <translation>标准 (0)：JTDX 的候选门限</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>low thresholds (1): sync minimum 1.0 + sync quality 16  (+1.2 % on a sparse band for +20 % reply time; -1 on a crowded band)</source>
+        <translation>低门限 (1)：同步最小值 1.0 + 同步质量 16（空闲波段上 +1.2 %，代价是应答时间 +20 %；拥挤波段上 -1）</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>residual unit: every known decode subtracted, the threshold lowered to 0.8, decoded once more  (+13/-0 on the night hour, ~0.12 s of idle time; runs only while the background runs, i.e. ensemble effort above the RX count)</source>
+        <translation>残差单元：减去每个已知解码，将门限降到 0.8 后再解码一次（夜间时段 +13/-0，约 0.12 秒空闲时间；仅在后台运行时执行，即集成投入高于 RX 数量时）</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>budget auto: as many members as fit the reply deadline, from this band's measured cost (1.3 s; the rest run in the TX background)</source>
+        <translation>预算自动：根据本波段实测开销，在应答期限内能容纳多少成员就用多少（1.3 秒；其余在发射后台运行）</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>auto: by thread count - 6 members from 12 threads, 4 from 8, 3 from 6, 2 from 4, 1 from 3, none below</source>
+        <translation>自动：按线程数 - 12 线程起 6 个成员，8 起 4 个，6 起 3 个，4 起 2 个，3 起 1 个，低于此则没有</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>auto: by thread count - 6 from 12 threads, 4 from 8, 3 from 3 up, none below (the clock cuts what does not fit)</source>
+        <translation>自动：按线程数 - 12 线程起 6 个，8 起 4 个，3 及以上起 3 个，低于此则没有（时间会截去放不下的部分）</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>low thresholds (1): sync minimum 1.0 + sync quality 16, in the background (the residual unit scales from it)</source>
+        <translation>低门限 (1)：同步最小值 1.0 + 同步质量 16，在后台（残差单元据此缩放）</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>low: the virtual candidate at the QSO frequency only from the last message received</source>
+        <translation>低：仅根据最后收到的消息在 QSO 频率上生成虚拟候选</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>medium: also from the DT at which the DX call was last heard</source>
+        <translation>中：也根据最后一次听到 DX 呼号时的 DT</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>high: also a wider DT window and OSD depth 5 on it</source>
+        <translation>高：还包括更宽的 DT 窗口以及在其上的 OSD 深度 5</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>fast: the shallow decoder, nothing added</source>
+        <translation>快速：浅层解码器，不添加任何内容</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>default: deep, 4 subtraction passes  (1748 messages on the night hour, 0.12 s at reply time)</source>
+        <translation>默认：深度，4 次相减遍历（夜间时段 1748 条消息，应答时 0.12 秒）</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>background 3: three ensemble members in the TX window, nothing at reply time  (+4.5 %, 0.12 s)</source>
+        <translation>后台 3：发射窗口内 3 个集成成员，应答时不做任何处理（+4.5 %，0.12 秒）</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>background 6 with deep OSD, the alternate pass and the residual unit, all in the TX window, nothing at reply time  (+8.0 % on the night hour, +3.5 % on the day hour, 0.12 s; ~1 s of idle CPU a period)</source>
+        <translation>后台 6，含深度 OSD、替代遍历和残差单元，全部在发射窗口内，应答时不做任何处理（夜间时段 +8.0 %，日间时段 +3.5 %，0.12 秒；每周期约 1 秒空闲 CPU）</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>most at reply time: all six members in the period, and the background's extras - deep OSD, the alternate pass, the residual unit - in the TX window  (+7.9 % in total, +5.5 % at reply time, 0.55 s mean, 1.3 s worst period)</source>
+        <translation>应答时最多：周期内全部 6 个成员，后台的附加项 - 深度 OSD、替代遍历、残差单元 - 放在发射窗口（合计 +7.9 %，应答时 +5.5 %，平均 0.55 秒，最差周期 1.3 秒）</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>max effort: as many members as fit the 1.3 s RX budget (six here) + low thresholds at reply time, the background's extras + low thresholds in the TX window until 0.5 s before it ends  (+8.4 % in total, +6.4 % at reply time, 0.69 s mean, 1.4 s worst period)</source>
+        <translation>最大投入：在 1.3 秒的 RX 预算内能容纳多少成员就用多少（此处为 6 个）+ 应答时使用低门限，后台附加项 + 发射窗口内使用低门限直到其结束前 0.5 秒（合计 +8.4 %，应答时 +6.4 %，平均 0.69 秒，最差周期 1.4 秒）</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>default: 3 cycles</source>
+        <translation>默认：3 个周期</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>maximum efficiency: 5 cycles, decoder sensitivity 2 - the most decodes per second of decoding (no member, no passes)</source>
+        <translation>最高效率：5 个周期，解码器灵敏度 2 - 每秒解码所得的解码数量最多（无成员，无遍历）</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>maximum decodes: 5 cycles, decoder sensitivity 2 (low thresholds + subpass), + 1 ensemble member with 8 or more threads</source>
+        <translation>最多解码：5 个周期，解码器灵敏度 2（低门限 + 子遍历），8 线程及以上再加 1 个集成成员</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>pipeline max decodes light: maximum decodes at reply time, then a ~6 s TX background - the plain 6-cycle pass, 2 members, the residual pass</source>
+        <translation>流水线最多解码（轻量）：应答时最多解码，随后约 6 秒的发射后台 - 普通的 6 周期遍历、2 个成员、残差遍历</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Support JTDX_contest on Ko-fi</source>
+        <translation>在 Ko-fi 上支持 JTDX_contest</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Contest multipliers x QSO points = score</source>
+        <translation>竞赛乘数 × QSO 分数 = 总分</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>cannot be opened</source>
+        <translation>无法打开</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>is not a mono 16 or 32 bit signed integer wav (%1 bit, %2 channel(s))</source>
+        <translation>不是单声道 16 位或 32 位有符号整数 wav（%1 位，%2 声道）</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>could not be written to %1</source>
+        <translation>无法写入到 %1</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Convert bit depth</source>
+        <translation>转换位深</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>WSJT Files (*.wav)</source>
+        <translation>WSJT 文件 (*.wav)</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Save converted file</source>
+        <translation>保存转换后的文件</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Cannot convert</source>
+        <translation>无法转换</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Saved %1 bit copy as %2</source>
+        <translation>%1 位副本已保存为 %2</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>%1 of %2 files converted</source>
+        <translation>已转换 %2 个文件中的 %1 个</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>%1 skipped, the converted file already exists</source>
+        <translation>已跳过 %1，转换后的文件已存在</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>%1 failed:</source>
+        <translation>%1 失败：</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>&lt;table cellspacing=1&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F1       &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Online User's Guide&lt;/td&gt;&lt;td&gt;&lt;b&gt;Ctrl+F1  &lt;/b&gt;&lt;/td&gt;&lt;td&gt;About JTDX_contest&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F2       &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Open configuration window&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F3       &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Display keyboard shortcuts&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F4       &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Clear DX Call/Grid and Tx messages&lt;/td&gt;&lt;td&gt;&lt;b&gt;Alt+F4   &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Exit program&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F5       &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Display special mouse commands&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F6       &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Open next file in directory&lt;/td&gt;&lt;td&gt;&lt;b&gt;Shift+F6 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Decode all remaining files in directory&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F7       &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Open log by assigned in the operating system viewer&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F11      &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Move Rx frequency down 1 Hz&lt;/td&gt;&lt;td&gt;&lt;b&gt;Ctrl+F11 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Move Rx and Tx frequencies down 1 Hz&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F12      &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Move Rx frequency up 1 Hz&lt;/td&gt;&lt;td&gt;&lt;b&gt;Ctrl+F12 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Move Rx and Tx frequencies up 1 Hz&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+1-6  &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Set now transmission to this number on Tab 1&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Ctl+1-6  &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Set next transmission to this number on Tab 1&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+Ctrl+A    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Clear wanted callsign list&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+B/C  &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Switch to FT8/FT4 mode&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+D    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Decode again at QSO frequency&lt;/td&gt;&lt;td&gt;&lt;b&gt;Shift+D  &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Full decode (both windows)&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+E    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Erase&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+F    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Toggle bypass all text filters&lt;/td&gt;&lt;td&gt;&lt;b&gt;Ctrl+F   &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Edit the free text message box&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+G    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Generate standard messages&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+H    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Halt Tx&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Ctrl+L   &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Lookup callsign in database, generate standard messages&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+M    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Monitor&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+N    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Enable Tx&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+Q    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Log QSO&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+S    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Stop monitoring&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+T    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Tune&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+V    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Save the most recently completed *.wav file&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+Z    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Filter, this shortcut is being supported in main UI and widegraph UI&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Esc    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Halt Tx&lt;/td&gt;&lt;/tr&gt;
+&lt;/table&gt;</source>
+        <translation>&lt;table cellspacing=1&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F1       &lt;/b&gt;&lt;/td&gt;&lt;td&gt;在线使用指南&lt;/td&gt;&lt;td&gt;&lt;b&gt;Ctrl+F1  &lt;/b&gt;&lt;/td&gt;&lt;td&gt;About JTDX_contest&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F2       &lt;/b&gt;&lt;/td&gt;&lt;td&gt;打开配置视窗&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F3       &lt;/b&gt;&lt;/td&gt;&lt;td&gt;显示键盘快捷方式&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F4       &lt;/b&gt;&lt;/td&gt;&lt;td&gt;清除 DX 呼叫/网格和 Tx 信息&lt;/td&gt;&lt;td&gt;&lt;b&gt;Alt+F4   &lt;/b&gt;&lt;/td&gt;&lt;td&gt;退出程式&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F5       &lt;/b&gt;&lt;/td&gt;&lt;td&gt;显示特殊的滑鼠命令&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F6       &lt;/b&gt;&lt;/td&gt;&lt;td&gt;在目录中打开下一个档&lt;/td&gt;&lt;td&gt;&lt;b&gt;Shift+F6 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;解码目录中的所有剩余文档&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F7       &lt;/b&gt;&lt;/td&gt;&lt;td&gt;在操作系统分配的查看器中打开日志&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F11      &lt;/b&gt;&lt;/td&gt;&lt;td&gt;移动Rx频率下降1赫兹&lt;/td&gt;&lt;td&gt;&lt;b&gt;Ctrl+F11 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;移动Rx和Tx频率下降1赫兹&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F12      &lt;/b&gt;&lt;/td&gt;&lt;td&gt;移动Rx频率上升1 赫兹&lt;/td&gt;&lt;td&gt;&lt;b&gt;Ctrl+F12 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;移动Rx和Tx频率上升1 赫兹&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+1-6  &lt;/b&gt;&lt;/td&gt;&lt;td&gt;立即在 Tab 1 上设置传输到此号码&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Ctl+1-6  &lt;/b&gt;&lt;/td&gt;&lt;td&gt;在Tab 1上将下一个传输到此号码&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+Ctrl+A    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;清除渴望清单&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+B/C  &lt;/b&gt;&lt;/td&gt;&lt;td&gt;切换到 FT8/FT4 模式&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+D    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;在QSO频率再次解码&lt;/td&gt;&lt;td&gt;&lt;b&gt;Shift+D  &lt;/b&gt;&lt;/td&gt;&lt;td&gt;完全解码 (两个视窗)&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+E    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;擦除&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+F    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;切换绕过所有文本过滤器&lt;/td&gt;&lt;td&gt;&lt;b&gt;Ctrl+F   &lt;/b&gt;&lt;/td&gt;&lt;td&gt;编辑自定义文本信息框&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+G    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;生成标准信息&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+H    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;停止 Tx&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Ctrl+L   &lt;/b&gt;&lt;/td&gt;&lt;td&gt;查找资料库中的呼号, 生成标准信息&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+M    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;监听&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+N    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;启用发射&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+Q    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;记录通联&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+S    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;停止监听&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+T    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;调谐&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+V    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;保存最近完成的*.wav 文档&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+Z    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;过滤, 此快捷方式在主窗口和宽图窗口中支持&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Esc    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;停止发射&lt;/td&gt;&lt;/tr&gt;
+&lt;/table&gt;</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Are You sure to change UI Language to English? JTDX will close, please start it again.</source>
+        <translation>确定要将用户界面语言更改为简体中文吗? JTDX 将关闭，请重新启动它。</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>
@@ -5639,94 +6190,6 @@ Please verify the correct directory name was given.</source>
         <location filename="../WFPalette.cpp" line="258"/>
         <source>Error writing waterfall palette file &quot;%1&quot;: %2.</source>
         <translation>读取瀑布调色板文件时错误 &quot;%1&quot;: %2.</translation>
-    </message>
-</context>
-<context>
-    <name>RemoteFile</name>
-    <message>
-        <location filename="../SampleDownloader/RemoteFile.cpp" line="37"/>
-        <location filename="../SampleDownloader/RemoteFile.cpp" line="99"/>
-        <location filename="../SampleDownloader/RemoteFile.cpp" line="204"/>
-        <location filename="../SampleDownloader/RemoteFile.cpp" line="244"/>
-        <location filename="../SampleDownloader/RemoteFile.cpp" line="254"/>
-        <location filename="../SampleDownloader/RemoteFile.cpp" line="262"/>
-        <source>File System Error</source>
-        <translation>文件系统错误</translation>
-    </message>
-    <message>
-        <location filename="../SampleDownloader/RemoteFile.cpp" line="38"/>
-        <source>Cannot rename file:
-&quot;%1&quot;
-to: &quot;%2&quot;
-Error(%3): %4</source>
-        <translation>无法重命名文件:
-&quot;%1&quot;
-到: &quot;%2&quot;
-错误(%3): %4</translation>
-    </message>
-    <message>
-        <location filename="../SampleDownloader/RemoteFile.cpp" line="100"/>
-        <source>Cannot delete file:
-&quot;%1&quot;</source>
-        <translation>无法删除文件:
-&quot;%1&quot;</translation>
-    </message>
-    <message>
-        <location filename="../SampleDownloader/RemoteFile.cpp" line="172"/>
-        <location filename="../SampleDownloader/RemoteFile.cpp" line="181"/>
-        <location filename="../SampleDownloader/RemoteFile.cpp" line="196"/>
-        <source>Network Error</source>
-        <translation>网络错误</translation>
-    </message>
-    <message>
-        <location filename="../SampleDownloader/RemoteFile.cpp" line="173"/>
-        <source>Too many redirects: %1</source>
-        <translation>太多重定向: %1</translation>
-    </message>
-    <message>
-        <location filename="../SampleDownloader/RemoteFile.cpp" line="182"/>
-        <source>Redirect not followed: %1</source>
-        <translation>未遵循重定向:%1</translation>
-    </message>
-    <message>
-        <location filename="../SampleDownloader/RemoteFile.cpp" line="205"/>
-        <source>Cannot commit changes to:
-&quot;%1&quot;</source>
-        <translation>无法将更改提交给:
-&quot;%1&quot;</translation>
-    </message>
-    <message>
-        <location filename="../SampleDownloader/RemoteFile.cpp" line="245"/>
-        <source>Cannot open file:
-&quot;%1&quot;
-Error(%2): %3</source>
-        <translation>无法打开文件:
-&quot;%1&quot;
-错误(%2): %3</translation>
-    </message>
-    <message>
-        <location filename="../SampleDownloader/RemoteFile.cpp" line="255"/>
-        <source>Cannot make path:
-&quot;%1&quot;</source>
-        <translation>无法创建路径:
-&quot;%1&quot;</translation>
-    </message>
-    <message>
-        <location filename="../SampleDownloader/RemoteFile.cpp" line="263"/>
-        <source>Cannot write to file:
-&quot;%1&quot;
-Error(%2): %3</source>
-        <translation>无法写入文件:
-&quot;%1&quot;
-错误(%2): %3</translation>
-    </message>
-</context>
-<context>
-    <name>SampleDownloader::impl</name>
-    <message>
-        <location filename="../SampleDownloader.cpp" line="99"/>
-        <source>Download Samples</source>
-        <translation>下载样本</translation>
     </message>
 </context>
 <context>
@@ -8920,6 +9383,81 @@ soundcard changes</source>
         <location filename="../Configuration.ui"/>
         <source>Contest</source>
         <translation>竞赛</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Highlight messages with grid squares which do not exist in the wsjtx_log.adi log file.&lt;/p&gt;&lt;p&gt;With &lt;b&gt;WW Digi contest&lt;/b&gt; enabled in the Misc menu these settings match on the 2 character grid field instead of the 4 character square, because the field is the contest multiplier, and a new field then outranks a new DXCC or zone in the highlighting.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;高亮显示网格不在日志文件 wsjtx_log.adi 中的消息。&lt;/p&gt;&lt;p&gt;在“杂项”菜单中启用 &lt;b&gt;WW Digi 竞赛&lt;/b&gt; 后，这些设置将作用于 2 字符的网格字段，而不是 4 字符的网格，因为该字段是竞赛的乘数，此时新字段在高亮显示中优先于新的 DXCC 或分区。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Restore the recommended notification colors for &lt;b&gt;both&lt;/b&gt; the light and the dark style.&lt;/p&gt;&lt;p&gt;Every text color has been checked against every background it can appear on, so nothing ends up unreadable - a message calling you on a new DXCC row, for instance.&lt;/p&gt;&lt;p&gt;Takes effect when the settings are accepted.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;为浅色和深色 &lt;b&gt;两种&lt;/b&gt; 风格恢复推荐的通知颜色。&lt;/p&gt;&lt;p&gt;每种文字颜色都已在它可能出现的每种背景上做过检查，因此不会出现无法阅读的情况 - 例如在新 DXCC 行上呼叫你的消息。&lt;/p&gt;&lt;p&gt;在设置被接受时生效。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Recommended colors</source>
+        <translation>推荐颜色</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Contest and event modes. Only one may be active at a time. Modes shown greyed out are declared but not implemented in this build.</source>
+        <translation>竞赛与活动模式。同一时间只能启用一个。显示为灰色的模式已声明，但在此版本中尚未实现。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>WW Digi contest</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;World Wide Digi DX Contest. The exchange is the 4 character grid instead of a signal report, and the multiplier is the 2 character grid field.&lt;/p&gt;&lt;p&gt;While this is selected the grid highlighting below is set to per band on the grid field, and cannot be changed by hand. Your own settings are restored when you switch back to None.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;World Wide Digi DX Contest。交换内容是 4 字符网格而不是信号报告，乘数是 2 字符的网格字段。&lt;/p&gt;&lt;p&gt;选中此项期间，下面的网格高亮将按波段固定作用于网格字段，且无法手动更改。切换回“无”时会恢复你自己的设置。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>NA VHF contest</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>EU VHF contest</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>ARRL Field Day</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>ARRL RTTY Roundup</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>ARRL Digi contest</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Contest working frequencies</source>
+        <translation>竞赛工作频率</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>The frequencies offered by the band selector while a contest is running. Only FT8 and FT4 are accepted. Right click the table to insert, delete, load, save, merge or reset. The everyday list on the Frequencies tab is left alone.</source>
+        <translation>竞赛进行期间波段选择器提供的频率。仅接受 FT8 和 FT4。右键单击表格可插入、删除、载入、保存、合并或重置。“频率”选项卡中的日常列表不会被改动。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Contest &amp;defaults</source>
+        <translation>竞赛默认值(&amp;D)</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Replace the table with the published default frequencies of the selected contest.</source>
+        <translation>用所选竞赛公布的默认频率替换该表格。</translation>
     </message>
 </context>
 <context>

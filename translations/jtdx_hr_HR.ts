@@ -46,6 +46,11 @@
         <source>OK</source>
         <translation>Potvrdi</translation>
     </message>
+    <message>
+        <location filename="../about.ui"/>
+        <source>About JTDX_contest</source>
+        <translation>O programu JTDX_contest</translation>
+    </message>
 </context>
 <context>
     <name>CallsignDialog</name>
@@ -318,6 +323,56 @@ Format:
         <location filename="../Configuration.cpp" line="6028"/>
         <source>Rig failure</source>
         <translation>Greška uređaja</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Contest defaults</source>
+        <translation>Zadane postavke natjecanja</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>No default frequencies are defined for the selected contest.</source>
+        <translation>Za odabrano natjecanje nisu definirane zadane frekvencije.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Are you sure you want to discard your current contest frequencies and replace them with the selected contest's defaults?</source>
+        <translation>Jeste li sigurni da želite odbaciti trenutne frekvencije natjecanja i zamijeniti ih zadanima za odabrano natjecanje?</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Load Contest Frequencies</source>
+        <translation>Učitaj frekvencije natjecanja</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Replace Contest Frequencies</source>
+        <translation>Zamijeni frekvencije natjecanja</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Are you sure you want to discard your current contest frequencies and replace them with the loaded ones?</source>
+        <translation>Jeste li sigurni da želite odbaciti trenutne frekvencije natjecanja i zamijeniti ih učitanima?</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Save Contest Frequencies</source>
+        <translation>Spremi frekvencije natjecanja</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Merge Contest Frequencies</source>
+        <translation>Spoji frekvencije natjecanja</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Reset Contest Frequencies</source>
+        <translation>Vrati frekvencije natjecanja</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Are you sure you want to discard your current contest frequencies and replace them with the FT8 and FT4 entries from the working frequencies?</source>
+        <translation>Jeste li sigurni da želite odbaciti trenutne frekvencije natjecanja i zamijeniti ih unosima FT8 i FT4 iz radnih frekvencija?</translation>
     </message>
 </context>
 <context>
@@ -2242,91 +2297,6 @@ Format:
         <location filename="../WSPRBandHopping.cpp" line="110"/>
         <source>Gray time:</source>
         <translation>Vrijeme sive zone:</translation>
-    </message>
-</context>
-<context>
-    <name>Directory</name>
-    <message>
-        <location filename="../SampleDownloader/Directory.cpp" line="111"/>
-        <location filename="../SampleDownloader/Directory.cpp" line="187"/>
-        <source>URL Error</source>
-        <translation>URL greška</translation>
-    </message>
-    <message>
-        <location filename="../SampleDownloader/Directory.cpp" line="112"/>
-        <location filename="../SampleDownloader/Directory.cpp" line="188"/>
-        <source>Invalid URL:
-&quot;%1&quot;</source>
-        <translation>Neispravna poveznica:
-&quot;%1&quot;</translation>
-    </message>
-    <message>
-        <location filename="../SampleDownloader/Directory.cpp" line="130"/>
-        <location filename="../SampleDownloader/Directory.cpp" line="137"/>
-        <location filename="../SampleDownloader/Directory.cpp" line="205"/>
-        <location filename="../SampleDownloader/Directory.cpp" line="211"/>
-        <location filename="../SampleDownloader/Directory.cpp" line="217"/>
-        <location filename="../SampleDownloader/Directory.cpp" line="223"/>
-        <location filename="../SampleDownloader/Directory.cpp" line="230"/>
-        <source>JSON Error</source>
-        <translation>JSON Greška</translation>
-    </message>
-    <message>
-        <location filename="../SampleDownloader/Directory.cpp" line="131"/>
-        <source>Contents file syntax error %1 at character offset %2</source>
-        <translation>Pogreška sintakse datoteke %1 odstupanje kod znaka %2</translation>
-    </message>
-    <message>
-        <location filename="../SampleDownloader/Directory.cpp" line="138"/>
-        <source>Contents file top level must be a JSON array</source>
-        <translation>Najviša razina datoteke sadržaja mora biti JSON niz</translation>
-    </message>
-    <message>
-        <location filename="../SampleDownloader/Directory.cpp" line="149"/>
-        <source>File System Error</source>
-        <translation>Pogreška datotečnog sustava</translation>
-    </message>
-    <message>
-        <location filename="../SampleDownloader/Directory.cpp" line="150"/>
-        <source>Failed to open &quot;%1&quot;
-Error: %2 - %3</source>
-        <translation>Otvaranje nije uspjelo &quot;%1&quot;
-Pogreška: %2 - %3</translation>
-    </message>
-    <message>
-        <location filename="../SampleDownloader/Directory.cpp" line="206"/>
-        <source>Contents entries must be a JSON array</source>
-        <translation>Unosi u sadržaju moraju biti JSON niz</translation>
-    </message>
-    <message>
-        <location filename="../SampleDownloader/Directory.cpp" line="212"/>
-        <source>Contents entries must have a valid type</source>
-        <translation>Uneseni sadržaj mora biti valjane vrste</translation>
-    </message>
-    <message>
-        <location filename="../SampleDownloader/Directory.cpp" line="218"/>
-        <source>Contents entries must have a valid name</source>
-        <translation>Unosi u sadržaju moraju imati valjano ime</translation>
-    </message>
-    <message>
-        <location filename="../SampleDownloader/Directory.cpp" line="224"/>
-        <source>Contents entries must be JSON objects</source>
-        <translation>Unosi u sadržaju moraju biti JSON objekti</translation>
-    </message>
-    <message>
-        <location filename="../SampleDownloader/Directory.cpp" line="231"/>
-        <source>Contents directories must be relative and within &quot;%1&quot;</source>
-        <translation>Sadržaja mapa mora biti relativni i unutar njih&quot;%1&quot;</translation>
-    </message>
-    <message>
-        <location filename="../SampleDownloader/Directory.cpp" line="298"/>
-        <source>Network Error</source>
-        <translation>Greška Mreže</translation>
-    </message>
-    <message>
-        <location filename="../SampleDownloader/Directory.cpp" line="298"/>
-        <source>Authentication required</source>
-        <translation>Potrebna provjera</translation>
     </message>
 </context>
 <context>
@@ -4332,16 +4302,6 @@ popis. Popis se može održavati u Postavkama (F2).</translation>
         <translation>Spremite referentni spektar</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5393"/>
-        <source>&amp;Download Samples ...</source>
-        <translation>&amp;Preuzmi Primjere ...</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="5396"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Download sample audio files demonstrating the various modes.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Preuzmite primjere audio datoteka koje prikazuju različite vrste rada.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
         <location filename="../mainwindow.ui" line="5404"/>
         <source>T10</source>
         <translation></translation>
@@ -5315,6 +5275,597 @@ UDP server %2:%3</translation>
         <source>WD %1m</source>
         <translation>WD %1m</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Band</source>
+        <translation>Pojas</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Contest</source>
+        <translation>Natjecanje</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Lit while a contest is selected on the Contest tab of the settings</source>
+        <translation>Svijetli dok je natjecanje odabrano na kartici Natjecanje u postavkama</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Preset</source>
+        <translation>Predložak</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>The FT8 decoding preset in force: 3 default, P best power, V best value, R recommended, E ensemble, B best results, M max effort, O most results; "Custom" when the controls match no preset - lit in the preset's menu colour</source>
+        <translation>Važeći predložak dekodiranja FT8: 3 zadano, P najbolja snaga, V najbolji omjer, R preporučeno, E ansambl, B najbolji rezultati, M najveći napor, O najviše rezultata; „Custom” kada kontrole ne odgovaraju nijednom predlošku - svijetli bojom predloška u izborniku</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>S&amp;WL</source>
+        <translation>S&amp;WL</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>FT8/FT4 threads</source>
+        <translation>FT8/FT4 dretve</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Presets</source>
+        <translation>Predlošci</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>expert</source>
+        <translation>stručnjak</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>RX</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>ensemble effort</source>
+        <translation>napor ansambla</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>TX background</source>
+        <translation>Pozadina odašiljanja</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>effort</source>
+        <translation>napor</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>ensemble effort: the TOTAL member count reached in the idle time (the members above the RX count run; with none left the extras below run alone)</source>
+        <translation>napor ansambla: UKUPAN broj članova postignut u slobodnom vremenu (članovi iznad broja RX se izvode; ako ih ne preostane, dodatni ispod se izvode sami)</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>FT8/FT4 decode bandwidth</source>
+        <translation>Širina pojasa dekodiranja FT8/FT4</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>About JTDX_contest</source>
+        <translation>O programu JTDX_contest</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Convert bit depth (32/16)</source>
+        <translation>Pretvori dubinu bitova (32/16)</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Read a wav file, detect whether it is 32 or 16 bit, and save a converted copy with a _16 or _32 suffix. All embedded metadata is carried over.</source>
+        <translation>Čita wav datoteku, otkriva je li 32- ili 16-bitna i sprema pretvorenu kopiju s nastavkom _16 ili _32. Svi ugrađeni metapodaci se prenose.</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>JTDX_contest Web site</source>
+        <translation>Web stranica JTDX_contest</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>use low thresholds (1)</source>
+        <translation>koristi niske pragove (1)</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>OSD order 2 for every candidate (weakest signals, about 3x CPU)</source>
+        <translation>OSD reda 2 za svakog kandidata (najslabiji signali, oko 3x procesora)</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>second slicing pass (2 or more threads, about 2x time)</source>
+        <translation>drugi prolaz podjele (2 ili više dretvi, oko 2x vremena)</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>second slicing pass  (2 or more threads, about 2x time - FT4 needs it: 1715 messages with it, 1625 without)</source>
+        <translation>drugi prolaz podjele  (2 ili više dretvi, oko 2x vremena - FT4 ga treba: 1715 poruka s njim, 1625 bez njega)</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>OSD order 2 for every candidate (weakest signals, about 2x CPU)</source>
+        <translation>OSD reda 2 za svakog kandidata (najslabiji signali, oko 2x procesora)</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>alternate pass on the residual  (+16, 11% - dominated: 5 members give more for less)</source>
+        <translation>alternativni prolaz po ostatku  (+16, 11% - lošiji: 5 članova daje više uz manje)</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>off</source>
+        <translation>isključeno</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>1 member</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>2 members</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>3 members</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>4 members</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>5 members</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>6 members</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>1 member   (+20, 13% of the budget at 8 threads)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>2 members  (+48, 18%)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>3 members  (+72, 23% - the knee of the curve)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>4 members  (+86, 28%)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>5 members  (+98, 33% - all that is worth taking)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>6 members  (+100, 39% - only 2 more than five)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>alternate-approach pass: 7 cycles + OSD order 2 on the subtracted band (2 or more threads)</source>
+        <translation>prolaz alternativnim pristupom: 7 ciklusa + OSD reda 2 na oduzetom pojasu (2 ili više dretvi)</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>budget auto: fill the reply time (~2.7 s) - more members when the band is quiet</source>
+        <translation>proračun auto: popuniti vrijeme odgovora (~2,7 s) - više članova kada je pojas miran</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>auto: 3 members with 12 or more threads, 2 from 6, 1 from 3</source>
+        <translation>auto: 3 člana s 12 ili više dretvi, 2 od 6, 1 od 3</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>1 member  (+7 msgs, +1.2 s at 12 threads on the benchmark)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>2 members  (+10, +2.3 s)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>3 members  (+13, +5.3 s)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>4 members  (+15, +7.9 s)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>5 members  (+16, +11.5 s - too slow for a 15 s period on this machine, for replays)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>auto: as many members as fit before the next decode (1 s margin)</source>
+        <translation>auto: onoliko članova koliko stane prije sljedećeg dekodiranja (1 s rezerve)</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>pipeline ensemble: SWL-4 + 1 member (8 or more threads) in the period, SWL-5 + alternate pass + ensemble in the TX background</source>
+        <translation>cjevovodni ansambl: SWL-4 + 1 član (8 ili više dretvi) u periodu, SWL-5 + alternativni prolaz + ansambl u pozadini odašiljanja</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>TX background decoding: decode the period again in the decoder's idle time, with the settings below</source>
+        <translation>dekodiranje u pozadini odašiljanja: ponovno dekodirati period u slobodnom vremenu dekodera, s postavkama ispod</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>SWL mode</source>
+        <translation>SWL način</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>minimum (0)</source>
+        <translation>najmanja (0)</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>use low thresholds + subpass (2)</source>
+        <translation>koristi niske pragove + podprolaz (2)</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>classic unit: the plain 6-cycle decode (standard thresholds) - what the old decoder still finds, about 0.5 s</source>
+        <translation>klasična jedinica: obično dekodiranje sa 6 ciklusa (standardni pragovi) - ono što stari dekoder još uvijek pronalazi, oko 0,5 s</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>pipeline ensemble full: the same, TX background effort auto - every member sample, about 2 s more for the same result on every capture measured</source>
+        <translation>cjevovodni ansambl potpun: isto to, napor pozadine odašiljanja auto - svaki uzorak člana, oko 2 s više za isti rezultat na svakom izmjerenom snimku</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>pipeline run: 5 cycles, sensitivity 2 in the period (the reply on time), SWL-5 + alternate pass + ensemble in the TX background</source>
+        <translation>cjevovodno izvođenje: 5 ciklusa, osjetljivost 2 u periodu (odgovor na vrijeme), SWL-5 + alternativni prolaz + ansambl u pozadini odašiljanja</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>100-3300 Hz</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>300-3300 Hz</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>50-3650 Hz</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Waterfall width (default)</source>
+        <translation>Širina vodopada (zadana)</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>100-3200 Hz</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>100-3100 Hz</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>100-3000 Hz</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>200-3200 Hz</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>200-3100 Hz</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>200-3000 Hz</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>200-2800 Hz</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>200-2500 Hz</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>200-2400 Hz</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>0-5000 Hz (testing only)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>alternate pass on the residual, in the background</source>
+        <translation>alternativni prolaz po ostatku, u pozadini</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>OSD order 2 for every candidate, in the background (about 2x the background's CPU)</source>
+        <translation>OSD reda 2 za svakog kandidata, u pozadini (oko 2x procesora pozadine)</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>second slicing pass, in the background (2 or more threads)</source>
+        <translation>drugi prolaz podjele, u pozadini (2 ili više dretvi)</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>standard (0): JTDX's candidate thresholds</source>
+        <translation>standardni (0): pragovi kandidata JTDX-a</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>low thresholds (1): sync minimum 1.0 + sync quality 16  (+1.2 % on a sparse band for +20 % reply time; -1 on a crowded band)</source>
+        <translation>niski pragovi (1): najmanja sinkronizacija 1.0 + kvaliteta sinkronizacije 16  (+1,2 % na rijetkom pojasu uz +20 % vremena odgovora; -1 na prepunom pojasu)</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>residual unit: every known decode subtracted, the threshold lowered to 0.8, decoded once more  (+13/-0 on the night hour, ~0.12 s of idle time; runs only while the background runs, i.e. ensemble effort above the RX count)</source>
+        <translation>jedinica ostatka: svako poznato dekodiranje se oduzima, prag se spušta na 0.8 i dekodira se još jednom  (+13/-0 u noćnom satu, ~0,12 s slobodnog vremena; radi samo dok radi pozadina, tj. uz napor ansambla iznad broja RX)</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>budget auto: as many members as fit the reply deadline, from this band's measured cost (1.3 s; the rest run in the TX background)</source>
+        <translation>proračun auto: onoliko članova koliko stane u rok odgovora, prema izmjerenom trošku ovog pojasa (1,3 s; ostali se izvode u pozadini odašiljanja)</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>auto: by thread count - 6 members from 12 threads, 4 from 8, 3 from 6, 2 from 4, 1 from 3, none below</source>
+        <translation>auto: prema broju dretvi - 6 članova od 12 dretvi, 4 od 8, 3 od 6, 2 od 4, 1 od 3, ispod nijedan</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>auto: by thread count - 6 from 12 threads, 4 from 8, 3 from 3 up, none below (the clock cuts what does not fit)</source>
+        <translation>auto: prema broju dretvi - 6 od 12 dretvi, 4 od 8, 3 od 3 naviše, ispod nijedan (sat odsijeca ono što ne stane)</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>low thresholds (1): sync minimum 1.0 + sync quality 16, in the background (the residual unit scales from it)</source>
+        <translation>niski pragovi (1): najmanja sinkronizacija 1.0 + kvaliteta sinkronizacije 16, u pozadini (jedinica ostatka se skalira prema njima)</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>low: the virtual candidate at the QSO frequency only from the last message received</source>
+        <translation>nisko: virtualni kandidat na frekvenciji QSO-a samo iz posljednje primljene poruke</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>medium: also from the DT at which the DX call was last heard</source>
+        <translation>srednje: također iz DT-a na kojem je DX pozivni znak zadnji put čut</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>high: also a wider DT window and OSD depth 5 on it</source>
+        <translation>visoko: također šire DT prozor i OSD dubina 5 na njemu</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>fast: the shallow decoder, nothing added</source>
+        <translation>brzo: plitki dekoder, bez dodataka</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>default: deep, 4 subtraction passes  (1748 messages on the night hour, 0.12 s at reply time)</source>
+        <translation>zadano: duboko, 4 prolaza oduzimanja  (1748 poruka u noćnom satu, 0,12 s u vremenu odgovora)</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>background 3: three ensemble members in the TX window, nothing at reply time  (+4.5 %, 0.12 s)</source>
+        <translation>pozadina 3: tri člana ansambla u prozoru odašiljanja, ništa u vremenu odgovora  (+4,5 %, 0,12 s)</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>background 6 with deep OSD, the alternate pass and the residual unit, all in the TX window, nothing at reply time  (+8.0 % on the night hour, +3.5 % on the day hour, 0.12 s; ~1 s of idle CPU a period)</source>
+        <translation>pozadina 6 s dubokim OSD-om, alternativnim prolazom i jedinicom ostatka, sve u prozoru odašiljanja, ništa u vremenu odgovora  (+8,0 % u noćnom satu, +3,5 % u dnevnom satu, 0,12 s; ~1 s slobodnog procesora po periodu)</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>most at reply time: all six members in the period, and the background's extras - deep OSD, the alternate pass, the residual unit - in the TX window  (+7.9 % in total, +5.5 % at reply time, 0.55 s mean, 1.3 s worst period)</source>
+        <translation>najviše u vremenu odgovora: svih šest članova u periodu, a dodaci pozadine - duboki OSD, alternativni prolaz, jedinica ostatka - u prozoru odašiljanja  (+7,9 % ukupno, +5,5 % u vremenu odgovora, 0,55 s prosječno, 1,3 s najgori period)</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>max effort: as many members as fit the 1.3 s RX budget (six here) + low thresholds at reply time, the background's extras + low thresholds in the TX window until 0.5 s before it ends  (+8.4 % in total, +6.4 % at reply time, 0.69 s mean, 1.4 s worst period)</source>
+        <translation>najveći napor: onoliko članova koliko stane u RX proračun od 1,3 s (ovdje šest) + niski pragovi u vremenu odgovora, dodaci pozadine + niski pragovi u prozoru odašiljanja do 0,5 s prije njegova kraja  (+8,4 % ukupno, +6,4 % u vremenu odgovora, 0,69 s prosječno, 1,4 s najgori period)</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>default: 3 cycles</source>
+        <translation>zadano: 3 ciklusa</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>maximum efficiency: 5 cycles, decoder sensitivity 2 - the most decodes per second of decoding (no member, no passes)</source>
+        <translation>najveća učinkovitost: 5 ciklusa, osjetljivost dekodera 2 - najviše dekodiranja po sekundi dekodiranja (bez članova, bez prolaza)</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>maximum decodes: 5 cycles, decoder sensitivity 2 (low thresholds + subpass), + 1 ensemble member with 8 or more threads</source>
+        <translation>najviše dekodiranja: 5 ciklusa, osjetljivost dekodera 2 (niski pragovi + podprolaz), + 1 član ansambla s 8 ili više dretvi</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>pipeline max decodes light: maximum decodes at reply time, then a ~6 s TX background - the plain 6-cycle pass, 2 members, the residual pass</source>
+        <translation>cjevovod najviše dekodiranja lagani: najviše dekodiranja u vremenu odgovora, zatim pozadina odašiljanja od ~6 s - obični prolaz sa 6 ciklusa, 2 člana, prolaz po ostatku</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Support JTDX_contest on Ko-fi</source>
+        <translation>Podrži JTDX_contest na Ko-fi</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Contest multipliers x QSO points = score</source>
+        <translation>Množitelji natjecanja x bodovi QSO-a = rezultat</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>cannot be opened</source>
+        <translation>ne može se otvoriti</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>is not a mono 16 or 32 bit signed integer wav (%1 bit, %2 channel(s))</source>
+        <translation>nije mono wav sa 16- ili 32-bitnim cijelim brojevima s predznakom (%1 bita, %2 kanal(a))</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>could not be written to %1</source>
+        <translation>nije se moglo zapisati u %1</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Convert bit depth</source>
+        <translation>Pretvori dubinu bitova</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>WSJT Files (*.wav)</source>
+        <translation>WSJT datoteke (*.wav)</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Save converted file</source>
+        <translation>Spremi pretvorenu datoteku</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Cannot convert</source>
+        <translation>Nije moguće pretvoriti</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Saved %1 bit copy as %2</source>
+        <translation>%1-bitna kopija spremljena kao %2</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>%1 of %2 files converted</source>
+        <translation>Pretvoreno %1 od %2 datoteka</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>%1 skipped, the converted file already exists</source>
+        <translation>%1 preskočeno, pretvorena datoteka već postoji</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>%1 failed:</source>
+        <translation>%1 nije uspjelo:</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>&lt;table cellspacing=1&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F1       &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Online User's Guide&lt;/td&gt;&lt;td&gt;&lt;b&gt;Ctrl+F1  &lt;/b&gt;&lt;/td&gt;&lt;td&gt;About JTDX_contest&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F2       &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Open configuration window&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F3       &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Display keyboard shortcuts&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F4       &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Clear DX Call/Grid and Tx messages&lt;/td&gt;&lt;td&gt;&lt;b&gt;Alt+F4   &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Exit program&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F5       &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Display special mouse commands&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F6       &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Open next file in directory&lt;/td&gt;&lt;td&gt;&lt;b&gt;Shift+F6 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Decode all remaining files in directory&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F7       &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Open log by assigned in the operating system viewer&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F11      &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Move Rx frequency down 1 Hz&lt;/td&gt;&lt;td&gt;&lt;b&gt;Ctrl+F11 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Move Rx and Tx frequencies down 1 Hz&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F12      &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Move Rx frequency up 1 Hz&lt;/td&gt;&lt;td&gt;&lt;b&gt;Ctrl+F12 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Move Rx and Tx frequencies up 1 Hz&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+1-6  &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Set now transmission to this number on Tab 1&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Ctl+1-6  &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Set next transmission to this number on Tab 1&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+Ctrl+A    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Clear wanted callsign list&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+B/C  &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Switch to FT8/FT4 mode&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+D    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Decode again at QSO frequency&lt;/td&gt;&lt;td&gt;&lt;b&gt;Shift+D  &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Full decode (both windows)&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+E    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Erase&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+F    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Toggle bypass all text filters&lt;/td&gt;&lt;td&gt;&lt;b&gt;Ctrl+F   &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Edit the free text message box&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+G    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Generate standard messages&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+H    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Halt Tx&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Ctrl+L   &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Lookup callsign in database, generate standard messages&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+M    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Monitor&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+N    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Enable Tx&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+Q    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Log QSO&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+S    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Stop monitoring&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+T    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Tune&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+V    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Save the most recently completed *.wav file&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+Z    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Filter, this shortcut is being supported in main UI and widegraph UI&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Esc    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Halt Tx&lt;/td&gt;&lt;/tr&gt;
+&lt;/table&gt;</source>
+        <translation>&lt;table cellspacing=1&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F1       &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Mrežni korisnički priručnik&lt;/td&gt;&lt;td&gt;&lt;b&gt;Ctrl+F1  &lt;/b&gt;&lt;/td&gt;&lt;td&gt;O JTDX_contest&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F2       &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Otvorite menu za konfiguraciju&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F3       &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Prikaz prečaca na tipkovnici&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F4       &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Očistite DX znak / lokator i Tx poruke&lt;/td&gt;&lt;td&gt;&lt;b&gt;Alt+F4   &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Izlaz iz programa&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F5       &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Prikažite posebne naredbe miša&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F6       &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Otvorite sljedeću datoteku u direktoriju&lt;/td&gt;&lt;td&gt;&lt;b&gt;Shift+F6 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Dekodirajte sve preostale datoteke u direktoriju&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F7       &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Otvorite log u dodijeljenom pregledniku operativnog sustava&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F11      &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Pomaknite Rx frekvenciju za 1 Hz&lt;/td&gt;&lt;td&gt;&lt;b&gt;Ctrl+F11 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Pomaknite Rx i Tx frekvencije niže za 1 Hz&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F12      &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Pomaknite Rx frekvenciju više za 1 Hz&lt;/td&gt;&lt;td&gt;&lt;b&gt;Ctrl+F12 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Pomaknite Rx i Tx frekvencije više za 1 Hz&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+1-6  &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Sada postavite prijenos na ovaj broj na TAB 1&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Ctl+1-6  &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Postavite sljedeći prijenos na ovaj broj na TAB 1&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+Ctrl+A    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Očistite popis traženih pozivnih znakova&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+B/C  &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Prebacivanje sa FT8 / FT4&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+D    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Dekodirajte ponovo na frekvenciji QSOa&lt;/td&gt;&lt;td&gt;&lt;b&gt;Shift+D  &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Potpuno dekodiranje (oba prozora)&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+E    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Obriši&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+F    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Uključi / zaobiđi sve tekstualne filtre&lt;/td&gt;&lt;td&gt;&lt;b&gt;Ctrl+F   &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Uredite polje s besplatnim tekstualnim porukama&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+G    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Generirajte standardne poruke&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+H    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;ZaustaviTx&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Ctrl+L   &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Potražite pozivni znak u bazi podataka, generirajte standardne poruke&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+M    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Monitor&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+N    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Omogući Tx&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+Q    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Logiraj QSO&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+S    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Zaustavi monitoring&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+T    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Tune&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+V    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Spremite najnoviju datoteku * .wav&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+Z    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Filter, ovaj je prečac  je podržan u glavnom korisničkom meniju i sučelju širokog grafičkog prikaza&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Esc    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Zaustavi Tx&lt;/td&gt;&lt;/tr&gt;
+&lt;/table&gt;</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Are You sure to change UI Language to English? JTDX will close, please start it again.</source>
+        <translation>Jeste li sigurni da želite promijeniti jezik sučelja na Hrvatski? JTDX će se zatvoriti, pokrenite ga ponovno.</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>
@@ -5627,94 +6178,6 @@ Provjerite je li dato točno ime imenika.</translation>
         <location filename="../WFPalette.cpp" line="258"/>
         <source>Error writing waterfall palette file &quot;%1&quot;: %2.</source>
         <translation>Pogreška pri pisanju datoteke palete vodopada &quot;%1&quot;: %2.</translation>
-    </message>
-</context>
-<context>
-    <name>RemoteFile</name>
-    <message>
-        <location filename="../SampleDownloader/RemoteFile.cpp" line="37"/>
-        <location filename="../SampleDownloader/RemoteFile.cpp" line="99"/>
-        <location filename="../SampleDownloader/RemoteFile.cpp" line="204"/>
-        <location filename="../SampleDownloader/RemoteFile.cpp" line="244"/>
-        <location filename="../SampleDownloader/RemoteFile.cpp" line="254"/>
-        <location filename="../SampleDownloader/RemoteFile.cpp" line="262"/>
-        <source>File System Error</source>
-        <translation>Pogreška datotečnog sustava</translation>
-    </message>
-    <message>
-        <location filename="../SampleDownloader/RemoteFile.cpp" line="38"/>
-        <source>Cannot rename file:
-&quot;%1&quot;
-to: &quot;%2&quot;
-Error(%3): %4</source>
-        <translation>Nije moguće preimenovati datoteku:
-&quot;%1&quot;
-u: &quot;%2&quot;
-Greška(%3): %4</translation>
-    </message>
-    <message>
-        <location filename="../SampleDownloader/RemoteFile.cpp" line="100"/>
-        <source>Cannot delete file:
-&quot;%1&quot;</source>
-        <translation>Nije moguće izbrisati datoteku:
-&quot;%1&quot;</translation>
-    </message>
-    <message>
-        <location filename="../SampleDownloader/RemoteFile.cpp" line="172"/>
-        <location filename="../SampleDownloader/RemoteFile.cpp" line="181"/>
-        <location filename="../SampleDownloader/RemoteFile.cpp" line="196"/>
-        <source>Network Error</source>
-        <translation>Greška Mreže</translation>
-    </message>
-    <message>
-        <location filename="../SampleDownloader/RemoteFile.cpp" line="173"/>
-        <source>Too many redirects: %1</source>
-        <translation>Previše preusmjeravanja: %1</translation>
-    </message>
-    <message>
-        <location filename="../SampleDownloader/RemoteFile.cpp" line="182"/>
-        <source>Redirect not followed: %1</source>
-        <translation>Preusmjeravanje nije uslijedilo: %1</translation>
-    </message>
-    <message>
-        <location filename="../SampleDownloader/RemoteFile.cpp" line="205"/>
-        <source>Cannot commit changes to:
-&quot;%1&quot;</source>
-        <translation>Ne mogu izvršiti promjene na:
-&quot;%1&quot;</translation>
-    </message>
-    <message>
-        <location filename="../SampleDownloader/RemoteFile.cpp" line="245"/>
-        <source>Cannot open file:
-&quot;%1&quot;
-Error(%2): %3</source>
-        <translation>Datoteka se ne može otvoriti:
-&quot;%1&quot;
-Greška(%2): %3</translation>
-    </message>
-    <message>
-        <location filename="../SampleDownloader/RemoteFile.cpp" line="255"/>
-        <source>Cannot make path:
-&quot;%1&quot;</source>
-        <translation>N mogu napraviti :
-&quot;%1&quot;</translation>
-    </message>
-    <message>
-        <location filename="../SampleDownloader/RemoteFile.cpp" line="263"/>
-        <source>Cannot write to file:
-&quot;%1&quot;
-Error(%2): %3</source>
-        <translation>Nije moguće zapisati u datoteku:
-&quot;%1&quot;
-Greška(%2): %3</translation>
-    </message>
-</context>
-<context>
-    <name>SampleDownloader::impl</name>
-    <message>
-        <location filename="../SampleDownloader.cpp" line="99"/>
-        <source>Download Samples</source>
-        <translation>Skidanje primjera</translation>
     </message>
 </context>
 <context>
@@ -8909,6 +9372,81 @@ promjena zvučne kartice</translation>
         <location filename="../Configuration.ui"/>
         <source>Contest</source>
         <translation>Natjecanje</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Highlight messages with grid squares which do not exist in the wsjtx_log.adi log file.&lt;/p&gt;&lt;p&gt;With &lt;b&gt;WW Digi contest&lt;/b&gt; enabled in the Misc menu these settings match on the 2 character grid field instead of the 4 character square, because the field is the contest multiplier, and a new field then outranks a new DXCC or zone in the highlighting.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Istakni poruke s lokatorima kojih nema u datoteci dnevnika wsjtx_log.adi.&lt;/p&gt;&lt;p&gt;Kada je &lt;b&gt;natjecanje WW Digi&lt;/b&gt; uključeno u izborniku Razno, ove se postavke primjenjuju na polje lokatora od 2 znaka umjesto na kvadrat od 4 znaka, jer je polje množitelj natjecanja, pa novo polje tada ima prednost pred novim DXCC-om ili zonom pri isticanju.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Restore the recommended notification colors for &lt;b&gt;both&lt;/b&gt; the light and the dark style.&lt;/p&gt;&lt;p&gt;Every text color has been checked against every background it can appear on, so nothing ends up unreadable - a message calling you on a new DXCC row, for instance.&lt;/p&gt;&lt;p&gt;Takes effect when the settings are accepted.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Vrati preporučene boje obavijesti za &lt;b&gt;oba&lt;/b&gt; stila, svijetli i tamni.&lt;/p&gt;&lt;p&gt;Svaka boja teksta provjerena je na svakoj pozadini na kojoj se može pojaviti, tako da ništa ne ostane nečitljivo - primjerice poruka koja vas zove u retku novog DXCC-a.&lt;/p&gt;&lt;p&gt;Stupa na snagu kada se postavke prihvate.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Recommended colors</source>
+        <translation>Preporučene boje</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Contest and event modes. Only one may be active at a time. Modes shown greyed out are declared but not implemented in this build.</source>
+        <translation>Načini natjecanja i događaja. Samo jedan može biti aktivan istodobno. Načini prikazani sivo deklarirani su, ali nisu implementirani u ovoj verziji.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>WW Digi contest</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;World Wide Digi DX Contest. The exchange is the 4 character grid instead of a signal report, and the multiplier is the 2 character grid field.&lt;/p&gt;&lt;p&gt;While this is selected the grid highlighting below is set to per band on the grid field, and cannot be changed by hand. Your own settings are restored when you switch back to None.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;World Wide Digi DX Contest. Razmjena je lokator od 4 znaka umjesto izvješća o signalu, a množitelj je polje lokatora od 2 znaka.&lt;/p&gt;&lt;p&gt;Dok je ovo odabrano, isticanje lokatora ispod postavljeno je po pojasu na polje lokatora i ne može se mijenjati ručno. Vaše vlastite postavke vraćaju se kada se vratite na Ništa.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>NA VHF contest</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>EU VHF contest</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>ARRL Field Day</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>ARRL RTTY Roundup</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>ARRL Digi contest</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Contest working frequencies</source>
+        <translation>Radne frekvencije natjecanja</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>The frequencies offered by the band selector while a contest is running. Only FT8 and FT4 are accepted. Right click the table to insert, delete, load, save, merge or reset. The everyday list on the Frequencies tab is left alone.</source>
+        <translation>Frekvencije koje nudi birač pojasa dok traje natjecanje. Prihvaćaju se samo FT8 i FT4. Desnom tipkom kliknite tablicu za umetanje, brisanje, učitavanje, spremanje, spajanje ili vraćanje. Uobičajeni popis na kartici Frekvencije ostaje netaknut.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Contest &amp;defaults</source>
+        <translation>&amp;Zadane postavke natjecanja</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Replace the table with the published default frequencies of the selected contest.</source>
+        <translation>Zamijeni tablicu objavljenim zadanim frekvencijama odabranog natjecanja.</translation>
     </message>
 </context>
 <context>

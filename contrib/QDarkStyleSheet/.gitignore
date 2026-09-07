@@ -1,11 +1,12 @@
 *.pyc
+*.orig
 
 dist/
 build/
-docs/
 
 *.egg-info/
 __pycache__
+.coverage
 
 *.tar
 *.tar.*
@@ -35,3 +36,6 @@ deb_dist
 ./.idea
 /.idea/
 .tox
+
+# OSX files
+.DS_Store

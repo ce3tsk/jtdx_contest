@@ -130,14 +130,17 @@ int main(int argc, char *argv[])
          window then shows the toolkit's blank default in the task bar and the switcher. The
          icon is searched for in the icon theme first, then where CMake installs it. */
       {
-        /* "jtdx_icon", not "jtdx": that is the name jtdx.desktop declares and the name CMake
-           installs under, so the theme lookup can only ever match that one. hasThemeIcon is the
-           reliable existence test - fromTheme returns a non-null QIcon even when nothing matches. */
-        QIcon base {QIcon::hasThemeIcon ("jtdx_icon") ? QIcon::fromTheme ("jtdx_icon") : QIcon {}};
+        /* "jtdx_contest_icon", not "jtdx_icon": stock JTDX installs its own jtdx_icon into
+           /usr/share/icons, and when both are present the theme lookup finds that one and this
+           build shows the stock artwork. A distinct name keeps the two apart. It is also the
+           name jtdx_contest.desktop declares and the name CMake installs under, so the theme lookup can
+           only ever match ours. hasThemeIcon is the reliable existence test - fromTheme returns
+           a non-null QIcon even when nothing matches. */
+        QIcon base {QIcon::hasThemeIcon ("jtdx_contest_icon") ? QIcon::fromTheme ("jtdx_contest_icon") : QIcon {}};
         if (base.isNull ())
           {
-            for (auto const& path : {QCoreApplication::applicationDirPath () + "/../share/pixmaps/jtdx_icon.png",
-                                     QString {"/usr/share/pixmaps/jtdx_icon.png"}})
+            for (auto const& path : {QCoreApplication::applicationDirPath () + "/../share/pixmaps/jtdx_contest_icon.png",
+                                     QString {"/usr/share/pixmaps/jtdx_contest_icon.png"}})
               if (QFile::exists (path)) { base = QIcon {path}; break; }
           }
         if (!base.isNull ()) a.setWindowIcon (base);
@@ -281,7 +284,13 @@ int main(int argc, char *argv[])
       bool qt_OK = false;
       bool resources_OK = false;
       bool files_OK = false;
-      do {
+      /* CE3TSK: this used to be `do { ... } while (result == 1337)` - the language menu set
+         exit code 1337 and the whole GUI was torn down and rebuilt inside the one process.
+         That re-zeroed the decode shared memory, restarted jtdxjt9, emptied both decode
+         windows, and re-enumerated the rigs mid-session, which lost the configured rig when
+         hamlib had renamed its entry. A language change now just closes the program and the
+         operator starts it again, so this block runs exactly once. */
+      {
         settings.beginGroup("Common");
         lang = settings.value ("Language","en_US").toString();
         settings.endGroup();
@@ -362,9 +371,7 @@ int main(int argc, char *argv[])
 
         QObject::connect (&a, SIGNAL (lastWindowClosed()), &a, SLOT (quit()));
         result = a.exec();
-        if (w.m_exitCode == 1337) result = 1337;
       }
-      while(result==1337);
       return result;
     }
   catch (std::exception const& e)

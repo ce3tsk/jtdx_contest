@@ -83,7 +83,7 @@
          <number>1</number>
         </property>
         <item>
-         <layout class="QHBoxLayout" name="horizontalLayout_10" stretch="9,2">
+         <layout class="QHBoxLayout" name="horizontalLayout_10" stretch="1,0">
           <property name="spacing">
            <number>0</number>
           </property>
@@ -103,7 +103,7 @@
             </property>
             <property name="maximumSize">
              <size>
-              <width>1000</width>
+              <width>16777215</width>
               <height>16</height>
              </size>
             </property>
@@ -191,7 +191,7 @@
           <item>
            <widget class="QLabel" name="label_6">
             <property name="sizePolicy">
-             <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+             <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
@@ -285,7 +285,7 @@
              <bool>true</bool>
             </property>
             <property name="text">
-             <string>Band Activity</string>
+             <string>Band</string>
             </property>
             <property name="alignment">
              <set>Qt::AlignCenter</set>
@@ -1848,7 +1848,7 @@
                  <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;The button provides choice between S-meter units and dBm. CAT shall be set up via Hamlib or TCI to get S-meter working, some rigs may not be supported.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                 </property>
                 <property name="styleSheet">
-                 <string notr="true">QPushButton { Text-align:left; }</string>
+                 <string notr="true">QPushButton { Text-align:left; padding: 2px; }</string>
                 </property>
                 <property name="text">
                  <string>S meter</string>
@@ -3115,7 +3115,7 @@ Click by right mouse's button sets JTDX internal time back to system time.&lt;/p
 }</string>
               </property>
               <property name="text">
-               <string>S&amp;WL mode</string>
+               <string>S&amp;WL</string>
               </property>
               <property name="checkable">
                <bool>true</bool>
@@ -5682,14 +5682,6 @@ list. The list can be maintained in Settings (F2).</string>
   <action name="actionSave_reference_spectrum">
    <property name="text">
     <string>Save reference spectrum</string>
-   </property>
-  </action>
-  <action name="download_samples_action">
-   <property name="text">
-    <string>&amp;Download Samples ...</string>
-   </property>
-   <property name="whatsThis">
-    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Download sample audio files demonstrating the various modes.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
   </action>
   <action name="actionT10">

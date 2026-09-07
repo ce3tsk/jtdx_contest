@@ -118,6 +118,11 @@ Dialog::Dialog (QSettings * settings, Configuration const * configuration, BandL
   main_layout->addLayout (bottom_layout);
 
   setLayout (main_layout);
+  /* CE3TSK: a geometry saved when the window was dragged small, or with a smaller font,
+     can be below what the layout needs and Qt then crushes the children. sizeHint() is
+     what the layout wants and it tracks the application font; a larger saved size is
+     kept as it is. See UI_DARK_STYLE.md. */
+  resize (size ().expandedTo (sizeHint ()));
 }
 
 Dialog::~Dialog ()

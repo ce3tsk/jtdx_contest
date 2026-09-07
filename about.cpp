@@ -8,20 +8,26 @@
 #include "ui_about.h"
 #include "moc_about.cpp"
 
-CAboutDlg::CAboutDlg(QWidget *parent) :
+CAboutDlg::CAboutDlg(QWidget *parent, bool useDarkStyle) :
   QDialog(parent),
   ui(new Ui::CAboutDlg)
 {
   ui->setupUi(this);
+
+  /* CE3TSK: Qt draws <a href> in the palette Link color, a dark blue that is unreadable
+     on the dark style background - the app stylesheet cannot set QPalette::Link, so the
+     anchors carry the color themselves. */
+  QString const link_color {useDarkStyle ? "#4EA3E0" : "#0000ff"};
 
   /* CE3TSK: the fork's About text - the fork first, the JTDX and WSJT-X lineage it is built
      on kept in full, as the GPL and plain honesty both require. */
   ui->labelTxt->setText ("<html><h2>JTDX_contest v"
                          + QCoreApplication::applicationVersion () + "  &mdash; JTDX Contest Edition</h2>\n\n"
                          "Designed, built and measured by <b>Tihomir Sokcevic, CE3TSK</b>, Santiago de Chile, 2025-2026<br>"
-                         "<a href=\"https://ce3tsk.com\">https://ce3tsk.com</a><br>"
-                         /* the Ko-fi button, shipped as a Qt resource (contrib/kofi6.png, 580x146): a QLabel does not fetch remote images */
-                         "<a href=\"https://ko-fi.com/ce3tsk\"><img src=\":/kofi6.png\" width=\"143\" height=\"36\" alt=\"Buy Me a Coffee at ko-fi.com\"></a><br><br>"
+                         "<a style=\"color:" + link_color + "\" href=\"https://ce3tsk.com\">https://ce3tsk.com</a><br>"
+                         /* the support button, shipped as a Qt resource (contrib/support_*.png, 252x44): a QLabel does not fetch remote images */
+                         "<a href=\"https://ko-fi.com/ce3tsk\"><img src=\":/support_" + QString {useDarkStyle ? "dark" : "light"}
+                         + ".png\" width=\"340\" height=\"59\" alt=\"Support this work on Ko-fi\"></a><br><br>"
                          "A rebuilt FT8 decoder - alternate pass, ensemble, pipelined RX phase and TX background,<br>"
                          "four-period hint memory, fixed data races, measured presets - and built-in support for<br>"
                          "the WW Digi DX Contest: the grid exchange, points and multipliers, a separate contest log,<br>"
@@ -39,7 +45,7 @@ CAboutDlg::CAboutDlg(QWidget *parent) :
                          "Supports FT8, FT4, JT9, T10 and JT65A for HF amateur radio communication.<br><br>"
                          "JTDX_contest, JTDX and WSJT-X are licensed under the terms of Version 3<br>"
                          "of the GNU General Public License (GPL)<br>"
-                         "<a href=\"https://www.gnu.org/licenses/gpl-3.0.txt\">"
+                         "<a style=\"color:" + link_color + "\" href=\"https://www.gnu.org/licenses/gpl-3.0.txt\">"
                          "https://www.gnu.org/licenses/gpl-3.0.txt</a>");
 }
 

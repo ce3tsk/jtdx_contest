@@ -6,7 +6,7 @@ and rebuilt FT4 decoder, and built-in support for the **WW Digi DX Contest**.
 Designed, built and measured by **Tihomir Sokcevic, CE3TSK** — Santiago de Chile,
 2025–2026 · [https://ce3tsk.com](https://ce3tsk.com) · source code: [https://github.com/ce3tsk/jtdx\_contest](https://github.com/ce3tsk/jtdx_contest)
 
-Version string: `v3.0.0-rc02` · derivative work of JTDX by UA3DJY, ES1JA and the
+Version string: `v3.0.0-rc03` · derivative work of JTDX by UA3DJY, ES1JA and the
 HF community, WSJT-X by K1JT.
 
 Support this work: https://ko-fi.com/ce3tsk
@@ -175,6 +175,29 @@ several times in this fork (and the sample buffer's width once, 2026-09-03) and 
 mismatched pair decodes wrongly or not at all. `make install` puts them under the
 prefix; `jtdx -r NAME` runs a separate instance with its own `JTDX - NAME.ini`.
 
+**Windows (JTSDK64, MinGW-w64 gfortran 8.1).** One toolchain difference matters for the
+threaded decoder: MinGW gcc implements `!$omp threadprivate` with *emulated* TLS, so every
+threadprivate variable lives in an exactly sized heap block instead of the static TLS segment
+Linux uses. An array overrun that was silent on Linux and in the original JTDX (where the
+array was plain static data) becomes heap corruption on Windows. That is what the FT4 crash of
+2026-09-05 was: `ft4b.f90` filled the 64-element columns of its threadprivate twiddle table
+`ctwk2` through `twkfreq1`, whose loop runs `0..npts` inclusive, with `npts=64` — one element
+too many, 8 bytes past the end of the last column — and `jtdxjt9.exe` died with
+`STATUS_HEAP_CORRUPTION` (0xC0000374) at the next `malloc`, inside `ft4_downsample`, on the
+first FT4 candidate of the first period. gfortran's `-fcheck=bounds` cannot see this class of
+bug: the dummy `cb(nbot:ntop)` is explicit-shape and takes its extent from the caller's own
+arguments. Fixed by passing the last index, `2*NSS-1`; the 64 stored values are unchanged.
+The routine's contract is still the trap (`npts` is a last index, the loop ignores `nbot`, the
+dummies are sized by the caller): the header of `lib/twkfreq1.f90` records it, with the deeper
+change that closes it and the one way to get that change wrong.
+
+To chase a Windows heap fault in the decoder: reproduce it in file mode (`jtdxjt9 -4 file.wav`,
+no GUI needed), run under gdb with `_NO_DEBUG_HEAP=1` in the environment (otherwise the Windows
+debug heap changes the layout and the crash disappears), and check the heap at breakpoints with
+the CRT's own `_heapchk()` — msvcrt's `malloc` uses a separate CRT heap, so `HeapValidate` on
+the process heap reports OK while the CRT heap is already broken.
+
+
 ## Rig control: use flrig rather than hamlib
 
 JTDX can drive the transceiver directly through hamlib (Settings → Radio → Rig), and that
@@ -227,6 +250,17 @@ The fork's longer documents — how the FT8 decoder works, every decoder and con
 change with its measurement, the preset ini keys, the contest design, the presentation
 and the long-form decoder explainer — are published separately at [https://ce3tsk.com](https://ce3tsk.com)
 rather than kept in the source tree.
+
+## Benchmark data
+
+The recorded air behind every decoder figure in those documents is published too, with the
+script that replays it: two hours off the band, 240 FT8 and 240 FT4 periods, plus the two
+crowded-band files and their truth manifests, at
+[https://ce3tsk.com/download/wav/](https://ce3tsk.com/download/wav/). The script
+(`jtdxbench.py`, one file, Python 3.6+, Linux/macOS/Windows) drives the standalone `jtdxjt9`
+over a suite preset by preset and prints the decodes, the per-period seconds and how many
+periods finished inside the mode's reply deadline, beside the reference machine's numbers —
+so a claim can be checked, and a machine can be measured before choosing a preset for it.
 
 ---
 

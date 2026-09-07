@@ -40,6 +40,11 @@ void LogQSO::loadSettings ()
 {
   m_settings->beginGroup ("LogQSO");
   restoreGeometry (m_settings->value ("geometry", saveGeometry ()).toByteArray ());
+  /* CE3TSK: the .ui rect (374px) is narrower than the layout wants, so the date/time and
+     band fields were crushed and lost characters. sizeHint() is the width the layout
+     actually needs and it tracks the application font, so grow to it - a larger saved
+     geometry is kept as it is. */
+  resize (size ().expandedTo (sizeHint ()));
   ui->cbTxPower->setChecked (m_settings->value ("SaveTxPower", false).toBool ());
   ui->cbComments->setChecked (m_settings->value ("SaveComments", false).toBool ());
   ui->cbEqslComments->setChecked (m_settings->value ("SaveEQSLComments", false).toBool ());

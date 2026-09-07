@@ -145,6 +145,7 @@ extern "C" {
 #include <cmath>
 
 #include <QApplication>
+#include <QAbstractButton>
 #include <QMetaType>
 #include <QList>
 #include <QSettings>
@@ -208,6 +209,46 @@ namespace
   // Magic numbers for file validation
   constexpr quint32 qrg_magic {0xadbccbdb};
   constexpr quint32 qrg_version {101}; // M.mm
+
+  /* CE3TSK: the recommended decode colors, one row per notification, light style then
+     dark. These are the defaults a fresh profile gets and what the Notifications tab's
+     'Recommended colors' button restores. They are not a matter of taste: every text
+     color was checked against every background it can appear on, and the worst pair in
+     each style clears about 3.3:1 (dark) and 4.5:1 (light). Only CQ, MyCall and
+     StandardCall are text colors - TxMsg and WorkedCall are backgrounds, like every
+     New* entry. The old values darkened the
+     text for the dark style, which is backwards - 'my call' on a new-DXCC row measured
+     1.3:1 and was effectively invisible. See UI_DARK_STYLE.md. */
+  struct RecommendedColor { char const * key; char const * light; char const * dark; };
+  RecommendedColor const recommended_colors[] = {
+    {"colorCQ", "#000000", "#e6dcd2"},
+    {"colorMyCall", "#850000", "#ff8c8c"},
+    {"colorStandardCall", "#3e3e3e", "#9eb3a9"},
+    {"colorTxMsg", "#ffff00", "#585800"},
+    {"colorWorkedCall", "#00ff00", "#006500"},
+    {"colorNewCQZ", "#e79a00", "#804000"},
+    {"colorNewCQZBand", "#c3a586", "#6b5035"},
+    {"colorNewITUZ", "#95b600", "#435d00"},
+    {"colorNewITUZBand", "#c0d0a0", "#4f593b"},
+    {"colorNewDXCC", "#ff6fff", "#800080"},
+    {"colorNewDXCCBand", "#d792d7", "#813981"},
+    {"colorNewGrid", "#f88b80", "#005f5f"},
+    {"colorNewGridBand", "#80d0d0", "#2a5e5e"},
+    {"colorNewPx", "#00c34e", "#006000"},
+    {"colorNewPxBand", "#50e090", "#0a6231"},
+    {"colorNewCall", "#afaf34", "#595900"},
+    {"colorNewCallBand", "#e0e070", "#58581a"},
+  };
+
+  QString recommended_color (QString const& key)
+  {
+    for (auto const& c : recommended_colors)
+      {
+        if (key == c.key) return c.light;
+        if (key == QString {c.key} + "_dark") return c.dark;
+      }
+    return QString {};
+  }
 
 }
 
@@ -425,6 +466,7 @@ private:
   void close_rig ();
   TransceiverFactory::ParameterPack gather_rig_data ();
   void enumerate_rigs ();
+  void select_stored_rig ();   // CE3TSK
   void set_rig_invariants ();
   bool validate ();
   void message_box_critical (QString const& reason, QString const& detail = QString ());
@@ -540,6 +582,7 @@ private:
   Q_SLOT void on_pbCQmsg_clicked();
   Q_SLOT void on_pbMyCall_clicked();
   Q_SLOT void on_pbTxMsg_clicked();
+  Q_SLOT void on_pbDefaultColors_clicked();
   Q_SLOT void on_pbNewCQZ_clicked();
   Q_SLOT void on_pbNewCQZBand_clicked();
   Q_SLOT void on_pbNewITUZ_clicked();
@@ -880,7 +923,7 @@ private:
     bool logAsRTTY = false;
     bool reportInComments = false;
     /* CE3TSK: the tiers a contest does not score - DXCC, both zones and prefix. Forced off
-       so their colours cannot contradict the ranking, where contest points outrank them. */
+       so their colors cannot contradict the ranking, where contest points outrank them. */
     bool newCQZ = false;
     bool newCQZBand = false;
     bool newCQZBandMode = false;
@@ -2460,7 +2503,7 @@ Radio::convert_dark("#fafbfe",useDarkStyle_),Radio::convert_dark("#dcdef1",useDa
   ui_->beep_on_newCall_check_box->setChecked(beepOnNewCall_ && newCall_);
   ui_->beep_on_firstMsg_check_box->setChecked(beepOnFirstMsg_);
   ui_->type_2_msg_gen_combo_box->setCurrentIndex (type_2_msg_gen_);
-  ui_->rig_combo_box->setCurrentText (rig_params_.rig_name);
+  select_stored_rig ();   // CE3TSK: same silent-no-op trap as enumerate_rigs
   ui_->TX_mode_button_group->button (data_mode_)->setChecked (true);
   ui_->split_mode_button_group->button (rig_params_.split_mode)->setChecked (true);
   ui_->CAT_serial_baud_combo_box->setCurrentText (QString::number (rig_params_.baud));
@@ -2549,41 +2592,43 @@ void Configuration::impl::read_settings ()
   content_ = settings_->value ("Content", "").toString ();
   countries_= settings_->value ("CountryFilterList", "").toString ();
   callsigns_= settings_->value ("CallsignFilterList", "").toString ();
-  next_color_CQ_ = color_CQ_ = settings_->value("colorCQ","#000000").toString();
-  next_color_MyCall_ = color_MyCall_ = settings_->value("colorMyCall","#ff0000").toString();
-  next_color_StandardCall_ = color_StandardCall_ = settings_->value("colorStandardCall","#707070").toString();
-  next_color_TxMsg_ = color_TxMsg_ = settings_->value("colorTxMsg","#eeee00").toString();
-  next_color_NewCQZ_ = color_NewCQZ_ = settings_->value("colorNewCQZ","#c08000").toString();
-  next_color_NewCQZBand_ = color_NewCQZBand_ = settings_->value("colorNewCQZBand","#c0a080").toString();
-  next_color_NewITUZ_ = color_NewITUZ_ = settings_->value("colorNewITUZ","#90b000").toString();
-  next_color_NewITUZBand_ = color_NewITUZBand_ = settings_->value("colorNewITUZBand","#c0d0a0").toString();
-  next_color_NewDXCC_ = color_NewDXCC_ = settings_->value("colorNewDXCC","#c000c0").toString();
-  next_color_NewDXCCBand_ = color_NewDXCCBand_ = settings_->value("colorNewDXCCBand","#d080d0").toString();
-  next_color_NewGrid_ = color_NewGrid_ = settings_->value("colorNewGrid","#00a0a0").toString();
-  next_color_NewGridBand_ = color_NewGridBand_ = settings_->value("colorNewGridBand","#80d0d0").toString();
-  next_color_NewPx_ = color_NewPx_ = settings_->value("colorNewPx","#00a040").toString();
-  next_color_NewPxBand_ = color_NewPxBand_ = settings_->value("colorNewPxBand","#50e090").toString();
-  next_color_NewCall_ = color_NewCall_ = settings_->value("colorNewCall","#a0a030").toString();
-  next_color_NewCallBand_ = color_NewCallBand_ = settings_->value("colorNewCallBand","#e0e070").toString();
-  next_color_WorkedCall_ = color_WorkedCall_ = settings_->value("colorWorkedCall","#00ff00").toString();
-  next_color_CQ_dark_ = color_CQ_dark_ = settings_->value("colorCQ_dark","#e6dcd2").toString();
-  next_color_MyCall_dark_ = color_MyCall_dark_ = settings_->value("colorMyCall_dark","#bf0000").toString();
-  next_color_StandardCall_dark_ = color_StandardCall_dark_ = settings_->value("colorStandardCall_dark","#96aca2").toString();
-  next_color_TxMsg_dark_ = color_TxMsg_dark_ = settings_->value("colorTxMsg_dark","#aeae00").toString();
-  next_color_NewCQZ_dark_ = color_NewCQZ_dark_ = settings_->value("colorNewCQZ_dark","#804000").toString();
-  next_color_NewCQZBand_dark_ = color_NewCQZBand_dark_ = settings_->value("colorNewCQZBand_dark","#806040").toString();
-  next_color_NewITUZ_dark_ = color_NewITUZ_dark_ = settings_->value("colorNewITUZ_dark","#507000").toString();
-  next_color_NewITUZBand_dark_ = color_NewITUZBand_dark_ = settings_->value("colorNewITUZBand_dark","#809060").toString();
-  next_color_NewDXCC_dark_ = color_NewDXCC_dark_ = settings_->value("colorNewDXCC_dark","#800080").toString();
-  next_color_NewDXCCBand_dark_ = color_NewDXCCBand_dark_ = settings_->value("colorNewDXCCBand_dark","#904090").toString();
-  next_color_NewGrid_dark_ = color_NewGrid_dark_ = settings_->value("colorNewGrid_dark","#006060").toString();
-  next_color_NewGridBand_dark_ = color_NewGridBand_dark_ = settings_->value("colorNewGridBand_dark","#409090").toString();
-  next_color_NewPx_dark_ = color_NewPx_dark_ = settings_->value("colorNewPx_dark","#006000").toString();
-  next_color_NewPxBand_dark_ = color_NewPxBand_dark_ = settings_->value("colorNewPxBand_dark","#10a050").toString();
-  next_color_NewCall_dark_ = color_NewCall_dark_ = settings_->value("colorNewCall_dark","#606000").toString();
-  next_color_NewCallBand_dark_ = color_NewCallBand_dark_ = settings_->value("colorNewCallBand_dark","#a0a030").toString();
-  next_color_WorkedCall_dark_ = color_WorkedCall_dark_ = settings_->value("colorWorkedCall_dark","#00bf00").toString();
-  useDarkStyle_ = settings_->value ("UseDarkStyle", false).toBool ();
+  next_color_CQ_ = color_CQ_ = settings_->value("colorCQ",recommended_color("colorCQ")).toString();
+  next_color_MyCall_ = color_MyCall_ = settings_->value("colorMyCall",recommended_color("colorMyCall")).toString();
+  next_color_StandardCall_ = color_StandardCall_ = settings_->value("colorStandardCall",recommended_color("colorStandardCall")).toString();
+  next_color_TxMsg_ = color_TxMsg_ = settings_->value("colorTxMsg",recommended_color("colorTxMsg")).toString();
+  next_color_NewCQZ_ = color_NewCQZ_ = settings_->value("colorNewCQZ",recommended_color("colorNewCQZ")).toString();
+  next_color_NewCQZBand_ = color_NewCQZBand_ = settings_->value("colorNewCQZBand",recommended_color("colorNewCQZBand")).toString();
+  next_color_NewITUZ_ = color_NewITUZ_ = settings_->value("colorNewITUZ",recommended_color("colorNewITUZ")).toString();
+  next_color_NewITUZBand_ = color_NewITUZBand_ = settings_->value("colorNewITUZBand",recommended_color("colorNewITUZBand")).toString();
+  next_color_NewDXCC_ = color_NewDXCC_ = settings_->value("colorNewDXCC",recommended_color("colorNewDXCC")).toString();
+  next_color_NewDXCCBand_ = color_NewDXCCBand_ = settings_->value("colorNewDXCCBand",recommended_color("colorNewDXCCBand")).toString();
+  next_color_NewGrid_ = color_NewGrid_ = settings_->value("colorNewGrid",recommended_color("colorNewGrid")).toString();
+  next_color_NewGridBand_ = color_NewGridBand_ = settings_->value("colorNewGridBand",recommended_color("colorNewGridBand")).toString();
+  next_color_NewPx_ = color_NewPx_ = settings_->value("colorNewPx",recommended_color("colorNewPx")).toString();
+  next_color_NewPxBand_ = color_NewPxBand_ = settings_->value("colorNewPxBand",recommended_color("colorNewPxBand")).toString();
+  next_color_NewCall_ = color_NewCall_ = settings_->value("colorNewCall",recommended_color("colorNewCall")).toString();
+  next_color_NewCallBand_ = color_NewCallBand_ = settings_->value("colorNewCallBand",recommended_color("colorNewCallBand")).toString();
+  next_color_WorkedCall_ = color_WorkedCall_ = settings_->value("colorWorkedCall",recommended_color("colorWorkedCall")).toString();
+  next_color_CQ_dark_ = color_CQ_dark_ = settings_->value("colorCQ_dark",recommended_color("colorCQ_dark")).toString();
+  next_color_MyCall_dark_ = color_MyCall_dark_ = settings_->value("colorMyCall_dark",recommended_color("colorMyCall_dark")).toString();
+  next_color_StandardCall_dark_ = color_StandardCall_dark_ = settings_->value("colorStandardCall_dark",recommended_color("colorStandardCall_dark")).toString();
+  next_color_TxMsg_dark_ = color_TxMsg_dark_ = settings_->value("colorTxMsg_dark",recommended_color("colorTxMsg_dark")).toString();
+  next_color_NewCQZ_dark_ = color_NewCQZ_dark_ = settings_->value("colorNewCQZ_dark",recommended_color("colorNewCQZ_dark")).toString();
+  next_color_NewCQZBand_dark_ = color_NewCQZBand_dark_ = settings_->value("colorNewCQZBand_dark",recommended_color("colorNewCQZBand_dark")).toString();
+  next_color_NewITUZ_dark_ = color_NewITUZ_dark_ = settings_->value("colorNewITUZ_dark",recommended_color("colorNewITUZ_dark")).toString();
+  next_color_NewITUZBand_dark_ = color_NewITUZBand_dark_ = settings_->value("colorNewITUZBand_dark",recommended_color("colorNewITUZBand_dark")).toString();
+  next_color_NewDXCC_dark_ = color_NewDXCC_dark_ = settings_->value("colorNewDXCC_dark",recommended_color("colorNewDXCC_dark")).toString();
+  next_color_NewDXCCBand_dark_ = color_NewDXCCBand_dark_ = settings_->value("colorNewDXCCBand_dark",recommended_color("colorNewDXCCBand_dark")).toString();
+  next_color_NewGrid_dark_ = color_NewGrid_dark_ = settings_->value("colorNewGrid_dark",recommended_color("colorNewGrid_dark")).toString();
+  next_color_NewGridBand_dark_ = color_NewGridBand_dark_ = settings_->value("colorNewGridBand_dark",recommended_color("colorNewGridBand_dark")).toString();
+  next_color_NewPx_dark_ = color_NewPx_dark_ = settings_->value("colorNewPx_dark",recommended_color("colorNewPx_dark")).toString();
+  next_color_NewPxBand_dark_ = color_NewPxBand_dark_ = settings_->value("colorNewPxBand_dark",recommended_color("colorNewPxBand_dark")).toString();
+  next_color_NewCall_dark_ = color_NewCall_dark_ = settings_->value("colorNewCall_dark",recommended_color("colorNewCall_dark")).toString();
+  next_color_NewCallBand_dark_ = color_NewCallBand_dark_ = settings_->value("colorNewCallBand_dark",recommended_color("colorNewCallBand_dark")).toString();
+  next_color_WorkedCall_dark_ = color_WorkedCall_dark_ = settings_->value("colorWorkedCall_dark",recommended_color("colorWorkedCall_dark")).toString();
+  /* CE3TSK: dark by default - a fresh install starts in the dark style; an existing profile
+     keeps whatever it saved, because the key is then present in the ini. */
+  useDarkStyle_ = settings_->value ("UseDarkStyle", true).toBool ();
 
   next_font_.fromString (settings_->value ("Font", QGuiApplication::font ().toString ()).toString ());
   if (next_font_ != font_ || useDarkStyle_)
@@ -3976,7 +4021,7 @@ void Configuration::impl::accept ()
     prompt_to_log_ = false;       // mutually exclusive with autolog
     log_as_RTTY_ = false;         // the log must record the mode actually used
     report_in_comments_ = false;  // the exchange is a grid, the dB report is noise
-    /* CE3TSK: none of these are scored in a digital grid contest, and their colours would
+    /* CE3TSK: none of these are scored in a digital grid contest, and their colors would
        contradict the ranking - contest points rank 32..45, new DXCC 22/23. */
     newCQZ_ = false;
     newCQZBand_ = false;
@@ -4771,7 +4816,7 @@ void Configuration::impl::apply_special_op_lock (bool locked)
 {
   if (locked) {
     /* setChecked() emits toggled, not clicked, so on_newGrid_check_box_clicked() would not
-       run and the next_ staging copies would keep their old values. Those drive the colour
+       run and the next_ staging copies would keep their old values. Those drive the color
        preview labels and the worked-before check boxes, so call the slot rather than poking
        the widgets, then apply on top the two band settings the contest dictates. */
     ui_->newGrid_check_box->setChecked (true);
@@ -4830,7 +4875,7 @@ void Configuration::impl::apply_special_op_lock (bool locked)
   ui_->gbContestFrequencies->setEnabled (locked);
   /* CE3TSK: mark the Contest tab's title while a contest is selected, so the dialog says so
      at a glance from any tab. Qt has no per-tab background or font - tabs are not widgets -
-     but text colour and icon are stock per-tab properties, so both are used: the title in
+     but text color and icon are stock per-tab properties, so both are used: the title in
      green plus a green dot. An invalid QColor and an empty QIcon reset to normal. */
   {
     int const tab = ui_->configuration_tabs->indexOf (ui_->special_op_tab);
@@ -5289,6 +5334,49 @@ void Configuration::impl::on_pbTxMsg_clicked()
       if (useDarkStyle_) next_color_TxMsg_dark_ = new_color; else next_color_TxMsg_ = new_color;
       ui_->labTx->setStyleSheet(QString("background: %1").arg(useDarkStyle_? next_color_TxMsg_dark_.name() : next_color_TxMsg_.name()));
     }
+}
+
+/* CE3TSK: restore the recommended colors - both styles at once, so switching the style
+   later finds a sane palette too. The swatches are repainted by handing the existing
+   text-color handler the current state, which redraws every one of them. */
+void Configuration::impl::on_pbDefaultColors_clicked()
+{
+  next_color_CQ_ = QColor {recommended_color ("colorCQ")};
+  next_color_CQ_dark_ = QColor {recommended_color ("colorCQ_dark")};
+  next_color_MyCall_ = QColor {recommended_color ("colorMyCall")};
+  next_color_MyCall_dark_ = QColor {recommended_color ("colorMyCall_dark")};
+  next_color_StandardCall_ = QColor {recommended_color ("colorStandardCall")};
+  next_color_StandardCall_dark_ = QColor {recommended_color ("colorStandardCall_dark")};
+  next_color_TxMsg_ = QColor {recommended_color ("colorTxMsg")};
+  next_color_TxMsg_dark_ = QColor {recommended_color ("colorTxMsg_dark")};
+  next_color_WorkedCall_ = QColor {recommended_color ("colorWorkedCall")};
+  next_color_WorkedCall_dark_ = QColor {recommended_color ("colorWorkedCall_dark")};
+  next_color_NewCQZ_ = QColor {recommended_color ("colorNewCQZ")};
+  next_color_NewCQZ_dark_ = QColor {recommended_color ("colorNewCQZ_dark")};
+  next_color_NewCQZBand_ = QColor {recommended_color ("colorNewCQZBand")};
+  next_color_NewCQZBand_dark_ = QColor {recommended_color ("colorNewCQZBand_dark")};
+  next_color_NewITUZ_ = QColor {recommended_color ("colorNewITUZ")};
+  next_color_NewITUZ_dark_ = QColor {recommended_color ("colorNewITUZ_dark")};
+  next_color_NewITUZBand_ = QColor {recommended_color ("colorNewITUZBand")};
+  next_color_NewITUZBand_dark_ = QColor {recommended_color ("colorNewITUZBand_dark")};
+  next_color_NewDXCC_ = QColor {recommended_color ("colorNewDXCC")};
+  next_color_NewDXCC_dark_ = QColor {recommended_color ("colorNewDXCC_dark")};
+  next_color_NewDXCCBand_ = QColor {recommended_color ("colorNewDXCCBand")};
+  next_color_NewDXCCBand_dark_ = QColor {recommended_color ("colorNewDXCCBand_dark")};
+  next_color_NewGrid_ = QColor {recommended_color ("colorNewGrid")};
+  next_color_NewGrid_dark_ = QColor {recommended_color ("colorNewGrid_dark")};
+  next_color_NewGridBand_ = QColor {recommended_color ("colorNewGridBand")};
+  next_color_NewGridBand_dark_ = QColor {recommended_color ("colorNewGridBand_dark")};
+  next_color_NewPx_ = QColor {recommended_color ("colorNewPx")};
+  next_color_NewPx_dark_ = QColor {recommended_color ("colorNewPx_dark")};
+  next_color_NewPxBand_ = QColor {recommended_color ("colorNewPxBand")};
+  next_color_NewPxBand_dark_ = QColor {recommended_color ("colorNewPxBand_dark")};
+  next_color_NewCall_ = QColor {recommended_color ("colorNewCall")};
+  next_color_NewCall_dark_ = QColor {recommended_color ("colorNewCall_dark")};
+  next_color_NewCallBand_ = QColor {recommended_color ("colorNewCallBand")};
+  next_color_NewCallBand_dark_ = QColor {recommended_color ("colorNewCallBand_dark")};
+  on_txtColor_check_box_clicked (next_txtColor_);
+  on_workedColor_check_box_clicked (next_workedColor_);
 }
 
 void Configuration::impl::on_pbNewCQZ_clicked()
@@ -7141,7 +7229,7 @@ void Configuration::impl::set_application_font (QFont const& font)
         int lopp = sheet.indexOf("* { font-family:");
         if (lopp > 0) ss = sheet.mid(0,lopp);
         else {
-          QFile sf {":/qdarkstyle/style.qss"};
+          QFile sf {":/qdarkstyle/dark/darkstyle.qss"};
           if (sf.open (QFile::ReadOnly | QFile::Text))
             ss = sf.readAll () + ss;
           else {
@@ -7155,7 +7243,7 @@ void Configuration::impl::set_application_font (QFont const& font)
         ss = "";
     }
     else if (useDarkStyle_) {
-      QFile sf {":/qdarkstyle/style.qss"};
+      QFile sf {":/qdarkstyle/dark/darkstyle.qss"};
       if (sf.open (QFile::ReadOnly | QFile::Text))
         ss = sf.readAll () + ss;
       else {
@@ -7167,6 +7255,36 @@ void Configuration::impl::set_application_font (QFont const& font)
   qApp->setStyleSheet (ss + "* {" + font_as_stylesheet (font) + '}');
   for (auto& widget : qApp->topLevelWidgets ())
     {
+      /* CE3TSK: the .ui files pin ~30 widgets with hard pixel maximumSize caps chosen for the
+         original font - a larger application font cannot grow past them and the text is clipped
+         ("Rx 305 Hz" lost the Hz, "GenMsgs" the s). Raise each cap to the widget's own sizeHint,
+         which already accounts for font and content; at the design font every sizeHint is inside
+         its cap, so the layout is left exactly as it was. */
+      for (auto* child : widget->findChildren<QWidget *> ())
+        {
+          /* remember what the .ui asked for the first time we see the widget, and always work
+             from that - otherwise a font increase ratchets the limits up and a later decrease
+             cannot bring them back down, leaving the layout inflated until the next restart. */
+          if (!child->property ("jtdxLimits").isValid ())
+            {
+              child->setProperty ("jtdxLimits", QRect {child->minimumWidth (), child->minimumHeight (),
+                                                       child->maximumWidth (), child->maximumHeight ()});
+            }
+          auto const from_ui = child->property ("jtdxLimits").toRect ();
+          auto const hint = child->sizeHint ();
+          child->setMaximumWidth (from_ui.width () < QWIDGETSIZE_MAX
+                                  ? qMax (from_ui.width (), hint.width ()) : from_ui.width ());
+          child->setMaximumHeight (from_ui.height () < QWIDGETSIZE_MAX
+                                   ? qMax (from_ui.height (), hint.height ()) : from_ui.height ());
+          /* a button's label is the whole point of the button, so it must not be squeezed:
+             GenMsgs is pinned at a 60px minimum and S meter is sized oddly by its own
+             stylesheet, and both lost characters at a larger font. */
+          if (qobject_cast<QAbstractButton *> (child))
+            {
+              child->setMinimumWidth (qMax (from_ui.x (), hint.width ()));
+              child->setMinimumHeight (qMax (from_ui.y (), hint.height ()));
+            }
+        }
       widget->updateGeometry ();
     }
 }
@@ -7191,7 +7309,44 @@ void Configuration::impl::enumerate_rigs ()
         }
     }
 
+  select_stored_rig ();
+}
+
+/* CE3TSK: seat the configured rig in the combo box, and cope with it not being there.
+
+   setCurrentText() on a NON-EDITABLE combo box silently does nothing when the text is absent,
+   leaving whatever was selected before - after enumerate_rigs()'s clear() + addItem() that is
+   whatever sorted first, "ADAT www.adat.ch ADT-200A".  The configured name really can vanish
+   from the list: hamlib renames its own FLRig entry once it has talked to the radio, so
+   "FLRig " becomes "FLRig IC-7300(FLRig)", and any re-enumeration inside one process - the
+   in-place restart the language menu performs - no longer finds the stored name.
+
+   Silently selecting a DIFFERENT radio is the worst outcome, because accept() then gathers it
+   from the combo and write_settings() persists it over the real one.  So: match on the
+   manufacturer prefix, which recovers the renamed entry, else fall back to "None".
+
+   Both places that seat the stored rig come through here: enumerate_rigs() at construction,
+   and initialize_models(), which runs on every exec() of the settings dialog. */
+void Configuration::impl::select_stored_rig ()
+{
   ui_->rig_combo_box->setCurrentText (rig_params_.rig_name);
+  if (ui_->rig_combo_box->currentText () != rig_params_.rig_name)
+    {
+      /* an empty prefix matches EVERYTHING - findText ("", MatchStartsWith) returns 0 - so an
+         empty stored name would silently select whatever happens to sit first.  That is "None"
+         today only because enumerate_rigs () inserts it at 0; go there deliberately instead. */
+      auto index = rig_params_.rig_name.trimmed ().isEmpty ()
+        ? -1
+        : ui_->rig_combo_box->findText (rig_params_.rig_name, Qt::MatchStartsWith);
+      if (index < 0)
+        {
+          index = ui_->rig_combo_box->findText (TransceiverFactory::basic_transceiver_name_);
+        }
+      if (index >= 0)
+        {
+          ui_->rig_combo_box->setCurrentIndex (index);
+        }
+    }
 }
 
 void Configuration::impl::fill_port_combo_box (QComboBox * cb)

@@ -65,7 +65,6 @@
 #include "eqsl.h"
 #include "signalmeter.h"
 #include "HelpTextWindow.hpp"
-#include "SampleDownloader.hpp"
 #include "Audio/BWFFile.hpp"
 
 #include "ui_mainwindow.h"
@@ -163,7 +162,6 @@ MainWindow::MainWindow(bool multiple, QSettings * settings, QSharedMemory *shdme
                        unsigned downSampleFactor, QNetworkAccessManager * network_manager,
                        QProcessEnvironment const& env, QWidget *parent) :
   QMainWindow(parent),
-  m_exitCode {0},
   m_jtdxtime {new JTDXDateTime()},
 
   m_env {env},
@@ -742,14 +740,16 @@ MainWindow::MainWindow(bool multiple, QSettings * settings, QSharedMemory *shdme
   /* CE3TSK: the Ko-fi button, in the menu bar's right corner. The title bar itself belongs to
      the window manager, so this is the closest a Qt application can put it - and it sits on the
      line directly below, which is what the slides do with their fixed top-left button. Same
-     artwork as the About dialog, already shipped as a resource for it (contrib/kofi6.png,
-     580x146, so 24 px high is about 96 wide). Flat and unobtrusive: no frame until hovered. */
+     cup as the About dialog uses, on its own and large - a wordmark that small would not be
+     readable (contrib/support_cup_*.png, drawn by tools/make_support_button.py). Flat: no
+     frame until hovered, and the tooltip carries the words. */
   {
     auto * kofi = new QToolButton {this};
     kofi->setAutoRaise (true);
     kofi->setCursor (Qt::PointingHandCursor);
-    kofi->setIcon (QIcon {":/kofi6.png"});
-    kofi->setIconSize (QSize {96, 24});
+    kofi->setObjectName ("kofiButton");
+    kofi->setIcon (QIcon {m_useDarkStyle ? ":/support_cup_dark.png" : ":/support_cup_light.png"});
+    kofi->setIconSize (QSize {28, 28});   // the cup alone - the wordmark would be unreadable here
     kofi->setToolTip (tr ("Support JTDX_contest on Ko-fi"));
     connect (kofi, &QToolButton::clicked, this,
              [] { QDesktopServices::openUrl (QUrl {"https://ko-fi.com/ce3tsk"}); });
@@ -817,13 +817,6 @@ MainWindow::MainWindow(bool multiple, QSettings * settings, QSharedMemory *shdme
   ui->actionAcceptUDPCQ->setActionGroup(AcceptUDPGroup);
   ui->actionAcceptUDPCQ73->setActionGroup(AcceptUDPGroup);
   ui->actionAcceptUDPAny->setActionGroup(AcceptUDPGroup);
-
-  connect (ui->download_samples_action, &QAction::triggered, [this, network_manager] () {
-      if (!m_sampleDownloader) {
-          m_sampleDownloader.reset (new SampleDownloader {m_settings, &m_config, network_manager, this});
-      }
-      m_sampleDownloader->show ();
-    });
 
   QButtonGroup* txMsgButtonGroup = new QButtonGroup {this};
   txMsgButtonGroup->addButton(ui->txrb1,1);
@@ -1402,7 +1395,8 @@ void MainWindow::writeSettings()
   m_settings->setValue("TxFreq",ui->TxFreqSpinBox->value());
   m_settings->setValue("WSPRfreq",ui->WSPRfreqSpinBox->value());
   m_settings->setValue("DialFreq",QVariant::fromValue(m_lastMonitoredFrequency));
-  m_settings->setValue("OutAttenuation",ui->outAttenuation->value ());
+  m_settings->setValue("OutAttenuation",m_outAttenuationRestored ? ui->outAttenuation->value ()
+                                                                 : m_outAttenuation);   // CE3TSK
   m_settings->setValue("GUItab",ui->tabWidget->currentIndex());
   m_settings->setValue("LockTxFreq",m_lockTxFreq);
   m_settings->setValue("SkipTx1", m_skipTx1);
@@ -1439,6 +1433,43 @@ void MainWindow::readSettings()
   
   m_geometry = m_settings->value ("geometry",saveGeometry()).toByteArray();
   restoreGeometry(m_geometry);
+  /* CE3TSK: a geometry saved when the window was dragged small, or with a smaller font,
+     can be below what the layout needs and Qt then crushes the children. sizeHint() is
+     what the layout wants and it tracks the application font; a larger saved size is
+     kept as it is. See UI_DARK_STYLE.md. */
+  resize (size ().expandedTo (sizeHint ()));
+  /* CE3TSK: mainwindow.ui pins ~30 widgets with hard pixel maximumSize caps chosen for the
+     original font, so a larger application font cannot grow past them and the text is clipped
+     ("Rx 305 Hz" loses the Hz, "GenMsgs" the s). Raise each cap to the widget's own sizeHint,
+     which already accounts for font and content - at the design font every sizeHint is inside
+     its cap, so the familiar layout is left untouched. Configuration::set_application_font does
+     the same for a font changed at run time; this covers start-up, when the font is applied
+     before this window exists. */
+  for (auto* child : findChildren<QWidget *> ())
+    {
+      /* remember what the .ui asked for the first time we see the widget, and always work
+         from that - otherwise a font increase ratchets the limits up and a later decrease
+         cannot bring them back down, leaving the layout inflated until the next restart. */
+      if (!child->property ("jtdxLimits").isValid ())
+        {
+          child->setProperty ("jtdxLimits", QRect {child->minimumWidth (), child->minimumHeight (),
+                                                   child->maximumWidth (), child->maximumHeight ()});
+        }
+      auto const from_ui = child->property ("jtdxLimits").toRect ();
+      auto const hint = child->sizeHint ();
+      child->setMaximumWidth (from_ui.width () < QWIDGETSIZE_MAX
+                              ? qMax (from_ui.width (), hint.width ()) : from_ui.width ());
+      child->setMaximumHeight (from_ui.height () < QWIDGETSIZE_MAX
+                               ? qMax (from_ui.height (), hint.height ()) : from_ui.height ());
+      /* a button's label is the whole point of the button, so it must not be squeezed:
+         GenMsgs is pinned at a 60px minimum and S meter is sized oddly by its own
+         stylesheet, and both lost characters at a larger font. */
+      if (qobject_cast<QAbstractButton *> (child))
+        {
+          child->setMinimumWidth (qMax (from_ui.x (), hint.width ()));
+          child->setMinimumHeight (qMax (from_ui.y (), hint.height ()));
+        }
+    }
   restoreState (m_settings->value ("state",saveState ()).toByteArray ());
   ui->splitter->restoreState(m_settings->value("vertSplitter").toByteArray());
   m_path = m_settings->value("MRUdir",m_config.save_directory ().absolutePath ()).toString ();
@@ -2191,7 +2222,7 @@ void MainWindow::dataSink(qint64 frames)
         if (m_autoseq && !m_manualDecode) process_Auto();
       } else {
       last=now; decode(); 
-      if(!m_lostaudio) { ui->label_6->setStyleSheet(QString("QLabel{background: %1}").arg(Radio::convert_dark("#fdedc5",m_useDarkStyle))); ui->label_6->setText(tr("Band Activity")); }
+      if(!m_lostaudio) { ui->label_6->setStyleSheet(QString("QLabel{background: %1}").arg(Radio::convert_dark("#fdedc5",m_useDarkStyle))); ui->label_6->setText(tr("Band")); }
       }
     }
     m_delay=0;
@@ -2324,6 +2355,13 @@ void MainWindow::on_actionSettings_triggered()               //Setup Dialog
       refreshSpecialOp (); /* CE3TSK: before anything below reads m_wwDigi */
       if (m_config.useDarkStyle() != m_useDarkStyle) {
         m_useDarkStyle = m_config.useDarkStyle(); setDecodeMenuColours();
+        /* CE3TSK: the decoded lines already on screen carry the colors of the style they were
+           written under, baked into their HTML - after the switch they are the wrong ones (a
+           dark country column on a white background, and worse the other way). DisplayText keeps
+           no source rows, and Radio::convert_dark clamps at 0 so it cannot be inverted, so the
+           only honest option is to start both windows again. */
+        ui->decodedTextBrowser->clear(); ui->decodedTextBrowser2->clear();
+        if(m_config.write_decoded_debug()) writeToALLTXT("Both windows cleared, triggered by dark style change");
         styleChanged();
       }
       if(m_config.my_callsign () != m_callsign) {
@@ -2537,7 +2575,7 @@ void MainWindow::monitor (bool state)
   if(m_monitoring && m_txbColorSet) { resetTxMsgBtnColor(); m_txbColorSet=false; }
 }
 
-void MainWindow::on_actionAbout_triggered() { CAboutDlg {this}.exec (); } //Display "About"
+void MainWindow::on_actionAbout_triggered() { CAboutDlg {this, m_useDarkStyle}.exec (); } //Display "About"
 
 void MainWindow::on_enableTxButton_clicked (bool checked)
 {
@@ -2777,7 +2815,7 @@ void MainWindow::displayDialFrequency ()
           if (m_mode == "JT9+JT65" && m_modeTx == "JT65") { curBand = band_name+m_modeTx; }
           else { curBand = band_name+m_mode; }
           if (m_pwrBandTxMemory.contains(curBand)) { m_PwrBandSetOK = false; ui->outAttenuation->setValue(m_pwrBandTxMemory[curBand].toInt()); m_PwrBandSetOK = true;/* printf("set power from freq %s %s %d\n",m_lastBand.toStdString().c_str(),curBand.toStdString().c_str(),m_pwrBandTxMemory[curBand].toInt());*/}
-          else { m_pwrBandTxMemory[curBand] = ui->outAttenuation->value(); }
+          else if (m_outAttenuationRestored) { m_pwrBandTxMemory[curBand] = ui->outAttenuation->value(); }   /* CE3TSK: only record a band once the slider holds a real value, never the .ui default */
       }
       startup=false;
     }
@@ -2805,7 +2843,7 @@ void MainWindow::displayDialFrequency ()
     valid = true;
   }
   if (valid) ui->labDialFreq->setStyleSheet(QString("QLabel {font-family: MS Shell Dlg 2;font-size: 18pt;background: %1;color: %2;}").arg(Radio::convert_dark("#e1e1e1",m_useDarkStyle),Radio::convert_dark("#0000ff",m_useDarkStyle)));
-  else ui->labDialFreq->setStyleSheet(QString("QLabel {font-family: MS Shell Dlg 2;font-size: 18pt;background: %1;color: %2;}").arg(Radio::convert_dark("#ff0000",m_useDarkStyle),Radio::convert_dark("#0000ff",m_useDarkStyle)));
+  else ui->labDialFreq->setStyleSheet(QString("QLabel {font-family: MS Shell Dlg 2;font-size: 18pt;background: %1;color: %2;}").arg(Radio::convert_dark("#ff0000",m_useDarkStyle),Radio::convert_dark("#000000",m_useDarkStyle)));   // CE3TSK: blue on the red alarm ground measured 2.15:1, black is 5.25:1
   ui->labDialFreq->setText (Radio::pretty_frequency_MHz_string (dial_frequency));
 
   static bool first_freq {true};
@@ -2858,6 +2896,9 @@ void MainWindow::styleChanged()
 ui->dxCallEntry->setStyleSheet(QString("QLineEdit {color: %1; background: %2}").arg(Radio::convert_dark("#000000",m_useDarkStyle),Radio::convert_dark("#ffffff",m_useDarkStyle)));
 ui->enableTxButton->setStyleSheet(QString("QPushButton{color: %1;background: %2;border-style: solid;border-width: 1px;border-color: %3;min-width: 63px;padding: 0px}").arg(Radio::convert_dark("#000000",m_useDarkStyle),
     Radio::convert_dark("#dcdcdc",m_useDarkStyle),Radio::convert_dark("#adadad",m_useDarkStyle)));
+  /* CE3TSK: the Ko-fi artwork has a light and a dark variant, swap with the style */
+  if (auto * kofi = qobject_cast<QToolButton *> (ui->menuBar->cornerWidget (Qt::TopRightCorner)))
+    kofi->setIcon (QIcon {m_useDarkStyle ? ":/support_cup_dark.png" : ":/support_cup_light.png"});
   setLastLogdLabel();
   setAutoSeqButtonStyle(m_autoseq);
   if(m_config.spot_to_dxsummit()) {
@@ -4422,9 +4463,10 @@ void MainWindow::refreshDecodePreset()
                               : !names[static_cast<int>(p)] ? QString("ensemble - the RX-only recipe of the former Ensemble preset (no menu entry)") : names[static_cast<int>(p)]->text());
 }
 
-// CE3TSK: the decoder label's count: "/D -" while the period's decode runs, "/D" when it is
-// done, "/(D+N=S) |" while the TX background runs (D from the decode, N from the background,
-// S their sum), "/(D+N=S)" when it is done
+// CE3TSK: the decoder label's count: "/D-" while the period's decode runs, "/D" when it is
+// done, "/D+N=S|" while the TX background runs (D from the decode, N from the background,
+// S their sum), "/D+N=S" when it is done - written tight, with no spaces or brackets, so the
+// trailing marker survives the clipping the label suffers at the right edge on Windows
 void MainWindow::updateDecodeLabel()
 {
   // the label is Qt::AutoText, which takes a string for rich text only when it starts with a
@@ -5104,7 +5146,7 @@ void MainWindow::readFromStdout()                             //readFromStdout
       }
       int navexdt=qAbs(100.*avexdt.toFloat());
       if(m_mode.startsWith("FT")) {
-        m_decodeLabelPrefix="UTC     dB   DT "+tr("Freq  ")+" "+tr("Avg="); m_decodeAvg=avexdt; m_decodeLabelMid=" "+tr("Lag="); m_decodeLag=slag;   // CE3TSK: coloured parts follow
+        m_decodeLabelPrefix="UTC     dB   DT "+tr("Freq  ")+" "+tr("Avg="); m_decodeAvg=avexdt; m_decodeLabelMid=tr("Lag="); m_decodeLag=slag;   // CE3TSK: coloured parts follow
         /* CE3TSK: FT4 has a TX background of its own since item 59, and this line still tested
            for FT8 alone - so m_bgPhase stayed false in FT4 and the two places that consult it
            behaved as if no background existed. The spacer was printed BEFORE FT4's late
@@ -5126,7 +5168,7 @@ void MainWindow::readFromStdout()                             //readFromStdout
             else if(navexdt>75 && navexdt<151) ui->label_6->setStyleSheet(QString("QLabel{background: %1}").arg(Radio::convert_dark("#ffff00",m_useDarkStyle)));
             else if(navexdt>150) ui->label_6->setStyleSheet(QString("QLabel{background: %1}").arg(Radio::convert_dark("#ff8000",m_useDarkStyle)));
             if(navexdt>75) ui->label_6->setText(tr("check time"));
-            else  ui->label_6->setText(tr("Band Activity"));
+            else  ui->label_6->setText(tr("Band"));
           }
           else m_lostaudio=false;
           if (ui->syncButton->isChecked()) {
@@ -5139,7 +5181,7 @@ void MainWindow::readFromStdout()                             //readFromStdout
           else if(navexdt>40 && navexdt<81) ui->label_6->setStyleSheet(QString("QLabel{background: %1}").arg(Radio::convert_dark("#ffff00",m_useDarkStyle)));
           else if(navexdt>80) ui->label_6->setStyleSheet(QString("QLabel{background: %1}").arg(Radio::convert_dark("#ff8000",m_useDarkStyle)));
           if(navexdt>40) ui->label_6->setText(tr("check time"));
-          else  ui->label_6->setText(tr("Band Activity"));
+          else  ui->label_6->setText(tr("Band"));
         }
       }
       else { ui->decodedTextLabel->setTextFormat(Qt::PlainText); ui->decodedTextLabel->setText("UTC     dB   DT "+tr("Freq  ")+" "+tr("Lag=")+slag); }
@@ -5268,7 +5310,7 @@ void MainWindow::readFromStdout()                             //readFromStdout
 	  }
       if (!decodedtext.isDebug()) m_nDecodes ++;
       if(m_rxPhase) m_nDecodesRx=m_nDecodes;
-      if(m_mode=="FT8") updateDecodeLabel();   // CE3TSK: "/D -" while decoding, "/(D+N=S) |" in the background
+      if(m_mode=="FT8") updateDecodeLabel();   // CE3TSK: "/D-" while decoding, "/D+N=S|" in the background
       auto decodedtextmsg = decodedtext.message();
       bool mycallinmsg = false;
       if (!m_baseCall.isEmpty () && Radio::base_callsign (decodedtext.call()) == m_baseCall) mycallinmsg = true;
@@ -5449,16 +5491,16 @@ void MainWindow::set_language (QString const& lang)
     JTDXMessageBox msgbox;
     msgbox.setWindowTitle(tr("Confirm change Language"));
     msgbox.setIcon(JTDXMessageBox::Question);
-    msgbox.setText(tr("Are You sure to change UI Language to English, JTDX will restart?"));
+    msgbox.setText(tr("Are You sure to change UI Language to English? JTDX will close, please start it again."));
     msgbox.setStandardButtons(JTDXMessageBox::Yes | JTDXMessageBox::No);
     msgbox.setDefaultButton(JTDXMessageBox::No);
     if (olek) {
       tolge = translator.translate("MainWindow","Confirm change Language");
       if (!tolge.isEmpty()) msgbox.setWindowTitle(tolge);
       else msgbox.setWindowTitle("Confirm change Language");
-      tolge = translator.translate("MainWindow","Are You sure to change UI Language to English, JTDX will restart?");
+      tolge = translator.translate("MainWindow","Are You sure to change UI Language to English? JTDX will close, please start it again.");
       if (!tolge.isEmpty()) msgbox.setText(tolge);
-      else msgbox.setText("Are You sure to change UI Language to English, JTDX will restart?");
+      else msgbox.setText("Are You sure to change UI Language to English? JTDX will close, please start it again.");
       tolge = translator.translate("JTDXMessageBox","&Yes");
       if (!tolge.isEmpty()) msgbox.button(JTDXMessageBox::Yes)->setText(tolge);
       else msgbox.button(JTDXMessageBox::Yes)->setText("&Yes");
@@ -5467,8 +5509,9 @@ void MainWindow::set_language (QString const& lang)
       else msgbox.button(JTDXMessageBox::No)->setText("&No");
     }
     if(msgbox.exec() == JTDXMessageBox::Yes) {
+            /* CE3TSK: the chosen language is persisted by writeSettings() from closeEvent();
+               closing normally is all that is needed - the operator restarts the program. */
             m_lang = lang;
-            m_exitCode = 1337;
             QMainWindow::close();
     }
   }
@@ -6072,7 +6115,9 @@ void MainWindow::guiUpdate()
     m_sec0=nsec;
     if(!m_monitoring and !m_diskData) ui->signal_meter_widget->setValue(0);
     displayDialFrequency ();
-    if (m_geometry_restored > 0) { m_geometry_restored -=1; if (m_geometry_restored == 0) restoreGeometry (m_geometry);}
+    if (m_geometry_restored > 0) { m_geometry_restored -=1;
+      /* CE3TSK: the delayed re-restore would undo the clamp applied at start-up */
+      if (m_geometry_restored == 0) { restoreGeometry (m_geometry); resize (size ().expandedTo (sizeHint ())); } }
     /* CE3TSK: the safety net behind ndecreq. The request counter should make a lost decode
        impossible; this catches anything that still wedges the pair - the decoder killed, a
        shared-memory mishap - and turns a dead session into one lost period. Recreating .lock
@@ -7840,12 +7885,12 @@ void MainWindow::commonActions ()
   else t = "UTC   dB   DT "+tr("Freq   Message");
   ui->decodedTextLabel->setTextFormat(Qt::PlainText); ui->decodedTextLabel->setText(t);
   ui->label_6->setStyleSheet(QString("QLabel{background: %1}").arg(Radio::convert_dark("#fdedc5",m_useDarkStyle)));
-  ui->label_6->setText(tr("Band Activity"));
+  ui->label_6->setText(tr("Band"));
   ui->decodedTextLabel2->setText(t);
   m_wideGraph->setPeriod(m_TRperiod,m_nsps);
   if (m_tci) Q_EMIT m_config.transceiver_period(m_TRperiod); // TODO - not thread safe
   else {m_modulator->setPeriod(m_TRperiod); m_detector->setPeriod(m_TRperiod); }  // TODO - not thread safe
-  ui->label_6->setText(tr("Band Activity"));
+  ui->label_6->setText(tr("Band"));
   ui->label_7->setText(tr("Rx Frequency"));
   ui->TxMinuteButton->setEnabled(true);
   setMinButton();
@@ -7907,7 +7952,7 @@ void MainWindow::WSPR_config(bool b)
   if(b) {
     ui->decodedTextLabel->setTextFormat(Qt::PlainText); ui->decodedTextLabel->setText("UTC    dB   DT "+tr("    Freq     Drift  Call          Grid    dBm   Dist"));
     ui->label_6->setStyleSheet(QString("QLabel{background: %1}").arg(Radio::convert_dark("#fdedc5",m_useDarkStyle)));
-    ui->label_6->setText(tr("Band Activity"));
+    ui->label_6->setText(tr("Band"));
     if (m_config.is_transceiver_online ()) {
       Q_EMIT m_config.transceiver_tx_frequency (0); // turn off split
     }
@@ -7918,7 +7963,7 @@ void MainWindow::WSPR_config(bool b)
     else t = "UTC   dB   DT "+tr("Freq   Message");
     ui->decodedTextLabel->setTextFormat(Qt::PlainText); ui->decodedTextLabel->setText(t);
     ui->label_6->setStyleSheet(QString("QLabel{background: %1}").arg(Radio::convert_dark("#fdedc5",m_useDarkStyle)));
-    ui->label_6->setText(tr("Band Activity"));
+    ui->label_6->setText(tr("Band"));
     m_bSimplex = false;
   }
   enable_DXCC_entity ();  // sets text window proportions and (re)inits the logbook
@@ -8168,7 +8213,15 @@ void MainWindow::band_changed (Frequency f)
     setRig ();
     setXIT (ui->TxFreqSpinBox->value ());
     qint64 fDelta = m_lastDisplayFreq - m_freqNominal;
-    if (ui->outAttenuation->value() == 1 && m_outAttenuation != 1 ) {ui->outAttenuation->setValue (m_outAttenuation); m_outAttenuation = 1;}
+    /* CE3TSK: was `... && m_outAttenuation != 1) {setValue (m_outAttenuation); m_outAttenuation = 1;}`,
+       which used m_outAttenuation itself as the "already done" sentinel and so could not tell
+       "not restored yet" from "restored, and the value is 1".  writeSettings needs that
+       distinction to avoid saving the slider's .ui default over a good stored value. */
+    if (!m_outAttenuationRestored)
+      {
+        if (ui->outAttenuation->value () == 1) ui->outAttenuation->setValue (m_outAttenuation);
+        m_outAttenuationRestored = true;
+      }
     if (qAbs(fDelta)>1000000) {
         m_qsoHistory.init(); if(m_config.write_decoded_debug()) writeToALLTXT("QSO history initialized by band_changed");
         clearDX (" cleared, triggered by erase both windows option upon band change, delta frequency"); // Request from Boris UX8IW
@@ -8182,7 +8235,7 @@ void MainWindow::band_changed (Frequency f)
             if (m_mode == "JT9+JT65" && m_modeTx == "JT65") { curBand = m_config.bands ()->find (m_freqNominal)+m_modeTx; }
             else { curBand = m_config.bands ()->find (m_freqNominal)+m_mode; }
             if (m_pwrBandTxMemory.contains(curBand)) { m_PwrBandSetOK = false; ui->outAttenuation->setValue(m_pwrBandTxMemory[curBand].toInt()); m_PwrBandSetOK = true;/* printf("set power from bandchange % lld %lld %s %d\n",m_lastDisplayFreq,m_freqNominal,curBand.toStdString().c_str(),m_pwrBandTxMemory[curBand].toInt());*/}
-            else { m_pwrBandTxMemory[curBand] = ui->outAttenuation->value(); }
+            else if (m_outAttenuationRestored) { m_pwrBandTxMemory[curBand] = ui->outAttenuation->value(); }   /* CE3TSK: only record a band once the slider holds a real value, never the .ui default */
         }
         ui->bandComboBox->setCurrentText (m_config.bands ()->find (m_freqNominal));
         m_wideGraph->setRxBand (m_config.bands ()->find (m_freqNominal));
@@ -8541,7 +8594,7 @@ void MainWindow::on_pbTxMode_clicked()
       if (m_mode == "JT9+JT65" && m_modeTx == "JT65") { curBand = ui->bandComboBox->currentText()+m_modeTx; }
       else { curBand = ui->bandComboBox->currentText()+m_mode; }
       if (m_pwrBandTxMemory.contains(curBand)) { ui->outAttenuation->setValue(m_pwrBandTxMemory[curBand].toInt()); }
-      else { m_pwrBandTxMemory[curBand] = ui->outAttenuation->value(); }
+      else if (m_outAttenuationRestored) { m_pwrBandTxMemory[curBand] = ui->outAttenuation->value(); }   /* CE3TSK: only record a band once the slider holds a real value, never the .ui default */
   }
   m_wideGraph->setModeTx(m_modeTx);
   statusChanged();
@@ -8881,6 +8934,7 @@ void MainWindow::transmit (double snr)
 
 void MainWindow::on_outAttenuation_valueChanged (int a)
 {
+  m_outAttenuationRestored = true;   // CE3TSK: the slider now holds a real value, save it as is
   QString tt_str; int areversed=450-a;
   qreal dBAttn {areversed / 10.};       // slider interpreted as dB / 100
   QString curBand;

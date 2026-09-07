@@ -322,7 +322,7 @@ subroutine jt9files(offset,nfiles,mode,ndepth,flow,fsplit,fhigh,nrxfreq,ncycles,
   use ft8_mod1, only : dd8
   use ft4_mod1, only : dd4
   include 'jt9com.f90'
-  integer, intent(inout) :: mode   ! CE3TSK: JTDX_FILE_MODES may switch it per file
+  integer, intent(in) :: mode   ! CE3TSK review 2026-09-05: JTDX_FILE_MODES switches a loop-local copy (modecur), never this
   integer, intent(in) :: offset,nfiles,ndepth,flow,fsplit,fhigh,nrxfreq,     &
        ncycles,nswlcycles,nsens,nrxfsens,naggr,ncandthin,nthreads,nensemble,nbgeffort,nbgbudget,nrxbudget,   &
        nbgswl,nbgcycles,nbgswlcycles,nbgosd,nbgtwo,nbgalt,nbgens,nbgsens,nbgrxf,nbgclassic
@@ -342,8 +342,9 @@ subroutine jt9files(offset,nfiles,mode,ndepth,flow,fsplit,fhigh,nrxfreq,ncycles,
   integer, allocatable :: i4(:)
   character(len=500) :: infile
   integer :: iarg,arglen,i1,nutc,npts1,nsamp,nbytes,nblocks,nlastsam,ios
-  integer :: modeprev,lmodes,imodes   ! CE3TSK: JTDX_FILE_MODES
-  character(len=64) :: filemodes
+  integer :: modecur,modelast,lmodes,imodes   ! CE3TSK: JTDX_FILE_MODES - this file's mode, the last decoded file's mode
+  integer :: ndelayfile   ! CE3TSK: JTDX_NDELAY_FILE
+  character(len=256) :: filemodes
 
   if(mode.ne.8 .and. mode.ne.4) then
      print*,'jt9files: file decoding supports FT8 (-8) and FT4 (-4) only'
@@ -355,21 +356,31 @@ subroutine jt9files(offset,nfiles,mode,ndepth,flow,fsplit,fhigh,nrxfreq,ncycles,
 ! decoder sees lmodechanged); file mode could only ever run one mode per process, so that
 ! sequence was untestable under -fcheck or valgrind. Diagnostic hook, no effect unless set.
   call get_environment_variable('JTDX_FILE_MODES',filemodes,lmodes,imodes)
+  if(imodes.eq.-1) print*,'jt9files: JTDX_FILE_MODES is longer than ',len(filemodes),' characters - ignored'
   if(imodes.ne.0) lmodes=0
+  modelast=mode   ! CE3TSK review: the mode of the last file actually decoded - the first file reports no change, as before
   do iarg=offset+1,offset+nfiles
-     modeprev=mode
+     ! CE3TSK review: every file starts from the command-line mode, so a list longer than the digit
+     ! string (or a character other than 8/4) falls back to -8/-4 instead of inheriting the previous
+     ! file's override; mode itself is never written
+     modecur=mode
      if(lmodes.ge.iarg-offset) then
-        if(filemodes(iarg-offset:iarg-offset).eq.'8') mode=8
-        if(filemodes(iarg-offset:iarg-offset).eq.'4') mode=4
+        if(filemodes(iarg-offset:iarg-offset).eq.'8') modecur=8
+        if(filemodes(iarg-offset:iarg-offset).eq.'4') modecur=4
      endif
      call get_command_argument(iarg,infile,arglen)
-     infile=infile(:arglen)
+     ! CE3TSK review: arglen is the argument's full length even when it was truncated into infile,
+     ! so the old infile=infile(:arglen) was a substring fault under -fcheck for a path over 500
+     ! characters (and a no-op otherwise); such a file is skipped with a message instead
+     if(arglen.gt.len(infile)) then
+        print*,'jt9files: argument',iarg-offset,' is longer than ',len(infile),' characters - skipped'; cycle
+     endif
      call wav%read(infile)
      if(wav%audio_format%sample_rate.ne.12000) then
         print*,'jt9files: ',trim(infile),' is not 12000 Hz - skipped'
         close(unit=wav%lun); cycle
      endif
-     if(mode.eq.8) then; npts1=180000; else; npts1=73728; endif
+     if(modecur.eq.8) then; npts1=180000; else; npts1=73728; endif
      nbytes=wav%audio_format%bits_per_sample/8
      nsamp=min(npts1,wav%data_size/nbytes)
      dd(1:npts1)=0.
@@ -400,7 +411,7 @@ subroutine jt9files(offset,nfiles,mode,ndepth,flow,fsplit,fhigh,nrxfreq,ncycles,
 1    continue
 
      ! what jt9a() does for a disk file: FT8 decodes only the first nblocks*3456 samples
-     if(mode.eq.8) then
+     if(modecur.eq.8) then
         if(lswl) then; nblocks=51; else if(learly) then; nblocks=48; else; nblocks=49; endif
         nlastsam=nblocks*3456
         dd(nlastsam+1:npts1)=0.
@@ -429,7 +440,7 @@ subroutine jt9files(offset,nfiles,mode,ndepth,flow,fsplit,fhigh,nrxfreq,ncycles,
      endif
      params%nftx=nrxfreq
      params%nutc=nutc
-     params%ntrperiod=15; if(mode.eq.4) params%ntrperiod=8
+     params%ntrperiod=15; if(modecur.eq.4) params%ntrperiod=8
      params%nfqso=nrxfreq
      params%npts8=74736
      params%nfa=flow
@@ -443,8 +454,8 @@ subroutine jt9files(offset,nfiles,mode,ndepth,flow,fsplit,fhigh,nrxfreq,ncycles,
      params%ndtcenter=0
      params%nft8cycles=ncycles
      params%nft8swlcycles=nswlcycles
-     params%ntxmode=mode
-     params%nmode=mode
+     params%ntxmode=modecur
+     params%nmode=modecur
      params%nlist=0
      params%nranera=3
      params%ntrials10=1
@@ -464,9 +475,22 @@ subroutine jt9files(offset,nfiles,mode,ndepth,flow,fsplit,fhigh,nrxfreq,ncycles,
 ! interval the GUI reports when monitoring starts mid-period (partintft4/partintft8 shuffle the
 ! buffer and fill the gap with noise); never set by file mode otherwise, so the path was
 ! untestable here. Diagnostic hook, decodes unchanged without it.
+! CE3TSK review 2026-09-05: applied to ONE file of the list - the first, or the k-th with
+! JTDX_NDELAY_FILE=k - as the GUI sets m_delay on the single interval where monitoring started and
+! clears it after that decode (mainwindow.cpp ~2197, ~2522). Applied to every file it also skipped
+! the avexdt update (decoder.f90 skips it while ndelay is set) for the whole run, so the sequence
+! the hook exists to test - one partial interval, then normal ones - could not be produced.
      call get_environment_variable('JTDX_NDELAY',envval,lenv,ienv)
      if(ienv.eq.0 .and. lenv.gt.0) then
-        read(envval(1:lenv),*,iostat=ienv) nbandfile; if(ienv.eq.0) params%ndelay=max(0,min(50,nbandfile))
+        read(envval(1:lenv),*,iostat=ienv) nbandfile
+        if(ienv.eq.0) then
+           ndelayfile=1
+           call get_environment_variable('JTDX_NDELAY_FILE',envval,lenv,ienv)
+           if(ienv.eq.0 .and. lenv.gt.0) then
+              read(envval(1:lenv),*,iostat=ienv) ndelayfile; if(ienv.ne.0) ndelayfile=1
+           endif
+           if(iarg-offset.eq.ndelayfile) params%ndelay=max(0,min(50,nbandfile))
+        endif
      endif
      params%nmt=nthreads
      params%nft8rxfsens=nrxfsens
@@ -481,11 +505,11 @@ subroutine jt9files(offset,nfiles,mode,ndepth,flow,fsplit,fhigh,nrxfreq,ncycles,
      params%lft4altpass=lalt
      params%nft4ensemble=nensemble
      params%nft4bgensemble=0
-     if(mode.eq.4 .and. nbgens.gt.0) params%nft4bgensemble=min(6,nbgens)   ! CE3TSK item 59: -V = the background's target member count in FT4
+     if(modecur.eq.4 .and. nbgens.gt.0) params%nft4bgensemble=min(6,nbgens)   ! CE3TSK item 59: -V = the background's target member count in FT4
      ! CE3TSK item 78: -B 1 is the FT4 TX background switch exactly as it is FT8's (nft8bgeffort); -V alone
      ! no longer implies a background, and -B 1 with -V at or below -M runs the phase's extras alone
-     params%nft4bgeffort=merge(1,0,mode.eq.4 .and. nbgeffort.ne.0)
-     if(mode.eq.4) then   ! CE3TSK item 73: -M auto (-1) and -V auto (-1) resolve by the thread ladder, as the GUI does
+     params%nft4bgeffort=merge(1,0,modecur.eq.4 .and. nbgeffort.ne.0)
+     if(modecur.eq.4) then   ! CE3TSK item 73: -M auto (-1) and -V auto (-1) resolve by the thread ladder, as the GUI does
         if(nensemble.eq.-1) params%nft4ensemble=ft4_members_auto(decoder_threads(nthreads,omp_get_num_procs()))
         if(nbgens.eq.-3) params%nft4bgensemble=ft4_bg_auto(decoder_threads(nthreads,omp_get_num_procs()))
      endif
@@ -540,7 +564,7 @@ subroutine jt9files(offset,nfiles,mode,ndepth,flow,fsplit,fhigh,nrxfreq,ncycles,
      params%lmycallstd=(len_trim(mycall).gt.0)
      params%lhiscallstd=(len_trim(hiscall).gt.0)
      params%lapmyc=.false.
-     params%lmodechanged=(mode.ne.modeprev)   ! CE3TSK: JTDX_FILE_MODES switched it, as the GUI reports a mode change
+     params%lmodechanged=(modecur.ne.modelast)   ! CE3TSK: JTDX_FILE_MODES switched it since the last DECODED file (a skipped file does not count), as the GUI reports a mode change
      params%lbandchanged=.false.
      ! CE3TSK test hook: JTDX_BANDCHANGE=n flags a band change on the n-th file of the list (the
      ! decoder then empties its hint and call/DT lists, as after a real band change)
@@ -562,12 +586,12 @@ subroutine jt9files(offset,nfiles,mode,ndepth,flow,fsplit,fhigh,nrxfreq,ncycles,
      params%lft8twopass=ltwo
      params%lft8altpass=lalt
      params%nft8ensemble=nensemble
-     params%nft8bgeffort=merge(nbgeffort,0,mode.eq.8)   ! item 78: -B reaches one mode's switch, as the GUI sends it
+     params%nft8bgeffort=merge(nbgeffort,0,modecur.eq.8)   ! item 78: -B reaches one mode's switch, as the GUI sends it
      params%nbgmargin=10; params%nbgbudget=nbgbudget
      ! CE3TSK item 80 review: the RX budget's default is per mode - 2.7 s for FT8 (P8), 1.3 s for FT4 against its
      ! 1.36 s reply deadline (the GUI sends FT4RXBudget=13); -l TENTHS overrides either. The variable's 27 initial
      ! value used to reach FT4 as it was, so `-M budget` without -l ran a 2.7 s budget there
-     params%nrxbudget=nrxbudget; if(mode.eq.4 .and. .not.lrxbudgetset) params%nrxbudget=13
+     params%nrxbudget=nrxbudget; if(modecur.eq.4 .and. .not.lrxbudgetset) params%nrxbudget=13
      params%lbgswl=(nbgswl.ne.0); params%nft8bgcycles=nbgcycles; params%nft8bgswlcycles=nbgswlcycles
      params%lbgdeeposd=(nbgosd.ne.0); params%lbgtwopass=(nbgtwo.ne.0); params%lbgaltpass=(nbgalt.ne.0)
      params%nft8bgensemble=merge(-1,nbgens,nbgens.eq.-3); params%lbglowth=(nbgsens.ge.1); params%lbgsubpass=(nbgsens.ge.2)   ! item 73: the typed 'auto' is FT8's -1
@@ -578,6 +602,7 @@ subroutine jt9files(offset,nfiles,mode,ndepth,flow,fsplit,fhigh,nrxfreq,ncycles,
      ! "decode finished, you may exit" handshake); create it so file mode does not idle
      open(unit=98,file=trim(temp_dir)//'/.lock',status='replace'); close(98)
      call multimode_decoder(params)
+     modelast=modecur   ! CE3TSK review: only a decoded file counts for the next file's lmodechanged
      call flush(6)
      if(params%nft4bgeffort.ne.0) then
         ! CE3TSK: the FT4 TX background (item 59, -B 1 since item 78); JTDX_BG_LOCK=1 runs it under the GUI's abort rules
@@ -585,7 +610,7 @@ subroutine jt9files(offset,nfiles,mode,ndepth,flow,fsplit,fhigh,nrxfreq,ncycles,
         nbg4run=2; if(ilock.eq.0 .and. llock.gt.0) nbg4run=1
         call multimode_decoder(params); nbg4run=0; call flush(6)
      endif
-     if(nbgeffort.ne.0 .and. mode.eq.8) then   ! CE3TSK: the background phase, explicitly nbgeffort units (-1: all), no clock
+     if(nbgeffort.ne.0 .and. modecur.eq.8) then   ! CE3TSK: the background phase, explicitly nbgeffort units (-1: all), no clock
         ! JTDX_BG_LOCK=1: run it under the GUI's rules instead - the budget in auto, and an abort when
         ! temp_dir/.lock disappears (test/decode/bgabort.sh removes it mid-way)
         call get_environment_variable('JTDX_BG_LOCK',lockenv,llock,ilock)

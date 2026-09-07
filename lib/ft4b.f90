@@ -100,7 +100,16 @@ subroutine ft4b(f0,snrc,nQSOProgress,nfqso,ndepth,stophint,swl,lswl,nthr,isp,dob
       a=0.
       a(1)=real(idf)
       ctwk=1.
-      call twkfreq1(ctwk,0,2*NSS,2*NSS,fs/2.0,a,ctwk2(:,idf))
+! CE3TSK 2026-09-05: twkfreq1 fills cb(nbot:npts) - "do i=0,npts" - so with npts=ntop=2*NSS it wrote
+! 65 elements into the 64-element column ctwk2(:,idf) (and read ctwk(65)). Column idf+1's first
+! element was overwritten by the next iteration, so the tables were never wrong, but the last
+! column (idf=16) ran 8 bytes past the end of ctwk2. As a static array that landed in whatever
+! followed it; threadprivate under MinGW's emulated TLS it is an exactly-sized heap block, and
+! the overrun hit the next block's header: STATUS_HEAP_CORRUPTION (c0000374) at the first
+! malloc after it - the allocate in ft4_downsample, on the first FT4 candidate of the first
+! period. -fcheck=bounds cannot see it (an explicit-shape dummy sized by the caller). Last
+! index 2*NSS-1: 64 elements, the same cumulative product, bit-identical tables.
+      call twkfreq1(ctwk,0,2*NSS-1,2*NSS-1,fs/2.0,a,ctwk2(:,idf))
     enddo
 
     mcq=2*mod(mcq+rvec(1:29),2)-1
