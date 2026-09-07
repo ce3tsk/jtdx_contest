@@ -11,7 +11,12 @@ set (CPACK_PACKAGE_INSTALL_DIRECTORY "@WSJTX_VERSION_PATCH@")
 else()
 set (CPACK_PACKAGE_INSTALL_DIRECTORY ${CPACK_PACKAGE_NAME})
 endif()
-set (CPACK_PACKAGE_EXECUTABLES jtdx "@PROJECT_NAME@")
+# CE3TSK: the Start Menu and desktop shortcut are named JTDX_contest, not "@PROJECT_NAME@"
+# (which is "JTDX"). Two reasons, the same ones behind the jtdx_contest.desktop rename on
+# Linux: the old name collides with a stock JTDX installation, and because Windows caches
+# shortcut icons by target path, an unchanged .lnk keeps showing the previous icon however
+# often the exe is rebuilt. A new shortcut name sidesteps both.
+set (CPACK_PACKAGE_EXECUTABLES jtdx "JTDX_contest")
 set (CPACK_CREATE_DESKTOP_LINKS jtdx)
 set (CPACK_STRIP_FILES TRUE)
 

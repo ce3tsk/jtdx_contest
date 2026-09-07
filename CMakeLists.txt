@@ -145,8 +145,14 @@ message (STATUS "******************************************************")
 #
 
 if (APPLE)
-  set (CMAKE_INSTALL_BINDIR ${CMAKE_PROJECT_NAME}.app/Contents/MacOS)
-  set (CMAKE_INSTALL_DATAROOTDIR ${CMAKE_PROJECT_NAME}.app/Contents/Resources)
+  # CE3TSK: the bundle is JTDX_contest.app, not jtdx.app - the same collision fix as the
+  # jtdx_contest.desktop rename on Linux and the JTDX_contest shortcut on Windows: a stock JTDX
+  # install owns /Applications/jtdx.app and the two would overwrite each other.
+  # WSJTX_BUNDLE_NAME was already referenced by Darwin/postflight.sh.in and CPACK_BUNDLE_NAME but
+  # was never SET anywhere, so both expanded to empty; defining it here fixes that too.
+  set (WSJTX_BUNDLE_NAME JTDX_contest)
+  set (CMAKE_INSTALL_BINDIR ${WSJTX_BUNDLE_NAME}.app/Contents/MacOS)
+  set (CMAKE_INSTALL_DATAROOTDIR ${WSJTX_BUNDLE_NAME}.app/Contents/Resources)
 endif ()
 
 include (GNUInstallDirs)
@@ -1220,11 +1226,20 @@ set_target_properties (jtdx PROPERTIES
   MACOSX_BUNDLE_BUNDLE_VERSION ${wsjtx_VERSION}
   MACOSX_BUNDLE_SHORT_VERSION_STRING "v${wsjtx_VERSION}"
   MACOSX_BUNDLE_LONG_VERSION_STRING "Version ${wsjtx_VERSION}"
-  MACOSX_BUNDLE_BUNDLE_NAME "${PROJECT_NAME}"
-  MACOSX_BUNDLE_BUNDLE_EXECUTABLE_NAME "${PROJECT_NAME}"
+  MACOSX_BUNDLE_BUNDLE_NAME "JTDX_contest"                 # CE3TSK: was ${PROJECT_NAME} = JTDX
+  MACOSX_BUNDLE_BUNDLE_EXECUTABLE_NAME "JTDX_contest"       # CE3TSK: must match OUTPUT_NAME below
   MACOSX_BUNDLE_COPYRIGHT "${PROJECT_COPYRIGHT}"
-  MACOSX_BUNDLE_GUI_IDENTIFIER "tech.jtdx"
+  # CE3TSK: LaunchServices keys on CFBundleIdentifier - sharing tech.jtdx with a stock install
+  # makes the two fight over file associations, "Open With" and the icon cache.
+  MACOSX_BUNDLE_GUI_IDENTIFIER "tech.jtdx.contest"
   )
+
+# CE3TSK: the .app directory takes its name from the target's output name, so it has to move in
+# lockstep with CMAKE_INSTALL_BINDIR above - otherwise the helper binaries install into
+# JTDX_contest.app/Contents/MacOS while the bundle itself is still jtdx.app.
+if (APPLE)
+  set_target_properties (jtdx PROPERTIES OUTPUT_NAME "${WSJTX_BUNDLE_NAME}")
+endif ()
 
 target_include_directories (jtdx PRIVATE ${FFTW3_INCLUDE_DIRS})
 if (APPLE)
