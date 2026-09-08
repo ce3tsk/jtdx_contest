@@ -51,6 +51,56 @@
         <source>About JTDX_contest</source>
         <translation>À propos de JTDX_contest</translation>
     </message>
+    <message>
+        <location filename="../about.cpp"/>
+        <source>JTDX Contest Edition</source>
+        <translation>JTDX Édition Concours</translation>
+    </message>
+    <message>
+        <location filename="../about.cpp"/>
+        <source>Designed, built and measured by &lt;b&gt;Tihomir Sokcevic, CE3TSK&lt;/b&gt;, Santiago de Chile, 2025-2026</source>
+        <translation>Conçu, développé et mesuré par &lt;b&gt;Tihomir Sokcevic, CE3TSK&lt;/b&gt;, Santiago du Chili, 2025-2026</translation>
+    </message>
+    <message>
+        <location filename="../about.cpp"/>
+        <source>A rebuilt FT8 and FT4 decoder - alternate pass, ensemble, pipelined RX phase and TX&lt;br&gt;background, four-period hint memory, fixed data races, measured presets - and built-in&lt;br&gt;support for the WW Digi DX Contest: the grid exchange, points and multipliers, a separate&lt;br&gt;contest log, contest-aware autoselect. Every number behind it comes from recorded audio&lt;br&gt;and a script in the tree. The GUI has been repaired throughout and the dark style now works.</source>
+        <translation>Un décodeur FT8 et FT4 reconstruit : passe alternative, ensemble, phase RX en pipeline et&lt;br&gt;arrière-plan TX, mémoire d'indices sur quatre périodes, courses de données corrigées, presets&lt;br&gt;mesurés - et prise en charge intégrée du WW Digi DX Contest : l'échange de locator, les points&lt;br&gt;et les multiplicateurs, un log de concours séparé, une autosélection qui connaît les règles.&lt;br&gt;Chaque chiffre vient d'un enregistrement et d'un script de l'arbre. L'interface a été réparée partout et le style sombre fonctionne désormais.</translation>
+    </message>
+    <message>
+        <location filename="../about.cpp"/>
+        <source>&amp;copy; 2025-2026 Tihomir Sokcevic, CE3TSK (the decoder work, the contest support, the measurements and the documents).</source>
+        <translation>&amp;copy; 2025-2026 Tihomir Sokcevic, CE3TSK (le travail sur le décodeur, la prise en charge du concours, les mesures et les documents).</translation>
+    </message>
+    <message>
+        <location filename="../about.cpp"/>
+        <source>&lt;b&gt;Thanks to the operators who beta tested the first release candidates&lt;/b&gt; on the air:</source>
+        <translation>&lt;b&gt;Merci aux opérateurs qui ont testé les premières versions candidates&lt;/b&gt; sur l'air :</translation>
+    </message>
+    <message>
+        <location filename="../about.cpp"/>
+        <source>&lt;b&gt;Derivative work of JTDX&lt;/b&gt; by Igor Chernikov, UA3DJY, and Arvo J&amp;auml;rve, ES1JA, &amp;copy; 2016-2022,&lt;br&gt;created with contributions from</source>
+        <translation>&lt;b&gt;Œuvre dérivée de JTDX&lt;/b&gt; d'Igor Chernikov, UA3DJY, et Arvo J&amp;auml;rve, ES1JA, &amp;copy; 2016-2022,&lt;br&gt;créée avec les contributions de</translation>
+    </message>
+    <message>
+        <location filename="../about.cpp"/>
+        <source>YL3GBC family and LY3BG family: Vytas and Rimas Kudelis.</source>
+        <translation>La famille YL3GBC et la famille LY3BG : Vytas et Rimas Kudelis.</translation>
+    </message>
+    <message>
+        <location filename="../about.cpp"/>
+        <source>&lt;b&gt;JTDX is derived from WSJT-X&lt;/b&gt; (forked from WSJT-X v1.7 r6462; FT8 code from v1.8 and v2.0,&lt;br&gt;FT4 from v2.1, WSPR from v2.1.2), &amp;copy; 2001-2022 by Joe Taylor, K1JT, Bill Somerville, G4WJS,&lt;br&gt;Steve Franke, K9AN, and Nico Palermo, IV3NWV.</source>
+        <translation>&lt;b&gt;JTDX est dérivé de WSJT-X&lt;/b&gt; (issu de WSJT-X v1.7 r6462 ; code FT8 des v1.8 et v2.0,&lt;br&gt;FT4 de v2.1, WSPR de v2.1.2), &amp;copy; 2001-2022 par Joe Taylor, K1JT, Bill Somerville, G4WJS,&lt;br&gt;Steve Franke, K9AN, et Nico Palermo, IV3NWV.</translation>
+    </message>
+    <message>
+        <location filename="../about.cpp"/>
+        <source>Supports FT8, FT4, JT9, T10 and JT65A for HF amateur radio communication.</source>
+        <translation>Prend en charge FT8, FT4, JT9, T10 et JT65A pour le radioamateurisme en HF.</translation>
+    </message>
+    <message>
+        <location filename="../about.cpp"/>
+        <source>JTDX_contest, JTDX and WSJT-X are licensed under the terms of Version 3&lt;br&gt;of the GNU General Public License (GPL)</source>
+        <translation>JTDX_contest, JTDX et WSJT-X sont distribués selon les termes de la version 3&lt;br&gt;de la Licence publique générale GNU (GPL)</translation>
+    </message>
 </context>
 <context>
     <name>CallsignDialog</name>

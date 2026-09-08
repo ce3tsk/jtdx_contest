@@ -2,6 +2,7 @@
 
 A fork of **JTDX v2.2.159** (itself derived from **WSJT-X**) with an enhanced FT8
 and rebuilt FT4 decoder, and built-in support for the **WW Digi DX Contest**.
+The GUI has been repaired throughout and the dark style now works.
 
 Designed, built and measured by **Tihomir Sokcevic, CE3TSK** — Santiago de Chile,
 2025–2026 · [https://ce3tsk.com](https://ce3tsk.com) · source code: [https://github.com/ce3tsk/jtdx\_contest](https://github.com/ce3tsk/jtdx_contest)

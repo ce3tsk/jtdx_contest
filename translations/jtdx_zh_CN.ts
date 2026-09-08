@@ -51,6 +51,56 @@
         <source>About JTDX_contest</source>
         <translation>关于 JTDX_contest</translation>
     </message>
+    <message>
+        <location filename="../about.cpp"/>
+        <source>JTDX Contest Edition</source>
+        <translation>JTDX 竞赛版</translation>
+    </message>
+    <message>
+        <location filename="../about.cpp"/>
+        <source>Designed, built and measured by &lt;b&gt;Tihomir Sokcevic, CE3TSK&lt;/b&gt;, Santiago de Chile, 2025-2026</source>
+        <translation>由 &lt;b&gt;Tihomir Sokcevic, CE3TSK&lt;/b&gt; 设计、构建并测量，智利圣地亚哥，2025-2026</translation>
+    </message>
+    <message>
+        <location filename="../about.cpp"/>
+        <source>A rebuilt FT8 and FT4 decoder - alternate pass, ensemble, pipelined RX phase and TX&lt;br&gt;background, four-period hint memory, fixed data races, measured presets - and built-in&lt;br&gt;support for the WW Digi DX Contest: the grid exchange, points and multipliers, a separate&lt;br&gt;contest log, contest-aware autoselect. Every number behind it comes from recorded audio&lt;br&gt;and a script in the tree. The GUI has been repaired throughout and the dark style now works.</source>
+        <translation>重建的 FT8 与 FT4 解码器：交替通道、集成解码、流水线化的 RX 阶段与 TX 后台、&lt;br&gt;四个周期的提示记忆、已修复的数据竞争、经过实测的预设，并内置 WW Digi DX Contest&lt;br&gt;支持：网格交换、得分与倍乘、独立的竞赛日志，以及了解规则的自动选择。其中每一个&lt;br&gt;数字都来自录制的音频和源码树中的脚本。&lt;br&gt;图形界面已全面修复，深色样式现已正常工作。</translation>
+    </message>
+    <message>
+        <location filename="../about.cpp"/>
+        <source>&amp;copy; 2025-2026 Tihomir Sokcevic, CE3TSK (the decoder work, the contest support, the measurements and the documents).</source>
+        <translation>&amp;copy; 2025-2026 Tihomir Sokcevic, CE3TSK（解码器工作、竞赛支持、测量与文档）。</translation>
+    </message>
+    <message>
+        <location filename="../about.cpp"/>
+        <source>&lt;b&gt;Thanks to the operators who beta tested the first release candidates&lt;/b&gt; on the air:</source>
+        <translation>&lt;b&gt;感谢在空中对首批候选版本进行 Beta 测试的操作员&lt;/b&gt;：</translation>
+    </message>
+    <message>
+        <location filename="../about.cpp"/>
+        <source>&lt;b&gt;Derivative work of JTDX&lt;/b&gt; by Igor Chernikov, UA3DJY, and Arvo J&amp;auml;rve, ES1JA, &amp;copy; 2016-2022,&lt;br&gt;created with contributions from</source>
+        <translation>&lt;b&gt;JTDX 的衍生作品&lt;/b&gt;，作者 Igor Chernikov, UA3DJY 与 Arvo J&amp;auml;rve, ES1JA，&amp;copy; 2016-2022，&lt;br&gt;在以下各位的贡献下完成：</translation>
+    </message>
+    <message>
+        <location filename="../about.cpp"/>
+        <source>YL3GBC family and LY3BG family: Vytas and Rimas Kudelis.</source>
+        <translation>YL3GBC 家族与 LY3BG 家族：Vytas 与 Rimas Kudelis。</translation>
+    </message>
+    <message>
+        <location filename="../about.cpp"/>
+        <source>&lt;b&gt;JTDX is derived from WSJT-X&lt;/b&gt; (forked from WSJT-X v1.7 r6462; FT8 code from v1.8 and v2.0,&lt;br&gt;FT4 from v2.1, WSPR from v2.1.2), &amp;copy; 2001-2022 by Joe Taylor, K1JT, Bill Somerville, G4WJS,&lt;br&gt;Steve Franke, K9AN, and Nico Palermo, IV3NWV.</source>
+        <translation>&lt;b&gt;JTDX 衍生自 WSJT-X&lt;/b&gt;（分支自 WSJT-X v1.7 r6462；FT8 代码来自 v1.8 与 v2.0，&lt;br&gt;FT4 来自 v2.1，WSPR 来自 v2.1.2），&amp;copy; 2001-2022 Joe Taylor, K1JT, Bill Somerville, G4WJS,&lt;br&gt;Steve Franke, K9AN, 与 Nico Palermo, IV3NWV。</translation>
+    </message>
+    <message>
+        <location filename="../about.cpp"/>
+        <source>Supports FT8, FT4, JT9, T10 and JT65A for HF amateur radio communication.</source>
+        <translation>支持 FT8、FT4、JT9、T10 和 JT65A，用于短波业余无线电通信。</translation>
+    </message>
+    <message>
+        <location filename="../about.cpp"/>
+        <source>JTDX_contest, JTDX and WSJT-X are licensed under the terms of Version 3&lt;br&gt;of the GNU General Public License (GPL)</source>
+        <translation>JTDX_contest、JTDX 与 WSJT-X 依据 GNU 通用公共许可证（GPL）&lt;br&gt;第 3 版的条款授权</translation>
+    </message>
 </context>
 <context>
     <name>CallsignDialog</name>

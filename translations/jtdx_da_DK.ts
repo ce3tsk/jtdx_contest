@@ -51,6 +51,56 @@
         <source>About JTDX_contest</source>
         <translation>Om JTDX_contest</translation>
     </message>
+    <message>
+        <location filename="../about.cpp"/>
+        <source>JTDX Contest Edition</source>
+        <translation>JTDX Contest-udgave</translation>
+    </message>
+    <message>
+        <location filename="../about.cpp"/>
+        <source>Designed, built and measured by &lt;b&gt;Tihomir Sokcevic, CE3TSK&lt;/b&gt;, Santiago de Chile, 2025-2026</source>
+        <translation>Designet, bygget og målt af &lt;b&gt;Tihomir Sokcevic, CE3TSK&lt;/b&gt;, Santiago de Chile, 2025-2026</translation>
+    </message>
+    <message>
+        <location filename="../about.cpp"/>
+        <source>A rebuilt FT8 and FT4 decoder - alternate pass, ensemble, pipelined RX phase and TX&lt;br&gt;background, four-period hint memory, fixed data races, measured presets - and built-in&lt;br&gt;support for the WW Digi DX Contest: the grid exchange, points and multipliers, a separate&lt;br&gt;contest log, contest-aware autoselect. Every number behind it comes from recorded audio&lt;br&gt;and a script in the tree. The GUI has been repaired throughout and the dark style now works.</source>
+        <translation>En genopbygget FT8- og FT4-dekoder: alternativt gennemløb, ensemble, pipelinet RX-fase og&lt;br&gt;TX-baggrund, hint-hukommelse over fire perioder, rettede datakapløb, målte presets - og&lt;br&gt;indbygget støtte til WW Digi DX Contest: grid-udvekslingen, point og multiplikatorer, en&lt;br&gt;separat contest-log og autovalg der kender reglerne. Hvert tal stammer fra optaget lyd og&lt;br&gt;et script i træet. Brugerfladen er repareret hele vejen igennem, og den mørke stil virker nu.</translation>
+    </message>
+    <message>
+        <location filename="../about.cpp"/>
+        <source>&amp;copy; 2025-2026 Tihomir Sokcevic, CE3TSK (the decoder work, the contest support, the measurements and the documents).</source>
+        <translation>&amp;copy; 2025-2026 Tihomir Sokcevic, CE3TSK (dekoderarbejdet, contest-understøttelsen, målingerne og dokumenterne).</translation>
+    </message>
+    <message>
+        <location filename="../about.cpp"/>
+        <source>&lt;b&gt;Thanks to the operators who beta tested the first release candidates&lt;/b&gt; on the air:</source>
+        <translation>&lt;b&gt;Tak til de operatører der betatestede de første udgivelseskandidater&lt;/b&gt; på luften:</translation>
+    </message>
+    <message>
+        <location filename="../about.cpp"/>
+        <source>&lt;b&gt;Derivative work of JTDX&lt;/b&gt; by Igor Chernikov, UA3DJY, and Arvo J&amp;auml;rve, ES1JA, &amp;copy; 2016-2022,&lt;br&gt;created with contributions from</source>
+        <translation>&lt;b&gt;Afledt værk af JTDX&lt;/b&gt; af Igor Chernikov, UA3DJY, og Arvo J&amp;auml;rve, ES1JA, &amp;copy; 2016-2022,&lt;br&gt;skabt med bidrag fra</translation>
+    </message>
+    <message>
+        <location filename="../about.cpp"/>
+        <source>YL3GBC family and LY3BG family: Vytas and Rimas Kudelis.</source>
+        <translation>Familien YL3GBC og familien LY3BG: Vytas og Rimas Kudelis.</translation>
+    </message>
+    <message>
+        <location filename="../about.cpp"/>
+        <source>&lt;b&gt;JTDX is derived from WSJT-X&lt;/b&gt; (forked from WSJT-X v1.7 r6462; FT8 code from v1.8 and v2.0,&lt;br&gt;FT4 from v2.1, WSPR from v2.1.2), &amp;copy; 2001-2022 by Joe Taylor, K1JT, Bill Somerville, G4WJS,&lt;br&gt;Steve Franke, K9AN, and Nico Palermo, IV3NWV.</source>
+        <translation>&lt;b&gt;JTDX er afledt af WSJT-X&lt;/b&gt; (forgrenet fra WSJT-X v1.7 r6462; FT8-koden fra v1.8 og v2.0,&lt;br&gt;FT4 fra v2.1, WSPR fra v2.1.2), &amp;copy; 2001-2022 af Joe Taylor, K1JT, Bill Somerville, G4WJS,&lt;br&gt;Steve Franke, K9AN, og Nico Palermo, IV3NWV.</translation>
+    </message>
+    <message>
+        <location filename="../about.cpp"/>
+        <source>Supports FT8, FT4, JT9, T10 and JT65A for HF amateur radio communication.</source>
+        <translation>Understøtter FT8, FT4, JT9, T10 og JT65A til amatørradiokommunikation på HF.</translation>
+    </message>
+    <message>
+        <location filename="../about.cpp"/>
+        <source>JTDX_contest, JTDX and WSJT-X are licensed under the terms of Version 3&lt;br&gt;of the GNU General Public License (GPL)</source>
+        <translation>JTDX_contest, JTDX og WSJT-X er licenseret under vilkårene i version 3&lt;br&gt;af GNU General Public License (GPL)</translation>
+    </message>
 </context>
 <context>
     <name>CallsignDialog</name>
