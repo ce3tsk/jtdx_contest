@@ -444,6 +444,8 @@ private:
   typedef QList<QAudioDeviceInfo> AudioDevices;
 
   void read_settings ();
+  bool colors_differ_from_recommended () const;      // CE3TSK
+  void apply_recommended_colors ();            // CE3TSK
   void write_settings ();
 
   bool load_audio_devices (QAudio::Mode, QComboBox *, QAudioDeviceInfo *);
@@ -864,6 +866,7 @@ private:
   bool autolog_;
   bool insert_blank_;
   bool useDarkStyle_;
+  bool recommendedColorsOffered_;   // CE3TSK: the one-time colour offer has been made
   bool countryName_;
   bool countryPrefix_;
   bool callNotif_;
@@ -2629,6 +2632,7 @@ void Configuration::impl::read_settings ()
   /* CE3TSK: dark by default - a fresh install starts in the dark style; an existing profile
      keeps whatever it saved, because the key is then present in the ini. */
   useDarkStyle_ = settings_->value ("UseDarkStyle", true).toBool ();
+  recommendedColorsOffered_ = settings_->value ("RecommendedColorsOffered", false).toBool ();   // CE3TSK
 
   next_font_.fromString (settings_->value ("Font", QGuiApplication::font ().toString ()).toString ());
   if (next_font_ != font_ || useDarkStyle_)
@@ -3114,6 +3118,7 @@ void Configuration::impl::write_settings ()
   SettingsGroup g {settings_, "Configuration"};
 
   settings_->setValue ("MyCall", my_callsign_);
+  settings_->setValue ("RecommendedColorsOffered", recommendedColorsOffered_);   // CE3TSK
   settings_->setValue ("MyGrid", my_grid_);
   settings_->setValue ("timeFromLogFiltering", timeFrom_);
   settings_->setValue ("Content", content_);
@@ -5339,6 +5344,89 @@ void Configuration::impl::on_pbTxMsg_clicked()
 /* CE3TSK: restore the recommended colors - both styles at once, so switching the style
    later finds a sane palette too. The swatches are repainted by handing the existing
    text-color handler the current state, which redraws every one of them. */
+/* CE3TSK: does this profile carry a notification colour that is not the recommended one?
+   Read from the settings rather than from the members: at start-up the two agree, and a key
+   that was never written reads back as its recommended default, so an untouched profile
+   correctly reports "no difference" and is never asked. */
+bool Configuration::impl::colors_differ_from_recommended () const
+{
+  SettingsGroup g {settings_, "Configuration"};
+  for (auto const& c : recommended_colors)
+    {
+      for (auto const& key : {QString {c.key}, QString {c.key} + "_dark"})
+        {
+          if (QColor {settings_->value (key, recommended_color (key)).toString ()}
+              != QColor {recommended_color (key)}) return true;
+        }
+    }
+  return false;
+}
+
+/* CE3TSK: set every notification colour to the recommended one, live and pending both. The
+   pending copies matter: nothing re-syncs them when the settings dialog opens, so leaving them
+   behind would mean the next OK in that dialog quietly put the old colours back. */
+void Configuration::impl::apply_recommended_colors ()
+{
+  struct Slot { char const * key; QColor impl::* live; QColor impl::* next; };
+  static Slot const color_slots[] = {   // NOT "slots": Qt's moc macro expands it away
+    {"colorCQ",              &impl::color_CQ_,              &impl::next_color_CQ_},
+    {"colorCQ_dark",         &impl::color_CQ_dark_,         &impl::next_color_CQ_dark_},
+    {"colorMyCall",          &impl::color_MyCall_,          &impl::next_color_MyCall_},
+    {"colorMyCall_dark",     &impl::color_MyCall_dark_,     &impl::next_color_MyCall_dark_},
+    {"colorStandardCall",    &impl::color_StandardCall_,    &impl::next_color_StandardCall_},
+    {"colorStandardCall_dark", &impl::color_StandardCall_dark_, &impl::next_color_StandardCall_dark_},
+    {"colorTxMsg",           &impl::color_TxMsg_,           &impl::next_color_TxMsg_},
+    {"colorTxMsg_dark",      &impl::color_TxMsg_dark_,      &impl::next_color_TxMsg_dark_},
+    {"colorWorkedCall",      &impl::color_WorkedCall_,      &impl::next_color_WorkedCall_},
+    {"colorWorkedCall_dark", &impl::color_WorkedCall_dark_, &impl::next_color_WorkedCall_dark_},
+    {"colorNewCQZ",          &impl::color_NewCQZ_,          &impl::next_color_NewCQZ_},
+    {"colorNewCQZ_dark",     &impl::color_NewCQZ_dark_,     &impl::next_color_NewCQZ_dark_},
+    {"colorNewCQZBand",      &impl::color_NewCQZBand_,      &impl::next_color_NewCQZBand_},
+    {"colorNewCQZBand_dark", &impl::color_NewCQZBand_dark_, &impl::next_color_NewCQZBand_dark_},
+    {"colorNewITUZ",         &impl::color_NewITUZ_,         &impl::next_color_NewITUZ_},
+    {"colorNewITUZ_dark",    &impl::color_NewITUZ_dark_,    &impl::next_color_NewITUZ_dark_},
+    {"colorNewITUZBand",     &impl::color_NewITUZBand_,     &impl::next_color_NewITUZBand_},
+    {"colorNewITUZBand_dark", &impl::color_NewITUZBand_dark_, &impl::next_color_NewITUZBand_dark_},
+    {"colorNewDXCC",         &impl::color_NewDXCC_,         &impl::next_color_NewDXCC_},
+    {"colorNewDXCC_dark",    &impl::color_NewDXCC_dark_,    &impl::next_color_NewDXCC_dark_},
+    {"colorNewDXCCBand",     &impl::color_NewDXCCBand_,     &impl::next_color_NewDXCCBand_},
+    {"colorNewDXCCBand_dark", &impl::color_NewDXCCBand_dark_, &impl::next_color_NewDXCCBand_dark_},
+    {"colorNewGrid",         &impl::color_NewGrid_,         &impl::next_color_NewGrid_},
+    {"colorNewGrid_dark",    &impl::color_NewGrid_dark_,    &impl::next_color_NewGrid_dark_},
+    {"colorNewGridBand",     &impl::color_NewGridBand_,     &impl::next_color_NewGridBand_},
+    {"colorNewGridBand_dark", &impl::color_NewGridBand_dark_, &impl::next_color_NewGridBand_dark_},
+    {"colorNewPx",           &impl::color_NewPx_,           &impl::next_color_NewPx_},
+    {"colorNewPx_dark",      &impl::color_NewPx_dark_,      &impl::next_color_NewPx_dark_},
+    {"colorNewPxBand",       &impl::color_NewPxBand_,       &impl::next_color_NewPxBand_},
+    {"colorNewPxBand_dark",  &impl::color_NewPxBand_dark_,  &impl::next_color_NewPxBand_dark_},
+    {"colorNewCall",         &impl::color_NewCall_,         &impl::next_color_NewCall_},
+    {"colorNewCall_dark",    &impl::color_NewCall_dark_,    &impl::next_color_NewCall_dark_},
+    {"colorNewCallBand",     &impl::color_NewCallBand_,     &impl::next_color_NewCallBand_},
+    {"colorNewCallBand_dark", &impl::color_NewCallBand_dark_, &impl::next_color_NewCallBand_dark_},
+  };
+  for (auto const& c : color_slots) this->*(c.live) = this->*(c.next) = QColor {recommended_color (c.key)};
+}
+
+bool Configuration::recommended_colors_offer_pending () const
+{
+  return !m_->recommendedColorsOffered_ && m_->colors_differ_from_recommended ();
+}
+
+void Configuration::accept_recommended_colors ()
+{
+  m_->apply_recommended_colors ();
+  m_->useDarkStyle_ = true;                              // the colours are tuned for it
+  m_->ui_->useDarkStyle_check_box->setChecked (true);
+  m_->recommendedColorsOffered_ = true;
+  m_->write_settings ();
+}
+
+void Configuration::decline_recommended_colors ()
+{
+  m_->recommendedColorsOffered_ = true;                  // asked once, never again
+  m_->write_settings ();
+}
+
 void Configuration::impl::on_pbDefaultColors_clicked()
 {
   next_color_CQ_ = QColor {recommended_color ("colorCQ")};

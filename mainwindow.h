@@ -970,6 +970,7 @@ private:
   void stub();
   void statusChanged();
   void styleChanged();
+  void offerRecommendedColors ();   // CE3TSK: the one-time colour offer, see Configuration
   bool gridOK(QString g);
   bool gridRR73(QString g);
   bool reportRCVD(QStringList msg);

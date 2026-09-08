@@ -101,6 +101,17 @@
         <source>JTDX_contest, JTDX and WSJT-X are licensed under the terms of Version 3&lt;br&gt;of the GNU General Public License (GPL)</source>
         <translation>JTDX_contest, JTDX y WSJT-X se distribuyen bajo los términos de la versión 3&lt;br&gt;de la Licencia Pública General de GNU (GPL)</translation>
     </message>
+    <message>
+        <location filename="../about.cpp"/>
+        <source>support</source>
+        <extracomment>Artwork tag, not a word to translate: give the tag of this language's Ko-fi button, e.g. support_es_ES, and generate it with tools/make_support_button.py. Leave it as &quot;support&quot; and the English button is used.</extracomment>
+        <translation>support_es_ES</translation>
+    </message>
+    <message>
+        <location filename="../about.cpp"/>
+        <source>Support this work on Ko-fi</source>
+        <translation>Apoya este trabajo en Ko-fi</translation>
+    </message>
 </context>
 <context>
     <name>CallsignDialog</name>
@@ -5936,6 +5947,43 @@ Servidor UDP %2:%3</translation>
         <location filename="../mainwindow.cpp"/>
         <source>Are You sure to change UI Language to English? JTDX will close, please start it again.</source>
         <translation>¿Está seguro de cambiar el idioma de la interfaz de usuario a Español? JTDX se cerrará, vuelva a abrirlo.</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Recommended colours</source>
+        <translation>Colores recomendados</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Use the recommended notification colours?</source>
+        <translation>¿Usar los colores de notificación recomendados?</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>This profile carries notification colours from an earlier setup. JTDX_contest ships a set that was checked against every background each colour can appear on, and meets the AA contrast level of the WCAG accessibility guidelines, so the decodes stay legible.
+
+Choosing Yes also switches on the new dark style, which those colours are made for.
+
+You can go back to the light style at any time in Settings, General; and the recommended colours can be set again later in Settings, Notifications.
+
+This is asked only once.</source>
+        <translation>Este perfil trae colores de notificación de una configuración anterior. JTDX_contest incluye un juego que fue comprobado contra cada fondo sobre el que puede aparecer cada color, y que cumple el nivel de contraste AA de las pautas de accesibilidad WCAG, de modo que las decodificaciones siguen siendo legibles.
+
+Al elegir Sí también se activa el nuevo estilo oscuro, para el que están hechos esos colores.
+
+Puede volver al estilo claro cuando quiera en Ajustes, General; y los colores recomendados se pueden aplicar de nuevo más adelante en Ajustes, Notificaciones.
+
+Esto se pregunta una sola vez.</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>&amp;Yes, use them</source>
+        <translation>&amp;Sí, usarlos</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>&amp;No, keep mine</source>
+        <translation>&amp;No, conservar los míos</translation>
     </message>
 </context>
 <context>

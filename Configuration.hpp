@@ -181,6 +181,13 @@ public:
   bool autolog () const;
   bool insert_blank () const;
   bool useDarkStyle () const;
+
+  /* CE3TSK: the one-time offer of the recommended notification colours. A user arriving from
+     stock JTDX brings colours that were never checked for contrast - several of them are close
+     to unreadable on the dark style. Offer the measured set once, then never ask again. */
+  bool recommended_colors_offer_pending () const;
+  void accept_recommended_colors ();
+  void decline_recommended_colors ();
   bool countryName () const;
   bool countryPrefix () const;
   bool callNotif () const;

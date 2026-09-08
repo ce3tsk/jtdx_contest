@@ -603,11 +603,22 @@ set (TOP_LEVEL_RESOURCES
   icons/Darwin/jtdx.iconset/icon_128x128.png
   contrib/decpasses.png
   contrib/dtrange.png
-  contrib/support_dark.png        # CE3TSK: cup + wordmark for About  (tools/make_support_button.py)
-  contrib/support_light.png       # CE3TSK: the same for the light style
   contrib/support_cup_dark.png    # CE3TSK: the cup alone, for the menu bar corner
   contrib/support_cup_light.png   # CE3TSK: the same for the light style
   )
+
+# CE3TSK: the About dialog's Ko-fi button carries its words as ARTWORK, so a translated button
+# is a translated file: tools/make_support_button.py draws support_<tag>_{dark,light}.png for
+# every language, and about.cpp asks the catalogue for the tag. Globbed rather than listed - the
+# set changes whenever a language is added, and a name typed by hand into a 40-entry list would
+# fail as a blank image at run time instead of at build time.
+file (GLOB SUPPORT_BUTTONS RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} contrib/support*_dark.png contrib/support*_light.png)
+list (REMOVE_ITEM SUPPORT_BUTTONS contrib/support_cup_dark.png contrib/support_cup_light.png)
+list (LENGTH SUPPORT_BUTTONS n_support_)
+if (n_support_ LESS 2)
+  message (SEND_ERROR "no Ko-fi button artwork in contrib/ - run tools/make_support_button.py")
+endif ()
+list (APPEND TOP_LEVEL_RESOURCES ${SUPPORT_BUTTONS})
 
 set (PALETTE_FILES
   Palettes/Banana.pal

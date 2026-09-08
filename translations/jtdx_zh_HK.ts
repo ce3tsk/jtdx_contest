@@ -101,6 +101,17 @@
         <source>JTDX_contest, JTDX and WSJT-X are licensed under the terms of Version 3&lt;br&gt;of the GNU General Public License (GPL)</source>
         <translation>JTDX_contest、JTDX 與 WSJT-X 依據 GNU 通用公共授權條款（GPL）&lt;br&gt;第 3 版的條款授權</translation>
     </message>
+    <message>
+        <location filename="../about.cpp"/>
+        <source>support</source>
+        <extracomment>Artwork tag, not a word to translate: give the tag of this language's Ko-fi button, e.g. support_es_ES, and generate it with tools/make_support_button.py. Leave it as &quot;support&quot; and the English button is used.</extracomment>
+        <translation>support_zh_HK</translation>
+    </message>
+    <message>
+        <location filename="../about.cpp"/>
+        <source>Support this work on Ko-fi</source>
+        <translation>在 Ko-fi 上支持這項工作</translation>
+    </message>
 </context>
 <context>
     <name>CallsignDialog</name>
@@ -5927,6 +5938,43 @@ UDP 伺服器 %2:%3</translation>
         <location filename="../mainwindow.cpp"/>
         <source>Are You sure to change UI Language to English? JTDX will close, please start it again.</source>
         <translation>確定要將用戶介面語言更改為繁體中文嗎? JTDX 將關閉，請重新啟動它。</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Recommended colours</source>
+        <translation>推薦配色</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Use the recommended notification colours?</source>
+        <translation>要使用推薦的通知配色嗎？</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>This profile carries notification colours from an earlier setup. JTDX_contest ships a set that was checked against every background each colour can appear on, and meets the AA contrast level of the WCAG accessibility guidelines, so the decodes stay legible.
+
+Choosing Yes also switches on the new dark style, which those colours are made for.
+
+You can go back to the light style at any time in Settings, General; and the recommended colours can be set again later in Settings, Notifications.
+
+This is asked only once.</source>
+        <translation>此設定檔沿用了先前設定中的通知顏色。JTDX_contest 提供了一套配色，已針對每種顏色可能出現的每一種背景逐一核對，並達到 WCAG 無障礙指引的 AA 對比度等級，使解碼內容始終清晰易讀。
+
+選擇「是」也會同時啟用新的深色樣式，這套配色正是為它而設。
+
+您隨時可以在「設定」的「一般」中改回淺色樣式；推薦配色也可以稍後在「設定」的「通知」中重新套用。
+
+此提示只會出現一次。</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>&amp;Yes, use them</source>
+        <translation>是，使用推薦配色(&amp;Y)</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>&amp;No, keep mine</source>
+        <translation>否，保留我的配色(&amp;N)</translation>
     </message>
 </context>
 <context>
