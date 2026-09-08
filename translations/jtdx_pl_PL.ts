@@ -44,7 +44,7 @@
     <message>
         <location filename="../about.ui" line="71"/>
         <source>OK</source>
-        <translation></translation>
+        <translation>OK</translation>
     </message>
     <message>
         <location filename="../about.ui"/>
@@ -126,7 +126,7 @@
     <message>
         <location filename="../Configuration.cpp" line="1372"/>
         <source>&amp;OK</source>
-        <translation></translation>
+        <translation>&amp;OK</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp" line="1373"/>
@@ -205,7 +205,7 @@ Inna aplikacja blokuje dostęp do katalogu</translation>
     <message>
         <location filename="../Configuration.cpp" line="2964"/>
         <source>TCI Server:</source>
-        <translation type="unfinished"></translation>
+        <translation>Serwer TCI:</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp" line="2965"/>
@@ -215,7 +215,12 @@ Formats:
 	hostname:port
 	IPv4-address:port
 	[IPv6-address]:port</source>
-        <translation type="unfinished"></translation>
+        <translation>Nazwa hosta i port usługi TCI (opcjonalnie).
+Pozostaw puste, aby użyć rozsądnej wartości domyślnej na tym komputerze.
+Formaty:
+	nazwa:port
+	adres-IPv4:port
+	[adres-IPv6]:port</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp" line="2977"/>
@@ -291,7 +296,7 @@ Format:
     <message>
         <location filename="../Configuration.cpp" line="4902"/>
         <source>Enter Grid error: 4/6/8/10 char grid will be accepted</source>
-        <translation type="unfinished"></translation>
+        <translation>Błąd wprowadzania lokatora: akceptowane są lokatory o długości 4/6/8/10 znaków</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp" line="5438"/>
@@ -469,7 +474,7 @@ Format:
     <message>
         <location filename="../logbook/countrydat.cpp" line="40"/>
         <source>Mauritius</source>
-        <translation></translation>
+        <translation>Mauritius</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="41"/>
@@ -549,7 +554,7 @@ Format:
     <message>
         <location filename="../logbook/countrydat.cpp" line="56"/>
         <source>Sri Lanka</source>
-        <translation></translation>
+        <translation>Sri Lanka</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="57"/>
@@ -564,7 +569,7 @@ Format:
     <message>
         <location filename="../logbook/countrydat.cpp" line="59"/>
         <source>Vienna Intl Ctr</source>
-        <translation></translation>
+        <translation>Centrum Międzynarodowe w Wiedniu</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="60"/>
@@ -589,12 +594,12 @@ Format:
     <message>
         <location filename="../logbook/countrydat.cpp" line="64"/>
         <source>Tanzania</source>
-        <translation></translation>
+        <translation>Tanzania</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="65"/>
         <source>Nigeria</source>
-        <translation></translation>
+        <translation>Nigeria</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="66"/>
@@ -614,17 +619,17 @@ Format:
     <message>
         <location filename="../logbook/countrydat.cpp" line="69"/>
         <source>Togo</source>
-        <translation></translation>
+        <translation>Togo</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="70"/>
         <source>Samoa</source>
-        <translation></translation>
+        <translation>Samoa</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="71"/>
         <source>Uganda</source>
-        <translation></translation>
+        <translation>Uganda</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="72"/>
@@ -634,7 +639,7 @@ Format:
     <message>
         <location filename="../logbook/countrydat.cpp" line="73"/>
         <source>Senegal</source>
-        <translation></translation>
+        <translation>Senegal</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="74"/>
@@ -654,17 +659,17 @@ Format:
     <message>
         <location filename="../logbook/countrydat.cpp" line="77"/>
         <source>Malawi</source>
-        <translation></translation>
+        <translation>Malawi</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="78"/>
         <source>Algeria</source>
-        <translation></translation>
+        <translation>Algieria</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="79"/>
         <source>Barbados</source>
-        <translation></translation>
+        <translation>Barbados</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="80"/>
@@ -684,17 +689,17 @@ Format:
     <message>
         <location filename="../logbook/countrydat.cpp" line="83"/>
         <source>Ghana</source>
-        <translation></translation>
+        <translation>Ghana</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="84"/>
         <source>Malta</source>
-        <translation></translation>
+        <translation>Malta</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="85"/>
         <source>Zambia</source>
-        <translation></translation>
+        <translation>Zambia</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="86"/>
@@ -704,7 +709,7 @@ Format:
     <message>
         <location filename="../logbook/countrydat.cpp" line="87"/>
         <source>Sierra Leone</source>
-        <translation></translation>
+        <translation>Sierra Leone</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="88"/>
@@ -719,7 +724,7 @@ Format:
     <message>
         <location filename="../logbook/countrydat.cpp" line="90"/>
         <source>Nepal</source>
-        <translation></translation>
+        <translation>Nepal</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="91"/>
@@ -729,7 +734,7 @@ Format:
     <message>
         <location filename="../logbook/countrydat.cpp" line="92"/>
         <source>Burundi</source>
-        <translation></translation>
+        <translation>Burundi</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="93"/>
@@ -739,7 +744,7 @@ Format:
     <message>
         <location filename="../logbook/countrydat.cpp" line="94"/>
         <source>Rwanda</source>
-        <translation></translation>
+        <translation>Rwanda</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="95"/>
@@ -749,22 +754,22 @@ Format:
     <message>
         <location filename="../logbook/countrydat.cpp" line="96"/>
         <source>Botswana</source>
-        <translation></translation>
+        <translation>Botswana</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="97"/>
         <source>Tonga</source>
-        <translation></translation>
+        <translation>Tonga</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="98"/>
         <source>Oman</source>
-        <translation></translation>
+        <translation>Oman</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="99"/>
         <source>Bhutan</source>
-        <translation></translation>
+        <translation>Bhutan</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="100"/>
@@ -779,12 +784,12 @@ Format:
     <message>
         <location filename="../logbook/countrydat.cpp" line="102"/>
         <source>Bahrain</source>
-        <translation></translation>
+        <translation>Bahrajn</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="103"/>
         <source>Pakistan</source>
-        <translation></translation>
+        <translation>Pakistan</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="104"/>
@@ -809,7 +814,7 @@ Format:
     <message>
         <location filename="../logbook/countrydat.cpp" line="108"/>
         <source>Nauru</source>
-        <translation></translation>
+        <translation>Nauru</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="109"/>
@@ -834,12 +839,12 @@ Format:
     <message>
         <location filename="../logbook/countrydat.cpp" line="113"/>
         <source>Chile</source>
-        <translation></translation>
+        <translation>Chile</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="114"/>
         <source>San Felix &amp; San Ambrosio</source>
-        <translation></translation>
+        <translation>San Félix i San Ambrosio</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="115"/>
@@ -904,7 +909,7 @@ Format:
     <message>
         <location filename="../logbook/countrydat.cpp" line="127"/>
         <source>Angola</source>
-        <translation></translation>
+        <translation>Angola</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="128"/>
@@ -949,7 +954,7 @@ Format:
     <message>
         <location filename="../logbook/countrydat.cpp" line="136"/>
         <source>Niue</source>
-        <translation></translation>
+        <translation>Niue</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="137"/>
@@ -984,17 +989,17 @@ Format:
     <message>
         <location filename="../logbook/countrydat.cpp" line="143"/>
         <source>Armenia</source>
-        <translation></translation>
+        <translation>Armenia</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="144"/>
         <source>Liberia</source>
-        <translation></translation>
+        <translation>Liberia</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="145"/>
         <source>Iran</source>
-        <translation></translation>
+        <translation>Iran</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="146"/>
@@ -1004,7 +1009,7 @@ Format:
     <message>
         <location filename="../logbook/countrydat.cpp" line="147"/>
         <source>Estonia</source>
-        <translation></translation>
+        <translation>Estonia</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="148"/>
@@ -1029,7 +1034,7 @@ Format:
     <message>
         <location filename="../logbook/countrydat.cpp" line="152"/>
         <source>Turkmenistan</source>
-        <translation></translation>
+        <translation>Turkmenistan</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="153"/>
@@ -1044,12 +1049,12 @@ Format:
     <message>
         <location filename="../logbook/countrydat.cpp" line="155"/>
         <source>Mayotte</source>
-        <translation></translation>
+        <translation>Majotta</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="156"/>
         <source>St. Barthelemy</source>
-        <translation></translation>
+        <translation>Saint-Barthélemy</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="157"/>
@@ -1109,7 +1114,7 @@ Format:
     <message>
         <location filename="../logbook/countrydat.cpp" line="168"/>
         <source>Juan de Nova, Europa</source>
-        <translation></translation>
+        <translation>Juan de Nova, Europa</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="169"/>
@@ -1204,7 +1209,7 @@ Format:
     <message>
         <location filename="../logbook/countrydat.cpp" line="187"/>
         <source>Liechtenstein</source>
-        <translation></translation>
+        <translation>Liechtenstein</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="188"/>
@@ -1219,7 +1224,7 @@ Format:
     <message>
         <location filename="../logbook/countrydat.cpp" line="190"/>
         <source>Haiti</source>
-        <translation></translation>
+        <translation>Haiti</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="191"/>
@@ -1234,7 +1239,7 @@ Format:
     <message>
         <location filename="../logbook/countrydat.cpp" line="193"/>
         <source>San Andres &amp; Providencia</source>
-        <translation></translation>
+        <translation>San Andrés i Providencia</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="194"/>
@@ -1249,12 +1254,12 @@ Format:
     <message>
         <location filename="../logbook/countrydat.cpp" line="196"/>
         <source>Panama</source>
-        <translation></translation>
+        <translation>Panama</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="197"/>
         <source>Honduras</source>
-        <translation></translation>
+        <translation>Honduras</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="198"/>
@@ -1279,7 +1284,7 @@ Format:
     <message>
         <location filename="../logbook/countrydat.cpp" line="202"/>
         <source>AF Italy</source>
-        <translation></translation>
+        <translation>Włochy (AF)</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="203"/>
@@ -1299,7 +1304,7 @@ Format:
     <message>
         <location filename="../logbook/countrydat.cpp" line="206"/>
         <source>Grenada</source>
-        <translation></translation>
+        <translation>Grenada</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="207"/>
@@ -1329,22 +1334,22 @@ Format:
     <message>
         <location filename="../logbook/countrydat.cpp" line="212"/>
         <source>Minami Torishima</source>
-        <translation></translation>
+        <translation>Minami-Torishima</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="213"/>
         <source>Ogasawara</source>
-        <translation></translation>
+        <translation>Ogasawara</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="214"/>
         <source>Mongolia</source>
-        <translation></translation>
+        <translation>Mongolia</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="215"/>
         <source>Svalbard</source>
-        <translation></translation>
+        <translation>Svalbard</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="216"/>
@@ -1354,7 +1359,7 @@ Format:
     <message>
         <location filename="../logbook/countrydat.cpp" line="217"/>
         <source>Jan Mayen</source>
-        <translation></translation>
+        <translation>Jan Mayen</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="218"/>
@@ -1364,7 +1369,7 @@ Format:
     <message>
         <location filename="../logbook/countrydat.cpp" line="219"/>
         <source>U.S.A.</source>
-        <translation></translation>
+        <translation>USA</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="220"/>
@@ -1384,7 +1389,7 @@ Format:
     <message>
         <location filename="../logbook/countrydat.cpp" line="223"/>
         <source>Guam</source>
-        <translation></translation>
+        <translation>Guam</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="224"/>
@@ -1429,7 +1434,7 @@ Format:
     <message>
         <location filename="../logbook/countrydat.cpp" line="232"/>
         <source>Alaska</source>
-        <translation></translation>
+        <translation>Alaska</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="233"/>
@@ -1479,7 +1484,7 @@ Format:
     <message>
         <location filename="../logbook/countrydat.cpp" line="242"/>
         <source>Peru</source>
-        <translation></translation>
+        <translation>Peru</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="243"/>
@@ -1489,7 +1494,7 @@ Format:
     <message>
         <location filename="../logbook/countrydat.cpp" line="244"/>
         <source>Austria</source>
-        <translation></translation>
+        <translation>Austria</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="245"/>
@@ -1504,7 +1509,7 @@ Format:
     <message>
         <location filename="../logbook/countrydat.cpp" line="247"/>
         <source>Market Reef</source>
-        <translation></translation>
+        <translation>Rafa Market</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="248"/>
@@ -1539,12 +1544,12 @@ Format:
     <message>
         <location filename="../logbook/countrydat.cpp" line="254"/>
         <source>Papua New Guinea</source>
-        <translation></translation>
+        <translation>Papua-Nowa Gwinea</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="255"/>
         <source>Aruba</source>
-        <translation></translation>
+        <translation>Aruba</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="256"/>
@@ -1559,22 +1564,22 @@ Format:
     <message>
         <location filename="../logbook/countrydat.cpp" line="258"/>
         <source>Curacao</source>
-        <translation></translation>
+        <translation>Curaçao</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="259"/>
         <source>Bonaire</source>
-        <translation></translation>
+        <translation>Bonaire</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="260"/>
         <source>Saba &amp; St. Eustatius</source>
-        <translation></translation>
+        <translation>Saba i Sint Eustatius</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="261"/>
         <source>Sint Maarten</source>
-        <translation></translation>
+        <translation>Sint Maarten</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="262"/>
@@ -1584,17 +1589,17 @@ Format:
     <message>
         <location filename="../logbook/countrydat.cpp" line="263"/>
         <source>Fernando de Noronha</source>
-        <translation></translation>
+        <translation>Fernando de Noronha</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="264"/>
         <source>St. Peter &amp; St. Paul</source>
-        <translation></translation>
+        <translation>Święty Piotr i Paweł</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="265"/>
         <source>Trindade &amp; Martim Vaz</source>
-        <translation></translation>
+        <translation>Trindade i Martim Vaz</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="266"/>
@@ -1629,7 +1634,7 @@ Format:
     <message>
         <location filename="../logbook/countrydat.cpp" line="272"/>
         <source>Sao Tome &amp; Principe</source>
-        <translation></translation>
+        <translation>Wyspy Świętego Tomasza i Książęca</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="273"/>
@@ -1644,7 +1649,7 @@ Format:
     <message>
         <location filename="../logbook/countrydat.cpp" line="275"/>
         <source>Sudan</source>
-        <translation></translation>
+        <translation>Sudan</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="276"/>
@@ -1699,17 +1704,17 @@ Format:
     <message>
         <location filename="../logbook/countrydat.cpp" line="286"/>
         <source>Somalia</source>
-        <translation></translation>
+        <translation>Somalia</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="287"/>
         <source>San Marino</source>
-        <translation></translation>
+        <translation>San Marino</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="288"/>
         <source>Palau</source>
-        <translation></translation>
+        <translation>Palau</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="289"/>
@@ -1764,7 +1769,7 @@ Format:
     <message>
         <location filename="../logbook/countrydat.cpp" line="299"/>
         <source>Gabon</source>
-        <translation></translation>
+        <translation>Gabon</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="300"/>
@@ -1779,12 +1784,12 @@ Format:
     <message>
         <location filename="../logbook/countrydat.cpp" line="302"/>
         <source>Benin</source>
-        <translation></translation>
+        <translation>Benin</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="303"/>
         <source>Mali</source>
-        <translation></translation>
+        <translation>Mali</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="304"/>
@@ -1794,7 +1799,7 @@ Format:
     <message>
         <location filename="../logbook/countrydat.cpp" line="305"/>
         <source>Kaliningrad</source>
-        <translation></translation>
+        <translation>Kaliningrad</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="306"/>
@@ -1804,7 +1809,7 @@ Format:
     <message>
         <location filename="../logbook/countrydat.cpp" line="307"/>
         <source>Uzbekistan</source>
-        <translation></translation>
+        <translation>Uzbekistan</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="308"/>
@@ -1819,22 +1824,22 @@ Format:
     <message>
         <location filename="../logbook/countrydat.cpp" line="310"/>
         <source>Antigua &amp; Barbuda</source>
-        <translation></translation>
+        <translation>Antigua i Barbuda</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="311"/>
         <source>Belize</source>
-        <translation></translation>
+        <translation>Belize</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="312"/>
         <source>St. Kitts &amp; Nevis</source>
-        <translation></translation>
+        <translation>Saint Kitts i Nevis</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="313"/>
         <source>Namibia</source>
-        <translation></translation>
+        <translation>Namibia</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="314"/>
@@ -1849,7 +1854,7 @@ Format:
     <message>
         <location filename="../logbook/countrydat.cpp" line="316"/>
         <source>Brunei Darussalam</source>
-        <translation></translation>
+        <translation>Brunei</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="317"/>
@@ -1859,7 +1864,7 @@ Format:
     <message>
         <location filename="../logbook/countrydat.cpp" line="318"/>
         <source>Australia</source>
-        <translation></translation>
+        <translation>Australia</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="319"/>
@@ -1904,12 +1909,12 @@ Format:
     <message>
         <location filename="../logbook/countrydat.cpp" line="327"/>
         <source>Anguilla</source>
-        <translation></translation>
+        <translation>Anguilla</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="328"/>
         <source>Montserrat</source>
-        <translation></translation>
+        <translation>Montserrat</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="329"/>
@@ -1994,12 +1999,12 @@ Format:
     <message>
         <location filename="../logbook/countrydat.cpp" line="345"/>
         <source>Revillagigedo</source>
-        <translation></translation>
+        <translation>Revillagigedo</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="346"/>
         <source>Burkina Faso</source>
-        <translation></translation>
+        <translation>Burkina Faso</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="347"/>
@@ -2009,7 +2014,7 @@ Format:
     <message>
         <location filename="../logbook/countrydat.cpp" line="348"/>
         <source>Laos</source>
-        <translation></translation>
+        <translation>Laos</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="349"/>
@@ -2019,7 +2024,7 @@ Format:
     <message>
         <location filename="../logbook/countrydat.cpp" line="350"/>
         <source>Myanmar</source>
-        <translation></translation>
+        <translation>Mjanma</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="351"/>
@@ -2039,12 +2044,12 @@ Format:
     <message>
         <location filename="../logbook/countrydat.cpp" line="354"/>
         <source>Vanuatu</source>
-        <translation></translation>
+        <translation>Vanuatu</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="355"/>
         <source>Syria</source>
-        <translation></translation>
+        <translation>Syria</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="356"/>
@@ -2069,7 +2074,7 @@ Format:
     <message>
         <location filename="../logbook/countrydat.cpp" line="360"/>
         <source>Serbia</source>
-        <translation></translation>
+        <translation>Serbia</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="361"/>
@@ -2084,7 +2089,7 @@ Format:
     <message>
         <location filename="../logbook/countrydat.cpp" line="363"/>
         <source>Zimbabwe</source>
-        <translation></translation>
+        <translation>Zimbabwe</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="364"/>
@@ -2104,12 +2109,12 @@ Format:
     <message>
         <location filename="../logbook/countrydat.cpp" line="367"/>
         <source>Albania</source>
-        <translation></translation>
+        <translation>Albania</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="368"/>
         <source>Gibraltar</source>
-        <translation></translation>
+        <translation>Gibraltar</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="369"/>
@@ -2129,7 +2134,7 @@ Format:
     <message>
         <location filename="../logbook/countrydat.cpp" line="372"/>
         <source>Tristan da Cunha &amp; Gough</source>
-        <translation></translation>
+        <translation>Tristan da Cunha i Gough</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="373"/>
@@ -2306,7 +2311,7 @@ Format:
     <message>
         <location filename="../WFPalette.cpp" line="122"/>
         <source>&amp;OK</source>
-        <translation></translation>
+        <translation>&amp;OK</translation>
     </message>
     <message>
         <location filename="../WFPalette.cpp" line="123"/>
@@ -2316,7 +2321,7 @@ Format:
     <message>
         <location filename="../WFPalette.cpp" line="126"/>
         <source>&amp;Import...</source>
-        <translation></translation>
+        <translation>&amp;Importuj...</translation>
     </message>
     <message>
         <location filename="../WFPalette.cpp" line="129"/>
@@ -2396,7 +2401,7 @@ Format:
     <message>
         <location filename="../Configuration.cpp" line="232"/>
         <source>&amp;OK</source>
-        <translation></translation>
+        <translation>&amp;OK</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp" line="233"/>
@@ -2610,7 +2615,7 @@ Format:
     <message>
         <location filename="../HamlibTransceiver.cpp" line="274"/>
         <source>NULL RIG handle or invalid pointer parameter</source>
-        <translation></translation>
+        <translation>Uchwyt RIG równy NULL lub nieprawidłowy wskaźnik</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="275"/>
@@ -2807,7 +2812,7 @@ Format:
     <message>
         <location filename="../JTDXMessageBox.cpp" line="39"/>
         <source>&amp;OK</source>
-        <translation></translation>
+        <translation>&amp;OK</translation>
     </message>
     <message>
         <location filename="../JTDXMessageBox.cpp" line="40"/>
@@ -2918,7 +2923,7 @@ Format:
         <location filename="../logqso.ui" line="82"/>
         <location filename="../logqso.ui" line="114"/>
         <source>dd/MM/yyyy HH:mm:ss</source>
-        <translation></translation>
+        <translation>dd.MM.yyyy HH:mm:ss</translation>
     </message>
     <message>
         <location filename="../logqso.ui" line="98"/>
@@ -2980,7 +2985,7 @@ Format:
     <message>
         <location filename="../logqso.cpp" line="27"/>
         <source>&amp;OK</source>
-        <translation></translation>
+        <translation>&amp;OK</translation>
     </message>
     <message>
         <location filename="../logqso.cpp" line="28"/>
@@ -2998,7 +3003,7 @@ Format:
     <message>
         <location filename="../mainwindow.ui" line="26"/>
         <source>JTDX</source>
-        <translation></translation>
+        <translation>JTDX</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="175"/>
@@ -3009,7 +3014,7 @@ Format:
         <location filename="../mainwindow.ui" line="181"/>
         <location filename="../mainwindow.ui" line="2262"/>
         <source>UTC           dB            DT           Freq          Dr </source>
-        <translation></translation>
+        <translation>UTC           dB            DT           Freq          Dr </translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="282"/>
@@ -3036,7 +3041,7 @@ Format:
     <message>
         <location filename="../mainwindow.ui" line="417"/>
         <source>?</source>
-        <translation></translation>
+        <translation>?</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="667"/>
@@ -3046,12 +3051,12 @@ Format:
     <message>
         <location filename="../mainwindow.ui" line="679"/>
         <source>14.078 000</source>
-        <translation></translation>
+        <translation>14.078 000</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="708"/>
         <source>Menu</source>
-        <translation></translation>
+        <translation>Menu</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="718"/>
@@ -3151,7 +3156,7 @@ Format:
     <message>
         <location filename="../mainwindow.ui" line="1371"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:18pt;&quot;&gt;01:23:45 &lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align="center"&gt;&lt;span style=" font-size:18pt;"&gt;01:23:45 &lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1405"/>
@@ -3173,12 +3178,12 @@ Format:
         <location filename="../mainwindow.ui" line="1744"/>
         <location filename="../mainwindow.ui" line="4410"/>
         <source>  Hz</source>
-        <translation></translation>
+        <translation>  Hz</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1747"/>
         <source>Rx  </source>
-        <translation></translation>
+        <translation>Rx  </translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1805"/>
@@ -3188,12 +3193,12 @@ Format:
     <message>
         <location filename="../mainwindow.ui" line="1808"/>
         <source>Tx JT9 @</source>
-        <translation></translation>
+        <translation>Tx JT9 @</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1451"/>
         <source>Hound</source>
-        <translation></translation>
+        <translation>Hound</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1479"/>
@@ -3214,7 +3219,7 @@ Format:
         <location filename="../mainwindow.ui" line="1641"/>
         <location filename="../mainwindow.ui" line="4413"/>
         <source>Tx  </source>
-        <translation></translation>
+        <translation>Tx  </translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1854"/>
@@ -3226,12 +3231,12 @@ Format:
     <message>
         <location filename="../mainwindow.ui" line="1683"/>
         <source>▲</source>
-        <translation></translation>
+        <translation>▲</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1711"/>
         <source>▼</source>
-        <translation></translation>
+        <translation>▼</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1769"/>
@@ -3241,7 +3246,7 @@ Format:
     <message>
         <location filename="../mainwindow.ui" line="1775"/>
         <source>Split Tx/Rx</source>
-        <translation></translation>
+        <translation>Split Tx/Rx</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1708"/>
@@ -3257,7 +3262,7 @@ Format:
         <location filename="../mainwindow.ui" line="1521"/>
         <location filename="../mainwindow.ui" line="4834"/>
         <source>AutoSeq</source>
-        <translation></translation>
+        <translation>AutoSeq</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1537"/>
@@ -3267,7 +3272,7 @@ Format:
     <message>
         <location filename="../mainwindow.ui" line="1551"/>
         <source>AutoTX</source>
-        <translation></translation>
+        <translation>AutoTX</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1680"/>
@@ -3292,12 +3297,12 @@ Format:
     <message>
         <location filename="../mainwindow.ui" line="1848"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;The button provides choice between S-meter units and dBm. CAT shall be set up via Hamlib or TCI to get S-meter working, some rigs may not be supported.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Przycisk przełącza między jednostkami S-metra a dBm. Aby S-metr działał, CAT musi być skonfigurowany przez Hamlib lub TCI; niektóre transceivery mogą nie być obsługiwane.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1901"/>
         <source> Pwr</source>
-        <translation></translation>
+        <translation> Moc</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1923"/>
@@ -3324,7 +3329,7 @@ Format:
         <location filename="../mainwindow.ui" line="2027"/>
         <location filename="../mainwindow.ui" line="2103"/>
         <source>Clr</source>
-        <translation></translation>
+        <translation>Clr</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2041"/>
@@ -3335,7 +3340,7 @@ Format:
     <message>
         <location filename="../mainwindow.ui" line="2044"/>
         <source>prefix:</source>
-        <translation></translation>
+        <translation>prefiks:</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2074"/>
@@ -3419,7 +3424,7 @@ ZD8,ZD9,ZF,ZK3,ZL,ZL7,ZL8,ZL9,ZP,ZS,ZS8&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</tra
     <message>
         <location filename="../mainwindow.ui" line="2481"/>
         <source>&amp;Monitor</source>
-        <translation></translation>
+        <translation>&amp;Monitor</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2512"/>
@@ -3439,7 +3444,7 @@ ZD8,ZD9,ZF,ZK3,ZL,ZL7,ZL8,ZL9,ZP,ZS,ZS8&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</tra
     <message>
         <location filename="../mainwindow.ui" line="2571"/>
         <source>1 QSO</source>
-        <translation></translation>
+        <translation>1 QSO</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2602"/>
@@ -3449,7 +3454,7 @@ ZD8,ZD9,ZF,ZK3,ZL,ZL7,ZL8,ZL9,ZP,ZS,ZS8&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</tra
     <message>
         <location filename="../mainwindow.ui" line="2616"/>
         <source>AnsB4</source>
-        <translation></translation>
+        <translation>AnsB4</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2644"/>
@@ -3459,7 +3464,7 @@ ZD8,ZD9,ZF,ZK3,ZL,ZL7,ZL8,ZL9,ZP,ZS,ZS8&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</tra
     <message>
         <location filename="../mainwindow.ui" line="2647"/>
         <source>&amp;Stop</source>
-        <translation></translation>
+        <translation>&amp;Stop</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2905"/>
@@ -3489,7 +3494,7 @@ ZD8,ZD9,ZF,ZK3,ZL,ZL7,ZL8,ZL9,ZP,ZS,ZS8&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</tra
     <message>
         <location filename="../mainwindow.ui" line="2838"/>
         <source>&amp;Halt Tx</source>
-        <translation></translation>
+        <translation>&amp;Przerwij Tx</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2947"/>
@@ -3499,7 +3504,7 @@ ZD8,ZD9,ZF,ZK3,ZL,ZL7,ZL8,ZL9,ZP,ZS,ZS8&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</tra
     <message>
         <location filename="../mainwindow.ui" line="2950"/>
         <source>Log &amp;QSO</source>
-        <translation></translation>
+        <translation>Zapisz &amp;QSO</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2779"/>
@@ -3529,7 +3534,7 @@ ZD8,ZD9,ZF,ZK3,ZL,ZL7,ZL8,ZL9,ZP,ZS,ZS8&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</tra
     <message>
         <location filename="../mainwindow.ui" line="2994"/>
         <source>Hint</source>
-        <translation></translation>
+        <translation>Hint</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2686"/>
@@ -3549,7 +3554,7 @@ ZD8,ZD9,ZF,ZK3,ZL,ZL7,ZL8,ZL9,ZP,ZS,ZS8&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</tra
     <message>
         <location filename="../mainwindow.ui" line="2748"/>
         <source>AGCc</source>
-        <translation></translation>
+        <translation>AGCc</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2807"/>
@@ -3573,7 +3578,16 @@ Note:&lt;br&gt;
 - if your computer clock difference is more than 7.5 seconds, there is a chance you will be reporting spots in wrong interval, also QSO start/end time can be affected&lt;br&gt;
 - DT of TX signal will be affected in wrong way if you are trying to compensate RX audio stream delay caused by buffering in SDR software.&lt;br&gt;&lt;br&gt;
 Click by right mouse&apos;s button sets JTDX internal time back to system time.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Kliknięcie lewym przyciskiem myszy przesuwa wewnętrzny czas JTDX, aby dekoder lepiej zsynchronizował się z sygnałami w przychodzącym strumieniu audio.&lt;br&gt;
+Obsługiwane są dwa scenariusze:&lt;br&gt;
+- synchronizacja zgrubna, gdy na wodospadzie widać przesunięte sygnały, a żaden nie został zdekodowany; dekoder używa wtedy minimalnej wartości mocy do oszacowania przesunięcia czasu względem początku interwału&lt;br&gt;
+- synchronizacja dokładniejsza, gdy w poprzednim interwale zdekodowano sygnały, a średnie DT wykracza poza zakres -0,19 .. 0,19 s. Do przesunięcia czasu używana jest średnia wartość DT.&lt;br&gt;
+Zaleca się odstęp co najmniej pięciu interwałów między kolejnymi próbami synchronizacji zgrubnej i dokładnej.&lt;br&gt;
+Przesunięcie czasu może przerwać dekodowanie bieżącego i następnego interwału.&lt;br&gt;
+Uwaga:&lt;br&gt;
+- jeśli zegar komputera odbiega o więcej niż 7,5 sekundy, spoty mogą trafiać do niewłaściwego interwału, a czas rozpoczęcia i zakończenia QSO może być błędny&lt;br&gt;
+- DT nadawanego sygnału zostanie błędnie przesunięte, jeśli próbujesz kompensować opóźnienie strumienia audio spowodowane buforowaniem w programie SDR.&lt;br&gt;&lt;br&gt;
+Kliknięcie prawym przyciskiem myszy przywraca wewnętrzny czas JTDX do czasu systemowego.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3202"/>
@@ -3581,7 +3595,7 @@ Click by right mouse&apos;s button sets JTDX internal time back to system time.&
         <location filename="../mainwindow.ui" line="6072"/>
         <location filename="../mainwindow.ui" line="6096"/>
         <source>1</source>
-        <translation></translation>
+        <translation>1</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3245"/>
@@ -3591,13 +3605,13 @@ Click by right mouse&apos;s button sets JTDX internal time back to system time.&
     <message>
         <location filename="../mainwindow.ui" line="3248"/>
         <source>GenMsgs</source>
-        <translation></translation>
+        <translation>GenMsgs</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3277"/>
         <location filename="../mainwindow.ui" line="5785"/>
         <source>CQ</source>
-        <translation></translation>
+        <translation>CQ</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3324"/>
@@ -3609,7 +3623,7 @@ Click by right mouse&apos;s button sets JTDX internal time back to system time.&
         <location filename="../mainwindow.ui" line="3327"/>
         <location filename="../mainwindow.ui" line="3949"/>
         <source>DX</source>
-        <translation></translation>
+        <translation>DX</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3340"/>
@@ -3621,7 +3635,7 @@ Click by right mouse&apos;s button sets JTDX internal time back to system time.&
         <location filename="../mainwindow.ui" line="3346"/>
         <location filename="../mainwindow.ui" line="3984"/>
         <source>RRR</source>
-        <translation></translation>
+        <translation>RRR</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3359"/>
@@ -3647,7 +3661,7 @@ Click by right mouse&apos;s button sets JTDX internal time back to system time.&
     <message>
         <location filename="../mainwindow.ui" line="3416"/>
         <source>Ctrl+1</source>
-        <translation></translation>
+        <translation>Ctrl+1</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3441"/>
@@ -3662,57 +3676,57 @@ Click by right mouse&apos;s button sets JTDX internal time back to system time.&
     <message>
         <location filename="../mainwindow.ui" line="3447"/>
         <source>Tx &amp;1</source>
-        <translation></translation>
+        <translation>Tx &amp;1</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3450"/>
         <source>Alt+1</source>
-        <translation></translation>
+        <translation>Alt+1</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3498"/>
         <source>Ctrl+2</source>
-        <translation></translation>
+        <translation>Ctrl+2</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3523"/>
         <source>Tx &amp;2</source>
-        <translation></translation>
+        <translation>Tx &amp;2</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3526"/>
         <source>Alt+2</source>
-        <translation></translation>
+        <translation>Alt+2</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3568"/>
         <source>Ctrl+3</source>
-        <translation></translation>
+        <translation>Ctrl+3</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3593"/>
         <source>Tx &amp;3</source>
-        <translation></translation>
+        <translation>Tx &amp;3</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3596"/>
         <source>Alt+3</source>
-        <translation></translation>
+        <translation>Alt+3</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3638"/>
         <source>Ctrl+4</source>
-        <translation></translation>
+        <translation>Ctrl+4</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3663"/>
         <source>Tx &amp;4</source>
-        <translation></translation>
+        <translation>Tx &amp;4</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3666"/>
         <source>Alt+4</source>
-        <translation></translation>
+        <translation>Alt+4</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3698"/>
@@ -3729,32 +3743,32 @@ listy. Listą można zarządzać w zakładce Ustawienia (F2).</translation>
     <message>
         <location filename="../mainwindow.ui" line="3726"/>
         <source>Ctrl+5</source>
-        <translation></translation>
+        <translation>Ctrl+5</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3751"/>
         <source>Tx &amp;5</source>
-        <translation></translation>
+        <translation>Tx &amp;5</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3754"/>
         <source>Alt+5</source>
-        <translation></translation>
+        <translation>Alt+5</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3799"/>
         <source>Ctrl+6</source>
-        <translation></translation>
+        <translation>Ctrl+6</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3827"/>
         <source>Tx &amp;6</source>
-        <translation></translation>
+        <translation>Tx &amp;6</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3830"/>
         <source>Alt+6</source>
-        <translation></translation>
+        <translation>Alt+6</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3848"/>
@@ -3763,22 +3777,22 @@ listy. Listą można zarządzać w zakładce Ustawienia (F2).</translation>
         <location filename="../mainwindow.ui" line="6080"/>
         <location filename="../mainwindow.ui" line="6104"/>
         <source>2</source>
-        <translation></translation>
+        <translation>2</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3902"/>
         <source>CQ </source>
-        <translation></translation>
+        <translation>CQ </translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4016"/>
         <source>AnsCQ </source>
-        <translation></translation>
+        <translation>AnsCQ </translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4038"/>
         <source>SkpGrid</source>
-        <translation></translation>
+        <translation>SkpGrid</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4065"/>
@@ -3788,7 +3802,7 @@ listy. Listą można zarządzać w zakładce Ustawienia (F2).</translation>
     <message>
         <location filename="../mainwindow.ui" line="4068"/>
         <source>CQ/CQ DX</source>
-        <translation></translation>
+        <translation>CQ/CQ DX</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4093"/>
@@ -3808,7 +3822,7 @@ listy. Listą można zarządzać w zakładce Ustawienia (F2).</translation>
     <message>
         <location filename="../mainwindow.ui" line="4124"/>
         <source>dB</source>
-        <translation></translation>
+        <translation>dB</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4149"/>
@@ -3818,7 +3832,7 @@ listy. Listą można zarządzać w zakładce Ustawienia (F2).</translation>
     <message>
         <location filename="../mainwindow.ui" line="4152"/>
         <source>R+dB</source>
-        <translation></translation>
+        <translation>R+dB</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4177"/>
@@ -3828,7 +3842,7 @@ listy. Listą można zarządzać w zakładce Ustawienia (F2).</translation>
     <message>
         <location filename="../mainwindow.ui" line="4180"/>
         <source>RRR/RR73</source>
-        <translation></translation>
+        <translation>RRR/RR73</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4205"/>
@@ -3838,7 +3852,7 @@ listy. Listą można zarządzać w zakładce Ustawienia (F2).</translation>
     <message>
         <location filename="../mainwindow.ui" line="4208"/>
         <source>73</source>
-        <translation></translation>
+        <translation>73</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4256"/>
@@ -3848,7 +3862,7 @@ listy. Listą można zarządzać w zakładce Ustawienia (F2).</translation>
     <message>
         <location filename="../mainwindow.ui" line="4259"/>
         <source>Gen msg</source>
-        <translation></translation>
+        <translation>Gen msg</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4324"/>
@@ -3893,7 +3907,7 @@ listy. Listą można zarządzać w zakładce Ustawienia (F2).</translation>
     <message>
         <location filename="../mainwindow.ui" line="4498"/>
         <source>Tx Next</source>
-        <translation></translation>
+        <translation>Tx następny</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4515"/>
@@ -3908,17 +3922,17 @@ listy. Listą można zarządzać w zakładce Ustawienia (F2).</translation>
     <message>
         <location filename="../mainwindow.ui" line="1437"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enable FT8 DXpedition Hound mode. MSHV multianswering mode is supported in common FT8 bands, WSJT-X DXpedition mode with frequency control is supported on the special DXpedition frequencies.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Włącz tryb FT8 DXpedition Hound. Na zwykłych pasmach FT8 obsługiwany jest tryb wieloodpowiedzi MSHV, a na specjalnych częstotliwościach DXpedycji - tryb WSJT-X DXpedition ze sterowaniem częstotliwością.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1592"/>
         <source> %</source>
-        <translation></translation>
+        <translation> %</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1595"/>
         <source>CL  </source>
-        <translation></translation>
+        <translation>CL  </translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1821"/>
@@ -3928,32 +3942,32 @@ listy. Listą można zarządzać w zakładce Ustawienia (F2).</translation>
     <message>
         <location filename="../mainwindow.ui" line="1824"/>
         <source>DT </source>
-        <translation></translation>
+        <translation>DT </translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1827"/>
         <source> s</source>
-        <translation></translation>
+        <translation> s</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1898"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;CAT shall be set up via Hamlib or TCI, TCI and Hamlib for some transceivers does support getting output power data.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;CAT musi być skonfigurowany przez Hamlib lub TCI; dla niektórych transceiverów TCI i Hamlib potrafią odczytać moc wyjściową.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3048"/>
         <source>Sync</source>
-        <translation type="unfinished"></translation>
+        <translation>Synchr.</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4435"/>
         <source>  %</source>
-        <translation></translation>
+        <translation>  %</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4438"/>
         <source>Tx Pct </source>
-        <translation></translation>
+        <translation>Tx % </translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4508"/>
@@ -4053,7 +4067,7 @@ listy. Listą można zarządzać w zakładce Ustawienia (F2).</translation>
     <message>
         <location filename="../mainwindow.ui" line="4863"/>
         <source>DXpedition</source>
-        <translation></translation>
+        <translation>DXpedycja</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4882"/>
@@ -4063,7 +4077,7 @@ listy. Listą można zarządzać w zakładce Ustawienia (F2).</translation>
     <message>
         <location filename="../mainwindow.ui" line="4885"/>
         <source>Alt+F4</source>
-        <translation></translation>
+        <translation>Alt+F4</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4896"/>
@@ -4074,7 +4088,7 @@ listy. Listą można zarządzać w zakładce Ustawienia (F2).</translation>
         <location filename="../mainwindow.ui" line="4899"/>
         <location filename="../mainwindow.ui" line="5320"/>
         <source>F2</source>
-        <translation></translation>
+        <translation>F2</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4904"/>
@@ -4084,7 +4098,7 @@ listy. Listą można zarządzać w zakładce Ustawienia (F2).</translation>
     <message>
         <location filename="../mainwindow.ui" line="4907"/>
         <source>Ctrl+F1</source>
-        <translation></translation>
+        <translation>Ctrl+F1</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4912"/>
@@ -4099,7 +4113,7 @@ listy. Listą można zarządzać w zakładce Ustawienia (F2).</translation>
     <message>
         <location filename="../mainwindow.ui" line="4920"/>
         <source>Ctrl+O</source>
-        <translation></translation>
+        <translation>Ctrl+O</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4925"/>
@@ -4109,7 +4123,7 @@ listy. Listą można zarządzać w zakładce Ustawienia (F2).</translation>
     <message>
         <location filename="../mainwindow.ui" line="4928"/>
         <source>F6</source>
-        <translation></translation>
+        <translation>F6</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4933"/>
@@ -4119,7 +4133,7 @@ listy. Listą można zarządzać w zakładce Ustawienia (F2).</translation>
     <message>
         <location filename="../mainwindow.ui" line="4936"/>
         <source>Shift+F6</source>
-        <translation></translation>
+        <translation>Shift+F6</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4941"/>
@@ -4152,7 +4166,7 @@ listy. Listą można zarządzać w zakładce Ustawienia (F2).</translation>
     <message>
         <location filename="../mainwindow.ui" line="5074"/>
         <source>F1</source>
-        <translation></translation>
+        <translation>F1</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5079"/>
@@ -4162,7 +4176,7 @@ listy. Listą można zarządzać w zakładce Ustawienia (F2).</translation>
     <message>
         <location filename="../mainwindow.ui" line="5082"/>
         <source>F3</source>
-        <translation></translation>
+        <translation>F3</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5087"/>
@@ -4172,12 +4186,12 @@ listy. Listą można zarządzać w zakładce Ustawienia (F2).</translation>
     <message>
         <location filename="../mainwindow.ui" line="5090"/>
         <source>F5</source>
-        <translation></translation>
+        <translation>F5</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5101"/>
         <source>JT9</source>
-        <translation></translation>
+        <translation>JT9</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5112"/>
@@ -4225,7 +4239,7 @@ listy. Listą można zarządzać w zakładce Ustawienia (F2).</translation>
         <location filename="../mainwindow.ui" line="5160"/>
         <location filename="../mainwindow.ui" line="5344"/>
         <source>F7</source>
-        <translation></translation>
+        <translation>F7</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5168"/>
@@ -4270,7 +4284,7 @@ listy. Listą można zarządzać w zakładce Ustawienia (F2).</translation>
     <message>
         <location filename="../mainwindow.ui" line="5232"/>
         <source>Runaway Tx watchdog</source>
-        <translation></translation>
+        <translation>Watchdog nadawania</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5240"/>
@@ -4290,12 +4304,12 @@ listy. Listą można zarządzać w zakładce Ustawienia (F2).</translation>
     <message>
         <location filename="../mainwindow.ui" line="5264"/>
         <source>JT65</source>
-        <translation></translation>
+        <translation>JT65</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5275"/>
         <source>JT9+JT65</source>
-        <translation></translation>
+        <translation>JT9+JT65</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5283"/>
@@ -4305,7 +4319,7 @@ listy. Listą można zarządzać w zakładce Ustawienia (F2).</translation>
     <message>
         <location filename="../mainwindow.ui" line="5291"/>
         <source>Gray1</source>
-        <translation></translation>
+        <translation>Gray1</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5299"/>
@@ -4355,7 +4369,7 @@ listy. Listą można zarządzać w zakładce Ustawienia (F2).</translation>
     <message>
         <location filename="../mainwindow.ui" line="5383"/>
         <source>WSPR-2</source>
-        <translation></translation>
+        <translation>WSPR-2</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5388"/>
@@ -4365,7 +4379,7 @@ listy. Listą można zarządzać w zakładce Ustawienia (F2).</translation>
     <message>
         <location filename="../mainwindow.ui" line="5404"/>
         <source>T10</source>
-        <translation></translation>
+        <translation>T10</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5415"/>
@@ -4380,7 +4394,7 @@ listy. Listą można zarządzać w zakładce Ustawienia (F2).</translation>
     <message>
         <location filename="../mainwindow.ui" line="5429"/>
         <source>Alt+F</source>
-        <translation></translation>
+        <translation>Alt+F</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5437"/>
@@ -4405,7 +4419,7 @@ listy. Listą można zarządzać w zakładce Ustawienia (F2).</translation>
     <message>
         <location filename="../mainwindow.ui" line="5478"/>
         <source>FT8</source>
-        <translation></translation>
+        <translation>FT8</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5486"/>
@@ -4475,22 +4489,22 @@ listy. Listą można zarządzać w zakładce Ustawienia (F2).</translation>
     <message>
         <location filename="../mainwindow.ui" line="5591"/>
         <source>Auto</source>
-        <translation></translation>
+        <translation>Auto</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5618"/>
         <source>4</source>
-        <translation></translation>
+        <translation>4</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5626"/>
         <source>8</source>
-        <translation></translation>
+        <translation>8</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5634"/>
         <source>12</source>
-        <translation></translation>
+        <translation>12</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5642"/>
@@ -4525,12 +4539,12 @@ listy. Listą można zarządzać w zakładce Ustawienia (F2).</translation>
     <message>
         <location filename="../mainwindow.ui" line="5750"/>
         <source>minimum</source>
-        <translation></translation>
+        <translation>minimum</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5758"/>
         <source>early start of decoder</source>
-        <translation type="unfinished"></translation>
+        <translation>wczesny start dekodera</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5766"/>
@@ -4612,37 +4626,37 @@ listy. Listą można zarządzać w zakładce Ustawienia (F2).</translation>
         <location filename="../mainwindow.ui" line="6088"/>
         <location filename="../mainwindow.ui" line="6112"/>
         <source>3</source>
-        <translation></translation>
+        <translation>3</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5911"/>
         <source>6</source>
-        <translation></translation>
+        <translation>6</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5919"/>
         <source>10</source>
-        <translation></translation>
+        <translation>10</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5927"/>
         <source>5</source>
-        <translation></translation>
+        <translation>5</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5935"/>
         <source>7</source>
-        <translation></translation>
+        <translation>7</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5943"/>
         <source>9</source>
-        <translation></translation>
+        <translation>9</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5951"/>
         <source>11</source>
-        <translation></translation>
+        <translation>11</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5959"/>
@@ -4662,7 +4676,7 @@ listy. Listą można zarządzać w zakładce Ustawienia (F2).</translation>
     <message>
         <location filename="../mainwindow.ui" line="5994"/>
         <source>FT4</source>
-        <translation></translation>
+        <translation>FT4</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="6029"/>
@@ -4697,62 +4711,62 @@ listy. Listą można zarządzać w zakładce Ustawienia (F2).</translation>
     <message>
         <location filename="../mainwindow.ui" line="6128"/>
         <source>13</source>
-        <translation></translation>
+        <translation>13</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="6136"/>
         <source>14</source>
-        <translation></translation>
+        <translation>14</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="6144"/>
         <source>15</source>
-        <translation></translation>
+        <translation>15</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="6152"/>
         <source>16</source>
-        <translation></translation>
+        <translation>16</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="6160"/>
         <source>17</source>
-        <translation></translation>
+        <translation>17</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="6168"/>
         <source>18</source>
-        <translation></translation>
+        <translation>18</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="6176"/>
         <source>19</source>
-        <translation></translation>
+        <translation>19</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="6184"/>
         <source>20</source>
-        <translation></translation>
+        <translation>20</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="6192"/>
         <source>21</source>
-        <translation></translation>
+        <translation>21</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="6200"/>
         <source>22</source>
-        <translation></translation>
+        <translation>22</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="6208"/>
         <source>23</source>
-        <translation></translation>
+        <translation>23</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="6216"/>
         <source>24</source>
-        <translation></translation>
+        <translation>24</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="470"/>
@@ -4842,24 +4856,24 @@ listy. Listą można zarządzać w zakładce Ustawienia (F2).</translation>
     <message>
         <location filename="../mainwindow.cpp" line="1994"/>
         <source>Error in SoundInput</source>
-        <translation></translation>
+        <translation>Błąd wejścia audio</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="1995"/>
         <source>Error in SoundOutput</source>
-        <translation></translation>
+        <translation>Błąd wyjścia audio</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="2110"/>
         <source>Pwr</source>
-        <translation></translation>
+        <translation>Moc</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="2509"/>
         <location filename="../mainwindow.cpp" line="3080"/>
         <location filename="../mainwindow.cpp" line="6622"/>
         <source>Hound mode TX frequency control requires *Split* rig control (either *Rig* or *Fake It* set in the *Settings | Radio* tab.)</source>
-        <translation type="unfinished"></translation>
+        <translation>Sterowanie częstotliwością nadawania w trybie Hound wymaga pracy *Split* (ustaw *TRCVR* lub *Symuluj* w zakładce *Ustawienia | Radio*).</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="2705"/>
@@ -4919,36 +4933,36 @@ listy. Listą można zarządzać w zakładce Ustawienia (F2).</translation>
     <message>
         <location filename="../mainwindow.cpp" line="2997"/>
         <source>AutoSeq0</source>
-        <translation></translation>
+        <translation>AutoSeq0</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="3010"/>
         <source>AutoSeq1</source>
-        <translation></translation>
+        <translation>AutoSeq1</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="3019"/>
         <location filename="../mainwindow.cpp" line="3045"/>
         <source>AutoSeq2</source>
-        <translation></translation>
+        <translation>AutoSeq2</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="3020"/>
         <location filename="../mainwindow.cpp" line="3041"/>
         <source>AutoSeq6</source>
-        <translation></translation>
+        <translation>AutoSeq6</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="3029"/>
         <location filename="../mainwindow.cpp" line="3046"/>
         <source>AutoSeq3</source>
-        <translation></translation>
+        <translation>AutoSeq3</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="3030"/>
         <location filename="../mainwindow.cpp" line="3042"/>
         <source>AutoSeq7</source>
-        <translation></translation>
+        <translation>AutoSeq7</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="2512"/>
@@ -4994,7 +5008,35 @@ listy. Listą można zarządzać w zakładce Ustawienia (F2).</translation>
   &lt;tr&gt;&lt;td&gt;&lt;b&gt;Esc    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Halt Tx&lt;/td&gt;&lt;/tr&gt;
 &lt;/table&gt;</source>
         <extracomment>Keyboard shortcuts help window contents</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>&lt;table cellspacing=1&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F1       &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Podręcznik użytkownika online&lt;/td&gt;&lt;td&gt;&lt;b&gt;Ctrl+F1  &lt;/b&gt;&lt;/td&gt;&lt;td&gt;O programie JTDX&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F2       &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Otwórz okno konfiguracji&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F3       &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Pokaż skróty klawiszowe&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F4       &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Wyczyść DX Call/Lokator i wiadomości Tx&lt;/td&gt;&lt;td&gt;&lt;b&gt;Alt+F4   &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Zakończ program&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F5       &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Pokaż specjalne polecenia myszy&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F6       &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Otwórz następny plik w katalogu&lt;/td&gt;&lt;td&gt;&lt;b&gt;Shift+F6 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Zdekoduj wszystkie pozostałe pliki w katalogu&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F7       &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Otwórz dziennik w przeglądarce przypisanej w systemie&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F11      &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Obniż częstotliwość odbioru o 1 Hz&lt;/td&gt;&lt;td&gt;&lt;b&gt;Ctrl+F11 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Obniż częstotliwość odbioru i nadawania o 1 Hz&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F12      &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Podnieś częstotliwość odbioru o 1 Hz&lt;/td&gt;&lt;td&gt;&lt;b&gt;Ctrl+F12 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Podnieś częstotliwość odbioru i nadawania o 1 Hz&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+1-6  &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Ustaw teraz nadawanie na ten numer w zakładce 1&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Ctl+1-6  &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Ustaw następne nadawanie na ten numer w zakładce 1&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+Ctrl+A    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Wyczyść listę poszukiwanych znaków&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+B/C  &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Przełącz na emisję FT8/FT4&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+D    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Zdekoduj ponownie na częstotliwości QSO&lt;/td&gt;&lt;td&gt;&lt;b&gt;Shift+D  &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Pełne dekodowanie (oba okna)&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+E    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Wyczyść&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+F    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Przełącz pomijanie wszystkich filtrów tekstowych&lt;/td&gt;&lt;td&gt;&lt;b&gt;Ctrl+F   &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Edytuj pole wiadomości dowolnej&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+G    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Generuj wiadomości standardowe&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+H    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Przerwij Tx&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Ctrl+L   &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Wyszukaj znak w bazie i generuj wiadomości standardowe&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+M    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Monitor&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+N    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Aktywuj Tx&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+Q    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Zapisz QSO&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+S    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Zatrzymaj monitorowanie&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+T    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Strojenie&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+V    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Zapisz ostatnio ukończony plik *.wav&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+Z    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Filtr; skrót działa w oknie głównym i w oknie wodospadu&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Esc    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Przerwij Tx&lt;/td&gt;&lt;/tr&gt;
+&lt;/table&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="3218"/>
@@ -5041,7 +5083,44 @@ listy. Listą można zarządzać w zakładce Ustawienia (F2).</translation>
   &lt;/tr&gt;
 &lt;/table&gt;
 </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;table cellpadding=5&gt;
+  &lt;tr&gt;
+    &lt;th align="right"&gt;Kliknięcie na&lt;/th&gt;
+    &lt;th align="left"&gt;Działanie&lt;/th&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td align="right"&gt;Wodospad:&lt;/td&gt;
+    &lt;td&gt;Ustawia częstotliwość odbioru.&lt;br/&gt;
+        Podwójne kliknięcie ustawia częstotliwość odbioru i dekoduje w tym miejscu.&lt;br/&gt;
+        Ctrl+kliknięcie ustawia częstotliwość odbioru i nadawania.&lt;br/&gt;
+        Gdy TX=RX nie jest zablokowane:&lt;br/&gt;
+        lewy przycisk ustawia częstotliwość odbioru&lt;br/&gt;
+        ALT+lewy przycisk ustawia częstotliwość odbioru i włącza filtr&lt;br/&gt;
+        prawy przycisk ustawia częstotliwość nadawania
+    &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td align="right"&gt;Zdekodowany tekst:&lt;/td&gt;
+    &lt;td&gt;Podwójne kliknięcie kopiuje drugi znak do Dx Call,&lt;br/&gt;
+        lokator do Dx Grid, ustawia częstotliwość odbioru i nadawania na&lt;br/&gt;
+        częstotliwość zdekodowanego sygnału i generuje wiadomości standardowe.&lt;br/&gt;
+        Jeśli pierwszy znak jest twój, częstotliwość nadawania nie&lt;br/&gt;
+        zmienia się, chyba że przy podwójnym kliknięciu trzymasz CTRL.&lt;br/&gt;&lt;br/&gt;
+        ALT+podwójne kliknięcie przerywa też nadawanie, gdy Aktywuj Tx jest włączone.&lt;br/&gt;&lt;br/&gt;
+        CTRL+ALT+podwójne kliknięcie tylko dodaje drugi znak z&lt;br/&gt;
+        wiadomości do listy poszukiwanych znaków.
+    &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td align="right"&gt;Przycisk Usuń:&lt;/td&gt;
+    &lt;td&gt;Prawy przycisk czyści okno QSO.&lt;br/&gt;
+        Lewy przycisk czyści okno aktywności pasma.&lt;br/&gt;
+        Podwójne kliknięcie lewym lub prawym przyciskiem czyści okno QSO &lt;br/&gt;
+        i okno aktywności pasma.
+    &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/table&gt;
+</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="3731"/>
@@ -5058,7 +5137,7 @@ listy. Listą można zarządzać w zakładce Ustawienia (F2).</translation>
         <location filename="../mainwindow.cpp" line="3731"/>
         <location filename="../mainwindow.cpp" line="3754"/>
         <source>Lag=</source>
-        <translation type="unfinished"></translation>
+        <translation>Opóźn=</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="3737"/>
@@ -5093,13 +5172,13 @@ i że JTDX zostanie zrestartowamy?</translation>
     <message>
         <location filename="../mainwindow.cpp" line="4203"/>
         <source>Please choose another Tx frequency. JTDX will not allow to Call below 1000 Hz in DXped mode.</source>
-        <translation type="unfinished"></translation>
+        <translation>Wybierz inną częstotliwość nadawania. W trybie DXpedycji JTDX nie pozwala wywoływać poniżej 1000 Hz.</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="4208"/>
         <location filename="../mainwindow.cpp" line="4211"/>
         <source>FT8 F/H Tx Guard</source>
-        <translation type="unfinished"></translation>
+        <translation>Zabezpieczenie nadawania FT8 F/H</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="4330"/>
@@ -5120,7 +5199,7 @@ i że JTDX zostanie zrestartowamy?</translation>
     <message>
         <location filename="../mainwindow.cpp" line="4583"/>
         <source>Tx: </source>
-        <translation type="unfinished"></translation>
+        <translation>Tx: </translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="4588"/>
@@ -5170,12 +5249,12 @@ jest już w CALL3.TXT, czy chcesz go zamienić?</translation>
     <message>
         <location filename="../mainwindow.cpp" line="6229"/>
         <source>Tx WSPR</source>
-        <translation type="unfinished"></translation>
+        <translation>Tx WSPR</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="6333"/>
         <source>    Freq     Drift  Call          Grid    dBm   Dist</source>
-        <translation type="unfinished"></translation>
+        <translation>    Częst    Dryf   Znak          Lokat.  dBm   Odl</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="6427"/>
@@ -5206,7 +5285,7 @@ jest już w CALL3.TXT, czy chcesz go zamienić?</translation>
     <message>
         <location filename="../mainwindow.cpp" line="7073"/>
         <source>Tx/Rx Split</source>
-        <translation type="unfinished"></translation>
+        <translation>Tx/Rx split</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="7074"/>
@@ -5216,7 +5295,7 @@ jest już w CALL3.TXT, czy chcesz go zamienić?</translation>
     <message>
         <location filename="../mainwindow.cpp" line="7134"/>
         <source>Pwr&lt;br&gt;%1 W</source>
-        <translation type="unfinished"></translation>
+        <translation>Moc&lt;br&gt;%1 W</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="7222"/>
@@ -5242,7 +5321,7 @@ jest już w CALL3.TXT, czy chcesz go zamienić?</translation>
         <location filename="../mainwindow.cpp" line="7399"/>
         <location filename="../mainwindow.cpp" line="7400"/>
         <source>Logd </source>
-        <translation type="unfinished"></translation>
+        <translation>Zapis. </translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="7644"/>
@@ -5269,7 +5348,7 @@ srever UDP %2:%3</translation>
     <message>
         <location filename="../mainwindow.cpp" line="8021"/>
         <source>WD %1m</source>
-        <translation type="unfinished"></translation>
+        <translation>WD %1m</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
@@ -5319,7 +5398,7 @@ srever UDP %2:%3</translation>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>RX</source>
-        <translation type="unfinished"></translation>
+        <translation>RX</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
@@ -5404,62 +5483,62 @@ srever UDP %2:%3</translation>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>1 member</source>
-        <translation type="unfinished"></translation>
+        <translation>1 element</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>2 members</source>
-        <translation type="unfinished"></translation>
+        <translation>2 elementy</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>3 members</source>
-        <translation type="unfinished"></translation>
+        <translation>3 elementy</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>4 members</source>
-        <translation type="unfinished"></translation>
+        <translation>4 elementy</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>5 members</source>
-        <translation type="unfinished"></translation>
+        <translation>5 elementów</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>6 members</source>
-        <translation type="unfinished"></translation>
+        <translation>6 elementów</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>1 member   (+20, 13% of the budget at 8 threads)</source>
-        <translation type="unfinished"></translation>
+        <translation>1 element   (+20, 13% budżetu przy 8 wątkach)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>2 members  (+48, 18%)</source>
-        <translation type="unfinished"></translation>
+        <translation>2 elementy  (+48, 18%)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>3 members  (+72, 23% - the knee of the curve)</source>
-        <translation type="unfinished"></translation>
+        <translation>3 elementy  (+72, 23% - kolano krzywej)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>4 members  (+86, 28%)</source>
-        <translation type="unfinished"></translation>
+        <translation>4 elementy  (+86, 28%)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>5 members  (+98, 33% - all that is worth taking)</source>
-        <translation type="unfinished"></translation>
+        <translation>5 elementów  (+98, 33% - wszystko, co warto wziąć)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>6 members  (+100, 39% - only 2 more than five)</source>
-        <translation type="unfinished"></translation>
+        <translation>6 elementów  (+100, 39% - tylko 2 więcej niż pięć)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
@@ -5479,27 +5558,27 @@ srever UDP %2:%3</translation>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>1 member  (+7 msgs, +1.2 s at 12 threads on the benchmark)</source>
-        <translation type="unfinished"></translation>
+        <translation>1 element  (+7 wiad., +1,2 s przy 12 wątkach w teście)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>2 members  (+10, +2.3 s)</source>
-        <translation type="unfinished"></translation>
+        <translation>2 elementy  (+10, +2,3 s)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>3 members  (+13, +5.3 s)</source>
-        <translation type="unfinished"></translation>
+        <translation>3 elementy  (+13, +5,3 s)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>4 members  (+15, +7.9 s)</source>
-        <translation type="unfinished"></translation>
+        <translation>4 elementy  (+15, +7,9 s)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>5 members  (+16, +11.5 s - too slow for a 15 s period on this machine, for replays)</source>
-        <translation type="unfinished"></translation>
+        <translation>5 elementów  (+16, +11,5 s - zbyt wolno na okres 15 s na tej maszynie, do odtwarzania)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
@@ -5549,17 +5628,17 @@ srever UDP %2:%3</translation>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>100-3300 Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>100-3300 Hz</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>300-3300 Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>300-3300 Hz</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>50-3650 Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>50-3650 Hz</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
@@ -5569,52 +5648,52 @@ srever UDP %2:%3</translation>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>100-3200 Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>100-3200 Hz</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>100-3100 Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>100-3100 Hz</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>100-3000 Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>100-3000 Hz</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>200-3200 Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>200-3200 Hz</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>200-3100 Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>200-3100 Hz</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>200-3000 Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>200-3000 Hz</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>200-2800 Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>200-2800 Hz</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>200-2500 Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>200-2500 Hz</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>200-2400 Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>200-2400 Hz</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>0-5000 Hz (testing only)</source>
-        <translation type="unfinished"></translation>
+        <translation>0-5000 Hz (tylko do testów)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
@@ -5827,7 +5906,35 @@ srever UDP %2:%3</translation>
   &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+Z    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Filter, this shortcut is being supported in main UI and widegraph UI&lt;/td&gt;&lt;/tr&gt;
   &lt;tr&gt;&lt;td&gt;&lt;b&gt;Esc    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Halt Tx&lt;/td&gt;&lt;/tr&gt;
 &lt;/table&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;table cellspacing=1&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F1       &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Podręcznik użytkownika online&lt;/td&gt;&lt;td&gt;&lt;b&gt;Ctrl+F1  &lt;/b&gt;&lt;/td&gt;&lt;td&gt;O programie JTDX_contest&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F2       &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Otwórz okno konfiguracji&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F3       &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Pokaż skróty klawiszowe&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F4       &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Wyczyść DX Call/Lokator i wiadomości Tx&lt;/td&gt;&lt;td&gt;&lt;b&gt;Alt+F4   &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Zakończ program&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F5       &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Pokaż specjalne polecenia myszy&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F6       &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Otwórz następny plik w katalogu&lt;/td&gt;&lt;td&gt;&lt;b&gt;Shift+F6 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Zdekoduj wszystkie pozostałe pliki w katalogu&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F7       &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Otwórz dziennik w przeglądarce przypisanej w systemie&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F11      &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Obniż częstotliwość odbioru o 1 Hz&lt;/td&gt;&lt;td&gt;&lt;b&gt;Ctrl+F11 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Obniż częstotliwość odbioru i nadawania o 1 Hz&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F12      &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Podnieś częstotliwość odbioru o 1 Hz&lt;/td&gt;&lt;td&gt;&lt;b&gt;Ctrl+F12 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Podnieś częstotliwość odbioru i nadawania o 1 Hz&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+1-6  &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Ustaw teraz nadawanie na ten numer w zakładce 1&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Ctl+1-6  &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Ustaw następne nadawanie na ten numer w zakładce 1&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+Ctrl+A    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Wyczyść listę poszukiwanych znaków&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+B/C  &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Przełącz na emisję FT8/FT4&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+D    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Zdekoduj ponownie na częstotliwości QSO&lt;/td&gt;&lt;td&gt;&lt;b&gt;Shift+D  &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Pełne dekodowanie (oba okna)&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+E    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Wyczyść&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+F    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Przełącz pomijanie wszystkich filtrów tekstowych&lt;/td&gt;&lt;td&gt;&lt;b&gt;Ctrl+F   &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Edytuj pole wiadomości dowolnej&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+G    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Generuj wiadomości standardowe&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+H    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Przerwij Tx&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Ctrl+L   &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Wyszukaj znak w bazie i generuj wiadomości standardowe&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+M    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Monitor&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+N    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Aktywuj Tx&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+Q    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Zapisz QSO&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+S    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Zatrzymaj monitorowanie&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+T    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Strojenie&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+V    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Zapisz ostatnio ukończony plik *.wav&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+Z    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Filtr; skrót działa w oknie głównym i w oknie wodospadu&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Esc    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Przerwij Tx&lt;/td&gt;&lt;/tr&gt;
+&lt;/table&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp"/>
@@ -5894,7 +6001,7 @@ To pytanie pojawia się tylko raz.</translation>
     <message>
         <location filename="../Configuration.cpp" line="5387"/>
         <source>OK</source>
-        <translation></translation>
+        <translation>OK</translation>
     </message>
 </context>
 <context>
@@ -5987,7 +6094,7 @@ To pytanie pojawia się tylko raz.</translation>
     <message>
         <location filename="../Configuration.cpp" line="5412"/>
         <source>Alt+Left</source>
-        <translation></translation>
+        <translation>Alt+Left</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp" line="5413"/>
@@ -6002,7 +6109,7 @@ To pytanie pojawia się tylko raz.</translation>
     <message>
         <location filename="../Configuration.cpp" line="5415"/>
         <source>Alt+Right</source>
-        <translation></translation>
+        <translation>Alt+Right</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp" line="5416"/>
@@ -6017,7 +6124,7 @@ To pytanie pojawia się tylko raz.</translation>
     <message>
         <location filename="../Configuration.cpp" line="5418"/>
         <source>Alt+Up</source>
-        <translation></translation>
+        <translation>Alt+Up</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp" line="5419"/>
@@ -6152,7 +6259,7 @@ Upewnić się, że podano właściwą nazwę katalogu.</translation>
     <message>
         <location filename="../Bands.cpp" line="51"/>
         <source>OOB</source>
-        <translation></translation>
+        <translation>OOB</translation>
     </message>
     <message>
         <location filename="../WFPalette.cpp" line="55"/>
@@ -6331,7 +6438,7 @@ Upewnić się, że podano właściwą nazwę katalogu.</translation>
     <message>
         <location filename="../Configuration.cpp" line="270"/>
         <source>&amp;Offset (MHz):</source>
-        <translation></translation>
+        <translation>&amp;Przesunięcie (MHz):</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp" line="271"/>
@@ -6341,7 +6448,7 @@ Upewnić się, że podano właściwą nazwę katalogu.</translation>
     <message>
         <location filename="../Configuration.cpp" line="277"/>
         <source>&amp;OK</source>
-        <translation></translation>
+        <translation>&amp;OK</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp" line="278"/>
@@ -6374,7 +6481,7 @@ Upewnić się, że podano właściwą nazwę katalogu.</translation>
     <message>
         <location filename="../StationList.cpp" line="365"/>
         <source>Offset</source>
-        <translation></translation>
+        <translation>Przesunięcie</translation>
     </message>
     <message>
         <location filename="../StationList.cpp" line="366"/>
@@ -6387,194 +6494,194 @@ Upewnić się, że podano właściwą nazwę katalogu.</translation>
     <message>
         <location filename="../TCITransceiver.cpp" line="141"/>
         <source>ConnectionRefused</source>
-        <translation type="unfinished"></translation>
+        <translation>Połączenie odrzucone</translation>
     </message>
     <message>
         <location filename="../TCITransceiver.cpp" line="142"/>
         <source>RemoteHostClosed</source>
-        <translation type="unfinished"></translation>
+        <translation>Zdalny host zamknął połączenie</translation>
     </message>
     <message>
         <location filename="../TCITransceiver.cpp" line="143"/>
         <source>HostNotFound</source>
-        <translation type="unfinished"></translation>
+        <translation>Nie znaleziono hosta</translation>
     </message>
     <message>
         <location filename="../TCITransceiver.cpp" line="144"/>
         <source>SocketAccess</source>
-        <translation type="unfinished"></translation>
+        <translation>Błąd dostępu do gniazda</translation>
     </message>
     <message>
         <location filename="../TCITransceiver.cpp" line="145"/>
         <source>SocketResource</source>
-        <translation type="unfinished"></translation>
+        <translation>Brak zasobów gniazda</translation>
     </message>
     <message>
         <location filename="../TCITransceiver.cpp" line="146"/>
         <source>SocketTimeout</source>
-        <translation type="unfinished"></translation>
+        <translation>Przekroczono czas gniazda</translation>
     </message>
     <message>
         <location filename="../TCITransceiver.cpp" line="147"/>
         <source>DatagramTooLarge</source>
-        <translation type="unfinished"></translation>
+        <translation>Datagram zbyt duży</translation>
     </message>
     <message>
         <location filename="../TCITransceiver.cpp" line="148"/>
         <source>Network</source>
-        <translation type="unfinished"></translation>
+        <translation>Błąd sieci</translation>
     </message>
     <message>
         <location filename="../TCITransceiver.cpp" line="149"/>
         <source>AddressInUse</source>
-        <translation type="unfinished"></translation>
+        <translation>Adres jest już używany</translation>
     </message>
     <message>
         <location filename="../TCITransceiver.cpp" line="150"/>
         <source>SocketAddressNotAvailable</source>
-        <translation type="unfinished"></translation>
+        <translation>Adres gniazda niedostępny</translation>
     </message>
     <message>
         <location filename="../TCITransceiver.cpp" line="151"/>
         <source>UnsupportedSocketOperation</source>
-        <translation type="unfinished"></translation>
+        <translation>Nieobsługiwana operacja gniazda</translation>
     </message>
     <message>
         <location filename="../TCITransceiver.cpp" line="152"/>
         <source>UnfinishedSocketOperation</source>
-        <translation type="unfinished"></translation>
+        <translation>Niezakończona operacja gniazda</translation>
     </message>
     <message>
         <location filename="../TCITransceiver.cpp" line="153"/>
         <source>ProxyAuthenticationRequired</source>
-        <translation type="unfinished"></translation>
+        <translation>Wymagane uwierzytelnienie proxy</translation>
     </message>
     <message>
         <location filename="../TCITransceiver.cpp" line="154"/>
         <source>SslHandshakeFailed</source>
-        <translation type="unfinished"></translation>
+        <translation>Niepowodzenie uzgadniania SSL</translation>
     </message>
     <message>
         <location filename="../TCITransceiver.cpp" line="155"/>
         <source>ProxyConnectionRefused</source>
-        <translation type="unfinished"></translation>
+        <translation>Proxy odrzuciło połączenie</translation>
     </message>
     <message>
         <location filename="../TCITransceiver.cpp" line="156"/>
         <source>ProxyConnectionClosed</source>
-        <translation type="unfinished"></translation>
+        <translation>Proxy zamknęło połączenie</translation>
     </message>
     <message>
         <location filename="../TCITransceiver.cpp" line="157"/>
         <source>ProxyConnectionTimeout</source>
-        <translation type="unfinished"></translation>
+        <translation>Przekroczono czas połączenia z proxy</translation>
     </message>
     <message>
         <location filename="../TCITransceiver.cpp" line="158"/>
         <source>ProxyNotFound</source>
-        <translation type="unfinished"></translation>
+        <translation>Nie znaleziono proxy</translation>
     </message>
     <message>
         <location filename="../TCITransceiver.cpp" line="159"/>
         <source>ProxyProtocol</source>
-        <translation type="unfinished"></translation>
+        <translation>Błąd protokołu proxy</translation>
     </message>
     <message>
         <location filename="../TCITransceiver.cpp" line="160"/>
         <source>Operation</source>
-        <translation type="unfinished"></translation>
+        <translation>Błąd operacji</translation>
     </message>
     <message>
         <location filename="../TCITransceiver.cpp" line="161"/>
         <source>SslInternal</source>
-        <translation type="unfinished"></translation>
+        <translation>Wewnętrzny błąd SSL</translation>
     </message>
     <message>
         <location filename="../TCITransceiver.cpp" line="162"/>
         <source>SslInvalidUserData</source>
-        <translation type="unfinished"></translation>
+        <translation>Nieprawidłowe dane użytkownika SSL</translation>
     </message>
     <message>
         <location filename="../TCITransceiver.cpp" line="163"/>
         <source>Temporary</source>
-        <translation type="unfinished"></translation>
+        <translation>Błąd tymczasowy</translation>
     </message>
     <message>
         <location filename="../TCITransceiver.cpp" line="164"/>
         <source>UnknownSocket</source>
-        <translation type="unfinished"></translation>
+        <translation>Nieznany błąd gniazda</translation>
     </message>
     <message>
         <location filename="../TCITransceiver.cpp" line="292"/>
         <source>TCI websocket error: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Błąd websocket TCI: %1</translation>
     </message>
     <message>
         <location filename="../TCITransceiver.cpp" line="417"/>
         <source>TCI SDR could not be switched on</source>
-        <translation type="unfinished"></translation>
+        <translation>Nie udało się włączyć TCI SDR</translation>
     </message>
     <message>
         <location filename="../TCITransceiver.cpp" line="420"/>
         <source>TCI SDR is not switched on</source>
-        <translation type="unfinished"></translation>
+        <translation>TCI SDR nie jest włączony</translation>
     </message>
     <message>
         <location filename="../TCITransceiver.cpp" line="427"/>
         <source>TCI RX2 could not be enabled</source>
-        <translation type="unfinished"></translation>
+        <translation>Nie udało się włączyć TCI RX2</translation>
     </message>
     <message>
         <location filename="../TCITransceiver.cpp" line="435"/>
         <source>TCI Audio could not be switched on</source>
-        <translation type="unfinished"></translation>
+        <translation>Nie udało się włączyć dźwięku TCI</translation>
     </message>
     <message>
         <location filename="../TCITransceiver.cpp" line="481"/>
         <location filename="../TCITransceiver.cpp" line="1550"/>
         <source>TCI could not be opened</source>
-        <translation type="unfinished"></translation>
+        <translation>Nie udało się otworzyć TCI</translation>
     </message>
     <message>
         <location filename="../TCITransceiver.cpp" line="1345"/>
         <source>TCI failed to set ptt</source>
-        <translation type="unfinished"></translation>
+        <translation>TCI nie ustawiło PTT</translation>
     </message>
     <message>
         <location filename="../TCITransceiver.cpp" line="1354"/>
         <source>TCI should use PTT via CAT</source>
-        <translation type="unfinished"></translation>
+        <translation>TCI powinno używać PTT przez CAT</translation>
     </message>
     <message>
         <location filename="../TCITransceiver.cpp" line="1397"/>
         <source>TCI failed set rxfreq</source>
-        <translation type="unfinished"></translation>
+        <translation>TCI nie ustawiło częstotliwości odbioru</translation>
     </message>
     <message>
         <location filename="../TCITransceiver.cpp" line="1416"/>
         <location filename="../TCITransceiver.cpp" line="1531"/>
         <source>TCI failed set mode</source>
-        <translation type="unfinished"></translation>
+        <translation>TCI nie ustawiło emisji</translation>
     </message>
     <message>
         <location filename="../TCITransceiver.cpp" line="1679"/>
         <source>TCI sent an unrecognized frequency</source>
-        <translation type="unfinished"></translation>
+        <translation>TCI przesłało nierozpoznaną częstotliwość</translation>
     </message>
     <message>
         <location filename="../TCITransceiver.cpp" line="1740"/>
         <source>TCI modulator not Idle</source>
-        <translation type="unfinished"></translation>
+        <translation>Modulator TCI nie jest bezczynny</translation>
     </message>
     <message>
         <location filename="../TCITransceiver.cpp" line="1196"/>
         <source>TCI failed set split</source>
-        <translation type="unfinished"></translation>
+        <translation>TCI nie ustawiło split</translation>
     </message>
     <message>
         <location filename="../TCITransceiver.cpp" line="1480"/>
         <source>TCI failed set txfreq</source>
-        <translation type="unfinished"></translation>
+        <translation>TCI nie ustawiło częstotliwości nadawania</translation>
     </message>
 </context>
 <context>
@@ -6590,7 +6697,7 @@ Upewnić się, że podano właściwą nazwę katalogu.</translation>
     <message>
         <location filename="../widegraph.ui" line="20"/>
         <source>Dialog</source>
-        <translation></translation>
+        <translation>Okno dialogowe</translation>
     </message>
     <message>
         <location filename="../widegraph.ui" line="83"/>
@@ -6615,7 +6722,7 @@ Upewnić się, że podano właściwą nazwę katalogu.</translation>
     <message>
         <location filename="../widegraph.ui" line="203"/>
         <source>Bins/Pixel  </source>
-        <translation></translation>
+        <translation>Bins/Pixel  </translation>
     </message>
     <message>
         <location filename="../widegraph.ui" line="234"/>
@@ -6625,12 +6732,12 @@ Upewnić się, że podano właściwą nazwę katalogu.</translation>
     <message>
         <location filename="../widegraph.ui" line="237"/>
         <source>  JT9</source>
-        <translation></translation>
+        <translation>  JT9</translation>
     </message>
     <message>
         <location filename="../widegraph.ui" line="240"/>
         <source>JT65  </source>
-        <translation></translation>
+        <translation>JT65  </translation>
     </message>
     <message>
         <location filename="../widegraph.ui" line="270"/>
@@ -6666,12 +6773,12 @@ Upewnić się, że podano właściwą nazwę katalogu.</translation>
     <message>
         <location filename="../widegraph.ui" line="329"/>
         <source> Hz</source>
-        <translation></translation>
+        <translation> Hz</translation>
     </message>
     <message>
         <location filename="../widegraph.ui" line="332"/>
         <source>Start </source>
-        <translation></translation>
+        <translation>Początek </translation>
     </message>
     <message>
         <location filename="../widegraph.ui" line="357"/>
@@ -6681,7 +6788,7 @@ Upewnić się, że podano właściwą nazwę katalogu.</translation>
     <message>
         <location filename="../widegraph.ui" line="360"/>
         <source>N Avg </source>
-        <translation></translation>
+        <translation>N śred </translation>
     </message>
     <message>
         <location filename="../widegraph.ui" line="398"/>
@@ -6746,12 +6853,12 @@ Upewnić się, że podano właściwą nazwę katalogu.</translation>
     <message>
         <location filename="../widegraph.ui" line="539"/>
         <source> %</source>
-        <translation></translation>
+        <translation> %</translation>
     </message>
     <message>
         <location filename="../widegraph.ui" line="542"/>
         <source>Spec </source>
-        <translation></translation>
+        <translation>Widmo </translation>
     </message>
     <message>
         <location filename="../widegraph.ui" line="593"/>
@@ -7080,12 +7187,12 @@ jest zawsze w okresie ciszy gdy dekodowanie zostalo zakończone.</translation>
         <location filename="../Configuration.ui" line="740"/>
         <location filename="../Configuration.ui" line="1683"/>
         <source> s</source>
-        <translation></translation>
+        <translation> s</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="737"/>
         <source>0.5 s</source>
-        <translation type="unfinished"></translation>
+        <translation>0.5 s</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="808"/>
@@ -7121,7 +7228,7 @@ jest zawsze w okresie ciszy gdy dekodowanie zostalo zakończone.</translation>
         <location filename="../Configuration.ui" line="885"/>
         <location filename="../Configuration.ui" line="1370"/>
         <source>Port:</source>
-        <translation></translation>
+        <translation>Port:</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="901"/>
@@ -7146,42 +7253,42 @@ jest zawsze w okresie ciszy gdy dekodowanie zostalo zakończone.</translation>
     <message>
         <location filename="../Configuration.ui" line="965"/>
         <source>1200</source>
-        <translation></translation>
+        <translation>1200</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="970"/>
         <source>2400</source>
-        <translation></translation>
+        <translation>2400</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="975"/>
         <source>4800</source>
-        <translation></translation>
+        <translation>4800</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="980"/>
         <source>9600</source>
-        <translation></translation>
+        <translation>9600</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="985"/>
         <source>19200</source>
-        <translation></translation>
+        <translation>19200</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="990"/>
         <source>38400</source>
-        <translation></translation>
+        <translation>38400</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="995"/>
         <source>57600</source>
-        <translation></translation>
+        <translation>57600</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1000"/>
         <source>115200</source>
-        <translation></translation>
+        <translation>115200</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1010"/>
@@ -7253,7 +7360,7 @@ jest zawsze w okresie ciszy gdy dekodowanie zostalo zakończone.</translation>
     <message>
         <location filename="../Configuration.ui" line="1165"/>
         <source>XON/XOFF</source>
-        <translation></translation>
+        <translation>XON/XOFF</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1175"/>
@@ -7283,7 +7390,7 @@ urządzenia Kenwood, ich wymagają).</translation>
     <message>
         <location filename="../Configuration.ui" line="1213"/>
         <source>DTR:</source>
-        <translation></translation>
+        <translation>DTR:</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1229"/>
@@ -7300,7 +7407,7 @@ urządzenia Kenwood, ich wymagają).</translation>
     <message>
         <location filename="../Configuration.ui" line="1246"/>
         <source>RTS:</source>
-        <translation></translation>
+        <translation>RTS:</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1299"/>
@@ -7324,7 +7431,7 @@ i nie masz innego sprzętowego interfejsu dla PTT.</translation>
     <message>
         <location filename="../Configuration.ui" line="1313"/>
         <source>C&amp;AT</source>
-        <translation></translation>
+        <translation>C&amp;AT</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1323"/>
@@ -7334,7 +7441,7 @@ i nie masz innego sprzętowego interfejsu dla PTT.</translation>
     <message>
         <location filename="../Configuration.ui" line="1326"/>
         <source>&amp;DTR</source>
-        <translation></translation>
+        <translation>&amp;DTR</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1339"/>
@@ -7344,7 +7451,7 @@ i nie masz innego sprzętowego interfejsu dla PTT.</translation>
     <message>
         <location filename="../Configuration.ui" line="1342"/>
         <source>VO&amp;X</source>
-        <translation></translation>
+        <translation>VO&amp;X</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1352"/>
@@ -7354,7 +7461,7 @@ i nie masz innego sprzętowego interfejsu dla PTT.</translation>
     <message>
         <location filename="../Configuration.ui" line="1355"/>
         <source>R&amp;TS</source>
-        <translation></translation>
+        <translation>R&amp;TS</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1386"/>
@@ -7364,12 +7471,12 @@ i nie masz innego sprzętowego interfejsu dla PTT.</translation>
     <message>
         <location filename="../Configuration.ui" line="1411"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Request enable PTT port sharing in Hamlib.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Zażądaj współdzielenia portu PTT w Hamlib.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1414"/>
         <source>Share PTT port</source>
-        <translation type="unfinished"></translation>
+        <translation>Współdziel port PTT</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1433"/>
@@ -7414,7 +7521,7 @@ opcja Tył/Dane będzie najlepsza).</translation>
     <message>
         <location filename="../Configuration.ui" line="1489"/>
         <source>US&amp;B</source>
-        <translation></translation>
+        <translation>US&amp;B</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1502"/>
@@ -7439,7 +7546,7 @@ złej modulacji lub szerokości pasma).</translation>
     <message>
         <location filename="../Configuration.ui" line="1520"/>
         <source>Data/P&amp;kt</source>
-        <translation></translation>
+        <translation>Data/P&amp;kt</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1540"/>
@@ -7464,7 +7571,7 @@ złej modulacji lub szerokości pasma).</translation>
     <message>
         <location filename="../Configuration.ui" line="1602"/>
         <source>Test CAT</source>
-        <translation></translation>
+        <translation>Test CAT</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1625"/>
@@ -7482,7 +7589,7 @@ działają w oczekiwany sposób.</translation>
     <message>
         <location filename="../Configuration.ui" line="1643"/>
         <source>Test PTT</source>
-        <translation></translation>
+        <translation>Test PTT</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1670"/>
@@ -7498,7 +7605,7 @@ działają w oczekiwany sposób.</translation>
     <message>
         <location filename="../Configuration.ui" line="1730"/>
         <source>A&amp;udio</source>
-        <translation></translation>
+        <translation>A&amp;udio</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1733"/>
@@ -7542,7 +7649,7 @@ w czasie okresów nadawania.</translation>
         <location filename="../Configuration.ui" line="1789"/>
         <location filename="../Configuration.ui" line="1819"/>
         <source>Mono</source>
-        <translation></translation>
+        <translation>Mono</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1794"/>
@@ -8045,17 +8152,17 @@ co jest użyteczne do szacowania propagacji i osiągów systemu.</translation>
     <message>
         <location filename="../Configuration.ui" line="3100"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Right click to maintain the working frequencies list. Reset option allows to bring frequency list back to the default values.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Kliknij prawym przyciskiem, aby zarządzać listą częstotliwości roboczych. Opcja resetowania przywraca listę do wartości domyślnych.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3697"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Hide hint character in marker field.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ukryj znak podpowiedzi w polu znacznika.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3700"/>
         <source>Hide hint char</source>
-        <translation type="unfinished"></translation>
+        <translation>Ukryj znak podpowiedzi</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="5183"/>
@@ -8081,7 +8188,7 @@ co jest użyteczne do szacowania propagacji i osiągów systemu.</translation>
         <location filename="../Configuration.ui" line="3152"/>
         <location filename="../Configuration.ui" line="6923"/>
         <source> Hz</source>
-        <translation></translation>
+        <translation> Hz</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3171"/>
@@ -8091,7 +8198,7 @@ co jest użyteczne do szacowania propagacji i osiągów systemu.</translation>
     <message>
         <location filename="../Configuration.ui" line="3184"/>
         <source> ppm</source>
-        <translation></translation>
+        <translation> ppm</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3227"/>
@@ -8208,12 +8315,12 @@ Prawoklik aby wstawić lub usunąć opcje.</translation>
     <message>
         <location filename="../Configuration.ui" line="353"/>
         <source>Scroll message windows down not up.</source>
-        <translation type="unfinished"></translation>
+        <translation>Przewijaj okna wiadomości w dół, a nie w górę.</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="356"/>
         <source>&amp;Scroll message windows down</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Przewijaj okna wiadomości w dół</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="376"/>
@@ -8223,7 +8330,7 @@ Prawoklik aby wstawić lub usunąć opcje.</translation>
     <message>
         <location filename="../Configuration.ui" line="431"/>
         <source>Use dar&amp;k style</source>
-        <translation type="unfinished"></translation>
+        <translation>Użyj &amp;ciemnego stylu</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="600"/>
@@ -8238,52 +8345,52 @@ Prawoklik aby wstawić lub usunąć opcje.</translation>
     <message>
         <location filename="../Configuration.ui" line="763"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Request switch on rig power when supported in Hamlib.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Zażądaj włączenia zasilania TRCVR-a, jeśli Hamlib to obsługuje.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="766"/>
         <source>On</source>
-        <translation type="unfinished"></translation>
+        <translation>Włącz</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="779"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Request switch off rig power when supported in Hamlib.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Zażądaj wyłączenia zasilania TRCVR-a, jeśli Hamlib to obsługuje.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="782"/>
         <source>Off Rig power</source>
-        <translation type="unfinished"></translation>
+        <translation>Wyłącz zasilanie TRCVR-a</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1852"/>
         <source>refresh audio device list</source>
-        <translation type="unfinished"></translation>
+        <translation>odśwież listę urządzeń audio</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1855"/>
         <source>Refresh</source>
-        <translation type="unfinished"></translation>
+        <translation>Odśwież</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1868"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Use TCI Audio when available.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Używaj dźwięku TCI, gdy jest dostępny.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1871"/>
         <source>Use TCI Audio</source>
-        <translation type="unfinished"></translation>
+        <translation>Używaj dźwięku TCI</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="2494"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Add distance to correspondent to comments in ADIF QSO record.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dodaj odległość do korespondenta w komentarzach rekordu QSO ADIF.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="2497"/>
         <source>Distance to comments</source>
-        <translation type="unfinished"></translation>
+        <translation>Odległość w komentarzach</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="2967"/>
@@ -8556,7 +8663,7 @@ Prawoklik aby wstawić lub usunąć opcje.</translation>
         <location filename="../Configuration.ui" line="4883"/>
         <location filename="../Configuration.ui" line="4902"/>
         <source>K1ABC</source>
-        <translation></translation>
+        <translation>K1ABC</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3878"/>
@@ -8566,7 +8673,7 @@ Prawoklik aby wstawić lub usunąć opcje.</translation>
     <message>
         <location filename="../Configuration.ui" line="3884"/>
         <source>RR73/73           </source>
-        <translation></translation>
+        <translation>RR73/73           </translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3897"/>
@@ -8691,7 +8798,7 @@ Prawoklik aby wstawić lub usunąć opcje.</translation>
     <message>
         <location filename="../Configuration.ui" line="4996"/>
         <source>Oceania</source>
-        <translation></translation>
+        <translation>Oceania</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="5003"/>
@@ -8859,12 +8966,12 @@ AA1AAA,BB1BB,CC1CC&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     <message>
         <location filename="../Configuration.ui" line="5285"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Hide message exchange between operators of own continent. This option allows user to ease monitoring of communication across intercontinental distances.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ukryj wymianę wiadomości między operatorami własnego kontynentu. Opcja ta ułatwia obserwację łączności międzykontynentalnych.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="5288"/>
         <source>Hide messages with own continent callsign</source>
-        <translation type="unfinished"></translation>
+        <translation>Ukryj wiadomości ze znakami własnego kontynentu</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="5311"/>
@@ -8884,12 +8991,12 @@ AA1AAA,BB1BB,CC1CC&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     <message>
         <location filename="../Configuration.ui" line="5332"/>
         <source>hh</source>
-        <translation></translation>
+        <translation>gg</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="5342"/>
         <source>mm</source>
-        <translation></translation>
+        <translation>mm</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="5352"/>
@@ -8909,7 +9016,7 @@ AA1AAA,BB1BB,CC1CC&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     <message>
         <location filename="../Configuration.ui" line="5365"/>
         <source>JT65+JT9</source>
-        <translation></translation>
+        <translation>JT65+JT9</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="5381"/>
@@ -8937,7 +9044,7 @@ AA1AAA,BB1BB,CC1CC&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
         <location filename="../Configuration.ui" line="6418"/>
         <location filename="../Configuration.ui" line="6556"/>
         <source>00</source>
-        <translation></translation>
+        <translation>00</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="5395"/>
@@ -8946,7 +9053,7 @@ AA1AAA,BB1BB,CC1CC&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
         <location filename="../Configuration.ui" line="6166"/>
         <location filename="../Configuration.ui" line="6423"/>
         <source>01</source>
-        <translation></translation>
+        <translation>01</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="5400"/>
@@ -8955,7 +9062,7 @@ AA1AAA,BB1BB,CC1CC&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
         <location filename="../Configuration.ui" line="6171"/>
         <location filename="../Configuration.ui" line="6428"/>
         <source>02</source>
-        <translation></translation>
+        <translation>02</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="5405"/>
@@ -8964,7 +9071,7 @@ AA1AAA,BB1BB,CC1CC&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
         <location filename="../Configuration.ui" line="6176"/>
         <location filename="../Configuration.ui" line="6433"/>
         <source>03</source>
-        <translation></translation>
+        <translation>03</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="5410"/>
@@ -8973,7 +9080,7 @@ AA1AAA,BB1BB,CC1CC&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
         <location filename="../Configuration.ui" line="6181"/>
         <location filename="../Configuration.ui" line="6438"/>
         <source>04</source>
-        <translation></translation>
+        <translation>04</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="5415"/>
@@ -8987,7 +9094,7 @@ AA1AAA,BB1BB,CC1CC&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
         <location filename="../Configuration.ui" line="6443"/>
         <location filename="../Configuration.ui" line="6561"/>
         <source>05</source>
-        <translation></translation>
+        <translation>05</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="5420"/>
@@ -8996,7 +9103,7 @@ AA1AAA,BB1BB,CC1CC&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
         <location filename="../Configuration.ui" line="6191"/>
         <location filename="../Configuration.ui" line="6448"/>
         <source>06</source>
-        <translation></translation>
+        <translation>06</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="5425"/>
@@ -9005,7 +9112,7 @@ AA1AAA,BB1BB,CC1CC&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
         <location filename="../Configuration.ui" line="6196"/>
         <location filename="../Configuration.ui" line="6453"/>
         <source>07</source>
-        <translation></translation>
+        <translation>07</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="5430"/>
@@ -9014,7 +9121,7 @@ AA1AAA,BB1BB,CC1CC&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
         <location filename="../Configuration.ui" line="6201"/>
         <location filename="../Configuration.ui" line="6458"/>
         <source>08</source>
-        <translation></translation>
+        <translation>08</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="5435"/>
@@ -9023,7 +9130,7 @@ AA1AAA,BB1BB,CC1CC&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
         <location filename="../Configuration.ui" line="6206"/>
         <location filename="../Configuration.ui" line="6463"/>
         <source>09</source>
-        <translation></translation>
+        <translation>09</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="5440"/>
@@ -9037,7 +9144,7 @@ AA1AAA,BB1BB,CC1CC&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
         <location filename="../Configuration.ui" line="6468"/>
         <location filename="../Configuration.ui" line="6566"/>
         <source>10</source>
-        <translation></translation>
+        <translation>10</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="5445"/>
@@ -9046,7 +9153,7 @@ AA1AAA,BB1BB,CC1CC&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
         <location filename="../Configuration.ui" line="6216"/>
         <location filename="../Configuration.ui" line="6473"/>
         <source>11</source>
-        <translation></translation>
+        <translation>11</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="5450"/>
@@ -9055,7 +9162,7 @@ AA1AAA,BB1BB,CC1CC&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
         <location filename="../Configuration.ui" line="6221"/>
         <location filename="../Configuration.ui" line="6478"/>
         <source>12</source>
-        <translation></translation>
+        <translation>12</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="5455"/>
@@ -9064,7 +9171,7 @@ AA1AAA,BB1BB,CC1CC&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
         <location filename="../Configuration.ui" line="6226"/>
         <location filename="../Configuration.ui" line="6483"/>
         <source>13</source>
-        <translation></translation>
+        <translation>13</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="5460"/>
@@ -9073,7 +9180,7 @@ AA1AAA,BB1BB,CC1CC&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
         <location filename="../Configuration.ui" line="6231"/>
         <location filename="../Configuration.ui" line="6488"/>
         <source>14</source>
-        <translation></translation>
+        <translation>14</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="5465"/>
@@ -9087,7 +9194,7 @@ AA1AAA,BB1BB,CC1CC&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
         <location filename="../Configuration.ui" line="6493"/>
         <location filename="../Configuration.ui" line="6571"/>
         <source>15</source>
-        <translation></translation>
+        <translation>15</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="5470"/>
@@ -9096,7 +9203,7 @@ AA1AAA,BB1BB,CC1CC&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
         <location filename="../Configuration.ui" line="6241"/>
         <location filename="../Configuration.ui" line="6498"/>
         <source>16</source>
-        <translation></translation>
+        <translation>16</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="5475"/>
@@ -9105,7 +9212,7 @@ AA1AAA,BB1BB,CC1CC&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
         <location filename="../Configuration.ui" line="6246"/>
         <location filename="../Configuration.ui" line="6503"/>
         <source>17</source>
-        <translation></translation>
+        <translation>17</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="5480"/>
@@ -9114,7 +9221,7 @@ AA1AAA,BB1BB,CC1CC&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
         <location filename="../Configuration.ui" line="6251"/>
         <location filename="../Configuration.ui" line="6508"/>
         <source>18</source>
-        <translation></translation>
+        <translation>18</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="5485"/>
@@ -9123,7 +9230,7 @@ AA1AAA,BB1BB,CC1CC&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
         <location filename="../Configuration.ui" line="6256"/>
         <location filename="../Configuration.ui" line="6513"/>
         <source>19</source>
-        <translation></translation>
+        <translation>19</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="5490"/>
@@ -9137,7 +9244,7 @@ AA1AAA,BB1BB,CC1CC&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
         <location filename="../Configuration.ui" line="6518"/>
         <location filename="../Configuration.ui" line="6576"/>
         <source>20</source>
-        <translation></translation>
+        <translation>20</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="5495"/>
@@ -9146,7 +9253,7 @@ AA1AAA,BB1BB,CC1CC&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
         <location filename="../Configuration.ui" line="6266"/>
         <location filename="../Configuration.ui" line="6523"/>
         <source>21</source>
-        <translation></translation>
+        <translation>21</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="5500"/>
@@ -9155,7 +9262,7 @@ AA1AAA,BB1BB,CC1CC&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
         <location filename="../Configuration.ui" line="6271"/>
         <location filename="../Configuration.ui" line="6528"/>
         <source>22</source>
-        <translation></translation>
+        <translation>22</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="5505"/>
@@ -9164,7 +9271,7 @@ AA1AAA,BB1BB,CC1CC&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
         <location filename="../Configuration.ui" line="6276"/>
         <location filename="../Configuration.ui" line="6533"/>
         <source>23</source>
-        <translation></translation>
+        <translation>23</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="5553"/>
@@ -9173,7 +9280,7 @@ AA1AAA,BB1BB,CC1CC&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
         <location filename="../Configuration.ui" line="6324"/>
         <location filename="../Configuration.ui" line="6581"/>
         <source>25</source>
-        <translation></translation>
+        <translation>25</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="5558"/>
@@ -9182,7 +9289,7 @@ AA1AAA,BB1BB,CC1CC&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
         <location filename="../Configuration.ui" line="6329"/>
         <location filename="../Configuration.ui" line="6586"/>
         <source>30</source>
-        <translation></translation>
+        <translation>30</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="5563"/>
@@ -9191,7 +9298,7 @@ AA1AAA,BB1BB,CC1CC&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
         <location filename="../Configuration.ui" line="6334"/>
         <location filename="../Configuration.ui" line="6591"/>
         <source>35</source>
-        <translation></translation>
+        <translation>35</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="5568"/>
@@ -9200,7 +9307,7 @@ AA1AAA,BB1BB,CC1CC&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
         <location filename="../Configuration.ui" line="6339"/>
         <location filename="../Configuration.ui" line="6596"/>
         <source>40</source>
-        <translation></translation>
+        <translation>40</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="5573"/>
@@ -9209,7 +9316,7 @@ AA1AAA,BB1BB,CC1CC&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
         <location filename="../Configuration.ui" line="6344"/>
         <location filename="../Configuration.ui" line="6601"/>
         <source>45</source>
-        <translation></translation>
+        <translation>45</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="5578"/>
@@ -9218,7 +9325,7 @@ AA1AAA,BB1BB,CC1CC&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
         <location filename="../Configuration.ui" line="6349"/>
         <location filename="../Configuration.ui" line="6606"/>
         <source>50</source>
-        <translation></translation>
+        <translation>50</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="5583"/>
@@ -9227,7 +9334,7 @@ AA1AAA,BB1BB,CC1CC&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
         <location filename="../Configuration.ui" line="6354"/>
         <location filename="../Configuration.ui" line="6611"/>
         <source>55</source>
-        <translation></translation>
+        <translation>55</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="5603"/>
@@ -9401,7 +9508,7 @@ zmiany dla karty dźwiękowej</translation>
     <message>
         <location filename="../Configuration.ui"/>
         <source>WW Digi contest</source>
-        <translation type="unfinished"></translation>
+        <translation>Zawody WW Digi</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
@@ -9411,27 +9518,27 @@ zmiany dla karty dźwiękowej</translation>
     <message>
         <location filename="../Configuration.ui"/>
         <source>NA VHF contest</source>
-        <translation type="unfinished"></translation>
+        <translation>Zawody NA VHF</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
         <source>EU VHF contest</source>
-        <translation type="unfinished"></translation>
+        <translation>Zawody EU VHF</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
         <source>ARRL Field Day</source>
-        <translation type="unfinished"></translation>
+        <translation>ARRL Field Day</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
         <source>ARRL RTTY Roundup</source>
-        <translation type="unfinished"></translation>
+        <translation>ARRL RTTY Roundup</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
         <source>ARRL Digi contest</source>
-        <translation type="unfinished"></translation>
+        <translation>Zawody ARRL Digi</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
@@ -9497,7 +9604,7 @@ zmiany dla karty dźwiękowej</translation>
     <message>
         <location filename="../wf_palette_design_dialog.ui" line="14"/>
         <source>Dialog</source>
-        <translation></translation>
+        <translation>Okno dialogowe</translation>
     </message>
     <message>
         <location filename="../wf_palette_design_dialog.ui" line="23"/>

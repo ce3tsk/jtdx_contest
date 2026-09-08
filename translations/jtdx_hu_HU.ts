@@ -205,7 +205,7 @@ Lehet, hogy egy másik alkalmazás használja a könyvtárat</translation>
     <message>
         <location filename="../Configuration.cpp" line="2964"/>
         <source>TCI Server:</source>
-        <translation type="unfinished"></translation>
+        <translation>TCI-kiszolgáló:</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp" line="2965"/>
@@ -215,7 +215,12 @@ Formats:
 	hostname:port
 	IPv4-address:port
 	[IPv6-address]:port</source>
-        <translation type="unfinished"></translation>
+        <translation>A TCI-szolgáltatás gépneve és portja (nem kötelező).
+Üresen hagyva a gépnek megfelelő alapérték érvényes.
+Formátumok:
+	gépnév:port
+	IPv4-cím:port
+	[IPv6-cím]:port</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp" line="2977"/>
@@ -291,7 +296,7 @@ Formátum:
     <message>
         <location filename="../Configuration.cpp" line="4902"/>
         <source>Enter Grid error: 4/6/8/10 char grid will be accepted</source>
-        <translation type="unfinished"></translation>
+        <translation>Hibás QTH-lokátor: 4/6/8/10 karakter fogadható el</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp" line="5438"/>
@@ -504,7 +509,7 @@ Formátum:
     <message>
         <location filename="../logbook/countrydat.cpp" line="47"/>
         <source>Kingdom of Eswatini</source>
-        <translation type="unfinished"></translation>
+        <translation>Eswatini Királyság</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="48"/>
@@ -519,1662 +524,1662 @@ Formátum:
     <message>
         <location filename="../logbook/countrydat.cpp" line="50"/>
         <source>Guinea</source>
-        <translation></translation>
+        <translation>Guinea</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="51"/>
         <source>Bouvet</source>
-        <translation></translation>
+        <translation>Bouvet-sziget</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="52"/>
         <source>Peter 1 Is.</source>
-        <translation></translation>
+        <translation>I. Péter-sziget</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="53"/>
         <source>Azerbaijan</source>
-        <translation></translation>
+        <translation>Azerbajdzsán</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="54"/>
         <source>Georgia</source>
-        <translation></translation>
+        <translation>Grúzia</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="55"/>
         <source>Montenegro</source>
-        <translation></translation>
+        <translation>Montenegró</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="56"/>
         <source>Sri Lanka</source>
-        <translation></translation>
+        <translation>Srí Lanka</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="57"/>
         <source>ITU HQ</source>
-        <translation></translation>
+        <translation>ITU-központ</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="58"/>
         <source>United Nations HQ</source>
-        <translation></translation>
+        <translation>ENSZ-központ</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="59"/>
         <source>Vienna Intl Ctr</source>
-        <translation></translation>
+        <translation>Bécsi Nemzetközi Központ</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="60"/>
         <source>Timor - Leste</source>
-        <translation></translation>
+        <translation>Kelet-Timor</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="61"/>
         <source>Israel</source>
-        <translation></translation>
+        <translation>Izrael</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="62"/>
         <source>Libya</source>
-        <translation></translation>
+        <translation>Líbia</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="63"/>
         <source>Cyprus</source>
-        <translation></translation>
+        <translation>Ciprus</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="64"/>
         <source>Tanzania</source>
-        <translation></translation>
+        <translation>Tanzánia</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="65"/>
         <source>Nigeria</source>
-        <translation></translation>
+        <translation>Nigéria</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="66"/>
         <source>Madagascar</source>
-        <translation></translation>
+        <translation>Madagaszkár</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="67"/>
         <source>Mauritania</source>
-        <translation></translation>
+        <translation>Mauritánia</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="68"/>
         <source>Niger</source>
-        <translation></translation>
+        <translation>Niger</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="69"/>
         <source>Togo</source>
-        <translation></translation>
+        <translation>Togo</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="70"/>
         <source>Samoa</source>
-        <translation></translation>
+        <translation>Szamoa</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="71"/>
         <source>Uganda</source>
-        <translation></translation>
+        <translation>Uganda</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="72"/>
         <source>Kenya</source>
-        <translation></translation>
+        <translation>Kenya</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="73"/>
         <source>Senegal</source>
-        <translation></translation>
+        <translation>Szenegál</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="74"/>
         <source>Jamaica</source>
-        <translation></translation>
+        <translation>Jamaica</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="75"/>
         <source>Yemen</source>
-        <translation></translation>
+        <translation>Jemen</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="76"/>
         <source>Lesotho</source>
-        <translation></translation>
+        <translation>Lesotho</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="77"/>
         <source>Malawi</source>
-        <translation></translation>
+        <translation>Malawi</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="78"/>
         <source>Algeria</source>
-        <translation></translation>
+        <translation>Algéria</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="79"/>
         <source>Barbados</source>
-        <translation></translation>
+        <translation>Barbados</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="80"/>
         <source>Maldives</source>
-        <translation></translation>
+        <translation>Maldív-szigetek</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="81"/>
         <source>Guyana</source>
-        <translation></translation>
+        <translation>Guyana</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="82"/>
         <source>Croatia</source>
-        <translation></translation>
+        <translation>Horvátország</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="83"/>
         <source>Ghana</source>
-        <translation></translation>
+        <translation>Ghána</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="84"/>
         <source>Malta</source>
-        <translation></translation>
+        <translation>Málta</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="85"/>
         <source>Zambia</source>
-        <translation></translation>
+        <translation>Zambia</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="86"/>
         <source>Kuwait</source>
-        <translation></translation>
+        <translation>Kuvait</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="87"/>
         <source>Sierra Leone</source>
-        <translation></translation>
+        <translation>Sierra Leone</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="88"/>
         <source>W. Malaysia</source>
-        <translation></translation>
+        <translation>Nyugat-Malajzia</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="89"/>
         <source>E. Malaysia</source>
-        <translation></translation>
+        <translation>Kelet-Malajzia</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="90"/>
         <source>Nepal</source>
-        <translation></translation>
+        <translation>Nepál</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="91"/>
         <source>Dem. Rep. of the Congo</source>
-        <translation></translation>
+        <translation>Kongói Dem. Közt.</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="92"/>
         <source>Burundi</source>
-        <translation></translation>
+        <translation>Burundi</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="93"/>
         <source>Singapore</source>
-        <translation></translation>
+        <translation>Szingapúr</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="94"/>
         <source>Rwanda</source>
-        <translation></translation>
+        <translation>Ruanda</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="95"/>
         <source>Trinidad &amp; Tobago</source>
-        <translation></translation>
+        <translation>Trinidad és Tobago</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="96"/>
         <source>Botswana</source>
-        <translation></translation>
+        <translation>Botswana</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="97"/>
         <source>Tonga</source>
-        <translation></translation>
+        <translation>Tonga</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="98"/>
         <source>Oman</source>
-        <translation></translation>
+        <translation>Omán</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="99"/>
         <source>Bhutan</source>
-        <translation></translation>
+        <translation>Bhután</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="100"/>
         <source>United Arab Emirates</source>
-        <translation></translation>
+        <translation>Egyesült Arab Emírségek</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="101"/>
         <source>Qatar</source>
-        <translation></translation>
+        <translation>Katar</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="102"/>
         <source>Bahrain</source>
-        <translation></translation>
+        <translation>Bahrein</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="103"/>
         <source>Pakistan</source>
-        <translation></translation>
+        <translation>Pakisztán</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="104"/>
         <source>Scarborough Reef</source>
-        <translation></translation>
+        <translation>Scarborough-zátony</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="105"/>
         <source>Taiwan</source>
-        <translation></translation>
+        <translation>Tajvan</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="106"/>
         <source>Pratas Is.</source>
-        <translation></translation>
+        <translation>Pratas-szigetek</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="107"/>
         <source>China</source>
-        <translation></translation>
+        <translation>Kína</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="108"/>
         <source>Nauru</source>
-        <translation></translation>
+        <translation>Nauru</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="109"/>
         <source>Andorra</source>
-        <translation></translation>
+        <translation>Andorra</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="110"/>
         <source>The Gambia</source>
-        <translation></translation>
+        <translation>Gambia</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="111"/>
         <source>Bahamas</source>
-        <translation></translation>
+        <translation>Bahamák</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="112"/>
         <source>Mozambique</source>
-        <translation></translation>
+        <translation>Mozambik</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="113"/>
         <source>Chile</source>
-        <translation></translation>
+        <translation>Chile</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="114"/>
         <source>San Felix &amp; San Ambrosio</source>
-        <translation></translation>
+        <translation>San Félix és San Ambrosio</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="115"/>
         <source>Easter Is.</source>
-        <translation></translation>
+        <translation>Húsvét-sziget</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="116"/>
         <source>Juan Fernandez Is.</source>
-        <translation></translation>
+        <translation>Juan Fernández-szigetek</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="117"/>
         <source>Antarctica</source>
-        <translation></translation>
+        <translation>Antarktisz</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="118"/>
         <source>Cuba</source>
-        <translation></translation>
+        <translation>Kuba</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="119"/>
         <source>Morocco</source>
-        <translation></translation>
+        <translation>Marokkó</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="120"/>
         <source>Bolivia</source>
-        <translation></translation>
+        <translation>Bolívia</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="121"/>
         <source>Portugal</source>
-        <translation></translation>
+        <translation>Portugália</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="122"/>
         <source>Madeira Is.</source>
-        <translation></translation>
+        <translation>Madeira</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="123"/>
         <source>Azores</source>
-        <translation></translation>
+        <translation>Azori-szigetek</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="124"/>
         <source>Uruguay</source>
-        <translation></translation>
+        <translation>Uruguay</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="125"/>
         <source>Sable Is.</source>
-        <translation></translation>
+        <translation>Sable-sziget</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="126"/>
         <source>St. Paul Is.</source>
-        <translation></translation>
+        <translation>St. Paul-sziget</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="127"/>
         <source>Angola</source>
-        <translation></translation>
+        <translation>Angola</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="128"/>
         <source>Cape Verde</source>
-        <translation></translation>
+        <translation>Zöld-foki Közt.</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="129"/>
         <source>Comoros</source>
-        <translation></translation>
+        <translation>Comore-szigetek</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="130"/>
         <source>Germany</source>
-        <translation></translation>
+        <translation>Németország</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="131"/>
         <source>Philippines</source>
-        <translation></translation>
+        <translation>Fülöp-szigetek</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="132"/>
         <source>Eritrea</source>
-        <translation></translation>
+        <translation>Eritrea</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="133"/>
         <source>Palestine</source>
-        <translation></translation>
+        <translation>Palesztina</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="134"/>
         <source>N. Cook Is.</source>
-        <translation></translation>
+        <translation>Északi Cook-szigetek</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="135"/>
         <source>S. Cook Is.</source>
-        <translation></translation>
+        <translation>Déli Cook-szigetek</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="136"/>
         <source>Niue</source>
-        <translation></translation>
+        <translation>Niue</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="137"/>
         <source>Bosnia-Herzegovina</source>
-        <translation></translation>
+        <translation>Bosznia-Hercegovina</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="138"/>
         <source>Spain</source>
-        <translation></translation>
+        <translation>Spanyolország</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="139"/>
         <source>Balearic Is.</source>
-        <translation></translation>
+        <translation>Baleár-szigetek</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="140"/>
         <source>Canary Is.</source>
-        <translation></translation>
+        <translation>Kanári-szigetek</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="141"/>
         <source>Ceuta &amp; Melilla</source>
-        <translation></translation>
+        <translation>Ceuta és Melilla</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="142"/>
         <source>Ireland</source>
-        <translation></translation>
+        <translation>Írország</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="143"/>
         <source>Armenia</source>
-        <translation></translation>
+        <translation>Örményország</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="144"/>
         <source>Liberia</source>
-        <translation></translation>
+        <translation>Libéria</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="145"/>
         <source>Iran</source>
-        <translation></translation>
+        <translation>Irán</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="146"/>
         <source>Moldova</source>
-        <translation></translation>
+        <translation>Moldova</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="147"/>
         <source>Estonia</source>
-        <translation></translation>
+        <translation>Észtország</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="148"/>
         <source>Ethiopia</source>
-        <translation></translation>
+        <translation>Etiópia</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="149"/>
         <source>Belarus</source>
-        <translation></translation>
+        <translation>Belarusz</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="150"/>
         <source>Kyrgyzstan</source>
-        <translation></translation>
+        <translation>Kirgizisztán</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="151"/>
         <source>Tajikistan</source>
-        <translation></translation>
+        <translation>Tádzsikisztán</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="152"/>
         <source>Turkmenistan</source>
-        <translation></translation>
+        <translation>Türkmenisztán</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="153"/>
         <source>France</source>
-        <translation></translation>
+        <translation>Franciaország</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="154"/>
         <source>Guadeloupe</source>
-        <translation></translation>
+        <translation>Guadeloupe</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="155"/>
         <source>Mayotte</source>
-        <translation></translation>
+        <translation>Mayotte</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="156"/>
         <source>St. Barthelemy</source>
-        <translation></translation>
+        <translation>Saint-Barthélemy</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="157"/>
         <source>New Caledonia</source>
-        <translation></translation>
+        <translation>Új-Kaledónia</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="158"/>
         <source>Chesterfield Is.</source>
-        <translation></translation>
+        <translation>Chesterfield-szigetek</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="159"/>
         <source>Martinique</source>
-        <translation></translation>
+        <translation>Martinique</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="160"/>
         <source>Fr. Polynesia</source>
-        <translation></translation>
+        <translation>Francia Polinézia</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="161"/>
         <source>Austral Is.</source>
-        <translation></translation>
+        <translation>Ausztrál-szigetek</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="162"/>
         <source>Clipperton Is.</source>
-        <translation></translation>
+        <translation>Clipperton-sziget</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="163"/>
         <source>Marquesas Is.</source>
-        <translation></translation>
+        <translation>Marquesas-szigetek</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="164"/>
         <source>St. Pierre &amp; Miquelo</source>
-        <translation></translation>
+        <translation>Saint-Pierre és Miquelon</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="165"/>
         <source>Reunion Is.</source>
-        <translation></translation>
+        <translation>Réunion</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="166"/>
         <source>St. Martin</source>
-        <translation></translation>
+        <translation>Saint-Martin</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="167"/>
         <source>Glorioso Is.</source>
-        <translation></translation>
+        <translation>Glorioso-szigetek</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="168"/>
         <source>Juan de Nova, Europa</source>
-        <translation></translation>
+        <translation>Juan de Nova, Europa</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="169"/>
         <source>Tromelin Is.</source>
-        <translation></translation>
+        <translation>Tromelin</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="170"/>
         <source>Crozet Is.</source>
-        <translation></translation>
+        <translation>Crozet-szigetek</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="171"/>
         <source>Kerguelen Is.</source>
-        <translation></translation>
+        <translation>Kerguelen-szigetek</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="172"/>
         <source>Amsterdam &amp; St. Paul Is.</source>
-        <translation></translation>
+        <translation>Amszterdam és St. Paul</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="173"/>
         <source>Wallis &amp; Futuna Is.</source>
-        <translation></translation>
+        <translation>Wallis és Futuna</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="174"/>
         <source>Fr. Guiana</source>
-        <translation></translation>
+        <translation>Francia Guyana</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="175"/>
         <source>England</source>
-        <translation></translation>
+        <translation>Anglia</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="176"/>
         <source>Isle of Man</source>
-        <translation></translation>
+        <translation>Man-sziget</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="177"/>
         <source>N. Ireland</source>
-        <translation></translation>
+        <translation>Észak-Írország</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="178"/>
         <source>Jersey</source>
-        <translation></translation>
+        <translation>Jersey</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="179"/>
         <source>Shetland Is.</source>
-        <translation></translation>
+        <translation>Shetland-szigetek</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="180"/>
         <source>Scotland</source>
-        <translation></translation>
+        <translation>Skócia</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="181"/>
         <source>Guernsey</source>
-        <translation></translation>
+        <translation>Guernsey</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="182"/>
         <source>Wales</source>
-        <translation></translation>
+        <translation>Wales</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="183"/>
         <source>Solomon Is.</source>
-        <translation></translation>
+        <translation>Salamon-szigetek</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="184"/>
         <source>Temotu Province</source>
-        <translation></translation>
+        <translation>Temotu tartomány</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="185"/>
         <source>Hungary</source>
-        <translation></translation>
+        <translation>Magyarország</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="186"/>
         <source>Switzerland</source>
-        <translation></translation>
+        <translation>Svájc</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="187"/>
         <source>Liechtenstein</source>
-        <translation></translation>
+        <translation>Liechtenstein</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="188"/>
         <source>Ecuador</source>
-        <translation></translation>
+        <translation>Ecuador</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="189"/>
         <source>Galapagos Is.</source>
-        <translation></translation>
+        <translation>Galápagos-szigetek</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="190"/>
         <source>Haiti</source>
-        <translation></translation>
+        <translation>Haiti</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="191"/>
         <source>Dominican Rep.</source>
-        <translation></translation>
+        <translation>Dominikai Közt.</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="192"/>
         <source>Colombia</source>
-        <translation></translation>
+        <translation>Kolumbia</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="193"/>
         <source>San Andres &amp; Providencia</source>
-        <translation></translation>
+        <translation>San Andrés és Providencia</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="194"/>
         <source>Malpelo Is.</source>
-        <translation></translation>
+        <translation>Malpelo</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="195"/>
         <source>Rep. of Korea</source>
-        <translation></translation>
+        <translation>Koreai Közt.</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="196"/>
         <source>Panama</source>
-        <translation></translation>
+        <translation>Panama</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="197"/>
         <source>Honduras</source>
-        <translation></translation>
+        <translation>Honduras</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="198"/>
         <source>Thailand</source>
-        <translation></translation>
+        <translation>Thaiföld</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="199"/>
         <source>Vatican City</source>
-        <translation></translation>
+        <translation>Vatikán</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="200"/>
         <source>Saudi Arabia</source>
-        <translation></translation>
+        <translation>Szaúd-Arábia</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="201"/>
         <source>Italy</source>
-        <translation></translation>
+        <translation>Olaszország</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="202"/>
         <source>AF Italy</source>
-        <translation></translation>
+        <translation>Olaszország (AF)</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="203"/>
         <source>Sardinia</source>
-        <translation></translation>
+        <translation>Szardínia</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="204"/>
         <source>Sicily</source>
-        <translation></translation>
+        <translation>Szicília</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="205"/>
         <source>Djibouti</source>
-        <translation></translation>
+        <translation>Dzsibuti</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="206"/>
         <source>Grenada</source>
-        <translation></translation>
+        <translation>Grenada</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="207"/>
         <source>Guinea-Bissau</source>
-        <translation></translation>
+        <translation>Bissau-Guinea</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="208"/>
         <source>St. Lucia</source>
-        <translation></translation>
+        <translation>Saint Lucia</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="209"/>
         <source>Dominica</source>
-        <translation></translation>
+        <translation>Dominika</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="210"/>
         <source>St. Vincent</source>
-        <translation></translation>
+        <translation>Saint Vincent</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="211"/>
         <source>Japan</source>
-        <translation></translation>
+        <translation>Japán</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="212"/>
         <source>Minami Torishima</source>
-        <translation></translation>
+        <translation>Minami-Torisima</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="213"/>
         <source>Ogasawara</source>
-        <translation></translation>
+        <translation>Ogaszavara</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="214"/>
         <source>Mongolia</source>
-        <translation></translation>
+        <translation>Mongólia</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="215"/>
         <source>Svalbard</source>
-        <translation></translation>
+        <translation>Svalbard</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="216"/>
         <source>Bear Is.</source>
-        <translation></translation>
+        <translation>Medve-sziget</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="217"/>
         <source>Jan Mayen</source>
-        <translation></translation>
+        <translation>Jan Mayen</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="218"/>
         <source>Jordan</source>
-        <translation></translation>
+        <translation>Jordánia</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="219"/>
         <source>U.S.A.</source>
-        <translation></translation>
+        <translation>USA</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="220"/>
         <source>Guantanamo Bay</source>
-        <translation></translation>
+        <translation>Guantánamói-öböl</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="221"/>
         <source>Mariana Is.</source>
-        <translation></translation>
+        <translation>Mariana-szigetek</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="222"/>
         <source>Baker &amp; Howland Is.</source>
-        <translation></translation>
+        <translation>Baker és Howland</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="223"/>
         <source>Guam</source>
-        <translation></translation>
+        <translation>Guam</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="224"/>
         <source>Johnston Is.</source>
-        <translation></translation>
+        <translation>Johnston-sziget</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="225"/>
         <source>Midway Is.</source>
-        <translation></translation>
+        <translation>Midway</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="226"/>
         <source>Palmyra &amp; Jarvis Is.</source>
-        <translation></translation>
+        <translation>Palmyra és Jarvis</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="227"/>
         <source>Hawaii</source>
-        <translation></translation>
+        <translation>Hawaii</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="228"/>
         <source>Kure Is.</source>
-        <translation></translation>
+        <translation>Kure</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="229"/>
         <source>American Samoa</source>
-        <translation></translation>
+        <translation>Amerikai Szamoa</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="230"/>
         <source>Swains Is.</source>
-        <translation></translation>
+        <translation>Swains</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="231"/>
         <source>Wake Is.</source>
-        <translation></translation>
+        <translation>Wake-sziget</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="232"/>
         <source>Alaska</source>
-        <translation></translation>
+        <translation>Alaszka</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="233"/>
         <source>Navassa Is.</source>
-        <translation></translation>
+        <translation>Navassa</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="234"/>
         <source>US Virgin Is.</source>
-        <translation></translation>
+        <translation>Amerikai Virgin-szigetek</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="235"/>
         <source>Puerto Rico</source>
-        <translation></translation>
+        <translation>Puerto Rico</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="236"/>
         <source>Desecheo Is.</source>
-        <translation></translation>
+        <translation>Desecheo</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="237"/>
         <source>Norway</source>
-        <translation></translation>
+        <translation>Norvégia</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="238"/>
         <source>Argentina</source>
-        <translation></translation>
+        <translation>Argentína</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="239"/>
         <source>Luxembourg</source>
-        <translation></translation>
+        <translation>Luxemburg</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="240"/>
         <source>Lithuania</source>
-        <translation></translation>
+        <translation>Litvánia</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="241"/>
         <source>Bulgaria</source>
-        <translation></translation>
+        <translation>Bulgária</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="242"/>
         <source>Peru</source>
-        <translation></translation>
+        <translation>Peru</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="243"/>
         <source>Lebanon</source>
-        <translation></translation>
+        <translation>Libanon</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="244"/>
         <source>Austria</source>
-        <translation></translation>
+        <translation>Ausztria</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="245"/>
         <source>Finland</source>
-        <translation></translation>
+        <translation>Finnország</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="246"/>
         <source>Aland Is.</source>
-        <translation></translation>
+        <translation>Åland</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="247"/>
         <source>Market Reef</source>
-        <translation></translation>
+        <translation>Market-zátony</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="248"/>
         <source>Czech Rep.</source>
-        <translation></translation>
+        <translation>Csehország</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="249"/>
         <source>Slovak Rep.</source>
-        <translation></translation>
+        <translation>Szlovákia</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="250"/>
         <source>Belgium</source>
-        <translation></translation>
+        <translation>Belgium</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="251"/>
         <source>Greenland</source>
-        <translation></translation>
+        <translation>Grönland</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="252"/>
         <source>Faroe Is.</source>
-        <translation></translation>
+        <translation>Feröer</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="253"/>
         <source>Denmark</source>
-        <translation></translation>
+        <translation>Dánia</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="254"/>
         <source>Papua New Guinea</source>
-        <translation></translation>
+        <translation>Pápua Új-Guinea</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="255"/>
         <source>Aruba</source>
-        <translation></translation>
+        <translation>Aruba</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="256"/>
         <source>DPR of Korea</source>
-        <translation></translation>
+        <translation>Koreai NDK</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="257"/>
         <source>Netherlands</source>
-        <translation></translation>
+        <translation>Hollandia</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="258"/>
         <source>Curacao</source>
-        <translation></translation>
+        <translation>Curaçao</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="259"/>
         <source>Bonaire</source>
-        <translation></translation>
+        <translation>Bonaire</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="260"/>
         <source>Saba &amp; St. Eustatius</source>
-        <translation></translation>
+        <translation>Saba és Sint Eustatius</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="261"/>
         <source>Sint Maarten</source>
-        <translation></translation>
+        <translation>Sint Maarten</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="262"/>
         <source>Brazil</source>
-        <translation></translation>
+        <translation>Brazília</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="263"/>
         <source>Fernando de Noronha</source>
-        <translation></translation>
+        <translation>Fernando de Noronha</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="264"/>
         <source>St. Peter &amp; St. Paul</source>
-        <translation></translation>
+        <translation>Szent Péter és Szent Pál</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="265"/>
         <source>Trindade &amp; Martim Vaz</source>
-        <translation></translation>
+        <translation>Trindade és Martim Vaz</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="266"/>
         <source>Suriname</source>
-        <translation></translation>
+        <translation>Suriname</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="267"/>
         <source>Franz Josef Land</source>
-        <translation></translation>
+        <translation>Ferenc József-föld</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="268"/>
         <source>Western Sahara</source>
-        <translation></translation>
+        <translation>Nyugat-Szahara</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="269"/>
         <source>Bangladesh</source>
-        <translation></translation>
+        <translation>Banglades</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="270"/>
         <source>Slovenia</source>
-        <translation></translation>
+        <translation>Szlovénia</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="271"/>
         <source>Seychelles</source>
-        <translation></translation>
+        <translation>Seychelle-szigetek</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="272"/>
         <source>Sao Tome &amp; Principe</source>
-        <translation></translation>
+        <translation>São Tomé és Príncipe</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="273"/>
         <source>Sweden</source>
-        <translation></translation>
+        <translation>Svédország</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="274"/>
         <source>Poland</source>
-        <translation></translation>
+        <translation>Lengyelország</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="275"/>
         <source>Sudan</source>
-        <translation></translation>
+        <translation>Szudán</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="276"/>
         <source>Egypt</source>
-        <translation></translation>
+        <translation>Egyiptom</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="277"/>
         <source>Greece</source>
-        <translation></translation>
+        <translation>Görögország</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="278"/>
         <source>Mount Athos</source>
-        <translation></translation>
+        <translation>Athosz-hegy</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="279"/>
         <source>Dodecanese</source>
-        <translation></translation>
+        <translation>Dodekanészosz</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="280"/>
         <source>Crete</source>
-        <translation></translation>
+        <translation>Kréta</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="281"/>
         <source>Tuvalu</source>
-        <translation></translation>
+        <translation>Tuvalu</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="282"/>
         <source>W. Kiribati</source>
-        <translation></translation>
+        <translation>Nyugat-Kiribati</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="283"/>
         <source>C. Kiribati</source>
-        <translation></translation>
+        <translation>Közép-Kiribati</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="284"/>
         <source>E. Kiribati</source>
-        <translation></translation>
+        <translation>Kelet-Kiribati</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="285"/>
         <source>Banaba Is.</source>
-        <translation></translation>
+        <translation>Banaba</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="286"/>
         <source>Somalia</source>
-        <translation></translation>
+        <translation>Szomália</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="287"/>
         <source>San Marino</source>
-        <translation></translation>
+        <translation>San Marino</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="288"/>
         <source>Palau</source>
-        <translation></translation>
+        <translation>Palau</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="289"/>
         <source>AS Turkey</source>
-        <translation></translation>
+        <translation>Törökország (AS)</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="290"/>
         <source>EU Turkey</source>
-        <translation></translation>
+        <translation>Törökország (EU)</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="291"/>
         <source>Iceland</source>
-        <translation></translation>
+        <translation>Izland</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="292"/>
         <source>Guatemala</source>
-        <translation></translation>
+        <translation>Guatemala</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="293"/>
         <source>Costa Rica</source>
-        <translation></translation>
+        <translation>Costa Rica</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="294"/>
         <source>Cocos Is.</source>
-        <translation></translation>
+        <translation>Kókusz-sziget</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="295"/>
         <source>Cameroon</source>
-        <translation></translation>
+        <translation>Kamerun</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="296"/>
         <source>Corsica</source>
-        <translation></translation>
+        <translation>Korzika</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="297"/>
         <source>C. African Rep.</source>
-        <translation></translation>
+        <translation>Közép-afrikai Közt.</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="298"/>
         <source>Rep. of the Congo</source>
-        <translation></translation>
+        <translation>Kongói Közt.</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="299"/>
         <source>Gabon</source>
-        <translation></translation>
+        <translation>Gabon</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="300"/>
         <source>Chad</source>
-        <translation></translation>
+        <translation>Csád</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="301"/>
         <source>Cote d&apos;Ivoire</source>
-        <translation></translation>
+        <translation>Elefántcsontpart</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="302"/>
         <source>Benin</source>
-        <translation></translation>
+        <translation>Benin</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="303"/>
         <source>Mali</source>
-        <translation></translation>
+        <translation>Mali</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="304"/>
         <source>EU Russia</source>
-        <translation></translation>
+        <translation>Oroszország (EU)</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="305"/>
         <source>Kaliningrad</source>
-        <translation></translation>
+        <translation>Kalinyingrád</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="306"/>
         <source>AS Russia</source>
-        <translation></translation>
+        <translation>Oroszország (AS)</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="307"/>
         <source>Uzbekistan</source>
-        <translation></translation>
+        <translation>Üzbegisztán</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="308"/>
         <source>Kazakhstan</source>
-        <translation></translation>
+        <translation>Kazahsztán</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="309"/>
         <source>Ukraine</source>
-        <translation></translation>
+        <translation>Ukrajna</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="310"/>
         <source>Antigua &amp; Barbuda</source>
-        <translation></translation>
+        <translation>Antigua és Barbuda</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="311"/>
         <source>Belize</source>
-        <translation></translation>
+        <translation>Belize</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="312"/>
         <source>St. Kitts &amp; Nevis</source>
-        <translation></translation>
+        <translation>Saint Kitts és Nevis</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="313"/>
         <source>Namibia</source>
-        <translation></translation>
+        <translation>Namíbia</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="314"/>
         <source>Micronesia</source>
-        <translation></translation>
+        <translation>Mikronézia</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="315"/>
         <source>Marshall Is.</source>
-        <translation></translation>
+        <translation>Marshall-szigetek</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="316"/>
         <source>Brunei Darussalam</source>
-        <translation></translation>
+        <translation>Brunei</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="317"/>
         <source>Canada</source>
-        <translation></translation>
+        <translation>Kanada</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="318"/>
         <source>Australia</source>
-        <translation></translation>
+        <translation>Ausztrália</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="319"/>
         <source>Heard Is.</source>
-        <translation></translation>
+        <translation>Heard-sziget</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="320"/>
         <source>Macquarie Is.</source>
-        <translation></translation>
+        <translation>Macquarie-sziget</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="321"/>
         <source>Cocos (Keeling) Is.</source>
-        <translation></translation>
+        <translation>Kókusz-szigetek (Keeling)</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="322"/>
         <source>Lord Howe Is.</source>
-        <translation></translation>
+        <translation>Lord Howe-sziget</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="323"/>
         <source>Mellish Reef</source>
-        <translation></translation>
+        <translation>Mellish-zátony</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="324"/>
         <source>Norfolk Is.</source>
-        <translation></translation>
+        <translation>Norfolk-sziget</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="325"/>
         <source>Willis Is.</source>
-        <translation></translation>
+        <translation>Willis-szigetek</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="326"/>
         <source>Christmas Is.</source>
-        <translation></translation>
+        <translation>Karácsony-sziget</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="327"/>
         <source>Anguilla</source>
-        <translation></translation>
+        <translation>Anguilla</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="328"/>
         <source>Montserrat</source>
-        <translation></translation>
+        <translation>Montserrat</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="329"/>
         <source>British Virgin Is.</source>
-        <translation></translation>
+        <translation>Brit Virgin-szigetek</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="330"/>
         <source>Turks &amp; Caicos Is.</source>
-        <translation></translation>
+        <translation>Turks- és Caicos-szigetek</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="331"/>
         <source>Pitcairn Is.</source>
-        <translation></translation>
+        <translation>Pitcairn-szigetek</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="332"/>
         <source>Ducie Is.</source>
-        <translation></translation>
+        <translation>Ducie</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="333"/>
         <source>Falkland Is.</source>
-        <translation></translation>
+        <translation>Falkland-szigetek</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="334"/>
         <source>S. Georgia Is.</source>
-        <translation></translation>
+        <translation>Déli-Georgia</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="335"/>
         <source>S. Shetland Is.</source>
-        <translation></translation>
+        <translation>Déli-Shetland-szigetek</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="336"/>
         <source>S. Orkney Is.</source>
-        <translation></translation>
+        <translation>Déli-Orkney-szigetek</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="337"/>
         <source>S. Sandwich Is.</source>
-        <translation></translation>
+        <translation>Déli-Sandwich-szigetek</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="338"/>
         <source>Bermuda</source>
-        <translation></translation>
+        <translation>Bermuda</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="339"/>
         <source>Chagos Is.</source>
-        <translation></translation>
+        <translation>Chagos-szigetek</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="340"/>
         <source>Hong Kong</source>
-        <translation></translation>
+        <translation>Hongkong</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="341"/>
         <source>India</source>
-        <translation></translation>
+        <translation>India</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="342"/>
         <source>Andaman &amp; Nicobar Is.</source>
-        <translation></translation>
+        <translation>Andamán- és Nikobár-szigetek</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="343"/>
         <source>Lakshadweep Is.</source>
-        <translation></translation>
+        <translation>Lakshadweep</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="344"/>
         <source>Mexico</source>
-        <translation></translation>
+        <translation>Mexikó</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="345"/>
         <source>Revillagigedo</source>
-        <translation></translation>
+        <translation>Revillagigedo</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="346"/>
         <source>Burkina Faso</source>
-        <translation></translation>
+        <translation>Burkina Faso</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="347"/>
         <source>Cambodia</source>
-        <translation></translation>
+        <translation>Kambodzsa</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="348"/>
         <source>Laos</source>
-        <translation></translation>
+        <translation>Laosz</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="349"/>
         <source>Macao</source>
-        <translation></translation>
+        <translation>Makaó</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="350"/>
         <source>Myanmar</source>
-        <translation></translation>
+        <translation>Mianmar</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="351"/>
         <source>Afghanistan</source>
-        <translation></translation>
+        <translation>Afganisztán</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="352"/>
         <source>Indonesia</source>
-        <translation></translation>
+        <translation>Indonézia</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="353"/>
         <source>Iraq</source>
-        <translation></translation>
+        <translation>Irak</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="354"/>
         <source>Vanuatu</source>
-        <translation></translation>
+        <translation>Vanuatu</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="355"/>
         <source>Syria</source>
-        <translation></translation>
+        <translation>Szíria</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="356"/>
         <source>Latvia</source>
-        <translation></translation>
+        <translation>Lettország</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="357"/>
         <source>Nicaragua</source>
-        <translation></translation>
+        <translation>Nicaragua</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="358"/>
         <source>Romania</source>
-        <translation></translation>
+        <translation>Románia</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="359"/>
         <source>El Salvador</source>
-        <translation></translation>
+        <translation>Salvador</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="360"/>
         <source>Serbia</source>
-        <translation></translation>
+        <translation>Szerbia</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="361"/>
         <source>Venezuela</source>
-        <translation></translation>
+        <translation>Venezuela</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="362"/>
         <source>Aves Is.</source>
-        <translation></translation>
+        <translation>Aves-sziget</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="363"/>
         <source>Zimbabwe</source>
-        <translation></translation>
+        <translation>Zimbabwe</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="364"/>
         <source>N. Macedonia</source>
-        <translation></translation>
+        <translation>Észak-Macedónia</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="365"/>
         <source>Rep. of Kosovo</source>
-        <translation></translation>
+        <translation>Koszovói Közt.</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="366"/>
         <source>Rep. of S. Sudan</source>
-        <translation></translation>
+        <translation>Dél-szudáni Közt.</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="367"/>
         <source>Albania</source>
-        <translation></translation>
+        <translation>Albánia</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="368"/>
         <source>Gibraltar</source>
-        <translation></translation>
+        <translation>Gibraltár</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="369"/>
         <source>UK Base Areas on Cyprus</source>
-        <translation></translation>
+        <translation>Brit támaszpontok Cipruson</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="370"/>
         <source>St. Helena</source>
-        <translation></translation>
+        <translation>Szent Ilona</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="371"/>
         <source>Ascension Is.</source>
-        <translation></translation>
+        <translation>Ascension</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="372"/>
         <source>Tristan da Cunha &amp; Gough</source>
-        <translation></translation>
+        <translation>Tristan da Cunha és Gough</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="373"/>
         <source>Cayman Is.</source>
-        <translation></translation>
+        <translation>Kajmán-szigetek</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="374"/>
         <source>Tokelau Is.</source>
-        <translation></translation>
+        <translation>Tokelau</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="375"/>
         <source>New Zealand</source>
-        <translation></translation>
+        <translation>Új-Zéland</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="376"/>
         <source>Chatham Is.</source>
-        <translation></translation>
+        <translation>Chatham-szigetek</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="377"/>
         <source>Kermadec Is.</source>
-        <translation></translation>
+        <translation>Kermadec-szigetek</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="378"/>
         <source>N.Z. Subantarctic Is.</source>
-        <translation></translation>
+        <translation>Új-zélandi szubantarktiszi szigetek</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="379"/>
         <source>Paraguay</source>
-        <translation></translation>
+        <translation>Paraguay</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="380"/>
         <source>S. Africa</source>
-        <translation></translation>
+        <translation>Dél-Afrika</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="381"/>
         <source>Pr. Edward &amp; Marion Is.</source>
-        <translation></translation>
+        <translation>Prince Edward- és Marion-sziget</translation>
     </message>
 </context>
 <context>
@@ -2381,7 +2386,7 @@ Formátum:
     <message>
         <location filename="../Configuration.cpp" line="224"/>
         <source>IARU &amp;Region:</source>
-        <translation>IARU &amp;Region:</translation>
+        <translation>IARU-&amp;régió:</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp" line="225"/>
@@ -2410,7 +2415,7 @@ Formátum:
         <location filename="../FrequencyList.cpp" line="513"/>
         <location filename="../FrequencyList.cpp" line="700"/>
         <source>IARU Region</source>
-        <translation>IARU Region</translation>
+        <translation>IARU-régió</translation>
     </message>
     <message>
         <location filename="../FrequencyList.cpp" line="534"/>
@@ -2918,7 +2923,7 @@ Formátum:
         <location filename="../logqso.ui" line="82"/>
         <location filename="../logqso.ui" line="114"/>
         <source>dd/MM/yyyy HH:mm:ss</source>
-        <translation></translation>
+        <translation>yyyy.MM.dd HH:mm:ss</translation>
     </message>
     <message>
         <location filename="../logqso.ui" line="98"/>
@@ -3292,7 +3297,7 @@ Formátum:
     <message>
         <location filename="../mainwindow.ui" line="1848"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;The button provides choice between S-meter units and dBm. CAT shall be set up via Hamlib or TCI to get S-meter working, some rigs may not be supported.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;A gomb S-mérő egység és dBm között vált. Az S-mérőhöz a CAT-ot Hamlibbel vagy TCI-vel kell beállítani; egyes rádiók nem támogatottak.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1901"/>
@@ -3573,7 +3578,16 @@ Note:&lt;br&gt;
 - if your computer clock difference is more than 7.5 seconds, there is a chance you will be reporting spots in wrong interval, also QSO start/end time can be affected&lt;br&gt;
 - DT of TX signal will be affected in wrong way if you are trying to compensate RX audio stream delay caused by buffering in SDR software.&lt;br&gt;&lt;br&gt;
 Click by right mouse&apos;s button sets JTDX internal time back to system time.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;A bal egérgomb eltolja a JTDX belső idejét, hogy a dekóder jobban illeszkedjen a bejövő vételi hang jeleihez.&lt;br&gt;
+Két eset támogatott:&lt;br&gt;
+- rough synchronization, if there are shifted signals on the waterfall and no a signal decoded, minimum power value is used in decoder to evaluate time shift till beginning of interval&lt;br&gt;
+- more precise synchronization, if there are signals decoded in previous interval and average DT is out of the -0.19 .. 0.19 sec range. Average DT value is used for JTDX time shift.&lt;br&gt;
+It is recommended to keep at least five interval gap between two consequential attempts of rough and precise synchronization.&lt;br&gt;
+Decoding of current and next interval can be broken by the time shift.&lt;br&gt;
+Megjegyzés:&lt;br&gt;
+- if your computer clock difference is more than 7.5 seconds, there is a chance you will be reporting spots in wrong interval, also QSO start/end time can be affected&lt;br&gt;
+- DT of TX signal will be affected in wrong way if you are trying to compensate RX audio stream delay caused by buffering in SDR software.&lt;br&gt;&lt;br&gt;
+A jobb egérgomb visszaállítja a JTDX belső idejét a rendszeridőre.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3202"/>
@@ -3677,7 +3691,7 @@ Click by right mouse&apos;s button sets JTDX internal time back to system time.&
     <message>
         <location filename="../mainwindow.ui" line="3523"/>
         <source>Tx &amp;2</source>
-        <translation></translation>
+        <translation>Tx &amp;2</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3526"/>
@@ -3697,7 +3711,7 @@ Click by right mouse&apos;s button sets JTDX internal time back to system time.&
     <message>
         <location filename="../mainwindow.ui" line="3596"/>
         <source>Alt+3</source>
-        <translation></translation>
+        <translation>Alt+3</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3638"/>
@@ -3908,7 +3922,7 @@ A listát a menü, Fájl -&gt; Beállítások (F2)-ban lehet karbantartani.</tra
     <message>
         <location filename="../mainwindow.ui" line="1437"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enable FT8 DXpedition Hound mode. MSHV multianswering mode is supported in common FT8 bands, WSJT-X DXpedition mode with frequency control is supported on the special DXpedition frequencies.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;FT8 DXpedíciós Hound mód bekapcsolása. A szokásos FT8-frekvenciákon az MSHV többválaszos mód, a külön DXpedíciós frekvenciákon a WSJT-X DXpedíciós mód működik frekvenciavezérléssel.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1592"/>
@@ -3918,7 +3932,7 @@ A listát a menü, Fájl -&gt; Beállítások (F2)-ban lehet karbantartani.</tra
     <message>
         <location filename="../mainwindow.ui" line="1595"/>
         <source>CL  </source>
-        <translation></translation>
+        <translation>CL  </translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1821"/>
@@ -3928,7 +3942,7 @@ A listát a menü, Fájl -&gt; Beállítások (F2)-ban lehet karbantartani.</tra
     <message>
         <location filename="../mainwindow.ui" line="1824"/>
         <source>DT </source>
-        <translation></translation>
+        <translation>DT </translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1827"/>
@@ -3938,12 +3952,12 @@ A listát a menü, Fájl -&gt; Beállítások (F2)-ban lehet karbantartani.</tra
     <message>
         <location filename="../mainwindow.ui" line="1898"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;CAT shall be set up via Hamlib or TCI, TCI and Hamlib for some transceivers does support getting output power data.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;A CAT-ot Hamlibbel vagy TCI-vel kell beállítani; egyes rádióknál a TCI és a Hamlib ki tudja olvasni a kimenő teljesítményt.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3048"/>
         <source>Sync</source>
-        <translation type="unfinished"></translation>
+        <translation>Sync</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4435"/>
@@ -4530,7 +4544,7 @@ A listát a menü, Fájl -&gt; Beállítások (F2)-ban lehet karbantartani.</tra
     <message>
         <location filename="../mainwindow.ui" line="5758"/>
         <source>early start of decoder</source>
-        <translation type="unfinished"></translation>
+        <translation>a dekóder korai indítása</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5766"/>
@@ -4859,7 +4873,7 @@ A listát a menü, Fájl -&gt; Beállítások (F2)-ban lehet karbantartani.</tra
         <location filename="../mainwindow.cpp" line="3080"/>
         <location filename="../mainwindow.cpp" line="6622"/>
         <source>Hound mode TX frequency control requires *Split* rig control (either *Rig* or *Fake It* set in the *Settings | Radio* tab.)</source>
-        <translation type="unfinished"></translation>
+        <translation>A Hound mód adófrekvencia-vezérléséhez *Split* üzem kell (a *Beállítások | Rádió* lapon *Rádió* vagy *Szimulált*).</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="2705"/>
@@ -4994,7 +5008,35 @@ A listát a menü, Fájl -&gt; Beállítások (F2)-ban lehet karbantartani.</tra
   &lt;tr&gt;&lt;td&gt;&lt;b&gt;Esc    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Halt Tx&lt;/td&gt;&lt;/tr&gt;
 &lt;/table&gt;</source>
         <extracomment>Keyboard shortcuts help window contents</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>&lt;table cellspacing=1&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F1       &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Online kézikönyv&lt;/td&gt;&lt;td&gt;&lt;b&gt;Ctrl+F1  &lt;/b&gt;&lt;/td&gt;&lt;td&gt;A JTDX névjegye&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F2       &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Beállítások ablak megnyitása&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F3       &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Billentyűparancsok megjelenítése&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F4       &lt;/b&gt;&lt;/td&gt;&lt;td&gt;DX hívójel/QTH és Tx üzenetek törlése&lt;/td&gt;&lt;td&gt;&lt;b&gt;Alt+F4   &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Kilépés a programból&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F5       &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Speciális egérparancsok megjelenítése&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F6       &lt;/b&gt;&lt;/td&gt;&lt;td&gt;A könyvtár következő fájljának megnyitása&lt;/td&gt;&lt;td&gt;&lt;b&gt;Shift+F6 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;A könyvtár összes hátralévő fájljának dekódolása&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F7       &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Napló megnyitása a rendszerhez rendelt programmal&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F11      &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Rx frekvencia 1 Hz-cel lejjebb&lt;/td&gt;&lt;td&gt;&lt;b&gt;Ctrl+F11 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Rx és Tx frekvencia 1 Hz-cel lejjebb&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F12      &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Rx frekvencia 1 Hz-cel feljebb&lt;/td&gt;&lt;td&gt;&lt;b&gt;Ctrl+F12 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Rx és Tx frekvencia 1 Hz-cel feljebb&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+1-6  &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Az aktuális adás beállítása erre a számra az 1. lapon&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Ctl+1-6  &lt;/b&gt;&lt;/td&gt;&lt;td&gt;A következő adás beállítása erre a számra az 1. lapon&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+Ctrl+A    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Keresett hívójelek listájának törlése&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+B/C  &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Váltás FT8/FT4 módra&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+D    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Újradekódolás a QSO frekvencián&lt;/td&gt;&lt;td&gt;&lt;b&gt;Shift+D  &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Teljes dekódolás (mindkét ablak)&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+E    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Törlés&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+F    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Minden szűrő megkerülésének kapcsolása&lt;/td&gt;&lt;td&gt;&lt;b&gt;Ctrl+F   &lt;/b&gt;&lt;/td&gt;&lt;td&gt;A szabad szöveg mező szerkesztése&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+G    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Szabványos üzenetek létrehozása&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+H    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Adás leállítása&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Ctrl+L   &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Hívójel keresése az adatbázisban, üzenetek létrehozása&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+M    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Figyelés&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+N    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Adás engedélyezése&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+Q    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;QSO naplózása&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+S    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Figyelés leállítása&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+T    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Hangolás&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+V    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;A legutóbb befejezett *.wav fájl mentése&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+Z    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Szűrő; a parancs a fő- és a vízesésablakban is működik&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Esc    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Adás leállítása&lt;/td&gt;&lt;/tr&gt;
+&lt;/table&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="3218"/>
@@ -5041,7 +5083,44 @@ A listát a menü, Fájl -&gt; Beállítások (F2)-ban lehet karbantartani.</tra
   &lt;/tr&gt;
 &lt;/table&gt;
 </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;table cellpadding=5&gt;
+  &lt;tr&gt;
+    &lt;th align="right"&gt;Kattintás&lt;/th&gt;
+    &lt;th align="left"&gt;Művelet&lt;/th&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td align="right"&gt;Vízesés:&lt;/td&gt;
+    &lt;td&gt;Beállítja a vételi frekvenciát.&lt;br/&gt;
+        Dupla kattintás beállítja a vételi frekvenciát és ott dekódol.&lt;br/&gt;
+        Ctrl+kattintás a vételi és az adási frekvenciát is beállítja.&lt;br/&gt;
+        Ha a TX=RX nincs rögzítve:&lt;br/&gt;
+        bal gomb: vételi frekvencia beállítása&lt;br/&gt;
+        Alt+bal gomb: vételi frekvencia beállítása és a szűrő bekapcsolása&lt;br/&gt;
+        jobb gomb: adási frekvencia beállítása
+    &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td align="right"&gt;Dekódolt szöveg:&lt;/td&gt;
+    &lt;td&gt;Dupla kattintás a második hívójelet a DX hívójel mezőbe,&lt;br/&gt;
+        a lokátort a DX QTH mezőbe másolja; a vételi és adási frekvenciát&lt;br/&gt;
+        a dekódolt jel frekvenciájára állítja, és üzeneteket készít.&lt;br/&gt;
+        Ha az első hívójel a sajátod, az adási frekvencia nem változik,&lt;br/&gt;
+        hacsak nem tartod nyomva a Ctrl-t a dupla kattintáskor.&lt;br/&gt;&lt;br/&gt;
+        Az Alt+dupla kattintás az adást is leállítja, ha az engedélyezve van.&lt;br/&gt;&lt;br/&gt;
+        A Ctrl+Alt+dupla kattintás csak a második hívójelet adja hozzá a&lt;br/&gt;
+        keresett hívójelek listájához.
+    &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td align="right"&gt;Törlés gomb:&lt;/td&gt;
+    &lt;td&gt;Jobb gomb: a QSO ablak törlése.&lt;br/&gt;
+        Bal gomb: a sávaktivitás ablak törlése.&lt;br/&gt;
+        Dupla kattintás bármelyik gombbal a QSO és a &lt;br/&gt;
+        sávaktivitás ablakot is törli.
+    &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/table&gt;
+</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="3731"/>
@@ -5092,13 +5171,13 @@ A listát a menü, Fájl -&gt; Beállítások (F2)-ban lehet karbantartani.</tra
     <message>
         <location filename="../mainwindow.cpp" line="4203"/>
         <source>Please choose another Tx frequency. JTDX will not allow to Call below 1000 Hz in DXped mode.</source>
-        <translation type="unfinished"></translation>
+        <translation>Válasszon másik adófrekvenciát. DXpedíciós módban a JTDX nem enged 1000 Hz alatt hívni.</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="4208"/>
         <location filename="../mainwindow.cpp" line="4211"/>
         <source>FT8 F/H Tx Guard</source>
-        <translation type="unfinished"></translation>
+        <translation>FT8 F/H adásvédelem</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="4330"/>
@@ -5183,7 +5262,7 @@ már a CALL3.TXT-ben van, szeretné cserélni?</translation>
     <message>
         <location filename="../mainwindow.cpp" line="6333"/>
         <source>    Freq     Drift  Call          Grid    dBm   Dist</source>
-        <translation>    Freq     Drift  Call          Grid    dBm   Dist</translation>
+        <translation>    Frek     Drift  Hívó          Loc     dBm   Táv </translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="6427"/>
@@ -5322,7 +5401,7 @@ UDP szerver %2:%3</translation>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>RX</source>
-        <translation type="unfinished"></translation>
+        <translation>RX</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
@@ -5407,62 +5486,62 @@ UDP szerver %2:%3</translation>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>1 member</source>
-        <translation type="unfinished"></translation>
+        <translation>1 tag</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>2 members</source>
-        <translation type="unfinished"></translation>
+        <translation>2 tag</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>3 members</source>
-        <translation type="unfinished"></translation>
+        <translation>3 tag</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>4 members</source>
-        <translation type="unfinished"></translation>
+        <translation>4 tag</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>5 members</source>
-        <translation type="unfinished"></translation>
+        <translation>5 tag</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>6 members</source>
-        <translation type="unfinished"></translation>
+        <translation>6 tag</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>1 member   (+20, 13% of the budget at 8 threads)</source>
-        <translation type="unfinished"></translation>
+        <translation>1 tag   (+20, 13% a keretből 8 szálon)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>2 members  (+48, 18%)</source>
-        <translation type="unfinished"></translation>
+        <translation>2 tag  (+48, 18%)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>3 members  (+72, 23% - the knee of the curve)</source>
-        <translation type="unfinished"></translation>
+        <translation>3 tag  (+72, 23% - a görbe töréspontja)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>4 members  (+86, 28%)</source>
-        <translation type="unfinished"></translation>
+        <translation>4 tag  (+86, 28%)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>5 members  (+98, 33% - all that is worth taking)</source>
-        <translation type="unfinished"></translation>
+        <translation>5 tag  (+98, 33% - minden, amit érdemes elvinni)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>6 members  (+100, 39% - only 2 more than five)</source>
-        <translation type="unfinished"></translation>
+        <translation>6 tag  (+100, 39% - csak 2-vel több, mint öt)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
@@ -5482,27 +5561,27 @@ UDP szerver %2:%3</translation>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>1 member  (+7 msgs, +1.2 s at 12 threads on the benchmark)</source>
-        <translation type="unfinished"></translation>
+        <translation>1 tag  (+7 üzenet, +1,2 s 12 szálon a méréskor)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>2 members  (+10, +2.3 s)</source>
-        <translation type="unfinished"></translation>
+        <translation>2 tag  (+10, +2,3 s)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>3 members  (+13, +5.3 s)</source>
-        <translation type="unfinished"></translation>
+        <translation>3 tag  (+13, +5,3 s)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>4 members  (+15, +7.9 s)</source>
-        <translation type="unfinished"></translation>
+        <translation>4 tag  (+15, +7,9 s)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>5 members  (+16, +11.5 s - too slow for a 15 s period on this machine, for replays)</source>
-        <translation type="unfinished"></translation>
+        <translation>5 tag  (+16, +11,5 s - túl lassú egy 15 s-os periódushoz ezen a gépen, visszajátszáshoz)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
@@ -5552,17 +5631,17 @@ UDP szerver %2:%3</translation>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>100-3300 Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>100-3300 Hz</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>300-3300 Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>300-3300 Hz</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>50-3650 Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>50-3650 Hz</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
@@ -5572,52 +5651,52 @@ UDP szerver %2:%3</translation>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>100-3200 Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>100-3200 Hz</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>100-3100 Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>100-3100 Hz</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>100-3000 Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>100-3000 Hz</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>200-3200 Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>200-3200 Hz</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>200-3100 Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>200-3100 Hz</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>200-3000 Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>200-3000 Hz</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>200-2800 Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>200-2800 Hz</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>200-2500 Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>200-2500 Hz</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>200-2400 Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>200-2400 Hz</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>0-5000 Hz (testing only)</source>
-        <translation type="unfinished"></translation>
+        <translation>0-5000 Hz (csak teszteléshez)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
@@ -5830,7 +5909,35 @@ UDP szerver %2:%3</translation>
   &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+Z    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Filter, this shortcut is being supported in main UI and widegraph UI&lt;/td&gt;&lt;/tr&gt;
   &lt;tr&gt;&lt;td&gt;&lt;b&gt;Esc    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Halt Tx&lt;/td&gt;&lt;/tr&gt;
 &lt;/table&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;table cellspacing=1&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F1       &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Online kézikönyv&lt;/td&gt;&lt;td&gt;&lt;b&gt;Ctrl+F1  &lt;/b&gt;&lt;/td&gt;&lt;td&gt;A JTDX_contest névjegye&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F2       &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Beállítások ablak megnyitása&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F3       &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Billentyűparancsok megjelenítése&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F4       &lt;/b&gt;&lt;/td&gt;&lt;td&gt;DX hívójel/QTH és Tx üzenetek törlése&lt;/td&gt;&lt;td&gt;&lt;b&gt;Alt+F4   &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Kilépés a programból&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F5       &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Speciális egérparancsok megjelenítése&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F6       &lt;/b&gt;&lt;/td&gt;&lt;td&gt;A könyvtár következő fájljának megnyitása&lt;/td&gt;&lt;td&gt;&lt;b&gt;Shift+F6 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;A könyvtár összes hátralévő fájljának dekódolása&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F7       &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Napló megnyitása a rendszerhez rendelt programmal&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F11      &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Rx frekvencia 1 Hz-cel lejjebb&lt;/td&gt;&lt;td&gt;&lt;b&gt;Ctrl+F11 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Rx és Tx frekvencia 1 Hz-cel lejjebb&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F12      &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Rx frekvencia 1 Hz-cel feljebb&lt;/td&gt;&lt;td&gt;&lt;b&gt;Ctrl+F12 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Rx és Tx frekvencia 1 Hz-cel feljebb&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+1-6  &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Az aktuális adás beállítása erre a számra az 1. lapon&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Ctl+1-6  &lt;/b&gt;&lt;/td&gt;&lt;td&gt;A következő adás beállítása erre a számra az 1. lapon&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+Ctrl+A    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Keresett hívójelek listájának törlése&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+B/C  &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Váltás FT8/FT4 módra&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+D    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Újradekódolás a QSO frekvencián&lt;/td&gt;&lt;td&gt;&lt;b&gt;Shift+D  &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Teljes dekódolás (mindkét ablak)&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+E    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Törlés&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+F    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Minden szűrő megkerülésének kapcsolása&lt;/td&gt;&lt;td&gt;&lt;b&gt;Ctrl+F   &lt;/b&gt;&lt;/td&gt;&lt;td&gt;A szabad szöveg mező szerkesztése&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+G    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Szabványos üzenetek létrehozása&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+H    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Adás leállítása&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Ctrl+L   &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Hívójel keresése az adatbázisban, üzenetek létrehozása&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+M    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Figyelés&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+N    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Adás engedélyezése&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+Q    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;QSO naplózása&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+S    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Figyelés leállítása&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+T    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Hangolás&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+V    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;A legutóbb befejezett *.wav fájl mentése&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+Z    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Szűrő; a parancs a fő- és a vízesésablakban is működik&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Esc    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Adás leállítása&lt;/td&gt;&lt;/tr&gt;
+&lt;/table&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp"/>
@@ -6390,194 +6497,194 @@ Ellenőrizze, hogy a helyes könyvtárnevet adta-e meg.</translation>
     <message>
         <location filename="../TCITransceiver.cpp" line="141"/>
         <source>ConnectionRefused</source>
-        <translation type="unfinished"></translation>
+        <translation>A kapcsolat elutasítva</translation>
     </message>
     <message>
         <location filename="../TCITransceiver.cpp" line="142"/>
         <source>RemoteHostClosed</source>
-        <translation type="unfinished"></translation>
+        <translation>A távoli gép lezárta a kapcsolatot</translation>
     </message>
     <message>
         <location filename="../TCITransceiver.cpp" line="143"/>
         <source>HostNotFound</source>
-        <translation type="unfinished"></translation>
+        <translation>A gép nem található</translation>
     </message>
     <message>
         <location filename="../TCITransceiver.cpp" line="144"/>
         <source>SocketAccess</source>
-        <translation type="unfinished"></translation>
+        <translation>Socket-hozzáférés megtagadva</translation>
     </message>
     <message>
         <location filename="../TCITransceiver.cpp" line="145"/>
         <source>SocketResource</source>
-        <translation type="unfinished"></translation>
+        <translation>Socket-erőforrás hiba</translation>
     </message>
     <message>
         <location filename="../TCITransceiver.cpp" line="146"/>
         <source>SocketTimeout</source>
-        <translation type="unfinished"></translation>
+        <translation>Socket időtúllépés</translation>
     </message>
     <message>
         <location filename="../TCITransceiver.cpp" line="147"/>
         <source>DatagramTooLarge</source>
-        <translation type="unfinished"></translation>
+        <translation>A datagram túl nagy</translation>
     </message>
     <message>
         <location filename="../TCITransceiver.cpp" line="148"/>
         <source>Network</source>
-        <translation type="unfinished"></translation>
+        <translation>Hálózati hiba</translation>
     </message>
     <message>
         <location filename="../TCITransceiver.cpp" line="149"/>
         <source>AddressInUse</source>
-        <translation type="unfinished"></translation>
+        <translation>A cím már használatban</translation>
     </message>
     <message>
         <location filename="../TCITransceiver.cpp" line="150"/>
         <source>SocketAddressNotAvailable</source>
-        <translation type="unfinished"></translation>
+        <translation>A socket-cím nem érhető el</translation>
     </message>
     <message>
         <location filename="../TCITransceiver.cpp" line="151"/>
         <source>UnsupportedSocketOperation</source>
-        <translation type="unfinished"></translation>
+        <translation>Nem támogatott socket-művelet</translation>
     </message>
     <message>
         <location filename="../TCITransceiver.cpp" line="152"/>
         <source>UnfinishedSocketOperation</source>
-        <translation type="unfinished"></translation>
+        <translation>Befejezetlen socket-művelet</translation>
     </message>
     <message>
         <location filename="../TCITransceiver.cpp" line="153"/>
         <source>ProxyAuthenticationRequired</source>
-        <translation type="unfinished"></translation>
+        <translation>Proxy-hitelesítés szükséges</translation>
     </message>
     <message>
         <location filename="../TCITransceiver.cpp" line="154"/>
         <source>SslHandshakeFailed</source>
-        <translation type="unfinished"></translation>
+        <translation>Az SSL-kézfogás sikertelen</translation>
     </message>
     <message>
         <location filename="../TCITransceiver.cpp" line="155"/>
         <source>ProxyConnectionRefused</source>
-        <translation type="unfinished"></translation>
+        <translation>A proxy elutasította a kapcsolatot</translation>
     </message>
     <message>
         <location filename="../TCITransceiver.cpp" line="156"/>
         <source>ProxyConnectionClosed</source>
-        <translation type="unfinished"></translation>
+        <translation>A proxykapcsolat lezárult</translation>
     </message>
     <message>
         <location filename="../TCITransceiver.cpp" line="157"/>
         <source>ProxyConnectionTimeout</source>
-        <translation type="unfinished"></translation>
+        <translation>Proxykapcsolat időtúllépés</translation>
     </message>
     <message>
         <location filename="../TCITransceiver.cpp" line="158"/>
         <source>ProxyNotFound</source>
-        <translation type="unfinished"></translation>
+        <translation>A proxy nem található</translation>
     </message>
     <message>
         <location filename="../TCITransceiver.cpp" line="159"/>
         <source>ProxyProtocol</source>
-        <translation type="unfinished"></translation>
+        <translation>Proxyprotokoll-hiba</translation>
     </message>
     <message>
         <location filename="../TCITransceiver.cpp" line="160"/>
         <source>Operation</source>
-        <translation type="unfinished"></translation>
+        <translation>Műveleti hiba</translation>
     </message>
     <message>
         <location filename="../TCITransceiver.cpp" line="161"/>
         <source>SslInternal</source>
-        <translation type="unfinished"></translation>
+        <translation>Belső SSL-hiba</translation>
     </message>
     <message>
         <location filename="../TCITransceiver.cpp" line="162"/>
         <source>SslInvalidUserData</source>
-        <translation type="unfinished"></translation>
+        <translation>Érvénytelen SSL-felhasználói adat</translation>
     </message>
     <message>
         <location filename="../TCITransceiver.cpp" line="163"/>
         <source>Temporary</source>
-        <translation type="unfinished"></translation>
+        <translation>Átmeneti hiba</translation>
     </message>
     <message>
         <location filename="../TCITransceiver.cpp" line="164"/>
         <source>UnknownSocket</source>
-        <translation type="unfinished"></translation>
+        <translation>Ismeretlen socket-hiba</translation>
     </message>
     <message>
         <location filename="../TCITransceiver.cpp" line="292"/>
         <source>TCI websocket error: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>TCI websocket hiba: %1</translation>
     </message>
     <message>
         <location filename="../TCITransceiver.cpp" line="417"/>
         <source>TCI SDR could not be switched on</source>
-        <translation type="unfinished"></translation>
+        <translation>A TCI SDR-t nem sikerült bekapcsolni</translation>
     </message>
     <message>
         <location filename="../TCITransceiver.cpp" line="420"/>
         <source>TCI SDR is not switched on</source>
-        <translation type="unfinished"></translation>
+        <translation>A TCI SDR nincs bekapcsolva</translation>
     </message>
     <message>
         <location filename="../TCITransceiver.cpp" line="427"/>
         <source>TCI RX2 could not be enabled</source>
-        <translation type="unfinished"></translation>
+        <translation>A TCI RX2-t nem sikerült engedélyezni</translation>
     </message>
     <message>
         <location filename="../TCITransceiver.cpp" line="435"/>
         <source>TCI Audio could not be switched on</source>
-        <translation type="unfinished"></translation>
+        <translation>A TCI hangot nem sikerült bekapcsolni</translation>
     </message>
     <message>
         <location filename="../TCITransceiver.cpp" line="481"/>
         <location filename="../TCITransceiver.cpp" line="1550"/>
         <source>TCI could not be opened</source>
-        <translation type="unfinished"></translation>
+        <translation>A TCI-t nem sikerült megnyitni</translation>
     </message>
     <message>
         <location filename="../TCITransceiver.cpp" line="1345"/>
         <source>TCI failed to set ptt</source>
-        <translation type="unfinished"></translation>
+        <translation>A TCI nem tudta beállítani a PTT-t</translation>
     </message>
     <message>
         <location filename="../TCITransceiver.cpp" line="1354"/>
         <source>TCI should use PTT via CAT</source>
-        <translation type="unfinished"></translation>
+        <translation>A TCI-nek CAT-on át kell PTT-t használnia</translation>
     </message>
     <message>
         <location filename="../TCITransceiver.cpp" line="1397"/>
         <source>TCI failed set rxfreq</source>
-        <translation type="unfinished"></translation>
+        <translation>A TCI nem tudta beállítani a vételi frekvenciát</translation>
     </message>
     <message>
         <location filename="../TCITransceiver.cpp" line="1416"/>
         <location filename="../TCITransceiver.cpp" line="1531"/>
         <source>TCI failed set mode</source>
-        <translation type="unfinished"></translation>
+        <translation>A TCI nem tudta beállítani a módot</translation>
     </message>
     <message>
         <location filename="../TCITransceiver.cpp" line="1679"/>
         <source>TCI sent an unrecognized frequency</source>
-        <translation type="unfinished"></translation>
+        <translation>A TCI ismeretlen frekvenciát küldött</translation>
     </message>
     <message>
         <location filename="../TCITransceiver.cpp" line="1740"/>
         <source>TCI modulator not Idle</source>
-        <translation type="unfinished"></translation>
+        <translation>A TCI modulátor nincs üresjáratban</translation>
     </message>
     <message>
         <location filename="../TCITransceiver.cpp" line="1196"/>
         <source>TCI failed set split</source>
-        <translation type="unfinished"></translation>
+        <translation>A TCI nem tudta beállítani a splitet</translation>
     </message>
     <message>
         <location filename="../TCITransceiver.cpp" line="1480"/>
         <source>TCI failed set txfreq</source>
-        <translation type="unfinished"></translation>
+        <translation>A TCI nem tudta beállítani az adófrekvenciát</translation>
     </message>
 </context>
 <context>
@@ -6618,7 +6725,7 @@ Ellenőrizze, hogy a helyes könyvtárnevet adta-e meg.</translation>
     <message>
         <location filename="../widegraph.ui" line="203"/>
         <source>Bins/Pixel  </source>
-        <translation>Bins/Pixel  </translation>
+        <translation>Bin/képpont </translation>
     </message>
     <message>
         <location filename="../widegraph.ui" line="234"/>
@@ -6840,7 +6947,7 @@ Ellenőrizze, hogy a helyes könyvtárnevet adta-e meg.</translation>
     <message>
         <location filename="../Configuration.ui" line="125"/>
         <source>IARU Region:</source>
-        <translation>IARU Region:</translation>
+        <translation>IARU-régió:</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="135"/>
@@ -6865,7 +6972,7 @@ Ellenőrizze, hogy a helyes könyvtárnevet adta-e meg.</translation>
     <message>
         <location filename="../Configuration.ui" line="162"/>
         <source>Full call in Tx5 only</source>
-        <translation>Full call in Tx5 only</translation>
+        <translation>Teljes hívójel csak a Tx5-ben</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="170"/>
@@ -7089,7 +7196,7 @@ csendes időszakban küldi el, amikor a dekódolás megtörtént.</translation>
     <message>
         <location filename="../Configuration.ui" line="737"/>
         <source>0.5 s</source>
-        <translation type="unfinished"></translation>
+        <translation>0.5 s</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="808"/>
@@ -7140,7 +7247,7 @@ csendes időszakban küldi el, amikor a dekódolás megtörtént.</translation>
     <message>
         <location filename="../Configuration.ui" line="942"/>
         <source>Baud Rate:</source>
-        <translation>Baud Rate:</translation>
+        <translation>Átviteli sebesség:</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="958"/>
@@ -7195,7 +7302,7 @@ csendes időszakban küldi el, amikor a dekódolás megtörtént.</translation>
     <message>
         <location filename="../Configuration.ui" line="1013"/>
         <source>Data Bits</source>
-        <translation>Data Bits</translation>
+        <translation>Adatbitek</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1025"/>
@@ -7222,7 +7329,7 @@ csendes időszakban küldi el, amikor a dekódolás megtörtént.</translation>
     <message>
         <location filename="../Configuration.ui" line="1070"/>
         <source>Stop Bits</source>
-        <translation>Stop Bits</translation>
+        <translation>Stopbitek</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1095"/>
@@ -7367,12 +7474,12 @@ más hardver interfész a PTT vezérléséhez.</translation>
     <message>
         <location filename="../Configuration.ui" line="1411"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Request enable PTT port sharing in Hamlib.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;PTT-port megosztásának kérése a Hamlibben.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1414"/>
         <source>Share PTT port</source>
-        <translation type="unfinished"></translation>
+        <translation>PTT-port megosztása</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1433"/>
@@ -7800,12 +7907,12 @@ egy 73 vagy szabad szöveges üzenet küldésekor.</translation>
     <message>
         <location filename="../Configuration.ui" line="353"/>
         <source>Scroll message windows down not up.</source>
-        <translation type="unfinished"></translation>
+        <translation>Az üzenetablakok lefelé görgessenek, ne felfelé.</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="356"/>
         <source>&amp;Scroll message windows down</source>
-        <translation type="unfinished"></translation>
+        <translation>Üzenetablakok görgetése &amp;lefelé</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="376"/>
@@ -8083,7 +8190,7 @@ Ezek az adatok a terjedés és a rendszer lehetőségeinek elemzését segítik.
     <message>
         <location filename="../Configuration.ui" line="3100"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Right click to maintain the working frequencies list. Reset option allows to bring frequency list back to the default values.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Jobb kattintás a munkafrekvencia-lista kezeléséhez. A visszaállítás az alapértékeket tölti vissza.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3697"/>
@@ -8240,22 +8347,22 @@ A jobb gombbal kattintva, a beillesztési és törlési lehetőségek elérhető
     <message>
         <location filename="../Configuration.ui" line="763"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Request switch on rig power when supported in Hamlib.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;A rádió bekapcsolásának kérése, ha a Hamlib támogatja.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="766"/>
         <source>On</source>
-        <translation type="unfinished"></translation>
+        <translation>Be</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="779"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Request switch off rig power when supported in Hamlib.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;A rádió kikapcsolásának kérése, ha a Hamlib támogatja.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="782"/>
         <source>Off Rig power</source>
-        <translation type="unfinished"></translation>
+        <translation>Ki Rádió tápellátás</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1852"/>
@@ -8270,12 +8377,12 @@ A jobb gombbal kattintva, a beillesztési és törlési lehetőségek elérhető
     <message>
         <location filename="../Configuration.ui" line="1868"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Use TCI Audio when available.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;TCI hang használata, ha elérhető.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1871"/>
         <source>Use TCI Audio</source>
-        <translation type="unfinished"></translation>
+        <translation>TCI hang használata</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="2494"/>
@@ -8861,12 +8968,12 @@ AA1AAA,BB1BB,CC1CC&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     <message>
         <location filename="../Configuration.ui" line="5285"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Hide message exchange between operators of own continent. This option allows user to ease monitoring of communication across intercontinental distances.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;A saját kontinens állomásai közti forgalom elrejtése. Így könnyebb a kontinensek közötti forgalmat figyelni.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="5288"/>
         <source>Hide messages with own continent callsign</source>
-        <translation type="unfinished"></translation>
+        <translation>Saját kontinensről érkező hívójelek elrejtése</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="5311"/>
@@ -9403,7 +9510,7 @@ hangkártya módosítási tevékenységet</translation>
     <message>
         <location filename="../Configuration.ui"/>
         <source>WW Digi contest</source>
-        <translation type="unfinished"></translation>
+        <translation>WW Digi verseny</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
@@ -9413,27 +9520,27 @@ hangkártya módosítási tevékenységet</translation>
     <message>
         <location filename="../Configuration.ui"/>
         <source>NA VHF contest</source>
-        <translation type="unfinished"></translation>
+        <translation>NA VHF verseny</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
         <source>EU VHF contest</source>
-        <translation type="unfinished"></translation>
+        <translation>EU VHF verseny</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
         <source>ARRL Field Day</source>
-        <translation type="unfinished"></translation>
+        <translation>ARRL Field Day</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
         <source>ARRL RTTY Roundup</source>
-        <translation type="unfinished"></translation>
+        <translation>ARRL RTTY Roundup</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
         <source>ARRL Digi contest</source>
-        <translation type="unfinished"></translation>
+        <translation>ARRL Digi verseny</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>

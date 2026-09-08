@@ -638,6 +638,7 @@ MainWindow::MainWindow(bool multiple, QSettings * settings, QSharedMemory *shdme
   ui->actionSwedish->setActionGroup(languageGroup);
   ui->actionFrench->setActionGroup(languageGroup);
   ui->actionItalian->setActionGroup(languageGroup);
+  ui->actionGerman->setActionGroup(languageGroup);   // CE3TSK
   ui->actionLatvian->setActionGroup(languageGroup);
   ui->actionPolish->setActionGroup(languageGroup);
   ui->actionPortuguese->setActionGroup(languageGroup);
@@ -645,6 +646,7 @@ MainWindow::MainWindow(bool multiple, QSettings * settings, QSharedMemory *shdme
   ui->actionChinese_simplified->setActionGroup(languageGroup);
   ui->actionChinese_traditional->setActionGroup(languageGroup);
   ui->actionJapanese->setActionGroup(languageGroup);
+  ui->actionKorean->setActionGroup(languageGroup);   // CE3TSK
 
   QActionGroup* saveGroup = new QActionGroup(this);
   ui->actionNone->setActionGroup(saveGroup);
@@ -1250,7 +1252,7 @@ MainWindow::MainWindow(bool multiple, QSettings * settings, QSharedMemory *shdme
   ui->spotMsgLabel->setTextFormat(Qt::PlainText);
   m_mslastTX = m_jtdxtime->currentMSecsSinceEpoch2();
   m_multInst=QApplication::applicationName ().length()>4;
-  foxgen_(); ui->actionLatvian->setEnabled(false); ui->actionDutch->setEnabled(false);//temporarily disable
+  foxgen_();
 
 // make sure TX hash tables are filled in at first message transmission
   char message[38]="CQ QQ1QQQ KO85                       ";char msgsent[38]; char ft8msgbits[77];
@@ -1585,6 +1587,7 @@ void MainWindow::readSettings()
   ui->actionSwedish->setText("Svenska");
   ui->actionFrench->setText("Français");
   ui->actionItalian->setText("Italiano");
+  ui->actionGerman->setText("Deutsch");   // CE3TSK: each language names itself
   ui->actionLatvian->setText("Latviski");
   ui->actionHungarian->setText("Magyar");
   ui->actionPolish->setText("Polski");
@@ -1593,6 +1596,7 @@ void MainWindow::readSettings()
   ui->actionChinese_simplified->setText("简体中文");
   ui->actionChinese_traditional->setText("繁體中文");
   ui->actionJapanese->setText("日本語");
+  ui->actionKorean->setText("한국어");   // CE3TSK: each language names itself
   set_language (m_lang);
   
   m_callMode=m_settings->value("CallMode",3).toInt();
@@ -3598,6 +3602,7 @@ void MainWindow::on_actionSpanish_triggered() { ui->actionSpanish->setChecked(tr
 void MainWindow::on_actionSwedish_triggered() { ui->actionSwedish->setChecked(true); set_language("sv_SE"); }
 void MainWindow::on_actionFrench_triggered() { ui->actionFrench->setChecked(true); set_language("fr_FR"); }
 void MainWindow::on_actionItalian_triggered() { ui->actionItalian->setChecked(true); set_language("it_IT"); }
+void MainWindow::on_actionGerman_triggered() { ui->actionGerman->setChecked(true); set_language("de_DE"); }   // CE3TSK
 void MainWindow::on_actionLatvian_triggered() { ui->actionLatvian->setChecked(true); set_language("lv_LV"); }
 void MainWindow::on_actionPolish_triggered() { ui->actionPolish->setChecked(true); set_language("pl_PL"); }
 void MainWindow::on_actionPortuguese_triggered() { ui->actionPortuguese->setChecked(true); set_language("pt_PT"); }
@@ -3605,6 +3610,7 @@ void MainWindow::on_actionPortuguese_BR_triggered() { ui->actionPortuguese_BR->s
 void MainWindow::on_actionChinese_simplified_triggered() { ui->actionChinese_simplified->setChecked(true); set_language("zh_CN"); }
 void MainWindow::on_actionChinese_traditional_triggered() { ui->actionChinese_traditional->setChecked(true); set_language("zh_HK"); }
 void MainWindow::on_actionJapanese_triggered() { ui->actionJapanese->setChecked(true); set_language("ja_JP"); }
+void MainWindow::on_actionKorean_triggered() { ui->actionKorean->setChecked(true); set_language("ko_KR"); }   // CE3TSK
 
 void MainWindow::on_actionCallNone_toggled(bool checked)
 {
@@ -5569,6 +5575,7 @@ void MainWindow::set_language (QString const& lang)
   else if(m_lang=="fr_FR") ui->actionFrench->setChecked(true);
   else if(m_lang=="hu_HU") ui->actionHungarian->setChecked(true);
   else if(m_lang=="it_IT") ui->actionItalian->setChecked(true);
+  else if(m_lang=="de_DE") ui->actionGerman->setChecked(true);   // CE3TSK
   else if(m_lang=="lv_LV") ui->actionLatvian->setChecked(true);
   else if(m_lang=="pl_PL") ui->actionPolish->setChecked(true);
   else if(m_lang=="pt_PT") ui->actionPortuguese->setChecked(true);
@@ -5577,6 +5584,7 @@ void MainWindow::set_language (QString const& lang)
   else if(m_lang=="zh_CN") ui->actionChinese_simplified->setChecked(true);
   else if(m_lang=="zh_HK") ui->actionChinese_traditional->setChecked(true);
   else if(m_lang=="ja_JP") ui->actionJapanese->setChecked(true);
+  else if(m_lang=="ko_KR") ui->actionKorean->setChecked(true);   // CE3TSK
   else ui->actionEnglish->setChecked(true);
 }
 

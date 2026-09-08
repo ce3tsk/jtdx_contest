@@ -195,7 +195,7 @@ Une autre application peut être le verrouillage du répertoire</translation>
     <message>
         <location filename="../Configuration.cpp" line="2956"/>
         <source>Serial Port:</source>
-        <translation></translation>
+        <translation>Port série :</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp" line="2957"/>
@@ -490,7 +490,7 @@ Format:
         <location filename="../logbook/countrydat.cpp" line="43"/>
         <source>Annobon Is.</source>
         <translatorcomment>ile Annobon</translatorcomment>
-        <translation></translation>
+        <translation>Île Annobón</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="44"/>
@@ -556,7 +556,7 @@ Format:
         <location filename="../logbook/countrydat.cpp" line="56"/>
         <source>Sri Lanka</source>
         <translatorcomment>Sri Lanka</translatorcomment>
-        <translation></translation>
+        <translation>Sri Lanka</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="57"/>
@@ -786,12 +786,12 @@ Format:
     <message>
         <location filename="../logbook/countrydat.cpp" line="102"/>
         <source>Bahrain</source>
-        <translation></translation>
+        <translation>Bahreïn</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="103"/>
         <source>Pakistan</source>
-        <translation></translation>
+        <translation>Pakistan</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="104"/>
@@ -801,7 +801,7 @@ Format:
     <message>
         <location filename="../logbook/countrydat.cpp" line="105"/>
         <source>Taiwan</source>
-        <translation></translation>
+        <translation>Taïwan</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="106"/>
@@ -831,12 +831,12 @@ Format:
     <message>
         <location filename="../logbook/countrydat.cpp" line="111"/>
         <source>Bahamas</source>
-        <translation></translation>
+        <translation>Bahamas</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="112"/>
         <source>Mozambique</source>
-        <translation></translation>
+        <translation>Mozambique</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="113"/>
@@ -866,7 +866,7 @@ Format:
     <message>
         <location filename="../logbook/countrydat.cpp" line="118"/>
         <source>Cuba</source>
-        <translation></translation>
+        <translation>Cuba</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="119"/>
@@ -881,7 +881,7 @@ Format:
     <message>
         <location filename="../logbook/countrydat.cpp" line="121"/>
         <source>Portugal</source>
-        <translation></translation>
+        <translation>Portugal</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="122"/>
@@ -896,7 +896,7 @@ Format:
     <message>
         <location filename="../logbook/countrydat.cpp" line="124"/>
         <source>Uruguay</source>
-        <translation></translation>
+        <translation>Uruguay</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="125"/>
@@ -911,7 +911,7 @@ Format:
     <message>
         <location filename="../logbook/countrydat.cpp" line="127"/>
         <source>Angola</source>
-        <translation></translation>
+        <translation>Angola</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="128"/>
@@ -922,7 +922,7 @@ Format:
         <location filename="../logbook/countrydat.cpp" line="129"/>
         <source>Comoros</source>
         <translatorcomment>Comores</translatorcomment>
-        <translation></translation>
+        <translation>Comores</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="130"/>
@@ -932,7 +932,7 @@ Format:
     <message>
         <location filename="../logbook/countrydat.cpp" line="131"/>
         <source>Philippines</source>
-        <translation></translation>
+        <translation>Philippines</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="132"/>
@@ -942,7 +942,7 @@ Format:
     <message>
         <location filename="../logbook/countrydat.cpp" line="133"/>
         <source>Palestine</source>
-        <translation></translation>
+        <translation>Palestine</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="134"/>
@@ -957,7 +957,7 @@ Format:
     <message>
         <location filename="../logbook/countrydat.cpp" line="136"/>
         <source>Niue</source>
-        <translation></translation>
+        <translation>Niue</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="137"/>
@@ -997,12 +997,12 @@ Format:
     <message>
         <location filename="../logbook/countrydat.cpp" line="144"/>
         <source>Liberia</source>
-        <translation></translation>
+        <translation>Liberia</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="145"/>
         <source>Iran</source>
-        <translation></translation>
+        <translation>Iran</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="146"/>
@@ -1027,37 +1027,37 @@ Format:
     <message>
         <location filename="../logbook/countrydat.cpp" line="150"/>
         <source>Kyrgyzstan</source>
-        <translation></translation>
+        <translation>Kirghizistan</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="151"/>
         <source>Tajikistan</source>
-        <translation></translation>
+        <translation>Tadjikistan</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="152"/>
         <source>Turkmenistan</source>
-        <translation></translation>
+        <translation>Turkménistan</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="153"/>
         <source>France</source>
-        <translation></translation>
+        <translation>France</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="154"/>
         <source>Guadeloupe</source>
-        <translation></translation>
+        <translation>Guadeloupe</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="155"/>
         <source>Mayotte</source>
-        <translation></translation>
+        <translation>Mayotte</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="156"/>
         <source>St. Barthelemy</source>
-        <translation></translation>
+        <translation>Saint-Barthélemy</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="157"/>
@@ -1072,7 +1072,7 @@ Format:
     <message>
         <location filename="../logbook/countrydat.cpp" line="159"/>
         <source>Martinique</source>
-        <translation></translation>
+        <translation>Martinique</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="160"/>
@@ -1107,7 +1107,7 @@ Format:
     <message>
         <location filename="../logbook/countrydat.cpp" line="166"/>
         <source>St. Martin</source>
-        <translation></translation>
+        <translation>Saint-Martin</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="167"/>
@@ -1167,7 +1167,7 @@ Format:
     <message>
         <location filename="../logbook/countrydat.cpp" line="178"/>
         <source>Jersey</source>
-        <translation></translation>
+        <translation>Jersey</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="179"/>
@@ -1182,7 +1182,7 @@ Format:
     <message>
         <location filename="../logbook/countrydat.cpp" line="181"/>
         <source>Guernsey</source>
-        <translation></translation>
+        <translation>Guernesey</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="182"/>
@@ -1212,7 +1212,7 @@ Format:
     <message>
         <location filename="../logbook/countrydat.cpp" line="187"/>
         <source>Liechtenstein</source>
-        <translation></translation>
+        <translation>Liechtenstein</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="188"/>
@@ -1227,7 +1227,7 @@ Format:
     <message>
         <location filename="../logbook/countrydat.cpp" line="190"/>
         <source>Haiti</source>
-        <translation></translation>
+        <translation>Haïti</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="191"/>
@@ -1257,12 +1257,12 @@ Format:
     <message>
         <location filename="../logbook/countrydat.cpp" line="196"/>
         <source>Panama</source>
-        <translation></translation>
+        <translation>Panama</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="197"/>
         <source>Honduras</source>
-        <translation></translation>
+        <translation>Honduras</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="198"/>
@@ -1302,7 +1302,7 @@ Format:
     <message>
         <location filename="../logbook/countrydat.cpp" line="205"/>
         <source>Djibouti</source>
-        <translation></translation>
+        <translation>Djibouti</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="206"/>
@@ -1327,7 +1327,7 @@ Format:
     <message>
         <location filename="../logbook/countrydat.cpp" line="210"/>
         <source>St. Vincent</source>
-        <translation></translation>
+        <translation>Saint-Vincent</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="211"/>
@@ -1342,7 +1342,7 @@ Format:
     <message>
         <location filename="../logbook/countrydat.cpp" line="213"/>
         <source>Ogasawara</source>
-        <translation></translation>
+        <translation>Ogasawara</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="214"/>
@@ -1352,7 +1352,7 @@ Format:
     <message>
         <location filename="../logbook/countrydat.cpp" line="215"/>
         <source>Svalbard</source>
-        <translation></translation>
+        <translation>Svalbard</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="216"/>
@@ -1372,12 +1372,12 @@ Format:
     <message>
         <location filename="../logbook/countrydat.cpp" line="219"/>
         <source>U.S.A.</source>
-        <translation></translation>
+        <translation>États-Unis</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="220"/>
         <source>Guantanamo Bay</source>
-        <translation></translation>
+        <translation>Baie de Guantánamo</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="221"/>
@@ -1392,7 +1392,7 @@ Format:
     <message>
         <location filename="../logbook/countrydat.cpp" line="223"/>
         <source>Guam</source>
-        <translation></translation>
+        <translation>Guam</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="224"/>
@@ -1412,7 +1412,7 @@ Format:
     <message>
         <location filename="../logbook/countrydat.cpp" line="227"/>
         <source>Hawaii</source>
-        <translation></translation>
+        <translation>Hawaï</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="228"/>
@@ -1437,7 +1437,7 @@ Format:
     <message>
         <location filename="../logbook/countrydat.cpp" line="232"/>
         <source>Alaska</source>
-        <translation></translation>
+        <translation>Alaska</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="233"/>
@@ -1472,7 +1472,7 @@ Format:
     <message>
         <location filename="../logbook/countrydat.cpp" line="239"/>
         <source>Luxembourg</source>
-        <translation></translation>
+        <translation>Luxembourg</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="240"/>
@@ -1552,7 +1552,7 @@ Format:
     <message>
         <location filename="../logbook/countrydat.cpp" line="255"/>
         <source>Aruba</source>
-        <translation></translation>
+        <translation>Aruba</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="256"/>
@@ -1567,12 +1567,12 @@ Format:
     <message>
         <location filename="../logbook/countrydat.cpp" line="258"/>
         <source>Curacao</source>
-        <translation></translation>
+        <translation>Curaçao</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="259"/>
         <source>Bonaire</source>
-        <translation></translation>
+        <translation>Bonaire</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="260"/>
@@ -1592,7 +1592,7 @@ Format:
     <message>
         <location filename="../logbook/countrydat.cpp" line="263"/>
         <source>Fernando de Noronha</source>
-        <translation></translation>
+        <translation>Fernando de Noronha</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="264"/>
@@ -1607,7 +1607,7 @@ Format:
     <message>
         <location filename="../logbook/countrydat.cpp" line="266"/>
         <source>Suriname</source>
-        <translation></translation>
+        <translation>Suriname</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="267"/>
@@ -1622,7 +1622,7 @@ Format:
     <message>
         <location filename="../logbook/countrydat.cpp" line="269"/>
         <source>Bangladesh</source>
-        <translation></translation>
+        <translation>Bangladesh</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="270"/>
@@ -1632,7 +1632,7 @@ Format:
     <message>
         <location filename="../logbook/countrydat.cpp" line="271"/>
         <source>Seychelles</source>
-        <translation></translation>
+        <translation>Seychelles</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="272"/>
@@ -1672,32 +1672,32 @@ Format:
     <message>
         <location filename="../logbook/countrydat.cpp" line="279"/>
         <source>Dodecanese</source>
-        <translation></translation>
+        <translation>Dodécanèse</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="280"/>
         <source>Crete</source>
-        <translation></translation>
+        <translation>Crète</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="281"/>
         <source>Tuvalu</source>
-        <translation></translation>
+        <translation>Tuvalu</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="282"/>
         <source>W. Kiribati</source>
-        <translation></translation>
+        <translation>Kiribati Ouest</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="283"/>
         <source>C. Kiribati</source>
-        <translation></translation>
+        <translation>Kiribati Centre</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="284"/>
         <source>E. Kiribati</source>
-        <translation></translation>
+        <translation>Kiribati Est</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="285"/>
@@ -1717,7 +1717,7 @@ Format:
     <message>
         <location filename="../logbook/countrydat.cpp" line="288"/>
         <source>Palau</source>
-        <translation></translation>
+        <translation>Palaos</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="289"/>
@@ -1737,12 +1737,12 @@ Format:
     <message>
         <location filename="../logbook/countrydat.cpp" line="292"/>
         <source>Guatemala</source>
-        <translation></translation>
+        <translation>Guatemala</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="293"/>
         <source>Costa Rica</source>
-        <translation></translation>
+        <translation>Costa Rica</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="294"/>
@@ -1772,7 +1772,7 @@ Format:
     <message>
         <location filename="../logbook/countrydat.cpp" line="299"/>
         <source>Gabon</source>
-        <translation></translation>
+        <translation>Gabon</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="300"/>
@@ -1782,17 +1782,17 @@ Format:
     <message>
         <location filename="../logbook/countrydat.cpp" line="301"/>
         <source>Cote d&apos;Ivoire</source>
-        <translation></translation>
+        <translation>Côte d'Ivoire</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="302"/>
         <source>Benin</source>
-        <translation></translation>
+        <translation>Bénin</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="303"/>
         <source>Mali</source>
-        <translation></translation>
+        <translation>Mali</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="304"/>
@@ -1802,7 +1802,7 @@ Format:
     <message>
         <location filename="../logbook/countrydat.cpp" line="305"/>
         <source>Kaliningrad</source>
-        <translation></translation>
+        <translation>Kaliningrad</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="306"/>
@@ -1817,12 +1817,12 @@ Format:
     <message>
         <location filename="../logbook/countrydat.cpp" line="308"/>
         <source>Kazakhstan</source>
-        <translation></translation>
+        <translation>Kazakhstan</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="309"/>
         <source>Ukraine</source>
-        <translation></translation>
+        <translation>Ukraine</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="310"/>
@@ -1832,7 +1832,7 @@ Format:
     <message>
         <location filename="../logbook/countrydat.cpp" line="311"/>
         <source>Belize</source>
-        <translation></translation>
+        <translation>Belize</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="312"/>
@@ -1857,12 +1857,12 @@ Format:
     <message>
         <location filename="../logbook/countrydat.cpp" line="316"/>
         <source>Brunei Darussalam</source>
-        <translation></translation>
+        <translation>Brunei</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="317"/>
         <source>Canada</source>
-        <translation></translation>
+        <translation>Canada</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="318"/>
@@ -1912,12 +1912,12 @@ Format:
     <message>
         <location filename="../logbook/countrydat.cpp" line="327"/>
         <source>Anguilla</source>
-        <translation></translation>
+        <translation>Anguilla</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="328"/>
         <source>Montserrat</source>
-        <translation></translation>
+        <translation>Montserrat</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="329"/>
@@ -1942,27 +1942,27 @@ Format:
     <message>
         <location filename="../logbook/countrydat.cpp" line="333"/>
         <source>Falkland Is.</source>
-        <translation></translation>
+        <translation>Îles Malouines</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="334"/>
         <source>S. Georgia Is.</source>
-        <translation></translation>
+        <translation>Géorgie du Sud</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="335"/>
         <source>S. Shetland Is.</source>
-        <translation></translation>
+        <translation>Shetland du Sud</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="336"/>
         <source>S. Orkney Is.</source>
-        <translation></translation>
+        <translation>Orcades du Sud</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="337"/>
         <source>S. Sandwich Is.</source>
-        <translation></translation>
+        <translation>Sandwich du Sud</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="338"/>
@@ -1972,12 +1972,12 @@ Format:
     <message>
         <location filename="../logbook/countrydat.cpp" line="339"/>
         <source>Chagos Is.</source>
-        <translation></translation>
+        <translation>Chagos</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="340"/>
         <source>Hong Kong</source>
-        <translation></translation>
+        <translation>Hong Kong</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="341"/>
@@ -1997,17 +1997,17 @@ Format:
     <message>
         <location filename="../logbook/countrydat.cpp" line="344"/>
         <source>Mexico</source>
-        <translation></translation>
+        <translation>Mexique</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="345"/>
         <source>Revillagigedo</source>
-        <translation></translation>
+        <translation>Revillagigedo</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="346"/>
         <source>Burkina Faso</source>
-        <translation></translation>
+        <translation>Burkina Faso</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="347"/>
@@ -2017,22 +2017,22 @@ Format:
     <message>
         <location filename="../logbook/countrydat.cpp" line="348"/>
         <source>Laos</source>
-        <translation></translation>
+        <translation>Laos</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="349"/>
         <source>Macao</source>
-        <translation></translation>
+        <translation>Macao</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="350"/>
         <source>Myanmar</source>
-        <translation></translation>
+        <translation>Birmanie</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="351"/>
         <source>Afghanistan</source>
-        <translation></translation>
+        <translation>Afghanistan</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="352"/>
@@ -2042,12 +2042,12 @@ Format:
     <message>
         <location filename="../logbook/countrydat.cpp" line="353"/>
         <source>Iraq</source>
-        <translation></translation>
+        <translation>Irak</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="354"/>
         <source>Vanuatu</source>
-        <translation></translation>
+        <translation>Vanuatu</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="355"/>
@@ -2062,7 +2062,7 @@ Format:
     <message>
         <location filename="../logbook/countrydat.cpp" line="357"/>
         <source>Nicaragua</source>
-        <translation></translation>
+        <translation>Nicaragua</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="358"/>
@@ -2072,7 +2072,7 @@ Format:
     <message>
         <location filename="../logbook/countrydat.cpp" line="359"/>
         <source>El Salvador</source>
-        <translation></translation>
+        <translation>Salvador</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="360"/>
@@ -2082,17 +2082,17 @@ Format:
     <message>
         <location filename="../logbook/countrydat.cpp" line="361"/>
         <source>Venezuela</source>
-        <translation></translation>
+        <translation>Venezuela</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="362"/>
         <source>Aves Is.</source>
-        <translation></translation>
+        <translation>Île d'Aves</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="363"/>
         <source>Zimbabwe</source>
-        <translation></translation>
+        <translation>Zimbabwe</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="364"/>
@@ -2117,7 +2117,7 @@ Format:
     <message>
         <location filename="../logbook/countrydat.cpp" line="368"/>
         <source>Gibraltar</source>
-        <translation></translation>
+        <translation>Gibraltar</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="369"/>
@@ -2132,7 +2132,7 @@ Format:
     <message>
         <location filename="../logbook/countrydat.cpp" line="371"/>
         <source>Ascension Is.</source>
-        <translation></translation>
+        <translation>Ascension</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="372"/>
@@ -2142,12 +2142,12 @@ Format:
     <message>
         <location filename="../logbook/countrydat.cpp" line="373"/>
         <source>Cayman Is.</source>
-        <translation></translation>
+        <translation>Îles Caïmans</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="374"/>
         <source>Tokelau Is.</source>
-        <translation></translation>
+        <translation>Tokelau</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="375"/>
@@ -2157,12 +2157,12 @@ Format:
     <message>
         <location filename="../logbook/countrydat.cpp" line="376"/>
         <source>Chatham Is.</source>
-        <translation></translation>
+        <translation>Îles Chatham</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="377"/>
         <source>Kermadec Is.</source>
-        <translation></translation>
+        <translation>Îles Kermadec</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="378"/>
@@ -2172,7 +2172,7 @@ Format:
     <message>
         <location filename="../logbook/countrydat.cpp" line="379"/>
         <source>Paraguay</source>
-        <translation></translation>
+        <translation>Paraguay</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="380"/>
@@ -2237,7 +2237,7 @@ Format:
     <message>
         <location filename="../DXLabSuiteCommanderTransceiver.cpp" line="378"/>
         <source>DX Lab Suite Commander sent an unrecognised mode: &quot;</source>
-        <translation></translation>
+        <translation>DX Lab Suite Commander a envoyé un mode inconnu : "</translation>
     </message>
     <message>
         <location filename="../DXLabSuiteCommanderTransceiver.cpp" line="385"/>
@@ -2377,7 +2377,7 @@ Format:
     <message>
         <location filename="../EmulateSplitTransceiver.cpp" line="50"/>
         <source>Emulated split mode requires rig to be in simplex mode</source>
-        <translation>Emulated split mode requires rig to be in simplex mode</translation>
+        <translation>Le mode split émulé exige que le poste soit en mode simplex</translation>
     </message>
 </context>
 <context>
@@ -2395,7 +2395,7 @@ Format:
     <message>
         <location filename="../Configuration.cpp" line="225"/>
         <source>&amp;Mode:</source>
-        <translation></translation>
+        <translation>&amp;Mode :</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp" line="226"/>
@@ -2927,7 +2927,7 @@ Format:
         <location filename="../logqso.ui" line="82"/>
         <location filename="../logqso.ui" line="114"/>
         <source>dd/MM/yyyy HH:mm:ss</source>
-        <translation></translation>
+        <translation>dd/MM/yyyy HH:mm:ss</translation>
     </message>
     <message>
         <location filename="../logqso.ui" line="98"/>
@@ -3080,7 +3080,7 @@ Format:
     <message>
         <location filename="../mainwindow.ui" line="788"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;DXSummit spot information field preview.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;DXSummit spot information field preview.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Aperçu du champ d'information du spot DXSummit.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="791"/>
@@ -3235,12 +3235,12 @@ Format:
     <message>
         <location filename="../mainwindow.ui" line="1683"/>
         <source>▲</source>
-        <translation></translation>
+        <translation>▲</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1711"/>
         <source>▼</source>
-        <translation></translation>
+        <translation>▼</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1769"/>
@@ -3448,7 +3448,7 @@ ZD8,ZD9,ZF,ZK3,ZL,ZL7,ZL8,ZL9,ZP,ZS,ZS8&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</tra
     <message>
         <location filename="../mainwindow.ui" line="2571"/>
         <source>1 QSO</source>
-        <translation></translation>
+        <translation>1 QSO</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2602"/>
@@ -3458,7 +3458,7 @@ ZD8,ZD9,ZF,ZK3,ZL,ZL7,ZL8,ZL9,ZP,ZS,ZS8&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</tra
     <message>
         <location filename="../mainwindow.ui" line="2616"/>
         <source>AnsB4</source>
-        <translation></translation>
+        <translation>RépB4</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2644"/>
@@ -3468,7 +3468,7 @@ ZD8,ZD9,ZF,ZK3,ZL,ZL7,ZL8,ZL9,ZP,ZS,ZS8&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</tra
     <message>
         <location filename="../mainwindow.ui" line="2647"/>
         <source>&amp;Stop</source>
-        <translation></translation>
+        <translation>&amp;Stop</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2905"/>
@@ -3538,7 +3538,7 @@ ZD8,ZD9,ZF,ZK3,ZL,ZL7,ZL8,ZL9,ZP,ZS,ZS8&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</tra
     <message>
         <location filename="../mainwindow.ui" line="2994"/>
         <source>Hint</source>
-        <translation></translation>
+        <translation>Indice</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2686"/>
@@ -3599,7 +3599,7 @@ Un clic par le bouton droit de la souris remet l&apos;heure interne de JTDX à l
         <location filename="../mainwindow.ui" line="6072"/>
         <location filename="../mainwindow.ui" line="6096"/>
         <source>1</source>
-        <translation></translation>
+        <translation>1</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3245"/>
@@ -3615,19 +3615,19 @@ Un clic par le bouton droit de la souris remet l&apos;heure interne de JTDX à l
         <location filename="../mainwindow.ui" line="3277"/>
         <location filename="../mainwindow.ui" line="5785"/>
         <source>CQ</source>
-        <translation></translation>
+        <translation>CQ</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3324"/>
         <location filename="../mainwindow.ui" line="3946"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Directional CQ, range from AA to ZZ is being supported.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;CQ directionnel ; la plage AA à ZZ est prise en charge.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3327"/>
         <location filename="../mainwindow.ui" line="3949"/>
         <source>DX</source>
-        <translation></translation>
+        <translation>DX</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3340"/>
@@ -3639,7 +3639,7 @@ Un clic par le bouton droit de la souris remet l&apos;heure interne de JTDX à l
         <location filename="../mainwindow.ui" line="3346"/>
         <location filename="../mainwindow.ui" line="3984"/>
         <source>RRR</source>
-        <translation></translation>
+        <translation>RRR</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3359"/>
@@ -3650,7 +3650,7 @@ Un clic par le bouton droit de la souris remet l&apos;heure interne de JTDX à l
     <message>
         <location filename="../mainwindow.ui" line="3365"/>
         <source>SkipTx1</source>
-        <translation></translation>
+        <translation>SkipTx1</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3410"/>
@@ -3660,12 +3660,12 @@ Un clic par le bouton droit de la souris remet l&apos;heure interne de JTDX à l
         <location filename="../mainwindow.ui" line="3720"/>
         <location filename="../mainwindow.ui" line="3793"/>
         <source>Send this message in next Tx interval</source>
-        <translation></translation>
+        <translation>Envoyer ce message au prochain intervalle Tx</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3416"/>
         <source>Ctrl+1</source>
-        <translation></translation>
+        <translation>Ctrl+1</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3441"/>
@@ -3675,62 +3675,62 @@ Un clic par le bouton droit de la souris remet l&apos;heure interne de JTDX à l
         <location filename="../mainwindow.ui" line="3748"/>
         <location filename="../mainwindow.ui" line="3824"/>
         <source>Switch to this Tx message NOW</source>
-        <translation></translation>
+        <translation>Passer MAINTENANT à ce message Tx</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3447"/>
         <source>Tx &amp;1</source>
-        <translation></translation>
+        <translation>Tx &amp;1</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3450"/>
         <source>Alt+1</source>
-        <translation></translation>
+        <translation>Alt+1</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3498"/>
         <source>Ctrl+2</source>
-        <translation></translation>
+        <translation>Ctrl+2</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3523"/>
         <source>Tx &amp;2</source>
-        <translation></translation>
+        <translation>Tx &amp;2</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3526"/>
         <source>Alt+2</source>
-        <translation></translation>
+        <translation>Alt+2</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3568"/>
         <source>Ctrl+3</source>
-        <translation></translation>
+        <translation>Ctrl+3</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3593"/>
         <source>Tx &amp;3</source>
-        <translation></translation>
+        <translation>Tx &amp;3</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3596"/>
         <source>Alt+3</source>
-        <translation></translation>
+        <translation>Alt+3</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3638"/>
         <source>Ctrl+4</source>
-        <translation></translation>
+        <translation>Ctrl+4</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3663"/>
         <source>Tx &amp;4</source>
-        <translation></translation>
+        <translation>Tx &amp;4</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3666"/>
         <source>Alt+4</source>
-        <translation></translation>
+        <translation>Alt+4</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3698"/>
@@ -3747,32 +3747,32 @@ ou sélectionnez une macro prédéfinie dans la liste déroulante.
     <message>
         <location filename="../mainwindow.ui" line="3726"/>
         <source>Ctrl+5</source>
-        <translation></translation>
+        <translation>Ctrl+5</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3751"/>
         <source>Tx &amp;5</source>
-        <translation></translation>
+        <translation>Tx &amp;5</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3754"/>
         <source>Alt+5</source>
-        <translation></translation>
+        <translation>Alt+5</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3799"/>
         <source>Ctrl+6</source>
-        <translation></translation>
+        <translation>Ctrl+6</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3827"/>
         <source>Tx &amp;6</source>
-        <translation></translation>
+        <translation>Tx &amp;6</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3830"/>
         <source>Alt+6</source>
-        <translation></translation>
+        <translation>Alt+6</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3848"/>
@@ -3781,12 +3781,12 @@ ou sélectionnez une macro prédéfinie dans la liste déroulante.
         <location filename="../mainwindow.ui" line="6080"/>
         <location filename="../mainwindow.ui" line="6104"/>
         <source>2</source>
-        <translation></translation>
+        <translation>2</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3902"/>
         <source>CQ </source>
-        <translation></translation>
+        <translation>CQ </translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4016"/>
@@ -3806,7 +3806,7 @@ ou sélectionnez une macro prédéfinie dans la liste déroulante.
     <message>
         <location filename="../mainwindow.ui" line="4068"/>
         <source>CQ/CQ DX</source>
-        <translation></translation>
+        <translation>CQ/CQ DX</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4093"/>
@@ -3816,7 +3816,7 @@ ou sélectionnez une macro prédéfinie dans la liste déroulante.
     <message>
         <location filename="../mainwindow.ui" line="4096"/>
         <source>Grid</source>
-        <translation></translation>
+        <translation>Locator</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4121"/>
@@ -3826,7 +3826,7 @@ ou sélectionnez une macro prédéfinie dans la liste déroulante.
     <message>
         <location filename="../mainwindow.ui" line="4124"/>
         <source>dB</source>
-        <translation></translation>
+        <translation>dB</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4149"/>
@@ -3836,7 +3836,7 @@ ou sélectionnez une macro prédéfinie dans la liste déroulante.
     <message>
         <location filename="../mainwindow.ui" line="4152"/>
         <source>R+dB</source>
-        <translation></translation>
+        <translation>R+dB</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4177"/>
@@ -3846,7 +3846,7 @@ ou sélectionnez une macro prédéfinie dans la liste déroulante.
     <message>
         <location filename="../mainwindow.ui" line="4180"/>
         <source>RRR/RR73</source>
-        <translation></translation>
+        <translation>RRR/RR73</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4205"/>
@@ -3856,7 +3856,7 @@ ou sélectionnez une macro prédéfinie dans la liste déroulante.
     <message>
         <location filename="../mainwindow.ui" line="4208"/>
         <source>73</source>
-        <translation></translation>
+        <translation>73</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4256"/>
@@ -4349,7 +4349,7 @@ ou sélectionnez une macro prédéfinie dans la liste déroulante.
     <message>
         <location filename="../mainwindow.ui" line="5328"/>
         <source>JTDX forum</source>
-        <translation>JTDX forum</translation>
+        <translation>Forum JTDX</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5333"/>
@@ -5226,7 +5226,7 @@ ou sélectionnez une macro prédéfinie dans la liste déroulante.
     <message>
         <location filename="../mainwindow.cpp" line="5665"/>
         <source>Please enter a valid grid locator</source>
-        <translation>Please enter a valid grid locator</translation>
+        <translation>Veuillez saisir un locator valide</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="5677"/>
@@ -5263,7 +5263,7 @@ est déjà dans CALL3.TXT, souhaitez-vous le remplacer ?</translation>
     <message>
         <location filename="../mainwindow.cpp" line="6333"/>
         <source>    Freq     Drift  Call          Grid    dBm   Dist</source>
-        <translation>    Freq     Drift  Call          Grid    dBm   Dist</translation>
+        <translation>    Freq     Dérive Ind.          Loc     dBm   Dist</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="6427"/>
@@ -5402,7 +5402,7 @@ Serveur UDP %2:%3</translation>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>RX</source>
-        <translation type="unfinished"></translation>
+        <translation>RX</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
@@ -5487,62 +5487,62 @@ Serveur UDP %2:%3</translation>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>1 member</source>
-        <translation type="unfinished"></translation>
+        <translation>1 membre</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>2 members</source>
-        <translation type="unfinished"></translation>
+        <translation>2 membres</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>3 members</source>
-        <translation type="unfinished"></translation>
+        <translation>3 membres</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>4 members</source>
-        <translation type="unfinished"></translation>
+        <translation>4 membres</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>5 members</source>
-        <translation type="unfinished"></translation>
+        <translation>5 membres</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>6 members</source>
-        <translation type="unfinished"></translation>
+        <translation>6 membres</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>1 member   (+20, 13% of the budget at 8 threads)</source>
-        <translation type="unfinished"></translation>
+        <translation>1 membre   (+20, 13% du budget avec 8 fils)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>2 members  (+48, 18%)</source>
-        <translation type="unfinished"></translation>
+        <translation>2 membres  (+48, 18%)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>3 members  (+72, 23% - the knee of the curve)</source>
-        <translation type="unfinished"></translation>
+        <translation>3 membres  (+72, 23% - le coude de la courbe)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>4 members  (+86, 28%)</source>
-        <translation type="unfinished"></translation>
+        <translation>4 membres  (+86, 28%)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>5 members  (+98, 33% - all that is worth taking)</source>
-        <translation type="unfinished"></translation>
+        <translation>5 membres  (+98, 33% - tout ce qui vaut la peine)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>6 members  (+100, 39% - only 2 more than five)</source>
-        <translation type="unfinished"></translation>
+        <translation>6 membres  (+100, 39% - seulement 2 de plus que cinq)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
@@ -5562,27 +5562,27 @@ Serveur UDP %2:%3</translation>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>1 member  (+7 msgs, +1.2 s at 12 threads on the benchmark)</source>
-        <translation type="unfinished"></translation>
+        <translation>1 membre  (+7 msgs, +1,2 s avec 12 fils sur le banc d'essai)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>2 members  (+10, +2.3 s)</source>
-        <translation type="unfinished"></translation>
+        <translation>2 membres  (+10, +2,3 s)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>3 members  (+13, +5.3 s)</source>
-        <translation type="unfinished"></translation>
+        <translation>3 membres  (+13, +5,3 s)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>4 members  (+15, +7.9 s)</source>
-        <translation type="unfinished"></translation>
+        <translation>4 membres  (+15, +7,9 s)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>5 members  (+16, +11.5 s - too slow for a 15 s period on this machine, for replays)</source>
-        <translation type="unfinished"></translation>
+        <translation>5 membres  (+16, +11,5 s - trop lent pour une période de 15 s sur cette machine, pour les relectures)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
@@ -5632,17 +5632,17 @@ Serveur UDP %2:%3</translation>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>100-3300 Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>100-3300 Hz</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>300-3300 Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>300-3300 Hz</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>50-3650 Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>50-3650 Hz</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
@@ -5652,52 +5652,52 @@ Serveur UDP %2:%3</translation>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>100-3200 Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>100-3200 Hz</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>100-3100 Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>100-3100 Hz</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>100-3000 Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>100-3000 Hz</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>200-3200 Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>200-3200 Hz</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>200-3100 Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>200-3100 Hz</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>200-3000 Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>200-3000 Hz</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>200-2800 Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>200-2800 Hz</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>200-2500 Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>200-2500 Hz</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>200-2400 Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>200-2400 Hz</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>0-5000 Hz (testing only)</source>
-        <translation type="unfinished"></translation>
+        <translation>0-5000 Hz (tests uniquement)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
@@ -6726,7 +6726,7 @@ Veuillez vérifier que le nom correct du répertoire a été donné.</translatio
     <message>
         <location filename="../widegraph.ui" line="203"/>
         <source>Bins/Pixel  </source>
-        <translation>Bins/Pixel  </translation>
+        <translation>Bins/pixel  </translation>
     </message>
     <message>
         <location filename="../widegraph.ui" line="234"/>
@@ -6817,7 +6817,7 @@ Veuillez vérifier que le nom correct du répertoire a été donné.</translatio
     <message>
         <location filename="../widegraph.ui" line="468"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scale spectrum by median value.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scale spectrum by median value.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Mettre le spectre à l'échelle par la valeur médiane.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../widegraph.ui" line="471"/>
@@ -6895,7 +6895,7 @@ Veuillez vérifier que le nom correct du répertoire a été donné.</translatio
     <message>
         <location filename="../widegraph.cpp" line="29"/>
         <source>Wide Graph</source>
-        <translation>Wide Graph</translation>
+        <translation>Graphe large</translation>
     </message>
 </context>
 <context>
@@ -7234,7 +7234,7 @@ une période de calme lorsque le décodage est effectué.</translation>
     <message>
         <location filename="../Configuration.ui" line="901"/>
         <source>Serial port used for CAT control.</source>
-        <translation>Serial port used for CAT control.</translation>
+        <translation>Port série utilisé pour la commande CAT.</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="925"/>
@@ -7321,12 +7321,12 @@ une période de calme lorsque le décodage est effectué.</translation>
     <message>
         <location filename="../Configuration.ui" line="1067"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Number of stop bits used when communicating with your radio&apos;s CAT interface&lt;/p&gt;&lt;p&gt;(consult you radio&apos;s manual for details).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Number of stop bits used when communicating with your radio&apos;s CAT interface&lt;/p&gt;&lt;p&gt;(consult you radio&apos;s manual for details).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Nombre de bits d'arrêt utilisés pour communiquer avec l'interface CAT de votre poste&lt;/p&gt;&lt;p&gt;(consultez le manuel de l'appareil pour les détails).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1070"/>
         <source>Stop Bits</source>
-        <translation>Stop Bits</translation>
+        <translation>Bits d'arrêt</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1095"/>
@@ -8157,7 +8157,7 @@ pour évaluer la propagation et les performances des systèmes.</translation>
     <message>
         <location filename="../Configuration.ui" line="3028"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Messages marked by questionmark will not be passed to JTAlert and other UDP based software.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Les messages marqués d'un point d'interrogation ne sont pas transmis à JTAlert ni aux autres logiciels UDP.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3031"/>
@@ -8229,7 +8229,7 @@ pour évaluer la propagation et les performances des systèmes.</translation>
         <location filename="../Configuration.ui" line="6923"/>
         <source> Hz</source>
         <translatorcomment> Hz</translatorcomment>
-        <translation></translation>
+        <translation> Hz</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3171"/>
@@ -8450,7 +8450,7 @@ Cliquez avec le bouton droit de la souris pour les options d&apos;insertion et d
     <message>
         <location filename="../Configuration.ui" line="3461"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Highlight messages with grid squares which are new in the mode according to the data from wsjtx_log.adi log file.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Mettre en évidence les messages dont le locator est nouveau dans le mode d'après wsjtx_log.adi.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3481"/>
@@ -9359,7 +9359,7 @@ AA1AAA,BB1BB,CC1CC&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     <message>
         <location filename="../Configuration.ui" line="6680"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Activating band scheduler&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Activating band scheduler&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Activation du planificateur de bandes&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="6683"/>
@@ -9519,7 +9519,7 @@ changements de carte son</translation>
     <message>
         <location filename="../Configuration.ui"/>
         <source>WW Digi contest</source>
-        <translation type="unfinished"></translation>
+        <translation>Concours WW Digi</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
@@ -9529,27 +9529,27 @@ changements de carte son</translation>
     <message>
         <location filename="../Configuration.ui"/>
         <source>NA VHF contest</source>
-        <translation type="unfinished"></translation>
+        <translation>Concours VHF NA</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
         <source>EU VHF contest</source>
-        <translation type="unfinished"></translation>
+        <translation>Concours VHF EU</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
         <source>ARRL Field Day</source>
-        <translation type="unfinished"></translation>
+        <translation>ARRL Field Day</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
         <source>ARRL RTTY Roundup</source>
-        <translation type="unfinished"></translation>
+        <translation>ARRL RTTY Roundup</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
         <source>ARRL Digi contest</source>
-        <translation type="unfinished"></translation>
+        <translation>Concours ARRL Digi</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
@@ -9607,7 +9607,7 @@ changements de carte son</translation>
     <message>
         <location filename="../main.cpp" line="154"/>
         <source>Writable files in test location.  Use with caution, for testing only.</source>
-        <translation>Writable files in test location.  Use with caution, for testing only.</translation>
+        <translation>Fichiers modifiables dans un emplacement de test. À utiliser avec prudence, pour les tests uniquement.</translation>
     </message>
 </context>
 <context>

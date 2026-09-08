@@ -671,7 +671,7 @@ Formato:
     <message>
         <location filename="../logbook/countrydat.cpp" line="79"/>
         <source>Barbados</source>
-        <translation></translation>
+        <translation>Barbados</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="80"/>
@@ -2925,7 +2925,7 @@ Formato:
         <location filename="../logqso.ui" line="82"/>
         <location filename="../logqso.ui" line="114"/>
         <source>dd/MM/yyyy HH:mm:ss</source>
-        <translation></translation>
+        <translation>dd/MM/yyyy HH:mm:ss</translation>
     </message>
     <message>
         <location filename="../logqso.ui" line="98"/>
@@ -3332,7 +3332,7 @@ Formato:
         <location filename="../mainwindow.ui" line="2027"/>
         <location filename="../mainwindow.ui" line="2103"/>
         <source>Clr</source>
-        <translation></translation>
+        <translation>Borr</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2041"/>
@@ -3926,7 +3926,7 @@ predefinida. La lista se puede actualizar en Ajustes (F2).</translation>
     <message>
         <location filename="../mainwindow.ui" line="1824"/>
         <source>DT </source>
-        <translation></translation>
+        <translation>DT </translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1827"/>
@@ -5405,7 +5405,7 @@ Servidor UDP %2:%3</translation>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>RX</source>
-        <translation type="unfinished"></translation>
+        <translation>RX</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
@@ -5490,62 +5490,62 @@ Servidor UDP %2:%3</translation>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>1 member</source>
-        <translation type="unfinished"></translation>
+        <translation>1 miembro</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>2 members</source>
-        <translation type="unfinished"></translation>
+        <translation>2 miembros</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>3 members</source>
-        <translation type="unfinished"></translation>
+        <translation>3 miembros</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>4 members</source>
-        <translation type="unfinished"></translation>
+        <translation>4 miembros</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>5 members</source>
-        <translation type="unfinished"></translation>
+        <translation>5 miembros</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>6 members</source>
-        <translation type="unfinished"></translation>
+        <translation>6 miembros</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>1 member   (+20, 13% of the budget at 8 threads)</source>
-        <translation type="unfinished"></translation>
+        <translation>1 miembro   (+20, 13% del presupuesto con 8 hilos)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>2 members  (+48, 18%)</source>
-        <translation type="unfinished"></translation>
+        <translation>2 miembros  (+48, 18%)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>3 members  (+72, 23% - the knee of the curve)</source>
-        <translation type="unfinished"></translation>
+        <translation>3 miembros  (+72, 23% - el codo de la curva)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>4 members  (+86, 28%)</source>
-        <translation type="unfinished"></translation>
+        <translation>4 miembros  (+86, 28%)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>5 members  (+98, 33% - all that is worth taking)</source>
-        <translation type="unfinished"></translation>
+        <translation>5 miembros  (+98, 33% - todo lo que vale la pena)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>6 members  (+100, 39% - only 2 more than five)</source>
-        <translation type="unfinished"></translation>
+        <translation>6 miembros  (+100, 39% - solo 2 más que cinco)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
@@ -5565,27 +5565,27 @@ Servidor UDP %2:%3</translation>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>1 member  (+7 msgs, +1.2 s at 12 threads on the benchmark)</source>
-        <translation type="unfinished"></translation>
+        <translation>1 miembro  (+7 msjs, +1,2 s con 12 hilos en el banco de pruebas)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>2 members  (+10, +2.3 s)</source>
-        <translation type="unfinished"></translation>
+        <translation>2 miembros  (+10, +2,3 s)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>3 members  (+13, +5.3 s)</source>
-        <translation type="unfinished"></translation>
+        <translation>3 miembros  (+13, +5,3 s)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>4 members  (+15, +7.9 s)</source>
-        <translation type="unfinished"></translation>
+        <translation>4 miembros  (+15, +7,9 s)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>5 members  (+16, +11.5 s - too slow for a 15 s period on this machine, for replays)</source>
-        <translation type="unfinished"></translation>
+        <translation>5 miembros  (+16, +11,5 s - demasiado lento para un periodo de 15 s en esta máquina, para reproducciones)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
@@ -5635,17 +5635,17 @@ Servidor UDP %2:%3</translation>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>100-3300 Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>100-3300 Hz</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>300-3300 Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>300-3300 Hz</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>50-3650 Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>50-3650 Hz</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
@@ -5655,52 +5655,52 @@ Servidor UDP %2:%3</translation>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>100-3200 Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>100-3200 Hz</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>100-3100 Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>100-3100 Hz</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>100-3000 Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>100-3000 Hz</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>200-3200 Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>200-3200 Hz</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>200-3100 Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>200-3100 Hz</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>200-3000 Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>200-3000 Hz</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>200-2800 Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>200-2800 Hz</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>200-2500 Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>200-2500 Hz</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>200-2400 Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>200-2400 Hz</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>0-5000 Hz (testing only)</source>
-        <translation type="unfinished"></translation>
+        <translation>0-5000 Hz (solo para pruebas)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
@@ -6161,7 +6161,7 @@ Esto se pregunta una sola vez.</translation>
     <message>
         <location filename="../Configuration.cpp" line="5424"/>
         <source>Change to detail view mode</source>
-        <translation></translation>
+        <translation>Cambiar a vista detallada</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp" line="5425"/>
@@ -6267,7 +6267,7 @@ Verifique que se haya proporcionado el nombre de directorio correcto.</translati
         <location filename="../Bands.cpp" line="51"/>
         <source>OOB</source>
         <translatorcomment>OOB</translatorcomment>
-        <translation></translation>
+        <translation>OOB</translation>
     </message>
     <message>
         <location filename="../WFPalette.cpp" line="55"/>
@@ -6463,7 +6463,7 @@ Verifique que se haya proporcionado el nombre de directorio correcto.</translati
         <location filename="../Configuration.cpp" line="278"/>
         <source>&amp;Cancel</source>
         <translatorcomment>&amp;Cancelar</translatorcomment>
-        <translation></translation>
+        <translation>&amp;Cancelar</translation>
     </message>
 </context>
 <context>
@@ -6732,7 +6732,7 @@ Verifique que se haya proporcionado el nombre de directorio correcto.</translati
     <message>
         <location filename="../widegraph.ui" line="203"/>
         <source>Bins/Pixel  </source>
-        <translation>Bins/Pixel  </translation>
+        <translation>Bins/píxel  </translation>
     </message>
     <message>
         <location filename="../widegraph.ui" line="234"/>
@@ -6829,7 +6829,7 @@ Verifique que se haya proporcionado el nombre de directorio correcto.</translati
         <location filename="../widegraph.ui" line="471"/>
         <source>Scale</source>
         <translatorcomment>Escala</translatorcomment>
-        <translation></translation>
+        <translation>Escalar</translation>
     </message>
     <message>
         <location filename="../widegraph.ui" line="481"/>
@@ -7356,7 +7356,7 @@ período tranquilo cuando se realiza la decodificación.</translation>
     <message>
         <location filename="../Configuration.ui" line="1124"/>
         <source>Handshake</source>
-        <translation></translation>
+        <translation>Control de flujo</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1136"/>
@@ -7565,7 +7565,7 @@ o se selecciona el ancho de banda).</translation>
     <message>
         <location filename="../Configuration.ui" line="1546"/>
         <source>Fake It</source>
-        <translation></translation>
+        <translation>Emular</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1556"/>
@@ -7658,7 +7658,7 @@ períodos de transmisión.</translation>
         <location filename="../Configuration.ui" line="1789"/>
         <location filename="../Configuration.ui" line="1819"/>
         <source>Mono</source>
-        <translation></translation>
+        <translation>Mono</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1794"/>
@@ -8239,7 +8239,7 @@ para evaluar la propagación y el rendimiento del sistema.</translation>
         <location filename="../Configuration.ui" line="3152"/>
         <location filename="../Configuration.ui" line="6923"/>
         <source> Hz</source>
-        <translation></translation>
+        <translation> Hz</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3171"/>
@@ -8249,7 +8249,7 @@ para evaluar la propagación y el rendimiento del sistema.</translation>
     <message>
         <location filename="../Configuration.ui" line="3184"/>
         <source> ppm</source>
-        <translation></translation>
+        <translation> ppm</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3227"/>
@@ -9523,7 +9523,7 @@ cambios en la tarjeta de sonido</translation>
     <message>
         <location filename="../Configuration.ui"/>
         <source>WW Digi contest</source>
-        <translation type="unfinished"></translation>
+        <translation>Concurso WW Digi</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
@@ -9533,27 +9533,27 @@ cambios en la tarjeta de sonido</translation>
     <message>
         <location filename="../Configuration.ui"/>
         <source>NA VHF contest</source>
-        <translation type="unfinished"></translation>
+        <translation>Concurso VHF NA</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
         <source>EU VHF contest</source>
-        <translation type="unfinished"></translation>
+        <translation>Concurso VHF EU</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
         <source>ARRL Field Day</source>
-        <translation type="unfinished"></translation>
+        <translation>ARRL Field Day</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
         <source>ARRL RTTY Roundup</source>
-        <translation type="unfinished"></translation>
+        <translation>ARRL RTTY Roundup</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
         <source>ARRL Digi contest</source>
-        <translation type="unfinished"></translation>
+        <translation>Concurso ARRL Digi</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>

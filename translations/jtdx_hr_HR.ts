@@ -235,7 +235,12 @@ Formats:
 	hostname:port
 	IPv4-address:port
 	[IPv6-address]:port</source>
-        <translation></translation>
+        <translation>Naziv računala i port mrežne usluge (nije obvezno).
+Ostavite prazno za razumnu zadanu vrijednost na ovom računalu.
+Formati:
+	naziv:port
+	IPv4-adresa:port
+	[IPv6-adresa]:port</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp" line="2990"/>
@@ -248,7 +253,10 @@ Formats:
 Leave blank for a sensible default for the rig.
 Format:
 	[VID[:PID[:VENDOR[:PRODUCT]]]]</source>
-        <translation></translation>
+        <translation>Identifikacija uređaja (nije obvezno).
+Ostavite prazno za razumnu zadanu vrijednost za uređaj.
+Format:
+	[VID[:PID[:VENDOR[:PRODUCT]]]]</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp" line="3026"/>
@@ -456,7 +464,7 @@ Format:
     <message>
         <location filename="../logbook/countrydat.cpp" line="38"/>
         <source>Monaco</source>
-        <translation></translation>
+        <translation>Monako</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="39"/>
@@ -471,7 +479,7 @@ Format:
     <message>
         <location filename="../logbook/countrydat.cpp" line="41"/>
         <source>Rodriguez Is.</source>
-        <translation></translation>
+        <translation>Otok Rodrigues</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="42"/>
@@ -621,7 +629,7 @@ Format:
     <message>
         <location filename="../logbook/countrydat.cpp" line="71"/>
         <source>Uganda</source>
-        <translation></translation>
+        <translation>Uganda</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="72"/>
@@ -971,7 +979,7 @@ Format:
     <message>
         <location filename="../logbook/countrydat.cpp" line="141"/>
         <source>Ceuta &amp; Melilla</source>
-        <translation></translation>
+        <translation>Ceuta i Melilla</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="142"/>
@@ -1021,12 +1029,12 @@ Format:
     <message>
         <location filename="../logbook/countrydat.cpp" line="151"/>
         <source>Tajikistan</source>
-        <translation></translation>
+        <translation>Tadžikistan</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="152"/>
         <source>Turkmenistan</source>
-        <translation></translation>
+        <translation>Turkmenistan</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="153"/>
@@ -1111,7 +1119,7 @@ Format:
     <message>
         <location filename="../logbook/countrydat.cpp" line="169"/>
         <source>Tromelin Is.</source>
-        <translation></translation>
+        <translation>Otok Tromelin</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="170"/>
@@ -1161,7 +1169,7 @@ Format:
     <message>
         <location filename="../logbook/countrydat.cpp" line="179"/>
         <source>Shetland Is.</source>
-        <translation></translation>
+        <translation>Shetlandski otoci</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="180"/>
@@ -1361,7 +1369,7 @@ Format:
     <message>
         <location filename="../logbook/countrydat.cpp" line="219"/>
         <source>U.S.A.</source>
-        <translation></translation>
+        <translation>SAD</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="220"/>
@@ -1371,7 +1379,7 @@ Format:
     <message>
         <location filename="../logbook/countrydat.cpp" line="221"/>
         <source>Mariana Is.</source>
-        <translation></translation>
+        <translation>Marijanski otoci</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="222"/>
@@ -1916,7 +1924,7 @@ Format:
     <message>
         <location filename="../logbook/countrydat.cpp" line="330"/>
         <source>Turks &amp; Caicos Is.</source>
-        <translation></translation>
+        <translation>Otoci Turks i Caicos</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="331"/>
@@ -2006,7 +2014,7 @@ Format:
     <message>
         <location filename="../logbook/countrydat.cpp" line="348"/>
         <source>Laos</source>
-        <translation></translation>
+        <translation>Laos</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="349"/>
@@ -2046,7 +2054,7 @@ Format:
     <message>
         <location filename="../logbook/countrydat.cpp" line="356"/>
         <source>Latvia</source>
-        <translation></translation>
+        <translation>Latvija</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="357"/>
@@ -2413,7 +2421,7 @@ Format:
         <location filename="../FrequencyList.cpp" line="534"/>
         <location filename="../FrequencyList.cpp" line="701"/>
         <source>Mode</source>
-        <translation></translation>
+        <translation>Mod</translation>
     </message>
     <message>
         <location filename="../FrequencyList.cpp" line="566"/>
@@ -2915,7 +2923,7 @@ Format:
         <location filename="../logqso.ui" line="82"/>
         <location filename="../logqso.ui" line="114"/>
         <source>dd/MM/yyyy HH:mm:ss</source>
-        <translation></translation>
+        <translation>dd.MM.yyyy. HH:mm:ss</translation>
     </message>
     <message>
         <location filename="../logqso.ui" line="98"/>
@@ -3006,7 +3014,7 @@ Format:
         <location filename="../mainwindow.ui" line="181"/>
         <location filename="../mainwindow.ui" line="2262"/>
         <source>UTC           dB            DT           Freq          Dr </source>
-        <translation></translation>
+        <translation>UTC           dB            DT           Freq          Dr </translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="282"/>
@@ -3033,7 +3041,7 @@ Format:
     <message>
         <location filename="../mainwindow.ui" line="417"/>
         <source>?</source>
-        <translation></translation>
+        <translation>?</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="667"/>
@@ -3043,7 +3051,7 @@ Format:
     <message>
         <location filename="../mainwindow.ui" line="679"/>
         <source>14.078 000</source>
-        <translation></translation>
+        <translation>14.078 000</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="708"/>
@@ -3058,7 +3066,7 @@ Format:
     <message>
         <location filename="../mainwindow.ui" line="724"/>
         <source>Spt</source>
-        <translation></translation>
+        <translation>Spot</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="743"/>
@@ -3073,7 +3081,7 @@ Format:
     <message>
         <location filename="../mainwindow.ui" line="791"/>
         <source>info:</source>
-        <translation></translation>
+        <translation>info:</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="803"/>
@@ -3095,7 +3103,7 @@ Format:
     <message>
         <location filename="../mainwindow.ui" line="823"/>
         <source>prop</source>
-        <translation></translation>
+        <translation>prop</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="981"/>
@@ -3148,7 +3156,7 @@ Format:
     <message>
         <location filename="../mainwindow.ui" line="1371"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:18pt;&quot;&gt;01:23:45 &lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align="center"&gt;&lt;span style=" font-size:18pt;"&gt;01:23:45 &lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1405"/>
@@ -3158,7 +3166,7 @@ Format:
     <message>
         <location filename="../mainwindow.ui" line="1411"/>
         <source>TX minute</source>
-        <translation></translation>
+        <translation>Minuta odašiljanja</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1738"/>
@@ -3170,12 +3178,12 @@ Format:
         <location filename="../mainwindow.ui" line="1744"/>
         <location filename="../mainwindow.ui" line="4410"/>
         <source>  Hz</source>
-        <translation></translation>
+        <translation>  Hz</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1747"/>
         <source>Rx  </source>
-        <translation></translation>
+        <translation>Rx  </translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1805"/>
@@ -3185,12 +3193,12 @@ Format:
     <message>
         <location filename="../mainwindow.ui" line="1808"/>
         <source>Tx JT9 @</source>
-        <translation></translation>
+        <translation>Tx JT9 @</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1451"/>
         <source>Hound</source>
-        <translation></translation>
+        <translation>Hound</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1479"/>
@@ -3211,7 +3219,7 @@ Format:
         <location filename="../mainwindow.ui" line="1641"/>
         <location filename="../mainwindow.ui" line="4413"/>
         <source>Tx  </source>
-        <translation></translation>
+        <translation>Tx  </translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1854"/>
@@ -3238,7 +3246,7 @@ Format:
     <message>
         <location filename="../mainwindow.ui" line="1775"/>
         <source>Split Tx/Rx</source>
-        <translation></translation>
+        <translation>Split Tx/Rx</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1708"/>
@@ -3254,7 +3262,7 @@ Format:
         <location filename="../mainwindow.ui" line="1521"/>
         <location filename="../mainwindow.ui" line="4834"/>
         <source>AutoSeq</source>
-        <translation></translation>
+        <translation>AutoSeq</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1537"/>
@@ -3264,7 +3272,7 @@ Format:
     <message>
         <location filename="../mainwindow.ui" line="1551"/>
         <source>AutoTX</source>
-        <translation></translation>
+        <translation>AutoTX</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1680"/>
@@ -3294,7 +3302,7 @@ Format:
     <message>
         <location filename="../mainwindow.ui" line="1901"/>
         <source> Pwr</source>
-        <translation></translation>
+        <translation> Snaga</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1923"/>
@@ -3437,7 +3445,7 @@ ZD8,ZD9,ZF,ZK3,ZL,ZL7,ZL8,ZL9,ZP,ZS,ZS8&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</tra
     <message>
         <location filename="../mainwindow.ui" line="2571"/>
         <source>1 QSO</source>
-        <translation></translation>
+        <translation>1 QSO</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2602"/>
@@ -3457,7 +3465,7 @@ ZD8,ZD9,ZF,ZK3,ZL,ZL7,ZL8,ZL9,ZP,ZS,ZS8&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</tra
     <message>
         <location filename="../mainwindow.ui" line="2647"/>
         <source>&amp;Stop</source>
-        <translation></translation>
+        <translation>&amp;Stop</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2905"/>
@@ -3572,7 +3580,16 @@ Note:&lt;br&gt;
 - if your computer clock difference is more than 7.5 seconds, there is a chance you will be reporting spots in wrong interval, also QSO start/end time can be affected&lt;br&gt;
 - DT of TX signal will be affected in wrong way if you are trying to compensate RX audio stream delay caused by buffering in SDR software.&lt;br&gt;&lt;br&gt;
 Click by right mouse&apos;s button sets JTDX internal time back to system time.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Klik lijevom tipkom miša pomiče interno vrijeme JTDX-a radi bolje sinkronizacije dekodera sa signalima u dolaznom audio toku.&lt;br&gt;
+Podržana su dva scenarija:&lt;br&gt;
+- gruba sinkronizacija, ako su signali na vodopadu pomaknuti a nijedan nije dekodiran; dekoder tada koristi minimalnu vrijednost snage za procjenu vremenskog pomaka do početka intervala&lt;br&gt;
+- preciznija sinkronizacija, ako su u prethodnom intervalu dekodirani signali a prosječni DT je izvan raspona -0,19 .. 0,19 s. Za pomak vremena koristi se prosječna vrijednost DT.&lt;br&gt;
+Preporučuje se razmak od najmanje pet intervala između dva uzastopna pokušaja grube i precizne sinkronizacije.&lt;br&gt;
+Vremenski pomak može prekinuti dekodiranje trenutnog i sljedećeg intervala.&lt;br&gt;
+Napomena:&lt;br&gt;
+- ako sat računala odstupa više od 7,5 sekundi, spotovi se mogu prijaviti u pogrešnom intervalu, a može biti pogođeno i vrijeme početka/kraja QSO-a&lt;br&gt;
+- DT odaslanog signala bit će pogrešno pomaknut ako pokušavate kompenzirati kašnjenje audio toka uzrokovano međuspremnikom u SDR programu.&lt;br&gt;&lt;br&gt;
+Klik desnom tipkom miša vraća interno vrijeme JTDX-a na vrijeme sustava.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3202"/>
@@ -3580,7 +3597,7 @@ Click by right mouse&apos;s button sets JTDX internal time back to system time.&
         <location filename="../mainwindow.ui" line="6072"/>
         <location filename="../mainwindow.ui" line="6096"/>
         <source>1</source>
-        <translation></translation>
+        <translation>1</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3245"/>
@@ -3596,7 +3613,7 @@ Click by right mouse&apos;s button sets JTDX internal time back to system time.&
         <location filename="../mainwindow.ui" line="3277"/>
         <location filename="../mainwindow.ui" line="5785"/>
         <source>CQ</source>
-        <translation></translation>
+        <translation>CQ</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3324"/>
@@ -3608,7 +3625,7 @@ Click by right mouse&apos;s button sets JTDX internal time back to system time.&
         <location filename="../mainwindow.ui" line="3327"/>
         <location filename="../mainwindow.ui" line="3949"/>
         <source>DX</source>
-        <translation></translation>
+        <translation>DX</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3340"/>
@@ -3620,7 +3637,7 @@ Click by right mouse&apos;s button sets JTDX internal time back to system time.&
         <location filename="../mainwindow.ui" line="3346"/>
         <location filename="../mainwindow.ui" line="3984"/>
         <source>RRR</source>
-        <translation></translation>
+        <translation>RRR</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3359"/>
@@ -3646,7 +3663,7 @@ Click by right mouse&apos;s button sets JTDX internal time back to system time.&
     <message>
         <location filename="../mainwindow.ui" line="3416"/>
         <source>Ctrl+1</source>
-        <translation></translation>
+        <translation>Ctrl+1</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3441"/>
@@ -3666,12 +3683,12 @@ Click by right mouse&apos;s button sets JTDX internal time back to system time.&
     <message>
         <location filename="../mainwindow.ui" line="3450"/>
         <source>Alt+1</source>
-        <translation></translation>
+        <translation>Alt+1</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3498"/>
         <source>Ctrl+2</source>
-        <translation></translation>
+        <translation>Ctrl+2</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3523"/>
@@ -3681,37 +3698,37 @@ Click by right mouse&apos;s button sets JTDX internal time back to system time.&
     <message>
         <location filename="../mainwindow.ui" line="3526"/>
         <source>Alt+2</source>
-        <translation></translation>
+        <translation>Alt+2</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3568"/>
         <source>Ctrl+3</source>
-        <translation></translation>
+        <translation>Ctrl+3</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3593"/>
         <source>Tx &amp;3</source>
-        <translation></translation>
+        <translation>Tx &amp;3</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3596"/>
         <source>Alt+3</source>
-        <translation></translation>
+        <translation>Alt+3</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3638"/>
         <source>Ctrl+4</source>
-        <translation></translation>
+        <translation>Ctrl+4</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3663"/>
         <source>Tx &amp;4</source>
-        <translation></translation>
+        <translation>Tx &amp;4</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3666"/>
         <source>Alt+4</source>
-        <translation></translation>
+        <translation>Alt+4</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3698"/>
@@ -3728,32 +3745,32 @@ popis. Popis se može održavati u Postavkama (F2).</translation>
     <message>
         <location filename="../mainwindow.ui" line="3726"/>
         <source>Ctrl+5</source>
-        <translation></translation>
+        <translation>Ctrl+5</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3751"/>
         <source>Tx &amp;5</source>
-        <translation></translation>
+        <translation>Tx &amp;5</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3754"/>
         <source>Alt+5</source>
-        <translation></translation>
+        <translation>Alt+5</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3799"/>
         <source>Ctrl+6</source>
-        <translation></translation>
+        <translation>Ctrl+6</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3827"/>
         <source>Tx &amp;6</source>
-        <translation></translation>
+        <translation>Tx &amp;6</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3830"/>
         <source>Alt+6</source>
-        <translation></translation>
+        <translation>Alt+6</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3848"/>
@@ -3762,22 +3779,22 @@ popis. Popis se može održavati u Postavkama (F2).</translation>
         <location filename="../mainwindow.ui" line="6080"/>
         <location filename="../mainwindow.ui" line="6104"/>
         <source>2</source>
-        <translation></translation>
+        <translation>2</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3902"/>
         <source>CQ </source>
-        <translation></translation>
+        <translation>CQ </translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4016"/>
         <source>AnsCQ </source>
-        <translation></translation>
+        <translation>AnsCQ </translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4038"/>
         <source>SkpGrid</source>
-        <translation></translation>
+        <translation>SkpGrid</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4065"/>
@@ -3787,7 +3804,7 @@ popis. Popis se može održavati u Postavkama (F2).</translation>
     <message>
         <location filename="../mainwindow.ui" line="4068"/>
         <source>CQ/CQ DX</source>
-        <translation></translation>
+        <translation>CQ/CQ DX</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4093"/>
@@ -3797,7 +3814,7 @@ popis. Popis se može održavati u Postavkama (F2).</translation>
     <message>
         <location filename="../mainwindow.ui" line="4096"/>
         <source>Grid</source>
-        <translation></translation>
+        <translation>Lokator</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4121"/>
@@ -3807,7 +3824,7 @@ popis. Popis se može održavati u Postavkama (F2).</translation>
     <message>
         <location filename="../mainwindow.ui" line="4124"/>
         <source>dB</source>
-        <translation></translation>
+        <translation>dB</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4149"/>
@@ -3817,7 +3834,7 @@ popis. Popis se može održavati u Postavkama (F2).</translation>
     <message>
         <location filename="../mainwindow.ui" line="4152"/>
         <source>R+dB</source>
-        <translation></translation>
+        <translation>R+dB</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4177"/>
@@ -3827,7 +3844,7 @@ popis. Popis se može održavati u Postavkama (F2).</translation>
     <message>
         <location filename="../mainwindow.ui" line="4180"/>
         <source>RRR/RR73</source>
-        <translation></translation>
+        <translation>RRR/RR73</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4205"/>
@@ -3837,7 +3854,7 @@ popis. Popis se može održavati u Postavkama (F2).</translation>
     <message>
         <location filename="../mainwindow.ui" line="4208"/>
         <source>73</source>
-        <translation></translation>
+        <translation>73</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4256"/>
@@ -3847,7 +3864,7 @@ popis. Popis se može održavati u Postavkama (F2).</translation>
     <message>
         <location filename="../mainwindow.ui" line="4259"/>
         <source>Gen msg</source>
-        <translation></translation>
+        <translation>Gen por.</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4324"/>
@@ -3862,7 +3879,7 @@ popis. Popis se može održavati u Postavkama (F2).</translation>
     <message>
         <location filename="../mainwindow.ui" line="4448"/>
         <source>Band Hopping</source>
-        <translation></translation>
+        <translation>Promjena opsega</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4457"/>
@@ -3942,17 +3959,17 @@ popis. Popis se može održavati u Postavkama (F2).</translation>
     <message>
         <location filename="../mainwindow.ui" line="3048"/>
         <source>Sync</source>
-        <translation type="unfinished"></translation>
+        <translation>Sinkr.</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4435"/>
         <source>  %</source>
-        <translation></translation>
+        <translation>  %</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4438"/>
         <source>Tx Pct </source>
-        <translation></translation>
+        <translation>Tx % </translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4508"/>
@@ -4062,7 +4079,7 @@ popis. Popis se može održavati u Postavkama (F2).</translation>
     <message>
         <location filename="../mainwindow.ui" line="4885"/>
         <source>Alt+F4</source>
-        <translation></translation>
+        <translation>Alt+F4</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4896"/>
@@ -4073,7 +4090,7 @@ popis. Popis se može održavati u Postavkama (F2).</translation>
         <location filename="../mainwindow.ui" line="4899"/>
         <location filename="../mainwindow.ui" line="5320"/>
         <source>F2</source>
-        <translation></translation>
+        <translation>F2</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4904"/>
@@ -4083,7 +4100,7 @@ popis. Popis se može održavati u Postavkama (F2).</translation>
     <message>
         <location filename="../mainwindow.ui" line="4907"/>
         <source>Ctrl+F1</source>
-        <translation></translation>
+        <translation>Ctrl+F1</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4912"/>
@@ -4098,7 +4115,7 @@ popis. Popis se može održavati u Postavkama (F2).</translation>
     <message>
         <location filename="../mainwindow.ui" line="4920"/>
         <source>Ctrl+O</source>
-        <translation></translation>
+        <translation>Ctrl+O</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4925"/>
@@ -4108,7 +4125,7 @@ popis. Popis se može održavati u Postavkama (F2).</translation>
     <message>
         <location filename="../mainwindow.ui" line="4928"/>
         <source>F6</source>
-        <translation></translation>
+        <translation>F6</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4933"/>
@@ -4118,7 +4135,7 @@ popis. Popis se može održavati u Postavkama (F2).</translation>
     <message>
         <location filename="../mainwindow.ui" line="4936"/>
         <source>Shift+F6</source>
-        <translation></translation>
+        <translation>Shift+F6</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4941"/>
@@ -4151,7 +4168,7 @@ popis. Popis se može održavati u Postavkama (F2).</translation>
     <message>
         <location filename="../mainwindow.ui" line="5074"/>
         <source>F1</source>
-        <translation></translation>
+        <translation>F1</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5079"/>
@@ -4161,7 +4178,7 @@ popis. Popis se može održavati u Postavkama (F2).</translation>
     <message>
         <location filename="../mainwindow.ui" line="5082"/>
         <source>F3</source>
-        <translation></translation>
+        <translation>F3</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5087"/>
@@ -4171,12 +4188,12 @@ popis. Popis se može održavati u Postavkama (F2).</translation>
     <message>
         <location filename="../mainwindow.ui" line="5090"/>
         <source>F5</source>
-        <translation></translation>
+        <translation>F5</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5101"/>
         <source>JT9</source>
-        <translation></translation>
+        <translation>JT9</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5112"/>
@@ -4224,7 +4241,7 @@ popis. Popis se može održavati u Postavkama (F2).</translation>
         <location filename="../mainwindow.ui" line="5160"/>
         <location filename="../mainwindow.ui" line="5344"/>
         <source>F7</source>
-        <translation></translation>
+        <translation>F7</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5168"/>
@@ -4289,12 +4306,12 @@ popis. Popis se može održavati u Postavkama (F2).</translation>
     <message>
         <location filename="../mainwindow.ui" line="5264"/>
         <source>JT65</source>
-        <translation></translation>
+        <translation>JT65</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5275"/>
         <source>JT9+JT65</source>
-        <translation></translation>
+        <translation>JT9+JT65</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5283"/>
@@ -4304,13 +4321,13 @@ popis. Popis se može održavati u Postavkama (F2).</translation>
     <message>
         <location filename="../mainwindow.ui" line="5291"/>
         <source>Gray1</source>
-        <translation></translation>
+        <translation>Gray1</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5299"/>
         <source>Show DXCC entity and worked B4 status</source>
         <translatorcomment>Prikaži DXCC entitet i rađene B4</translatorcomment>
-        <translation>Show DXCC entity and worked B4 status</translation>
+        <translation>Prikaži DXCC entitet i status 'već rađen'</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5307"/>
@@ -4330,7 +4347,7 @@ popis. Popis se može održavati u Postavkama (F2).</translation>
     <message>
         <location filename="../mainwindow.ui" line="5328"/>
         <source>JTDX forum</source>
-        <translation></translation>
+        <translation>JTDX forum</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5333"/>
@@ -4355,7 +4372,7 @@ popis. Popis se može održavati u Postavkama (F2).</translation>
     <message>
         <location filename="../mainwindow.ui" line="5383"/>
         <source>WSPR-2</source>
-        <translation></translation>
+        <translation>WSPR-2</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5388"/>
@@ -4365,7 +4382,7 @@ popis. Popis se može održavati u Postavkama (F2).</translation>
     <message>
         <location filename="../mainwindow.ui" line="5404"/>
         <source>T10</source>
-        <translation></translation>
+        <translation>T10</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5415"/>
@@ -4380,7 +4397,7 @@ popis. Popis se može održavati u Postavkama (F2).</translation>
     <message>
         <location filename="../mainwindow.ui" line="5429"/>
         <source>Alt+F</source>
-        <translation></translation>
+        <translation>Alt+F</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5437"/>
@@ -4405,7 +4422,7 @@ popis. Popis se može održavati u Postavkama (F2).</translation>
     <message>
         <location filename="../mainwindow.ui" line="5478"/>
         <source>FT8</source>
-        <translation></translation>
+        <translation>FT8</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5486"/>
@@ -4475,22 +4492,22 @@ popis. Popis se može održavati u Postavkama (F2).</translation>
     <message>
         <location filename="../mainwindow.ui" line="5591"/>
         <source>Auto</source>
-        <translation></translation>
+        <translation>Auto</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5618"/>
         <source>4</source>
-        <translation></translation>
+        <translation>4</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5626"/>
         <source>8</source>
-        <translation></translation>
+        <translation>8</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5634"/>
         <source>12</source>
-        <translation></translation>
+        <translation>12</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5642"/>
@@ -4546,7 +4563,7 @@ popis. Popis se može održavati u Postavkama (F2).</translation>
     <message>
         <location filename="../mainwindow.ui" line="5793"/>
         <source>CQ and 73</source>
-        <translation></translation>
+        <translation>CQ i 73</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5801"/>
@@ -4613,37 +4630,37 @@ popis. Popis se može održavati u Postavkama (F2).</translation>
         <location filename="../mainwindow.ui" line="6088"/>
         <location filename="../mainwindow.ui" line="6112"/>
         <source>3</source>
-        <translation></translation>
+        <translation>3</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5911"/>
         <source>6</source>
-        <translation></translation>
+        <translation>6</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5919"/>
         <source>10</source>
-        <translation></translation>
+        <translation>10</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5927"/>
         <source>5</source>
-        <translation></translation>
+        <translation>5</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5935"/>
         <source>7</source>
-        <translation></translation>
+        <translation>7</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5943"/>
         <source>9</source>
-        <translation></translation>
+        <translation>9</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5951"/>
         <source>11</source>
-        <translation></translation>
+        <translation>11</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5959"/>
@@ -4663,7 +4680,7 @@ popis. Popis se može održavati u Postavkama (F2).</translation>
     <message>
         <location filename="../mainwindow.ui" line="5994"/>
         <source>FT4</source>
-        <translation></translation>
+        <translation>FT4</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="6029"/>
@@ -4698,62 +4715,62 @@ popis. Popis se može održavati u Postavkama (F2).</translation>
     <message>
         <location filename="../mainwindow.ui" line="6128"/>
         <source>13</source>
-        <translation></translation>
+        <translation>13</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="6136"/>
         <source>14</source>
-        <translation></translation>
+        <translation>14</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="6144"/>
         <source>15</source>
-        <translation></translation>
+        <translation>15</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="6152"/>
         <source>16</source>
-        <translation></translation>
+        <translation>16</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="6160"/>
         <source>17</source>
-        <translation></translation>
+        <translation>17</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="6168"/>
         <source>18</source>
-        <translation></translation>
+        <translation>18</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="6176"/>
         <source>19</source>
-        <translation></translation>
+        <translation>19</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="6184"/>
         <source>20</source>
-        <translation></translation>
+        <translation>20</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="6192"/>
         <source>21</source>
-        <translation></translation>
+        <translation>21</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="6200"/>
         <source>22</source>
-        <translation></translation>
+        <translation>22</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="6208"/>
         <source>23</source>
-        <translation></translation>
+        <translation>23</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="6216"/>
         <source>24</source>
-        <translation></translation>
+        <translation>24</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="470"/>
@@ -4853,7 +4870,7 @@ popis. Popis se može održavati u Postavkama (F2).</translation>
     <message>
         <location filename="../mainwindow.cpp" line="2110"/>
         <source>Pwr</source>
-        <translation></translation>
+        <translation>Snaga</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="2509"/>
@@ -4920,36 +4937,36 @@ popis. Popis se može održavati u Postavkama (F2).</translation>
     <message>
         <location filename="../mainwindow.cpp" line="2997"/>
         <source>AutoSeq0</source>
-        <translation></translation>
+        <translation>AutoSeq0</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="3010"/>
         <source>AutoSeq1</source>
-        <translation></translation>
+        <translation>AutoSeq1</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="3019"/>
         <location filename="../mainwindow.cpp" line="3045"/>
         <source>AutoSeq2</source>
-        <translation></translation>
+        <translation>AutoSeq2</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="3020"/>
         <location filename="../mainwindow.cpp" line="3041"/>
         <source>AutoSeq6</source>
-        <translation></translation>
+        <translation>AutoSeq6</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="3029"/>
         <location filename="../mainwindow.cpp" line="3046"/>
         <source>AutoSeq3</source>
-        <translation></translation>
+        <translation>AutoSeq3</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="3030"/>
         <location filename="../mainwindow.cpp" line="3042"/>
         <source>AutoSeq7</source>
-        <translation></translation>
+        <translation>AutoSeq7</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="2512"/>
@@ -5384,7 +5401,7 @@ UDP server %2:%3</translation>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>RX</source>
-        <translation type="unfinished"></translation>
+        <translation>RX</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
@@ -5469,62 +5486,62 @@ UDP server %2:%3</translation>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>1 member</source>
-        <translation type="unfinished"></translation>
+        <translation>1 član</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>2 members</source>
-        <translation type="unfinished"></translation>
+        <translation>2 člana</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>3 members</source>
-        <translation type="unfinished"></translation>
+        <translation>3 člana</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>4 members</source>
-        <translation type="unfinished"></translation>
+        <translation>4 člana</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>5 members</source>
-        <translation type="unfinished"></translation>
+        <translation>5 članova</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>6 members</source>
-        <translation type="unfinished"></translation>
+        <translation>6 članova</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>1 member   (+20, 13% of the budget at 8 threads)</source>
-        <translation type="unfinished"></translation>
+        <translation>1 član   (+20, 13% proračuna uz 8 niti)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>2 members  (+48, 18%)</source>
-        <translation type="unfinished"></translation>
+        <translation>2 člana  (+48, 18%)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>3 members  (+72, 23% - the knee of the curve)</source>
-        <translation type="unfinished"></translation>
+        <translation>3 člana  (+72, 23% - koljeno krivulje)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>4 members  (+86, 28%)</source>
-        <translation type="unfinished"></translation>
+        <translation>4 člana  (+86, 28%)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>5 members  (+98, 33% - all that is worth taking)</source>
-        <translation type="unfinished"></translation>
+        <translation>5 članova  (+98, 33% - sve što se isplati uzeti)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>6 members  (+100, 39% - only 2 more than five)</source>
-        <translation type="unfinished"></translation>
+        <translation>6 članova  (+100, 39% - samo 2 više od pet)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
@@ -5544,27 +5561,27 @@ UDP server %2:%3</translation>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>1 member  (+7 msgs, +1.2 s at 12 threads on the benchmark)</source>
-        <translation type="unfinished"></translation>
+        <translation>1 član  (+7 poruka, +1,2 s uz 12 niti na mjerenju)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>2 members  (+10, +2.3 s)</source>
-        <translation type="unfinished"></translation>
+        <translation>2 člana  (+10, +2,3 s)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>3 members  (+13, +5.3 s)</source>
-        <translation type="unfinished"></translation>
+        <translation>3 člana  (+13, +5,3 s)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>4 members  (+15, +7.9 s)</source>
-        <translation type="unfinished"></translation>
+        <translation>4 člana  (+15, +7,9 s)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>5 members  (+16, +11.5 s - too slow for a 15 s period on this machine, for replays)</source>
-        <translation type="unfinished"></translation>
+        <translation>5 članova  (+16, +11,5 s - prespor za razdoblje od 15 s na ovom stroju, za reprodukcije)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
@@ -5614,17 +5631,17 @@ UDP server %2:%3</translation>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>100-3300 Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>100-3300 Hz</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>300-3300 Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>300-3300 Hz</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>50-3650 Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>50-3650 Hz</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
@@ -5634,52 +5651,52 @@ UDP server %2:%3</translation>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>100-3200 Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>100-3200 Hz</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>100-3100 Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>100-3100 Hz</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>100-3000 Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>100-3000 Hz</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>200-3200 Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>200-3200 Hz</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>200-3100 Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>200-3100 Hz</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>200-3000 Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>200-3000 Hz</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>200-2800 Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>200-2800 Hz</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>200-2500 Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>200-2500 Hz</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>200-2400 Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>200-2400 Hz</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>0-5000 Hz (testing only)</source>
-        <translation type="unfinished"></translation>
+        <translation>0-5000 Hz (samo za testiranje)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
@@ -6245,7 +6262,7 @@ Provjerite je li dato točno ime imenika.</translation>
     <message>
         <location filename="../Bands.cpp" line="51"/>
         <source>OOB</source>
-        <translation></translation>
+        <translation>OOB</translation>
     </message>
     <message>
         <location filename="../WFPalette.cpp" line="55"/>
@@ -6683,7 +6700,7 @@ Provjerite je li dato točno ime imenika.</translation>
     <message>
         <location filename="../widegraph.ui" line="20"/>
         <source>Dialog</source>
-        <translation></translation>
+        <translation>Dijalog</translation>
     </message>
     <message>
         <location filename="../widegraph.ui" line="83"/>
@@ -6708,7 +6725,7 @@ Provjerite je li dato točno ime imenika.</translation>
     <message>
         <location filename="../widegraph.ui" line="203"/>
         <source>Bins/Pixel  </source>
-        <translation></translation>
+        <translation>Bins/Pixel  </translation>
     </message>
     <message>
         <location filename="../widegraph.ui" line="234"/>
@@ -6718,12 +6735,12 @@ Provjerite je li dato točno ime imenika.</translation>
     <message>
         <location filename="../widegraph.ui" line="237"/>
         <source>  JT9</source>
-        <translation></translation>
+        <translation>  JT9</translation>
     </message>
     <message>
         <location filename="../widegraph.ui" line="240"/>
         <source>JT65  </source>
-        <translation></translation>
+        <translation>JT65  </translation>
     </message>
     <message>
         <location filename="../widegraph.ui" line="270"/>
@@ -6759,7 +6776,7 @@ Provjerite je li dato točno ime imenika.</translation>
     <message>
         <location filename="../widegraph.ui" line="329"/>
         <source> Hz</source>
-        <translation></translation>
+        <translation> Hz</translation>
     </message>
     <message>
         <location filename="../widegraph.ui" line="332"/>
@@ -6769,12 +6786,12 @@ Provjerite je li dato točno ime imenika.</translation>
     <message>
         <location filename="../widegraph.ui" line="357"/>
         <source>Number of FFTs averaged (controls waterfall scrolling rate)</source>
-        <translation></translation>
+        <translation>Broj usrednjenih FFT-ova (određuje brzinu pomicanja vodopada)</translation>
     </message>
     <message>
         <location filename="../widegraph.ui" line="360"/>
         <source>N Avg </source>
-        <translation></translation>
+        <translation>N sred </translation>
     </message>
     <message>
         <location filename="../widegraph.ui" line="398"/>
@@ -6824,12 +6841,12 @@ Provjerite je li dato točno ime imenika.</translation>
     <message>
         <location filename="../widegraph.ui" line="508"/>
         <source>Current</source>
-        <translation></translation>
+        <translation>Trenutni</translation>
     </message>
     <message>
         <location filename="../widegraph.ui" line="513"/>
         <source>Cumulative</source>
-        <translation></translation>
+        <translation>Kumulativni</translation>
     </message>
     <message>
         <location filename="../widegraph.ui" line="533"/>
@@ -6839,12 +6856,12 @@ Provjerite je li dato točno ime imenika.</translation>
     <message>
         <location filename="../widegraph.ui" line="539"/>
         <source> %</source>
-        <translation></translation>
+        <translation> %</translation>
     </message>
     <message>
         <location filename="../widegraph.ui" line="542"/>
         <source>Spec </source>
-        <translation></translation>
+        <translation>Spek </translation>
     </message>
     <message>
         <location filename="../widegraph.ui" line="593"/>
@@ -6862,7 +6879,7 @@ Provjerite je li dato točno ime imenika.</translation>
         <location filename="../widegraph.ui" line="755"/>
         <location filename="../widegraph.ui" line="762"/>
         <source>TextLabel</source>
-        <translation></translation>
+        <translation>TextLabel</translation>
     </message>
     <message>
         <location filename="../widegraph.ui" line="695"/>
@@ -6945,17 +6962,17 @@ Provjerite je li dato točno ime imenika.</translation>
     <message>
         <location filename="../Configuration.ui" line="152"/>
         <source>Full call in Tx1</source>
-        <translation></translation>
+        <translation>Puni pozivni znak u Tx1</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="157"/>
         <source>Full call in Tx3</source>
-        <translation></translation>
+        <translation>Puni pozivni znak u Tx3</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="162"/>
         <source>Full call in Tx5 only</source>
-        <translation></translation>
+        <translation>Puni pozivni znak samo u Tx5</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="170"/>
@@ -7147,7 +7164,7 @@ mirnom periodu kada se vrši dekodiranje.</translation>
     <message>
         <location filename="../Configuration.ui" line="693"/>
         <source>&amp;Radio</source>
-        <translation></translation>
+        <translation>&amp;Radio</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="696"/>
@@ -7157,12 +7174,12 @@ mirnom periodu kada se vrši dekodiranje.</translation>
     <message>
         <location filename="../Configuration.ui" line="704"/>
         <source>Rig:</source>
-        <translation></translation>
+        <translation>Uređaj:</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="724"/>
         <source>Poll Interval:</source>
-        <translation></translation>
+        <translation>Interval očitavanja:</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="734"/>
@@ -7173,12 +7190,12 @@ mirnom periodu kada se vrši dekodiranje.</translation>
         <location filename="../Configuration.ui" line="740"/>
         <location filename="../Configuration.ui" line="1683"/>
         <source> s</source>
-        <translation></translation>
+        <translation> s</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="737"/>
         <source>0.5 s</source>
-        <translation></translation>
+        <translation>0.5 s</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="808"/>
@@ -7214,7 +7231,7 @@ mirnom periodu kada se vrši dekodiranje.</translation>
         <location filename="../Configuration.ui" line="885"/>
         <location filename="../Configuration.ui" line="1370"/>
         <source>Port:</source>
-        <translation></translation>
+        <translation>Port:</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="901"/>
@@ -7239,42 +7256,42 @@ mirnom periodu kada se vrši dekodiranje.</translation>
     <message>
         <location filename="../Configuration.ui" line="965"/>
         <source>1200</source>
-        <translation></translation>
+        <translation>1200</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="970"/>
         <source>2400</source>
-        <translation></translation>
+        <translation>2400</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="975"/>
         <source>4800</source>
-        <translation></translation>
+        <translation>4800</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="980"/>
         <source>9600</source>
-        <translation></translation>
+        <translation>9600</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="985"/>
         <source>19200</source>
-        <translation></translation>
+        <translation>19200</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="990"/>
         <source>38400</source>
-        <translation></translation>
+        <translation>38400</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="995"/>
         <source>57600</source>
-        <translation></translation>
+        <translation>57600</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1000"/>
         <source>115200</source>
-        <translation></translation>
+        <translation>115200</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1010"/>
@@ -7284,7 +7301,7 @@ mirnom periodu kada se vrši dekodiranje.</translation>
     <message>
         <location filename="../Configuration.ui" line="1013"/>
         <source>Data Bits</source>
-        <translation>Data Bits</translation>
+        <translation>Podatkovni bitovi</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1025"/>
@@ -7311,7 +7328,7 @@ mirnom periodu kada se vrši dekodiranje.</translation>
     <message>
         <location filename="../Configuration.ui" line="1070"/>
         <source>Stop Bits</source>
-        <translation>Stop Bits</translation>
+        <translation>Stop bitovi</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1095"/>
@@ -7346,7 +7363,7 @@ mirnom periodu kada se vrši dekodiranje.</translation>
     <message>
         <location filename="../Configuration.ui" line="1165"/>
         <source>XON/XOFF</source>
-        <translation></translation>
+        <translation>XON/XOFF</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1175"/>
@@ -7360,7 +7377,7 @@ ne koristi se često, ali neka radija imaju kao opciju i
     <message>
         <location filename="../Configuration.ui" line="1180"/>
         <source>&amp;Hardware</source>
-        <translation></translation>
+        <translation>&amp;Hardver</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1193"/>
@@ -7375,24 +7392,24 @@ ne koristi se često, ali neka radija imaju kao opciju i
     <message>
         <location filename="../Configuration.ui" line="1213"/>
         <source>DTR:</source>
-        <translation></translation>
+        <translation>DTR:</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1229"/>
         <location filename="../Configuration.ui" line="1262"/>
         <source>High</source>
-        <translation></translation>
+        <translation>Visoko</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1234"/>
         <location filename="../Configuration.ui" line="1267"/>
         <source>Low</source>
-        <translation></translation>
+        <translation>Nisko</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1246"/>
         <source>RTS:</source>
-        <translation></translation>
+        <translation>RTS:</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1299"/>
@@ -7416,7 +7433,7 @@ ostalo hardversko sučelje za PTT.</translation>
     <message>
         <location filename="../Configuration.ui" line="1313"/>
         <source>C&amp;AT</source>
-        <translation></translation>
+        <translation>C&amp;AT</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1323"/>
@@ -7426,7 +7443,7 @@ ostalo hardversko sučelje za PTT.</translation>
     <message>
         <location filename="../Configuration.ui" line="1326"/>
         <source>&amp;DTR</source>
-        <translation></translation>
+        <translation>&amp;DTR</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1339"/>
@@ -7436,7 +7453,7 @@ ostalo hardversko sučelje za PTT.</translation>
     <message>
         <location filename="../Configuration.ui" line="1342"/>
         <source>VO&amp;X</source>
-        <translation></translation>
+        <translation>VO&amp;X</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1352"/>
@@ -7446,7 +7463,7 @@ ostalo hardversko sučelje za PTT.</translation>
     <message>
         <location filename="../Configuration.ui" line="1355"/>
         <source>R&amp;TS</source>
-        <translation></translation>
+        <translation>R&amp;TS</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1386"/>
@@ -7505,7 +7522,7 @@ ova postavka omogućava vam odabir audio ulaza
     <message>
         <location filename="../Configuration.ui" line="1489"/>
         <source>US&amp;B</source>
-        <translation></translation>
+        <translation>US&amp;B</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1502"/>
@@ -7530,7 +7547,7 @@ ili je odabrana širina pojasa).</translation>
     <message>
         <location filename="../Configuration.ui" line="1520"/>
         <source>Data/P&amp;kt</source>
-        <translation></translation>
+        <translation>Data/P&amp;kt</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1540"/>
@@ -7540,12 +7557,12 @@ ili je odabrana širina pojasa).</translation>
     <message>
         <location filename="../Configuration.ui" line="1546"/>
         <source>Fake It</source>
-        <translation></translation>
+        <translation>Simuliraj</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1556"/>
         <source>Rig</source>
-        <translation></translation>
+        <translation>Uređaj</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1599"/>
@@ -7633,7 +7650,7 @@ razdoblja odašiljanja.</translation>
         <location filename="../Configuration.ui" line="1789"/>
         <location filename="../Configuration.ui" line="1819"/>
         <source>Mono</source>
-        <translation></translation>
+        <translation>Mono</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1794"/>
@@ -7712,7 +7729,7 @@ oboje ovdje.</translation>
     <message>
         <location filename="../Configuration.ui" line="1964"/>
         <source>TextLabel</source>
-        <translation></translation>
+        <translation>TextLabel</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1971"/>
@@ -7951,7 +7968,7 @@ i DX Lokatora kad je poslan 73 ili slobodna tekstualna poruka.</translation>
     <message>
         <location filename="../Configuration.ui" line="2654"/>
         <source>UDP port:</source>
-        <translation></translation>
+        <translation>UDP port:</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="2670"/>
@@ -8057,7 +8074,7 @@ za procjenu rasprostiranja i performansi sustava.</translation>
     <message>
         <location filename="../Configuration.ui" line="2931"/>
         <source>UDP Server:</source>
-        <translation></translation>
+        <translation>UDP poslužitelj:</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="2947"/>
@@ -8152,7 +8169,7 @@ za procjenu rasprostiranja i performansi sustava.</translation>
     <message>
         <location filename="../Configuration.ui" line="5183"/>
         <source>Reset</source>
-        <translation></translation>
+        <translation>Resetiraj</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3127"/>
@@ -8167,13 +8184,13 @@ za procjenu rasprostiranja i performansi sustava.</translation>
     <message>
         <location filename="../Configuration.ui" line="3139"/>
         <source>Intercept:</source>
-        <translation></translation>
+        <translation>Odsječak:</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3152"/>
         <location filename="../Configuration.ui" line="6923"/>
         <source> Hz</source>
-        <translation></translation>
+        <translation> Hz</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3171"/>
@@ -8183,7 +8200,7 @@ za procjenu rasprostiranja i performansi sustava.</translation>
     <message>
         <location filename="../Configuration.ui" line="3184"/>
         <source> ppm</source>
-        <translation></translation>
+        <translation> ppm</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3227"/>
@@ -9002,7 +9019,7 @@ AA1AAA,BB1BB,CC1CC&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     <message>
         <location filename="../Configuration.ui" line="5365"/>
         <source>JT65+JT9</source>
-        <translation></translation>
+        <translation>JT65+JT9</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="5381"/>
@@ -9030,7 +9047,7 @@ AA1AAA,BB1BB,CC1CC&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
         <location filename="../Configuration.ui" line="6418"/>
         <location filename="../Configuration.ui" line="6556"/>
         <source>00</source>
-        <translation></translation>
+        <translation>00</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="5395"/>
@@ -9039,7 +9056,7 @@ AA1AAA,BB1BB,CC1CC&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
         <location filename="../Configuration.ui" line="6166"/>
         <location filename="../Configuration.ui" line="6423"/>
         <source>01</source>
-        <translation></translation>
+        <translation>01</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="5400"/>
@@ -9048,7 +9065,7 @@ AA1AAA,BB1BB,CC1CC&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
         <location filename="../Configuration.ui" line="6171"/>
         <location filename="../Configuration.ui" line="6428"/>
         <source>02</source>
-        <translation></translation>
+        <translation>02</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="5405"/>
@@ -9057,7 +9074,7 @@ AA1AAA,BB1BB,CC1CC&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
         <location filename="../Configuration.ui" line="6176"/>
         <location filename="../Configuration.ui" line="6433"/>
         <source>03</source>
-        <translation></translation>
+        <translation>03</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="5410"/>
@@ -9066,7 +9083,7 @@ AA1AAA,BB1BB,CC1CC&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
         <location filename="../Configuration.ui" line="6181"/>
         <location filename="../Configuration.ui" line="6438"/>
         <source>04</source>
-        <translation></translation>
+        <translation>04</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="5415"/>
@@ -9080,7 +9097,7 @@ AA1AAA,BB1BB,CC1CC&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
         <location filename="../Configuration.ui" line="6443"/>
         <location filename="../Configuration.ui" line="6561"/>
         <source>05</source>
-        <translation></translation>
+        <translation>05</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="5420"/>
@@ -9089,7 +9106,7 @@ AA1AAA,BB1BB,CC1CC&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
         <location filename="../Configuration.ui" line="6191"/>
         <location filename="../Configuration.ui" line="6448"/>
         <source>06</source>
-        <translation></translation>
+        <translation>06</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="5425"/>
@@ -9098,7 +9115,7 @@ AA1AAA,BB1BB,CC1CC&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
         <location filename="../Configuration.ui" line="6196"/>
         <location filename="../Configuration.ui" line="6453"/>
         <source>07</source>
-        <translation></translation>
+        <translation>07</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="5430"/>
@@ -9107,7 +9124,7 @@ AA1AAA,BB1BB,CC1CC&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
         <location filename="../Configuration.ui" line="6201"/>
         <location filename="../Configuration.ui" line="6458"/>
         <source>08</source>
-        <translation></translation>
+        <translation>08</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="5435"/>
@@ -9116,7 +9133,7 @@ AA1AAA,BB1BB,CC1CC&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
         <location filename="../Configuration.ui" line="6206"/>
         <location filename="../Configuration.ui" line="6463"/>
         <source>09</source>
-        <translation></translation>
+        <translation>09</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="5440"/>
@@ -9130,7 +9147,7 @@ AA1AAA,BB1BB,CC1CC&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
         <location filename="../Configuration.ui" line="6468"/>
         <location filename="../Configuration.ui" line="6566"/>
         <source>10</source>
-        <translation></translation>
+        <translation>10</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="5445"/>
@@ -9139,7 +9156,7 @@ AA1AAA,BB1BB,CC1CC&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
         <location filename="../Configuration.ui" line="6216"/>
         <location filename="../Configuration.ui" line="6473"/>
         <source>11</source>
-        <translation></translation>
+        <translation>11</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="5450"/>
@@ -9148,7 +9165,7 @@ AA1AAA,BB1BB,CC1CC&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
         <location filename="../Configuration.ui" line="6221"/>
         <location filename="../Configuration.ui" line="6478"/>
         <source>12</source>
-        <translation></translation>
+        <translation>12</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="5455"/>
@@ -9157,7 +9174,7 @@ AA1AAA,BB1BB,CC1CC&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
         <location filename="../Configuration.ui" line="6226"/>
         <location filename="../Configuration.ui" line="6483"/>
         <source>13</source>
-        <translation></translation>
+        <translation>13</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="5460"/>
@@ -9166,7 +9183,7 @@ AA1AAA,BB1BB,CC1CC&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
         <location filename="../Configuration.ui" line="6231"/>
         <location filename="../Configuration.ui" line="6488"/>
         <source>14</source>
-        <translation></translation>
+        <translation>14</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="5465"/>
@@ -9180,7 +9197,7 @@ AA1AAA,BB1BB,CC1CC&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
         <location filename="../Configuration.ui" line="6493"/>
         <location filename="../Configuration.ui" line="6571"/>
         <source>15</source>
-        <translation></translation>
+        <translation>15</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="5470"/>
@@ -9189,7 +9206,7 @@ AA1AAA,BB1BB,CC1CC&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
         <location filename="../Configuration.ui" line="6241"/>
         <location filename="../Configuration.ui" line="6498"/>
         <source>16</source>
-        <translation></translation>
+        <translation>16</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="5475"/>
@@ -9198,7 +9215,7 @@ AA1AAA,BB1BB,CC1CC&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
         <location filename="../Configuration.ui" line="6246"/>
         <location filename="../Configuration.ui" line="6503"/>
         <source>17</source>
-        <translation></translation>
+        <translation>17</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="5480"/>
@@ -9207,7 +9224,7 @@ AA1AAA,BB1BB,CC1CC&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
         <location filename="../Configuration.ui" line="6251"/>
         <location filename="../Configuration.ui" line="6508"/>
         <source>18</source>
-        <translation></translation>
+        <translation>18</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="5485"/>
@@ -9216,7 +9233,7 @@ AA1AAA,BB1BB,CC1CC&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
         <location filename="../Configuration.ui" line="6256"/>
         <location filename="../Configuration.ui" line="6513"/>
         <source>19</source>
-        <translation></translation>
+        <translation>19</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="5490"/>
@@ -9230,7 +9247,7 @@ AA1AAA,BB1BB,CC1CC&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
         <location filename="../Configuration.ui" line="6518"/>
         <location filename="../Configuration.ui" line="6576"/>
         <source>20</source>
-        <translation></translation>
+        <translation>20</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="5495"/>
@@ -9239,7 +9256,7 @@ AA1AAA,BB1BB,CC1CC&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
         <location filename="../Configuration.ui" line="6266"/>
         <location filename="../Configuration.ui" line="6523"/>
         <source>21</source>
-        <translation></translation>
+        <translation>21</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="5500"/>
@@ -9248,7 +9265,7 @@ AA1AAA,BB1BB,CC1CC&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
         <location filename="../Configuration.ui" line="6271"/>
         <location filename="../Configuration.ui" line="6528"/>
         <source>22</source>
-        <translation></translation>
+        <translation>22</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="5505"/>
@@ -9257,7 +9274,7 @@ AA1AAA,BB1BB,CC1CC&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
         <location filename="../Configuration.ui" line="6276"/>
         <location filename="../Configuration.ui" line="6533"/>
         <source>23</source>
-        <translation></translation>
+        <translation>23</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="5553"/>
@@ -9266,7 +9283,7 @@ AA1AAA,BB1BB,CC1CC&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
         <location filename="../Configuration.ui" line="6324"/>
         <location filename="../Configuration.ui" line="6581"/>
         <source>25</source>
-        <translation></translation>
+        <translation>25</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="5558"/>
@@ -9275,7 +9292,7 @@ AA1AAA,BB1BB,CC1CC&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
         <location filename="../Configuration.ui" line="6329"/>
         <location filename="../Configuration.ui" line="6586"/>
         <source>30</source>
-        <translation></translation>
+        <translation>30</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="5563"/>
@@ -9284,7 +9301,7 @@ AA1AAA,BB1BB,CC1CC&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
         <location filename="../Configuration.ui" line="6334"/>
         <location filename="../Configuration.ui" line="6591"/>
         <source>35</source>
-        <translation></translation>
+        <translation>35</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="5568"/>
@@ -9293,7 +9310,7 @@ AA1AAA,BB1BB,CC1CC&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
         <location filename="../Configuration.ui" line="6339"/>
         <location filename="../Configuration.ui" line="6596"/>
         <source>40</source>
-        <translation></translation>
+        <translation>40</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="5573"/>
@@ -9302,7 +9319,7 @@ AA1AAA,BB1BB,CC1CC&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
         <location filename="../Configuration.ui" line="6344"/>
         <location filename="../Configuration.ui" line="6601"/>
         <source>45</source>
-        <translation></translation>
+        <translation>45</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="5578"/>
@@ -9311,7 +9328,7 @@ AA1AAA,BB1BB,CC1CC&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
         <location filename="../Configuration.ui" line="6349"/>
         <location filename="../Configuration.ui" line="6606"/>
         <source>50</source>
-        <translation></translation>
+        <translation>50</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="5583"/>
@@ -9320,7 +9337,7 @@ AA1AAA,BB1BB,CC1CC&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
         <location filename="../Configuration.ui" line="6354"/>
         <location filename="../Configuration.ui" line="6611"/>
         <source>55</source>
-        <translation></translation>
+        <translation>55</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="5603"/>
@@ -9494,7 +9511,7 @@ promjena zvučne kartice</translation>
     <message>
         <location filename="../Configuration.ui"/>
         <source>WW Digi contest</source>
-        <translation type="unfinished"></translation>
+        <translation>WW Digi natjecanje</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
@@ -9504,27 +9521,27 @@ promjena zvučne kartice</translation>
     <message>
         <location filename="../Configuration.ui"/>
         <source>NA VHF contest</source>
-        <translation type="unfinished"></translation>
+        <translation>NA VHF natjecanje</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
         <source>EU VHF contest</source>
-        <translation type="unfinished"></translation>
+        <translation>EU VHF natjecanje</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
         <source>ARRL Field Day</source>
-        <translation type="unfinished"></translation>
+        <translation>ARRL Field Day</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
         <source>ARRL RTTY Roundup</source>
-        <translation type="unfinished"></translation>
+        <translation>ARRL RTTY Roundup</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
         <source>ARRL Digi contest</source>
-        <translation type="unfinished"></translation>
+        <translation>ARRL Digi natjecanje</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
@@ -9562,12 +9579,12 @@ promjena zvučne kartice</translation>
     <message>
         <location filename="../main.cpp" line="144"/>
         <source>&lt;style&gt; can be Fusion (default) or Windows</source>
-        <translation></translation>
+        <translation>&lt;style&gt; može biti Fusion (zadano) ili Windows</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="145"/>
         <source>style</source>
-        <translation></translation>
+        <translation>stil</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="149"/>
@@ -9577,7 +9594,7 @@ promjena zvučne kartice</translation>
     <message>
         <location filename="../main.cpp" line="150"/>
         <source>rig-name</source>
-        <translation></translation>
+        <translation>naziv-uređaja</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="154"/>
@@ -9590,7 +9607,7 @@ promjena zvučne kartice</translation>
     <message>
         <location filename="../wf_palette_design_dialog.ui" line="14"/>
         <source>Dialog</source>
-        <translation></translation>
+        <translation>Dijalog</translation>
     </message>
     <message>
         <location filename="../wf_palette_design_dialog.ui" line="23"/>

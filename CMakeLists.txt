@@ -1025,6 +1025,7 @@ set (LANGUAGES
   hu_HU
   fr_FR
   it_IT
+  de_DE
   lv_LV
   nl_NL
   pl_PL
@@ -1033,6 +1034,7 @@ set (LANGUAGES
   zh_HK
   zh_CN
   ja_JP
+  ko_KR
   ca_ES
   da_DK
   sv_SE
@@ -1041,6 +1043,29 @@ foreach (lang_ ${LANGUAGES})
   file (TO_NATIVE_PATH translations/jtdx_${lang_}.ts ts_)
   list (APPEND TS_FILES ${ts_})
 endforeach ()  
+
+# CE3TSK: every catalogue that names its own Ko-fi artwork must actually have that artwork.
+# about.cpp renders <img src=":/<tag>_dark.png"> from the tag the catalogue gives for "support",
+# and a tag with no PNG behind it is a silently blank button in the About dialog - which is
+# exactly how German and Korean shipped after they were added (fixed 2026-09-08). A catalogue
+# that leaves the tag untranslated is fine and deliberate: it falls back to the English pair.
+foreach (lang_ ${LANGUAGES})
+  file (READ ${CMAKE_CURRENT_SOURCE_DIR}/translations/jtdx_${lang_}.ts ts_text_)
+  # the <extracomment> that explains the tag sits between <source> and <translation>, so it has
+  # to be allowed for here - a pattern that only tolerated whitespace matched nothing at all and
+  # made this whole check a no-op, which is the very failure it exists to catch.
+  if (ts_text_ MATCHES "<source>support</source>[^<]*(<extracomment>[^<]*</extracomment>[^<]*)?<translation[^>]*>([^<]+)</translation>")
+    set (tag_ ${CMAKE_MATCH_2})
+    foreach (variant_ dark light)
+      if (NOT EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/contrib/${tag_}_${variant_}.png)
+        message (SEND_ERROR
+          "jtdx_${lang_}.ts asks for Ko-fi artwork contrib/${tag_}_${variant_}.png, which does not"
+          " exist - add the wordmark to tools/make_support_button.py and re-run it")
+      endif ()
+    endforeach ()
+  endif ()
+  unset (ts_text_)
+endforeach ()
 if (UPDATE_TRANSLATIONS)
   message (STATUS "UPDATE_TRANSLATIONS option is set.")
   qt5_create_translation (

@@ -2389,7 +2389,7 @@ Format:
     <message>
         <location filename="../Configuration.cpp" line="224"/>
         <source>IARU &amp;Region:</source>
-        <translation>IARU &amp;Region:</translation>
+        <translation>IARU-&amp;region:</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp" line="225"/>
@@ -2418,7 +2418,7 @@ Format:
         <location filename="../FrequencyList.cpp" line="513"/>
         <location filename="../FrequencyList.cpp" line="700"/>
         <source>IARU Region</source>
-        <translation>IARU Region</translation>
+        <translation>IARU-region</translation>
     </message>
     <message>
         <location filename="../FrequencyList.cpp" line="534"/>
@@ -2807,7 +2807,7 @@ Format:
         <location filename="../IARURegions.cpp" line="58"/>
         <location filename="../IARURegions.cpp" line="85"/>
         <source>IARU Region</source>
-        <translation>IARU Region</translation>
+        <translation>IARU-region</translation>
     </message>
 </context>
 <context>
@@ -3576,7 +3576,16 @@ Note:&lt;br&gt;
 - if your computer clock difference is more than 7.5 seconds, there is a chance you will be reporting spots in wrong interval, also QSO start/end time can be affected&lt;br&gt;
 - DT of TX signal will be affected in wrong way if you are trying to compensate RX audio stream delay caused by buffering in SDR software.&lt;br&gt;&lt;br&gt;
 Click by right mouse&apos;s button sets JTDX internal time back to system time.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Venstre museknap forskyder JTDX' interne tid, så dekoderen synkroniserer bedre med signalerne i den indkommende RX-lydstrøm.&lt;br&gt;
+To scenarier understøttes:&lt;br&gt;
+- rough synchronization, if there are shifted signals on the waterfall and no a signal decoded, minimum power value is used in decoder to evaluate time shift till beginning of interval&lt;br&gt;
+- more precise synchronization, if there are signals decoded in previous interval and average DT is out of the -0.19 .. 0.19 sec range. Average DT value is used for JTDX time shift.&lt;br&gt;
+It is recommended to keep at least five interval gap between two consequential attempts of rough and precise synchronization.&lt;br&gt;
+Decoding of current and next interval can be broken by the time shift.&lt;br&gt;
+Bemærk:&lt;br&gt;
+- if your computer clock difference is more than 7.5 seconds, there is a chance you will be reporting spots in wrong interval, also QSO start/end time can be affected&lt;br&gt;
+- DT of TX signal will be affected in wrong way if you are trying to compensate RX audio stream delay caused by buffering in SDR software.&lt;br&gt;&lt;br&gt;
+Højre museknap sætter JTDX' interne tid tilbage til systemtiden.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3202"/>
@@ -3951,7 +3960,7 @@ liste. Listen kan oprettes og vedligeholdes under Indstillinger (F2).</translati
     <message>
         <location filename="../mainwindow.ui" line="3048"/>
         <source>Sync</source>
-        <translation type="unfinished"></translation>
+        <translation>Sync</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4435"/>
@@ -4338,7 +4347,7 @@ liste. Listen kan oprettes og vedligeholdes under Indstillinger (F2).</translati
     <message>
         <location filename="../mainwindow.ui" line="5328"/>
         <source>JTDX forum</source>
-        <translation>JTDX forum</translation>
+        <translation>JTDX-forum</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5333"/>
@@ -4468,7 +4477,7 @@ liste. Listen kan oprettes og vedligeholdes under Indstillinger (F2).</translati
     <message>
         <location filename="../mainwindow.ui" line="5564"/>
         <source>Single shot QSO</source>
-        <translation>Single shot QSO</translation>
+        <translation>Enkelt QSO</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5572"/>
@@ -4790,7 +4799,7 @@ liste. Listen kan oprettes og vedligeholdes under Indstillinger (F2).</translati
     <message>
         <location filename="../mainwindow.cpp" line="970"/>
         <source>KillByName return code: %1</source>
-        <translation>KillByName return code: %1</translation>
+        <translation>KillByName-returkode: %1</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="987"/>
@@ -5253,7 +5262,7 @@ er allerede i CALL3.TXT. Vil du erstatte det?</translation>
     <message>
         <location filename="../mainwindow.cpp" line="6333"/>
         <source>    Freq     Drift  Call          Grid    dBm   Dist</source>
-        <translation>    Freq     Drift  Call          Grid    dBm   Dist</translation>
+        <translation>    Freq     Drift  Kald          Loc     dBm   Afst</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="6427"/>
@@ -5326,7 +5335,8 @@ er allerede i CALL3.TXT. Vil du erstatte det?</translation>
         <location filename="../mainwindow.cpp" line="7645"/>
         <source>Error: %1
 UDP server %2:%3</source>
-        <translation></translation>
+        <translation>Fejl: %1
+UDP-server %2:%3</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="7792"/>
@@ -5391,7 +5401,7 @@ UDP server %2:%3</source>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>RX</source>
-        <translation type="unfinished"></translation>
+        <translation>RX</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
@@ -5476,62 +5486,62 @@ UDP server %2:%3</source>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>1 member</source>
-        <translation type="unfinished"></translation>
+        <translation>1 medlem</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>2 members</source>
-        <translation type="unfinished"></translation>
+        <translation>2 medlemmer</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>3 members</source>
-        <translation type="unfinished"></translation>
+        <translation>3 medlemmer</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>4 members</source>
-        <translation type="unfinished"></translation>
+        <translation>4 medlemmer</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>5 members</source>
-        <translation type="unfinished"></translation>
+        <translation>5 medlemmer</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>6 members</source>
-        <translation type="unfinished"></translation>
+        <translation>6 medlemmer</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>1 member   (+20, 13% of the budget at 8 threads)</source>
-        <translation type="unfinished"></translation>
+        <translation>1 medlem   (+20, 13% af budgettet ved 8 tråde)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>2 members  (+48, 18%)</source>
-        <translation type="unfinished"></translation>
+        <translation>2 medlemmer  (+48, 18%)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>3 members  (+72, 23% - the knee of the curve)</source>
-        <translation type="unfinished"></translation>
+        <translation>3 medlemmer  (+72, 23% - kurvens knæ)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>4 members  (+86, 28%)</source>
-        <translation type="unfinished"></translation>
+        <translation>4 medlemmer  (+86, 28%)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>5 members  (+98, 33% - all that is worth taking)</source>
-        <translation type="unfinished"></translation>
+        <translation>5 medlemmer  (+98, 33% - alt hvad der er værd at tage)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>6 members  (+100, 39% - only 2 more than five)</source>
-        <translation type="unfinished"></translation>
+        <translation>6 medlemmer  (+100, 39% - kun 2 mere end fem)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
@@ -5551,27 +5561,27 @@ UDP server %2:%3</source>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>1 member  (+7 msgs, +1.2 s at 12 threads on the benchmark)</source>
-        <translation type="unfinished"></translation>
+        <translation>1 medlem  (+7 beskeder, +1,2 s ved 12 tråde på benchmarken)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>2 members  (+10, +2.3 s)</source>
-        <translation type="unfinished"></translation>
+        <translation>2 medlemmer  (+10, +2,3 s)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>3 members  (+13, +5.3 s)</source>
-        <translation type="unfinished"></translation>
+        <translation>3 medlemmer  (+13, +5,3 s)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>4 members  (+15, +7.9 s)</source>
-        <translation type="unfinished"></translation>
+        <translation>4 medlemmer  (+15, +7,9 s)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>5 members  (+16, +11.5 s - too slow for a 15 s period on this machine, for replays)</source>
-        <translation type="unfinished"></translation>
+        <translation>5 medlemmer  (+16, +11,5 s - for langsomt til et 15 s interval på denne maskine, til genafspilning)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
@@ -5621,17 +5631,17 @@ UDP server %2:%3</source>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>100-3300 Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>100-3300 Hz</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>300-3300 Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>300-3300 Hz</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>50-3650 Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>50-3650 Hz</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
@@ -5641,52 +5651,52 @@ UDP server %2:%3</source>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>100-3200 Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>100-3200 Hz</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>100-3100 Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>100-3100 Hz</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>100-3000 Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>100-3000 Hz</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>200-3200 Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>200-3200 Hz</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>200-3100 Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>200-3100 Hz</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>200-3000 Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>200-3000 Hz</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>200-2800 Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>200-2800 Hz</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>200-2500 Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>200-2500 Hz</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>200-2400 Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>200-2400 Hz</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>0-5000 Hz (testing only)</source>
-        <translation type="unfinished"></translation>
+        <translation>0-5000 Hz (kun til test)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
@@ -6715,7 +6725,7 @@ Kontroller, at det korrekte navn blev angivet.</translation>
     <message>
         <location filename="../widegraph.ui" line="203"/>
         <source>Bins/Pixel  </source>
-        <translation>Bins/Pixel  </translation>
+        <translation>Bins/pixel  </translation>
     </message>
     <message>
         <location filename="../widegraph.ui" line="234"/>
@@ -6937,7 +6947,7 @@ Kontroller, at det korrekte navn blev angivet.</translation>
     <message>
         <location filename="../Configuration.ui" line="125"/>
         <source>IARU Region:</source>
-        <translation>IARU Region:</translation>
+        <translation>IARU-region:</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="135"/>
@@ -7103,7 +7113,7 @@ Kontroller, at det korrekte navn blev angivet.</translation>
     <message>
         <location filename="../Configuration.ui" line="563"/>
         <source>Tune timer</source>
-        <translation>Tune timer</translation>
+        <translation>Tune-timer</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="570"/>
@@ -7169,7 +7179,7 @@ stille periode, når dekodningen er udført.</translation>
     <message>
         <location filename="../Configuration.ui" line="724"/>
         <source>Poll Interval:</source>
-        <translation>Poll Interval:</translation>
+        <translation>Afsøgningsinterval:</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="734"/>
@@ -7487,7 +7497,7 @@ denne indstilling giver dig mulighed for at vælge, hvilken lydindgang der skal 
     <message>
         <location filename="../Configuration.ui" line="1444"/>
         <source>Rear&amp;/Data</source>
-        <translation>Rear&amp;/Data</translation>
+        <translation>Bag&amp;/Data</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1454"/>
@@ -7542,7 +7552,7 @@ eller båndbredde bliver valgt).</translation>
     <message>
         <location filename="../Configuration.ui" line="1540"/>
         <source>Split Operation</source>
-        <translation>Split Operation</translation>
+        <translation>Split-drift</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1546"/>
@@ -8058,7 +8068,7 @@ og DX Grid-felter, når der sendes en 73 eller fri tekstbesked.</translation>
     <message>
         <location filename="../Configuration.ui" line="2848"/>
         <source>EQSL Password.</source>
-        <translation>EQSL Password.</translation>
+        <translation>eQSL-adgangskode.</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="2858"/>
@@ -9504,7 +9514,7 @@ lydkort ændring</translation>
     <message>
         <location filename="../Configuration.ui"/>
         <source>WW Digi contest</source>
-        <translation type="unfinished"></translation>
+        <translation>WW Digi-contest</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
@@ -9514,27 +9524,27 @@ lydkort ændring</translation>
     <message>
         <location filename="../Configuration.ui"/>
         <source>NA VHF contest</source>
-        <translation type="unfinished"></translation>
+        <translation>NA VHF-contest</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
         <source>EU VHF contest</source>
-        <translation type="unfinished"></translation>
+        <translation>EU VHF-contest</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
         <source>ARRL Field Day</source>
-        <translation type="unfinished"></translation>
+        <translation>ARRL Field Day</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
         <source>ARRL RTTY Roundup</source>
-        <translation type="unfinished"></translation>
+        <translation>ARRL RTTY Roundup</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
         <source>ARRL Digi contest</source>
-        <translation type="unfinished"></translation>
+        <translation>ARRL Digi-contest</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>

@@ -44,7 +44,7 @@
     <message>
         <location filename="../about.ui" line="71"/>
         <source>OK</source>
-        <translation></translation>
+        <translation>Labi</translation>
     </message>
     <message>
         <location filename="../about.ui"/>
@@ -131,7 +131,7 @@
     <message>
         <location filename="../Configuration.cpp" line="1373"/>
         <source>&amp;Cancel</source>
-        <translation></translation>
+        <translation>&amp;Atcelt</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp" line="1388"/>
@@ -215,7 +215,12 @@ Formats:
 	hostname:port
 	IPv4-address:port
 	[IPv6-address]:port</source>
-        <translation type="unfinished"></translation>
+        <translation>TCI pakalpojuma resursdatora nosaukums un ports (nav obligāti).
+Atstājiet tukšu, lai izmantotu šai datorā saprātīgu noklusējumu.
+Formāti:
+	resursdators:ports
+	IPv4-adrese:ports
+	[IPv6-adrese]:ports</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp" line="2977"/>
@@ -319,24 +324,24 @@ Formāts:
     <message>
         <location filename="../Configuration.cpp" line="5453"/>
         <source>Are you sure you want to discard your current working frequencies and replace them with the loaded ones?</source>
-        <translation type="unfinished"></translation>
+        <translation>Vai tiešām vēlaties atmest pašreizējās darba frekvences un aizstāt tās ar ielādētajām?</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp" line="5465"/>
         <source>Merge Working Frequencies</source>
-        <translation type="unfinished"></translation>
+        <translation>Apvienot darba frekvences</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp" line="5492"/>
         <location filename="../Configuration.cpp" line="5501"/>
         <location filename="../Configuration.cpp" line="5511"/>
         <source>Not a valid frequencies file</source>
-        <translation type="unfinished"></translation>
+        <translation>Nederīgs frekvenču fails</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp" line="5492"/>
         <source>Incorrect file magic</source>
-        <translation type="unfinished"></translation>
+        <translation>Nepareizs faila paraksts</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp" line="5501"/>
@@ -351,27 +356,27 @@ Formāts:
     <message>
         <location filename="../Configuration.cpp" line="5521"/>
         <source>Save Working Frequencies</source>
-        <translation type="unfinished"></translation>
+        <translation>Saglabāt darba frekvences</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp" line="5531"/>
         <source>Only Save Selected  Working Frequencies</source>
-        <translation type="unfinished"></translation>
+        <translation>Saglabāt tikai atlasītās darba frekvences</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp" line="5533"/>
         <source>Are you sure you want to save only the working frequencies that are currently selected? Click No to save all.</source>
-        <translation type="unfinished"></translation>
+        <translation>Vai tiešām saglabāt tikai pašlaik atlasītās darba frekvences? Noklikšķiniet uz Nē, lai saglabātu visas.</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp" line="5560"/>
         <source>Reset Working Frequencies</source>
-        <translation type="unfinished"></translation>
+        <translation>Atiestatīt darba frekvences</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp" line="5562"/>
         <source>Are you sure you want to discard your current working frequencies and replace them with default ones?</source>
-        <translation type="unfinished"></translation>
+        <translation>Vai tiešām vēlaties atmest pašreizējās darba frekvences un aizstāt tās ar noklusējuma frekvencēm?</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp" line="5622"/>
@@ -1449,7 +1454,7 @@ Formāts:
     <message>
         <location filename="../logbook/countrydat.cpp" line="236"/>
         <source>Desecheo Is.</source>
-        <translation></translation>
+        <translation>Desečo sala</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="237"/>
@@ -1594,7 +1599,7 @@ Formāts:
     <message>
         <location filename="../logbook/countrydat.cpp" line="265"/>
         <source>Trindade &amp; Martim Vaz</source>
-        <translation></translation>
+        <translation>Trindadi un Martinvasa</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="266"/>
@@ -1679,17 +1684,17 @@ Formāts:
     <message>
         <location filename="../logbook/countrydat.cpp" line="282"/>
         <source>W. Kiribati</source>
-        <translation></translation>
+        <translation>Rietumkiribati</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="283"/>
         <source>C. Kiribati</source>
-        <translation></translation>
+        <translation>Centrālā Kiribati</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="284"/>
         <source>E. Kiribati</source>
-        <translation></translation>
+        <translation>Austrumkiribati</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="285"/>
@@ -1884,7 +1889,7 @@ Formāts:
     <message>
         <location filename="../logbook/countrydat.cpp" line="323"/>
         <source>Mellish Reef</source>
-        <translation></translation>
+        <translation>Melišas rifs</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="324"/>
@@ -1929,7 +1934,7 @@ Formāts:
     <message>
         <location filename="../logbook/countrydat.cpp" line="332"/>
         <source>Ducie Is.</source>
-        <translation></translation>
+        <translation>Dusī sala</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="333"/>
@@ -2114,7 +2119,7 @@ Formāts:
     <message>
         <location filename="../logbook/countrydat.cpp" line="369"/>
         <source>UK Base Areas on Cyprus</source>
-        <translation></translation>
+        <translation>Lielbritānijas bāzes Kiprā</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="370"/>
@@ -2188,80 +2193,83 @@ Formāts:
     <message>
         <location filename="../DXLabSuiteCommanderTransceiver.cpp" line="129"/>
         <source>DX Lab Suite Commander didn&apos;t respond correctly reading frequency: </source>
-        <translation></translation>
+        <translation>DX Lab Suite Commander nekorekti atbildēja, nolasot frekvenci: </translation>
     </message>
     <message>
         <location filename="../DXLabSuiteCommanderTransceiver.cpp" line="176"/>
         <source>DX Lab Suite Commander sent an unrecognised TX state: </source>
-        <translation></translation>
+        <translation>DX Lab Suite Commander nosūtīja neatpazītu raidīšanas stāvokli: </translation>
     </message>
     <message>
         <location filename="../DXLabSuiteCommanderTransceiver.cpp" line="182"/>
         <source>DX Lab Suite Commander didn&apos;t respond correctly polling TX status: </source>
-        <translation></translation>
+        <translation>DX Lab Suite Commander nekorekti atbildēja, aptaujājot raidīšanas stāvokli: </translation>
     </message>
     <message>
         <location filename="../DXLabSuiteCommanderTransceiver.cpp" line="190"/>
         <source>DX Lab Suite Commander rig did not respond to PTT: </source>
-        <translation></translation>
+        <translation>DX Lab Suite Commander transīvers neatbildēja uz PTT: </translation>
     </message>
     <message>
         <location filename="../DXLabSuiteCommanderTransceiver.cpp" line="276"/>
         <source>DX Lab Suite Commander didn&apos;t respond correctly polling frequency: </source>
-        <translation></translation>
+        <translation>DX Lab Suite Commander nekorekti atbildēja, aptaujājot frekvenci: </translation>
     </message>
     <message>
         <location filename="../DXLabSuiteCommanderTransceiver.cpp" line="297"/>
         <source>DX Lab Suite Commander didn&apos;t respond correctly polling TX frequency: </source>
-        <translation type="unfinished"></translation>
+        <translation>DX Lab Suite Commander nekorekti atbildēja, aptaujājot raidīšanas frekvenci: </translation>
     </message>
     <message>
         <location filename="../DXLabSuiteCommanderTransceiver.cpp" line="316"/>
         <source>DX Lab Suite Commander sent an unrecognised split state: </source>
-        <translation type="unfinished"></translation>
+        <translation>DX Lab Suite Commander nosūtīja neatpazītu split stāvokli: </translation>
     </message>
     <message>
         <location filename="../DXLabSuiteCommanderTransceiver.cpp" line="322"/>
         <source>DX Lab Suite Commander didn&apos;t respond correctly polling split status: </source>
-        <translation type="unfinished"></translation>
+        <translation>DX Lab Suite Commander nekorekti atbildēja, aptaujājot split stāvokli: </translation>
     </message>
     <message>
         <location filename="../DXLabSuiteCommanderTransceiver.cpp" line="378"/>
         <source>DX Lab Suite Commander sent an unrecognised mode: &quot;</source>
-        <translation></translation>
+        <translation>DX Lab Suite Commander nosūtīja neatpazītu modi: "</translation>
     </message>
     <message>
         <location filename="../DXLabSuiteCommanderTransceiver.cpp" line="385"/>
         <source>DX Lab Suite Commander didn&apos;t respond correctly polling mode: </source>
-        <translation></translation>
+        <translation>DX Lab Suite Commander nekorekti atbildēja, aptaujājot modi: </translation>
     </message>
     <message>
         <location filename="../DXLabSuiteCommanderTransceiver.cpp" line="402"/>
         <source>DX Lab Suite Commander send command failed
 </source>
-        <translation></translation>
+        <translation>DX Lab Suite Commander komandas nosūtīšana neizdevās
+</translation>
     </message>
     <message>
         <location filename="../DXLabSuiteCommanderTransceiver.cpp" line="414"/>
         <source>DX Lab Suite Commander failed to send command &quot;%1&quot;: %2
 </source>
-        <translation></translation>
+        <translation>DX Lab Suite Commander neizdevās nosūtīt komandu "%1": %2
+</translation>
     </message>
     <message>
         <location filename="../DXLabSuiteCommanderTransceiver.cpp" line="431"/>
         <source>DX Lab Suite Commander send command &quot;%1&quot; read reply failed: %2
 </source>
-        <translation></translation>
+        <translation>DX Lab Suite Commander komandai "%1" neizdevās nolasīt atbildi: %2
+</translation>
     </message>
     <message>
         <location filename="../DXLabSuiteCommanderTransceiver.cpp" line="442"/>
         <source>DX Lab Suite Commander retries exhausted sending command &quot;%1&quot;</source>
-        <translation></translation>
+        <translation>DX Lab Suite Commander izsmēla atkārtotos mēģinājumus, sūtot komandu "%1"</translation>
     </message>
     <message>
         <location filename="../DXLabSuiteCommanderTransceiver.cpp" line="505"/>
         <source>DX Lab Suite Commander sent an unrecognized frequency</source>
-        <translation></translation>
+        <translation>DX Lab Suite Commander nosūtīja neatpazītu frekvenci</translation>
     </message>
 </context>
 <context>
@@ -2279,7 +2287,7 @@ Formāts:
     <message>
         <location filename="../decodedtext.cpp" line="29"/>
         <source>nQSOProgress</source>
-        <translation></translation>
+        <translation>nQSOProgress</translation>
     </message>
     <message>
         <location filename="../decodedtext.cpp" line="30"/>
@@ -2307,7 +2315,7 @@ Formāts:
     <message>
         <location filename="../WFPalette.cpp" line="123"/>
         <source>&amp;Cancel</source>
-        <translation></translation>
+        <translation>&amp;Atcelt</translation>
     </message>
     <message>
         <location filename="../WFPalette.cpp" line="126"/>
@@ -2332,23 +2340,23 @@ Formāts:
     <message>
         <location filename="../WFPalette.cpp" line="208"/>
         <source>Insert &amp;after ...</source>
-        <translation></translation>
+        <translation>Ievietot &amp;pēc ...</translation>
     </message>
     <message>
         <location filename="../WFPalette.cpp" line="223"/>
         <source>Import Palette</source>
-        <translation></translation>
+        <translation>Importēt paleti</translation>
     </message>
     <message>
         <location filename="../WFPalette.cpp" line="223"/>
         <location filename="../WFPalette.cpp" line="234"/>
         <source>Palettes (*.pal)</source>
-        <translation></translation>
+        <translation>Paletes (*.pal)</translation>
     </message>
     <message>
         <location filename="../WFPalette.cpp" line="234"/>
         <source>Export Palette</source>
-        <translation></translation>
+        <translation>Eksportēt paleti</translation>
     </message>
 </context>
 <context>
@@ -2397,7 +2405,7 @@ Formāts:
     <message>
         <location filename="../Configuration.cpp" line="233"/>
         <source>&amp;Cancel</source>
-        <translation></translation>
+        <translation>&amp;Atcelt</translation>
     </message>
 </context>
 <context>
@@ -2446,76 +2454,78 @@ Formāts:
     <message>
         <location filename="../HRDTransceiver.cpp" line="162"/>
         <source>Failed to open file &quot;%1&quot;: %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>Neizdevās atvērt failu "%1": %2.</translation>
     </message>
     <message>
         <location filename="../HRDTransceiver.cpp" line="177"/>
         <location filename="../HRDTransceiver.cpp" line="201"/>
         <source>Ham Radio Deluxe: no rig found</source>
-        <translation type="unfinished"></translation>
+        <translation>Ham Radio Deluxe: transīvers nav atrasts</translation>
     </message>
     <message>
         <location filename="../HRDTransceiver.cpp" line="425"/>
         <source>Ham Radio Deluxe: rig doesn&apos;t support mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Ham Radio Deluxe: transīvers neatbalsta modi</translation>
     </message>
     <message>
         <location filename="../HRDTransceiver.cpp" line="444"/>
         <source>Ham Radio Deluxe: sent an unrecognised mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Ham Radio Deluxe: nosūtīja neatpazītu modi</translation>
     </message>
     <message>
         <location filename="../HRDTransceiver.cpp" line="479"/>
         <source>Ham Radio Deluxe: item not found in %1 dropdown list</source>
-        <translation type="unfinished"></translation>
+        <translation>Ham Radio Deluxe: vienums nav atrasts %1 nolaižamajā sarakstā</translation>
     </message>
     <message>
         <location filename="../HRDTransceiver.cpp" line="523"/>
         <source>Ham Radio Deluxe: button not available</source>
-        <translation type="unfinished"></translation>
+        <translation>Ham Radio Deluxe: poga nav pieejama</translation>
     </message>
     <message>
         <location filename="../HRDTransceiver.cpp" line="889"/>
         <source>Ham Radio Deluxe didn&apos;t respond as expected</source>
-        <translation type="unfinished"></translation>
+        <translation>Ham Radio Deluxe neatbildēja, kā gaidīts</translation>
     </message>
     <message>
         <location filename="../HRDTransceiver.cpp" line="1038"/>
         <source>Ham Radio Deluxe: rig has disappeared or changed</source>
-        <translation type="unfinished"></translation>
+        <translation>Ham Radio Deluxe: transīvers ir pazudis vai mainījies</translation>
     </message>
     <message>
         <location filename="../HRDTransceiver.cpp" line="1053"/>
         <source>Ham Radio Deluxe send command &quot;%1&quot; failed %2
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Ham Radio Deluxe komandas "%1" nosūtīšana neizdevās %2
+</translation>
     </message>
     <message>
         <location filename="../HRDTransceiver.cpp" line="1066"/>
         <location filename="../HRDTransceiver.cpp" line="1079"/>
         <source>Ham Radio Deluxe: failed to write command &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Ham Radio Deluxe: neizdevās ierakstīt komandu "%1"</translation>
     </message>
     <message>
         <location filename="../HRDTransceiver.cpp" line="1096"/>
         <source>Ham Radio Deluxe sent an invalid reply to our command &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Ham Radio Deluxe nosūtīja nederīgu atbildi uz mūsu komandu "%1"</translation>
     </message>
     <message>
         <location filename="../HRDTransceiver.cpp" line="1150"/>
         <source>Ham Radio Deluxe failed to reply to command &quot;%1&quot; %2
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Ham Radio Deluxe neatbildēja uz komandu "%1" %2
+</translation>
     </message>
     <message>
         <location filename="../HRDTransceiver.cpp" line="1160"/>
         <source>Ham Radio Deluxe retries exhausted sending command &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Ham Radio Deluxe izsmēla atkārtotos mēģinājumus, sūtot komandu "%1"</translation>
     </message>
     <message>
         <location filename="../HRDTransceiver.cpp" line="1173"/>
         <source>Ham Radio Deluxe didn&apos;t respond to command &quot;%1&quot; as expected</source>
-        <translation type="unfinished"></translation>
+        <translation>Ham Radio Deluxe neatbildēja uz komandu "%1", kā gaidīts</translation>
     </message>
 </context>
 <context>
@@ -2524,37 +2534,37 @@ Formāts:
         <location filename="../HamlibTransceiver.cpp" line="214"/>
         <location filename="../HamlibTransceiver.cpp" line="299"/>
         <source>Hamlib initialisation error</source>
-        <translation type="unfinished"></translation>
+        <translation>Hamlib inicializācijas kļūda</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="259"/>
         <source>Command completed successfully</source>
-        <translation type="unfinished"></translation>
+        <translation>Komanda izpildīta veiksmīgi</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="260"/>
         <source>Invalid parameter</source>
-        <translation type="unfinished"></translation>
+        <translation>Nederīgs parametrs</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="261"/>
         <source>Invalid configuration</source>
-        <translation type="unfinished"></translation>
+        <translation>Nederīga konfigurācija</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="262"/>
         <source>Memory shortage</source>
-        <translation type="unfinished"></translation>
+        <translation>Trūkst atmiņas</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="263"/>
         <source>Feature not implemented</source>
-        <translation type="unfinished"></translation>
+        <translation>Funkcija nav realizēta</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="264"/>
         <source>Communication timed out</source>
-        <translation type="unfinished"></translation>
+        <translation>Sakaru noildze</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="265"/>
@@ -2564,47 +2574,47 @@ Formāts:
     <message>
         <location filename="../HamlibTransceiver.cpp" line="266"/>
         <source>Internal Hamlib error</source>
-        <translation type="unfinished"></translation>
+        <translation>Iekšēja Hamlib kļūda</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="267"/>
         <source>Protocol error</source>
-        <translation type="unfinished"></translation>
+        <translation>Protokola kļūda</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="268"/>
         <source>Command rejected by the rig</source>
-        <translation type="unfinished"></translation>
+        <translation>Transīvers noraidīja komandu</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="269"/>
         <source>Command performed, but arg truncated, result not guaranteed</source>
-        <translation type="unfinished"></translation>
+        <translation>Komanda izpildīta, bet arguments apcirsts, rezultāts nav garantēts</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="270"/>
         <source>Feature not available</source>
-        <translation type="unfinished"></translation>
+        <translation>Funkcija nav pieejama</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="271"/>
         <source>Target VFO unaccessible</source>
-        <translation type="unfinished"></translation>
+        <translation>Mērķa VFO nav pieejams</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="272"/>
         <source>Communication bus error</source>
-        <translation type="unfinished"></translation>
+        <translation>Sakaru kopnes kļūda</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="273"/>
         <source>Communication bus collision</source>
-        <translation type="unfinished"></translation>
+        <translation>Sakaru kopnes sadursme</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="274"/>
         <source>NULL RIG handle or invalid pointer parameter</source>
-        <translation type="unfinished"></translation>
+        <translation>NULL RIG deskriptors vai nederīgs rādītāja parametrs</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="275"/>
@@ -2614,85 +2624,85 @@ Formāts:
     <message>
         <location filename="../HamlibTransceiver.cpp" line="276"/>
         <source>Argument out of domain of func</source>
-        <translation type="unfinished"></translation>
+        <translation>Arguments ārpus funkcijas definīcijas apgabala</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="434"/>
         <source>Hamlib settings file error: %1 at character offset %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Hamlib iestatījumu faila kļūda: %1 rakstzīmes nobīdē %2</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="440"/>
         <source>Hamlib settings file error: top level must be a JSON object</source>
-        <translation type="unfinished"></translation>
+        <translation>Hamlib iestatījumu faila kļūda: augšējam līmenim jābūt JSON objektam</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="452"/>
         <source>Hamlib settings file error: config must be a JSON object</source>
-        <translation type="unfinished"></translation>
+        <translation>Hamlib iestatījumu faila kļūda: config jābūt JSON objektam</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="360"/>
         <source>Unsupported CAT type</source>
-        <translation type="unfinished"></translation>
+        <translation>Neatbalstīts CAT tips</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="476"/>
         <source>Hamlib error: %1 while %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Hamlib kļūda: %1, kamēr %2</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="493"/>
         <source>opening connection to rig</source>
-        <translation type="unfinished"></translation>
+        <translation>tiek atvērts savienojums ar transīveru</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="555"/>
         <source>getting current frequency</source>
-        <translation type="unfinished"></translation>
+        <translation>tiek nolasīta pašreizējā frekvence</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="564"/>
         <source>getting current mode</source>
-        <translation type="unfinished"></translation>
+        <translation>tiek nolasīta pašreizējā mode</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="613"/>
         <location filename="../HamlibTransceiver.cpp" line="648"/>
         <source>exchanging VFOs</source>
-        <translation type="unfinished"></translation>
+        <translation>tiek apmainīti VFO</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="621"/>
         <location filename="../HamlibTransceiver.cpp" line="1177"/>
         <source>getting other VFO frequency</source>
-        <translation type="unfinished"></translation>
+        <translation>tiek nolasīta otra VFO frekvence</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="630"/>
         <source>getting other VFO mode</source>
-        <translation type="unfinished"></translation>
+        <translation>tiek nolasīta otra VFO mode</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="658"/>
         <source>setting current VFO</source>
-        <translation type="unfinished"></translation>
+        <translation>tiek iestatīts pašreizējais VFO</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="667"/>
         <source>getting frequency</source>
-        <translation type="unfinished"></translation>
+        <translation>tiek nolasīta frekvence</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="676"/>
         <source>getting mode</source>
-        <translation type="unfinished"></translation>
+        <translation>tiek nolasīta mode</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="698"/>
         <location filename="../HamlibTransceiver.cpp" line="1092"/>
         <source>getting current VFO</source>
-        <translation type="unfinished"></translation>
+        <translation>tiek nolasīts pašreizējais VFO</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="757"/>
@@ -2700,7 +2710,7 @@ Formāts:
         <location filename="../HamlibTransceiver.cpp" line="779"/>
         <location filename="../HamlibTransceiver.cpp" line="1151"/>
         <source>getting current VFO frequency</source>
-        <translation type="unfinished"></translation>
+        <translation>tiek nolasīta pašreizējā VFO frekvence</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="763"/>
@@ -2710,7 +2720,7 @@ Formāts:
         <location filename="../HamlibTransceiver.cpp" line="892"/>
         <location filename="../HamlibTransceiver.cpp" line="953"/>
         <source>setting frequency</source>
-        <translation type="unfinished"></translation>
+        <translation>tiek iestatīta frekvence</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="882"/>
@@ -2718,7 +2728,7 @@ Formāts:
         <location filename="../HamlibTransceiver.cpp" line="1032"/>
         <location filename="../HamlibTransceiver.cpp" line="1045"/>
         <source>getting current VFO mode</source>
-        <translation type="unfinished"></translation>
+        <translation>tiek nolasīta pašreizējā VFO mode</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="888"/>
@@ -2727,64 +2737,64 @@ Formāts:
         <location filename="../HamlibTransceiver.cpp" line="1038"/>
         <location filename="../HamlibTransceiver.cpp" line="1051"/>
         <source>setting current VFO mode</source>
-        <translation type="unfinished"></translation>
+        <translation>tiek iestatīta pašreizējā VFO mode</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="940"/>
         <location filename="../HamlibTransceiver.cpp" line="1009"/>
         <source>setting/unsetting split mode</source>
-        <translation type="unfinished"></translation>
+        <translation>tiek ieslēgts/izslēgts split režīms</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="951"/>
         <location filename="../HamlibTransceiver.cpp" line="991"/>
         <source>setting split mode</source>
-        <translation type="unfinished"></translation>
+        <translation>tiek iestatīts split režīms</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="979"/>
         <source>setting split TX frequency and mode</source>
-        <translation type="unfinished"></translation>
+        <translation>tiek iestatīta split raidīšanas frekvence un mode</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="984"/>
         <source>setting split TX frequency</source>
-        <translation type="unfinished"></translation>
+        <translation>tiek iestatīta split raidīšanas frekvence</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="1056"/>
         <source>getting split TX VFO mode</source>
-        <translation type="unfinished"></translation>
+        <translation>tiek nolasīta split raidīšanas VFO mode</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="1063"/>
         <source>setting split TX VFO mode</source>
-        <translation type="unfinished"></translation>
+        <translation>tiek iestatīta split raidīšanas VFO mode</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="1343"/>
         <source>getting PTT state</source>
-        <translation type="unfinished"></translation>
+        <translation>tiek nolasīts PTT stāvoklis</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="1379"/>
         <source>setting PTT on</source>
-        <translation type="unfinished"></translation>
+        <translation>tiek ieslēgts PTT</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="1387"/>
         <source>setting PTT off</source>
-        <translation type="unfinished"></translation>
+        <translation>tiek izslēgts PTT</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="1399"/>
         <source>setting a configuration item</source>
-        <translation type="unfinished"></translation>
+        <translation>tiek iestatīts konfigurācijas vienums</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="1409"/>
         <source>getting a configuration item</source>
-        <translation type="unfinished"></translation>
+        <translation>tiek nolasīts konfigurācijas vienums</translation>
     </message>
 </context>
 <context>
@@ -2801,7 +2811,7 @@ Formāts:
     <message>
         <location filename="../JTDXMessageBox.cpp" line="39"/>
         <source>&amp;OK</source>
-        <translation></translation>
+        <translation>&amp;Labi</translation>
     </message>
     <message>
         <location filename="../JTDXMessageBox.cpp" line="40"/>
@@ -2822,12 +2832,12 @@ Formāts:
         <location filename="../JTDXMessageBox.cpp" line="43"/>
         <location filename="../mainwindow.cpp" line="4025"/>
         <source>&amp;Yes</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Jā</translation>
     </message>
     <message>
         <location filename="../JTDXMessageBox.cpp" line="44"/>
         <source>Yes to &amp;All</source>
-        <translation type="unfinished"></translation>
+        <translation>Jā &amp;visiem</translation>
     </message>
     <message>
         <location filename="../JTDXMessageBox.cpp" line="45"/>
@@ -2838,7 +2848,7 @@ Formāts:
     <message>
         <location filename="../JTDXMessageBox.cpp" line="46"/>
         <source>N&amp;o to All</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Nē visiem</translation>
     </message>
     <message>
         <location filename="../JTDXMessageBox.cpp" line="47"/>
@@ -2848,7 +2858,7 @@ Formāts:
     <message>
         <location filename="../JTDXMessageBox.cpp" line="48"/>
         <source>&amp;Retry</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Mēģināt vēlreiz</translation>
     </message>
     <message>
         <location filename="../JTDXMessageBox.cpp" line="49"/>
@@ -2863,7 +2873,7 @@ Formāts:
     <message>
         <location filename="../JTDXMessageBox.cpp" line="51"/>
         <source>&amp;Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Atcelt</translation>
     </message>
     <message>
         <location filename="../JTDXMessageBox.cpp" line="52"/>
@@ -2912,7 +2922,7 @@ Formāts:
         <location filename="../logqso.ui" line="82"/>
         <location filename="../logqso.ui" line="114"/>
         <source>dd/MM/yyyy HH:mm:ss</source>
-        <translation></translation>
+        <translation>dd.MM.yyyy HH:mm:ss</translation>
     </message>
     <message>
         <location filename="../logqso.ui" line="98"/>
@@ -2969,17 +2979,17 @@ Formāts:
     <message>
         <location filename="../logqso.ui" line="367"/>
         <source>EQSL MSG</source>
-        <translation></translation>
+        <translation>EQSL ziņojums</translation>
     </message>
     <message>
         <location filename="../logqso.cpp" line="27"/>
         <source>&amp;OK</source>
-        <translation></translation>
+        <translation>&amp;Labi</translation>
     </message>
     <message>
         <location filename="../logqso.cpp" line="28"/>
         <source>&amp;Cancel</source>
-        <translation></translation>
+        <translation>&amp;Atcelt</translation>
     </message>
     <message>
         <location filename="../logqso.cpp" line="222"/>
@@ -2992,12 +3002,12 @@ Formāts:
     <message>
         <location filename="../mainwindow.ui" line="26"/>
         <source>JTDX</source>
-        <translation></translation>
+        <translation>JTDX</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="175"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Avg: accumulated average DT of decoded signals on current band.&lt;/p&gt;&lt;p&gt;Lag: it is decoder lag calculated relatively to beginning of next interval, negative values mean there is spare time available to increase decoding depth, positive values is decoder&apos;s lag into TX or next interval meaning there may be no enough CPU resources for selected decoding depth to provide reliable signal transmission.&lt;/p&gt;&lt;p&gt;&lt;/p&gt;&lt;p&gt;Lag depends on CPU performance, noise conditions, band fullness and other programs using computer, it can be decreased by reducing waterfall bandwidth. If Lag is constantly negative then CPU handling well interval decoding and you can try to make decoding more aggressive to get more decodes.&lt;/p&gt;&lt;p&gt;FT8: if Lag is 0 .. 0.4 then you can still use Autoseq 3/7 (autoselect will trigger change of TX message early enough to transmit full message). If Lag &gt; 0.4 then you should try to decrease decoding aggressivity. If still Lag &gt; 0.4 then Autoseq 2/6 should be used as responding to incoming call will be partially damaged at transmission in AutoSeq 3/7. If constantly Lag  &gt; 2 then your CPU is unsuitable to operate in FT8 with current decoder settings. Sure You can monitor as SWL.&lt;/p&gt;&lt;p&gt;/xx: number of decoded messages in last interval.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Vid: dekodēto signālu uzkrātais vidējais DT pašreizējā joslā.&lt;/p&gt;&lt;p&gt;Nobīde: dekodētāja kavējums attiecībā pret nākamā intervāla sākumu. Negatīvas vērtības nozīmē, ka ir laika rezerve dekodēšanas dziļuma palielināšanai; pozitīvas nozīmē, ka dekodētājs ieiet raidīšanā vai nākamajā intervālā, tātad procesora resursu izvēlētajam dziļumam var nepietikt drošai signāla raidīšanai.&lt;/p&gt;&lt;p&gt;&lt;/p&gt;&lt;p&gt;Nobīde ir atkarīga no procesora veiktspējas, trokšņu apstākļiem, joslas noslogotības un citām datorā darbojošamies programmām; to var samazināt, sašaurinot ūdenskrituma joslu. Ja nobīde pastāvīgi ir negatīva, procesors ar intervāla dekodēšanu tiek galā un varat mēģināt dekodēt agresīvāk, lai iegūtu vairāk dekodējumu.&lt;/p&gt;&lt;p&gt;FT8: ja nobīde ir 0 .. 0,4, varat lietot AutoSeq 3/7 (automātiskā izvēle nomainīs raidāmo ziņojumu pietiekami agri, lai to noraidītu pilnībā). Ja nobīde ir lielāka par 0,4, mēģiniet samazināt dekodēšanas agresivitāti. Ja tā joprojām pārsniedz 0,4, jālieto AutoSeq 2/6, jo AutoSeq 3/7 atbilde uz ienākošu izsaukumu tiks noraidīta bojāta. Ja nobīde pastāvīgi pārsniedz 2, jūsu procesors ar šiem iestatījumiem FT8 darbam nav piemērots; protams, varat klausīties kā SWL.&lt;/p&gt;&lt;p&gt;/xx: pēdējā intervālā dekodēto ziņojumu skaits.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="181"/>
@@ -3008,7 +3018,7 @@ Formāts:
     <message>
         <location filename="../mainwindow.ui" line="282"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Lost audio blocks. FT8 15sec interval has 52 blocks of audio data, where decoder being triggered if audio data reached 51 blocks in &apos;SWL/late strat of decoder&apos; modes or 50 blocks otherwise. Under Windows OS there were multiple reports audio data being lost, for Windows OS there is workaround implemented to start FT8 decoder if there at least 46 out of 52 audio blocks received. Lost audio blocks notification lets user know there is something wrong in the setup.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Zaudētie audio bloki. FT8 15 sekunžu intervālā ir 52 audio datu bloki; dekodētājs tiek palaists, kad saņemti 51 bloks režīmos 'SWL/vēlā dekodētāja palaišana' vai 50 bloki pārējos gadījumos. Windows vidē vairākkārt ziņots par audio datu zudumu, tāpēc tur FT8 dekodētājs tiek palaists jau tad, ja saņemti vismaz 46 no 52 blokiem. Paziņojums par zaudētajiem blokiem norāda, ka iestatījumos kaut kas nav kārtībā.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="288"/>
@@ -3020,12 +3030,12 @@ Formāts:
         <location filename="../mainwindow.cpp" line="6335"/>
         <location filename="../mainwindow.cpp" line="6346"/>
         <source>Band Activity</source>
-        <translation></translation>
+        <translation>Joslas aktivitāte</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="397"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If orange or red there has been a rig control failure, click to reset and read the dial frequency.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Oranžs vai sarkans nozīmē transīvera vadības kļūmi; noklikšķiniet, lai atiestatītu un nolasītu skalas frekvenci.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="417"/>
@@ -3035,12 +3045,12 @@ Formāts:
     <message>
         <location filename="../mainwindow.ui" line="667"/>
         <source>USB dial frequency</source>
-        <translation></translation>
+        <translation>USB skalas frekvence</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="679"/>
         <source>14.078 000</source>
-        <translation></translation>
+        <translation>14.078 000</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="708"/>
@@ -3050,7 +3060,7 @@ Formāts:
     <message>
         <location filename="../mainwindow.ui" line="718"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Use this control to show or hide spot edit line&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ar šo vadīklu var parādīt vai paslēpt spota rediģēšanas rindu&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="724"/>
@@ -3060,12 +3070,12 @@ Formāts:
     <message>
         <location filename="../mainwindow.ui" line="743"/>
         <source>Select operating band or frequency in MHz</source>
-        <translation type="unfinished"></translation>
+        <translation>Izvēlieties darba joslu vai frekvenci MHz</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="788"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;DXSummit spot information field preview.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;DXSummit spota informācijas lauka priekšskatījums.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="791"/>
@@ -3076,7 +3086,7 @@ Formāts:
         <location filename="../mainwindow.ui" line="803"/>
         <location filename="../mainwindow.ui" line="813"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;DXSummit spot line edit: mode in the information field being spotted automatically, user can add own text message in the information field. Available macros: #D is for distance, #G is for &quot;Grid1&lt;&gt;Grid2&quot;, #R is for report value. Information field preview is available.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;DXSummit spota rindas rediģēšana: mode informācijas laukā tiek spotota automātiski, lietotājs var pievienot savu tekstu. Pieejamie makro: #D ir attālums, #G ir "Lokators1&lt;&gt;Lokators2", #R ir raporta vērtība. Pieejams informācijas lauka priekšskatījums.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="806"/>
@@ -3087,7 +3097,7 @@ Formāts:
         <location filename="../mainwindow.ui" line="820"/>
         <location filename="../mainwindow.ui" line="830"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Type of the propagation.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Propagācijas veids.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="823"/>
@@ -3102,27 +3112,27 @@ Formāts:
     <message>
         <location filename="../mainwindow.ui" line="1003"/>
         <source>Locator of station to be worked</source>
-        <translation type="unfinished"></translation>
+        <translation>Strādājamās stacijas lokātors</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1022"/>
         <source>Callsign of station to be worked</source>
-        <translation type="unfinished"></translation>
+        <translation>Strādājamās stacijas izsaukuma signāls</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1041"/>
         <source>Search for callsign in database</source>
-        <translation type="unfinished"></translation>
+        <translation>Meklēt izsaukuma signālu datubāzē</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1044"/>
         <source>&amp;Lookup</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Meklēt</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1057"/>
         <source>Add callsign and locator to database</source>
-        <translation type="unfinished"></translation>
+        <translation>Pievienot izsaukuma signālu un lokātoru datubāzei</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1060"/>
@@ -3132,7 +3142,7 @@ Formāts:
     <message>
         <location filename="../mainwindow.ui" line="1095"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Click by left mouse&apos;s button to spot DX call to dxsummit.fi (spotting shall be enabled in Reporting tab of the settings). Click by right mouse&apos;s button to add callsign to the &apos;Hide messages from callsigns&apos; filter.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ar kreiso peles pogu DX izsaukuma signālu var nospotot uz dxsummit.fi (spotēšanai jābūt ieslēgtai iestatījumu cilnē Raportēšana). Ar labo peles pogu izsaukuma signālu var pievienot filtram 'Slēpt ziņojumus no izsaukuma signāliem'.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1098"/>
@@ -3145,70 +3155,70 @@ Formāts:
     <message>
         <location filename="../mainwindow.ui" line="1371"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:18pt;&quot;&gt;01:23:45 &lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align="center"&gt;&lt;span style=" font-size:18pt;"&gt;01:23:45 &lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1405"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Toggle TX minute&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Pārslēgt raidīšanas minūti&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1411"/>
         <source>TX minute</source>
-        <translation type="unfinished"></translation>
+        <translation>Raidīšanas minūte</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1738"/>
         <source>Audio Rx frequency</source>
-        <translation type="unfinished"></translation>
+        <translation>Uztveršanas NF frekvence</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1638"/>
         <location filename="../mainwindow.ui" line="1744"/>
         <location filename="../mainwindow.ui" line="4410"/>
         <source>  Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>  Hz</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1747"/>
         <source>Rx  </source>
-        <translation type="unfinished"></translation>
+        <translation>Rx  </translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1805"/>
         <source>Toggle Tx mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Pārslēgt raidīšanas modi</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1808"/>
         <source>Tx JT9 @</source>
-        <translation type="unfinished"></translation>
+        <translation>Tx JT9 @</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1451"/>
         <source>Hound</source>
-        <translation type="unfinished"></translation>
+        <translation>Hound</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1479"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Signal report (dB)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Signāla raports (dB)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1482"/>
         <source>Report </source>
-        <translation type="unfinished"></translation>
+        <translation>Raports </translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1632"/>
         <source>Audio Tx frequency</source>
-        <translation type="unfinished"></translation>
+        <translation>Raidīšanas NF frekvence</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1641"/>
         <location filename="../mainwindow.ui" line="4413"/>
         <source>Tx  </source>
-        <translation type="unfinished"></translation>
+        <translation>Tx  </translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1854"/>
@@ -3230,63 +3240,63 @@ Formāts:
     <message>
         <location filename="../mainwindow.ui" line="1769"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Use different Rx/Tx AF frequencies or set Tx frequency equal to Rx AF frequency.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Lietot atšķirīgas uztveršanas un raidīšanas NF frekvences vai iestatīt raidīšanas frekvenci vienādu ar uztveršanas NF frekvenci.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1775"/>
         <source>Split Tx/Rx</source>
-        <translation type="unfinished"></translation>
+        <translation>Split Tx/Rx</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1708"/>
         <source>Set Rx frequency to Tx Frequency</source>
-        <translation type="unfinished"></translation>
+        <translation>Iestatīt uztveršanas frekvenci vienādu ar raidīšanas frekvenci</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1507"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enable semi-automatic message sequencing. In calling CQ operation autoselect by default searching for response with the highiest priority.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ieslēgt pusautomātisku ziņojumu secību. Izsaucot CQ, automātiskā izvēle pēc noklusējuma meklē atbildi ar augstāko prioritāti.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1521"/>
         <location filename="../mainwindow.ui" line="4834"/>
         <source>AutoSeq</source>
-        <translation type="unfinished"></translation>
+        <translation>AutoSeq</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1537"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Double-click on call sets TX enable&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dubultklikšķis uz izsaukuma signāla ieslēdz raidīšanu&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1551"/>
         <source>AutoTX</source>
-        <translation type="unfinished"></translation>
+        <translation>AutoTX</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1680"/>
         <source>Set Tx frequency to Rx Frequency</source>
-        <translation type="unfinished"></translation>
+        <translation>Iestatīt raidīšanas frekvenci vienādu ar uztveršanas frekvenci</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1567"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Use this control to show or hide wanted callsign/prefix edit lines&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ar šo vadīklu var parādīt vai paslēpt meklēto izsaukuma signālu/prefiksu rediģēšanas rindas&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1570"/>
         <source>Wanted</source>
-        <translation type="unfinished"></translation>
+        <translation>Meklētie</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1589"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Candidate list thinning, this feature is dedicated to wideband decoding with slow CPUs and &apos;minimum&apos; wideband decoder sensitivity setting. Candidate list being sorted by synchonization pattern level with applied DT weight factor, candidates with low value will not be processed by decoder to decrease time spent for interval decoding. This feature is not applied to QSO RX frequency.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Kandidātu saraksta retināšana; šī funkcija paredzēta platjoslas dekodēšanai ar lēniem procesoriem un platjoslas dekodētāja jutību 'minimums'. Saraksts tiek kārtots pēc sinhronizācijas raksta līmeņa ar piemērotu DT svara koeficientu; kandidāti ar zemu vērtību netiek dekodēti, lai saīsinātu intervāla dekodēšanas laiku. Uz QSO uztveršanas frekvenci šī funkcija neattiecas.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1848"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;The button provides choice between S-meter units and dBm. CAT shall be set up via Hamlib or TCI to get S-meter working, some rigs may not be supported.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Poga pārslēdz starp S metra vienībām un dBm. Lai S metrs darbotos, CAT jābūt iestatītam caur Hamlib vai TCI; daži transīveri var netikt atbalstīti.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1901"/>
@@ -3296,13 +3306,13 @@ Formāts:
     <message>
         <location filename="../mainwindow.ui" line="1923"/>
         <source>Adjust Tx audio level</source>
-        <translation type="unfinished"></translation>
+        <translation>Regulēt raidāmā audio līmeni</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1992"/>
         <location filename="../mainwindow.ui" line="2008"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Comma separated list of the wanted callsigns. Autoselection under AutoSeq 1..7 will process wanted callsign according to the choosen notifications/priorities, this functionality is not supported under AutoSeq0. Non FT8 modes only: for compound callsigns the base callsign shall be used in the list, sometimes base callsign will be copied from the decoded message: when logging such QSO user will have to change correspondent&apos;s callsign to compound one if needed.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ar komatiem atdalīts meklēto izsaukuma signālu saraksts. AutoSeq 1..7 automātiskā izvēle apstrādās meklēto izsaukuma signālu atbilstoši izvēlētajiem paziņojumiem un prioritātēm; AutoSeq0 šī funkcija netiek atbalstīta. Tikai ne-FT8 modēs: saliktajiem izsaukuma signāliem sarakstā jālieto pamata izsaukuma signāls; dažkārt no dekodētā ziņojuma tiks pārkopēts pamata izsaukuma signāls, tāpēc, ierakstot šādu QSO žurnālā, korespondenta izsaukuma signāls vajadzības gadījumā jālabo uz salikto.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1995"/>
@@ -3312,19 +3322,19 @@ Formāts:
     <message>
         <location filename="../mainwindow.ui" line="2021"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Clear callsign from this list at logging of the QSO.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ierakstot QSO žurnālā, izņemt izsaukuma signālu no šī saraksta.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2027"/>
         <location filename="../mainwindow.ui" line="2103"/>
         <source>Clr</source>
-        <translation type="unfinished"></translation>
+        <translation>Clr</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2041"/>
         <location filename="../mainwindow.ui" line="2057"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Comma separated list of the wanted prefixes. Autoselection under AutoSeq 1..7 will process wanted prefix according to the choosen notifications/priorities, this functionality is not supported under AutoSeq0. For compound callsigns prefix is recognized at beginning of the callsign. Autoselection will process wanted callsign according to the choosen notifications/priorities. Non FT8 modes only: sometimes the base callsign will be copied from the decoded message: when logging such QSO user will have to change correspondent&apos;s callsign to compound one if needed.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ar komatiem atdalīts meklēto prefiksu saraksts. AutoSeq 1..7 automātiskā izvēle apstrādās meklēto prefiksu atbilstoši izvēlētajiem paziņojumiem un prioritātēm; AutoSeq0 šī funkcija netiek atbalstīta. Saliktajiem izsaukuma signāliem prefikss tiek atpazīts izsaukuma signāla sākumā. Tikai ne-FT8 modēs: dažkārt no dekodētā ziņojuma tiks pārkopēts pamata izsaukuma signāls, tāpēc, ierakstot šādu QSO žurnālā, korespondenta izsaukuma signāls vajadzības gadījumā jālabo uz salikto.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2044"/>
@@ -3335,7 +3345,7 @@ Formāts:
         <location filename="../mainwindow.ui" line="2074"/>
         <location filename="../mainwindow.ui" line="2090"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Comma separated list of the wanted grid squares where four char grid being supported only. Autoselection under AutoSeq 1..7 will process wanted grid according to the choosen notifications/priorities, this functionality is not supported under AutoSeq0.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ar komatiem atdalīts meklēto lokātoru saraksts; tiek atbalstīti tikai četru rakstzīmju lokātori. AutoSeq 1..7 automātiskā izvēle apstrādās meklēto lokātoru atbilstoši izvēlētajiem paziņojumiem un prioritātēm; AutoSeq0 šī funkcija netiek atbalstīta.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2077"/>
@@ -3345,7 +3355,7 @@ Formāts:
     <message>
         <location filename="../mainwindow.ui" line="2097"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Clear grid from this list at logging of the QSO.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ierakstot QSO žurnālā, izņemt lokātoru no šī saraksta.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2116"/>
@@ -3366,7 +3376,22 @@ UA2,UA9,UK,UN,UR,V2,V3,V4,V5,V6,V7,V8,VE,VK,VK0H,VK0M,VK9C,VK9L,VK9M,VK9N,VK9W,V
 VP2E,VP2M,VP2V,VP5,VP6,VP6/D,VP8,VP8/G,VP8/H,VP8/O,VP8/S,VP9,VQ9,VR,VU,VU4,VU7,XE,&lt;br&gt;
 XF4,XT,XU,XW,XX9,XZ,YA,YB,YI,YJ,YK,YL,YN,YO,YS,YU,YV,YV0,Z2,Z3,Z6,Z8,ZA,ZB,ZC4,ZD7,&lt;br&gt;
 ZD8,ZD9,ZF,ZK3,ZL,ZL7,ZL8,ZL9,ZP,ZS,ZS8&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ar komatiem atdalīts meklēto valstu saraksts; sarakstā jālieto valsts galvenais prefikss. Saliktajiem izsaukuma signāliem prefikss tiek atpazīts izsaukuma signāla sākumā. AutoSeq 1..7 automātiskā izvēle apstrādās meklēto valsti atbilstoši izvēlētajiem paziņojumiem un prioritātēm; AutoSeq0 šī funkcija netiek atbalstīta. Tikai ne-FT8 modēs: dažkārt no dekodētā ziņojuma tiks pārkopēts pamata izsaukuma signāls, tāpēc, ierakstot šādu QSO žurnālā, korespondenta izsaukuma signāls vajadzības gadījumā jālabo uz salikto. Galveno valstu prefiksu saraksts: 1A,1S,3A,3B6,3B8,3B9,3C,3C0,3D2,3D2/C,&lt;br&gt;
+3D2/R,3DA,3V,3W,3X,3Y/B,3Y/P,4J,4L,4O,4S,4U1I,4U1U,*4U1V,4W,4X,5A,5B,5H,5N,5R,5T,&lt;br&gt;
+5U,5V,5W,5X,5Z,6W,6Y,7O,7P,7Q,7X,8P,8Q,8R,9A,9G,9H,9J,9K,9L,9M2,9M6,9N,9Q,9U,9V,9X,&lt;br&gt;
+9Y,A2,A3,A4,A5,A6,A7,A9,AP,BS7,BV,BV9P,BY,C2,C3,C5,C6,C9,CE,CE0X,CE0Y,CE0Z,CE9,CM,&lt;br&gt;
+CN,CP,CT,CT3,CU,CX,CY0,CY9,D2,D4,D6,DL,DU,E3,E4,E5/N,E5/S,E6,E7,EA,EA6,EA8,EA9,EI,&lt;br&gt;
+EK,EL,EP,ER,ES,ET,EU,EX,EY,EZ,F,FG,FH,FJ,FK,FK/C,FM,FO,FO/A,FO/C,FO/M,FP,FR,FS,&lt;br&gt;
+FT/G,FT/J,FT/T,FT/W,FT/X,FT/Z,FW,FY,G,GD,GI,GJ,*GM/S,GM,GU,GW,H4,H40,HA,HB,HB0,HC,&lt;br&gt;
+HC8,HH,HI,HK,HK0/A,HK0/M,HL,HP,HR,HS,HV,HZ,I,*IG9,IS,*IT9,J2,J3,J5,J6,J7,J8,JA,&lt;br&gt;
+JD/M,JD/O,JT,JW,*JW/B,JX,JY,K,KG4,KH0,KH1,KH2,KH3,KH4,KH5,KH6,KH7K,KH8,KH8/S,KH9,KL,&lt;br&gt;
+KP1,KP2,KP4,KP5,LA,LU,LX,LY,LZ,OA,OD,OE,OH,OH0,OJ0,OK,OM,ON,OX,OY,OZ,P2,P4,P5,PA,&lt;br&gt;
+PJ2,PJ4,PJ5,PJ7,PY,PY0F,PY0S,PY0T,PZ,R1FJ,S0,S2,S5,S7,S9,SM,SP,ST,SU,SV,SV/A,SV5,&lt;br&gt;
+SV9,T2,T30,T31,T32,T33,T5,T7,T8,TA,*TA1,TF,TG,TI,TI9,TJ,TK,TL,TN,TR,TT,TU,TY,TZ,UA,&lt;br&gt;
+UA2,UA9,UK,UN,UR,V2,V3,V4,V5,V6,V7,V8,VE,VK,VK0H,VK0M,VK9C,VK9L,VK9M,VK9N,VK9W,VK9X,&lt;br&gt;
+VP2E,VP2M,VP2V,VP5,VP6,VP6/D,VP8,VP8/G,VP8/H,VP8/O,VP8/S,VP9,VQ9,VR,VU,VU4,VU7,XE,&lt;br&gt;
+XF4,XT,XU,XW,XX9,XZ,YA,YB,YI,YJ,YK,YL,YN,YO,YS,YU,YV,YV0,Z2,Z3,Z6,Z8,ZA,ZB,ZC4,ZD7,&lt;br&gt;
+ZD8,ZD9,ZF,ZK3,ZL,ZL7,ZL8,ZL9,ZP,ZS,ZS8&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2134"/>
@@ -3377,138 +3402,138 @@ ZD8,ZD9,ZF,ZK3,ZL,ZL7,ZL8,ZL9,ZP,ZS,ZS8&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</sou
         <location filename="../mainwindow.ui" line="2339"/>
         <location filename="../mainwindow.cpp" line="6290"/>
         <source>Rx Frequency</source>
-        <translation type="unfinished"></translation>
+        <translation>Uztveršanas frekvence</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2425"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Transmit a pure tone. Tune timer can be set in General tab of the settings.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Raidīt tīru toni. Piestrādes taimeri var iestatīt iestatījumu cilnē Vispārīgi.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2439"/>
         <location filename="../mainwindow.cpp" line="6895"/>
         <source>&amp;Tune</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Piestrāde</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2467"/>
         <source>Start monitoring</source>
-        <translation type="unfinished"></translation>
+        <translation>Sākt uzraudzību</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2481"/>
         <source>&amp;Monitor</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Monitors</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2512"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Bypass all text filters option, duplicates action in the Misc tab.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Apiet visus teksta filtrus; dublē darbību cilnē Dažādi.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2526"/>
         <source>Bypass</source>
-        <translation type="unfinished"></translation>
+        <translation>Apiet</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2557"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Single shot QSO AutoSeq option&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Viena QSO AutoSeq opcija&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2571"/>
         <source>1 QSO</source>
-        <translation type="unfinished"></translation>
+        <translation>1 QSO</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2602"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Answer worked B4 AutoSeq option&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;AutoSeq opcija: atbildēt jau strādātajiem&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2616"/>
         <source>AnsB4</source>
-        <translation type="unfinished"></translation>
+        <translation>AnsB4</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2644"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Stop monitoring input signal, stop playing pack of the audio wav files&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Pārtraukt ieejas signāla uzraudzību un wav failu atskaņošanu&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2647"/>
         <source>&amp;Stop</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Apturēt</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2905"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Decode again most recent Rx period or last played wav audio file for any Hint/Filter/SWL mode buttons combination&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dekodēt vēlreiz pēdējo uztveršanas periodu vai pēdējo atskaņoto wav failu ar jebkuru Hint/Filtrs/SWL pogu kombināciju&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2919"/>
         <source>Dec&amp;ode</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Dekodēt</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2863"/>
         <source>Toggle Tx Enable On/Off</source>
-        <translation type="unfinished"></translation>
+        <translation>Ieslēgt/izslēgt raidīšanas atļauju</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2877"/>
         <source>E&amp;nable Tx</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Atļaut raidīt</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2835"/>
         <source>Stop transmitting immediately</source>
-        <translation type="unfinished"></translation>
+        <translation>Nekavējoties pārtraukt raidīšanu</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2838"/>
         <source>&amp;Halt Tx</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Pārtraukt Tx</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2947"/>
         <source>Enter this QSO in ADIF log</source>
-        <translation type="unfinished"></translation>
+        <translation>Ierakstīt šo QSO ADIF žurnālā</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2950"/>
         <source>Log &amp;QSO</source>
-        <translation type="unfinished"></translation>
+        <translation>Ierakstīt &amp;QSO</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2779"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Left mouse button: Erase decoded text(left) window. Right mouse button: Erase QSO Frequency window. Double-click for both windows.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Kreisā peles poga: notīrīt dekodētā teksta (kreiso) logu. Labā peles poga: notīrīt QSO frekvences logu. Dubultklikšķis notīra abus.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2782"/>
         <source>&amp;Erase</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Notīrīt</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3078"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Increase number of decoding attempts&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Palielināt dekodēšanas mēģinājumu skaitu&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3092"/>
         <source>S&amp;WL mode</source>
-        <translation type="unfinished"></translation>
+        <translation>S&amp;WL režīms</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2980"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Activates group of decoders based on the matched filters, in FT8 mode activates FT8AP functionality&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Aktivizē uz saskaņotiem filtriem balstītu dekodētāju grupu; FT8 modē aktivizē FT8AP funkcionalitāti&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2994"/>
         <source>Hint</source>
-        <translation></translation>
+        <translation>Hint</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2700"/>
@@ -3518,22 +3543,22 @@ ZD8,ZD9,ZF,ZK3,ZL,ZL7,ZL8,ZL9,ZP,ZS,ZS8&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</sou
     <message>
         <location filename="../mainwindow.ui" line="2734"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Activates AGC compensation functionality. Raising up decoding efficiency if AGC is turned ON in the receiver&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Aktivizē AGC kompensāciju. Uzlabo dekodēšanas efektivitāti, ja uztvērējā ieslēgta AGC&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2748"/>
         <source>AGCc</source>
-        <translation type="unfinished"></translation>
+        <translation>AGCc</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2807"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Left mouse button: Erase data from DX Call and DX Grid windows. Right mouse button: Erase data from DX Call, DX Grid windows, QSO history and blacklist. CTRL+Right mouse button: add callsign from DX Call window to blacklist, erase data from DX Call, DX Grid windows and QSO history.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Kreisā peles poga: notīrīt laukus DX Call un DX Grid. Labā peles poga: notīrīt laukus DX Call un DX Grid, QSO vēsturi un melno sarakstu. CTRL+labā peles poga: pievienot DX Call izsaukuma signālu melnajam sarakstam un notīrīt laukus DX Call, DX Grid un QSO vēsturi.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2810"/>
         <source>Clear D&amp;X</source>
-        <translation type="unfinished"></translation>
+        <translation>Notīrīt D&amp;X</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3202"/>
@@ -3546,53 +3571,53 @@ ZD8,ZD9,ZF,ZK3,ZL,ZL7,ZL8,ZL9,ZP,ZS,ZS8&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</sou
     <message>
         <location filename="../mainwindow.ui" line="3245"/>
         <source>Generate standard messages for minimal QSO</source>
-        <translation type="unfinished"></translation>
+        <translation>Ģenerēt standarta ziņojumus minimālam QSO</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3248"/>
         <source>GenMsgs</source>
-        <translation type="unfinished"></translation>
+        <translation>GenMsgs</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3277"/>
         <location filename="../mainwindow.ui" line="5785"/>
         <source>CQ</source>
-        <translation type="unfinished"></translation>
+        <translation>CQ</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3324"/>
         <location filename="../mainwindow.ui" line="3946"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Directional CQ, range from AA to ZZ is being supported.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Virzīts CQ; tiek atbalstīts diapazons no AA līdz ZZ.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3327"/>
         <location filename="../mainwindow.ui" line="3949"/>
         <source>DX</source>
-        <translation type="unfinished"></translation>
+        <translation>DX</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3340"/>
         <location filename="../mainwindow.ui" line="3978"/>
         <source>Check to generate &apos;RRR&apos; message, uncheck to generate &apos;RR73&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>Atzīmējiet, lai ģenerētu 'RRR'; neatzīmējiet, lai ģenerētu 'RR73'</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3346"/>
         <location filename="../mainwindow.ui" line="3984"/>
         <source>RRR</source>
-        <translation type="unfinished"></translation>
+        <translation>RRR</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3359"/>
         <location filename="../mainwindow.ui" line="4032"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Skip transmitting message with QTH Grid locator&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Izlaist ziņojuma ar QTH lokātoru raidīšanu&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3365"/>
         <source>SkipTx1</source>
-        <translation type="unfinished"></translation>
+        <translation>SkipTx1</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3410"/>
@@ -3602,12 +3627,12 @@ ZD8,ZD9,ZF,ZK3,ZL,ZL7,ZL8,ZL9,ZP,ZS,ZS8&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</sou
         <location filename="../mainwindow.ui" line="3720"/>
         <location filename="../mainwindow.ui" line="3793"/>
         <source>Send this message in next Tx interval</source>
-        <translation type="unfinished"></translation>
+        <translation>Raidīt šo ziņojumu nākamajā raidīšanas intervālā</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3416"/>
         <source>Ctrl+1</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+1</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3441"/>
@@ -3617,62 +3642,62 @@ ZD8,ZD9,ZF,ZK3,ZL,ZL7,ZL8,ZL9,ZP,ZS,ZS8&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</sou
         <location filename="../mainwindow.ui" line="3748"/>
         <location filename="../mainwindow.ui" line="3824"/>
         <source>Switch to this Tx message NOW</source>
-        <translation type="unfinished"></translation>
+        <translation>Pārslēgties uz šo raidāmo ziņojumu TŪLĪT</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3447"/>
         <source>Tx &amp;1</source>
-        <translation type="unfinished"></translation>
+        <translation>Tx &amp;1</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3450"/>
         <source>Alt+1</source>
-        <translation type="unfinished"></translation>
+        <translation>Alt+1</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3498"/>
         <source>Ctrl+2</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+2</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3523"/>
         <source>Tx &amp;2</source>
-        <translation type="unfinished"></translation>
+        <translation>Tx &amp;2</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3526"/>
         <source>Alt+2</source>
-        <translation type="unfinished"></translation>
+        <translation>Alt+2</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3568"/>
         <source>Ctrl+3</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+3</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3593"/>
         <source>Tx &amp;3</source>
-        <translation type="unfinished"></translation>
+        <translation>Tx &amp;3</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3596"/>
         <source>Alt+3</source>
-        <translation type="unfinished"></translation>
+        <translation>Alt+3</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3638"/>
         <source>Ctrl+4</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+4</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3663"/>
         <source>Tx &amp;4</source>
-        <translation type="unfinished"></translation>
+        <translation>Tx &amp;4</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3666"/>
         <source>Alt+4</source>
-        <translation type="unfinished"></translation>
+        <translation>Alt+4</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3698"/>
@@ -3681,37 +3706,40 @@ ZD8,ZD9,ZF,ZK3,ZL,ZL7,ZL8,ZL9,ZP,ZS,ZS8&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</sou
 or select a predefined macro from the dropdown list.
 Press ENTER to add the current text to the predefined
 list. The list can be maintained in Settings (F2).</source>
-        <translation type="unfinished"></translation>
+        <translation>Ievadiet brīvā teksta ziņojumu (ne vairāk kā 13 rakstzīmes)
+vai izvēlieties sagatavotu makro no nolaižamā saraksta.
+Nospiediet ENTER, lai pievienotu pašreizējo tekstu sagatavoto
+sarakstam. Sarakstu var pārvaldīt iestatījumos (F2).</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3726"/>
         <source>Ctrl+5</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+5</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3751"/>
         <source>Tx &amp;5</source>
-        <translation type="unfinished"></translation>
+        <translation>Tx &amp;5</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3754"/>
         <source>Alt+5</source>
-        <translation type="unfinished"></translation>
+        <translation>Alt+5</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3799"/>
         <source>Ctrl+6</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+6</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3827"/>
         <source>Tx &amp;6</source>
-        <translation type="unfinished"></translation>
+        <translation>Tx &amp;6</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3830"/>
         <source>Alt+6</source>
-        <translation type="unfinished"></translation>
+        <translation>Alt+6</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3848"/>
@@ -3725,32 +3753,32 @@ list. The list can be maintained in Settings (F2).</source>
     <message>
         <location filename="../mainwindow.ui" line="3902"/>
         <source>CQ </source>
-        <translation type="unfinished"></translation>
+        <translation>CQ </translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4016"/>
         <source>AnsCQ </source>
-        <translation type="unfinished"></translation>
+        <translation>AnsCQ </translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4038"/>
         <source>SkpGrid</source>
-        <translation type="unfinished"></translation>
+        <translation>SkpGrid</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4065"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Generate CQ or directional CQ message&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ģenerēt CQ vai virzītu CQ ziņojumu&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4068"/>
         <source>CQ/CQ DX</source>
-        <translation type="unfinished"></translation>
+        <translation>CQ/CQ DX</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4093"/>
         <source>Generate message for replying to a CQ</source>
-        <translation type="unfinished"></translation>
+        <translation>Ģenerēt ziņojumu atbildei uz CQ</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4096"/>
@@ -3760,37 +3788,37 @@ list. The list can be maintained in Settings (F2).</source>
     <message>
         <location filename="../mainwindow.ui" line="4121"/>
         <source>Generate message with report</source>
-        <translation type="unfinished"></translation>
+        <translation>Ģenerēt ziņojumu ar raportu</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4124"/>
         <source>dB</source>
-        <translation type="unfinished"></translation>
+        <translation>dB</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4149"/>
         <source>Generate message with R+report</source>
-        <translation type="unfinished"></translation>
+        <translation>Ģenerēt ziņojumu ar R+raportu</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4152"/>
         <source>R+dB</source>
-        <translation type="unfinished"></translation>
+        <translation>R+dB</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4177"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Generate message with RR73 if RRR checkbox is unchecked, generate RRR message if RRR checkbox is checked&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ģenerēt RR73 ziņojumu, ja RRR nav atzīmēts; ģenerēt RRR ziņojumu, ja RRR ir atzīmēts&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4180"/>
         <source>RRR/RR73</source>
-        <translation type="unfinished"></translation>
+        <translation>RRR/RR73</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4205"/>
         <source>Generate message with 73</source>
-        <translation type="unfinished"></translation>
+        <translation>Ģenerēt ziņojumu ar 73</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4208"/>
@@ -3800,92 +3828,92 @@ list. The list can be maintained in Settings (F2).</source>
     <message>
         <location filename="../mainwindow.ui" line="4256"/>
         <source>Send this standard (generated) message</source>
-        <translation type="unfinished"></translation>
+        <translation>Raidīt šo standarta (ģenerēto) ziņojumu</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4259"/>
         <source>Gen msg</source>
-        <translation type="unfinished"></translation>
+        <translation>Gen msg</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4324"/>
         <source>Send this free-text message (max 13 characters)</source>
-        <translation type="unfinished"></translation>
+        <translation>Raidīt šo brīvā teksta ziņojumu (ne vairāk kā 13 rakstzīmes)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4327"/>
         <source>Free msg</source>
-        <translation type="unfinished"></translation>
+        <translation>Free msg</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4448"/>
         <source>Band Hopping</source>
-        <translation type="unfinished"></translation>
+        <translation>Joslu maiņa</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4457"/>
         <source>Choose bands and times of day for band-hopping.</source>
-        <translation type="unfinished"></translation>
+        <translation>Izvēlieties joslas un diennakts laikus joslu maiņai.</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4460"/>
         <source>Schedule ...</source>
-        <translation type="unfinished"></translation>
+        <translation>Grafiks ...</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4474"/>
         <source>Upload decoded messages to WSPRnet.org.</source>
-        <translation type="unfinished"></translation>
+        <translation>Augšupielādēt dekodētos ziņojumus uz WSPRnet.org.</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4477"/>
         <source>Upload spots</source>
-        <translation type="unfinished"></translation>
+        <translation>Augšupielādēt spotus</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4484"/>
         <source>Transmit during the next 2-minute sequence.</source>
-        <translation type="unfinished"></translation>
+        <translation>Raidīt nākamajā 2 minūšu ciklā.</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4498"/>
         <source>Tx Next</source>
-        <translation type="unfinished"></translation>
+        <translation>Raidīt nākamo</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4515"/>
         <source>Set Tx power in dBm (dB above 1 mW) as part of your WSPR message.</source>
-        <translation type="unfinished"></translation>
+        <translation>Iestatiet raidīšanas jaudu dBm (dB virs 1 mW) kā daļu no WSPR ziņojuma.</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4429"/>
         <source>Percentage of 2-minute sequences devoted to transmitting.</source>
-        <translation type="unfinished"></translation>
+        <translation>Raidīšanai atvēlēto 2 minūšu ciklu procentuālā daļa.</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1437"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enable FT8 DXpedition Hound mode. MSHV multianswering mode is supported in common FT8 bands, WSJT-X DXpedition mode with frequency control is supported on the special DXpedition frequencies.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ieslēgt FT8 DXpedīcijas Hound režīmu. Parastajās FT8 joslās tiek atbalstīts MSHV vairākatbilžu režīms, bet īpašajās DXpedīciju frekvencēs - WSJT-X DXpedīcijas režīms ar frekvences vadību.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1592"/>
         <source> %</source>
-        <translation type="unfinished"></translation>
+        <translation> %</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1595"/>
         <source>CL  </source>
-        <translation type="unfinished"></translation>
+        <translation>CL  </translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1821"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;DT weighting functionality for candidate list thinning option, median value of DT distribution of decoded signals should be set there. This value depends on system clock synchronization accuracy and on overcrowded bands is close to average DT value of decoded signals. Correct value raises up decoding efficiency in the candidate list thinning option.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;DT svēršana kandidātu saraksta retināšanai; šeit jāievada dekodēto signālu DT sadalījuma mediāna. Vērtība atkarīga no sistēmas pulksteņa sinhronizācijas precizitātes un pārpildītās joslās ir tuva dekodēto signālu vidējam DT. Pareiza vērtība uzlabo dekodēšanas efektivitāti, retinot kandidātu sarakstu.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1824"/>
         <source>DT </source>
-        <translation type="unfinished"></translation>
+        <translation>DT </translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1827"/>
@@ -3895,12 +3923,12 @@ list. The list can be maintained in Settings (F2).</source>
     <message>
         <location filename="../mainwindow.ui" line="1898"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;CAT shall be set up via Hamlib or TCI, TCI and Hamlib for some transceivers does support getting output power data.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;CAT jābūt iestatītam caur Hamlib vai TCI; dažiem transīveriem TCI un Hamlib atbalsta izejas jaudas nolasīšanu.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2686"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Bandwidth, FT8 170Hz, FT8 hound mode 580Hz, FT4 274Hz, JT9 115Hz, T10 225Hz. JT65 signals: 580Hz decoding, 300 Hz for displaying messages. Filter is centered to the RX signal spectrum. Filter functionality can not improve signal decoding, it is dedicated for use with slow CPUs to let decoder finish processing before signal transmission and avoid message change at transmission. All incoming calls out of Filter bandwidth will be lost, use Filter functionaly only if it is really needed for your CPU.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Joslas platums: FT8 170 Hz, FT8 hound režīms 580 Hz, FT4 274 Hz, JT9 115 Hz, T10 225 Hz. JT65 signāli: dekodēšana 580 Hz, ziņojumu attēlošana 300 Hz. Filtrs tiek centrēts pēc uztvertā signāla spektra. Filtrs nespēj uzlabot dekodēšanu; tas paredzēts lēniem procesoriem, lai dekodētājs paspētu pabeigt darbu pirms raidīšanas un ziņojums raidīšanas laikā nemainītos. Visi ienākošie izsaukumi ārpus filtra joslas tiks zaudēti, tāpēc lietojiet filtru tikai tad, ja jūsu procesoram tas tiešām nepieciešams.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3025"/>
@@ -3914,27 +3942,36 @@ Note:&lt;br&gt;
 - if your computer clock difference is more than 7.5 seconds, there is a chance you will be reporting spots in wrong interval, also QSO start/end time can be affected&lt;br&gt;
 - DT of TX signal will be affected in wrong way if you are trying to compensate RX audio stream delay caused by buffering in SDR software.&lt;br&gt;&lt;br&gt;
 Click by right mouse&apos;s button sets JTDX internal time back to system time.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ar kreiso peles pogu var nobīdīt JTDX iekšējo laiku, lai dekodētājs labāk sinhronizētos ar ienākošās audio plūsmas signāliem.&lt;br&gt;
+Tiek atbalstīti divi scenāriji:&lt;br&gt;
+- rupja sinhronizācija, ja ūdenskritumā ir nobīdīti signāli un neviens nav dekodēts; laika nobīdes līdz intervāla sākumam novērtēšanai dekodētājs izmanto minimālo jaudas vērtību&lt;br&gt;
+- precīzāka sinhronizācija, ja iepriekšējā intervālā ir dekodēti signāli un vidējais DT ir ārpus -0,19 .. 0,19 s diapazona. JTDX laika nobīdei tiek izmantota vidējā DT vērtība.&lt;br&gt;
+Starp diviem secīgiem rupjās un precīzās sinhronizācijas mēģinājumiem ieteicams ieturēt vismaz piecu intervālu atstarpi.&lt;br&gt;
+Laika nobīde var izjaukt pašreizējā un nākamā intervāla dekodēšanu.&lt;br&gt;
+Piezīme:&lt;br&gt;
+- ja datora pulksteņa novirze pārsniedz 7,5 sekundes, spoti var tikt ziņoti nepareizā intervālā un var tikt ietekmēts arī QSO sākuma/beigu laiks&lt;br&gt;
+- raidāmā signāla DT tiks ietekmēts nelabvēlīgi, ja mēģināsiet kompensēt uztveršanas audio plūsmas aizturi, ko rada SDR programmatūras buferizācija.&lt;br&gt;&lt;br&gt;
+Ar labo peles pogu JTDX iekšējais laiks tiek atgriezts uz sistēmas laiku.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3048"/>
         <source>Sync</source>
-        <translation type="unfinished"></translation>
+        <translation>Sinhr.</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4435"/>
         <source>  %</source>
-        <translation type="unfinished"></translation>
+        <translation>  %</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4438"/>
         <source>Tx Pct </source>
-        <translation type="unfinished"></translation>
+        <translation>Tx % </translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4508"/>
         <source>No own call decodes</source>
-        <translation type="unfinished"></translation>
+        <translation>Nav dekodēts savs izsaukuma signāls</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4610"/>
@@ -3944,22 +3981,22 @@ Click by right mouse&apos;s button sets JTDX internal time back to system time.&
     <message>
         <location filename="../mainwindow.ui" line="4628"/>
         <source>View</source>
-        <translation type="unfinished"></translation>
+        <translation>Skats</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4635"/>
         <source>Decode</source>
-        <translation type="unfinished"></translation>
+        <translation>Dekodēšana</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4639"/>
         <source>FT8 threads</source>
-        <translation type="unfinished"></translation>
+        <translation>FT8 pavedieni</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4669"/>
         <source>JT9 WSPR decoding</source>
-        <translation type="unfinished"></translation>
+        <translation>JT9 WSPR dekodēšana</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4677"/>
@@ -3969,22 +4006,22 @@ Click by right mouse&apos;s button sets JTDX internal time back to system time.&
     <message>
         <location filename="../mainwindow.ui" line="4681"/>
         <source>decoder sensitivity</source>
-        <translation type="unfinished"></translation>
+        <translation>dekodētāja jutība</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4689"/>
         <source>QSO RX freq sensitivity</source>
-        <translation type="unfinished"></translation>
+        <translation>QSO uztveršanas frekvences jutība</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4697"/>
         <source>decoding cycles</source>
-        <translation type="unfinished"></translation>
+        <translation>dekodēšanas cikli</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4705"/>
         <source>SWL decoding cycles</source>
-        <translation type="unfinished"></translation>
+        <translation>SWL dekodēšanas cikli</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4723"/>
@@ -4014,17 +4051,17 @@ Click by right mouse&apos;s button sets JTDX internal time back to system time.&
     <message>
         <location filename="../mainwindow.ui" line="4799"/>
         <source>Misc</source>
-        <translation type="unfinished"></translation>
+        <translation>Dažādi</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4803"/>
         <source>Accept UDP Reply messages</source>
-        <translation type="unfinished"></translation>
+        <translation>Pieņemt UDP atbildes ziņojumus</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4838"/>
         <source>Auto RX frequency Filter</source>
-        <translation type="unfinished"></translation>
+        <translation>Automātisks uztveršanas frekvences filtrs</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4863"/>
@@ -4039,7 +4076,7 @@ Click by right mouse&apos;s button sets JTDX internal time back to system time.&
     <message>
         <location filename="../mainwindow.ui" line="4885"/>
         <source>Alt+F4</source>
-        <translation type="unfinished"></translation>
+        <translation>Alt+F4</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4896"/>
@@ -4060,12 +4097,12 @@ Click by right mouse&apos;s button sets JTDX internal time back to system time.&
     <message>
         <location filename="../mainwindow.ui" line="4907"/>
         <source>Ctrl+F1</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+F1</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4912"/>
         <source>Waterfall</source>
-        <translation type="unfinished"></translation>
+        <translation>Ūdenskritums</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4917"/>
@@ -4075,12 +4112,12 @@ Click by right mouse&apos;s button sets JTDX internal time back to system time.&
     <message>
         <location filename="../mainwindow.ui" line="4920"/>
         <source>Ctrl+O</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+O</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4925"/>
         <source>Open next in directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Atvērt nākamo direktorijā</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4928"/>
@@ -4090,17 +4127,17 @@ Click by right mouse&apos;s button sets JTDX internal time back to system time.&
     <message>
         <location filename="../mainwindow.ui" line="4933"/>
         <source>Decode remaining files in directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Dekodēt atlikušos failus direktorijā</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4936"/>
         <source>Shift+F6</source>
-        <translation type="unfinished"></translation>
+        <translation>Shift+F6</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4941"/>
         <source>Delete all *.wav &amp;&amp; *.c2 files in SaveDir</source>
-        <translation type="unfinished"></translation>
+        <translation>Dzēst visus *.wav &amp;&amp; *.c2 failus SaveDir direktorijā</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4952"/>
@@ -4108,7 +4145,7 @@ Click by right mouse&apos;s button sets JTDX internal time back to system time.&
         <location filename="../mainwindow.ui" line="5712"/>
         <location filename="../mainwindow.ui" line="6002"/>
         <source>fast</source>
-        <translation type="unfinished"></translation>
+        <translation>ātri</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4963"/>
@@ -4133,7 +4170,7 @@ Click by right mouse&apos;s button sets JTDX internal time back to system time.&
     <message>
         <location filename="../mainwindow.ui" line="5079"/>
         <source>Keyboard shortcuts</source>
-        <translation type="unfinished"></translation>
+        <translation>Īsinājumtaustiņi</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5082"/>
@@ -4143,7 +4180,7 @@ Click by right mouse&apos;s button sets JTDX internal time back to system time.&
     <message>
         <location filename="../mainwindow.ui" line="5087"/>
         <source>Special mouse commands</source>
-        <translation type="unfinished"></translation>
+        <translation>Īpašās peles komandas</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5090"/>
@@ -4158,7 +4195,7 @@ Click by right mouse&apos;s button sets JTDX internal time back to system time.&
     <message>
         <location filename="../mainwindow.ui" line="5112"/>
         <source>Save decoded</source>
-        <translation type="unfinished"></translation>
+        <translation>Saglabāt dekodētos</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5123"/>
@@ -4167,7 +4204,7 @@ Click by right mouse&apos;s button sets JTDX internal time back to system time.&
         <location filename="../mainwindow.ui" line="5970"/>
         <location filename="../mainwindow.ui" line="6010"/>
         <source>medium</source>
-        <translation type="unfinished"></translation>
+        <translation>vidēji</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5134"/>
@@ -4175,12 +4212,12 @@ Click by right mouse&apos;s button sets JTDX internal time back to system time.&
         <location filename="../mainwindow.ui" line="5731"/>
         <location filename="../mainwindow.ui" line="6021"/>
         <source>deep</source>
-        <translation type="unfinished"></translation>
+        <translation>dziļi</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5142"/>
         <source>Monitor OFF at startup</source>
-        <translation type="unfinished"></translation>
+        <translation>Monitors izslēgts, startējot</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5147"/>
@@ -4190,7 +4227,7 @@ Click by right mouse&apos;s button sets JTDX internal time back to system time.&
     <message>
         <location filename="../mainwindow.ui" line="5152"/>
         <source>Erase QSO LOG file wsjtx_log.adi</source>
-        <translation type="unfinished"></translation>
+        <translation>Dzēst QSO žurnāla failu wsjtx_log.adi</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5157"/>
@@ -4206,62 +4243,62 @@ Click by right mouse&apos;s button sets JTDX internal time back to system time.&
     <message>
         <location filename="../mainwindow.ui" line="5168"/>
         <source>Convert mode to RTTY for logging</source>
-        <translation type="unfinished"></translation>
+        <translation>Ierakstot žurnālā, pārvērst modi par RTTY</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5176"/>
         <source>Log dB reports to Comments</source>
-        <translation type="unfinished"></translation>
+        <translation>Ierakstīt dB raportus komentāros</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5184"/>
         <source>Prompt me to log QSO</source>
-        <translation type="unfinished"></translation>
+        <translation>Atgādināt ierakstīt QSO žurnālā</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5192"/>
         <source>Blank line between decoding periods</source>
-        <translation type="unfinished"></translation>
+        <translation>Tukša rinda starp dekodēšanas periodiem</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5200"/>
         <source>Clear DX Call and Grid after logging</source>
-        <translation type="unfinished"></translation>
+        <translation>Notīrīt DX Call un DX Grid pēc ierakstīšanas žurnālā</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5208"/>
         <source>Display distance in miles</source>
-        <translation type="unfinished"></translation>
+        <translation>Rādīt attālumu jūdzēs</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5216"/>
         <source>Double-click on call sets Tx Enable</source>
-        <translation type="unfinished"></translation>
+        <translation>Dubultklikšķis uz izsaukuma signāla atļauj raidīšanu</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5224"/>
         <source>Tx disabled after sending 73</source>
-        <translation type="unfinished"></translation>
+        <translation>Raidīšana aizliegta pēc 73 nosūtīšanas</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5232"/>
         <source>Runaway Tx watchdog</source>
-        <translation type="unfinished"></translation>
+        <translation>Raidīšanas uzraugs</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5240"/>
         <source>Allow multiple instances</source>
-        <translation type="unfinished"></translation>
+        <translation>Atļaut vairākas programmas instances</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5248"/>
         <source>Tx freq locked to Rx freq</source>
-        <translation type="unfinished"></translation>
+        <translation>Raidīšanas frekvence piesaistīta uztveršanas frekvencei</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5256"/>
         <source>Skip Tx 1</source>
-        <translation type="unfinished"></translation>
+        <translation>Izlaist Tx 1</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5264"/>
@@ -4276,32 +4313,32 @@ Click by right mouse&apos;s button sets JTDX internal time back to system time.&
     <message>
         <location filename="../mainwindow.ui" line="5283"/>
         <source>Tx messages to Rx Frequency window</source>
-        <translation type="unfinished"></translation>
+        <translation>Raidītie ziņojumi uztveršanas frekvences logā</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5291"/>
         <source>Gray1</source>
-        <translation type="unfinished"></translation>
+        <translation>Gray1</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5299"/>
         <source>Show DXCC entity and worked B4 status</source>
-        <translation type="unfinished"></translation>
+        <translation>Rādīt DXCC teritoriju un 'jau strādāts' statusu</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5307"/>
         <source>Astronomical data</source>
-        <translation type="unfinished"></translation>
+        <translation>Astronomiskie dati</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5312"/>
         <source>Short list of add-on prefixes and suffixes</source>
-        <translation type="unfinished"></translation>
+        <translation>Papildu prefiksu un sufiksu īsais saraksts</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5317"/>
         <source>Settings...</source>
-        <translation type="unfinished"></translation>
+        <translation>Iestatījumi...</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5328"/>
@@ -4311,32 +4348,32 @@ Click by right mouse&apos;s button sets JTDX internal time back to system time.&
     <message>
         <location filename="../mainwindow.ui" line="5333"/>
         <source>Open log directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Atvērt žurnāla direktoriju</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5341"/>
         <source>Message averaging</source>
-        <translation type="unfinished"></translation>
+        <translation>Ziņojumu vidējošana</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5358"/>
         <source>Include averaging</source>
-        <translation type="unfinished"></translation>
+        <translation>Iekļaut vidējošanu</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5372"/>
         <source>JT65 hinted decoding</source>
-        <translation type="unfinished"></translation>
+        <translation>JT65 norāžu dekodēšana</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5383"/>
         <source>WSPR-2</source>
-        <translation type="unfinished"></translation>
+        <translation>WSPR-2</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5388"/>
         <source>Save reference spectrum</source>
-        <translation type="unfinished"></translation>
+        <translation>Saglabāt atsauces spektru</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5404"/>
@@ -4346,37 +4383,37 @@ Click by right mouse&apos;s button sets JTDX internal time back to system time.&
     <message>
         <location filename="../mainwindow.ui" line="5415"/>
         <source>Bypass text filters on RX frequency</source>
-        <translation type="unfinished"></translation>
+        <translation>Apiet teksta filtrus uztveršanas frekvencē</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5426"/>
         <source>Bypass all text filters</source>
-        <translation type="unfinished"></translation>
+        <translation>Apiet visus teksta filtrus</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5429"/>
         <source>Alt+F</source>
-        <translation type="unfinished"></translation>
+        <translation>Alt+F</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5437"/>
         <source>Show messages decoded from JT65 harmonics</source>
-        <translation type="unfinished"></translation>
+        <translation>Rādīt no JT65 harmonikām dekodētos ziņojumus</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5448"/>
         <source>Enable main window popup</source>
-        <translation type="unfinished"></translation>
+        <translation>Iespējot galvenā loga uzniršanu</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5459"/>
         <source>Messages with my callsign to RX frequency window </source>
-        <translation type="unfinished"></translation>
+        <translation>Ziņojumi ar manu izsaukuma signālu uztveršanas frekvences logā </translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5464"/>
         <source>Copyright notice from WSJT Development Group</source>
-        <translation type="unfinished"></translation>
+        <translation>WSJT izstrādes grupas autortiesību paziņojums</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5478"/>
@@ -4386,72 +4423,72 @@ Click by right mouse&apos;s button sets JTDX internal time back to system time.&
     <message>
         <location filename="../mainwindow.ui" line="5486"/>
         <source>FT8 call first</source>
-        <translation type="unfinished"></translation>
+        <translation>FT8 izsaukt pirmo</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5497"/>
         <source>Call priority and search CQ</source>
-        <translation type="unfinished"></translation>
+        <translation>Izsaukuma prioritāte un CQ meklēšana</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5500"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Autoselect searching for response to CQ with priorities, if failed then searching for CQ messages with higher priority&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Automātiskā izvēle vispirms meklē atbildi uz CQ pēc prioritātēm; ja tādas nav, meklē CQ ziņojumus ar augstāku prioritāti&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5508"/>
         <source>FT8 call last</source>
-        <translation type="unfinished"></translation>
+        <translation>FT8 izsaukt pēdējo</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5516"/>
         <source>FT8 manual call</source>
-        <translation type="unfinished"></translation>
+        <translation>FT8 manuāls izsaukums</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5524"/>
         <source>0  Call None</source>
-        <translation type="unfinished"></translation>
+        <translation>0  Neizsaukt nevienu</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5532"/>
         <source>1  Call first</source>
-        <translation type="unfinished"></translation>
+        <translation>1  Izsaukt pirmo</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5540"/>
         <source>4+ Call and search through CQ messages</source>
-        <translation type="unfinished"></translation>
+        <translation>4+ Izsaukt un pārmeklēt CQ ziņojumus</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5548"/>
         <source>2  Call decoded till start of TX interval</source>
-        <translation type="unfinished"></translation>
+        <translation>2  Izsaukt dekodētos līdz raidīšanas intervāla sākumam</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5556"/>
         <source>3  Call based on end of decoding</source>
-        <translation type="unfinished"></translation>
+        <translation>3  Izsaukt pēc dekodēšanas beigām</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5564"/>
         <source>Single shot QSO</source>
-        <translation type="unfinished"></translation>
+        <translation>Viens QSO</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5572"/>
         <source>Erase band activity window at start of decoding</source>
-        <translation type="unfinished"></translation>
+        <translation>Notīrīt joslas aktivitātes logu, sākot dekodēšanu</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5580"/>
         <source>Answer worked B4 calls</source>
-        <translation type="unfinished"></translation>
+        <translation>Atbildēt jau strādātajiem</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5591"/>
         <source>Auto</source>
-        <translation type="unfinished"></translation>
+        <translation>Auto</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5618"/>
@@ -4471,117 +4508,117 @@ Click by right mouse&apos;s button sets JTDX internal time back to system time.&
     <message>
         <location filename="../mainwindow.ui" line="5642"/>
         <source>Erase both message windows at band change</source>
-        <translation type="unfinished"></translation>
+        <translation>Notīrīt abus ziņojumu logus, mainot joslu</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5680"/>
         <source>deep with 4 passes</source>
-        <translation type="unfinished"></translation>
+        <translation>dziļi ar 4 gājieniem</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5688"/>
         <source>Max distance instead of best SNR</source>
-        <translation type="unfinished"></translation>
+        <translation>Maksimālais attālums labākā SNR vietā</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5696"/>
         <source>Messages with wanted call to RX frequency window</source>
-        <translation type="unfinished"></translation>
+        <translation>Ziņojumi ar meklēto izsaukuma signālu uztveršanas frekvences logā</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5704"/>
         <source>use low thresholds</source>
-        <translation type="unfinished"></translation>
+        <translation>lietot zemus sliekšņus</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5739"/>
         <source>use subpass</source>
-        <translation type="unfinished"></translation>
+        <translation>lietot apakšgājienu</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5750"/>
         <source>minimum</source>
-        <translation type="unfinished"></translation>
+        <translation>minimums</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5758"/>
         <source>early start of decoder</source>
-        <translation type="unfinished"></translation>
+        <translation>agra dekodētāja palaišana</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5766"/>
         <source>Call worked B4 callsigns</source>
-        <translation type="unfinished"></translation>
+        <translation>Izsaukt jau strādātos izsaukuma signālus</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5774"/>
         <source>Call higher than new calls priority callsigns</source>
-        <translation type="unfinished"></translation>
+        <translation>Izsaukt izsaukuma signālus ar augstāku prioritāti nekā jaunie</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5793"/>
         <source>CQ and 73</source>
-        <translation type="unfinished"></translation>
+        <translation>CQ un 73</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5801"/>
         <source>any messages</source>
-        <translation type="unfinished"></translation>
+        <translation>jebkurus ziņojumus</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5809"/>
         <source>Enable</source>
-        <translation type="unfinished"></translation>
+        <translation>Ieslēgt</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5817"/>
         <source>Switch Filter OFF at sending 73</source>
-        <translation type="unfinished"></translation>
+        <translation>Izslēgt filtru, nosūtot 73</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5825"/>
         <source>Switch Filter OFF at getting 73</source>
-        <translation type="unfinished"></translation>
+        <translation>Izslēgt filtru, saņemot 73</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5833"/>
         <source>Hide FT8 dupe messages</source>
-        <translation type="unfinished"></translation>
+        <translation>Slēpt FT8 dublējošos ziņojumus</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5841"/>
         <source>Display output power</source>
-        <translation type="unfinished"></translation>
+        <translation>Rādīt izejas jaudu</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5849"/>
         <source>Report message priority</source>
-        <translation type="unfinished"></translation>
+        <translation>Raporta ziņojuma prioritāte</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5857"/>
         <source>Enable hound mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Ieslēgt hound režīmu</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5868"/>
         <source>Use hound TX frequency control</source>
-        <translation type="unfinished"></translation>
+        <translation>Lietot hound raidīšanas frekvences vadību</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5876"/>
         <source>Disable TX after sending RRR/RR73/73 in manual mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Manuālajā režīmā aizliegt raidīšanu pēc RRR/RR73/73 nosūtīšanas</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5887"/>
         <source>Show tooltips in main window</source>
-        <translation type="unfinished"></translation>
+        <translation>Rādīt paskaidres galvenajā logā</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5895"/>
         <source>Color Tx message buttons</source>
-        <translation type="unfinished"></translation>
+        <translation>Krāsainas raidāmo ziņojumu pogas</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5903"/>
@@ -4628,12 +4665,12 @@ Click by right mouse&apos;s button sets JTDX internal time back to system time.&
     <message>
         <location filename="../mainwindow.ui" line="5978"/>
         <source>high</source>
-        <translation type="unfinished"></translation>
+        <translation>augsta</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5986"/>
         <source>Hide FT contest messages</source>
-        <translation type="unfinished"></translation>
+        <translation>Slēpt FT sacensību ziņojumus</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5994"/>
@@ -4643,32 +4680,32 @@ Click by right mouse&apos;s button sets JTDX internal time back to system time.&
     <message>
         <location filename="../mainwindow.ui" line="6029"/>
         <source>wideband DX Call search</source>
-        <translation type="unfinished"></translation>
+        <translation>platjoslas DX izsaukumu meklēšana</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="6037"/>
         <source>6 pass SWL mode</source>
-        <translation type="unfinished"></translation>
+        <translation>6 gājienu SWL režīms</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="6048"/>
         <source>Callsign to clipboard at double-click|autoselect</source>
-        <translation type="unfinished"></translation>
+        <translation>Izsaukuma signāls starpliktuvē pie dubultklikšķa|automātiskās izvēles</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="6056"/>
         <source>Crossband 160m operation with Japan</source>
-        <translation type="unfinished"></translation>
+        <translation>Krustjoslu 160 m darbs ar Japānu</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="6064"/>
         <source>Crossband 160m operation with Korea</source>
-        <translation type="unfinished"></translation>
+        <translation>Krustjoslu 160 m darbs ar Koreju</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="6120"/>
         <source>Hide telemetry messages</source>
-        <translation type="unfinished"></translation>
+        <translation>Slēpt telemetrijas ziņojumus</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="6128"/>
@@ -4733,12 +4770,12 @@ Click by right mouse&apos;s button sets JTDX internal time back to system time.&
     <message>
         <location filename="../mainwindow.cpp" line="470"/>
         <source>Do you want to reconfigure the radio interface?</source>
-        <translation type="unfinished"></translation>
+        <translation>Vai vēlaties pārkonfigurēt radio interfeisu?</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="827"/>
         <source>Error Writing WAV File</source>
-        <translation type="unfinished"></translation>
+        <translation>Kļūda, rakstot WAV failu</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="947"/>
@@ -4748,37 +4785,37 @@ Click by right mouse&apos;s button sets JTDX internal time back to system time.&
         <location filename="../mainwindow.cpp" line="6342"/>
         <location filename="../mainwindow.cpp" line="6343"/>
         <source>Freq   Message</source>
-        <translation type="unfinished"></translation>
+        <translation>Frekv   Ziņojums</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="969"/>
         <source>Error Killing jtdxjt9.exe Process</source>
-        <translation type="unfinished"></translation>
+        <translation>Kļūda, pārtraucot jtdxjt9.exe procesu</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="970"/>
         <source>KillByName return code: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>KillByName atgrieztais kods: %1</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="987"/>
         <source>Error removing &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Kļūda, dzēšot "%1"</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="988"/>
         <source>Click OK to retry</source>
-        <translation type="unfinished"></translation>
+        <translation>Noklikšķiniet uz Labi, lai mēģinātu vēlreiz</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="1707"/>
         <source>TX Even</source>
-        <translation type="unfinished"></translation>
+        <translation>Raidīt pāra</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="1714"/>
         <source>TX Odd</source>
-        <translation type="unfinished"></translation>
+        <translation>Raidīt nepāra</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="1777"/>
@@ -4790,7 +4827,7 @@ Click by right mouse&apos;s button sets JTDX internal time back to system time.&
         <location filename="../mainwindow.cpp" line="7183"/>
         <location filename="../mainwindow.cpp" line="7429"/>
         <source>File Open Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Faila atvēršanas kļūda</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="1778"/>
@@ -4808,133 +4845,135 @@ Click by right mouse&apos;s button sets JTDX internal time back to system time.&
     <message>
         <location filename="../mainwindow.cpp" line="1832"/>
         <source>lost audio </source>
-        <translation type="unfinished"></translation>
+        <translation>zaudēts audio </translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="1918"/>
         <source>Error saving c2 file</source>
-        <translation type="unfinished"></translation>
+        <translation>Kļūda, saglabājot c2 failu</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="1994"/>
         <source>Error in SoundInput</source>
-        <translation type="unfinished"></translation>
+        <translation>Kļūda audio ievadē</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="1995"/>
         <source>Error in SoundOutput</source>
-        <translation type="unfinished"></translation>
+        <translation>Kļūda audio izvadē</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="2110"/>
         <source>Pwr</source>
-        <translation type="unfinished"></translation>
+        <translation>Jauda</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="2509"/>
         <location filename="../mainwindow.cpp" line="3080"/>
         <location filename="../mainwindow.cpp" line="6622"/>
         <source>Hound mode TX frequency control requires *Split* rig control (either *Rig* or *Fake It* set in the *Settings | Radio* tab.)</source>
-        <translation type="unfinished"></translation>
+        <translation>Hound režīma raidīšanas frekvences vadībai nepieciešama *Split* transīvera vadība (cilnē *Iestatījumi | Radio* jāizvēlas *Transīvers* vai *Imitēt*).</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="2705"/>
         <source>Subprocess Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Apakšprocesa kļūda</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="2706"/>
         <source>Subprocess failed with exit code %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Apakšprocess beidzās ar kļūdas kodu %1</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="2708"/>
         <location filename="../mainwindow.cpp" line="2727"/>
         <source>Running: %1
 %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Izpildīts: %1
+%2</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="2726"/>
         <source>Subprocess error</source>
-        <translation type="unfinished"></translation>
+        <translation>Apakšprocesa kļūda</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="2797"/>
         <source>Spotted</source>
-        <translation type="unfinished"></translation>
+        <translation>Nospotots</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="2804"/>
         <source>Can not establish/complete connection to dxsummit server</source>
-        <translation type="unfinished"></translation>
+        <translation>Neizdodas izveidot vai pabeigt savienojumu ar dxsummit serveri</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="2826"/>
         <source>The algorithms, source code, look-and-feel of WSJT-X and related programs, and protocol specifications for the modes FSK441, FT8, JT4, JT6M, JT9, JT65, JTMS, QRA64, ISCAT, MSK144 are Copyright (C) 2001-2018 by one or more of the following authors: Joseph Taylor, K1JT; Bill Somerville, G4WJS; Steven Franke, K9AN; Nico Palermo, IV3NWV; Greg Beam, KI7MT; Michael Black, W9MDB; Edson Pereira, PY2SDR; Philip Karn, KA9Q; and other members of the WSJT Development Group.</source>
-        <translation type="unfinished"></translation>
+        <translation>WSJT-X un saistīto programmu algoritmi, pirmkods un ārējais izskats, kā arī modu FSK441, FT8, JT4, JT6M, JT9, JT65, JTMS, QRA64, ISCAT un MSK144 protokolu specifikācijas ir Copyright (C) 2001-2018, un tās pieder vienam vai vairākiem no šiem autoriem: Joseph Taylor, K1JT; Bill Somerville, G4WJS; Steven Franke, K9AN; Nico Palermo, IV3NWV; Greg Beam, KI7MT; Michael Black, W9MDB; Edson Pereira, PY2SDR; Philip Karn, KA9Q; kā arī citiem WSJT izstrādes grupas dalībniekiem.</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="2946"/>
         <source>No data read from disk. Wrong file format?</source>
-        <translation type="unfinished"></translation>
+        <translation>No diska nav nolasīti dati. Nepareizs faila formāts?</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="2953"/>
         <source>Confirm Delete</source>
-        <translation type="unfinished"></translation>
+        <translation>Apstiprināt dzēšanu</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="2954"/>
         <source>Are you sure you want to delete all *.wav and *.c2 files in
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Vai tiešām dzēst visus *.wav un *.c2 failus direktorijā
+</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="2997"/>
         <source>AutoSeq0</source>
-        <translation type="unfinished"></translation>
+        <translation>AutoSeq0</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="3010"/>
         <source>AutoSeq1</source>
-        <translation type="unfinished"></translation>
+        <translation>AutoSeq1</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="3019"/>
         <location filename="../mainwindow.cpp" line="3045"/>
         <source>AutoSeq2</source>
-        <translation type="unfinished"></translation>
+        <translation>AutoSeq2</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="3020"/>
         <location filename="../mainwindow.cpp" line="3041"/>
         <source>AutoSeq6</source>
-        <translation type="unfinished"></translation>
+        <translation>AutoSeq6</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="3029"/>
         <location filename="../mainwindow.cpp" line="3046"/>
         <source>AutoSeq3</source>
-        <translation type="unfinished"></translation>
+        <translation>AutoSeq3</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="3030"/>
         <location filename="../mainwindow.cpp" line="3042"/>
         <source>AutoSeq7</source>
-        <translation type="unfinished"></translation>
+        <translation>AutoSeq7</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="2512"/>
         <location filename="../mainwindow.cpp" line="3083"/>
         <location filename="../mainwindow.cpp" line="6625"/>
         <source>Hound TX frequency control warning</source>
-        <translation type="unfinished"></translation>
+        <translation>Hound raidīšanas frekvences vadības brīdinājums</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="3177"/>
         <source>Keyboard Shortcuts</source>
-        <translation type="unfinished"></translation>
+        <translation>Īsinājumtaustiņi</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="3179"/>
@@ -4968,12 +5007,40 @@ Click by right mouse&apos;s button sets JTDX internal time back to system time.&
   &lt;tr&gt;&lt;td&gt;&lt;b&gt;Esc    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Halt Tx&lt;/td&gt;&lt;/tr&gt;
 &lt;/table&gt;</source>
         <extracomment>Keyboard shortcuts help window contents</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>&lt;table cellspacing=1&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F1       &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Tiešsaistes lietotāja rokasgrāmata&lt;/td&gt;&lt;td&gt;&lt;b&gt;Ctrl+F1  &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Par JTDX&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F2       &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Atvērt iestatījumu logu&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F3       &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Rādīt tastatūras saīsnes&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F4       &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Notīrīt DX izsaukumu/lokatoru un Tx ziņas&lt;/td&gt;&lt;td&gt;&lt;b&gt;Alt+F4   &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Iziet no programmas&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F5       &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Rādīt īpašās peles komandas&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F6       &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Atvērt nākamo failu mapē&lt;/td&gt;&lt;td&gt;&lt;b&gt;Shift+F6 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Atkodēt visus atlikušos failus mapē&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F7       &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Atvērt žurnālu ar sistēmā piesaistīto programmu&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F11      &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Pazemināt Rx frekvenci par 1 Hz&lt;/td&gt;&lt;td&gt;&lt;b&gt;Ctrl+F11 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Pazemināt Rx un Tx frekvenci par 1 Hz&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F12      &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Paaugstināt Rx frekvenci par 1 Hz&lt;/td&gt;&lt;td&gt;&lt;b&gt;Ctrl+F12 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Paaugstināt Rx un Tx frekvenci par 1 Hz&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+1-6  &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Iestatīt pašreizējo raidījumu uz šo numuru 1. cilnē&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Ctl+1-6  &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Iestatīt nākamo raidījumu uz šo numuru 1. cilnē&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+Ctrl+A    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Notīrīt meklēto izsaukumu sarakstu&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+B/C  &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Pārslēgties uz FT8/FT4&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+D    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Atkodēt vēlreiz QSO frekvencē&lt;/td&gt;&lt;td&gt;&lt;b&gt;Shift+D  &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Pilna atkodēšana (abi logi)&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+E    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Notīrīt&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+F    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Pārslēgt visu teksta filtru apiešanu&lt;/td&gt;&lt;td&gt;&lt;b&gt;Ctrl+F   &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Rediģēt brīvā teksta lauku&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+G    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Izveidot standarta ziņas&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+H    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Apturēt raidīšanu&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Ctrl+L   &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Meklēt izsaukumu datubāzē, izveidot standarta ziņas&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+M    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Uzraudzīt&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+N    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Atļaut raidīšanu&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+Q    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Ierakstīt QSO&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+S    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Pārtraukt uzraudzību&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+T    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Skaņot&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+V    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Saglabāt pēdējo pabeigto *.wav failu&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+Z    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Filtrs; saīsne darbojas galvenajā logā un ūdenskrituma logā&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Esc    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Apturēt raidīšanu&lt;/td&gt;&lt;/tr&gt;
+&lt;/table&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="3218"/>
         <source>Special Mouse Commands</source>
-        <translation type="unfinished"></translation>
+        <translation>Īpašās peles komandas</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="3218"/>
@@ -5015,90 +5082,127 @@ Click by right mouse&apos;s button sets JTDX internal time back to system time.&
   &lt;/tr&gt;
 &lt;/table&gt;
 </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;table cellpadding=5&gt;
+  &lt;tr&gt;
+    &lt;th align="right"&gt;Klikšķis uz&lt;/th&gt;
+    &lt;th align="left"&gt;Darbība&lt;/th&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td align="right"&gt;Ūdenskritums:&lt;/td&gt;
+    &lt;td&gt;Iestata uztveršanas frekvenci.&lt;br/&gt;
+        Dubultklikšķis iestata uztveršanas frekvenci un dekodē tur.&lt;br/&gt;
+        Ctrl+klikšķis iestata uztveršanas un raidīšanas frekvenci.&lt;br/&gt;
+        Ja TX=RX nav fiksēts:&lt;br/&gt;
+        kreisā poga iestata uztveršanas frekvenci&lt;br/&gt;
+        ALT+kreisā poga iestata uztveršanas frekvenci un ieslēdz filtru&lt;br/&gt;
+        labā poga iestata raidīšanas frekvenci
+    &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td align="right"&gt;Dekodētais teksts:&lt;/td&gt;
+    &lt;td&gt;Dubultklikšķis kopē otro izsaukuma signālu uz Dx Call,&lt;br/&gt;
+        lokātoru uz Dx Grid, maina uztveršanas un raidīšanas frekvenci uz&lt;br/&gt;
+        dekodētā signāla frekvenci un ģenerē standarta ziņojumus.&lt;br/&gt;
+        Ja pirmais izsaukuma signāls ir jūsējais, raidīšanas frekvence&lt;br/&gt;
+        netiek mainīta, ja vien dubultklikšķa laikā netur CTRL.&lt;br/&gt;&lt;br/&gt;
+        ALT+dubultklikšķis arī pārtrauc raidīšanu, ja poga Atļaut raidīt ir aktīva.&lt;br/&gt;&lt;br/&gt;
+        CTRL+ALT+dubultklikšķis tikai pievieno otro izsaukuma signālu no&lt;br/&gt;
+        ziņojuma meklēto izsaukuma signālu sarakstam.
+    &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td align="right"&gt;Poga Notīrīt:&lt;/td&gt;
+    &lt;td&gt;Labā poga notīra QSO logu.&lt;br/&gt;
+        Kreisā poga notīra joslas aktivitātes logu.&lt;br/&gt;
+        Dubultklikšķis ar kreiso vai labo pogu notīra QSO &lt;br/&gt;
+        un joslas aktivitātes logu.
+    &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/table&gt;
+</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="3731"/>
         <location filename="../mainwindow.cpp" line="3754"/>
         <source>Freq  </source>
-        <translation type="unfinished"></translation>
+        <translation>Frekv  </translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="3731"/>
         <source>Avg=</source>
-        <translation type="unfinished"></translation>
+        <translation>Vid=</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="3731"/>
         <location filename="../mainwindow.cpp" line="3754"/>
         <source>Lag=</source>
-        <translation type="unfinished"></translation>
+        <translation>Nob=</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="3737"/>
         <location filename="../mainwindow.cpp" line="3750"/>
         <source>check time</source>
-        <translation type="unfinished"></translation>
+        <translation>pārbaudiet laiku</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="4013"/>
         <location filename="../mainwindow.cpp" line="4019"/>
         <source>Confirm change Language</source>
-        <translation type="unfinished"></translation>
+        <translation>Apstiprināt valodas maiņu</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="4015"/>
         <location filename="../mainwindow.cpp" line="4022"/>
         <source>Are You sure to change UI Language to English, JTDX will restart?</source>
-        <translation type="unfinished"></translation>
+        <translation>Vai tiešām mainīt lietotāja saskarnes valodu uz latviešu? JTDX tiks restartēts.</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="4192"/>
         <source>Please choose another Tx frequency. JTDX will not knowingly transmit another mode in the WSPR sub-band.</source>
-        <translation type="unfinished"></translation>
+        <translation>Lūdzu, izvēlieties citu raidīšanas frekvenci. JTDX apzināti neraidīs citu modi WSPR apakšjoslā.</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="4197"/>
         <location filename="../mainwindow.cpp" line="4200"/>
         <source>WSPR Guard Band</source>
-        <translation type="unfinished"></translation>
+        <translation>WSPR aizsargjosla</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="4203"/>
         <source>Please choose another Tx frequency. JTDX will not allow to Call below 1000 Hz in DXped mode.</source>
-        <translation type="unfinished"></translation>
+        <translation>Lūdzu, izvēlieties citu raidīšanas frekvenci. DXpedīcijas režīmā JTDX neļauj izsaukt zem 1000 Hz.</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="4208"/>
         <location filename="../mainwindow.cpp" line="4211"/>
         <source>FT8 F/H Tx Guard</source>
-        <translation type="unfinished"></translation>
+        <translation>FT8 F/H raidīšanas aizsardzība</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="4330"/>
         <source>TUNE</source>
-        <translation type="unfinished"></translation>
+        <translation>PIESTRĀDE</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="4331"/>
         <location filename="../mainwindow.cpp" line="4793"/>
         <source>LastTx: </source>
-        <translation type="unfinished"></translation>
+        <translation>Pēdējais Tx: </translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="4582"/>
         <source>Tx: TUNE</source>
-        <translation type="unfinished"></translation>
+        <translation>Tx: PIESTRĀDE</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="4583"/>
         <source>Tx: </source>
-        <translation type="unfinished"></translation>
+        <translation>Tx: </translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="4588"/>
         <source>Receiving </source>
-        <translation type="unfinished"></translation>
+        <translation>Uztver </translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="5664"/>
@@ -5106,104 +5210,105 @@ Click by right mouse&apos;s button sets JTDX internal time back to system time.&
         <location filename="../mainwindow.cpp" line="5695"/>
         <location filename="../mainwindow.cpp" line="5721"/>
         <source>Add to CALL3.TXT</source>
-        <translation type="unfinished"></translation>
+        <translation>Pievienot failam CALL3.TXT</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="5665"/>
         <source>Please enter a valid grid locator</source>
-        <translation type="unfinished"></translation>
+        <translation>Lūdzu, ievadiet derīgu lokātoru</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="5677"/>
         <source>Cannot open &quot;%1&quot; for read/write: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Nevar atvērt "%1" lasīšanai/rakstīšanai: %2</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="5696"/>
         <source>Cannot open &quot;%1&quot; for writing: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Nevar atvērt "%1" rakstīšanai: %2</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="5719"/>
         <source>%1
 is already in CALL3.TXT, do you wish to replace it?</source>
-        <translation type="unfinished"></translation>
+        <translation>%1
+jau ir failā CALL3.TXT; vai vēlaties to aizstāt?</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="6062"/>
         <source>Error sending QSO ADIF data to secondary UDP server</source>
-        <translation type="unfinished"></translation>
+        <translation>Kļūda, sūtot QSO ADIF datus uz otro UDP serveri</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="6062"/>
         <source>Write returned &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Rakstīšana atgrieza "%1"</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="6229"/>
         <source>Tx WSPR</source>
-        <translation type="unfinished"></translation>
+        <translation>Tx WSPR</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="6333"/>
         <source>    Freq     Drift  Call          Grid    dBm   Dist</source>
-        <translation type="unfinished"></translation>
+        <translation>    Frekv    Dreifs Izsauk.       Lokat.  dBm   Attāl</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="6427"/>
         <location filename="../mainwindow.cpp" line="6439"/>
         <source>Confirm Erase</source>
-        <translation type="unfinished"></translation>
+        <translation>Apstiprināt dzēšanu</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="6428"/>
         <source>Are you sure you want to erase file ALL.TXT ?</source>
-        <translation type="unfinished"></translation>
+        <translation>Vai tiešām vēlaties dzēst failu ALL.TXT?</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="6440"/>
         <source>Are you sure you want to erase your QSO LOG?</source>
-        <translation type="unfinished"></translation>
+        <translation>Vai tiešām vēlaties dzēst savu QSO žurnālu?</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="7069"/>
         <source>Lockd Tx=Rx</source>
-        <translation type="unfinished"></translation>
+        <translation>Fiks. Tx=Rx</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="7070"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Push button to allow Tx/Rx AF frequencies split operation.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Nospiediet pogu, lai atļautu atsevišķas raidīšanas un uztveršanas NF frekvences.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="7073"/>
         <source>Tx/Rx Split</source>
-        <translation type="unfinished"></translation>
+        <translation>Tx/Rx split</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="7074"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Push button to lock Tx frequency to the Rx AF frequency.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Nospiediet pogu, lai piesaistītu raidīšanas frekvenci uztveršanas NF frekvencei.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="7134"/>
         <source>Pwr&lt;br&gt;%1 W</source>
-        <translation type="unfinished"></translation>
+        <translation>Jauda&lt;br&gt;%1 W</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="7222"/>
         <source>Rig Control Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Transīvera vadības kļūda</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="7302"/>
         <source>Tune digital gain</source>
-        <translation type="unfinished"></translation>
+        <translation>Digitālais pastiprinājums piestrādē</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="7303"/>
         <source>Transmit digital gain</source>
-        <translation type="unfinished"></translation>
+        <translation>Digitālais pastiprinājums raidīšanā</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="7323"/>
@@ -5214,33 +5319,34 @@ is already in CALL3.TXT, do you wish to replace it?</source>
         <location filename="../mainwindow.cpp" line="7399"/>
         <location filename="../mainwindow.cpp" line="7400"/>
         <source>Logd </source>
-        <translation type="unfinished"></translation>
+        <translation>Ierakst. </translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="7644"/>
         <source>Network Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Tīkla kļūda</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="7645"/>
         <source>Error: %1
 UDP server %2:%3</source>
-        <translation type="unfinished"></translation>
+        <translation>Kļūda: %1
+UDP serveris %2:%3</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="7792"/>
         <source>File Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Faila kļūda</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="8007"/>
         <source>Tx watchdog expired</source>
-        <translation type="unfinished"></translation>
+        <translation>Raidīšanas uzrauga laiks beidzies</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="8021"/>
         <source>WD %1m</source>
-        <translation type="unfinished"></translation>
+        <translation>WD %1m</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
@@ -5290,7 +5396,7 @@ UDP server %2:%3</source>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>RX</source>
-        <translation type="unfinished"></translation>
+        <translation>RX</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
@@ -5375,62 +5481,62 @@ UDP server %2:%3</source>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>1 member</source>
-        <translation type="unfinished"></translation>
+        <translation>1 dalībnieks</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>2 members</source>
-        <translation type="unfinished"></translation>
+        <translation>2 dalībnieki</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>3 members</source>
-        <translation type="unfinished"></translation>
+        <translation>3 dalībnieki</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>4 members</source>
-        <translation type="unfinished"></translation>
+        <translation>4 dalībnieki</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>5 members</source>
-        <translation type="unfinished"></translation>
+        <translation>5 dalībnieki</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>6 members</source>
-        <translation type="unfinished"></translation>
+        <translation>6 dalībnieki</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>1 member   (+20, 13% of the budget at 8 threads)</source>
-        <translation type="unfinished"></translation>
+        <translation>1 dalībnieks   (+20, 13% no budžeta ar 8 pavedieniem)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>2 members  (+48, 18%)</source>
-        <translation type="unfinished"></translation>
+        <translation>2 dalībnieki  (+48, 18%)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>3 members  (+72, 23% - the knee of the curve)</source>
-        <translation type="unfinished"></translation>
+        <translation>3 dalībnieki  (+72, 23% - līknes lūzuma punkts)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>4 members  (+86, 28%)</source>
-        <translation type="unfinished"></translation>
+        <translation>4 dalībnieki  (+86, 28%)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>5 members  (+98, 33% - all that is worth taking)</source>
-        <translation type="unfinished"></translation>
+        <translation>5 dalībnieki  (+98, 33% - viss, ko ir vērts ņemt)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>6 members  (+100, 39% - only 2 more than five)</source>
-        <translation type="unfinished"></translation>
+        <translation>6 dalībnieki  (+100, 39% - tikai par 2 vairāk nekā pieci)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
@@ -5450,27 +5556,27 @@ UDP server %2:%3</source>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>1 member  (+7 msgs, +1.2 s at 12 threads on the benchmark)</source>
-        <translation type="unfinished"></translation>
+        <translation>1 dalībnieks  (+7 ziņas, +1,2 s ar 12 pavedieniem etalonmērījumā)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>2 members  (+10, +2.3 s)</source>
-        <translation type="unfinished"></translation>
+        <translation>2 dalībnieki  (+10, +2,3 s)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>3 members  (+13, +5.3 s)</source>
-        <translation type="unfinished"></translation>
+        <translation>3 dalībnieki  (+13, +5,3 s)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>4 members  (+15, +7.9 s)</source>
-        <translation type="unfinished"></translation>
+        <translation>4 dalībnieki  (+15, +7,9 s)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>5 members  (+16, +11.5 s - too slow for a 15 s period on this machine, for replays)</source>
-        <translation type="unfinished"></translation>
+        <translation>5 dalībnieki  (+16, +11,5 s - pārāk lēni 15 s periodam uz šīs mašīnas, atkārtojumiem)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
@@ -5520,17 +5626,17 @@ UDP server %2:%3</source>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>100-3300 Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>100-3300 Hz</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>300-3300 Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>300-3300 Hz</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>50-3650 Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>50-3650 Hz</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
@@ -5540,52 +5646,52 @@ UDP server %2:%3</source>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>100-3200 Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>100-3200 Hz</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>100-3100 Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>100-3100 Hz</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>100-3000 Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>100-3000 Hz</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>200-3200 Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>200-3200 Hz</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>200-3100 Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>200-3100 Hz</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>200-3000 Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>200-3000 Hz</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>200-2800 Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>200-2800 Hz</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>200-2500 Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>200-2500 Hz</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>200-2400 Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>200-2400 Hz</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>0-5000 Hz (testing only)</source>
-        <translation type="unfinished"></translation>
+        <translation>0-5000 Hz (tikai testēšanai)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
@@ -5798,7 +5904,35 @@ UDP server %2:%3</source>
   &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+Z    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Filter, this shortcut is being supported in main UI and widegraph UI&lt;/td&gt;&lt;/tr&gt;
   &lt;tr&gt;&lt;td&gt;&lt;b&gt;Esc    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Halt Tx&lt;/td&gt;&lt;/tr&gt;
 &lt;/table&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;table cellspacing=1&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F1       &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Tiešsaistes lietotāja rokasgrāmata&lt;/td&gt;&lt;td&gt;&lt;b&gt;Ctrl+F1  &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Par JTDX_contest&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F2       &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Atvērt iestatījumu logu&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F3       &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Rādīt tastatūras saīsnes&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F4       &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Notīrīt DX izsaukumu/lokatoru un Tx ziņas&lt;/td&gt;&lt;td&gt;&lt;b&gt;Alt+F4   &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Iziet no programmas&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F5       &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Rādīt īpašās peles komandas&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F6       &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Atvērt nākamo failu mapē&lt;/td&gt;&lt;td&gt;&lt;b&gt;Shift+F6 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Atkodēt visus atlikušos failus mapē&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F7       &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Atvērt žurnālu ar sistēmā piesaistīto programmu&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F11      &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Pazemināt Rx frekvenci par 1 Hz&lt;/td&gt;&lt;td&gt;&lt;b&gt;Ctrl+F11 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Pazemināt Rx un Tx frekvenci par 1 Hz&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F12      &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Paaugstināt Rx frekvenci par 1 Hz&lt;/td&gt;&lt;td&gt;&lt;b&gt;Ctrl+F12 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Paaugstināt Rx un Tx frekvenci par 1 Hz&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+1-6  &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Iestatīt pašreizējo raidījumu uz šo numuru 1. cilnē&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Ctl+1-6  &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Iestatīt nākamo raidījumu uz šo numuru 1. cilnē&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+Ctrl+A    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Notīrīt meklēto izsaukumu sarakstu&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+B/C  &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Pārslēgties uz FT8/FT4&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+D    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Atkodēt vēlreiz QSO frekvencē&lt;/td&gt;&lt;td&gt;&lt;b&gt;Shift+D  &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Pilna atkodēšana (abi logi)&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+E    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Notīrīt&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+F    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Pārslēgt visu teksta filtru apiešanu&lt;/td&gt;&lt;td&gt;&lt;b&gt;Ctrl+F   &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Rediģēt brīvā teksta lauku&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+G    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Izveidot standarta ziņas&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+H    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Apturēt raidīšanu&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Ctrl+L   &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Meklēt izsaukumu datubāzē, izveidot standarta ziņas&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+M    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Uzraudzīt&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+N    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Atļaut raidīšanu&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+Q    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Ierakstīt QSO&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+S    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Pārtraukt uzraudzību&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+T    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Skaņot&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+V    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Saglabāt pēdējo pabeigto *.wav failu&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+Z    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Filtrs; saīsne darbojas galvenajā logā un ūdenskrituma logā&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Esc    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Apturēt raidīšanu&lt;/td&gt;&lt;/tr&gt;
+&lt;/table&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp"/>
@@ -5878,17 +6012,17 @@ Tas tiek jautāts tikai vienu reizi.</translation>
     <message>
         <location filename="../Configuration.cpp" line="5390"/>
         <source>File &amp;name:</source>
-        <translation></translation>
+        <translation>Faila &amp;nosaukums:</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp" line="5391"/>
         <source>&amp;Open</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Atvērt</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp" line="5392"/>
         <source>&amp;Choose</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Izvēlēties</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp" line="5393"/>
@@ -5923,17 +6057,17 @@ Tas tiek jautāts tikai vienu reizi.</translation>
     <message>
         <location filename="../Configuration.cpp" line="5399"/>
         <source>&amp;Rename</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Pārdēvēt</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp" line="5400"/>
         <source>Show &amp;hidden files</source>
-        <translation type="unfinished"></translation>
+        <translation>Rādīt &amp;slēptos failus</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp" line="5401"/>
         <source>&amp;New Folder</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Jauna mape</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp" line="5402"/>
@@ -5943,30 +6077,33 @@ Tas tiek jautāts tikai vienu reizi.</translation>
     <message>
         <location filename="../Configuration.cpp" line="5403"/>
         <source>Files of type:</source>
-        <translation type="unfinished"></translation>
+        <translation>Faila tips:</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp" line="5404"/>
         <source>&apos;%1&apos; is write protected.
 Do you want to delete it anyway?</source>
-        <translation type="unfinished"></translation>
+        <translation>'%1' ir aizsargāts pret rakstīšanu.
+Vai tomēr to dzēst?</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp" line="5405"/>
         <source>Are you sure you want to delete &apos;%1&apos;?</source>
-        <translation type="unfinished"></translation>
+        <translation>Vai tiešām vēlaties dzēst '%1'?</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp" line="5406"/>
         <source>Could not delete directory.</source>
-        <translation type="unfinished"></translation>
+        <translation>Neizdevās izdzēst direktoriju.</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp" line="5407"/>
         <source>%1
 Directory not found.
 Please verify the correct directory name was given.</source>
-        <translation type="unfinished"></translation>
+        <translation>%1
+Direktorija nav atrasta.
+Lūdzu, pārbaudiet, vai norādīts pareizs direktorijas nosaukums.</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp" line="5409"/>
@@ -6006,12 +6143,12 @@ Please verify the correct directory name was given.</source>
     <message>
         <location filename="../Configuration.cpp" line="5416"/>
         <source>Parent Directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Vecākdirektorija</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp" line="5417"/>
         <source>Go to the parent directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Pāriet uz vecākdirektoriju</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp" line="5418"/>
@@ -6026,7 +6163,7 @@ Please verify the correct directory name was given.</source>
     <message>
         <location filename="../Configuration.cpp" line="5420"/>
         <source>Create a New Folder</source>
-        <translation></translation>
+        <translation>Izveidot jaunu mapi</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp" line="5421"/>
@@ -6036,7 +6173,7 @@ Please verify the correct directory name was given.</source>
     <message>
         <location filename="../Configuration.cpp" line="5422"/>
         <source>Change to list view mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Pārslēgt uz saraksta skatu</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp" line="5423"/>
@@ -6046,17 +6183,17 @@ Please verify the correct directory name was given.</source>
     <message>
         <location filename="../Configuration.cpp" line="5424"/>
         <source>Change to detail view mode</source>
-        <translation></translation>
+        <translation>Pārslēgt uz detalizēto skatu</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp" line="5425"/>
         <source>Sidebar</source>
-        <translation></translation>
+        <translation>Sānjosla</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp" line="5426"/>
         <source>List of places and bookmarks</source>
-        <translation></translation>
+        <translation>Vietu un grāmatzīmju saraksts</translation>
     </message>
 </context>
 <context>
@@ -6101,12 +6238,12 @@ Please verify the correct directory name was given.</source>
     <message>
         <location filename="../main.cpp" line="186"/>
         <source>Invalid rig name - \ &amp; / not allowed</source>
-        <translation></translation>
+        <translation>Nederīgs transīvera nosaukums - \ &amp; / nav atļauti</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="210"/>
         <source>Another instance may be running, try to remove stale lock file?</source>
-        <translation></translation>
+        <translation>Iespējams, darbojas cita programmas instance; vai mēģināt noņemt novecojušo bloķēšanas failu?</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="356"/>
@@ -6116,42 +6253,42 @@ Please verify the correct directory name was given.</source>
     <message>
         <location filename="../widegraph.cpp" line="14"/>
         <source>User Defined</source>
-        <translation></translation>
+        <translation>Lietotāja definēta</translation>
     </message>
     <message>
         <location filename="../Bands.cpp" line="51"/>
         <source>OOB</source>
-        <translation></translation>
+        <translation>OOB</translation>
     </message>
     <message>
         <location filename="../WFPalette.cpp" line="55"/>
         <source>Too many colours in palette.</source>
-        <translation></translation>
+        <translation>Paletē ir pārāk daudz krāsu.</translation>
     </message>
     <message>
         <location filename="../WFPalette.cpp" line="78"/>
         <source>Error reading waterfall palette file &quot;%1:%2&quot; too many colors.</source>
-        <translation></translation>
+        <translation>Kļūda, lasot ūdenskrituma paletes failu "%1:%2": pārāk daudz krāsu.</translation>
     </message>
     <message>
         <location filename="../WFPalette.cpp" line="84"/>
         <source>Error reading waterfall palette file &quot;%1:%2&quot; invalid triplet.</source>
-        <translation></translation>
+        <translation>Kļūda, lasot ūdenskrituma paletes failu "%1:%2": nederīgs trijnieks.</translation>
     </message>
     <message>
         <location filename="../WFPalette.cpp" line="96"/>
         <source>Error reading waterfall palette file &quot;%1:%2&quot; invalid color.</source>
-        <translation></translation>
+        <translation>Kļūda, lasot ūdenskrituma paletes failu "%1:%2": nederīga krāsa.</translation>
     </message>
     <message>
         <location filename="../WFPalette.cpp" line="104"/>
         <source>Error opening waterfall palette file &quot;%1&quot;: %2.</source>
-        <translation></translation>
+        <translation>Kļūda, atverot ūdenskrituma paletes failu "%1": %2.</translation>
     </message>
     <message>
         <location filename="../WFPalette.cpp" line="258"/>
         <source>Error writing waterfall palette file &quot;%1&quot;: %2.</source>
-        <translation></translation>
+        <translation>Kļūda, rakstot ūdenskrituma paletes failu "%1": %2.</translation>
     </message>
 </context>
 <context>
@@ -6159,37 +6296,37 @@ Please verify the correct directory name was given.</source>
     <message>
         <location filename="../soundin.cpp" line="21"/>
         <source>An error opening the audio input device has occurred.</source>
-        <translation type="unfinished"></translation>
+        <translation>Atverot audio ievades ierīci, radās kļūda.</translation>
     </message>
     <message>
         <location filename="../soundin.cpp" line="25"/>
         <source>An error occurred during read from the audio input device.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nolasot no audio ievades ierīces, radās kļūda.</translation>
     </message>
     <message>
         <location filename="../soundin.cpp" line="29"/>
         <source>Audio data not being fed to the audio input device fast enough.</source>
-        <translation type="unfinished"></translation>
+        <translation>Audio dati netiek padoti audio ievades ierīcei pietiekami ātri.</translation>
     </message>
     <message>
         <location filename="../soundin.cpp" line="33"/>
         <source>Non-recoverable error, audio input device not usable at this time.</source>
-        <translation type="unfinished"></translation>
+        <translation>Neatgriezeniska kļūda; audio ievades ierīce pašlaik nav lietojama.</translation>
     </message>
     <message>
         <location filename="../soundin.cpp" line="62"/>
         <source>Requested input audio format is not valid.</source>
-        <translation type="unfinished"></translation>
+        <translation>Pieprasītais ievades audio formāts nav derīgs.</translation>
     </message>
     <message>
         <location filename="../soundin.cpp" line="69"/>
         <source>Requested input audio format is not supported on device.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ierīce neatbalsta pieprasīto ievades audio formātu.</translation>
     </message>
     <message>
         <location filename="../soundin.cpp" line="90"/>
         <source>Failed to initialize audio sink device</source>
-        <translation type="unfinished"></translation>
+        <translation>Neizdevās inicializēt audio izvades ierīci</translation>
     </message>
     <message>
         <location filename="../soundin.cpp" line="125"/>
@@ -6227,32 +6364,32 @@ Please verify the correct directory name was given.</source>
     <message>
         <location filename="../soundout.cpp" line="24"/>
         <source>An error opening the audio output device has occurred.</source>
-        <translation type="unfinished"></translation>
+        <translation>Atverot audio izvades ierīci, radās kļūda.</translation>
     </message>
     <message>
         <location filename="../soundout.cpp" line="25"/>
         <source>An error occurred during write to the audio output device.</source>
-        <translation type="unfinished"></translation>
+        <translation>Rakstot uz audio izvades ierīci, radās kļūda.</translation>
     </message>
     <message>
         <location filename="../soundout.cpp" line="26"/>
         <source>Audio data not being fed to the audio output device fast enough.</source>
-        <translation type="unfinished"></translation>
+        <translation>Audio dati netiek padoti audio izvades ierīcei pietiekami ātri.</translation>
     </message>
     <message>
         <location filename="../soundout.cpp" line="27"/>
         <source>Non-recoverable error, audio output device not usable at this time.</source>
-        <translation type="unfinished"></translation>
+        <translation>Neatgriezeniska kļūda; audio izvades ierīce pašlaik nav lietojama.</translation>
     </message>
     <message>
         <location filename="../soundout.cpp" line="45"/>
         <source>Requested output audio format is not valid.</source>
-        <translation type="unfinished"></translation>
+        <translation>Pieprasītais izvades audio formāts nav derīgs.</translation>
     </message>
     <message>
         <location filename="../soundout.cpp" line="46"/>
         <source>Requested output audio format is not supported on device.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ierīce neatbalsta pieprasīto izvades audio formātu.</translation>
     </message>
     <message>
         <location filename="../soundout.cpp" line="109"/>
@@ -6295,12 +6432,12 @@ Please verify the correct directory name was given.</source>
     <message>
         <location filename="../Configuration.cpp" line="269"/>
         <source>&amp;Band:</source>
-        <translation></translation>
+        <translation>&amp;Josla:</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp" line="270"/>
         <source>&amp;Offset (MHz):</source>
-        <translation></translation>
+        <translation>&amp;Nobīde (MHz):</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp" line="271"/>
@@ -6315,7 +6452,7 @@ Please verify the correct directory name was given.</source>
     <message>
         <location filename="../Configuration.cpp" line="278"/>
         <source>&amp;Cancel</source>
-        <translation></translation>
+        <translation>&amp;Atcelt</translation>
     </message>
 </context>
 <context>
@@ -6328,7 +6465,7 @@ Please verify the correct directory name was given.</source>
     <message>
         <location filename="../StationList.cpp" line="320"/>
         <source>Frequency offset</source>
-        <translation type="unfinished"></translation>
+        <translation>Frekvences nobīde</translation>
     </message>
     <message>
         <location filename="../StationList.cpp" line="342"/>
@@ -6343,7 +6480,7 @@ Please verify the correct directory name was given.</source>
     <message>
         <location filename="../StationList.cpp" line="365"/>
         <source>Offset</source>
-        <translation type="unfinished"></translation>
+        <translation>Nobīde</translation>
     </message>
     <message>
         <location filename="../StationList.cpp" line="366"/>
@@ -6356,194 +6493,194 @@ Please verify the correct directory name was given.</source>
     <message>
         <location filename="../TCITransceiver.cpp" line="141"/>
         <source>ConnectionRefused</source>
-        <translation type="unfinished"></translation>
+        <translation>Savienojums noraidīts</translation>
     </message>
     <message>
         <location filename="../TCITransceiver.cpp" line="142"/>
         <source>RemoteHostClosed</source>
-        <translation type="unfinished"></translation>
+        <translation>Attālais resursdators aizvēra savienojumu</translation>
     </message>
     <message>
         <location filename="../TCITransceiver.cpp" line="143"/>
         <source>HostNotFound</source>
-        <translation type="unfinished"></translation>
+        <translation>Resursdators nav atrasts</translation>
     </message>
     <message>
         <location filename="../TCITransceiver.cpp" line="144"/>
         <source>SocketAccess</source>
-        <translation type="unfinished"></translation>
+        <translation>Ligzdas piekļuves kļūda</translation>
     </message>
     <message>
         <location filename="../TCITransceiver.cpp" line="145"/>
         <source>SocketResource</source>
-        <translation type="unfinished"></translation>
+        <translation>Trūkst ligzdas resursu</translation>
     </message>
     <message>
         <location filename="../TCITransceiver.cpp" line="146"/>
         <source>SocketTimeout</source>
-        <translation type="unfinished"></translation>
+        <translation>Ligzdas noildze</translation>
     </message>
     <message>
         <location filename="../TCITransceiver.cpp" line="147"/>
         <source>DatagramTooLarge</source>
-        <translation type="unfinished"></translation>
+        <translation>Datagramma pārāk liela</translation>
     </message>
     <message>
         <location filename="../TCITransceiver.cpp" line="148"/>
         <source>Network</source>
-        <translation type="unfinished"></translation>
+        <translation>Tīkla kļūda</translation>
     </message>
     <message>
         <location filename="../TCITransceiver.cpp" line="149"/>
         <source>AddressInUse</source>
-        <translation type="unfinished"></translation>
+        <translation>Adrese jau tiek lietota</translation>
     </message>
     <message>
         <location filename="../TCITransceiver.cpp" line="150"/>
         <source>SocketAddressNotAvailable</source>
-        <translation type="unfinished"></translation>
+        <translation>Ligzdas adrese nav pieejama</translation>
     </message>
     <message>
         <location filename="../TCITransceiver.cpp" line="151"/>
         <source>UnsupportedSocketOperation</source>
-        <translation type="unfinished"></translation>
+        <translation>Neatbalstīta ligzdas darbība</translation>
     </message>
     <message>
         <location filename="../TCITransceiver.cpp" line="152"/>
         <source>UnfinishedSocketOperation</source>
-        <translation type="unfinished"></translation>
+        <translation>Nepabeigta ligzdas darbība</translation>
     </message>
     <message>
         <location filename="../TCITransceiver.cpp" line="153"/>
         <source>ProxyAuthenticationRequired</source>
-        <translation type="unfinished"></translation>
+        <translation>Nepieciešama starpniekservera autentifikācija</translation>
     </message>
     <message>
         <location filename="../TCITransceiver.cpp" line="154"/>
         <source>SslHandshakeFailed</source>
-        <translation type="unfinished"></translation>
+        <translation>SSL rokasspiediens neizdevās</translation>
     </message>
     <message>
         <location filename="../TCITransceiver.cpp" line="155"/>
         <source>ProxyConnectionRefused</source>
-        <translation type="unfinished"></translation>
+        <translation>Starpniekserveris noraidīja savienojumu</translation>
     </message>
     <message>
         <location filename="../TCITransceiver.cpp" line="156"/>
         <source>ProxyConnectionClosed</source>
-        <translation type="unfinished"></translation>
+        <translation>Starpniekserveris aizvēra savienojumu</translation>
     </message>
     <message>
         <location filename="../TCITransceiver.cpp" line="157"/>
         <source>ProxyConnectionTimeout</source>
-        <translation type="unfinished"></translation>
+        <translation>Starpniekservera savienojuma noildze</translation>
     </message>
     <message>
         <location filename="../TCITransceiver.cpp" line="158"/>
         <source>ProxyNotFound</source>
-        <translation type="unfinished"></translation>
+        <translation>Starpniekserveris nav atrasts</translation>
     </message>
     <message>
         <location filename="../TCITransceiver.cpp" line="159"/>
         <source>ProxyProtocol</source>
-        <translation type="unfinished"></translation>
+        <translation>Starpniekservera protokola kļūda</translation>
     </message>
     <message>
         <location filename="../TCITransceiver.cpp" line="160"/>
         <source>Operation</source>
-        <translation type="unfinished"></translation>
+        <translation>Darbības kļūda</translation>
     </message>
     <message>
         <location filename="../TCITransceiver.cpp" line="161"/>
         <source>SslInternal</source>
-        <translation type="unfinished"></translation>
+        <translation>Iekšēja SSL kļūda</translation>
     </message>
     <message>
         <location filename="../TCITransceiver.cpp" line="162"/>
         <source>SslInvalidUserData</source>
-        <translation type="unfinished"></translation>
+        <translation>Nederīgi SSL lietotāja dati</translation>
     </message>
     <message>
         <location filename="../TCITransceiver.cpp" line="163"/>
         <source>Temporary</source>
-        <translation type="unfinished"></translation>
+        <translation>Īslaicīga kļūda</translation>
     </message>
     <message>
         <location filename="../TCITransceiver.cpp" line="164"/>
         <source>UnknownSocket</source>
-        <translation type="unfinished"></translation>
+        <translation>Nezināma ligzdas kļūda</translation>
     </message>
     <message>
         <location filename="../TCITransceiver.cpp" line="292"/>
         <source>TCI websocket error: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>TCI websocket kļūda: %1</translation>
     </message>
     <message>
         <location filename="../TCITransceiver.cpp" line="417"/>
         <source>TCI SDR could not be switched on</source>
-        <translation type="unfinished"></translation>
+        <translation>Neizdevās ieslēgt TCI SDR</translation>
     </message>
     <message>
         <location filename="../TCITransceiver.cpp" line="420"/>
         <source>TCI SDR is not switched on</source>
-        <translation type="unfinished"></translation>
+        <translation>TCI SDR nav ieslēgts</translation>
     </message>
     <message>
         <location filename="../TCITransceiver.cpp" line="427"/>
         <source>TCI RX2 could not be enabled</source>
-        <translation type="unfinished"></translation>
+        <translation>Neizdevās iespējot TCI RX2</translation>
     </message>
     <message>
         <location filename="../TCITransceiver.cpp" line="435"/>
         <source>TCI Audio could not be switched on</source>
-        <translation type="unfinished"></translation>
+        <translation>Neizdevās ieslēgt TCI audio</translation>
     </message>
     <message>
         <location filename="../TCITransceiver.cpp" line="481"/>
         <location filename="../TCITransceiver.cpp" line="1550"/>
         <source>TCI could not be opened</source>
-        <translation type="unfinished"></translation>
+        <translation>Neizdevās atvērt TCI</translation>
     </message>
     <message>
         <location filename="../TCITransceiver.cpp" line="1345"/>
         <source>TCI failed to set ptt</source>
-        <translation type="unfinished"></translation>
+        <translation>TCI neizdevās iestatīt PTT</translation>
     </message>
     <message>
         <location filename="../TCITransceiver.cpp" line="1354"/>
         <source>TCI should use PTT via CAT</source>
-        <translation type="unfinished"></translation>
+        <translation>TCI jāizmanto PTT caur CAT</translation>
     </message>
     <message>
         <location filename="../TCITransceiver.cpp" line="1397"/>
         <source>TCI failed set rxfreq</source>
-        <translation type="unfinished"></translation>
+        <translation>TCI neizdevās iestatīt uztveršanas frekvenci</translation>
     </message>
     <message>
         <location filename="../TCITransceiver.cpp" line="1416"/>
         <location filename="../TCITransceiver.cpp" line="1531"/>
         <source>TCI failed set mode</source>
-        <translation type="unfinished"></translation>
+        <translation>TCI neizdevās iestatīt modi</translation>
     </message>
     <message>
         <location filename="../TCITransceiver.cpp" line="1196"/>
         <source>TCI failed set split</source>
-        <translation type="unfinished"></translation>
+        <translation>TCI neizdevās iestatīt split</translation>
     </message>
     <message>
         <location filename="../TCITransceiver.cpp" line="1480"/>
         <source>TCI failed set txfreq</source>
-        <translation type="unfinished"></translation>
+        <translation>TCI neizdevās iestatīt raidīšanas frekvenci</translation>
     </message>
     <message>
         <location filename="../TCITransceiver.cpp" line="1679"/>
         <source>TCI sent an unrecognized frequency</source>
-        <translation type="unfinished"></translation>
+        <translation>TCI nosūtīja neatpazītu frekvenci</translation>
     </message>
     <message>
         <location filename="../TCITransceiver.cpp" line="1740"/>
         <source>TCI modulator not Idle</source>
-        <translation type="unfinished"></translation>
+        <translation>TCI modulators nav dīkstāvē</translation>
     </message>
 </context>
 <context>
@@ -6564,32 +6701,32 @@ Please verify the correct directory name was given.</source>
     <message>
         <location filename="../widegraph.ui" line="83"/>
         <source>Controls</source>
-        <translation type="unfinished"></translation>
+        <translation>Vadīklas</translation>
     </message>
     <message>
         <location filename="../widegraph.ui" line="142"/>
         <source>Bars</source>
-        <translation type="unfinished"></translation>
+        <translation>Joslas</translation>
     </message>
     <message>
         <location filename="../widegraph.ui" line="152"/>
         <source>Freq</source>
-        <translation type="unfinished"></translation>
+        <translation>Frekv</translation>
     </message>
     <message>
         <location filename="../widegraph.ui" line="197"/>
         <source>Compression factor for frequency scale</source>
-        <translation type="unfinished"></translation>
+        <translation>Frekvenču skalas saspiešanas koeficients</translation>
     </message>
     <message>
         <location filename="../widegraph.ui" line="203"/>
         <source>Bins/Pixel  </source>
-        <translation type="unfinished"></translation>
+        <translation>Bins/Pixel  </translation>
     </message>
     <message>
         <location filename="../widegraph.ui" line="234"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Decode JT9 only above this frequency&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dekodēt JT9 tikai virs šīs frekvences&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../widegraph.ui" line="237"/>
@@ -6605,17 +6742,17 @@ Please verify the correct directory name was given.</source>
         <location filename="../widegraph.ui" line="270"/>
         <location filename="../widegraph.ui" line="280"/>
         <source>Position of timestamp above each interval line</source>
-        <translation type="unfinished"></translation>
+        <translation>Laika zīmoga novietojums virs katras intervāla rindas</translation>
     </message>
     <message>
         <location filename="../widegraph.ui" line="273"/>
         <source>Timestamp</source>
-        <translation type="unfinished"></translation>
+        <translation>Laika zīmogs</translation>
     </message>
     <message>
         <location filename="../widegraph.ui" line="284"/>
         <source>Off</source>
-        <translation type="unfinished"></translation>
+        <translation>Izslēgts</translation>
     </message>
     <message>
         <location filename="../widegraph.ui" line="289"/>
@@ -6630,7 +6767,7 @@ Please verify the correct directory name was given.</source>
     <message>
         <location filename="../widegraph.ui" line="326"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Frequency at left edge of waterfall&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Frekvence ūdenskrituma kreisajā malā&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../widegraph.ui" line="329"/>
@@ -6645,92 +6782,92 @@ Please verify the correct directory name was given.</source>
     <message>
         <location filename="../widegraph.ui" line="357"/>
         <source>Number of FFTs averaged (controls waterfall scrolling rate)</source>
-        <translation type="unfinished"></translation>
+        <translation>Vidējoto FFT skaits (nosaka ūdenskrituma ritināšanas ātrumu)</translation>
     </message>
     <message>
         <location filename="../widegraph.ui" line="360"/>
         <source>N Avg </source>
-        <translation type="unfinished"></translation>
+        <translation>N vid. </translation>
     </message>
     <message>
         <location filename="../widegraph.ui" line="398"/>
         <source>  Palette </source>
-        <translation type="unfinished"></translation>
+        <translation>  Palete </translation>
     </message>
     <message>
         <location filename="../widegraph.ui" line="414"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enter definition for a new color palette.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ievadiet jaunas krāsu paletes definīciju.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../widegraph.ui" line="417"/>
         <source>Adjust...</source>
-        <translation type="unfinished"></translation>
+        <translation>Pielāgot...</translation>
     </message>
     <message>
         <location filename="../widegraph.ui" line="438"/>
         <source>Select waterfall palette</source>
-        <translation type="unfinished"></translation>
+        <translation>Izvēlieties ūdenskrituma paleti</translation>
     </message>
     <message>
         <location filename="../widegraph.ui" line="468"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scale spectrum by median value.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Mērogot spektru pēc mediānas vērtības.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../widegraph.ui" line="471"/>
         <source>Scale</source>
-        <translation type="unfinished"></translation>
+        <translation>Mērogs</translation>
     </message>
     <message>
         <location filename="../widegraph.ui" line="481"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Flatten spectral baseline over the full displayed interval.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Izlīdzināt spektra bāzes līniju visā attēlotajā intervālā.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../widegraph.ui" line="484"/>
         <source>Flatten</source>
-        <translation type="unfinished"></translation>
+        <translation>Izlīdzināt</translation>
     </message>
     <message>
         <location filename="../widegraph.ui" line="501"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Select data for spectral display&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Izvēlieties datus spektra attēlošanai&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../widegraph.ui" line="508"/>
         <source>Current</source>
-        <translation type="unfinished"></translation>
+        <translation>Pašreizējais</translation>
     </message>
     <message>
         <location filename="../widegraph.ui" line="513"/>
         <source>Cumulative</source>
-        <translation type="unfinished"></translation>
+        <translation>Kumulatīvais</translation>
     </message>
     <message>
         <location filename="../widegraph.ui" line="533"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Set fractional size of spectrum in this window.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Iestatiet spektra daļas izmēru šajā logā.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../widegraph.ui" line="539"/>
         <source> %</source>
-        <translation type="unfinished"></translation>
+        <translation> %</translation>
     </message>
     <message>
         <location filename="../widegraph.ui" line="542"/>
         <source>Spec </source>
-        <translation type="unfinished"></translation>
+        <translation>Spektrs </translation>
     </message>
     <message>
         <location filename="../widegraph.ui" line="593"/>
         <source>Waterfall gain</source>
-        <translation type="unfinished"></translation>
+        <translation>Ūdenskrituma pastiprinājums</translation>
     </message>
     <message>
         <location filename="../widegraph.ui" line="630"/>
         <source>Spectrum gain</source>
-        <translation type="unfinished"></translation>
+        <translation>Spektra pastiprinājums</translation>
     </message>
     <message>
         <location filename="../widegraph.ui" line="653"/>
@@ -6738,22 +6875,22 @@ Please verify the correct directory name was given.</source>
         <location filename="../widegraph.ui" line="755"/>
         <location filename="../widegraph.ui" line="762"/>
         <source>TextLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>TextLabel</translation>
     </message>
     <message>
         <location filename="../widegraph.ui" line="695"/>
         <source>Waterfall zero</source>
-        <translation type="unfinished"></translation>
+        <translation>Ūdenskrituma nulle</translation>
     </message>
     <message>
         <location filename="../widegraph.ui" line="732"/>
         <source>Spectrum zero</source>
-        <translation type="unfinished"></translation>
+        <translation>Spektra nulle</translation>
     </message>
     <message>
         <location filename="../widegraph.cpp" line="29"/>
         <source>Wide Graph</source>
-        <translation type="unfinished"></translation>
+        <translation>Platais grafiks</translation>
     </message>
 </context>
 <context>
@@ -6766,17 +6903,17 @@ Please verify the correct directory name was given.</source>
     <message>
         <location filename="../Configuration.ui" line="35"/>
         <source>Select tab to change configuration parameters.</source>
-        <translation type="unfinished"></translation>
+        <translation>Izvēlieties cilni, lai mainītu konfigurācijas parametrus.</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="42"/>
         <source>Genera&amp;l</source>
-        <translation></translation>
+        <translation>Vispārīg&amp;i</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="45"/>
         <source>General station details and settings.</source>
-        <translation type="unfinished"></translation>
+        <translation>Vispārīga stacijas informācija un iestatījumi.</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="57"/>
@@ -6796,12 +6933,12 @@ Please verify the correct directory name was given.</source>
     <message>
         <location filename="../Configuration.ui" line="108"/>
         <source>M&amp;y Grid:</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Mans lokātors:</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="118"/>
         <source>Maidenhead locator (only the first four characters are required).</source>
-        <translation type="unfinished"></translation>
+        <translation>Maidenhead lokātors (obligātas ir tikai pirmās četras rakstzīmes).</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="125"/>
@@ -6816,37 +6953,37 @@ Please verify the correct directory name was given.</source>
     <message>
         <location filename="../Configuration.ui" line="145"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Type 2 compound callsigns are those with prefixes or suffixes not included in the allowed shortlist (See Help-&amp;gt;Add-on prefixes and suffixes).&lt;/p&gt;&lt;p&gt;This option determines which generated messages should contain your full type 2 compound call sign rather than your base callsign. It only applies if you have a type 2 compound callsign.&lt;/p&gt;&lt;p&gt;This option controls the way the messages that are used to answer CQ calls are generated. Generated messages 6 (CQ) and 5 (73) will always contain your full callsign. The JT65 and JT9 protocols allow for some standard messages with your full call at the expense of another piece of information such as the DX call or your locator.&lt;/p&gt;&lt;p&gt;Choosing message 1 omits the DX callsign which may be an issue when replying to CQ calls. Choosing message 3 also omits the DX callsign and many versions of this and other software will not extract the report. Choosing neither means that your full callsign only goes in your message 5 (73) so your QSO partner my log the wrong callsign.&lt;/p&gt;&lt;p&gt;None of these options are perfect, message 3 is best but be aware your QSO partner may not log the report you send them.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;2. tipa saliktie izsaukuma signāli ir tie, kuru prefiksi vai sufiksi nav iekļauti atļautajā sarakstā (skatiet Palīdzība-&amp;gt;Papildu prefiksi un sufiksi).&lt;/p&gt;&lt;p&gt;Šī opcija nosaka, kuros ģenerētajos ziņojumos tiks lietots jūsu pilnais 2. tipa saliktais izsaukuma signāls, nevis pamata izsaukuma signāls. Tā attiecas tikai uz 2. tipa saliktajiem izsaukuma signāliem.&lt;/p&gt;&lt;p&gt;Opcija nosaka, kā tiek ģenerēti ziņojumi, ar kuriem tiek atbildēts uz CQ izsaukumiem. Ģenerētajos ziņojumos 6 (CQ) un 5 (73) vienmēr būs jūsu pilnais izsaukuma signāls. JT65 un JT9 protokoli atļauj dažos standarta ziņojumos iekļaut pilno izsaukuma signālu uz citas informācijas rēķina, piemēram, DX izsaukuma signāla vai jūsu lokātora.&lt;/p&gt;&lt;p&gt;Izvēloties 1. ziņojumu, tiek izlaists DX izsaukuma signāls, kas var radīt problēmas, atbildot uz CQ. Izvēloties 3. ziņojumu, DX izsaukuma signāls arī tiek izlaists, un daudzas šīs un citu programmu versijas neizgūs raportu. Neizvēloties nevienu, jūsu pilnais izsaukuma signāls parādīsies tikai 5. ziņojumā (73), tāpēc QSO partneris var ierakstīt žurnālā nepareizu izsaukuma signālu.&lt;/p&gt;&lt;p&gt;Neviena no šīm opcijām nav ideāla; 3. ziņojums ir labākais, taču ņemiet vērā, ka QSO partneris var neierakstīt jūsu nosūtīto raportu.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="152"/>
         <source>Full call in Tx1</source>
-        <translation type="unfinished"></translation>
+        <translation>Pilns izsaukuma signāls Tx1</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="157"/>
         <source>Full call in Tx3</source>
-        <translation type="unfinished"></translation>
+        <translation>Pilns izsaukuma signāls Tx3</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="162"/>
         <source>Full call in Tx5 only</source>
-        <translation type="unfinished"></translation>
+        <translation>Pilns izsaukuma signāls tikai Tx5</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="170"/>
         <source>Message generation for type 2 compound callsign holders:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ziņojumu ģenerēšana 2. tipa salikto izsaukuma signālu īpašniekiem:</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="192"/>
         <source>Logbook filtering</source>
-        <translation type="unfinished"></translation>
+        <translation>Žurnāla filtrēšana</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="264"/>
         <source>Filter logbook starting from date/time (YYYYMMDDHHMMSS)</source>
-        <translation type="unfinished"></translation>
+        <translation>Filtrēt žurnālu, sākot no datuma/laika (GGGGMMDDHHMMSS)</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="304"/>
@@ -6856,17 +6993,17 @@ Please verify the correct directory name was given.</source>
     <message>
         <location filename="../Configuration.ui" line="343"/>
         <source>Set the font characteristics for the Band Activity and Rx Frequency areas.</source>
-        <translation type="unfinished"></translation>
+        <translation>Iestatiet fontu joslas aktivitātes un uztveršanas frekvences logiem.</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="346"/>
         <source>Decoded Text Font...</source>
-        <translation type="unfinished"></translation>
+        <translation>Dekodētā teksta fonts ...</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="333"/>
         <source>Set the font characteristics for the application.</source>
-        <translation type="unfinished"></translation>
+        <translation>Iestatiet lietojumprogrammas fontu.</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="336"/>
@@ -6876,82 +7013,82 @@ Please verify the correct directory name was given.</source>
     <message>
         <location filename="../Configuration.ui" line="363"/>
         <source>Show distance to DX station in miles rather than kilometers.</source>
-        <translation type="unfinished"></translation>
+        <translation>Rādīt attālumu līdz DX stacijai jūdzēs, nevis kilometros.</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="366"/>
         <source>Display dista&amp;nce in miles</source>
-        <translation type="unfinished"></translation>
+        <translation>Rādīt attālumu &amp;jūdzēs</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="419"/>
         <source>Include a separator line between periods in the band activity window.</source>
-        <translation type="unfinished"></translation>
+        <translation>Iekļaut atdalītājlīniju starp periodiem joslas aktivitātes logā.</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="422"/>
         <source>&amp;Blank line between decoding periods</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Tukša rinda starp dekodēšanas periodiem</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="409"/>
         <source>Append DXCC names to decoded messages.</source>
-        <translation type="unfinished"></translation>
+        <translation>Pievienot DXCC nosaukumus dekodētajiem ziņojumiem.</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="412"/>
         <source>Show &amp;DXCC names</source>
-        <translation type="unfinished"></translation>
+        <translation>Rādīt &amp;DXCC nosaukumus</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="383"/>
         <source>Append prefix instead of name.</source>
-        <translation type="unfinished"></translation>
+        <translation>Pievienot prefiksu nosaukuma vietā.</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="386"/>
         <source>Show &amp;prefix not name</source>
-        <translation type="unfinished"></translation>
+        <translation>Rādīt &amp;prefiksu, nevis nosaukumu</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="373"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When TX message is changed previous message will not be shown if it was transmitted for less than 2 seconds.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Mainot raidāmo ziņojumu, iepriekšējais netiks rādīts, ja tas raidīts mazāk par 2 sekundēm.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="396"/>
         <source>Show outgoing transmitted messages in the Rx frequency window.</source>
-        <translation type="unfinished"></translation>
+        <translation>Rādīt raidītos ziņojumus uztveršanas frekvences logā.</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="399"/>
         <source>&amp;Tx messages to Rx frequency window</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Raidītie ziņojumi uztveršanas frekvences logā</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="458"/>
         <source>Behavior</source>
-        <translation type="unfinished"></translation>
+        <translation>Darbība</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="484"/>
         <source>Don&apos;t start decoding until the monitor button is clicked.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nesākt dekodēšanu, kamēr nav nospiesta poga Monitor.</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="487"/>
         <source>Mon&amp;itor off at startup</source>
-        <translation type="unfinished"></translation>
+        <translation>Mon&amp;itors izslēgts, startējot</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="513"/>
         <source>Tx watchdog timer</source>
-        <translation type="unfinished"></translation>
+        <translation>Raidīšanas uzraudzības taimeris</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="523"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Number of minutes before unattended transmissions are aborted&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Minūšu skaits, pēc kura nepieskatīta raidīšana tiek pārtraukta&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="526"/>
@@ -6967,17 +7104,17 @@ Please verify the correct directory name was given.</source>
     <message>
         <location filename="../Configuration.ui" line="543"/>
         <source>Decode at t = 52 s</source>
-        <translation type="unfinished"></translation>
+        <translation>Dekodēt pie t = 52 s</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="563"/>
         <source>Tune timer</source>
-        <translation type="unfinished"></translation>
+        <translation>Piestrāde taimeris</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="570"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Number of seconds before tune is aborted&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Sekunžu skaits, pēc kura piestrāde tiek pārtraukta&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="576"/>
@@ -6987,27 +7124,27 @@ Please verify the correct directory name was given.</source>
     <message>
         <location filename="../Configuration.ui" line="597"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Some rigs are not able to process CAT commands while transmitting. This means that if you are operating in split mode you may have to uncheck this option.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Daži transīveri raidīšanas laikā nespēj apstrādāt CAT komandas. Ja strādājat split režīmā, šī opcija, iespējams, jāatslēdz.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="607"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Check this if you wish to automatically return to the last monitored frequency when monitor is enabled, leave it unchecked if you wish to have the current rig frequency maintained.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Atzīmējiet, ja, ieslēdzot monitoru, vēlaties automātiski atgriezties uz pēdējo uzraudzīto frekvenci; atstājiet neatzīmētu, ja jāsaglabā pašreizējā transīvera frekvence.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="619"/>
         <source>Send a CW ID after every 73 or free text message.</source>
-        <translation type="unfinished"></translation>
+        <translation>Sūtīt CW identifikatoru pēc katra 73 vai brīvā teksta ziņojuma.</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="622"/>
         <source>CW ID a&amp;fter 73</source>
-        <translation></translation>
+        <translation>CW ID &amp;pēc 73</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="648"/>
         <source>Periodic CW ID Inter&amp;val:</source>
-        <translation type="unfinished"></translation>
+        <translation>Periodiskā CW ID inter&amp;vāls:</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="664"/>
@@ -7015,17 +7152,20 @@ Please verify the correct directory name was given.</source>
 This might be required under your countries licence regulations.
 It will not interfere with other users as it is always sent in the
 quiet period when decoding is done.</source>
-        <translation type="unfinished"></translation>
+        <translation>Sūtīt CW identifikatoru periodiski ik pēc dažām minūtēm.
+To var prasīt jūsu valsts licences noteikumi.
+Tas netraucēs citiem lietotājiem, jo vienmēr tiek sūtīts
+klusajā periodā, kad notiek dekodēšana.</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="693"/>
         <source>&amp;Radio</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Radio</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="696"/>
         <source>Radio interface configuration settings.</source>
-        <translation type="unfinished"></translation>
+        <translation>Radio interfeisa konfigurācijas iestatījumi.</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="704"/>
@@ -7035,12 +7175,12 @@ quiet period when decoding is done.</source>
     <message>
         <location filename="../Configuration.ui" line="724"/>
         <source>Poll Interval:</source>
-        <translation type="unfinished"></translation>
+        <translation>Aptaujas intervāls:</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="734"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Interval to poll rig for status. Longer intervals will mean that changes to the rig will take longer to be detected.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Intervāls, ar kādu tiek aptaujāts transīvera stāvoklis. Garāks intervāls nozīmē, ka izmaiņas transīverī tiks pamanītas vēlāk.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="740"/>
@@ -7051,12 +7191,12 @@ quiet period when decoding is done.</source>
     <message>
         <location filename="../Configuration.ui" line="737"/>
         <source>0.5 s</source>
-        <translation type="unfinished"></translation>
+        <translation>0.5 s</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="808"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Request S meter data from transceiver: CAT shall be set up via Hamlib, Hamlib does support getting S meter data for some transceivers.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Pieprasīt S metra datus no transīvera: CAT jābūt iestatītam caur Hamlib; Hamlib atbalsta S metra nolasīšanu dažiem transīveriem.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="811"/>
@@ -7066,7 +7206,7 @@ quiet period when decoding is done.</source>
     <message>
         <location filename="../Configuration.ui" line="840"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Request output power data from transceiver: CAT shall be set up via Hamlib, Hamlib does support getting output power data for some transceivers.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Pieprasīt izejas jaudas datus no transīvera: CAT jābūt iestatītam caur Hamlib; Hamlib atbalsta izejas jaudas nolasīšanu dažiem transīveriem.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="843"/>
@@ -7076,7 +7216,7 @@ quiet period when decoding is done.</source>
     <message>
         <location filename="../Configuration.ui" line="871"/>
         <source>Settings that control your CAT interface.</source>
-        <translation type="unfinished"></translation>
+        <translation>Iestatījumi, kas vada jūsu CAT interfeisu.</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="874"/>
@@ -7092,12 +7232,12 @@ quiet period when decoding is done.</source>
     <message>
         <location filename="../Configuration.ui" line="901"/>
         <source>Serial port used for CAT control.</source>
-        <translation type="unfinished"></translation>
+        <translation>Seriālais ports, ko izmanto CAT vadībai.</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="925"/>
         <source>Serial Port Parameters</source>
-        <translation type="unfinished"></translation>
+        <translation>Seriālā porta parametri</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="942"/>
@@ -7107,7 +7247,7 @@ quiet period when decoding is done.</source>
     <message>
         <location filename="../Configuration.ui" line="958"/>
         <source>Serial port data rate which must match the setting of your radio.</source>
-        <translation type="unfinished"></translation>
+        <translation>Seriālā porta datu ātrums, kam jāsakrīt ar transīvera iestatījumu.</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="965"/>
@@ -7152,7 +7292,7 @@ quiet period when decoding is done.</source>
     <message>
         <location filename="../Configuration.ui" line="1010"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Number of data bits used to communicate with your radio&apos;s CAT interface (usually eight).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Datu bitu skaits saziņai ar transīvera CAT interfeisu (parasti astoņi).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1013"/>
@@ -7169,17 +7309,17 @@ quiet period when decoding is done.</source>
     <message>
         <location filename="../Configuration.ui" line="1038"/>
         <source>Se&amp;ven</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Septiņi</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1051"/>
         <source>E&amp;ight</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Astoņi</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1067"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Number of stop bits used when communicating with your radio&apos;s CAT interface&lt;/p&gt;&lt;p&gt;(consult you radio&apos;s manual for details).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Stop bitu skaits saziņai ar transīvera CAT interfeisu&lt;/p&gt;&lt;p&gt;(sīkāku informāciju skatiet transīvera rokasgrāmatā).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1070"/>
@@ -7189,17 +7329,17 @@ quiet period when decoding is done.</source>
     <message>
         <location filename="../Configuration.ui" line="1095"/>
         <source>On&amp;e</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Viens</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1105"/>
         <source>T&amp;wo</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Divi</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1121"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Flow control protocol used between this computer and your radio&apos;s CAT interface (usually &amp;quot;None&amp;quot; but some require &amp;quot;Hardware&amp;quot;).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Plūsmas vadības protokols starp šo datoru un transīvera CAT interfeisu (parasti &amp;quot;Nav&amp;quot;, bet dažiem nepieciešams &amp;quot;Aparatūra&amp;quot;).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1124"/>
@@ -7209,12 +7349,12 @@ quiet period when decoding is done.</source>
     <message>
         <location filename="../Configuration.ui" line="1136"/>
         <source>&amp;None</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Nav</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1162"/>
         <source>Software flow control (very rare on CAT interfaces).</source>
-        <translation type="unfinished"></translation>
+        <translation>Programmatūras plūsmas vadība (CAT interfeisos ļoti reti).</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1165"/>
@@ -7226,22 +7366,24 @@ quiet period when decoding is done.</source>
         <source>Flow control using the RTS and CTS RS-232 control lines
 not often used but some radios have it as an option and 
 a few, particularly some Kenwood rigs, require it).</source>
-        <translation type="unfinished"></translation>
+        <translation>Plūsmas vadība, izmantojot RS-232 RTS un CTS vadības līnijas;
+tiek lietota reti, bet daži transīveri to piedāvā un
+daži, jo īpaši atsevišķi Kenwood, to pieprasa.</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1180"/>
         <source>&amp;Hardware</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Aparatūra</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1193"/>
         <source>Special control of CAT port control lines.</source>
-        <translation type="unfinished"></translation>
+        <translation>Īpaša CAT porta vadības līniju kontrole.</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1196"/>
         <source>Force Control Lines</source>
-        <translation type="unfinished"></translation>
+        <translation>Piespiedu vadības līnijas</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1213"/>
@@ -7252,7 +7394,7 @@ a few, particularly some Kenwood rigs, require it).</source>
         <location filename="../Configuration.ui" line="1229"/>
         <location filename="../Configuration.ui" line="1262"/>
         <source>High</source>
-        <translation type="unfinished"></translation>
+        <translation>Augsts</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1234"/>
@@ -7268,7 +7410,7 @@ a few, particularly some Kenwood rigs, require it).</source>
     <message>
         <location filename="../Configuration.ui" line="1299"/>
         <source>How this program activates the PTT on your radio</source>
-        <translation type="unfinished"></translation>
+        <translation>Kā šī programma aktivizē transīvera PTT</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1302"/>
@@ -7280,84 +7422,88 @@ a few, particularly some Kenwood rigs, require it).</source>
         <source>Some radios support PTT via CAT commands,
 use this option if your radio supports it and you have no
 other hardware interface for PTT.</source>
-        <translation type="unfinished"></translation>
+        <translation>Daži transīveri atbalsta PTT ar CAT komandām;
+izmantojiet šo opciju, ja transīvers to atbalsta un jums nav
+citas aparatūras PTT vadībai.</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1313"/>
         <source>C&amp;AT</source>
-        <translation type="unfinished"></translation>
+        <translation>C&amp;AT</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1323"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Use the RS-232 DTR control line to toggle your radio&apos;s PTT, requires hardware to inteface the line.&lt;/p&gt;&lt;p&gt;Some commercial interface units also use this method.&lt;/p&gt;&lt;p&gt;The DTR control line of the CAT serial port may be used for this or a DTR control line on a different serial port may be used.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Izmantot RS-232 DTR vadības līniju transīvera PTT pārslēgšanai; nepieciešama aparatūra šīs līnijas pieslēgšanai.&lt;/p&gt;&lt;p&gt;Šo metodi izmanto arī daži komerciālie interfeisi.&lt;/p&gt;&lt;p&gt;Var lietot CAT seriālā porta DTR līniju vai cita seriālā porta DTR līniju.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1326"/>
         <source>&amp;DTR</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;DTR</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1339"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;No PTT activation, instead the radio&apos;s automatic VOX is used to key the transmitter.&lt;/p&gt;&lt;p&gt;Use this if you have no radio interface hardware.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;PTT netiek aktivizēts; raidītāju ieslēdz transīvera automātiskais VOX.&lt;/p&gt;&lt;p&gt;Izmantojiet, ja jums nav interfeisa aparatūras.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1342"/>
         <source>VO&amp;X</source>
-        <translation type="unfinished"></translation>
+        <translation>VO&amp;X</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1352"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Use the RS-232 RTS control line to toggle your radio&apos;s PTT, requires hardware to inteface the line.&lt;/p&gt;&lt;p&gt;Some commercial interface units also use this method.&lt;/p&gt;&lt;p&gt;The RTS control line of the CAT serial port may be used for this or a RTS control line on a different serial port may be used. Note that this option is not available on the CAT serial port when hardware flow control is used.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Izmantot RS-232 RTS vadības līniju transīvera PTT pārslēgšanai; nepieciešama aparatūra šīs līnijas pieslēgšanai.&lt;/p&gt;&lt;p&gt;Šo metodi izmanto arī daži komerciālie interfeisi.&lt;/p&gt;&lt;p&gt;Var lietot CAT seriālā porta RTS līniju vai cita seriālā porta RTS līniju. Ņemiet vērā, ka CAT seriālajam portam šī opcija nav pieejama, ja tiek izmantota aparatūras plūsmas vadība.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1355"/>
         <source>R&amp;TS</source>
-        <translation type="unfinished"></translation>
+        <translation>R&amp;TS</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1386"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Select the RS-232 serial port utilised for PTT control, this option is available when DTR or RTS is selected above as a transmit method.&lt;/p&gt;&lt;p&gt;This port can be the same one as the one used for CAT control.&lt;/p&gt;&lt;p&gt;For some interface types the special value CAT may be chosen, this is used for non-serial CAT interfaces that can control serial port control lines remotely (OmniRig for example).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Izvēlieties RS-232 seriālo portu PTT vadībai; šī opcija ir pieejama, ja augstāk kā raidīšanas metode izvēlēts DTR vai RTS.&lt;/p&gt;&lt;p&gt;Ports var būt tas pats, ko izmanto CAT vadībai.&lt;/p&gt;&lt;p&gt;Dažiem interfeisu veidiem var izvēlēties īpašo vērtību CAT; to lieto neseriāliem CAT interfeisiem, kas var attāli vadīt seriālā porta līnijas (piemēram, OmniRig).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1411"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Request enable PTT port sharing in Hamlib.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Pieprasīt PTT porta koplietošanu Hamlib bibliotēkā.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1414"/>
         <source>Share PTT port</source>
-        <translation type="unfinished"></translation>
+        <translation>Koplietot PTT portu</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1433"/>
         <source>Some radios can select the audio input using a CAT command,
 this setting allows you to select which audio input will be used
 (if it is available then generally the Rear/Data option is best).</source>
-        <translation type="unfinished"></translation>
+        <translation>Daži transīveri var izvēlēties audio ieeju ar CAT komandu;
+šis iestatījums ļauj norādīt, kura audio ieeja tiks lietota
+(ja pieejama, parasti vislabākā ir Rear/Data opcija).</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1438"/>
         <source>Transmit Audio Source</source>
-        <translation type="unfinished"></translation>
+        <translation>Raidīšanas audio avots</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1444"/>
         <source>Rear&amp;/Data</source>
-        <translation type="unfinished"></translation>
+        <translation>Rear&amp;/Data</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1454"/>
         <source>&amp;Front/Mic</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Front/Mic</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1477"/>
         <source>Modulation mode selected on radio.</source>
-        <translation type="unfinished"></translation>
+        <translation>Transīverī izvēlētā modulācijas mode.</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1480"/>
@@ -7367,19 +7513,21 @@ this setting allows you to select which audio input will be used
     <message>
         <location filename="../Configuration.ui" line="1486"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;USB is usually the correct modulation mode,&lt;/p&gt;&lt;p&gt;unless the radio has a special data or packet mode setting&lt;/p&gt;&lt;p&gt;for AFSK operation.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;USB parasti ir pareizā modulācijas mode,&lt;/p&gt;&lt;p&gt;ja vien transīverim nav īpaša datu vai pakešu mode&lt;/p&gt;&lt;p&gt;AFSK darbam.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1489"/>
         <source>US&amp;B</source>
-        <translation type="unfinished"></translation>
+        <translation>US&amp;B</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1502"/>
         <source>Don&apos;t allow the program to set the radio mode
 (not recommended but use if the wrong mode
 or bandwidth is selected).</source>
-        <translation type="unfinished"></translation>
+        <translation>Neļaut programmai iestatīt transīvera modi
+(nav ieteicams, bet noder, ja tiek izvēlēta nepareiza
+mode vai joslas platums).</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1507"/>
@@ -7390,22 +7538,22 @@ or bandwidth is selected).</source>
     <message>
         <location filename="../Configuration.ui" line="1517"/>
         <source>If this is availabe then it is usually the correct mode for this program.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ja tā ir pieejama, tā parasti ir pareizā mode šai programmai.</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1520"/>
         <source>Data/P&amp;kt</source>
-        <translation type="unfinished"></translation>
+        <translation>Data/P&amp;kt</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1540"/>
         <source>Split Operation</source>
-        <translation type="unfinished"></translation>
+        <translation>Split darbs</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1546"/>
         <source>Fake It</source>
-        <translation type="unfinished"></translation>
+        <translation>Imitēt</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1556"/>
@@ -7415,7 +7563,7 @@ or bandwidth is selected).</source>
     <message>
         <location filename="../Configuration.ui" line="1599"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Attempt to connect to the radio with these settings.&lt;/p&gt;&lt;p&gt;The button will turn green if the connection is successful or red if there is a problem.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Mēģināt pieslēgties transīverim ar šiem iestatījumiem.&lt;/p&gt;&lt;p&gt;Poga kļūs zaļa, ja savienojums izdevies, vai sarkana, ja radusies problēma.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1602"/>
@@ -7429,7 +7577,11 @@ Click again to deactivate. Normally no power should be
 output since there is no audio being generated at this time.
 Check that any Tx indication on your radio and/or your
 radio interface behave as expected.</source>
-        <translation type="unfinished"></translation>
+        <translation>Mēģināt ieslēgt raidītāju.
+Noklikšķiniet vēlreiz, lai izslēgtu. Parasti izejas jaudai nevajadzētu
+rasties, jo šobrīd audio netiek ģenerēts.
+Pārbaudiet, vai raidīšanas indikācija transīverī un/vai
+interfeisā uzvedas kā gaidīts.</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1643"/>
@@ -7440,22 +7592,22 @@ radio interface behave as expected.</source>
         <location filename="../Configuration.ui" line="1670"/>
         <location filename="../Configuration.ui" line="1680"/>
         <source>Minimum delay between assertion of PTT and start of Tx audio.</source>
-        <translation type="unfinished"></translation>
+        <translation>Minimālā aizture starp PTT ieslēgšanu un raidāmā audio sākumu.</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1673"/>
         <source>Tx delay:</source>
-        <translation type="unfinished"></translation>
+        <translation>Raidīšanas aizture:</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1730"/>
         <source>A&amp;udio</source>
-        <translation type="unfinished"></translation>
+        <translation>A&amp;udio</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1733"/>
         <source>Audio interface settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Audio interfeisa iestatījumi</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1739"/>
@@ -7469,62 +7621,65 @@ If this is your default device for system sounds then
 ensure that all system sounds are disabled otherwise
 you will broadcast any systems sounds generated during
 transmitting periods.</source>
-        <translation type="unfinished"></translation>
+        <translation>Izvēlieties raidīšanai lietojamo audio kodeku.
+Ja tā ir jūsu noklusējuma sistēmas skaņu ierīce,
+pārliecinieties, ka visas sistēmas skaņas ir izslēgtas, citādi
+raidīšanas laikā tās tiks izraidītas ēterā.</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1751"/>
         <source>Select the audio CODEC to use for receiving.</source>
-        <translation type="unfinished"></translation>
+        <translation>Izvēlieties uztveršanai lietojamo audio kodeku.</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="220"/>
         <source>Use current &amp;callsign</source>
-        <translation type="unfinished"></translation>
+        <translation>Lietot pašreizējo &amp;izsaukuma signālu</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="240"/>
         <source>Use curr&amp;ent grid</source>
-        <translation type="unfinished"></translation>
+        <translation>Lietot pašreizējo &amp;lokātoru</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="353"/>
         <source>Scroll message windows down not up.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ritināt ziņojumu logus uz leju, nevis uz augšu.</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="356"/>
         <source>&amp;Scroll message windows down</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Ritināt ziņojumu logus uz leju</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="376"/>
         <source>&amp;Hide partially transmitted messages</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Slēpt daļēji noraidītos ziņojumus</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="431"/>
         <source>Use dar&amp;k style</source>
-        <translation type="unfinished"></translation>
+        <translation>Lietot &amp;tumšo stilu</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="600"/>
         <source>Allo&amp;w Tx frequency changes while transmitting</source>
-        <translation type="unfinished"></translation>
+        <translation>Ļaut &amp;mainīt raidīšanas frekvenci raidīšanas laikā</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="610"/>
         <source>Monitor returns to last used fre&amp;quency</source>
-        <translation type="unfinished"></translation>
+        <translation>Monitors atgriežas uz pēdējo lietoto fre&amp;kvenci</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1758"/>
         <source>&amp;Input:</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Ieeja:</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1785"/>
         <source>Select the channel to use for receiving.</source>
-        <translation type="unfinished"></translation>
+        <translation>Izvēlieties uztveršanai lietojamo kanālu.</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1789"/>
@@ -7548,7 +7703,7 @@ transmitting periods.</source>
         <location filename="../Configuration.ui" line="1804"/>
         <location filename="../Configuration.ui" line="1834"/>
         <source>Both</source>
-        <translation type="unfinished"></translation>
+        <translation>Abi</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1812"/>
@@ -7556,87 +7711,89 @@ transmitting periods.</source>
 Unless you have multiple radios connected on different
 channels; then you will usually want to select mono or
 both here.</source>
-        <translation type="unfinished"></translation>
+        <translation>Izvēlieties raidīšanai lietojamo audio kanālu.
+Ja vien jums nav vairāku transīveru, kas pieslēgti dažādiem
+kanāliem, parasti šeit jāizvēlas mono vai abi.</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1842"/>
         <source>Ou&amp;tput:</source>
-        <translation type="unfinished"></translation>
+        <translation>I&amp;zeja:</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1887"/>
         <source>Remember power settings by band and mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Atcerēties jaudas iestatījumus pa joslām un modēm</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1895"/>
         <source>Enable power memory during transmit</source>
-        <translation type="unfinished"></translation>
+        <translation>Iespējot jaudas atmiņu raidīšanas laikā</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1898"/>
         <source>Transmit</source>
-        <translation type="unfinished"></translation>
+        <translation>Raidīšana</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1905"/>
         <source>Enable power memory during tuning</source>
-        <translation type="unfinished"></translation>
+        <translation>Iespējot jaudas atmiņu piestrādes laikā</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1908"/>
         <source>Tune</source>
-        <translation type="unfinished"></translation>
+        <translation>Piestrāde</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1933"/>
         <source>Audio files save directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Audio failu saglabāšanas direktorija</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1939"/>
         <source>Loc&amp;ation:</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Atrašanās vieta:</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1955"/>
         <source>Path to which .WAV files are saved.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ceļš, kurā tiek saglabāti .WAV faili.</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1964"/>
         <source>TextLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>TextLabel</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1971"/>
         <source>Click to select a different save directory for .WAV files.</source>
-        <translation type="unfinished"></translation>
+        <translation>Noklikšķiniet, lai izvēlētos citu .WAV failu saglabāšanas direktoriju.</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1974"/>
         <source>S&amp;elect</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Izvēlēties</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="2005"/>
         <source>Sequencing</source>
-        <translation type="unfinished"></translation>
+        <translation>Secība</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="2029"/>
         <source>Message sequencing short scenarios</source>
-        <translation type="unfinished"></translation>
+        <translation>Ziņojumu secības īsie scenāriji</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="2037"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;AutoSeq 1..3: call CQ when counter is reached. AutoSeq 6/7: search through decoded messages for any valid &apos;CQ&apos; or &apos;73&apos; message, call CQ if there no such messages found. Halt Tx if Single Shot QSO option is enabled in AutoSeq tab.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;AutoSeq 1..3: izsaukt CQ, kad sasniegts skaitītājs. AutoSeq 6/7: meklēt dekodētajos ziņojumos derīgu 'CQ' vai '73' ziņojumu un izsaukt CQ, ja tāds nav atrasts. Apturēt raidīšanu, ja AutoSeq cilnē ieslēgta viena QSO opcija.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="2040"/>
         <source>Counters. Search through decoded messages, call CQ or Halt Tx if:</source>
-        <translation type="unfinished"></translation>
+        <translation>Skaitītāji. Pārmeklēt dekodētos ziņojumus, izsaukt CQ vai apturēt raidīšanu, ja:</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="2072"/>
@@ -7644,67 +7801,67 @@ both here.</source>
         <location filename="../Configuration.ui" line="2137"/>
         <location filename="../Configuration.ui" line="2173"/>
         <source>times</source>
-        <translation type="unfinished"></translation>
+        <translation>reizes</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="2085"/>
         <source>called CQ,  received a call and answered</source>
-        <translation type="unfinished"></translation>
+        <translation>izsaukts CQ, saņemts izsaukums un atbildēts</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="2147"/>
         <source>sent RR73(73) answering to incoming RRR(RR73)</source>
-        <translation type="unfinished"></translation>
+        <translation>nosūtīts RR73(73), atbildot uz saņemto RRR(RR73)</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="2186"/>
         <source>answered to someone&apos;s CQ with no response</source>
-        <translation type="unfinished"></translation>
+        <translation>atbildēts uz kāda CQ bez atbildes</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="2199"/>
         <source>sent report answering to incoming report</source>
-        <translation type="unfinished"></translation>
+        <translation>nosūtīts raports, atbildot uz saņemto raportu</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="2233"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This option is being used for non-overlapping spectra scenario. Tx will be halted if spectra have common frequencies with no respect to this setting.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Šī opcija attiecas uz nepārklājošos spektru scenāriju. Ja spektriem ir kopīgas frekvences, raidīšana tiks apturēta neatkarīgi no šī iestatījuma.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="2236"/>
         <source>Halt TX if operator I called answered to other operator</source>
-        <translation type="unfinished"></translation>
+        <translation>Apturēt raidīšanu, ja izsauktais operators atbildējis citam operatoram</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="2243"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;By default autoselection ignoring received/transmitted direction of CQ if there is a valid &apos;new DXCC&apos; message decoded, either incoming call or selection from decoded CQ/73 messages. This option eliminates &apos;new DXCC&apos; exception in autoselection for directional CQ processing.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Pēc noklusējuma automātiskā izvēle ignorē CQ virzienu, ja dekodēts derīgs 'jauna DXCC' ziņojums - vai nu ienākošs izsaukums, vai izvēle no dekodētajiem CQ/73 ziņojumiem. Šī opcija novērš 'jaunas DXCC' izņēmumu virzītā CQ apstrādē.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="2246"/>
         <source>Strict directional CQ operation</source>
-        <translation type="unfinished"></translation>
+        <translation>Strikts virzītā CQ darbs</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="2304"/>
         <source>Tx &amp;Macros</source>
-        <translation type="unfinished"></translation>
+        <translation>Raidīšanas &amp;makro</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="2307"/>
         <source>Canned free text messages setup</source>
-        <translation type="unfinished"></translation>
+        <translation>Sagatavoto brīvā teksta ziņojumu iestatīšana</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="2313"/>
         <source>&amp;Add</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Pievienot</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="2320"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Maximum 13 characters for free message&lt;br&gt;&lt;br&gt;Maximum 19 characters for directional CQ standard message.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ne vairāk kā 13 rakstzīmes brīvajam ziņojumam&lt;br&gt;&lt;br&gt;Ne vairāk kā 19 rakstzīmes virzītā CQ standarta ziņojumam.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="2330"/>
@@ -7714,22 +7871,22 @@ both here.</source>
     <message>
         <location filename="../Configuration.ui" line="2340"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Drag and drop items to rearrange order. Right click for item specific actions. Click, SHIFT+Click and, CRTL+Click to select items. @ symbol is being substituted with DX call, &amp; symbol with user&apos;s base callsign, # symbol with report to be transmitted, ^ symbol with correspondent&apos;s name retrieved from the log where name shall not exceed 7 chars.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Velciet un nometiet vienumus, lai mainītu secību. Ar labo peles pogu var veikt konkrētas darbības. Vienumus atlasa ar klikšķi, SHIFT+klikšķi un CTRL+klikšķi. Simbolu @ aizstāj DX izsaukuma signāls, &amp; - lietotāja pamata izsaukuma signāls, # - raidāmais raports, ^ - korespondenta vārds no žurnāla, kas nedrīkst pārsniegt 7 rakstzīmes.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="2391"/>
         <source>Reportin&amp;g</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Raportēšana</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="2394"/>
         <source>Reporting and logging settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Raportēšanas un žurnāla iestatījumi</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="2407"/>
         <source>Logging</source>
-        <translation type="unfinished"></translation>
+        <translation>Žurnāls</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="2443"/>
@@ -7737,38 +7894,42 @@ both here.</source>
 saved by this program.
 Check this option to save the sent and received reports in the
 comments field.</source>
-        <translation type="unfinished"></translation>
+        <translation>Dažas žurnālu programmas nepieņem šīs programmas saglabāto
+raportu veidu.
+Atzīmējiet šo opciju, lai nosūtītos un saņemtos raportus saglabātu
+komentāru laukā.</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="2449"/>
         <source>d&amp;B reports to comments</source>
-        <translation type="unfinished"></translation>
+        <translation>d&amp;B raporti komentāros</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="2476"/>
         <source>Check this option to force the clearing of the DX Call
 and DX Grid fields when a 73 or free text message is sent.</source>
-        <translation type="unfinished"></translation>
+        <translation>Atzīmējiet šo opciju, lai, nosūtot 73 vai brīvā teksta ziņojumu,
+lauki DX Call un DX Grid tiktu notīrīti.</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="2480"/>
         <source>Clear &amp;DX call and grid after logging</source>
-        <translation type="unfinished"></translation>
+        <translation>Notīrīt &amp;DX izsaukuma signālu un lokātoru pēc ierakstīšanas žurnālā</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="2456"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Check this option to force the clearing of the DX Call and DX Grid fields when exiting JTDX. This functionality is intended for UR5EQF logbook software users.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Atzīmējiet šo opciju, lai, izejot no JTDX, lauki DX Call un DX Grid tiktu notīrīti. Šī funkcija paredzēta UR5EQF žurnāla programmas lietotājiem.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="2459"/>
         <source>Clear DX call and grid on exit</source>
-        <translation type="unfinished"></translation>
+        <translation>Notīrīt DX izsaukuma signālu un lokātoru, izejot</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="2433"/>
         <source>Some logging programs will not accept JT-65 or JT9 as a recognized mode.</source>
-        <translation type="unfinished"></translation>
+        <translation>Dažas žurnālu programmas nepieņem JT-65 vai JT9 kā atpazītu modi.</translation>
     </message>
     <message>
         <source>0.5</source>
@@ -7777,88 +7938,88 @@ and DX Grid fields when a 73 or free text message is sent.</source>
     <message>
         <location filename="../Configuration.ui" line="763"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Request switch on rig power when supported in Hamlib.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Pieprasīt transīvera ieslēgšanu, ja Hamlib to atbalsta.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="766"/>
         <source>On</source>
-        <translation type="unfinished"></translation>
+        <translation>Ieslēgt</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="779"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Request switch off rig power when supported in Hamlib.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Pieprasīt transīvera izslēgšanu, ja Hamlib to atbalsta.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="782"/>
         <source>Off Rig power</source>
-        <translation type="unfinished"></translation>
+        <translation>Izslēgt transīveru</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1852"/>
         <source>refresh audio device list</source>
-        <translation type="unfinished"></translation>
+        <translation>atsvaidzināt audio ierīču sarakstu</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1855"/>
         <source>Refresh</source>
-        <translation type="unfinished"></translation>
+        <translation>Atsvaidzināt</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1868"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Use TCI Audio when available.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Lietot TCI audio, ja pieejams.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1871"/>
         <source>Use TCI Audio</source>
-        <translation type="unfinished"></translation>
+        <translation>Lietot TCI audio</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="2436"/>
         <source>Con&amp;vert mode to RTTY</source>
-        <translation type="unfinished"></translation>
+        <translation>Pār&amp;vērst modi par RTTY</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="2466"/>
         <source>The program will pop up a partially completed Log QSO dialog when you send a 73 or free text message.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nosūtot 73 vai brīvā teksta ziņojumu, programma parādīs daļēji aizpildītu QSO ierakstīšanas dialogu.</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="2469"/>
         <source>Promp&amp;t me to log QSO</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Atgādināt ierakstīt QSO žurnālā</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="2487"/>
         <source>Enable automatic logging of QSO</source>
-        <translation type="unfinished"></translation>
+        <translation>Iespējot automātisku QSO ierakstīšanu žurnālā</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="2494"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Add distance to correspondent to comments in ADIF QSO record.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Pievienot attālumu līdz korespondentam ADIF QSO ieraksta komentāriem.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="2497"/>
         <source>Distance to comments</source>
-        <translation type="unfinished"></translation>
+        <translation>Attālums komentāros</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="2527"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Connection to external logbook software.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Savienojums ar ārējo žurnāla programmu.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="2530"/>
         <source>Send logged QSO ADIF data</source>
-        <translation type="unfinished"></translation>
+        <translation>Sūtīt ierakstītā QSO ADIF datus</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="2564"/>
         <location filename="../Configuration.ui" line="2580"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;TCP server name or address&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;TCP servera nosaukums vai adrese&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="2567"/>
@@ -7869,7 +8030,7 @@ and DX Grid fields when a 73 or free text message is sent.</source>
         <location filename="../Configuration.ui" line="2587"/>
         <location filename="../Configuration.ui" line="2597"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;TCP server port number&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;TCP servera porta numurs&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="2590"/>
@@ -7879,7 +8040,7 @@ and DX Grid fields when a 73 or free text message is sent.</source>
     <message>
         <location filename="../Configuration.ui" line="2612"/>
         <source>Enable sending to TCP server</source>
-        <translation type="unfinished"></translation>
+        <translation>Iespējot sūtīšanu uz TCP serveri</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="2637"/>
@@ -7890,7 +8051,7 @@ and DX Grid fields when a 73 or free text message is sent.</source>
         <location filename="../Configuration.ui" line="2651"/>
         <location filename="../Configuration.ui" line="2661"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;secondary UDP server port number&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;otrā UDP servera porta numurs&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="2654"/>
@@ -7900,12 +8061,12 @@ and DX Grid fields when a 73 or free text message is sent.</source>
     <message>
         <location filename="../Configuration.ui" line="2670"/>
         <source>Enable sending to secondary UDP server</source>
-        <translation type="unfinished"></translation>
+        <translation>Iespējot sūtīšanu uz otro UDP serveri</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="2703"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Allows to configure data for recording into the ALL.TXT file. Recording of TX messages can not be switched off.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ļauj konfigurēt, kādi dati tiek ierakstīti ALL.TXT failā. Raidīto ziņojumu ierakstīšanu nevar izslēgt.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="2706"/>
@@ -7915,12 +8076,12 @@ and DX Grid fields when a 73 or free text message is sent.</source>
     <message>
         <location filename="../Configuration.ui" line="2728"/>
         <source>decoded messages</source>
-        <translation type="unfinished"></translation>
+        <translation>dekodētie ziņojumi</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="2735"/>
         <source>decoded and debug messages</source>
-        <translation type="unfinished"></translation>
+        <translation>dekodētie un atkļūdošanas ziņojumi</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="2777"/>
@@ -7930,12 +8091,12 @@ and DX Grid fields when a 73 or free text message is sent.</source>
     <message>
         <location filename="../Configuration.ui" line="2798"/>
         <source>The program can send logged QSO info to the http://www.eqsl.cc web site.</source>
-        <translation type="unfinished"></translation>
+        <translation>Programma var nosūtīt ierakstītā QSO informāciju uz vietni http://www.eqsl.cc.</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="2801"/>
         <source>Enable &amp;eQSL sending</source>
-        <translation type="unfinished"></translation>
+        <translation>Iespējot &amp;eQSL sūtīšanu</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="2821"/>
@@ -7945,12 +8106,12 @@ and DX Grid fields when a 73 or free text message is sent.</source>
     <message>
         <location filename="../Configuration.ui" line="2828"/>
         <source>U&amp;sername:</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Lietotājvārds:</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="2838"/>
         <source>P&amp;assword:</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Parole:</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="2848"/>
@@ -7963,12 +8124,15 @@ and DX Grid fields when a 73 or free text message is sent.</source>
 decoded signals as spots to the http://pskreporter.info web site.
 This is used for reverse beacon analysis which is very useful
 for assessing propagation and system performance.</source>
-        <translation type="unfinished"></translation>
+        <translation>Programma var nosūtīt jūsu stacijas datus un visus
+dekodētos signālus kā spotus uz vietni http://pskreporter.info.
+To izmanto reversā bākas signāla analīzei, kas ir ļoti noderīga
+propagācijas un sistēmas veiktspējas novērtēšanai.</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="2864"/>
         <source>Enable &amp;PSK Reporter Spotting</source>
-        <translation type="unfinished"></translation>
+        <translation>Iespējot &amp;PSK Reporter spotus</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="2871"/>
@@ -7978,22 +8142,22 @@ for assessing propagation and system performance.</source>
     <message>
         <location filename="../Configuration.ui" line="2878"/>
         <source>Enable DXSummit Spotting </source>
-        <translation type="unfinished"></translation>
+        <translation>Iespējot DXSummit spotus </translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="2885"/>
         <source>QTH N&amp;ickname:</source>
-        <translation type="unfinished"></translation>
+        <translation>QTH &amp;segvārds:</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="2898"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Primary UDP connection to external software.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Galvenais UDP savienojums ar ārējo programmatūru.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="2901"/>
         <source>Primary UDP Server</source>
-        <translation type="unfinished"></translation>
+        <translation>Galvenais UDP serveris</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="2931"/>
@@ -8003,72 +8167,72 @@ for assessing propagation and system performance.</source>
     <message>
         <location filename="../Configuration.ui" line="2947"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Optional hostname of network service to receive decodes.&lt;/p&gt;&lt;p&gt;Formats:&lt;/p&gt;&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;hostname&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;IPv4 address&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;IPv6 address&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;IPv4 multicast group address&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;IPv6 multicast group address&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;Clearing this field will disable the broadcasting of UDP status updates.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Neobligāts tīkla pakalpojuma resursdatora nosaukums dekodējumu saņemšanai.&lt;/p&gt;&lt;p&gt;Formāti:&lt;/p&gt;&lt;ul style="margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;"&gt;&lt;li style=" margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;resursdatora nosaukums&lt;/li&gt;&lt;li style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;IPv4 adrese&lt;/li&gt;&lt;li style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;IPv6 adrese&lt;/li&gt;&lt;li style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;IPv4 multiraides grupas adrese&lt;/li&gt;&lt;li style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;IPv6 multiraides grupas adrese&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;Notīrot šo lauku, UDP statusa atjauninājumu izsūtīšana tiks izslēgta.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="2957"/>
         <source>UDP Server port number:</source>
-        <translation type="unfinished"></translation>
+        <translation>UDP servera porta numurs:</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="2967"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enter the service port number of the UDP server that JTDX should send updates to. If this is zero no updates will be broadcast.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ievadiet tā UDP servera porta numuru, uz kuru JTDX sūtīs atjauninājumus. Ja tas ir nulle, atjauninājumi netiks raidīti.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="2984"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;With this enabled JTDX will accept certain requests back from a UDP server that receives decode messages.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ja ieslēgts, JTDX pieņems atsevišķus pieprasījumus no UDP servera, kas saņem dekodētos ziņojumus.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="2987"/>
         <source>Accept UDP requests</source>
-        <translation type="unfinished"></translation>
+        <translation>Pieņemt UDP pieprasījumus</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="2994"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Indicate acceptance of an incoming UDP request. The effect of this option varies depending on the operating system and window manager, its intent is to notify the acceptance of an incoming UDP request even if this application is minimized or hidden.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Paziņot par ienākoša UDP pieprasījuma pieņemšanu. Šīs opcijas darbība atkarīga no operētājsistēmas un logu pārvaldnieka; tās nolūks ir paziņot par pieprasījuma pieņemšanu arī tad, ja programma ir minimizēta vai paslēpta.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="2997"/>
         <source>Notify on accepted UDP request</source>
-        <translation type="unfinished"></translation>
+        <translation>Paziņot par pieņemtu UDP pieprasījumu</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3004"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Restore the window from minimized if an UDP request is accepted.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Atjaunot logu no minimizēta stāvokļa, ja tiek pieņemts UDP pieprasījums.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3007"/>
         <source>Accepted UDP request restores window</source>
-        <translation type="unfinished"></translation>
+        <translation>Pieņemts UDP pieprasījums atjauno logu</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3018"/>
         <source>Enable sending logged QSO ADIF data</source>
-        <translation type="unfinished"></translation>
+        <translation>Iespējot ierakstītā QSO ADIF datu sūtīšanu</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3028"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Messages marked by questionmark will not be passed to JTAlert and other UDP based software.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ar jautājuma zīmi atzīmētie ziņojumi netiks nodoti JTAlert un citai UDP programmatūrai.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3031"/>
         <source>Prevent spotting messages with the unconfirmed callsigns via UDP</source>
-        <translation type="unfinished"></translation>
+        <translation>Neizsūtīt caur UDP ziņojumus ar neapstiprinātiem izsaukuma signāliem</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3038"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Selected text filters will be applied to limit transmission of the UDP messages from JTDX, for instance messages from some continents can be blocked.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Izvēlētie teksta filtri ierobežos JTDX sūtītos UDP ziņojumus, piemēram, var bloķēt ziņojumus no atsevišķiem kontinentiem.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3041"/>
         <source>Apply text filters to transmission of the UDP messages</source>
-        <translation type="unfinished"></translation>
+        <translation>Piemērot teksta filtrus UDP ziņojumu sūtīšanai</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3076"/>
@@ -8078,32 +8242,32 @@ for assessing propagation and system performance.</source>
     <message>
         <location filename="../Configuration.ui" line="3079"/>
         <source>Default frequencies and band specific station details setup</source>
-        <translation type="unfinished"></translation>
+        <translation>Noklusējuma frekvenču un joslai specifisko stacijas datu iestatīšana</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3085"/>
         <source>Working Frequencies</source>
-        <translation type="unfinished"></translation>
+        <translation>Darba frekvences</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3100"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Right click to maintain the working frequencies list. Reset option allows to bring frequency list back to the default values.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ar labo peles pogu var pārvaldīt darba frekvenču sarakstu. Atiestatīšanas opcija atgriež sarakstu uz noklusējuma vērtībām.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3127"/>
         <source>See WSPR documentattion Appendix C for details of how to determine these factors for your radio.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kā noteikt šos koeficientus savam transīveram, skatiet WSPR dokumentācijas C pielikumā.</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3130"/>
         <source>Frequency Calibration</source>
-        <translation type="unfinished"></translation>
+        <translation>Frekvences kalibrēšana</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3139"/>
         <source>Intercept:</source>
-        <translation type="unfinished"></translation>
+        <translation>Nobīde:</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3152"/>
@@ -8114,48 +8278,49 @@ for assessing propagation and system performance.</source>
     <message>
         <location filename="../Configuration.ui" line="3171"/>
         <source>Slope:</source>
-        <translation type="unfinished"></translation>
+        <translation>Slīpums:</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3184"/>
         <source> ppm</source>
-        <translation type="unfinished"></translation>
+        <translation> ppm</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3227"/>
         <source>Station Information</source>
-        <translation type="unfinished"></translation>
+        <translation>Stacijas informācija</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3239"/>
         <source>Items may be edited.
 Right click for insert and delete options.</source>
-        <translation type="unfinished"></translation>
+        <translation>Vienumus var rediģēt.
+Ar labo peles pogu var ievietot un dzēst.</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3287"/>
         <source>Notifications</source>
-        <translation type="unfinished"></translation>
+        <translation>Paziņojumi</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3295"/>
         <source>&apos;New one&apos; and &apos;worked B4&apos; status notifications</source>
-        <translation type="unfinished"></translation>
+        <translation>'Jauns' un 'jau strādāts' statusa paziņojumi</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3321"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Highlight messages with CQ Zones which do not exist in the wsjtx_log.adi log file.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Izcelt ziņojumus ar CQ zonām, kuru nav wsjtx_log.adi žurnāla failā.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3324"/>
         <source>Check and highlight new CQZ</source>
-        <translation type="unfinished"></translation>
+        <translation>Pārbaudīt un izcelt jaunas CQZ</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3331"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Highlight messages with CQ Zones which are new on the band according to the data from wsjtx_log.adi log file.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Izcelt ziņojumus ar CQ zonām, kuras pēc wsjtx_log.adi žurnāla datiem šajā joslā ir jaunas.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3334"/>
@@ -8165,12 +8330,12 @@ Right click for insert and delete options.</source>
         <location filename="../Configuration.ui" line="3494"/>
         <location filename="../Configuration.ui" line="3534"/>
         <source>per band</source>
-        <translation type="unfinished"></translation>
+        <translation>pa joslām</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3341"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Highlight messages with CQ Zones which are new in the mode according to the data from wsjtx_log.adi log file.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Izcelt ziņojumus ar CQ zonām, kuras pēc wsjtx_log.adi žurnāla datiem šajā modē ir jaunas.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3344"/>
@@ -8180,7 +8345,7 @@ Right click for insert and delete options.</source>
         <location filename="../Configuration.ui" line="3504"/>
         <location filename="../Configuration.ui" line="3544"/>
         <source>per mode</source>
-        <translation type="unfinished"></translation>
+        <translation>pa modēm</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3351"/>
@@ -8190,7 +8355,7 @@ Right click for insert and delete options.</source>
         <location filename="../Configuration.ui" line="3511"/>
         <location filename="../Configuration.ui" line="3551"/>
         <source>Use also system sound for the notification.</source>
-        <translation type="unfinished"></translation>
+        <translation>Paziņojumam izmantot arī sistēmas skaņu.</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3354"/>
@@ -8200,253 +8365,253 @@ Right click for insert and delete options.</source>
         <location filename="../Configuration.ui" line="3514"/>
         <location filename="../Configuration.ui" line="3554"/>
         <source>Beep as well</source>
-        <translation type="unfinished"></translation>
+        <translation>Arī pīkstiens</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3361"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Highlight messages with ITU Zones which do not exist in the wsjtx_log.adi log file.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Izcelt ziņojumus ar ITU zonām, kuru nav wsjtx_log.adi žurnāla failā.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3364"/>
         <source>Check and highlight new ITUZ</source>
-        <translation type="unfinished"></translation>
+        <translation>Pārbaudīt un izcelt jaunas ITUZ</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3371"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Highlight messages with ITU Zones which are new on the band according to the data from wsjtx_log.adi log file.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Izcelt ziņojumus ar ITU zonām, kuras pēc wsjtx_log.adi žurnāla datiem šajā joslā ir jaunas.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3381"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Highlight messages with ITU Zones which are new in the mode according to the data from wsjtx_log.adi log file.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Izcelt ziņojumus ar ITU zonām, kuras pēc wsjtx_log.adi žurnāla datiem šajā modē ir jaunas.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3401"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Highlight messages with DXCC countries which do not exist in the wsjtx_log.adi log file.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Izcelt ziņojumus ar DXCC valstīm, kuru nav wsjtx_log.adi žurnāla failā.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3404"/>
         <source>Check and highlight new DXCC</source>
-        <translation type="unfinished"></translation>
+        <translation>Pārbaudīt un izcelt jaunas DXCC</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3411"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Highlight messages with DXCC countries which are new on the band according to the data from wsjtx_log.adi log file.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Izcelt ziņojumus ar DXCC valstīm, kuras pēc wsjtx_log.adi žurnāla datiem šajā joslā ir jaunas.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3421"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Highlight messages with DXCC countries which are new in the mode according to the data from wsjtx_log.adi log file.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Izcelt ziņojumus ar DXCC valstīm, kuras pēc wsjtx_log.adi žurnāla datiem šajā modē ir jaunas.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3441"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Highlight messages with grid squares which do not exist in the wsjtx_log.adi log file.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Izcelt ziņojumus ar lokātoriem, kuru nav wsjtx_log.adi žurnāla failā.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3444"/>
         <source>Check and highlight new grids</source>
-        <translation type="unfinished"></translation>
+        <translation>Pārbaudīt un izcelt jaunus lokātorus</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3451"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Highlight messages with grid squares which are new on the band according to the data from wsjtx_log.adi log file.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Izcelt ziņojumus ar lokātoriem, kuras pēc wsjtx_log.adi žurnāla datiem šajā joslā ir jaunas.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3461"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Highlight messages with grid squares which are new in the mode according to the data from wsjtx_log.adi log file.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Izcelt ziņojumus ar lokātoriem, kuras pēc wsjtx_log.adi žurnāla datiem šajā modē ir jaunas.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3481"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Highlight messages with prefixes which do not exist in the wsjtx_log.adi log file.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Izcelt ziņojumus ar prefiksiem, kuru nav wsjtx_log.adi žurnāla failā.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3484"/>
         <source>Check and highlight new prefixes</source>
-        <translation type="unfinished"></translation>
+        <translation>Pārbaudīt un izcelt jaunus prefiksus</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3491"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Highlight messages with prefixes which are new on the band according to the data from wsjtx_log.adi log file.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Izcelt ziņojumus ar prefiksiem, kuras pēc wsjtx_log.adi žurnāla datiem šajā joslā ir jaunas.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3501"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Highlight messages with prefixes which are new in the mode according to the data from wsjtx_log.adi log file.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Izcelt ziņojumus ar prefiksiem, kuras pēc wsjtx_log.adi žurnāla datiem šajā modē ir jaunas.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3521"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Highlight messages with callsigns which do not exist in the wsjtx_log.adi log file.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Izcelt ziņojumus ar izsaukuma signāliem, kuru nav wsjtx_log.adi žurnāla failā.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3524"/>
         <source>Check and highlight new calls</source>
-        <translation type="unfinished"></translation>
+        <translation>Pārbaudīt un izcelt jaunus izsaukuma signālus</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3531"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Highlight messages with callsigns which are new on the band according to the data from wsjtx_log.adi log file.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Izcelt ziņojumus ar izsaukuma signāliem, kuras pēc wsjtx_log.adi žurnāla datiem šajā joslā ir jaunas.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3541"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Highlight messages with callsigns which are new in the mode according to the data from wsjtx_log.adi log file.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Izcelt ziņojumus ar izsaukuma signāliem, kuras pēc wsjtx_log.adi žurnāla datiem šajā modē ir jaunas.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3561"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Use color notification for messages with the worked DXCC, Grid, Call.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Izmantot krāsu paziņojumu ziņojumiem ar jau strādātu DXCC, lokātoru vai izsaukuma signālu.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3564"/>
         <source>Highlight worked ones</source>
-        <translation type="unfinished"></translation>
+        <translation>Izcelt jau strādātos</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3571"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Messages with worked DXCC, Grid, Call will be striked.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ziņojumi ar jau strādātu DXCC, lokātoru vai izsaukuma signālu tiks pārsvītroti.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3574"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Messages with worked Call will be striked&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ziņojumi ar jau strādātu izsaukuma signālu tiks pārsvītroti&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3577"/>
         <source>strike it</source>
-        <translation type="unfinished"></translation>
+        <translation>pārsvītrot</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3584"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Messages with worked DXCC, Grid, Call will be underlined.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ziņojumi ar jau strādātu DXCC, lokātoru vai izsaukuma signālu tiks pasvītroti.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3587"/>
         <source>underline it</source>
-        <translation type="unfinished"></translation>
+        <translation>pasvītrot</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3594"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Messages with worked DXCC, Grid, Call where there is no MyCall will be skipped in the decoded text window&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ziņojumi ar jau strādātu DXCC, lokātoru vai izsaukuma signālu, kuros nav mana izsaukuma signāla, netiks rādīti dekodētā teksta logā&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3597"/>
         <source>don&apos;t show it</source>
-        <translation type="unfinished"></translation>
+        <translation>nerādīt</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3604"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Invert text&lt;-&gt;background color for received messages&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Apmainīt teksta un fona krāsu saņemtajiem ziņojumiem&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3607"/>
         <source>Inverse text/background color</source>
-        <translation type="unfinished"></translation>
+        <translation>Apgriezta teksta/fona krāsa</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3614"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;By default &apos;CQ&apos; and &apos;MyCall&apos; messages being only checked, this setting allows to check also other received standard messages for new DXCC, Grid, Call. &apos;Other standard message&apos; color being used for the notification&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Pēc noklusējuma tiek pārbaudīti tikai 'CQ' un 'MyCall' ziņojumi; šis iestatījums ļauj pārbaudīt uz jaunu DXCC, lokātoru vai izsaukuma signālu arī pārējos saņemtos standarta ziņojumus. Paziņojumam tiek lietota 'Cita standarta ziņojuma' krāsa&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3617"/>
         <source>Highlight other standard messages</source>
-        <translation type="unfinished"></translation>
+        <translation>Izcelt citus standarta ziņojumus</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3637"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Use system sound for notification as soon as the first message is decoded in the RX interval.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Izmantot sistēmas skaņu, tiklīdz uztveršanas intervālā ir dekodēts pirmais ziņojums.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3640"/>
         <source>Beep on 1st decoded message</source>
-        <translation type="unfinished"></translation>
+        <translation>Pīkstiens pie pirmā dekodētā ziņojuma</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3647"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Use system sound for notification if there is MyCall in the received message.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Izmantot sistēmas skaņu, ja saņemtajā ziņojumā ir mans izsaukuma signāls.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3650"/>
         <source>Beep on my call</source>
-        <translation type="unfinished"></translation>
+        <translation>Pīkstiens uz manu izsaukuma signālu</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3680"/>
         <source>Markers</source>
-        <translation type="unfinished"></translation>
+        <translation>Marķieri</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3687"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Use blue marker to notify if there is my callsign in the decoded message related to the ongoing QSO (QSO party&apos;s callsign is in the DX Call window), other incoming calls with my callsign will be followed with the red marker.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ar zilu marķieri atzīmēt manu izsaukuma signālu dekodētajā ziņojumā, kas saistīts ar notiekošo QSO (partnera izsaukuma signāls ir DX Call logā); pārējie ienākošie izsaukumi ar manu izsaukuma signālu tiks atzīmēti ar sarkanu marķieri.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3690"/>
         <source>blue / my call at QSO</source>
-        <translation type="unfinished"></translation>
+        <translation>zils / mans izsaukums QSO laikā</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3697"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Hide hint character in marker field.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Slēpt norādes rakstzīmi marķiera laukā.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3700"/>
         <source>Hide hint char</source>
-        <translation type="unfinished"></translation>
+        <translation>Slēpt norādes rakstzīmi</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3736"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Use red marker to notify if there is my callsign in the decoded message.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ar sarkanu marķieri atzīmēt, ja dekodētajā ziņojumā ir mans izsaukuma signāls.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3739"/>
         <source>red / my call in message</source>
-        <translation type="unfinished"></translation>
+        <translation>sarkans / mans izsaukums ziņojumā</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3749"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Use marker at end of message instead of background color to other standard message notification.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Citu standarta ziņojumu paziņošanai lietot marķieri ziņojuma beigās, nevis fona krāsu.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3752"/>
         <source>Other standard messages</source>
-        <translation type="unfinished"></translation>
+        <translation>Citi standarta ziņojumi</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3795"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;On top of the preview pane there are types of message that being checked for some criterion, text color being selected for each  type of message.&lt;br&gt;&lt;br&gt;On left side there are criteria allocated in the hierarchy order, and background color being selected for messages for each criterion.&lt;br&gt;&lt;br&gt;&apos;Worked one&apos; notification functionality is based on the residual principle, triggered if all activated &apos;New one&apos; criteria or criterion are not met.&lt;br&gt;&lt;br&gt;&apos;Inverse color&apos; may be used if user would like to highlight CQ and &apos;MyCall&apos; messages by some specific backgroung color.&lt;br&gt;&lt;br&gt;For beginning one criterion can be chose and for new band/mode notifications may be used similar color with the different saturation level, later number of required criteria can be increased.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Priekšskatījuma rūts augšpusē ir ziņojumu veidi, kas tiek pārbaudīti pēc kāda kritērija; katram veidam izvēlas teksta krāsu.&lt;br&gt;&lt;br&gt;Kreisajā pusē kritēriji ir sakārtoti hierarhijas secībā, un katram kritērijam izvēlas ziņojumu fona krāsu.&lt;br&gt;&lt;br&gt;'Jau strādāts' paziņojums darbojas pēc atlikuma principa un nostrādā, ja neviens no ieslēgtajiem 'Jauns' kritērijiem nav izpildīts.&lt;br&gt;&lt;br&gt;'Apgrieztā krāsa' noder, ja CQ un 'MyCall' ziņojumus vēlas izcelt ar noteiktu fona krāsu.&lt;br&gt;&lt;br&gt;Sākumā var izvēlēties vienu kritēriju, bet jaunas joslas/modes paziņojumiem lietot līdzīgu krāsu ar citu piesātinājumu; vēlāk kritēriju skaitu var palielināt.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3798"/>
         <location filename="../Configuration.ui" line="6988"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Configuration tips&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Konfigurēšanas padomi&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3846"/>
         <source>Transmitted message</source>
-        <translation type="unfinished"></translation>
+        <translation>Raidītais ziņojums</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3862"/>
@@ -8498,7 +8663,7 @@ Right click for insert and delete options.</source>
     <message>
         <location filename="../Configuration.ui" line="3878"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Treat RR73/73 messages in the same way as CQ messages for auto selection.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Automātiskajā izvēlē apstrādāt RR73/73 ziņojumus tāpat kā CQ ziņojumus.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3884"/>
@@ -8513,17 +8678,17 @@ Right click for insert and delete options.</source>
     <message>
         <location filename="../Configuration.ui" line="3910"/>
         <source>My Call in message</source>
-        <translation type="unfinished"></translation>
+        <translation>Mans izsaukums ziņojumā</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3923"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Set text color for non (&apos;CQ&apos; and &apos;MyCall&apos;) standard messages&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Iestatīt teksta krāsu standarta ziņojumiem, kas nav 'CQ' un 'MyCall'&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3926"/>
         <source>Other standard message</source>
-        <translation type="unfinished"></translation>
+        <translation>Cits standarta ziņojums</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="4005"/>
@@ -8533,7 +8698,7 @@ Right click for insert and delete options.</source>
     <message>
         <location filename="../Configuration.ui" line="4075"/>
         <source>New CQZ on Band/Mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Jauna CQZ joslā/modē</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="4145"/>
@@ -8543,7 +8708,7 @@ Right click for insert and delete options.</source>
     <message>
         <location filename="../Configuration.ui" line="4215"/>
         <source>New ITUZ on Band/Mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Jauna ITUZ joslā/modē</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="4285"/>
@@ -8553,7 +8718,7 @@ Right click for insert and delete options.</source>
     <message>
         <location filename="../Configuration.ui" line="4355"/>
         <source>New DXCC on Band/Mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Jauna DXCC joslā/modē</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="4425"/>
@@ -8563,7 +8728,7 @@ Right click for insert and delete options.</source>
     <message>
         <location filename="../Configuration.ui" line="4495"/>
         <source>New Grid on Band/Mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Jauns lokātors joslā/modē</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="4565"/>
@@ -8573,7 +8738,7 @@ Right click for insert and delete options.</source>
     <message>
         <location filename="../Configuration.ui" line="4635"/>
         <source>New Prefix on Band/Mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Jauns prefikss joslā/modē</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="4705"/>
@@ -8583,17 +8748,17 @@ Right click for insert and delete options.</source>
     <message>
         <location filename="../Configuration.ui" line="4775"/>
         <source>New Call on Band/Mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Jauns izsaukums joslā/modē</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="4845"/>
         <source>Being used for CQ and MyCall messages only</source>
-        <translation type="unfinished"></translation>
+        <translation>Tiek lietots tikai CQ un MyCall ziņojumiem</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="4848"/>
         <source>Worked one</source>
-        <translation type="unfinished"></translation>
+        <translation>Jau strādāts</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="4945"/>
@@ -8603,7 +8768,7 @@ Right click for insert and delete options.</source>
     <message>
         <location filename="../Configuration.ui" line="4956"/>
         <source>Hide messages from continents</source>
-        <translation type="unfinished"></translation>
+        <translation>Slēpt ziņojumus no kontinentiem</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="4968"/>
@@ -8643,24 +8808,24 @@ Right click for insert and delete options.</source>
     <message>
         <location filename="../Configuration.ui" line="5020"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&apos;Show DXCC name/prefix&apos; shall be activated in General tab of the settings or any &apos;New one&apos; notification to get this functionality working.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Lai šī funkcija darbotos, iestatījumu cilnē Vispārīgi jāieslēdz 'Rādīt DXCC nosaukumu/prefiksu' vai kāds no 'Jauns' paziņojumiem.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="5023"/>
         <source>Hide messages from countries</source>
-        <translation type="unfinished"></translation>
+        <translation>Slēpt ziņojumus no valstīm</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="5043"/>
         <location filename="../Configuration.ui" line="5108"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enable option&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ieslēgt opciju&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="5046"/>
         <location filename="../Configuration.ui" line="5111"/>
         <source>Hide</source>
-        <translation type="unfinished"></translation>
+        <translation>Slēpt</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="5053"/>
@@ -8681,23 +8846,39 @@ UA2,UA9,UK,UN,UR,V2,V3,V4,V5,V6,V7,V8,VE,VK,VK0H,VK0M,VK9C,VK9L,VK9M,VK9N,VK9W,V
 VP2E,VP2M,VP2V,VP5,VP6,VP6/D,VP8,VP8/G,VP8/H,VP8/O,VP8/S,VP9,VQ9,VR,VU,VU4,VU7,XE,&lt;br&gt;
 XF4,XT,XU,XW,XX9,XZ,YA,YB,YI,YJ,YK,YL,YN,YO,YS,YU,YV,YV0,Z2,Z3,Z6,Z8,ZA,ZB,ZC4,ZD7,&lt;br&gt;
 ZD8,ZD9,ZF,ZK3,ZL,ZL7,ZL8,ZL9,ZP,ZS,ZS8&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ar komatiem atdalīts valstu prefiksu saraksts, kas balstīts uz cty.dat failu.&lt;br&gt;
+Atstarpes nav atļautas. Pieļaujamās vērtības: 1A,1S,3A,3B6,3B8,3B9,3C,3C0,3D2,3D2/C,&lt;br&gt;
+3D2/R,3DA,3V,3W,3X,3Y/B,3Y/P,4J,4L,4O,4S,4U1I,4U1U,*4U1V,4W,4X,5A,5B,5H,5N,5R,5T,&lt;br&gt;
+5U,5V,5W,5X,5Z,6W,6Y,7O,7P,7Q,7X,8P,8Q,8R,9A,9G,9H,9J,9K,9L,9M2,9M6,9N,9Q,9U,9V,9X,&lt;br&gt;
+9Y,A2,A3,A4,A5,A6,A7,A9,AP,BS7,BV,BV9P,BY,C2,C3,C5,C6,C9,CE,CE0X,CE0Y,CE0Z,CE9,CM,&lt;br&gt;
+CN,CP,CT,CT3,CU,CX,CY0,CY9,D2,D4,D6,DL,DU,E3,E4,E5/N,E5/S,E6,E7,EA,EA6,EA8,EA9,EI,&lt;br&gt;
+EK,EL,EP,ER,ES,ET,EU,EX,EY,EZ,F,FG,FH,FJ,FK,FK/C,FM,FO,FO/A,FO/C,FO/M,FP,FR,FS,&lt;br&gt;
+FT/G,FT/J,FT/T,FT/W,FT/X,FT/Z,FW,FY,G,GD,GI,GJ,*GM/S,GM,GU,GW,H4,H40,HA,HB,HB0,HC,&lt;br&gt;
+HC8,HH,HI,HK,HK0/A,HK0/M,HL,HP,HR,HS,HV,HZ,I,*IG9,IS,*IT9,J2,J3,J5,J6,J7,J8,JA,&lt;br&gt;
+JD/M,JD/O,JT,JW,*JW/B,JX,JY,K,KG4,KH0,KH1,KH2,KH3,KH4,KH5,KH6,KH7K,KH8,KH8/S,KH9,KL,&lt;br&gt;
+KP1,KP2,KP4,KP5,LA,LU,LX,LY,LZ,OA,OD,OE,OH,OH0,OJ0,OK,OM,ON,OX,OY,OZ,P2,P4,P5,PA,&lt;br&gt;
+PJ2,PJ4,PJ5,PJ7,PY,PY0F,PY0S,PY0T,PZ,R1FJ,S0,S2,S5,S7,S9,SM,SP,ST,SU,SV,SV/A,SV5,&lt;br&gt;
+SV9,T2,T30,T31,T32,T33,T5,T7,T8,TA,*TA1,TF,TG,TI,TI9,TJ,TK,TL,TN,TR,TT,TU,TY,TZ,UA,&lt;br&gt;
+UA2,UA9,UK,UN,UR,V2,V3,V4,V5,V6,V7,V8,VE,VK,VK0H,VK0M,VK9C,VK9L,VK9M,VK9N,VK9W,VK9X,&lt;br&gt;
+VP2E,VP2M,VP2V,VP5,VP6,VP6/D,VP8,VP8/G,VP8/H,VP8/O,VP8/S,VP9,VQ9,VR,VU,VU4,VU7,XE,&lt;br&gt;
+XF4,XT,XU,XW,XX9,XZ,YA,YB,YI,YJ,YK,YL,YN,YO,YS,YU,YV,YV0,Z2,Z3,Z6,Z8,ZA,ZB,ZC4,ZD7,&lt;br&gt;
+ZD8,ZD9,ZF,ZK3,ZL,ZL7,ZL8,ZL9,ZP,ZS,ZS8&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="5076"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Clear country list&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Notīrīt valstu sarakstu&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="5079"/>
         <location filename="../Configuration.ui" line="5134"/>
         <source>Clear</source>
-        <translation type="unfinished"></translation>
+        <translation>Notīrīt</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="5091"/>
         <source>Hide messages from callsigns</source>
-        <translation type="unfinished"></translation>
+        <translation>Slēpt ziņojumus no izsaukuma signāliem</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="5118"/>
@@ -8705,37 +8886,40 @@ ZD8,ZD9,ZF,ZK3,ZL,ZL7,ZL8,ZL9,ZP,ZS,ZS8&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</sou
 gaps are not allowed, base callsign shall be
 used for compound callsigns, for instance:
 AA1AAA,BB1BB,CC1CC&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ar komatiem atdalīts izsaukuma signālu saraksts,
+atstarpes nav atļautas; saliktajiem izsaukuma signāliem
+jālieto pamata izsaukuma signāls, piemēram:
+AA1AAA,BB1BB,CC1CC&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="5131"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Clear callsign list&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Notīrīt izsaukuma signālu sarakstu&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="5146"/>
         <source>Show content related messages in RX frequency window </source>
-        <translation type="unfinished"></translation>
+        <translation>Rādīt satura ziņojumus uztveršanas frekvences logā </translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="5163"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Pass content related free messages to the RX frequency messages window.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Nodot ar saturu saistītos brīvos ziņojumus uztveršanas frekvences logam.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="5166"/>
         <source>Enable</source>
-        <translation type="unfinished"></translation>
+        <translation>Ieslēgt</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="5173"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Comma separated list of content names.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ar komatiem atdalīts satura nosaukumu saraksts.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="5180"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Reset content name list to default value.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Atiestatīt satura nosaukumu sarakstu uz noklusējuma vērtību.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="5183"/>
@@ -8747,72 +8931,72 @@ AA1AAA,BB1BB,CC1CC&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <location filename="../Configuration.ui" line="5220"/>
         <location filename="../Configuration.ui" line="5243"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Filter will be applied out of the RX frequency.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Filtrs tiks piemērots ārpus uztveršanas frekvences.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="5200"/>
         <source>Show CQ messages only</source>
-        <translation type="unfinished"></translation>
+        <translation>Rādīt tikai CQ ziņojumus</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="5223"/>
         <source>Show CQ/RRR/RR73/73 messages only</source>
-        <translation type="unfinished"></translation>
+        <translation>Rādīt tikai CQ/RRR/RR73/73 ziņojumus</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="5246"/>
         <source>Show CQ/RR73/73 messages only</source>
-        <translation type="unfinished"></translation>
+        <translation>Rādīt tikai CQ/RR73/73 ziņojumus</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="5268"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Hide decoded free messages located out of the RX frequency.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Slēpt dekodētos brīvos ziņojumus ārpus uztveršanas frekvences.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="5271"/>
         <source>Hide decoded free messages</source>
-        <translation type="unfinished"></translation>
+        <translation>Slēpt dekodētos brīvos ziņojumus</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="5278"/>
         <source>Hide messages with not associated hash for 2nd callsign</source>
-        <translation type="unfinished"></translation>
+        <translation>Slēpt ziņojumus ar nesaistītu jaucējkodu otrajam izsaukuma signālam</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="5285"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Hide message exchange between operators of own continent. This option allows user to ease monitoring of communication across intercontinental distances.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Slēpt ziņojumu apmaiņu starp sava kontinenta operatoriem. Šī opcija atvieglo starpkontinentālo sakaru novērošanu.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="5288"/>
         <source>Hide messages with own continent callsign</source>
-        <translation type="unfinished"></translation>
+        <translation>Slēpt ziņojumus ar sava kontinenta izsaukuma signāliem</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="5311"/>
         <source>Scheduler</source>
-        <translation type="unfinished"></translation>
+        <translation>Plānotājs</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="5319"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Automatic band switching as per predefined schedule&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Automātiska joslu pārslēgšana pēc iepriekš noteikta grafika&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="5322"/>
         <source>Band scheduler configuration</source>
-        <translation type="unfinished"></translation>
+        <translation>Joslu plānotāja konfigurācija</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="5332"/>
         <source>hh</source>
-        <translation type="unfinished"></translation>
+        <translation>hh</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="5342"/>
         <source>mm</source>
-        <translation type="unfinished"></translation>
+        <translation>mm</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="5352"/>
@@ -8827,7 +9011,7 @@ AA1AAA,BB1BB,CC1CC&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <location filename="../Configuration.ui" line="6393"/>
         <location filename="../Configuration.ui" line="6650"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scheduler will set JT65+JT9 mode if JT65 frequency is selected.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ja izvēlēta JT65 frekvence, plānotājs iestatīs JT65+JT9 modi.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="5365"/>
@@ -8846,7 +9030,7 @@ AA1AAA,BB1BB,CC1CC&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <location filename="../Configuration.ui" line="6409"/>
         <location filename="../Configuration.ui" line="6547"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Select time&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Izvēlieties laiku&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="5390"/>
@@ -9159,140 +9343,142 @@ AA1AAA,BB1BB,CC1CC&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <location filename="../Configuration.ui" line="6374"/>
         <location filename="../Configuration.ui" line="6631"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Select band&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Izvēlieties joslu&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="6680"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Activating band scheduler&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Joslu plānotāja aktivizēšana&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="6683"/>
         <source>Use band scheduler</source>
-        <translation type="unfinished"></translation>
+        <translation>Lietot joslu plānotāju</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="6706"/>
         <source>Advanced</source>
-        <translation type="unfinished"></translation>
+        <translation>Papildu</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="6716"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;User-selectable parameters for JT65 decoding.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Lietotāja izvēlami JT65 dekodēšanas parametri.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="6719"/>
         <source>JT65 decoding parameters</source>
-        <translation type="unfinished"></translation>
+        <translation>JT65 dekodēšanas parametri</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="6747"/>
         <location filename="../Configuration.ui" line="6760"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Defines number of decoding attempts for the wideband decoding passes&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Nosaka dekodēšanas mēģinājumu skaitu platjoslas dekodēšanas gājieniem&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="6750"/>
         <location filename="../Configuration.ui" line="7102"/>
         <source>Number of decoding attempts:</source>
-        <translation type="unfinished"></translation>
+        <translation>Dekodēšanas mēģinājumu skaits:</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="6786"/>
         <location filename="../Configuration.ui" line="6799"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Number of decoding passes for the wideband decoding&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Platjoslas dekodēšanas gājienu skaits&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="6789"/>
         <source>Number of decoding  passes: </source>
-        <translation type="unfinished"></translation>
+        <translation>Dekodēšanas gājienu skaits: </translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="6819"/>
         <location filename="../Configuration.ui" line="6832"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Defines number of decoding attempts for RX frequency decoding passes&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Nosaka dekodēšanas mēģinājumu skaitu uztveršanas frekvences gājieniem&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="6822"/>
         <location filename="../Configuration.ui" line="7138"/>
         <source>RX frequency decoding attempts:</source>
-        <translation type="unfinished"></translation>
+        <translation>Uztveršanas frekvences dekodēšanas mēģinājumi:</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="6858"/>
         <location filename="../Configuration.ui" line="6871"/>
         <location filename="../Configuration.ui" line="7029"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This DT window being used only for RX frequency CALL3 data based Hint decoders focused on CQ and &apos;mycall hiscall hisgrid&apos; messages. Higher values may increase number of the false decodes.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Šis DT logs tiek lietots tikai uztveršanas frekvences CALL3 datu norāžu dekodētājiem, kas orientēti uz CQ un 'mycall hiscall hisgrid' ziņojumiem. Lielākas vērtības var palielināt kļūdaino dekodējumu skaitu.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="6861"/>
         <source>Hinted decoding DT range:</source>
-        <translation type="unfinished"></translation>
+        <translation>Norāžu dekodēšanas DT diapazons:</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="6892"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Activate two additional frequency mask JT65 decoding passes for overcrowded band conditions. This decoding passes being activated automatically if there are few signals on the band. Use this setting only for fast CPU.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Aktivizēt divus papildu frekvenču maskas JT65 dekodēšanas gājienus pārpildītas joslas apstākļos. Šie gājieni tiek aktivizēti automātiski, ja joslā ir maz signālu. Izmantojiet šo iestatījumu tikai ar ātru procesoru.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="6898"/>
         <source>Use frequency mask decoding</source>
-        <translation type="unfinished"></translation>
+        <translation>Lietot frekvenču maskas dekodēšanu</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="6910"/>
         <location filename="../Configuration.ui" line="6920"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Defines ceiling for decoding of the JT65a signals, default value is 3000 Hz.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Nosaka JT65a signālu dekodēšanas augšējo robežu; noklusējuma vērtība ir 3000 Hz.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="6913"/>
         <source>Top decoding frequency: </source>
-        <translation type="unfinished"></translation>
+        <translation>Augstākā dekodēšanas frekvence: </translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="6946"/>
         <location filename="../Configuration.ui" line="6959"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Signal distortion in RX or TX path can produce harmonics of the JT65A signal (JT65B, JT65C etc.) Decoding harmonics of JT65A signal can improve overall decoding efficiency via subtraction of the decoded signals. Decoding depth is proportional to the required CPU resources, set it to 1 for slow CPU. Greater value of depth will allow to decode more harmonics. JT65B and JT65C decoding is being supported.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Signāla kropļojumi uztveršanas vai raidīšanas ceļā var radīt JT65A signāla harmonikas (JT65B, JT65C u.c.). Harmoniku dekodēšana var uzlabot kopējo dekodēšanas efektivitāti, atņemot dekodētos signālus. Dekodēšanas dziļums ir proporcionāls nepieciešamajiem procesora resursiem; lēnam procesoram iestatiet 1. Lielāks dziļums ļauj dekodēt vairāk harmoniku. Tiek atbalstīta JT65B un JT65C dekodēšana.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="6949"/>
         <source>Harmonics decoding depth:</source>
-        <translation type="unfinished"></translation>
+        <translation>Harmoniku dekodēšanas dziļums:</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="6985"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Settings depend on the CPU power, try to use maximum number of decoding passes for overcrowded HF bands.&lt;br&gt;&lt;br&gt;Number of decoding passes may be decreased for low populated HF/VHF bands while an increase of the number of decoding attempts might bring better decoding efficiency for the weak signals there.&lt;br&gt;&lt;br&gt;Number of decoding attempts affecting decoding efficiency of the low SNR signals: wideband or RX frequency one.&lt;br&gt;&lt;br&gt;Number of decoding passes affecting maximum number of the signals that can be decoded on the same frequency or located close to each other with largely overlapped spectra, it is possible to decode up to 4 signals on the same frequency and up to 7 signals on the RX frequency if number of decoding passes is set to 4.&lt;br&gt;&lt;br&gt;Increase number of decoding attempts to the value allowing to get decoding finished until end of the RX minute interval.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Iestatījumi atkarīgi no procesora jaudas; pārpildītās KV joslās mēģiniet lietot maksimālo dekodēšanas gājienu skaitu.&lt;br&gt;&lt;br&gt;Maz noslogotās KV/UĪV joslās gājienu skaitu var samazināt, savukārt lielāks dekodēšanas mēģinājumu skaits tur var uzlabot vāju signālu dekodēšanu.&lt;br&gt;&lt;br&gt;Dekodēšanas mēģinājumu skaits ietekmē zema signāla/trokšņa attiecības signālu dekodēšanu - platjoslas vai uztveršanas frekvencē.&lt;br&gt;&lt;br&gt;Dekodēšanas gājienu skaits nosaka, cik signālus var dekodēt vienā frekvencē vai tuvu viens otram ar stipri pārklājošiem spektriem: ja gājienu skaits ir 4, vienā frekvencē var dekodēt līdz 4 signāliem un uztveršanas frekvencē līdz 7 signāliem.&lt;br&gt;&lt;br&gt;Palieliniet dekodēšanas mēģinājumu skaitu tik daudz, lai dekodēšana paspētu beigties līdz uztveršanas intervāla beigām.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="7073"/>
         <source>T10 decoding parameters</source>
-        <translation type="unfinished"></translation>
+        <translation>T10 dekodēšanas parametri</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="7099"/>
         <location filename="../Configuration.ui" line="7109"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Defines number of decoding attempts for the wideband T10 decoding.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Nosaka dekodēšanas mēģinājumu skaitu platjoslas T10 dekodēšanai.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="7135"/>
         <location filename="../Configuration.ui" line="7148"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Defines number of T10 decoding attempts for RX frequency&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Nosaka T10 dekodēšanas mēģinājumu skaitu uztveršanas frekvencei&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="7239"/>
         <source>Discard or apply configuration changes including
 resetting the radio interface and applying any
 soundcard changes</source>
-        <translation type="unfinished"></translation>
+        <translation>Atmest vai piemērot konfigurācijas izmaiņas, tostarp
+atiestatīt radio interfeisu un piemērot skaņas kartes
+izmaiņas</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
@@ -9322,7 +9508,7 @@ soundcard changes</source>
     <message>
         <location filename="../Configuration.ui"/>
         <source>WW Digi contest</source>
-        <translation type="unfinished"></translation>
+        <translation>WW Digi sacensības</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
@@ -9332,27 +9518,27 @@ soundcard changes</source>
     <message>
         <location filename="../Configuration.ui"/>
         <source>NA VHF contest</source>
-        <translation type="unfinished"></translation>
+        <translation>NA VHF sacensības</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
         <source>EU VHF contest</source>
-        <translation type="unfinished"></translation>
+        <translation>EU VHF sacensības</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
         <source>ARRL Field Day</source>
-        <translation type="unfinished"></translation>
+        <translation>ARRL Field Day</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
         <source>ARRL RTTY Roundup</source>
-        <translation type="unfinished"></translation>
+        <translation>ARRL RTTY Roundup</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
         <source>ARRL Digi contest</source>
-        <translation type="unfinished"></translation>
+        <translation>ARRL Digi sacensības</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
@@ -9405,7 +9591,7 @@ soundcard changes</source>
     <message>
         <location filename="../main.cpp" line="150"/>
         <source>rig-name</source>
-        <translation></translation>
+        <translation>transīvera-nosaukums</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="154"/>
@@ -9423,7 +9609,7 @@ soundcard changes</source>
     <message>
         <location filename="../wf_palette_design_dialog.ui" line="23"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Double click a color to edit it.&lt;/p&gt;&lt;p&gt;Right click to insert or delete colors.&lt;/p&gt;&lt;p&gt;Colors at the top represent weak signals&lt;/p&gt;&lt;p&gt;and colors at the bottom represent strong&lt;/p&gt;&lt;p&gt;signals. You can have up to 256 colors.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Veiciet dubultklikšķi uz krāsas, lai to rediģētu.&lt;/p&gt;&lt;p&gt;Ar labo peles pogu var ievietot vai dzēst krāsas.&lt;/p&gt;&lt;p&gt;Augšējās krāsas atbilst vājiem signāliem,&lt;/p&gt;&lt;p&gt;bet apakšējās - stipriem signāliem.&lt;/p&gt;&lt;p&gt;Var būt līdz 256 krāsām.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 </TS>
