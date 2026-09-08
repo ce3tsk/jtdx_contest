@@ -33,6 +33,8 @@ CAboutDlg::CAboutDlg(QWidget *parent, bool useDarkStyle) :
                          "the WW Digi DX Contest: the grid exchange, points and multipliers, a separate contest log,<br>"
                          "contest-aware autoselect. Every number behind it comes from recorded audio and a script in the tree.<br><br>"
                          "&copy; 2025-2026 Tihomir Sokcevic, CE3TSK (the decoder work, the contest support, the measurements and the documents).<br><br>"
+                         "<b>Thanks to the operators who beta tested the first release candidates</b> on the air:<br>"
+                         "Willy XQ3SK &middot; Eduardo CA3EAP &middot; Miguel CA7FKZ &middot; Cristian CA8CEU.<br><br>"
                          "<b>Derivative work of JTDX</b> by Igor Chernikov, UA3DJY, and Arvo J&auml;rve, ES1JA, &copy; 2016-2022,<br>"
                          "created with contributions from 5P1KZX, 9A5CW, BD3OOX, CE2EC, CT1AXS, DK7UY, DO1IP, EA1AHY, EA3W,<br>"
                          "EA7QL, ES2HV, ES2MC, ES4AW, ES5TF, F1DSZ, F5RUE, G4UJS, G7OED, HA3LI, IZ5ILJ, JA2BQX, JG1APX, JP1LRT,<br>"

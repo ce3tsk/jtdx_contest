@@ -279,6 +279,16 @@ benchmarks running. Support this work: https://ko-fi.com/ce3tsk
 
 ---
 
+## Thanks
+
+The first release candidates were put on the air by a small group of operators who found the
+problems a benchmark cannot. Thank you:
+
+- **Willy XQ3SK**
+- **Eduardo CA3EAP**
+- **Miguel CA7FKZ**
+- **Cristian CA8CEU**
+
 ## Copyright and license
 
 - Copyright © 2001–2026 Joe Taylor, K1JT (WSJT-X)

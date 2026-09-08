@@ -761,10 +761,13 @@ find_program (RIGCTLCOM_EXE rigctlcom)
 # They are optional to the BUILD but not to the product: JTDX needs rigctld for the
 # "Hamlib NET rigctl" rig type, and tools/make_appimage.sh bundles all three.
 #
-# find_program leaves <VAR>-NOTFOUND when it misses, and the unguarded install (PROGRAMS)
-# rules below then tried to install that literal string, failing much later with
+# find_program leaves <VAR>-NOTFOUND when it misses, and the install (PROGRAMS) rules below
+# then try to install that literal string, so the build fails at install time with
 #   file INSTALL cannot find ".../RIGCTL_EXE-NOTFOUND"
-# which says nothing about the real cause. Warn here, at configure time, instead.
+# which says nothing about the real cause. That failure is WANTED - a missing utility must
+# not be skipped silently, or the product ships without a working "Hamlib NET rigctl" rig
+# type and nobody notices until a user hits it. Warn here as well, at configure time, so the
+# later failure is easy to explain (operator, 2026-09-08).
 foreach (rigctl_var_ RIGCTL_EXE RIGCTLD_EXE RIGCTLCOM_EXE)
   if (NOT ${rigctl_var_})
     message (WARNING
@@ -1361,35 +1364,28 @@ install (TARGETS jtdxjt9 wsprd_jtdx udp_daemon_jtdx
   BUNDLE DESTINATION ${CMAKE_INSTALL_BINDIR} COMPONENT runtime
   )
 
-if (RIGCTL_EXE)     # CE3TSK: skip rather than install a "-NOTFOUND" literal
-  install (PROGRAMS
-    ${RIGCTL_EXE}
-    DESTINATION ${CMAKE_INSTALL_BINDIR}
-    #COMPONENT runtime
-    RENAME rigctl-jtdx${CMAKE_EXECUTABLE_SUFFIX}
-    )
-endif ()
+install (PROGRAMS
+  ${RIGCTL_EXE}
+  DESTINATION ${CMAKE_INSTALL_BINDIR}
+  #COMPONENT runtime
+  RENAME rigctl-jtdx${CMAKE_EXECUTABLE_SUFFIX}
+  )
 
-if (RIGCTLD_EXE)     # CE3TSK: skip rather than install a "-NOTFOUND" literal
-  install (PROGRAMS
-    ${RIGCTLD_EXE}
-    DESTINATION ${CMAKE_INSTALL_BINDIR}
-    #COMPONENT runtime
-    RENAME rigctld-jtdx${CMAKE_EXECUTABLE_SUFFIX}
-    )
-endif ()
+install (PROGRAMS
+  ${RIGCTLD_EXE}
+  DESTINATION ${CMAKE_INSTALL_BINDIR}
+  #COMPONENT runtime
+  RENAME rigctld-jtdx${CMAKE_EXECUTABLE_SUFFIX}
+  )
 
-if (RIGCTLCOM_EXE)     # CE3TSK: skip rather than install a "-NOTFOUND" literal
-  install (PROGRAMS
-    ${RIGCTLCOM_EXE}
-    DESTINATION ${CMAKE_INSTALL_BINDIR}
-    #COMPONENT runtime
-    RENAME rigctlcom-jtdx${CMAKE_EXECUTABLE_SUFFIX}
-    )
-endif ()
+install (PROGRAMS
+  ${RIGCTLCOM_EXE}
+  DESTINATION ${CMAKE_INSTALL_BINDIR}
+  #COMPONENT runtime
+  RENAME rigctlcom-jtdx${CMAKE_EXECUTABLE_SUFFIX}
+  )
 
 install (FILES
-  README
   COPYING
   AUTHORS
   THANKS
