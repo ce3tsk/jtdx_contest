@@ -19,8 +19,27 @@
 //#include <QThread>
 #include "moc_HamlibTransceiver.cpp"
 
+// CE3TSK: hamlib renamed the enumerator CACHE_ALL to HAMLIB_CACHE_ALL. Same shim as
+// upstream WSJT-X carries, so the cache call below still compiles against a hamlib old
+// enough to predate the rename. Both jtdxhamlib (4.5~git) and 4.7/5.0 use the new name;
+// this only matters because the probe that answers the question was broken until now and
+// was hiding the breakage.
+#if HAVE_HAMLIB_OLD_CACHING
+#define HAMLIB_CACHE_ALL CACHE_ALL
+#endif
+
 namespace
 {
+  // CE3TSK: hamlib answers freq/mode/ptt/split/level reads from a cache whose lifetime is
+  // rig_set_cache_timeout_ms() milliseconds - 500 by default, and 1000 in practice, see
+  // do_start(). JTDX's fast polling mode (Settings -> Radio -> Poll Interval = 0) polls
+  // every 500 ms, so a cache that lives as long or longer answers some cycles itself
+  // instead of asking the rig. 400 ms keeps the cache doing its real job - the several
+  // reads that happen back to back within one poll cycle - while guaranteeing it has
+  // always expired by the time the next cycle starts. jtdxhamlib patched src/rig.c to get
+  // this; going through the public API instead works against stock hamlib as well.
+  int constexpr hamlib_cache_timeout_ms {400};
+
   // Unfortunately bandwidth is conflated  with mode, this is probably
   // because Icom do  the same. So we have to  care about bandwidth if
   // we want  to set  mode otherwise we  will end up  setting unwanted
@@ -490,7 +509,32 @@ m_jtdxtime = jtdxtime;
   fclose (pFile);
 #endif
 //  QThread::msleep (50);
+  // CE3TSK: hamlib 4.6 gave the library a polling thread of its own - rig_state.poll_interval
+  // now defaults to 1000 ms, where jtdxhamlib and hamlib 4.5 left it at 0. That thread polls
+  // the rig behind JTDX's back, and on start it forces the read cache timeout to its own
+  // interval (src/event.c, "Rig cache time should be equal to rig poll interval"), from
+  // another thread a moment after rig_open() returns. So it both duplicates the polling JTDX
+  // already does and overrides anything set below. Switch it off and poll only from here.
+  // set_conf() checks the token first, so this is silently skipped on a hamlib without it.
+  //
+  // Setting poll_interval also zeroes the read cache timeout (hamlib's TOK_POLL_INTERVAL
+  // handler calls rig_set_cache_timeout_ms with the same value), which would leave caching
+  // switched off entirely - worse than the 1000 ms it replaces. So restore the timeout
+  // through the neighbouring token rather than only through the API below: this pair is
+  // guarded the same way, at run time by the token lookup, and cannot come apart the way an
+  // unguarded set_conf and a #if-guarded restore could.
+  set_conf ("poll_interval", "0");
+  set_conf ("cache_timeout", QByteArray::number (hamlib_cache_timeout_ms).data ());
+
   error_check (rig_open (rig_.data ()), tr ("opening connection to rig"));
+
+#if HAVE_HAMLIB_CACHING
+  // see hamlib_cache_timeout_ms above. Reasserted here after rig_open for the case of a
+  // hamlib that exports the API but not the cache_timeout token. The return code is
+  // deliberately not checked: a backend that does not cache has nothing to do here and is
+  // not an error either way.
+  rig_set_cache_timeout_ms (rig_.data (), HAMLIB_CACHE_ALL, hamlib_cache_timeout_ms);
+#endif
 
   // reset dynamic state
   one_VFO_ = false;

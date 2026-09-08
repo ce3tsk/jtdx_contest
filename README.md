@@ -6,7 +6,7 @@ and rebuilt FT4 decoder, and built-in support for the **WW Digi DX Contest**.
 Designed, built and measured by **Tihomir Sokcevic, CE3TSK** — Santiago de Chile,
 2025–2026 · [https://ce3tsk.com](https://ce3tsk.com) · source code: [https://github.com/ce3tsk/jtdx\_contest](https://github.com/ce3tsk/jtdx_contest)
 
-Version string: `v3.0.0-rc03` · derivative work of JTDX by UA3DJY, ES1JA and the
+Version string: `v3.0.0-rc04` · derivative work of JTDX by UA3DJY, ES1JA and the
 HF community, WSJT-X by K1JT.
 
 Support this work: https://ko-fi.com/ce3tsk

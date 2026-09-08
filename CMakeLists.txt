@@ -756,8 +756,51 @@ find_program (RIGCTL_EXE rigctl)
 find_program (RIGCTLD_EXE rigctld)
 find_program (RIGCTLCOM_EXE rigctlcom)
 
+# CE3TSK: these three are hamlib's own utilities - hamlib's "make install" puts them in
+# /usr/local/bin alongside libhamlib; JTDX only finds them and re-installs them as *-jtdx.
+# They are optional to the BUILD but not to the product: JTDX needs rigctld for the
+# "Hamlib NET rigctl" rig type, and tools/make_appimage.sh bundles all three.
+#
+# find_program leaves <VAR>-NOTFOUND when it misses, and the unguarded install (PROGRAMS)
+# rules below then tried to install that literal string, failing much later with
+#   file INSTALL cannot find ".../RIGCTL_EXE-NOTFOUND"
+# which says nothing about the real cause. Warn here, at configure time, instead.
+foreach (rigctl_var_ RIGCTL_EXE RIGCTLD_EXE RIGCTLCOM_EXE)
+  if (NOT ${rigctl_var_})
+    message (WARNING
+      "${rigctl_var_} not found. The matching hamlib utility will be MISSING from the install "
+      "and from any AppImage built from it, so the \"Hamlib NET rigctl\" rig type will not work. "
+      "Install hamlib's command line utilities (they come with libhamlib), then re-run cmake "
+      "with -U${rigctl_var_} - find_program caches its result, so a plain re-run will not "
+      "search again.")
+  endif ()
+endforeach ()
+
+# CE3TSK: HamlibTransceiver lowers hamlib's read cache timeout at open, but only when the
+# API is there. Both checks below were inherited from WSJT-X and had been answering "no" on
+# every machine, whatever hamlib was installed, because neither was given what it needs:
+#
+#   check_symbol_exists   COMPILES *and LINKS* a test program -> needs the header on the
+#                         include path and libhamlib on the link line, or it fails with
+#                         "undefined reference to rig_set_cache_timeout_ms".
+#   check_type_size       takes its headers from CMAKE_EXTRA_INCLUDE_FILES, NOT from
+#                         CMAKE_REQUIRED_INCLUDES -> without it the enumerator is never
+#                         visible and the answer is "no" even on an old hamlib that has it.
+#
+# Link ${Hamlib_LIBRARIES}, not ${Hamlib_LIBRARY}: FindHamlib.cmake deliberately adds the
+# platform extras to the plural one (m;dl here, Usb;ws2_32 for the MinGW win64 build, or the
+# pkg-config static ldflags). The singular is the bare libhamlib path and links only because
+# hamlib happens to be shared here - it would fail again for a static or win64 build.
+# Results are cached: re-run cmake with -UHAVE_HAMLIB_CACHING -UHAMLIB_OLD_CACHING to probe
+# again.
+set (CMAKE_REQUIRED_INCLUDES ${Hamlib_INCLUDE_DIR})
+set (CMAKE_REQUIRED_LIBRARIES ${Hamlib_LIBRARIES})
+set (CMAKE_EXTRA_INCLUDE_FILES "hamlib/rig.h")
 check_type_size (CACHE_ALL HAMLIB_OLD_CACHING)
 check_symbol_exists (rig_set_cache_timeout_ms "hamlib/rig.h" HAVE_HAMLIB_CACHING)
+unset (CMAKE_EXTRA_INCLUDE_FILES)
+unset (CMAKE_REQUIRED_INCLUDES)
+unset (CMAKE_REQUIRED_LIBRARIES)
 
 find_package (Usb REQUIRED)
 
@@ -1318,26 +1361,32 @@ install (TARGETS jtdxjt9 wsprd_jtdx udp_daemon_jtdx
   BUNDLE DESTINATION ${CMAKE_INSTALL_BINDIR} COMPONENT runtime
   )
 
-install (PROGRAMS
-  ${RIGCTL_EXE}
-  DESTINATION ${CMAKE_INSTALL_BINDIR}
-  #COMPONENT runtime
-  RENAME rigctl-jtdx${CMAKE_EXECUTABLE_SUFFIX}
-  )
+if (RIGCTL_EXE)     # CE3TSK: skip rather than install a "-NOTFOUND" literal
+  install (PROGRAMS
+    ${RIGCTL_EXE}
+    DESTINATION ${CMAKE_INSTALL_BINDIR}
+    #COMPONENT runtime
+    RENAME rigctl-jtdx${CMAKE_EXECUTABLE_SUFFIX}
+    )
+endif ()
 
-install (PROGRAMS
-  ${RIGCTLD_EXE}
-  DESTINATION ${CMAKE_INSTALL_BINDIR}
-  #COMPONENT runtime
-  RENAME rigctld-jtdx${CMAKE_EXECUTABLE_SUFFIX}
-  )
+if (RIGCTLD_EXE)     # CE3TSK: skip rather than install a "-NOTFOUND" literal
+  install (PROGRAMS
+    ${RIGCTLD_EXE}
+    DESTINATION ${CMAKE_INSTALL_BINDIR}
+    #COMPONENT runtime
+    RENAME rigctld-jtdx${CMAKE_EXECUTABLE_SUFFIX}
+    )
+endif ()
 
-install (PROGRAMS
-  ${RIGCTLCOM_EXE}
-  DESTINATION ${CMAKE_INSTALL_BINDIR}
-  #COMPONENT runtime
-  RENAME rigctlcom-jtdx${CMAKE_EXECUTABLE_SUFFIX}
-  )
+if (RIGCTLCOM_EXE)     # CE3TSK: skip rather than install a "-NOTFOUND" literal
+  install (PROGRAMS
+    ${RIGCTLCOM_EXE}
+    DESTINATION ${CMAKE_INSTALL_BINDIR}
+    #COMPONENT runtime
+    RENAME rigctlcom-jtdx${CMAKE_EXECUTABLE_SUFFIX}
+    )
+endif ()
 
 install (FILES
   README
