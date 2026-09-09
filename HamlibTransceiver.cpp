@@ -528,6 +528,31 @@ m_jtdxtime = jtdxtime;
 
   error_check (rig_open (rig_.data ()), tr ("opening connection to rig"));
 
+  /* CE3TSK: did the pair above actually take? Reading the cache timeout back is NOT a valid
+     check on its own. Hamlib's poll thread rewrites it from another thread a moment after
+     rig_open() returns, so an immediate read gives back the 400 ms we asked for even when it
+     is about to be replaced - measured on 4.7.3~rc with the Dummy rig: 400 ms immediately,
+     1000 ms 1.5 s later, and 400 ms both times once poll_interval is 0. What IS settled by
+     the time rig_open() returns is poll_interval itself, and with that thread off nothing
+     else touches the timeout. So this checks the cause rather than the symptom, and says so
+     loudly: a silent override is exactly what hid this for months.
+
+     The token lookup guards a hamlib old enough not to have it - there is no poll thread
+     there either. The read's result is not error_check'ed: a diagnostic must not be able to
+     abort the rig open. tools/hamlib_cache_check.sh runs the same test standalone. */
+  token_t const poll_token = rig_token_lookup (rig_.data (), "poll_interval");
+  if (RIG_CONF_END != poll_token)
+    {
+      QByteArray poll {128, '\0'};
+      // rig_get_conf2, not rig_get_conf: the latter is deprecated in 4.7, and the form that
+      // takes a buffer length is present as far back as the 4.5 fork, so nothing needs guarding
+      if (RIG_OK == rig_get_conf2 (rig_.data (), poll_token, poll.data (), poll.size ()) && poll.toInt ())
+        {
+          qCritical ("Hamlib: its poll thread is still on (poll_interval=%s) and will override "
+                     "the %d ms read cache timeout", poll.constData (), hamlib_cache_timeout_ms);
+        }
+    }
+
 #if HAVE_HAMLIB_CACHING
   // see hamlib_cache_timeout_ms above. Reasserted here after rig_open for the case of a
   // hamlib that exports the API but not the cache_timeout token. The return code is

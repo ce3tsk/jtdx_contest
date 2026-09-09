@@ -81,26 +81,22 @@ QString version (bool include_patch)
   return v;
 }
 
-/* CE3TSK: the name this build shows in a window title. The application name itself stays JTDX -
-   it names the settings and data directories, and changing it would strand every existing
-   profile - so this is display only. One copy, used by the main window and by the wide graph,
-   so a build cannot end up half branded: JTDX_contest on one window and JTDX on the other.
-   A named instance keeps its suffix, "JTDX - test" becoming "JTDX_contest - test". */
-QString fork_name ()
-{
-  QString name {QCoreApplication::applicationName ()};
-  if (name.startsWith ("JTDX")) name.replace (0, 4, "JTDX_contest");
-  return name;
-}
+/* CE3TSK: the leading token MUST be QCoreApplication::applicationName() exactly - "JTDX", or
+   "JTDX - <rig>" when -r names an instance. JTAlert, and anything else that reconstructs JTDX's
+   settings path from the window title, reads the rig name from precisely that position and uses
+   it to find "JTDX - <rig>.ini", which is where the UDP port and server live.
 
-QString program_title (QString const& revision, QString const& contest)
+   This build used to put "JTDX_contest" there. JTAlert's own diagnostic (2026-09-09) then read
+   the rig name as "_contest  by CE3TSK", looked for an ini of that name, found none, never
+   learned the UDP settings and reported "no messages received" - the Heartbeat was never the
+   problem, it never opened the socket. With -r it was worse: "_contest - test  by CE3TSK".
+
+   So which build this is now sits AFTER the version, where nothing parses it, and a running
+   contest is no longer named in the title at all. */
+QString program_title (QString const& revision)
 {
-  /* CE3TSK: this fork announces itself as JTDX_contest (the application name itself stays
-     JTDX - it names the settings and data directories), and a running contest is named up
-     front, before everything the title already carried, so the window and the task bar say
-     which contest this instance is in. */
-  QString const name {fork_name ()};
-  QString const activity {contest.isEmpty () ? QString {} : " - " + contest + " -"};
-  QString id {name + activity + "  by CE3TSK                                v" + QCoreApplication::applicationVersion ()};
-  return id + " " + revision + ", derivative work of JTDX by UA3DJY/ES1JA and WSJT-X by K1JT";
+  QString id {QCoreApplication::applicationName () + "  by CE3TSK                                v"
+              + QCoreApplication::applicationVersion () + " contest"};
+  if (!revision.isEmpty ()) id += ' ' + revision;
+  return id + ", derivative work of JTDX by UA3DJY/ES1JA and WSJT-X by K1JT";
 }

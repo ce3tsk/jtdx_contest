@@ -8,7 +8,6 @@
 #include "tooltip_wrap.hpp"   /* CE3TSK */
 #include "moc_widegraph.cpp"
 #include "JTDXMessageBox.hpp"
-#include "revision_utils.hpp"   /* CE3TSK: fork_name() */
 static float swide[MAX_SCREENSIZE];
 
 namespace
@@ -29,7 +28,7 @@ WideGraph::WideGraph(QSettings * settings, JTDXDateTime * jtdxtime, QWidget *par
   ui->setupUi(this);
   wrap_tooltips (this);   /* CE3TSK: as in MainWindow - Qt leaves plain tooltips unwrapped */
 
-  setWindowTitle (fork_name () + " - " + tr ("Wide Graph"));   /* CE3TSK: named as the main window is */
+  setWindowTitle (QApplication::applicationName () + " - " + tr ("Wide Graph"));
   setWindowFlags (Qt::WindowCloseButtonHint | Qt::WindowMinimizeButtonHint);
   setMaximumWidth (MAX_SCREENSIZE);
   setMaximumHeight (880);

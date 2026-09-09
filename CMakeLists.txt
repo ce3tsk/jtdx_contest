@@ -1725,7 +1725,15 @@ endif ()
 
 set (CPACK_DEBIAN_PACKAGE_DESCRIPTION "${PROJECT_DESCRIPTION}")
 set (CPACK_DEBIAN_PACKAGE_HOMEPAGE "${PROJECT_HOMEPAGE}")
-set (CPACK_DEBIAN_PACKAGE_DEPENDS "libgfortran5 (>=8.3) | libgfortran4 (>=7.3) | libgfortran3 (>=6.3), libfftw3-single3 (>=3.3), libgomp1 (>=6), libqt5serialport5 (>=5.7), libqt5multimedia5-plugins (>=5.7), libqt5widgets5 (>=5.7), libqt5network5 (>=5.7), libqt5printsupport5 (>=5.7), libqt5websockets5 (>=5.7), libusb-1.0-0 (>=1.0.21), hamlib (>=4.5~git.20211220)")
+# CE3TSK: "hamlib (>=4.5~git.20211220)" used to be in this list and made the .deb impossible to
+# install - there is no Debian package of that name (apt-cache show hamlib: "No packages found"),
+# and unlike the libgfortran entry it had no alternatives to fall back on. It is not needed:
+# CPACK_DEBIAN_PACKAGE_SHLIBDEPS below reads what the binaries actually link and contributes the
+# real package with a tight bound - libhamlib4t64 (>= 4.5.3) on Ubuntu 24.04 - so hamlib stays
+# properly required without a hand-maintained name that goes stale. The rest of this list is
+# equally redundant next to shlibdeps but harmless, and its libgfortran alternatives deliberately
+# reach back to older distributions.
+set (CPACK_DEBIAN_PACKAGE_DEPENDS "libgfortran5 (>=8.3) | libgfortran4 (>=7.3) | libgfortran3 (>=6.3), libfftw3-single3 (>=3.3), libgomp1 (>=6), libqt5serialport5 (>=5.7), libqt5multimedia5-plugins (>=5.7), libqt5widgets5 (>=5.7), libqt5network5 (>=5.7), libqt5printsupport5 (>=5.7), libqt5websockets5 (>=5.7), libusb-1.0-0 (>=1.0.21)")
 set (CPACK_DEBIAN_PACKAGE_SHLIBDEPS ON)
 
 set (CPACK_RPM_PACKAGE_ARCHITECTURE ${CMAKE_SYSTEM_PROCESSOR})

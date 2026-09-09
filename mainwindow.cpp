@@ -844,7 +844,7 @@ MainWindow::MainWindow(bool multiple, QSettings * settings, QSharedMemory *shdme
     });
 
 //  setWindowTitle (program_title ());
-  setWindowTitle (program_title (QString {}, m_config.special_op_name ())); /* CE3TSK */
+  setWindowTitle (program_title ()); /* CE3TSK */
 
   createStatusBar();
 
@@ -4014,7 +4014,7 @@ void MainWindow::refreshSpecialOp (bool initial)
   refreshContestLog (false);   /* CE3TSK: follow the activity */
   /* CE3TSK: the title names the contest, so it is rebuilt whenever this runs rather than
      only on a transition - cheap, and it cannot drift out of step with the setting. */
-  setWindowTitle (program_title (QString {}, m_config.special_op_name ()));
+  setWindowTitle (program_title ());
   /* CE3TSK: the greying runs on every call, not only on a transition, because a restart
      already in contest mode never sees one - the constructor's call is guarded by initial.
      It only enables and disables; the values themselves are not touched here, and must not

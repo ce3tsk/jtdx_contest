@@ -7,7 +7,7 @@ set (CPACK_PACKAGE_CONTACT "@PROJECT_CONTACT@")
 set (CPACK_PACKAGE_DESCRIPTION_SUMMARY "@PROJECT_SUMMARY_DESCRIPTION@")
 set (CPACK_RESOURCE_FILE_LICENSE "@PROJECT_SOURCE_DIR@/COPYING")
 # CE3TSK: on Windows this is both the folder under the install root and the Start Menu group.
-# JTDX used the patch level ("0-rc04"), giving C:\JTDX64\0-rc04 - a new directory per release
+# JTDX used the patch level ("0-rc05"), giving C:\JTDX64\0-rc05 - a new directory per release
 # candidate. This fork installs to one place, C:\JTDX_contest (see CPACK_NSIS_INSTALL_ROOT
 # below), so an upgrade replaces the previous build instead of littering the disk.
 if(CPACK_GENERATOR MATCHES "NSIS")
@@ -42,7 +42,7 @@ if (CPACK_GENERATOR MATCHES "NSIS")
   # CE3TSK: and the artifact carries the fork's name. CPACK_PACKAGE_NAME stays "jtdx" - it is
   # the executable, the Linux install paths and the Debian package name - so only the file the
   # operator publishes is renamed here, which is what the download page already links:
-  #   jtdx_contest-3.0.0-rc04-win64.exe
+  #   jtdx_contest-3.0.0-rc05-win64.exe
   set (CPACK_PACKAGE_FILE_NAME "jtdx_contest-${CPACK_PACKAGE_VERSION}-${CPACK_SYSTEM_NAME}")
 
   # set the install/unistall icon used for the installer itself
