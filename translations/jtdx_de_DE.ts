@@ -5967,6 +5967,81 @@ Dies wird nur einmal gefragt.</translation>
         <source>&amp;No, keep mine</source>
         <translation>&amp;Nein, meine behalten</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>TX|</source>
+        <translation>TX|</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>RX burst: how long the decode of the received period took, against the deadline for deciding the reply. Green up to 2.0 s in FT8 and 1.0 s in FT4, amber to 2.8 s and 1.4 s, red beyond. It follows the Lag= figure in the line above the decodes. Frequent red means this machine is spending more effort than it has time for: choose a preset one step lighter - the Presets list runs roughly lighter to heavier, so the entry above is usually the lighter one.</source>
+        <translation>RX-Schub: wie lange das Decodieren der empfangenen Periode gedauert hat, gemessen an der Frist für die Antwortentscheidung. Grün bis 2,0 s in FT8 und 1,0 s in FT4, Bernstein bis 2,8 s und 1,4 s, darüber rot. Folgt dem Wert Lag= in der Zeile über den Decodierungen. Häufiges Rot heißt, dass dieser Rechner mehr Aufwand treibt, als ihm Zeit bleibt: wählen Sie eine Voreinstellung eine Stufe leichter - die Liste der Voreinstellungen geht ungefähr von leicht nach schwer, der Eintrag darüber ist also meist der leichtere.</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>TX background: whether the decoding that keeps running through your own transmission finished, or was cut short by the next period. Green when it finished, red when it was cut - the X after the decode count in the line above. Grey while no TX background is enabled. Frequent red means the background is asking for more time than the period leaves: choose a preset one step lighter - the Presets list runs roughly lighter to heavier, so the entry above is usually the lighter one.</source>
+        <translation>TX-Hintergrund: ob das Decodieren, das während der eigenen Aussendung weiterläuft, fertig wurde oder von der nächsten Periode abgeschnitten wurde. Grün, wenn es fertig wurde, rot, wenn es abgeschnitten wurde - das X hinter der Decodierzahl in der Zeile darüber. Grau, solange kein TX-Hintergrund eingeschaltet ist. Häufiges Rot heißt, dass der Hintergrund mehr Zeit verlangt, als die Periode lässt: wählen Sie eine Voreinstellung eine Stufe leichter - die Liste geht ungefähr von leicht nach schwer, der Eintrag darüber ist also meist der leichtere.</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>best power</source>
+        <translation>beste Leistung</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>best value</source>
+        <translation>bestes Verhältnis</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>best medium effort</source>
+        <translation>bester mittlerer Aufwand</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>best results</source>
+        <translation>beste Ergebnisse</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>max effort</source>
+        <translation>maximaler Aufwand</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>most results</source>
+        <translation>meiste Ergebnisse</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>most at reply time</source>
+        <translation>das meiste zur Antwortzeit</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>recommended: %1</source>
+        <translation>empfohlen: %1</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>Custom - the FT4 RX / TX background controls match no preset</source>
+        <translation>Custom - die FT4-Einstellungen für RX / TX-Hintergrund passen zu keiner Voreinstellung</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>FT8 / FT4 decoding preset - greyed while the mode is neither</source>
+        <translation>FT8- / FT4-Dekodier-Voreinstellung - grau, solange der Modus keiner von beiden ist</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>Custom - the RX / TX background controls match no preset</source>
+        <translation>Custom - die Einstellungen für RX / TX-Hintergrund passen zu keiner Voreinstellung</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>ensemble - the RX-only recipe of the former Ensemble preset (no menu entry)</source>
+        <translation>Ensemble - das reine RX-Rezept der früheren Voreinstellung Ensemble (kein Menüeintrag)</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

@@ -3150,7 +3150,7 @@ Formāts:
         <location filename="../mainwindow.cpp" line="5573"/>
         <location filename="../mainwindow.cpp" line="5962"/>
         <source>DX Call</source>
-        <translation>DX Izsaukuma signāls</translation>
+        <translation>DX izsauk.</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1371"/>
@@ -5965,6 +5965,81 @@ Tas tiek jautāts tikai vienu reizi.</translation>
         <location filename="../mainwindow.cpp"/>
         <source>&amp;No, keep mine</source>
         <translation>&amp;Nē, paturēt manas</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>TX|</source>
+        <translation>TX|</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>RX burst: how long the decode of the received period took, against the deadline for deciding the reply. Green up to 2.0 s in FT8 and 1.0 s in FT4, amber to 2.8 s and 1.4 s, red beyond. It follows the Lag= figure in the line above the decodes. Frequent red means this machine is spending more effort than it has time for: choose a preset one step lighter - the Presets list runs roughly lighter to heavier, so the entry above is usually the lighter one.</source>
+        <translation>RX uzliesmojums: cik ilgi noritēja saņemtā perioda dekodēšana, salīdzinot ar termiņu, kad jāizlemj atbilde. Zaļš līdz 2,0 s FT8 un 1,0 s FT4, dzintarkrāsas līdz 2,8 s un 1,4 s, sarkans virs tā. Seko rindā virs dekodējumiem redzamajai Lag= vērtībai. Bieža sarkana krāsa nozīmē, ka šis dators patērē vairāk pūļu, nekā tam ir laika: izvēlieties par pakāpi vieglāku sagatavi - saraksts iet aptuveni no vieglākajām uz smagākajām, tāpēc ieraksts augstāk parasti ir vieglāks.</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>TX background: whether the decoding that keeps running through your own transmission finished, or was cut short by the next period. Green when it finished, red when it was cut - the X after the decode count in the line above. Grey while no TX background is enabled. Frequent red means the background is asking for more time than the period leaves: choose a preset one step lighter - the Presets list runs roughly lighter to heavier, so the entry above is usually the lighter one.</source>
+        <translation>TX fons: vai dekodēšana, kas turpinās jūsu paša raidīšanas laikā, tika pabeigta vai to pārtrauca nākamais periods. Zaļš, ja pabeigta, sarkans, ja pārtraukta - X aiz dekodējumu skaita rindā augstāk. Pelēks, kamēr neviens TX fons nav ieslēgts. Bieža sarkana krāsa nozīmē, ka fons prasa vairāk laika, nekā periods atļauj: izvēlieties par pakāpi vieglāku sagatavi - saraksts iet aptuveni no vieglākajām uz smagākajām, tāpēc ieraksts augstāk parasti ir vieglāks.</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>best power</source>
+        <translation>labākā jauda</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>best value</source>
+        <translation>labākā attiecība</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>best medium effort</source>
+        <translation>labākā vidējā piepūle</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>best results</source>
+        <translation>labākie rezultāti</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>max effort</source>
+        <translation>maksimālā piepūle</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>most results</source>
+        <translation>visvairāk rezultātu</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>most at reply time</source>
+        <translation>visvairāk atbildes laikā</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>recommended: %1</source>
+        <translation>ieteicamais: %1</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>Custom - the FT4 RX / TX background controls match no preset</source>
+        <translation>Custom - FT4 RX / TX fona vadīklas neatbilst nevienam priekšiestatījumam</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>FT8 / FT4 decoding preset - greyed while the mode is neither</source>
+        <translation>FT8 / FT4 dekodēšanas priekšiestatījums - pelēks, kamēr režīms nav neviens no tiem</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>Custom - the RX / TX background controls match no preset</source>
+        <translation>Custom - RX / TX fona vadīklas neatbilst nevienam priekšiestatījumam</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>ensemble - the RX-only recipe of the former Ensemble preset (no menu entry)</source>
+        <translation>ansamblis - bijušā priekšiestatījuma Ensemble tikai RX recepte (bez izvēlnes ieraksta)</translation>
     </message>
 </context>
 <context>

@@ -2415,6 +2415,39 @@ ZD8,ZD9,ZF,ZK3,ZL,ZL7,ZL8,ZL9,ZP,ZS,ZS8&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</str
                </widget>
               </item>
               <item>
+               <layout class="QHBoxLayout" name="timingLampLayout">
+                <property name="spacing">
+                 <number>2</number>
+                </property>
+                <item>
+                 <widget class="QLabel" name="labelRxTiming">
+                  <property name="text">
+                   <string>RX</string>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignCenter</set>
+                  </property>
+                  <property name="toolTip">
+                   <string>RX burst: how long the decode of the received period took, against the deadline for deciding the reply. Green up to 2.0 s in FT8 and 1.0 s in FT4, amber to 2.8 s and 1.4 s, red beyond. It follows the Lag= figure in the line above the decodes. Frequent red means this machine is spending more effort than it has time for: choose a preset one step lighter - the Presets list runs roughly lighter to heavier, so the entry above is usually the lighter one.</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QLabel" name="labelTxTiming">
+                  <property name="text">
+                   <string>TX|</string>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignCenter</set>
+                  </property>
+                  <property name="toolTip">
+                   <string>TX background: whether the decoding that keeps running through your own transmission finished, or was cut short by the next period. Green when it finished, red when it was cut - the X after the decode count in the line above. Grey while no TX background is enabled. Frequent red means the background is asking for more time than the period leaves: choose a preset one step lighter - the Presets list runs roughly lighter to heavier, so the entry above is usually the lighter one.</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+              <item>
                <widget class="QLabel" name="labelPreset">
                 <property name="text">
                  <string>Preset</string>
@@ -2443,8 +2476,8 @@ ZD8,ZD9,ZF,ZK3,ZL,ZL7,ZL8,ZL9,ZP,ZS,ZS8&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</str
               </property>
               <property name="maximumSize">
                <size>
-                <width>75</width>
-                <height>7</height>
+                <width>16777215</width>
+                <height>45</height>
                </size>
               </property>
               <property name="toolTip">
@@ -2485,8 +2518,8 @@ ZD8,ZD9,ZF,ZK3,ZL,ZL7,ZL8,ZL9,ZP,ZS,ZS8&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</str
               </property>
               <property name="maximumSize">
                <size>
-                <width>75</width>
-                <height>7</height>
+                <width>16777215</width>
+                <height>45</height>
                </size>
               </property>
               <property name="toolTip">
@@ -2530,8 +2563,8 @@ ZD8,ZD9,ZF,ZK3,ZL,ZL7,ZL8,ZL9,ZP,ZS,ZS8&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</str
               </property>
               <property name="maximumSize">
                <size>
-                <width>75</width>
-                <height>7</height>
+                <width>16777215</width>
+                <height>45</height>
                </size>
               </property>
               <property name="toolTip">
@@ -2575,8 +2608,8 @@ ZD8,ZD9,ZF,ZK3,ZL,ZL7,ZL8,ZL9,ZP,ZS,ZS8&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</str
               </property>
               <property name="maximumSize">
                <size>
-                <width>75</width>
-                <height>7</height>
+                <width>16777215</width>
+                <height>45</height>
                </size>
               </property>
               <property name="toolTip">
@@ -2620,8 +2653,8 @@ ZD8,ZD9,ZF,ZK3,ZL,ZL7,ZL8,ZL9,ZP,ZS,ZS8&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</str
               </property>
               <property name="maximumSize">
                <size>
-                <width>75</width>
-                <height>7</height>
+                <width>16777215</width>
+                <height>45</height>
                </size>
               </property>
               <property name="toolTip">
@@ -2662,8 +2695,8 @@ ZD8,ZD9,ZF,ZK3,ZL,ZL7,ZL8,ZL9,ZP,ZS,ZS8&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</str
               </property>
               <property name="maximumSize">
                <size>
-                <width>75</width>
-                <height>7</height>
+                <width>16777215</width>
+                <height>45</height>
                </size>
               </property>
               <property name="toolTip">
@@ -7062,7 +7095,7 @@ list. The list can be maintained in Settings (F2).</string>
     <bool>true</bool>
    </property>
    <property name="checked">
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
    <property name="text">
     <string>Show tooltips in main window</string>

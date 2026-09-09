@@ -265,6 +265,7 @@ set (wsjtx_CXXSRCS
   about.cpp
   WsprTxScheduler.cpp
   mainwindow.cpp
+  sequencer_hooks.cpp
   Configuration.cpp
   main.cpp
   eqsl.cpp

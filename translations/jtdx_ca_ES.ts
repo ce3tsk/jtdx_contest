@@ -5976,6 +5976,81 @@ Això només es pregunta una vegada.</translation>
         <source>&amp;No, keep mine</source>
         <translation>&amp;No, conserva els meus</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>TX|</source>
+        <translation>TX|</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>RX burst: how long the decode of the received period took, against the deadline for deciding the reply. Green up to 2.0 s in FT8 and 1.0 s in FT4, amber to 2.8 s and 1.4 s, red beyond. It follows the Lag= figure in the line above the decodes. Frequent red means this machine is spending more effort than it has time for: choose a preset one step lighter - the Presets list runs roughly lighter to heavier, so the entry above is usually the lighter one.</source>
+        <translation>Ràfega RX: quant ha trigat la descodificació del període rebut, davant del termini per decidir la resposta. Verd fins a 2,0 s en FT8 i 1,0 s en FT4, ambre fins a 2,8 s i 1,4 s, vermell més enllà. Segueix el valor Lag= de la línia sobre les descodificacions. El vermell freqüent indica que aquesta màquina dedica més esforç del que té temps: trieu un preset un pas més lleuger; la llista de presets va aproximadament de més lleuger a més pesat, així que l'entrada de dalt sol ser la més lleugera.</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>TX background: whether the decoding that keeps running through your own transmission finished, or was cut short by the next period. Green when it finished, red when it was cut - the X after the decode count in the line above. Grey while no TX background is enabled. Frequent red means the background is asking for more time than the period leaves: choose a preset one step lighter - the Presets list runs roughly lighter to heavier, so the entry above is usually the lighter one.</source>
+        <translation>Fons TX: si la descodificació que continua durant la vostra pròpia transmissió ha acabat o l'ha tallada el període següent. Verd quan ha acabat, vermell quan s'ha tallat: la X després del recompte de descodificacions a la línia de dalt. Gris mentre no hi hagi cap fons TX activat. El vermell freqüent indica que el fons demana més temps del que deixa el període: trieu un preset un pas més lleuger; la llista va aproximadament de més lleuger a més pesat, així que l'entrada de dalt sol ser la més lleugera.</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>best power</source>
+        <translation>millor potència</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>best value</source>
+        <translation>millor relació</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>best medium effort</source>
+        <translation>millor esforç mitjà</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>best results</source>
+        <translation>millors resultats</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>max effort</source>
+        <translation>esforç màxim</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>most results</source>
+        <translation>més resultats</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>most at reply time</source>
+        <translation>la majoria en el temps de resposta</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>recommended: %1</source>
+        <translation>recomanada: %1</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>Custom - the FT4 RX / TX background controls match no preset</source>
+        <translation>Custom - els controls de RX / fons TX d'FT4 no coincideixen amb cap predefinició</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>FT8 / FT4 decoding preset - greyed while the mode is neither</source>
+        <translation>Predefinició de descodificació FT8 / FT4 - en gris mentre el mode no sigui cap dels dos</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>Custom - the RX / TX background controls match no preset</source>
+        <translation>Custom - els controls de RX / fons TX no coincideixen amb cap predefinició</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>ensemble - the RX-only recipe of the former Ensemble preset (no menu entry)</source>
+        <translation>conjunt - la recepta només de RX de l'antiga predefinició Ensemble (sense entrada de menú)</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

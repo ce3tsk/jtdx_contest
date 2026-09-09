@@ -3447,7 +3447,7 @@ ZD8,ZD9,ZF,ZK3,ZL,ZL7,ZL8,ZL9,ZP,ZS,ZS8&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</tra
     <message>
         <location filename="../mainwindow.ui" line="2571"/>
         <source>1 QSO</source>
-        <translation>Одиноч. QSO</translation>
+        <translation>Одиноч.QSO</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2602"/>
@@ -3487,7 +3487,7 @@ ZD8,ZD9,ZF,ZK3,ZL,ZL7,ZL8,ZL9,ZP,ZS,ZS8&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</tra
     <message>
         <location filename="../mainwindow.ui" line="2877"/>
         <source>E&amp;nable Tx</source>
-        <translation>Разреш. Tx</translation>
+        <translation>Разреш.Tx</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2835"/>
@@ -5361,7 +5361,7 @@ UDP сервер %2:%3</translation>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>Contest</source>
-        <translation>Соревнование</translation>
+        <translation>Контест</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
@@ -5980,6 +5980,81 @@ This is asked only once.</source>
         <location filename="../mainwindow.cpp"/>
         <source>&amp;No, keep mine</source>
         <translation>&amp;Нет, оставить свои</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>TX|</source>
+        <translation>TX|</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>RX burst: how long the decode of the received period took, against the deadline for deciding the reply. Green up to 2.0 s in FT8 and 1.0 s in FT4, amber to 2.8 s and 1.4 s, red beyond. It follows the Lag= figure in the line above the decodes. Frequent red means this machine is spending more effort than it has time for: choose a preset one step lighter - the Presets list runs roughly lighter to heavier, so the entry above is usually the lighter one.</source>
+        <translation>Пакет RX: сколько заняло декодирование принятого периода против срока, к которому нужно решить ответ. Зелёный до 2,0 с в FT8 и 1,0 с в FT4, янтарный до 2,8 с и 1,4 с, выше - красный. Следует значению Lag= в строке над декодами. Частый красный означает, что эта машина тратит больше усилий, чем у неё есть времени: выберите пресет на ступень легче - список пресетов идёт примерно от более лёгких к более тяжёлым, так что запись выше обычно легче.</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>TX background: whether the decoding that keeps running through your own transmission finished, or was cut short by the next period. Green when it finished, red when it was cut - the X after the decode count in the line above. Grey while no TX background is enabled. Frequent red means the background is asking for more time than the period leaves: choose a preset one step lighter - the Presets list runs roughly lighter to heavier, so the entry above is usually the lighter one.</source>
+        <translation>Фон TX: успело ли декодирование, продолжающееся во время вашей передачи, завершиться, или его оборвал следующий период. Зелёный, когда завершилось, красный, когда оборвано - X после числа декодов в строке выше. Серый, пока фон TX не включён. Частый красный означает, что фон просит больше времени, чем оставляет период: выберите пресет на ступень легче - список идёт примерно от более лёгких к более тяжёлым, так что запись выше обычно легче.</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>best power</source>
+        <translation>лучшая мощность</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>best value</source>
+        <translation>лучшее соотношение</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>best medium effort</source>
+        <translation>лучшие средние усилия</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>best results</source>
+        <translation>лучшие результаты</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>max effort</source>
+        <translation>максимальные усилия</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>most results</source>
+        <translation>больше всего результатов</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>most at reply time</source>
+        <translation>больше всего ко времени ответа</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>recommended: %1</source>
+        <translation>рекомендуемый: %1</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>Custom - the FT4 RX / TX background controls match no preset</source>
+        <translation>Custom - органы управления RX / фона TX для FT4 не совпадают ни с одним пресетом</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>FT8 / FT4 decoding preset - greyed while the mode is neither</source>
+        <translation>Пресет декодирования FT8 / FT4 - серый, пока режим не является ни тем, ни другим</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>Custom - the RX / TX background controls match no preset</source>
+        <translation>Custom - органы управления RX / фона TX не совпадают ни с одним пресетом</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>ensemble - the RX-only recipe of the former Ensemble preset (no menu entry)</source>
+        <translation>ансамбль - рецепт только для RX из прежнего пресета Ensemble (без пункта меню)</translation>
     </message>
 </context>
 <context>

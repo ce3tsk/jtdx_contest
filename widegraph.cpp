@@ -5,6 +5,7 @@
 #include "ui_widegraph.h"
 #include "commons.h"
 #include "Configuration.hpp"
+#include "tooltip_wrap.hpp"   /* CE3TSK */
 #include "moc_widegraph.cpp"
 #include "JTDXMessageBox.hpp"
 #include "revision_utils.hpp"   /* CE3TSK: fork_name() */
@@ -26,6 +27,7 @@ WideGraph::WideGraph(QSettings * settings, JTDXDateTime * jtdxtime, QWidget *par
   m_jtdxtime {jtdxtime}
 {
   ui->setupUi(this);
+  wrap_tooltips (this);   /* CE3TSK: as in MainWindow - Qt leaves plain tooltips unwrapped */
 
   setWindowTitle (fork_name () + " - " + tr ("Wide Graph"));   /* CE3TSK: named as the main window is */
   setWindowFlags (Qt::WindowCloseButtonHint | Qt::WindowMinimizeButtonHint);

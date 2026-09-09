@@ -5971,6 +5971,81 @@ Ezt csak egyszer kérdezzük meg.</translation>
         <source>&amp;No, keep mine</source>
         <translation>&amp;Nem, marad a sajátom</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>TX|</source>
+        <translation>TX|</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>RX burst: how long the decode of the received period took, against the deadline for deciding the reply. Green up to 2.0 s in FT8 and 1.0 s in FT4, amber to 2.8 s and 1.4 s, red beyond. It follows the Lag= figure in the line above the decodes. Frequent red means this machine is spending more effort than it has time for: choose a preset one step lighter - the Presets list runs roughly lighter to heavier, so the entry above is usually the lighter one.</source>
+        <translation>RX löket: mennyi ideig tartott a vett periódus dekódolása, a válasz eldöntésének határidejéhez mérve. Zöld 2,0 s-ig FT8-ban és 1,0 s-ig FT4-ben, borostyán 2,8 s-ig és 1,4 s-ig, azon túl piros. A dekódolások fölötti sor Lag= értékét követi. A gyakori piros azt jelenti, hogy ez a gép több erőfeszítést fordít rá, mint amennyi ideje van: válasszon egy fokozattal könnyebb előbeállítást - a lista nagyjából a könnyebbtől a nehezebb felé halad, így a fölötte lévő általában a könnyebb.</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>TX background: whether the decoding that keeps running through your own transmission finished, or was cut short by the next period. Green when it finished, red when it was cut - the X after the decode count in the line above. Grey while no TX background is enabled. Frequent red means the background is asking for more time than the period leaves: choose a preset one step lighter - the Presets list runs roughly lighter to heavier, so the entry above is usually the lighter one.</source>
+        <translation>TX háttér: a saját adás alatt tovább futó dekódolás befejeződött-e, vagy a következő periódus vágta el. Zöld, ha befejeződött, piros, ha elvágták - a fenti sorban a dekódolásszám utáni X. Szürke, amíg nincs TX háttér bekapcsolva. A gyakori piros azt jelenti, hogy a háttér több időt kér, mint amennyit a periódus hagy: válasszon egy fokozattal könnyebb előbeállítást - a lista nagyjából a könnyebbtől a nehezebb felé halad, így a fölötte lévő általában a könnyebb.</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>best power</source>
+        <translation>legjobb teljesítmény</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>best value</source>
+        <translation>legjobb arány</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>best medium effort</source>
+        <translation>legjobb közepes ráfordítás</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>best results</source>
+        <translation>legjobb eredmények</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>max effort</source>
+        <translation>maximális ráfordítás</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>most results</source>
+        <translation>legtöbb eredmény</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>most at reply time</source>
+        <translation>a legtöbb a válaszidőnél</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>recommended: %1</source>
+        <translation>ajánlott: %1</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>Custom - the FT4 RX / TX background controls match no preset</source>
+        <translation>Custom - az FT4 RX / TX háttér vezérlői egyik előbeállításnak sem felelnek meg</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>FT8 / FT4 decoding preset - greyed while the mode is neither</source>
+        <translation>FT8 / FT4 dekódolási előbeállítás - szürke, amíg a mód egyik sem</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>Custom - the RX / TX background controls match no preset</source>
+        <translation>Custom - az RX / TX háttér vezérlői egyik előbeállításnak sem felelnek meg</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>ensemble - the RX-only recipe of the former Ensemble preset (no menu entry)</source>
+        <translation>együttes - a korábbi Ensemble előbeállítás csak RX receptje (nincs menüpont)</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

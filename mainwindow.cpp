@@ -26,6 +26,7 @@
 #include <QVector>
 #include <QCursor>
 #include <QToolTip>
+#include <QTextDocument>   /* CE3TSK: measuring the header line */
 #include <QButtonGroup>
 #include <QUdpSocket>
 #include <QtMath>
@@ -35,6 +36,7 @@
 
 #include "revision_utils.hpp"
 #include "qt_helpers.hpp"
+#include "tooltip_wrap.hpp"   /* CE3TSK */
 #include "soundout.h"
 #include "soundin.h"
 #include "Modulator.hpp"
@@ -342,6 +344,8 @@ MainWindow::MainWindow(bool multiple, QSettings * settings, QSharedMemory *shdme
   m_savedRRR {false},
   m_lang {"en_US"},
   m_lastloggedcall {""},
+  m_finishedCall {""},
+  m_finishedTime {0},
   m_cqdir {""},
   m_lastMode {""},
   m_callsign {""},
@@ -460,6 +464,7 @@ MainWindow::MainWindow(bool multiple, QSettings * settings, QSharedMemory *shdme
   m_manual {network_manager}
 {
   ui->setupUi(this);
+  wrap_tooltips (this);   /* CE3TSK: Qt does not word-wrap a plain tooltip, see tooltip_wrap.hpp */
   m_config.set_jtdxtime (m_jtdxtime);
   ui->decodedTextBrowser->setConfiguration (&m_config);
   ui->decodedTextBrowser2->setConfiguration (&m_config);
@@ -1038,12 +1043,12 @@ MainWindow::MainWindow(bool multiple, QSettings * settings, QSharedMemory *shdme
   ui->decodedTextLabel->setTextFormat(Qt::PlainText); ui->decodedTextLabel->setText(t);
   ui->decodedTextLabel2->setText(t);
 
-  ui->tuneButton->setMaximumSize(80,45);
-  ui->monitorButton->setMaximumSize(80,45);
-  ui->bypassButton->setMaximumSize(80,45);
-  ui->singleQSOButton->setMaximumSize(80,45);
-  ui->AnsB4Button->setMaximumSize(80,45);
-  ui->stopButton->setMaximumSize(80,45);
+  /* CE3TSK: these six used to be pinned to 80 px wide here, which is narrower than the
+     lamps above them and, in a language whose word does not fit, narrower than the
+     button's own text - "Одиноч. QSO" burst out of its cap and stood proud of the
+     column while its neighbours stayed short. The .ui now caps only the height, so all
+     six take the column's width, as the lamps do. The width is still bounded: the
+     column is only ever as wide as its widest item asks to be. */
   dynamicButtonsInit();
 
   m_audioThread.start (m_audioThreadPriority);
@@ -1719,6 +1724,7 @@ void MainWindow::readSettings()
   m_ft8BackgroundMargin=m_settings->value("FT8BackgroundMargin",10).toInt();
   m_ft8RXBudget=m_settings->value("FT8RXBudget",27).toInt(); if(!(m_ft8RXBudget>=5 && m_ft8RXBudget<=600)) m_ft8RXBudget=27;   // CE3TSK P8: tenths
   if(m_ft8BackgroundMargin<0 || m_ft8BackgroundMargin>100) m_ft8BackgroundMargin=10;
+  m_rxLag=0.0; m_rxLagKnown=false; m_bgLastCut=false; m_bgLastKnown=false;   // CE3TSK: nothing decoded yet
   m_rxPhase=false; m_bgPhase=false; m_bgRan=false; m_bgCut=false; m_bgAbortAsked=false; m_nDecodesRx=0; m_txPeriod=-1;
   setBackgroundActions();
   setDecodeMenuColours();
@@ -1885,8 +1891,13 @@ void MainWindow::readSettings()
   m_disable_TX_on_73=m_settings->value("73TxDisable",false).toBool();
   ui->actionDisableTx73->setChecked(m_disable_TX_on_73);
 
+  readSequencerSettings ();   /* CE3TSK: whatever the sequencer policy keeps in the ini */
 
 
+  /* CE3TSK: tooltips on by default - a fresh install shows them, an existing profile keeps
+     whatever it saved because the key is then present in the ini. Seeded on the first run so
+     the state is written down rather than implied by a default no one can see. */
+  if (!m_settings->contains ("ShowMainWindowTooltips")) m_settings->setValue ("ShowMainWindowTooltips", true);
   m_showTooltips=m_settings->value("ShowMainWindowTooltips",true).toBool();
   ui->actionShow_tooltips_main_window->setChecked(m_showTooltips);
 
@@ -1945,6 +1956,7 @@ void MainWindow::setDecodedTextFont (QFont const& font)
   ui->decodedTextLabel2->setStyleSheet (ui->decodedTextLabel2->styleSheet () + style_sheet);
   ui->decodedTextLabel2->setMinimumHeight (fm.height());
   ui->decodedTextLabel2->setMaximumHeight (fm.height());
+  fitDecodeLabels ();   // CE3TSK: rich text in a CJK language needs more than the metric
   updateGeometry ();
 }
 
@@ -2926,6 +2938,7 @@ void MainWindow::displayDialFrequency ()
 
 void MainWindow::styleChanged()
 {
+  updateTimingLamps();   // CE3TSK: the lamps carry their own palette, light and dark
 
   ui->pbTxLock->setChecked(m_lockTxFreq);
   on_pbTxLock_clicked(m_lockTxFreq);
@@ -3287,6 +3300,10 @@ void MainWindow::on_actionOpen_triggered()                     //Open File
    in ISRC, program title in ISFT, creation time in ICRD, mode/frequency/DX in ICMT - is
    carried over. The one thing the suffix costs is the filename timestamp: replaying the
    converted copy parses no time from the name, which only matters for QsoHistory ordering. */
+/* CE3TSK: one file's conversion, lifted out of the menu handler so a batch can use it too.
+   `oname` empty means "name it yourself": beside the source, with the depth appended, and
+   refuse rather than overwrite. Returns false with `err` set on any failure; err == EXISTS is
+   the one case a batch reports as skipped rather than failed. Nothing is written on failure. */
 /* the sentinel that separates "already converted" from a real failure; not a message, so it is
    never shown to the operator */
 static QString const EXISTS {QStringLiteral ("__exists__")};
@@ -3866,14 +3883,14 @@ void MainWindow::applyContestLock (bool locked)
   ui->labelContest->setAutoFillBackground (true);
   ui->labelContest->setEnabled (locked);
   if (locked)
-    /* the pale green the status bar uses for its highlight lamps, and bold text */
-    ui->labelContest->setStyleSheet (QString ("QLabel{color: %1; background: %2; font-weight: bold; border: 1px solid %3; border-radius: 3px; padding: 1px 4px}")
+    /* the pale green the status bar uses for its highlight lamps */
+    ui->labelContest->setStyleSheet (QString ("QLabel{color: %1; background: %2; border: 1px solid %3; border-radius: 3px; padding: 1px 4px}")
                                      .arg (Radio::convert_dark ("#000000", m_useDarkStyle),
                                            Radio::convert_dark ("#99ff99", m_useDarkStyle),
                                            Radio::convert_dark ("#005400", m_useDarkStyle)));
   else
     /* at rest: the same grey box the preset lamp below it uses for its uncoloured cases */
-    ui->labelContest->setStyleSheet ("QLabel{font-weight: bold; border: 1px solid #808080; border-radius: 3px; padding: 1px 4px}");
+    ui->labelContest->setStyleSheet ("QLabel{border: 1px solid #808080; border-radius: 3px; padding: 1px 4px}");
 
   /* FT8 and FT4 stay selectable; every other member of the mode group is greyed. WSPR is the
      seventh member of that same group, so it needs no case of its own. */
@@ -4024,6 +4041,7 @@ void MainWindow::refreshSpecialOp (bool initial)
      format; blanking the fields by hand would leave the sequencer free to resume the QSO
      with messages of the other kind. */
   if(m_config.write_decoded_debug()) writeToALLTXT("Special operating activity changed, TX halted and messages cleared");
+  onQsoAbandoned ();   /* CE3TSK: the QSO the sequencer hooks refer to is being abandoned */
   m_contestIgnore.clear (); /* CE3TSK: the contest's report-message skip list goes with it */
   /* CE3TSK: the directional CQ the contest calls with - "WW" for WW Digi, empty on the way
      back out. Set before clearDX() so the Tx6 it rebuilds already carries the new direction.
@@ -4129,23 +4147,72 @@ static QIcon menu_dot(QColor const& colour)
   q.drawEllipse(3, 3, 10, 10);
   return QIcon(dot);
 }
+/* CE3TSK: a preset entry's name for the menu, its whole description for the tooltip.
+
+   Each preset action carries its full recipe as its label - "pipeline max decodes light:
+   maximum decodes at reply time, then a ~6 s TX background - the plain 6-cycle pass, 2
+   members, the residual pass" - and with the tier prefix in front the widest FT8 entry
+   measured 1534 px, wider than a 1366 px laptop screen. Breaking it over several lines is not
+   possible: Qt paints a menu entry with Qt::TextSingleLine, and a QProxyStyle that paints the
+   lines itself is bypassed entirely as soon as a stylesheet rule matches QMenu - which the
+   dark style always does (darkstyle.qss has QMenu::item rules) and setDecodeMenuColours does
+   even in the light one. Measured: 0 of 6 draw calls reach such a style under either sheet.
+
+   So the entry keeps the name and hands the detail to the tooltip, which wrap_tooltip folds
+   over several lines and QMenu shows because the two preset menus set setToolTipsVisible.
+   Widest entry: 625 px.
+
+   The split is on the TRANSLATED text, so no source string changes and no catalogue entry is
+   orphaned. Most of these descriptions are written "name: detail", so the colon is the cut;
+   FT4's recommended preset is the one with no colon in it ("background 6 with deep OSD, the
+   alternate pass and ...") and is cut at its first comma instead, which reads as the parallel
+   of "background 3" above it. Whichever separator comes first wins.
+
+   The full-width forms are in the list because zh_CN, zh_HK and ja_JP punctuate with them and
+   with nothing else: without them all ten Chinese entries kept their whole text and the widest
+   measured 1769 px, worse than the English it was meant to fix. The ASCII pair needs its
+   trailing space so that a number written 1,024 is not mistaken for the end of a name; the
+   full-width characters carry their own spacing and take none. A translation with no separator
+   at all simply keeps its whole text as the label, exactly as before this change. */
+static QString preset_menu_entry (QAction* action, QString const& tier)
+{
+  QString const description = action->text ();
+  action->setToolTip (wrap_tooltip (description));
+  int cut = -1;
+  for (auto const* separator : {u8": ", u8", ", u8"\uFF1A", u8"\uFF0C", u8"\u3001"})
+    {
+      int const at = description.indexOf (QString::fromUtf8 (separator));
+      if (at > 0 && (cut < 0 || at < cut)) cut = at;
+    }
+  QString const name = cut > 0 ? description.left (cut) : description;
+  /* two of the FT4 tiers ARE the preset's name - "most at reply time (+7.9 %, 0.55 s) - most at
+     reply time" says it twice, so there the tier alone is the entry. Both halves are translated,
+     so this holds in every language whose catalogue words them the same - and where a translator
+     chose different words the two do belong side by side, which is what happens. */
+  return tier.startsWith (name, Qt::CaseInsensitive) ? tier : QString ("%1 - %2").arg (tier, name);
+}
 void MainWindow::markRecommendedPresets()
 {
-  struct { QAction* action; char const* tier; DecodePreset preset; } const picks[] = {
-    {ui->actionFT8PresetMaxEfficiency, "best power (+11.3 %, 0.4 s)", DecodePreset::MaxEfficiency},
-    {ui->actionFT8PresetMaxDecodes, "best value (+16.6 %, 1.1 s)", DecodePreset::MaxDecodes},
-    {ui->actionFT8PresetPipelineLight, "best medium effort (+25.1 %, 5.3 s)", DecodePreset::PipelineMaxDecodesLight},
-    {ui->actionFT8PresetPipeline, "best results (+27.2 %, 12.7 s)", DecodePreset::PipelineEnsemble},
-    {ui->actionFT8PresetPipelineFull, "max effort (+27.5 %, 14.0 s)", DecodePreset::PipelineEnsembleFull},
-    {ui->actionFT8PresetPipelineRun, "most results (+28.0 %, 13.3 s)", DecodePreset::PipelineRun}};
+  /* CE3TSK: the tier NAME is translated, the measurement beside it is not - "+11.3 %, 0.4 s" is
+     data, it reads the same in every language, and a translator who edits it introduces a
+     mistake rather than a translation. QT_TR_NOOP marks the names for the catalogue; the lookup
+     is the tr() in the loop, in the MainWindow context. */
+  struct { QAction* action; char const* tier; char const* cost; DecodePreset preset; } const picks[] = {
+    {ui->actionFT8PresetMaxEfficiency, QT_TR_NOOP("best power"), "+11.3 %, 0.4 s", DecodePreset::MaxEfficiency},
+    {ui->actionFT8PresetMaxDecodes, QT_TR_NOOP("best value"), "+16.6 %, 1.1 s", DecodePreset::MaxDecodes},
+    {ui->actionFT8PresetPipelineLight, QT_TR_NOOP("best medium effort"), "+25.1 %, 5.3 s", DecodePreset::PipelineMaxDecodesLight},
+    {ui->actionFT8PresetPipeline, QT_TR_NOOP("best results"), "+27.2 %, 12.7 s", DecodePreset::PipelineEnsemble},
+    {ui->actionFT8PresetPipelineFull, QT_TR_NOOP("max effort"), "+27.5 %, 14.0 s", DecodePreset::PipelineEnsembleFull},
+    {ui->actionFT8PresetPipelineRun, QT_TR_NOOP("most results"), "+28.0 %, 13.3 s", DecodePreset::PipelineRun}};
   for (auto const& p : picks) {
     QFont f = p.action->font(); f.setBold(true); p.action->setFont(f);
     p.action->setIcon(menu_dot(QColor(preset_colour(p.preset))));   // P13: the lamp's colour table
-    p.action->setText(QString("%1 - %2").arg(p.tier, p.action->text()));
+    p.action->setText(preset_menu_entry(p.action, QString("%1 (%2)").arg(tr(p.tier), p.cost)));
   }
   // the recommended one: underlined as well, and named so; the best-results pipeline underlined too
   for (auto a : {ui->actionFT8PresetPipelineLight, ui->actionFT8PresetPipeline}) { QFont f = a->font(); f.setUnderline(true); a->setFont(f); }
-  ui->actionFT8PresetPipelineLight->setText("recommended: " + ui->actionFT8PresetPipelineLight->text());
+  ui->actionFT8PresetPipelineLight->setText(tr("recommended: %1").arg(ui->actionFT8PresetPipelineLight->text()));
+  ui->menuFT8_preset->setToolTipsVisible(true);   // the recipe preset_menu_entry moved off the entry
 }
 void MainWindow::setDecodeMenuColours()
 {
@@ -4241,18 +4308,19 @@ void MainWindow::refreshFT4Preset()
 // and its measured gain and reply-time cost in front of the name; the recommended one underlined
 void MainWindow::markFT4Presets()
 {
-  struct { QAction* action; char const* tier; FT4Preset preset; } const picks[] = {
-    {ui->actionFT4PresetBestPower, "best power (+4.5 %, 0.12 s)", FT4Preset::BestPower},
-    {ui->actionFT4PresetRecommended, "best value (+8.0 %, 0.12 s)", FT4Preset::Recommended},
-    {ui->actionFT4PresetMaxDecodes, "most at reply time (+7.9 %, 0.55 s)", FT4Preset::MaxDecodes},
-    {ui->actionFT4PresetMaxEffort, "max effort (+8.4 %, 0.69 s)", FT4Preset::MaxEffort}};
+  struct { QAction* action; char const* tier; char const* cost; FT4Preset preset; } const picks[] = {
+    {ui->actionFT4PresetBestPower, QT_TR_NOOP("best power"), "+4.5 %, 0.12 s", FT4Preset::BestPower},
+    {ui->actionFT4PresetRecommended, QT_TR_NOOP("best value"), "+8.0 %, 0.12 s", FT4Preset::Recommended},
+    {ui->actionFT4PresetMaxDecodes, QT_TR_NOOP("most at reply time"), "+7.9 %, 0.55 s", FT4Preset::MaxDecodes},
+    {ui->actionFT4PresetMaxEffort, QT_TR_NOOP("max effort"), "+8.4 %, 0.69 s", FT4Preset::MaxEffort}};
   for (auto const& p : picks) {
     QFont f = p.action->font(); f.setBold(true); p.action->setFont(f);
     p.action->setIcon(menu_dot(QColor(ft4_preset_colour(p.preset))));
-    p.action->setText(QString("%1 - %2").arg(p.tier, p.action->text()));
+    p.action->setText(preset_menu_entry(p.action, QString("%1 (%2)").arg(tr(p.tier), p.cost)));
   }
   QFont f = ui->actionFT4PresetRecommended->font(); f.setUnderline(true); ui->actionFT4PresetRecommended->setFont(f);
-  ui->actionFT4PresetRecommended->setText("recommended: " + ui->actionFT4PresetRecommended->text());
+  ui->actionFT4PresetRecommended->setText(tr("recommended: %1").arg(ui->actionFT4PresetRecommended->text()));
+  ui->menuFT4_preset->setToolTipsVisible(true);   // as FT8's
   ui->menuFT4_preset->menuAction()->setIcon(menu_dot(QColor(ft4_preset_colour(FT4Preset::Recommended))));
 }
 
@@ -4460,8 +4528,39 @@ void MainWindow::applyDecodePreset(DecodePreset p)
   refreshDecodePreset();
 }
 
+/* CE3TSK: the RX and TX timing lamps, between the Contest and Preset lamps.
+
+   RX carries the same figure the decode label prints as "Lag=" - how far past the start of the
+   next period the receive decode ran - against the moment the reply has to be decided. TX says
+   whether the background decoding that keeps working through your own transmission finished or
+   was cut short by the next period, which is the "X" the decode count already carries. The
+   thresholds and the colours live in decodelabel.h, beside the tints of the line they summarise.
+
+   Both are grey and disabled where they mean nothing: outside FT8 and FT4, before the first
+   period has been decoded, and - for TX - whenever no background is enabled. */
+void MainWindow::updateTimingLamps()
+{
+  bool const ft8 = m_mode == "FT8";
+  bool const ft4 = m_mode == "FT4";
+  bool const ft = ft8 || ft4;
+  bool const bg_on = (ft8 && m_bgEnabled) || (ft4 && m_ft4BgEnabled);
+
+  ui->labelRxTiming->setAutoFillBackground (true);
+  ui->labelTxTiming->setAutoFillBackground (true);
+  ui->labelRxTiming->setEnabled (ft && m_rxLagKnown);
+  ui->labelTxTiming->setEnabled (ft && bg_on && m_bgLastKnown);
+
+  auto const rx = (ft && m_rxLagKnown) ? rx_timing_level (m_rxLag, ft4) : TimingLevel::Unknown;
+  /* the background either made the period or it did not - two colours, never amber */
+  auto const tx = (ft && bg_on && m_bgLastKnown)
+                    ? (m_bgLastCut ? TimingLevel::Late : TimingLevel::Good) : TimingLevel::Unknown;
+  ui->labelRxTiming->setStyleSheet (timing_lamp_style (rx, m_useDarkStyle));
+  ui->labelTxTiming->setStyleSheet (timing_lamp_style (tx, m_useDarkStyle));
+}
+
 void MainWindow::refreshDecodePreset()
 {
+  updateTimingLamps();   // CE3TSK: the mode or the TX background switch may have moved
   int const threads = effective_ft8_threads(m_ft8threads, QThread::idealThreadCount());
   DecodeRecipe const r {{m_swl, m_nFT8Cycles, m_nFT8SWLCycles, m_ft8Sensitivity, m_nFT8RXfSens, m_ft8DeepOSD, m_ft8TwoSlicings, m_ft8AltPass,
                          ensemble_effort_members(m_ft8EnsembleEffort, threads)},
@@ -4490,25 +4589,62 @@ void MainWindow::refreshDecodePreset()
   auto const c = ft8 ? preset_colour(p) : ft4 ? ft4_preset_colour(p4) : nullptr;
   if (c) {
     QColor const bg(c);
-    ui->labelPreset->setStyleSheet(QString("QLabel{color: %1; background: %2; font-weight: bold; border: 1px solid %3; border-radius: 3px; padding: 1px 4px}")
+    ui->labelPreset->setStyleSheet(QString("QLabel{color: %1; background: %2; border: 1px solid %3; border-radius: 3px; padding: 1px 4px}")
                                    .arg(bg.lightness() < 140 ? "#ffffff" : "#000000", bg.name(), bg.darker(150).name()));
   } else {
-    ui->labelPreset->setStyleSheet("QLabel{font-weight: bold; border: 1px solid #808080; border-radius: 3px; padding: 1px 4px}");
+    ui->labelPreset->setStyleSheet("QLabel{border: 1px solid #808080; border-radius: 3px; padding: 1px 4px}");
   }
   QAction* const names[] = {ui->actionFT8PresetDefault, ui->actionFT8PresetMaxEfficiency, ui->actionFT8PresetMaxDecodes, ui->actionFT8PresetPipelineLight,
                             nullptr /* Ensemble: recipe kept, menu entry removed 2026-09-05 */, ui->actionFT8PresetPipeline, ui->actionFT8PresetPipelineFull, ui->actionFT8PresetPipelineRun};
   QAction* const names4[] = {ui->actionFT4PresetFast, ui->actionFT4PresetDefault, ui->actionFT4PresetBestPower,
                              ui->actionFT4PresetRecommended, ui->actionFT4PresetMaxDecodes, ui->actionFT4PresetMaxEffort};
-  ui->labelPreset->setToolTip(ft4 ? (p4==FT4Preset::Custom ? QString("Custom - the FT4 RX / TX background controls match no preset") : names4[static_cast<int>(p4)]->text())
-                              : !ft8 ? QString("FT8 / FT4 decoding preset - greyed while the mode is neither")
-                              : p==DecodePreset::Custom ? QString("Custom - the RX / TX background controls match no preset")
-                              : !names[static_cast<int>(p)] ? QString("ensemble - the RX-only recipe of the former Ensemble preset (no menu entry)") : names[static_cast<int>(p)]->text());
+  /* CE3TSK: the four fallbacks are translated too - every other branch hands over an action's
+     text, which the catalogues already carry, so these were the last English left on the lamp.
+     "Custom" itself stays the English word in every language: it is what the lamp reads, and the
+     lamp's own tooltip quotes it verbatim in all 20 catalogues. */
+  ui->labelPreset->setToolTip(wrap_tooltip(ft4 ? (p4==FT4Preset::Custom ? tr("Custom - the FT4 RX / TX background controls match no preset") : names4[static_cast<int>(p4)]->text())
+                              : !ft8 ? tr("FT8 / FT4 decoding preset - greyed while the mode is neither")
+                              : p==DecodePreset::Custom ? tr("Custom - the RX / TX background controls match no preset")
+                              : !names[static_cast<int>(p)] ? tr("ensemble - the RX-only recipe of the former Ensemble preset (no menu entry)") : names[static_cast<int>(p)]->text()));
 }
 
 // CE3TSK: the decoder label's count: "/D-" while the period's decode runs, "/D" when it is
 // done, "/D+N=S|" while the TX background runs (D from the decode, N from the background,
 // S their sum), "/D+N=S" when it is done - written tight, with no spaces or brackets, so the
 // trailing marker survives the clipping the label suffers at the right edge on Windows
+/* CE3TSK: the header line above the decodes is pinned to exactly one text line, so that it
+   cannot steal room from the messages. The pin was QFontMetrics(decoded text font).height() -
+   the metric of the monospace font alone. But the line is RICH text (the tinted Avg, Lag and
+   count), which Qt lays out through QTextDocument, and in Japanese, Chinese and Korean the
+   translated "Avg=" and "Lag=" are drawn from a CJK fallback font whose ascent and descent are
+   taller than the monospace one. The line box then outgrew its pin and was cut off at the top -
+   on screen it looked as though the text had slipped downwards, and only once something was
+   decoded, because that is when the tinted figures appear.
+
+   So measure what is actually about to be drawn, in the font it will be drawn in, and give the
+   label that height - never less than the plain metric, so nothing shrinks in the Latin
+   languages where it was always right. */
+void MainWindow::fitDecodeLabels()
+{
+  QFont const font = m_config.decoded_text_font ();
+  int const floor_height = QFontMetrics {font}.height ();
+  auto fit = [&font, floor_height] (QLabel * label) {
+    QTextDocument doc;
+    doc.setDefaultFont (font);
+    doc.setDocumentMargin (0);
+    QString const text = label->text ();
+    if (Qt::mightBeRichText (text)) doc.setHtml (text); else doc.setPlainText (text);
+    int const wanted = qMax (floor_height, int (doc.size ().height () + 0.5));
+    if (label->maximumHeight () != wanted)
+      {
+        label->setMinimumHeight (wanted);
+        label->setMaximumHeight (wanted);
+      }
+  };
+  fit (ui->decodedTextLabel);
+  fit (ui->decodedTextLabel2);
+}
+
 void MainWindow::updateDecodeLabel()
 {
   // the label is Qt::AutoText, which takes a string for rich text only when it starts with a
@@ -4517,6 +4653,7 @@ void MainWindow::updateDecodeLabel()
   ui->decodedTextLabel->setText("<span>"+decode_label_prefix_html(m_decodeLabelPrefix)+decode_avg_html(m_decodeAvg, m_useDarkStyle)
                                 +decode_label_prefix_html(m_decodeLabelMid)+decode_lag_html(m_decodeLag, m_useDarkStyle)
                                 +decode_count_label_html(m_rxPhase, m_bgPhase, m_bgRan, m_nDecodes, m_nDecodesRx, m_useDarkStyle, m_bgCut)+"</span>");
+  fitDecodeLabels();   // CE3TSK: the tinted figures make the line taller in CJK
 }
 void MainWindow::on_actionFT8subpass_toggled(bool checked) { if(checked) m_ft8Sensitivity=2; }
 void MainWindow::on_actionFT8EarlyStart_toggled(bool checked) { m_FT8EarlyStart=checked; }
@@ -4859,6 +4996,7 @@ void MainWindow::process_Auto()
   int prio = 0;
   bool counters = true;
   bool counters2 = true;
+  bool qsoJustFinished = false; /* CE3TSK: set when the post-QSO hook dealt with this pass */
   m_status = QsoHistory::NONE;
   QString hisCall = m_hisCall;
   QString rpt = m_rpt;
@@ -4895,6 +5033,9 @@ void MainWindow::process_Auto()
            }
          }
       }
+    } else if ((qsoJustFinished = afterQsoFinished (hisCall, grid, rpt, prio, count, counters, StrStatus))) {
+      /* CE3TSK: the post-QSO hook dealt with this pass. A policy that does nothing returns
+         false here and the chain below continues exactly as it would have. */
     } else if ((m_status == QsoHistory::SRR73 || m_status >= QsoHistory::S73) && !m_singleshot && !m_config.autolog() && m_lastloggedcall == m_hisCall && !m_lockTxFreq &&
         (tx == 1 || abs(rx - ui->TxFreqSpinBox->value ()) > m_nguardfreq)) {
       clearDX (" cleared, AutoSeq QSO finished");
@@ -4902,9 +5043,9 @@ void MainWindow::process_Auto()
       grid = m_hisGrid;
       m_status = QsoHistory::NONE;
     } else if ((m_status == QsoHistory::RCQ || m_status == QsoHistory::SCALL || (m_status == QsoHistory::SREPORT && m_skipTx1 && !m_houndMode)) && m_config.answerCQCount() &&
-        ((prio > 4 && prio < 17) || prio < 2 || m_strictdirCQ) && (m_config.nAnswerCQCounter() <= count || m_reply_other)) {
+        ((prio > 4 && prio < 17) || prio < 2 || m_strictdirCQ) && (m_config.nAnswerCQCounter() <= count || replyOtherOverridesCounters ())) {
       clearDX (" cleared, RCQ/SCALL/SREPORT count reached");
-      if (m_reply_other)
+      if (replyOtherOverridesCounters ())
           counters2 = false;
       else {
           m_counter = m_config.nAnswerCQCounter(); 
@@ -4917,7 +5058,7 @@ void MainWindow::process_Auto()
       if (m_singleshot)
         counters = false;
     } else if ((m_status == QsoHistory::RCALL || (m_status == QsoHistory::SREPORT && !m_skipTx1)) && m_config.answerInCallCount() && 
-        (m_config.nAnswerInCallCounter() <= count || m_reply_other)) {
+        (m_config.nAnswerInCallCounter() <= count || replyOtherOverridesCounters ())) {
       clearDX (" cleared, RCALL/SREPORT count reached");
       m_qsoHistory.calllist(hisCall,rpt.toInt(),time);
       count = m_qsoHistory.reset_count(hisCall);
@@ -4982,6 +5123,7 @@ void MainWindow::process_Auto()
       }
       writeToALLTXT("hisCall:" + hisCall + "mode:" + mode + StrPriority + " time:" + QString::number(time) +  " autoselect: " + StrDirection + " status: " + StrStatus[m_status] + " count: " + QString::number(count)+ " prio: " + QString::number(prio));
     }
+    beforeAutoselectPick (hisCall);   /* CE3TSK: the policy may reject this candidate */
     /* CE3TSK: contest - and never pick a station that answers the exchange with a signal
        report; he is not in the contest (contestReportAbort), five minute window */
     if (!hisCall.isEmpty () && m_wwDigi
@@ -4990,6 +5132,7 @@ void MainWindow::process_Auto()
       hisCall.clear ();
       m_status = QsoHistory::NONE;
     }
+    afterAutoselectPick (qsoJustFinished, hisCall, rx, prio, StrStatus);   /* CE3TSK */
     if (!hisCall.isEmpty ()) {
       if (m_callToClipboard) clipboard->setText(hisCall);
       ui->dxCallEntry->setText(hisCall);
@@ -5087,9 +5230,12 @@ void MainWindow::process_Auto()
         }
         break;
       }
+      /* CE3TSK: the SRR73/S73/FIN cases below are the fallback to CQ. They are reached only
+         when the post-QSO hook above did not deal with the pass (sequencer_hooks.cpp);
+         otherwise the QSO was cleared there and m_status is NONE by now. */
       case QsoHistory::SRR73: {
         if (!m_singleshot && !m_config.autolog() && m_lastloggedcall == m_hisCall)
-          autoStopTx("SRR73, none received ");
+          endOfQsoStopTx("SRR73, none received ");
         break;
       }
       case QsoHistory::R73: {
@@ -5099,18 +5245,18 @@ void MainWindow::process_Auto()
       }
       case QsoHistory::S73: {
 //        if (!m_singleshot && !m_config.autolog() && m_lastloggedcall == m_hisCall)
-          autoStopTx("S73, none received ");
+          endOfQsoStopTx("S73, none received ");
         break;
       }
       case QsoHistory::FIN: {
-        if (m_singleshot) 
-          autoStopTx("FIN, end of QSO, Singleshot ");
+        if (m_singleshot)
+          endOfQsoStopTx("FIN, end of QSO, Singleshot ");
         else if (m_config.autolog())
-          autoStopTx("FIN, end of QSO, Autolog ");
+          endOfQsoStopTx("FIN, end of QSO, Autolog ");
         else if (m_lastloggedcall != m_hisCall)
-          autoStopTx("FIN, end of QSO, Call not logged ");
+          endOfQsoStopTx("FIN, end of QSO, Call not logged ");
         else
-          autoStopTx("FIN, end of QSO, not owner of the frequency ");
+          endOfQsoStopTx("FIN, end of QSO, not owner of the frequency ");
         break;
       }
       default: {
@@ -5120,8 +5266,8 @@ void MainWindow::process_Auto()
   } else {
     if (m_enableTx && m_hisCall.isEmpty()) ui->RxFreqSpinBox->setValue (ui->TxFreqSpinBox->value ());
     if (!counters) {
-       if(m_singleshot) { autoStopTx("m_singleshot, counter triggered "); }
-       else if(m_houndMode) { autoStopTx("m_houndMode, counter triggered "); }
+       if(m_singleshot) { endOfQsoStopTx("m_singleshot, counter triggered "); }
+       else if(m_houndMode) { endOfQsoStopTx("m_houndMode, counter triggered "); }
     }
   }
 }
@@ -5139,6 +5285,7 @@ void MainWindow::readFromStdout()                             //readFromStdout
       bool aborted=t.mid(t.indexOf("<abort>")+7,1)=="1";
       m_bgPhase=false; m_bgRan=true; m_blankLine=true;
       m_bgCut=aborted && !m_bgAbortAsked; m_bgAbortAsked=false;   // item 81: cut short by the next decode (not by our own band/mode abort): the label shows X
+      m_bgLastCut=m_bgCut; m_bgLastKnown=true; updateTimingLamps();   // CE3TSK: the TX lamp holds this until the next background finishes
       updateDecodeLabel();
       if(m_config.write_decoded_debug()) writeToALLTXT(QString("Background finished: %1 units, %2 messages, %3 s%4").arg(units).arg(msgs).arg(secs).arg(aborted ? ", cut short by the next decode" : ""));
       continue;
@@ -5188,7 +5335,8 @@ void MainWindow::readFromStdout()                             //readFromStdout
       }
       int navexdt=qAbs(100.*avexdt.toFloat());
       if(m_mode.startsWith("FT")) {
-        m_decodeLabelPrefix="UTC     dB   DT "+tr("Freq  ")+" "+tr("Avg="); m_decodeAvg=avexdt; m_decodeLabelMid=tr("Lag="); m_decodeLag=slag;   // CE3TSK: coloured parts follow
+        m_decodeLabelPrefix="UTC     dB   DT "+tr("Freq  ")+" "+tr("Avg="); m_decodeAvg=avexdt; m_decodeLabelMid=tr("Lag="); m_decodeLag=slag;
+        if(!slag.isEmpty()) { m_rxLag=slag.toDouble(); m_rxLagKnown=true; }   /* CE3TSK: the RX lamp reads the same figure; a manual decode prints none and leaves the lamp as it was */   // CE3TSK: coloured parts follow
         /* CE3TSK: FT4 has a TX background of its own since item 59, and this line still tested
            for FT8 alone - so m_bgPhase stayed false in FT4 and the two places that consult it
            behaved as if no background existed. The spacer was printed BEFORE FT4's late
@@ -5204,6 +5352,7 @@ void MainWindow::readFromStdout()                             //readFromStdout
            flag had to copy that rule or every later separator was swallowed. */
         m_bgPhase=((m_mode=="FT8" && m_bgEnabled) || (m_mode=="FT4" && m_ft4BgEnabled));
         updateDecodeLabel();
+        updateTimingLamps();   // CE3TSK
         if(m_mode=="FT8") {
           if(!m_lostaudio) {
             if(navexdt<76) ui->label_6->setStyleSheet(QString("QLabel{background: %1}").arg(Radio::convert_dark("#fdedc5",m_useDarkStyle)));
@@ -5464,7 +5613,7 @@ void MainWindow::readFromStdout()                             //readFromStdout
          }
       } else if (!deCall.isEmpty() && Radio::base_callsign (deCall) == Radio::base_callsign (m_hisCall) && decodedtextmsg.left(3) != "CQ " && decodedtextmsg.left(3) != "DE " && decodedtextmsg.left(4) != "QRZ " && !decodedtextmsg.contains(" 73") && !decodedtextmsg.contains(" RR73") && !decodedtextmsg.contains(" RRR")) {
         m_used_freq = decodedtext.frequencyOffset();
-         if (m_enableTx && !m_reply_me && !m_houndMode && (abs(m_used_freq - ui->TxFreqSpinBox->value ()) < m_nguardfreq || m_config.halttxreplyother ())) { 
+         if (haltTxWhenFrequencyTaken ()) {
            haltTx("readFromStdout, not owner of the frequency or reply to other ");/* if(m_skipTx1) m_qsoHistory.remove(m_hisCall); */
          }
       }
@@ -6687,6 +6836,7 @@ void MainWindow::processMessage(QString const& messages, int position, bool alt,
       if (m_callToClipboard) clipboard->setText(hiscall);
       ui->dxCallEntry->setText(hiscall); ui->dxCallEntry->setStyleSheet(QString("QLineEdit {color: %1; background: %2}").arg(Radio::convert_dark("#000000",m_useDarkStyle),Radio::convert_dark("#ffffff",m_useDarkStyle)));
       call_changed = true;
+      onCallPickedByHand (base_call);   /* CE3TSK: the operator's own choice overrides the policy */
       m_contestIgnore.remove (base_call);   /* CE3TSK: ... and the contest's report-message skip */
     }
   if (gridOK(hisgrid)) {

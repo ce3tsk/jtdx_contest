@@ -340,6 +340,8 @@ private slots:
   void on_actionFT8PresetMaxEfficiency_triggered();
   void applyDecodePreset(DecodePreset p);   // CE3TSK
   void refreshDecodePreset();
+  void updateTimingLamps();   // CE3TSK: the RX / TX timing lamps
+  void fitDecodeLabels();     // CE3TSK: keep the header line tall enough for the text it holds
   void on_actionFT8subpass_toggled(bool checked);
   void on_actionFT8EarlyStart_toggled(bool checked);
   void on_actionFT8WidebandDXCallSearch_toggled(bool checked);
@@ -658,6 +660,10 @@ private:
   bool m_rxPhase;              // the period's decode is running
   bool m_bgPhase;              // between <DecodeFinished> and <BackgroundFinished> - no period spacer for late lines
   bool m_bgRan;                // a background phase finished for this period
+  double m_rxLag;              // CE3TSK: the last RX burst's lag in seconds, as the label prints it
+  bool m_rxLagKnown;           // CE3TSK: false until a period has been decoded on air
+  bool m_bgLastCut;            // CE3TSK: the last finished background was cut short - the TX lamp holds this
+  bool m_bgLastKnown;          // CE3TSK: false until a background has finished under the current switch
   bool m_bgCut;                // item 81: the last background was cut short by the next period's decode - the label shows " X" until one completes
   bool m_bgAbortAsked;         // item 81: the GUI itself aborted it (band or mode change) - not a load problem, no X
   int m_txPeriod;              // CE3TSK P7: the index of the period our last transmission started in (-1: none)
@@ -773,6 +779,9 @@ private:
   QString m_lastloggedcall;
   QStringList m_contestReportSeen;   /* CE3TSK: stations we have already explained on screen */
   ContestIgnore m_contestIgnore;   /* CE3TSK: contest - stations that answered with a report, skipped for 5 min */
+  /* CE3TSK: the QSO that finished most recently, and when - the state sequencer_hooks.cpp owns */
+  QString m_finishedCall;
+  qint64 m_finishedTime;
   QString m_cqdir;
   QString m_lastMode;
   QString m_callsign;
@@ -941,6 +950,21 @@ private:
   void setAutoSeqButtonStyle(bool checked);
   void setMinButton();
   void autoStopTx(QString reason);
+  /* CE3TSK: the three seams the sequencer's end-of-QSO behaviour goes through, so that what a
+     finished QSO does to the transmitter, and what overrides the answer counters, is decided in
+     one place each rather than at eight and three call sites. */
+  void endOfQsoStopTx(QString const& reason);
+  bool replyOtherOverridesCounters() const;
+  bool haltTxWhenFrequencyTaken() const;
+  /* CE3TSK: the sequencer's post-QSO hooks - what happens once a QSO has run its course.
+     Declared here, defined in sequencer_hooks.cpp, which is the file that carries the policy. */
+  bool afterQsoFinished(QString& hisCall, QString& grid, QString& rpt, int& prio, int& count,
+                        bool& counters, QStringList const& statusNames);
+  void beforeAutoselectPick(QString& hisCall);
+  void afterAutoselectPick(bool acted, QString const& hisCall, int rx, int prio, QStringList const& statusNames);
+  void onQsoAbandoned();
+  void onCallPickedByHand(QString const& base_call);
+  void readSequencerSettings();
   void writeHaltTxEvent(QString reason);
   void writeSettings();
   void createStatusBar();

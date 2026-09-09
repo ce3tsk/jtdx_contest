@@ -5947,6 +5947,81 @@ This is asked only once.</source>
         <source>&amp;No, keep mine</source>
         <translation>いいえ、現状のまま(&amp;N)</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>TX|</source>
+        <translation>TX|</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>RX burst: how long the decode of the received period took, against the deadline for deciding the reply. Green up to 2.0 s in FT8 and 1.0 s in FT4, amber to 2.8 s and 1.4 s, red beyond. It follows the Lag= figure in the line above the decodes. Frequent red means this machine is spending more effort than it has time for: choose a preset one step lighter - the Presets list runs roughly lighter to heavier, so the entry above is usually the lighter one.</source>
+        <translation>RX バースト：受信した周期のデコードにかかった時間を、応答を決める期限と比べたものです。FT8 では 2.0 秒まで、FT4 では 1.0 秒まで緑、2.8 秒および 1.4 秒まで琥珀色、それを超えると赤。デコード行の上にある Lag= の値に従います。赤が頻繁に出るなら、この機械は使える時間より多くの労力をかけています。1 段軽いプリセットを選んでください。プリセットの一覧はおおよそ軽いものから重いものへ並んでいるので、1 つ上の項目はたいてい軽いほうです。</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>TX background: whether the decoding that keeps running through your own transmission finished, or was cut short by the next period. Green when it finished, red when it was cut - the X after the decode count in the line above. Grey while no TX background is enabled. Frequent red means the background is asking for more time than the period leaves: choose a preset one step lighter - the Presets list runs roughly lighter to heavier, so the entry above is usually the lighter one.</source>
+        <translation>TX バックグラウンド：自分の送信中も動き続けるデコードが完了したか、次の周期に打ち切られたかを示します。完了なら緑、打ち切られたなら赤 &amp;mdash; 上の行のデコード数の後ろに付く X と同じ意味です。TX バックグラウンドが無効の間は灰色。赤が頻繁に出るなら、バックグラウンドが周期の残り時間より多くを求めています。1 段軽いプリセットを選んでください。一覧はおおよそ軽いものから重いものへ並んでいるので、1 つ上の項目はたいてい軽いほうです。</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>best power</source>
+        <translation>最良の電力</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>best value</source>
+        <translation>最良の費用対効果</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>best medium effort</source>
+        <translation>中程度の労力で最良</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>best results</source>
+        <translation>最良の結果</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>max effort</source>
+        <translation>最大の労力</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>most results</source>
+        <translation>最多の結果</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>most at reply time</source>
+        <translation>応答時に最多</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>recommended: %1</source>
+        <translation>推奨：%1</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>Custom - the FT4 RX / TX background controls match no preset</source>
+        <translation>Custom - FT4 の RX / TX バックグラウンドのコントロールがどのプリセットにも一致しません</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>FT8 / FT4 decoding preset - greyed while the mode is neither</source>
+        <translation>FT8 / FT4 デコードプリセット - モードがどちらでもない間は灰色</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>Custom - the RX / TX background controls match no preset</source>
+        <translation>Custom - RX / TX バックグラウンドのコントロールがどのプリセットにも一致しません</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>ensemble - the RX-only recipe of the former Ensemble preset (no menu entry)</source>
+        <translation>アンサンブル - 旧 Ensemble プリセットの RX のみのレシピ（メニュー項目なし）</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

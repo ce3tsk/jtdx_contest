@@ -5981,6 +5981,81 @@ Seda küsitakse ainult üks kord.</translation>
         <source>&amp;No, keep mine</source>
         <translation>&amp;Ei, jäta minu omad</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>TX|</source>
+        <translation>TX|</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>RX burst: how long the decode of the received period took, against the deadline for deciding the reply. Green up to 2.0 s in FT8 and 1.0 s in FT4, amber to 2.8 s and 1.4 s, red beyond. It follows the Lag= figure in the line above the decodes. Frequent red means this machine is spending more effort than it has time for: choose a preset one step lighter - the Presets list runs roughly lighter to heavier, so the entry above is usually the lighter one.</source>
+        <translation>RX puhang: kui kaua vastuvõetud perioodi dekodeerimine kestis, võrreldes vastuse otsustamise tähtajaga. Roheline kuni 2,0 s FT8-s ja 1,0 s FT4-s, merevaigukollane kuni 2,8 s ja 1,4 s, üle selle punane. Järgib dekodeeringute kohal oleva rea Lag= väärtust. Sage punane tähendab, et see masin kulutab rohkem jõudu, kui tal aega on: valige eelseadistus üks aste kergem - loend läheb umbes kergemast raskema poole, nii et ülalolev kirje on tavaliselt kergem.</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>TX background: whether the decoding that keeps running through your own transmission finished, or was cut short by the next period. Green when it finished, red when it was cut - the X after the decode count in the line above. Grey while no TX background is enabled. Frequent red means the background is asking for more time than the period leaves: choose a preset one step lighter - the Presets list runs roughly lighter to heavier, so the entry above is usually the lighter one.</source>
+        <translation>TX taust: kas dekodeerimine, mis jätkub teie enda saate ajal, jõudis lõpuni või katkestas selle järgmine periood. Roheline, kui jõudis, punane, kui katkestati - X ülemises reas dekodeeringute arvu järel. Hall, kuni ükski TX taust pole sisse lülitatud. Sage punane tähendab, et taust nõuab rohkem aega, kui periood jätab: valige eelseadistus üks aste kergem - loend läheb umbes kergemast raskema poole, nii et ülalolev kirje on tavaliselt kergem.</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>best power</source>
+        <translation>parim võimsus</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>best value</source>
+        <translation>parim suhe</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>best medium effort</source>
+        <translation>parim keskmine pingutus</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>best results</source>
+        <translation>parimad tulemused</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>max effort</source>
+        <translation>maksimaalne pingutus</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>most results</source>
+        <translation>kõige rohkem tulemusi</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>most at reply time</source>
+        <translation>kõige rohkem vastuseajal</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>recommended: %1</source>
+        <translation>soovitatav: %1</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>Custom - the FT4 RX / TX background controls match no preset</source>
+        <translation>Custom - FT4 RX / TX tausta juhtelemendid ei vasta ühelegi eelseadele</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>FT8 / FT4 decoding preset - greyed while the mode is neither</source>
+        <translation>FT8 / FT4 dekodeerimise eelseade - hall, kuni režiim pole kumbki neist</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>Custom - the RX / TX background controls match no preset</source>
+        <translation>Custom - RX / TX tausta juhtelemendid ei vasta ühelegi eelseadele</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>ensemble - the RX-only recipe of the former Ensemble preset (no menu entry)</source>
+        <translation>ansambel - endise eelseade Ensemble ainult RX retsept (menüükirjet pole)</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

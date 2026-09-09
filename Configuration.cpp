@@ -175,6 +175,7 @@ extern "C" {
 #include <QDebug>
 #include <QtGui>
 #include "qt_helpers.hpp"
+#include "tooltip_wrap.hpp"   /* CE3TSK */
 #include "MetaDataRegistry.hpp"
 #include "SettingsGroup.hpp"
 #include "FrequencyLineEdit.hpp"
@@ -1692,6 +1693,7 @@ Configuration::impl::impl (Configuration * self, QSettings * settings, QWidget *
   , default_audio_output_device_selected_ {false}
 {
   ui_->setupUi (this);
+  wrap_tooltips (this);   /* CE3TSK: Qt does not word-wrap a plain tooltip, see tooltip_wrap.hpp */
 
   {
     ui_->configuration_dialog_button_box->button(QDialogButtonBox::Ok)->setText(tr("&OK"));
@@ -2630,7 +2632,9 @@ void Configuration::impl::read_settings ()
   next_color_NewCallBand_dark_ = color_NewCallBand_dark_ = settings_->value("colorNewCallBand_dark",recommended_color("colorNewCallBand_dark")).toString();
   next_color_WorkedCall_dark_ = color_WorkedCall_dark_ = settings_->value("colorWorkedCall_dark",recommended_color("colorWorkedCall_dark")).toString();
   /* CE3TSK: dark by default - a fresh install starts in the dark style; an existing profile
-     keeps whatever it saved, because the key is then present in the ini. */
+     keeps whatever it saved, because the key is then present in the ini. Seeded on the first
+     run so the state is written down rather than implied by a default no one can see. */
+  if (!settings_->contains ("UseDarkStyle")) settings_->setValue ("UseDarkStyle", true);
   useDarkStyle_ = settings_->value ("UseDarkStyle", true).toBool ();
   recommendedColorsOffered_ = settings_->value ("RecommendedColorsOffered", false).toBool ();   // CE3TSK
 

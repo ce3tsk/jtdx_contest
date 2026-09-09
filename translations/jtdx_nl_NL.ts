@@ -5967,6 +5967,81 @@ Dit wordt maar één keer gevraagd.</translation>
         <source>&amp;No, keep mine</source>
         <translation>&amp;Nee, de mijne houden</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>TX|</source>
+        <translation>TX|</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>RX burst: how long the decode of the received period took, against the deadline for deciding the reply. Green up to 2.0 s in FT8 and 1.0 s in FT4, amber to 2.8 s and 1.4 s, red beyond. It follows the Lag= figure in the line above the decodes. Frequent red means this machine is spending more effort than it has time for: choose a preset one step lighter - the Presets list runs roughly lighter to heavier, so the entry above is usually the lighter one.</source>
+        <translation>RX-burst: hoe lang het decoderen van de ontvangen periode duurde, afgezet tegen de deadline om het antwoord te bepalen. Groen tot 2,0 s in FT8 en 1,0 s in FT4, amber tot 2,8 s en 1,4 s, daarboven rood. Volgt het getal Lag= in de regel boven de decodes. Vaak rood betekent dat deze machine meer moeite doet dan er tijd voor is: kies een preset een stap lichter - de presetlijst loopt ruwweg van licht naar zwaar, dus het item erboven is meestal het lichtere.</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>TX background: whether the decoding that keeps running through your own transmission finished, or was cut short by the next period. Green when it finished, red when it was cut - the X after the decode count in the line above. Grey while no TX background is enabled. Frequent red means the background is asking for more time than the period leaves: choose a preset one step lighter - the Presets list runs roughly lighter to heavier, so the entry above is usually the lighter one.</source>
+        <translation>TX-achtergrond: of het decoderen dat tijdens uw eigen uitzending doorloopt klaar kwam of door de volgende periode werd afgekapt. Groen als het klaar kwam, rood als het is afgekapt - de X achter het aantal decodes in de regel erboven. Grijs zolang er geen TX-achtergrond is ingeschakeld. Vaak rood betekent dat de achtergrond meer tijd vraagt dan de periode laat: kies een preset een stap lichter - de lijst loopt ruwweg van licht naar zwaar, dus het item erboven is meestal het lichtere.</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>best power</source>
+        <translation>beste vermogen</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>best value</source>
+        <translation>beste verhouding</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>best medium effort</source>
+        <translation>beste gemiddelde inspanning</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>best results</source>
+        <translation>beste resultaten</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>max effort</source>
+        <translation>maximale inspanning</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>most results</source>
+        <translation>meeste resultaten</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>most at reply time</source>
+        <translation>meeste bij antwoordtijd</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>recommended: %1</source>
+        <translation>aanbevolen: %1</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>Custom - the FT4 RX / TX background controls match no preset</source>
+        <translation>Custom - de FT4-instellingen voor RX / TX-achtergrond passen bij geen enkele voorinstelling</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>FT8 / FT4 decoding preset - greyed while the mode is neither</source>
+        <translation>FT8- / FT4-decodeervoorinstelling - grijs zolang de modus geen van beide is</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>Custom - the RX / TX background controls match no preset</source>
+        <translation>Custom - de instellingen voor RX / TX-achtergrond passen bij geen enkele voorinstelling</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>ensemble - the RX-only recipe of the former Ensemble preset (no menu entry)</source>
+        <translation>ensemble - het recept met alleen RX van de vroegere voorinstelling Ensemble (geen menu-item)</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

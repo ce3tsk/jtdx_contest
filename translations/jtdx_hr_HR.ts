@@ -5971,6 +5971,81 @@ Ovo se pita samo jednom.</translation>
         <source>&amp;No, keep mine</source>
         <translation>&amp;Ne, zadrži moje</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>TX|</source>
+        <translation>TX|</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>RX burst: how long the decode of the received period took, against the deadline for deciding the reply. Green up to 2.0 s in FT8 and 1.0 s in FT4, amber to 2.8 s and 1.4 s, red beyond. It follows the Lag= figure in the line above the decodes. Frequent red means this machine is spending more effort than it has time for: choose a preset one step lighter - the Presets list runs roughly lighter to heavier, so the entry above is usually the lighter one.</source>
+        <translation>RX rafal: koliko je trajalo dekodiranje primljenog perioda, u odnosu na rok za odluku o odgovoru. Zeleno do 2,0 s u FT8 i 1,0 s u FT4, jantarno do 2,8 s i 1,4 s, crveno iznad toga. Prati vrijednost Lag= u retku iznad dekodiranja. Često crveno znači da ovo računalo troši više truda nego što ima vremena: odaberite preset stupanj lakši - popis preseta ide otprilike od lakših prema težima, pa je stavka iznad obično lakša.</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>TX background: whether the decoding that keeps running through your own transmission finished, or was cut short by the next period. Green when it finished, red when it was cut - the X after the decode count in the line above. Grey while no TX background is enabled. Frequent red means the background is asking for more time than the period leaves: choose a preset one step lighter - the Presets list runs roughly lighter to heavier, so the entry above is usually the lighter one.</source>
+        <translation>TX pozadina: je li dekodiranje koje se nastavlja tijekom vašeg odašiljanja dovršeno ili ga je prekinuo sljedeći period. Zeleno kad je dovršeno, crveno kad je prekinuto - X iza broja dekodiranja u retku iznad. Sivo dok nijedna TX pozadina nije uključena. Često crveno znači da pozadina traži više vremena nego što period ostavlja: odaberite preset stupanj lakši - popis ide otprilike od lakših prema težima, pa je stavka iznad obično lakša.</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>best power</source>
+        <translation>najbolja snaga</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>best value</source>
+        <translation>najbolji omjer</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>best medium effort</source>
+        <translation>najbolji srednji napor</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>best results</source>
+        <translation>najbolji rezultati</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>max effort</source>
+        <translation>najveći napor</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>most results</source>
+        <translation>najviše rezultata</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>most at reply time</source>
+        <translation>najviše u vremenu odgovora</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>recommended: %1</source>
+        <translation>preporučeno: %1</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>Custom - the FT4 RX / TX background controls match no preset</source>
+        <translation>Custom - FT4 kontrole RX / TX pozadine ne odgovaraju nijednom predlošku</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>FT8 / FT4 decoding preset - greyed while the mode is neither</source>
+        <translation>Predložak dekodiranja FT8 / FT4 - siv dok način rada nije nijedan od njih</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>Custom - the RX / TX background controls match no preset</source>
+        <translation>Custom - kontrole RX / TX pozadine ne odgovaraju nijednom predlošku</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>ensemble - the RX-only recipe of the former Ensemble preset (no menu entry)</source>
+        <translation>ansambl - recept samo za RX iz bivšeg predloška Ensemble (bez stavke izbornika)</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

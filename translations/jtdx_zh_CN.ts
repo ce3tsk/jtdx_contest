@@ -5966,6 +5966,81 @@ This is asked only once.</source>
         <source>&amp;No, keep mine</source>
         <translation>否，保留我的配色(&amp;N)</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>TX|</source>
+        <translation>TX|</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>RX burst: how long the decode of the received period took, against the deadline for deciding the reply. Green up to 2.0 s in FT8 and 1.0 s in FT4, amber to 2.8 s and 1.4 s, red beyond. It follows the Lag= figure in the line above the decodes. Frequent red means this machine is spending more effort than it has time for: choose a preset one step lighter - the Presets list runs roughly lighter to heavier, so the entry above is usually the lighter one.</source>
+        <translation>RX 突发：接收周期的解码用了多久，与决定应答的截止时刻相比。FT8 中 2.0 秒以内、FT4 中 1.0 秒以内为绿色，到 2.8 秒和 1.4 秒为琥珀色，超过则为红色。它跟随解码上方一行的 Lag= 数值。经常出现红色，说明这台机器花的力气超过了它拥有的时间：请选择低一档的预设 —— 预设列表大致由轻到重排列，因此上面一档通常更轻。</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>TX background: whether the decoding that keeps running through your own transmission finished, or was cut short by the next period. Green when it finished, red when it was cut - the X after the decode count in the line above. Grey while no TX background is enabled. Frequent red means the background is asking for more time than the period leaves: choose a preset one step lighter - the Presets list runs roughly lighter to heavier, so the entry above is usually the lighter one.</source>
+        <translation>TX 后台：在你自己发射期间继续运行的解码是完成了，还是被下一个周期切断了。完成为绿色，被切断为红色 —— 与上方一行解码计数后面的 X 含义相同。未启用 TX 后台时为灰色。经常出现红色，说明后台要求的时间超过了周期所留下的：请选择低一档的预设 —— 列表大致由轻到重排列，因此上面一档通常更轻。</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>best power</source>
+        <translation>最佳功率</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>best value</source>
+        <translation>最佳性价比</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>best medium effort</source>
+        <translation>中等投入最佳</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>best results</source>
+        <translation>最佳结果</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>max effort</source>
+        <translation>最大投入</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>most results</source>
+        <translation>最多结果</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>most at reply time</source>
+        <translation>应答时最多</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>recommended: %1</source>
+        <translation>推荐：%1</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>Custom - the FT4 RX / TX background controls match no preset</source>
+        <translation>Custom - FT4 的 RX / TX 后台控件与任何预设都不匹配</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>FT8 / FT4 decoding preset - greyed while the mode is neither</source>
+        <translation>FT8 / FT4 解码预设 - 模式不是这两者之一时显示为灰色</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>Custom - the RX / TX background controls match no preset</source>
+        <translation>Custom - RX / TX 后台控件与任何预设都不匹配</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>ensemble - the RX-only recipe of the former Ensemble preset (no menu entry)</source>
+        <translation>集成 - 旧 Ensemble 预设的纯 RX 配方（无菜单项）</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

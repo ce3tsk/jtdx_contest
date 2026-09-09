@@ -5957,6 +5957,81 @@ Isto é perguntado apenas uma vez.</translation>
         <source>&amp;No, keep mine</source>
         <translation>&amp;Não, manter as minhas</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>TX|</source>
+        <translation>TX|</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>RX burst: how long the decode of the received period took, against the deadline for deciding the reply. Green up to 2.0 s in FT8 and 1.0 s in FT4, amber to 2.8 s and 1.4 s, red beyond. It follows the Lag= figure in the line above the decodes. Frequent red means this machine is spending more effort than it has time for: choose a preset one step lighter - the Presets list runs roughly lighter to heavier, so the entry above is usually the lighter one.</source>
+        <translation>Rajada RX: quanto demorou a descodificação do período recebido, face ao prazo para decidir a resposta. Verde até 2,0 s em FT8 e 1,0 s em FT4, âmbar até 2,8 s e 1,4 s, vermelho acima disso. Segue o valor Lag= da linha acima das descodificações. Vermelho frequente significa que esta máquina gasta mais esforço do que o tempo permite: escolha uma predefinição um passo mais leve; a lista de predefinições vai aproximadamente das mais leves para as mais pesadas, por isso a entrada acima costuma ser a mais leve.</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>TX background: whether the decoding that keeps running through your own transmission finished, or was cut short by the next period. Green when it finished, red when it was cut - the X after the decode count in the line above. Grey while no TX background is enabled. Frequent red means the background is asking for more time than the period leaves: choose a preset one step lighter - the Presets list runs roughly lighter to heavier, so the entry above is usually the lighter one.</source>
+        <translation>Fundo TX: se a descodificação que continua a trabalhar durante a sua própria transmissão terminou ou foi cortada pelo período seguinte. Verde quando terminou, vermelho quando foi cortada: o X a seguir à contagem de descodificações na linha acima. Cinzento enquanto não houver fundo TX activado. Vermelho frequente significa que o fundo pede mais tempo do que o período deixa: escolha uma predefinição um passo mais leve; a lista vai aproximadamente das mais leves para as mais pesadas, por isso a entrada acima costuma ser a mais leve.</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>best power</source>
+        <translation>melhor potência</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>best value</source>
+        <translation>melhor relação</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>best medium effort</source>
+        <translation>melhor esforço médio</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>best results</source>
+        <translation>melhores resultados</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>max effort</source>
+        <translation>esforço máximo</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>most results</source>
+        <translation>mais resultados</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>most at reply time</source>
+        <translation>a maioria no tempo de resposta</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>recommended: %1</source>
+        <translation>recomendada: %1</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>Custom - the FT4 RX / TX background controls match no preset</source>
+        <translation>Custom - os controlos de RX / fundo TX do FT4 não correspondem a nenhuma predefinição</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>FT8 / FT4 decoding preset - greyed while the mode is neither</source>
+        <translation>Predefinição de descodificação FT8 / FT4 - cinzento enquanto o modo não for nenhum dos dois</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>Custom - the RX / TX background controls match no preset</source>
+        <translation>Custom - os controlos de RX / fundo TX não correspondem a nenhuma predefinição</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>ensemble - the RX-only recipe of the former Ensemble preset (no menu entry)</source>
+        <translation>conjunto - a receita apenas de RX da antiga predefinição Ensemble (sem entrada de menu)</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

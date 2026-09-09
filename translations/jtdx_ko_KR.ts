@@ -5967,6 +5967,81 @@ This is asked only once.</source>
         <source>&amp;No, keep mine</source>
         <translation>아니요, 유지합니다(&amp;N)</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>TX|</source>
+        <translation>TX|</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>RX burst: how long the decode of the received period took, against the deadline for deciding the reply. Green up to 2.0 s in FT8 and 1.0 s in FT4, amber to 2.8 s and 1.4 s, red beyond. It follows the Lag= figure in the line above the decodes. Frequent red means this machine is spending more effort than it has time for: choose a preset one step lighter - the Presets list runs roughly lighter to heavier, so the entry above is usually the lighter one.</source>
+        <translation>RX 버스트: 수신한 주기의 디코딩에 걸린 시간을 응답을 결정해야 하는 기한과 비교합니다. FT8에서는 2.0초, FT4에서는 1.0초까지 녹색, 2.8초와 1.4초까지 호박색, 그 이상은 빨간색입니다. 디코딩 위 줄의 Lag= 값을 따릅니다. 빨간색이 자주 나타나면 이 컴퓨터가 주어진 시간보다 많은 노력을 들이고 있다는 뜻입니다. 한 단계 가벼운 프리셋을 선택하세요. 프리셋 목록은 대체로 가벼운 것에서 무거운 것 순이므로 한 칸 위 항목이 대개 더 가볍습니다.</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>TX background: whether the decoding that keeps running through your own transmission finished, or was cut short by the next period. Green when it finished, red when it was cut - the X after the decode count in the line above. Grey while no TX background is enabled. Frequent red means the background is asking for more time than the period leaves: choose a preset one step lighter - the Presets list runs roughly lighter to heavier, so the entry above is usually the lighter one.</source>
+        <translation>TX 백그라운드: 자신의 송신 중에도 계속되는 디코딩이 끝났는지, 다음 주기에 잘렸는지를 나타냅니다. 끝났으면 녹색, 잘렸으면 빨간색 - 위 줄의 디코딩 수 뒤에 붙는 X와 같은 뜻입니다. TX 백그라운드가 꺼져 있는 동안은 회색입니다. 빨간색이 자주 나타나면 백그라운드가 주기가 남기는 시간보다 더 많은 시간을 요구하는 것입니다. 한 단계 가벼운 프리셋을 선택하세요. 목록은 대체로 가벼운 것에서 무거운 것 순이므로 한 칸 위 항목이 대개 더 가볍습니다.</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>best power</source>
+        <translation>최고 효율</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>best value</source>
+        <translation>최고 가성비</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>best medium effort</source>
+        <translation>중간 노력 최적</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>best results</source>
+        <translation>최고 성과</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>max effort</source>
+        <translation>최대 노력</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>most results</source>
+        <translation>최다 결과</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>most at reply time</source>
+        <translation>응답 시점 최대</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>recommended: %1</source>
+        <translation>권장: %1</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>Custom - the FT4 RX / TX background controls match no preset</source>
+        <translation>Custom - FT4의 RX / TX 백그라운드 설정이 어떤 프리셋과도 맞지 않습니다</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>FT8 / FT4 decoding preset - greyed while the mode is neither</source>
+        <translation>FT8 / FT4 디코딩 프리셋 - 모드가 둘 다 아닌 동안은 회색입니다</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>Custom - the RX / TX background controls match no preset</source>
+        <translation>Custom - RX / TX 백그라운드 설정이 어떤 프리셋과도 맞지 않습니다</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>ensemble - the RX-only recipe of the former Ensemble preset (no menu entry)</source>
+        <translation>앙상블 - 이전 Ensemble 프리셋의 RX 전용 레시피(메뉴 항목 없음)</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

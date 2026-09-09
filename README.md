@@ -199,27 +199,6 @@ the CRT's own `_heapchk()` — msvcrt's `malloc` uses a separate CRT heap, so `H
 the process heap reports OK while the CRT heap is already broken.
 
 
-## Rig control: use flrig rather than hamlib
-
-JTDX can drive the transceiver directly through hamlib (Settings → Radio → Rig), and that
-still works here. For contest operating the recommendation is to let **flrig** own the CAT
-link and point JTDX at it instead: Settings → Radio → Rig **FLRig FLRig**, PTT method **CAT**,
-split operation **Rig** or **Fake It** as you use today, with flrig started first. Reasons:
-
-- one CAT connection for everything - flrig talks to the radio, and JTDX, the logger and
-  any other program share it over its XML-RPC interface, so nothing fights over the serial
-  port;
-- the link survives a JTDX restart or a rig power cycle without a reconfiguration - flrig
-  reconnects, JTDX only asks it for frequency and PTT;
-- PTT every 7.5 s in FT4 and the frequency polling behind the waterfall go through flrig's
-  own rig driver, which is maintained per model and is easier to tune (poll intervals, PTT
-  line, band-change behaviour) than hamlib's generic backend settings inside JTDX;
-- a CAT problem shows up in flrig's window, separately from the decoder and the contest
-  logic, which is where you want it during a run.
-
-hamlib remains a build dependency (`libhamlib-dev`) and the direct rig entries stay in the
-menu; nothing in the fork depends on which of the two you choose.
-
 ## What is not in this repository
 
 This repository carries the program: the source, the build files and this README.
