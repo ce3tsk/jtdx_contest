@@ -5036,29 +5036,28 @@ list. The list can be maintained in Settings (F2).</string>
    <widget class="QMenu" name="menuLang">
     <property name="title">
      <string>Language</string>
-    </property>
-    <addaction name="actionEnglish"/>
-    <addaction name="actionEstonian"/>
-    <addaction name="actionRussian"/>
-    <addaction name="actionCatalan"/>
-    <addaction name="actionCroatian"/>
-    <addaction name="actionDanish"/>
-    <addaction name="actionDutch"/>
-    <addaction name="actionSpanish"/>
-    <addaction name="actionSwedish"/>
-    <addaction name="actionGerman"/>
-    <addaction name="actionFrench"/>
-    <addaction name="actionHungarian"/>
-    <addaction name="actionItalian"/>
-    <addaction name="actionLatvian"/>
-    <addaction name="actionPolish"/>
-    <addaction name="actionPortuguese"/>
-    <addaction name="actionPortuguese_BR"/>
-    <addaction name="actionChinese_simplified"/>
-    <addaction name="actionChinese_traditional"/>
-    <addaction name="actionJapanese"/>
-    <addaction name="actionKorean"/>
-   </widget>
+    </property>   <addaction name="actionEnglish"/>
+   <addaction name="actionSpanish"/>
+   <addaction name="actionPortuguese_BR"/>
+   <addaction name="actionPortuguese"/>
+   <addaction name="actionFrench"/>
+   <addaction name="actionGerman"/>
+   <addaction name="actionItalian"/>
+   <addaction name="actionCroatian"/>
+   <addaction name="actionJapanese"/>
+   <addaction name="actionRussian"/>
+   <addaction name="actionEstonian"/>
+   <addaction name="actionCatalan"/>
+   <addaction name="actionDanish"/>
+   <addaction name="actionLatvian"/>
+   <addaction name="actionHungarian"/>
+   <addaction name="actionDutch"/>
+   <addaction name="actionPolish"/>
+   <addaction name="actionSwedish"/>
+   <addaction name="actionChinese_simplified"/>
+   <addaction name="actionChinese_traditional"/>
+   <addaction name="actionKorean"/>
+  </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
      <string>Help</string>
