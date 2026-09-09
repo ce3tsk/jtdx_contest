@@ -4166,11 +4166,6 @@ En fer clic amb el botó dret del ratolí, l&apos;hora interna de JTDX torna a l
         <translation>Guardar tot</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5071"/>
-        <source>JTDX Web site</source>
-        <translation>Lloc web de JTDX</translation>
-    </message>
-    <message>
         <location filename="../mainwindow.ui" line="5074"/>
         <source>F1</source>
         <translation>F1</translation>
@@ -4347,11 +4342,6 @@ En fer clic amb el botó dret del ratolí, l&apos;hora interna de JTDX torna a l
         <location filename="../mainwindow.ui" line="5317"/>
         <source>Settings...</source>
         <translation>Configuració ...</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="5328"/>
-        <source>JTDX forum</source>
-        <translation>Fòrum JTDX</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5333"/>

@@ -6,8 +6,12 @@ set (CPACK_PACKAGE_VENDOR "@PROJECT_VENDOR@")
 set (CPACK_PACKAGE_CONTACT "@PROJECT_CONTACT@")
 set (CPACK_PACKAGE_DESCRIPTION_SUMMARY "@PROJECT_SUMMARY_DESCRIPTION@")
 set (CPACK_RESOURCE_FILE_LICENSE "@PROJECT_SOURCE_DIR@/COPYING")
+# CE3TSK: on Windows this is both the folder under the install root and the Start Menu group.
+# JTDX used the patch level ("0-rc04"), giving C:\JTDX64\0-rc04 - a new directory per release
+# candidate. This fork installs to one place, C:\JTDX_contest (see CPACK_NSIS_INSTALL_ROOT
+# below), so an upgrade replaces the previous build instead of littering the disk.
 if(CPACK_GENERATOR MATCHES "NSIS")
-set (CPACK_PACKAGE_INSTALL_DIRECTORY "@WSJTX_VERSION_PATCH@")
+set (CPACK_PACKAGE_INSTALL_DIRECTORY "JTDX_contest")
 else()
 set (CPACK_PACKAGE_INSTALL_DIRECTORY ${CPACK_PACKAGE_NAME})
 endif()
@@ -30,11 +34,16 @@ set (CPACK_STRIP_FILES TRUE)
 if (CPACK_GENERATOR MATCHES "NSIS")
   set (CPACK_STRIP_FILES FALSE)	# breaks Qt packaging on Windows
 
-  if("@CMAKE_SIZEOF_VOID_P@" EQUAL 8)
-  set (CPACK_NSIS_INSTALL_ROOT "C:\\JTDX64")
-  else()
-  set (CPACK_NSIS_INSTALL_ROOT "C:\\JTDX32")
-  endif()
+  # CE3TSK: the installer offers C:\JTDX_contest. It was C:\JTDX64 (or C:\JTDX32) with the
+  # release candidate as a subdirectory; the name said JTDX and the word size, neither of which
+  # tells an operator which program this is. One name, one directory, either word size.
+  set (CPACK_NSIS_INSTALL_ROOT "C:")
+
+  # CE3TSK: and the artifact carries the fork's name. CPACK_PACKAGE_NAME stays "jtdx" - it is
+  # the executable, the Linux install paths and the Debian package name - so only the file the
+  # operator publishes is renamed here, which is what the download page already links:
+  #   jtdx_contest-3.0.0-rc04-win64.exe
+  set (CPACK_PACKAGE_FILE_NAME "jtdx_contest-${CPACK_PACKAGE_VERSION}-${CPACK_SYSTEM_NAME}")
 
   # set the install/unistall icon used for the installer itself
   # There is a bug in NSI that does not handle full unix paths properly.
@@ -43,15 +52,16 @@ if (CPACK_GENERATOR MATCHES "NSIS")
   # set the package header icon for MUI
   set (CPACK_PACKAGE_ICON "@PROJECT_SOURCE_DIR@/icons/windows-icons\\installer_logo.bmp")
   # tell cpack to create links to the doc files
+  # CE3TSK: the "Documentation" entry pointed at a SourceForge manual this fork does not
+  # ship, so the start menu now carries the web site alone.
   set (CPACK_NSIS_MENU_LINKS
-    "@PROJECT_MANUAL_DIRECTORY_URL@/@PROJECT_MANUAL@" "@PROJECT_NAME@ Documentation"
     "@PROJECT_HOMEPAGE@" "@PROJECT_NAME@ Web Site"
     )
   # Use the icon from jtdx for add-remove programs
   set (CPACK_NSIS_INSTALLED_ICON_NAME "bin\\\\jtdx.exe")
 
   set (CPACK_NSIS_DISPLAY_NAME "${CPACK_PACKAGE_DESCRIPTION_SUMMARY}")
-  set (CPACK_NSIS_HELP_LINK "@PROJECT_MANUAL_DIRECTORY_URL@/@PROJECT_MANUAL@")
+  set (CPACK_NSIS_HELP_LINK "@PROJECT_HOMEPAGE@")   # CE3TSK: was the SourceForge manual
   set (CPACK_NSIS_URL_INFO_ABOUT "@PROJECT_HOMEPAGE@")
   set (CPACK_NSIS_CONTACT "${CPACK_PACKAGE_CONTACT}")
   set (CPACK_NSIS_MUI_FINISHPAGE_RUN "jtdx.exe")

@@ -4164,11 +4164,6 @@ De lijst beheert u bij Instellingen (F2).</translation>
         <translation>Alles opslaan</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5071"/>
-        <source>JTDX Web site</source>
-        <translation>JTDX-website</translation>
-    </message>
-    <message>
         <location filename="../mainwindow.ui" line="5074"/>
         <source>F1</source>
         <translation>F1</translation>
@@ -4345,11 +4340,6 @@ De lijst beheert u bij Instellingen (F2).</translation>
         <location filename="../mainwindow.ui" line="5317"/>
         <source>Settings...</source>
         <translation>Instellingen...</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="5328"/>
-        <source>JTDX forum</source>
-        <translation>JTDX-forum</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5333"/>

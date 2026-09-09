@@ -4162,11 +4162,6 @@ liste. Listen kan oprettes og vedligeholdes under Indstillinger (F2).</translati
         <translation>Gem alt</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5071"/>
-        <source>JTDX Web site</source>
-        <translation>JTDX web side</translation>
-    </message>
-    <message>
         <location filename="../mainwindow.ui" line="5074"/>
         <source>F1</source>
         <translation>F1</translation>
@@ -4343,11 +4338,6 @@ liste. Listen kan oprettes og vedligeholdes under Indstillinger (F2).</translati
         <location filename="../mainwindow.ui" line="5317"/>
         <source>Settings...</source>
         <translation>Indstillinger...</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="5328"/>
-        <source>JTDX forum</source>
-        <translation>JTDX-forum</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5333"/>

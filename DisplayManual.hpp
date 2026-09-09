@@ -6,7 +6,6 @@
 #include "pimpl_h.hpp"
 
 class QNetworkAccessManager;
-class QDir;
 class QUrl;
 class QString;
 
@@ -17,7 +16,6 @@ public:
   DisplayManual (QNetworkAccessManager *, QObject * = nullptr);
   ~DisplayManual ();
   void display_html_url (QUrl const& url, QString const& name_we);
-  void display_html_file (QDir const& dir, QString const& name_we);
 
 private:
   class impl;

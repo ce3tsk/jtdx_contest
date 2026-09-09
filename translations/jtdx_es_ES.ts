@@ -4166,11 +4166,6 @@ l hacer clic con el botón derecho del mouse, la hora interna de JTDX vuelve a l
         <translation>Salvar todo</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5071"/>
-        <source>JTDX Web site</source>
-        <translation>Sitio web de JTDX</translation>
-    </message>
-    <message>
         <location filename="../mainwindow.ui" line="5074"/>
         <source>F1</source>
         <translation>F1</translation>
@@ -4347,11 +4342,6 @@ l hacer clic con el botón derecho del mouse, la hora interna de JTDX vuelve a l
         <location filename="../mainwindow.ui" line="5317"/>
         <source>Settings...</source>
         <translation>Ajustes...</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="5328"/>
-        <source>JTDX forum</source>
-        <translation>Foro JTDX</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5333"/>

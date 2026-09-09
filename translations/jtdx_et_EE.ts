@@ -44,7 +44,7 @@
     <message>
         <location filename="../about.ui" line="71"/>
         <source>OK</source>
-        <translation>OK</translation>
+        <translation>Kinnita</translation>
     </message>
     <message>
         <location filename="../about.ui"/>
@@ -4169,11 +4169,6 @@ Parem hiire klõps nullib JTDX kella korrektsiooni.&lt;/p&gt;&lt;/body&gt;&lt;/h
         <translation>Salvesta kõik</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5071"/>
-        <source>JTDX Web site</source>
-        <translation>JTDX Veebileht</translation>
-    </message>
-    <message>
         <location filename="../mainwindow.ui" line="5074"/>
         <source>F1</source>
         <translation>F1</translation>
@@ -4350,11 +4345,6 @@ Parem hiire klõps nullib JTDX kella korrektsiooni.&lt;/p&gt;&lt;/body&gt;&lt;/h
         <location filename="../mainwindow.ui" line="5317"/>
         <source>Settings...</source>
         <translation>Seaded...</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="5328"/>
-        <source>JTDX forum</source>
-        <translation>JTDX foorum</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5333"/>

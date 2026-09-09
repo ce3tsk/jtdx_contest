@@ -49,22 +49,46 @@ message (STATUS "Building ${CMAKE_PROJECT_NAME}-${wsjtx_VERSION}")
 #
 # project information
 #
-set (PROJECT_NAME "JTDX")
+# CE3TSK: the packaged product's identity - who built THIS, not who built what it grew from.
+# These strings are what an operator sees in the Windows installer, in the exe's Properties ->
+# Details pane (CompanyName, LegalCopyright, ProductName) and in the Debian package's
+# maintainer and copyright fields. They all still named UA3DJY and ES1JA, with contact
+# addresses that reach neither of them about this fork.
+#
+# The lineage is NOT dropped, it is stated: the copyright line names the fork first and then
+# the work it derives from, which is what the GPL asks for, and the About dialog carries the
+# full JTDX and WSJT-X attribution with every contributor. The WIN32 branch stays ASCII
+# because NSIS VersionInfo and the Windows resource are happier without diacritics.
+#
+# PROJECT_CONTACT must be a real RFC822 address: it becomes the Debian package's Maintainer
+# field and the changelog trailer, where a bare URL is rejected by lintian as malformed - and
+# the name carries no comma there for the same reason, which is also the ham convention this
+# project writes new text in ("Name CALLSIGN"). The inherited JTDX and WSJT-X names inside the
+# copyright line keep their own punctuation.
+#
+# THE ADDRESS IS jtdx_contest@ce3tsk.com, the project's own mailbox, and it is the only address
+# that belongs in anything published - packages, the web site, artwork. The operator's personal
+# address is not to appear in shipped artifacts.
+set (PROJECT_NAME "JTDX_contest")
 if (WIN32)
-  set (PROJECT_VENDOR "Igor Chernikov, UA3DJY and Arvo Jarve, ES1JA")
-  set (PROJECT_CONTACT "Igor Chernikov <c_igor@inbox.ru>, Arvo Jarve <arvo.jarve@eesti.ee>")
-  set (PROJECT_COPYRIGHT "Copyright (C) 2016-2020 by Igor Chernikov, UA3DJY and Arvo Jarve, ES1JA.")
+  set (PROJECT_VENDOR "Tihomir Sokcevic CE3TSK")
+  set (PROJECT_CONTACT "Tihomir Sokcevic CE3TSK <jtdx_contest@ce3tsk.com>")
+  set (PROJECT_COPYRIGHT "Copyright (C) 2025-2026 Tihomir Sokcevic CE3TSK - derivative work of JTDX (C) 2016-2022 Igor Chernikov, UA3DJY and Arvo Jarve, ES1JA, and WSJT-X (C) 2001-2022 Joe Taylor, K1JT and others - GPLv3")
 else ()
-  set (PROJECT_VENDOR "Igor Chernikov, UA3DJY and Arvo Järve, ES1JA")
-  set (PROJECT_CONTACT "Igor Chernikov <c_igor@inbox.ru>, Arvo Järve <arvo.jarve@eesti.ee>")
-  set (PROJECT_COPYRIGHT "Copyright (C) 2016-2020 by Igor Chernikov, UA3DJY and Arvo Järve, ES1JA.")
+  set (PROJECT_VENDOR "Tihomir Sokcevic CE3TSK")
+  set (PROJECT_CONTACT "Tihomir Sokcevic CE3TSK <jtdx_contest@ce3tsk.com>")
+  set (PROJECT_COPYRIGHT "Copyright (C) 2025-2026 Tihomir Sokcevic CE3TSK - derivative work of JTDX (C) 2016-2022 Igor Chernikov, UA3DJY and Arvo Järve, ES1JA, and WSJT-X (C) 2001-2022 Joe Taylor, K1JT and others - GPLv3")
 endif (WIN32)
-set (PROJECT_HOMEPAGE http://sourceforge.net/projects/jtdx/)
-set (PROJECT_MANUAL index.php/videos-guides)
-set (PROJECT_MANUAL_DIRECTORY_URL http://sourceforge.net/projects/jtdx/)
+# CE3TSK: the fork's own home page. It was JTDX's SourceForge project page, which is where
+# the Debian package's Homepage field, debian/copyright and the Windows installer's "Web Site"
+# link and About URL all pointed - none of them anything to do with this fork. PROJECT_MANUAL
+# and PROJECT_MANUAL_DIRECTORY_URL are gone with it: they named an old SourceForge wiki path
+# (index.php/videos-guides) for a manual this fork does not ship, and their only reader in the
+# program was a commented-out menu action.
+set (PROJECT_HOMEPAGE https://ce3tsk.com/)
 set (PROJECT_SAMPLES_UPLOAD_DEST frs.sourceforge.net:/home/frs/project/wsjt/)
 set (PROJECT_SUMMARY_DESCRIPTION "${PROJECT_NAME} - Digital Modes for Amateur Radio.")
-set (PROJECT_DESCRIPTION "JTDX: Digital Modes for Weak Signal Communications in Amateur Radio")
+set (PROJECT_DESCRIPTION "JTDX_contest: Digital Modes for Weak Signal Communications in Amateur Radio, with a rebuilt FT8/FT4 decoder and WW Digi DX Contest support")
 #set (CMAKE_PROJECT_DESCRIPTION ${PROJECT_DESCRIPTION})
 
 set (CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/CMake/Modules ${CMAKE_MODULE_PATH})

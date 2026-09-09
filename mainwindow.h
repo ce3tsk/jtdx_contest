@@ -143,8 +143,6 @@ private slots:
   void on_bypassButton_clicked (bool);
   void on_pbSpotDXCall_clicked ();  
   void on_actionJTDX_Web_Site_triggered();
-  void on_actionJTDX_Forum_triggered();
-//  void on_actionLocal_User_Guide_triggered();
   void on_actionWide_Waterfall_triggered();
   void on_actionOpen_triggered();
   void on_actionConvert_bit_depth_triggered();   /* CE3TSK */

@@ -4159,11 +4159,6 @@ Enter를 누르면 현재 문구가 목록에 추가됩니다.
         <translation>모두 저장</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5071"/>
-        <source>JTDX Web site</source>
-        <translation>JTDX 웹사이트</translation>
-    </message>
-    <message>
         <location filename="../mainwindow.ui" line="5074"/>
         <source>F1</source>
         <translation>F1</translation>
@@ -4340,11 +4335,6 @@ Enter를 누르면 현재 문구가 목록에 추가됩니다.
         <location filename="../mainwindow.ui" line="5317"/>
         <source>Settings...</source>
         <translation>설정...</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="5328"/>
-        <source>JTDX forum</source>
-        <translation>JTDX 포럼</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5333"/>

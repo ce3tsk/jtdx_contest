@@ -4149,11 +4149,6 @@ Clicar com o botão direito do rato define a hora interna do JTDX de volta à ho
         <translation>Salvar todos</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5071"/>
-        <source>JTDX Web site</source>
-        <translation>Web site JTDX</translation>
-    </message>
-    <message>
         <location filename="../mainwindow.ui" line="5074"/>
         <source>F1</source>
         <translation>F1</translation>
@@ -4330,11 +4325,6 @@ Clicar com o botão direito do rato define a hora interna do JTDX de volta à ho
         <location filename="../mainwindow.ui" line="5317"/>
         <source>Settings...</source>
         <translation>Configurações...</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="5328"/>
-        <source>JTDX forum</source>
-        <translation>Forum JTDX</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5333"/>

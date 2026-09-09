@@ -4159,11 +4159,6 @@ listy. Listą można zarządzać w zakładce Ustawienia (F2).</translation>
         <translation>Zapisuj wszystko</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5071"/>
-        <source>JTDX Web site</source>
-        <translation>Strona internetowa JTDX</translation>
-    </message>
-    <message>
         <location filename="../mainwindow.ui" line="5074"/>
         <source>F1</source>
         <translation>F1</translation>
@@ -4340,11 +4335,6 @@ listy. Listą można zarządzać w zakładce Ustawienia (F2).</translation>
         <location filename="../mainwindow.ui" line="5317"/>
         <source>Settings...</source>
         <translation>Ustawienia ...</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="5328"/>
-        <source>JTDX forum</source>
-        <translation>Forum JTDX</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5333"/>

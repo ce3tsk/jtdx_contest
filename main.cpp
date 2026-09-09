@@ -16,6 +16,7 @@
 #include <QObject>
 #include <QSettings>
 #include <QLibraryInfo>
+#include <QLocale>     /* CE3TSK: first-run UI language from the operating system */
 #include <QSysInfo>
 #include <QDir>
 #include <QStandardPaths>
@@ -41,6 +42,51 @@
 
 namespace
 {
+  /* CE3TSK: the UI language on a first run.
+
+     JTDX used to start in English for everybody and stay there until the operator found the
+     Language menu. QLocale::system() gives the operating system's language on all three
+     platforms - Qt reads LC_ALL/LC_MESSAGES/LANG on Linux, GetUserDefaultLocaleName on Windows
+     and NSLocale on macOS - so the sensible default is simply that, when we ship a catalogue
+     for it. Only used when the ini has no Language key at all; once the key exists, whatever it
+     says wins, including a deliberate "en_US".
+
+     Matching is: exact tag first (so pt_BR, zh_CN and zh_HK land on themselves), then the
+     language alone, mapped to the country variant we actually ship - a Chilean or Mexican
+     operator gets es_ES, an Austrian de_DE, an Angolan pt_PT. Chinese is decided by script
+     rather than country, because zh_TW and zh_MO ship no catalogue of their own but are
+     traditional. Anything we have no catalogue for falls back to English. */
+  QString default_ui_language ()
+  {
+    // the catalogues JTDX ships - keep in step with LANGUAGES in CMakeLists.txt
+    static QStringList const shipped {
+      "ca_ES", "da_DK", "de_DE", "en_US", "es_ES", "et_EE", "fr_FR", "hr_HR", "hu_HU", "it_IT",
+      "ja_JP", "ko_KR", "lv_LV", "nl_NL", "pl_PL", "pt_BR", "pt_PT", "ru_RU", "sv_SE",
+      "zh_CN", "zh_HK"};
+    // the variant a bare language falls back to
+    static QList<QPair<QString, QString>> const by_language {
+      {"ca", "ca_ES"}, {"da", "da_DK"}, {"de", "de_DE"}, {"en", "en_US"}, {"es", "es_ES"},
+      {"et", "et_EE"}, {"fr", "fr_FR"}, {"hr", "hr_HR"}, {"hu", "hu_HU"}, {"it", "it_IT"},
+      {"ja", "ja_JP"}, {"ko", "ko_KR"}, {"lv", "lv_LV"}, {"nl", "nl_NL"}, {"pl", "pl_PL"},
+      {"pt", "pt_PT"}, {"ru", "ru_RU"}, {"sv", "sv_SE"}};
+
+    auto const system = QLocale::system ();
+    auto const name = system.name ();               // "es_CL", "pt_BR", "zh_TW", "C" ...
+    if (shipped.contains (name)) return name;
+
+    if (QLocale::Chinese == system.language ())
+      {
+        return QLocale::TraditionalHanScript == system.script () ? "zh_HK" : "zh_CN";
+      }
+
+    auto const code = name.left (name.indexOf (QChar {'_'}));
+    for (auto const& pair : by_language)
+      {
+        if (pair.first == code) return pair.second;
+      }
+    return "en_US";
+  }
+
   struct RNGSetup
   {
     RNGSetup ()
@@ -292,6 +338,14 @@ int main(int argc, char *argv[])
          operator starts it again, so this block runs exactly once. */
       {
         settings.beginGroup("Common");
+        /* CE3TSK: no Language key means this ini has never chosen one - take the operating
+           system's language and write it down, so the next start and the Language menu both
+           see a settled value. An empty key counts as never chosen too. A key that is present
+           is never second-guessed. */
+        if (settings.value ("Language").toString ().isEmpty ())
+          {
+            settings.setValue ("Language", default_ui_language ());
+          }
         lang = settings.value ("Language","en_US").toString();
         settings.endGroup();
         if (files_OK) has_style = a.removeTranslator (&translator_from_files);

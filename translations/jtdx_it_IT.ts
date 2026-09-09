@@ -4164,11 +4164,6 @@ Fare clic con il pulsante destro del mouse riporta l&apos;ora interna di JTDX al
         <translation>Tutto (Rx e Tx)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5071"/>
-        <source>JTDX Web site</source>
-        <translation>Sito Web JTDX</translation>
-    </message>
-    <message>
         <location filename="../mainwindow.ui" line="5074"/>
         <source>F1</source>
         <translation>F1</translation>
@@ -4345,11 +4340,6 @@ Fare clic con il pulsante destro del mouse riporta l&apos;ora interna di JTDX al
         <location filename="../mainwindow.ui" line="5317"/>
         <source>Settings...</source>
         <translation>Impostazioni...</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="5328"/>
-        <source>JTDX forum</source>
-        <translation>Forum JTDX</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5333"/>

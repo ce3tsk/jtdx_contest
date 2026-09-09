@@ -9,8 +9,6 @@
 #include <QNetworkReply>
 #include <QUrl>
 #include <QString>
-#include <QDir>
-#include <QFileInfo>
 #include <QDesktopServices>
 #include <QLocale>
 
@@ -132,25 +130,3 @@ void DisplayManual::display_html_url (QUrl const& url, QString const& name_we)
 {
   m_->display (url, name_we);
 }
-
-void DisplayManual::display_html_file (QDir const& dir, QString const& name_we)
-{
-  // try and find a localized manual
-  auto lang = QLocale::system ().name ();
-  // try for language and country first
-  auto file = dir.absoluteFilePath (name_we + '_' + lang + '-' + version () + ".html");
-  if (!QFileInfo::exists (file))
-    {
-      // try for language
-      lang.truncate (lang.lastIndexOf ('_'));
-      file = dir.absoluteFilePath (name_we + '_' + lang + '-' + version () + ".html");
-      if (!QFileInfo::exists (file))
-        {
-          // use default
-          file = dir.absoluteFilePath (name_we + '-' + version () + ".html");
-        }
-    }
-  // may fail but browser 404 error is a good as anything
-  QDesktopServices::openUrl (QUrl {"file:///" + file});
-}
-

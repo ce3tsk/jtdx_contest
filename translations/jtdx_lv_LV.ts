@@ -4158,11 +4158,6 @@ Ar labo peles pogu JTDX iekšējais laiks tiek atgriezts uz sistēmas laiku.&lt;
         <translation>Saglabāt visu</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5071"/>
-        <source>JTDX Web site</source>
-        <translation>JTDX Web lapa</translation>
-    </message>
-    <message>
         <location filename="../mainwindow.ui" line="5074"/>
         <source>F1</source>
         <translation>F1</translation>
@@ -4339,11 +4334,6 @@ Ar labo peles pogu JTDX iekšējais laiks tiek atgriezts uz sistēmas laiku.&lt;
         <location filename="../mainwindow.ui" line="5317"/>
         <source>Settings...</source>
         <translation>Iestatījumi...</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="5328"/>
-        <source>JTDX forum</source>
-        <translation>JTDX forums</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5333"/>

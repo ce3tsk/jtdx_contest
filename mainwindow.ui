@@ -5627,14 +5627,6 @@ list. The list can be maintained in Settings (F2).</string>
     <string>F2</string>
    </property>
   </action>
-  <action name="actionJTDX_Forum">
-   <property name="enabled">
-    <bool>true</bool>
-   </property>
-   <property name="text">
-    <string>JTDX forum</string>
-   </property>
-  </action>
   <action name="actionOpen_log_directory">
    <property name="text">
     <string>Open log directory</string>

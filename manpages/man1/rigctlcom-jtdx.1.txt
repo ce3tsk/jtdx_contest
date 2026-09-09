@@ -22,9 +22,7 @@ rigctlcom-jtdx - Hamlib 4 rigctlcom Serial port passthru Kenwood TS-2000 emulato
  special version of *rigctlcom* should be used since that too has the
  modified *hamlib* code embedded with it.
 
-JTDX home page:: https://jtdx.tech/en/videos-guides
-
-JTDX User's Guide:: https://jtdx.tech/en/videos-guides
+JTDX_contest home page:: https://ce3tsk.com/
 
 == OPTIONS
 Refer to the *hamlib* documentation.

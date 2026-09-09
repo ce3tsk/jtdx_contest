@@ -4159,11 +4159,6 @@ Die Liste wird in den Einstellungen (F2) gepflegt.</translation>
         <translation>Alle speichern</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5071"/>
-        <source>JTDX Web site</source>
-        <translation>JTDX-Website</translation>
-    </message>
-    <message>
         <location filename="../mainwindow.ui" line="5074"/>
         <source>F1</source>
         <translation>F1</translation>
@@ -4340,11 +4335,6 @@ Die Liste wird in den Einstellungen (F2) gepflegt.</translation>
         <location filename="../mainwindow.ui" line="5317"/>
         <source>Settings...</source>
         <translation>Einstellungen ...</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="5328"/>
-        <source>JTDX forum</source>
-        <translation>JTDX-Forum</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5333"/>

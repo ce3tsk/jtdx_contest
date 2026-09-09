@@ -2990,7 +2990,7 @@ Format:
     <message>
         <location filename="../logqso.cpp" line="28"/>
         <source>&amp;Cancel</source>
-        <translation>&amp;Cancel</translation>
+        <translation>&amp;Prekid</translation>
     </message>
     <message>
         <location filename="../logqso.cpp" line="222"/>
@@ -4049,7 +4049,7 @@ popis. Popis se može održavati u Postavkama (F2).</translation>
     <message>
         <location filename="../mainwindow.ui" line="4787"/>
         <source>Mode</source>
-        <translation>Mode</translation>
+        <translation>Mod</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4799"/>
@@ -4159,11 +4159,6 @@ popis. Popis se može održavati u Postavkama (F2).</translation>
         <location filename="../mainwindow.ui" line="4971"/>
         <source>Save all</source>
         <translation>Spremi sve</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="5071"/>
-        <source>JTDX Web site</source>
-        <translation>JTDX Web stranica</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5074"/>
@@ -4343,11 +4338,6 @@ popis. Popis se može održavati u Postavkama (F2).</translation>
         <location filename="../mainwindow.ui" line="5317"/>
         <source>Settings...</source>
         <translation>Postavke ...</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="5328"/>
-        <source>JTDX forum</source>
-        <translation>JTDX forum</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5333"/>

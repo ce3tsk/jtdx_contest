@@ -43,7 +43,7 @@ subroutine hintrxgrid(mrs,mrs2,mycall,decoded,hint_call3)
 10   ncalls=j
      if(ncalls.lt.1) then
         print *, 'copy CALL3.TXT file to log directory'
-        print *, 'http://www.jtdx.tech' 
+        print *, 'https://ce3tsk.com' 
 !        stop 'CALL3.TXT is too short or missed?'
      endif
      close(23)

@@ -21,9 +21,7 @@ rigctl-jtdx - Hamlib 3 rigctld server.
  special version of the *rigctl* client should be used since that too
  has the modified *hamlib* code embedded with it.
 
-JTDX home page:: https://jtdx.tech/en/videos-guides
-
-JTDX User's Guide:: https://jtdx.tech/en/videos-guides
+JTDX_contest home page:: https://ce3tsk.com/
 
 == OPTIONS
 Refer to the *hamlib* documentation.

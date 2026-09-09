@@ -4177,11 +4177,6 @@ Click by right mouse&apos;s button sets JTDX internal time back to system time.&
         <translation>すべて保存</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5071"/>
-        <source>JTDX Web site</source>
-        <translation>JTDX ウェブサイト</translation>
-    </message>
-    <message>
         <location filename="../mainwindow.ui" line="5074"/>
         <source>F1</source>
         <translation>F1</translation>
@@ -4358,11 +4353,6 @@ Click by right mouse&apos;s button sets JTDX internal time back to system time.&
         <location filename="../mainwindow.ui" line="5317"/>
         <source>Settings...</source>
         <translation>設定…</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="5328"/>
-        <source>JTDX forum</source>
-        <translation>JTDXフォーラム</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5333"/>

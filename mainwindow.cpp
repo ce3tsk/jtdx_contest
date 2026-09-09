@@ -3225,16 +3225,8 @@ void MainWindow::on_pbSpotDXCall_clicked ()
 }
 
 void MainWindow::msgBox(QString t) { msgBox0.setText(t); msgBox0.translate_buttons(); msgBox0.exec(); }
-void MainWindow::on_actionJTDX_Web_Site_triggered() { m_manual.display_html_url (QUrl {"https://ce3tsk.com/"}, ""); }   /* CE3TSK: the fork's site; the forum and sample-download items are no longer in the Help menu (mainwindow.ui) */
-void MainWindow::on_actionJTDX_Forum_triggered() { m_manual.display_html_url (QUrl {"https://jtdx.freeforums.net/"}, ""); }
-
-/*Display local copy of manual
-void MainWindow::on_actionLocal_User_Guide_triggered()
-{
-#if defined (CMAKE_BUILD)
-  m_manual.display_html_file (m_config.doc_dir (), PROJECT_MANUAL);
-#endif
-}*/
+void MainWindow::on_actionJTDX_Web_Site_triggered() { m_manual.display_html_url (QUrl {"https://ce3tsk.com/"}, ""); }   /* CE3TSK: the fork's site (F1) - the only user of DisplayManual; JTDX's forum,
+                                                              sample-download and manual items are gone */
 
 void MainWindow::on_actionWide_Waterfall_triggered() { m_wideGraph->show(); } //Display Waterfalls
 

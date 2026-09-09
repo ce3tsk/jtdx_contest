@@ -92,9 +92,7 @@ You will discover that every possible JT65 message differs from every
 other possible JT65 message in at least 52 of the 63
 information-carrying channel symbols.
 
-JTDX home page:: https://jtdx.tech/en/
-
-JTDX User's Guide:: https://jtdx.tech/en/videos-guides
+JTDX_contest home page:: https://ce3tsk.com/
 
 == AUTHOR
 

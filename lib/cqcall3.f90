@@ -34,7 +34,7 @@ subroutine cqcall3()
 10   ncalls=j
      if(first .and. ncalls.lt.1) then
         print *, 'copy CALL3.TXT file to log directory'
-        print *, 'http://www.jtdx.tech'
+        print *, 'https://ce3tsk.com'
         first=.false.
 !        stop 'CALL3.TXT is too short or missed?'
      endif
