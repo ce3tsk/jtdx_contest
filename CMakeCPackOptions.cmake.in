@@ -60,7 +60,26 @@ if (CPACK_GENERATOR MATCHES "NSIS")
   # Use the icon from jtdx for add-remove programs
   set (CPACK_NSIS_INSTALLED_ICON_NAME "bin\\\\jtdx.exe")
 
-  set (CPACK_NSIS_DISPLAY_NAME "${CPACK_PACKAGE_DESCRIPTION_SUMMARY}")
+  # CE3TSK: one version-free name for everything Windows remembers this program by.
+  #
+  # CPack bakes four names at CONFIGURE time, each defaulting to
+  # "${CPACK_PACKAGE_NAME} ${CPACK_PACKAGE_VERSION}" = "jtdx 3.0.0-rc05" (CPack.cmake's
+  # _cpack_set_default). This file runs at CPACK time and only ever overrode two of them, so the
+  # other two kept the version and the installer littered the Start Menu:
+  #
+  #   CPACK_NSIS_PACKAGE_NAME             the installer's Name, and the DEFAULT START MENU
+  #                                       FOLDER - the versioned entry itself
+  #   CPACK_PACKAGE_INSTALL_REGISTRY_KEY  where the uninstall entry and the remembered Start
+  #                                       Menu folder live. Versioned, so every release candidate
+  #                                       registered as a separate program and the previous
+  #                                       entries were never replaced
+  #
+  # All four now say JTDX_contest, so an upgrade replaces the last one instead of adding to it -
+  # exactly what the single install directory (C:\JTDX_contest) already intended. The shortcut
+  # itself was never the problem: CPACK_PACKAGE_EXECUTABLES has said JTDX_contest all along.
+  set (CPACK_NSIS_PACKAGE_NAME "JTDX_contest")
+  set (CPACK_NSIS_DISPLAY_NAME "JTDX_contest")
+  set (CPACK_PACKAGE_INSTALL_REGISTRY_KEY "JTDX_contest")
   set (CPACK_NSIS_HELP_LINK "@PROJECT_HOMEPAGE@")   # CE3TSK: was the SourceForge manual
   set (CPACK_NSIS_URL_INFO_ABOUT "@PROJECT_HOMEPAGE@")
   set (CPACK_NSIS_CONTACT "${CPACK_PACKAGE_CONTACT}")
