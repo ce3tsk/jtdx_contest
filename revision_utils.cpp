@@ -81,22 +81,29 @@ QString version (bool include_patch)
   return v;
 }
 
-/* CE3TSK: the leading token MUST be QCoreApplication::applicationName() exactly - "JTDX", or
-   "JTDX - <rig>" when -r names an instance. JTAlert, and anything else that reconstructs JTDX's
-   settings path from the window title, reads the rig name from precisely that position and uses
-   it to find "JTDX - <rig>.ini", which is where the UDP port and server live.
+/* CE3TSK: everything between the application name and the version is the RIG-NAME REGION, and
+   it must contain nothing but spaces.
 
-   This build used to put "JTDX_contest" there. JTAlert's own diagnostic (2026-09-09) then read
-   the rig name as "_contest  by CE3TSK", looked for an ini of that name, found none, never
-   learned the UDP settings and reported "no messages received" - the Heartbeat was never the
-   problem, it never opened the socket. With -r it was worse: "_contest - test  by CE3TSK".
+   JTAlert reconstructs JTDX's settings path from the window title: it takes the text between
+   "JTDX" and the version, strips the literal "by HF community" that stock puts there, and calls
+   what is left the rig name - then looks for "JTDX - <rig>.ini", which is where the UDP port and
+   server live. Stock's "by HF community" is an anchor, not decoration.
 
-   So which build this is now sits AFTER the version, where nothing parses it, and a running
-   contest is no longer named in the title at all. */
+   Two rounds of evidence from JTAlert's own diagnostic, 2026-09-09:
+     "JTDX_contest  by CE3TSK   v..."  ->  rig name "_contest  by CE3TSK"
+     "JTDX  by CE3TSK   v..."          ->  rig name "by CE3TSK"
+     "JTDX - TEST  by CE3TSK   v..."   ->  rig name "TEST  by CE3TSK"
+   No ini of any of those names exists, so JTAlert never learned the UDP settings and reported
+   "no messages received" - the Heartbeat was never the problem, it never opened a socket. It
+   still FOUND the window (matched by the jtdx.exe process name), so dropping the anchor costs
+   nothing.
+
+   So: the name, then spaces, then the version - and who built it, which build it is and the
+   attribution all live after the version, where nothing parses them. The gap keeps the version
+   in stock's own column. */
 QString program_title (QString const& revision)
 {
-  QString id {QCoreApplication::applicationName () + "  by CE3TSK                                v"
-              + QCoreApplication::applicationVersion () + " contest"};
+  QString id {QCoreApplication::applicationName () + "                                                          v" + QCoreApplication::applicationVersion ()};
   if (!revision.isEmpty ()) id += ' ' + revision;
-  return id + ", derivative work of JTDX by UA3DJY/ES1JA and WSJT-X by K1JT";
+  return id + " contest by CE3TSK, derivative work of JTDX by UA3DJY/ES1JA and WSJT-X by K1JT";
 }
