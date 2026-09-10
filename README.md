@@ -14,6 +14,46 @@ Support this work: https://ko-fi.com/ce3tsk
 
 ---
 
+## The one thing no other FT8 program does
+
+**It keeps decoding through the next period.**
+
+Every FT8 program decodes once, when the period's audio is complete, and then leaves the
+processor idle for roughly **twelve of the next fifteen seconds** — whether you are transmitting
+or listening. WSJT-X and JTDX trigger one decode and the decoder process then waits; MSHV splits
+its FT8 decode into three passes, but all three fall inside the receive period. In every case the
+whole decode has to finish before the auto-sequencer picks your reply, so the depth a decoder can
+afford is capped by that deadline rather than by the period.
+
+JTDX\_CONTEST cuts the runtime budget **at** the deadline instead of fitting the work inside it:
+
+- an **RX phase**, deliberately cheap — five cycles, sensitivity 2, one ensemble member — which
+  finishes about **1.1 s** into the period and hands the sequencer what it needs, exactly as an
+  unsplit decoder would;
+- a **background phase** on the retained band, running what the first phase could never afford:
+  the alternate pass, the ensemble members, a residual pass with every known message subtracted,
+  and a plain classic decode of the pristine audio.
+
+Bounded by the deadline a decoder may spend about a second; bounded by the period, about thirteen.
+**Listening, the background phase has one period. Transmitting, it has two** — a period you
+transmitted in has nothing new to decode, so its decode is skipped and the phase simply keeps
+going, close to **29 s** without a break. The deadline never moves and the reply is unaffected
+either way. Each unit re-reads the decode-request counter and the lock file before it starts and
+aborts *within* a pass when the next decode is due.
+
+Then it pays forward: everything the background finds enters the four-period hint memory, so a
+station it recovers late is pinned as 77-bit a-priori knowledge for the RX phases that follow —
+the next deadline-bound second goes to stations still unknown instead of re-deriving one already
+heard.
+
+Measured on the 104-message reference capture, the split alone carries the decoder from **78 to
+102** messages: **+30.8 %**, the largest gain of any single mechanism in this fork. In FT4 the TX
+background is worth **+8.3 %** over a baseline that already carries the hint memory. Available in
+every preset whose name carries **pipeline**, on FT8 and FT4 alike; off in the plain presets, so a
+slow machine is never asked for it.
+
+---
+
 ## What it does better
 
 Measured on **240 consecutive on-air 15 s periods** (2026-08-27 16:57–17:57 UTC,
@@ -66,13 +106,14 @@ subtracted what they can. The **ensemble** re-decodes the same audio through fix
 perturbations (delay, dither, tone shift) and keeps the union — deterministic on
 any machine with 2 threads or more.
 
-- **The pipeline.** A contest reply must be decided before the transmitter keys, so the
+- **The pipeline** — see *The one thing no other FT8 program does* above. A fast **RX phase**
 
-decoder is split in two: a fast **RX phase** (5 cycles, sensitivity 2, one ensemble
-member — 1.1 s per period) that decides the answer, and a **TX background** that
-keeps working on the same audio through your own transmission, where the CPU used
-to sit idle. Its decodes arrive while you transmit and are ready for the next reply.
-Background units abort cleanly on a band change and never carry over between periods.
+(5 cycles, sensitivity 2, one ensemble member — 1.1 s per period) decides the answer, and a
+**TX background** keeps working on the same audio through the idle time that follows, whether
+you are transmitting or listening: one period when listening, two after your own transmission,
+because the period you transmitted in has nothing new to decode. Its decodes arrive in time to
+be pinned as hints for the next reply. Background units abort cleanly on a band change and never
+carry over between periods.
 
 - **Four-period hint memory** (+6 % messages at no measurable cost), the **classic unit**
 
