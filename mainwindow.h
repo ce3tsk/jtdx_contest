@@ -785,6 +785,10 @@ private:
   QPointer<QAbstractItemModel> m_bandButtonsModel; // the list they were built from
   QList<QMetaObject::Connection> m_bandButtonsConnections;
   QTimer m_bandButtonsTimer;                       // one rebuild per burst of list changes
+  QTimer m_dialWheelTimer;                         // CE3TSK: dial wheel tuning, one QSY per burst of notches
+  QElapsedTimer m_dialWheelClock;                  // since the last notch or wheel QSY, see dialWheelHolding ()
+  Radio::Frequency m_dialWheelTarget {0};          // where the wheel has taken the dial
+  int m_dialWheelDelta {0};                        // wheel angle short of a whole notch (touchpads)
   bool m_lostaudio;
   bool m_lasthint;
   bool m_monitoroff;
@@ -1027,6 +1031,9 @@ private:
   void rebuildBandButtons ();
   void highlightBandButton ();
   void selectBandButton (Radio::Frequency frequency);
+  bool dialFrequencyWheel (QWheelEvent * event);   // CE3TSK
+  void applyDialWheel ();
+  bool dialWheelHolding () const;
   void offerRecommendedColors ();   // CE3TSK: the one-time colour offer, see Configuration
   bool gridOK(QString g);
   bool gridRR73(QString g);

@@ -470,6 +470,9 @@ MainWindow::MainWindow(bool multiple, QSettings * settings, QSharedMemory *shdme
   m_bandButtonsTimer.setSingleShot (true);   // CE3TSK: View > Band buttons, see scheduleBandButtons ()
   m_bandButtonsTimer.setInterval (0);
   connect (&m_bandButtonsTimer, &QTimer::timeout, this, &MainWindow::rebuildBandButtons);
+  m_dialWheelTimer.setSingleShot (true);   // CE3TSK: dial wheel tuning, see dialFrequencyWheel ()
+  m_dialWheelTimer.setInterval (200);
+  connect (&m_dialWheelTimer, &QTimer::timeout, this, &MainWindow::applyDialWheel);
   wrap_tooltips (this);   /* CE3TSK: Qt does not word-wrap a plain tooltip, see tooltip_wrap.hpp */
   m_config.set_jtdxtime (m_jtdxtime);
   ui->decodedTextBrowser->setConfiguration (&m_config);
@@ -2872,6 +2875,7 @@ void MainWindow::displayDialFrequency ()
   Frequency dial_frequency {m_rigState.ptt () && m_rigState.split () ?
       m_rigState.tx_frequency () : m_rigState.frequency ()};
   if(m_monitoroff && m_config.rig_name()=="None") dial_frequency=m_freqNominal;
+  if (dialWheelHolding ()) dial_frequency = m_dialWheelTarget;   // CE3TSK: the wheel's target, not the rig's older report
   // lookup band
   auto const& band_name = m_config.bands ()->find (dial_frequency);
 //  printf("last band %s curband %s band %s freq %lld\n",m_lastBand.toStdString().c_str(),ui->bandComboBox->currentText().toStdString().c_str(),band_name.toStdString().c_str(),dial_frequency);
@@ -3141,6 +3145,62 @@ void MainWindow::highlightBandButton ()
   for (auto * const button : m_bandButtons) button->setChecked (button == lit);
 }
 
+/* CE3TSK: tuning with the mouse wheel over the dial frequency. Only the three kHz digits after the
+   decimal point respond - in "7.074 000" the 0, the 7 and the 4 - so a notch moves the dial by
+   100, 10 or 1 kHz, carrying into the next digit the way a sum does (7.079 + 1 kHz = 7.080,
+   7.000 - 1 kHz = 6.999). The MHz digits would change the band and the Hz digits are finer than
+   any use, so both are left alone, and so is a step that would take the dial out of the band it
+   is in. Notches in a burst show on the display at once and reach the rig as one QSY 200 ms after
+   the last, through band_changed () like the band selector; until the rig reports the new
+   frequency the display holds the target. Nothing happens while transmitting or tuning. */
+bool MainWindow::dialFrequencyWheel (QWheelEvent * event)
+{
+  if (m_transmitting || m_tune) return false;
+  auto const * const label = ui->labDialFreq;
+  auto const text = label->text ();   // "7.074 000": the kHz digits are 7, 6 and 5 from the end in any locale
+  if (text.size () < 8) return false;
+  QFontMetrics const metrics {label->font ()};
+  int const margin {label->margin ()};
+  auto const area = label->contentsRect ().adjusted (margin, margin, -margin, -margin);
+  int const left {area.left () + (area.width () - metrics.horizontalAdvance (text)) / 2};   // the .ui centres the text
+  int const x {event->position ().toPoint ().x ()};
+  int digit {-1};
+  for (int i = 0; i < 3; ++i)
+    {
+      int const at {text.size () - 7 + i};
+      int const from {left + metrics.horizontalAdvance (text.left (at))};
+      if (text.at (at).isDigit () && x >= from && x < from + metrics.horizontalAdvance (text.at (at))) digit = i;
+    }
+  if (digit < 0) return false;
+  m_dialWheelDelta += event->angleDelta ().y ();
+  int const notches {m_dialWheelDelta / 120};
+  if (!notches) return true;   // part of a notch, from a touchpad
+  m_dialWheelDelta -= notches * 120;
+  Frequency const from {dialWheelHolding () ? m_dialWheelTarget : m_freqNominal};
+  qint64 const to {static_cast<qint64> (from) + notches * (digit == 0 ? 100000 : digit == 1 ? 10000 : 1000)};
+  if (to <= 0 || m_config.bands ()->find (static_cast<Frequency> (to)) != m_config.bands ()->find (from)) return true;   // stays in its band
+  m_dialWheelTarget = static_cast<Frequency> (to);
+  m_dialWheelClock.start ();
+  m_dialWheelTimer.start ();
+  displayDialFrequency ();
+  return true;
+}
+
+void MainWindow::applyDialWheel ()
+{
+  auto const target = m_dialWheelTarget;
+  if (m_transmitting || m_tune || target == m_freqNominal) return;
+  m_bandEdited = true;
+  band_changed (target); if(m_config.write_decoded_debug()) writeToALLTXT("Band changed from dial wheel, frequency: " + QString::number(target));
+  m_dialWheelClock.start ();   // hold the target on the display while the rig catches up
+  displayDialFrequency ();
+}
+
+bool MainWindow::dialWheelHolding () const
+{
+  return m_dialWheelClock.isValid () && m_dialWheelClock.elapsed () < 1500 && !m_transmitting;
+}
+
 /* CE3TSK: the dark style was switched - from Settings, the first-run colour offer or View > Use
    dark style. The decoded lines already on screen carry the colors of the style they were
    written under, baked into their HTML - after the switch they are the wrong ones (a dark
@@ -3283,6 +3343,11 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)  //eventFilter()
 
     case QEvent::ToolTip:
       if(!m_showTooltips) return true;
+      break;
+
+    case QEvent::Wheel:
+      // CE3TSK: the wheel over a kHz digit of the dial frequency tunes it
+      if (object == ui->labDialFreq && dialFrequencyWheel (static_cast<QWheelEvent *> (event))) return true;
       break;
 
     default: break;
@@ -8628,6 +8693,7 @@ void MainWindow::on_bandComboBox_activated (int index)
 
 void MainWindow::band_changed (Frequency f)
 {
+  m_dialWheelTimer.stop (); m_dialWheelClock.invalidate ();   // CE3TSK: any QSY ends a wheel burst, applyDialWheel () restarts the hold
   abortTxBackground("band change");   // CE3TSK
   if (m_bandEdited) {
     if (!m_mode.startsWith ("WSPR")) { // band hopping preserves auto Tx
