@@ -3,10 +3,15 @@
 #include <QNetworkAccessManager>
 #include <QNetworkRequest>
 #include <QSaveFile>
-#include <QSslSocket>
 #include <QFileInfo>
 #include <QDir>
 #include <QUrl>
+
+#if defined (Q_OS_WIN)
+# include "WinHttpFetch.hpp"
+#else
+# include <QSslSocket>
+#endif
 
 namespace
 {
@@ -21,6 +26,11 @@ FileDownload::FileDownload (QObject * parent)
 
 FileDownload::~FileDownload ()
 {
+#if defined (Q_OS_WIN)
+  // cancels the fetch and waits for its thread; nothing of ours is touched afterwards
+  delete fetch_;
+  fetch_ = nullptr;
+#endif
   if (reply_)
     {
       // no signals from a half-destroyed object
@@ -43,12 +53,34 @@ void FileDownload::configure (QNetworkAccessManager * network_manager, QString c
 
 bool FileDownload::running () const
 {
+#if defined (Q_OS_WIN)
+  if (fetch_ && fetch_->running ()) return true;
+#endif
   return reply_ && reply_->isRunning ();
 }
 
 void FileDownload::start_download ()
 {
-  if (running () || !manager_) return;
+  if (running ()) return;
+  body_.clear ();
+
+#if defined (Q_OS_WIN)
+  /* CE3TSK 2026-09-15: WinHTTP and Schannel, so there is no OpenSSL to be missing and no
+     QSslSocket::supportsSsl () gate to fail. The Failure::NoSsl case below cannot arise here and
+     the enumerator stays only so the caller's wording is the same on every platform. */
+  if (!fetch_)
+    {
+      fetch_ = new WinHttpFetch {this};
+      connect (fetch_, &WinHttpFetch::fetched, this, [this] (QByteArray const& body, int http_status) {
+          deliver (body, http_status);
+        });
+      connect (fetch_, &WinHttpFetch::failed, this, [this] (QString const& detail) {
+          fail (Failure::Network, detail);
+        });
+    }
+  fetch_->start (source_url_, user_agent_, max_body_size);
+#else
+  if (!manager_) return;
   QUrl const url {source_url_};
   if ("https" == url.scheme () && !QSslSocket::supportsSsl ())
     {
@@ -65,7 +97,6 @@ void FileDownload::start_download ()
 #endif
   request.setRawHeader ("Accept", "*/*");
   request.setRawHeader ("User-Agent", user_agent_.toUtf8 ());   // country-files.com refuses requests without one
-  body_.clear ();
   reply_ = manager_->get (request);
   connect (reply_, &QNetworkReply::readyRead, this, [this] {
       if (!reply_) return;
@@ -73,11 +104,15 @@ void FileDownload::start_download ()
       if (body_.size () > max_body_size) reply_->abort ();
     });
   connect (reply_, &QNetworkReply::finished, this, &FileDownload::finished);
+#endif
 }
 
 void FileDownload::abort ()
 {
-  if (running ()) reply_->abort ();
+#if defined (Q_OS_WIN)
+  if (fetch_) fetch_->abort ();
+#endif
+  if (reply_ && reply_->isRunning ()) reply_->abort ();
 }
 
 void FileDownload::finished ()
@@ -88,35 +123,52 @@ void FileDownload::finished ()
   reply->deleteLater ();
   body_ += reply->readAll ();
 
-  auto fail = [this] (Failure failure, QString const& detail) {
-      body_.clear ();
-      Q_EMIT error (failure, detail);
-    };
+  Failure transport_failure {Failure::Network};
+  QString transport_detail;             // stays null while the transport itself was happy
+  if (QNetworkReply::NoError != reply->error ())
+    {
+      // an http URL redirected to https lands here when the SSL library is missing
+#if !defined (Q_OS_WIN)
+      if ("https" == reply->url ().scheme () && !QSslSocket::supportsSsl ())
+        {
+          transport_failure = Failure::NoSsl;
+          transport_detail = reply->url ().toDisplayString ();
+        }
+      else
+#endif
+        {
+          transport_failure = Failure::Network;
+          transport_detail = reply->errorString ();
+        }
+      if (transport_detail.isNull ()) transport_detail = QString {""};   // never null once it has failed
+    }
 
-  if (body_.size () > max_body_size)
+  deliver (body_, reply->attribute (QNetworkRequest::HttpStatusCodeAttribute).toInt (),
+           transport_failure, transport_detail);
+}
+
+void FileDownload::deliver (QByteArray const& body, int http_status,
+                            Failure transport_failure, QString const& transport_detail)
+{
+  if (body.size () > max_body_size)
     {
       fail (Failure::TooLarge, QString::number (max_body_size / (1024 * 1024)));
       return;
     }
   // a server that answered at all is reported by its status: Qt also flags a 404 as a network error
-  auto const status = reply->attribute (QNetworkRequest::HttpStatusCodeAttribute).toInt ();
-  if (status && 200 != status)
+  if (http_status && 200 != http_status)
     {
-      fail (Failure::HttpStatus, QString::number (status));
+      fail (Failure::HttpStatus, QString::number (http_status));
       return;
     }
-  if (QNetworkReply::NoError != reply->error ())
+  if (!transport_detail.isNull ())
     {
-      // an http URL redirected to https lands here when the SSL library is missing
-      if ("https" == reply->url ().scheme () && !QSslSocket::supportsSsl ())
-        fail (Failure::NoSsl, reply->url ().toDisplayString ());
-      else
-        fail (Failure::Network, reply->errorString ());
+      fail (transport_failure, transport_detail);
       return;
     }
   if (validator_)
     {
-      auto const reason = validator_ (body_);
+      auto const reason = validator_ (body);
       if (!reason.isEmpty ())
         {
           fail (Failure::Rejected, reason);
@@ -125,11 +177,17 @@ void FileDownload::finished ()
     }
   QDir {}.mkpath (QFileInfo {destination_filename_}.absolutePath ());
   QSaveFile file {destination_filename_};
-  if (!file.open (QIODevice::WriteOnly) || file.write (body_) != body_.size () || !file.commit ())
+  if (!file.open (QIODevice::WriteOnly) || file.write (body) != body.size () || !file.commit ())
     {
       fail (Failure::Write, file.errorString ());
       return;
     }
   body_.clear ();
   Q_EMIT complete (destination_filename_);
+}
+
+void FileDownload::fail (Failure failure, QString const& detail)
+{
+  body_.clear ();
+  Q_EMIT error (failure, detail);
 }

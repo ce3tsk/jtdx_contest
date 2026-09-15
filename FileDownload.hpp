@@ -28,6 +28,13 @@
 #include <QNetworkReply>
 
 class QNetworkAccessManager;
+#if defined (Q_OS_WIN)
+/* CE3TSK 2026-09-15: Windows fetches through WinHTTP and Schannel instead of QNetworkAccessManager
+   and OpenSSL, which Qt 5.15.2 can only reach through libssl-1_1, a library neither Qt nor Windows
+   provides. WinHttpFetch.hpp has the full reasoning. Only the transport differs: the size cap, the
+   validator, the atomic replacement and the one-signal-per-start rule below are shared. */
+class WinHttpFetch;
+#endif
 
 class FileDownload
   : public QObject
@@ -59,6 +66,14 @@ public:
 
 private:
   void finished ();
+  /* CE3TSK 2026-09-15: the shared tail. Whichever transport fetched the body, this is where it is
+     checked and becomes a file. transport_detail is null unless the transport itself failed, and
+     that failure is applied only after the size and status checks - a server that answered at all
+     is reported by its status, and Qt flags a 404 as a network error too. */
+  void deliver (QByteArray const& body, int http_status,
+                Failure transport_failure = Failure::Network,
+                QString const& transport_detail = QString {});
+  void fail (Failure failure, QString const& detail);
 
   QNetworkAccessManager * manager_ {nullptr};
   QString source_url_;
@@ -67,6 +82,9 @@ private:
   Validator validator_;
   QPointer<QNetworkReply> reply_;
   QByteArray body_;
+#if defined (Q_OS_WIN)
+  WinHttpFetch * fetch_ {nullptr};
+#endif
 };
 
 #endif

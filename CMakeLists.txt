@@ -298,6 +298,14 @@ if (WIN32)
     ${wsjt_qt_CXXSRCS}
     OmniRigTransceiver.cpp
     )
+
+  # CE3TSK 2026-09-15: FileDownload's Windows transport. Qt 5.15.2 can only do TLS through
+  # OpenSSL 1.1, which neither Qt nor Windows ships, so on Windows the fetch goes through
+  # WinHTTP and Schannel instead and the installer carries no crypto library at all.
+  set (wsjtx_CXXSRCS
+    ${wsjtx_CXXSRCS}
+    WinHttpFetch.cpp
+    )
 endif (WIN32)
 
 set (wsjt_FSRCS
@@ -1350,6 +1358,9 @@ if (APPLE)
 endif ()
 
 target_include_directories (jtdx PRIVATE ${FFTW3_INCLUDE_DIRS})
+if (WIN32)
+  target_link_libraries (jtdx winhttp)   # CE3TSK: WinHttpFetch, FileDownload's Windows transport
+endif ()
 if (APPLE)
   target_link_libraries (jtdx Qt5::SerialPort wsjt_fort wsjt_cxx wsjt_qt wsjt_qtmm ${FFTW3_LIBRARIES})
 else (APPLE)
