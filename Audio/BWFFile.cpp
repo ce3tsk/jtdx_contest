@@ -578,8 +578,16 @@ void BWFFile::bext_originator_reference (QByteArray const& reference)
 QDateTime BWFFile::bext_origination_date_time () const
 {
   if (!m_->bext ()) return {};
-  return {QDate::fromString (m_->bext ()->origination_date_, "yyyy-MM-dd"),
-      QTime::fromString (m_->bext ()->origination_time_, "hh-mm-ss"), Qt::UTC};
+  /* CE3TSK: Qt::ISODate rather than a format - see the note in logbook/countrydat.cpp. Both
+     fields are fixed 10 character arrays: a date fills one exactly and carries no terminator,
+     while "hh-mm-ss" leaves two NULs the parser would choke on, so each is read up to the first
+     NUL and never past its own field. */
+  auto const bext = m_->bext ();
+  auto const field = [] (char const * text, std::size_t size) {
+      return QString::fromLatin1 (text, qstrnlen (text, size));
+    };
+  return {QDate::fromString (field (bext->origination_date_, sizeof bext->origination_date_), Qt::ISODate),
+      QTime::fromString (field (bext->origination_time_, sizeof bext->origination_time_), "hh-mm-ss"), Qt::UTC};
 }
 
 void BWFFile::bext_origination_date_time (QDateTime const& dt)
