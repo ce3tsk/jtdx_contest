@@ -954,10 +954,12 @@ private:
   QHash<QString, QVariant> m_pwrBandTxMemory; // Remembers power level by band
   QHash<QString, QVariant> m_pwrBandTuneMemory; // Remembers power level by band for tuning
   QByteArray m_geometry;
+  QSize m_geometryMinHint;   // CE3TSK: minimumSizeHint () when m_geometry was saved, see restoreMainGeometry ()
   qint32 m_ft8Freq[15] = {1810,1840,1908,3573,5357,7074,10136,14074,18100,21074,24915,28074,40680,50313,70154};
 
   //---------------------------------------------------- private functions
   void readSettings();
+  void restoreMainGeometry ();   // CE3TSK
   void setDecodedTextFont (QFont const&);
   void setStopHSym();
   void setClockStyle(bool reset);

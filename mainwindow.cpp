@@ -1305,6 +1305,7 @@ void MainWindow::writeSettings()
 {
   m_settings->beginGroup("MainWindow");
   m_settings->setValue("geometry",saveGeometry ());
+  m_settings->setValue("geometryMinHint",minimumSizeHint ());   // CE3TSK: see restoreMainGeometry ()
   m_settings->setValue("state",saveState ());
   m_settings->setValue("vertSplitter",ui->splitter->saveState());
   m_settings->setValue("MRUdir",m_path);
@@ -1444,18 +1445,31 @@ void MainWindow::writeSettings()
   m_settings->endGroup();
 }
 
+/* CE3TSK: restore the saved main window geometry. A saved size can be below what the layout
+   needs for one of two reasons. The operator narrowed the window on purpose: Qt lets it be
+   dragged down to the .ui's 733x422, although the controls start to clip below 829 px at 11 pt.
+   That is the operator's choice, so it reopens exactly as saved. Or it was saved under a smaller
+   font, and then Qt would crush the children further than the operator ever saw: only this grows
+   the window, by as much as the layout's minimum has risen since the save and never past that
+   minimum, so a large window is left alone. Clamping to sizeHint () (971 px wide), and then to
+   minimumSizeHint (), both threw a narrowed width away. See UI_DARK_STYLE.md. */
+void MainWindow::restoreMainGeometry ()
+{
+  restoreGeometry (m_geometry);
+  if (!m_geometryMinHint.isValid ()) return;   // saved before the minimum was recorded: as saved
+  auto const needed = minimumSizeHint ();
+  auto const growth = (needed - m_geometryMinHint).expandedTo (QSize {0, 0});
+  resize (size ().expandedTo ((size () + growth).boundedTo (needed)));
+}
+
 //---------------------------------------------------------- readSettings()
 void MainWindow::readSettings()
 {
   m_settings->beginGroup("MainWindow");
   
   m_geometry = m_settings->value ("geometry",saveGeometry()).toByteArray();
-  restoreGeometry(m_geometry);
-  /* CE3TSK: a geometry saved when the window was dragged small, or with a smaller font,
-     can be below what the layout needs and Qt then crushes the children. sizeHint() is
-     what the layout wants and it tracks the application font; a larger saved size is
-     kept as it is. See UI_DARK_STYLE.md. */
-  resize (size ().expandedTo (sizeHint ()));
+  m_geometryMinHint = m_settings->value ("geometryMinHint").toSize ();   // CE3TSK
+  restoreMainGeometry ();   // CE3TSK
   /* CE3TSK: mainwindow.ui pins ~30 widgets with hard pixel maximumSize caps chosen for the
      original font, so a larger application font cannot grow past them and the text is clipped
      ("Rx 305 Hz" loses the Hz, "GenMsgs" the s). Raise each cap to the widget's own sizeHint,
@@ -6549,7 +6563,7 @@ void MainWindow::guiUpdate()
     displayDialFrequency ();
     if (m_geometry_restored > 0) { m_geometry_restored -=1;
       /* CE3TSK: the delayed re-restore would undo the clamp applied at start-up */
-      if (m_geometry_restored == 0) { restoreGeometry (m_geometry); resize (size ().expandedTo (sizeHint ())); } }
+      if (m_geometry_restored == 0) restoreMainGeometry (); }
     /* CE3TSK: the safety net behind ndecreq. The request counter should make a lost decode
        impossible; this catches anything that still wedges the pair - the decoder killed, a
        shared-memory mishap - and turns a dead session into one lost period. Recreating .lock
