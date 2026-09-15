@@ -413,6 +413,16 @@
               </property>
              </widget>
             </item>
+            <item row="4" column="0">
+             <widget class="QCheckBox" name="countryNameTranslated_check_box">
+              <property name="toolTip">
+               <string>Show DXCC names in the language of the user interface. When off, the English names are shown.</string>
+              </property>
+              <property name="text">
+               <string>Translate DXCC na&amp;mes</string>
+              </property>
+             </widget>
+            </item>
             <item row="0" column="0">
              <widget class="QCheckBox" name="insert_blank_check_box">
               <property name="toolTip">
@@ -672,6 +682,87 @@ quiet period when decoding is done.</string>
              </widget>
             </item>
            </layout>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="data_files_group_box">
+         <property name="title">
+          <string>Data files</string>
+         </property>
+         <layout class="QGridLayout" name="data_files_grid_layout">
+          <property name="leftMargin">
+           <number>3</number>
+          </property>
+          <property name="topMargin">
+           <number>3</number>
+          </property>
+          <property name="rightMargin">
+           <number>3</number>
+          </property>
+          <property name="bottomMargin">
+           <number>1</number>
+          </property>
+          <item row="0" column="0">
+           <widget class="QLabel" name="cty_file_label">
+            <property name="text">
+             <string notr="true">cty.dat:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QLabel" name="cty_file_status_label">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+              <horstretch>1</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="toolTip">
+             <string>The newer of the downloaded copy and the copy bundled with this release is used.</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="2">
+           <widget class="QPushButton" name="cty_download_push_button">
+            <property name="toolTip">
+             <string>Download the latest cty.dat from country-files.com. The DXCC entities, CQ and ITU zones and continents shown for each call come from it.</string>
+            </property>
+            <property name="text">
+             <string>Download latest</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="lotw_file_label">
+            <property name="text">
+             <string>LoTW users:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QLabel" name="lotw_file_status_label">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+              <horstretch>1</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="toolTip">
+             <string>The newer of the downloaded copy and the copy bundled with this release is used.</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="2">
+           <widget class="QPushButton" name="lotw_download_push_button">
+            <property name="toolTip">
+             <string>Download the latest LoTW user activity file from ARRL. Stations that uploaded to LoTW during the last 365 days are treated as LoTW users.</string>
+            </property>
+            <property name="text">
+             <string>Download latest</string>
+            </property>
+           </widget>
           </item>
          </layout>
         </widget>

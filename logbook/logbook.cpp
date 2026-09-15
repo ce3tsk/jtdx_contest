@@ -19,34 +19,19 @@ int LogBook::fieldBandCount () { return _log.fieldBandCount (); }        /* CE3T
 QList<QString> LogBook::gridList () { return _log.gridList (); }         /* CE3TSK */
 
 void LogBook::init(const QString mycall,const QString mygrid,const QString mydate,
-                   QString const& logFileName, CountryDat* sharedCountries)
+                   QString const& logFileName, CountryDat* sharedCountries,
+                   bool translatedCountryNames)
 {
   _shared = sharedCountries;   /* CE3TSK */
   QDir dataPath {QStandardPaths::writableLocation (QStandardPaths::DataLocation)};
-  QString countryDataFilename,lotwDataFilename;
-  if (dataPath.exists (countryFileName))
-    {
-      // User override
-      countryDataFilename = dataPath.absoluteFilePath (countryFileName);
-    }
-  else
-    {
-      countryDataFilename = QString {":/"} + countryFileName;
-    }
-  if (dataPath.exists (lotwFileName))
-    {
-      // User override
-      lotwDataFilename = dataPath.absoluteFilePath (lotwFileName);
-    }
-  else
-    {
-      lotwDataFilename = QString {":/"} + lotwFileName;
-    }
-
-  /* CE3TSK: only parse cty.dat when this logbook owns its country data */
+  /* CE3TSK: only parse cty.dat when this logbook owns its country data. The copy in the data
+     directory is read unless the one bundled with this release is newer (CountryDat::fileToUse),
+     so a newer installer is never shadowed by an old download. */
   if (!_shared)
     {
-      _countries.init(countryDataFilename,lotwDataFilename);
+      auto const countryDataFilename = CountryDat::fileToUse (dataPath, countryFileName, &CountryDat::ctyVersion);
+      auto const lotwDataFilename = CountryDat::fileToUse (dataPath, lotwFileName, &CountryDat::lotwVersion);
+      _countries.init(countryDataFilename,lotwDataFilename,translatedCountryNames);
       _countries.load();
     }
 

@@ -443,6 +443,71 @@ Format:
         <source>Are you sure you want to discard your current contest frequencies and replace them with the FT8 and FT4 entries from the working frequencies?</source>
         <translation>Êtes-vous sûr de vouloir abandonner vos fréquences de concours actuelles et les remplacer par les entrées FT8 et FT4 des fréquences de travail ?</translation>
     </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>The downloaded file is not a cty.dat file.</source>
+        <translation>Le fichier téléchargé n'est pas un fichier cty.dat.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>The downloaded file is not a LoTW user activity file.</source>
+        <translation>Le fichier téléchargé n'est pas un fichier d'activité des utilisateurs LoTW.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>SSL/TLS support is not installed, so %1 cannot be fetched.</source>
+        <translation>La prise en charge SSL/TLS n'est pas installée, %1 ne peut donc pas être récupéré.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>The server answered with HTTP status %1.</source>
+        <translation>Le serveur a répondu avec le statut HTTP %1.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>The download was stopped at %1 MB.</source>
+        <translation>Le téléchargement a été arrêté à %1 Mo.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>The file could not be saved: %1</source>
+        <translation>Impossible d'enregistrer le fichier : %1</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Network error: %1</source>
+        <translation>Erreur réseau : %1</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Download of %1 failed</source>
+        <translation>Échec du téléchargement de %1</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>The copy in use has not been changed.</source>
+        <translation>La copie utilisée n'a pas été modifiée.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>downloading...</source>
+        <translation>téléchargement en cours...</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>version unknown</source>
+        <translation>version inconnue</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1, bundled with this release</source>
+        <translation>%1, fournie avec cette version</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1, downloaded</source>
+        <translation>%1, téléchargée</translation>
+    </message>
 </context>
 <context>
     <name>CountryDat</name>
@@ -1096,7 +1161,7 @@ Format:
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="164"/>
-        <source>St. Pierre &amp; Miquelo</source>
+        <source>St. Pierre &amp; Miquelon</source>
         <translation>St. Pierre et Miquelon</translation>
     </message>
     <message>
@@ -2924,12 +2989,6 @@ Format:
         <translation>Démarrer</translation>
     </message>
     <message>
-        <location filename="../logqso.ui" line="82"/>
-        <location filename="../logqso.ui" line="114"/>
-        <source>dd/MM/yyyy HH:mm:ss</source>
-        <translation>dd/MM/yyyy HH:mm:ss</translation>
-    </message>
-    <message>
         <location filename="../logqso.ui" line="98"/>
         <source>End</source>
         <translation>Fin</translation>
@@ -3024,18 +3083,6 @@ Format:
         <location filename="../mainwindow.ui" line="282"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Lost audio blocks. FT8 15sec interval has 52 blocks of audio data, where decoder being triggered if audio data reached 51 blocks in &apos;SWL/late strat of decoder&apos; modes or 50 blocks otherwise. Under Windows OS there were multiple reports audio data being lost, for Windows OS there is workaround implemented to start FT8 decoder if there at least 46 out of 52 audio blocks received. Lost audio blocks notification lets user know there is something wrong in the setup.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Des blocs audio perdus. FT8 15sec intervalle a 52 blocs de données audio, où le décodeur étant déclenché si les données audio ont atteint 51 blocs dans les modes &apos;SWL/late strat of decoder&apos; ou 50 blocs autrement. Sous Windows OS, il y a eu de nombreux rapports de perte de données audio, pour Windows OS il y a une solution de contournement implémentée pour démarrer le décodeur FT8 s&apos;il y a au moins 46 blocs audio sur 52 reçus. La notification de blocs audio perdus permet à l&apos;utilisateur de savoir qu&apos;il y a un problème dans la configuration.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="288"/>
-        <location filename="../mainwindow.cpp" line="1885"/>
-        <location filename="../mainwindow.cpp" line="3738"/>
-        <location filename="../mainwindow.cpp" line="3751"/>
-        <location filename="../mainwindow.cpp" line="6284"/>
-        <location filename="../mainwindow.cpp" line="6289"/>
-        <location filename="../mainwindow.cpp" line="6335"/>
-        <location filename="../mainwindow.cpp" line="6346"/>
-        <source>Band Activity</source>
-        <translation>Activité de la bande</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="397"/>
@@ -6046,6 +6093,16 @@ La question n'est posée qu'une seule fois.</translation>
         <location filename="../../mainwindow.cpp"/>
         <source>ensemble - the RX-only recipe of the former Ensemble preset (no menu entry)</source>
         <translation>ensemble - la recette RX seule de l'ancien préréglage Ensemble (pas d'entrée de menu)</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Use dar&amp;k style</source>
+        <translation>Utiliser le style sombre</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Band buttons</source>
+        <translation>Boutons de bande</translation>
     </message>
 </context>
 <context>
@@ -9635,6 +9692,46 @@ changements de carte son</translation>
         <location filename="../Configuration.ui"/>
         <source>Replace the table with the published default frequencies of the selected contest.</source>
         <translation>Remplacer le tableau par les fréquences par défaut publiées du concours sélectionné.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Translate DXCC na&amp;mes</source>
+        <translation>Traduire les no&amp;ms des DXCC</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Show DXCC names in the language of the user interface. When off, the English names are shown.</source>
+        <translation>Affiche les noms des DXCC dans la langue de l'interface. Désactivé, les noms anglais sont affichés.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Data files</source>
+        <translation>Fichiers de données</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>The newer of the downloaded copy and the copy bundled with this release is used.</source>
+        <translation>La copie la plus récente, entre celle téléchargée et celle fournie avec cette version, est utilisée.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Download the latest cty.dat from country-files.com. The DXCC entities, CQ and ITU zones and continents shown for each call come from it.</source>
+        <translation>Télécharger le dernier cty.dat depuis country-files.com. Les entités DXCC, les zones CQ et UIT et les continents affichés pour chaque indicatif en proviennent.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Download latest</source>
+        <translation>Télécharger la dernière</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>LoTW users:</source>
+        <translation>Utilisateurs LoTW :</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Download the latest LoTW user activity file from ARRL. Stations that uploaded to LoTW during the last 365 days are treated as LoTW users.</source>
+        <translation>Télécharger le dernier fichier d'activité des utilisateurs LoTW depuis l'ARRL. Les stations ayant envoyé des données à LoTW au cours des 365 derniers jours sont considérées comme utilisatrices de LoTW.</translation>
     </message>
 </context>
 <context>

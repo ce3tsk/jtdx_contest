@@ -15,6 +15,7 @@
 
 class QSettings;
 class QWidget;
+class QNetworkAccessManager;
 class QAudioDeviceInfo;
 class QString;
 class QDir;
@@ -76,7 +77,7 @@ public:
   enum class SpecialOperatingActivity {NONE = 0, NA_VHF = 1, EU_VHF = 2, FIELD_DAY = 3,
                                        RTTY = 4, WW_DIGI = 5, ARRL_DIGI = 6};
 
-  explicit Configuration (QSettings * settings, QWidget * parent = nullptr);
+  explicit Configuration (QNetworkAccessManager * network_manager, QSettings * settings, QWidget * parent = nullptr);
   ~Configuration ();
 
   int exec ();
@@ -188,8 +189,19 @@ public:
   bool recommended_colors_offer_pending () const;
   void accept_recommended_colors ();
   void decline_recommended_colors ();
+  /* CE3TSK: switch the dark style from outside the Settings dialog (View > Use dark style). It
+     takes effect at once, as accepting Settings with the box changed does, and is saved; the
+     dialog's check box shows it the next time it opens. useDarkStyle () tells whether the switch
+     happened - a missing style sheet or a -stylesheet file on the command line can refuse it. */
+  void set_dark_style (bool dark);
+  /* CE3TSK: fit every widget's size limits to its size hint, as setting the application font does.
+     At startup the font is set while this object is being built, before the main window's widgets
+     and the Wide Graph exist, so MainWindow runs this once more when they do - otherwise a fresh
+     start is laid out differently from the same style or font chosen later. */
+  void fit_widget_size_limits ();
   bool countryName () const;
   bool countryPrefix () const;
+  bool countryNameTranslated () const;   // CE3TSK: DXCC names in the UI language
   bool callNotif () const;
   bool gridNotif () const;
   bool otherMessagesMarker () const;
@@ -411,6 +423,12 @@ public:
   Q_SIGNAL void udp_server_port_changed (port_type server_port);
   Q_SIGNAL void tcp_server_changed (QString const& tcp_server);
   Q_SIGNAL void tcp_server_port_changed (port_type server_port);
+
+  //
+  // CE3TSK: cty.dat or the LoTW user activity file was replaced by a download, so the logbook
+  // should read its country data again
+  //
+  Q_SIGNAL void data_files_updated () const;
 
   //
   // These signals are emitted and reflect transceiver state changes

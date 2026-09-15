@@ -23,10 +23,13 @@
 #include "../Radio.hpp"
 #include <QFile>
 #include <QTextStream>
+#include <QRegularExpression>
+#include <cstring>
 
 
-void CountryDat::init(const QString filename,const QString filename2)
+void CountryDat::init(const QString filename,const QString filename2,bool translated)
 {
+    _translated = translated;   /* CE3TSK */
     _filename = filename;
     _data.clear();
     _filename2 = filename2;
@@ -161,7 +164,7 @@ void CountryDat::init(const QString filename,const QString filename2)
     _name.insert("Austral Islands",tr("Austral Is."));
     _name.insert("Clipperton Island",tr("Clipperton Is."));
     _name.insert("Marquesas Islands",tr("Marquesas Is."));
-    _name.insert("St. Pierre & Miquelo",tr("St. Pierre & Miquelo"));
+    _name.insert("St. Pierre & Miquelon",tr("St. Pierre & Miquelon"));
     _name.insert("Reunion Island",tr("Reunion Is."));
     _name.insert("St. Martin",tr("St. Martin"));
     _name.insert("Glorioso Islands",tr("Glorioso Is."));
@@ -604,3 +607,71 @@ QString CountryDat::find2(const QString call)
 
       
 
+// CE3TSK: see countrydat.h
+QDate CountryDat::ctyVersion (QByteArray const& content)
+{
+  QString const text {QString::fromLatin1 (content)};
+  // AD1C marks every release with an exact-call entry =VERyyyymmdd
+  static QRegularExpression const version_re {R"(=VER(\d{8})\b)"};
+  auto const version = version_re.match (text);
+  if (!version.hasMatch ()) return QDate {};
+  // and the rest must be a cty.dat: "Name: CQ: ITU: continent: lat: lon: UTC offset: prefix:"
+  // (primary prefixes can carry a lowercase suffix: 3D2/c Conway Reef, E5/n North Cook Islands)
+  static QRegularExpression const entity_re {R"(^\S[^:\r\n]*:\s*\d+:\s*\d+:\s*[A-Z]{2}:\s*-?[\d.]+:\s*-?[\d.]+:\s*-?[\d.]+:\s*\*?[A-Za-z0-9/]+:)"
+                                            , QRegularExpression::MultilineOption};
+  int entities {0};
+  for (auto it = entity_re.globalMatch (text); it.hasNext (); it.next ()) ++entities;
+  return entities >= 300 ? QDate::fromString (version.captured (1), "yyyyMMdd") : QDate {};
+}
+
+QDate CountryDat::lotwVersion (QByteArray const& content)
+{
+  // "CALL,yyyy-MM-dd,hh:mm:ss" per line; the newest upload says how recent the file is
+  auto const is_date = [] (char const * d) {
+      for (int i = 0; i < 10; ++i)
+        if ((4 == i || 7 == i) ? '-' != d[i] : (d[i] < '0' || d[i] > '9')) return false;
+      return true;
+    };
+  char newest[10] {};
+  int good {0}, bad {0};
+  char const * p {content.constData ()};
+  char const * const end {p + content.size ()};
+  while (p < end)
+    {
+      auto eol = static_cast<char const *> (std::memchr (p, '\n', end - p));
+      if (!eol) eol = end;
+      auto line_end = eol;
+      if (line_end > p && '\r' == line_end[-1]) --line_end;
+      if (line_end > p)
+        {
+          auto comma = static_cast<char const *> (std::memchr (p, ',', line_end - p));
+          if (comma && comma > p && line_end - comma >= 20 && is_date (comma + 1) && ',' == comma[11])
+            {
+              ++good;
+              if (std::memcmp (comma + 1, newest, 10) > 0) std::memcpy (newest, comma + 1, 10);
+            }
+          else ++bad;
+        }
+      p = eol + 1;
+    }
+  if (good < 1000 || bad * 100 > good) return QDate {};
+  return QDate::fromString (QString::fromLatin1 (newest, 10), "yyyy-MM-dd");
+}
+
+QString CountryDat::fileToUse (QDir const& dataDir, QString const& fileName,
+                               QDate (* versionOf) (QByteArray const&), QDate * version)
+{
+  auto const version_of_file = [versionOf] (QString const& path) {
+      QFile file {path};
+      return file.open (QIODevice::ReadOnly) ? versionOf (file.readAll ()) : QDate {};
+    };
+  QString const bundled {QString {":/"} + fileName};
+  bool const have_local {dataDir.exists (fileName)};
+  QString const local {dataDir.absoluteFilePath (fileName)};
+  QDate const local_version {have_local ? version_of_file (local) : QDate {}};
+  QDate const bundled_version {version_of_file (bundled)};
+  bool const use_local {have_local && !(local_version.isValid () && bundled_version.isValid ()
+                                        && bundled_version > local_version)};
+  if (version) *version = use_local ? local_version : bundled_version;
+  return use_local ? local : bundled;
+}

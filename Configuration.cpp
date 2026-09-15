@@ -191,6 +191,8 @@ extern "C" {
 #include "StationList.hpp"
 #include "NetworkServerLookup.hpp"
 #include "JTDXMessageBox.hpp"
+#include "FileDownload.hpp"            /* CE3TSK */
+#include "logbook/countrydat.h"       /* CE3TSK */
 
 #include "pimpl_impl.hpp"
 
@@ -199,6 +201,14 @@ extern "C" {
 
 namespace
 {
+  // CE3TSK: on-demand data file updates. The big cty.dat is the variant JTDX bundles (the plain
+  // one lacks the exact-callsign entries), and country-files.com serves it over plain http; ARRL
+  // serves the LoTW file only over https. The names are the ones LogBook::init reads.
+  char const * const cty_url {"http://www.country-files.com/bigcty/cty.dat"};
+  char const * const lotw_url {"https://lotw.arrl.org/lotw-user-activity.csv"};
+  char const * const cty_file_name {"cty.dat"};
+  char const * const lotw_file_name {"lotw-user-activity.csv"};
+
   // these undocumented flag values when stored in (Qt::UserRole - 1)
   // of a ComboBox item model index allow the item to be enabled or
   // disabled
@@ -414,7 +424,7 @@ public:
   using FrequencyDelta = Radio::FrequencyDelta;
   using port_type = Configuration::port_type;
 
-  explicit impl (Configuration * self, QSettings * settings, QWidget * parent);
+  explicit impl (Configuration * self, QNetworkAccessManager * network_manager, QSettings * settings, QWidget * parent);
   ~impl ();
 
   bool have_rig ();
@@ -453,6 +463,7 @@ private:
   void update_audio_channels (QComboBox const *, int, QComboBox *, bool);
 
   void set_application_font (QFont const&);
+  void fit_size_limits ();   // CE3TSK
 
   void initialize_models ();
   /* CE3TSK: force and grey the settings a contest owns */
@@ -540,6 +551,12 @@ private:
   Q_SLOT void handle_transceiver_update (TransceiverState const&, unsigned sequence_number);
   Q_SLOT void handle_transceiver_failure (QString const& reason);
   Q_SLOT void on_countryName_check_box_clicked(bool checked);
+  Q_SLOT void on_cty_download_push_button_clicked (bool);    // CE3TSK: data file updates
+  Q_SLOT void on_lotw_download_push_button_clicked (bool);
+  void start_data_file_download (FileDownload&, char const * url, char const * file_name,
+                                 QDate (* version_of) (QByteArray const&), QString const& not_that_file);
+  void data_file_download_failed (char const * file_name, FileDownload::Failure, QString const& detail);
+  void update_data_file_labels ();
   Q_SLOT void on_callNotif_check_box_clicked(bool checked);
   Q_SLOT void on_otherMessagesMarker_check_box_clicked(bool checked);
   Q_SLOT void on_RR73_marker_check_box_clicked(bool checked);
@@ -642,6 +659,9 @@ private:
   
   QDir doc_dir_;
   QDir data_dir_;
+  QNetworkAccessManager * network_manager_;   // CE3TSK: data file updates
+  FileDownload cty_download_;
+  FileDownload lotw_download_;
   QDir temp_dir_;
   QDir default_save_directory_;
   QDir save_directory_;
@@ -870,6 +890,7 @@ private:
   bool recommendedColorsOffered_;   // CE3TSK: the one-time colour offer has been made
   bool countryName_;
   bool countryPrefix_;
+  bool countryNameTranslated_;   // CE3TSK
   bool callNotif_;
   bool gridNotif_;
   bool otherMessagesMarker_;
@@ -1042,8 +1063,8 @@ private:
 
 
 // delegate to implementation class
-Configuration::Configuration (QSettings * settings, QWidget * parent)
-  : m_ {this, settings, parent}
+Configuration::Configuration (QNetworkAccessManager * network_manager, QSettings * settings, QWidget * parent)
+  : m_ {this, network_manager, settings, parent}
 {
 }
 
@@ -1184,6 +1205,7 @@ bool Configuration::insert_blank () const {return m_->insert_blank_;}
 bool Configuration::useDarkStyle () const {return m_->useDarkStyle_;}
 bool Configuration::countryName () const {return m_->countryName_;}
 bool Configuration::countryPrefix () const {return m_->countryPrefix_;}
+bool Configuration::countryNameTranslated () const {return m_->countryNameTranslated_;}
 bool Configuration::callNotif () const {return m_->callNotif_;}
 bool Configuration::gridNotif () const {return m_->gridNotif_;}
 bool Configuration::otherMessagesMarker () const {return m_->otherMessagesMarker_;}
@@ -1658,13 +1680,14 @@ namespace
   }
 }
 
-Configuration::impl::impl (Configuration * self, QSettings * settings, QWidget * parent)
+Configuration::impl::impl (Configuration * self, QNetworkAccessManager * network_manager, QSettings * settings, QWidget * parent)
   : QDialog {parent}
   , self_ {self}
   , ui_ {new Ui::configuration_dialog}
   , settings_ {settings}
   , doc_dir_ {doc_path ()}
   , data_dir_ {data_path ()}
+  , network_manager_ {network_manager}
   , restart_sound_input_device_ {false}
   , restart_sound_output_device_ {false}
   , restart_tci_device_ {false}
@@ -1802,6 +1825,21 @@ Configuration::impl::impl (Configuration * self, QSettings * settings, QWidget *
   // Dependent checkboxes 
   ui_->countryPrefix_check_box->setChecked(countryName_ && countryPrefix_);
   ui_->countryPrefix_check_box->setEnabled(countryName_);
+  ui_->countryNameTranslated_check_box->setChecked(countryName_ && countryNameTranslated_);
+  ui_->countryNameTranslated_check_box->setEnabled(countryName_);
+
+  // CE3TSK: data file updates - exactly one of complete() or error() arrives per download
+  for (FileDownload * download : {&cty_download_, &lotw_download_})
+    {
+      connect (download, &FileDownload::complete, this, [this] (QString const&) {
+          update_data_file_labels ();
+          Q_EMIT self_->data_files_updated ();
+        });
+      connect (download, &FileDownload::error, this, [this, download] (FileDownload::Failure failure, QString const& detail) {
+          update_data_file_labels ();
+          data_file_download_failed (download == &cty_download_ ? cty_file_name : lotw_file_name, failure, detail);
+        });
+    }
   ui_->gridNotif_check_box->setChecked(callNotif_ && gridNotif_);
   ui_->gridNotif_check_box->setEnabled(callNotif_);
   ui_->blueMarker_check_box->setChecked(redMarker_ && blueMarker_);
@@ -2081,6 +2119,8 @@ Configuration::impl::~impl ()
 
 void Configuration::impl::initialize_models ()
 {
+  update_data_file_labels ();   // CE3TSK
+
   //
   // setup PTT port combo box drop down content
   //
@@ -2407,6 +2447,7 @@ Radio::convert_dark("#fafbfe",useDarkStyle_),Radio::convert_dark("#dcdef1",useDa
   ui_->useDarkStyle_check_box->setChecked (useDarkStyle_);
   ui_->countryName_check_box->setChecked (countryName_);
   ui_->countryPrefix_check_box->setChecked (countryName_ && countryPrefix_);
+  ui_->countryNameTranslated_check_box->setChecked (countryName_ && countryNameTranslated_);
   ui_->callNotif_check_box->setChecked (callNotif_);
   ui_->gridNotif_check_box->setChecked (gridNotif_ && callNotif_);
   ui_->otherMessagesMarker_check_box->setChecked (otherMessagesMarker_);
@@ -2808,7 +2849,7 @@ void Configuration::impl::read_settings ()
   else monitor_off_at_startup_ = false;
 
   monitor_last_used_ = settings_->value ("MonitorLastUsed", false).toBool ();
-  spot_to_psk_reporter_ = settings_->value ("PSKReporter", false).toBool ();
+  spot_to_psk_reporter_ = settings_->value ("PSKReporter", true).toBool (); /* CE3TSK: on unless the user turned it off */
   spot_to_dxsummit_ = settings_->value ("AllowSpotsDXSummit", false).toBool ();
   prevent_spotting_false_ = settings_->value ("preventFalseUDPspots", true).toBool ();
 
@@ -2947,6 +2988,7 @@ void Configuration::impl::read_settings ()
   insert_blank_ = settings_->value ("InsertBlank", false).toBool ();
   countryName_ = settings_->value ("countryName", true).toBool ();
   countryPrefix_ = settings_->value ("countryPrefix", false).toBool ();
+  countryNameTranslated_ = settings_->value ("countryNameTranslated", false).toBool ();
 
   if(settings_->value ("callsignLogFiltering").toString()=="false" || settings_->value ("callsignLogFiltering").toString()=="true")
     callNotif_ = settings_->value ("callsignLogFiltering").toBool ();
@@ -3289,6 +3331,7 @@ void Configuration::impl::write_settings ()
   settings_->setValue ("UseDarkStyle", useDarkStyle_);
   settings_->setValue ("countryName", countryName_);
   settings_->setValue ("countryPrefix", countryPrefix_);
+  settings_->setValue ("countryNameTranslated", countryNameTranslated_);
   settings_->setValue ("callsignLogFiltering", callNotif_);
   settings_->setValue ("gridLogFiltering", gridNotif_);
   settings_->setValue ("OtherStandardMessagesMarker", otherMessagesMarker_);
@@ -3948,6 +3991,7 @@ void Configuration::impl::accept ()
   tunetimer_= ui_->tune_timer_spin_box->value ();
   countryName_ = ui_->countryName_check_box->isChecked ();
   countryPrefix_ = ui_->countryPrefix_check_box->isChecked ();
+  countryNameTranslated_ = ui_->countryNameTranslated_check_box->isChecked ();
   callNotif_ = ui_->callNotif_check_box->isChecked ();
   gridNotif_ = ui_->gridNotif_check_box->isChecked ();
   otherMessagesMarker_ = ui_->otherMessagesMarker_check_box->isChecked ();
@@ -4239,10 +4283,76 @@ void Configuration::impl::on_font_push_button_clicked ()
   next_font_ = QFontDialog::getFont (0, next_font_, this);
 }
 
+// CE3TSK: data file updates
+void Configuration::impl::on_cty_download_push_button_clicked (bool)
+{
+  start_data_file_download (cty_download_, cty_url, cty_file_name, &CountryDat::ctyVersion,
+                            tr ("The downloaded file is not a cty.dat file."));
+}
+
+void Configuration::impl::on_lotw_download_push_button_clicked (bool)
+{
+  start_data_file_download (lotw_download_, lotw_url, lotw_file_name, &CountryDat::lotwVersion,
+                            tr ("The downloaded file is not a LoTW user activity file."));
+}
+
+void Configuration::impl::start_data_file_download (FileDownload& download, char const * url, char const * file_name,
+                                                    QDate (* version_of) (QByteArray const&), QString const& not_that_file)
+{
+  // the directory LogBook::init reads its copies from
+  QDir const data_dir {QStandardPaths::writableLocation (QStandardPaths::DataLocation)};
+  download.configure (network_manager_, url, data_dir.absoluteFilePath (file_name),
+                      "JTDX_contest/" + QCoreApplication::applicationVersion (),
+                      [version_of, not_that_file] (QByteArray const& content) {
+                        return version_of (content).isValid () ? QString {} : not_that_file;
+                      });
+  download.start_download ();
+  update_data_file_labels ();
+}
+
+void Configuration::impl::data_file_download_failed (char const * file_name, FileDownload::Failure failure, QString const& detail)
+{
+  QString reason;
+  switch (failure)
+    {
+    case FileDownload::Failure::NoSsl: reason = tr ("SSL/TLS support is not installed, so %1 cannot be fetched.").arg (detail); break;
+    case FileDownload::Failure::HttpStatus: reason = tr ("The server answered with HTTP status %1.").arg (detail); break;
+    case FileDownload::Failure::TooLarge: reason = tr ("The download was stopped at %1 MB.").arg (detail); break;
+    case FileDownload::Failure::Rejected: reason = detail; break;
+    case FileDownload::Failure::Write: reason = tr ("The file could not be saved: %1").arg (detail); break;
+    case FileDownload::Failure::Network: reason = tr ("Network error: %1").arg (detail); break;
+    }
+  JTDXMessageBox::warning_message (this, tr ("Download of %1 failed").arg (file_name), reason,
+                                   tr ("The copy in use has not been changed."));
+}
+
+void Configuration::impl::update_data_file_labels ()
+{
+  QDir const data_dir {QStandardPaths::writableLocation (QStandardPaths::DataLocation)};
+  auto const show = [this, &data_dir] (QLabel * label, QPushButton * button, FileDownload const& download,
+                                       char const * file_name, QDate (* version_of) (QByteArray const&)) {
+      button->setEnabled (!download.running ());
+      if (download.running ())
+        {
+          label->setText (tr ("downloading..."));
+          return;
+        }
+      QDate version;
+      auto const path = CountryDat::fileToUse (data_dir, file_name, version_of, &version);
+      auto const date = version.isValid () ? version.toString (Qt::ISODate) : tr ("version unknown");
+      label->setText (path.startsWith (":/") ? tr ("%1, bundled with this release").arg (date)
+                                             : tr ("%1, downloaded").arg (date));
+    };
+  show (ui_->cty_file_status_label, ui_->cty_download_push_button, cty_download_, cty_file_name, &CountryDat::ctyVersion);
+  show (ui_->lotw_file_status_label, ui_->lotw_download_push_button, lotw_download_, lotw_file_name, &CountryDat::lotwVersion);
+}
+
 void Configuration::impl::on_countryName_check_box_clicked(bool checked)
 {
   ui_->countryPrefix_check_box->setChecked(checked && countryPrefix_);
   ui_->countryPrefix_check_box->setEnabled(checked);
+  ui_->countryNameTranslated_check_box->setChecked(checked && countryNameTranslated_);
+  ui_->countryNameTranslated_check_box->setEnabled(checked);
 }
 
 void Configuration::impl::on_callNotif_check_box_clicked(bool checked)
@@ -5419,9 +5529,10 @@ bool Configuration::recommended_colors_offer_pending () const
 void Configuration::accept_recommended_colors ()
 {
   m_->apply_recommended_colors ();
-  m_->useDarkStyle_ = true;                              // the colours are tuned for it
-  m_->ui_->useDarkStyle_check_box->setChecked (true);
   m_->recommendedColorsOffered_ = true;
+  /* the colours are tuned for the dark style. Switch it the way View > Use dark style does, so the
+     style sheet is loaded too - setting the flag alone left the window light until a restart. */
+  set_dark_style (true);
   m_->write_settings ();
 }
 
@@ -5429,6 +5540,20 @@ void Configuration::decline_recommended_colors ()
 {
   m_->recommendedColorsOffered_ = true;                  // asked once, never again
   m_->write_settings ();
+}
+
+void Configuration::set_dark_style (bool dark)
+{
+  if (dark == m_->useDarkStyle_) return;
+  m_->useDarkStyle_ = dark;
+  m_->ui_->useDarkStyle_check_box->setChecked (dark);
+  m_->set_application_font (m_->font_);                  // reloads the style sheet, may refuse
+  m_->write_settings ();
+}
+
+void Configuration::fit_widget_size_limits ()
+{
+  m_->fit_size_limits ();
 }
 
 void Configuration::impl::on_pbDefaultColors_clicked()
@@ -7345,6 +7470,12 @@ void Configuration::impl::set_application_font (QFont const& font)
       }
     }
   qApp->setStyleSheet (ss + "* {" + font_as_stylesheet (font) + '}');
+  fit_size_limits ();
+}
+
+// CE3TSK: see the comment inside; also run once by MainWindow after its widgets and the Wide Graph exist
+void Configuration::impl::fit_size_limits ()
+{
   for (auto& widget : qApp->topLevelWidgets ())
     {
       /* CE3TSK: the .ui files pin ~30 widgets with hard pixel maximumSize caps chosen for the

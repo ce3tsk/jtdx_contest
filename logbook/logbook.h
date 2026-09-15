@@ -23,9 +23,12 @@ class LogBook
 public:
     /* CE3TSK: logFileName selects which ADIF this logbook reads - the normal log or a
        contest's own. sharedCountries lets a second logbook borrow the first's country
-       database instead of parsing cty.dat (344 KB) a second time; null means own it. */
+       database instead of parsing cty.dat (344 KB) a second time; null means own it.
+       translatedCountryNames picks the UI-language country names over the English ones; it only
+       matters when this logbook owns its country data. */
     void init(const QString mycall,const QString mygrid,const QString mydate,
-              QString const& logFileName, CountryDat* sharedCountries = nullptr);
+              QString const& logFileName, CountryDat* sharedCountries = nullptr,
+              bool translatedCountryNames = false);
     CountryDat* countryData ();   /* CE3TSK: to share with a contest logbook */
     int fieldBandCount ();          /* CE3TSK: contest multipliers */
     QList<QString> gridList ();     /* CE3TSK: for contest points */

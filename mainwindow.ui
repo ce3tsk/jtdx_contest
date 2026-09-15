@@ -53,7 +53,7 @@
      <height>16777215</height>
     </size>
    </property>
-   <layout class="QGridLayout" name="gridLayout_3">
+   <layout class="QGridLayout" name="gridLayout_3" rowstretch="0,1">
     <property name="leftMargin">
      <number>2</number>
     </property>
@@ -70,6 +70,33 @@
      <number>3</number>
     </property>
     <item row="0" column="0">
+     <widget class="QWidget" name="bandButtonsWidget" native="true">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <layout class="QHBoxLayout" name="bandButtonsLayout">
+       <property name="spacing">
+        <number>3</number>
+       </property>
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+      </layout>
+     </widget>
+    </item>
+    <item row="1" column="0">
      <widget class="QSplitter" name="splitter">
       <property name="orientation">
        <enum>Qt::Horizontal</enum>
@@ -1848,7 +1875,7 @@
                  <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;The button provides choice between S-meter units and dBm. CAT shall be set up via Hamlib or TCI to get S-meter working, some rigs may not be supported.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                 </property>
                 <property name="styleSheet">
-                 <string notr="true">QPushButton { Text-align:left; padding: 2px; }</string>
+                 <string notr="true">QPushButton { Text-align:left; padding: 2px; } QPushButton:disabled { text-align: center; }</string>
                 </property>
                 <property name="text">
                  <string>S meter</string>
@@ -4688,7 +4715,10 @@ list. The list can be maintained in Settings (F2).</string>
      <string>View</string>
     </property>
     <addaction name="actionWide_Waterfall"/>
+    <addaction name="actionBand_buttons"/>
     <addaction name="actionMessage_averaging"/>
+    <addaction name="separator"/>
+    <addaction name="actionUse_dark_style"/>
    </widget>
    <widget class="QMenu" name="menuDecode">
     <property name="title">
@@ -5234,6 +5264,14 @@ list. The list can be maintained in Settings (F2).</string>
     <string>Waterfall</string>
    </property>
   </action>
+  <action name="actionBand_buttons">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Band buttons</string>
+   </property>
+  </action>
   <action name="actionConvert_bit_depth">
    <property name="text">
     <string>Convert bit depth (32/16)</string>
@@ -5677,6 +5715,14 @@ list. The list can be maintained in Settings (F2).</string>
    </property>
    <property name="visible">
     <bool>false</bool>
+   </property>
+  </action>
+  <action name="actionUse_dark_style">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Use dar&amp;k style</string>
    </property>
   </action>
   <action name="actionInclude_averaging">

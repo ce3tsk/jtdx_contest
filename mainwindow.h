@@ -144,6 +144,8 @@ private slots:
   void on_pbSpotDXCall_clicked ();  
   void on_actionJTDX_Web_Site_triggered();
   void on_actionWide_Waterfall_triggered();
+  void on_actionUse_dark_style_triggered (bool checked);   // CE3TSK
+  void on_actionBand_buttons_toggled (bool checked);   // CE3TSK
   void on_actionOpen_triggered();
   void on_actionConvert_bit_depth_triggered();   /* CE3TSK */
   void on_actionOpen_next_in_directory_triggered();
@@ -486,6 +488,7 @@ private slots:
   void haltTx(QString reason);
   void haltTxTuneTimer();
   void logChanged();
+  void dataFilesUpdated ();   // CE3TSK
   bool stdCall(QString const& w);
   void ScrollBarPosition(int n);
   void on_S_meter_button_clicked(bool checked);
@@ -757,8 +760,11 @@ private:
   bool m_bHisCallStd;
   bool m_callNotif;
   bool m_gridNotif;
+  bool m_countryNameTranslated;   // CE3TSK
   bool m_qsoLogged;
   bool m_logInitNeeded;
+  bool m_dataFilesChanged;   // CE3TSK: the pending log init also rereads cty.dat and the LoTW list
+  bool m_dxCallHidden;       // CE3TSK: DX Call is green after a right-click hid the call
   bool m_wantedchkd;
   bool m_menus;
   bool m_wasSkipTx1;
@@ -771,6 +777,14 @@ private:
   bool m_rigOk;
   bool m_bandChanged;
   bool m_useDarkStyle;
+  QString m_rigLampColour;       // CE3TSK: the last colours set through setRigLamp () and friends
+  QString m_bandLabelColour;
+  QString m_dxCallEntryColour;
+  QString m_txStatusColour;
+  QList<QPushButton *> m_bandButtons;              // CE3TSK: View > Band buttons
+  QPointer<QAbstractItemModel> m_bandButtonsModel; // the list they were built from
+  QList<QMetaObject::Connection> m_bandButtonsConnections;
+  QTimer m_bandButtonsTimer;                       // one rebuild per burst of list changes
   bool m_lostaudio;
   bool m_lasthint;
   bool m_monitoroff;
@@ -994,6 +1008,23 @@ private:
   void stub();
   void statusChanged();
   void styleChanged();
+  void darkStyleChanged ();   // CE3TSK
+  // CE3TSK: colours that follow a state, painted again by styleChanged ()
+  void setRigLamp (QString const& colour);
+  void setBandLabelColour (QString const& colour);
+  void setModeLabelStyle (QString const& mode);
+  void setDxCallEntryColour (QString const& background);
+  void setEnableTxButtonStyle ();
+  void setHoundButtonStyle ();
+  void setSpotButtonStyle ();
+  void initLogIfNeeded ();
+  void setTxStatusColour (QString const& colour);
+  void setProgressBarStyle ();
+  // CE3TSK: View > Band buttons
+  void scheduleBandButtons ();
+  void rebuildBandButtons ();
+  void highlightBandButton ();
+  void selectBandButton (Radio::Frequency frequency);
   void offerRecommendedColors ();   // CE3TSK: the one-time colour offer, see Configuration
   bool gridOK(QString g);
   bool gridRR73(QString g);

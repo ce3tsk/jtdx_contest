@@ -443,6 +443,71 @@ Formátum:
         <source>Are you sure you want to discard your current contest frequencies and replace them with the FT8 and FT4 entries from the working frequencies?</source>
         <translation>Biztosan elveti a jelenlegi versenyfrekvenciákat, és lecseréli őket a munkafrekvenciák FT8- és FT4-bejegyzéseire?</translation>
     </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>The downloaded file is not a cty.dat file.</source>
+        <translation>A letöltött fájl nem cty.dat fájl.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>The downloaded file is not a LoTW user activity file.</source>
+        <translation>A letöltött fájl nem LoTW-felhasználói aktivitásfájl.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>SSL/TLS support is not installed, so %1 cannot be fetched.</source>
+        <translation>Nincs telepítve SSL/TLS-támogatás, ezért a(z) %1 nem tölthető le.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>The server answered with HTTP status %1.</source>
+        <translation>A kiszolgáló %1 HTTP-állapotkóddal válaszolt.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>The download was stopped at %1 MB.</source>
+        <translation>A letöltés %1 MB-nál leállt.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>The file could not be saved: %1</source>
+        <translation>A fájl nem menthető: %1</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Network error: %1</source>
+        <translation>Hálózati hiba: %1</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Download of %1 failed</source>
+        <translation>A(z) %1 letöltése sikertelen</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>The copy in use has not been changed.</source>
+        <translation>A használatban lévő példány nem változott.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>downloading...</source>
+        <translation>letöltés folyamatban...</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>version unknown</source>
+        <translation>ismeretlen verzió</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1, bundled with this release</source>
+        <translation>%1, ezzel a kiadással érkezett</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1, downloaded</source>
+        <translation>%1, letöltve</translation>
+    </message>
 </context>
 <context>
     <name>CountryDat</name>
@@ -1093,7 +1158,7 @@ Formátum:
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="164"/>
-        <source>St. Pierre &amp; Miquelo</source>
+        <source>St. Pierre &amp; Miquelon</source>
         <translation>Saint-Pierre és Miquelon</translation>
     </message>
     <message>
@@ -2920,12 +2985,6 @@ Formátum:
         <translation>QSO kezdés</translation>
     </message>
     <message>
-        <location filename="../logqso.ui" line="82"/>
-        <location filename="../logqso.ui" line="114"/>
-        <source>dd/MM/yyyy HH:mm:ss</source>
-        <translation>yyyy.MM.dd HH:mm:ss</translation>
-    </message>
-    <message>
         <location filename="../logqso.ui" line="98"/>
         <source>End</source>
         <translation>QSO befejezés</translation>
@@ -3020,18 +3079,6 @@ Formátum:
         <location filename="../mainwindow.ui" line="282"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Lost audio blocks. FT8 15sec interval has 52 blocks of audio data, where decoder being triggered if audio data reached 51 blocks in &apos;SWL/late strat of decoder&apos; modes or 50 blocks otherwise. Under Windows OS there were multiple reports audio data being lost, for Windows OS there is workaround implemented to start FT8 decoder if there at least 46 out of 52 audio blocks received. Lost audio blocks notification lets user know there is something wrong in the setup.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Elvesztett audio blokkok. Az FT8 15 másodperces periódusa 52 audio blokkot tartalmaz; SWL/Késleltetett dekódolás üzemben a dekódolás akkor aktiválódik, ha az audio adatok elérték az 51. blokkot , vagy egyéb esetben az 50. blokkot. A Windows operációs rendszer alatt, ha néhány audio blokk elveszik az FT8 dekóder elindul akkor is, ha az 52 audio blokkból legalább 46 megérkezett. Az elveszített audio blokkokról ez az értesítés tudatja a felhasználóval, hogy helytelenek a beállítások.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="288"/>
-        <location filename="../mainwindow.cpp" line="1885"/>
-        <location filename="../mainwindow.cpp" line="3738"/>
-        <location filename="../mainwindow.cpp" line="3751"/>
-        <location filename="../mainwindow.cpp" line="6284"/>
-        <location filename="../mainwindow.cpp" line="6289"/>
-        <location filename="../mainwindow.cpp" line="6335"/>
-        <location filename="../mainwindow.cpp" line="6346"/>
-        <source>Band Activity</source>
-        <translation>Sáv_aktivítás</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="397"/>
@@ -6045,6 +6092,16 @@ Ezt csak egyszer kérdezzük meg.</translation>
         <location filename="../../mainwindow.cpp"/>
         <source>ensemble - the RX-only recipe of the former Ensemble preset (no menu entry)</source>
         <translation>együttes - a korábbi Ensemble előbeállítás csak RX receptje (nincs menüpont)</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Use dar&amp;k style</source>
+        <translation>Sötét stílus használata</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Band buttons</source>
+        <translation>Sávgombok</translation>
     </message>
 </context>
 <context>
@@ -9626,6 +9683,46 @@ hangkártya módosítási tevékenységet</translation>
         <location filename="../Configuration.ui"/>
         <source>Replace the table with the published default frequencies of the selected contest.</source>
         <translation>A táblázat cseréje a kiválasztott verseny közzétett alapértelmezett frekvenciáira.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Translate DXCC na&amp;mes</source>
+        <translation>DXCC-nevek &amp;fordítása</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Show DXCC names in the language of the user interface. When off, the English names are shown.</source>
+        <translation>A DXCC-nevek megjelenítése a felhasználói felület nyelvén. Kikapcsolva az angol nevek jelennek meg.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Data files</source>
+        <translation>Adatfájlok</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>The newer of the downloaded copy and the copy bundled with this release is used.</source>
+        <translation>Az újabb példány kerül felhasználásra: a letöltött vagy az ezzel a kiadással érkezett.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Download the latest cty.dat from country-files.com. The DXCC entities, CQ and ITU zones and continents shown for each call come from it.</source>
+        <translation>A legújabb cty.dat letöltése a country-files.com oldalról. Az egyes hívójelekhez megjelenített DXCC-entitások, CQ- és ITU-zónák és kontinensek ebből származnak.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Download latest</source>
+        <translation>Legújabb letöltése</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>LoTW users:</source>
+        <translation>LoTW-felhasználók:</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Download the latest LoTW user activity file from ARRL. Stations that uploaded to LoTW during the last 365 days are treated as LoTW users.</source>
+        <translation>A legújabb LoTW-felhasználói aktivitásfájl letöltése az ARRL-től. Azok az állomások számítanak LoTW-felhasználónak, amelyek az elmúlt 365 napban töltöttek fel adatot a LoTW-be.</translation>
     </message>
 </context>
 <context>

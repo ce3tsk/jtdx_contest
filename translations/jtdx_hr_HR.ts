@@ -443,6 +443,71 @@ Format:
         <source>Are you sure you want to discard your current contest frequencies and replace them with the FT8 and FT4 entries from the working frequencies?</source>
         <translation>Jeste li sigurni da želite odbaciti trenutne frekvencije natjecanja i zamijeniti ih unosima FT8 i FT4 iz radnih frekvencija?</translation>
     </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>The downloaded file is not a cty.dat file.</source>
+        <translation>Preuzeta datoteka nije cty.dat datoteka.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>The downloaded file is not a LoTW user activity file.</source>
+        <translation>Preuzeta datoteka nije datoteka aktivnosti LoTW korisnika.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>SSL/TLS support is not installed, so %1 cannot be fetched.</source>
+        <translation>Podrška za SSL/TLS nije instalirana pa se %1 ne može preuzeti.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>The server answered with HTTP status %1.</source>
+        <translation>Poslužitelj je odgovorio HTTP statusom %1.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>The download was stopped at %1 MB.</source>
+        <translation>Preuzimanje je zaustavljeno na %1 MB.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>The file could not be saved: %1</source>
+        <translation>Datoteku nije moguće spremiti: %1</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Network error: %1</source>
+        <translation>Mrežna pogreška: %1</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Download of %1 failed</source>
+        <translation>Preuzimanje %1 nije uspjelo</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>The copy in use has not been changed.</source>
+        <translation>Kopija u uporabi nije promijenjena.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>downloading...</source>
+        <translation>preuzimanje...</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>version unknown</source>
+        <translation>nepoznata verzija</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1, bundled with this release</source>
+        <translation>%1, isporučeno s ovom verzijom</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1, downloaded</source>
+        <translation>%1, preuzeto</translation>
+    </message>
 </context>
 <context>
     <name>CountryDat</name>
@@ -1093,8 +1158,8 @@ Format:
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="164"/>
-        <source>St. Pierre &amp; Miquelo</source>
-        <translation>Sv. Pierre &amp; Miquelo</translation>
+        <source>St. Pierre &amp; Miquelon</source>
+        <translation>Sv. Pierre &amp; Miquelon</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="165"/>
@@ -2920,12 +2985,6 @@ Format:
         <translation>Početak QSO</translation>
     </message>
     <message>
-        <location filename="../logqso.ui" line="82"/>
-        <location filename="../logqso.ui" line="114"/>
-        <source>dd/MM/yyyy HH:mm:ss</source>
-        <translation>dd.MM.yyyy. HH:mm:ss</translation>
-    </message>
-    <message>
         <location filename="../logqso.ui" line="98"/>
         <source>End</source>
         <translation>Kraj</translation>
@@ -3020,18 +3079,6 @@ Format:
         <location filename="../mainwindow.ui" line="282"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Lost audio blocks. FT8 15sec interval has 52 blocks of audio data, where decoder being triggered if audio data reached 51 blocks in &apos;SWL/late strat of decoder&apos; modes or 50 blocks otherwise. Under Windows OS there were multiple reports audio data being lost, for Windows OS there is workaround implemented to start FT8 decoder if there at least 46 out of 52 audio blocks received. Lost audio blocks notification lets user know there is something wrong in the setup.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt; Izgubljeni audio blokovi. FT8 interval od 15 sekundi ima 52 bloka audio podataka, pri čemu se dekoder aktivira ako audio podaci dosegnu 51 blok u načinu rada &quot;SWL / kasni početak dekodera&quot; ili 50 blokova u suprotnom. Pod Windows OS-om bilo je više izvještaja o gubitku audio podataka, za Windows OS implementirano je rješenje za pokretanje FT8 dekodera ako je primljeno najmanje 46 od 52 audio bloka. Obavijest o izgubljenim zvučnim blokovima daje korisniku do znanja da nešto nije u redu u postavljanju.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="288"/>
-        <location filename="../mainwindow.cpp" line="1885"/>
-        <location filename="../mainwindow.cpp" line="3738"/>
-        <location filename="../mainwindow.cpp" line="3751"/>
-        <location filename="../mainwindow.cpp" line="6284"/>
-        <location filename="../mainwindow.cpp" line="6289"/>
-        <location filename="../mainwindow.cpp" line="6335"/>
-        <location filename="../mainwindow.cpp" line="6346"/>
-        <source>Band Activity</source>
-        <translation>Aktivnost na Opsegu</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="397"/>
@@ -6045,6 +6092,16 @@ Ovo se pita samo jednom.</translation>
         <location filename="../../mainwindow.cpp"/>
         <source>ensemble - the RX-only recipe of the former Ensemble preset (no menu entry)</source>
         <translation>ansambl - recept samo za RX iz bivšeg predloška Ensemble (bez stavke izbornika)</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Use dar&amp;k style</source>
+        <translation>Koristi ta&amp;mni stil</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Band buttons</source>
+        <translation>Gumbi opsega</translation>
     </message>
 </context>
 <context>
@@ -9627,6 +9684,46 @@ promjena zvučne kartice</translation>
         <location filename="../Configuration.ui"/>
         <source>Replace the table with the published default frequencies of the selected contest.</source>
         <translation>Zamijeni tablicu objavljenim zadanim frekvencijama odabranog natjecanja.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Translate DXCC na&amp;mes</source>
+        <translation>Prevedi i&amp;mena DXCCa</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Show DXCC names in the language of the user interface. When off, the English names are shown.</source>
+        <translation>Prikaži imena DXCCa na jeziku korisničkog sučelja. Kad je isključeno, prikazuju se engleska imena.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Data files</source>
+        <translation>Datoteke podataka</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>The newer of the downloaded copy and the copy bundled with this release is used.</source>
+        <translation>Koristi se novija kopija: preuzeta ili ona isporučena s ovom verzijom.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Download the latest cty.dat from country-files.com. The DXCC entities, CQ and ITU zones and continents shown for each call come from it.</source>
+        <translation>Preuzmi najnoviji cty.dat s country-files.com. Iz njega dolaze DXCC entiteti, CQ i ITU zone te kontinenti prikazani za svaki pozivni znak.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Download latest</source>
+        <translation>Preuzmi najnovije</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>LoTW users:</source>
+        <translation>LoTW korisnici:</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Download the latest LoTW user activity file from ARRL. Stations that uploaded to LoTW during the last 365 days are treated as LoTW users.</source>
+        <translation>Preuzmi najnoviju datoteku aktivnosti LoTW korisnika s ARRL-a. Stanice koje su u zadnjih 365 dana poslale podatke na LoTW smatraju se LoTW korisnicima.</translation>
     </message>
 </context>
 <context>

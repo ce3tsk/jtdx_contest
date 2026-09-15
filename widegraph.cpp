@@ -38,6 +38,7 @@ WideGraph::WideGraph(QSettings * settings, JTDXDateTime * jtdxtime, QWidget *par
   ui->widePlot->setMaximumHeight(800);
   ui->widePlot->setCurrent(false);
   ui->cbControls->setCursor(Qt::ArrowCursor);
+  ui->cbControls->installEventFilter (this);   // CE3TSK: see eventFilter ()
   ui->cbBars->setCursor(Qt::ArrowCursor);
 
   connect(ui->widePlot, SIGNAL(freezeDecode1(int)),this,
@@ -413,6 +414,20 @@ void WideGraph::setFilter(bool b)                             //Filter
 void WideGraph::setHoundFilter(bool b)
 {
   ui->widePlot->setHoundFilter(b);
+}
+
+/* CE3TSK: the Controls check box floats over the plotter's 30 px frequency scale at a fixed position
+   from the .ui, its bottom at y 27. Fitting widget size limits to the size hint - at startup and on
+   a style or font change - makes it taller, and growing downwards it covered the scale's separator
+   line. Keep its bottom where the .ui put it, whatever its height. */
+bool WideGraph::eventFilter (QObject * object, QEvent * event)
+{
+  if (object == ui->cbControls && QEvent::Resize == event->type ())
+    {
+      int const y {qMax (0, 27 - ui->cbControls->height ())};
+      if (ui->cbControls->y () != y) ui->cbControls->move (ui->cbControls->x (), y);
+    }
+  return QDialog::eventFilter (object, event);
 }
 
 void WideGraph::setDarkStyle(bool b)

@@ -59,47 +59,47 @@
     <message>
         <location filename="../about.cpp"/>
         <source>Designed, built and measured by &lt;b&gt;Tihomir Sokcevic, CE3TSK&lt;/b&gt;, Santiago de Chile, 2025-2026</source>
-        <translation>設計・開発・測定: &lt;b&gt;Tihomir Sokcevic, CE3TSK&lt;/b&gt;、チリ・サンティアゴ、2025-2026</translation>
+        <translation>設計・開発・測定: &lt;b&gt;Tihomir Sokcevic, CE3TSK&lt;/b&gt;（チリ・サンティアゴ、2025-2026）</translation>
     </message>
     <message>
         <location filename="../about.cpp"/>
         <source>A rebuilt FT8 and FT4 decoder - alternate pass, ensemble, pipelined RX phase and TX&lt;br&gt;background, four-period hint memory, fixed data races, measured presets - and built-in&lt;br&gt;support for the WW Digi DX Contest: the grid exchange, points and multipliers, a separate&lt;br&gt;contest log, contest-aware autoselect. Every number behind it comes from recorded audio&lt;br&gt;and a script in the tree. The GUI has been repaired throughout and the dark style now works.</source>
-        <translation>FT8 と FT4 のデコーダーを作り直しました。代替パス、アンサンブル、パイプライン化した RX&lt;br&gt;フェーズと TX バックグラウンド、4 周期分のヒントメモリ、データ競合の修正、実測に基づく&lt;br&gt;プリセット。さらに WW Digi DX Contest に標準対応し、グリッド交換、得点と乗数、独立した&lt;br&gt;コンテストログ、ルールを理解する自動選択を備えます。すべての数値は録音した音声とツリー内の&lt;br&gt;スクリプトによる実測です。GUI は全面的に修正され、ダークスタイルが正しく動作します。</translation>
+        <translation>FT8/FT4デコーダーを再構築しました。alternate pass、ensemble、パイプライン化されたRXフェーズとTX&lt;br&gt;バックグラウンド、4周期のヒントメモリー、データ競合の修正、実測に基づくプリセットを備え、WW Digi DX Contestにも組み込み&lt;br&gt;対応しています。グリッド交換、ポイントとマルチプライヤー、独立した&lt;br&gt;コンテストログ、コンテスト対応の自動選択をサポートします。これらの数値はすべて、録音音声&lt;br&gt;とソースツリー内のスクリプトによる測定に基づいています。GUI全体も修復され、ダークスタイルも正常に動作します。</translation>
     </message>
     <message>
         <location filename="../about.cpp"/>
         <source>&amp;copy; 2025-2026 Tihomir Sokcevic, CE3TSK (the decoder work, the contest support, the measurements and the documents).</source>
-        <translation>&amp;copy; 2025-2026 Tihomir Sokcevic, CE3TSK (デコーダーの開発、コンテスト対応、測定、および文書)。</translation>
+        <translation>© 2025-2026 Tihomir Sokcevic, CE3TSK（デコーダー、コンテスト対応、測定および文書）。</translation>
     </message>
     <message>
         <location filename="../about.cpp"/>
         <source>&lt;b&gt;Thanks to the operators who beta tested the first release candidates&lt;/b&gt; on the air:</source>
-        <translation>&lt;b&gt;最初のリリース候補をオンエアでベータテストしてくださった局に感謝します&lt;/b&gt;:</translation>
+        <translation>&lt;b&gt;最初のリリース候補を実運用でベータテストしてくださったオペレーターの皆様に感謝します&lt;/b&gt;:</translation>
     </message>
     <message>
         <location filename="../about.cpp"/>
         <source>&lt;b&gt;Derivative work of JTDX&lt;/b&gt; by Igor Chernikov, UA3DJY, and Arvo J&amp;auml;rve, ES1JA, &amp;copy; 2016-2022,&lt;br&gt;created with contributions from</source>
-        <translation>&lt;b&gt;JTDX の派生物&lt;/b&gt; 作者 Igor Chernikov, UA3DJY, および Arvo J&amp;auml;rve, ES1JA, &amp;copy; 2016-2022,&lt;br&gt;次の各局の貢献により作成:</translation>
+        <translation>&lt;b&gt;JTDX の派生作品&lt;/b&gt;。Igor Chernikov, UA3DJY および Arvo Järve, ES1JA による © 2016-2022。&lt;br&gt;以下の方々の貢献を受けて作成されています:</translation>
     </message>
     <message>
         <location filename="../about.cpp"/>
         <source>YL3GBC family and LY3BG family: Vytas and Rimas Kudelis.</source>
-        <translation>YL3GBC ファミリーと LY3BG ファミリー: Vytas および Rimas Kudelis。</translation>
+        <translation>YL3GBC ファミリーおよび LY3BG ファミリー: Vytas と Rimas Kudelis。</translation>
     </message>
     <message>
         <location filename="../about.cpp"/>
         <source>&lt;b&gt;JTDX is derived from WSJT-X&lt;/b&gt; (forked from WSJT-X v1.7 r6462; FT8 code from v1.8 and v2.0,&lt;br&gt;FT4 from v2.1, WSPR from v2.1.2), &amp;copy; 2001-2022 by Joe Taylor, K1JT, Bill Somerville, G4WJS,&lt;br&gt;Steve Franke, K9AN, and Nico Palermo, IV3NWV.</source>
-        <translation>&lt;b&gt;JTDX は WSJT-X から派生しています&lt;/b&gt; (WSJT-X v1.7 r6462 から分岐、FT8 コードは v1.8 と v2.0、&lt;br&gt;FT4 は v2.1、WSPR は v2.1.2 より)、&amp;copy; 2001-2022 Joe Taylor, K1JT, Bill Somerville, G4WJS,&lt;br&gt;Steve Franke, K9AN, Nico Palermo, IV3NWV。</translation>
+        <translation>&lt;b&gt;JTDX は WSJT-X から派生しています&lt;/b&gt;（WSJT-X v1.7 r6462 からフォーク。FT8コードは v1.8 および v2.0、&lt;br&gt;FT4は v2.1、WSPRは v2.1.2）、© 2001-2022 Joe Taylor, K1JT、Bill Somerville, G4WJS、&lt;br&gt;Steve Franke, K9AN、Nico Palermo, IV3NWV。</translation>
     </message>
     <message>
         <location filename="../about.cpp"/>
         <source>Supports FT8, FT4, JT9, T10 and JT65A for HF amateur radio communication.</source>
-        <translation>HF アマチュア無線通信向けに FT8、FT4、JT9、T10、JT65A に対応しています。</translation>
+        <translation>HFアマチュア無線通信向けに FT8、FT4、JT9、T10、JT65A をサポートします。</translation>
     </message>
     <message>
         <location filename="../about.cpp"/>
         <source>JTDX_contest, JTDX and WSJT-X are licensed under the terms of Version 3&lt;br&gt;of the GNU General Public License (GPL)</source>
-        <translation>JTDX_contest、JTDX、WSJT-X は GNU 一般公衆利用許諾契約書 (GPL)&lt;br&gt;バージョン 3 の条項に基づいて許諾されています</translation>
+        <translation>JTDX_contest、JTDX、WSJT-X は GNU General Public License (GPL) Version 3&lt;br&gt;の条項に基づいてライセンスされています。</translation>
     </message>
     <message>
         <location filename="../about.cpp"/>
@@ -110,7 +110,7 @@
     <message>
         <location filename="../about.cpp"/>
         <source>Support this work on Ko-fi</source>
-        <translation>Ko-fi でこの開発を支援する</translation>
+        <translation>Ko-fi でこの活動を支援</translation>
     </message>
 </context>
 <context>
@@ -226,11 +226,11 @@ Formats:
 	IPv4-address:port
 	[IPv6-address]:port</source>
         <translation>オプションのTCIサービスのホスト名とポート。
-このマシンの適切なデフォルトの場合は空白のままにします。
-フォーマット：
-       →        ホスト名：ポート
-       →        IPv4-address：port
-       →       [IPv6-address]：port</translation>
+このマシンで適切な既定値を使用する場合は空欄のままにします。
+形式:
+	hostname:port
+	IPv4-address:port
+	[IPv6-address]:port</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp" line="2978"/>
@@ -241,11 +241,11 @@ Formats:
 	IPv4-address:port
 	[IPv6-address]:port</source>
         <translation>オプションのネットワークサービスのホスト名とポート。
-このマシンの適切なデフォルトの場合は空白のままにします。
-フォーマット：
-       →      ホスト名：ポート
-       →      IPv4-address：port
-       →      [IPv6-address]：port</translation>
+このマシンで適切な既定値を使用する場合は空欄のままにします。
+形式:
+	hostname:port
+	IPv4-address:port
+	[IPv6-address]:port</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp" line="2991"/>
@@ -254,9 +254,9 @@ Leave blank for a sensible default for the rig.
 Format:
 	[VID[:PID[:VENDOR[:PRODUCT]]]]</source>
         <translation>オプションのデバイス識別。
-リグの適切なデフォルトの場合は空白のままにします。
-フォーマット
-：[VID [：PID [：VENDOR [：PRODUCT]]]]</translation>
+リグの適切な既定値を使用する場合は空欄のままにします。
+形式:
+	[VID[:PID[:VENDOR[:PRODUCT]]]]</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp" line="3026"/>
@@ -286,7 +286,7 @@ Format:
     <message>
         <location filename="../Configuration.cpp" line="3599"/>
         <source>CQ in message</source>
-        <translation>メッセージにＣＱを含む</translation>
+        <translation>メッセージにCQを含む</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp" line="4782"/>
@@ -396,17 +396,17 @@ Format:
     <message>
         <location filename="../Configuration.cpp"/>
         <source>Contest defaults</source>
-        <translation>コンテストの既定値</translation>
+        <translation>コンテスト既定値</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp"/>
         <source>No default frequencies are defined for the selected contest.</source>
-        <translation>選択したコンテストには既定の周波数が定義されていません。</translation>
+        <translation>選択したコンテストには既定周波数が定義されていません。</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp"/>
         <source>Are you sure you want to discard your current contest frequencies and replace them with the selected contest's defaults?</source>
-        <translation>現在のコンテスト周波数を破棄し、選択したコンテストの既定の周波数に置き換えてよろしいですか？</translation>
+        <translation>現在のコンテスト周波数を破棄して、選択したコンテストの既定値に置き換えますか？</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp"/>
@@ -421,27 +421,92 @@ Format:
     <message>
         <location filename="../Configuration.cpp"/>
         <source>Are you sure you want to discard your current contest frequencies and replace them with the loaded ones?</source>
-        <translation>現在のコンテスト周波数を破棄し、読み込んだ周波数に置き換えてよろしいですか？</translation>
+        <translation>現在のコンテスト周波数を破棄して、読み込んだ周波数に置き換えますか？</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp"/>
         <source>Save Contest Frequencies</source>
-        <translation>コンテスト周波数を保存する</translation>
+        <translation>コンテスト周波数を保存</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp"/>
         <source>Merge Contest Frequencies</source>
-        <translation>コンテスト周波数を統合する</translation>
+        <translation>コンテスト周波数を結合</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp"/>
         <source>Reset Contest Frequencies</source>
-        <translation>コンテスト周波数をリセットする</translation>
+        <translation>コンテスト周波数をリセット</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp"/>
         <source>Are you sure you want to discard your current contest frequencies and replace them with the FT8 and FT4 entries from the working frequencies?</source>
-        <translation>現在のコンテスト周波数を破棄し、運用周波数の FT8 と FT4 の項目に置き換えてよろしいですか？</translation>
+        <translation>現在のコンテスト周波数を破棄して、運用周波数の FT8/FT4 項目に置き換えますか？</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>The downloaded file is not a cty.dat file.</source>
+        <translation>ダウンロードしたファイルは cty.dat ファイルではありません。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>The downloaded file is not a LoTW user activity file.</source>
+        <translation>ダウンロードしたファイルは LoTW ユーザーアクティビティファイルではありません。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>SSL/TLS support is not installed, so %1 cannot be fetched.</source>
+        <translation>SSL/TLS サポートがインストールされていないため、%1 を取得できません。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>The server answered with HTTP status %1.</source>
+        <translation>サーバーが HTTP ステータス %1 を返しました。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>The download was stopped at %1 MB.</source>
+        <translation>ダウンロードは %1 MB で停止しました。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>The file could not be saved: %1</source>
+        <translation>ファイルを保存できませんでした：%1</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Network error: %1</source>
+        <translation>ネットワークエラー：%1</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Download of %1 failed</source>
+        <translation>%1 のダウンロードに失敗しました</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>The copy in use has not been changed.</source>
+        <translation>使用中のコピーは変更されていません。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>downloading...</source>
+        <translation>ダウンロード中...</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>version unknown</source>
+        <translation>バージョン不明</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1, bundled with this release</source>
+        <translation>%1、このリリースに同梱</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1, downloaded</source>
+        <translation>%1、ダウンロード済み</translation>
     </message>
 </context>
 <context>
@@ -1093,7 +1158,7 @@ Format:
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="164"/>
-        <source>St. Pierre &amp; Miquelo</source>
+        <source>St. Pierre &amp; Miquelon</source>
         <translation>サンピエール島・ミクロン島</translation>
     </message>
     <message>
@@ -2265,7 +2330,7 @@ Format:
     <message>
         <location filename="../DXLabSuiteCommanderTransceiver.cpp" line="442"/>
         <source>DX Lab Suite Commander retries exhausted sending command &quot;%1&quot;</source>
-        <translation>DX Lab Suite Commanderはコマンド「%1」の送信を再試行します</translation>
+        <translation>DX Lab Suite Commander はコマンド「%1」の送信再試行回数を使い切りました</translation>
     </message>
     <message>
         <location filename="../DXLabSuiteCommanderTransceiver.cpp" line="505"/>
@@ -2311,22 +2376,22 @@ Format:
     <message>
         <location filename="../WFPalette.cpp" line="122"/>
         <source>&amp;OK</source>
-        <translation>OK(&amp;O)</translation>
+        <translation>&amp;OK</translation>
     </message>
     <message>
         <location filename="../WFPalette.cpp" line="123"/>
         <source>&amp;Cancel</source>
-        <translation>キャンセル(&amp;C)</translation>
+        <translation>&amp;Cancel</translation>
     </message>
     <message>
         <location filename="../WFPalette.cpp" line="126"/>
         <source>&amp;Import...</source>
-        <translation>インポート(&amp;I)...</translation>
+        <translation>&amp;Import...</translation>
     </message>
     <message>
         <location filename="../WFPalette.cpp" line="129"/>
         <source>&amp;Export...</source>
-        <translation>エクスポート(&amp;E)...</translation>
+        <translation>&amp;Export...</translation>
     </message>
     <message>
         <location filename="../WFPalette.cpp" line="191"/>
@@ -2391,12 +2456,12 @@ Format:
     <message>
         <location filename="../Configuration.cpp" line="225"/>
         <source>&amp;Mode:</source>
-        <translation>モード：</translation>
+        <translation>モード(&amp;M)：</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp" line="226"/>
         <source>&amp;Frequency (MHz):</source>
-        <translation>周波数（MHz）：</translation>
+        <translation>周波数（MHz）(&amp;F)：</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp" line="232"/>
@@ -2650,7 +2715,7 @@ Format:
     <message>
         <location filename="../HamlibTransceiver.cpp" line="476"/>
         <source>Hamlib error: %1 while %2</source>
-        <translation>Hamlibエラー：%1 while%2</translation>
+        <translation>Hamlibエラー: %2中に%1</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="493"/>
@@ -2770,22 +2835,22 @@ Format:
     <message>
         <location filename="../HamlibTransceiver.cpp" line="1063"/>
         <source>setting split TX VFO mode</source>
-        <translation>スプリットX VFOのモードの設定</translation>
+        <translation>スプリットTX VFOモードを設定</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="1343"/>
         <source>getting PTT state</source>
-        <translation>PTT状態をを取得</translation>
+        <translation>PTT状態を取得</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="1379"/>
         <source>setting PTT on</source>
-        <translation>ＰＴＴをオンに設定</translation>
+        <translation>PTTをオンに設定</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="1387"/>
         <source>setting PTT off</source>
-        <translation>ＰＴＴをオフに設定</translation>
+        <translation>PTTをオフに設定</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="1399"/>
@@ -2889,7 +2954,7 @@ Format:
     <message>
         <location filename="../JTDXMessageBox.cpp" line="54"/>
         <source>Apply</source>
-        <translation>アプライ</translation>
+        <translation>適用</translation>
     </message>
     <message>
         <location filename="../JTDXMessageBox.cpp" line="55"/>
@@ -2918,12 +2983,6 @@ Format:
         <location filename="../logqso.ui" line="66"/>
         <source>Start</source>
         <translation>開始時刻</translation>
-    </message>
-    <message>
-        <location filename="../logqso.ui" line="82"/>
-        <location filename="../logqso.ui" line="114"/>
-        <source>dd/MM/yyyy HH:mm:ss</source>
-        <translation>yyyy-MM-dd HH:mm:ss</translation>
     </message>
     <message>
         <location filename="../logqso.ui" line="98"/>
@@ -2985,12 +3044,12 @@ Format:
     <message>
         <location filename="../logqso.cpp" line="27"/>
         <source>&amp;OK</source>
-        <translation>OK(&amp;O)</translation>
+        <translation>&amp;OK</translation>
     </message>
     <message>
         <location filename="../logqso.cpp" line="28"/>
         <source>&amp;Cancel</source>
-        <translation>キャンセル(&amp;C)</translation>
+        <translation>&amp;Cancel</translation>
     </message>
     <message>
         <location filename="../logqso.cpp" line="222"/>
@@ -3001,21 +3060,9 @@ Format:
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../mainwindow.ui" line="288"/>
-        <location filename="../mainwindow.cpp" line="1885"/>
-        <location filename="../mainwindow.cpp" line="3738"/>
-        <location filename="../mainwindow.cpp" line="3751"/>
-        <location filename="../mainwindow.cpp" line="6284"/>
-        <location filename="../mainwindow.cpp" line="6289"/>
-        <location filename="../mainwindow.cpp" line="6335"/>
-        <location filename="../mainwindow.cpp" line="6346"/>
-        <source>Band Activity</source>
-        <translation>バンドアクティビティ</translation>
-    </message>
-    <message>
         <location filename="../mainwindow.ui" line="397"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If orange or red there has been a rig control failure, click to reset and read the dial frequency.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt; &lt;head /&gt; &lt;body&gt; &lt;p&gt;オレンジ色または赤色の場合はリグコントロールエラーが発生しています。クリックしてリセットし、ダイヤル周波数を読み取ります。.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt; &lt;head /&gt; &lt;body&gt; &lt;p&gt;オレンジ色または赤色の場合はリグコントロールエラーが発生しています。クリックしてリセットし、ダイヤル周波数を読み取ります。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="417"/>
@@ -3102,7 +3149,7 @@ Format:
     <message>
         <location filename="../mainwindow.ui" line="1041"/>
         <source>Search for callsign in database</source>
-        <translation>コールサインをデータベスで検索</translation>
+        <translation>コールサインをデータベースで検索</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1044"/>
@@ -3182,7 +3229,7 @@ Format:
     <message>
         <location filename="../mainwindow.ui" line="1769"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Use different Rx/Tx AF frequencies or set Tx frequency equal to Rx AF frequency.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt; &lt;head /&gt; &lt;body&gt; &lt;p&gt;異なるRx / Tx AF周波数を使用するか、Tx周波数をRx AF周波数に等しく設定します。.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt; &lt;head /&gt; &lt;body&gt; &lt;p&gt;異なるRx / Tx AF周波数を使用するか、Tx周波数をRx AF周波数に等しく設定します。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1775"/>
@@ -3276,7 +3323,7 @@ Format:
     <message>
         <location filename="../mainwindow.ui" line="175"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Avg: accumulated average DT of decoded signals on current band.&lt;/p&gt;&lt;p&gt;Lag: it is decoder lag calculated relatively to beginning of next interval, negative values mean there is spare time available to increase decoding depth, positive values is decoder&apos;s lag into TX or next interval meaning there may be no enough CPU resources for selected decoding depth to provide reliable signal transmission.&lt;/p&gt;&lt;p&gt;&lt;/p&gt;&lt;p&gt;Lag depends on CPU performance, noise conditions, band fullness and other programs using computer, it can be decreased by reducing waterfall bandwidth. If Lag is constantly negative then CPU handling well interval decoding and you can try to make decoding more aggressive to get more decodes.&lt;/p&gt;&lt;p&gt;FT8: if Lag is 0 .. 0.4 then you can still use Autoseq 3/7 (autoselect will trigger change of TX message early enough to transmit full message). If Lag &gt; 0.4 then you should try to decrease decoding aggressivity. If still Lag &gt; 0.4 then Autoseq 2/6 should be used as responding to incoming call will be partially damaged at transmission in AutoSeq 3/7. If constantly Lag  &gt; 2 then your CPU is unsuitable to operate in FT8 with current decoder settings. Sure You can monitor as SWL.&lt;/p&gt;&lt;p&gt;/xx: number of decoded messages in last interval.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;平均：現在のバンドのデコードされた信号の累積平均DT。.&lt;/p&gt;&lt;p&gt;Lag：次の送信の開始に対して相対的に計算されたデコーダーLagです。負の値は、デコード深度を増やすために利用できる時間があることを意味します。正の値は、TXまたは次のインターバルへのデコーダーのラグであり、信頼できる信号送信のためには選択したデコード深度では十分なCPUリソースがない可能性があります。.&lt;/p&gt;&lt;p&gt;&lt;/p&gt;&lt;p&gt;Lagは、CPUパフォーマンス、ノイズ条件、帯域幅の充実度、およびコンピューターを使用するその他のプログラムに依存します。ウォーターフォールの帯域幅を減らすことで、Lagを減らすことができます。 Lagが常に負の場合、CPUはインターバルデコードを適切に処理し、より多くのデコードを取得するためにデコードをより積極的にすることができます。.&lt;/p&gt;&lt;p&gt;FT8：Lagが0 - 0.4の場合では、Autoseq 3/7を使用できます（autoselectは、完全なメッセージを送信するのに十分早く、TXメッセージの変更をトリガーします）。 Lag&gt; 0.4の場合、デコードの深さをを浅くするようにしてください。それでもラグ&gt; 0.4の場合、AutoSeq 2/6を使用する必要があります。AutoSeq3/7での送信時に、着信呼び出しへの応答が部分的に破損するためです。常にラグ&gt; 2である場合、CPUは現在のデコーダ設定でFT8で動作するのに適していません。もちろん、SWLとしては監視できます。.&lt;/p&gt;&lt;p&gt; / xx：最後のピリオドでデコードされたメッセージの数。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;平均：現在のバンドのデコードされた信号の累積平均DT。&lt;/p&gt;&lt;p&gt;Lag：次の送信の開始に対して相対的に計算されたデコーダーLagです。負の値は、デコード深度を増やすために利用できる時間があることを意味します。正の値は、TXまたは次のインターバルへのデコーダーのラグであり、信頼できる信号送信のためには選択したデコード深度では十分なCPUリソースがない可能性があります。&lt;/p&gt;&lt;p&gt;&lt;/p&gt;&lt;p&gt;Lagは、CPUパフォーマンス、ノイズ条件、帯域幅の充実度、およびコンピューターを使用するその他のプログラムに依存します。ウォーターフォールの帯域幅を減らすことで、Lagを減らすことができます。 Lagが常に負の場合、CPUはインターバルデコードを適切に処理し、より多くのデコードを取得するためにデコードをより積極的にすることができます。&lt;/p&gt;&lt;p&gt;FT8：Lagが0 - 0.4の場合では、Autoseq 3/7を使用できます（autoselectは、完全なメッセージを送信するのに十分早く、TXメッセージの変更をトリガーします）。 Lag&gt; 0.4の場合、デコードの深さを浅くするようにしてください。それでもラグ&gt; 0.4の場合、AutoSeq 2/6を使用する必要があります。AutoSeq3/7での送信時に、着信呼び出しへの応答が部分的に破損するためです。常にラグ&gt; 2である場合、CPUは現在のデコーダ設定でFT8で動作するのに適していません。もちろん、SWLとしては監視できます。&lt;/p&gt;&lt;p&gt; / xx：直近の周期でデコードされたメッセージの数。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1371"/>
@@ -3351,7 +3398,7 @@ UA2,UA9,UK,UN,UR,V2,V3,V4,V5,V6,V7,V8,VE,VK,VK0H,VK0M,VK9C,VK9L,VK9M,VK9N,VK9W,V
 VP2E,VP2M,VP2V,VP5,VP6,VP6/D,VP8,VP8/G,VP8/H,VP8/O,VP8/S,VP9,VQ9,VR,VU,VU4,VU7,XE,&lt;br&gt;
 XF4,XT,XU,XW,XX9,XZ,YA,YB,YI,YJ,YK,YL,YN,YO,YS,YU,YV,YV0,Z2,Z3,Z6,Z8,ZA,ZB,ZC4,ZD7,&lt;br&gt;
 ZD8,ZD9,ZF,ZK3,ZL,ZL7,ZL8,ZL9,ZP,ZS,ZS8&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt; &lt;head /&gt; &lt;body&gt; &lt;p&gt;希望する国をコンマで区切りリストを作成：このリストでは、主要国のプリフィックスが使用されます。複合コールサインの場合、プリフィックスはコールサインの先頭で認識されます。 AutoSeq 1..7での自動選択は、選択された通知/優先度に従って希望する国を処理します。この機能はAutoSeq0ではサポートされていません。非FT8モードのみ：場合によっては、ベースコールサインがデコードされたメッセージからコピーされます。そのようなQSOユーザーをログに記録する場合、必要に応じてコールサインを複合コールサインに変更する必要があります。主な国のプリフィックスのリスト：1A、1S、3A、3B6,3B8,3B9,3C、3C0,3D2,3D2 / C、&lt;br&gt;3D2 / R、3DA、3V、3W、3X、3Y / B、3Y / P、4J、4L、4O、4S、4U1I、4U1U、* 4U1V、4W、4X、5A、5B、5H、5N、5R、5T 、&lt;br&gt;5U、5V、5W、5X、5Z、6W、6Y、7O、7P、7Q、7X、8P、8Q、8R、9A、9G、9H、9J、9K、9L、9M2,9M6、9N、9Q、9U、 9V、9X、&lt;br&gt;9Y、A2、A3、A4、A5、A6、A7、A9、AP、BS7、BV、BV9P、BY、C2、C3、C5、C6、C9、CE、CE0X、CE0Y、CE0Z、CE9、CM、&lt;br &gt;CN、CP、CT、CT3、CU、CX、CY0、CY9、D2、D4、D6、DL、DU、E3、E4、E5 / N、E5 / S、E6、E7、EA、EA6、EA8、EA9、 EI、&lt;br&gt;EK、EL、EP、ER、ES、ET、EU、EX、EY、EZ、F、FG、FH、FJ、FK、FK / C、FM、FO、FO / A、FO / C、FO / M、 FP、FR、FS、&lt;br&gt;FT / G、FT / J、FT / T、FT / W、FT / X、FT / Z、FW、FY、G、GD、GI、GJ、* GM / S、GM、GU、GW、H4、H40 、HA、HB、HB0、HC、&lt;br&gt;HC8、HH、HI、HK、HK0 / A、HK0 / M、HL、HP、HR、HS、HV、HZ、I、* IG9、IS、* IT9、J2、J3、J5、J6、J7、J8、 JA、&lt;br&gt;JD / M、JD / O、JT、JW、* JW / B、JX、JY、K、KG4、KH0、KH1、KH2、KH3、KH4、KH5、KH6、KH7K、KH8、KH8 / S、KH9、KL 、&lt;br&gt;KP1、KP2、KP4、KP5、LA、LU、LX、LY、LZ、OA、OD、OE、OH、OH0、OJ0、OK、OM、ON、OX、OY、OZ、P2、P4、P5、PA、 &lt;br&gt;PJ2、PJ4、PJ5、PJ7、PY、PY0F、PY0S、PY0T、PZ、R1FJ、S0、S2、S5、S7、S9、SM、SP、ST、SU、SV、SV / A、SV5、&lt;br&gt;SV9、T2、T30、T31、T32、T33、T5、T7、T8、TA、* TA1、TF、TG、TI、TI9、TJ、TK、TL、TN、TR、TT、TU、TY、TZ、UA 、&lt;br&gt;UA2、UA9、UK、UN、UR、V2、V3、V4、V5、V6、V7、V8、VE、VK、VK0H、VK0M、VK9C、VK9L、VK9M、VK9N、VK9W、VK9X、&lt;br&gt;VP2E、VP2M、VP2V、VP5、VP6、VP6 / D、VP8、VP8 / G、VP8 / H、VP8 / O、VP8 / S、VP9、VQ9、VR、VU、VU4、VU7、XE、&lt;br&gt;XF4、XT、XU、XW、XX9、XZ、YA、YB、YI、YJ、YK、YL、YN、YO、YS、YU、YV、YV0、Z2、Z3、Z6、Z8、ZA、ZB、ZC4、 ZD7、&lt;br&gt;ZD8、ZD9、ZF、ZK3、ZL、ZL7、ZL8、ZL9、ZP、ZS、ZS8 &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt; &lt;head /&gt; &lt;body&gt; &lt;p&gt;希望する国をコンマで区切りリストを作成：このリストでは、主要国のプリフィックスが使用されます。複合コールサインの場合、プリフィックスはコールサインの先頭で認識されます。 AutoSeq 1..7での自動選択は、選択された通知/優先度に従って希望する国を処理します。この機能はAutoSeq0ではサポートされていません。非FT8モードのみ：場合によっては、ベースコールサインがデコードされたメッセージからコピーされます。そのようなQSOユーザーをログに記録する場合、必要に応じてコールサインを複合コールサインに変更する必要があります。主な国のプリフィックスのリスト：1A,1S,3A,3B6,3B8,3B9,3C,3C0,3D2,3D2 / C,&lt;br&gt;3D2 / R,3DA,3V,3W,3X,3Y / B,3Y / P,4J,4L,4O,4S,4U1I,4U1U,* 4U1V,4W,4X,5A,5B,5H,5N,5R,5T ,&lt;br&gt;5U,5V,5W,5X,5Z,6W,6Y,7O,7P,7Q,7X,8P,8Q,8R,9A,9G,9H,9J,9K,9L,9M2,9M6,9N,9Q,9U, 9V,9X,&lt;br&gt;9Y,A2,A3,A4,A5,A6,A7,A9,AP,BS7,BV,BV9P,BY,C2,C3,C5,C6,C9,CE,CE0X,CE0Y,CE0Z,CE9,CM,&lt;br &gt;CN,CP,CT,CT3,CU,CX,CY0,CY9,D2,D4,D6,DL,DU,E3,E4,E5 / N,E5 / S,E6,E7,EA,EA6,EA8,EA9, EI,&lt;br&gt;EK,EL,EP,ER,ES,ET,EU,EX,EY,EZ,F,FG,FH,FJ,FK,FK / C,FM,FO,FO / A,FO / C,FO / M, FP,FR,FS,&lt;br&gt;FT / G,FT / J,FT / T,FT / W,FT / X,FT / Z,FW,FY,G,GD,GI,GJ,* GM / S,GM,GU,GW,H4,H40 ,HA,HB,HB0,HC,&lt;br&gt;HC8,HH,HI,HK,HK0 / A,HK0 / M,HL,HP,HR,HS,HV,HZ,I,* IG9,IS,* IT9,J2,J3,J5,J6,J7,J8, JA,&lt;br&gt;JD / M,JD / O,JT,JW,* JW / B,JX,JY,K,KG4,KH0,KH1,KH2,KH3,KH4,KH5,KH6,KH7K,KH8,KH8 / S,KH9,KL ,&lt;br&gt;KP1,KP2,KP4,KP5,LA,LU,LX,LY,LZ,OA,OD,OE,OH,OH0,OJ0,OK,OM,ON,OX,OY,OZ,P2,P4,P5,PA, &lt;br&gt;PJ2,PJ4,PJ5,PJ7,PY,PY0F,PY0S,PY0T,PZ,R1FJ,S0,S2,S5,S7,S9,SM,SP,ST,SU,SV,SV / A,SV5,&lt;br&gt;SV9,T2,T30,T31,T32,T33,T5,T7,T8,TA,* TA1,TF,TG,TI,TI9,TJ,TK,TL,TN,TR,TT,TU,TY,TZ,UA ,&lt;br&gt;UA2,UA9,UK,UN,UR,V2,V3,V4,V5,V6,V7,V8,VE,VK,VK0H,VK0M,VK9C,VK9L,VK9M,VK9N,VK9W,VK9X,&lt;br&gt;VP2E,VP2M,VP2V,VP5,VP6,VP6 / D,VP8,VP8 / G,VP8 / H,VP8 / O,VP8 / S,VP9,VQ9,VR,VU,VU4,VU7,XE,&lt;br&gt;XF4,XT,XU,XW,XX9,XZ,YA,YB,YI,YJ,YK,YL,YN,YO,YS,YU,YV,YV0,Z2,Z3,Z6,Z8,ZA,ZB,ZC4, ZD7,&lt;br&gt;ZD8,ZD9,ZF,ZK3,ZL,ZL7,ZL8,ZL9,ZP,ZS,ZS8 &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2134"/>
@@ -3398,7 +3445,7 @@ ZD8,ZD9,ZF,ZK3,ZL,ZL7,ZL8,ZL9,ZP,ZS,ZS8&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</sou
     <message>
         <location filename="../mainwindow.ui" line="2557"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Single shot QSO AutoSeq option&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;単一ショットQSOとAutoSeqオプションの切り替え&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;単発QSO用のAutoSeqオプション&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2571"/>
@@ -3408,7 +3455,7 @@ ZD8,ZD9,ZF,ZK3,ZL,ZL7,ZL8,ZL9,ZP,ZS,ZS8&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</sou
     <message>
         <location filename="../mainwindow.ui" line="2602"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Answer worked B4 AutoSeq option&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;ＡｕｔｏＳｅｑ のオプション：交信済局に応答&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;AutoSeq のオプション：交信済局に応答&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2616"/>
@@ -3726,7 +3773,7 @@ list. The list can be maintained in Settings (F2).</source>
     <message>
         <location filename="../mainwindow.ui" line="282"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Lost audio blocks. FT8 15sec interval has 52 blocks of audio data, where decoder being triggered if audio data reached 51 blocks in &apos;SWL/late strat of decoder&apos; modes or 50 blocks otherwise. Under Windows OS there were multiple reports audio data being lost, for Windows OS there is workaround implemented to start FT8 decoder if there at least 46 out of 52 audio blocks received. Lost audio blocks notification lets user know there is something wrong in the setup.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;音声ブロックのロスがありました。FT8 15秒間隔には52ブロックのオーディオデータがあり、オーディオデータが「デコーダーのSWLモード、またはlate strat of decoderモードでは51ブロックに達した場合にデコードが開始され、それ以外の場合は50ブロックからになります。Windows OSでは、複数のオーディオデータが失われたレポートがあります。WindowsOSでは、52個のオーディオブロックのうち少なくとも46個が受信された場合にFT8デコーダーを起動するための回避策が実装されています。紛失した音声ブロックの通知により、セットアップに問題があることがユーザーに通知されます。.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;音声ブロックのロスがありました。FT8 15秒間隔には52ブロックのオーディオデータがあり、オーディオデータが「デコーダーのSWLモード、またはlate strat of decoderモードでは51ブロックに達した場合にデコードが開始され、それ以外の場合は50ブロックからになります。Windows OSでは、複数のオーディオデータが失われたレポートがあります。WindowsOSでは、52個のオーディオブロックのうち少なくとも46個が受信された場合にFT8デコーダーを起動するための回避策が実装されています。紛失した音声ブロックの通知により、セットアップに問題があることがユーザーに通知されます。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1683"/>
@@ -3747,7 +3794,7 @@ list. The list can be maintained in Settings (F2).</source>
         <location filename="../mainwindow.ui" line="2027"/>
         <location filename="../mainwindow.ui" line="2103"/>
         <source>Clr</source>
-        <translation>消去</translation>
+        <translation>クリア</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2097"/>
@@ -3801,7 +3848,7 @@ list. The list can be maintained in Settings (F2).</source>
     <message>
         <location filename="../mainwindow.ui" line="4065"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Generate CQ or directional CQ message&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt; &lt;head /&gt; &lt;body&gt; &lt;p&gt; CQまたは指定CQメッセージの生成.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt; &lt;head /&gt; &lt;body&gt; &lt;p&gt; CQまたは指定CQメッセージの生成&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4068"/>
@@ -3906,7 +3953,7 @@ list. The list can be maintained in Settings (F2).</source>
     <message>
         <location filename="../mainwindow.ui" line="4484"/>
         <source>Transmit during the next 2-minute sequence.</source>
-        <translation>次の2分のシークエンスの間に送信.</translation>
+        <translation>次の2分のシークエンスの間に送信</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4498"/>
@@ -4412,7 +4459,7 @@ Click by right mouse&apos;s button sets JTDX internal time back to system time.&
     <message>
         <location filename="../mainwindow.ui" line="5448"/>
         <source>Enable main window popup</source>
-        <translation>メインのウィンドウポップアップを使用可能</translation>
+        <translation>メインのウィンドウポップアップを有効化</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5464"/>
@@ -4552,7 +4599,7 @@ Click by right mouse&apos;s button sets JTDX internal time back to system time.&
     <message>
         <location filename="../mainwindow.ui" line="5809"/>
         <source>Enable</source>
-        <translation>可能</translation>
+        <translation>有効</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5817"/>
@@ -4582,7 +4629,7 @@ Click by right mouse&apos;s button sets JTDX internal time back to system time.&
     <message>
         <location filename="../mainwindow.ui" line="5857"/>
         <source>Enable hound mode</source>
-        <translation>Hound モードを有効</translation>
+        <translation>Hound モードを有効化</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5868"/>
@@ -4664,7 +4711,7 @@ Click by right mouse&apos;s button sets JTDX internal time back to system time.&
     <message>
         <location filename="../mainwindow.ui" line="6029"/>
         <source>wideband DX Call search</source>
-        <translation>ワイドバンドDX呼び出し検索</translation>
+        <translation>ワイドバンドDXコール検索</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="6037"/>
@@ -4955,68 +5002,6 @@ Click by right mouse&apos;s button sets JTDX internal time back to system time.&
         <translation>キーボードショートカット</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="3179"/>
-        <source>&lt;table cellspacing=1&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F1       &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Online User&apos;s Guide&lt;/td&gt;&lt;td&gt;&lt;b&gt;Ctrl+F1  &lt;/b&gt;&lt;/td&gt;&lt;td&gt;About JTDX&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F2       &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Open configuration window&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F3       &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Display keyboard shortcuts&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F4       &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Clear DX Call/Grid and Tx messages&lt;/td&gt;&lt;td&gt;&lt;b&gt;Alt+F4   &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Exit program&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F5       &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Display special mouse commands&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F6       &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Open next file in directory&lt;/td&gt;&lt;td&gt;&lt;b&gt;Shift+F6 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Decode all remaining files in directory&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F7       &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Open log by assigned in the operating system viewer&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F11      &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Move Rx frequency down 1 Hz&lt;/td&gt;&lt;td&gt;&lt;b&gt;Ctrl+F11 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Move Rx and Tx frequencies down 1 Hz&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F12      &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Move Rx frequency up 1 Hz&lt;/td&gt;&lt;td&gt;&lt;b&gt;Ctrl+F12 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Move Rx and Tx frequencies up 1 Hz&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+1-6  &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Set now transmission to this number on Tab 1&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Ctl+1-6  &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Set next transmission to this number on Tab 1&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+Ctrl+A    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Clear wanted callsign list&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+B/C  &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Switch to FT8/FT4 mode&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+D    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Decode again at QSO frequency&lt;/td&gt;&lt;td&gt;&lt;b&gt;Shift+D  &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Full decode (both windows)&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+E    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Erase&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+F    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Toggle bypass all text filters&lt;/td&gt;&lt;td&gt;&lt;b&gt;Ctrl+F   &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Edit the free text message box&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+G    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Generate standard messages&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+H    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Halt Tx&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Ctrl+L   &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Lookup callsign in database, generate standard messages&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+M    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Monitor&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+N    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Enable Tx&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+Q    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Log QSO&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+S    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Stop monitoring&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+T    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Tune&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+V    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Save the most recently completed *.wav file&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+Z    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Filter, this shortcut is being supported in main UI and widegraph UI&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Esc    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Halt Tx&lt;/td&gt;&lt;/tr&gt;
-&lt;/table&gt;</source>
-        <extracomment>Keyboard shortcuts help window contents</extracomment>
-        <translation>&lt;table cellspacing=&quot;1&quot;&gt;
-  &lt;tbody&gt;&lt;tr&gt;&lt;td&gt;&lt;strong&gt;F1 &lt;/strong&gt;&lt;/td&gt;&lt;td&gt;オンライン・ユーザー・ガイド&lt;/td&gt;&lt;td&gt;&lt;strong&gt;Ctrl+F1 &lt;/strong&gt;&lt;/td&gt;&lt;td&gt;JTDXについて&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;strong&gt;F2 &lt;/strong&gt;&lt;/td&gt;&lt;td&gt;設定ウィンドウを開く&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;strong&gt;F3 &lt;/strong&gt;&lt;/td&gt;&lt;td&gt;キーボード・ショートカットの表示&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;strong&gt;F4 &lt;/strong&gt;&lt;/td&gt;&lt;td&gt;DXコール/グリッドおよびTxメッセージのクリア&lt;/td&gt;&lt;td&gt;&lt;strong&gt;Alt+F4 &lt;/strong&gt;&lt;/td&gt;&lt;td&gt;プログラムの終了&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;strong&gt;F5 &lt;/strong&gt;&lt;/td&gt;&lt;td&gt;スペシャル・マウス・コマンドの表示&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;strong&gt;F6 &lt;/strong&gt;&lt;/td&gt;&lt;td&gt;ディレクトリ内の次のファイルを開く&lt;/td&gt;&lt;td&gt;&lt;strong&gt;Shift+F6 &lt;/strong&gt;&lt;/td&gt;&lt;td&gt;ディレクトリ内の残りのすべてのファイルをデコードする&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;strong&gt;F7 &lt;/strong&gt;&lt;/td&gt;&lt;td&gt;OSのビューアでログを開く&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;strong&gt;F11 &lt;/strong&gt;&lt;/td&gt;&lt;td&gt;Rxの周波数を1Hz下に移動&lt;/td&gt;&lt;td&gt;&lt;strong&gt;Ctrl+F11 &lt;/strong&gt;&lt;/td&gt;&lt;td&gt;RxおよびTxの周波数を1Hz下に移動&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;strong&gt;F12 &lt;/strong&gt;&lt;/td&gt;&lt;td&gt;Rxの周波数を1Hz上に移動&lt;/td&gt;&lt;td&gt;&lt;strong&gt;Ctrl+F12 &lt;/strong&gt;&lt;/td&gt;&lt;td&gt;RxとTxの周波数を1Hz上に移動&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;strong&gt;Alt+1-6  &lt;/strong&gt;&lt;/td&gt;&lt;td&gt;タブ1でこの番号を今の送信に設定する&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;strong&gt;Ctl+1-6 &lt;/strong&gt;&lt;/td&gt;&lt;td&gt;タブ1でこの番号を次の送信に設定する&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;strong&gt;Alt+Ctrl+A &lt;/strong&gt;&lt;/td&gt;&lt;td&gt;wanted コールサインリストをクリアする&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;strong&gt;Alt+B/C &lt;/strong&gt;&lt;/td&gt;&lt;td&gt;FT8とFT4のモードに切り替え&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;strong&gt;Alt+D &lt;/strong&gt;&lt;/td&gt;&lt;td&gt;QSO周波数を再度デコード&lt;/td&gt;&lt;td&gt;&lt;strong&gt;Shift+D &lt;/strong&gt;&lt;/td&gt;&lt;td&gt;全てを再デコード(両ウィンドウ)&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;strong&gt;Alt+E &lt;/strong&gt;&lt;/td&gt;&lt;td&gt;消去&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;strong&gt;Alt+F &lt;/strong&gt;&lt;/td&gt;&lt;td&gt;すべてのテキストフィルタをバイパスするかどうかを切り替える&lt;/td&gt;&lt;td&gt;&lt;strong&gt;Ctrl+F &lt;/strong&gt;&lt;/td&gt;&lt;td&gt;フリーテキストメッセージボックスを編集する&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;strong&gt;Alt+G &lt;/strong&gt;&lt;/td&gt;&lt;td&gt;標準的なメッセージの生成&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;strong&gt;Alt+H &lt;/strong&gt;&lt;/td&gt;&lt;td&gt;送信停止&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;strong&gt;Ctrl+L &lt;/strong&gt;&lt;/td&gt;&lt;td&gt;データベースでコールサインを検索し、標準メッセージを生成する&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;strong&gt;Alt+M &lt;/strong&gt;&lt;/td&gt;&lt;td&gt;モニター&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;strong&gt;Alt+N &lt;/strong&gt;&lt;/td&gt;&lt;td&gt;送信開始&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;strong&gt;Alt+Q &lt;/strong&gt;&lt;/td&gt;&lt;td&gt;ログに記載&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;strong&gt;Alt+S &lt;/strong&gt;&lt;/td&gt;&lt;td&gt;モニターの停止&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;strong&gt;Alt+T &lt;/strong&gt;&lt;/td&gt;&lt;td&gt;チューン&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;
-  &lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;strong&gt;Alt+V &lt;/strong&gt;&lt;/td&gt;&lt;td&gt;直近に完成した*.wavファイルを保存する&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;strong&gt;Alt+Z &lt;/strong&gt;&lt;/td&gt;&lt;td&gt;フィルタ、このショートカットはメインUIとワイドグラフUIでサポートされています&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;strong&gt;Esc &lt;/strong&gt;&lt;/td&gt;&lt;td&gt;送信停止&lt;/td&gt;&lt;/tr&gt;
-&lt;/tbody&gt;&lt;/table&gt;</translation>
-    </message>
-    <message>
         <location filename="../mainwindow.cpp" line="3218"/>
         <source>Special Mouse Commands</source>
         <translation>特別なマウスコマンド</translation>
@@ -5115,19 +5100,13 @@ Click by right mouse&apos;s button sets JTDX internal time back to system time.&
         <location filename="../mainwindow.cpp" line="3737"/>
         <location filename="../mainwindow.cpp" line="3750"/>
         <source>check time</source>
-        <translation>PCの時計をチェック&#x3000;ずれ過ぎ</translation>
+        <translation>PC時計ずれ過ぎ</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="4013"/>
         <location filename="../mainwindow.cpp" line="4019"/>
         <source>Confirm change Language</source>
         <translation>言語の変更確認</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.cpp" line="4015"/>
-        <location filename="../mainwindow.cpp" line="4022"/>
-        <source>Are You sure to change UI Language to English, JTDX will restart?</source>
-        <translation>JTDXは再起動されますが、言語を日本語に変更してもよろしいですか?</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="4197"/>
@@ -5272,7 +5251,7 @@ UDP server %2:%3</source>
     <message>
         <location filename="../mainwindow.cpp" line="7070"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Push button to allow Tx/Rx AF frequencies split operation.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt; &lt;head /&gt; &lt;body&gt; &lt;p&gt; Tx / Rx AF周波数スプリット操作を可能にするプッシュボタン。.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt; &lt;head /&gt; &lt;body&gt; &lt;p&gt; Tx / Rx AF周波数スプリット操作を可能にするプッシュボタン。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="7073"/>
@@ -5282,7 +5261,7 @@ UDP server %2:%3</source>
     <message>
         <location filename="../mainwindow.cpp" line="7074"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Push button to lock Tx frequency to the Rx AF frequency.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt; &lt;head /&gt; &lt;body&gt; &lt;p&gt; Tx周波数をRx AF周波数に固定するプッシュボタン。.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt; &lt;head /&gt; &lt;body&gt; &lt;p&gt; Tx周波数をRx AF周波数に固定するプッシュボタン。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="7302"/>
@@ -5332,7 +5311,7 @@ UDP server %2:%3</source>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>Lit while a contest is selected on the Contest tab of the settings</source>
-        <translation>設定の「コンテスト」タブでコンテストが選択されている間、点灯します</translation>
+        <translation>設定の［コンテスト］タブでコンテストが選択されている間点灯します</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
@@ -5342,7 +5321,7 @@ UDP server %2:%3</source>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>The FT8 decoding preset in force: 3 default, P best power, V best value, R recommended, E ensemble, B best results, M max effort, O most results; "Custom" when the controls match no preset - lit in the preset's menu colour</source>
-        <translation>有効な FT8 デコードプリセット: 3 既定、P 最良の電力、V 最良の費用対効果、R 推奨、E アンサンブル、B 最良の結果、M 最大の労力、O 最多の結果。どのプリセットにも一致しない場合は「Custom」- プリセットのメニュー色で点灯します</translation>
+        <translation>現在有効な FT8 デコードプリセット: 3=デフォルト、P=最高性能、V=最良バランス、R=推奨、E=ensemble、B=最良結果、M=最大処理、O=最多結果。「Custom」は各コントロールがどのプリセットにも一致しない場合に表示されます。表示色はそのプリセットのメニュー色です。</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
@@ -5352,7 +5331,7 @@ UDP server %2:%3</source>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>FT8/FT4 threads</source>
-        <translation>FT8/FT4 スレッド</translation>
+        <translation>FT8/FT4 スレッド数</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
@@ -5362,7 +5341,7 @@ UDP server %2:%3</source>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>expert</source>
-        <translation>エキスパート</translation>
+        <translation>上級設定</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
@@ -5372,22 +5351,22 @@ UDP server %2:%3</source>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>ensemble effort</source>
-        <translation>アンサンブルの労力</translation>
+        <translation>アンサンブル処理強度</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>TX background</source>
-        <translation>送信バックグラウンド</translation>
+        <translation>TX バックグラウンド</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>effort</source>
-        <translation>労力</translation>
+        <translation>処理強度</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>ensemble effort: the TOTAL member count reached in the idle time (the members above the RX count run; with none left the extras below run alone)</source>
-        <translation>アンサンブルの労力: 空き時間に到達するメンバーの合計数（RX 数を超えるメンバーが実行されます。残りがなければ、下の追加分が単独で実行されます）</translation>
+        <translation>アンサンブル処理強度: アイドル時間内に到達させるメンバーの総数です（RX数を超えるメンバーを実行し、残りのメンバーがなければ下記の追加処理だけを実行します）。</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
@@ -5407,42 +5386,42 @@ UDP server %2:%3</source>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>Read a wav file, detect whether it is 32 or 16 bit, and save a converted copy with a _16 or _32 suffix. All embedded metadata is carried over.</source>
-        <translation>wav ファイルを読み込み、32 ビットか 16 ビットかを判定し、接尾辞 _16 または _32 を付けた変換済みのコピーを保存します。埋め込まれたメタデータはすべて引き継がれます。</translation>
+        <translation>wav ファイルを読み込み、32ビットか16ビットかを判定し、_16 または _32 のサフィックスを付けた変換コピーを保存します。埋め込まれたメタデータはすべて引き継がれます。</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>JTDX_contest Web site</source>
-        <translation>JTDX_contest ウェブサイト</translation>
+        <translation>JTDX_contest Web サイト</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>use low thresholds (1)</source>
-        <translation>低いしきい値を使う (1)</translation>
+        <translation>低しきい値を使用 (1)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>OSD order 2 for every candidate (weakest signals, about 3x CPU)</source>
-        <translation>すべての候補に OSD 次数 2（最も弱い信号、CPU 約 3 倍）</translation>
+        <translation>すべての候補に OSD 次数2（最弱信号向け、CPU負荷 約3倍）</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>second slicing pass (2 or more threads, about 2x time)</source>
-        <translation>2 回目の分割パス（2 スレッド以上、時間約 2 倍）</translation>
+        <translation>2回目のスライシングパス（2スレッド以上、所要時間 約2倍）</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>second slicing pass  (2 or more threads, about 2x time - FT4 needs it: 1715 messages with it, 1625 without)</source>
-        <translation>2 回目の分割パス（2 スレッド以上、時間約 2 倍 - FT4 には必要: あり 1715 メッセージ、なし 1625）</translation>
+        <translation>2回目のスライシングパス（2スレッド以上、所要時間 約2倍 — FT4では必要: 有効時1715メッセージ、無効時1625）</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>OSD order 2 for every candidate (weakest signals, about 2x CPU)</source>
-        <translation>すべての候補に OSD 次数 2（最も弱い信号、CPU 約 2 倍）</translation>
+        <translation>すべての候補に OSD 次数2（最弱信号向け、CPU負荷 約2倍）</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>alternate pass on the residual  (+16, 11% - dominated: 5 members give more for less)</source>
-        <translation>残差に対する代替パス（+16、11% - 劣位: メンバー 5 のほうが少ない代償で多く得られます）</translation>
+        <translation>残差に alternate pass（+16、11% — 非効率: 5メンバーの方が少ない処理で多く得られる）</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
@@ -5452,117 +5431,117 @@ UDP server %2:%3</source>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>1 member</source>
-        <translation>メンバー1</translation>
+        <translation>1メンバー</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>2 members</source>
-        <translation>メンバー2</translation>
+        <translation>2メンバー</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>3 members</source>
-        <translation>メンバー3</translation>
+        <translation>3メンバー</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>4 members</source>
-        <translation>メンバー4</translation>
+        <translation>4メンバー</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>5 members</source>
-        <translation>メンバー5</translation>
+        <translation>5メンバー</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>6 members</source>
-        <translation>メンバー6</translation>
+        <translation>6メンバー</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>1 member   (+20, 13% of the budget at 8 threads)</source>
-        <translation>メンバー1   (+20, 13% (8 スレッド時の処理時間に対する割合))</translation>
+        <translation>1メンバー（+20、8スレッド時の許容処理量の13%）</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>2 members  (+48, 18%)</source>
-        <translation>メンバー2  (+48, 18%)</translation>
+        <translation>2メンバー（+48、18%）</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>3 members  (+72, 23% - the knee of the curve)</source>
-        <translation>メンバー3  (+72, 23% - 曲線の変曲点)</translation>
+        <translation>3メンバー（+72、23% — 性能向上の折れ点）</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>4 members  (+86, 28%)</source>
-        <translation>メンバー4  (+86, 28%)</translation>
+        <translation>4メンバー（+86、28%）</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>5 members  (+98, 33% - all that is worth taking)</source>
-        <translation>メンバー5  (+98, 33% - 取る価値があるのはここまで)</translation>
+        <translation>5メンバー（+98、33% — 実用上ここまで）</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>6 members  (+100, 39% - only 2 more than five)</source>
-        <translation>メンバー6  (+100, 39% - 5 個より 2 件多いだけ)</translation>
+        <translation>6メンバー（+100、39% — 5メンバーより+2だけ）</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>alternate-approach pass: 7 cycles + OSD order 2 on the subtracted band (2 or more threads)</source>
-        <translation>代替手法のパス: 7 サイクル + 減算後の帯域に OSD 次数 2（2 スレッド以上）</translation>
+        <translation>別方式パス: 7サイクル + 減算後の帯域に OSD 次数2（2スレッド以上）</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>budget auto: fill the reply time (~2.7 s) - more members when the band is quiet</source>
-        <translation>バジェット自動: 応答時間を埋めます（約 2.7 秒）- バンドが空いているときはメンバーを増やします</translation>
+        <translation>自動調整: 応答期限までの処理時間（約2.7秒）を使い切る — バンドが静かなほどメンバー数を増やす</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>auto: 3 members with 12 or more threads, 2 from 6, 1 from 3</source>
-        <translation>自動: 12 スレッド以上でメンバー 3、6 から 2、3 から 1</translation>
+        <translation>自動: 12スレッド以上で3メンバー、6以上で2、3以上で1</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>1 member  (+7 msgs, +1.2 s at 12 threads on the benchmark)</source>
-        <translation>メンバー1  (+7 件, +1.2 s 12 スレッドのベンチマークで)</translation>
+        <translation>1メンバー（+7メッセージ、ベンチマークの12スレッド時で+1.2秒）</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>2 members  (+10, +2.3 s)</source>
-        <translation>メンバー2  (+10, +2.3 s)</translation>
+        <translation>2メンバー（+10、+2.3秒）</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>3 members  (+13, +5.3 s)</source>
-        <translation>メンバー3  (+13, +5.3 s)</translation>
+        <translation>3メンバー（+13、+5.3秒）</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>4 members  (+15, +7.9 s)</source>
-        <translation>メンバー4  (+15, +7.9 s)</translation>
+        <translation>4メンバー（+15、+7.9秒）</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>5 members  (+16, +11.5 s - too slow for a 15 s period on this machine, for replays)</source>
-        <translation>メンバー5  (+16, +11.5 s - このマシンでは 15 秒周期に間に合わない、再生用)</translation>
+        <translation>5メンバー（+16、+11.5秒 — このマシンでは15秒周期には遅すぎる。リプレイ用）</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>auto: as many members as fit before the next decode (1 s margin)</source>
-        <translation>自動: 次のデコードまでに収まるだけのメンバー（余裕 1 秒）</translation>
+        <translation>自動: 次のデコードまでに収まる最大メンバー数（1秒の余裕を確保）</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>pipeline ensemble: SWL-4 + 1 member (8 or more threads) in the period, SWL-5 + alternate pass + ensemble in the TX background</source>
-        <translation>パイプラインアンサンブル: 期間内に SWL-4 + メンバー 1（8 スレッド以上）、送信バックグラウンドで SWL-5 + 代替パス + アンサンブル</translation>
+        <translation>パイプライン・アンサンブル: 周期内では SWL-4 + 1メンバー（8スレッド以上）、TXバックグラウンドでは SWL-5 + alternate pass + ensemble</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>TX background decoding: decode the period again in the decoder's idle time, with the settings below</source>
-        <translation>送信バックグラウンドでのデコード: 下の設定で、デコーダーの空き時間に期間をもう一度デコードします</translation>
+        <translation>TXバックグラウンドデコード: デコーダーのアイドル時間に、下記の設定で同じ周期をもう一度デコードします</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
@@ -5577,22 +5556,22 @@ UDP server %2:%3</source>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>use low thresholds + subpass (2)</source>
-        <translation>低いしきい値 + サブパスを使う (2)</translation>
+        <translation>低しきい値 + サブパスを使用 (2)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>classic unit: the plain 6-cycle decode (standard thresholds) - what the old decoder still finds, about 0.5 s</source>
-        <translation>クラシックユニット: 素の 6 サイクルデコード（標準しきい値）- 旧デコーダーが今も見つけるもの、約 0.5 秒</translation>
+        <translation>クラシックユニット: 標準しきい値による通常の6サイクルデコード — 旧デコーダーでも検出できる範囲、約0.5秒</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>pipeline ensemble full: the same, TX background effort auto - every member sample, about 2 s more for the same result on every capture measured</source>
-        <translation>パイプラインアンサンブル完全版: 同じ内容で送信バックグラウンドの労力は自動 - 各メンバーの標本、測定したすべての録音で同じ結果を得るのに約 2 秒余分</translation>
+        <translation>パイプライン・アンサンブル（フル）: 同じ処理で TXバックグラウンドの処理強度を自動化。すべてのメンバーを試すが、測定した全キャプチャで結果は同じで、約2秒余分に要します</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>pipeline run: 5 cycles, sensitivity 2 in the period (the reply on time), SWL-5 + alternate pass + ensemble in the TX background</source>
-        <translation>パイプライン実行: 期間内に 5 サイクル、デコーダー感度 2（応答は時間内）、送信バックグラウンドで SWL-5 + 代替パス + アンサンブル</translation>
+        <translation>パイプライン実行: 周期内で5サイクル、感度2（応答に間に合う設定）。TXバックグラウンドでは SWL-5 + alternate pass + ensemble</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
@@ -5612,7 +5591,7 @@ UDP server %2:%3</source>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>Waterfall width (default)</source>
-        <translation>ウォーターフォール幅（既定）</translation>
+        <translation>ワイドグラフ幅（既定）</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
@@ -5662,22 +5641,22 @@ UDP server %2:%3</source>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>0-5000 Hz (testing only)</source>
-        <translation>0-5000 Hz (テスト専用)</translation>
+        <translation>0-5000 Hz（テスト専用）</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>alternate pass on the residual, in the background</source>
-        <translation>残差に対する代替パス、バックグラウンドで</translation>
+        <translation>残差に対する alternate pass をバックグラウンドで実行</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>OSD order 2 for every candidate, in the background (about 2x the background's CPU)</source>
-        <translation>すべての候補に OSD 次数 2、バックグラウンドで（バックグラウンドの CPU の約 2 倍）</translation>
+        <translation>すべての候補に OSD 次数2をバックグラウンドで実行（バックグラウンドのCPU負荷 約2倍）</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>second slicing pass, in the background (2 or more threads)</source>
-        <translation>2 回目の分割パス、バックグラウンドで（2 スレッド以上）</translation>
+        <translation>2回目のスライシングパスをバックグラウンドで実行（2スレッド以上）</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
@@ -5687,107 +5666,107 @@ UDP server %2:%3</source>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>low thresholds (1): sync minimum 1.0 + sync quality 16  (+1.2 % on a sparse band for +20 % reply time; -1 on a crowded band)</source>
-        <translation>低いしきい値 (1): 同期最小 1.0 + 同期品質 16（空いたバンドで +1.2 %、応答時間は +20 %。混雑したバンドでは -1）</translation>
+        <translation>低しきい値 (1): 同期最小値 1.0 + 同期品質 16（空いているバンドで応答時間+20%に対し+1.2%、混雑したバンドでは-1）</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>residual unit: every known decode subtracted, the threshold lowered to 0.8, decoded once more  (+13/-0 on the night hour, ~0.12 s of idle time; runs only while the background runs, i.e. ensemble effort above the RX count)</source>
-        <translation>残差ユニット: 既知のデコードをすべて減算し、しきい値を 0.8 に下げてもう一度デコードします（夜間帯で +13/-0、空き時間 約 0.12 秒。バックグラウンドが動作している間のみ、つまりアンサンブルの労力が RX 数を超える場合のみ実行されます）</translation>
+        <translation>残差ユニット: 既知の全デコードを減算し、しきい値を0.8へ下げてもう一度デコードします（夜間1時間のサンプルで+13/-0、アイドル時間 約0.12秒。バックグラウンド実行中、つまりアンサンブル処理強度がRX数を上回る場合だけ実行）</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>budget auto: as many members as fit the reply deadline, from this band's measured cost (1.3 s; the rest run in the TX background)</source>
-        <translation>バジェット自動: このバンドの実測コストに基づき、応答期限に収まるだけのメンバー（1.3 秒。残りは送信バックグラウンドで実行されます）</translation>
+        <translation>自動調整: このバンドの実測処理時間を基に、応答期限内に収まる最大数のメンバーを実行（処理時間枠1.3秒。残りはTXバックグラウンドで実行）</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>auto: by thread count - 6 members from 12 threads, 4 from 8, 3 from 6, 2 from 4, 1 from 3, none below</source>
-        <translation>自動: スレッド数に応じて - 12 スレッドからメンバー 6、8 から 4、6 から 3、4 から 2、3 から 1、それ未満はなし</translation>
+        <translation>自動: スレッド数に応じて — 12スレッド以上で6メンバー、8以上で4、6以上で3、4以上で2、3で1、それ未満はなし</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>auto: by thread count - 6 from 12 threads, 4 from 8, 3 from 3 up, none below (the clock cuts what does not fit)</source>
-        <translation>自動: スレッド数に応じて - 12 スレッドから 6、8 から 4、3 以上から 3、それ未満はなし（収まらない分は時間で打ち切られます）</translation>
+        <translation>自動: スレッド数に応じて — 12スレッド以上で6、8以上で4、3以上で3、それ未満はなし（時間に収まらない分は打ち切り）</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>low thresholds (1): sync minimum 1.0 + sync quality 16, in the background (the residual unit scales from it)</source>
-        <translation>低いしきい値 (1): 同期最小 1.0 + 同期品質 16、バックグラウンドで（残差ユニットはこれを基準に調整されます）</translation>
+        <translation>低しきい値 (1): 同期最小値 1.0 + 同期品質 16をバックグラウンドで使用（残差ユニットはこれを基準にスケール）</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>low: the virtual candidate at the QSO frequency only from the last message received</source>
-        <translation>低: 最後に受信したメッセージのみから QSO 周波数の仮想候補</translation>
+        <translation>低: 最後に受信したメッセージだけから、QSO周波数に仮想候補を作成</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>medium: also from the DT at which the DX call was last heard</source>
-        <translation>中: DX コールサインを最後に受信した DT からも</translation>
+        <translation>中: DXコールを最後に受信したときの DT も使用</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>high: also a wider DT window and OSD depth 5 on it</source>
-        <translation>高: さらに広い DT 窓と、それに対する OSD 深度 5 も</translation>
+        <translation>高: さらに広い DT ウィンドウを使用し、そこで OSD 深度5も適用</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>fast: the shallow decoder, nothing added</source>
-        <translation>高速: 浅いデコーダー、追加なし</translation>
+        <translation>高速: 浅いデコーダー、追加処理なし</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>default: deep, 4 subtraction passes  (1748 messages on the night hour, 0.12 s at reply time)</source>
-        <translation>既定: 深い、4 回の減算パス（夜間帯で 1748 メッセージ、応答時に 0.12 秒）</translation>
+        <translation>デフォルト: deep、減算4パス（夜間1時間のサンプルで1748メッセージ、応答判定時0.12秒）</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>background 3: three ensemble members in the TX window, nothing at reply time  (+4.5 %, 0.12 s)</source>
-        <translation>バックグラウンド 3: 送信ウィンドウでアンサンブルメンバー 3、応答時には何もなし（+4.5 %、0.12 秒）</translation>
+        <translation>バックグラウンド3: TX期間でアンサンブル3メンバー、応答判定時には追加処理なし（+4.5%、0.12秒）</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>background 6 with deep OSD, the alternate pass and the residual unit, all in the TX window, nothing at reply time  (+8.0 % on the night hour, +3.5 % on the day hour, 0.12 s; ~1 s of idle CPU a period)</source>
-        <translation>バックグラウンド 6、深い OSD、代替パス、残差ユニットをすべて送信ウィンドウで実行、応答時には何もなし（夜間帯 +8.0 %、日中帯 +3.5 %、0.12 秒。1 期間あたり約 1 秒の空き CPU）</translation>
+        <translation>バックグラウンド6: deep OSD、alternate pass、残差ユニットを含む6メンバーをすべてTX期間で実行し、応答判定時には追加処理なし（夜間1時間で+8.0%、昼間1時間で+3.5%、0.12秒。1周期あたりアイドルCPU約1秒）</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>most at reply time: all six members in the period, and the background's extras - deep OSD, the alternate pass, the residual unit - in the TX window  (+7.9 % in total, +5.5 % at reply time, 0.55 s mean, 1.3 s worst period)</source>
-        <translation>応答時に最多: 期間内に 6 メンバー全員、バックグラウンドの追加分 - 深い OSD、代替パス、残差ユニット - は送信ウィンドウで（合計 +7.9 %、応答時 +5.5 %、平均 0.55 秒、最悪の期間 1.3 秒）</translation>
+        <translation>応答時最多: 周期内で6メンバーすべてを実行し、バックグラウンドの追加処理（deep OSD、alternate pass、残差ユニット）はTX期間で実行（合計+7.9%、応答判定時+5.5%、平均0.55秒、最悪周期1.3秒）</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>max effort: as many members as fit the 1.3 s RX budget (six here) + low thresholds at reply time, the background's extras + low thresholds in the TX window until 0.5 s before it ends  (+8.4 % in total, +6.4 % at reply time, 0.69 s mean, 1.4 s worst period)</source>
-        <translation>最大の労力: 1.3 秒の RX バジェットに収まるだけのメンバー（ここでは 6）+ 応答時に低いしきい値、バックグラウンドの追加分 + 送信ウィンドウ終了の 0.5 秒前まで低いしきい値（合計 +8.4 %、応答時 +6.4 %、平均 0.69 秒、最悪の期間 1.4 秒）</translation>
+        <translation>最大処理: 1.3秒のRX処理時間枠に収まるだけのメンバー（ここでは6）+ 応答判定時の低しきい値。バックグラウンドの追加処理 + 低しきい値はTX期間終了0.5秒前まで実行（合計+8.4%、応答判定時+6.4%、平均0.69秒、最悪周期1.4秒）</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>default: 3 cycles</source>
-        <translation>既定: 3 サイクル</translation>
+        <translation>デフォルト: 3サイクル</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>maximum efficiency: 5 cycles, decoder sensitivity 2 - the most decodes per second of decoding (no member, no passes)</source>
-        <translation>最大効率: 5 サイクル、デコーダー感度 2 - デコード 1 秒あたりのデコード数が最多（メンバーなし、パスなし）</translation>
+        <translation>最高効率: 5サイクル、デコーダー感度2 — デコード処理1秒あたりのデコード数が最多（メンバーなし、追加パスなし）</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>maximum decodes: 5 cycles, decoder sensitivity 2 (low thresholds + subpass), + 1 ensemble member with 8 or more threads</source>
-        <translation>最大デコード数: 5 サイクル、デコーダー感度 2（低いしきい値 + サブパス）、8 スレッド以上でアンサンブルメンバー 1</translation>
+        <translation>最大デコード数: 5サイクル、デコーダー感度2（低しきい値 + サブパス）+ 8スレッド以上でアンサンブル1メンバー</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>pipeline max decodes light: maximum decodes at reply time, then a ~6 s TX background - the plain 6-cycle pass, 2 members, the residual pass</source>
-        <translation>パイプライン最大デコード数（軽量）: 応答時に最大デコード数、その後 約 6 秒の送信バックグラウンド - 素の 6 サイクルパス、メンバー 2、残差パス</translation>
+        <translation>パイプライン最大デコード・ライト: 応答判定時に最大デコードを行い、その後約6秒のTXバックグラウンドで通常の6サイクルパス、2メンバー、残差パスを実行</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp"/>
         <source>Support JTDX_contest on Ko-fi</source>
-        <translation>Ko-fi で JTDX_contest を支援する</translation>
+        <translation>Ko-fi で JTDX_contest を支援</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp"/>
         <source>Contest multipliers x QSO points = score</source>
-        <translation>コンテストのマルチプライヤー × QSO 点 = スコア</translation>
+        <translation>コンテスト・マルチプライヤー × QSOポイント = スコア</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp"/>
@@ -5797,7 +5776,7 @@ UDP server %2:%3</source>
     <message>
         <location filename="../mainwindow.cpp"/>
         <source>is not a mono 16 or 32 bit signed integer wav (%1 bit, %2 channel(s))</source>
-        <translation>はモノラルの 16 ビットまたは 32 ビット符号付き整数 wav ではありません（%1 ビット、%2 チャンネル）</translation>
+        <translation>はモノラル16/32ビット符号付き整数 wav ではありません（%1ビット、%2チャンネル）</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp"/>
@@ -5827,22 +5806,22 @@ UDP server %2:%3</source>
     <message>
         <location filename="../mainwindow.cpp"/>
         <source>Saved %1 bit copy as %2</source>
-        <translation>%1 ビットのコピーを %2 として保存しました</translation>
+        <translation>%1ビットのコピーを %2 として保存しました</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp"/>
         <source>%1 of %2 files converted</source>
-        <translation>%2 個中 %1 個のファイルを変換しました</translation>
+        <translation>%2ファイル中 %1ファイルを変換しました</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp"/>
         <source>%1 skipped, the converted file already exists</source>
-        <translation>%1 をスキップしました。変換後のファイルは既に存在します</translation>
+        <translation>%1件をスキップしました（変換済みファイルがすでに存在します）</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp"/>
         <source>%1 failed:</source>
-        <translation>%1 が失敗しました:</translation>
+        <translation>%1件失敗:</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp"/>
@@ -5875,50 +5854,50 @@ UDP server %2:%3</source>
   &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+Z    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Filter, this shortcut is being supported in main UI and widegraph UI&lt;/td&gt;&lt;/tr&gt;
   &lt;tr&gt;&lt;td&gt;&lt;b&gt;Esc    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Halt Tx&lt;/td&gt;&lt;/tr&gt;
 &lt;/table&gt;</source>
-        <translation>&lt;table cellspacing="1"&gt;
-  &lt;tbody&gt;&lt;tr&gt;&lt;td&gt;&lt;strong&gt;F1 &lt;/strong&gt;&lt;/td&gt;&lt;td&gt;オンライン・ユーザー・ガイド&lt;/td&gt;&lt;td&gt;&lt;strong&gt;Ctrl+F1 &lt;/strong&gt;&lt;/td&gt;&lt;td&gt;JTDX_contestについて&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;strong&gt;F2 &lt;/strong&gt;&lt;/td&gt;&lt;td&gt;設定ウィンドウを開く&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;strong&gt;F3 &lt;/strong&gt;&lt;/td&gt;&lt;td&gt;キーボード・ショートカットの表示&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;strong&gt;F4 &lt;/strong&gt;&lt;/td&gt;&lt;td&gt;DXコール/グリッドおよびTxメッセージのクリア&lt;/td&gt;&lt;td&gt;&lt;strong&gt;Alt+F4 &lt;/strong&gt;&lt;/td&gt;&lt;td&gt;プログラムの終了&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;strong&gt;F5 &lt;/strong&gt;&lt;/td&gt;&lt;td&gt;スペシャル・マウス・コマンドの表示&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;strong&gt;F6 &lt;/strong&gt;&lt;/td&gt;&lt;td&gt;ディレクトリ内の次のファイルを開く&lt;/td&gt;&lt;td&gt;&lt;strong&gt;Shift+F6 &lt;/strong&gt;&lt;/td&gt;&lt;td&gt;ディレクトリ内の残りのすべてのファイルをデコードする&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;strong&gt;F7 &lt;/strong&gt;&lt;/td&gt;&lt;td&gt;OSのビューアでログを開く&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;strong&gt;F11 &lt;/strong&gt;&lt;/td&gt;&lt;td&gt;Rxの周波数を1Hz下に移動&lt;/td&gt;&lt;td&gt;&lt;strong&gt;Ctrl+F11 &lt;/strong&gt;&lt;/td&gt;&lt;td&gt;RxおよびTxの周波数を1Hz下に移動&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;strong&gt;F12 &lt;/strong&gt;&lt;/td&gt;&lt;td&gt;Rxの周波数を1Hz上に移動&lt;/td&gt;&lt;td&gt;&lt;strong&gt;Ctrl+F12 &lt;/strong&gt;&lt;/td&gt;&lt;td&gt;RxとTxの周波数を1Hz上に移動&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;strong&gt;Alt+1-6  &lt;/strong&gt;&lt;/td&gt;&lt;td&gt;タブ1でこの番号を今の送信に設定する&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;strong&gt;Ctl+1-6 &lt;/strong&gt;&lt;/td&gt;&lt;td&gt;タブ1でこの番号を次の送信に設定する&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;strong&gt;Alt+Ctrl+A &lt;/strong&gt;&lt;/td&gt;&lt;td&gt;wanted コールサインリストをクリアする&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;strong&gt;Alt+B/C &lt;/strong&gt;&lt;/td&gt;&lt;td&gt;FT8とFT4のモードに切り替え&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;strong&gt;Alt+D &lt;/strong&gt;&lt;/td&gt;&lt;td&gt;QSO周波数を再度デコード&lt;/td&gt;&lt;td&gt;&lt;strong&gt;Shift+D &lt;/strong&gt;&lt;/td&gt;&lt;td&gt;全てを再デコード(両ウィンドウ)&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;strong&gt;Alt+E &lt;/strong&gt;&lt;/td&gt;&lt;td&gt;消去&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;strong&gt;Alt+F &lt;/strong&gt;&lt;/td&gt;&lt;td&gt;すべてのテキストフィルタをバイパスするかどうかを切り替える&lt;/td&gt;&lt;td&gt;&lt;strong&gt;Ctrl+F &lt;/strong&gt;&lt;/td&gt;&lt;td&gt;フリーテキストメッセージボックスを編集する&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;strong&gt;Alt+G &lt;/strong&gt;&lt;/td&gt;&lt;td&gt;標準的なメッセージの生成&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;strong&gt;Alt+H &lt;/strong&gt;&lt;/td&gt;&lt;td&gt;送信停止&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;strong&gt;Ctrl+L &lt;/strong&gt;&lt;/td&gt;&lt;td&gt;データベースでコールサインを検索し、標準メッセージを生成する&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;strong&gt;Alt+M &lt;/strong&gt;&lt;/td&gt;&lt;td&gt;モニター&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;strong&gt;Alt+N &lt;/strong&gt;&lt;/td&gt;&lt;td&gt;送信開始&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;strong&gt;Alt+Q &lt;/strong&gt;&lt;/td&gt;&lt;td&gt;ログに記載&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;strong&gt;Alt+S &lt;/strong&gt;&lt;/td&gt;&lt;td&gt;モニターの停止&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;strong&gt;Alt+T &lt;/strong&gt;&lt;/td&gt;&lt;td&gt;チューン&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;
-  &lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;strong&gt;Alt+V &lt;/strong&gt;&lt;/td&gt;&lt;td&gt;直近に完成した*.wavファイルを保存する&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;strong&gt;Alt+Z &lt;/strong&gt;&lt;/td&gt;&lt;td&gt;フィルタ、このショートカットはメインUIとワイドグラフUIでサポートされています&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;strong&gt;Esc &lt;/strong&gt;&lt;/td&gt;&lt;td&gt;送信停止&lt;/td&gt;&lt;/tr&gt;
-&lt;/tbody&gt;&lt;/table&gt;</translation>
+        <translation>&lt;table cellspacing=1&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F1       &lt;/b&gt;&lt;/td&gt;&lt;td&gt;オンラインユーザーガイド&lt;/td&gt;&lt;td&gt;&lt;b&gt;Ctrl+F1  &lt;/b&gt;&lt;/td&gt;&lt;td&gt;JTDX_contest について&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F2       &lt;/b&gt;&lt;/td&gt;&lt;td&gt;設定画面を開く&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F3       &lt;/b&gt;&lt;/td&gt;&lt;td&gt;キーボードショートカットを表示&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F4       &lt;/b&gt;&lt;/td&gt;&lt;td&gt;DXコール/グリッドと送信メッセージをクリア&lt;/td&gt;&lt;td&gt;&lt;b&gt;Alt+F4   &lt;/b&gt;&lt;/td&gt;&lt;td&gt;プログラムを終了&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F5       &lt;/b&gt;&lt;/td&gt;&lt;td&gt;特殊なマウス操作を表示&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F6       &lt;/b&gt;&lt;/td&gt;&lt;td&gt;ディレクトリ内の次のファイルを開く&lt;/td&gt;&lt;td&gt;&lt;b&gt;Shift+F6 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;ディレクトリ内の残りすべてのファイルをデコード&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F7       &lt;/b&gt;&lt;/td&gt;&lt;td&gt;OSで関連付けられたビューアーでログを開く&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F11      &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Rx周波数を1 Hz下げる&lt;/td&gt;&lt;td&gt;&lt;b&gt;Ctrl+F11 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Rx/Tx周波数を1 Hz下げる&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F12      &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Rx周波数を1 Hz上げる&lt;/td&gt;&lt;td&gt;&lt;b&gt;Ctrl+F12 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Rx/Tx周波数を1 Hz上げる&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+1-6  &lt;/b&gt;&lt;/td&gt;&lt;td&gt;タブ1で現在の送信メッセージをこの番号に設定&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Ctl+1-6  &lt;/b&gt;&lt;/td&gt;&lt;td&gt;タブ1で次回の送信メッセージをこの番号に設定&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+Ctrl+A    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Wantedコールサインリストをクリア&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+B/C  &lt;/b&gt;&lt;/td&gt;&lt;td&gt;FT8/FT4モードに切り替える&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+D    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;QSO周波数で再デコード&lt;/td&gt;&lt;td&gt;&lt;b&gt;Shift+D  &lt;/b&gt;&lt;/td&gt;&lt;td&gt;フルデコード（両ウィンドウ）&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+E    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;消去&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+F    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;全テキストフィルターのバイパスを切り替える&lt;/td&gt;&lt;td&gt;&lt;b&gt;Ctrl+F   &lt;/b&gt;&lt;/td&gt;&lt;td&gt;フリーテキストメッセージ欄を編集&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+G    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;標準メッセージを生成&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+H    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;送信停止&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Ctrl+L   &lt;/b&gt;&lt;/td&gt;&lt;td&gt;データベースでコールサインを検索し、標準メッセージを生成&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+M    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;モニター&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+N    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;送信を有効化&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+Q    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;QSOをログに記録&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+S    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;モニター停止&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+T    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;チューン&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+V    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;直近に完了した *.wav ファイルを保存&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+Z    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;フィルター（このショートカットはメインUIとワイドグラフUIで使用可能）&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Esc    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;送信停止&lt;/td&gt;&lt;/tr&gt;
+&lt;/table&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp"/>
         <source>Are You sure to change UI Language to English? JTDX will close, please start it again.</source>
-        <translation>言語を日本語に変更してもよろしいですか? JTDX は終了しますので、もう一度起動してください。</translation>
+        <translation>UI言語を日本語に変更しますか？ JTDXを終了します。再度起動してください。</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp"/>
         <source>Recommended colours</source>
-        <translation>推奨カラー</translation>
+        <translation>推奨色</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp"/>
         <source>Use the recommended notification colours?</source>
-        <translation>推奨の通知カラーを使用しますか?</translation>
+        <translation>推奨通知色を使用しますか？</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp"/>
@@ -5929,13 +5908,13 @@ Choosing Yes also switches on the new dark style, which those colours are made f
 You can go back to the light style at any time in Settings, General; and the recommended colours can be set again later in Settings, Notifications.
 
 This is asked only once.</source>
-        <translation>このプロファイルには以前の設定から引き継いだ通知カラーがあります。JTDX_contest には、各色が表示され得るすべての背景に対して確認し、WCAG アクセシビリティ指針のコントラスト比 AA を満たすカラーセットが含まれており、デコード結果が読みやすいまま保たれます。
+        <translation>このプロファイルには、以前の設定から引き継がれた通知色があります。JTDX_contest には、各色が表示される可能性のあるすべての背景との組み合わせを確認し、WCAGアクセシビリティガイドラインのAAコントラスト基準を満たす通知色セットが付属しているため、デコード表示の可読性が保たれます。
 
-「はい」を選ぶと、これらの色に合わせた新しいダークスタイルも同時に有効になります。
+［はい］を選ぶと、新しいダークスタイルも有効になります。この色セットはダークスタイル向けに調整されています。
 
-ライトスタイルには設定の「一般」でいつでも戻せます。推奨カラーは後から設定の「通知」で設定し直せます。
+いつでも［設定］→［一般］でライトスタイルに戻せます。また、推奨色は後から［設定］→［通知］で再設定できます。
 
-この確認は一度だけです。</translation>
+この確認は一度だけ表示されます。</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp"/>
@@ -5945,7 +5924,7 @@ This is asked only once.</source>
     <message>
         <location filename="../mainwindow.cpp"/>
         <source>&amp;No, keep mine</source>
-        <translation>いいえ、現状のまま(&amp;N)</translation>
+        <translation>いいえ、自分の設定を維持(&amp;N)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
@@ -5955,72 +5934,82 @@ This is asked only once.</source>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>RX burst: how long the decode of the received period took, against the deadline for deciding the reply. Green up to 2.0 s in FT8 and 1.0 s in FT4, amber to 2.8 s and 1.4 s, red beyond. It follows the Lag= figure in the line above the decodes. Frequent red means this machine is spending more effort than it has time for: choose a preset one step lighter - the Presets list runs roughly lighter to heavier, so the entry above is usually the lighter one.</source>
-        <translation>RX バースト：受信した周期のデコードにかかった時間を、応答を決める期限と比べたものです。FT8 では 2.0 秒まで、FT4 では 1.0 秒まで緑、2.8 秒および 1.4 秒まで琥珀色、それを超えると赤。デコード行の上にある Lag= の値に従います。赤が頻繁に出るなら、この機械は使える時間より多くの労力をかけています。1 段軽いプリセットを選んでください。プリセットの一覧はおおよそ軽いものから重いものへ並んでいるので、1 つ上の項目はたいてい軽いほうです。</translation>
+        <translation>RX burst: 受信周期のデコードに要した時間を、応答を決定する期限と比較したものです。FT8では2.0秒まで、FT4では1.0秒まで緑、2.8秒/1.4秒まで黄、それを超えると赤になります。デコード表示の上の行にある Lag= の値に対応します。赤が頻発する場合、このマシンは利用可能な時間以上の処理を行っています。プリセットを1段軽いものにしてください。Presetsリストはおおむね軽い順から重い順に並んでいるため、通常は1つ上の項目が軽いプリセットです。</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>TX background: whether the decoding that keeps running through your own transmission finished, or was cut short by the next period. Green when it finished, red when it was cut - the X after the decode count in the line above. Grey while no TX background is enabled. Frequent red means the background is asking for more time than the period leaves: choose a preset one step lighter - the Presets list runs roughly lighter to heavier, so the entry above is usually the lighter one.</source>
-        <translation>TX バックグラウンド：自分の送信中も動き続けるデコードが完了したか、次の周期に打ち切られたかを示します。完了なら緑、打ち切られたなら赤 &amp;mdash; 上の行のデコード数の後ろに付く X と同じ意味です。TX バックグラウンドが無効の間は灰色。赤が頻繁に出るなら、バックグラウンドが周期の残り時間より多くを求めています。1 段軽いプリセットを選んでください。一覧はおおよそ軽いものから重いものへ並んでいるので、1 つ上の項目はたいてい軽いほうです。</translation>
+        <translation>TX background: 自局送信中も継続するデコード処理が完了したか、次の周期によって途中で打ち切られたかを示します。完了時は緑、打ち切り時は赤です。デコード表示の上の行では、デコード数の後ろに付く X が打ち切りを示します。TXバックグラウンドが無効のときはグレーです。赤が頻発する場合、バックグラウンド処理が周期内に収まらない時間を要求しています。プリセットを1段軽いものにしてください。Presetsリストはおおむね軽い順から重い順に並んでいるため、通常は1つ上の項目が軽いプリセットです。</translation>
     </message>
     <message>
         <location filename="../../mainwindow.cpp"/>
         <source>best power</source>
-        <translation>最良の電力</translation>
+        <translation>最高性能</translation>
     </message>
     <message>
         <location filename="../../mainwindow.cpp"/>
         <source>best value</source>
-        <translation>最良の費用対効果</translation>
+        <translation>最良バランス</translation>
     </message>
     <message>
         <location filename="../../mainwindow.cpp"/>
         <source>best medium effort</source>
-        <translation>中程度の労力で最良</translation>
+        <translation>中程度の処理で最良</translation>
     </message>
     <message>
         <location filename="../../mainwindow.cpp"/>
         <source>best results</source>
-        <translation>最良の結果</translation>
+        <translation>最良結果</translation>
     </message>
     <message>
         <location filename="../../mainwindow.cpp"/>
         <source>max effort</source>
-        <translation>最大の労力</translation>
+        <translation>最大処理</translation>
     </message>
     <message>
         <location filename="../../mainwindow.cpp"/>
         <source>most results</source>
-        <translation>最多の結果</translation>
+        <translation>最多結果</translation>
     </message>
     <message>
         <location filename="../../mainwindow.cpp"/>
         <source>most at reply time</source>
-        <translation>応答時に最多</translation>
+        <translation>応答時最多</translation>
     </message>
     <message>
         <location filename="../../mainwindow.cpp"/>
         <source>recommended: %1</source>
-        <translation>推奨：%1</translation>
+        <translation>推奨: %1</translation>
     </message>
     <message>
         <location filename="../../mainwindow.cpp"/>
         <source>Custom - the FT4 RX / TX background controls match no preset</source>
-        <translation>Custom - FT4 の RX / TX バックグラウンドのコントロールがどのプリセットにも一致しません</translation>
+        <translation>カスタム — FT4のRX/TXバックグラウンド設定がどのプリセットにも一致しません</translation>
     </message>
     <message>
         <location filename="../../mainwindow.cpp"/>
         <source>FT8 / FT4 decoding preset - greyed while the mode is neither</source>
-        <translation>FT8 / FT4 デコードプリセット - モードがどちらでもない間は灰色</translation>
+        <translation>FT8/FT4 デコードプリセット — モードがどちらでもない場合はグレー表示</translation>
     </message>
     <message>
         <location filename="../../mainwindow.cpp"/>
         <source>Custom - the RX / TX background controls match no preset</source>
-        <translation>Custom - RX / TX バックグラウンドのコントロールがどのプリセットにも一致しません</translation>
+        <translation>カスタム — RX/TXバックグラウンド設定がどのプリセットにも一致しません</translation>
     </message>
     <message>
         <location filename="../../mainwindow.cpp"/>
         <source>ensemble - the RX-only recipe of the former Ensemble preset (no menu entry)</source>
-        <translation>アンサンブル - 旧 Ensemble プリセットの RX のみのレシピ（メニュー項目なし）</translation>
+        <translation>ensemble — 旧 Ensemble プリセットのRX専用レシピ（メニュー項目なし）</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Use dar&amp;k style</source>
+        <translation>ダークスタイルを使用する</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Band buttons</source>
+        <translation>バンドボタン</translation>
     </message>
 </context>
 <context>
@@ -6817,7 +6806,7 @@ Please verify the correct directory name was given.</source>
     <message>
         <location filename="../widegraph.ui" line="326"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Frequency at left edge of waterfall&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt; &lt;head /&gt; &lt;body&gt; &lt;p&gt;ウオーターフォールの左端の周波数.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt; &lt;head /&gt; &lt;body&gt; &lt;p&gt;ウオーターフォールの左端の周波数&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../widegraph.ui" line="329"/>
@@ -6892,7 +6881,7 @@ Please verify the correct directory name was given.</source>
     <message>
         <location filename="../widegraph.ui" line="533"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Set fractional size of spectrum in this window.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt; &lt;head /&gt; &lt;body&gt; &lt;p&gt;このウィンドウでスペクトルの表示サイズを設定します。.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt; &lt;head /&gt; &lt;body&gt; &lt;p&gt;このウィンドウでスペクトルの表示サイズを設定します。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../widegraph.ui" line="539"/>
@@ -6958,7 +6947,7 @@ Please verify the correct directory name was given.</source>
     <message>
         <location filename="../Configuration.ui" line="45"/>
         <source>General station details and settings.</source>
-        <translation>自局の詳細情報と設定.</translation>
+        <translation>自局の詳細情報と設定</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="57"/>
@@ -6973,7 +6962,7 @@ Please verify the correct directory name was given.</source>
     <message>
         <location filename="../Configuration.ui" line="88"/>
         <source>Station callsign.</source>
-        <translation>運用局のコールサイン.</translation>
+        <translation>運用局のコールサイン</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="108"/>
@@ -7000,7 +6989,7 @@ Please verify the correct directory name was given.</source>
     <message>
         <location filename="../Configuration.ui" line="145"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Type 2 compound callsigns are those with prefixes or suffixes not included in the allowed shortlist (See Help-&amp;gt;Add-on prefixes and suffixes).&lt;/p&gt;&lt;p&gt;This option determines which generated messages should contain your full type 2 compound call sign rather than your base callsign. It only applies if you have a type 2 compound callsign.&lt;/p&gt;&lt;p&gt;This option controls the way the messages that are used to answer CQ calls are generated. Generated messages 6 (CQ) and 5 (73) will always contain your full callsign. The JT65 and JT9 protocols allow for some standard messages with your full call at the expense of another piece of information such as the DX call or your locator.&lt;/p&gt;&lt;p&gt;Choosing message 1 omits the DX callsign which may be an issue when replying to CQ calls. Choosing message 3 also omits the DX callsign and many versions of this and other software will not extract the report. Choosing neither means that your full callsign only goes in your message 5 (73) so your QSO partner my log the wrong callsign.&lt;/p&gt;&lt;p&gt;None of these options are perfect, message 3 is best but be aware your QSO partner may not log the report you send them.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>JA3TYB&lt;html&gt; &lt;head /&gt; &lt;body&gt; &lt;p&gt;タイプ2の複合コールサインは、許可されたショートリストに含まれないプリフィックスまたはサフィックスを持つものです（ヘルプ参照-&amp;gt;アドオンのプリフィックスおよびサフィックスを参照してください）。&lt;/p&gt;&lt;p&gt;このオプションは、生成されるメッセージに、ベースコールサインではなく、完全なタイプ2複合コールサインを含める必要があるかどうかを決定します。タイプ2の複合コールサインがある場合にのみ適用されます。&lt;/p&gt;&lt;p&gt;このオプションは、CQコールに応答するために使用されるメッセージの生成方法を制御します。生成されたメッセージ6（CQ）および5（73）には、常に完全なコールサインが含まれます。 JT65およびJT9プロトコルは、DXコールやロケーターなどの別の情報を犠牲にして、完全なコールを伴う標準メッセージを許可します。&lt;/p&gt;&lt;p&gt;メッセージ1を選択すると、問題の可能性があるDXコールサインが省略されます。 CQ呼び出しに応答するとき。メッセージ3を選択すると、DXコールサインも省略され、このソフトウェアや他のソフトウェアの多くのバージョンはレポートを抽出しません。どちらも選択しないということは、完全なコールサインがメッセージ5（73）にのみ含まれることを意味するため、QSOパートナーは間違ったコールサインをログに記録します。&lt;/p&gt;&lt;p&gt;これらのオプションのいずれも完璧ではありません。送信したレポートを記録しない場合があります。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt; &lt;head /&gt; &lt;body&gt; &lt;p&gt;タイプ2の複合コールサインは、許可されたショートリストに含まれないプリフィックスまたはサフィックスを持つものです（ヘルプ参照-&amp;gt;アドオンのプリフィックスおよびサフィックスを参照してください）。&lt;/p&gt;&lt;p&gt;このオプションは、生成されるメッセージに、ベースコールサインではなく、完全なタイプ2複合コールサインを含める必要があるかどうかを決定します。タイプ2の複合コールサインがある場合にのみ適用されます。&lt;/p&gt;&lt;p&gt;このオプションは、CQコールに応答するために使用されるメッセージの生成方法を制御します。生成されたメッセージ6（CQ）および5（73）には、常に完全なコールサインが含まれます。 JT65およびJT9プロトコルは、DXコールやロケーターなどの別の情報を犠牲にして、完全なコールを伴う標準メッセージを許可します。&lt;/p&gt;&lt;p&gt;メッセージ1を選択すると、問題の可能性があるDXコールサインが省略されます。 CQ呼び出しに応答するとき。メッセージ3を選択すると、DXコールサインも省略され、このソフトウェアや他のソフトウェアの多くのバージョンはレポートを抽出しません。どちらも選択しないということは、完全なコールサインがメッセージ5（73）にのみ含まれることを意味するため、QSOパートナーは間違ったコールサインをログに記録します。&lt;/p&gt;&lt;p&gt;これらのオプションのいずれも完璧ではありません。送信したレポートを記録しない場合があります。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="152"/>
@@ -7060,7 +7049,7 @@ Please verify the correct directory name was given.</source>
     <message>
         <location filename="../Configuration.ui" line="363"/>
         <source>Show distance to DX station in miles rather than kilometers.</source>
-        <translation>ＤＸ局を Ｋｍ よりもマイルで距離を表示。</translation>
+        <translation>DX局を Km よりもマイルで距離を表示。</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="366"/>
@@ -7100,7 +7089,7 @@ Please verify the correct directory name was given.</source>
     <message>
         <location filename="../Configuration.ui" line="373"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When TX message is changed previous message will not be shown if it was transmitted for less than 2 seconds.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;送信開始2秒未満で送信メッセージが変更された場合、そのメッセージは表示されない.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;送信開始2秒未満で送信メッセージが変更された場合、そのメッセージは表示されない&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="396"/>
@@ -7135,7 +7124,7 @@ Please verify the correct directory name was given.</source>
     <message>
         <location filename="../Configuration.ui" line="523"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Number of minutes before unattended transmissions are aborted&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt; &lt;head /&gt; &lt;body&gt; &lt;p&gt;無人送信が中止されるまでの分数.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt; &lt;head /&gt; &lt;body&gt; &lt;p&gt;無人送信が中止されるまでの分数&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="526"/>
@@ -7156,7 +7145,7 @@ Please verify the correct directory name was given.</source>
     <message>
         <location filename="../Configuration.ui" line="619"/>
         <source>Send a CW ID after every 73 or free text message.</source>
-        <translation>73またはフリーメッセージの後に、CW IDを送る.</translation>
+        <translation>73またはフリーメッセージの後に、CW IDを送る</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="622"/>
@@ -7385,7 +7374,7 @@ Please verify the correct directory name was given.</source>
     <message>
         <location filename="../Configuration.ui" line="1313"/>
         <source>C&amp;AT</source>
-        <translation>ＣＡＴ</translation>
+        <translation>CAT</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1323"/>
@@ -7395,32 +7384,32 @@ Please verify the correct directory name was given.</source>
     <message>
         <location filename="../Configuration.ui" line="1326"/>
         <source>&amp;DTR</source>
-        <translation>ＤＴＲ</translation>
+        <translation>DTR</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1339"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;No PTT activation, instead the radio&apos;s automatic VOX is used to key the transmitter.&lt;/p&gt;&lt;p&gt;Use this if you have no radio interface hardware.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt; &lt;head /&gt; &lt;body&gt; &lt;p&gt; PTTアクティベーションなし、代わりに無線の自動VOXが送信機のキーイングに使用されます。.&lt;/p&gt;&lt;p&gt;無線インターフェースハードウェアがない場合はこれを使用します。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt; &lt;head /&gt; &lt;body&gt; &lt;p&gt; PTTアクティベーションなし、代わりに無線の自動VOXが送信機のキーイングに使用されます。&lt;/p&gt;&lt;p&gt;無線インターフェースハードウェアがない場合はこれを使用します。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1342"/>
         <source>VO&amp;X</source>
-        <translation>ＶＯＸ</translation>
+        <translation>VOX</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1352"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Use the RS-232 RTS control line to toggle your radio&apos;s PTT, requires hardware to inteface the line.&lt;/p&gt;&lt;p&gt;Some commercial interface units also use this method.&lt;/p&gt;&lt;p&gt;The RTS control line of the CAT serial port may be used for this or a RTS control line on a different serial port may be used. Note that this option is not available on the CAT serial port when hardware flow control is used.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;RS-232 RTSコントロールラインが貴方の無線機のPTTコントロールを行います。&lt;/p&gt;&lt;p&gt; いくつかの商業用のインタフェースユニットがこの方法を用いています。&lt;/p&gt;&lt;p&gt;RTSコントロールラインのCATのシリアルポートか別のRTSコントロールの汁あるポートが使用されます。ハードウェアフロー制御が行われているときはこのオプションは使用できません。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;RS-232 RTSコントロールラインを使用して無線機のPTTを切り替えます。回線を接続するにはハードウェアが必要です。&lt;/p&gt;&lt;p&gt;一部の商用インターフェイスユニットもこの方法を使用します。&lt;/p&gt;&lt;p&gt;CATシリアルポートのRTSコントロールライン、または別のシリアルポートのRTSコントロールラインを使用できます。ハードウェアフロー制御が使用されているときは、このオプションはCATシリアルポートでは使用できません。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1355"/>
         <source>R&amp;TS</source>
-        <translation>ＲＴＳ</translation>
+        <translation>RTS</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1386"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Select the RS-232 serial port utilised for PTT control, this option is available when DTR or RTS is selected above as a transmit method.&lt;/p&gt;&lt;p&gt;This port can be the same one as the one used for CAT control.&lt;/p&gt;&lt;p&gt;For some interface types the special value CAT may be chosen, this is used for non-serial CAT interfaces that can control serial port control lines remotely (OmniRig for example).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;選択されたRS-232シリアルポートがPTTコントロールに用いられます。このオプションはDTRまたはRTSが上記の送信方法に用いられた時に使用可能です。&lt;/p&gt;&lt;p&gt;このポートはCATコントロールのために使われたものと同じものでも構いません。.&lt;/p&gt;&lt;p&gt;
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;選択されたRS-232シリアルポートがPTTコントロールに用いられます。このオプションはDTRまたはRTSが上記の送信方法に用いられた時に使用可能です。&lt;/p&gt;&lt;p&gt;このポートはCATコントロールのために使われたものと同じものでも構いません。&lt;/p&gt;&lt;p&gt;
 一部のインターフェイスタイプでは、特別な値CATを選択できます。これは、シリアルポート制御ラインをリモートで制御できる非シリアルCATインターフェイスに使用されます（たとえば、OmniRig）&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
@@ -7461,7 +7450,7 @@ Please verify the correct directory name was given.</source>
     <message>
         <location filename="../Configuration.ui" line="1489"/>
         <source>US&amp;B</source>
-        <translation>ＵＳＢ</translation>
+        <translation>USB</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1507"/>
@@ -7497,12 +7486,12 @@ Please verify the correct directory name was given.</source>
     <message>
         <location filename="../Configuration.ui" line="1602"/>
         <source>Test CAT</source>
-        <translation>ＣＡＴテスト</translation>
+        <translation>CATテスト</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1643"/>
         <source>Test PTT</source>
-        <translation>ＰＴＴテスト</translation>
+        <translation>PTTテスト</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1670"/>
@@ -7533,7 +7522,7 @@ Please verify the correct directory name was given.</source>
     <message>
         <location filename="../Configuration.ui" line="1751"/>
         <source>Select the audio CODEC to use for receiving.</source>
-        <translation>受信のために使うたオーディオCODECを選択.</translation>
+        <translation>受信のために使うたオーディオCODECを選択</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1758"/>
@@ -7543,7 +7532,7 @@ Please verify the correct directory name was given.</source>
     <message>
         <location filename="../Configuration.ui" line="1785"/>
         <source>Select the channel to use for receiving.</source>
-        <translation>受信のために使うチャンネルを選択.</translation>
+        <translation>受信のために使うチャンネルを選択</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1789"/>
@@ -7750,7 +7739,7 @@ Please verify the correct directory name was given.</source>
     <message>
         <location filename="../Configuration.ui" line="2459"/>
         <source>Clear DX call and grid on exit</source>
-        <translation>ＤＸコールサインとグリッドをクリアして終了</translation>
+        <translation>DXコールサインとグリッドをクリアして終了</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="2433"/>
@@ -7775,7 +7764,7 @@ Please verify the correct directory name was given.</source>
     <message>
         <location filename="../Configuration.ui" line="2487"/>
         <source>Enable automatic logging of QSO</source>
-        <translation>QSOの自動的な記録を可能にする</translation>
+        <translation>QSOの自動的な記録を有効化する</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="2530"/>
@@ -7786,7 +7775,7 @@ Please verify the correct directory name was given.</source>
         <location filename="../Configuration.ui" line="2564"/>
         <location filename="../Configuration.ui" line="2580"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;TCP server name or address&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;TCPサーバー名または&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;TCPサーバー名またはアドレス&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="2567"/>
@@ -8066,7 +8055,7 @@ Please verify the correct directory name was given.</source>
     <message>
         <location filename="../Configuration.ui" line="2967"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enter the service port number of the UDP server that JTDX should send updates to. If this is zero no updates will be broadcast.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;JTDXがアップデート送信するためのUDPサーバーのサービスポート番号を入力。、0を入力した場合何も送信されません。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;JTDXがアップデートを送信するためのUDPサーバーのサービスポート番号を入力してください。0を入力した場合、何も送信されません。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="2984"/>
@@ -8379,7 +8368,7 @@ Please verify the correct directory name was given.</source>
         <location filename="../Configuration.ui" line="5043"/>
         <location filename="../Configuration.ui" line="5108"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enable option&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;可能なオプション&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;このオプションを有効にする&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="5046"/>
@@ -8549,7 +8538,7 @@ both here.</source>
     <message>
         <location filename="../Configuration.ui" line="2233"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This option is being used for non-overlapping spectra scenario. Tx will be halted if spectra have common frequencies with no respect to this setting.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt; &lt;head /&gt; &lt;body&gt; &lt;p&gt;このオプションは、重複しないスペクトルシナリオに使用されています。この設定に関係なくスペクトルに共通の周波数がある場合、送信は停止します。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt; &lt;head /&gt; &lt;body&gt; &lt;p&gt;このオプションはオーバーラップしない周波数帯域の場合(SPLIT周波数で呼んだ場合)に使用される。この設定に関係なく、自局信号周波数(自局DF)が相手と共通の周波数を持つ場合(DFが重なっている場合)、送信は停止される。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="2243"/>
@@ -8578,7 +8567,7 @@ comments field.</source>
         <location filename="../Configuration.ui" line="2476"/>
         <source>Check this option to force the clearing of the DX Call
 and DX Grid fields when a 73 or free text message is sent.</source>
-        <translation>このオプションはDX CallとDX Gridの欄を73やフリーメッセージを受信した時にクリアーにします。</translation>
+        <translation>このオプションを有効にすると、73またはフリーテキストメッセージを送信したときに DX Call と DX Grid 欄をクリアします。</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="2456"/>
@@ -8638,7 +8627,7 @@ and DX Grid fields when a 73 or free text message is sent.</source>
     <message>
         <location filename="../Configuration.ui" line="766"/>
         <source>On</source>
-        <translation>リグ電源オン</translation>
+        <translation>オン</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="779"/>
@@ -8648,7 +8637,7 @@ and DX Grid fields when a 73 or free text message is sent.</source>
     <message>
         <location filename="../Configuration.ui" line="782"/>
         <source>Off Rig power</source>
-        <translation>リグ電源オフ</translation>
+        <translation>オフ リグ電源</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="2494"/>
@@ -8691,7 +8680,7 @@ for assessing propagation and system performance.</source>
     <message>
         <location filename="../Configuration.ui" line="2947"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Optional hostname of network service to receive decodes.&lt;/p&gt;&lt;p&gt;Formats:&lt;/p&gt;&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;hostname&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;IPv4 address&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;IPv6 address&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;IPv4 multicast group address&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;IPv6 multicast group address&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;Clearing this field will disable the broadcasting of UDP status updates.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt; &lt;head /&gt; &lt;body&gt; &lt;p&gt;デコードを受信するネットワークサービスのオプションのホスト名。.&lt;/p&gt;&lt;p&gt;フォーマット：:&lt;/p&gt;&lt;ul style = &quot;margin-top：0px; margin-bottom： 0px; margin-left：0px; margin-right：0px; -qt-list-indent：1; &quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt; hostnamee&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;IPv4アドレス&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;IPv6アドレス&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;IPv4マルチキャストグループアドレス&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;IPv6マルチキャストグループアドレス&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;このフィールドをクリアするとUDPステータス更新のブロードキャストが無効になります。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt; &lt;head /&gt; &lt;body&gt; &lt;p&gt;デコードを受信するネットワークサービスのオプションのホスト名。&lt;/p&gt;&lt;p&gt;フォーマット：:&lt;/p&gt;&lt;ul style = &quot;margin-top：0px; margin-bottom： 0px; margin-left：0px; margin-right：0px; -qt-list-indent：1; &quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt; hostnamee&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;IPv4アドレス&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;IPv6アドレス&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;IPv4マルチキャストグループアドレス&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;IPv6マルチキャストグループアドレス&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;このフィールドをクリアするとUDPステータス更新のブロードキャストが無効になります。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="2994"/>
@@ -8744,11 +8733,6 @@ Right click for insert and delete options.</source>
         <location filename="../Configuration.ui" line="3421"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Highlight messages with DXCC countries which are new in the mode according to the data from wsjtx_log.adi log file.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt; &lt;head /&gt; &lt;body&gt; &lt;p&gt; wsjtx_log.adiログファイルのデータに応じたモードで新しいDXCCの国のメッセージを強調表示します。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <location filename="../Configuration.ui" line="3441"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Highlight messages with grid squares which do not exist in the wsjtx_log.adi log file.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt; &lt;head /&gt; &lt;body&gt; &lt;p&gt; wsjtx_log.adiログファイルに存在しないグリッドの正方形のメッセージを強調表示します。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3451"/>
@@ -8813,28 +8797,28 @@ Right click for insert and delete options.</source>
     <message>
         <location filename="../Configuration.ui" line="3687"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Use blue marker to notify if there is my callsign in the decoded message related to the ongoing QSO (QSO party&apos;s callsign is in the DX Call window), other incoming calls with my callsign will be followed with the red marker.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt; &lt;head /&gt; &lt;body&gt; &lt;p&gt;青色のマーカーを使用して、進行中のQSO（QSOパーティのコールサインはDXコールウィンドウにある）に関連するデコードされたメッセージにコールサインがあるかどうかを通知します。その他自分のコールサインを含むメッセージは赤色でフォローします。.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt; &lt;head /&gt; &lt;body&gt; &lt;p&gt;青色のマーカーを使用して、進行中のQSO（QSOパーティのコールサインはDXコールウィンドウにある）に関連するデコードされたメッセージにコールサインがあるかどうかを通知します。その他自分のコールサインを含むメッセージは赤色でフォローします。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3736"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Use red marker to notify if there is my callsign in the decoded message.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt; &lt;head /&gt; &lt;body&gt; &lt;p&gt;赤いマーカーを使用して、デコードされたメッセージに自局のコールサインがあるかどうかを通知します。.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt; &lt;head /&gt; &lt;body&gt; &lt;p&gt;赤いマーカーを使用して、デコードされたメッセージに自局のコールサインがあるかどうかを通知します。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3749"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Use marker at end of message instead of background color to other standard message notification.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt; &lt;head /&gt; &lt;body&gt; &lt;p&gt;他の標準的なメッセージ通知の背景色ではなく、メッセージの最後にマーカーをつけて表示します。.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt; &lt;head /&gt; &lt;body&gt; &lt;p&gt;他の標準的なメッセージ通知の背景色ではなく、メッセージの最後にマーカーをつけて表示します。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3795"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;On top of the preview pane there are types of message that being checked for some criterion, text color being selected for each  type of message.&lt;br&gt;&lt;br&gt;On left side there are criteria allocated in the hierarchy order, and background color being selected for messages for each criterion.&lt;br&gt;&lt;br&gt;&apos;Worked one&apos; notification functionality is based on the residual principle, triggered if all activated &apos;New one&apos; criteria or criterion are not met.&lt;br&gt;&lt;br&gt;&apos;Inverse color&apos; may be used if user would like to highlight CQ and &apos;MyCall&apos; messages by some specific backgroung color.&lt;br&gt;&lt;br&gt;For beginning one criterion can be chose and for new band/mode notifications may be used similar color with the different saturation level, later number of required criteria can be increased.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt; &lt;head /&gt; &lt;body&gt; &lt;p&gt;プレビュー領域の上部には、何らかの基準がチェックされているメッセージの種類があり、メッセージの種類ごとにテキストの色が選択されています。&lt;br&gt; &lt;br&gt;左側 階層順に割り当てられた基準があり、各基準のメッセージに背景色が選択されています。&lt;br&gt; &lt;br&gt;「交信済み」通知機能は、すべてが「新規」基準または基準をアクティブにした場合にトリガーされる残差原則に基づいています。 &lt;br&gt; &lt;br&gt;ユーザーが特定の背景色でCQおよび「MyCall」メッセージを強調表示する場合は、「逆色」を使用できます。&lt;br&gt; &lt;br&gt;最初に1つの基準を選択し、 新しいバンド/モード通知は、異なる彩度レベルの同様の色で使用される場合があり、後から必要な基準の数を増やすことができます。.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt; &lt;head /&gt; &lt;body&gt; &lt;p&gt;プレビュー領域の上部には、何らかの基準がチェックされているメッセージの種類があり、メッセージの種類ごとにテキストの色が選択されています。&lt;br&gt; &lt;br&gt;左側 階層順に割り当てられた基準があり、各基準のメッセージに背景色が選択されています。&lt;br&gt; &lt;br&gt;「交信済み」通知機能は、すべてが「新規」基準または基準をアクティブにした場合にトリガーされる残差原則に基づいています。 &lt;br&gt; &lt;br&gt;ユーザーが特定の背景色でCQおよび「MyCall」メッセージを強調表示する場合は、「逆色」を使用できます。&lt;br&gt; &lt;br&gt;最初に1つの基準を選択し、 新しいバンド/モード通知は、異なる彩度レベルの同様の色で使用される場合があり、後から必要な基準の数を増やすことができます。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3798"/>
         <location filename="../Configuration.ui" line="6988"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Configuration tips&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt; &lt;head /&gt; &lt;body&gt; &lt;p&gt;構成のヒント.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt; &lt;head /&gt; &lt;body&gt; &lt;p&gt;構成のヒント&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3878"/>
@@ -8918,7 +8902,7 @@ AA1AAA,BB1BB,CC1CC&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
     <message>
         <location filename="../Configuration.ui" line="5166"/>
         <source>Enable</source>
-        <translation>可能</translation>
+        <translation>有効</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="5173"/>
@@ -9352,7 +9336,7 @@ AA1AAA,BB1BB,CC1CC&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
     <message>
         <location filename="../Configuration.ui" line="6680"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Activating band scheduler&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt; &lt;head /&gt; &lt;body&gt; &lt;p&gt;バンドスケジューラのアクティブ化.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt; &lt;head /&gt; &lt;body&gt; &lt;p&gt;バンドスケジューラのアクティブ化&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="6683"/>
@@ -9367,7 +9351,7 @@ AA1AAA,BB1BB,CC1CC&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
     <message>
         <location filename="../Configuration.ui" line="6716"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;User-selectable parameters for JT65 decoding.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt; &lt;head /&gt; &lt;body&gt; &lt;p&gt; JT65デコード用のユーザー選択可能なパラメーター。.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt; &lt;head /&gt; &lt;body&gt; &lt;p&gt; JT65デコード用のユーザー選択可能なパラメーター。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="6719"/>
@@ -9490,22 +9474,22 @@ soundcard changes</source>
     <message>
         <location filename="../Configuration.ui"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Highlight messages with grid squares which do not exist in the wsjtx_log.adi log file.&lt;/p&gt;&lt;p&gt;With &lt;b&gt;WW Digi contest&lt;/b&gt; enabled in the Misc menu these settings match on the 2 character grid field instead of the 4 character square, because the field is the contest multiplier, and a new field then outranks a new DXCC or zone in the highlighting.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;ログファイル wsjtx_log.adi に存在しないグリッドを含むメッセージを強調表示します。&lt;/p&gt;&lt;p&gt;「その他」メニューで &lt;b&gt;WW Digi コンテスト&lt;/b&gt; を有効にすると、これらの設定は 4 文字のスクエアではなく 2 文字のグリッドフィールドに対して適用されます。フィールドがコンテストのマルチプライヤーであるため、強調表示では新しいフィールドが新しい DXCC やゾーンより優先されます。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;wsjtx_log.adi ログファイルに存在しないグリッドスクエアを含むメッセージを強調表示します。&lt;/p&gt;&lt;p&gt;Misc メニューで &lt;b&gt;WW Digi contest&lt;/b&gt; を有効にすると、4文字のグリッドスクエアではなく2文字のグリッドフィールドで判定します。これはグリッドフィールドがコンテストのマルチプライヤーであるためで、新しいフィールドは強調表示上、新しい DXCC またはゾーンより高い優先度になります。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Restore the recommended notification colors for &lt;b&gt;both&lt;/b&gt; the light and the dark style.&lt;/p&gt;&lt;p&gt;Every text color has been checked against every background it can appear on, so nothing ends up unreadable - a message calling you on a new DXCC row, for instance.&lt;/p&gt;&lt;p&gt;Takes effect when the settings are accepted.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;ライトとダークの &lt;b&gt;両方&lt;/b&gt; のスタイルについて、推奨される通知色を復元します。&lt;/p&gt;&lt;p&gt;各文字色は、表示されうるすべての背景に対して確認済みなので、読めなくなることはありません - たとえば新しい DXCC の行であなたを呼んでいるメッセージなど。&lt;/p&gt;&lt;p&gt;設定を確定したときに反映されます。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;ライトスタイルとダークスタイルの&lt;b&gt;両方&lt;/b&gt;について、推奨通知色に戻します。&lt;/p&gt;&lt;p&gt;各文字色は、表示される可能性のあるすべての背景との組み合わせで確認済みです。そのため、たとえば新しい DXCC の行で自局を呼んでいるメッセージなども読めなくなることはありません。&lt;/p&gt;&lt;p&gt;設定を確定すると反映されます。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
         <source>Recommended colors</source>
-        <translation>推奨される色</translation>
+        <translation>推奨色</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
         <source>Contest and event modes. Only one may be active at a time. Modes shown greyed out are declared but not implemented in this build.</source>
-        <translation>コンテストおよびイベントのモード。同時に有効にできるのは 1 つだけです。灰色で表示されているモードは宣言済みですが、このビルドでは実装されていません。</translation>
+        <translation>コンテストおよびイベントモード。一度に有効にできるのは1つだけです。グレー表示のモードは定義されていますが、このビルドでは実装されていません。</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
@@ -9515,7 +9499,7 @@ soundcard changes</source>
     <message>
         <location filename="../Configuration.ui"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;World Wide Digi DX Contest. The exchange is the 4 character grid instead of a signal report, and the multiplier is the 2 character grid field.&lt;/p&gt;&lt;p&gt;While this is selected the grid highlighting below is set to per band on the grid field, and cannot be changed by hand. Your own settings are restored when you switch back to None.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;World Wide Digi DX Contest。交換内容はシグナルレポートではなく 4 文字のグリッドで、マルチプライヤーは 2 文字のグリッドフィールドです。&lt;/p&gt;&lt;p&gt;これが選択されている間、下のグリッド強調表示はグリッドフィールドに対するバンドごとの設定に固定され、手動では変更できません。「なし」に戻すと、ご自身の設定が復元されます。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;World Wide Digi DX Contest。交換内容はシグナルレポートではなく4文字のグリッドで、マルチプライヤーは2文字のグリッドフィールドです。&lt;/p&gt;&lt;p&gt;これを選択している間、下のグリッド強調表示はグリッドフィールドをバンドごとに判定する設定へ固定され、手動では変更できません。None に戻すと、元の設定が復元されます。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
@@ -9550,17 +9534,57 @@ soundcard changes</source>
     <message>
         <location filename="../Configuration.ui"/>
         <source>The frequencies offered by the band selector while a contest is running. Only FT8 and FT4 are accepted. Right click the table to insert, delete, load, save, merge or reset. The everyday list on the Frequencies tab is left alone.</source>
-        <translation>コンテスト中にバンドセレクターが提示する周波数です。FT8 と FT4 のみが受け付けられます。テーブルを右クリックすると、挿入、削除、読み込み、保存、統合、リセットができます。「周波数」タブの通常の一覧はそのまま残ります。</translation>
+        <translation>コンテスト中にバンドセレクターへ表示する周波数です。FT8 と FT4 のみ使用できます。テーブルを右クリックすると、挿入、削除、読み込み、保存、結合、リセットができます。「Frequencies」タブの日常運用用リストには影響しません。</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
         <source>Contest &amp;defaults</source>
-        <translation>コンテストの既定値(&amp;D)</translation>
+        <translation>コンテスト既定値(&amp;D)</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
         <source>Replace the table with the published default frequencies of the selected contest.</source>
-        <translation>選択したコンテストについて公表されている既定の周波数でテーブルを置き換えます。</translation>
+        <translation>選択したコンテストの公開済み既定周波数でテーブルを置き換えます。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Translate DXCC na&amp;mes</source>
+        <translation>DXCC名を日本語で表示</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Show DXCC names in the language of the user interface. When off, the English names are shown.</source>
+        <translation>DXCC名を日本語で表示します。オフの場合は英語の名称を表示します。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Data files</source>
+        <translation>データファイル</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>The newer of the downloaded copy and the copy bundled with this release is used.</source>
+        <translation>ダウンロードしたコピーとこのリリースに同梱のコピーのうち、新しい方を使用します。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Download the latest cty.dat from country-files.com. The DXCC entities, CQ and ITU zones and continents shown for each call come from it.</source>
+        <translation>country-files.com から最新の cty.dat をダウンロードします。各コールサインに表示される DXCC エンティティ、CQ ゾーン、ITU ゾーン、大陸はこのファイルから取得されます。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Download latest</source>
+        <translation>最新版をダウンロード</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>LoTW users:</source>
+        <translation>LoTW ユーザー：</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Download the latest LoTW user activity file from ARRL. Stations that uploaded to LoTW during the last 365 days are treated as LoTW users.</source>
+        <translation>ARRL から最新の LoTW ユーザーアクティビティファイルをダウンロードします。過去 365 日以内に LoTW へアップロードした局を LoTW ユーザーとして扱います。</translation>
     </message>
 </context>
 <context>
@@ -9611,7 +9635,7 @@ soundcard changes</source>
     <message>
         <location filename="../wf_palette_design_dialog.ui" line="23"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Double click a color to edit it.&lt;/p&gt;&lt;p&gt;Right click to insert or delete colors.&lt;/p&gt;&lt;p&gt;Colors at the top represent weak signals&lt;/p&gt;&lt;p&gt;and colors at the bottom represent strong&lt;/p&gt;&lt;p&gt;signals. You can have up to 256 colors.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt; &lt;head /&gt; &lt;body&gt; &lt;p&gt;色をダブルクリックして編集します。.&lt;/p&gt;&lt;p&gt;右クリックして色を挿入または削除します。.&lt;/p&gt;&lt;p&gt;上部の色は弱い信号を表します.&lt;/p&gt;&lt;p&gt;および下部の色は強い信号を表します.&lt;/p&gt;&lt;p&gt;最大256色まで使用できます。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt; &lt;head /&gt; &lt;body&gt; &lt;p&gt;色をダブルクリックして編集します。&lt;/p&gt;&lt;p&gt;右クリックして色を挿入または削除します。&lt;/p&gt;&lt;p&gt;上部の色は弱い信号を表します.&lt;/p&gt;&lt;p&gt;および下部の色は強い信号を表します.&lt;/p&gt;&lt;p&gt;最大256色まで使用できます。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 </TS>

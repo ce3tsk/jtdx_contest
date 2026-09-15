@@ -273,6 +273,7 @@ set (wsjtx_CXXSRCS
   WSPRBandHopping.cpp
   JTDXMessageBox.cpp
   JTDXDateTime.cpp
+  FileDownload.cpp
   )
 
 set (wsjt_CXXSRCS
