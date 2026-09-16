@@ -1032,6 +1032,7 @@ private:
   void highlightBandButton ();
   void selectBandButton (Radio::Frequency frequency);
   bool dialFrequencyWheel (QWheelEvent * event);   // CE3TSK
+  void lookupDxCallOnQrz ();                       // CE3TSK
   void applyDialWheel ();
   bool dialWheelHolding () const;
   void offerRecommendedColors ();   // CE3TSK: the one-time colour offer, see Configuration

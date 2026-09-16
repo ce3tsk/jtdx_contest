@@ -3196,6 +3196,19 @@ void MainWindow::applyDialWheel ()
   displayDialFrequency ();
 }
 
+/* CE3TSK: a double click on the DX Call button, or on the callsign box beside it, opens the call's
+   qrz.com page - https://www.qrz.com/db/CE3TSK. A compound call keeps its slash exactly as it is:
+   qrz.com answers /db/VP2E/CE3TSK but returns 404 for the percent-encoded %2F, and the box's
+   validator allows only letters, digits and '/', so nothing here needs encoding. An empty box does
+   nothing. The button's other actions are untouched: a double click delivers a single clicked (),
+   which spots to dxsummit as before when that is enabled, and m_spotDXsummit stops a second spot. */
+void MainWindow::lookupDxCallOnQrz ()
+{
+  auto const call = ui->dxCallEntry->text ().trimmed ().toUpper ();
+  if (call.isEmpty ()) return;
+  QDesktopServices::openUrl (QUrl {"https://www.qrz.com/db/" + call});
+}
+
 bool MainWindow::dialWheelHolding () const
 {
   return m_dialWheelClock.isValid () && m_dialWheelClock.elapsed () < 1500 && !m_transmitting;
@@ -3348,6 +3361,15 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)  //eventFilter()
     case QEvent::Wheel:
       // CE3TSK: the wheel over a kHz digit of the dial frequency tunes it
       if (object == ui->labDialFreq && dialFrequencyWheel (static_cast<QWheelEvent *> (event))) return true;
+      break;
+
+    case QEvent::MouseButtonDblClick:
+      // CE3TSK: the DX Call button or the callsign box looks the call up on qrz.com
+      if (object == ui->pbSpotDXCall || object == ui->dxCallEntry)
+        {
+          lookupDxCallOnQrz ();
+          if (object == ui->pbSpotDXCall) return true;   // the box keeps its own word selection
+        }
       break;
 
     default: break;
