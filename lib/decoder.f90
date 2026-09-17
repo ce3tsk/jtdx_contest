@@ -79,6 +79,7 @@ subroutine multimode_decoder(params)
   integer nutc,ndelay
   type(params_block) :: params
   character(len=300) :: dumpfile   ! CE3TSK debug dump
+  character(len=26) :: modemsg   ! CE3TSK: the unknown-mode diagnostic below
   integer :: ldump,idumpstat
   integer :: nslicing,islicing,nhalf   ! CE3TSK: second slicing pass
   integer :: nsl4,nslpass4,nf4w,nf4lo(24),nf4hi(24),nthr4,ncore4,nuse4,ihalf4,nsldiv4,nhalf4,k8
@@ -325,6 +326,11 @@ subroutine multimode_decoder(params)
 
   lmultinst=params%lmultinst; lskiptx1=params%lskiptx1; lhidetest=params%lhidetest; lhidetelemetry=params%lhidetelemetry
   ltxing=params%ltxing
+! CE3TSK: JTDX_DUMP_PARAMS - the block as the decoder received it (dump_params below). Hoisted
+! above the mode dispatch 2026-09-17: it used to be called inside the FT8 branch and inside the
+! FT4/FT2 branch, so the one case where you most want it - a mode that matches no branch, i.e.
+! the GUI and this decoder out of step - was the one case it could not dump.
+  call dump_params()
   if(params%nmode.eq.8) then
      mycalllen1=len_trim(mycall)+1
      msgroot=''; msgroot=trim(mycall)//' '//trim(hiscall)//' '; msgrootlen=len_trim(msgroot)
@@ -346,10 +352,6 @@ subroutine multimode_decoder(params)
      ndecodes=0; allmessages=""; allsnrs=0; allfreq=0. !init arrays for multithreading decoding
      numcores=omp_get_num_procs()
      nuserthr=params%nmt
-! CE3TSK: JTDX_DUMP_PARAMS - the block as the decoder received it (dump_params below, called from
-! the FT8 path here and from the FT4 path, so ft4bg.sh can check the FT4 fields' reach)
-     call dump_params()
-
      numthreads=decoder_threads(nuserthr,numcores)   ! CE3TSK item 63: the ladder lives in thread_ladder.f90
 
 !print *,nuserthr,numcores,numthreads
@@ -608,7 +610,6 @@ endif
 ! CE3TSK: the hint memory is counted in periods, and FT2's are half as long - four of them is 30 s of
 ! wall time against FT4's 60. Eight keeps the same reach in seconds. The env still wins where given.
     if(.not.lhintdepthenv) nft4hintdepth=merge(8,4,lft2)
-    call dump_params()   ! CE3TSK: JTDX_DUMP_PARAMS, as the FT8 path does (ft4bg.sh checks the FT4 fields' reach)
     if(params%nagcc) call agccft4()
     nfa=params%nfa; nfb=params%nfb; nfqso=params%nfqso; lfilter=params%nfilter
     if(lft2) then; nfa=nfa/2; nfb=nfb/2; nfqso=nfqso/2; endif
@@ -790,6 +791,22 @@ endif
       t4sync=0.d0; t4bits=0.d0; t4bp=0.d0; t4osd=0.d0; t4sub=0.d0; t4cand=0.d0; t4down=0.d0; n4sync=0; n4bp=0; n4osd=0
     endif
     go to 800
+  endif
+
+! CE3TSK 2026-09-17: everything from here down decodes JT9 (9), T10 (10), JT65 (65) or the dual
+! mode (65+9). Any other value arriving here is a mode the GUI knows and this decoder does not -
+! the two halves are out of step - and saying nothing is worse than useless: rms_augap would then
+! average dd() at 100000..500099, samples an FT4 or FT2 period never fills, and report 'input
+! signal low rms' on every period. That reads as an audio fault, and it cost a macOS porter a day
+! of looking at their soundcard when their merged build had lost the nmode 52 branch (2026-09-17
+! report: FT4 perfect, every FT2 period low rms, on our own published benchmark wav). Name it.
+  if(params%nmode.ne.9 .and. params%nmode.ne.10 .and. params%nmode.ne.65 .and.                &
+     params%nmode.ne.(65+9)) then
+     write(modemsg,'(a,i0)') 'decoder has no mode ',params%nmode
+     write(*,129) nutc,modemsg,'d'
+129  format(i6.6,2x,a26,15x,a1)
+     call flush(6)
+     go to 800
   endif
 
   lowrms=.false.
