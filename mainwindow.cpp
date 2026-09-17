@@ -796,6 +796,10 @@ MainWindow::MainWindow(bool multiple, QSettings * settings, QSharedMemory *shdme
     };
     hook(ui->menuFT8_RX); hook(ui->menuFT8_TX); hook(ui->menuFT8_threads);
     hook(ui->menuFT4_RX); hook(ui->menuFT4_TX);   // item 73: the lamp reads the FT4 preset in FT4 mode
+    /* CE3TSK step 5: and FT2's, or the lamp never notices a control changing under it - the tier
+       would still read "Preset R" after the operator moved an RX member off it, and would not come
+       back when they moved it back. Every action in these two submenus feeds the same refresh. */
+    hook(ui->menuFT2_RX); hook(ui->menuFT2_TX);
     connect(ui->swlButton, &QPushButton::clicked, this, &MainWindow::refreshDecodePreset);
   }
   QActionGroup* FT8DecoderSensitivityGroup = new QActionGroup(this);
@@ -4641,7 +4645,8 @@ void MainWindow::setDecodeMenuColours()
 {
   struct { QMenu* menu; char const* light; char const* dark; } const menus[] = {
     {ui->menuFT8_preset, "#dff3df", "#1e3a1e"}, {ui->menuFT8_RX, "#e4eeff", "#1b2a44"}, {ui->menuFT8_TX, "#ffe6dc", "#44221b"},
-    {ui->menuFT4_preset, "#dff3df", "#1e3a1e"}, {ui->menuFT4_RX, "#e4eeff", "#1b2a44"}, {ui->menuFT4_TX, "#ffe6dc", "#44221b"}};   // CE3TSK item 69: FT4's three the same
+    {ui->menuFT4_preset, "#dff3df", "#1e3a1e"}, {ui->menuFT4_RX, "#e4eeff", "#1b2a44"}, {ui->menuFT4_TX, "#ffe6dc", "#44221b"},   // CE3TSK item 69: FT4's three the same
+    {ui->menuFT2_preset, "#dff3df", "#1e3a1e"}, {ui->menuFT2_RX, "#e4eeff", "#1b2a44"}, {ui->menuFT2_TX, "#ffe6dc", "#44221b"}};   // CE3TSK step 5: and FT2's, the same three colours
   for (auto const& m : menus) {
     QColor const colour {m_useDarkStyle ? m.dark : m.light};
     m.menu->setStyleSheet(QString("QMenu { background-color: %1; }").arg(colour.name()));
@@ -4653,6 +4658,7 @@ void MainWindow::setDecodeMenuColours()
   // recommended preset's mark, so the entry says "presets" the way the marks do
   ui->menuFT8_preset->menuAction()->setIcon(menu_dot(QColor(preset_colour(DecodePreset::PipelineMaxDecodesLight))));
   ui->menuFT4_preset->menuAction()->setIcon(menu_dot(QColor(ft4_preset_colour(FT4Preset::Recommended))));   // item 69
+  ui->menuFT2_preset->menuAction()->setIcon(menu_dot(QColor(ft2_preset_colour(FT2Preset::Recommended))));   // CE3TSK step 5
 }
 // CE3TSK: decode bandwidth - the radio entries carry the table index in their data
 void MainWindow::setDecodeBandwidthAction()
@@ -4695,6 +4701,8 @@ void MainWindow::refreshFT2Preset()
   for (int i=0; i<4; ++i) a[i]->setChecked(false);
   if (p != FT2Preset::Custom) a[static_cast<int>(p)]->setChecked(true);
   setFT2EnsembleActions();
+  refreshDecodePreset();   // CE3TSK: the lamp, exactly as refreshFT4Preset ends - without this the
+                           // tier changed and the lamp went on showing the last one
 }
 
 void MainWindow::on_actionFT2PresetFast_triggered() { applyFT2Preset (FT2Preset::Fast); }

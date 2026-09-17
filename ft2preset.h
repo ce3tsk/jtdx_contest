@@ -111,8 +111,12 @@ inline FT2Preset ft2_preset_of (FT4Recipe const& r, int threads)
 inline char const* ft2_preset_colour (FT2Preset p)
 {
   switch (p) {
+    case FT2Preset::Fast:        return "#8d99ae";   // grey, FT8's own grey for a lesser tier
+    case FT2Preset::Default:     return "#8d99ae";   // grey - deep, but nothing added
     case FT2Preset::Recommended: return "#3cb043";   // green - the tier the mode is built around
     case FT2Preset::MaxEffort:   return "#d32f2f";   // red - no budget at reply time
+    /* Custom returns nullptr, which is what FT8's and FT4's Custom returns: the lamp then wears
+       the plain bordered style instead of a colour, and all three modes say "Custom" alike. */
     default: return nullptr;
   }
 }
@@ -125,7 +129,7 @@ inline char ft2_preset_letter (FT2Preset p)
     case FT2Preset::Fast:        return 'F';
     case FT2Preset::Default:     return 'D';
     case FT2Preset::Recommended: return 'R';
-    case FT2Preset::MaxEffort:   return 'E';
+    case FT2Preset::MaxEffort:   return 'M';   // M for max, as the operator reads it
     default:                     return 'C';
     }
 }
