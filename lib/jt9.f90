@@ -370,7 +370,6 @@ subroutine jt9files(offset,nfiles,mode,ndepth,flow,fsplit,fhigh,nrxfreq,ncycles,
         if(filemodes(iarg-offset:iarg-offset).eq.'8') modecur=8
         if(filemodes(iarg-offset:iarg-offset).eq.'4') modecur=4
         if(filemodes(iarg-offset:iarg-offset).eq.'2') modecur=52   ! CE3TSK
-        if(filemodes(iarg-offset:iarg-offset).eq.'7') modecur=-1234567890   ! SCRATCH: 11 characters
      endif
      call get_command_argument(iarg,infile,arglen)
      ! CE3TSK review: arglen is the argument's full length even when it was truncated into infile,
