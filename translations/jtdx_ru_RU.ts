@@ -5432,8 +5432,8 @@ UDP сервер %2:%3</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
-        <source>FT8/FT4 threads</source>
-        <translation>Потоки FT8/FT4</translation>
+        <source>FT* threads</source>
+        <translation>Потоки FT*</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
@@ -5472,8 +5472,8 @@ UDP сервер %2:%3</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
-        <source>FT8/FT4 decode bandwidth</source>
-        <translation>Полоса декодирования FT8/FT4</translation>
+        <source>FT* decode bandwidth</source>
+        <translation>Полоса декодирования FT*</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
@@ -5812,6 +5812,31 @@ UDP сервер %2:%3</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
+        <source>FT2 decoding</source>
+        <translation>FT2 декодер</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>default: deep, nothing added  (1457 of 1575 signals on the 240-period set, 0.10 s at reply time)</source>
+        <translation>по умолчанию: глубокий, без добавлений  (1457 сигналов из 1575 на наборе из 240 периодов, 0,10 с ко времени ответа)</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>background 3 with deep OSD, the alternate pass and the residual unit, all in the TX window, nothing at reply time  (+0.5 % on the 240-period set, +7.4 % on the crowded band, 0.10 s; ~1.8 s of idle CPU a period)</source>
+        <translation>фон 3 с глубоким OSD, альтернативным проходом и блоком остатка, всё в окне передачи, ничего ко времени ответа  (+0,5 % на наборе из 240 периодов, +7,4 % на загруженном диапазоне, 0,10 с; ~1,8 с свободного процессорного времени за период)</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>max effort: as many members as fit the 0.5 s RX budget + low thresholds at reply time, six in the TX window with its extras and low thresholds  (+0.7 % in total, +12.5 % on the crowded band, 0.56 s mean, 1.2 s worst period)</source>
+        <translation>максимальные усилия: столько участников, сколько укладывается в бюджет RX 0,5 с + низкие пороги ко времени ответа, шесть в окне передачи с его дополнениями и низкими порогами  (+0,7 % всего, +12,5 % на загруженном диапазоне, 0,56 с в среднем, 1,2 с в худшем периоде)</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>budget auto: as many members as fit the reply deadline, from this band's measured cost (0.5 s; the rest run in the TX background)</source>
+        <translation>бюджет авто: столько участников, сколько укладывается в срок ответа, исходя из измеренной стоимости этого диапазона (0,5 с; остальные выполняются в фоне передачи)</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
         <source>fast: the shallow decoder, nothing added</source>
         <translation>быстрый: поверхностный декодер, без добавлений</translation>
     </message>
@@ -6085,13 +6110,18 @@ This is asked only once.</source>
     </message>
     <message>
         <location filename="../../mainwindow.cpp"/>
+        <source>Custom - the FT2 RX / TX background controls match no preset</source>
+        <translation>Custom - органы управления RX / фона TX для FT2 не совпадают ни с одним пресетом</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
         <source>Custom - the FT4 RX / TX background controls match no preset</source>
         <translation>Custom - органы управления RX / фона TX для FT4 не совпадают ни с одним пресетом</translation>
     </message>
     <message>
         <location filename="../../mainwindow.cpp"/>
-        <source>FT8 / FT4 decoding preset - greyed while the mode is neither</source>
-        <translation>Пресет декодирования FT8 / FT4 - серый, пока режим не является ни тем, ни другим</translation>
+        <source>FT* decoding preset - greyed while the mode is none of them</source>
+        <translation>Пресет декодирования FT* - серый, пока режим не является ни одним из них</translation>
     </message>
     <message>
         <location filename="../../mainwindow.cpp"/>

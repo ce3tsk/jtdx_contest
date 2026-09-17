@@ -72,6 +72,10 @@ subroutine jt9a()
 
   if(local_params%nmode.eq.8) then; npts1=180000
   else if(local_params%nmode.eq.4) then; npts1=73728
+! CE3TSK: FT2's period is 3.75 s and the FT4 chain decodes it from a stream stretched x2, so the
+! capture is half of dd4's length: 36864 real samples, 3.072 s of the period. The rest of the
+! period is out of reach - dd4 is 73728 and raising it would change FT4's FFT length.
+  else if(local_params%nmode.eq.52) then; npts1=36864
   else; npts1=NPTS
   endif
 
@@ -99,6 +103,9 @@ subroutine jt9a()
      else if(local_params%nmode.eq.4) then
         rms=sum(abs(shared_data%dd2(1:10)))+sum(abs(shared_data%dd2(30001:30010)))+ &
             sum(abs(shared_data%dd2(60470:60480)))
+     else if(local_params%nmode.eq.52) then   ! CE3TSK: the same three probes inside FT2's 36864
+        rms=sum(abs(shared_data%dd2(1:10)))+sum(abs(shared_data%dd2(18001:18010)))+ &
+            sum(abs(shared_data%dd2(36855:36864)))
      else
         rms=sum(abs(shared_data%dd2(1:10)))+sum(abs(shared_data%dd2(300000:300010)))+ &
             sum(abs(shared_data%dd2(623991:624000)))
@@ -114,6 +121,13 @@ subroutine jt9a()
 
   if(local_params%nmode.eq.8) then; dd8(1:npts1)=dd(1:npts1)
   else if(local_params%nmode.eq.4) then; dd4(1:npts1)=dd(1:npts1)
+  else if(local_params%nmode.eq.52) then
+! CE3TSK: the stretch - every sample twice, a zero order hold. This is the whole of FT2's receive
+! side: what the FT4 decoder then sees is an FT4 signal, and only the frequency limits on the way in
+! and the frequency and DT on the way out have to be converted (decoder.f90, ft4emit, ft4b).
+     do i=1,npts1
+        dd4(2*i-1)=dd(i); dd4(2*i)=dd(i)
+     enddo
   endif
 
 !  call timer('decoder ',0)
@@ -123,7 +137,8 @@ subroutine jt9a()
 ! CE3TSK: pipeline ensemble (PIPELINED_DECODE_PLAN.md) - the background phase decodes the
 ! period again in the idle time, until the GUI removes .lock for the next decode; if it did,
 ! the new data is already in shared memory: go straight to it
-  if(local_params%nmode.eq.4 .and. local_params%nft4bgeffort.ne.0) then
+! CE3TSK: nmode 52 is FT2, decoded by the same FT4 chain, so its background phase is this one
+  if((local_params%nmode.eq.4 .or. local_params%nmode.eq.52) .and. local_params%nft4bgeffort.ne.0) then
 ! CE3TSK: the FT4 TX background (item 59), FT8's block below mirrored - one unit in the idle
 ! time, .lock/.bgabort rules identical. Item 78: the switch alone decides, as nft8bgeffort does
 ! for FT8 - the member target no longer has to exceed the RX count (with no member left the

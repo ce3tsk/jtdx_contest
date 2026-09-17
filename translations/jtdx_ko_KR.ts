@@ -5418,8 +5418,8 @@ UDP 서버 %2:%3</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
-        <source>FT8/FT4 threads</source>
-        <translation>FT8/FT4 스레드</translation>
+        <source>FT* threads</source>
+        <translation>FT* 스레드</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
@@ -5458,8 +5458,8 @@ UDP 서버 %2:%3</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
-        <source>FT8/FT4 decode bandwidth</source>
-        <translation>FT8/FT4 디코드 대역폭</translation>
+        <source>FT* decode bandwidth</source>
+        <translation>FT* 디코드 대역폭</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
@@ -5798,6 +5798,31 @@ UDP 서버 %2:%3</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
+        <source>FT2 decoding</source>
+        <translation>FT2 디코딩</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>default: deep, nothing added  (1457 of 1575 signals on the 240-period set, 0.10 s at reply time)</source>
+        <translation>기본: 깊게, 추가 없음  (240주기 세트에서 1575개 중 1457개, 응답 시점 0.10초)</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>background 3 with deep OSD, the alternate pass and the residual unit, all in the TX window, nothing at reply time  (+0.5 % on the 240-period set, +7.4 % on the crowded band, 0.10 s; ~1.8 s of idle CPU a period)</source>
+        <translation>배경 3 + 깊은 OSD + 대체 패스 + 잔차 단위를 모두 TX 구간에서, 응답 시점에는 없음  (240주기 세트 +0.5 %, 혼잡한 밴드 +7.4 %, 0.10초. 주기당 유휴 CPU 약 1.8초)</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>max effort: as many members as fit the 0.5 s RX budget + low thresholds at reply time, six in the TX window with its extras and low thresholds  (+0.7 % in total, +12.5 % on the crowded band, 0.56 s mean, 1.2 s worst period)</source>
+        <translation>최대 노력: 0.5초 RX 예산에 맞는 만큼의 멤버와 낮은 임계값을 응답 시점에, TX 구간에서는 6개를 추가 항목과 낮은 임계값과 함께  (합계 +0.7 %, 혼잡한 밴드 +12.5 %, 평균 0.56초, 최악 주기 1.2초)</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>budget auto: as many members as fit the reply deadline, from this band's measured cost (0.5 s; the rest run in the TX background)</source>
+        <translation>예산 자동: 이 밴드에서 측정한 비용을 기준으로 응답 기한에 맞는 만큼의 멤버 (0.5초. 나머지는 TX 배경에서 실행)</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
         <source>fast: the shallow decoder, nothing added</source>
         <translation>빠름: 얕은 디코더만, 추가 없음</translation>
     </message>
@@ -6071,13 +6096,18 @@ This is asked only once.</source>
     </message>
     <message>
         <location filename="../../mainwindow.cpp"/>
+        <source>Custom - the FT2 RX / TX background controls match no preset</source>
+        <translation>Custom - FT2의 RX / TX 백그라운드 설정이 어떤 프리셋과도 맞지 않습니다</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
         <source>Custom - the FT4 RX / TX background controls match no preset</source>
         <translation>Custom - FT4의 RX / TX 백그라운드 설정이 어떤 프리셋과도 맞지 않습니다</translation>
     </message>
     <message>
         <location filename="../../mainwindow.cpp"/>
-        <source>FT8 / FT4 decoding preset - greyed while the mode is neither</source>
-        <translation>FT8 / FT4 디코딩 프리셋 - 모드가 둘 다 아닌 동안은 회색입니다</translation>
+        <source>FT* decoding preset - greyed while the mode is none of them</source>
+        <translation>FT* 디코딩 프리셋 - 모드가 그중 어느 것도 아닌 동안은 회색입니다</translation>
     </message>
     <message>
         <location filename="../../mainwindow.cpp"/>

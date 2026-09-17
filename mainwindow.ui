@@ -4726,7 +4726,7 @@ list. The list can be maintained in Settings (F2).</string>
     </property>
     <widget class="QMenu" name="menuFT8_threads">
      <property name="title">
-      <string>FT8/FT4 threads</string>
+      <string>FT* threads</string>
      </property>
      <addaction name="actionMTAuto"/>
      <addaction name="actionMT1"/>
@@ -5060,9 +5060,63 @@ list. The list can be maintained in Settings (F2).</string>
      <addaction name="separator"/>
      <addaction name="menuFT4_expert"/>
     </widget>
+   <widget class="QMenu" name="menuFT2_decoding">
+     <property name="title">
+      <string>FT2 decoding</string>
+     </property>
+     <widget class="QMenu" name="menuFT2_preset">
+      <property name="title">
+       <string>Presets</string>
+      </property>
+      <addaction name="actionFT2PresetFast"/>
+      <addaction name="actionFT2PresetDefault"/>
+      <addaction name="actionFT2PresetRecommended"/>
+      <addaction name="actionFT2PresetMaxEffort"/>
+     </widget>
+     <widget class="QMenu" name="menuFT2_expert">
+      <property name="title">
+       <string>expert</string>
+      </property>
+      <widget class="QMenu" name="menuFT2_RX">
+       <property name="title">
+        <string>RX</string>
+       </property>
+       <widget class="QMenu" name="menuFT2_ensemble_effort">
+        <property name="title">
+         <string>ensemble effort</string>
+        </property>
+        <addaction name="actionFT2EnsembleOff"/>
+        <addaction name="actionFT2EnsembleAuto"/>
+        <addaction name="actionFT2EnsembleBudget"/>
+       </widget>
+       <addaction name="menuFT2_ensemble_effort"/>
+      </widget>
+      <widget class="QMenu" name="menuFT2_TX">
+       <property name="title">
+        <string>TX background</string>
+       </property>
+       <widget class="QMenu" name="menuFT2_bg_ensemble">
+        <property name="title">
+         <string>ensemble effort</string>
+        </property>
+        <addaction name="actionFT2BgEnsembleOff"/>
+        <addaction name="actionFT2BgEnsemble3"/>
+        <addaction name="actionFT2BgEnsemble6"/>
+        <addaction name="actionFT2BgEnsembleAuto"/>
+       </widget>
+       <addaction name="menuFT2_bg_ensemble"/>
+       <addaction name="actionFT2BgEnabled"/>
+      </widget>
+      <addaction name="menuFT2_RX"/>
+      <addaction name="menuFT2_TX"/>
+     </widget>
+     <addaction name="menuFT2_preset"/>
+     <addaction name="separator"/>
+     <addaction name="menuFT2_expert"/>
+    </widget>
     <widget class="QMenu" name="menuFT8_bandwidth">
      <property name="title">
-        <string>FT8/FT4 decode bandwidth</string>
+        <string>FT* decode bandwidth</string>
      </property>
      <addaction name="actionBW0"/>
      <addaction name="actionBW13"/>
@@ -5086,6 +5140,7 @@ list. The list can be maintained in Settings (F2).</string>
     <addaction name="menuFT8_bandwidth"/>
     <addaction name="menuFT8_decoding"/>
     <addaction name="menuFT4_decoding"/>
+    <addaction name="menuFT2_decoding"/>
     <addaction name="menuJT9_decoding"/>
    </widget>
    <widget class="QMenu" name="menuSave">
@@ -5141,6 +5196,7 @@ list. The list can be maintained in Settings (F2).</string>
     </property>
     <addaction name="actionFT8"/>
     <addaction name="actionFT4"/>
+    <addaction name="actionFT2"/>
     <addaction name="actionJT65"/>
     <addaction name="actionJT9_JT65"/>
     <addaction name="actionJT9"/>
@@ -6884,6 +6940,102 @@ list. The list can be maintained in Settings (F2).</string>
     <string>high</string>
    </property>
   </action>
+  <action name="actionFT2PresetFast">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>fast: the shallow decoder, nothing added</string>
+   </property>
+  </action>
+  <action name="actionFT2PresetDefault">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>default: deep, nothing added  (1457 of 1575 signals on the 240-period set, 0.10 s at reply time)</string>
+   </property>
+  </action>
+  <action name="actionFT2PresetRecommended">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>background 3 with deep OSD, the alternate pass and the residual unit, all in the TX window, nothing at reply time  (+0.5 % on the 240-period set, +7.4 % on the crowded band, 0.10 s; ~1.8 s of idle CPU a period)</string>
+   </property>
+  </action>
+  <action name="actionFT2PresetMaxEffort">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>max effort: as many members as fit the 0.5 s RX budget + low thresholds at reply time, six in the TX window with its extras and low thresholds  (+0.7 % in total, +12.5 % on the crowded band, 0.56 s mean, 1.2 s worst period)</string>
+   </property>
+  </action>
+  <action name="actionFT2BgEnabled">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>TX background decoding: decode the period again in the decoder's idle time, with the settings below</string>
+   </property>
+  </action>
+  <action name="actionFT2EnsembleOff">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>off</string>
+   </property>
+  </action>
+  <action name="actionFT2EnsembleAuto">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>auto: by thread count - 6 members from 12 threads, 4 from 8, 3 from 6, 2 from 4, 1 from 3, none below</string>
+   </property>
+  </action>
+  <action name="actionFT2EnsembleBudget">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>budget auto: as many members as fit the reply deadline, from this band's measured cost (0.5 s; the rest run in the TX background)</string>
+   </property>
+  </action>
+  <action name="actionFT2BgEnsembleOff">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>off</string>
+   </property>
+  </action>
+  <action name="actionFT2BgEnsemble3">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>3 members</string>
+   </property>
+  </action>
+  <action name="actionFT2BgEnsemble6">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>6 members</string>
+   </property>
+  </action>
+  <action name="actionFT2BgEnsembleAuto">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>auto: by thread count - 6 from 12 threads, 4 from 8, 3 from 3 up, none below (the clock cuts what does not fit)</string>
+   </property>
+  </action>
   <action name="actionFT4PresetFast">
    <property name="checkable">
     <bool>true</bool>
@@ -7252,6 +7404,17 @@ list. The list can be maintained in Settings (F2).</string>
    </property>
    <property name="text">
     <string>FT4</string>
+   </property>
+  </action>
+  <action name="actionFT2">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>FT2</string>
+   </property>
+   <property name="toolTip">
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;FT2: FT4's frame at twice the rate, 3.75 s periods. Receive only for now - transmitting is not enabled yet.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
   </action>
   <action name="actionFT4fast">

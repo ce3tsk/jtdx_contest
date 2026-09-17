@@ -132,7 +132,7 @@ program jt9
   ! valgrind on the FT4 hint memory work, 2026-08-29; file mode only, the GUI clears its block)
   mycall=''; hiscall=''; mygrid=''; hisgrid=''
   do
-     call getopt('hs:e:a:b:r:m:p:d:f:w:t:964TL:S:H:c:G:x:g:8C:K:E:R:A:WN:j:OyuzXQM:l:B:k:I:D:F:J:P:U:V:Y:Z:n:',long_options,c,   &
+     call getopt('hs:e:a:b:r:m:p:d:f:w:t:9642TL:S:H:c:G:x:g:8C:K:E:R:A:WN:j:OyuzXQM:l:B:k:I:D:F:J:P:U:V:Y:Z:n:',long_options,c,   &
           optarg,arglen,stat,offset,remain,.true.)
      if (stat .ne. 0) then
         exit
@@ -169,6 +169,8 @@ program jt9
            read (optarg(:arglen), *) fhigh
         case ('4')
            mode = 4
+        case ('2')                       ! CE3TSK: FT2 - decoded by the FT4 chain from a x2 stretch
+           mode = 52
         case ('8')                       ! CE3TSK: file mode options
            mode = 8
         case ('C')
@@ -346,8 +348,8 @@ subroutine jt9files(offset,nfiles,mode,ndepth,flow,fsplit,fhigh,nrxfreq,ncycles,
   integer :: ndelayfile   ! CE3TSK: JTDX_NDELAY_FILE
   character(len=256) :: filemodes
 
-  if(mode.ne.8 .and. mode.ne.4) then
-     print*,'jt9files: file decoding supports FT8 (-8) and FT4 (-4) only'
+  if(mode.ne.8 .and. mode.ne.4 .and. mode.ne.52) then
+     print*,'jt9files: file decoding supports FT8 (-8), FT4 (-4) and FT2 (-2) only'
      return
   endif
 ! CE3TSK 2026-09-05: JTDX_FILE_MODES=844... - one digit per file, 8 or 4, overriding -8/-4 for
@@ -367,6 +369,7 @@ subroutine jt9files(offset,nfiles,mode,ndepth,flow,fsplit,fhigh,nrxfreq,ncycles,
      if(lmodes.ge.iarg-offset) then
         if(filemodes(iarg-offset:iarg-offset).eq.'8') modecur=8
         if(filemodes(iarg-offset:iarg-offset).eq.'4') modecur=4
+        if(filemodes(iarg-offset:iarg-offset).eq.'2') modecur=52   ! CE3TSK
      endif
      call get_command_argument(iarg,infile,arglen)
      ! CE3TSK review: arglen is the argument's full length even when it was truncated into infile,
@@ -380,7 +383,9 @@ subroutine jt9files(offset,nfiles,mode,ndepth,flow,fsplit,fhigh,nrxfreq,ncycles,
         print*,'jt9files: ',trim(infile),' is not 12000 Hz - skipped'
         close(unit=wav%lun); cycle
      endif
-     if(modecur.eq.8) then; npts1=180000; else; npts1=73728; endif
+     if(modecur.eq.8) then; npts1=180000
+     else if(modecur.eq.52) then; npts1=36864   ! CE3TSK: FT2 captures 3.072 s and is stretched x2 into dd4
+     else; npts1=73728; endif
      nbytes=wav%audio_format%bits_per_sample/8
      nsamp=min(npts1,wav%data_size/nbytes)
      dd(1:npts1)=0.
@@ -416,6 +421,11 @@ subroutine jt9files(offset,nfiles,mode,ndepth,flow,fsplit,fhigh,nrxfreq,ncycles,
         nlastsam=nblocks*3456
         dd(nlastsam+1:npts1)=0.
         dd8(1:npts1)=dd(1:npts1)
+     else if(modecur.eq.52) then
+        nblocks=0
+        do i=1,npts1                     ! CE3TSK: the x2 stretch, as jt9a.f90 does it for live audio
+           dd4(2*i-1)=dd(i); dd4(2*i)=dd(i)
+        enddo
      else
         nblocks=0
         dd4(1:npts1)=dd(1:npts1)
@@ -440,7 +450,7 @@ subroutine jt9files(offset,nfiles,mode,ndepth,flow,fsplit,fhigh,nrxfreq,ncycles,
      endif
      params%nftx=nrxfreq
      params%nutc=nutc
-     params%ntrperiod=15; if(modecur.eq.4) params%ntrperiod=8
+     params%ntrperiod=15; if(modecur.eq.4) params%ntrperiod=8; if(modecur.eq.52) params%ntrperiod=4   ! CE3TSK: informational only
      params%nfqso=nrxfreq
      params%npts8=74736
      params%nfa=flow
@@ -505,11 +515,11 @@ subroutine jt9files(offset,nfiles,mode,ndepth,flow,fsplit,fhigh,nrxfreq,ncycles,
      params%lft4altpass=lalt
      params%nft4ensemble=nensemble
      params%nft4bgensemble=0
-     if(modecur.eq.4 .and. nbgens.gt.0) params%nft4bgensemble=min(6,nbgens)   ! CE3TSK item 59: -V = the background's target member count in FT4
+     if((modecur.eq.4 .or. modecur.eq.52) .and. nbgens.gt.0) params%nft4bgensemble=min(6,nbgens)   ! CE3TSK item 59: -V = the background's target member count in FT4 (and FT2, which shares the fields)
      ! CE3TSK item 78: -B 1 is the FT4 TX background switch exactly as it is FT8's (nft8bgeffort); -V alone
      ! no longer implies a background, and -B 1 with -V at or below -M runs the phase's extras alone
-     params%nft4bgeffort=merge(1,0,modecur.eq.4 .and. nbgeffort.ne.0)
-     if(modecur.eq.4) then   ! CE3TSK item 73: -M auto (-1) and -V auto (-1) resolve by the thread ladder, as the GUI does
+     params%nft4bgeffort=merge(1,0,(modecur.eq.4 .or. modecur.eq.52) .and. nbgeffort.ne.0)
+     if(modecur.eq.4 .or. modecur.eq.52) then   ! CE3TSK item 73: -M auto (-1) and -V auto (-1) resolve by the thread ladder, as the GUI does
         if(nensemble.eq.-1) params%nft4ensemble=ft4_members_auto(decoder_threads(nthreads,omp_get_num_procs()))
         if(nbgens.eq.-3) params%nft4bgensemble=ft4_bg_auto(decoder_threads(nthreads,omp_get_num_procs()))
      endif
@@ -592,6 +602,9 @@ subroutine jt9files(offset,nfiles,mode,ndepth,flow,fsplit,fhigh,nrxfreq,ncycles,
      ! 1.36 s reply deadline (the GUI sends FT4RXBudget=13); -l TENTHS overrides either. The variable's 27 initial
      ! value used to reach FT4 as it was, so `-M budget` without -l ran a 2.7 s budget there
      params%nrxbudget=nrxbudget; if(modecur.eq.4 .and. .not.lrxbudgetset) params%nrxbudget=13
+! CE3TSK: FT2's reply deadline is 3.75 - 22*1728/12000 = 0.58 s, so its RX budget is 5 tenths where
+! FT4 gets 13 against 1.45 s. Measured tuning comes later (step 3 of the port).
+     if(modecur.eq.52 .and. .not.lrxbudgetset) params%nrxbudget=5
      params%lbgswl=(nbgswl.ne.0); params%nft8bgcycles=nbgcycles; params%nft8bgswlcycles=nbgswlcycles
      params%lbgdeeposd=(nbgosd.ne.0); params%lbgtwopass=(nbgtwo.ne.0); params%lbgaltpass=(nbgalt.ne.0)
      params%nft8bgensemble=merge(-1,nbgens,nbgens.eq.-3); params%lbglowth=(nbgsens.ge.1); params%lbgsubpass=(nbgsens.ge.2)   ! item 73: the typed 'auto' is FT8's -1

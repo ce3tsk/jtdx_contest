@@ -24,6 +24,7 @@ public:
     FT8,
     FT4,
     WSPR,
+    FT2,   // CE3TSK: appended, never inserted - the frequency table stores these as integers
     MODES_END_SENTINAL_AND_COUNT
   };
 

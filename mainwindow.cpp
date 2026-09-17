@@ -52,6 +52,7 @@
 #include "contestreply.h"
 #include "logfields.h"   // CE3TSK: what a log entry takes when the QSO skipped a step   /* CE3TSK: contest-mode rejection of signal-report messages */
 #include "decodelabel.h"   // CE3TSK
+#include "modetiming.h"   // CE3TSK: the per-mode timing constants
 #include <QPainter>
 #include <functional>   // CE3TSK P13: the recursive menu hook
 #include <QThread>                  /* CE3TSK: 16 bit wav expansion */
@@ -632,6 +633,7 @@ MainWindow::MainWindow(bool multiple, QSettings * settings, QSharedMemory *shdme
 
   QActionGroup* modeGroup = new QActionGroup(this);
   ui->actionFT4->setActionGroup(modeGroup);
+  ui->actionFT2->setActionGroup(modeGroup);   // CE3TSK
   ui->actionFT8->setActionGroup(modeGroup);
   ui->actionJT65->setActionGroup(modeGroup);
   ui->actionJT9_JT65->setActionGroup(modeGroup);
@@ -711,6 +713,7 @@ MainWindow::MainWindow(bool multiple, QSettings * settings, QSharedMemory *shdme
   ui->actionFT8PresetPipelineLight->setActionGroup(FT8PresetGroup);
   markRecommendedPresets();   // CE3TSK
   markFT4Presets();   // CE3TSK item 67
+  markFT2Presets();   // CE3TSK step 5: the same marks on FT2's tiers
   ui->actionFT8PresetPipeline->setActionGroup(FT8PresetGroup);
   ui->actionFT8PresetPipelineFull->setActionGroup(FT8PresetGroup);
   ui->actionFT8PresetPipelineRun->setActionGroup(FT8PresetGroup);
@@ -772,6 +775,15 @@ MainWindow::MainWindow(bool multiple, QSettings * settings, QSharedMemory *shdme
     ui->menuBar->setCornerWidget (kofi, Qt::TopRightCorner);
   }
   connect(ui->menuFT4_decoding, &QMenu::aboutToShow, this, &MainWindow::refreshFT4Preset);   // CE3TSK: same for FT4
+  connect(ui->menuFT2_decoding, &QMenu::aboutToShow, this, &MainWindow::refreshFT2Preset);   // CE3TSK step 5: and for FT2
+  QActionGroup* FT2PresetGroup = new QActionGroup(this);
+  for (auto a : {ui->actionFT2PresetFast, ui->actionFT2PresetDefault,
+                 ui->actionFT2PresetRecommended, ui->actionFT2PresetMaxEffort}) a->setActionGroup(FT2PresetGroup);
+  QActionGroup* FT2EnsembleGroup = new QActionGroup(this);
+  for (auto a : {ui->actionFT2EnsembleOff, ui->actionFT2EnsembleAuto, ui->actionFT2EnsembleBudget}) a->setActionGroup(FT2EnsembleGroup);
+  QActionGroup* FT2BgEnsembleGroup = new QActionGroup(this);
+  for (auto a : {ui->actionFT2BgEnsembleOff, ui->actionFT2BgEnsemble3, ui->actionFT2BgEnsemble6,
+                 ui->actionFT2BgEnsembleAuto}) a->setActionGroup(FT2BgEnsembleGroup);
   QActionGroup* FT4PresetGroup = new QActionGroup(this);
   for (auto a : {ui->actionFT4PresetFast, ui->actionFT4PresetDefault, ui->actionFT4PresetBestPower,
                  ui->actionFT4PresetRecommended, ui->actionFT4PresetMaxDecodes, ui->actionFT4PresetMaxEffort}) a->setActionGroup(FT4PresetGroup);
@@ -1186,6 +1198,7 @@ MainWindow::MainWindow(bool multiple, QSettings * settings, QSharedMemory *shdme
   
   if(m_mode=="FT8") on_actionFT8_triggered();
   else if(m_mode=="FT4") on_actionFT4_triggered();
+  else if(m_mode=="FT2") on_actionFT2_triggered();   // CE3TSK
   else if(m_mode=="JT9+JT65") on_actionJT9_JT65_triggered();
   else if(m_mode=="JT9") on_actionJT9_triggered();
   else if(m_mode=="JT65") on_actionJT65_triggered();
@@ -1378,6 +1391,27 @@ void MainWindow::writeSettings()
   m_settings->setValue("FT4BgQSORXfreqSensitivity",m_ft4BgRXfSens);
   m_settings->setValue("FT4EnsembleEffort",m_ft4Ensemble);
   m_settings->setValue("FT4RXBudget",m_ft4RXBudget);   // CE3TSK item 80: tenths
+  /* CE3TSK step 5: FT2's own values, one key per field of the recipe. They are written under
+     their own names rather than shared with FT4 because the two modes want different answers:
+     FT2 decodes a 3.75 s period against a 0.58 s deadline. */
+  m_settings->setValue("FT2Depth",m_ft2Recipe.depth);
+  m_settings->setValue("FT2AltPass",m_ft2Recipe.alt);
+  m_settings->setValue("FT2Ensemble",m_ft2Recipe.members);
+  m_settings->setValue("FT2DeepOSD",m_ft2Recipe.deeposd);
+  m_settings->setValue("FT2BgEnsemble",m_ft2Recipe.bg);
+  m_settings->setValue("FT2BgDepth",m_ft2Recipe.bgdepth);
+  m_settings->setValue("FT2BgDeepOSD",m_ft2Recipe.bgdeeposd);
+  m_settings->setValue("FT2BgAltPass",m_ft2Recipe.bgalt);
+  m_settings->setValue("FT2BgTwoSlicings",m_ft2Recipe.bgtwopass);
+  m_settings->setValue("FT2Sensitivity",m_ft2Recipe.sens);
+  m_settings->setValue("FT2BgResidual",m_ft2Recipe.bgresidual);
+  m_settings->setValue("FT2BgSensitivity",m_ft2Recipe.bgsens);
+  m_settings->setValue("FT2TwoSlicings",m_ft2Recipe.twopass);
+  m_settings->setValue("FT2BgEnabled",m_ft2Recipe.bgon);
+  m_settings->setValue("FT2RXfSens",m_ft2Recipe.rxf);
+  m_settings->setValue("FT2BgRXfSens",m_ft2Recipe.bgrxf);
+  m_settings->setValue("FT2RXBudget",m_ft2RXBudget);
+  m_settings->setValue("FT2BgMargin",m_ft2BgMargin);
   m_settings->setValue("FT4BgMargin",m_ft4BgMargin);
   m_settings->setValue("FT4TwoSlicings",m_ft4TwoSlicings);
   m_settings->setValue("FT8EnsembleEffort",m_ft8EnsembleEffort);
@@ -1513,7 +1547,7 @@ void MainWindow::readSettings()
      copy is offered beside its source, which is where it belonged before this was remembered */
   m_convertOutPath = m_settings->value("ConvertOutMRUdir","").toString ();   /* CE3TSK */
 
-  m_txFirst = m_settings->value("TxFirst",false).toBool();
+  m_txFirst = m_settings->value("TxFirst",true).toBool();
 
   m_rrr = m_settings->value("RRR/RR73",false).toBool();
   ui->rrrCheckBox->setChecked(m_rrr);
@@ -1539,7 +1573,10 @@ void MainWindow::readSettings()
 
   if(m_settings->contains ("FreeText")) ui->freeTextMsg->setCurrentText (m_settings->value ("FreeText").toString ());
 
-  if(m_settings->value("ShowMenus").toString()=="false") { ui->cbMenus->setChecked(false); on_cbMenus_toggled(false); }
+  /* CE3TSK: the menus show unless the key says otherwise - the default is now written down here
+     rather than implied by cbMenus being checked in the .ui, and a stored 0/1 counts as well as
+     the literal "false" the old string comparison demanded. */
+  if(!m_settings->value("ShowMenus",true).toBool()) { ui->cbMenus->setChecked(false); on_cbMenus_toggled(false); }
   else { ui->cbMenus->setChecked(true); on_cbMenus_toggled(true); }
 
   bool wanted=m_settings->value("ShowWanted",false).toBool(); m_wantedchkd=wanted; ui->cbShowWanted->setChecked(wanted);
@@ -1577,7 +1614,7 @@ void MainWindow::readSettings()
   else if(m_ft8threads==23) ui->actionMT23->setChecked(true);
   else if(m_ft8threads==24) ui->actionMT24->setChecked(true);
 
-  m_acceptUDP=m_settings->value("AcceptUDPReplyMessages",1).toInt(); if(!(m_acceptUDP>=1 && m_acceptUDP<=3)) m_acceptUDP=1;
+  m_acceptUDP=m_settings->value("AcceptUDPReplyMessages",3).toInt(); if(!(m_acceptUDP>=1 && m_acceptUDP<=3)) m_acceptUDP=3;
   if(m_acceptUDP==1) ui->actionAcceptUDPCQ->setChecked(true);
   else if(m_acceptUDP==2) ui->actionAcceptUDPCQ73->setChecked(true);
   else if(m_acceptUDP==3) ui->actionAcceptUDPAny->setChecked(true);
@@ -1592,6 +1629,7 @@ void MainWindow::readSettings()
   if(!m_modeTx.startsWith("FT") && !m_modeTx.startsWith("JT") && m_modeTx!="T10" && !m_modeTx.startsWith ("WSPR")) {
     if(m_mode=="FT8") m_modeTx="FT8";
 	else if(m_mode=="FT4") m_modeTx="FT4";
+    else if(m_mode=="FT2") m_modeTx="FT2";   // CE3TSK
     else if(m_mode=="JT9+JT65") m_modeTx="JT65";
     else if(m_mode=="JT65") m_modeTx="JT65";
     else if(m_mode=="JT9") m_modeTx="JT9";
@@ -1643,15 +1681,15 @@ void MainWindow::readSettings()
   else ui->actionCallPriorityAndSearchCQ->setChecked(m_settings->value("CallPriorityCQ",false).toBool());
 
   ui->actionMaxDistance->setChecked(m_settings->value("MaxDistance",false).toBool());
-  ui->actionAnswerWorkedB4->setChecked(m_settings->value("AnswerWorkedB4",false).toBool());
-  ui->actionCallWorkedB4->setChecked(m_settings->value("CallWorkedB4",false).toBool());
+  ui->actionAnswerWorkedB4->setChecked(m_settings->value("AnswerWorkedB4",true).toBool());
+  ui->actionCallWorkedB4->setChecked(m_settings->value("CallWorkedB4",true).toBool());
   ui->actionCallHigherNewCall->setChecked(m_settings->value("CallHigherNewCall",false).toBool());
   ui->actionSingleShot->setChecked(m_settings->value("SingleShotQSO",false).toBool());
   /* CE3TSK */
   m_uiParkedValid = m_settings->value("ContestUiParked",false).toBool();
   m_settings->remove("ContestUiHound");   /* CE3TSK: no longer parked */
   m_uiParked.autoTx = m_settings->value("ContestUiAutoTx",true).toBool();
-  m_uiParked.skipTx1 = m_settings->value("ContestUiSkipTx1",false).toBool();
+  m_uiParked.skipTx1 = m_settings->value("ContestUiSkipTx1",true).toBool();
   m_uiParked.rrr = m_settings->value("ContestUiRRR",false).toBool();
   m_uiParked.maxDistance = m_settings->value("ContestUiMaxDistance",false).toBool();
   m_uiParked.rprtPriority = m_settings->value("ContestUiRprtPriority",false).toBool();
@@ -1720,6 +1758,38 @@ void MainWindow::readSettings()
   // CE3TSK item 80: FT8's P8 budget and P7 margin, FT4's own values - the RX budget against the 1.36 s reply
   // deadline, the margin the background leaves before the next decode (the max effort preset sets 0.5 s)
   m_ft4RXBudget=m_settings->value("FT4RXBudget",13).toInt(); if(!(m_ft4RXBudget>=5 && m_ft4RXBudget<=600)) m_ft4RXBudget=13;
+  {   // CE3TSK step 5: FT2's own settings, defaulting to its recommended preset on a profile without them
+    FT4Recipe const d = ft2_preset_recipe (FT2Preset::Recommended);
+    m_ft2Recipe.depth=m_settings->value("FT2Depth",d.depth).toInt();
+    if(!(m_ft2Recipe.depth>=1 && m_ft2Recipe.depth<=3)) m_ft2Recipe.depth=d.depth;
+    m_ft2Recipe.alt=m_settings->value("FT2AltPass",d.alt).toBool();
+    m_ft2Recipe.members=m_settings->value("FT2Ensemble",d.members).toInt();
+    if(!valid_ft4_ensemble(m_ft2Recipe.members) && m_ft2Recipe.members!=FT4_ENSEMBLE_AUTO
+       && m_ft2Recipe.members!=FT4_ENSEMBLE_BUDGET) m_ft2Recipe.members=d.members;
+    m_ft2Recipe.deeposd=m_settings->value("FT2DeepOSD",d.deeposd).toBool();
+    m_ft2Recipe.bg=m_settings->value("FT2BgEnsemble",d.bg).toInt();
+    if(!valid_ft4_ensemble(m_ft2Recipe.bg) && m_ft2Recipe.bg!=FT4_ENSEMBLE_AUTO) m_ft2Recipe.bg=d.bg;
+    m_ft2Recipe.bgdepth=m_settings->value("FT2BgDepth",d.bgdepth).toInt();
+    if(!(m_ft2Recipe.bgdepth>=0 && m_ft2Recipe.bgdepth<=3)) m_ft2Recipe.bgdepth=d.bgdepth;
+    m_ft2Recipe.bgdeeposd=m_settings->value("FT2BgDeepOSD",d.bgdeeposd).toBool();
+    m_ft2Recipe.bgalt=m_settings->value("FT2BgAltPass",d.bgalt).toBool();
+    m_ft2Recipe.bgtwopass=m_settings->value("FT2BgTwoSlicings",d.bgtwopass).toBool();
+    m_ft2Recipe.sens=m_settings->value("FT2Sensitivity",d.sens).toInt();
+    if(!(m_ft2Recipe.sens>=0 && m_ft2Recipe.sens<=1)) m_ft2Recipe.sens=d.sens;
+    m_ft2Recipe.bgresidual=m_settings->value("FT2BgResidual",d.bgresidual).toBool();
+    m_ft2Recipe.bgsens=m_settings->value("FT2BgSensitivity",d.bgsens).toInt();
+    if(!(m_ft2Recipe.bgsens>=0 && m_ft2Recipe.bgsens<=1)) m_ft2Recipe.bgsens=d.bgsens;
+    m_ft2Recipe.twopass=m_settings->value("FT2TwoSlicings",d.twopass).toBool();
+    m_ft2Recipe.bgon=m_settings->value("FT2BgEnabled",d.bgon).toBool();
+    m_ft2Recipe.rxf=m_settings->value("FT2RXfSens",d.rxf).toInt();
+    if(!(m_ft2Recipe.rxf>=0 && m_ft2Recipe.rxf<=3)) m_ft2Recipe.rxf=d.rxf;
+    m_ft2Recipe.bgrxf=m_settings->value("FT2BgRXfSens",d.bgrxf).toInt();
+    if(!(m_ft2Recipe.bgrxf>=0 && m_ft2Recipe.bgrxf<=3)) m_ft2Recipe.bgrxf=d.bgrxf;
+    m_ft2RXBudget=m_settings->value("FT2RXBudget",FT2_RX_BUDGET_DEFAULT).toInt();
+    if(!(m_ft2RXBudget>=3 && m_ft2RXBudget<=600)) m_ft2RXBudget=FT2_RX_BUDGET_DEFAULT;
+    m_ft2BgMargin=m_settings->value("FT2BgMargin",FT2_BG_MARGIN_DEFAULT).toInt();
+    if(!(m_ft2BgMargin>=1 && m_ft2BgMargin<=100)) m_ft2BgMargin=FT2_BG_MARGIN_DEFAULT;
+  }
   m_ft4BgMargin=m_settings->value("FT4BgMargin",10).toInt(); if(m_ft4BgMargin<0 || m_ft4BgMargin>100) m_ft4BgMargin=10;
   /* CE3TSK: FT4's second slicing pass defaults ON, where FT8's FT8TwoSlicings defaults off.
      FT4's signals are wide against a slice, so without the offset pass a threaded run loses
@@ -1768,7 +1838,7 @@ void MainWindow::readSettings()
   ui->actionFT8WidebandDXCallSearch->setChecked(m_FT8WideDxCallSearch);
 
   ui->actionBypass_text_filters_on_RX_frequency->setChecked(m_settings->value("BypassRXFreqTextFilters",true).toBool());
-  ui->actionBypass_all_text_filters->setChecked(m_settings->value("BypassAllTextFilters",false).toBool());
+  ui->actionBypass_all_text_filters->setChecked(m_settings->value("BypassAllTextFilters",true).toBool());
   ui->actionEnable_main_window_popup->setChecked(m_settings->value("EnableMainwindowPopup",false).toBool());
   ui->actionAutoErase->setChecked(m_settings->value("AutoErase",false).toBool());
   ui->actionEraseWindowsAtBandChange->setChecked(m_settings->value("EraseWindowsAtBandChange",true).toBool());
@@ -1890,7 +1960,7 @@ void MainWindow::readSettings()
 
   m_lockTxFreq=m_settings->value("LockTxFreq",false).toBool();
 
-  m_skipTx1=m_settings->value("SkipTx1",false).toBool();
+  m_skipTx1=m_settings->value("SkipTx1",true).toBool();
   ui->skipTx1->setChecked(m_skipTx1);
   ui->skipGrid->setChecked(m_skipTx1);
 
@@ -1928,7 +1998,7 @@ void MainWindow::readSettings()
   m_showTooltips=m_settings->value("ShowMainWindowTooltips",true).toBool();
   ui->actionShow_tooltips_main_window->setChecked(m_showTooltips);
 
-  m_colorTxMsgButtons=m_settings->value("ColorTxMessageButtons",false).toBool();
+  m_colorTxMsgButtons=m_settings->value("ColorTxMessageButtons",true).toBool();
   ui->actionColor_Tx_message_buttons->setChecked(m_colorTxMsgButtons);
 
   ui->actionBand_buttons->setChecked (m_settings->value ("BandButtons", false).toBool ());   // CE3TSK
@@ -1946,7 +2016,7 @@ void MainWindow::readSettings()
   m_autoTx=m_settings->value("QuickCall",true).toBool();
   ui->AutoTxButton->setChecked(m_autoTx);
 
-  m_autoseq=m_settings->value("AutoSequence",false).toBool();
+  m_autoseq=m_settings->value("AutoSequence",true).toBool();
   if (m_autoseq) { clearDXfields(""); enableTab1TXRB(false); }
   ui->AutoSeqButton->setChecked(m_autoseq);
   setAutoSeqButtonStyle(m_autoseq);
@@ -1999,6 +2069,7 @@ void MainWindow::setStopHSym()
     else m_hsymStop=49;
   }
   else if(m_mode=="FT4") m_hsymStop=21;
+  else if(m_mode=="FT2") m_hsymStop=22;   // CE3TSK: 22*1728 = 38016 samples of a 45000-sample period
   else if(m_mode.startsWith("JT") or m_mode=="T10") { m_hsymStop=173; if(m_config.decode_at_52s()) m_hsymStop=179; }
   else if(m_mode.startsWith ("WSPR")) m_hsymStop=396;
 }
@@ -2011,12 +2082,17 @@ void MainWindow::setClockStyle(bool reset)
   QString second = t.time().toString("ss");
   QString secms = t.time().toString("ss.zzz");
   secms.remove(2,1); int ft4int = secms.toInt()/7500;
+  int ft2int = secms.toInt()/3750;   // CE3TSK: FT2's period index inside the minute, 0..15
 
   if(m_start || reset) {
     if(m_mode.startsWith("FT")) {
       if(m_mode=="FT8") {
 		int isecond = second.toInt();
 		if((isecond >= 0 &&  isecond < 15) || (isecond >= 30 &&  isecond < 45)) ui->labUTC->setStyleSheet(QString("font-size: 18pt;background: %1;color : %2").arg(Radio::convert_dark("#96ffff",m_useDarkStyle),Radio::convert_dark("#1400b1",m_useDarkStyle)));
+        else ui->labUTC->setStyleSheet(QString("font-size: 18pt;background: %1;color: %2").arg(Radio::convert_dark("#ffff96",m_useDarkStyle),Radio::convert_dark("#0000ff",m_useDarkStyle)));
+      }
+      else if(m_mode=="FT2") {   // CE3TSK: the same alternation, at FT2's rate
+        if(ft2int%2==0) ui->labUTC->setStyleSheet(QString("font-size: 18pt;background: %1;color : %2").arg(Radio::convert_dark("#96ffff",m_useDarkStyle),Radio::convert_dark("#1400b1",m_useDarkStyle)));
         else ui->labUTC->setStyleSheet(QString("font-size: 18pt;background: %1;color: %2").arg(Radio::convert_dark("#ffff96",m_useDarkStyle),Radio::convert_dark("#0000ff",m_useDarkStyle)));
       }
       else if(m_mode=="FT4") {
@@ -2077,6 +2153,7 @@ void MainWindow::setMinButton()
 	if(m_txFirst) {
 	  if(m_mode.startsWith("FT")) {
 		if(m_mode=="FT8") ui->TxMinuteButton->setText("TX 00/30");
+		else if(m_mode=="FT2") ui->TxMinuteButton->setText("TX 0.0");   // CE3TSK: FT2's periods start every 3.75 s
 		else ui->TxMinuteButton->setText("TX 00");
       }
       else ui->TxMinuteButton->setText(tr("TX Even"));
@@ -2084,6 +2161,7 @@ void MainWindow::setMinButton()
     } else {
 	  if(m_mode.startsWith("FT")) {
 		if(m_mode=="FT8") ui->TxMinuteButton->setText("TX 15/45");
+        else if(m_mode=="FT2") ui->TxMinuteButton->setText("TX 3.75");   // CE3TSK
         else ui->TxMinuteButton->setText("TX 7.5");
       } 
       else ui->TxMinuteButton->setText(tr("TX Odd"));
@@ -2223,16 +2301,14 @@ void MainWindow::dataSink(qint64 frames)
 //#endif
 
   int ihsymdelay=0;
-  if(m_delay > 0) {
-  float fdelta=float(m_delay)*0.345; // 1/(0.29*10)
-  if(fmod(fdelta,1.0)>0.49) ihsymdelay=qCeil(fdelta)+ihsym;
-  else ihsymdelay=qFloor(fdelta)+ihsym;
-  }
+  if(m_delay > 0) ihsymdelay=delay_blocks(m_delay,m_nsps)+ihsym;   // CE3TSK: modetiming.h
 //cycling approximately once per 269..301 milliseconds
   if((m_mode=="FT8" && m_delay==0 && ihsym == nhsymEStopFT8)
      || (m_mode=="FT8" && m_delay > 0 && ihsymdelay >= nhsymEStopFT8)
      || (m_mode=="FT4" && m_delay==0 && ihsym == m_hsymStop)
      || (m_mode=="FT4" && m_delay > 0 && ihsymdelay >= m_hsymStop)
+     || (m_mode=="FT2" && m_delay==0 && ihsym == m_hsymStop)          // CE3TSK
+     || (m_mode=="FT2" && m_delay > 0 && ihsymdelay >= m_hsymStop)
      || ((m_mode.startsWith("JT") || m_mode=="T10") && m_delay==0 && ihsym == m_hsymStop)
      || ((m_mode.startsWith("JT") || m_mode=="T10") && m_delay > 0 && ihsymdelay >= m_hsymStop)
      || (m_mode.startsWith("WSPR") && ihsym == m_hsymStop)) {
@@ -2241,6 +2317,9 @@ void MainWindow::dataSink(qint64 frames)
     if(lastdelayed && !m_modeChanged) {
       if(m_mode=="FT8" && last.secsTo(now)<12) { lastdelayed=false; return; }
       else if(m_mode=="FT4" && last.secsTo(now)<6) { lastdelayed=false; return; }
+      /* CE3TSK: FT2's guard is half a period, 1.9 s, and it has to be counted in milliseconds -
+         secsTo () truncates, so a 3.75 s period cannot be guarded with whole seconds. */
+      else if(m_mode=="FT2" && last.msecsTo(now)<1900) { lastdelayed=false; return; }
       else if(!m_mode.startsWith("FT") && !m_mode.startsWith("WSPR") && last.secsTo(now)<46) { lastdelayed=false; return; }
       lastdelayed=false;
     }
@@ -2259,7 +2338,8 @@ void MainWindow::dataSink(qint64 frames)
       // CE3TSK P7: the decode of a period in which we transmitted is skipped while the TX
       // background is enabled, so the background runs on through our TX period (decodebudget.h)
       int const thisPeriod = period_index_of_trigger (0.001 * (m_jtdxtime->currentMSecsSinceEpoch2 () % 86400000), m_TRperiod);
-      if(skip_own_tx_decode (m_diskData, (m_mode=="FT8" && m_bgEnabled) || (m_mode=="FT4" && m_ft4BgEnabled), m_txPeriod, thisPeriod)) {   // item 80: FT4 too
+      if(skip_own_tx_decode (m_diskData, (m_mode=="FT8" && m_bgEnabled) || (m_mode=="FT4" && m_ft4BgEnabled)
+                             || (m_mode=="FT2" && m_ft2Recipe.bgon), m_txPeriod, thisPeriod)) {   // item 80: FT4 too; step 5: FT2 too
         last=now;
         if(m_config.write_decoded_debug()) writeToALLTXT("Decode skipped: own TX period, TX background running");
         // what the empty decode's <DecodeFinished> used to do for this period: the sequencer's
@@ -2287,6 +2367,7 @@ void MainWindow::dataSink(qint64 frames)
       m_fileToSave.clear ();
       int samples=m_TRperiod*12000;
       if(m_mode=="FT4") samples=21*3456;
+      if(m_mode=="FT2") samples=22*1728;   // CE3TSK: what the decoder is given, as FT4's line does
       // the following is potential a threading hazard - not a good
       // idea to pass pointer to be processed in another thread
       if ((m_saveWav==2 || m_saveWav==1 || m_mode.mid (0,4) == "WSPR") && !m_fnameWE.isEmpty ())
@@ -2526,6 +2607,7 @@ void MainWindow::on_actionSettings_triggered()               //Setup Dialog
 
       if(m_mode=="FT8") on_actionFT8_triggered();
       else if(m_mode=="FT4") on_actionFT4_triggered();
+      else if(m_mode=="FT2") on_actionFT2_triggered();   // CE3TSK
       else if(m_mode=="JT9+JT65") on_actionJT9_JT65_triggered();
       else if(m_mode=="JT9") on_actionJT9_triggered();
       else if(m_mode=="JT65") on_actionJT65_triggered();
@@ -2639,11 +2721,17 @@ void MainWindow::monitor (bool state)
       curtime.remove(2,1); curtime.remove(3,2);
       int curdsec = curtime.toInt();
       if(m_addtx==-1) m_addtx=2; else if(m_addtx==-2) m_addtx=4; else m_addtx=0; // no delay for manual triggering Monitor button
+      /* CE3TSK: one implementation for every mode (modetiming.h). The remainder has to be taken
+         in milliseconds: FT2's period is 37.5 tenths, so tenths cannot express it. */
+      qint64 const msmin=currentTime.time().second()*1000 + currentTime.time().msec();
       if(m_mode == "FT8") {
-         curdsec=curdsec%150; if(curdsec > 0 && curdsec < 90) m_delay=curdsec+m_addtx; else m_delay = 0;
+         curdsec=period_position_tenths(msmin,tr_period_of(m_mode)); if(curdsec > 0 && curdsec < 90) m_delay=curdsec+m_addtx; else m_delay = 0;
       }
       else if(m_mode == "FT4") {
-         curdsec=curdsec%75; if(curdsec > 0 && curdsec < 40) m_delay=curdsec+m_addtx; else m_delay = 0;
+         curdsec=period_position_tenths(msmin,tr_period_of(m_mode)); if(curdsec > 0 && curdsec < 40) m_delay=curdsec+m_addtx; else m_delay = 0;
+      }
+      else if(m_mode == "FT2") {
+         curdsec=period_position_tenths(msmin,tr_period_of(m_mode)); if(curdsec > 0 && curdsec < 20) m_delay=curdsec+m_addtx; else m_delay = 0;
       }
 	  else if(!m_mode.startsWith("WSPR")) {
          if(curdsec > 0 && curdsec < 350) m_delay=curdsec+m_addtx; else m_delay = 0; // 2 second processing delay
@@ -2983,6 +3071,7 @@ void MainWindow::setModeLabelStyle (QString const& mode)
   if (mode == "JT9") colour = "#ff99cc";
   else if (mode == "T10") colour = "#aaffff";
   else if (mode == "FT4") colour = "#a99ee2";
+  else if (mode == "FT2") colour = "#ffacda";   // CE3TSK
   else if (mode == "JT65") colour = "#66ff66";
   else if (mode == "JT9+JT65") colour = "#ffff66";
   else if (mode == "WSPR-2") colour = "#ff66ff";
@@ -4419,6 +4508,7 @@ void MainWindow::refreshSpecialOp (bool initial)
           else if (back == "JT9+JT65") on_actionJT9_JT65_triggered ();
           else if (back == "JT9") on_actionJT9_triggered ();
           else if (back == "T10") on_actionT10_triggered ();
+          else if (back == "FT2") on_actionFT2_triggered ();   // CE3TSK
           else if (back.startsWith ("WSPR")) on_actionWSPR_2_triggered ();
           else on_actionFT8_triggered ();
         }
@@ -4574,6 +4664,52 @@ void MainWindow::on_actionFT8TwoSlicings_toggled(bool checked) { m_ft8TwoSlicing
 void MainWindow::on_actionFT8AltPass_toggled(bool checked) { m_ft8AltPass=checked; }   // CE3TSK
 void MainWindow::on_actionFT4AltPass_toggled(bool checked) { m_ft4AltPass=checked; }   // CE3TSK: FT4 expert
 void MainWindow::on_actionFT4DeepOSD_toggled(bool checked) { m_ft4DeepOSD=checked; }   // CE3TSK item 58
+
+/* CE3TSK step 5: FT2's tiers. The shape is FT4's - a preset only sets the ordinary controls, and
+   the menu derives the active tier back from them when it opens - but the values are FT2's own
+   (ft2preset.h), because a 3.75 s period answers on a 0.58 s deadline. */
+void MainWindow::applyFT2Preset (FT2Preset p)
+{
+  m_ft2Recipe = ft2_preset_recipe (p);
+  m_ft2BgMargin = (p == FT2Preset::MaxEffort) ? 3 : FT2_BG_MARGIN_DEFAULT;   // as FT4's max effort narrows its margin
+  ui->actionFT2BgEnabled->setChecked(m_ft2Recipe.bgon);
+  setFT2EnsembleActions();
+  refreshFT2Preset();
+}
+
+void MainWindow::setFT2EnsembleActions()
+{
+  QAction* const rx[] = {ui->actionFT2EnsembleOff, ui->actionFT2EnsembleAuto, ui->actionFT2EnsembleBudget};
+  int const rxwant = m_ft2Recipe.members==FT4_ENSEMBLE_AUTO ? 1 : m_ft2Recipe.members==FT4_ENSEMBLE_BUDGET ? 2 : 0;
+  for (int i=0; i<3; ++i) rx[i]->setChecked(i==rxwant);
+  QAction* const bg[] = {ui->actionFT2BgEnsembleOff, ui->actionFT2BgEnsemble3, ui->actionFT2BgEnsemble6, ui->actionFT2BgEnsembleAuto};
+  int const bgwant = m_ft2Recipe.bg==FT4_ENSEMBLE_AUTO ? 3 : m_ft2Recipe.bg==6 ? 2 : m_ft2Recipe.bg==3 ? 1 : 0;
+  for (int i=0; i<4; ++i) bg[i]->setChecked(i==bgwant);
+}
+
+void MainWindow::refreshFT2Preset()
+{
+  QAction* const a[] = {ui->actionFT2PresetFast, ui->actionFT2PresetDefault,
+                        ui->actionFT2PresetRecommended, ui->actionFT2PresetMaxEffort};
+  auto const p = ft2_preset_of (m_ft2Recipe, ft4Threads());
+  for (int i=0; i<4; ++i) a[i]->setChecked(false);
+  if (p != FT2Preset::Custom) a[static_cast<int>(p)]->setChecked(true);
+  setFT2EnsembleActions();
+}
+
+void MainWindow::on_actionFT2PresetFast_triggered() { applyFT2Preset (FT2Preset::Fast); }
+void MainWindow::on_actionFT2PresetDefault_triggered() { applyFT2Preset (FT2Preset::Default); }
+void MainWindow::on_actionFT2PresetRecommended_triggered() { applyFT2Preset (FT2Preset::Recommended); }
+void MainWindow::on_actionFT2PresetMaxEffort_triggered() { applyFT2Preset (FT2Preset::MaxEffort); }
+void MainWindow::on_actionFT2BgEnabled_toggled(bool checked) { m_ft2Recipe.bgon=checked; }
+void MainWindow::on_actionFT2EnsembleOff_triggered() { m_ft2Recipe.members=0; }
+void MainWindow::on_actionFT2EnsembleAuto_triggered() { m_ft2Recipe.members=FT4_ENSEMBLE_AUTO; }
+void MainWindow::on_actionFT2EnsembleBudget_triggered() { m_ft2Recipe.members=FT4_ENSEMBLE_BUDGET; }
+void MainWindow::on_actionFT2BgEnsembleOff_triggered() { m_ft2Recipe.bg=0; }
+void MainWindow::on_actionFT2BgEnsemble3_triggered() { m_ft2Recipe.bg=3; }
+void MainWindow::on_actionFT2BgEnsemble6_triggered() { m_ft2Recipe.bg=6; }
+void MainWindow::on_actionFT2BgEnsembleAuto_triggered() { m_ft2Recipe.bg=FT4_ENSEMBLE_AUTO; }
+
 // CE3TSK: FT4 presets. A preset only sets the ordinary controls - effort, alternate pass, the
 // RX member count, deep OSD and the TX background members (decodepreset.h has the recipes) -
 // and the radio state is derived back from those controls when the menu opens, exactly as the
@@ -4655,6 +4791,28 @@ void MainWindow::markFT4Presets()
   ui->actionFT4PresetRecommended->setText(tr("recommended: %1").arg(ui->actionFT4PresetRecommended->text()));
   ui->menuFT4_preset->setToolTipsVisible(true);   // as FT8's
   ui->menuFT4_preset->menuAction()->setIcon(menu_dot(QColor(ft4_preset_colour(FT4Preset::Recommended))));
+}
+
+/* CE3TSK step 5: FT2's preset menu marked as FT4's is (markFT4Presets) - the same bold text, the
+   same coloured dot from the mode's own colour table, the same "tier (cost)" entry with the recipe
+   moved into the tooltip, the same underlined "recommended:" on the tier that carries the mark, and
+   the same dot on the submenu itself. The costs are FT2's own measurements (ft2preset.h), and they
+   are quoted on the CROWDED band because that is where FT2's tiers differ: on a sparse band every
+   tier is within half a percent of the default. */
+void MainWindow::markFT2Presets()
+{
+  struct { QAction* action; char const* tier; char const* cost; FT2Preset preset; } const picks[] = {
+    {ui->actionFT2PresetRecommended, QT_TR_NOOP("best value"), "+7.4 % crowded, 0.10 s", FT2Preset::Recommended},
+    {ui->actionFT2PresetMaxEffort, QT_TR_NOOP("max effort"), "+12.5 % crowded, 0.56 s", FT2Preset::MaxEffort}};
+  for (auto const& p : picks) {
+    QFont f = p.action->font(); f.setBold(true); p.action->setFont(f);
+    p.action->setIcon(menu_dot(QColor(ft2_preset_colour(p.preset))));
+    p.action->setText(preset_menu_entry(p.action, QString("%1 (%2)").arg(tr(p.tier), p.cost)));
+  }
+  QFont f = ui->actionFT2PresetRecommended->font(); f.setUnderline(true); ui->actionFT2PresetRecommended->setFont(f);
+  ui->actionFT2PresetRecommended->setText(tr("recommended: %1").arg(ui->actionFT2PresetRecommended->text()));
+  ui->menuFT2_preset->setToolTipsVisible(true);
+  ui->menuFT2_preset->menuAction()->setIcon(menu_dot(QColor(ft2_preset_colour(FT2Preset::Recommended))));
 }
 
 void MainWindow::on_actionFT4PresetFast_triggered() { applyFT4Preset (FT4Preset::Fast); }
@@ -4875,15 +5033,16 @@ void MainWindow::updateTimingLamps()
 {
   bool const ft8 = m_mode == "FT8";
   bool const ft4 = m_mode == "FT4";
-  bool const ft = ft8 || ft4;
-  bool const bg_on = (ft8 && m_bgEnabled) || (ft4 && m_ft4BgEnabled);
+  bool const ft2 = m_mode == "FT2";   // CE3TSK step 5
+  bool const ft = ft8 || ft4 || ft2;
+  bool const bg_on = (ft8 && m_bgEnabled) || (ft4 && m_ft4BgEnabled) || (ft2 && m_ft2Recipe.bgon);
 
   ui->labelRxTiming->setAutoFillBackground (true);
   ui->labelTxTiming->setAutoFillBackground (true);
   ui->labelRxTiming->setEnabled (ft && m_rxLagKnown);
   ui->labelTxTiming->setEnabled (ft && bg_on && m_bgLastKnown);
 
-  auto const rx = (ft && m_rxLagKnown) ? rx_timing_level (m_rxLag, ft4) : TimingLevel::Unknown;
+  auto const rx = (ft && m_rxLagKnown) ? rx_timing_level (m_rxLag, ft4, m_TRperiod) : TimingLevel::Unknown;   // CE3TSK: the period tells FT2 apart
   /* the background either made the period or it did not - two colours, never amber */
   auto const tx = (ft && bg_on && m_bgLastKnown)
                     ? (m_bgLastCut ? TimingLevel::Late : TimingLevel::Good) : TimingLevel::Unknown;
@@ -4914,12 +5073,15 @@ void MainWindow::refreshDecodePreset()
   // do not apply: the lamp is greyed (disabled, the neutral box) whatever the controls say
   bool const ft8 = m_mode=="FT8";
   bool const ft4 = m_mode=="FT4";   // item 73: in FT4 the lamp reads the FT4 preset (letters F3PROM, FT8's colour scheme)
+  bool const ft2 = m_mode=="FT2";    // CE3TSK step 5: and FT2's own in FT2
   auto const p4 = ft4_preset_of (currentFT4Recipe (), ft4Threads());
+  auto const p2 = ft2_preset_of (m_ft2Recipe, ft4Threads());
   ui->labelPreset->setAutoFillBackground(true);
-  ui->labelPreset->setEnabled(ft8 || ft4);
-  if (ft4) ui->labelPreset->setText(p4==FT4Preset::Custom ? QString("Custom") : QString("Preset %1").arg(QChar(ft4_preset_letter(p4))));
+  ui->labelPreset->setEnabled(ft8 || ft4 || ft2);
+  if (ft2) ui->labelPreset->setText(p2==FT2Preset::Custom ? QString("Custom") : QString("Preset %1").arg(QChar(ft2_preset_letter(p2))));
+  else if (ft4) ui->labelPreset->setText(p4==FT4Preset::Custom ? QString("Custom") : QString("Preset %1").arg(QChar(ft4_preset_letter(p4))));
   else ui->labelPreset->setText(p==DecodePreset::Custom ? QString("Custom") : QString("Preset %1").arg(QChar(preset_letter(p))));   // the C of the table is never shown
-  auto const c = ft8 ? preset_colour(p) : ft4 ? ft4_preset_colour(p4) : nullptr;
+  auto const c = ft8 ? preset_colour(p) : ft4 ? ft4_preset_colour(p4) : ft2 ? ft2_preset_colour(p2) : nullptr;   // CE3TSK step 5: FT2's tier colours its lamp too
   if (c) {
     QColor const bg(c);
     ui->labelPreset->setStyleSheet(QString("QLabel{color: %1; background: %2; border: 1px solid %3; border-radius: 3px; padding: 1px 4px}")
@@ -4931,12 +5093,15 @@ void MainWindow::refreshDecodePreset()
                             nullptr /* Ensemble: recipe kept, menu entry removed 2026-09-05 */, ui->actionFT8PresetPipeline, ui->actionFT8PresetPipelineFull, ui->actionFT8PresetPipelineRun};
   QAction* const names4[] = {ui->actionFT4PresetFast, ui->actionFT4PresetDefault, ui->actionFT4PresetBestPower,
                              ui->actionFT4PresetRecommended, ui->actionFT4PresetMaxDecodes, ui->actionFT4PresetMaxEffort};
+  QAction* const names2[] = {ui->actionFT2PresetFast, ui->actionFT2PresetDefault,
+                             ui->actionFT2PresetRecommended, ui->actionFT2PresetMaxEffort};   // CE3TSK step 5
   /* CE3TSK: the four fallbacks are translated too - every other branch hands over an action's
      text, which the catalogues already carry, so these were the last English left on the lamp.
      "Custom" itself stays the English word in every language: it is what the lamp reads, and the
      lamp's own tooltip quotes it verbatim in all 20 catalogues. */
-  ui->labelPreset->setToolTip(wrap_tooltip(ft4 ? (p4==FT4Preset::Custom ? tr("Custom - the FT4 RX / TX background controls match no preset") : names4[static_cast<int>(p4)]->text())
-                              : !ft8 ? tr("FT8 / FT4 decoding preset - greyed while the mode is neither")
+  ui->labelPreset->setToolTip(wrap_tooltip(ft2 ? (p2==FT2Preset::Custom ? tr("Custom - the FT2 RX / TX background controls match no preset") : names2[static_cast<int>(p2)]->text())
+                              : ft4 ? (p4==FT4Preset::Custom ? tr("Custom - the FT4 RX / TX background controls match no preset") : names4[static_cast<int>(p4)]->text())
+                              : !ft8 ? tr("FT* decoding preset - greyed while the mode is none of them")
                               : p==DecodePreset::Custom ? tr("Custom - the RX / TX background controls match no preset")
                               : !names[static_cast<int>(p)] ? tr("ensemble - the RX-only recipe of the former Ensemble preset (no menu entry)") : names[static_cast<int>(p)]->text()));
 }
@@ -5166,7 +5331,7 @@ void MainWindow::decode()                                       //decode()
   dec_data.params.nft8cycles=m_nFT8Cycles;
   dec_data.params.nft8swlcycles=m_nFT8SWLCycles;
   if(m_houndMode) { dec_data.params.nft8rxfsens=1; } else { dec_data.params.nft8rxfsens=m_nFT8RXfSens; }
-  dec_data.params.nft4depth=m_nFT4depth;
+  dec_data.params.nft4depth=(m_mode=="FT2") ? m_ft2Recipe.depth : m_nFT4depth;   // CE3TSK step 5
   if(m_ft8Sensitivity==0) dec_data.params.lft8lowth=false;
   else  dec_data.params.lft8lowth=true;
   if(m_ft8Sensitivity==2) dec_data.params.lft8subpass=true;
@@ -5190,28 +5355,34 @@ void MainWindow::decode()                                       //decode()
   dec_data.params.lft8deeposd=m_ft8DeepOSD ? 1 : 0;   // CE3TSK: OSD order 2 for every candidate
   dec_data.params.lft8twopass=m_ft8TwoSlicings ? 1 : 0;   // CE3TSK: second slicing pass
   dec_data.params.lft8altpass=m_ft8AltPass ? 1 : 0;   // CE3TSK: alternate-approach pass
-  dec_data.params.lft4altpass=m_ft4AltPass ? 1 : 0;   // CE3TSK: FT4 expert
-  dec_data.params.lft4deeposd=m_ft4DeepOSD ? 1 : 0;   // CE3TSK item 58
-  dec_data.params.nft4bgensemble=ft4_bg_effort_members(m_ft4BgEnsemble, ft4Threads());   // CE3TSK items 59/73: the target, auto resolved here
-  dec_data.params.nft4bgeffort=(m_mode=="FT4" && m_ft4BgEnabled) ? 1 : 0;   // CE3TSK item 78: the switch, sent as FT8's nft8bgeffort is - it alone decides whether the phase runs
-  dec_data.params.nft4bgdepth=m_ft4BgDepth;   // CE3TSK item 69
-  dec_data.params.lft4bgdeeposd=m_ft4BgDeepOSD ? 1 : 0;
-  dec_data.params.lft4bgaltpass=m_ft4BgAltPass ? 1 : 0;
-  dec_data.params.lft4bgtwopass=m_ft4BgTwoSlicings ? 1 : 0;
-  dec_data.params.lft4bgresidual=m_ft4BgResidual ? 1 : 0;   // CE3TSK item 72
-  dec_data.params.nft4sens=m_ft4Sens;
-  dec_data.params.nft4bgsens=m_ft4BgSens;   // CE3TSK item 73
-  dec_data.params.nft4rxfsens=m_ft4RXfSens;   // CE3TSK item 75
-  dec_data.params.nft4bgrxfsens=m_ft4BgRXfSens;
-  dec_data.params.nft4ensemble=ft4_effort_members(m_ft4Ensemble, ft4Threads());   // item 73
-  dec_data.params.lft4twopass=m_ft4TwoSlicings;
+  /* CE3TSK step 5: FT2 shares every one of these fields with FT4 - it is the same decoder - but
+     carries its OWN values, so the recipe that fills them is the active mode's. */
+  FT4Recipe const fr = (m_mode=="FT2") ? m_ft2Recipe : currentFT4Recipe();
+  dec_data.params.lft4altpass=fr.alt ? 1 : 0;   // CE3TSK: FT4 expert
+  dec_data.params.lft4deeposd=fr.deeposd ? 1 : 0;   // CE3TSK item 58
+  dec_data.params.nft4bgensemble=ft4_bg_effort_members(fr.bg, ft4Threads());   // CE3TSK items 59/73: the target, auto resolved here
+  dec_data.params.nft4bgeffort=((m_mode=="FT4" || m_mode=="FT2") && fr.bgon) ? 1 : 0;   // CE3TSK item 78: the switch, sent as FT8's nft8bgeffort is - it alone decides whether the phase runs
+  dec_data.params.nft4bgdepth=fr.bgdepth;   // CE3TSK item 69
+  dec_data.params.lft4bgdeeposd=fr.bgdeeposd ? 1 : 0;
+  dec_data.params.lft4bgaltpass=fr.bgalt ? 1 : 0;
+  dec_data.params.lft4bgtwopass=fr.bgtwopass ? 1 : 0;
+  dec_data.params.lft4bgresidual=fr.bgresidual ? 1 : 0;   // CE3TSK item 72
+  dec_data.params.nft4sens=fr.sens;
+  dec_data.params.nft4bgsens=fr.bgsens;   // CE3TSK item 73
+  dec_data.params.nft4rxfsens=fr.rxf;   // CE3TSK item 75
+  dec_data.params.nft4bgrxfsens=fr.bgrxf;
+  dec_data.params.nft4ensemble=ft4_effort_members(fr.members, ft4Threads());   // item 73
+  dec_data.params.lft4twopass=fr.twopass;
   dec_data.params.nft8ensemble=ensemble_effort_members(m_ft8EnsembleEffort, effective_ft8_threads(m_ft8threads, QThread::idealThreadCount()));   // CE3TSK (P8: budget auto passes -2 through)
-  dec_data.params.nrxbudget=(m_mode=="FT4") ? m_ft4RXBudget : m_ft8RXBudget;   // CE3TSK P8; item 80: FT4's own budget
+  /* CE3TSK: FT2 has a 0.58 s reply deadline, so FT8's 2.7 s budget would never bite; until FT2
+     gets its own setting (step 5 of the port) it uses the same 5 tenths file mode gives it. */
+  dec_data.params.nrxbudget=(m_mode=="FT4") ? m_ft4RXBudget : (m_mode=="FT2") ? m_ft2RXBudget : m_ft8RXBudget;   // CE3TSK P8; item 80: FT4's own budget, step 5: FT2's own
   dec_data.params.nft8bgeffort=(m_mode=="FT8" && m_bgEnabled) ? 1 : 0;   // CE3TSK: the TX background phase (pipeline ensemble)
-  dec_data.params.nbgmargin=(m_mode=="FT4") ? m_ft4BgMargin : m_ft8BackgroundMargin;   // item 80: FT4's own margin
+  dec_data.params.nbgmargin=(m_mode=="FT4") ? m_ft4BgMargin : (m_mode=="FT2") ? m_ft2BgMargin : m_ft8BackgroundMargin;   // item 80: FT4's own margin, step 5: FT2's own
   {   // CE3TSK P7: two periods of background when TX is enabled and the coming period is ours
     int const thisPeriod = period_index_of_trigger (0.001 * (m_jtdxtime->currentMSecsSinceEpoch2 () % 86400000), m_TRperiod);
-    bool const bgmode = (m_mode=="FT8" && m_bgEnabled) || (m_mode=="FT4" && m_ft4BgEnabled);   // item 80: the two-period window reaches FT4's background too
+    bool const bgmode = (m_mode=="FT8" && m_bgEnabled) || (m_mode=="FT4" && m_ft4BgEnabled)
+                        || (m_mode=="FT2" && m_ft2Recipe.bgon);   // item 80: the two-period window reaches FT4's background too; step 5: FT2's
     dec_data.params.nbgbudget = background_budget_tenths (m_enableTx && !m_diskData && bgmode, tx_period_next (m_txFirst, thisPeriod), m_TRperiod,
                                                           m_diskData && bgmode);   // a replay gets the full window: the whole unit list, 100 on the benchmark
   }
@@ -5255,6 +5426,10 @@ void MainWindow::decode()                                       //decode()
   
   if(m_mode=="FT8") dec_data.params.nmode=8;
   else if(m_mode=="FT4") dec_data.params.nmode=4;
+  /* CE3TSK: FT2 rides the FT4 decoder - nmode 52 tells decoder.f90 to stretch the period x2 and
+     halve the frequency limits. It carries FT2's settings in FT4's own parameter fields, which is
+     why the shared block did not have to grow; the two modes never decode at the same time. */
+  else if(m_mode=="FT2") dec_data.params.nmode=52;
   else if(m_mode=="JT9+JT65") dec_data.params.nmode=9+65;
   else if(m_mode=="JT9") dec_data.params.nmode=9;
   else if(m_mode=="JT65") dec_data.params.nmode=65;
@@ -5631,6 +5806,7 @@ void MainWindow::readFromStdout()                             //readFromStdout
     // autoseq guard frequency band
       if(m_modeTx == "FT8") m_nguardfreq = 51;
       else if(m_modeTx == "FT4") m_nguardfreq = 84;
+      else if(m_modeTx == "FT2") m_nguardfreq = 168;   // CE3TSK: 4 tones at 41.667 Hz, twice FT4's width
       else if(m_modeTx == "JT65") m_nguardfreq = 176;
       else if(m_modeTx == "JT9") m_nguardfreq = 16;
       else if(m_modeTx == "T10") m_nguardfreq = 67;
@@ -5645,7 +5821,9 @@ void MainWindow::readFromStdout()                             //readFromStdout
       m_notified=false;
       if(m_config.write_decoded_debug()) {
         QString rxm{""};
-        if((m_mode=="FT8" && m_ft8EnsembleEffort==ENSEMBLE_BUDGET) || (m_mode=="FT4" && m_ft4Ensemble==FT4_ENSEMBLE_BUDGET)) { int i=t.indexOf("<rxm>"); if(i>=0) rxm=" - RX budget auto: "+t.mid(i+5,3).trimmed()+" member(s)"; }   // CE3TSK P8; item 80 FT4
+        if((m_mode=="FT8" && m_ft8EnsembleEffort==ENSEMBLE_BUDGET) || (m_mode=="FT4" && m_ft4Ensemble==FT4_ENSEMBLE_BUDGET)
+           || (m_mode=="FT2" && m_ft2Recipe.members==FT4_ENSEMBLE_BUDGET)) {   // CE3TSK step 5: FT2's max effort uses it too
+          int i=t.indexOf("<rxm>"); if(i>=0) rxm=" - RX budget auto: "+t.mid(i+5,3).trimmed()+" member(s)"; }   // CE3TSK P8; item 80 FT4
         writeToALLTXT("Decoding finished"+rxm);
       }
       QString slag="";
@@ -5683,7 +5861,8 @@ void MainWindow::readFromStdout()                             //readFromStdout
            <BackgroundFinished> line, which re-arms the spacer) will come. Until item 78 the FT4
            decoder ran the phase only when the member target exceeded the RX count, and this
            flag had to copy that rule or every later separator was swallowed. */
-        m_bgPhase=((m_mode=="FT8" && m_bgEnabled) || (m_mode=="FT4" && m_ft4BgEnabled));
+        m_bgPhase=((m_mode=="FT8" && m_bgEnabled) || (m_mode=="FT4" && m_ft4BgEnabled)
+                   || (m_mode=="FT2" && m_ft2Recipe.bgon));   // CE3TSK step 5
         updateDecodeLabel();
         updateTimingLamps();   // CE3TSK
         if(m_mode=="FT8") {
@@ -5705,6 +5884,13 @@ void MainWindow::readFromStdout()                             //readFromStdout
           else if(navexdt>40 && navexdt<81) setBandLabelColour ("#ffff00");
           else if(navexdt>80) setBandLabelColour ("#ff8000");
           if(navexdt>40) ui->label_6->setText(tr("check time"));
+          else  ui->label_6->setText(tr("Band"));
+        }
+        else if (m_mode=="FT2") {   // CE3TSK: half FT4's thresholds, for half its period
+          if(navexdt<21) setBandLabelColour ("#fdedc5");
+          else if(navexdt>20 && navexdt<41) setBandLabelColour ("#ffff00");
+          else if(navexdt>40) setBandLabelColour ("#ff8000");
+          if(navexdt>20) ui->label_6->setText(tr("check time"));
           else  ui->label_6->setText(tr("Band"));
         }
       }
@@ -5794,7 +5980,8 @@ void MainWindow::readFromStdout()                             //readFromStdout
             QString band;
             if (m_jtdxtime->currentMSecsSinceEpoch2() / 1000 - m_secBandChanged > 50 
 			|| (m_jtdxtime->currentMSecsSinceEpoch2() / 1000 - m_secBandChanged > 14 && m_mode == "FT8")
-			|| (m_jtdxtime->currentMSecsSinceEpoch2() / 1000 - m_secBandChanged > 6 && m_mode == "FT4"))
+			|| (m_jtdxtime->currentMSecsSinceEpoch2() / 1000 - m_secBandChanged > 6 && m_mode == "FT4")
+			|| (m_jtdxtime->currentMSecsSinceEpoch2() / 1000 - m_secBandChanged > 3 && m_mode == "FT2"))   // CE3TSK
               {
                 band = ' ' + m_config.bands ()->find (m_freqNominal) + ' ';
               }
@@ -5963,6 +6150,7 @@ void MainWindow::readFromStdout()                             //readFromStdout
       if(m_okToPost and m_config.spot_to_psk_reporter () and stdMsg and !m_diskData) {
         QString msgmode="FT8";
         if (m_mode=="FT4") msgmode="FT4";
+        else if (m_mode=="FT2") msgmode="FT2";   // CE3TSK
         else if (decodedtext.isJT65()) msgmode="JT65";
         else if (m_mode.startsWith("JT9")) msgmode="JT9";
         else if (m_mode=="T10") msgmode="T10";
@@ -6119,6 +6307,7 @@ void MainWindow::guiUpdate()
   txDuration=0.0;
   if(m_modeTx=="FT8") txDuration=13.64; //1.0 + 79*1920/12000.0;
   else if(m_modeTx=="FT4")  txDuration=6.04; //1.0 + 105*576/12000.0;
+  else if(m_modeTx=="FT2")  txDuration=3.02; //0.5 + 105*288/12000.0 - CE3TSK step 6: 2.52 s of signal in a 3.75 s period, so the margin is half a second, not FT4's whole one
   else if(m_modeTx=="JT65") txDuration=47.81142857142857; //1.0 + 126*4096/11025.0;
   else if(m_modeTx=="JT9") txDuration=49.96; //1.0 + 85.0*m_nsps/12000.0;
   else if(m_modeTx=="T10") txDuration=49.96; //1.0 + 85.0*m_nsps/12000.0;
@@ -6329,6 +6518,16 @@ void MainWindow::guiUpdate()
         int ichk=0; char ft4msgbits[77]; int ntxhash=1;
         genft4_(message, &ichk, &ntxhash, msgsent, const_cast<char *> (ft4msgbits),const_cast<int *>(itone),37,37);
         int nsym=103; int nsps=4*576; float fsample=48000.0; float f0=ui->TxFreqSpinBox->value() - m_XIT; int nwave=(nsym+2)*nsps; int icmplx=0;
+        gen_ft4wave_(const_cast<int *>(itone),&nsym,&nsps,&fsample,&f0,foxcom_.wave,foxcom_.wave,&icmplx,&nwave);
+      }
+      /* CE3TSK step 6: FT2 transmits FT4's frame at twice the rate, so it is the SAME message
+         coding and the SAME waveform generator - only the symbol length changes, 288 samples at
+         12 kHz and so 4*288 at the 48 kHz transmit rate. 103 symbols plus the two ramp symbols
+         gen_ft4wave adds is the 105 of the frame. */
+      else if(m_modeTx=="FT2") {
+        int ichk=0; char ft4msgbits[77]; int ntxhash=1;
+        genft4_(message, &ichk, &ntxhash, msgsent, const_cast<char *> (ft4msgbits),const_cast<int *>(itone),37,37);
+        int nsym=103; int nsps=4*288; float fsample=48000.0; float f0=ui->TxFreqSpinBox->value() - m_XIT; int nwave=(nsym+2)*nsps; int icmplx=0;
         gen_ft4wave_(const_cast<int *>(itone),&nsym,&nsps,&fsample,&f0,foxcom_.wave,foxcom_.wave,&icmplx,&nwave);
       }
       else if(m_modeTx=="JT65") { gen65_(message, &ichk, msgsent, const_cast<int *> (itone), &m_currentMessageType, len1, len1); }
@@ -6622,9 +6821,7 @@ void MainWindow::guiUpdate()
 	// setting labUTC clock style at start
 	if(m_start) setClockStyle(true);
 	// setting labUTC clock style at operation
-	if ((m_mode=="FT8" && isecond%15==0) || 
-        (m_mode=="FT4" && (isecond%15==0 || isecond==8 || isecond==23 || isecond==38 || isecond==53)) ||
-        (!m_mode.startsWith("FT") && second=="00")) setClockStyle(false);
+	if (clock_refresh_due(m_mode,isecond)) setClockStyle(false);   // CE3TSK: modetiming.h
 	// setting band scheduler
 	if((minute.toInt())%5==0 && second == "01" && m_config.usesched() && !m_enableTx) {
         if (m_config.sched_hh_1() == hour && m_config.sched_mm_1() == minute) {
@@ -6663,6 +6860,7 @@ void MainWindow::guiUpdate()
        real decode and still recover within seconds of a wedge. */
     quint64 timeout=120000;
     if(m_mode=="FT4") timeout=30000;
+    else if(m_mode=="FT2") timeout=15000;   // CE3TSK
     else if(m_mode=="FT8") timeout=60000;
     if(m_decoderBusy && m_msDecoderStarted>0 && !m_mode.startsWith("WSPR")
        && (m_jtdxtime->currentMSecsSinceEpoch2()-m_msDecoderStarted)>timeout) {
@@ -6692,6 +6890,7 @@ void MainWindow::set_scheduler(QString const& setto,bool mixed)
     newband=setto.mid(setto.indexOf(" ")+1,4);
     if (newband == "FT8") { on_actionFT8_triggered(); }
     else if (newband == "FT4") { on_actionFT4_triggered(); }
+    else if (newband == "FT2") { on_actionFT2_triggered(); }   // CE3TSK
     else if (newband == "JT65") { on_actionJT65_triggered(); }
 	else if (newband == "JT9") { on_actionJT9_triggered(); }
 	else if (newband == "T10") { on_actionT10_triggered(); }
@@ -7088,9 +7287,9 @@ void MainWindow::processMessage(QString const& messages, int position, bool alt,
                 {
                   ui->outAttenuation->setValue(m_pwrBandTxMemory[curBand].toInt());
                 }
-              else
+              else if (m_outAttenuationRestored)
                 {
-                  m_pwrBandTxMemory[curBand] = ui->outAttenuation->value();
+                  m_pwrBandTxMemory[curBand] = ui->outAttenuation->value();   /* CE3TSK: never the .ui default */
                 }
             }
           m_modeTx="JT9";
@@ -7107,9 +7306,9 @@ void MainWindow::processMessage(QString const& messages, int position, bool alt,
 //                  printf("auto mode changed %s JT65 %s:%d\n",m_mode.toStdString().c_str(),curBand.toStdString().c_str(),m_pwrBandTxMemory[curBand].toInt());
                   ui->outAttenuation->setValue(m_pwrBandTxMemory[curBand].toInt());
                 }
-              else
+              else if (m_outAttenuationRestored)
                 {
-                  m_pwrBandTxMemory[curBand] = ui->outAttenuation->value();
+                  m_pwrBandTxMemory[curBand] = ui->outAttenuation->value();   /* CE3TSK: never the .ui default */
                 }
             }
           m_modeTx="JT65";
@@ -7704,6 +7903,7 @@ void MainWindow::countQSOs ()
   char c_txt [20];
   if (m_mode == "FT8") { sprintf(c_txt,"FT8  %d",book.get_qso_count("FT8")); }
   else if (m_mode == "FT4") { sprintf(c_txt,"FT4  %d",book.get_qso_count("FT4")); }
+  else if (m_mode == "FT2") { sprintf(c_txt,"FT2  %d",book.get_qso_count("FT2")); }   // CE3TSK
   else if (m_mode == "JT9+JT65") { sprintf(c_txt,"JT65/9 %d/%d",book.get_qso_count("JT65"),book.get_qso_count("JT9")); }
   else if (m_mode == "JT9") { sprintf(c_txt,"JT9  %d",book.get_qso_count("JT9")); }
   else if (m_mode == "JT65") { sprintf(c_txt,"JT65  %d",book.get_qso_count("JT65")); }
@@ -8149,6 +8349,7 @@ void MainWindow::on_logQSOButton_clicked()
   if (!m_houndMode && (m_config.prompt_to_log() || m_config.autolog())) {
     if(m_mode == "FT8") dateTimeQSOOff = currenttime.addSecs (14);
     else if(m_mode == "FT4") dateTimeQSOOff = currenttime.addSecs (7);
+    else if(m_mode == "FT2") dateTimeQSOOff = currenttime.addSecs (3);   // CE3TSK
     else dateTimeQSOOff = currenttime.addSecs (50);
   }
   if (dateTimeQSOOff < m_dateTimeQSOOn) m_dateTimeQSOOn = dateTimeQSOOff;
@@ -8288,6 +8489,30 @@ void MainWindow::on_actionFT4_triggered()
   enableHoundAccess(false);
 }
 
+/* CE3TSK: FT2 - FT4's frame at twice the rate, 3.75 s periods. The decoder reaches it through
+   nmode 52 and does the work in the FT4 chain (decoder.f90, which stretches the period x2), and
+   since step 6 it transmits as well: the same genft4 coding and gen_ft4wave waveform as FT4, at
+   288 samples per symbol, started 150 ms into the period - the instant WSJT-X improved's own FT2
+   transmitter uses (Modulator.cpp, `if(mode=="FT2") delay_ms=150;`), verified against its source. */
+void MainWindow::on_actionFT2_triggered()
+{
+  if (m_mode=="WSPR-2") killFile();
+  m_mode="FT2";
+  WSPR_config(false);
+  switch_mode (Modes::FT2);
+  m_modeTx="FT2";
+  m_hsymStop=22;                 // 22*1728 = 38016 samples, the 36864 the decoder stretches plus a margin
+  setModeLabelStyle ("FT2");
+  ui->actionFT2->setChecked(true);
+  ui->pbTxMode->setText("Tx FT2 ;");
+  ui->pbTxMode->setEnabled(false);
+  on_AutoSeqButton_clicked(true);
+  m_TRperiod=3.75;
+  if(!m_hint) ui->hintButton->click();
+  commonActions();
+  enableHoundAccess(false);
+}
+
 void MainWindow::on_actionFT8_triggered()
 {
   if (m_mode=="WSPR-2") killFile();
@@ -8420,6 +8645,7 @@ void MainWindow::commonActions ()
 //  m_modulator->setPeriod(m_TRperiod); // TODO - not thread safe
 //  m_detector->setPeriod(m_TRperiod);   // TODO - not thread safe
   m_nsps=6912;                   //For symspec only
+  if (m_mode=="FT2") m_nsps=3456;   // CE3TSK: half the block, so the waterfall keeps its rate in a half-length period
   m_FFTSize = m_nsps / 2;
   if (m_tci) Q_EMIT m_config.transceiver_blocksize(m_FFTSize);
   else Q_EMIT FFTSize (m_FFTSize);
@@ -8447,7 +8673,7 @@ void MainWindow::commonActions ()
   progressBar->setFormat("%v/"+QString::number(m_TRperiod));
   statusChanged();
   on_spotLineEdit_textChanged(ui->spotLineEdit->text());
-  if(m_mode=="FT4") {
+  if(m_mode=="FT4" || m_mode=="FT2") {   // CE3TSK: FT2 has FT4's message set and hint memory
     if(m_rrr) { m_savedRRR=m_rrr; ui->rrrCheckBox->click(); }
     ui->rrrCheckBox->setEnabled(false); ui->rrr1CheckBox->setEnabled(false);
     if(!m_hint) ui->hintButton->click();
@@ -8750,9 +8976,8 @@ void MainWindow::band_changed (Frequency f)
     if(!m_transmitting && (oldband != newband || m_oldmode != m_mode) && m_rigOk && !m_config.rig_name().startsWith("None")) {
       m_bandChanged=true;
       qint64 ms = m_jtdxtime->currentMSecsSinceEpoch2() % 86400000; int nsec=ms/1000;
-      double TRperiod=60.0; // TR period is the only reliable way in this point of code at the mode change 
-      if(m_mode=="FT8") TRperiod=15.0;
-      else if(m_mode=="FT4") TRperiod=7.5;
+      // TR period is the only reliable way in this point of code at the mode change
+      double TRperiod=tr_period_of(m_mode);   // CE3TSK: modetiming.h - this chain used to forget FT2
       int nseqmod = fmod(double(nsec),TRperiod);
       m_nsecBandChanged=nseqmod;
     }
@@ -9046,8 +9271,14 @@ void MainWindow::on_tuneButton_clicked (bool checked)
   if (m_mode == "JT9+JT65" && m_modeTx == "JT65") { curBand = ui->bandComboBox->currentText()+m_modeTx; }
   else { curBand = ui->bandComboBox->currentText()+m_mode; }
   if (checked && m_tune==false) { // we're starting tuning so remember Tx and change pwr to Tune value
+    /* CE3TSK: what the slider held before the tune, so the end of the tune can come back to it
+       even on a band that has nothing remembered - otherwise the operator is left transmitting
+       at tune drive. */
+    m_outAttenuationPreTune = ui->outAttenuation->value();
     if (m_config.pwrBandTuneMemory ()) {
-      m_pwrBandTxMemory[curBand] = ui->outAttenuation->value(); // remember our Tx pwr
+      /* CE3TSK: only record a band once the slider holds a real value, never the .ui default -
+         the guard every power-memory write carries. */
+      if (m_outAttenuationRestored) m_pwrBandTxMemory[curBand] = ui->outAttenuation->value(); // remember our Tx pwr
       if (m_pwrBandTuneMemory.contains(curBand)) {
         m_PwrBandSetOK = false;
         ui->outAttenuation->setValue(m_pwrBandTuneMemory[curBand].toInt()); // set to Tune pwr
@@ -9056,11 +9287,19 @@ void MainWindow::on_tuneButton_clicked (bool checked)
     }
   } else { // we're turning off so remember our Tune pwr setting and reset to Tx pwr
 	if (m_config.pwrBandTuneMemory() || m_config.pwrBandTxMemory()) {
-		m_pwrBandTuneMemory[curBand] = ui->outAttenuation->value(); // remember our Tune pwr
+		/* CE3TSK: the same guard the other power-memory writes carry - a slider still at the .ui
+		   default of 1 (the rig never came up, so band_changed () never restored it) must not be
+		   memorised as this band's tune drive. */
+		if (m_outAttenuationRestored) m_pwrBandTuneMemory[curBand] = ui->outAttenuation->value(); // remember our Tune pwr
 		m_PwrBandSetOK = false;
-		ui->outAttenuation->setValue(m_pwrBandTxMemory[curBand].toInt()); // set to Tx pwr
+		/* CE3TSK: come back to the remembered Tx drive, or failing that to whatever the slider
+		   held before the tune. Reading an absent key would give 0, i.e. minimum drive, and
+		   leaving the slider alone would transmit at tune drive. */
+		if (m_pwrBandTxMemory.contains(curBand)) ui->outAttenuation->setValue(m_pwrBandTxMemory[curBand].toInt()); // set to Tx pwr
+		else if (m_outAttenuationPreTune >= 0) ui->outAttenuation->setValue(m_outAttenuationPreTune);
 		m_PwrBandSetOK = true;
     }
+	m_outAttenuationPreTune = -1;
   }
   if (m_tune) {
 	if (!tuneButtonTimer.isActive())
@@ -9308,7 +9547,7 @@ void MainWindow::handle_transceiver_update (Transceiver::TransceiverState const&
       if (m_tx_when_ready && g_iptt) {
 //          QThread::currentThread()->setPriority(QThread::HighestPriority);
           int ms_delay=1000*m_config.txDelay();
-          if(m_mode=="FT4") ms_delay=20;
+          if(m_mode=="FT4" || m_mode=="FT2") ms_delay=20;   // CE3TSK step 6: FT2 starts 150 ms into the period, so the sequencer cannot take the default second
           ptt1Timer.start(ms_delay);
 //          printf("ptt1Timer started\n");
           if(m_config.write_decoded_debug()) writeToALLTXT("ptt1Timer started");
@@ -9339,6 +9578,7 @@ void MainWindow::handle_transceiver_update (Transceiver::TransceiverState const&
       if(m_config.write_decoded_debug()) writeToALLTXT("handle_transceiver_update: transceiver state transition from offline to online");
       if(m_mode=="FT8") on_actionFT8_triggered();
       else if(m_mode=="FT4") on_actionFT4_triggered();
+      else if(m_mode=="FT2") on_actionFT2_triggered();   // CE3TSK
       else if(m_mode=="JT9+JT65") on_actionJT9_JT65_triggered();
       else if(m_mode=="JT9") on_actionJT9_triggered();
       else if(m_mode=="JT65") on_actionJT65_triggered();
@@ -9458,6 +9698,12 @@ void MainWindow::transmit (double snr)
     else Q_EMIT sendMessage (NUM_FT4_SYMBOLS,576.0,ui->TxFreqSpinBox->value()-m_XIT,toneSpacing,m_soundOutput,
                         m_config.audio_output_channel(),true,snr,m_TRperiod);
   }
+  else if (m_modeTx == "FT2") {   // CE3TSK step 6: FT4's 105 symbols, 288 samples each
+    toneSpacing=-2.0;                     //Transmit a pre-computed, filtered waveform.
+    if (m_tci) Q_EMIT m_config.transceiver_modulator_start(NUM_FT4_SYMBOLS,288.0,ui->TxFreqSpinBox->value()-m_XIT,toneSpacing,true,snr,m_TRperiod);
+    else Q_EMIT sendMessage (NUM_FT4_SYMBOLS,288.0,ui->TxFreqSpinBox->value()-m_XIT,toneSpacing,m_soundOutput,
+                        m_config.audio_output_channel(),true,snr,m_TRperiod);
+  }
   else if (m_modeTx == "JT65") {
     toneSpacing=11025.0/4096.0;
     if (m_tci) Q_EMIT m_config.transceiver_modulator_start(NUM_JT65_SYMBOLS,4096.0*12000.0/11025.0,ui->TxFreqSpinBox->value()-m_XIT,toneSpacing,true,snr,m_TRperiod);
@@ -9486,7 +9732,12 @@ void MainWindow::transmit (double snr)
 
 void MainWindow::on_outAttenuation_valueChanged (int a)
 {
-  m_outAttenuationRestored = true;   // CE3TSK: the slider now holds a real value, save it as is
+  /* CE3TSK: only a change the operator made says the slider holds a real value. m_PwrBandSetOK is
+     false around our own setValue calls (the band and tune memories), and setting the flag there
+     defeated the guard it exists for: a tune started before band_changed () had restored the drive
+     set the flag from its own setValue and then memorised the .ui default. band_changed () sets
+     the flag itself once it restores. */
+  if (m_PwrBandSetOK) m_outAttenuationRestored = true;
   QString tt_str; int areversed=450-a;
   qreal dBAttn {areversed / 10.};       // slider interpreted as dB / 100
   QString curBand;

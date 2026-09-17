@@ -21,9 +21,14 @@ inline int period_index (double seconds_of_day, double period)
   return static_cast<int> (seconds_of_day / period);
 }
 
+/* CE3TSK: the 5 s step back is sized for FT8's 15 s and FT4's 7.5 s, where a trigger sits at
+   14.1 s and 6.05 s of its period. A period shorter than that would be stepped back past its
+   own start and the trigger would be counted as the previous period's, which is what decides
+   whether our own TX period's decode is skipped. Below 7.5 s the back-off is a third of the
+   period instead - 1.25 s for FT2's 3.75 s, against a trigger at 3.17 s. */
 inline int period_index_of_trigger (double seconds_of_day, double period)
 {
-  return period_index (seconds_of_day - 5.0, period);
+  return period_index (seconds_of_day - (period >= 7.5 ? 5.0 : period / 3.0), period);
 }
 
 /* whether the period after the given one is a period of ours: "TX first" transmits in the

@@ -387,6 +387,7 @@ set (wsjt_FSRCS
   lib/ft4_mod1.f90
   lib/ft4/ft4_downsample.f90
   lib/ft4/ft4sim.f90
+  lib/ft2/ft2sim.f90
   lib/ft8_decode.f90
   lib/ft8_downsample.f90
   lib/ft8_mod1.f90
@@ -1221,6 +1222,10 @@ target_link_libraries (wsjt_qtmm Qt5::Multimedia)
 add_executable (ft4sim lib/ft4/ft4sim.f90 jtdx.rc)
 target_link_libraries (ft4sim wsjt_fort wsjt_cxx)
 target_include_directories (ft4sim PRIVATE ${CMAKE_BINARY_DIR}/fortran_modules)   # CE3TSK
+
+add_executable (ft2sim lib/ft2/ft2sim.f90 jtdx.rc)   # CE3TSK: FT2 is FT4's frame at twice the rate
+target_link_libraries (ft2sim wsjt_fort wsjt_cxx)
+target_include_directories (ft2sim PRIVATE ${CMAKE_BINARY_DIR}/fortran_modules)   # CE3TSK
 
 add_executable (ft8sim lib/ft8sim.f90 jtdx.rc)
 target_link_libraries (ft8sim wsjt_fort wsjt_cxx)

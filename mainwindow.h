@@ -6,6 +6,7 @@
 #include <QtWidgets>
 #include "contestignore.h"   // CE3TSK: the contest's five minute skip list
 #include "decodepreset.h"
+#include "ft2preset.h"   // CE3TSK step 5: FT2's own tiers, in FT4's fields
 #include "decodebudget.h"   // CE3TSK P7   // CE3TSK
 #else
 #include <QtGui>
@@ -278,12 +279,28 @@ private slots:
   void on_actionFT4BgEnsemble4_triggered();
   void on_actionFT4BgEnsemble5_triggered();
   void on_actionFT4BgEnsemble6_triggered();
+  void on_actionFT2PresetFast_triggered();        // CE3TSK step 5: FT2's tiers
+  void on_actionFT2PresetDefault_triggered();
+  void on_actionFT2PresetRecommended_triggered();
+  void on_actionFT2PresetMaxEffort_triggered();
+  void on_actionFT2BgEnabled_toggled(bool checked);
+  void on_actionFT2EnsembleOff_triggered();
+  void on_actionFT2EnsembleAuto_triggered();
+  void on_actionFT2EnsembleBudget_triggered();
+  void on_actionFT2BgEnsembleOff_triggered();
+  void on_actionFT2BgEnsemble3_triggered();
+  void on_actionFT2BgEnsemble6_triggered();
+  void on_actionFT2BgEnsembleAuto_triggered();
   void on_actionFT4PresetFast_triggered();        // CE3TSK: FT4 presets, as FT8 has them (item 67: FT8's tiers)
   void on_actionFT4PresetDefault_triggered();
   void on_actionFT4PresetBestPower_triggered();
   void on_actionFT4PresetRecommended_triggered();
   void on_actionFT4PresetMaxDecodes_triggered();
   void on_actionFT4PresetMaxEffort_triggered();
+  void applyFT2Preset (FT2Preset p);   // CE3TSK step 5: FT2's four tiers
+  void markFT2Presets();
+  void refreshFT2Preset();
+  void setFT2EnsembleActions();
   void applyFT4Preset (FT4Preset p);
   void refreshFT4Preset();
   FT4Recipe currentFT4Recipe () const;   // CE3TSK: the FT4 controls as one recipe (built at two sites before)
@@ -380,6 +397,7 @@ private slots:
   void on_actionJT9_triggered();
   void on_actionT10_triggered();
   void on_actionFT4_triggered();
+  void on_actionFT2_triggered();   // CE3TSK
   void on_actionFT8_triggered();
   void on_actionJT65_triggered();
   void on_actionJT9_JT65_triggered();
@@ -561,6 +579,7 @@ private:
      never came up saved the .ui default of 1 over it, and poisoned the per-band memories
      with 1 as well.  Seen after an in-place language restart. */
   bool m_outAttenuationRestored = false;
+  int m_outAttenuationPreTune = -1;   // CE3TSK: the drive to come back to when a tune ends, -1 = none captured
   QThread m_audioThread;
   QClipboard *clipboard = QGuiApplication::clipboard();
 
@@ -673,6 +692,13 @@ private:
   int m_ft8RXBudget;           // CE3TSK P8: the RX budget for ensemble effort "budget auto", tenths of a second
   int m_ft4RXBudget;           // CE3TSK item 80: FT4's (13 = 1.3 s against the 1.36 s reply deadline)
   int m_ft4BgMargin;           // CE3TSK item 80: FT4's background margin, tenths (the max effort preset sets 5)
+  /* CE3TSK step 5 of the FT2 port: FT2's own settings. FT2 is decoded by the FT4 chain and writes
+     FT4's parameter fields, but its period is half as long and its reply deadline about 580 ms, so
+     the VALUES have to be its own - they are kept as one FT4Recipe rather than sixteen members,
+     which is also what the preset table and the lamp compare against. */
+  FT4Recipe m_ft2Recipe;
+  int m_ft2RXBudget;           // tenths; FT2's deadline is 0.58 s, so its default is 5, not FT4's 13
+  int m_ft2BgMargin;           // tenths, as FT4's
   int m_nDecodesRx;            // decodes of the period's own decode, before the background
   QString m_decodeLabelPrefix; // "UTC dB DT Freq Avg= Lag=" as set at <DecodeFinished>; the lag and the count follow
   QString m_decodeLag;         // the lag figure, coloured separately; empty while the decode runs
@@ -917,7 +943,7 @@ private:
   struct ContestUiParked
   {
     bool autoTx = true;
-    bool skipTx1 = false;
+    bool skipTx1 = true;    /* CE3TSK: matches the ContestUiSkipTx1 default */
     bool rrr = false;
     bool maxDistance = false;    /* CE3TSK: AutoSeq -> "Max distance instead of best SNR", forced off in a contest (the points tiers already rank by distance; the tie-break should be SNR) */
     bool rprtPriority = false;   /* its mutually exclusive partner - forcing the one clears the other, so both are parked */

@@ -5422,8 +5422,8 @@ UDP-server %2:%3</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
-        <source>FT8/FT4 threads</source>
-        <translation>FT8/FT4-tråde</translation>
+        <source>FT* threads</source>
+        <translation>FT*-tråde</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
@@ -5462,8 +5462,8 @@ UDP-server %2:%3</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
-        <source>FT8/FT4 decode bandwidth</source>
-        <translation>FT8/FT4-afkodningsbåndbredde</translation>
+        <source>FT* decode bandwidth</source>
+        <translation>FT*-afkodningsbåndbredde</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
@@ -5802,6 +5802,31 @@ UDP-server %2:%3</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
+        <source>FT2 decoding</source>
+        <translation>FT2 dekodning</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>default: deep, nothing added  (1457 of 1575 signals on the 240-period set, 0.10 s at reply time)</source>
+        <translation>standard: dyb, intet tilføjet  (1457 af 1575 signaler på sættet med 240 perioder, 0,10 s ved svartid)</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>background 3 with deep OSD, the alternate pass and the residual unit, all in the TX window, nothing at reply time  (+0.5 % on the 240-period set, +7.4 % on the crowded band, 0.10 s; ~1.8 s of idle CPU a period)</source>
+        <translation>baggrund 3 med dyb OSD, den alternative gennemgang og restenheden, alt sammen i TX-vinduet, intet ved svartid  (+0,5 % på sættet med 240 perioder, +7,4 % på et tæt bånd, 0,10 s; ~1,8 s ledig CPU pr. periode)</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>max effort: as many members as fit the 0.5 s RX budget + low thresholds at reply time, six in the TX window with its extras and low thresholds  (+0.7 % in total, +12.5 % on the crowded band, 0.56 s mean, 1.2 s worst period)</source>
+        <translation>maksimal indsats: så mange medlemmer som der er plads til i RX-budgettet på 0,5 s + lave tærskler ved svartid, seks i TX-vinduet med dets ekstra og lave tærskler  (+0,7 % i alt, +12,5 % på et tæt bånd, 0,56 s gennemsnit, 1,2 s værste periode)</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>budget auto: as many members as fit the reply deadline, from this band's measured cost (0.5 s; the rest run in the TX background)</source>
+        <translation>budget auto: så mange medlemmer som der er plads til inden svarfristen, ud fra dette bånds målte omkostning (0,5 s; resten kører i TX-baggrunden)</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
         <source>fast: the shallow decoder, nothing added</source>
         <translation>hurtig: den overfladiske afkoder, intet tilføjet</translation>
     </message>
@@ -6075,13 +6100,18 @@ Der spørges kun én gang.</translation>
     </message>
     <message>
         <location filename="../../mainwindow.cpp"/>
+        <source>Custom - the FT2 RX / TX background controls match no preset</source>
+        <translation>Custom - FT2's betjening af RX / TX-baggrund svarer ikke til nogen forudindstilling</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
         <source>Custom - the FT4 RX / TX background controls match no preset</source>
         <translation>Custom - FT4's betjening af RX / TX-baggrund svarer ikke til nogen forudindstilling</translation>
     </message>
     <message>
         <location filename="../../mainwindow.cpp"/>
-        <source>FT8 / FT4 decoding preset - greyed while the mode is neither</source>
-        <translation>FT8- / FT4-afkodningsforudindstilling - grå så længe tilstanden er ingen af delene</translation>
+        <source>FT* decoding preset - greyed while the mode is none of them</source>
+        <translation>FT*-afkodningsforudindstilling - grå så længe tilstanden ikke er nogen af dem</translation>
     </message>
     <message>
         <location filename="../../mainwindow.cpp"/>

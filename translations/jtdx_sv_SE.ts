@@ -5420,8 +5420,8 @@ UDP-server%2:%3</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
-        <source>FT8/FT4 threads</source>
-        <translation>FT8/FT4-trådar</translation>
+        <source>FT* threads</source>
+        <translation>FT*-trådar</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
@@ -5460,8 +5460,8 @@ UDP-server%2:%3</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
-        <source>FT8/FT4 decode bandwidth</source>
-        <translation>FT8/FT4-avkodningsbandbredd</translation>
+        <source>FT* decode bandwidth</source>
+        <translation>FT*-avkodningsbandbredd</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
@@ -5800,6 +5800,31 @@ UDP-server%2:%3</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
+        <source>FT2 decoding</source>
+        <translation>FT2 avkodning</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>default: deep, nothing added  (1457 of 1575 signals on the 240-period set, 0.10 s at reply time)</source>
+        <translation>standard: djup, inget tillagt  (1457 av 1575 signaler på uppsättningen om 240 perioder, 0,10 s vid svarstid)</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>background 3 with deep OSD, the alternate pass and the residual unit, all in the TX window, nothing at reply time  (+0.5 % on the 240-period set, +7.4 % on the crowded band, 0.10 s; ~1.8 s of idle CPU a period)</source>
+        <translation>bakgrund 3 med djup OSD, det alternativa passet och restenheten, allt i TX-fönstret, inget vid svarstid  (+0,5 % på uppsättningen om 240 perioder, +7,4 % på ett tätt band, 0,10 s; ~1,8 s ledig CPU per period)</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>max effort: as many members as fit the 0.5 s RX budget + low thresholds at reply time, six in the TX window with its extras and low thresholds  (+0.7 % in total, +12.5 % on the crowded band, 0.56 s mean, 1.2 s worst period)</source>
+        <translation>maximal ansträngning: så många medlemmar som ryms i RX-budgeten på 0,5 s + låga trösklar vid svarstid, sex i TX-fönstret med dess extra och låga trösklar  (+0,7 % totalt, +12,5 % på ett tätt band, 0,56 s i medel, 1,2 s värsta perioden)</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>budget auto: as many members as fit the reply deadline, from this band's measured cost (0.5 s; the rest run in the TX background)</source>
+        <translation>budget auto: så många medlemmar som ryms inom svarsfristen, utifrån detta bands uppmätta kostnad (0,5 s; resten körs i TX-bakgrunden)</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
         <source>fast: the shallow decoder, nothing added</source>
         <translation>snabb: den ytliga avkodaren, inget tillagt</translation>
     </message>
@@ -6073,13 +6098,18 @@ Detta frågas bara en gång.</translation>
     </message>
     <message>
         <location filename="../../mainwindow.cpp"/>
+        <source>Custom - the FT2 RX / TX background controls match no preset</source>
+        <translation>Custom - FT2:s reglage för RX / TX-bakgrund matchar ingen förinställning</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
         <source>Custom - the FT4 RX / TX background controls match no preset</source>
         <translation>Custom - FT4:s reglage för RX / TX-bakgrund matchar ingen förinställning</translation>
     </message>
     <message>
         <location filename="../../mainwindow.cpp"/>
-        <source>FT8 / FT4 decoding preset - greyed while the mode is neither</source>
-        <translation>FT8- / FT4-avkodningsförinställning - grå så länge läget inte är något av dem</translation>
+        <source>FT* decoding preset - greyed while the mode is none of them</source>
+        <translation>FT*-avkodningsförinställning - grå så länge läget inte är något av dem</translation>
     </message>
     <message>
         <location filename="../../mainwindow.cpp"/>

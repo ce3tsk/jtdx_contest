@@ -6,19 +6,36 @@ subroutine gen_ft4wave(itone,nsym,nsps,fsample,f0,cwave,wave,icmplx,nwave)
   real dphi(0:250000-1)
   integer itone(nsym)
   logical first
-  data first/.true./
-  save pulse,first,twopi,dt,hmod
+  integer nspsz
+  real fsamplez
+  data first/.true./,nspsz/-1/,fsamplez/-1.0/
+  save pulse,first,twopi,dt,hmod,nspsz,fsamplez
 
-  if(first) then
-     twopi=8.0*atan(1.0)
-     dt=1.0/fsample
-     hmod=1.0
+! CE3TSK: the pulse table is shaped by nsps and dt is 1/fsample, so both have to be part of
+! the "already computed" test. Caching on `first` alone was safe only while each process used
+! a single pair - the decoder subtracts with (576, 12000) and the GUI transmits with
+! (2304, 48000) - and would hand the second shape of a process the first one's table.
+  if(first .or. nsps.ne.nspsz .or. fsample.ne.fsamplez) then
+! CE3TSK: the table is shared and subtractft4 calls this from inside the slice parallel region, so
+! the rebuild is serialised the way subtractft4 serialises its own filter init, and the test is made
+! again inside. That protects rebuilders from each other, NOT a thread already reading pulse: it is
+! safe today only because each process uses one shape (the decoder subtracts with 576/12000, the GUI
+! transmits with 2304/48000). Mixing shapes inside one parallel region would need more than this.
+!$omp critical(ft4_gen_pulse)
+     if(first .or. nsps.ne.nspsz .or. fsample.ne.fsamplez) then
+        twopi=8.0*atan(1.0)
+        dt=1.0/fsample
+        hmod=1.0
 ! Compute the smoothed frequency-deviation pulse
-     do i=1,3*nsps
-        tt=(i-1.5*nsps)/real(nsps)
-        pulse(i)=gfsk_pulse(1.0,tt)
-     enddo
-     first=.false.
+        do i=1,3*nsps
+           tt=(i-1.5*nsps)/real(nsps)
+           pulse(i)=gfsk_pulse(1.0,tt)
+        enddo
+        nspsz=nsps
+        fsamplez=fsample
+        first=.false.
+     endif
+!$omp end critical(ft4_gen_pulse)
   endif
 
 ! Compute the smoothed frequency waveform.

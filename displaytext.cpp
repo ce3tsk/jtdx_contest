@@ -1062,6 +1062,11 @@ void DisplayText::displayTransmittedText(QString text, QString myCall, QString h
     t2 = QString::asprintf("%4d",txFreq);
     if(modeTx=="FT8") t1=" ~ ";
     else if(modeTx=="FT4") t1=" : ";
+    else if(modeTx=="FT2") t1=" ; ";   /* CE3TSK: FT2's own character, as the decoder prints it
+                                          (decoder.f90's ft4_decoded). Without this arm FT2 fell
+                                          through to the default " @ ", which is JT9's marker, and
+                                          the first FT2 QSO showed one character on the lines
+                                          received and another on the lines sent. */
     else if(modeTx=="JT65") t1=" # ";
     else if(modeTx=="T10") t1=" + ";
     

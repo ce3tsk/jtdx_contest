@@ -5432,8 +5432,8 @@ UDP server %2:%3</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
-        <source>FT8/FT4 threads</source>
-        <translation>FT8/FT4 lõimed</translation>
+        <source>FT* threads</source>
+        <translation>FT* lõimed</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
@@ -5472,8 +5472,8 @@ UDP server %2:%3</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
-        <source>FT8/FT4 decode bandwidth</source>
-        <translation>FT8/FT4 dekodeerimise ribalaius</translation>
+        <source>FT* decode bandwidth</source>
+        <translation>FT* dekodeerimise ribalaius</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
@@ -5812,6 +5812,31 @@ UDP server %2:%3</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
+        <source>FT2 decoding</source>
+        <translation>FT2 dekodeerimine</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>default: deep, nothing added  (1457 of 1575 signals on the 240-period set, 0.10 s at reply time)</source>
+        <translation>vaikimisi: sügav, midagi lisatud pole  (1457 signaali 1575-st 240 perioodi komplektil, 0,10 s vastuseajal)</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>background 3 with deep OSD, the alternate pass and the residual unit, all in the TX window, nothing at reply time  (+0.5 % on the 240-period set, +7.4 % on the crowded band, 0.10 s; ~1.8 s of idle CPU a period)</source>
+        <translation>taust 3 sügava OSD, alternatiivse käigu ja jäägiüksusega, kõik saateaknas, midagi vastuseajal  (+0,5 % 240 perioodi komplektil, +7,4 % tihedal sagedusalal, 0,10 s; ~1,8 s vaba protsessoriaega perioodi kohta)</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>max effort: as many members as fit the 0.5 s RX budget + low thresholds at reply time, six in the TX window with its extras and low thresholds  (+0.7 % in total, +12.5 % on the crowded band, 0.56 s mean, 1.2 s worst period)</source>
+        <translation>maksimaalne pingutus: nii palju liikmeid, kui mahub 0,5 s RX-eelarvesse + madalad lävendid vastuseajal, kuus saateaknas koos selle lisade ja madalate lävenditega  (+0,7 % kokku, +12,5 % tihedal sagedusalal, 0,56 s keskmiselt, 1,2 s halvim periood)</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>budget auto: as many members as fit the reply deadline, from this band's measured cost (0.5 s; the rest run in the TX background)</source>
+        <translation>eelarve auto: nii palju liikmeid, kui mahub vastuse tähtaega, selle sagedusala mõõdetud kulu järgi (0,5 s; ülejäänud töötavad saatmise taustal)</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
         <source>fast: the shallow decoder, nothing added</source>
         <translation>kiire: pinnapealne dekooder, midagi lisatud pole</translation>
     </message>
@@ -6085,13 +6110,18 @@ Seda küsitakse ainult üks kord.</translation>
     </message>
     <message>
         <location filename="../../mainwindow.cpp"/>
+        <source>Custom - the FT2 RX / TX background controls match no preset</source>
+        <translation>Custom - FT2 RX / TX tausta juhtelemendid ei vasta ühelegi eelseadele</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
         <source>Custom - the FT4 RX / TX background controls match no preset</source>
         <translation>Custom - FT4 RX / TX tausta juhtelemendid ei vasta ühelegi eelseadele</translation>
     </message>
     <message>
         <location filename="../../mainwindow.cpp"/>
-        <source>FT8 / FT4 decoding preset - greyed while the mode is neither</source>
-        <translation>FT8 / FT4 dekodeerimise eelseade - hall, kuni režiim pole kumbki neist</translation>
+        <source>FT* decoding preset - greyed while the mode is none of them</source>
+        <translation>FT* dekodeerimise eelseade - hall, kuni režiim pole ükski neist</translation>
     </message>
     <message>
         <location filename="../../mainwindow.cpp"/>

@@ -75,11 +75,16 @@ inline QString decode_lag_html (QString const& lag, bool dark)
    black, the deep ones 5.4 to 8.6:1 on white. */
 enum class TimingLevel { Good, Tight, Late, Unknown };
 
-/* FT4 has 7.5 s to FT8's 15 and must answer inside 1.36 s, so its thresholds are halved. */
-inline TimingLevel rx_timing_level (double lag_seconds, bool ft4)
+/* FT4 has 7.5 s to FT8's 15 and must answer inside 1.36 s, so its thresholds are halved; FT2 has
+   3.75 s and about 0.58 s, so they are halved again. CE3TSK: the period is passed rather than a
+   flag now - the two existing modes keep their own literals, they are not derived. */
+inline TimingLevel rx_timing_level (double lag_seconds, bool ft4, double period = 0.0)
 {
-  if (lag_seconds <= (ft4 ? 1.0 : 2.0)) return TimingLevel::Good;
-  if (lag_seconds <= (ft4 ? 1.4 : 2.8)) return TimingLevel::Tight;
+  bool const ft2 = period > 0.0 && period < 7.0;
+  double const good = ft2 ? 0.5 : (ft4 ? 1.0 : 2.0);
+  double const tight = ft2 ? 0.7 : (ft4 ? 1.4 : 2.8);
+  if (lag_seconds <= good) return TimingLevel::Good;
+  if (lag_seconds <= tight) return TimingLevel::Tight;
   return TimingLevel::Late;
 }
 

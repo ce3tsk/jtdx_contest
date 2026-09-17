@@ -43,6 +43,7 @@ namespace
       {1810000, Modes::FT8, IARURegions::R1,true},
       {1840000, Modes::FT8, IARURegions::ALL,true},
       {1908000, Modes::FT8, IARURegions::R1,true},
+      {1843000, Modes::FT2, IARURegions::ALL,true},   // CE3TSK: FT2, the operator's list
 
       {3567000, Modes::FT8, IARURegions::ALL,false},
       {3568600, Modes::WSPR, IARURegions::ALL,true}, // needs guard marker and lock out
@@ -52,6 +53,7 @@ namespace
       {3573000, Modes::FT8, IARURegions::ALL,true}, // above as below JT65 is out of DM allocation
       {3575000, Modes::FT4, IARURegions::ALL,true},  // provisional
       {3568000, Modes::FT4, IARURegions::R3,true},   // provisional
+      {3578000, Modes::FT2, IARURegions::ALL,true},   // CE3TSK: FT2, the operator's list
       {3585000, Modes::FT8, IARURegions::ALL,false},
 
       {5126000, Modes::FT8, IARURegions::ALL,false},
@@ -60,9 +62,11 @@ namespace
       {5357000, Modes::FT8, IARURegions::ALL,true},
       {5287200, Modes::WSPR, IARURegions::ALL,true},
       {5362000, Modes::FT8, IARURegions::ALL,false},
+      {5360000, Modes::FT2, IARURegions::ALL,true},   // CE3TSK: FT2, the operator's list
 
       {7038600, Modes::WSPR, IARURegions::ALL,true},
       {7047500, Modes::FT4, IARURegions::ALL,true}, // provisional - moved
+      {7052000, Modes::FT2, IARURegions::ALL,true},   // CE3TSK: FT2, the operator's list
       {7056000, Modes::FT8, IARURegions::ALL,false},
       {7071000, Modes::FT8, IARURegions::ALL,false},
       {7074000, Modes::FT8, IARURegions::ALL,true},
@@ -80,6 +84,7 @@ namespace
       {10140000, Modes::JT9, IARURegions::ALL,true},
       {10141000, Modes::T10, IARURegions::ALL,true},
       {10140000, Modes::FT4, IARURegions::ALL,true}, // provisional
+      {10144000, Modes::FT2, IARURegions::ALL,true},   // CE3TSK: FT2, the operator's list
       {10143000, Modes::FT8, IARURegions::ALL,false},
 
       {14095600, Modes::WSPR, IARURegions::ALL,true},
@@ -89,6 +94,7 @@ namespace
       {14078000, Modes::JT9, IARURegions::ALL,true},
       {14079000, Modes::T10, IARURegions::ALL,true},
       {14080000, Modes::FT4, IARURegions::ALL,true}, // provisional
+      {14084000, Modes::FT2, IARURegions::ALL,true},   // CE3TSK: FT2, the operator's list
       {14090000, Modes::FT8, IARURegions::ALL,false},
 
       {18095000, Modes::FT8, IARURegions::ALL,false},
@@ -96,6 +102,7 @@ namespace
       {18102000, Modes::JT65, IARURegions::ALL,true},
       {18104000, Modes::JT9, IARURegions::ALL,true},
       {18104000, Modes::FT4, IARURegions::ALL,true}, // provisional
+      {18108000, Modes::FT2, IARURegions::ALL,true},   // CE3TSK: FT2, the operator's list
       {18104600, Modes::WSPR, IARURegions::ALL,true},
       {18105000, Modes::T10, IARURegions::ALL,true},
       
@@ -106,12 +113,14 @@ namespace
       {21091000, Modes::FT8, IARURegions::ALL,false},
       {21094600, Modes::WSPR, IARURegions::ALL,true},
       {21140000, Modes::FT4, IARURegions::ALL,true},
+      {21144000, Modes::FT2, IARURegions::ALL,true},   // CE3TSK: FT2, the operator's list
 
       {24911000, Modes::FT8, IARURegions::ALL,false},
       {24915000, Modes::FT8, IARURegions::ALL,true},
       {24917000, Modes::JT65, IARURegions::ALL,true},
       {24919000, Modes::JT9, IARURegions::ALL,true},
       {24919000, Modes::FT4, IARURegions::ALL,true}, // provisional
+      {24923000, Modes::FT2, IARURegions::ALL,true},   // CE3TSK: FT2, the operator's list
       {24920000, Modes::T10, IARURegions::ALL,true},
       {24924600, Modes::WSPR, IARURegions::ALL,true},
       
@@ -122,6 +131,7 @@ namespace
       {28095000, Modes::FT8, IARURegions::ALL,false},
       {28124600, Modes::WSPR, IARURegions::ALL,true},
       {28180000, Modes::FT4, IARURegions::ALL,true},
+      {28184000, Modes::FT2, IARURegions::ALL,true},   // CE3TSK: FT2, the operator's list
 
       {40680000, Modes::FT8, IARURegions::R1,true},
 
@@ -135,6 +145,7 @@ namespace
       {50310000, Modes::FT8, IARURegions::ALL,false},
       {50313000, Modes::FT8, IARURegions::ALL,true},
       {50318000, Modes::FT4, IARURegions::ALL,true}, // provisional
+      {50320000, Modes::FT2, IARURegions::ALL,true},   // CE3TSK: FT2, the operator's list
       {50323000, Modes::FT8, IARURegions::ALL,true},
       
       {70100000, Modes::FT8, IARURegions::R1,false},
@@ -278,6 +289,16 @@ auto FrequencyList_v2::frequency_list (QModelIndexList const& model_index_list) 
 void FrequencyList_v2::frequency_list_merge (FrequencyItems const& items)
 {
   m_->add (items);
+}
+
+FrequencyList_v2::FrequencyItems FrequencyList_v2::default_rows (Mode mode)
+{
+  FrequencyItems rows;
+  for (auto const& item : default_frequency_list)
+    {
+      if (item.mode_ == mode) rows << item;
+    }
+  return rows;
 }
 
 int FrequencyList_v2::best_working_frequency (Frequency f) const

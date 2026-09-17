@@ -5417,8 +5417,8 @@ UDP 伺服器 %2:%3</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
-        <source>FT8/FT4 threads</source>
-        <translation>FT8/FT4 線程</translation>
+        <source>FT* threads</source>
+        <translation>FT* 線程</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
@@ -5457,8 +5457,8 @@ UDP 伺服器 %2:%3</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
-        <source>FT8/FT4 decode bandwidth</source>
-        <translation>FT8/FT4 解碼帶寬</translation>
+        <source>FT* decode bandwidth</source>
+        <translation>FT* 解碼帶寬</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
@@ -5797,6 +5797,31 @@ UDP 伺服器 %2:%3</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
+        <source>FT2 decoding</source>
+        <translation>FT2 解碼</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>default: deep, nothing added  (1457 of 1575 signals on the 240-period set, 0.10 s at reply time)</source>
+        <translation>預設：深度，不添加任何內容（240 週期樣本上 1575 個訊號中的 1457 個，應答時 0.10 秒）</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>background 3 with deep OSD, the alternate pass and the residual unit, all in the TX window, nothing at reply time  (+0.5 % on the 240-period set, +7.4 % on the crowded band, 0.10 s; ~1.8 s of idle CPU a period)</source>
+        <translation>後台 3，含深度 OSD、替代遍歷和殘差單元，全部在發射窗口內，應答時不做任何處理（240 週期樣本上 +0.5 %，擁擠波段上 +7.4 %，0.10 秒；每周期約 1.8 秒空閒 CPU）</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>max effort: as many members as fit the 0.5 s RX budget + low thresholds at reply time, six in the TX window with its extras and low thresholds  (+0.7 % in total, +12.5 % on the crowded band, 0.56 s mean, 1.2 s worst period)</source>
+        <translation>最大投入：在 0.5 秒的 RX 預算內能容納多少成員就用多少 + 應答時使用低門限，發射窗口內 6 個成員並帶附加項和低門限（合計 +0.7 %，擁擠波段上 +12.5 %，平均 0.56 秒，最差周期 1.2 秒）</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>budget auto: as many members as fit the reply deadline, from this band's measured cost (0.5 s; the rest run in the TX background)</source>
+        <translation>預算自動：根據本波段實測開銷，在應答期限內能容納多少成員就用多少（0.5 秒；其餘在發射後台運行）</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
         <source>fast: the shallow decoder, nothing added</source>
         <translation>快速：淺層解碼器，不添加任何內容</translation>
     </message>
@@ -6070,13 +6095,18 @@ This is asked only once.</source>
     </message>
     <message>
         <location filename="../../mainwindow.cpp"/>
+        <source>Custom - the FT2 RX / TX background controls match no preset</source>
+        <translation>Custom - FT2 的 RX / TX 背景控件與任何預設都不匹配</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
         <source>Custom - the FT4 RX / TX background controls match no preset</source>
         <translation>Custom - FT4 的 RX / TX 背景控件與任何預設都不匹配</translation>
     </message>
     <message>
         <location filename="../../mainwindow.cpp"/>
-        <source>FT8 / FT4 decoding preset - greyed while the mode is neither</source>
-        <translation>FT8 / FT4 解碼預設 - 模式不是這兩者之一時顯示為灰色</translation>
+        <source>FT* decoding preset - greyed while the mode is none of them</source>
+        <translation>FT* 解碼預設 - 模式不屬於其中任何一種時顯示為灰色</translation>
     </message>
     <message>
         <location filename="../../mainwindow.cpp"/>

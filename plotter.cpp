@@ -156,6 +156,11 @@ void CPlotter::draw(float swide[], bool bScroll)                            //dr
   j0=int(m_startFreq/m_fftBinWidth + 0.5);
   int iz=XfromFreq(5000.0);
   int jz=iz*m_binsPerPixel;
+  /* CE3TSK: savg holds NSMAX bins. j0 is the first bin of the waterfall's start frequency, so
+     with a non-zero Start the last column reaches past the end - at Start 50 Hz with 5 bins per
+     pixel j0+jz is 6828 against 0..6826 - and the read lands in the next member of dec_data. */
+  if(j0+jz>NSMAX) jz=NSMAX-j0;
+  if(jz<0) jz=0;
   m_fMax=FreqfromX(iz);
 
   if(bScroll) {
@@ -189,7 +194,8 @@ void CPlotter::draw(float swide[], bool bScroll)                            //dr
       float sum=0.0;
       int j=j0+m_binsPerPixel*i;
       for(int k=0; k<m_binsPerPixel; k++) {
-        sum+=dec_data.savg[j++];
+        if(j<NSMAX) sum+=dec_data.savg[j];   // CE3TSK: the last column can reach past savg's end
+        j++;
       }
       m_sum[i]=sum;
     }
@@ -206,6 +212,7 @@ void CPlotter::draw(float swide[], bool bScroll)                            //dr
 
   if(swide[0]>1.0e29) m_line=0;
   if(m_mode=="FT4" and m_line==34) m_line=0;
+  if(m_mode=="FT2" and m_line==17) m_line=0;   // CE3TSK: half FT4's period, half the lines
   m_line++;
   if(m_timestamp!=0 || m_mode=="JT9+JT65") {
     if(m_line == 16) {
@@ -329,6 +336,7 @@ void CPlotter::DrawOverlay()                                 //DrawOverlay()
   float bw=0.0;
   if(m_modeTx=="FT8") bw=7*12000.0/1920.0;
   else if(m_mode=="FT4") bw=3*12000.0/576.0;
+  else if(m_mode=="FT2") bw=3*12000.0/288.0;   // CE3TSK
   else if(m_modeTx=="JT65") bw=66.0*11025.0/4096.0;
   else if(m_modeTx=="JT9") bw=9.0*12000.0/m_nsps;
   else if(m_modeTx=="T10") bw=9.0*4.0*12000.0/6912.0;
@@ -343,6 +351,10 @@ void CPlotter::DrawOverlay()                                 //DrawOverlay()
     }
     else if(m_mode=="FT4") {
       x1=XfromFreq(m_rxFreq-95.0); x2=XfromFreq(m_rxFreq+179.0);
+      painter0.drawLine(x1,23,x1,30); painter0.drawLine(x1,23,x2,23); painter0.drawLine(x2,23,x2,30);
+    }
+    else if(m_mode=="FT2") {   // CE3TSK: FT2's signal is twice as wide, so its window is too
+      x1=XfromFreq(m_rxFreq-190.0); x2=XfromFreq(m_rxFreq+358.0);
       painter0.drawLine(x1,23,x1,30); painter0.drawLine(x1,23,x2,23); painter0.drawLine(x2,23,x2,30);
     }
     else if((m_mode=="JT65" or m_mode=="JT9+JT65") and m_modeTx=="JT65") {

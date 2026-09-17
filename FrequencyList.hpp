@@ -57,6 +57,11 @@ public:
   using FrequencyItems = QList<Item>;
   using BandSet = QSet<QString>;
 
+  /* CE3TSK: the shipped default rows of one mode. The whole table is persisted in the settings, so
+     a mode added later has no rows at all in a profile that already exists - new defaults reach
+     only a fresh install. This lets such a mode be seeded once into an existing table. */
+  static FrequencyItems default_rows (Mode);
+
   enum Column {region_column, mode_column, frequency_column, frequency_mhz_column, mode_frequency_mhz_column, SENTINAL};
 
   // an iterator that meets the requirements of the C++ for range statement

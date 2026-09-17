@@ -29,7 +29,7 @@ subroutine symspec(shared_data,k,ntrperiod,nsps,pxdb,s,df3,ihsym,npts8)
   real*4 speak
   complex cx(0:MAXFFT3/2)
 
-  data k0/99999999/,nfft3z/0/
+  data k0/99999999/,nfft3z/0/,nspsz/0/
   equivalence (xc,cx)
   save
 
@@ -43,7 +43,10 @@ subroutine symspec(shared_data,k,ntrperiod,nsps,pxdb,s,df3,ihsym,npts8)
      go to 900                                 !Wait for enough samples to start
   endif
 
-  if(nfft3.ne.nfft3z) then
+! CE3TSK: the window is shaped by nsps as well as by nfft3, and nfft3 never changes, so a mode
+! with a different nsps would have kept the previous mode's window for the life of the process.
+! Every mode used 6912 until now, which is why the omission never showed.
+  if(nfft3.ne.nfft3z .or. nsps.ne.nspsz) then
 ! Compute new window
      width=0.25*nsps
      do i=1,nfft3
@@ -51,6 +54,7 @@ subroutine symspec(shared_data,k,ntrperiod,nsps,pxdb,s,df3,ihsym,npts8)
         w3(i)=exp(-z*z)
      enddo
      nfft3z=nfft3
+     nspsz=nsps
   endif
 
   if(k.lt.k0) then                             !Start a new data block

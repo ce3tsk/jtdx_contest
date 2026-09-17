@@ -29,6 +29,7 @@ subroutine multimode_decoder(params)
                        maskincallthr,ltxing
   use ft4_mod1, only : llagcc,nFT4decd,nfafilt,nfbfilt,lfilter,lhidetest,lhidetelemetry,dd4
   use ft4_mod1, only : nseen4   ! CE3TSK: the period's printed-message list
+  use ft4_mod1, only : lft2,tperiod4,ft4rxcost,nft4rxrun   ! CE3TSK: FT2 rides the FT4 chain; the learned RX costs are per mode
   use ft4_mod1, only : dd4orig,dd4delta,lcollectdelta4,NFT4SLICEMAX,sumxdt4,ndecd4,ncand4, &   ! CE3TSK: the FT4 slice loop
                        t4sync_s,t4down_s,t4bp_s,t4osd_s,t4sub_s,t4cand_s,t4bits_s,n4sync_s,n4bp_s,n4osd_s
   use ft4_mod1, only : ft4hint_rotate,ft4hint_clear,nft4hintdepth,NHINT4MAX   ! CE3TSK: the FT4 hint memory
@@ -88,6 +89,7 @@ subroutine multimode_decoder(params)
   real, allocatable :: dd8prist(:)       ! CE3TSK: the pristine band the members start from
   integer :: nbgnext,nslicing0,naltpass0   ! CE3TSK: pipeline ensemble
   logical :: lrxbudget   ! CE3TSK P8: RX members by budget
+  logical :: lhintdepthenv   ! CE3TSK: JTDX_FT4_HINT_DEPTH was given, so the mode must not overwrite it
   logical :: lft4rxbudget   ! CE3TSK item 80: the same for FT4, decided before the decode
   real(8) :: budget4
   integer :: m4,imc4
@@ -150,7 +152,7 @@ subroutine multimode_decoder(params)
      return
   endif
   if(nbg4run.gt.0) then   ! CE3TSK: the FT4 TX background invocation (item 59), FT8's block above mirrored
-     if(params%nmode.eq.4 .and. allocated(dd4prist)) then
+     if((params%nmode.eq.4 .or. params%nmode.eq.52) .and. allocated(dd4prist)) then
         call ft4_background()
      else
         write(*,'(a)') '<BackgroundFinished><units>  0<msgs>   0<secs>  0.00<abort>0'; call flush(6)
@@ -164,6 +166,10 @@ subroutine multimode_decoder(params)
   nagainjt9=.false.;  nagainjt9s=.false.;  nagainjt10=.false.; ncandall=0; ncandallthr=0
 
   if(params%lmodechanged) then; avexdt=0.; if(params%nmode.eq.8) nintcount=3; endif ! avexdt fast track in FT8 after mode change
+! CE3TSK: the FT4 RX cost model is learned wall time for a member count, and FT2 does about half the
+! work in half the period - keeping FT4's learned costs would size FT2's ensemble from the wrong
+! measurements (and the other way round), so a mode change forgets them.
+  if(params%lmodechanged) then; ft4rxcost=0.; nft4rxrun=0; endif
   if(params%lbandchanged .and. (params%nmode.eq.8 .or. params%nmode.eq.4)) then; ihash22=-1; calls22=''; calls12=''; endif
 ! CE3TSK P11: a band or mode change also empties the hint decoder's message lists (the period's,
 ! the previous same-parity one and the deeper ones) and the call/DT lists - they are keyed by
@@ -180,7 +186,7 @@ subroutine multimode_decoder(params)
   lqsomsgdcd=.false.
   if(ndelay.gt.0) then ! received incomplete interval
     if(params%nmode.eq.8) then; call partintft8(ndelay,params%nutc); lqsomsgdcd=.true.
-    else if(params%nmode.eq.4) then; call partintft4(ndelay,params%nutc)
+    else if(params%nmode.eq.4 .or. params%nmode.eq.52) then; call partintft4(ndelay,params%nutc)
     else; call partint(ndelay,params%nutc)
     endif
   endif
@@ -194,6 +200,10 @@ subroutine multimode_decoder(params)
     else if(params%nmode.eq.4) then
       if(params%nsecbandchanged.gt.6) then; dd4=0. ! protection: interval length is greater than dd4 index range
       else; dd4(1:nsamplesdel)=0.
+      endif
+    else if(params%nmode.eq.52) then   ! CE3TSK: 3.072 s of real audio, at two virtual samples each
+      if(params%nsecbandchanged.gt.3) then; dd4=0.
+      else; dd4(1:2*nsamplesdel)=0.
       endif
     endif
   endif
@@ -228,9 +238,11 @@ subroutine multimode_decoder(params)
   endif
 ! CE3TSK: JTDX_FT4_HINT_DEPTH=0..8 - the same for the FT4 hint memory (ft4_mod1); 0 switches the
 ! FT4 hint pass off, i.e. JTDX's own FT4 behaviour; the default is 4 like FT8's
+  lhintdepthenv=.false.
   call get_environment_variable('JTDX_FT4_HINT_DEPTH',dumpfile,ldump,idumpstat)
   if(idumpstat.eq.0 .and. ldump.gt.0) then
-     read(dumpfile(1:ldump),*,iostat=ios) k; if(ios.eq.0) nft4hintdepth=max(0,min(NHINT4MAX,k))
+     read(dumpfile(1:ldump),*,iostat=ios) k
+     if(ios.eq.0) then; nft4hintdepth=max(0,min(NHINT4MAX,k)); lhintdepthenv=.true.; endif
   endif
 ! CE3TSK: FT4 experiment hooks (ft4_mod1): JTDX_FT4_OSDDEEP (3), JTDX_FT4_SYNCQUAL (20),
 ! JTDX_FT4_NSP (4 since item 66; JTDX's 3), JTDX_FT4_BPITER (40), JTDX_FT4_IDFSTP (3), JTDX_FT4_SYNCMIN (1.2)
@@ -587,10 +599,19 @@ endif
     go to 800
   endif
 
-  if(params%nmode.eq.4) then
+  if(params%nmode.eq.4 .or. params%nmode.eq.52) then
+! CE3TSK: FT2 (nmode 52) is decoded by this same chain. jt9a.f90 / jt9.f90 have already doubled
+! every sample, so what follows sees an FT4 signal and needs no changes of its own; the two scalars
+! below are the only thing that knows better. Frequencies are halved here, once, and doubled back in
+! ft4emit; DT is converted in ft4b, where it is first expressed in seconds.
+    lft2=(params%nmode.eq.52); tperiod4=merge(3.75,7.5,lft2)
+! CE3TSK: the hint memory is counted in periods, and FT2's are half as long - four of them is 30 s of
+! wall time against FT4's 60. Eight keeps the same reach in seconds. The env still wins where given.
+    if(.not.lhintdepthenv) nft4hintdepth=merge(8,4,lft2)
     call dump_params()   ! CE3TSK: JTDX_DUMP_PARAMS, as the FT8 path does (ft4bg.sh checks the FT4 fields' reach)
     if(params%nagcc) call agccft4()
     nfa=params%nfa; nfb=params%nfb; nfqso=params%nfqso; lfilter=params%nfilter
+    if(lft2) then; nfa=nfa/2; nfb=nfb/2; nfqso=nfqso/2; endif
     if(lfilter) then
       nfafilt=max(nfa,nfqso-95); nfbfilt=min(nfb,nfqso+95) ! 84 + 11Hz possible freq error  
       if(nfqso.lt.nfafilt .or. nfqso.gt.nfbfilt) then
@@ -624,7 +645,7 @@ endif
     ! the first count that does not fit has its estimate decayed so it is tried again later
     lft4rxbudget=(params%nft4ensemble.eq.-2)
     if(lft4rxbudget) then
-       budget4=dble(max(1,merge(params%nrxbudget,13,params%nrxbudget.gt.0)))/10.d0
+       budget4=dble(max(1,merge(params%nrxbudget,merge(5,13,lft2),params%nrxbudget.gt.0)))/10.d0
        m4=0
        do k=1,6
           if(dble(ft4_rxcost(k)).gt.budget4) then; call ft4_rxcost_decay(k); exit; endif
@@ -1652,11 +1673,17 @@ contains
     character(len=1), intent(in) :: servis4
     character(len=3) :: mark4   ! CE3TSK: the marker as printed - '#' is the background hint's
                                 ! cross U+253C, three UTF-8 bytes, exactly as ft8_decoded prints it
+    character(len=1) :: sep4    ! CE3TSK: the mode column - FT8 prints '~', FT4 ':', and FT2 ';'.
+                                ! FT2 shares this emit with FT4, so it needs its own character here
+                                ! or an operator cannot tell the two apart in the window, in ALL.TXT
+                                ! or in anything that reads them afterwards. The COLUMN does not
+                                ! move: the format is fixed width and only the character differs.
 
     mark4=servis4
     if(servis4.eq.'#') mark4=char(226)//char(148)//char(188)
-    write(*,1001) nutc,snr,dt,nint(freq),decoded,trim(mark4)
-1001 format(i6.6,i4,f5.1,i5,1x,':',1x,a26,a)
+    sep4=':'; if(lft2) sep4=';'
+    write(*,1001) nutc,snr,dt,nint(freq),sep4,decoded,trim(mark4)
+1001 format(i6.6,i4,f5.1,i5,1x,a1,1x,a26,a)
     call flush(6)
     
     select type(this)

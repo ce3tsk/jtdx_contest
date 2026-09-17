@@ -5330,8 +5330,8 @@ UDP server %2:%3</source>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
-        <source>FT8/FT4 threads</source>
-        <translation>FT8/FT4 スレッド数</translation>
+        <source>FT* threads</source>
+        <translation>FT* スレッド数</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
@@ -5370,8 +5370,8 @@ UDP server %2:%3</source>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
-        <source>FT8/FT4 decode bandwidth</source>
-        <translation>FT8/FT4 デコード帯域幅</translation>
+        <source>FT* decode bandwidth</source>
+        <translation>FT* デコード帯域幅</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
@@ -5710,6 +5710,31 @@ UDP server %2:%3</source>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
+        <source>FT2 decoding</source>
+        <translation>FT2デコード</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>default: deep, nothing added  (1457 of 1575 signals on the 240-period set, 0.10 s at reply time)</source>
+        <translation>デフォルト: deep、追加処理なし（240周期のサンプルで1575信号中1457、応答判定時0.10秒）</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>background 3 with deep OSD, the alternate pass and the residual unit, all in the TX window, nothing at reply time  (+0.5 % on the 240-period set, +7.4 % on the crowded band, 0.10 s; ~1.8 s of idle CPU a period)</source>
+        <translation>バックグラウンド3: deep OSD、alternate pass、残差ユニットを含む3メンバーをすべてTX期間で実行し、応答判定時には追加処理なし（240周期のサンプルで+0.5%、混雑バンドで+7.4%、0.10秒。1周期あたりアイドルCPU約1.8秒）</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>max effort: as many members as fit the 0.5 s RX budget + low thresholds at reply time, six in the TX window with its extras and low thresholds  (+0.7 % in total, +12.5 % on the crowded band, 0.56 s mean, 1.2 s worst period)</source>
+        <translation>最大処理: 0.5秒のRX処理時間枠に収まるだけのメンバー + 応答判定時の低しきい値。TX期間では6メンバーを追加処理と低しきい値付きで実行（合計+0.7%、混雑バンドで+12.5%、平均0.56秒、最悪周期1.2秒）</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>budget auto: as many members as fit the reply deadline, from this band's measured cost (0.5 s; the rest run in the TX background)</source>
+        <translation>自動調整: このバンドの実測処理時間を基に、応答期限内に収まる最大数のメンバーを実行（処理時間枠0.5秒。残りはTXバックグラウンドで実行）</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
         <source>fast: the shallow decoder, nothing added</source>
         <translation>高速: 浅いデコーダー、追加処理なし</translation>
     </message>
@@ -5983,13 +6008,18 @@ This is asked only once.</source>
     </message>
     <message>
         <location filename="../../mainwindow.cpp"/>
+        <source>Custom - the FT2 RX / TX background controls match no preset</source>
+        <translation>カスタム — FT2のRX/TXバックグラウンド設定がどのプリセットにも一致しません</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
         <source>Custom - the FT4 RX / TX background controls match no preset</source>
         <translation>カスタム — FT4のRX/TXバックグラウンド設定がどのプリセットにも一致しません</translation>
     </message>
     <message>
         <location filename="../../mainwindow.cpp"/>
-        <source>FT8 / FT4 decoding preset - greyed while the mode is neither</source>
-        <translation>FT8/FT4 デコードプリセット — モードがどちらでもない場合はグレー表示</translation>
+        <source>FT* decoding preset - greyed while the mode is none of them</source>
+        <translation>FT* デコードプリセット — モードがそのいずれでもない場合はグレー表示</translation>
     </message>
     <message>
         <location filename="../../mainwindow.cpp"/>

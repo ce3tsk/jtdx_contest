@@ -77,6 +77,10 @@ void Modulator::start (unsigned symbolsLength, double framesPerSymbol,
   else if(m_nsps==576) {
     delay_ms=500;   //FT4
   }
+  /* CE3TSK step 6: FT2 transmits 150 ms into its 3.75 s period. That is not a choice - it is where
+     WSJT-X improved's own FT2 transmitter starts (`if(mode=="FT2") delay_ms=150;`), read from its
+     source, and where our simulator and decoder have placed the frame all along. */
+  else if(m_nsps==288) delay_ms=150;   //FT2
   // noise generator parameters
   if (m_addNoise) {
     m_snr = qPow (10.0, 0.05 * (dBSNR - 6.0));

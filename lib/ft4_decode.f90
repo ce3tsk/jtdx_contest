@@ -149,6 +149,7 @@ contains
     use ft4_mod1, only : ft4qso_store   ! CE3TSK item 75
     use ft8_mod1, only : mycall,hiscall
     use ft4_mod1, only : NDEC4MAX,NFT4SLICEMAX
+    use ft4_mod1, only : lft2   ! CE3TSK: FT2 decodes a stream stretched x2, so its frequencies are halved
     class(ft4_decoder), intent(inout) :: this
     integer, intent(in) :: nsl
     integer k,i,iseen,j,nacc,ka,ia
@@ -156,6 +157,7 @@ contains
     logical lnewmsg,ldup
     character(len=26) msg26
     character(len=1) servis4
+    real f1out
 ! CE3TSK: the hints first, per entry in walk order exactly as before - duplicates included,
 ! and before any selection, so the hint lists' content and order cannot depend on which copy
 ! wins below (the store order steers ft4hint_find's first-match in later periods)
@@ -197,10 +199,11 @@ contains
       if(ft4res(ia,ka)%lemit) then
         call ft4qso_store(ft4res(ia,ka)%xdt,ft4res(ia,ka)%msg,mycall,hiscall)   ! item 75: in emission order
         msg26=ft4res(ia,ka)%m26a; servis4=ft4res(ia,ka)%srv
-        call this%callback(ft4res(ia,ka)%nsnr,ft4res(ia,ka)%xdt,ft4res(ia,ka)%f1,msg26,servis4)
+        f1out=ft4res(ia,ka)%f1; if(lft2) f1out=2.0*f1out   ! CE3TSK: back to the frequency received
+        call this%callback(ft4res(ia,ka)%nsnr,ft4res(ia,ka)%xdt,f1out,msg26,servis4)
         if(ft4res(ia,ka)%ltwo) then
           msg26=ft4res(ia,ka)%m26b
-          call this%callback(ft4res(ia,ka)%nsnr,ft4res(ia,ka)%xdt,ft4res(ia,ka)%f1,msg26,servis4)
+          call this%callback(ft4res(ia,ka)%nsnr,ft4res(ia,ka)%xdt,f1out,msg26,servis4)
         endif
       endif
     enddo

@@ -19,6 +19,10 @@ program ft4sim
   integer itone(NN)
   integer*1 msgbits(77)
   integer*4 iwave(NZZ)                  !Generated full-length waveform, CE3TSK: 32 bit for JTDX
+  integer*2 i2wave(NZZ)                 !CE3TSK: the 16 bit default
+  logical l32
+  character envval*8
+  integer envlen
   integer icos4(4)
   data icos4/0,1,3,2/
   
@@ -45,6 +49,12 @@ program ft4sim
   read(arg,*) snrdb                      !SNR_2500
 
   nfiles=abs(nfiles)
+! CE3TSK: the simulators write 16 bit wav files, the width JTDX records and the decoder's
+! native format. JTDX_SIM_32BIT=1 restores the 32 bit files older expectation sets used.
+  l32=.false.
+  call get_environment_variable('JTDX_SIM_32BIT',envval,envlen)
+  if(envlen.gt.0) l32=(envval(1:1).eq.'1')
+  if(l32) write(*,*) 'JTDX_SIM_32BIT=1: writing 32 bit files'
   twopi=8.0*atan(1.0)
   fs=12000.0                             !Sample rate (Hz)
   dt=1.0/fs                              !Sample interval (s)
@@ -130,29 +140,41 @@ program ft4sim
         enddo
      endif
 
-! CE3TSK: 32 bit output. gain is chosen so that the noise floor lands at the level JTDX
-! records itself, roughly 2.8e7 rms, so replayed files look like real received audio.
+! CE3TSK: gain puts the noise floor where JTDX records it, roughly 2.8e7 rms in 32 bit terms,
+! so replayed files look like real received audio. A 16 bit file carries the same level: file
+! mode multiplies 16 bit samples by 65536 (jt9.f90), so the gain is divided by it here.
      gain=2.7e7
+     if(.not.l32) gain=gain/65536.0
      if(snrdb.lt.90.0) then
        wave=gain*wave
      else
        datpk=maxval(abs(wave))
        fac=1.0e8/datpk
+       if(.not.l32) fac=fac/65536.0
        wave=fac*wave
      endif
-! CE3TSK: clamp before nint(). Converting a value beyond the 32 bit range is undefined
+! CE3TSK: clamp before nint(). Converting a value beyond the target range is undefined
 ! behaviour and wraps to nonsense instead of clipping.
-     if(any(abs(wave).gt.2.1e9)) then
+     clip=2.1e9
+     if(.not.l32) clip=32767.0
+     if(any(abs(wave).gt.clip)) then
        print*,"Warning - data will be clipped."
-       where(wave.gt.2.1e9) wave=2.1e9
-       where(wave.lt.-2.1e9) wave=-2.1e9
+       where(wave.gt.clip) wave=clip
+       where(wave.lt.-clip) wave=-clip
      endif
-     iwave=nint(wave)
-     h=default_header32(12000,NZZ)
+
      write(fname,1102) ifile
 1102 format('000000_',i6.6,'.wav')
      open(10,file=fname,status='unknown',access='stream')
-     write(10) h,iwave                !Save to *.wav file
+     if(l32) then
+       iwave=nint(wave)
+       h=default_header32(12000,NZZ)
+       write(10) h,iwave              !Save to *.wav file
+     else
+       i2wave=nint(wave)
+       h=default_header(12000,NZZ)
+       write(10) h,i2wave             !Save to *.wav file
+     endif
      close(10)
      write(*,1110) ifile,xdt,f0,snrdb,fname
 1110 format(i4,f7.2,f8.2,f7.1,2x,a17)

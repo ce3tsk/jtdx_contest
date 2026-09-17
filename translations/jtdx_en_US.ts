@@ -5300,7 +5300,7 @@ UDP server %2:%3</source>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
-        <source>FT8/FT4 threads</source>
+        <source>FT* threads</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -5340,7 +5340,7 @@ UDP server %2:%3</source>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
-        <source>FT8/FT4 decode bandwidth</source>
+        <source>FT* decode bandwidth</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

@@ -17,6 +17,7 @@ subroutine ft4b(f0,snrc,nQSOProgress,nfqso,ndepth,stophint,swl,lswl,nthr,isp,dob
   use ft8_mod1, only : avexdt,mycall,hiscall,mycalllen1
   use ft4_mod1, only : nft4hintdepth,ft4hint_find,ft4hint_near
   use ft4_mod1, only : nft4osddeep,nft4syncqual,nft4idfstp,nft4alt,nft4ens,ft4falsegate,ft4ensfreq,nft4dt2
+  use ft4_mod1, only : lft2,ft2snroff   ! CE3TSK: FT2 - stretched units, real-second DT, and the SNR offset
   use ft4_mod1, only : nbg4run,nft4ensfrom   ! CE3TSK: the TX background (item 59)
   use ft4_mod1, only : xdtvirt,nft4rxfsens   ! CE3TSK item 75: the virtual candidate
   use omp_lib, only : omp_get_wtime
@@ -166,7 +167,15 @@ subroutine ft4b(f0,snrc,nQSOProgress,nfqso,ndepth,stophint,swl,lswl,nthr,isp,dob
 ! Sample rate is now 12000/18 = 666.67 samples/second
 ! +/- 1.1 +/- 735 (1470); +/- 1.4 +/- 934.5 (1869); 0.5 sec 334 samples
     if(lswl) then; ibwindow=623; else; ibwindow=490; endif ! /3
-    ibottom=(0.5+avexdt)*666.67-667
+    if(lft2) then
+! CE3TSK: an ib index is virtual time, avexdt is real seconds. Virtual time is twice real time (the
+! stretch starts at the period start), the chain's zero is FT4's 0.5 s start and FT2 transmits 0.15 s
+! in, so xdt_real = 0.5*xdt_virtual + 0.10 and back ib = (2*xdt_real + 0.3)*666.67. The window keeps
+! its width in ib, which is half as wide in real seconds - right for a period half as long.
+      ibottom=(2.0*avexdt+0.3)*666.67-667
+    else
+      ibottom=(0.5+avexdt)*666.67-667
+    endif
 ! CE3TSK: two sweeps over the DT segments - the ordinary passes first, the hint pass only in a
 ! second sweep once all three segments failed, so a hint can never pre-empt a decode a later
 ! segment would have made with better sync (measured: 8 decodes lost that way for 32 gained)
@@ -195,7 +204,8 @@ subroutine ft4b(f0,snrc,nQSOProgress,nfqso,ndepth,stophint,swl,lswl,nthr,isp,dob
           idfstp=nft4idfstp   ! CE3TSK: 3 by default
 !-1.0..+1.4; -1.2..+1.7 start window
           if(lvirt) then   ! item 75: xdt = ib/666.67 - 0.5, so ib = (xdt+0.5)*666.67; +-0.12 s, +-0.25 s at level 3
-            ibvirt=nint((xdtvirt+0.5)*666.67); nwvirt=80; if(nft4rxfsens.ge.3) nwvirt=167
+            if(lft2) then; ibvirt=nint((2.0*xdtvirt+0.3)*666.67); else; ibvirt=nint((xdtvirt+0.5)*666.67); endif
+            nwvirt=80; if(nft4rxfsens.ge.3) nwvirt=167
             ibmin=ibvirt-nwvirt; ibmax=ibvirt+nwvirt
           else if(abs(avexdt).lt.1.e-6) then
             if(iseg.eq.1) then
@@ -345,6 +355,7 @@ subroutine ft4b(f0,snrc,nQSOProgress,nfqso,ndepth,stophint,swl,lswl,nthr,isp,dob
       lhint=.false.; npasst=npasses; ih=0; kh=0
       if(isweep.eq.2) then
         xdtc=ibest/666.67 - 0.5
+        if(lft2) xdtc=0.5*xdtc + 0.10   ! CE3TSK: the hint lists hold real seconds
         ! CE3TSK: no lock needed any more - the previous periods' lists are read only while
         ! the slices run (they are retired in emit(), after the loop) and the "already spent"
         ! mask ft4used is per thread.
@@ -460,8 +471,10 @@ subroutine ft4b(f0,snrc,nQSOProgress,nfqso,ndepth,stophint,swl,lswl,nthr,isp,dob
           if(idupe.eq.1) exit
           ndecodes=ndecodes+1; decodes(ndecodes)=message
           if(snr.gt.0.0) then; xsnr=10*log10(snr)-14.8; else; xsnr=-21.0; endif
+          if(lft2 .and. snr.gt.0.0) xsnr=xsnr+ft2snroff   ! CE3TSK: FT2's own scale, see ft4_mod1
           nsnr=nint(max(-21.0,xsnr))
           xdt=ibm/666.67 - 0.5   ! CE3TSK: ibm carries the member's delay, ibest for every other sweep
+          if(lft2) xdt=0.5*xdt + 0.10   ! CE3TSK: FT2's own seconds - the stretch doubled the time axis
 ! check for false decodes
 ! i3=3 n3=4  TU; B69FWJ 8Z6IB 559 580  
 ! i3=3 n3=3  TU; FD9GRU HT1HHY R 529 11
@@ -479,7 +492,7 @@ subroutine ft4b(f0,snrc,nQSOProgress,nfqso,ndepth,stophint,swl,lswl,nthr,isp,dob
 ! plain-decoded ghost with an impossible prefix/grid pair passed. The full-AP types 4-6 and the
 ! hint pass (7) are known messages, nothing to check. SNR gate: -17.5 on FT4's scale, as -20.5
 ! sits 3.5 dB above FT8's floor (JTDX_FT4_FALSEGATE overrides).
-          if(iaptype.lt.4 .and. (xsnr.lt.ft4falsegate .or. (iaptype.ge.1 .and. iaptype.le.3))) then
+          if(iaptype.lt.4 .and. (xsnr.lt.ft4falsegate+merge(ft2snroff,0.0,lft2) .or. (iaptype.ge.1 .and. iaptype.le.3))) then
             lmine=.false.
             if(iaptype.ne.2 .and. iaptype.ne.3) then
               if(len_trim(mycall).gt.2) then; if(index(message,trim(mycall)).gt.0) lmine=.true.; endif

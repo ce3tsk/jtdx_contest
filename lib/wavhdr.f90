@@ -38,11 +38,12 @@ module wavhdr
       default_header=h
     end function default_header
 
-! CE3TSK: 32 bit variant, used by the simulators (ft8sim, ft8sim_gfsk, ft4sim). JTDX itself
-! is back to 16 bit samples since 2026-09-03 (AUDIO_DEPTH_PLAN.md) and both File -> Open and
-! file mode read either depth; the simulators keep writing 32 bit because their noise is
-! quantised at the output depth, and re-scaling them would move every simulated-signal test
-! expectation (ft4qso, ft8merge, ft4merge, ft4hint, memcheck) for no benefit.
+! CE3TSK: 32 bit variant. JTDX itself is back to 16 bit samples since 2026-09-03
+! (AUDIO_DEPTH_PLAN.md): file mode reads either depth, but File -> Open reads two-byte samples
+! straight into d2 (getfile.cpp), so 16 bit is the only depth the GUI can replay. Since 2026-09-16
+! the simulators write 16 bit by default for that reason and divide their gain by 65536 to keep the
+! level identical; JTDX_SIM_32BIT=1 selects this header instead, for reproducing the expectation
+! sets recorded before the change.
     function default_header32(nsamrate,npts)
       type(hdr) default_header32,h
       h%ariff='RIFF'

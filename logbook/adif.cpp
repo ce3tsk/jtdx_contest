@@ -378,7 +378,7 @@ bool ADIF::addQSOToFile(const QString hisCall, const QString hisGrid, const QStr
         QString t;
         t="<call:" + QString::number(hisCall.length()) + ">" + hisCall;
         t+=" <gridsquare:" + QString::number(hisGrid.length()) + ">" + hisGrid;
-        if (mode == "FT4") t+=" <mode:4>MFSK <submode:" + QString::number(mode.length()) + ">" + mode;
+        if (mode == "FT4" || mode == "FT2") t+=" <mode:4>MFSK <submode:" + QString::number(mode.length()) + ">" + mode;   // CE3TSK: FT2 too
         else t+=" <mode:" + QString::number(mode.length()) + ">" + mode;
         t+=" <rst_sent:" + QString::number(rptSent.length()) + ">" + rptSent;
         t+=" <rst_rcvd:" + QString::number(rptRcvd.length()) + ">" + rptRcvd;

@@ -220,7 +220,7 @@ void LogQSO::accept()
     }
     myadif+=" <CALL:" + QString::number(hisCall.length()) + ">" + hisCall;
     myadif+=" <FREQ:" + QString::number(strDialFreq.length()) + ">" + strDialFreq;
-    if (mode == "FT4") myadif+=" <MODE:4>MFSK <SUBMODE:"  + QString::number(mode.length()) + ">" + mode;
+    if (mode == "FT4" || mode == "FT2") myadif+=" <MODE:4>MFSK <SUBMODE:"  + QString::number(mode.length()) + ">" + mode;   // CE3TSK: FT2 too
     else myadif+=" <MODE:"  + QString::number(mode.length()) + ">" + mode;
     myadif+=" <QSO_DATE:8>" + m_dateTimeOn.date().toString("yyyyMMdd");
     myadif+=" <TIME_ON:6>" + m_dateTimeOn.time().toString("hhmmss");

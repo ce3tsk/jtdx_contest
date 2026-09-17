@@ -67,6 +67,13 @@ module ft4_mod1
   end type ft4hint_struct
   type(ft4hint_struct) :: ft4cur(NHINT4LIST)
   type(ft4hint_struct) :: ft4even(NHINT4LIST,NHINT4MAX),ft4odd(NHINT4LIST,NHINT4MAX)
+  ! CE3TSK: FT2 is decoded by this same chain, from a stream stretched x2 by jt9a.f90 / jt9.f90 -
+  ! doubling every sample turns FT2's 288 samples per symbol into FT4's 576 and its 41.667 Hz tone
+  ! spacing into 20.833, so everything below works in FT4's units and knows nothing about FT2. Only
+  ! two things have to: the period, for the even/odd parity, and the emit, which doubles the
+  ! frequency back. Both are written once per decode on the master thread and read-only in slices.
+  logical :: lft2=.false.
+  real :: tperiod4=7.5
   integer :: nft4cur=0,nft4parity=0,nft4hintdepth=4,nlastnutc4=-1
 ! CE3TSK: the hints this slice has already spent. Consumption used to mark the shared list
 ! straight away, so whether a slice found a hint depended on whether another slice had got
@@ -158,6 +165,13 @@ module ft4_mod1
                            ! FT4 is ~90 Hz with 20.8 Hz spacing, so the right value here is its own
                            ! question - JTDX_FT4_ENSFREQ sweeps it (DECODER_IMPROVEMENTS item 49)
   real :: ft4falsegate=-17.5   ! CE3TSK: below this SNR a plain decode goes through chkfalse8 as FT8's do below -20.5 (JTDX_FT4_FALSEGATE)
+  ! CE3TSK: FT2 reads 3 dB low on FT4's scale and the whole scale moves with it. The stretch halves
+  ! every frequency, so the 2500 Hz reference band of the SNR estimate covers 5000 Hz of real audio -
+  ! twice the noise, 3 dB. Measured 2026-09-16 with ft2sim, 20 files per level: truth -5 read -8,
+  ! truth -8 read -11 (the offset shrinks at threshold, as an SNR estimator's bias does, so the
+  ! strong-signal figure is the one to trust). Applied to the reported SNR and to the false-decode
+  ! gate together, so the gate keeps the physical threshold it had.
+  real :: ft2snroff=3.0
 
   ! CE3TSK: the hint lists are written from inside the candidate loop (ft4hint_store) and an
   ! entry is retired by ft4hint_consume, so under the slice loop they are shared mutable state.
@@ -248,7 +262,7 @@ contains
       endif
     endif
     nsec=mod(nutc,100)
-    nft4parity=mod(nint(real(nsec)/7.5),2)
+    nft4parity=mod(nint(real(nsec)/tperiod4),2)   ! CE3TSK: 3.75 under FT2, and 16 periods a minute still alternate
     nft4cur=0; ft4cur%lstate=.false.; nlastnutc4=nutc
   end subroutine ft4hint_rotate
 

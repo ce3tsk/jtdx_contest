@@ -5417,8 +5417,8 @@ UDP serveris %2:%3</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
-        <source>FT8/FT4 threads</source>
-        <translation>FT8/FT4 pavedieni</translation>
+        <source>FT* threads</source>
+        <translation>FT* pavedieni</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
@@ -5457,8 +5457,8 @@ UDP serveris %2:%3</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
-        <source>FT8/FT4 decode bandwidth</source>
-        <translation>FT8/FT4 dekodēšanas joslas platums</translation>
+        <source>FT* decode bandwidth</source>
+        <translation>FT* dekodēšanas joslas platums</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
@@ -5797,6 +5797,31 @@ UDP serveris %2:%3</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
+        <source>FT2 decoding</source>
+        <translation>FT2 kodēšana</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>default: deep, nothing added  (1457 of 1575 signals on the 240-period set, 0.10 s at reply time)</source>
+        <translation>noklusējums: dziļš, nekas nav pievienots  (1457 signāli no 1575 240 periodu kopā, 0,10 s atbildes laikā)</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>background 3 with deep OSD, the alternate pass and the residual unit, all in the TX window, nothing at reply time  (+0.5 % on the 240-period set, +7.4 % on the crowded band, 0.10 s; ~1.8 s of idle CPU a period)</source>
+        <translation>fons 3 ar dziļo OSD, alternatīvo kārtu un atlikuma vienību, viss raidīšanas logā, nekas atbildes laikā  (+0,5 % 240 periodu kopā, +7,4 % pārpildītā joslā, 0,10 s; ~1,8 s brīva procesora laika periodā)</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>max effort: as many members as fit the 0.5 s RX budget + low thresholds at reply time, six in the TX window with its extras and low thresholds  (+0.7 % in total, +12.5 % on the crowded band, 0.56 s mean, 1.2 s worst period)</source>
+        <translation>maksimālā piepūle: tik dalībnieku, cik ietilpst 0,5 s RX budžetā + zemi sliekšņi atbildes laikā, seši raidīšanas logā ar tā papildinājumiem un zemiem sliekšņiem  (+0,7 % kopā, +12,5 % pārpildītā joslā, 0,56 s vidēji, 1,2 s sliktākais periods)</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>budget auto: as many members as fit the reply deadline, from this band's measured cost (0.5 s; the rest run in the TX background)</source>
+        <translation>budžets auto: tik dalībnieku, cik ietilpst atbildes termiņā, pēc šīs joslas izmērītajām izmaksām (0,5 s; pārējie darbojas raidīšanas fonā)</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
         <source>fast: the shallow decoder, nothing added</source>
         <translation>ātrs: virspusējais dekoders, nekas nav pievienots</translation>
     </message>
@@ -6070,13 +6095,18 @@ Tas tiek jautāts tikai vienu reizi.</translation>
     </message>
     <message>
         <location filename="../../mainwindow.cpp"/>
+        <source>Custom - the FT2 RX / TX background controls match no preset</source>
+        <translation>Custom - FT2 RX / TX fona vadīklas neatbilst nevienam priekšiestatījumam</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
         <source>Custom - the FT4 RX / TX background controls match no preset</source>
         <translation>Custom - FT4 RX / TX fona vadīklas neatbilst nevienam priekšiestatījumam</translation>
     </message>
     <message>
         <location filename="../../mainwindow.cpp"/>
-        <source>FT8 / FT4 decoding preset - greyed while the mode is neither</source>
-        <translation>FT8 / FT4 dekodēšanas priekšiestatījums - pelēks, kamēr režīms nav neviens no tiem</translation>
+        <source>FT* decoding preset - greyed while the mode is none of them</source>
+        <translation>FT* dekodēšanas priekšiestatījums - pelēks, kamēr režīms nav neviens no tiem</translation>
     </message>
     <message>
         <location filename="../../mainwindow.cpp"/>

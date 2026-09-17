@@ -5422,8 +5422,8 @@ UDP server %2:%3</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
-        <source>FT8/FT4 threads</source>
-        <translation>FT8/FT4 dretve</translation>
+        <source>FT* threads</source>
+        <translation>FT* dretve</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
@@ -5462,8 +5462,8 @@ UDP server %2:%3</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
-        <source>FT8/FT4 decode bandwidth</source>
-        <translation>Širina pojasa dekodiranja FT8/FT4</translation>
+        <source>FT* decode bandwidth</source>
+        <translation>Širina pojasa dekodiranja FT*</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
@@ -5802,6 +5802,31 @@ UDP server %2:%3</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
+        <source>FT2 decoding</source>
+        <translation>FT2 dekodiranje</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>default: deep, nothing added  (1457 of 1575 signals on the 240-period set, 0.10 s at reply time)</source>
+        <translation>zadano: duboko, bez dodataka  (1457 od 1575 signala na skupu od 240 perioda, 0,10 s u vremenu odgovora)</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>background 3 with deep OSD, the alternate pass and the residual unit, all in the TX window, nothing at reply time  (+0.5 % on the 240-period set, +7.4 % on the crowded band, 0.10 s; ~1.8 s of idle CPU a period)</source>
+        <translation>pozadina 3 s dubokim OSD-om, alternativnim prolazom i jedinicom ostatka, sve u prozoru odašiljanja, ništa u vremenu odgovora  (+0,5 % na skupu od 240 perioda, +7,4 % na prepunom pojasu, 0,10 s; ~1,8 s slobodnog procesora po periodu)</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>max effort: as many members as fit the 0.5 s RX budget + low thresholds at reply time, six in the TX window with its extras and low thresholds  (+0.7 % in total, +12.5 % on the crowded band, 0.56 s mean, 1.2 s worst period)</source>
+        <translation>najveći napor: onoliko članova koliko stane u RX proračun od 0,5 s + niski pragovi u vremenu odgovora, šest u prozoru odašiljanja s njegovim dodacima i niskim pragovima  (+0,7 % ukupno, +12,5 % na prepunom pojasu, 0,56 s prosječno, 1,2 s najgori period)</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>budget auto: as many members as fit the reply deadline, from this band's measured cost (0.5 s; the rest run in the TX background)</source>
+        <translation>proračun auto: onoliko članova koliko stane u rok odgovora, prema izmjerenom trošku ovog pojasa (0,5 s; ostali se izvode u pozadini odašiljanja)</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
         <source>fast: the shallow decoder, nothing added</source>
         <translation>brzo: plitki dekoder, bez dodataka</translation>
     </message>
@@ -6075,13 +6100,18 @@ Ovo se pita samo jednom.</translation>
     </message>
     <message>
         <location filename="../../mainwindow.cpp"/>
+        <source>Custom - the FT2 RX / TX background controls match no preset</source>
+        <translation>Custom - FT2 kontrole RX / TX pozadine ne odgovaraju nijednom predlošku</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
         <source>Custom - the FT4 RX / TX background controls match no preset</source>
         <translation>Custom - FT4 kontrole RX / TX pozadine ne odgovaraju nijednom predlošku</translation>
     </message>
     <message>
         <location filename="../../mainwindow.cpp"/>
-        <source>FT8 / FT4 decoding preset - greyed while the mode is neither</source>
-        <translation>Predložak dekodiranja FT8 / FT4 - siv dok način rada nije nijedan od njih</translation>
+        <source>FT* decoding preset - greyed while the mode is none of them</source>
+        <translation>Predložak dekodiranja FT* - siv dok način rada nije nijedan od njih</translation>
     </message>
     <message>
         <location filename="../../mainwindow.cpp"/>
