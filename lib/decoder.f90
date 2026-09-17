@@ -79,7 +79,8 @@ subroutine multimode_decoder(params)
   integer nutc,ndelay
   type(params_block) :: params
   character(len=300) :: dumpfile   ! CE3TSK debug dump
-  character(len=26) :: modemsg   ! CE3TSK: the unknown-mode diagnostic below
+  character(len=32) :: modemsg   ! CE3TSK: the unknown-mode diagnostic below - 20 characters of
+                                 ! text plus room for the widest 32 bit integer (-2147483648, 11)
   integer :: ldump,idumpstat
   integer :: nslicing,islicing,nhalf   ! CE3TSK: second slicing pass
   integer :: nsl4,nslpass4,nf4w,nf4lo(24),nf4hi(24),nthr4,ncore4,nuse4,ihalf4,nsldiv4,nhalf4,k8
@@ -802,9 +803,11 @@ endif
 ! report: FT4 perfect, every FT2 period low rms, on our own published benchmark wav). Name it.
   if(params%nmode.ne.9 .and. params%nmode.ne.10 .and. params%nmode.ne.65 .and.                &
      params%nmode.ne.(65+9)) then
+! the value is whatever arrived, so it is formatted at full integer width: an internal write
+! that overruns modemsg is a runtime abort, and aborting is no way to report a mismatch
      write(modemsg,'(a,i0)') 'decoder has no mode ',params%nmode
      write(*,129) nutc,modemsg,'d'
-129  format(i6.6,2x,a26,15x,a1)
+129  format(i6.6,2x,a32,9x,a1)
      call flush(6)
      go to 800
   endif
