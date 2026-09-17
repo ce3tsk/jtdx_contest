@@ -112,6 +112,7 @@ protected:
   void childEvent(QChildEvent *) override;
   virtual bool eventFilter(QObject *object, QEvent *event);
   virtual void resizeEvent(QResizeEvent *event);
+  virtual void showEvent(QShowEvent *event);   // CE3TSK: where the splitter's share is first read
   virtual void mousePressEvent(QMouseEvent *event);
 
 private slots:
@@ -985,6 +986,14 @@ private:
   QHash<QString, QVariant> m_pwrBandTuneMemory; // Remembers power level by band for tuning
   QByteArray m_geometry;
   QSize m_geometryMinHint;   // CE3TSK: minimumSizeHint () when m_geometry was saved, see restoreMainGeometry ()
+  /* CE3TSK: the share of the splitter the LEFT pane holds, kept across window resizes. Qt divides
+     new width by its own rules - measured 41.3 % of 1000 px becoming 47.8 % at 1600 - so widening
+     the window slid the bar rightwards and the operator had to drag it back. */
+  double m_splitRatio {0.0};
+  bool m_splitApplying {false};   // setSizes must not be read back as an operator's drag
+  void keepSplitRatio ();
+  void rememberSplitRatio ();
+  bool m_splitLearned {false};   // the share is learnt once the window is laid out, then only a drag changes it
   qint32 m_ft8Freq[15] = {1810,1840,1908,3573,5357,7074,10136,14074,18100,21074,24915,28074,40680,50313,70154};
 
   //---------------------------------------------------- private functions

@@ -801,6 +801,12 @@ MainWindow::MainWindow(bool multiple, QSettings * settings, QSharedMemory *shdme
        back when they moved it back. Every action in these two submenus feeds the same refresh. */
     hook(ui->menuFT2_RX); hook(ui->menuFT2_TX);
     connect(ui->swlButton, &QPushButton::clicked, this, &MainWindow::refreshDecodePreset);
+  // CE3TSK: dragging the bar is the one thing that changes the share the panes keep
+  /* CE3TSK: the drag is read AFTER Qt has applied it. Reading sizes() inside splitterMoved gives the
+     positions from before the move, so the share was set back to the old one and the next layout
+     snapped the bar home - the handle could not be dragged at all, which is how this was found. */
+  connect(ui->splitter, &QSplitter::splitterMoved, this,
+          [this] (int, int) { if (!m_splitApplying) QTimer::singleShot (0, this, [this] { rememberSplitRatio (); }); });
   }
   QActionGroup* FT8DecoderSensitivityGroup = new QActionGroup(this);
   ui->actionFT8SensMin->setActionGroup(FT8DecoderSensitivityGroup);
@@ -9126,6 +9132,54 @@ void MainWindow::on_pbSendRRR_clicked()
 
 void MainWindow::resizeEvent(QResizeEvent *event) { 
   if(event->size().height() != event->oldSize().height()) dynamicButtonsInit(); 
+  // CE3TSK: the share is put back when the splitter itself is resized - see eventFilter
+}
+
+/* CE3TSK: the share is read once the window is up and laid out, and after that only the operator's
+   own drag changes it. It must NOT be read during a resize: by then Qt has already redistributed the
+   new width, so reading it there captures the drift and preserves THAT - measured 41.3 % becoming
+   48.5 % on the first widening and sticking. */
+void MainWindow::showEvent (QShowEvent *event)
+{
+  QMainWindow::showEvent (event);
+  if (!m_splitLearned) {
+    m_splitLearned = true;
+    QTimer::singleShot (0, this, [this] { rememberSplitRatio (); });
+  }
+}
+
+/* CE3TSK: the splitter keeps the share the operator gave it.
+ *
+ * QSplitter has no stretch factors here, so Qt hands new width to the panes by its own rule and the
+ * bar slides: measured, the left pane held 41.3 % of a 1000 px window and 47.8 % of a 1600 px one,
+ * the same either way whether the edge was dragged or the window resized in one step. Widening the
+ * window therefore meant dragging the bar back every time.
+ *
+ * So the ratio is remembered whenever the operator moves the handle - that is the only thing that
+ * should change it - and re-applied whenever the window's WIDTH changes. setSizes respects each
+ * pane's minimum, so a window too narrow for the right-hand controls still gives them their hint
+ * rather than the ratio; the ratio is restored as soon as there is room again. */
+void MainWindow::rememberSplitRatio ()
+{
+  auto const s = ui->splitter->sizes ();
+  if (s.size () != 2 || s[0] <= 0 || s[1] <= 0) return;
+  m_splitRatio = double (s[0]) / (s[0] + s[1]);
+  keepSplitRatio ();
+}
+
+/* The share is expressed to Qt as STRETCH FACTORS rather than corrected afterwards. Qt divides new
+   width between the panes in proportion to these, so the panes grow and shrink together and no
+   correction has to race the layout - which is what three earlier attempts did, each one measurably
+   losing to it. Widths beyond a pane's own minimum or maximum are still Qt's to clamp: the
+   right-hand controls keep their minimum on a narrow window, and the ratio returns as soon as there
+   is room for it. */
+void MainWindow::keepSplitRatio ()
+{
+  if (m_splitRatio <= 0.0 || m_splitRatio >= 1.0) return;
+  m_splitApplying = true;
+  ui->splitter->setStretchFactor (0, qRound (1000.0 * m_splitRatio));
+  ui->splitter->setStretchFactor (1, qRound (1000.0 * (1.0 - m_splitRatio)));
+  m_splitApplying = false;
 }
 
 void MainWindow::mousePressEvent(QMouseEvent *event)             //mousePressEvent
