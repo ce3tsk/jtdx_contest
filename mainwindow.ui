@@ -109,6 +109,10 @@
         <property name="spacing">
          <number>1</number>
         </property>
+        <property name="leftMargin"><number>2</number></property>
+        <property name="topMargin"><number>2</number></property>
+        <property name="rightMargin"><number>2</number></property>
+        <property name="bottomMargin"><number>2</number></property>
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout_10" stretch="1,0">
           <property name="spacing">
@@ -362,6 +366,10 @@
         <property name="spacing">
          <number>2</number>
         </property>
+        <property name="leftMargin"><number>2</number></property>
+        <property name="topMargin"><number>2</number></property>
+        <property name="rightMargin"><number>2</number></property>
+        <property name="bottomMargin"><number>2</number></property>
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout_11" stretch="4,5,1">
           <property name="spacing">
@@ -1911,7 +1919,7 @@
              <widget class="QLabel" name="PWRlabel">
               <property name="minimumSize">
                <size>
-                <width>50</width>
+                <width>0</width>
                 <height>0</height>
                </size>
               </property>
@@ -1936,7 +1944,7 @@
              <widget class="QSlider" name="outAttenuation">
               <property name="minimumSize">
                <size>
-                <width>50</width>
+                <width>38</width>
                 <height>0</height>
                </size>
               </property>
@@ -1979,7 +1987,7 @@
              <widget class="QLabel" name="SWRlabel">
               <property name="minimumSize">
                <size>
-                <width>50</width>
+                <width>0</width>
                 <height>0</height>
                </size>
               </property>

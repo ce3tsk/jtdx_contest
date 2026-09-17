@@ -195,6 +195,7 @@ extern "C" {
 #include "logbook/countrydat.h"       /* CE3TSK */
 
 #include "pimpl_impl.hpp"
+#include "uilimits.h"   // CE3TSK: the .ui size limits against the current font
 
 #include "ui_Configuration.h"
 #include "moc_Configuration.cpp"
@@ -7498,38 +7499,14 @@ void Configuration::impl::set_application_font (QFont const& font)
 // CE3TSK: see the comment inside; also run once by MainWindow after its widgets and the Wide Graph exist
 void Configuration::impl::fit_size_limits ()
 {
+  /* CE3TSK: the .ui files pin ~30 widgets with hard pixel maximumSize caps chosen for the font
+     they were drawn at, so a larger application font cannot grow past them and the text is
+     clipped ("Rx 305 Hz" lost the Hz, "GenMsgs" the s). uilimits.h raises each limit to what the
+     current font needs - and, for a button, no further than its label needs, which is what keeps
+     the layout the width stock JTDX has. */
   for (auto& widget : qApp->topLevelWidgets ())
     {
-      /* CE3TSK: the .ui files pin ~30 widgets with hard pixel maximumSize caps chosen for the
-         original font - a larger application font cannot grow past them and the text is clipped
-         ("Rx 305 Hz" lost the Hz, "GenMsgs" the s). Raise each cap to the widget's own sizeHint,
-         which already accounts for font and content; at the design font every sizeHint is inside
-         its cap, so the layout is left exactly as it was. */
-      for (auto* child : widget->findChildren<QWidget *> ())
-        {
-          /* remember what the .ui asked for the first time we see the widget, and always work
-             from that - otherwise a font increase ratchets the limits up and a later decrease
-             cannot bring them back down, leaving the layout inflated until the next restart. */
-          if (!child->property ("jtdxLimits").isValid ())
-            {
-              child->setProperty ("jtdxLimits", QRect {child->minimumWidth (), child->minimumHeight (),
-                                                       child->maximumWidth (), child->maximumHeight ()});
-            }
-          auto const from_ui = child->property ("jtdxLimits").toRect ();
-          auto const hint = child->sizeHint ();
-          child->setMaximumWidth (from_ui.width () < QWIDGETSIZE_MAX
-                                  ? qMax (from_ui.width (), hint.width ()) : from_ui.width ());
-          child->setMaximumHeight (from_ui.height () < QWIDGETSIZE_MAX
-                                   ? qMax (from_ui.height (), hint.height ()) : from_ui.height ());
-          /* a button's label is the whole point of the button, so it must not be squeezed:
-             GenMsgs is pinned at a 60px minimum and S meter is sized oddly by its own
-             stylesheet, and both lost characters at a larger font. */
-          if (qobject_cast<QAbstractButton *> (child))
-            {
-              child->setMinimumWidth (qMax (from_ui.x (), hint.width ()));
-              child->setMinimumHeight (qMax (from_ui.y (), hint.height ()));
-            }
-        }
+      JTDX::fit_size_limits (widget);
       widget->updateGeometry ();
     }
 }

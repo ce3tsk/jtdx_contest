@@ -53,6 +53,7 @@
 #include "logfields.h"   // CE3TSK: what a log entry takes when the QSO skipped a step   /* CE3TSK: contest-mode rejection of signal-report messages */
 #include "decodelabel.h"   // CE3TSK
 #include "modetiming.h"   // CE3TSK: the per-mode timing constants
+#include "uilimits.h"      // CE3TSK: the .ui size limits against the current font
 #include <QPainter>
 #include <functional>   // CE3TSK P13: the recursive menu hook
 #include <QThread>                  /* CE3TSK: 16 bit wav expansion */
@@ -1517,37 +1518,18 @@ void MainWindow::readSettings()
   m_geometry = m_settings->value ("geometry",saveGeometry()).toByteArray();
   m_geometryMinHint = m_settings->value ("geometryMinHint").toSize ();   // CE3TSK
   restoreMainGeometry ();   // CE3TSK
-  /* CE3TSK: mainwindow.ui pins ~30 widgets with hard pixel maximumSize caps chosen for the
-     original font, so a larger application font cannot grow past them and the text is clipped
-     ("Rx 305 Hz" loses the Hz, "GenMsgs" the s). Raise each cap to the widget's own sizeHint,
-     which already accounts for font and content - at the design font every sizeHint is inside
-     its cap, so the familiar layout is left untouched. Configuration::set_application_font does
-     the same for a font changed at run time; this covers start-up, when the font is applied
-     before this window exists. */
-  for (auto* child : findChildren<QWidget *> ())
+  /* CE3TSK: the .ui's hard size limits are reconciled with the font in use - see uilimits.h for
+     what is raised and why a button is measured by its label rather than by its sizeHint.
+     Configuration::set_application_font does the same for a font changed at run time; this
+     covers start-up, when the font is applied before this window exists. */
+  JTDX::fit_size_limits (this);
+  /* CE3TSK 2026-09-17: a QStackedWidget lays its pages out with the default 9 px margin on every
+     side, and the tab widget inside adds its own frame - 64 px of chrome around a 268 px row, all
+     of it inside the splitter's right-hand column, where it becomes floor the operator cannot drag
+     away. The pages have their own 2 px margins, which is what actually separates the controls. */
+  if (auto* stack_layout = ui->controls_stack_widget->layout ())
     {
-      /* remember what the .ui asked for the first time we see the widget, and always work
-         from that - otherwise a font increase ratchets the limits up and a later decrease
-         cannot bring them back down, leaving the layout inflated until the next restart. */
-      if (!child->property ("jtdxLimits").isValid ())
-        {
-          child->setProperty ("jtdxLimits", QRect {child->minimumWidth (), child->minimumHeight (),
-                                                   child->maximumWidth (), child->maximumHeight ()});
-        }
-      auto const from_ui = child->property ("jtdxLimits").toRect ();
-      auto const hint = child->sizeHint ();
-      child->setMaximumWidth (from_ui.width () < QWIDGETSIZE_MAX
-                              ? qMax (from_ui.width (), hint.width ()) : from_ui.width ());
-      child->setMaximumHeight (from_ui.height () < QWIDGETSIZE_MAX
-                               ? qMax (from_ui.height (), hint.height ()) : from_ui.height ());
-      /* a button's label is the whole point of the button, so it must not be squeezed:
-         GenMsgs is pinned at a 60px minimum and S meter is sized oddly by its own
-         stylesheet, and both lost characters at a larger font. */
-      if (qobject_cast<QAbstractButton *> (child))
-        {
-          child->setMinimumWidth (qMax (from_ui.x (), hint.width ()));
-          child->setMinimumHeight (qMax (from_ui.y (), hint.height ()));
-        }
+      stack_layout->setContentsMargins (0, 0, 0, 0);
     }
   restoreState (m_settings->value ("state",saveState ()).toByteArray ());
   ui->splitter->restoreState(m_settings->value("vertSplitter").toByteArray());
