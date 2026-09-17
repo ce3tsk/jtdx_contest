@@ -9132,7 +9132,9 @@ void MainWindow::on_pbSendRRR_clicked()
 
 void MainWindow::resizeEvent(QResizeEvent *event) { 
   if(event->size().height() != event->oldSize().height()) dynamicButtonsInit(); 
-  // CE3TSK: the share is put back when the splitter itself is resized - see eventFilter
+  /* CE3TSK: nothing to do here for the splitter - its share rides on stretch factors, which Qt
+     honours during the layout this resize triggers. Correcting the sizes from here was tried and
+     measured to do nothing: the layout runs afterwards and overwrites whatever is set. */
 }
 
 /* CE3TSK: the share is read once the window is up and laid out, and after that only the operator's
