@@ -476,6 +476,14 @@ MainWindow::MainWindow(bool multiple, QSettings * settings, QSharedMemory *shdme
   m_dialWheelTimer.setInterval (200);
   connect (&m_dialWheelTimer, &QTimer::timeout, this, &MainWindow::applyDialWheel);
   wrap_tooltips (this);   /* CE3TSK: Qt does not word-wrap a plain tooltip, see tooltip_wrap.hpp */
+  /* CE3TSK: a QAction's tooltip never appears in a menu unless that menu asks for it. Asked
+     here for View and Mode, and by the three preset menus for themselves (see
+     markRecommendedPresets). Every other menu still says no, so the tooltip authored on
+     actionConvert_bit_depth (File) is folded by wrap_tooltips and shown nowhere.
+     Mode holds exactly one, FT2's, and has_own_tooltip keeps the other seven entries silent
+     rather than echoing their own labels back. */
+  ui->menuView->setToolTipsVisible (true);
+  ui->menuMode->setToolTipsVisible (true);
   m_config.set_jtdxtime (m_jtdxtime);
   ui->decodedTextBrowser->setConfiguration (&m_config);
   ui->decodedTextBrowser2->setConfiguration (&m_config);
@@ -1480,6 +1488,7 @@ void MainWindow::writeSettings()
   m_settings->setValue("ShowMainWindowTooltips",m_showTooltips);
   m_settings->setValue("ColorTxMessageButtons",m_colorTxMsgButtons);
   m_settings->setValue("BandButtons",ui->actionBand_buttons->isChecked ());   // CE3TSK
+  m_settings->setValue("NarrowControls",ui->actionNarrow_controls->isChecked ());   // CE3TSK
   m_settings->setValue("CallsignToClipboard",m_callToClipboard);
   m_settings->setValue("Crossband160mJA",m_crossbandOptionEnabled);
   m_settings->setValue("Crossband160mHL",m_crossbandHLOptionEnabled);
@@ -1513,16 +1522,46 @@ void MainWindow::restoreMainGeometry ()
 //---------------------------------------------------------- readSettings()
 void MainWindow::readSettings()
 {
+  /* CE3TSK: View -> Narrow controls, read BEFORE the MainWindow group is opened, because the
+     key lives in [Common] beside BandButtons - read from inside the group it resolved to
+     MainWindow/NarrowControls, a key that never exists, so the allowance was silently always
+     off for this first fit.  Same trap the FT2 settings recorded: a group mismatch does not
+     fail, it just quietly reads the default. */
+  JTDX::narrow_allowance () = m_settings->value ("Common/NarrowControls", false).toBool ()
+                            ? JTDX::NARROW_ALLOWANCE : 0;
+  /* CE3TSK: and the window's OWN floor.  mainwindow.ui pins MainWindow at minimumSize 733x422,
+     which no amount of squeezing inside can get under - measured in the sandbox, where the window
+     advertised minimum 733 to the window manager whether the allowance was on or off and whether
+     the band button row was shown or not.  Relaxing it lets the layout's computed minimum take
+     over; turning the option off puts the .ui's number back. */
+  m_uiMinWidth = minimumWidth ();
+  setMinimumWidth (JTDX::narrowed_window_minimum (m_uiMinWidth));
+  /* CE3TSK 2026-09-18, review finding 5: and the REST of the narrow state, here, before the
+     geometry is restored below.
+
+     restoreMainGeometry () compares minimumSizeHint () against the m_geometryMinHint saved at
+     exit. That hint was saved with the widget limits fitted AND the pane floor in force, so if
+     they are not in force yet the hint is larger, the growth comes out positive and a narrow
+     saved window is opened about one allowance too wide - visibly, until the delayed re-restore
+     puts it back a tick later. Setting the action here fires on_actionNarrow_controls_toggled,
+     which applies the allowance, the window minimum, the widget limits and applyPaneFloor (),
+     so the comparison is like with like. readSettings () sets the same value again later and
+     that is then a no-op; the delayed re-restore stays as the safety net it was. */
+  ui->actionNarrow_controls->setChecked (JTDX::narrow_allowance () > 0);
+
   m_settings->beginGroup("MainWindow");
   
   m_geometry = m_settings->value ("geometry",saveGeometry()).toByteArray();
   m_geometryMinHint = m_settings->value ("geometryMinHint").toSize ();   // CE3TSK
-  restoreMainGeometry ();   // CE3TSK
   /* CE3TSK: the .ui's hard size limits are reconciled with the font in use - see uilimits.h for
      what is raised and why a button is measured by its label rather than by its sizeHint.
      Configuration::set_application_font does the same for a font changed at run time; this
      covers start-up, when the font is applied before this window exists. */
   JTDX::fit_size_limits (this);
+  /* CE3TSK: and from here on a button that is too narrow for its label draws it left-aligned, so
+     what it loses is the tail rather than both ends.  Only the buttons that are actually short
+     are touched, and only while they are short - see uilimits.h. */
+  JTDX::watch_narrow_labels (this);
   /* CE3TSK 2026-09-17: a QStackedWidget lays its pages out with the default 9 px margin on every
      side, and the tab widget inside adds its own frame - 64 px of chrome around a 268 px row, all
      of it inside the splitter's right-hand column, where it becomes floor the operator cannot drag
@@ -1531,6 +1570,13 @@ void MainWindow::readSettings()
     {
       stack_layout->setContentsMargins (0, 0, 0, 0);
     }
+  /* CE3TSK 2026-09-18, review finding 3: and only NOW the geometry, because restoreMainGeometry
+     compares minimumSizeHint () against the m_geometryMinHint saved at exit - and everything
+     that lowers that hint has to have run first, or the comparison is not like for like and a
+     saved window opens wider than it was left. The narrow state moved above this earlier the
+     same day for the same reason; fit_size_limits and the stack's margin reset are the other two
+     contributors, and they run just above. */
+  restoreMainGeometry ();   // CE3TSK
   restoreState (m_settings->value ("state",saveState ()).toByteArray ());
   ui->splitter->restoreState(m_settings->value("vertSplitter").toByteArray());
   m_path = m_settings->value("MRUdir",m_config.save_directory ().absolutePath ()).toString ();
@@ -1994,6 +2040,17 @@ void MainWindow::readSettings()
   ui->actionColor_Tx_message_buttons->setChecked(m_colorTxMsgButtons);
 
   ui->actionBand_buttons->setChecked (m_settings->value ("BandButtons", false).toBool ());   // CE3TSK
+  /* CE3TSK: this setChecked is also what applies the narrow floors at start-up - it fires
+     on_actionNarrow_controls_toggled, which sets the window minimum, refits the widget limits
+     and calls applyPaneFloor (); there is deliberately no second call in the constructor. */
+  ui->actionNarrow_controls->setChecked (m_settings->value ("NarrowControls", false).toBool ());
+  /* CE3TSK 2026-09-18, review: the splitter position needs no second restore here any more.
+     It used to: the constructor restored it while the right pane still carried its natural
+     minimum, so a position dragged past that minimum under Narrow controls was clamped on the
+     way in and the clamped value was saved again at exit (measured 456/440 in, 441/455 out).
+     The narrow state is now applied before that restore, above, so the first one is already
+     correct - and restoring again from the toggle would throw away a position the operator is
+     looking at. */
   ui->bandButtonsWidget->setVisible (ui->actionBand_buttons->isChecked ());
 
   m_callToClipboard=m_settings->value("CallsignToClipboard",true).toBool();
@@ -3120,6 +3177,150 @@ void MainWindow::on_actionBand_buttons_toggled (bool checked)
   rebuildBandButtons ();
 }
 
+/* CE3TSK 2026-09-18: the right-hand pane's floor for a splitter DRAG, made equal to what
+   narrowing the WINDOW already allows - the operator found the two disagreeing, the drag being
+   the stricter of the two (uilimits.h, set_pane_floor, has the measurements).
+
+   Derived from the live layout rather than pinned: the window's narrow floor, less what the left
+   pane needs, less the splitter handle and the margins the central layout keeps around it. So a
+   different font, a different translation or a changed allowance all carry through, and the 300 px
+   clamp is only there so an absurd .ui minimum could never leave the column unusable. */
+/* CE3TSK 2026-09-18, review: a font or style change re-runs fit_size_limits (Configuration's
+   set_application_font reaches every top-level widget), but it cannot reach applyPaneFloor () -
+   so the pane kept a floor computed for the old font. At 9 pt the floor is ~435; at 14 pt the
+   contents need far more and dragging to that floor clipped whole controls, which uilimits.h's
+   own measurements call broken. FontChange and StyleChange arrive on this window for both
+   cases, so the floor is recomputed here. */
+void MainWindow::changeEvent (QEvent * event)
+{
+  QMainWindow::changeEvent (event);
+  /* CE3TSK 2026-09-18, review: QUEUED, not immediate. Configuration::impl::set_application_font
+     calls qApp->setStyleSheet () and only THEN fit_size_limits (), and Qt delivers FontChange and
+     StyleChange synchronously from inside that setStyleSheet - so recomputing here would measure
+     the pane before a single widget limit had been refitted for the new font. Probed at 28 pt:
+     the pane's minimumSizeHint read 93 during the event and 167 after the refit, and nothing
+     re-ran the floor afterwards, so it stayed sized for the old font until the next toggle. */
+  if (QEvent::FontChange == event->type () || QEvent::StyleChange == event->type ())
+    QTimer::singleShot (0, this, [this] { applyPaneFloor (); });
+}
+
+/* CE3TSK 2026-09-18: has this window been built yet?
+
+   It has to be asked of QMainWindow's own state, never of `ui`. Qt delivers StyleChange to this
+   window while the Configuration MEMBER is still being constructed - read_settings () ->
+   set_application_font () -> QApplication::setStyle () - and members are constructed before the
+   constructor body, so ui->setupUi () has not run.
+
+   What is inside `ui` at that point is not defined. `ui` ITSELF is valid - it is initialised
+   ahead of m_config, both in the initialiser list and in the declaration order - but the
+   generated Ui_MainWindow holds raw pointers that only setupUi assigns, so reading one before
+   that is undefined behaviour. It is not reliably null either way: a probe that default
+   constructs the struct reads every member as 0, while the process that produced the core dump
+   went through the null test and died inside QSplitter::widget, which is what a non-zero garbage
+   pointer does. Do not reason about which; do not read them at all.
+
+   setupUi installs the central widget, so centralWidget () is null until the window really
+   exists, and QMainWindow's own state is valid from the base class's construction. */
+bool MainWindow::uiBuilt () const
+{
+  return centralWidget () != nullptr;
+}
+
+
+void MainWindow::applyPaneFloor ()
+{
+  /* CE3TSK 2026-09-18: nothing here may touch `ui` before the window is built - see uiBuilt (),
+     which is the only safe test, and the core dump it came from. Note m_uiMinWidth is no use as
+     that test: it is declared after m_config, so it is not even zero-initialised yet while the
+     Configuration member is constructing. */
+  if (!uiBuilt () || m_uiMinWidth <= 0) return;
+  if (!ui->splitter || !ui->actionNarrow_controls) return;
+  int floor {0};
+  if (ui->actionNarrow_controls->isChecked () && m_uiMinWidth > 0)
+    {
+      auto * const left = ui->splitter->widget (0);
+      int chrome {ui->splitter->handleWidth ()};
+      if (auto const * const central = centralWidget ())
+        if (auto const * const layout = central->layout ())
+          chrome += layout->contentsMargins ().left () + layout->contentsMargins ().right ();
+      floor = JTDX::narrowed_window_minimum (m_uiMinWidth)
+            - (left ? left->minimumSizeHint ().width () : 0) - chrome;
+      /* CE3TSK 2026-09-18, review finding 2: and never below what the pane's OWN contents need,
+         less the allowance the operator agreed to.
+
+         The term above is font-blind - narrowed_window_minimum () works from the .ui's fixed 733
+         and m_uiMinWidth is captured once - while the left pane's minimum GROWS with the font.
+         So recomputing on a font change moved the floor the wrong way: ~435 at 9 pt but ~385 at
+         14 pt, exactly when the contents need more. The pane's own minimumSizeHint is font-relative by
+         construction, so the bound below is measured against it. */
+      auto const * const pane = ui->splitter->widget (1);
+      /* What the pane's contents need AS ALREADY NARROWED: minimumSizeHint () is the layout's sum
+         over its children's effective minimums, and fit_one has written the 25 % allowance onto
+         each of those children - qSmartMinSize prefers an explicit minimum over the hint, so the
+         reduction is in this number already. Taking the allowance off it again, which the first
+         version did, put the bound ~44 % under the contents instead of 25 % (probed: 118 with the
+         allowance off, 93 with it on, and 69 after the second reduction). */
+      /* -1 for a widget with no layout, which is why it is guarded before use */
+      int const needed {pane ? pane->minimumSizeHint ().width () : 0};
+      /* CE3TSK 2026-09-19, review: the window term is CLAMPED to that figure, never raised by
+         it. This helper exists to let a drag go BELOW what the contents demand, so it must never
+         end up stricter than plain Qt, which refuses to pass `needed` on its own - and the qMax
+         that was here did exactly that: the window term is font-blind while `needed` shrinks with
+         the font, so one step below the design font the window term won, the pane was pinned
+         ABOVE its own minimum, and the operator lost ~70 px of drag that Qt would have allowed
+         with this code absent.
+
+         The "unsqueeze" that made the previous version raise this bound is fixed at its root -
+         fit_one no longer lets an intermediate minimum escape - so squeezing under `needed`
+         clips cleanly again, as narrowing the window always did.
+
+         The old text below is kept for the history of what the bound was for.
+
+         It used to allow another 12 % under it, to match what narrowing the WINDOW can force.
+         Those last few pixels were worth nothing and cost the layout: below the grid's own
+         minimum Qt stops squeezing and lays the grid out at that minimum instead, so everything
+         "unsqueezes" and the widest labels are drawn past their column - Log QSO at 76 px and
+         Clear DX at 74 in a 59 px column, overlapping their neighbours. Reported from the
+         running application ("a bit before it squeezes but at the end it unsqueezes") and
+         measured with the splitter hard right. */
+      if (needed > 0) floor = qMin (floor, needed);
+      /* and a positive floor whatever the .ui or the font say, so set_pane_floor can never be
+         handed a negative number and silently clear the floor instead of setting one - the flat
+         300 px clamp that used to make that unreachable was removed earlier the same day */
+      floor = qMax (floor, 200);
+    }
+  JTDX::set_pane_floor (ui->splitter, 1, floor);
+}
+
+/* CE3TSK 2026-09-17: let the operator drag the splitter further left than the controls need.
+   fit_size_limits always recomputes from the limits the .ui asked for, so turning this off
+   restores the old floor exactly - it is not a one-way squeeze. */
+void MainWindow::on_actionNarrow_controls_toggled (bool checked)
+{
+  JTDX::narrow_allowance () = checked ? JTDX::NARROW_ALLOWANCE : 0;
+  setMinimumWidth (JTDX::narrowed_window_minimum (m_uiMinWidth));
+  JTDX::fit_size_limits (this);
+  /* CE3TSK 2026-09-18, review: and every other top-level window, because the allowance is
+     global. Configuration's font change already refits them all, so with this option on a style
+     or font change pulled the Wide Graph's capped widgets down too - and turning the option off
+     refitted only this window, leaving them narrowed until the next font change. Whatever the
+     allowance does, it has to be undone in the same places. */
+  for (auto * const top : QApplication::topLevelWidgets ())
+    if (top != this) JTDX::fit_size_limits (top);
+  applyPaneFloor ();
+  updateGeometry ();
+  /* and re-align the labels once the layout has settled - queued, because right here the buttons
+     still have their old widths, and a button that does not change width never gets the resize
+     event the filter would otherwise rely on.
+
+     CE3TSK 2026-09-18, review: the pane floor is recomputed in the same queued pass, and for the
+     same reason. It is measured against the LEFT pane's minimumSizeHint, which Qt caches: read
+     during construction it still says 259 and the floor came out 378 - 59 px lower than the
+     window path allows, i.e. more clipping than was asked for. Once the layout has run it reads
+     200 and the floor lands on 437. */
+  QTimer::singleShot (0, this, [this] { JTDX::refresh_narrow_labels (this); applyPaneFloor (); });
+}
+
 void MainWindow::scheduleBandButtons ()
 {
   auto * const frequencies = m_config.frequencies ();
@@ -3189,7 +3390,14 @@ void MainWindow::rebuildBandButtons ()
       connect (button, &QPushButton::clicked, this, [this, f] { selectBandButton (f); });
       ui->bandButtonsLayout->addWidget (button);
       m_bandButtons << button;
+      /* CE3TSK 2026-09-18, review: these are made long after readSettings ran the narrow rules
+         over the window, so each one is fitted as it is built and the filter is installed for
+         it - otherwise they kept their full minimums under Narrow controls, and since the pane
+         floor lets the column be dragged below its contents the row was clipped at the window
+         edge instead of the drag stopping. fit_one is what the extraction made possible. */
+      JTDX::fit_one (button);
     }
+  JTDX::watch_narrow_labels (ui->bandButtonsWidget);
   highlightBandButton ();
 }
 
@@ -9111,6 +9319,7 @@ void MainWindow::on_pbSendRRR_clicked()
   ui->rbGenMsg->setChecked(true);
   if(m_transmitting) m_restart=true;
 }
+
 
 void MainWindow::resizeEvent(QResizeEvent *event) { 
   if(event->size().height() != event->oldSize().height()) dynamicButtonsInit(); 

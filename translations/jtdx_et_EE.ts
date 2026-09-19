@@ -3261,8 +3261,8 @@ Vorming:
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1482"/>
-        <source>Report </source>
-        <translation>Raport </translation>
+        <source>R </source>
+        <translation>R </translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1632"/>
@@ -6142,6 +6142,21 @@ Seda küsitakse ainult üks kord.</translation>
         <location filename="../mainwindow.ui"/>
         <source>Band buttons</source>
         <translation>Sagedusala nupud</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Narrow controls</source>
+        <translation>Kitsad juhtelemendid</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Allows the splitter to be dragged further left than the controls need, making the right-hand column noticeably narrower. Buttons may lose a character or two and the Hz and % units are hidden; entry fields never lose digits.</source>
+        <translation>Võimaldab lohistada eraldajat kaugemale vasakule, kui juhtelemendid vajavad, muutes parempoolse veeru tunduvalt kitsamaks. Nupud võivad kaotada tähemärgi või kaks ning ühikud Hz ja % peidetakse; sisestusväljad ei kaota kunagi numbrikohti.</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>FT2: FT4's frame at twice the rate, 3.75 s periods. Receive and transmit both work; its own decoding presets are in the Decode menu, under FT2 decoding.</source>
+        <translation>FT2: FT4 raam kahekordse kiirusega, 3,75 s perioodid. Nii vastuvõtt kui saatmine töötavad; oma dekodeerimise eelseaded on menüüs Dekodeerimine, jaotises FT2 dekodeerimine.</translation>
     </message>
 </context>
 <context>

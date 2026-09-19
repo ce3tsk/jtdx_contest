@@ -3244,8 +3244,8 @@ Format:
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1482"/>
-        <source>Report </source>
-        <translation>Reporte </translation>
+        <source>R </source>
+        <translation>R </translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1632"/>
@@ -6118,6 +6118,21 @@ Isto é perguntado apenas uma vez.</translation>
         <location filename="../mainwindow.ui"/>
         <source>Band buttons</source>
         <translation>Botões de banda</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Narrow controls</source>
+        <translation>Controles estreitos</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Allows the splitter to be dragged further left than the controls need, making the right-hand column noticeably narrower. Buttons may lose a character or two and the Hz and % units are hidden; entry fields never lose digits.</source>
+        <translation>Permite arrastar o divisor mais para a esquerda do que os controles precisam, deixando a coluna da direita bem mais estreita. Os botões podem perder um ou dois caracteres e as unidades Hz e % ficam ocultas; os campos de entrada nunca perdem dígitos.</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>FT2: FT4's frame at twice the rate, 3.75 s periods. Receive and transmit both work; its own decoding presets are in the Decode menu, under FT2 decoding.</source>
+        <translation>FT2: o quadro do FT4 ao dobro da velocidade, períodos de 3,75 s. Recepção e transmissão funcionam; as suas predefinições de descodificação estão no menu Descodificar, em Descodificação FT2.</translation>
     </message>
 </context>
 <context>

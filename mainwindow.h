@@ -112,6 +112,7 @@ protected:
   void childEvent(QChildEvent *) override;
   virtual bool eventFilter(QObject *object, QEvent *event);
   virtual void resizeEvent(QResizeEvent *event);
+  void changeEvent (QEvent *event) override;   // CE3TSK: the pane floor follows a font or style change
   virtual void showEvent(QShowEvent *event);   // CE3TSK: where the splitter's share is first read
   virtual void mousePressEvent(QMouseEvent *event);
 
@@ -148,6 +149,7 @@ private slots:
   void on_actionWide_Waterfall_triggered();
   void on_actionUse_dark_style_triggered (bool checked);   // CE3TSK
   void on_actionBand_buttons_toggled (bool checked);   // CE3TSK
+  void on_actionNarrow_controls_toggled (bool checked);   // CE3TSK
   void on_actionOpen_triggered();
   void on_actionConvert_bit_depth_triggered();   /* CE3TSK */
   void on_actionOpen_next_in_directory_triggered();
@@ -986,6 +988,7 @@ private:
   QHash<QString, QVariant> m_pwrBandTuneMemory; // Remembers power level by band for tuning
   QByteArray m_geometry;
   QSize m_geometryMinHint;   // CE3TSK: minimumSizeHint () when m_geometry was saved, see restoreMainGeometry ()
+  int m_uiMinWidth {0};   // CE3TSK: MainWindow's own minimumSize width from the .ui
   /* CE3TSK: the share of the splitter the LEFT pane holds, kept across window resizes. Qt divides
      new width by its own rules - measured 41.3 % of 1000 px becoming 47.8 % at 1600 - so widening
      the window slid the bar rightwards and the operator had to drag it back. */
@@ -1061,6 +1064,8 @@ private:
   void initLogIfNeeded ();
   void setTxStatusColour (QString const& colour);
   void setProgressBarStyle ();
+  void applyPaneFloor ();   // CE3TSK: the right pane's floor under Narrow controls
+  bool uiBuilt () const;   // CE3TSK: false until setupUi has installed the central widget
   // CE3TSK: View > Band buttons
   void scheduleBandButtons ();
   void rebuildBandButtons ();

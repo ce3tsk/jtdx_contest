@@ -3256,8 +3256,8 @@ Formatera:
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1482"/>
-        <source>Report </source>
-        <translation>Rapport </translation>
+        <source>R </source>
+        <translation>R </translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1632"/>
@@ -3976,7 +3976,7 @@ lista. Listan kan underhållas i Inställningar (F2).</translation>
     <message>
         <location filename="../mainwindow.ui" line="1592"/>
         <source> %</source>
-        <translation type="unfinished"> %</translation>
+        <translation> %</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1595"/>
@@ -3996,7 +3996,7 @@ lista. Listan kan underhållas i Inställningar (F2).</translation>
     <message>
         <location filename="../mainwindow.ui" line="1827"/>
         <source> s</source>
-        <translation type="unfinished"> s</translation>
+        <translation> s</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1898"/>
@@ -6131,6 +6131,21 @@ Detta frågas bara en gång.</translation>
         <source>Band buttons</source>
         <translation>Bandknappar</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Narrow controls</source>
+        <translation>Smala kontroller</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Allows the splitter to be dragged further left than the controls need, making the right-hand column noticeably narrower. Buttons may lose a character or two and the Hz and % units are hidden; entry fields never lose digits.</source>
+        <translation>Gör att avdelaren kan dras längre till vänster än kontrollerna behöver, vilket gör den högra kolumnen märkbart smalare. Knappar kan tappa ett tecken eller två och enheterna Hz och % döljs; inmatningsfält tappar aldrig siffror.</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>FT2: FT4's frame at twice the rate, 3.75 s periods. Receive and transmit both work; its own decoding presets are in the Decode menu, under FT2 decoding.</source>
+        <translation>FT2: FT4:s ram i dubbla hastigheten, perioder på 3,75 s. Både mottagning och sändning fungerar; de egna avkodningsförinställningarna finns i menyn Avkoda, under FT2 avkodning.</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>
@@ -6976,7 +6991,7 @@ Kontrollera att rätt katalognamn anges.</translation>
     <message>
         <location filename="../widegraph.ui" line="481"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Flatten spectral baseline over the full displayed interval.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Platta till den spektrala baslinjen över det visade intervallet. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Platta till den spektrala baslinjen över det visade intervallet.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../widegraph.ui" line="484"/>
@@ -8050,12 +8065,12 @@ och DX-rutnätfält när ett 73 eller fritextmeddelande skickas.</translation>
     <message>
         <location filename="../Configuration.ui" line="220"/>
         <source>Use current &amp;callsign</source>
-        <translation type="unfinished">Använd aktuell anropssignal</translation>
+        <translation>Använd aktuell &amp;anropssignal</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="240"/>
         <source>Use curr&amp;ent grid</source>
-        <translation type="unfinished">Använd aktuell Grid</translation>
+        <translation>Använd aktu&amp;ell Grid</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="353"/>
@@ -8070,22 +8085,22 @@ och DX-rutnätfält när ett 73 eller fritextmeddelande skickas.</translation>
     <message>
         <location filename="../Configuration.ui" line="376"/>
         <source>&amp;Hide partially transmitted messages</source>
-        <translation type="unfinished">Dölj delvis överförda meddelanden</translation>
+        <translation>Döl&amp;j delvis överförda meddelanden</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="431"/>
         <source>Use dar&amp;k style</source>
-        <translation type="unfinished">Använd mörk stil</translation>
+        <translation>Använd mör&amp;k stil</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="600"/>
         <source>Allo&amp;w Tx frequency changes while transmitting</source>
-        <translation type="unfinished">Tillåt Tx-frekvensändringar när du sänder</translation>
+        <translation>Tillåt T&amp;x-frekvensändringar när du sänder</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="610"/>
         <source>Monitor returns to last used fre&amp;quency</source>
-        <translation type="unfinished">Övervakningen återgå till den senast använda frekvensen</translation>
+        <translation>Övervakningen återgå till den &amp;senast använda frekvensen</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="2436"/>

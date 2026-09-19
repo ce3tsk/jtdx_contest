@@ -3254,8 +3254,8 @@ Formátum:
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1482"/>
-        <source>Report </source>
-        <translation>Riport </translation>
+        <source>R </source>
+        <translation>R </translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1632"/>
@@ -6133,6 +6133,21 @@ Ezt csak egyszer kérdezzük meg.</translation>
         <source>Band buttons</source>
         <translation>Sávgombok</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Narrow controls</source>
+        <translation>Szűk vezérlők</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Allows the splitter to be dragged further left than the controls need, making the right-hand column noticeably narrower. Buttons may lose a character or two and the Hz and % units are hidden; entry fields never lose digits.</source>
+        <translation>Lehetővé teszi, hogy az elválasztót balrább húzza, mint amennyit a vezérlők igényelnek, így a jobb oldali oszlop észrevehetően szűkebb lesz. A gombokról lemaradhat egy-két karakter, és a Hz, illetve % mértékegység eltűnik; a beviteli mezőkről soha nem hiányzik számjegy.</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>FT2: FT4's frame at twice the rate, 3.75 s periods. Receive and transmit both work; its own decoding presets are in the Decode menu, under FT2 decoding.</source>
+        <translation>FT2: az FT4 keret dupla sebességgel, 3,75 s-os periódusok. A vétel és az adás is működik; saját dekódolási előbeállításai a Dekódolás menüben, az FT2 dekódolás alatt találhatók.</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>
@@ -8049,12 +8064,12 @@ egy 73 vagy szabad szöveges üzenet küldésekor.</translation>
     <message>
         <location filename="../Configuration.ui" line="220"/>
         <source>Use current &amp;callsign</source>
-        <translation type="unfinished">Aktuális hívójel használata</translation>
+        <translation>Aktuális &amp;hívójel használata</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="240"/>
         <source>Use curr&amp;ent grid</source>
-        <translation type="unfinished">Aktuális QRA használata</translation>
+        <translation>Aktuális &amp;QRA használata</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="353"/>
@@ -8069,22 +8084,22 @@ egy 73 vagy szabad szöveges üzenet küldésekor.</translation>
     <message>
         <location filename="../Configuration.ui" line="376"/>
         <source>&amp;Hide partially transmitted messages</source>
-        <translation type="unfinished">Részben továbbított üzenetek elrejtése</translation>
+        <translation>Részben továbbított üzenetek &amp;elrejtése</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="431"/>
         <source>Use dar&amp;k style</source>
-        <translation type="unfinished">Sötét stílus használata</translation>
+        <translation>Sötét &amp;stílus használata</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="600"/>
         <source>Allo&amp;w Tx frequency changes while transmitting</source>
-        <translation type="unfinished">Engedélyezi a frekvencia változtatását adás közben</translation>
+        <translation>Engedélyezi a frekvencia változtatását adás &amp;közben</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="610"/>
         <source>Monitor returns to last used fre&amp;quency</source>
-        <translation type="unfinished">A monitor visszatér az utoljára használt frekvenciához</translation>
+        <translation>A &amp;monitor visszatér az utoljára használt frekvenciához</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="2436"/>

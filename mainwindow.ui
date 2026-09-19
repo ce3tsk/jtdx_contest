@@ -1415,6 +1415,9 @@
               </item>
               <item>
                <widget class="QPushButton" name="TxMinuteButton">
+                <property name="jtdxNarrowCap" stdset="0">
+                 <bool>true</bool>
+                </property>
                 <property name="enabled">
                  <bool>true</bool>
                 </property>
@@ -1514,7 +1517,7 @@
                  <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Signal report (dB)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                 </property>
                 <property name="prefix">
-                 <string>Report </string>
+                 <string>R </string>
                 </property>
                 <property name="minimum">
                  <number>-50</number>
@@ -4724,6 +4727,7 @@ list. The list can be maintained in Settings (F2).</string>
     </property>
     <addaction name="actionWide_Waterfall"/>
     <addaction name="actionBand_buttons"/>
+    <addaction name="actionNarrow_controls"/>
     <addaction name="actionMessage_averaging"/>
     <addaction name="separator"/>
     <addaction name="actionUse_dark_style"/>
@@ -5334,6 +5338,17 @@ list. The list can be maintained in Settings (F2).</string>
    </property>
    <property name="text">
     <string>Band buttons</string>
+   </property>
+  </action>
+  <action name="actionNarrow_controls">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Narrow controls</string>
+   </property>
+   <property name="toolTip">
+    <string>Allows the splitter to be dragged further left than the controls need, making the right-hand column noticeably narrower. Buttons may lose a character or two and the Hz and % units are hidden; entry fields never lose digits.</string>
    </property>
   </action>
   <action name="actionConvert_bit_depth">
@@ -7422,7 +7437,7 @@ list. The list can be maintained in Settings (F2).</string>
     <string>FT2</string>
    </property>
    <property name="toolTip">
-    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;FT2: FT4's frame at twice the rate, 3.75 s periods. Receive only for now - transmitting is not enabled yet.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    <string>FT2: FT4's frame at twice the rate, 3.75 s periods. Receive and transmit both work; its own decoding presets are in the Decode menu, under FT2 decoding.</string>
    </property>
   </action>
   <action name="actionFT4fast">

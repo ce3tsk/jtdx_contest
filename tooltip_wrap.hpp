@@ -122,15 +122,42 @@ inline QString wrap_tooltip (QString const& text, int columns = 64)
   return fold_plain_text (text, QFontMetrics {QToolTip::font ()}, columns);
 }
 
+/* CE3TSK: has this action a tooltip of its own, or only the one QAction::toolTip () invents
+   from its text?
+
+   Asked of Qt itself, with a throwaway action carrying the same text, rather than by
+   reimplementing its qt_strippedText: that helper also removes "..." anywhere in the string and
+   trims the result, so a hand-written "strip the & " comparison says NO for `Settings...` and
+   for `Messages with my callsign to RX frequency window ` (a trailing space in the .ui) - and
+   the caller would then store the invented tooltip on exactly the entries this exists to spare.
+   The text is what Qt looks at first and the icon text only when the text is empty, so the
+   probe carries both. */
+inline bool has_own_tooltip (QAction const * action)
+{
+  QAction probe {action->text (), nullptr};
+  probe.setIconText (action->iconText ());
+  return action->toolTip () != probe.toolTip ();
+}
+
 /* Apply it to every tooltip a window owns, widgets and menu actions alike - an action is not a
-   widget, and the wav-converter menu entry was one of the offenders. */
+   widget, and the wav-converter menu entry was one of the offenders.
+
+   An action with no tooltip of its own is left ALONE, and that matters: QAction::toolTip ()
+   falls back to the stripped text, but QMenu decides whether to pop a tooltip by looking at the
+   stored tooltip, not at that accessor. Assigning the fallback therefore turns "no tooltip"
+   into "a tooltip that repeats the entry's own label", and every entry of a menu with
+   setToolTipsVisible would echo itself - measured on View > Waterfall. See has_own_tooltip for
+   why the test is not a hand-written mnemonic strip. */
 template <class Window>
 void wrap_tooltips (Window * w, int columns = 64)
 {
   for (auto * child : w->template findChildren<QWidget *> ())
     child->setToolTip (wrap_tooltip (child->toolTip (), columns));
   for (auto * action : w->template findChildren<QAction *> ())
-    action->setToolTip (wrap_tooltip (action->toolTip (), columns));
+    {
+      if (!has_own_tooltip (action)) continue;
+      action->setToolTip (wrap_tooltip (action->toolTip (), columns));
+    }
 }
 
 #endif

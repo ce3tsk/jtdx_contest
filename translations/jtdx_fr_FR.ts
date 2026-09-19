@@ -3258,8 +3258,8 @@ Format:
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1482"/>
-        <source>Report </source>
-        <translation>Report </translation>
+        <source>R </source>
+        <translation>R </translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1632"/>
@@ -6133,6 +6133,21 @@ La question n'est posée qu'une seule fois.</translation>
         <location filename="../mainwindow.ui"/>
         <source>Band buttons</source>
         <translation>Boutons de bande</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Narrow controls</source>
+        <translation>Contrôles étroits</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Allows the splitter to be dragged further left than the controls need, making the right-hand column noticeably narrower. Buttons may lose a character or two and the Hz and % units are hidden; entry fields never lose digits.</source>
+        <translation>Permet de faire glisser le séparateur plus à gauche que ne l'exigent les contrôles, ce qui rend la colonne de droite nettement plus étroite. Les boutons peuvent perdre un caractère ou deux et les unités Hz et % sont masquées ; les champs de saisie ne perdent jamais de chiffres.</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>FT2: FT4's frame at twice the rate, 3.75 s periods. Receive and transmit both work; its own decoding presets are in the Decode menu, under FT2 decoding.</source>
+        <translation>FT2 : la trame de FT4 au double du débit, périodes de 3,75 s. La réception et l'émission fonctionnent toutes deux ; ses propres préréglages de décodage sont dans le menu Décodage, sous Décodage FT2.</translation>
     </message>
 </context>
 <context>

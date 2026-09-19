@@ -3257,8 +3257,8 @@ Format:
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1482"/>
-        <source>Report </source>
-        <translation>Рапорт </translation>
+        <source>R </source>
+        <translation>R </translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1632"/>
@@ -6142,6 +6142,21 @@ This is asked only once.</source>
         <location filename="../mainwindow.ui"/>
         <source>Band buttons</source>
         <translation>Кнопки диапазонов</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Narrow controls</source>
+        <translation>Узкие элементы управления</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Allows the splitter to be dragged further left than the controls need, making the right-hand column noticeably narrower. Buttons may lose a character or two and the Hz and % units are hidden; entry fields never lose digits.</source>
+        <translation>Позволяет перетаскивать разделитель левее, чем требуется элементам управления, делая правую колонку заметно уже. Кнопки могут потерять один-два символа, а единицы Hz и % скрываются; поля ввода никогда не теряют цифры.</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>FT2: FT4's frame at twice the rate, 3.75 s periods. Receive and transmit both work; its own decoding presets are in the Decode menu, under FT2 decoding.</source>
+        <translation>FT2: кадр FT4 с удвоенной скоростью, периоды 3,75 с. Работают и приём, и передача; свои пресеты декодирования находятся в меню Декодирование, в разделе FT2 декодер.</translation>
     </message>
 </context>
 <context>

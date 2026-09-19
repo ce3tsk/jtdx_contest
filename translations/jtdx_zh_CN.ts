@@ -3254,8 +3254,8 @@ Format:
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1482"/>
-        <source>Report </source>
-        <translation>报告 </translation>
+        <source>R </source>
+        <translation>R </translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1632"/>
@@ -6127,6 +6127,21 @@ This is asked only once.</source>
         <location filename="../mainwindow.ui"/>
         <source>Band buttons</source>
         <translation>波段按钮</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Narrow controls</source>
+        <translation>窄控件列</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Allows the splitter to be dragged further left than the controls need, making the right-hand column noticeably narrower. Buttons may lose a character or two and the Hz and % units are hidden; entry fields never lose digits.</source>
+        <translation>允许把分隔条向左拖得比控件所需的更远，使右侧列明显变窄。按钮可能少显示一两个字符，Hz 和 % 单位会被隐藏；输入框中的数字不会丢失。</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>FT2: FT4's frame at twice the rate, 3.75 s periods. Receive and transmit both work; its own decoding presets are in the Decode menu, under FT2 decoding.</source>
+        <translation>FT2：以两倍速率发送 FT4 的帧，周期为 3.75 秒。收发都可用；它自己的解码预设在解码菜单的 FT2 解码中。</translation>
     </message>
 </context>
 <context>

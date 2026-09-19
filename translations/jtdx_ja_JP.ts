@@ -3344,8 +3344,8 @@ Format:
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1482"/>
-        <source>Report </source>
-        <translation>ﾚﾎﾟｰﾄ </translation>
+        <source>R </source>
+        <translation>R </translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1641"/>
@@ -6040,6 +6040,21 @@ This is asked only once.</source>
         <location filename="../mainwindow.ui"/>
         <source>Band buttons</source>
         <translation>バンドボタン</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Narrow controls</source>
+        <translation>コントロールを狭く</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Allows the splitter to be dragged further left than the controls need, making the right-hand column noticeably narrower. Buttons may lose a character or two and the Hz and % units are hidden; entry fields never lose digits.</source>
+        <translation>コントロールが必要とする幅よりも左へスプリッターをドラッグできるようにし、右側の列を大幅に狭くします。ボタンの文字が 1〜2 文字欠けることがあり、Hz と % の単位は表示されなくなります。入力欄の数字が欠けることはありません。</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>FT2: FT4's frame at twice the rate, 3.75 s periods. Receive and transmit both work; its own decoding presets are in the Decode menu, under FT2 decoding.</source>
+        <translation>FT2: FT4 のフレームを 2 倍の速さで送る、3.75 秒周期のモードです。受信も送信も動作します。専用のデコードプリセットはデコードメニューの FT2デコードにあります。</translation>
     </message>
 </context>
 <context>

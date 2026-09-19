@@ -3254,8 +3254,8 @@ Format:
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1482"/>
-        <source>Report </source>
-        <translation>리포트 </translation>
+        <source>R </source>
+        <translation>R </translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1632"/>
@@ -6128,6 +6128,21 @@ This is asked only once.</source>
         <location filename="../mainwindow.ui"/>
         <source>Band buttons</source>
         <translation>밴드 버튼</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Narrow controls</source>
+        <translation>좁은 조작부</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Allows the splitter to be dragged further left than the controls need, making the right-hand column noticeably narrower. Buttons may lose a character or two and the Hz and % units are hidden; entry fields never lose digits.</source>
+        <translation>조작부가 필요로 하는 폭보다 더 왼쪽으로 분할선을 끌 수 있게 하여 오른쪽 열을 눈에 띄게 좁힙니다. 버튼에서 한두 글자가 잘릴 수 있고 Hz 및 % 단위는 숨겨지지만, 입력란의 숫자는 잘리지 않습니다.</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>FT2: FT4's frame at twice the rate, 3.75 s periods. Receive and transmit both work; its own decoding presets are in the Decode menu, under FT2 decoding.</source>
+        <translation>FT2: FT4의 프레임을 두 배 속도로 보내는 3.75초 주기 모드입니다. 수신과 송신 모두 동작하며, 전용 디코딩 프리셋은 디코드 메뉴의 FT2 디코딩에 있습니다.</translation>
     </message>
 </context>
 <context>

@@ -3254,8 +3254,8 @@ Format:
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1482"/>
-        <source>Report </source>
-        <translation>Raport </translation>
+        <source>R </source>
+        <translation>R </translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1632"/>
@@ -6130,6 +6130,21 @@ To pytanie pojawia się tylko raz.</translation>
         <source>Band buttons</source>
         <translation>Przyciski pasm</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Narrow controls</source>
+        <translation>Wąskie kontrolki</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Allows the splitter to be dragged further left than the controls need, making the right-hand column noticeably narrower. Buttons may lose a character or two and the Hz and % units are hidden; entry fields never lose digits.</source>
+        <translation>Pozwala przeciągnąć separator dalej w lewo, niż wymagają tego kontrolki, dzięki czemu prawa kolumna staje się wyraźnie węższa. Przyciski mogą stracić znak lub dwa, a jednostki Hz i % zostają ukryte; pola wprowadzania nigdy nie tracą cyfr.</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>FT2: FT4's frame at twice the rate, 3.75 s periods. Receive and transmit both work; its own decoding presets are in the Decode menu, under FT2 decoding.</source>
+        <translation>FT2: ramka FT4 z podwójną szybkością, okresy 3,75 s. Działa zarówno odbiór, jak i nadawanie; własne ustawienia dekodowania znajdują się w menu Dekodowanie, w Dekodowanie FT2.</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>
@@ -8457,12 +8472,12 @@ Prawoklik aby wstawić lub usunąć opcje.</translation>
     <message>
         <location filename="../Configuration.ui" line="220"/>
         <source>Use current &amp;callsign</source>
-        <translation type="unfinished">Używaj aktualnego znaku</translation>
+        <translation>Używaj &amp;aktualnego znaku</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="240"/>
         <source>Use curr&amp;ent grid</source>
-        <translation type="unfinished">Używaj aktualnego lokatora</translation>
+        <translation>Używaj aktualn&amp;ego lokatora</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="353"/>
@@ -8477,7 +8492,7 @@ Prawoklik aby wstawić lub usunąć opcje.</translation>
     <message>
         <location filename="../Configuration.ui" line="376"/>
         <source>&amp;Hide partially transmitted messages</source>
-        <translation type="unfinished">Ukryj wiadomości częściowo nadane</translation>
+        <translation>&amp;Ukryj wiadomości częściowo nadane</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="431"/>
@@ -8487,12 +8502,12 @@ Prawoklik aby wstawić lub usunąć opcje.</translation>
     <message>
         <location filename="../Configuration.ui" line="600"/>
         <source>Allo&amp;w Tx frequency changes while transmitting</source>
-        <translation type="unfinished">Zezwól na zmianę częstotliwości podczas nadawania</translation>
+        <translation>Zez&amp;wól na zmianę częstotliwości podczas nadawania</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="610"/>
         <source>Monitor returns to last used fre&amp;quency</source>
-        <translation type="unfinished">Monitor powraca do ostatnio używanej częstotliwości</translation>
+        <translation>Monitor pow&amp;raca do ostatnio używanej częstotliwości</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="763"/>
