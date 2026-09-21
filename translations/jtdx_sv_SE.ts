@@ -6146,6 +6146,46 @@ Detta frågas bara en gång.</translation>
         <source>FT2: FT4's frame at twice the rate, 3.75 s periods. Receive and transmit both work; its own decoding presets are in the Decode menu, under FT2 decoding.</source>
         <translation>FT2: FT4:s ram i dubbla hastigheten, perioder på 3,75 s. Både mottagning och sändning fungerar; de egna avkodningsförinställningarna finns i menyn Avkoda, under FT2 avkodning.</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>SuperFox mode (S-Hound)</source>
+        <translation>SuperFox-läge (S-Hund)</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>The DXpedition transmits SuperFox (WSJT-X 2.7 and later, MSHV): in Hound mode its slot is decoded by the SuperFox receiver. The receiver finds the Fox by itself, normally at 750 Hz, wherever the RX frequency is set. You transmit in the 15/45 s periods only. Also: right click on the Hound button.</source>
+        <translation>DXpeditionen sänder SuperFox (WSJT-X 2.7 och senare, MSHV): i "Hund"-mod avkodas dess period av SuperFox-mottagaren. Mottagaren hittar själv Fox, normalt vid 750 Hz, var RX-frekvensen än står. Du sänder endast i perioderna 15/45 s. Även: högerklicka på knappen Hund.</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>S-Hound</source>
+        <translation>S-Hund</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>SuperFox %1 has not been decoded yet: transmission halted</source>
+        <translation>SuperFox %1 har inte avkodats ännu: sändningen stoppad</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Verify Fox online (OTP)</source>
+        <translation>Verifiera Fox online (OTP)</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>A DXpedition can sign its transmissions with a one-time code. In Hound mode the code is checked with the verification server www.9dx.cc, and the answer is shown as a line: CALL verified, or CALL invalid. The Fox's callsign, the time and the code are sent to the server. Works for SuperFox and for old-style Fox.</source>
+        <translation>En DXpedition kan signera sina sändningar med en engångskod. I "Hund"-mod kontrolleras koden hos verifieringsservern www.9dx.cc, och svaret visas som en rad: CALL verified, eller CALL invalid. Fox-stationens anropssignal, tiden och koden skickas till servern. Fungerar för SuperFox och för Fox av äldre typ.</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Fox verification: %1 is not known to the verification server</source>
+        <translation>Fox-verifiering: %1 är inte känd av verifieringsservern</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Fox verification failed: %1</source>
+        <translation>Fox-verifieringen misslyckades: %1</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

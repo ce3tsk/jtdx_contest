@@ -19,7 +19,8 @@ program jt9
 !  type(wav_header) wav
   character c
   character(len=500) optarg
-  character wisfile*80
+  character wisfile*520   ! CE3TSK: was *80 - a data directory over 65 characters cut the name AND its closing NUL off,
+                          ! and FFTW read an unterminated string (data_dir is len=500, prog_args.f90)
   ! CE3TSK: band edges default to the full 0-5000 Hz the GUI can pass (the waterfall's
   ! start frequency and Fmax, capped at 5000) rather than WSJT-X's 200-4000; to reproduce
   ! a GUI replay exactly give -L/-H the waterfall's actual range
@@ -32,8 +33,9 @@ program jt9
   integer :: nbgswl=1,nbgcycles=3,nbgswlcycles=5,nbgosd=0,nbgtwo=0,nbgalt=1,nbgens=-1,nbgsens=1,nbgrxf=2,nbgclassic=6
   logical :: lswl=.false.,ldeeposd=.false.,learly=.false.,lhidedupes=.false.,ltwo=.false.,lalt=.false.,lagcccomp=.false.
   logical :: lrxbudgetset=.false.   ! CE3TSK item 80: -l given (the RX budget's default is per mode otherwise)
+  integer :: nsftol=0   ! CE3TSK: -o, SuperFox receive (SUPERFOX_PLAN.md): 0 off, else the sync search range in Hz
   logical :: read_files = .true., tx9 = .false., display_help = .false.
-  type (option) :: long_options(52) = [ &
+  type (option) :: long_options(53) = [ &
     option ('help', .false., 'h', 'Display this help message', ''),          &
     option ('shmem',.true.,'s','Use shared memory for sample data','KEY'),   &
     option ('tr-period', .true., 'p', 'Tx/Rx period, default MINUTES=1',     &
@@ -117,7 +119,10 @@ program jt9
     option ('bg-sensitivity', .true., 'Y', 'background: sensitivity 0/1/2, default 1', 'SENS'), &
     option ('bg-rxf-sens', .true., 'Z', 'background: RX frequency sensitivity 1-3, default 2', 'SENS'), &
     option ('bg-classic', .true., 'n',                                        &
-        'background: the classic unit (P9), a plain non-SWL decode with CYCLES cycles (3-9), 0 off, default 6', 'CYCLES') ]
+        'background: the classic unit (P9), a plain non-SWL decode with CYCLES cycles (3-9), 0 off, default 6', 'CYCLES'), &
+    option ('superfox', .true., 'o',                                          &
+        'SuperFox receive (SuperHound): even slots go to the SuperFox decoder, which looks for the sync tone'  &
+        //' HERTZ either side of -f (normally -f 750 -o 50); 0 off, default 0', 'HERTZ') ]
 
   character(len=12) :: mycall, hiscall
   character(len=6) :: mygrid, hisgrid
@@ -132,7 +137,8 @@ program jt9
   ! valgrind on the FT4 hint memory work, 2026-08-29; file mode only, the GUI clears its block)
   mycall=''; hiscall=''; mygrid=''; hisgrid=''
   do
-     call getopt('hs:e:a:b:r:m:p:d:f:w:t:9642TL:S:H:c:G:x:g:8C:K:E:R:A:WN:j:OyuzXQM:l:B:k:I:D:F:J:P:U:V:Y:Z:n:',long_options,c,   &
+     call getopt('hs:e:a:b:r:m:p:d:f:w:t:9642TL:S:H:c:G:x:g:8C:K:E:R:A:WN:j:OyuzXQM:l:B:k:I:D:F:J:P:U:V:Y:Z:n:o:',   &
+          long_options,c,   &
           optarg,arglen,stat,offset,remain,.true.)
      if (stat .ne. 0) then
         exit
@@ -233,6 +239,8 @@ program jt9
            read (optarg(:arglen), *) nbgrxf
         case ('n')
            read (optarg(:arglen), *) nbgclassic
+        case ('o')   ! CE3TSK: SuperFox receive
+           read (optarg(:arglen), *) nsftol
         case ('6')
            if (mode.lt.65) mode = mode + 65
         case ('9')
@@ -242,11 +250,14 @@ program jt9
         case ('w')
            read (optarg(:arglen), *) npatience
         case ('c')
-           read (optarg(:arglen), *) mycall
+! CE3TSK: assigned, not read list-directed - a "/" ends a list-directed read, so -c PJ4/K1ABC
+! arrived as "PJ4" and a compound call could not be tested in file mode at all (found with the
+! SuperFox own-call test, 2026-09-19). The same for -x below.
+           mycall = optarg(:arglen)
         case ('G')
            read (optarg(:arglen), *) mygrid
         case ('x')
-           read (optarg(:arglen), *) hiscall
+           hiscall = optarg(:arglen)
         case ('g')
            read (optarg(:arglen), *) hisgrid
      end select
@@ -286,7 +297,7 @@ program jt9
      call jt9files(offset,remain,mode,ndepth,flow,fsplit,fhigh,nrxfreq,ncycles,   &
           nswlcycles,nsens,nrxfsens,naggr,lswl,ncandthin,nthreads,ldeeposd,learly,lhidedupes,ltwo,lalt,lagcccomp,   &
           nensemble,nbgeffort,nbgswl,nbgcycles,nbgswlcycles,nbgosd,nbgtwo,nbgalt,nbgens,nbgsens,nbgrxf,nbgbudget,nrxbudget,   &
-          nbgclassic,lrxbudgetset,   &
+          nbgclassic,lrxbudgetset,nsftol,   &
           mycall,mygrid,hiscall,hisgrid)
   endif
 
@@ -312,7 +323,7 @@ end program jt9
 subroutine jt9files(offset,nfiles,mode,ndepth,flow,fsplit,fhigh,nrxfreq,ncycles,   &
      nswlcycles,nsens,nrxfsens,naggr,lswl,ncandthin,nthreads,ldeeposd,learly,lhidedupes,ltwo,lalt,lagcccomp,   &
      nensemble,nbgeffort,nbgswl,nbgcycles,nbgswlcycles,nbgosd,nbgtwo,nbgalt,nbgens,nbgsens,nbgrxf,nbgbudget,nrxbudget,   &
-          nbgclassic,lrxbudgetset,   &
+          nbgclassic,lrxbudgetset,nsftol,   &
      mycall,mygrid,hiscall,hisgrid)
   use prog_args
   use ft8ensemble, only : nbgrun,nbgunits   ! CE3TSK: pipeline ensemble
@@ -331,13 +342,16 @@ subroutine jt9files(offset,nfiles,mode,ndepth,flow,fsplit,fhigh,nrxfreq,ncycles,
   logical, intent(in) :: ldeeposd,learly,lhidedupes,ltwo,lalt,lagcccomp
   logical, intent(in) :: lswl
   logical, intent(in) :: lrxbudgetset   ! CE3TSK item 80
+  integer, intent(in) :: nsftol   ! CE3TSK: -o, SuperFox receive
   character(len=12), intent(in) :: mycall,hiscall
   character(len=6), intent(in) :: mygrid,hisgrid
   type(params_block) :: params
   integer(1), allocatable :: pzero(:)   ! CE3TSK: to zero the block, see below
   character(len=8) :: lockenv   ! CE3TSK: JTDX_BG_LOCK
-  character(len=8) :: envval   ! CE3TSK diagnostic hooks: JTDX_STOPHINT, JTDX_DXCSEARCH, JTDX_BANDCHANGE
+  character(len=8) :: envval   ! CE3TSK diagnostic hooks: JTDX_STOPHINT, JTDX_DXCSEARCH, JTDX_BANDCHANGE, JTDX_DXCALL2, JTDX_NEWDAT0, JTDX_SHOUND0
   integer :: lenv,ienv,nbandfile
+  integer :: ndxfile
+  character(len=12) :: hiscall2
   integer :: llock,ilock
   type(wav_header) :: wav
   integer*2, allocatable :: i2(:)
@@ -417,7 +431,9 @@ subroutine jt9files(offset,nfiles,mode,ndepth,flow,fsplit,fhigh,nrxfreq,ncycles,
 
      ! what jt9a() does for a disk file: FT8 decodes only the first nblocks*3456 samples
      if(modecur.eq.8) then
-        if(lswl) then; nblocks=51; else if(learly) then; nblocks=48; else; nblocks=49; endif
+        ! CE3TSK: -o is S-Hound, and the GUI never starts early there (ft8EarlyStartInEffect): a
+        ! late Fox would lose its last symbols to the 48-block cut
+        if(lswl) then; nblocks=51; else if(learly .and. nsftol.le.0) then; nblocks=48; else; nblocks=49; endif
         nlastsam=nblocks*3456
         dd(nlastsam+1:npts1)=0.
         dd8(1:npts1)=dd(1:npts1)
@@ -569,11 +585,53 @@ subroutine jt9files(offset,nfiles,mode,ndepth,flow,fsplit,fhigh,nrxfreq,ncycles,
      params%lhidetelemetry=.false.
      params%lhideft8dupes=lhidedupes
      params%lhound=.false.
+! CE3TSK: -o N = SuperHound as the GUI sets it: Hound on and the SuperFox receiver in the even
+! slots, searching N Hz either side of -f. The slot is read from the file name's _hhmmss; a name
+! without one counts as even.
+     params%nsftol=max(0,nsftol)
+     if(nsftol.gt.0) params%lhound=.true.
+! CE3TSK test hook: JTDX_HOUND=1 is Hound mode alone, which file mode otherwise never sets. It is
+! what test/decode/superfox.sh compares -o against in the odd slot: -o switches Hound on as well, so
+! the FT8 decode it must equal is a Hound-mode one, not a plain one.
+     call get_environment_variable('JTDX_HOUND',envval,lenv,ienv)
+     if(ienv.eq.0 .and. lenv.gt.0) then
+        if(envval(1:1).eq.'1') params%lhound=.true.
+     endif
      params%lhidehash=.false.
      params%lcommonft8b=.true.
      params%lmycallstd=(len_trim(mycall).gt.0)
      params%lhiscallstd=(len_trim(hiscall).gt.0)
+     ! CE3TSK test hooks (2026-09-20, review 2): JTDX_DXCALL2=n:CALL - from the n-th file on the DX call is
+     ! CALL (the operator changes DX Call within a session; file mode has one -x); JTDX_NEWDAT0=n - the
+     ! n-th file comes as a RE-DECODE of its period (newdat false, as the Decode button sends it)
+     call get_environment_variable('JTDX_DXCALL2',envval,lenv,ienv)
+     if(ienv.eq.0 .and. lenv.gt.2) then
+        nbandfile=index(envval(1:lenv),':')
+        if(nbandfile.gt.1 .and. nbandfile.lt.lenv) then
+           read(envval(1:nbandfile-1),*,iostat=ienv) ndxfile
+           if(ienv.eq.0 .and. iarg-offset.ge.ndxfile) then
+              hiscall2=envval(nbandfile+1:lenv)
+              params%hiscall=transfer(hiscall2,params%hiscall); params%hisbcall=transfer(hiscall2,params%hisbcall)
+           endif
+        endif
+     endif
+     call get_environment_variable('JTDX_NEWDAT0',envval,lenv,ienv)
+     if(ienv.eq.0 .and. lenv.gt.0) then
+        read(envval(1:lenv),*,iostat=ienv) nbandfile; if(ienv.eq.0 .and. iarg-offset.eq.nbandfile) params%newdat=.false.
+     endif
+     ! ... and JTDX_SHOUND0=n: the n-th file is decoded with S-Hound mode OFF, as when the operator leaves
+     ! the mode and comes back (Hound mode stays on) - what the SuperFox receiver remembered must be gone
+     call get_environment_variable('JTDX_SHOUND0',envval,lenv,ienv)
+     if(ienv.eq.0 .and. lenv.gt.0) then
+        read(envval(1:lenv),*,iostat=ienv) nbandfile; if(ienv.eq.0 .and. iarg-offset.eq.nbandfile) params%nsftol=0
+     endif
      params%lapmyc=.false.
+     ! CE3TSK test hook: JTDX_APMYC=1 - "I have transmitted in the last two minutes", which the GUI
+     ! reports and file mode never could: with JTDX_QSOPROGRESS it opens the a-priori types for MY call
+     call get_environment_variable('JTDX_APMYC',envval,lenv,ienv)
+     if(ienv.eq.0 .and. lenv.gt.0) then
+        if(envval(1:1).eq.'1') params%lapmyc=.true.
+     endif
      params%lmodechanged=(modecur.ne.modelast)   ! CE3TSK: JTDX_FILE_MODES switched it since the last DECODED file (a skipped file does not count), as the GUI reports a mode change
      params%lbandchanged=.false.
      ! CE3TSK test hook: JTDX_BANDCHANGE=n flags a band change on the n-th file of the list (the
@@ -590,7 +648,7 @@ subroutine jt9files(offset,nfiles,mode,ndepth,flow,fsplit,fhigh,nrxfreq,ncycles,
      params%lmultinst=.false.
      params%lskiptx1=.false.
      params%lforcesync=.false.
-     params%learlystart=learly
+     params%learlystart=learly .and. nsftol.le.0
      params%lft8deeposd=ldeeposd
      params%lft4deeposd=ldeeposd   ! CE3TSK: -O reaches FT4's deep OSD too (item 58; ft4bg.sh checks the reach)
      params%lft8twopass=ltwo

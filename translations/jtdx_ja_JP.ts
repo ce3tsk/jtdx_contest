@@ -6056,6 +6056,46 @@ This is asked only once.</source>
         <source>FT2: FT4's frame at twice the rate, 3.75 s periods. Receive and transmit both work; its own decoding presets are in the Decode menu, under FT2 decoding.</source>
         <translation>FT2: FT4 のフレームを 2 倍の速さで送る、3.75 秒周期のモードです。受信も送信も動作します。専用のデコードプリセットはデコードメニューの FT2デコードにあります。</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>SuperFox mode (S-Hound)</source>
+        <translation>SuperFox モード (S-Hound)</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>The DXpedition transmits SuperFox (WSJT-X 2.7 and later, MSHV): in Hound mode its slot is decoded by the SuperFox receiver. The receiver finds the Fox by itself, normally at 750 Hz, wherever the RX frequency is set. You transmit in the 15/45 s periods only. Also: right click on the Hound button.</source>
+        <translation>DXpedition が SuperFox で送信している場合 (WSJT-X 2.7 以降、MSHV)：Hound モードでは、そのスロットを SuperFox 受信機がデコードします。受信機は RX 周波数の位置に関係なく、Fox を自動的に見つけます (通常は 750 Hz)。送信できるのは 15/45 秒の周期だけです。Hound ボタンの右クリックでも切り替えられます。</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>S-Hound</source>
+        <translation>S-Hound</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>SuperFox %1 has not been decoded yet: transmission halted</source>
+        <translation>SuperFox %1 はまだデコードされていません：送信を中止しました</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Verify Fox online (OTP)</source>
+        <translation>Fox をオンラインで検証 (OTP)</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>A DXpedition can sign its transmissions with a one-time code. In Hound mode the code is checked with the verification server www.9dx.cc, and the answer is shown as a line: CALL verified, or CALL invalid. The Fox's callsign, the time and the code are sent to the server. Works for SuperFox and for old-style Fox.</source>
+        <translation>DXpedition は送信にワンタイムコードで署名できます。Hound モードでは、そのコードを検証サーバー www.9dx.cc に問い合わせ、結果を 1 行で表示します：CALL verified または CALL invalid。サーバーには Fox のコールサイン、時刻、コードが送信されます。SuperFox と従来の Fox の両方に対応します。</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Fox verification: %1 is not known to the verification server</source>
+        <translation>Fox の検証：%1 は検証サーバーに登録されていません</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Fox verification failed: %1</source>
+        <translation>Fox の検証に失敗しました：%1</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

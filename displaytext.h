@@ -31,6 +31,7 @@ public:
                                 QColor color_TxMsg, QsoHistory& qsoHistory);
     void displayQSY(QString text);
     void displayContestNotice(QString text);   // CE3TSK: why the software just dropped a QSO
+    void displayFoxVerification(QString const& line, int verdict);   // CE3TSK: 1 verified (green), 2 invalid (red), 0 plain (a shown OTP line)
 signals:
     void selectCallsign(bool alt, bool ctrl);
 

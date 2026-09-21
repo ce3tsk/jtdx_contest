@@ -70,6 +70,7 @@
 #include "signalmeter.h"
 #include "HelpTextWindow.hpp"
 #include "Audio/BWFFile.hpp"
+#include "FoxVerifier.hpp"   // CE3TSK
 
 #include "ui_mainwindow.h"
 #include "moc_mainwindow.cpp"
@@ -477,13 +478,14 @@ MainWindow::MainWindow(bool multiple, QSettings * settings, QSharedMemory *shdme
   connect (&m_dialWheelTimer, &QTimer::timeout, this, &MainWindow::applyDialWheel);
   wrap_tooltips (this);   /* CE3TSK: Qt does not word-wrap a plain tooltip, see tooltip_wrap.hpp */
   /* CE3TSK: a QAction's tooltip never appears in a menu unless that menu asks for it. Asked
-     here for View and Mode, and by the three preset menus for themselves (see
+     here for View, Mode and DXpedition, and by the three preset menus for themselves (see
      markRecommendedPresets). Every other menu still says no, so the tooltip authored on
      actionConvert_bit_depth (File) is folded by wrap_tooltips and shown nowhere.
      Mode holds exactly one, FT2's, and has_own_tooltip keeps the other seven entries silent
      rather than echoing their own labels back. */
   ui->menuView->setToolTipsVisible (true);
   ui->menuMode->setToolTipsVisible (true);
+  ui->menuDXpedition->setToolTipsVisible (true);   // CE3TSK: two tooltips, SuperFox mode's and the Fox verifier's
   m_config.set_jtdxtime (m_jtdxtime);
   ui->decodedTextBrowser->setConfiguration (&m_config);
   ui->decodedTextBrowser2->setConfiguration (&m_config);
@@ -979,6 +981,22 @@ MainWindow::MainWindow(bool multiple, QSettings * settings, QSharedMemory *shdme
     });
 
   bindBandCombo ();   /* CE3TSK: also called on a contest transition, see below */
+  /* CE3TSK: SuperFox receive - a right click on the Hound button switches SuperFox mode, as in
+     WSJT-X. The action is greyed wherever Hound is unreachable (enableHoundAccess), and a
+     disabled button gets no context menu event at all. */
+  ui->HoundButton->setContextMenuPolicy (Qt::CustomContextMenu);
+  connect (ui->HoundButton, &QWidget::customContextMenuRequested, this, [this] (QPoint const&) {
+      if (ui->actionSuperFox_mode->isEnabled ()) ui->actionSuperFox_mode->toggle ();
+    });
+  /* CE3TSK: the Fox verifier (SUPERFOX_PLAN.md milestone 2) on the application's one network
+     manager. It is created whether or not the operator wants it used: verify () is simply not
+     called while "Verify Fox online" is off. The outcome travels as an int so that mainwindow.h
+     needs no more than a forward declaration. */
+  m_foxVerifier = new FoxVerifier {network_manager, "JTDX_contest/" + QCoreApplication::applicationVersion (), this};
+  connect (m_foxVerifier, &FoxVerifier::result, this,
+           [this] (QString const& call, QDateTime const& slotUtc, int hz, FoxVerifier::Outcome outcome, FoxVerifier::Trouble trouble, QString const& detail, QString const& server) {
+             foxVerification (call, slotUtc, hz, static_cast<int> (outcome), static_cast<int> (trouble), detail, server);
+           });
   connect (ui->bandComboBox->lineEdit (), &QLineEdit::textEdited, [this] (QString const&) {m_bandEdited = true; if(m_config.write_decoded_debug()) writeToALLTXT("bandComboBox line edited to " + ui->bandComboBox->lineEdit()->text());});
 
   // hook up configuration signals
@@ -1208,7 +1226,7 @@ MainWindow::MainWindow(bool multiple, QSettings * settings, QSharedMemory *shdme
          const_cast<int *> (icw), &m_ncw, m_config.my_callsign ().length());
   on_actionWide_Waterfall_triggered();
   m_wideGraph->setTol(500);
-  m_wideGraph->setLockTxFreq(m_lockTxFreq);
+  syncTxLock ();   // CE3TSK: the wide graph's copy of the lock, out of effect under a SuperFox
   m_wideGraph->setMode(m_mode);
   m_wideGraph->setTopJT65(m_config.ntopfreq65());
   m_wideGraph->setModeTx(m_modeTx);
@@ -1346,7 +1364,7 @@ void MainWindow::writeSettings()
   m_settings->setValue("MRUdir",m_path);
   m_settings->setValue("ConvertMRUdir",m_convertPath);   /* CE3TSK */
   m_settings->setValue("ConvertOutMRUdir",m_convertOutPath);   /* CE3TSK */
-  m_settings->setValue("TxFirst",m_txFirst);
+  m_settings->setValue("TxFirst",m_txFirstParkedValid ? m_txFirstParked : m_txFirst);   // CE3TSK: S-Hound forces the period, the operator's own choice is what is kept
   m_settings->setValue("RRR/RR73",m_rrr);
   m_settings->setValue("CQdirection",m_cqdir);
   m_settings->setValue("DXcall",ui->dxCallEntry->text());
@@ -1385,6 +1403,20 @@ void MainWindow::writeSettings()
   m_settings->setValue("ContestUiMode",m_uiParked.mode);
   m_settings->setValue("AutoFilter",ui->actionAutoFilter->isChecked());
   m_settings->setValue("EnableHoundMode",ui->actionEnable_hound_mode->isChecked());  
+  m_settings->setValue("SuperFoxMode",ui->actionSuperFox_mode->isChecked());   // CE3TSK
+  m_settings->setValue("FoxVerify",ui->actionVerify_Fox_online->isChecked());   // CE3TSK
+  /* CE3TSK: the four keys with no control in the GUI (PRESET_INI_SETTINGS.md) are written only when
+     they differ from the built-in default, and removed when they do not. Written always, the
+     default of the day would be frozen into every profile at its first exit - and a later change
+     of the verification server's address could never reach an existing installation. */
+  auto const iniOnly = [this] (char const * key, QVariant const& value, QVariant const& builtIn) {
+    if (value == builtIn) m_settings->remove (key); else m_settings->setValue (key, value);
+  };
+  iniOnly ("SuperFoxTol", m_superFoxTol, 50);
+  iniOnly ("SuperFoxFreq", m_superFoxBase, 750);
+  iniOnly ("ShowOTP", m_showOTP, false);
+  // a list, best server first (FoxVerifier.hpp); QSettings writes it "a, b" and one server as plain text
+  iniOnly ("OTPUrl", m_foxVerifier ? m_foxVerifier->base_urls () : QStringList {FoxVerifier::default_base_url ()}, QStringList {FoxVerifier::default_base_url ()});
   m_settings->setValue("ShowHarmonics",ui->actionShow_messages_decoded_from_harmonics->isChecked());
   m_settings->setValue("HideFTContestMessages",ui->actionHide_FT_contest_messages->isChecked());
   m_settings->setValue("HideTelemetryMessages",ui->actionHide_telemetry_messages->isChecked());
@@ -1739,6 +1771,15 @@ void MainWindow::readSettings()
   m_settings->remove("ContestUiSingleShot");   /* CE3TSK: no longer parked */
   m_uiParked.mode = m_settings->value("ContestUiMode","").toString();
   ui->actionAutoFilter->setChecked(m_settings->value("AutoFilter",false).toBool());
+  /* CE3TSK: SuperFox mode is restored BEFORE Hound mode, because switching Hound on asks whether
+     SuperFox is on (it lifts the split requirement and sets the RX frequency). */
+  m_superFoxTol = qBound (1, m_settings->value("SuperFoxTol",50).toInt(), 100);
+  m_superFoxBase = qBound (200, m_settings->value("SuperFoxFreq",750).toInt(), 3000); m_superFoxFreq = m_superFoxBase;
+  ui->actionSuperFox_mode->setChecked(m_settings->value("SuperFoxMode",false).toBool());
+  ui->actionVerify_Fox_online->setChecked(m_settings->value("FoxVerify",true).toBool());   // CE3TSK: WSJT-X's key names for the two below
+  m_foxVerify = ui->actionVerify_Fox_online->isChecked ();
+  m_showOTP = m_settings->value("ShowOTP",false).toBool();
+  if (m_foxVerifier) m_foxVerifier->set_base_urls (m_settings->value("OTPUrl",FoxVerifier::default_base_url ()).toStringList ());   // one URL or "a, b": toStringList reads both
   ui->actionEnable_hound_mode->setChecked(m_settings->value("EnableHoundMode",false).toBool());
 
   ui->actionShow_messages_decoded_from_harmonics->setChecked(m_settings->value("ShowHarmonics",false).toBool());
@@ -2114,7 +2155,14 @@ void MainWindow::setStopHSym()
   m_hsymStop=179;
   if(m_mode=="FT8") {
     if(m_swl) m_hsymStop = 51;
-    else if(m_FT8EarlyStart) m_hsymStop = 48;
+    /* CE3TSK: a SuperFox ends 13.4 s into the slot plus its DT. The early start's 48 blocks stop
+       at 13.8 s, 49 at 14.1 s, which keeps a Fox that is 0.7 s late whole. A transmission that
+       DECODES takes the receiver 0.02-0.07 s, so the later start costs that reply nothing. It is
+       not the whole truth about timing: a slot with nothing to decode takes 0.2-0.6 s, and one in
+       which FT8 energy near the sync tone sends it through all its dither steps takes about 2 s
+       (measured, SUPERFOX_PLAN.md A8 and A8g) - a Fox found only late in that search is reported
+       after 15.0 s, and the reply then starts late, as after any late decode. */
+    else if(ft8EarlyStartInEffect ()) m_hsymStop = 48;
     else m_hsymStop=49;
   }
   else if(m_mode=="FT4") m_hsymStop=21;
@@ -2341,9 +2389,10 @@ void MainWindow::dataSink(qint64 frames)
       QDateTime now1 {m_jtdxtime->currentDateTimeUtc2 ()};
       quint64 n1=now1.toMSecsSinceEpoch()%15000;
       if(n1>14735) {
-        if(m_swl) ihsym=51; 
-        else if(m_FT8EarlyStart) ihsym=48;
-        else ihsym=49;
+        /* CE3TSK: the stop block itself, not a second copy of setStopHSym ()'s table. The copy said
+           48 for early start while SuperFox mode stops at 49 whatever that option says, so after lost
+           audio the forced 48 never equalled the stop value and the Fox's slot went undecoded. */
+        ihsym=nhsymEStopFT8;
       } 
     }
   }
@@ -2875,15 +2924,11 @@ void MainWindow::keyPressEvent( QKeyEvent *e )                //keyPressEvent
       return;
     case Qt::Key_E:
       if(e->modifiers() & Qt::ShiftModifier) {
-        m_txFirst=false;
-        ui->TxMinuteButton->setChecked(m_txFirst);
-        setMinButton();
+        if(setTxFirst (false, true)) setMinButton();   // CE3TSK: refused in S-Hound
         return;
       }
       if(e->modifiers() & Qt::ControlModifier) {
-        m_txFirst=true;
-        ui->TxMinuteButton->setChecked(m_txFirst);
-        setMinButton();
+        if(setTxFirst (true, true)) setMinButton();
         return;
       }
       if(e->modifiers() & Qt::AltModifier && m_lang=="ru_RU") {
@@ -3079,20 +3124,8 @@ void MainWindow::displayDialFrequency ()
     }
     m_commonFT8b=commonFT8b; first_freq=false;
     if (m_houndMode) {
-    // Don't allow Hound frequency control in common FT8 bands if VFO Split mode is switched off
-      QString message = "";
-      if(!m_config.split_mode() && !m_commonFT8b && m_config.rig_name() != "None") {
-        message =  tr ("Hound mode TX frequency control requires"
-                                                            " *Split* rig control (either *Rig* or *Fake It* set"
-                                                            " in the *Settings | Radio* tab.)");
-        JTDXMessageBox::warning_message (this, "", tr ("Hound TX frequency control warning"), message);
-        ui->actionEnable_hound_mode->setChecked(false);
-      } else {
-        m_houndTXfreqJumps=!m_commonFT8b && m_config.split_mode() && m_config.rig_name() != "None";
-        ui->actionUse_TX_frequency_jumps->setChecked(m_houndTXfreqJumps);
-        if(m_commonFT8b || m_config.rig_name() == "None") ui->actionUse_TX_frequency_jumps->setEnabled(false);
-        else ui->actionUse_TX_frequency_jumps->setEnabled(true);
-      }
+    houndTxControl (true, true);   // CE3TSK: warns and switches Hound off, or derives the TX frequency control
+      applySuperFoxMode ();   // CE3TSK: a SuperFox keeps the frequency control off
     }
   }
 }
@@ -3141,7 +3174,8 @@ void MainWindow::setEnableTxButtonStyle ()
 
 void MainWindow::setHoundButtonStyle ()
 {
-  if(m_houndMode) ui->HoundButton->setStyleSheet(QString("QPushButton {color: %1;background: %2;border-style: solid;border-width: 1px;border-radius: 5px;border-color: %3;min-width: 5em;padding: 3px}").arg(Radio::convert_dark("#000000",m_useDarkStyle),Radio::convert_dark("#00ff00",m_useDarkStyle),Radio::convert_dark("#000000",m_useDarkStyle)));
+  // CE3TSK: red for a minute after the verification server called the Fox's code INVALID (foxVerification)
+  if(m_houndMode) ui->HoundButton->setStyleSheet(QString("QPushButton {color: %1;background: %2;border-style: solid;border-width: 1px;border-radius: 5px;border-color: %3;min-width: 5em;padding: 3px}").arg(Radio::convert_dark("#000000",m_useDarkStyle),Radio::convert_dark(2 == m_foxVerdict ? "#ff3c3c" : "#00ff00",m_useDarkStyle),Radio::convert_dark("#000000",m_useDarkStyle)));
   else ui->HoundButton->setStyleSheet(QString("QPushButton {color: %1;background: %2;border-style: solid;border-width: 1px;border-color: %3;min-width: 5em;padding: 3px}").arg(Radio::convert_dark("#000000",m_useDarkStyle),Radio::convert_dark("#e1e1e1",m_useDarkStyle),Radio::convert_dark("#adadad",m_useDarkStyle)));
 }
 
@@ -3897,6 +3931,7 @@ void MainWindow::hideMenus(bool checked)
 
 void MainWindow::on_actionOpen_triggered()                     //Open File
 {
+  m_superFoxFreqDisk = m_superFoxBase;   // CE3TSK: a new replay looks for its Fox at the nominal tone
   monitor (false);
 
   QString fname;
@@ -4333,18 +4368,7 @@ void MainWindow::on_actionAutoFilter_toggled(bool checked)
 
 void MainWindow::on_actionEnable_hound_mode_toggled(bool checked)
 {
-// Don't allow Hound frequency control in common FT8 bands if VFO Split mode is switched off
-  QString message = "";
-  if(checked && !m_config.split_mode() && !m_commonFT8b && m_config.rig_name() != "None") {
-    message =  tr ("Hound mode TX frequency control requires"
-                                                        " *Split* rig control (either *Rig* or *Fake It* set"
-                                                        " in the *Settings | Radio* tab.)");
-    JTDXMessageBox::warning_message (this, "", tr ("Hound TX frequency control warning"), message);
-    ui->actionEnable_hound_mode->setChecked(false);
-    return;
-  }
-  m_houndTXfreqJumps=checked && !m_commonFT8b && m_config.split_mode() && m_config.rig_name() != "None";
-  ui->actionUse_TX_frequency_jumps->setChecked(m_houndTXfreqJumps);
+  if(!houndTxControl (checked, false)) return;   // CE3TSK: refused - Hound is being switched off again
   m_houndMode=checked;
   m_wideGraph->setHoundFilter(m_houndMode);
   ui->HoundButton->setChecked(m_houndMode);
@@ -4365,9 +4389,234 @@ void MainWindow::on_actionEnable_hound_mode_toggled(bool checked)
     ui->actionUse_TX_frequency_jumps->setEnabled(false);
   }
   setHoundAppearance(m_houndMode); if(!ui->spotLineEdit->text().isEmpty() && ui->spotLineEdit->text().contains("#H")) on_spotLineEdit_textChanged(ui->spotLineEdit->text());
+  applySuperFoxMode ();   // CE3TSK
 }
 
 void MainWindow::on_actionUse_TX_frequency_jumps_triggered (bool checked) { m_houndTXfreqJumps=checked; }
+
+/* CE3TSK: SuperFox receive (SuperHound), SUPERFOX_PLAN.md. The DXpedition menu entry and a right
+   click on the Hound button both end here. */
+void MainWindow::on_actionSuperFox_mode_toggled (bool checked)
+{
+  m_superFox = checked;
+  applySuperFoxMode ();
+}
+
+void MainWindow::on_actionVerify_Fox_online_toggled (bool checked) { m_foxVerify = checked; }
+
+/* CE3TSK: a line carrying a Fox's one-time code was decoded - SuperFox's "$VERIFY$ <call> <code>"
+   or an old-style Fox's free text "<call>.<code>" (SUPERFOX_PLAN.md milestone 2). Asks the
+   verifier, in Hound mode and unless the operator switched it off; the verifier itself refuses an
+   unsigned code, a hashed call and a repeat. The slot's TIME is the line's own hhmmss. Its DATE is
+   the replayed file's when one is open and its name carries one (yymmdd_hhmmss.wav, built from the
+   digits - never a format parse, see the QDate DST trap), else the clock's, stepped back a day when
+   the decode straddled UTC midnight. Whether the line is SHOWN is the caller's business (ini
+   ShowOTP): this was a bool "show it?" once, called inside && chains, where re-ordering a
+   condition would have stopped the verification without a word. */
+void MainWindow::askFoxCode (QByteArray const& line, QString const& call, QString const& code)
+{
+  if (m_houndMode && m_foxVerify && m_foxVerifier) {
+    QTime const hhmmss {line.mid (0, 2).toInt (), line.mid (2, 2).toInt (), line.mid (4, 2).toInt ()};
+    if (hhmmss.isValid ()) {
+      QDateTime slotUtc {FoxVerifier::slot_from_time (hhmmss, m_jtdxtime->currentDateTimeUtc2 ())};
+      if (m_diskData) {
+        QString const base {m_path.mid (m_path.lastIndexOf ('/') + 1)};
+        static QRegularExpression const stamped {"^([0-9]{2})([0-9]{2})([0-9]{2})_[0-9]{6}"};
+        auto const m = stamped.match (base);
+        QDate const d {2000 + m.captured (1).toInt (), m.captured (2).toInt (), m.captured (3).toInt ()};
+        if (!m.hasMatch () || !d.isValid ()) {
+          /* a replayed recording that does not say WHEN it was made. Asked with today's date, a
+             genuine DXpedition's old code comes back INVALID - a red line, a red button and a false
+             accusation in ALL.TXT. No date, no question. */
+          if (m_config.write_decoded_debug ()) writeToALLTXT ("Fox verification not asked: the replayed file's name carries no date (yymmdd_hhmmss)");
+          return;
+        }
+        slotUtc = QDateTime {d, hhmmss, Qt::UTC};
+      }
+      auto const asked = m_foxVerifier->verify (call, slotUtc, code, line.mid (15, 5).trimmed ().toInt ());
+      // a REPLAYED line's verdict is drawn like any other, but it says nothing about the band now:
+      // it must not colour the live Hound button (foxVerification)
+      if (FoxVerifier::Asked::Yes == asked && m_diskData) m_foxReplayAsked << FoxVerifier::bare_call (call) + '|' + slotUtc.toString ("yyyyMMddHHmmss");
+      if (m_config.write_decoded_debug ()) {
+        if (FoxVerifier::Asked::Yes == asked)
+          writeToALLTXT ("Fox verification asked: " + FoxVerifier::bare_call (call) + " " + slotUtc.toString ("yyyy-MM-ddTHH:mm:ss") + " " + code);
+        else if (FoxVerifier::Asked::QueueFull == asked)   // the others are the ordinary refusals: unsigned, hashed, a repeat
+          writeToALLTXT ("Fox verification NOT asked, the queue is full: " + FoxVerifier::bare_call (call) + " " + code);
+      }
+    }
+  }
+}
+
+/* CE3TSK: the verifier's answer. Verified and invalid become a line in the decodes' own columns,
+   at the time and frequency of the transmission they are about - green or red - in Band Activity,
+   and in Rx Frequency too when it is the station being worked; the Hound button turns red for a
+   minute on "invalid". A callsign the server does not know, and a failure to ask at all, are said
+   once each (per ten minutes) in the status bar: they are not verdicts, and a pile-up is no place for a line every
+   thirty seconds saying that nothing is known. */
+void MainWindow::foxVerification (QString const& call, QDateTime const& slotUtc, int hz, int outcome, int trouble, QString const& detail, QString const& server)
+{
+  auto const o = static_cast<FoxVerifier::Outcome> (outcome);
+  if (FoxVerifier::Outcome::Verified == o || FoxVerifier::Outcome::Invalid == o) {
+    bool const ok = FoxVerifier::Outcome::Verified == o;
+    /* WHO vouched. From the first server on the list - the NCDXF's keys, unless the operator put
+       another there - the line reads as WSJT-X's and MSHV's does, "CALL verified". From a later
+       one, asked because the servers before it do not know the callsign, its host is named: a
+       verdict is worth what its server's checks are worth, and the operator should see whose
+       it is ("CALL verified (hamdx.org)"). */
+    QString who;
+    if (m_foxVerifier && !server.isEmpty () && server != m_foxVerifier->base_urls ().value (0)) {
+      QString const host {QUrl {server}.host ()};
+      who = " (" + (host.isEmpty () ? server : host) + ")";
+    }
+    QString const line = QString {"%1   0  0.0%2 ~ %3 %4%5"}.arg (slotUtc.toString ("HHmmss")).arg (hz, 5).arg (call, ok ? "verified" : "invalid", who);
+    ui->decodedTextBrowser->displayFoxVerification (line, ok ? 1 : 2);
+    /* the station being worked? An old-style Fox signs with a SHORTENED call - WSJT-X sends the first
+       six characters up to a "/", "4U1IAR.123456" for 4U1IARU and "W1AW.123456" for W1AW/7 - so the
+       DX call is compared in that form as well as by base call. */
+    QString const dxShort {m_hisCall.left (6).section ('/', 0, 0)};
+    if (!m_hisCall.isEmpty () && (Radio::base_callsign (m_hisCall) == Radio::base_callsign (call) || dxShort == call))
+      ui->decodedTextBrowser2->displayFoxVerification (line, ok ? 1 : 2);
+    // to ALL.TXT under the setting that put the code-carrying line there: the verdict is part of that record
+    if (m_config.write_decoded () || m_config.write_decoded_debug ()) writeToALLTXT ("Fox verification: " + line.mid (23) + " (" + detail + ") from " + server);
+    /* an answer has come, so whatever kept answers from coming is over: the next failure is news
+       again. The same for "not known" once this callsign has a verdict. */
+    for (auto it = m_foxTold.begin (); it != m_foxTold.end ();)
+      if (it.key ().startsWith ("failed:") || it.key () == "unknown:" + call) it = m_foxTold.erase (it); else ++it;
+    /* the button changes colour only for "invalid" (setHoundButtonStyle), so it is restyled only when
+       that changes: a signed SuperFox is verified every 30 s, and replacing the stylesheet each
+       time would wipe the Narrow controls bookkeeping on the button for nothing (uilimits.h). */
+    if (m_foxReplayAsked.remove (call + '|' + slotUtc.toString ("yyyyMMddHHmmss"))) return;   // a replay: the line, not the button
+    bool const wasRed = 2 == m_foxVerdict;
+    m_foxVerdict = ok ? 1 : 2; int const gen = ++m_foxVerdictGen;
+    if (wasRed != (2 == m_foxVerdict)) setHoundButtonStyle ();
+    QTimer::singleShot (60000, this, [this, gen] {
+        if (gen != m_foxVerdictGen) return;
+        bool const red = 2 == m_foxVerdict; m_foxVerdict = 0;
+        if (red) setHoundButtonStyle ();
+      });
+    return;
+  }
+  QString const note = FoxVerifier::Outcome::Unknown == o
+    ? tr ("Fox verification: %1 is not known to the verification server").arg (call)
+    : tr ("Fox verification failed: %1").arg (detail);
+  if (m_config.write_decoded_debug ()) writeToALLTXT (note + " [" + (FoxVerifier::Outcome::Unknown == o && m_foxVerifier ? m_foxVerifier->base_urls ().join (", ") : server) + "]");
+  /* once per KIND of failure, not per wording (the detail can differ from request to request) -
+     and once per ten minutes, not once per program run: an operator who saw "no answer in time"
+     on Monday must still be told on Thursday, or an unsigned Fox and a dead verifier look alike. */
+  QString const kind = FoxVerifier::Outcome::Unknown == o ? "unknown:" + call : "failed:" + QString::number (trouble);
+  qint64 const now = m_jtdxtime->currentMSecsSinceEpoch2 ();
+  if (m_foxTold.contains (kind) && now - m_foxTold.value (kind) < 10 * 60 * 1000) return;
+  m_foxTold.insert (kind, now);
+  statusBar ()->showMessage (note, 10000);
+}
+
+void MainWindow::syncTxLock () {m_wideGraph->setLockTxFreq (txLockInEffect ());}
+
+bool MainWindow::superFoxHeardRecently (QString const& call, bool dialReadable) const
+{
+  /* on THIS dial frequency: decode () notices a QSY only when the Fox's next slot is decoded, and
+     until then - up to half a minute - a Hound who moved and called at once would be calling a
+     Fox decoded somewhere else. The dial is read here, at the start of a transmission, while the
+     rig is still receiving. */
+  /* dialReadable: NOT while transmitting. This check is evaluated again whenever a transmission
+     is restarted (a late decode changed the message), and some CAT backends report the TRANSMIT
+     VFO while in split - the Hound would be halted in the middle of its R+report. */
+  if (dialReadable && qAbs (static_cast<qint64> (m_freqNominal) - m_superFoxDial) > superFoxDialTolHz) return false;
+  auto const it = m_superFoxHeard.constFind (Radio::base_callsign (call));
+  return it != m_superFoxHeard.constEnd () && m_jtdxtime->currentMSecsSinceEpoch2 () - it.value () <= superFoxHeardValidMs;
+}
+
+// a new Fox is to be found: nobody decoded yet, the search back on the nominal lowest tone
+void MainWindow::superFoxSearchReset ()
+{
+  m_superFoxHeard.clear ();
+  m_superFoxFreq = m_superFoxBase;
+  m_superFoxSince = 0;
+  m_superFoxDial = static_cast<qint64> (m_freqNominal);
+  m_superFoxFreqDisk = m_superFoxBase;
+}
+
+// an ordinary Hound off the common FT8 frequencies needs a split rig; a SuperFox Hound does not
+bool MainWindow::houndSplitMissing () const
+{
+  return !m_config.split_mode () && !m_commonFT8b && m_config.rig_name () != "None";
+}
+
+/* CE3TSK: the ONE place that enforces it - there were four copies of the warning and of the
+   derivation below (the dial frequency display, the Hound switch, a band change, the way out of
+   S-Hound). hound: Hound mode is (being switched) on. Returns false when it had to refuse: the
+   warning has been shown and Hound is being switched off. Otherwise derives whether the TX
+   frequency jumps are used - and, with enableToo, whether the operator may change that. */
+bool MainWindow::houndTxControl (bool hound, bool enableToo)
+{
+  if (hound && !m_superFox && houndSplitMissing ()) {
+    JTDXMessageBox::warning_message (this, "", tr ("Hound TX frequency control warning"),
+                                     tr ("Hound mode TX frequency control requires"
+                                         " *Split* rig control (either *Rig* or *Fake It* set"
+                                         " in the *Settings | Radio* tab.)"));
+    ui->actionEnable_hound_mode->setChecked (false);
+    return false;
+  }
+  m_houndTXfreqJumps = hound && !m_commonFT8b && m_config.split_mode () && m_config.rig_name () != "None";
+  ui->actionUse_TX_frequency_jumps->setChecked (m_houndTXfreqJumps);
+  if (enableToo) ui->actionUse_TX_frequency_jumps->setEnabled (!m_commonFT8b && m_config.rig_name () != "None");
+  return true;
+}
+
+/* CE3TSK: everything that follows from SuperFox mode being in effect or not - which is the
+   switch AND Hound mode AND FT8 (superFoxActive). Called whenever one of the three changes, and
+   after every place that re-derives the Hound TX frequency control, so that a band or settings
+   change cannot switch the frequency jumps back on under a SuperFox.
+
+   In effect: the Fox's slot goes to the SuperFox receiver (decode() sets nsftol); the Hound TX
+   frequency control is off and greyed, because a SuperFox Hound stays on its calling frequency
+   for the whole QSO (SuperFox User Guide); the decode never starts early (setStopHSym); the
+   button reads S-Hound; the TX minute button is greyed on the odd period, the only one a Hound
+   of a SuperFox has (m_txFirstParked keeps what the operator had). On every transition the list of Foxes decoded is emptied and the
+   receiver's search frequency goes back to the Fox's nominal lowest tone (m_superFoxFreq, which
+   decode() sends instead of the RX box); on the way IN the RX box goes there too, but only so
+   that the marker sits on the Fox - nothing depends on it staying there. */
+void MainWindow::applySuperFoxMode ()
+{
+  bool const on = superFoxActive ();
+  bool const was = m_superFoxApplied;
+  m_superFoxApplied = on;               // first: the Hound switch-off below comes back in here
+  ui->HoundButton->setText (on ? tr ("S-Hound") : tr ("Hound"));
+  if (on != was) {
+    superFoxSearchReset ();
+    /* the TX period: the Fox has the even one, so the Hound's is the odd one and not a choice.
+       Through the button's own slot, so that it does what a press does (a DX call whose messages
+       were made for the other period is cleared) - and BEFORE the marker below, because that
+       clearDX puts RX on TX in Hound mode. */
+    if (on) {
+      m_txFirstParked = m_txFirst; m_txFirstParkedValid = true;
+      if (m_txFirst) { m_txPeriodForcing = true; ui->TxMinuteButton->setChecked (false); on_TxMinuteButton_clicked (false); m_txPeriodForcing = false; }
+    } else if (m_txFirstParkedValid) {
+      m_txFirstParkedValid = false;
+      ui->TxMinuteButton->setEnabled (true);   // a mode slot that greys it (WSPR) does so after this
+      if (m_txFirst != m_txFirstParked) { ui->TxMinuteButton->setChecked (m_txFirstParked); on_TxMinuteButton_clicked (m_txFirstParked); }
+    }
+    if (on) ui->RxFreqSpinBox->setValue (m_superFoxBase);   // for the eye only: the marker on the Fox, its lines in Rx Frequency
+    setStopHSym ();
+    if (m_config.write_decoded_debug ()) writeToALLTXT (on ? "SuperFox mode on: the Fox's slot is decoded by the SuperFox receiver" : "SuperFox mode off");
+  }
+  syncTxLock ();   // every time: the lock's effect follows the mode
+  /* the lock is back in effect on the way out, so what it promises must hold again. RX follows TX,
+     not the other way round as on a press of the lock: RX was parked on the Fox for the eye only,
+     TX is where the operator chose to be. */
+  if (!on && was && txLockInEffect ()) on_pbT2R_clicked ();
+  if (on) {
+    ui->TxMinuteButton->setEnabled (false);   // every time, not only on the way in: commonActions () enables it in each mode slot
+    m_houndTXfreqJumps = false;
+    ui->actionUse_TX_frequency_jumps->setChecked (false);
+    ui->actionUse_TX_frequency_jumps->setEnabled (false);
+  } else if (m_houndMode && was) {
+    /* back to an ordinary Hound. SuperFox mode let Hound be switched on without a split rig; an
+       ordinary Hound off the common FT8 frequencies may not be, so what on_actionEnable_hound_mode_
+       toggled refuses at the door is refused here as well: same warning, Hound off. */
+    if (!houndTxControl (true, true)) return;
+  }
+}
 void MainWindow::on_actionMTAuto_triggered() { m_ft8threads=0; }
 void MainWindow::on_actionMT1_triggered() { m_ft8threads=1; }
 void MainWindow::on_actionMT2_triggered() { m_ft8threads=2; }
@@ -5522,6 +5771,30 @@ void MainWindow::decode()                                       //decode()
     isec=isec - fmod(double(isec),m_TRperiod);
     dec_data.params.nutc=10000*ihr + 100*imin + isec;
   }
+  /* CE3TSK: is this period the Fox's, to be decoded by the SuperFox receiver? The decoder applies
+     the same test to the same nutc (decoder.f90). Known here because two parameters depend on it:
+     the search frequency below, and a Sync request, which the SuperFox path cannot serve. */
+  m_superFoxSlot = superFoxActive () && (dec_data.params.nutc % 100) % 30 < 15;
+  /* CE3TSK: where the receiver looks in this Fox slot. Normally where it last decoded the Fox. But
+     (1) a dial move beyond the search tolerance is a QSY to somebody else - nobody decoded yet,
+     back to the nominal tone (checked HERE, in the Fox's slot, where the rig is certainly receiving:
+     a dial reading taken during a transmission may be the transmit VFO's); and (2) once two of the
+     Fox's slots have passed without a decode the search alternates between the nominal tone and
+     the last known one, so neither a new Fox on this frequency nor the old one coming out of a
+     fade is lost for good. A tracked frequency with no way back was the silent deafness this
+     search was built to end. */
+  int superFoxSearch = m_superFoxBase;
+  if (m_superFoxSlot && m_diskData) superFoxSearch = m_superFoxFreqDisk;   // a replay: its own search, none of the live state
+  else if (m_superFoxSlot) {
+    if (qAbs (static_cast<qint64> (m_freqNominal) - m_superFoxDial) > superFoxDialTolHz) {
+      if (m_config.write_decoded_debug ()) writeToALLTXT ("SuperFox: dial moved, the Fox is to be decoded anew");
+      superFoxSearchReset ();
+    }
+    ++m_superFoxSince;
+    /* read AFTER the reset above: taken before it, the first slot after a QSY still searched
+       around the Fox that had just been left, and a Fox period was lost (review 3, finding 1) */
+    superFoxSearch = (m_superFoxSince > 2 && m_superFoxSince % 2 == 1) ? m_superFoxBase : m_superFoxFreq;
+  }
 
 //FT8 block of parameters
   dec_data.params.nQSOProgress = m_QSOProgress;
@@ -5545,6 +5818,7 @@ void MainWindow::decode()                                       //decode()
   dec_data.params.lhidetelemetry=(ui->actionHide_telemetry_messages->isChecked() && !m_bypassAllFilters) ? 1 : 0;
   dec_data.params.lhideft8dupes=ui->actionHide_FT8_dupe_messages->isChecked() ? 1 : 0;
   dec_data.params.lhound=m_houndMode ? 1 : 0;
+  dec_data.params.nsftol=superFoxActive () ? m_superFoxTol : 0;   // CE3TSK: SuperFox receive - the decoder gates on the even slot itself
   dec_data.params.lhidehash=m_config.hide2ndHash() && !m_bypassAllFilters;
   dec_data.params.lcommonft8b=m_commonFT8b;
   dec_data.params.lmycallstd=m_bMyCallStd; dec_data.params.lhiscallstd=m_bHisCallStd;
@@ -5554,8 +5828,11 @@ void MainWindow::decode()                                       //decode()
   dec_data.params.lmultinst=m_multInst ? 1 : 0;
   dec_data.params.lskiptx1=m_skipTx1 ? 1 : 0;
   dec_data.params.nlasttx=m_nlasttx;
-  dec_data.params.lforcesync=ui->syncButton->isChecked() && m_mode=="FT8";
-  dec_data.params.learlystart=m_FT8EarlyStart ? 1 : 0;
+  /* CE3TSK: not in the Fox's slot - the forced sync search is part of the FT8 decode, which does
+     not run there. The request stays pending (the button stays checked, see <DecodeFinished>) and
+     is served by the next FT8 period, 15 s later; it used to be consumed with a stale average. */
+  dec_data.params.lforcesync=ui->syncButton->isChecked() && m_mode=="FT8" && !m_superFoxSlot;
+  dec_data.params.learlystart=ft8EarlyStartInEffect () ? 1 : 0;   // CE3TSK: a replayed file is cut to 48 blocks by this flag (jt9a.f90)
   dec_data.params.lft8deeposd=m_ft8DeepOSD ? 1 : 0;   // CE3TSK: OSD order 2 for every candidate
   dec_data.params.lft8twopass=m_ft8TwoSlicings ? 1 : 0;   // CE3TSK: second slicing pass
   dec_data.params.lft8altpass=m_ft8AltPass ? 1 : 0;   // CE3TSK: alternate-approach pass
@@ -5602,7 +5879,13 @@ void MainWindow::decode()                                       //decode()
   dec_data.params.nagcc=m_agcc ? 1 : 0;
   dec_data.params.nhint=m_hint ? 1 : 0;
   dec_data.params.ndelay=m_delay;
-  dec_data.params.nfqso=m_wideGraph->rxFreq();
+  /* CE3TSK: in the Fox's slot the receiver searches around ITS OWN frequency, not around the RX
+     box. RX is moved by a dozen ordinary actions - a double click on any decode, clearing the DX
+     call after every logged QSO, the Tx=Rx lock, the bump keys - and each of them would have left
+     the Fox undecoded from then on, silently. m_superFoxFreq starts at the Fox's nominal lowest
+     tone (ini SuperFoxFreq, 750) and then follows what the receiver reports, so a drifting Fox is
+     kept; the odd slots still decode FT8 around the RX box as always. */
+  dec_data.params.nfqso=m_superFoxSlot ? superFoxSearch : m_wideGraph->rxFreq();
   dec_data.params.ndepth=m_ndepth;
   dec_data.params.nranera=m_config.ntrials();
   dec_data.params.ntrials10=m_config.ntrials10();
@@ -6041,7 +6324,7 @@ void MainWindow::readFromStdout()                             //readFromStdout
         qint64 lagms=msDecFin-m_msDecStarted;
         if(m_mode=="FT8") {
           if(m_swl) lagms-=300; 
-          else if(m_FT8EarlyStart) lagms-=1200;
+          else if(ft8EarlyStartInEffect ()) lagms-=1200;
           else lagms-=900;
         } else {
           lagms-=1430;	
@@ -6078,7 +6361,7 @@ void MainWindow::readFromStdout()                             //readFromStdout
             else  ui->label_6->setText(tr("Band"));
           }
           else m_lostaudio=false;
-          if (ui->syncButton->isChecked()) {
+          if (ui->syncButton->isChecked() && !m_superFoxSlot) {   // CE3TSK: the Fox's slot ran no sync search, see decode()
             if (navexdt > 19) m_jtdxtime->SetOffset(m_jtdxtime->GetOffset() - avexdt.toFloat());
             ui->syncButton->setChecked(false);
           } else if (!ui->syncButton->isEnabled()) ui->syncButton->setEnabled(true);
@@ -6176,6 +6459,50 @@ void MainWindow::readFromStdout()                             //readFromStdout
           JTDXMessageBox::warning_message (this, "", tr ("File Open Error")
                                        , tr ("Cannot open \"%1\" for append: %2")
                                        .arg (f.fileName ()).arg (f.errorString ()));
+        }
+      }
+
+      /* CE3TSK: SuperFox receive (SUPERFOX_PLAN.md). The receiver ends every transmission it decodes
+         with "$VERIFY$ <FoxCall> <6-digit code>", the Fox's one-time signature (000000 when it sent
+         none). It is not a message: it has just gone to ALL.TXT with the other decodes, under the
+         same "write decoded" setting, and it goes nowhere else - not to the windows, the sequencer,
+         the UDP clients or PSK Reporter. It does tell us which Fox this receiver has decoded, which
+         is what the blind-call rule at the start of a transmission asks for. Checking the code
+         online is the plan's milestone 2. */
+      if(t.mid(23).startsWith("$VERIFY$ ")) {
+        QStringList const parts = QString::fromUtf8 (t.mid(23)).simplified ().split (' ');
+        /* a Fox with a compound call is printed as <CALL> once its call is known (it sends a hash of
+           it), and as <...> before that - which names nobody and is skipped */
+        if(parts.size () >= 2) {
+          QString const fox {FoxVerifier::bare_call (parts.at (1))};   // "" for <...>
+          /* ON THE AIR only. A replayed recording that counted here made its Fox "decoded just now
+             on this dial frequency", and the blind-call rule let the Hound call a Fox it had never
+             heard (review 3, finding 2). */
+          if(!fox.isEmpty () && !m_diskData) m_superFoxHeard.insert (Radio::base_callsign (fox), m_jtdxtime->currentMSecsSinceEpoch2 ());
+        }
+        // the receiver found the sync tone here: search around it next time (decode()) - the live
+        // search for a live decode, the replay's own for a replayed one
+        { int const f = t.mid (15, 5).trimmed ().toInt ();
+          if(m_diskData) { if(f > 0) m_superFoxFreqDisk = f; }
+          else { if(f > 0) m_superFoxFreq = f; m_superFoxSince = 0; m_superFoxDial = static_cast<qint64> (m_freqNominal); } }
+        // milestone 2: ask the verification server; shown only on request, and then as a plain line
+        if(parts.size () >= 3) {
+          askFoxCode (t, parts.at (1), parts.at (2));
+          if(m_showOTP) ui->decodedTextBrowser->displayFoxVerification (QString::fromUtf8 (t).trimmed (), 0);
+        }
+        continue;
+      }
+      /* CE3TSK: an old-style (multi-stream) Fox signs by sending the free text "<call>.<code>" now and
+         then - WSJT-X 2.7+ and MSHV both do. In Hound mode, while it is being verified, it goes the
+         way $VERIFY$ does: asked, in ALL.TXT (above), and hidden unless the operator wants to see it;
+         shown, it is an ordinary free-text line, which is what it is. */
+      if(m_houndMode) {
+        static QRegularExpression const oldStyleOtp {"^([A-Z0-9]{2,6})\\.([0-9]{6})$"};
+        auto const m = oldStyleOtp.match (QString::fromUtf8 (t.mid (23, 26)).trimmed ());
+        // with verification switched off it stays what it was before: an ordinary free-text line
+        if(m.hasMatch () && m_foxVerify) {
+          askFoxCode (t, m.captured (1), m.captured (2));
+          if(!m_showOTP) continue;
         }
       }
 
@@ -6690,11 +7017,27 @@ void MainWindow::guiUpdate()
       else if(m_ntx == 7) { txMsg=ui->genMsg->text(); }
       else if(m_ntx == 8) { txMsg=ui->freeTextMsg->currentText(); txMsg.remove(" ^"); }
       int msgLength=txMsg.trimmed().length();
-      if(!m_tune && (msgLength==0 || m_config.my_callsign().isEmpty() || (m_houndMode && (m_QSOProgress == CALLING || m_ntx == 6)))) { 
+      /* CE3TSK: SuperFox - "Hounds can call SuperFox only after they have decoded a signal from
+         SuperFox" (SuperFox User Guide): a Hound that has not decoded it has no chance of a QSO and
+         only adds QRM to the pile-up. The Foxes decoded are those whose $VERIFY$ line the receiver
+         printed (readFromStdout) on this dial frequency within the last five minutes
+         (superFoxHeardRecently). With no DX call there is no Fox to ask about: that case belongs to
+         the rules below (no CQ in Hound mode), which say what is actually wrong. */
+      bool const superFoxBlind = superFoxActive () && !m_tune && msgLength > 0 && !m_hisCall.isEmpty ()
+                                 && !superFoxHeardRecently (m_hisCall, !m_transmitting);
+      if(!m_tune && (msgLength==0 || m_config.my_callsign().isEmpty() || superFoxBlind || (m_houndMode && (m_QSOProgress == CALLING || m_ntx == 6)))) { 
         haltedEmpty=true;
         if(m_houndMode) m_currentMessage=txMsg; else m_currentMessage.clear();
         if(msgLength==0) haltTx("Transmission of the empty message is not allowed ");
         else if(m_config.my_callsign().isEmpty()) haltTx("Transmission halted: user callsign is not configured ");
+        else if(superFoxBlind) {
+          haltTx("Transmission halted: SuperFox " + m_hisCall + " has not been decoded yet ");
+          // the other halts here explain themselves (an empty message, no callsign); this one needs
+          // saying. A moment later, because the halt sequence re-shows the watchdog label
+          // (update_watchdog_label), which would otherwise sit on top of the first word.
+          QString const why {tr ("SuperFox %1 has not been decoded yet: transmission halted").arg (m_hisCall)};
+          QTimer::singleShot (300, this, [this, why] {statusBar ()->showMessage (why, 10000);});
+        }
         else haltTx("Transmission of CQ message is not allowed in the Hound mode ");
       }
 	  else { ba=txMsg.toLocal8Bit(); }
@@ -7256,9 +7599,22 @@ void MainWindow::ba2msg(QByteArray ba, char message[])             //ba2msg()
   message[37]=0;
 }
 
+/* CE3TSK: the ONE place m_txFirst changes after start-up. While S-Hound holds the period every
+   request is refused - the button's, the shortcuts', a double click's, whatever is added later -
+   except S-Hound's own (m_txPeriodForcing). Guarding the writers one by one is the pattern that
+   failed twice that day (the RX box, the Tx=Rx lock). syncButton: also set the button's state;
+   false for callers that are, or go through, the button's own click. */
+bool MainWindow::setTxFirst (bool first, bool syncButton)
+{
+  if (superFoxActive () && !m_txPeriodForcing) return false;
+  m_txFirst = first;
+  if (syncButton) ui->TxMinuteButton->setChecked (first);
+  return true;
+}
+
 void MainWindow::on_TxMinuteButton_clicked(bool checked)        //TxFirst
 {
-  m_txFirst=checked;
+  if (!setTxFirst (checked, false)) { ui->TxMinuteButton->setChecked (m_txFirst); return; }   // CE3TSK: refused: the button shows what holds
   if(m_transmitting && m_config.write_decoded_debug()) writeToALLTXT("Tx halted: period changed via TX period button");
   if (m_txGenerated != checked && m_enableTx && m_autoseq)  clearDX (" cleared, Tx Minute button clicked");
   setMinButton();
@@ -7430,8 +7786,7 @@ void MainWindow::processMessage(QString const& messages, int position, bool alt,
 //    int nmod=decodedtext.timeInSeconds () % (2*int(m_TRperiod));
     int nmod = fmod(double(decodedtext.timeInSeconds()),2.0*m_TRperiod);
 //    printf ("periods %d,%f,%d,%s,%d\n",decodedtext.timeInSeconds (),m_TRperiod,nmod,t2.mid(6,4).toStdString().c_str(),tx_message);
-    if (m_txFirst != (nmod!=0) && !tx_message) {
-      m_txFirst=(nmod!=0);
+    if (m_txFirst != (nmod!=0) && !tx_message && setTxFirst (nmod!=0, false)) {   // CE3TSK: refused in S-Hound - the period is the Fox's to decide, not the clicked line's
 //      ui->TxMinuteButton->setChecked(m_txFirst);
 //      an attempt to provide stable UDP Reply operation:
       if(m_txFirst && !ui->TxMinuteButton->isChecked()) ui->TxMinuteButton->click();
@@ -7536,7 +7891,7 @@ void MainWindow::processMessage(QString const& messages, int position, bool alt,
 
   // Don't change Tx freq if in a fast mode;
   // unless m_lockTxFreq is true or CTRL is held down
-  if (m_lockTxFreq or ctrl or TxModeChanged) {
+  if (txLockInEffect () or ctrl or TxModeChanged) {   // CE3TSK
      if (ui->TxFreqSpinBox->isEnabled ()) {
         ui->TxFreqSpinBox->setValue(frequency);
      } else {
@@ -8802,6 +9157,10 @@ void MainWindow::on_actionWSPR_2_triggered()
   ui->TxFreqSpinBox->setValue(ui->WSPRfreqSpinBox->value());
   ui->pbTxMode->setText(tr("Tx WSPR"));
   ui->pbTxMode->setEnabled(false);
+  /* CE3TSK: every other mode slot says so; this one left Hound (and with it S-Hound, which has
+     the TX period parked) switched on in a mode that has neither. Before the two lines below,
+     which grey the TX minute button for WSPR - handing the period back enables it. */
+  enableHoundAccess(false);
   setMinButton();
   ui->TxMinuteButton->setEnabled(false); ui->candListSpinBox->setEnabled(false);
   ui->DTCenterSpinBox->setEnabled(false); ui->DTCenterSpinBox->setVisible(false);
@@ -8951,7 +9310,7 @@ void MainWindow::on_TxFreqSpinBox_valueChanged(int n)
 {
 //  if(n<200 && (!m_rigOk || ui->readFreq->text()!="S")) n=200;
   m_wideGraph->setTxFreq(n);
-  if(m_lockTxFreq) ui->RxFreqSpinBox->setValue(n);
+  if(txLockInEffect ()) ui->RxFreqSpinBox->setValue(n);   // CE3TSK
   if (m_tci) Q_EMIT m_config.transceiver_trfrequency(n - m_XIT);
   else Q_EMIT transmitFrequency (n - m_XIT);
   statusUpdate ();
@@ -8960,7 +9319,13 @@ void MainWindow::on_TxFreqSpinBox_valueChanged(int n)
 void MainWindow::on_RxFreqSpinBox_valueChanged(int n)
 {
   m_wideGraph->setRxFreq(n);
-  if (m_lockTxFreq && ui->TxFreqSpinBox->isEnabled ()) ui->TxFreqSpinBox->setValue (n);
+  /* CE3TSK: while SuperFox mode is in effect the Tx=Rx lock never moves the TX frequency. A Hound
+     keeps its own calling frequency for the whole QSO (SuperFox User Guide), and RX sits on the
+     Fox's sync tone at 750 Hz, the one place every locked Hound would otherwise pile on to. Three
+     paths lead there: this one (RX changes), a double click on a decode (processMessage) and the
+     lock button itself, which styleChanged () also "presses" (on_pbTxLock_clicked). Ctrl + double
+     click and the T<-R button remain: those are the operator moving TX on purpose. */
+  if (txLockInEffect () && ui->TxFreqSpinBox->isEnabled ()) ui->TxFreqSpinBox->setValue (n);
   statusUpdate ();
 }
 
@@ -9203,7 +9568,12 @@ void MainWindow::band_changed (Frequency f)
       }
     if (qAbs(fDelta)>1000000) {
         m_qsoHistory.init(); if(m_config.write_decoded_debug()) writeToALLTXT("QSO history initialized by band_changed");
+        /* CE3TSK: SuperFox - another band is another Fox: none decoded yet, and its lowest tone is
+           looked for at its nominal frequency again */
+        superFoxSearchReset ();
         clearDX (" cleared, triggered by erase both windows option upon band change, delta frequency"); // Request from Boris UX8IW
+        // CE3TSK: AFTER clearDX, which puts RX on TX in Hound mode: the marker back on the Fox
+        if (superFoxActive ()) ui->RxFreqSpinBox->setValue (m_superFoxBase);
         if (m_autoEraseBC && !cleared) { // option: erase both windows if band is changed
             ui->decodedTextBrowser->clear();
             ui->decodedTextBrowser2->clear();
@@ -9232,20 +9602,8 @@ void MainWindow::band_changed (Frequency f)
       }
       m_commonFT8b=commonFT8b;
       if (m_houndMode) {
-      // Don't allow Hound frequency control in common FT8 bands if VFO Split mode is switched off
-        QString message = "";
-        if(!m_config.split_mode() && !m_commonFT8b && m_config.rig_name() != "None") {
-          message =  tr ("Hound mode TX frequency control requires"
-                                                              " *Split* rig control (either *Rig* or *Fake It* set"
-                                                              " in the *Settings | Radio* tab.)");
-          JTDXMessageBox::warning_message (this, "", tr ("Hound TX frequency control warning"), message);
-          ui->actionEnable_hound_mode->setChecked(false);
-        } else {
-          m_houndTXfreqJumps=!m_commonFT8b && m_config.split_mode() && m_config.rig_name() != "None";
-          ui->actionUse_TX_frequency_jumps->setChecked(m_houndTXfreqJumps);
-          if(m_commonFT8b || m_config.rig_name() == "None") ui->actionUse_TX_frequency_jumps->setEnabled(false);
-          else ui->actionUse_TX_frequency_jumps->setEnabled(true);
-        }
+      houndTxControl (true, true);   // CE3TSK: warns and switches Hound off, or derives the TX frequency control
+        applySuperFoxMode ();   // CE3TSK: a SuperFox keeps the frequency control off
       }
     }
     m_lastloggedtime=m_lastloggedtime.addSecs(-7*int(m_TRperiod));
@@ -9757,8 +10115,8 @@ void MainWindow::on_pbTxLock_clicked(bool checked)
      ui->pbTxLock->setToolTip(tr("<html><head/><body><p>Push button to lock Tx frequency to the Rx AF frequency.</p></body></html>"));
      ui->pbTxLock->setStyleSheet(QString("QPushButton {color: %1;background: %2;border-style: solid;border-width: 1px;border-color: %3;min-width: 5em;padding: 3px}").arg(Radio::convert_dark("#000000",m_useDarkStyle),Radio::convert_dark("#00ff00",m_useDarkStyle),Radio::convert_dark("#808080",m_useDarkStyle)));
   }
-  m_wideGraph->setLockTxFreq(m_lockTxFreq);
-  if(m_lockTxFreq) on_pbR2T_clicked();
+  syncTxLock ();   // CE3TSK: the wide graph's copy of the lock, out of effect under a SuperFox
+  if(txLockInEffect ()) on_pbR2T_clicked();   // CE3TSK
 }
 
 void MainWindow::on_skipTx1_clicked(bool checked)
@@ -10083,6 +10441,10 @@ void MainWindow::enableHoundAccess(bool b)
   else { ui->actionEnable_hound_mode->setChecked(false); ui->actionEnable_hound_mode->setEnabled(false); ui->HoundButton->setEnabled(false);
          ui->actionUse_TX_frequency_jumps->setChecked(false);
   }
+  /* CE3TSK: SuperFox mode can be chosen wherever Hound can, before or after Hound itself; the
+     choice is kept when Hound becomes unreachable, only its effect ends */
+  ui->actionSuperFox_mode->setEnabled (b);
+  applySuperFoxMode ();
 }
 
 void MainWindow::setHoundAppearance(bool hound)

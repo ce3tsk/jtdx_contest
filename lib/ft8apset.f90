@@ -19,6 +19,11 @@ subroutine ft8apset(lmycallstd,lhiscallstd,numthreads)
   if(hiscall.ne.hiscallprev .or. mycall.ne.mycallprev .or. (lhound.neqv.lhoundprev) .or. first) then ! first for lhound triggered
 
     first=.false.; mycallprev=mycall; lhoundprev=lhound
+! CE3TSK 2026-09-20: pack77 READS i3 and n3 before it sets them (a hint: 0 and 5 mean telemetry),
+! and the first call below - the "CQ <DX call> <grid>" mask - handed it whatever the stack held
+! (memcheck, the SuperFox a-priori rows: the first to give file mode a DX grid). -1, -1 is what
+! WSJT-X's callers pass for "no hint"; every later call sees the previous call's results.
+    i3=-1; n3=-1
 
 ! shall hash both callsigns for making AP masks with nonstandard callsign message
     if(.not.lhound) call fillhash(numthreads,.true.)

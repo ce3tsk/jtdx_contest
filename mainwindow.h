@@ -23,6 +23,7 @@
 #include <QHostAddress>
 #include <QPointer>
 #include <QSet>
+#include <QHash>
 #include <QFuture>
 #include <QFutureWatcher>
 #include <QFileSystemWatcher>
@@ -53,6 +54,7 @@ namespace Ui {
 class QProcessEnvironment;
 class QSettings;
 class QNetworkAccessManager;
+class FoxVerifier;   /* CE3TSK */
 class QLineEdit;
 class QFont;
 class QHostInfo;
@@ -192,6 +194,8 @@ private slots:
   void on_actionAutoFilter_toggled(bool checked);
   void on_actionEnable_hound_mode_toggled(bool checked);
   void on_actionUse_TX_frequency_jumps_triggered(bool checked);
+  void on_actionSuperFox_mode_toggled(bool checked);   /* CE3TSK: SuperFox receive, SUPERFOX_PLAN.md */
+  void on_actionVerify_Fox_online_toggled(bool checked);   /* CE3TSK: the Fox verifier, SUPERFOX_PLAN.md M2 */
   void on_actionMTAuto_triggered();
   void on_actionMT1_triggered();
   void on_actionMT2_triggered();
@@ -647,7 +651,7 @@ private:
   bool    m_diskData;
   bool    m_loopall;
   bool    m_decoderBusy;
-  bool    m_txFirst;
+  bool    m_txFirst;   // CE3TSK: written ONLY by setTxFirst () (and the settings read): S-Hound holds the period, and a writer of its own would put the Hound on the Fox
   bool    m_txGenerated;
   bool    m_rrr;
   bool    m_enableTx;
@@ -778,6 +782,61 @@ private:
   bool m_houndMode;
   bool m_commonFT8b;
   bool m_houndTXfreqJumps;
+  /* CE3TSK: SuperFox receive (SuperHound, SUPERFOX_PLAN.md). m_superFox is the operator's switch and
+     is remembered whatever the mode; it takes effect while Hound mode is on in FT8, which is what
+     superFoxActive() says. m_superFoxTol is the receiver's search range for the sync tone either
+     side of the RX frequency (ini SuperFoxTol). m_superFoxHeard holds the base calls of the Foxes
+     the SuperFox receiver has decoded on this band, for the rule that a Hound calls a SuperFox only
+     after decoding it. */
+  bool m_superFox = false;
+  bool m_superFoxApplied = false;
+  int m_superFoxTol = 50;
+  /* the frequency the SuperFox receiver searches around: NOT the RX box, which a dozen ordinary
+     actions move (decode()). m_superFoxBase is the Fox's nominal lowest tone (ini SuperFoxFreq,
+     750); m_superFoxFreq starts there whenever the mode comes into effect or the band changes and
+     then follows the frequency the receiver reports. m_superFoxSlot: the period now being decoded
+     is the Fox's, set by decode() for the code that handles its <DecodeFinished>. */
+  int m_superFoxBase = 750;
+  int m_superFoxFreq = 750;
+  bool m_superFoxSlot = false;
+  /* a SuperFox transmits in the even periods (00 and 30 s) and nowhere else, so a Hound has
+     exactly one period to transmit in: the odd one. While S-Hound is in effect the TX minute
+     button shows that and is greyed; what the operator had chosen is parked here and handed back
+     on the way out. It is also what the ini file keeps - TxFirst never stores the forced value. */
+  bool m_txFirstParked = false;
+  bool m_txFirstParkedValid = false;
+  bool m_txPeriodForcing = false;   // set by applySuperFoxMode around its own change of the period
+  /* the Foxes this receiver has decoded, base call -> when last (ms since the epoch): the blind-
+     call rule asks for a decode that is RECENT, not for one at some point since the band was
+     chosen - a Fox heard at 10:00 that has gone QRT or moved is not a Fox one may still call at
+     16:00. superFoxHeardRecently () is the rule. m_superFoxSince counts the Fox's slots since the
+     last decode (the search goes back to the nominal tone every other slot once two have been
+     missed, see decode ()); m_superFoxDial is the dial frequency that decode was made on - a dial
+     move beyond the search tolerance is a QSY to somebody else: the list and the search start over. */
+  QHash<QString, qint64> m_superFoxHeard;
+  static constexpr qint64 superFoxHeardValidMs = 5 * 60 * 1000;
+  /* how far the DIAL may move before it is a QSY to somebody else. A figure of its own: it was
+     SuperFoxTol for an evening, and SuperFoxTol is the AUDIO search width, which an operator may
+     set to 5 Hz to keep the search off a carrier - 10 Hz of dial drift then emptied the list of
+     Foxes decoded in every slot. 50 Hz: a Fox that moved less is still inside any search window. */
+  static constexpr qint64 superFoxDialTolHz = 50;
+  /* replays (File > Open, Decode remaining files) have a search frequency of their own and touch
+     NOTHING of the live state: a recording is not a Fox decoded on the air just now */
+  int m_superFoxFreqDisk = 750;
+  int m_superFoxSince = 0;
+  qint64 m_superFoxDial = 0;
+  /* CE3TSK: the Fox verifier (FoxVerifier.hpp, SUPERFOX_PLAN.md milestone 2). m_foxVerify is the
+     operator's switch (DXpedition menu, default on); m_showOTP (ini ShowOTP) shows the lines that
+     carry the code, which are otherwise hidden; m_foxVerdict is what the Hound button shows for a
+     minute after an answer (0 nothing, 1 verified, 2 invalid) and m_foxVerdictGen retires the timer
+     of an older answer; m_foxTold keeps the status-bar notes to one per kind (per ten minutes). */
+  FoxVerifier * m_foxVerifier = nullptr;
+  bool m_foxVerify = true;
+  bool m_showOTP = false;
+  int m_foxVerdict = 0;
+  int m_foxVerdictGen = 0;
+  QSet<QString> m_foxReplayAsked;   // questions asked about a REPLAYED line: their verdict is drawn, the live Hound button is left alone
+  QHash<QString, qint64> m_foxTold;   // kind -> when said: said again after ten minutes, and forgotten once an answer has come
   bool m_spotDXsummit;
   qint32 m_FilterState;
   bool m_manualDecode;
@@ -1083,6 +1142,27 @@ private:
   bool shortList(QString callsign);
   bool isAutoSeq73(QString const& text);
   void enableHoundAccess(bool b);
+  bool superFoxActive () const {return m_superFox && m_houndMode && m_mode == "FT8";}   /* CE3TSK */
+  /* CE3TSK: FT8 early start is an FT8-decoder option; a SuperFox ends later than an FT8 signal and
+     its slot always runs to block 49. One answer for every place that asks (setStopHSym, the
+     learlystart parameter, the replay lag estimate) - they disagreed once. */
+  bool ft8EarlyStartInEffect () const {return m_FT8EarlyStart && !superFoxActive ();}
+  /* CE3TSK: Lock Tx=Rx has no meaning under a SuperFox - the Fox's lines sit on its lowest tone and
+     the Hound anywhere else - so it is out of effect while S-Hound is on. ONE answer for every
+     place that consults the lock, the wide graph's own copy included (syncTxLock): guarding call
+     sites one by one left the wide graph's setRxFreq -> setTxFreq -> setXIT path open, which with
+     a split rig retuned the TX VFO on every Fox line. */
+  bool txLockInEffect () const {return m_lockTxFreq && !superFoxActive ();}
+  void syncTxLock ();
+  bool superFoxHeardRecently (QString const& call, bool dialReadable) const;
+  bool setTxFirst (bool first, bool syncButton);
+  bool houndTxControl (bool hound, bool enableToo);
+  void superFoxSearchReset ();
+  // Hound's TX frequency control needs a split rig off the common FT8 frequencies; a SuperFox needs none
+  bool houndSplitMissing () const;
+  void applySuperFoxMode ();   /* CE3TSK */
+  void askFoxCode (QByteArray const& line, QString const& call, QString const& code);   /* CE3TSK */
+  void foxVerification (QString const& call, QDateTime const& slotUtc, int hz, int outcome, int trouble, QString const& detail, QString const& server);   /* CE3TSK */
   void setHoundAppearance(bool hound);
   void setLastLogdLabel();
   void writeToALLTXT(QString const& text);

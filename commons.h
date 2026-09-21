@@ -151,6 +151,9 @@ typedef struct dec_data {
     int nft4bgeffort;   // CE3TSK item 78: the FT4 TX background switch, FT8's nft8bgeffort mirrored - 0 off, 1 on. The
                         //   phase runs when this is set, whatever the member target: the members above the RX count,
                         //   or with none left the phase's own extras alone (deep OSD, alternate pass, residual)
+    int nsftol;         // CE3TSK: SuperFox receive (SuperHound, SUPERFOX_PLAN.md) - 0 off; N > 0 on, with N Hz the
+                        //   search range either side of nfqso for the SuperFox sync tone. When on, and lhound, the
+                        //   Fox's (even) slot is decoded by the SuperFox receiver instead of the FT8 decoder
     } params;
 } dec_data_t;
 

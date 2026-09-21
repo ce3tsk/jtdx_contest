@@ -13,12 +13,14 @@ program ft8sim
   character c77*77
   complex c0(0:NMAX-1)
   complex c(0:NMAX-1)
+  complex cwave(NWAVE)                   !CE3TSK: the GFSK waveform (JTDX_SIM_GFSK=1)
+  real xjunk(NWAVE)                      !gen_ft8wave's real output, not written when icmplx=1
   real wave(NMAX)
   integer itone(NN)
   integer*1 msgbits(77)
   integer*4 iwave(NMAX)                  !Generated full-length waveform, CE3TSK: 32 bit for JTDX
   integer*2 i2wave(NMAX)                 !CE3TSK: the 16 bit default
-  logical l32
+  logical l32,lgfsk
   character envval*8
   integer envlen
 
@@ -29,6 +31,10 @@ program ft8sim
      print*,'Examples: ft8sim "K1ABC W9XYZ EN37"       1500.0 0.0  0.1 1.0   0     10   -18'
      print*,'          ft8sim "WA9XYZ/R KA1ABC/R FN42" 1500.0 0.0  0.1 1.0   0     10   -18'
      print*,'          ft8sim "K1ABC RR73; W9XYZ <KH1/KH7Z> -11" 300 0 0 0 25 1 -10'
+     print*,'Environment: JTDX_SIM_SEED=n   fixed noise seed'
+     print*,'             JTDX_SIM_32BIT=1  32 bit files (default 16 bit)'
+     print*,'             JTDX_SIM_GFSK=1   Gaussian-shaped FSK (BT 2.0), what WSJT-X, JTDX and MSHV'
+     print*,'                               transmit; the default (0) is plain FSK'
      go to 999
   endif
   call getarg(1,msg37)                   !Message to be transmitted
@@ -60,6 +66,35 @@ program ft8sim
   call get_environment_variable('JTDX_SIM_32BIT',envval,envlen)
   if(envlen.gt.0) l32=(envval(1:1).eq.'1')
   if(l32) write(*,*) 'JTDX_SIM_32BIT=1: writing 32 bit files'
+! CE3TSK 2026-09-20: what this simulator has always written is PLAIN FSK - the phase advances at
+! a constant rate through each symbol. No current program sends that: WSJT-X since 2.1, MSHV and
+! this program (mainwindow.cpp, gen_ft8wave with bt=2.0) send GFSK, and GFSK is also the reference
+! every decoder SUBTRACTS (subtractft8). For a single-signal decode test the difference does not
+! matter - the symbol energies are detected non-coherently, and the measured threshold is the same
+! (-21.7 against -21.8 dB). For anything that depends on how well a signal subtracts it matters a
+! great deal: against a plain-FSK signal the reference is wrong at each of the 79 symbol edges.
+! ONE signal at +20 dB is taken 19 dB down as plain FSK and 41 dB, to the noise, as GFSK; a -10 dB
+! signal 12 Hz from it is never found in the first case and always in the second
+! (FT8_IDEAS_FROM_SUPERFOX.md section 2). JTDX_SIM_GFSK=1 generates the signal with gen_ft8wave,
+! the transmitter's own routine, ramps included. It is NOT the default, and must not become it
+! unannounced: the expectations of memcheck.sh and ft8merge.sh are pinned on seeded files made
+! with the plain waveform, every threshold on record was measured with it, and the default output
+! is byte-identical to what it was (test/decode/ft8simgfsk.sh pins it).
+! Any value but 0 and 1 stops the program: a harness that throws the output away would otherwise
+! go on with the plain waveform while believing it had asked for the other one.
+! lib/ft8sim_gfsk.f90 is the older route to the same waveform - WSJT-X 2.1's simulator as JTDX
+! inherited it: 7 arguments (no filter width), 32 bit files only, and a signal that starts before
+! the file wraps round to the file's end. Nothing uses it; the same test pins that the two agree.
+  lgfsk=.false.
+  call get_environment_variable('JTDX_SIM_GFSK',envval,envlen)
+  if(envlen.gt.0) then
+     if(envlen.ne.1 .or. (envval(1:1).ne.'0' .and. envval(1:1).ne.'1')) then
+        write(*,*) 'JTDX_SIM_GFSK must be 1 (Gaussian-shaped FSK) or 0 (plain FSK, the default)'
+        call exit(1)
+     endif
+     lgfsk=(envval(1:1).eq.'1')
+  endif
+  if(lgfsk) write(*,*) 'JTDX_SIM_GFSK=1: Gaussian-shaped FSK, BT 2.0'
   twopi=8.0*atan(1.0)
   fs=12000.0                             !Sample rate (Hz)
   dt=1.0/fs                              !Sample interval (s)
@@ -98,12 +133,28 @@ program ft8sim
 
   call sgran()
 
+! CE3TSK 2026-09-20: a signal that lies WHOLLY outside the 15 s is not a test file. With noise it
+! would be a file of noise that claims to hold a signal, and without noise the peak normalisation
+! below divides by zero and writes NaN through nint() - both silently, exit code 0.
+  k=nint((xdt+0.5)/dt)
+  if(k+NWAVE.le.0 .or. k.ge.NMAX) then
+     write(*,'(a,f8.2,a)') ' DT',xdt,' s puts the whole signal outside the 15 s file - nothing written'
+     call exit(1)
+  endif
+  if(lgfsk) call gen_ft8wave(itone,NN,NSPS,2.0,fs,f0,cwave,xjunk,1,NWAVE)   !the transmitter's waveform
+
   msg0=msg
   do ifile=1,nfiles
      k=nint((xdt+0.5)/dt)
      ia=k
      phi=0.0 
      c0=0.0
+     if(lgfsk) then                        !CE3TSK: cwave placed exactly as the plain signal below
+        do i=1,NWAVE
+           if(k.ge.0 .and. k.lt.NMAX) c0(k)=cwave(i)
+           k=k+1
+        enddo
+     else
      do j=1,NN                             !Generate complex waveform
         dphi=twopi*(f0*dt+itone(j)/real(NSPS))
         do i=1,NSPS
@@ -112,12 +163,17 @@ program ft8sim
            phi=mod(phi+dphi,twopi)
         enddo
      enddo
+     endif
      if(fspread.ne.0.0 .or. delay.ne.0.0) call watterson(c0,NMAX,NWAVE,fs,delay,fspread)
      c=sig*c0
   
      ib=k
      wave=real(c)
-     peak=maxval(abs(wave(ia:ib)))
+! CE3TSK 2026-09-20: ia..ib is where the signal was placed and runs off the array when DT is
+! -0.5 s or less (wave is 1-based, ia is then 0 or below) or above 1.86 s - the loop above guards
+! exactly that case, this line did not, and the bounds-checked build stopped with "Index '-1200'
+! of dimension 1". (peak itself is not used.)
+     peak=maxval(abs(wave(max(1,ia):min(NMAX,ib))))
      nslots=1
      if(width.gt.0.0) call filt8(f0,nslots,width,wave)
    

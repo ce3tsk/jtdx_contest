@@ -114,6 +114,7 @@
      integer(c_int) :: nft4bgrxfsens  ! CE3TSK item 75: the same for the FT4 TX background phase
      integer(c_int) :: ndecreq        ! CE3TSK: the decode request counter (commons.h has the why)
      integer(c_int) :: nft4bgeffort   ! CE3TSK item 78: the FT4 TX background switch, as nft8bgeffort - 0 off, 1 on
+     integer(c_int) :: nsftol         ! CE3TSK: SuperFox receive - 0 off, N > 0 on with a sync search range of +/- N Hz (commons.h)
  end type params_block
 
   type, bind(C) :: dec_data

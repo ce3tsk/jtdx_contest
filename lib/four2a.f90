@@ -23,6 +23,8 @@ subroutine four2a(a,nfft,ndim,isign,iform)
   parameter (NSMALL=16385)               !Max size of "small" FFTs
   complex a(nfft)                        !Array to be transformed
   complex aa(NSMALL)                     !Local copy of "small" a()
+  complex, allocatable :: abig(:)        !CE3TSK: the same for a large a(), only while a plan is MEASUREd
+  logical lbig
   integer nn(NPMAX),ns(NPMAX),nf(NPMAX)  !Params of stored plans 
   integer*8 nl(NPMAX),nloc               !More params of plans
   integer*8 plan(NPMAX)                  !Pointers to stored plans
@@ -78,10 +80,20 @@ subroutine four2a(a,nfft,ndim,isign,iform)
      if(npatience.eq.3) nflags=FFTW_PATIENT
      if(npatience.eq.4) nflags=FFTW_EXHAUSTIVE
 
-     if(nfft.le.NSMALL) then
+! CE3TSK 2026-09-19: planning with FFTW_MEASURE and up OVERWRITES the arrays it is given, and only
+! "small" transforms were saved and restored around it. A large one - the SuperFox receiver's
+! 180000- and 108000-point FFTs, FT8's long ones - was transformed from destroyed data the first
+! time each array address was seen: with -w 2 and up the first SuperFox file decoded nothing.
+! The ESTIMATE flags (-w 0, 1: what the GUI passes) never touch the arrays, so nothing is copied there.
+     lbig=nfft.gt.NSMALL .and. npatience.ge.2
+     if(nfft.le.NSMALL .or. lbig) then
         jz=nfft
         if(iform.le.0) jz=nfft/2+1
+     endif
+     if(nfft.le.NSMALL) then
         aa(1:jz)=a(1:jz)
+     else if(lbig) then
+        allocate(abig(jz)); abig(1:jz)=a(1:jz)
      endif
 
      !$omp critical(fftw) ! serialize non thread-safe FFTW3 calls
@@ -99,9 +111,9 @@ subroutine four2a(a,nfft,ndim,isign,iform)
      !$omp end critical(fftw)
 
      if(nfft.le.NSMALL) then
-        jz=nfft
-        if(iform.le.0) jz=nfft/2+1
         a(1:jz)=aa(1:jz)
+     else if(lbig) then
+        a(1:jz)=abig(1:jz); deallocate(abig)
      endif
      !$omp flush
      nplan=i   ! publish the completed entry

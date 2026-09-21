@@ -5284,6 +5284,8 @@ list. The list can be maintained in Settings (F2).</string>
     </property>
     <addaction name="actionEnable_hound_mode"/>
     <addaction name="actionUse_TX_frequency_jumps"/>
+    <addaction name="actionSuperFox_mode"/>
+    <addaction name="actionVerify_Fox_online"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuView"/>
@@ -7301,6 +7303,31 @@ list. The list can be maintained in Settings (F2).</string>
    </property>
    <property name="text">
     <string>Use hound TX frequency control</string>
+   </property>
+  </action>
+  <action name="actionVerify_Fox_online">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Verify Fox online (OTP)</string>
+   </property>
+   <property name="toolTip">
+    <string>A DXpedition can sign its transmissions with a one-time code. In Hound mode the code is checked with the verification server www.9dx.cc, and the answer is shown as a line: CALL verified, or CALL invalid. The Fox's callsign, the time and the code are sent to the server. Works for SuperFox and for old-style Fox.</string>
+   </property>
+  </action>
+  <action name="actionSuperFox_mode">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>SuperFox mode (S-Hound)</string>
+   </property>
+   <property name="toolTip">
+    <string>The DXpedition transmits SuperFox (WSJT-X 2.7 and later, MSHV): in Hound mode its slot is decoded by the SuperFox receiver. The receiver finds the Fox by itself, normally at 750 Hz, wherever the RX frequency is set. You transmit in the 15/45 s periods only. Also: right click on the Hound button.</string>
    </property>
   </action>
   <action name="actionDisableTx73">

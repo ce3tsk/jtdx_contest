@@ -49,8 +49,16 @@ subroutine fillhash(numthreads,lfill)
       endif
     endif
 
-    if(dxcall13.ne.dxcall13_0) then
-      if(len(trim(dxcall13)).gt.2) then
+! CE3TSK 2026-09-19: this used to act only when the DX call DIFFERED from the last one seen
+! (dxcall13_0), and dxcall13_0 survives the DX call being cleared. So: work VP2X/K1JT, change
+! band - the decoder wipes the 22-bit table (decoder.f90, lbandchanged) and the GUI clears the DX
+! call - type VP2X/K1JT again: equal to dxcall13_0, nothing was done, dxcall13_set stayed .false.
+! and the call was never hashed again. For a SuperFox with a compound call that is fatal: every
+! one of its lines carries only the hash, so they read <...> until the decoder is restarted, and
+! the GUI's blind-call rule halts every transmission. Now: a DX call that is set is made sure of
+! whenever it is new, was unset in between, or is no longer in the table (wiped, or pushed out).
+    if(len(trim(dxcall13)).gt.2) then
+      if(dxcall13.ne.dxcall13_0 .or. .not.dxcall13_set .or. .not.any(calls22.eq.dxcall13)) then
         dxcall13_set=.true.
         dxcall13_0=dxcall13
         hashdx10=ihashcall(dxcall13,10)
@@ -58,9 +66,9 @@ subroutine fillhash(numthreads,lfill)
 ! it is needed if manually callsign set in DX Call window was not decoded before
         call save_hash_call(dxcall13,1)
 !print *,dxcall13,hashdx10
-      else
-        dxcall13_set=.false.
       endif
+    else
+      dxcall13_set=.false.
     endif
   endif
 

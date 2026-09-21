@@ -274,6 +274,8 @@ set (wsjtx_CXXSRCS
   JTDXMessageBox.cpp
   JTDXDateTime.cpp
   FileDownload.cpp
+  HttpFetch.cpp      # CE3TSK: one in-memory HTTP(S) GET on the same two transports (SUPERFOX_PLAN.md M2)
+  FoxVerifier.cpp    # CE3TSK: checks a Fox's one-time code with the verification server
   )
 
 set (wsjt_CXXSRCS
@@ -500,6 +502,7 @@ set (wsjt_FSRCS
   lib/sleep_msec.f90
   lib/slope.f90
   lib/smo.f90
+  lib/smo121.f90   # CE3TSK: from WSJT-X 3.0.2, needed by the SuperFox sync search
   lib/softsym.f90
   lib/softsym9s.f90
   lib/softsym10.f90
@@ -544,6 +547,30 @@ set (wsjt_FSRCS
   lib/wqencode.f90
   lib/wspr_downsample.f90
   lib/zplot9.f90
+# CE3TSK: SuperFox receive (SuperHound), from WSJT-X 3.0.2 lib/superfox (SUPERFOX_PLAN.md).
+# The receiver: sfox_mod, qpc_mod, sfrx_sub (entry), sfox_ana, sfox_remove_tone, qpc_sync,
+# twkfreq2, sfox_demod, qpc_likelihoods2, qpc_decode2, qpc_snr, sfox_unpack. The rest only
+# serves the test tool sfoxsim, which makes SuperFox audio: jtdx does not transmit it.
+  lib/superfox/sfox_mod.f90
+  lib/superfox/qpc/qpc_mod.f90
+  lib/superfox/julian.f90
+  lib/superfox/sfrx_sub.f90
+  lib/superfox/sfox_ana.f90
+  lib/superfox/sfox_remove_tone.f90
+  lib/superfox/qpc_sync.f90
+  lib/superfox/twkfreq2.f90
+  lib/superfox/sfox_demod.f90
+  lib/superfox/sfox_pctile.f90
+  lib/superfox/qpc_likelihoods2.f90
+  lib/superfox/qpc_decode2.f90
+  lib/superfox/qpc_snr.f90
+  lib/superfox/sfox_unpack.f90
+  lib/superfox/foxgen2.f90
+  lib/superfox/sfox_assemble.f90
+  lib/superfox/sfox_pack.f90
+  lib/superfox/sfox_gen_gfsk.f90
+  lib/superfox/ran1.f90
+  lib/superfox/watterson_sf.f90
   )
 
 set (ka9q_CSRCS
@@ -565,6 +592,24 @@ set (wsjt_CSRCS
   lib/usleep.c
   lib/wisdom.c
   lib/wrapkarn.c
+# CE3TSK: the SuperFox polar code (127,50) over GF(128) by Nico Palermo IV3NWV, from WSJT-X
+# 3.0.2 lib/superfox/qpc, unchanged (GPL v3). np_qpc.c keeps its work arrays in file-static
+# storage: single-threaded use only, never from the FT8 slice threads. WSJT-X's
+# qpc_n127k50q128.c - the code's DEFINITION, whose author reserves its tables - is NOT part of
+# this program: qpc_measured.c holds the definition as measured from one transmission of
+# WSJT-X's own transmit tool (lib/superfox/qpc/measured/, and the file's own text; README.md).
+# qpc_ap.c is this program's own: np_qpc.c's decoder called with message symbols that are known
+# (the receiver's a-priori pass, lib/superfox/qpc_decode2.f90). qpc_scl.c is this program's own as well:
+# a CRC-aided successive-cancellation LIST decoder with candidate sets for the Hound slots (the pool pass).
+  lib/superfox/qpc/dbgprintf.c
+  lib/superfox/qpc/nhash2.c
+  lib/superfox/qpc/np_qpc.c
+  lib/superfox/qpc/np_rnd.c
+  lib/superfox/qpc/qpc_ap.c
+  lib/superfox/qpc/qpc_fwht.c
+  lib/superfox/qpc/qpc_measured.c
+  lib/superfox/qpc/qpc_scl.c
+  lib/superfox/qpc/qpc_subs.c
   )
 
 set (wsjt_qt_UISRCS
@@ -1226,6 +1271,23 @@ target_include_directories (ft4sim PRIVATE ${CMAKE_BINARY_DIR}/fortran_modules) 
 add_executable (ft2sim lib/ft2/ft2sim.f90 jtdx.rc)   # CE3TSK: FT2 is FT4's frame at twice the rate
 target_link_libraries (ft2sim wsjt_fort wsjt_cxx)
 target_include_directories (ft2sim PRIVATE ${CMAKE_BINARY_DIR}/fortran_modules)   # CE3TSK
+
+# CE3TSK: SuperFox test tools (SUPERFOX_PLAN.md). sfoxsim writes SuperFox audio, sfrx decodes
+# wav files through the same sfrx_sub the decoder process calls.
+add_executable (sfoxsim lib/superfox/sfoxsim.f90 jtdx.rc)
+target_link_libraries (sfoxsim wsjt_fort wsjt_cxx)
+target_include_directories (sfoxsim PRIVATE ${CMAKE_BINARY_DIR}/fortran_modules)
+
+add_executable (sfrx lib/superfox/sfrx.f90 jtdx.rc)
+target_link_libraries (sfrx wsjt_fort wsjt_cxx)
+target_include_directories (sfrx PRIVATE ${CMAKE_BINARY_DIR}/fortran_modules)
+if (WIN32)
+  # CE3TSK: the Fortran is compiled with OpenMP, so local arrays are on the stack: the SuperFox
+  # receiver's chain peaks near 5 MB (sfox_remove_tone alone holds 2.9 MB), against MinGW's 2 MB
+  # default. jtdxjt9 gets its 16 MB further down; these two tools need it for the same reason.
+  # Not run here - there is no Windows toolchain on the machine this was written on.
+  set_target_properties (sfrx sfoxsim PROPERTIES LINK_FLAGS -Wl,--stack,16777216)
+endif ()
 
 add_executable (ft8sim lib/ft8sim.f90 jtdx.rc)
 target_link_libraries (ft8sim wsjt_fort wsjt_cxx)

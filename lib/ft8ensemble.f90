@@ -23,6 +23,7 @@ module ft8ensemble
   private
   public :: NENSMAX,NENSBASE,enskind,ensval,ensseed,ensswl,enscycles,ensalt,ensdtcorr,ensfreqcorr,ens_perturb
   public :: nbgrun,nbgunits,lbgabort,tdecstart,bgsyncscale,nretrydither,lretrymode,ift8stage,lbgtones,NRETRY,nrxmembers
+  public :: ens_residual_refined   ! CE3TSK: the SuperFox QRM remover's residual
   public :: ens_reset_period,ens_store_tone,ens_residual,ens_record_fail,ens_retry_candidates,bg_lock_gone, &
             ens_dither_cd0,ntones,nfail,nretried,nretrystage,ens_merge_tones
 
@@ -66,6 +67,7 @@ module ft8ensemble
   integer, save :: itones(79,NTONEMAX)
   real, save :: tonef(NTONEMAX),tonedt(NTONEMAX)
   logical(1), save :: tonesw(NTONEMAX)
+  integer, save :: tonerefined(NTONEMAX)=0   ! CE3TSK: ens_residual_refined's verdict - 0 not yet, 1 DT refined, 2 left in
 ! CE3TSK: with the buffered emission the tone store is per slice during the pass and merged in
 ! slice order afterwards (ens_merge_tones) - the shared store under a critical was appended in
 ! thread-arrival order, and ens_residual subtracts in list order, so the residual band's float
@@ -153,7 +155,7 @@ contains
   ! ---- pipeline ensemble ----
 
   subroutine ens_reset_period()   ! at the start of a period's decode
-    ntones=0; ntones_b=0; nfail=0; lbgabort=.false.; lretrymode=.false.; bgsyncscale=1.0; nretried=0; nretrystage=0
+    ntones=0; tonerefined=0; ntones_b=0; nfail=0; lbgabort=.false.; lretrymode=.false.; bgsyncscale=1.0; nretried=0; nretrystage=0
   end subroutine ens_reset_period
 
   ! ft8b stores the tones of a decode (refined DT) so the residual unit can subtract it; a
@@ -226,6 +228,83 @@ contains
     enddo
     y=dd8(1:n)
   end subroutine ens_residual
+
+  ! CE3TSK 2026-09-20: the same, with each signal's DT REFINED BY WHAT THE SUBTRACTION LEAVES - as
+  ! WSJT-X's subtractft8 does it (lrefinedt): three trial subtractions at -90, 0 and +90 samples,
+  ! a parabola through the three residual powers, the real subtraction at its minimum when the
+  ! parabola has one inside the trials, else at the better of the three trial DTs; and no
+  ! subtraction at all when none of them lowers the band's power (a decode whose removal lowers
+  ! nothing is not a signal worth taking out - the routine's body has the review's story). subtractft8 here
+  ! takes its DT from the sync correlation, which is good enough for decoding the next FT8
+  ! signal and leaves a STRONG one only about 18 dB down. For the SuperFox receiver that is what
+  ! counts: a caller 20 dB above the Fox, 18 dB down, is still in its tone bins. Measured on a
+  ! -10 dB Fox under three callers at +13.8 dB (test/decode/sfoxqrm.py --callers, whose "+10"
+  ! was 3.8 dB hot until 2026-09-20): the donor 6 of 30, this program 0 with ens_residual. Used by the SuperFox QRM remover only - the FT8
+  ! decoder's own passes and the residual unit are untouched. nskipped: signals left in.
+  subroutine ens_residual_refined(x,y,n,nskipped)
+    use ft8_mod1, only : dd8
+    integer, intent(in) :: n
+    real, intent(in) :: x(n)
+    real, intent(out) :: y(n)
+    integer, intent(out) :: nskipped
+    real, allocatable, save :: base(:)
+    integer :: k
+    real :: sqa,sq0,sqb,dx,step,dtbest
+    real(8) :: pa,p0,pb,pbase,pbest
+    nskipped=0
+    if(.not.allocated(base)) allocate(base(size(dd8)))
+    step=90.0/12000.0
+    dd8(1:n)=x
+    do k=1,ntones
+       ! a signal this period's earlier residual has dealt with keeps its verdict: the second
+       ! round's residual refined all of the first round's signals again, 48 of them on a
+       ! crowded band, four subtractions each, for the same answer (but for the subtraction
+       ! window: the deep round leaves the SWL one in force, whose end correction differs from
+       ! the plain one's by 1.5 % of the amplitude over the first and last 0.15 s - about -36 dB)
+       if(tonerefined(k).eq.2) then; nskipped=nskipped+1; cycle; endif
+       if(tonerefined(k).eq.1) then
+          call subtractft8(itones(:,k),tonef(k),tonedt(k),tonesw(k)); cycle
+       endif
+       base=dd8; pbase=sum(real(base(1:n),8)**2)
+       call subtractft8(itones(:,k),tonef(k),tonedt(k)-step,tonesw(k)); pa=sum(real(dd8(1:n),8)**2)
+       dd8=base
+       call subtractft8(itones(:,k),tonef(k),tonedt(k)+step,tonesw(k)); pb=sum(real(dd8(1:n),8)**2)
+       dd8=base
+       call subtractft8(itones(:,k),tonef(k),tonedt(k),tonesw(k)); p0=sum(real(dd8(1:n),8)**2)
+       ! the three powers differ in their fifth digit or later: take the common part off in double
+       ! precision before peakup sees them as reals
+       sqa=real((pa-p0)/max(p0,1.d0)*1.d6); sqb=real((pb-p0)/max(p0,1.d0)*1.d6); sq0=0.
+       ! review of M3, 2026-09-20: peakup returns the parabola's vertex whether it is a minimum or
+       ! a MAXIMUM. When both trial DTs leave less power than the stored one (sqa+sqb < 0) the
+       ! vertex is the worst place there is, and a weak, noise-dominated tone was subtracted
+       ! there. The vertex counts only when the parabola opens upward; otherwise, and when the
+       ! vertex lies outside the three points, the best of the three trial DTs is taken. And
+       ! nothing is subtracted that does not LOWER the band's power (pbase): a signal whose
+       ! waveform adds power is not in the band as decoded, it is left in.
+       dx=9.
+       if(sqa+sqb-2.*sq0.gt.0.) call peakup(sqa,sq0,sqb,dx)
+       pbest=p0; dtbest=tonedt(k)                                  ! dd8 holds the centre subtraction now
+       if(abs(dx).le.1.0) then
+          if(abs(dx).gt.0.011) then        ! more than a sample away from the stored DT: do it again, there
+             dd8=base; dtbest=tonedt(k)+dx*step
+             call subtractft8(itones(:,k),tonef(k),dtbest,tonesw(k)); pbest=sum(real(dd8(1:n),8)**2)
+             if(pbest.ge.p0) then          ! three points are not the curve: the vertex left MORE than the stored DT did
+                dd8=base; dtbest=tonedt(k); pbest=p0
+                call subtractft8(itones(:,k),tonef(k),dtbest,tonesw(k))
+             endif
+          endif
+       else if(min(pa,pb).lt.p0) then      ! no minimum inside: the better end
+          dd8=base; dtbest=tonedt(k)+sign(step,real(pa-pb))        ! pa < pb: the earlier one
+          call subtractft8(itones(:,k),tonef(k),dtbest,tonesw(k)); pbest=min(pa,pb)
+       endif
+       if(pbest.lt.pbase) then
+          tonerefined(k)=1; tonedt(k)=dtbest
+       else
+          dd8=base; nskipped=nskipped+1; tonerefined(k)=2          ! it lowers nothing: leave the band as it was
+       endif
+    enddo
+    y=dd8(1:n)
+  end subroutine ens_residual_refined
 
   ! ft8_decode records a candidate that reached the LDPC/OSD stage and failed; one entry per
   ! place (3 Hz, 0.08 s), keeping the best sync

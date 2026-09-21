@@ -16,7 +16,7 @@ subroutine multimode_decoder(params)
   use ft8_mod1, only : lft8buffered,nft8res,ldectr2   ! CE3TSK: the emission merge (FT8_EMISSION_ORDER.md)
   use thread_ladder, only : decoder_threads   ! CE3TSK item 63: the one thread ladder, both mode paths
   use ft8ensemble, only : NENSMAX,NENSBASE,ens_perturb,ensdtcorr,ensfreqcorr,ensswl,enscycles,ensalt   ! CE3TSK: ensemble members
-  use ft8ensemble, only : ens_merge_tones
+  use ft8ensemble, only : ens_merge_tones,ens_residual_refined
   use ft8ensemble, only : nbgrun,nbgunits,lbgabort,tdecstart,bgsyncscale,lretrymode,lbgtones,ens_residual,   &
                           ens_reset_period,bg_lock_gone,ntones,nfail,nretried,nretrystage,   &
                           nrxmembers   ! CE3TSK: pipeline ensemble, P8
@@ -109,6 +109,18 @@ subroutine multimode_decoder(params)
   logical(c_bool) :: llowth0,lsubp0   ! CE3TSK: the period's sensitivity, restored after the background recipe
   integer :: nrxf0,nbgm
   logical :: lmergecheck   ! CE3TSK: JTDX_MERGE_CHECK diagnostic switch
+! CE3TSK: SuperFox milestone 3, the FT8 QRM remover (superfox_slot, superfox_residual). lsfqrm: this
+! period's FT8 decode is the SILENT one of a Fox slot - it prints nothing and feeds no DT
+! statistics (ft8_decoded), but subtracts, stores its tones and fills the hint memory as any
+! other. The sf_* are the operator's recipe while the fixed one is in force.
+  logical, save :: lsfqrm=.false.
+  logical :: lsfdecoded,sf_nswl,sf_altpass,sf_twopass,sf_deeposd,sf_filter,sf_againfil,sf_lagcc,sf_forcesync
+  integer :: sf_cycles,sf_swlcycles,sf_ensemble,sf_bgeffort,sf_nfa,sf_nfb,nsftried
+  integer :: sf_candthin,nsfleft   ! review of M3: the operator's candidate cap; the last residual's count of signals left in
+  logical :: lsfdeep=.false.       ! round B2 is running: ft8_unit(0,0) must not take it for a period's first pass
+  real(8) :: tsfround,tsfspent,tsfbudget   ! when round B1 began; what B1 + C took; the RX budget in seconds
+  real, allocatable, save :: dd8sf(:)      ! the Fox slot's band as received, 65536 x the sample
+  real, allocatable, save :: sfres(:)      ! the same with every decoded FT8 signal taken out
   data ndelay/0/
   data first/.true./
   data firstsd/.true./
@@ -182,6 +194,7 @@ subroutine multimode_decoder(params)
      evencopyk%lstate=.false.; oddcopyk%lstate=.false.
      calldteven%call2=''; calldtodd%call2=''; lastrxmsg(1)%lstate=.false.
      call ft4hint_clear()   ! CE3TSK: the FT4 hint lists as well
+     call sfox_forget()     ! CE3TSK: and the Fox the SuperFox receiver remembers, with its grid (sfrx_sub.f90)
   endif
 
   if(.not.params%nagain) ndelay=params%ndelay
@@ -338,7 +351,71 @@ subroutine multimode_decoder(params)
      lcommonft8b=params%lcommonft8b; lagcc=params%nagcc; lhound=params%lhound
      nft8cycles=params%nft8cycles; nft8swlcycles=params%nft8swlcycles; forcedt=0.
      lft8deeposd=params%lft8deeposd   ! CE3TSK
-     if(params%nagcc .or. params%lforcesync) call agccft8(params%nfa,params%nfb,params%lforcesync,forcedt)
+! CE3TSK: SuperFox receive (SUPERFOX_PLAN.md). In Hound mode with SuperHound on, the even slot -
+! the Fox's - is decoded by the SuperFox receiver and the FT8 decoder does not run in it
+! (WSJT-X's and MSHV's semantics): a SuperFox occupies 750-2250 Hz with a waveform the FT8
+! decoder cannot read, and the Hounds transmit in the odd slot, which decodes FT8 as usual.
+! The gate sits before agccft8 because that scales dd8 in place; the receiver wants the band
+! as received. Only an FT8 period reaches this line (FT2 and FT4 take the branch below).
+! Milestone 3, the FT8 QRM remover. WSJT-X and MSHV decode and subtract the ordinary FT8 signals
+! in the Fox's slot BEFORE they look for the Fox, with a plain FT8 decoder of their own. Here:
+!   A  the receiver on the band as received, as before - 0.02 s when it decodes, and then that is
+!      all (the reply is due at 15.0 s; nothing may stand in front of the common case);
+!   B  only when A found nothing: THIS program's FT8 decoder over the same slot, silent, over
+!      the Fox's 1.5 kHz only; ft8b stores the tones of every decode it accepts. In two rounds:
+!      B1 the plain recipe, three cycles - what a DXpedition's frequency really has on it is a
+!         few Hounds calling in the Fox's period, often strong, and those decode at once; it
+!         takes 0.2-0.3 s, so a Fox rescued here is still reported BEFORE the period ends and
+!         the reply goes out on time;
+!      B2 only when C still found nothing: SWL, five cycles, then the alternate pass, on the
+!         RESIDUAL C made (B1's signals out at their refined DTs, at any thread count) - the
+!         crowded-band case. The four-level hint memory, which these very decodes keep filled
+!         from one Fox slot to the next, serves both. B2 is the expensive one (it and its
+!         residual cost about twice what B1 and C did) and NOTHING bounded it: a crowded band
+!         with no Fox on it ended 3.8 s after the decode began at 12 threads, 6.8 s at one. It
+!         runs only if it can be expected to end inside the RX budget (-l, the GUI's setting,
+!         2.7 s unless set): now + 3.5 x (B1 + C) <= budget. (Twice was the first figure, from
+!         two runs at 12 threads; measured at 2 threads B2 and its residual cost 2.85 to 3.5
+!         times B1 + C, and a band let in at 1.74 s predicted ended 8.1 s into a 7 s budget.)
+!         And because a prediction is only that, B2 also checks the clock where it can stop:
+!         its alternate pass is not begun once the budget is spent (ft8_unit). A DXpedition's
+!         frequency passes (0.7 + 0.5 x 3.5 s), a crowded band or a slow machine does not;
+!   C  after each round that decoded anything new: the band as received minus all stored tones
+!      (ens_residual_refined - the tone list is the one complete record there is: dd8 after a
+!      threaded decode holds one slice's subtractions, the merged band nothing from the fourth
+!      pass on), and the receiver again (superfox_residual).
+! No AGC compensation and no forced sync in B: the residual must be of the band as received.
+! JTDX_SFQRM=0 switches B and C off (measurements; and a way out, should it misbehave on the air),
+! JTDX_SFQRM=1 leaves B1 and drops B2.
+     lsfqrm=.false.
+! CE3TSK: the clock of the SuperFox receiver's pool of Hounds ticks for an odd slot that was LISTENED
+! to - a FRESH period only (review 2: the Decode button, Shift+D and a double click on the waterfall
+! come through here again with the same slot, newdat false, and four clicks aged every Hound out).
+! Outside S-Hound mode what the receiver remembers is forgotten: it was heard in another mode of
+! operating, and the GUI reports no mode change for it.
+     if(lhound .and. params%nsftol.gt.0 .and. mod(mod(nutc,100),30).ge.15 .and. params%newdat) call sfox_odd_listened()
+     if(.not.(lhound .and. params%nsftol.gt.0)) call sfox_forget()
+     if(lhound .and. params%nsftol.gt.0 .and. mod(mod(nutc,100),30).lt.15) then
+        call superfox_slot(lsfdecoded)
+        call get_environment_variable('JTDX_SFQRM',dumpfile,ldump,idumpstat)
+        if(lsfdecoded .or. (idumpstat.eq.0 .and. ldump.gt.0 .and. dumpfile(1:1).eq.'0')) then
+           call superfox_done(); go to 800
+        endif
+        lsfqrm=.true.
+        sf_nswl=params%nswl; sf_swlcycles=params%nft8swlcycles; sf_altpass=params%lft8altpass
+        sf_cycles=params%nft8cycles; sf_twopass=params%lft8twopass; sf_deeposd=params%lft8deeposd
+        sf_ensemble=params%nft8ensemble; sf_bgeffort=params%nft8bgeffort; sf_filter=params%nfilter
+        sf_againfil=params%nagainfil; sf_nfa=params%nfa; sf_nfb=params%nfb; sf_lagcc=lagcc
+        sf_forcesync=params%lforcesync; sf_candthin=params%ncandthin
+        params%nswl=.false.; params%nft8cycles=3; nft8cycles=3; params%lft8altpass=.false.   ! round B1
+        params%lft8twopass=.false.; params%lft8deeposd=.false.; lft8deeposd=.false.; nsftried=0
+        params%nft8ensemble=0; params%nft8bgeffort=0; params%nfilter=.false.; params%nagainfil=.false.
+        params%nfa=max(params%nfa,params%nfqso-100); params%nfb=min(params%nfb,params%nfqso+1650)
+        lagcc=.false.; params%lforcesync=.false.
+        params%ncandthin=100   ! every candidate: a thinned list (-N 30) left 5 of 47 signals in a crowded band
+        nsfleft=0; lsfdeep=.false.; tsfround=omp_get_wtime()
+     endif
+     if(.not.lsfqrm .and. (params%nagcc .or. params%lforcesync)) call agccft8(params%nfa,params%nfb,params%lforcesync,forcedt)
      if((hiscall.ne.hiscall12_0 .and. hiscall.ne.'            ') &
         .or. (mycall.ne.mycall12_0 .and. mycall.ne.'            ') .or. (lhound.neqv.lhoundprev)) then
         if(hiscall.ne.'            ') then
@@ -491,10 +568,55 @@ if(nslicing.gt.1 .or. nmembers.gt.0 .or. lrxbudget .or. lpipeline) then
    lcollectdelta=(nslicing.gt.1 .or. (lpipeline .and. numthreads.gt.1))   ! a single thread has no dd8orig to diff against
 endif
 lbgtones=lpipeline
+if(lsfqrm) then   ! CE3TSK: SuperFox QRM remover
+   lbgtones=.true.   ! its residual is built from the stored tones
+   ! round B2 continues on the band B1 left, and its alternate pass merges deltas: B1's recipe
+   ! alone (one slicing, no pipeline) would neither have allocated the delta array nor collected
+   ! into it - B2 then merged through an unallocated array and the decoder stopped
+   if(numthreads.gt.1) then
+      if(.not.allocated(dd8delta)) then; allocate(dd8delta(size(dd8),nslicesft8)); dd8delta=0.; endif
+      lcollectdelta=.true.
+   endif
+endif
 nswl0=params%nswl; ncyc0=nft8cycles; ldeep0=lft8deeposd; nswlcyc0=nft8swlcycles
 llowth0=params%lft8lowth; lsubp0=params%lft8subpass; nrxf0=params%nft8rxfsens
 nslicing0=nslicing; naltpass0=naltpass
 call ft8_unit(0,0)
+if(lsfqrm) then   ! CE3TSK: SuperFox milestone 3 - the gate has the story
+   call superfox_residual(lsfdecoded)
+   call get_environment_variable('JTDX_SFQRM',dumpfile,ldump,idumpstat)   ! =1: the quick round alone (measurements)
+   if(idumpstat.eq.0 .and. ldump.gt.0 .and. dumpfile(1:1).eq.'1') lsfdecoded=.true.
+   if(.not.lsfdecoded) then   ! round B2 - if it can be expected to end inside the RX budget (the gate has the rule)
+      tsfspent=omp_get_wtime()-tsfround
+      tsfbudget=dble(max(1,merge(params%nrxbudget,27,params%nrxbudget.gt.0)))/10.d0
+      lsfdeep=omp_get_wtime()-tdecstart+3.5d0*tsfspent.le.tsfbudget
+      if(.not.lsfdeep) then
+         call get_environment_variable('JTDX_MEMO_STATS',dumpfile,ldump,idumpstat)
+         if(idumpstat.eq.0) write(0,'(a,f6.2,a,f6.2,a,f5.1,a)') 'SuperFox QRM remover: deep round skipped, ',  &
+              omp_get_wtime()-tdecstart,' s gone and the quick round took ',tsfspent,', RX budget ',tsfbudget,' s'
+      endif
+   endif
+   if(.not.lsfdecoded .and. lsfdeep) then   ! the alternate pass needs more than one thread
+      params%nswl=.true.; params%nft8swlcycles=5; nft8swlcycles=5
+      nslicing0=1; naltpass0=0
+      ! B2 starts from the residual C made, whatever the thread count: B1's signals out at their
+      ! refined DTs - pass 3's too, which a threaded B1 never subtracts - and those the residual
+      ! left in, back in. (Before, one thread started there, by way of the dd8 the residual
+      ! borrows, and several threads from B1's merged deltas.) No residual if B1 decoded nothing.
+      if(nsftried.gt.0 .and. allocated(sfres)) then
+         if(numthreads.gt.1) then; dd8orig(1:180000)=65536.0*sfres
+         else; dd8(1:180000)=65536.0*sfres; endif
+      else if(numthreads.gt.1) then
+         do it=1,nslicesft8; dd8orig=dd8orig+dd8delta(:,it); enddo
+      endif
+      if(numthreads.gt.1) then   ! B2 collects its own deltas anew
+         dd8delta=0.; lcollectdelta=.true.; nslicing0=2; naltpass0=2
+      endif
+      call ft8_unit(0,0)   ! lsfdeep tells it that this is no period's first pass
+      lsfdeep=.false.
+      call superfox_residual(lsfdecoded)
+   endif
+endif
 laltdeferred=.false.
 if(lpipeline) then   ! the band after the recipe's passes: the deferred alternate pass and the retry unit work on it
    allocate(dd8merged(size(dd8)))
@@ -554,7 +676,7 @@ endif
 !  if(nsec.eq.15 .or. nsec.eq.45) print *, odd(i)%msg
 !enddo
 
-    if(params%ndelay.eq.0) then
+    if(params%ndelay.eq.0 .and. .not.lsfqrm) then   ! CE3TSK: not from the QRM remover's silent decode
       nFT8decd=my_ft8%decoded; dtmed=0.
       if(params%lforcesync) then; nintcount=3 ! fast track after Sync
       else if(nintcount.gt.0) then; nintcount=nintcount-1
@@ -599,6 +721,7 @@ endif
     call fillhash(nslicesft8,.true.)
     ncandall=sum(ncandallthr(1:nslicesft8))
 !     call timer('decft8  ',1)
+    if(lsfqrm) call superfox_close()   ! CE3TSK: the operator's recipe back, nothing left for the TX background
     go to 800
   endif
 
@@ -1071,6 +1194,10 @@ contains
     logical(c_bool) :: lsubp6   ! CE3TSK: the classic unit's saved sub-pass setting, restored below
     if(kind.eq.0) then
        nslicing=nslicing0; naltpass=naltpass0; lsecondpass=.false.
+       ! CE3TSK: the Fox slot's round B2 is a FOLLOW-UP of B1 in the same period, as every other
+       ! unit kind is: as a first pass it zeroed B1's incoming-call records and exported the
+       ! even/odd lists over B1's
+       if(lsfqrm .and. lsfdeep) lsecondpass=.true.
     else if(kind.eq.1) then
        nslicing=1; naltpass=0
        if(ensalt(im) .and. numthreads.gt.1) then; nslicing=2; naltpass=2; endif
@@ -1130,6 +1257,11 @@ contains
     endif
     call unit_filter()
     do islicing=1,nslicing
+    ! CE3TSK: the Fox slot's deep round does not begin another pass - its alternate one - once the RX
+    ! budget is spent; what its SWL pass decoded still goes into the residual (superfox_residual)
+    if(lsfqrm .and. lsfdeep .and. islicing.gt.1) then
+       if(omp_get_wtime()-tdecstart.gt.tsfbudget) exit
+    endif
     nhalf=0; if(islicing.eq.2 .and. ((params%lft8twopass .and. kind.eq.0) .or. (params%lbgtwopass .and. kind.eq.5))) nhalf=1
     if(islicing.gt.1) then   ! the band with every earlier pass's subtractions, merged in thread order
        ! CE3TSK diagnostic, JTDX_MERGE_CHECK: the per-slice deltas are printed BEFORE the merge
@@ -1439,6 +1571,7 @@ contains
           write(97,*) 'lft8twopass=',params%lft8twopass
           write(97,*) 'lft8altpass=',params%lft8altpass
           write(97,*) 'nft8ensemble=',params%nft8ensemble
+          write(97,*) 'nsftol=',params%nsftol
           close(97)
        endif
   end subroutine dump_params
@@ -1642,6 +1775,116 @@ contains
     call flush(6)
   end subroutine ft8_background
 
+  subroutine superfox_slot(ldecoded)
+! CE3TSK: the Fox's slot in SuperHound mode (the gate above). sfrx_sub is WSJT-X 3.0.2's
+! receiver and takes what it took there, 15 s of 16-bit samples: dd8 holds 65536 times the
+! sample (jt9a.f90, jt9.f90), so nint(dd8/65536) gives the recorded integers back exactly from
+! a file and to the nearest integer from the live float stream. Past the end of the captured
+! audio the live buffer still holds the previous period's tail, so that part is zeroed; file
+! mode and File > Open have done the same already.
+! It prints its own decode lines (sfox_unpack). Single threaded by construction: the polar
+! decoder's work arrays are file-static C (np_qpc.c).
+! Afterwards nothing of an FT8 decode may be left for the TX background phase, which would
+! otherwise decode the PREVIOUS period's retained band again: with the arrays gone it prints
+! its empty <BackgroundFinished> line (the dispatch at the top of this routine).
+    integer*2, allocatable, save :: iwave(:)
+    integer :: nlast,nsfprog1
+    logical, intent(out) :: ldecoded
+
+    if(.not.allocated(iwave)) allocate(iwave(180000))
+    if(.not.allocated(dd8sf)) allocate(dd8sf(180000))
+    nlast=min(180000,max(0,params%nzhsym)*3456)
+    if(nlast.eq.0) nlast=180000   ! no block count given: the whole buffer
+    iwave(1:nlast)=nint(max(-32768.0,min(32767.0,dd8(1:nlast)/65536.0)),2)
+    if(nlast.lt.180000) iwave(nlast+1:180000)=0
+    dd8sf(1:nlast)=dd8(1:nlast); if(nlast.lt.180000) dd8sf(nlast+1:180000)=0.   ! for stage C, should it come to that
+    call fillhash(1,.false.)   ! mycall13 and its hashes, for a Fox addressing our own hashed call
+    ! and at once the merge that normally follows a decode: fillhash(.false.) has just put a DX
+    ! call the operator typed on thread 1's list, and only the merge makes it resolvable. A busy
+    ! Fox with a compound call never sends the CQ-only period that carries its call in full, so
+    ! the typed DX call is the ONLY way its hash is ever read - and it must be read in THIS
+    ! period, not the next Fox period 30 s on (the blind-call rule waits for it). Idempotent.
+    call fillhash(1,.true.)
+    if(params%newdat) call sfox_age()   ! the Fox the receiver REMEMBERS is forgotten after four Fox slots without a decode of it (a fresh period only: a re-decode is the same slot)
+    call sfox_known(hiscall,1)   ! the DX call is a Fox the receiver may accept below its SNR floor (qpc_decode2)
+    ! and what its a-priori pass may state beside that call: the DX grid, for the Fox's CQ, and my
+    ! own call when the QSO expects an answer to ME - the two rows of FT8's Hound table that hold
+    ! a-priori types (ft8b.f90, nhaptypes: Tx1 sent, a report may come; Tx3 sent, RR73 or the report
+    ! again), and like FT8's only while a transmission of mine is no more than two minutes old
+    nsfprog1=0
+    if(params%lapmyc .and. params%nQSOProgress.eq.1) nsfprog1=1
+    if(params%lapmyc .and. params%nQSOProgress.eq.3) nsfprog1=2
+    call sfox_grid(hisgrid(1:4))
+    call sfox_me(mycall,nsfprog1)
+    call sfrx_sub(nutc,params%nfqso,params%nsftol,iwave,ldecoded)
+    call fillhash(1,.true.)    ! a compound Fox call learnt from its CQ (sfox_unpack) becomes resolvable
+  end subroutine superfox_slot
+
+  subroutine superfox_done()
+! CE3TSK: the end of a Fox slot, whichever way it went. Nothing of an FT8 decode may be left for
+! the TX background phase, which would otherwise decode a retained band again - the previous
+! period's, or this slot's own QRM-removal band, and PRINT it: with the arrays gone it prints
+! its empty <BackgroundFinished> line (the dispatch at the top of multimode_decoder).
+    if(allocated(dd8prist)) deallocate(dd8prist)
+    if(allocated(dd8merged)) deallocate(dd8merged)
+    if(allocated(dd8orig)) deallocate(dd8orig)
+    if(allocated(dd8delta)) deallocate(dd8delta)
+    ncandall=0
+  end subroutine superfox_done
+
+  subroutine superfox_residual(ldecoded)
+! CE3TSK: milestone 3, stage C (the gate has the whole story). A silent FT8 round is over and
+! ft8b has stored the tones of everything it accepted: take them all out of the band AS RECEIVED
+! and run the SuperFox receiver on what is left - unless the round decoded nothing new, for then
+! what is left is what the receiver has seen already. Serial code: the residual borrows the
+! master thread's dd8, and the polar decoder's work arrays are file-static C.
+    logical, intent(out) :: ldecoded
+    integer :: nleft
+    logical :: lrebuilt
+
+    ldecoded=.false.; nleft=nsfleft; lrebuilt=.false.
+    if(ntones.gt.nsftried) then
+       lrebuilt=.true.
+       nsftried=ntones
+       if(.not.allocated(sfres)) allocate(sfres(180000))
+       call get_environment_variable('JTDX_SFQRM_REFINE',dumpfile,ldump,idumpstat)   ! =0: the plain residual, for measurements
+       if(idumpstat.eq.0 .and. ldump.gt.0 .and. dumpfile(1:1).eq.'0') then
+          call ens_residual(dd8sf,sfres,180000)
+       else
+          call ens_residual_refined(dd8sf,sfres,180000,nleft)   ! each signal's DT refined by what its subtraction leaves
+       endif
+       nsfleft=nleft
+       sfres=sfres/65536.0
+       call get_environment_variable('JTDX_SFQRM_DUMP',dumpfile,ldump,idumpstat)   ! the residual, for looking at
+       if(idumpstat.eq.0 .and. ldump.gt.0) then
+          open(98,file=dumpfile(1:ldump),access='stream',status='replace'); write(98) sfres; close(98)
+       endif
+       call fillhash(1,.true.)
+       call sfrx_core(nutc,params%nfqso,params%nsftol,sfres,ldecoded)
+       call fillhash(1,.true.)
+    endif
+    call get_environment_variable('JTDX_MEMO_STATS',dumpfile,ldump,idumpstat)
+    if(idumpstat.eq.0 .and. lrebuilt) write(0,'(a,i4,a,i3,a,l2,a,f6.2,a)') 'SuperFox QRM remover: ',ntones,  &
+         ' FT8 signals decoded, ',nleft,' left in (they lower nothing), Fox decoded',ldecoded,', ',omp_get_wtime()-tdecstart,  &
+         ' s since the decode began'
+    if(idumpstat.eq.0 .and. .not.lrebuilt) write(0,'(a,i4,a,f6.2,a)') 'SuperFox QRM remover: ',ntones,  &
+         ' FT8 signals decoded, none of them new - the residual is the one already tried, ',omp_get_wtime()-tdecstart,  &
+         ' s since the decode began'
+  end subroutine superfox_residual
+
+  subroutine superfox_close()
+! the operator's recipe back in force, and the slot closed as any other Fox slot
+    params%nswl=sf_nswl; params%nft8swlcycles=sf_swlcycles; nft8swlcycles=sf_swlcycles
+    params%nft8cycles=sf_cycles; nft8cycles=sf_cycles; params%lft8twopass=sf_twopass
+    params%lft8deeposd=sf_deeposd; lft8deeposd=sf_deeposd
+    params%lft8altpass=sf_altpass; params%nft8ensemble=sf_ensemble; params%nft8bgeffort=sf_bgeffort
+    params%nfilter=sf_filter; params%nagainfil=sf_againfil; params%nfa=sf_nfa; params%nfb=sf_nfb
+    lagcc=sf_lagcc; params%lforcesync=sf_forcesync; params%ncandthin=sf_candthin
+    call unit_filter()   ! the subtraction window follows the recipe's SWL flag
+    lbgtones=.false.; lsfqrm=.false.
+    call superfox_done()
+  end subroutine superfox_close
+
   subroutine ft8_decoded (this,snr,dt,freq,decoded,servis8)
     use ft8_decode
     implicit none
@@ -1657,6 +1900,15 @@ contains
 ! CE3TSK: an ensemble member's band is delayed or frequency shifted; report the signal's own
 ! DT and frequency (ft8ensemble.f90 sets the corrections, zero for the base decode). The
 ! marker '#' (a hint decode in the TX background) prints as the box-drawing cross U+253C.
+    if(lsfqrm) return   ! CE3TSK: the Fox slot's QRM-removal decode says nothing and counts nothing
+! CE3TSK 2026-09-20: S-Hound mode, a Hound's slot. Who calls or answers the Fox in DX Call is a
+! Hound the Fox may name in its next messages: into the SuperFox receiver's pool (sfrx_sub.f90
+! sfox_pool_line; sfox_mod.f90, stage B of the hint memory). Every FT8 thread comes through here.
+    if(lhound .and. params%nsftol.gt.0) then
+!$omp critical(sfox_pool)
+       call sfox_pool_line(decoded,hiscall,mycall)
+!$omp end critical(sfox_pool)
+    endif
     mark=servis8
     if(servis8.eq.'#') mark=char(226)//char(148)//char(188)
     write(*,1000) nutc,snr,dt+ensdtcorr,nint(freq+ensfreqcorr),decoded,trim(mark)

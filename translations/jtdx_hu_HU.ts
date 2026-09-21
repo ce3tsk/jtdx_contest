@@ -6148,6 +6148,46 @@ Ezt csak egyszer kérdezzük meg.</translation>
         <source>FT2: FT4's frame at twice the rate, 3.75 s periods. Receive and transmit both work; its own decoding presets are in the Decode menu, under FT2 decoding.</source>
         <translation>FT2: az FT4 keret dupla sebességgel, 3,75 s-os periódusok. A vétel és az adás is működik; saját dekódolási előbeállításai a Dekódolás menüben, az FT2 dekódolás alatt találhatók.</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>SuperFox mode (S-Hound)</source>
+        <translation>SuperFox mód (S-Vadász)</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>The DXpedition transmits SuperFox (WSJT-X 2.7 and later, MSHV): in Hound mode its slot is decoded by the SuperFox receiver. The receiver finds the Fox by itself, normally at 750 Hz, wherever the RX frequency is set. You transmit in the 15/45 s periods only. Also: right click on the Hound button.</source>
+        <translation>A DX expedíció SuperFox jelet ad (WSJT-X 2.7 és újabb, MSHV): Vadász módban az ő periódusát a SuperFox vevő dekódolja. A vevő magától megtalálja a Foxot, általában 750 Hz-en, bárhol is áll az RX frekvencia. Adni csak a 15/45 s periódusokban lehet. Továbbá: jobb kattintás a Vadász gombon.</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>S-Hound</source>
+        <translation>S-Vadász</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>SuperFox %1 has not been decoded yet: transmission halted</source>
+        <translation>A(z) %1 SuperFox még nincs dekódolva: az adás leállítva</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Verify Fox online (OTP)</source>
+        <translation>Fox ellenőrzése online (OTP)</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>A DXpedition can sign its transmissions with a one-time code. In Hound mode the code is checked with the verification server www.9dx.cc, and the answer is shown as a line: CALL verified, or CALL invalid. The Fox's callsign, the time and the code are sent to the server. Works for SuperFox and for old-style Fox.</source>
+        <translation>A DX expedíció egyszer használatos kóddal írhatja alá az adásait. Vadász módban a kódot a www.9dx.cc ellenőrző szerver vizsgálja meg, a válasz pedig egy sorként jelenik meg: CALL verified vagy CALL invalid. A szervernek a Fox hívójele, az időpont és a kód kerül elküldésre. SuperFox és hagyományos Fox esetén is működik.</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Fox verification: %1 is not known to the verification server</source>
+        <translation>Fox ellenőrzés: %1 nem ismert az ellenőrző szerver számára</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Fox verification failed: %1</source>
+        <translation>A Fox ellenőrzése sikertelen: %1</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

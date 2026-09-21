@@ -6143,6 +6143,46 @@ This is asked only once.</source>
         <source>FT2: FT4's frame at twice the rate, 3.75 s periods. Receive and transmit both work; its own decoding presets are in the Decode menu, under FT2 decoding.</source>
         <translation>FT2：以兩倍速率發送 FT4 的幀，週期為 3.75 秒。收發都可用；它自己的解碼預設在解碼菜單的 FT2 解碼中。</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>SuperFox mode (S-Hound)</source>
+        <translation>SuperFox 模式 (S-獵犬)</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>The DXpedition transmits SuperFox (WSJT-X 2.7 and later, MSHV): in Hound mode its slot is decoded by the SuperFox receiver. The receiver finds the Fox by itself, normally at 750 Hz, wherever the RX frequency is set. You transmit in the 15/45 s periods only. Also: right click on the Hound button.</source>
+        <translation>DX遠征使用 SuperFox 發射 (WSJT-X 2.7 及更高版本、MSHV)：在獵犬模式下，其時段由 SuperFox 接收器解碼。接收器會自行找到 Fox (通常在 750 Hz)，與 RX 頻率的位置無關。您只能在 15/45 秒時段發射。另外：右鍵單擊獵犬按鈕。</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>S-Hound</source>
+        <translation>S-獵犬</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>SuperFox %1 has not been decoded yet: transmission halted</source>
+        <translation>SuperFox %1 尚未解碼：發射已中止</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Verify Fox online (OTP)</source>
+        <translation>線上驗證 Fox (OTP)</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>A DXpedition can sign its transmissions with a one-time code. In Hound mode the code is checked with the verification server www.9dx.cc, and the answer is shown as a line: CALL verified, or CALL invalid. The Fox's callsign, the time and the code are sent to the server. Works for SuperFox and for old-style Fox.</source>
+        <translation>DX遠征可以用一次性代碼為其發射簽名。在獵犬模式下，該代碼會提交給驗證伺服器 www.9dx.cc 核對，結果顯示為一行：CALL verified 或 CALL invalid。傳送給伺服器的內容包括 Fox 的呼號、時間和代碼。適用於 SuperFox 和傳統 Fox。</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Fox verification: %1 is not known to the verification server</source>
+        <translation>Fox 驗證：驗證伺服器不認識 %1</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Fox verification failed: %1</source>
+        <translation>Fox 驗證失敗：%1</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

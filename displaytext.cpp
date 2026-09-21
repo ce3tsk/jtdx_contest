@@ -1194,6 +1194,16 @@ void DisplayText::displayContestNotice(QString text)
   appendText(t,bg,Radio::convert_dark("#000000",useDarkStyle_),0," ",Radio::convert_dark("#000000",useDarkStyle_));
 }
 
+/* CE3TSK: the Fox verifier's answer, SUPERFOX_PLAN.md milestone 2. `line` is a whole decode-style
+   line ("hhmmss   0  0.0  750 ~ K1JT verified"), so it sits in the columns of the decodes around
+   it; green for verified, red for invalid, as MSHV colours them. verdict 0 is the plain form, used
+   when the operator asked to see the lines that carry the code (ini ShowOTP). */
+void DisplayText::displayFoxVerification(QString const& line, int verdict)
+{
+  QString const bg = Radio::convert_dark(1 == verdict ? "#c8fac8" : 2 == verdict ? "#ff6e6e" : "#ffffff",useDarkStyle_);
+  appendText(line,bg,Radio::convert_dark("#000000",useDarkStyle_),0," ",Radio::convert_dark("#000000",useDarkStyle_),"",1 == verdict || 2 == verdict);
+}
+
 void DisplayText::displayQSY(QString text)
 {
   QString t = QDateTime::currentDateTimeUtc().toString("hhmmss") + "            " + text;
