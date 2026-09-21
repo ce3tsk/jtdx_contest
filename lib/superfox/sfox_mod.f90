@@ -49,9 +49,17 @@ module sfox_mod
 !   JTDX_SFOX_POOLFLOOR=x   the SNR floor of its decodes, dB                       (default -19.5)
 !   JTDX_SFOX_POOLAGE=n     odd slots LISTENED TO in which a Hound may be absent before it leaves
 !                           the pool (the clock stands while I transmit); 0 = no pool   (default 4)
+!   JTDX_SFOX_FLOOR=x       the ordinary search's SNR floor for a Fox that is NOT known, dB: WSJT-X's
+!                           -16.5, MSHV's -16.95 (a known Fox has none)             (default -16.95)
+!   JTDX_SFOX_LISTANY=0     the list pass's round with NOTHING told off (below)      (default on)
+!   JTDX_SFOX_LISTANYFLOOR=x its SNR floor, dB                                       (default -16.95)
+!   JTDX_SFOX_LISTANYLOOKS=1|2|L the same for that round (83 of its 83 decodes on record came at the
+!                           likelihoods; kept at 2 until on-air material says)     (default 2)
 !   JTDX_SFOX_LIST=0        the LIST pass off (below)                              (default on)
 !   JTDX_SFOX_LISTL=n       its list size, 1 to 256                                (default 64)
-!   JTDX_SFOX_LISTLOOKS=1|2 forms of the spectra it tries: themselves; the likelihoods too (default 2)
+!   JTDX_SFOX_LISTLOOKS=1|2|L forms of the spectra it tries: themselves; the likelihoods too; L the
+!                           likelihoods ONLY (for experiments: every AWGN decode on record came at that look)
+!                                                                                  (default 2)
 !   JTDX_SFOX_LISTCRC=n     how many of the list's paths, best first, may be tried against the
 !                           CRC, 1 to 16                                           (default 4)
 !   JTDX_SFOX_LISTFLOOR=x   the SNR floor of its decodes, dB                       (default -17.3)
@@ -103,6 +111,20 @@ module sfox_mod
 ! there the CRC stands alone, as in stage A. At -17.2 it would cost 1 true decode in 124, at -17.1 four.
 ! The margin is thin and the figures are simulated ones - a SETTING, to be looked at with on-air material.
   integer, save :: nsfliston=1
+! CE3TSK 2026-09-21: ON PAR WITH MSHV FOR A FOX THAT IS NOT KNOWN (SUPERFOX_DECODER_IDEAS.md 4.14, idea 9):
+! the search's floor as a setting - MSHV accepts down to -16.95 dB for every Fox - and a last round of the
+! list pass with nothing told at all, for a Fox the receiver does not know, with a floor of its own.
+! Measured (test/experiments/sfox_scl/results/s7_*, a busy Fox, NO DX call, 600 files a channel): WSJT-X's
+! floor and no such round 211 (AWGN) / 287 (fading); the floor at -16.95 alone 233 / 287; the round alone
+! 265 / 316; both 287 / 316 - 50 % at -17.2 dB (MSHV -17.2) and -15.7 (MSHV -15.6). The round's floor at
+! -16.5 keeps 245, at -17.3 291: its true decodes read -16.95 and up here, while the best words of NOISE
+! reach -16.95 once in 3998 and -17.3 in 124 - so -16.95, a hundred times fewer chances for 4 decodes in
+! 600. No line in 2000 periods of noise and 1000 of a Fox at -19 / -20 dB; with BOTH floors taken away
+! one false line in those 2000. About 0.15 s more in a period in which nothing decodes.
+  real, save :: sfsearchfloor=-16.95
+  integer, save :: nsflistany=1
+  real, save :: sflistanyfloor=-16.95
+  integer, save :: nsflistanylooks=2   !1 the spectra, 2 both, 3 ("L") the likelihoods alone - as nsflistlooks
   integer, save :: nsflistl=64
   integer, save :: nsflistcrc=4
   integer, save :: nsflistlooks=2
@@ -287,6 +309,29 @@ contains
        if(ios.ne.0 .or. i.lt.0 .or. i.gt.1000) call sfox_badcfg('JTDX_SFOX_POOLAGE',v(1:n),'listened odd slots, 0 to 1000')
        nsfpoolage=i
     endif
+    call get_environment_variable('JTDX_SFOX_FLOOR',v,n,ios)
+    if(ios.eq.-1) call sfox_badcfg('JTDX_SFOX_FLOOR',v,'at most 32 characters')
+    if(ios.eq.0 .and. n.gt.0) then
+       ios=1; if(sfox_isnum(v(1:n))) read(v(1:n),*,iostat=ios) x
+       if(ios.ne.0 .or. x.lt.-99.0 .or. x.gt.30.0) call sfox_badcfg('JTDX_SFOX_FLOOR',v(1:n),'dB, -99 to 30')
+       sfsearchfloor=x
+    endif
+    call get_environment_variable('JTDX_SFOX_LISTANY',v,n,ios)
+    if(ios.eq.-1) call sfox_badcfg('JTDX_SFOX_LISTANY',v,'at most 32 characters')
+    if(ios.eq.0 .and. n.gt.0) then
+       if(v(1:n).eq.'0') then
+          nsflistany=0
+       else if(v(1:n).ne.'1') then
+          call sfox_badcfg('JTDX_SFOX_LISTANY',v(1:n),'0 or 1')
+       endif
+    endif
+    call get_environment_variable('JTDX_SFOX_LISTANYFLOOR',v,n,ios)
+    if(ios.eq.-1) call sfox_badcfg('JTDX_SFOX_LISTANYFLOOR',v,'at most 32 characters')
+    if(ios.eq.0 .and. n.gt.0) then
+       ios=1; if(sfox_isnum(v(1:n))) read(v(1:n),*,iostat=ios) x
+       if(ios.ne.0 .or. x.lt.-99.0 .or. x.gt.30.0) call sfox_badcfg('JTDX_SFOX_LISTANYFLOOR',v(1:n),'dB, -99 to 30')
+       sflistanyfloor=x
+    endif
     call get_environment_variable('JTDX_SFOX_LIST',v,n,ios)
     if(ios.eq.-1) call sfox_badcfg('JTDX_SFOX_LIST',v,'at most 32 characters')
     if(ios.eq.0 .and. n.gt.0) then
@@ -305,11 +350,10 @@ contains
     endif
     call get_environment_variable('JTDX_SFOX_LISTLOOKS',v,n,ios)
     if(ios.eq.-1) call sfox_badcfg('JTDX_SFOX_LISTLOOKS',v,'at most 32 characters')
-    if(ios.eq.0 .and. n.gt.0) then
-       ios=1; if(sfox_isint(v(1:n))) read(v(1:n),*,iostat=ios) i
-       if(ios.ne.0 .or. i.lt.1 .or. i.gt.2) call sfox_badcfg('JTDX_SFOX_LISTLOOKS',v(1:n),'1 or 2')
-       nsflistlooks=i
-    endif
+    if(ios.eq.0 .and. n.gt.0) nsflistlooks=sfox_looks('JTDX_SFOX_LISTLOOKS',v(1:n))
+    call get_environment_variable('JTDX_SFOX_LISTANYLOOKS',v,n,ios)
+    if(ios.eq.-1) call sfox_badcfg('JTDX_SFOX_LISTANYLOOKS',v,'at most 32 characters')
+    if(ios.eq.0 .and. n.gt.0) nsflistanylooks=sfox_looks('JTDX_SFOX_LISTANYLOOKS',v(1:n))
     call get_environment_variable('JTDX_SFOX_LISTCRC',v,n,ios)
     if(ios.eq.-1) call sfox_badcfg('JTDX_SFOX_LISTCRC',v,'at most 32 characters')
     if(ios.eq.0 .and. n.gt.0) then
@@ -346,6 +390,22 @@ contains
     if(sfox_isnum) sfox_isnum=scan(t(2:),'+-').eq.0 .and. index(t,'.').eq.index(t,'.',.true.)
 
   end function sfox_isnum
+
+  integer function sfox_looks(name,t)
+
+! the list pass's looks: 1 the spectra, 2 the spectra and the likelihoods, L (returned as 3) the likelihoods alone
+
+    character*(*) name,t
+    integer i,ios
+
+    if(t.eq.'L' .or. t.eq.'l') then
+       sfox_looks=3; return
+    endif
+    ios=1; if(sfox_isint(t)) read(t,*,iostat=ios) i
+    if(ios.ne.0 .or. i.lt.1 .or. i.gt.2) call sfox_badcfg(name,t,'1, 2 or L')
+    sfox_looks=i
+
+  end function sfox_looks
 
   logical function sfox_isint(t)
 

@@ -71,7 +71,9 @@ subroutine sfrx_core(nutc,nfqso,ntol,dd,ldecoded)
 ! CE3TSK: a Fox decoded ABOVE the floor is a Fox the receiver knows from here on (qpc_decode2) -
 ! by the ordinary search: an a-priori decode is of a Fox already known, and teaches nothing -
 ! but ANY decode of the remembered Fox says it is still there (sfox_age)
-     if(snr.ge.-16.5 .and. .not.lsfoxap) call sfox_remember(xdec,foxcall)
+! (2026-09-21: "above the floor" is the search's floor setting, JTDX_SFOX_FLOOR - a decode that floor
+! accepts is one the receiver prints as a Fox, and it is remembered as one)
+     if(snr.ge.sfsearchfloor .and. .not.lsfoxap) call sfox_remember(xdec,foxcall)
      call sfox_seen(xdec)
   endif
 
