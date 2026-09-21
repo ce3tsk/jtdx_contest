@@ -55,6 +55,7 @@ module sfox_mod
 !   JTDX_SFOX_LISTANYFLOOR=x its SNR floor, dB                                       (default -16.95)
 !   JTDX_SFOX_LISTANYLOOKS=1|2|L the same for that round (83 of its 83 decodes on record came at the
 !                           likelihoods; kept at 2 until on-air material says)     (default 2)
+!   JTDX_SFOX_SYNC3=1       MSHV's THREE sync windows as the LAST step of a Fox slot (below)   (default OFF)
 !   JTDX_SFOX_LIST=0        the LIST pass off (below)                              (default on)
 !   JTDX_SFOX_LISTL=n       its list size, 1 to 256                                (default 64)
 !   JTDX_SFOX_LISTLOOKS=1|2|L forms of the spectra it tries: themselves; the likelihoods too; L the
@@ -110,6 +111,17 @@ module sfox_mod
 ! likely to be printed. It does NOT part the words of a Fox just under the threshold (127 of 610 pass):
 ! there the CRC stands alone, as in stage A. At -17.2 it would cost 1 true decode in 124, at -17.1 four.
 ! The margin is thin and the figures are simulated ones - a SETTING, to be looked at with on-air material.
+! CE3TSK 2026-09-21: MSHV'S THREE SYNC WINDOWS AS THE LAST STEP (SUPERFOX_DECODER_IDEAS.md 4.14; decoder.f90
+! superfox_extra, qpc_sync3.f90). OFF by default (the operator: an option until there is on-air material).
+! When the receiver, its passes and the FT8 QRM remover have found nothing in a Fox slot, the search and the
+! passes run once more on each distinct candidate of MSHV's three windows (RX +/- 60 Hz, 700-800 Hz,
+! 200-3200 Hz), each only if it can end inside the RX budget - so everything decoded today keeps its time.
+! Measured in the experiment (the extra candidates searched with the passes on each): no DX call 287 -> 317
+! of 600 (AWGN), 316 -> 331 (fading); DX call 357 -> 389, 350 -> 366 - about +0.15 to +0.25 dB, no line in
+! 1000 periods of noise; about 1 s more in a slot in which nothing decodes. nsfextra: which candidate the
+! receiver works on now (0 = the ordinary sync) - state, not a setting.
+  integer, save :: nsfsync3=0
+  integer, save :: nsfextra=0
   integer, save :: nsfliston=1
 ! CE3TSK 2026-09-21: ON PAR WITH MSHV FOR A FOX THAT IS NOT KNOWN (SUPERFOX_DECODER_IDEAS.md 4.14, idea 9):
 ! the search's floor as a setting - MSHV accepts down to -16.95 dB for every Fox - and a last round of the
@@ -308,6 +320,15 @@ contains
        ios=1; if(sfox_isint(v(1:n))) read(v(1:n),*,iostat=ios) i
        if(ios.ne.0 .or. i.lt.0 .or. i.gt.1000) call sfox_badcfg('JTDX_SFOX_POOLAGE',v(1:n),'listened odd slots, 0 to 1000')
        nsfpoolage=i
+    endif
+    call get_environment_variable('JTDX_SFOX_SYNC3',v,n,ios)
+    if(ios.eq.-1) call sfox_badcfg('JTDX_SFOX_SYNC3',v,'at most 32 characters')
+    if(ios.eq.0 .and. n.gt.0) then
+       if(v(1:n).eq.'1') then
+          nsfsync3=1
+       else if(v(1:n).ne.'0') then
+          call sfox_badcfg('JTDX_SFOX_SYNC3',v(1:n),'0 or 1')
+       endif
     endif
     call get_environment_variable('JTDX_SFOX_FLOOR',v,n,ios)
     if(ios.eq.-1) call sfox_badcfg('JTDX_SFOX_FLOOR',v,'at most 32 characters')

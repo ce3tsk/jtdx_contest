@@ -118,9 +118,12 @@ subroutine multimode_decoder(params)
   integer :: sf_cycles,sf_swlcycles,sf_ensemble,sf_bgeffort,sf_nfa,sf_nfb,nsftried
   integer :: sf_candthin,nsfleft   ! review of M3: the operator's candidate cap; the last residual's count of signals left in
   logical :: lsfdeep=.false.       ! round B2 is running: ft8_unit(0,0) must not take it for a period's first pass
+  logical :: lsfquick=.false.      ! JTDX_SFQRM=1 (measurements): the quick round alone, no B2
   real(8) :: tsfround,tsfspent,tsfbudget   ! when round B1 began; what B1 + C took; the RX budget in seconds
   real, allocatable, save :: dd8sf(:)      ! the Fox slot's band as received, 65536 x the sample
   real, allocatable, save :: sfres(:)      ! the same with every decoded FT8 signal taken out
+  real, allocatable, save :: sfxd(:)       ! CE3TSK: the audio the last step works on (superfox_extra)
+  real(8) :: tsffirst=0.d0                 ! CE3TSK: what the receiver's first pass of the slot took (superfox_extra's estimate)
   data ndelay/0/
   data first/.true./
   data firstsd/.true./
@@ -399,6 +402,7 @@ subroutine multimode_decoder(params)
         call superfox_slot(lsfdecoded)
         call get_environment_variable('JTDX_SFQRM',dumpfile,ldump,idumpstat)
         if(lsfdecoded .or. (idumpstat.eq.0 .and. ldump.gt.0 .and. dumpfile(1:1).eq.'0')) then
+           if(.not.lsfdecoded) call superfox_extra(lsfdecoded)   ! the remover off: the last step comes at once
            call superfox_done(); go to 800
         endif
         lsfqrm=.true.
@@ -585,8 +589,9 @@ call ft8_unit(0,0)
 if(lsfqrm) then   ! CE3TSK: SuperFox milestone 3 - the gate has the story
    call superfox_residual(lsfdecoded)
    call get_environment_variable('JTDX_SFQRM',dumpfile,ldump,idumpstat)   ! =1: the quick round alone (measurements)
-   if(idumpstat.eq.0 .and. ldump.gt.0 .and. dumpfile(1:1).eq.'1') lsfdecoded=.true.
-   if(.not.lsfdecoded) then   ! round B2 - if it can be expected to end inside the RX budget (the gate has the rule)
+   ! (2026-09-21: it used to say so by setting lsfdecoded, which also kept the last step - superfox_extra - from running)
+   lsfquick=idumpstat.eq.0 .and. ldump.gt.0 .and. dumpfile(1:1).eq.'1'
+   if(.not.lsfdecoded .and. .not.lsfquick) then   ! round B2 - if it can be expected to end inside the RX budget (the gate has the rule)
       tsfspent=omp_get_wtime()-tsfround
       tsfbudget=dble(max(1,merge(params%nrxbudget,27,params%nrxbudget.gt.0)))/10.d0
       lsfdeep=omp_get_wtime()-tdecstart+3.5d0*tsfspent.le.tsfbudget
@@ -616,6 +621,7 @@ if(lsfqrm) then   ! CE3TSK: SuperFox milestone 3 - the gate has the story
       lsfdeep=.false.
       call superfox_residual(lsfdecoded)
    endif
+   if(.not.lsfdecoded) call superfox_extra(lsfdecoded)   ! CE3TSK: MSHV's three sync windows, the LAST step (off by default)
 endif
 laltdeferred=.false.
 if(lpipeline) then   ! the band after the recipe's passes: the deferred alternate pass and the retry unit work on it
@@ -1816,7 +1822,9 @@ contains
     if(params%lapmyc .and. params%nQSOProgress.eq.3) nsfprog1=2
     call sfox_grid(hisgrid(1:4))
     call sfox_me(mycall,nsfprog1)
+    tsffirst=omp_get_wtime()
     call sfrx_sub(nutc,params%nfqso,params%nsftol,iwave,ldecoded)
+    tsffirst=omp_get_wtime()-tsffirst   ! the receiver's first pass: what one more candidate will cost (superfox_extra)
     call fillhash(1,.true.)    ! a compound Fox call learnt from its CQ (sfox_unpack) becomes resolvable
   end subroutine superfox_slot
 
@@ -1871,6 +1879,46 @@ contains
          ' FT8 signals decoded, none of them new - the residual is the one already tried, ',omp_get_wtime()-tdecstart,  &
          ' s since the decode began'
   end subroutine superfox_residual
+
+  subroutine superfox_extra(ldecoded)
+! CE3TSK 2026-09-21: MSHV'S THREE SYNC WINDOWS AS THE LAST STEP of a Fox slot (JTDX_SFOX_SYNC3=1, OFF by
+! default; SUPERFOX_DECODER_IDEAS.md 4.14, test/experiments/sfox_mshvdither). Called when the receiver, its
+! passes and the FT8 QRM remover have found nothing (or at once when the remover is off): the search and
+! the passes run again on each distinct candidate of MSHV's windows (qpc_decode2's nsfextra, qpc_sync3.f90),
+! on the last residual the remover made - or the band as received when it made none - and a candidate is
+! begun only if one more receiver pass, costed as the slot's first one, can end inside the RX budget. So
+! nothing decoded today comes later: only a slot that would print nothing spends the extra time.
+    use sfox_mod, only : nsfsync3,nsfextra,sfox_config,lsfstats
+    logical, intent(inout) :: ldecoded
+    integer :: k,ntried
+    real(8) :: tb
+    call sfox_config
+    if(nsfsync3.eq.0 .or. ldecoded) return
+    tb=dble(max(1,merge(params%nrxbudget,27,params%nrxbudget.gt.0)))/10.d0
+    if(.not.allocated(sfxd)) allocate(sfxd(180000))
+    if(nsftried.gt.0 .and. allocated(sfres)) then
+       sfxd=sfres                   ! the remover's last residual (sample units, superfox_residual)
+    else
+       sfxd=dd8sf/65536.0           ! the band as received
+    endif
+    ntried=0
+    do k=1,3
+       if(omp_get_wtime()-tdecstart+tsffirst.gt.tb) then
+          if(lsfstats) write(0,'(a,i2,a,f6.2,a,f5.1,a)') 'SuperFox last step: sync candidate',k,' not begun, ',  &
+               omp_get_wtime()-tdecstart,' s gone, RX budget ',tb,' s'
+          exit
+       endif
+       nsfextra=k
+       call fillhash(1,.true.)
+       call sfrx_core(nutc,params%nfqso,params%nsftol,sfxd,ldecoded)
+       call fillhash(1,.true.)
+       nsfextra=0; ntried=k
+       if(ldecoded) exit
+    enddo
+    nsfextra=0
+    if(lsfstats) write(0,'(a,i2,a,l2,a,f6.2,a)') 'SuperFox last step: MSHV''s sync windows,',ntried,  &
+         ' candidate(s) tried, Fox decoded',ldecoded,', ',omp_get_wtime()-tdecstart,' s since the decode began'
+  end subroutine superfox_extra
 
   subroutine superfox_close()
 ! the operator's recipe back in force, and the slot closed as any other Fox slot

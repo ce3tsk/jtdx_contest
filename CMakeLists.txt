@@ -558,6 +558,7 @@ set (wsjt_FSRCS
   lib/superfox/sfox_ana.f90
   lib/superfox/sfox_remove_tone.f90
   lib/superfox/qpc_sync.f90
+  lib/superfox/qpc_sync3.f90
   lib/superfox/twkfreq2.f90
   lib/superfox/sfox_demod.f90
   lib/superfox/sfox_pctile.f90

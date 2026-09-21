@@ -18,6 +18,7 @@ subroutine qpc_decode2(c0,fsync,ftol,xdec,ndepth,dth,damp,crc_ok,   &
    use sfox_mod, only : nsfliston,nsflistl,nsflistcrc,sflistfloor,nsflistlooks   !CE3TSK: the list pass's settings
    use sfox_mod, only : sfsearchfloor,nsflistany,sflistanyfloor   !CE3TSK: the search's floor, the list round with nothing told
    use sfox_mod, only : nsflistanylooks                           !CE3TSK: and its looks
+   use sfox_mod, only : nsfextra                                  !CE3TSK: the last step's sync candidate (decoder.f90 superfox_extra)
 
    parameter(NMAX=15*12000,NFT=365,NZ=100)
    complex c0(NMAX)                    !Signal as received
@@ -67,6 +68,8 @@ subroutine qpc_decode2(c0,fsync,ftol,xdec,ndepth,dth,damp,crc_ok,   &
       end subroutine qpc_scl_cand
    end interface
    integer, save :: nknown=-1            !CE3TSK: 1 = a known Fox is accepted below the floor; JTDX_SFOX_KNOWN=0: 0
+   real f2x(3),t2x(3),snrx(3)            !CE3TSK: MSHV's three sync candidates (the last step)
+   integer ordx(3),jcx
    integer nown
    logical lqrm(0:127)
    logical lnormed0
@@ -117,7 +120,26 @@ subroutine qpc_decode2(c0,fsync,ftol,xdec,ndepth,dth,damp,crc_ok,   &
    lsfoxap=.false.
 
    call sfox_config                   !CE3TSK: the settings, once for the process - the search's floor is one
-   call qpc_sync(c0,fsample,isync,fsync,ftol,f2,t2,snrsync)
+   if(nsfextra.ge.1 .and. nsfextra.le.3) then
+! CE3TSK 2026-09-21: THE LAST STEP of a Fox slot (JTDX_SFOX_SYNC3=1; decoder.f90 superfox_extra): MSHV's three
+! sync windows (qpc_sync3.f90), ranked as MSHV ranks them - the RX window first unless another is 0.05
+! stronger - and the search and the passes below on candidate nsfextra; a candidate equal to one before it
+! (same frequency and time) is not searched twice.
+      call qpc_sync3(c0,fsample,isync,fsync,f2x,t2x,snrx)
+      ordx=(/1,2,3/)
+      if(snrx(2).gt.snrx(1)) ordx(1:2)=(/2,1/)
+      if(snrx(3).gt.snrx(ordx(1))+0.05) then
+         ordx=(/3,ordx(1),ordx(2)/)
+      else if(snrx(3).gt.snrx(ordx(2))+0.05) then
+         ordx(3)=ordx(2); ordx(2)=3
+      endif
+      do jcx=1,nsfextra-1
+         if(f2x(ordx(jcx)).eq.f2x(ordx(nsfextra)) .and. t2x(ordx(jcx)).eq.t2x(ordx(nsfextra))) return
+      enddo
+      f2=f2x(ordx(nsfextra)); t2=t2x(ordx(nsfextra)); snrsync=snrx(ordx(nsfextra))
+   else
+      call qpc_sync(c0,fsample,isync,fsync,ftol,f2,t2,snrsync)
+   endif
    f00=1500.0 + f2
    t00=t2
    fbest=f00
