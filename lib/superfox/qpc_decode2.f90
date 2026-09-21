@@ -674,9 +674,10 @@ subroutine sfox_listpass
 ! call, or the Fox it last decoded above the floor). Here that Fox is told - its call is message
 ! symbols 0-3, four of the first decisions successive cancellation gets wrong - the nine Hound slots
 ! are left FREE, and the list decoder (qpc/qpc_scl.c) keeps the 64 best paths.
-! Measured (100 files a level, a Fox with six Hounds, the same files through every variant): 50 %
-! from -16.9 to -17.65 dB on AWGN (233 -> 365 decodes of 600) and from -15.4 to -16.25 dB on the
-! mid-latitude fading channel (288 -> 364); L = 16 gives -17.45 / -16.1, L = 256 -17.7 / -16.35. The
+! Measured AS SHIPPED (the CRC on 4 paths; 100 files a level, a Fox with six Hounds, the same files
+! through every variant; test/experiments/sfox_scl/results/s6_*): 50 % from -16.9 to -17.6 dB on AWGN
+! (233 -> 357 decodes of 600) and from -15.4 to -16.1 dB on the mid-latitude fading channel (288 ->
+! 350); the CRC on all 64 paths 365 / 364 (-17.65 / -16.25); L = 16 / 256 340 / 370 and 341 / 358. The
 ! list WITHOUT the Fox told gives half of it (-17.25 / -15.9), and next to nothing for a Fox that is
 ! not known - the -16.5 dB floor takes those decodes - which is why this is a pass for a KNOWN Fox
 ! and not a list decoder inside the search. As a pass it also leaves the search the donor's, call
