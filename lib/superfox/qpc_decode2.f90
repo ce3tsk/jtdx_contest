@@ -15,6 +15,7 @@ subroutine qpc_decode2(c0,fsync,ftol,xdec,ndepth,dth,damp,crc_ok,   &
    use sfox_mod, only : nsfap,lsfapfam,sfapfloor1,sfapfloor2,nsfaplooks,lsfstats,sfox_config   !CE3TSK: its settings
    use sfox_mod, only : nsfpool,nsfpool28,nsfpoolfox                  !CE3TSK: the pool pass: the Hounds heard
    use sfox_mod, only : nsfpoolon,nsfpooll,nsfpoolcrc,sfpoolfloor,nsfpoollooks   !CE3TSK: and its settings
+   use sfox_mod, only : nsfliston,nsflistl,nsflistcrc,sflistfloor,nsflistlooks   !CE3TSK: the list pass's settings
 
    parameter(NMAX=15*12000,NFT=365,NZ=100)
    complex c0(NMAX)                    !Signal as received
@@ -236,6 +237,7 @@ subroutine qpc_decode2(c0,fsync,ftol,xdec,ndepth,dth,damp,crc_ok,   &
    enddo          !idith: dither of frequency and time
    call sfox_appass                   !CE3TSK: nothing found - what can be STATED about the message is tried
    if(.not.crc_ok) call sfox_poolpass !CE3TSK: and then WHO MAY BE IN IT: the Hounds heard
+   if(.not.crc_ok) call sfox_listpass !CE3TSK: and then the known Fox told and NOTHING said about the Hounds: the list decoder alone
    return
 
 contains
@@ -661,6 +663,132 @@ subroutine sfox_poolpass
 
    return
 end subroutine sfox_poolpass
+
+subroutine sfox_listpass
+
+! CE3TSK 2026-09-21: THE LIST PASS - the pool pass without the pool (SUPERFOX_DECODER_IDEAS.md 4.11,
+! "S2 finished"; test/experiments/sfox_scl/README.md rows S2c and S6 have the measurements and their
+! files). Stage A needs a message it can state whole, the pool pass needs every Hound of the message
+! HEARD in the odd slots. What is left is the busy Fox whose Hounds were not heard, the empty pool,
+! the first period on a frequency - and there the receiver still knows ONE thing: the Fox (the DX
+! call, or the Fox it last decoded above the floor). Here that Fox is told - its call is message
+! symbols 0-3, four of the first decisions successive cancellation gets wrong - the nine Hound slots
+! are left FREE, and the list decoder (qpc/qpc_scl.c) keeps the 64 best paths.
+! Measured (100 files a level, a Fox with six Hounds, the same files through every variant): 50 %
+! from -16.9 to -17.65 dB on AWGN (233 -> 365 decodes of 600) and from -15.4 to -16.25 dB on the
+! mid-latitude fading channel (288 -> 364); L = 16 gives -17.45 / -16.1, L = 256 -17.7 / -16.35. The
+! list WITHOUT the Fox told gives half of it (-17.25 / -15.9), and next to nothing for a Fox that is
+! not known - the -16.5 dB floor takes those decodes - which is why this is a pass for a KNOWN Fox
+! and not a list decoder inside the search. As a pass it also leaves the search the donor's, call
+! for call: what WSJT-X's receiver decodes is decoded as before, with this pass on or off.
+! TWO LOOKS, stage A's and the pool pass's: the sync's own step, no smoothing, the spectra and then
+! the likelihoods. Measured inside the search: the list in its first two calls - these two looks -
+! decodes exactly what the list in the first eight does (the three smoothing weights too), at every
+! list size, on both channels. Two list decodes at L = 64 are about 0.1 s, and only in a receiver
+! pass that has found nothing.
+! FALSE LINES. Every path carries the told Fox, so a chance CRC pass would print the right Fox with
+! Hounds it did not send, and the search's -16.5 dB floor does not apply to it. Against that: the
+! CRC is tried on the best 4 paths only (JTDX_SFOX_LISTCRC; 357 of the 365 AWGN decodes and 350 of
+! the 364 fading ones have their path among the first four - without candidate sets the right path
+! is NOT always first, so 1 would cost a fifth of the gain) - 8 checks a receiver pass, each a
+! 2^-21 chance, against the search's 796; only the two message types that carry the Fox's call in
+! bits 1-28 are accepted (i3 = 0 Hounds, i3 = 2 free text and Hounds); and a floor of its own,
+! JTDX_SFOX_LISTFLOOR, -17.3 dB (sfox_mod.f90 has what it was laid on: it costs no true decode on record
+! and takes 99.8 % of the words of noise alone, 96 % of those of a Fox at -19 / -20 dB - and does not
+! part the words of a Fox just under the threshold, where the CRC stands alone). No line in 3000 periods
+! of noise and of a Fox under the threshold as the program runs it, none in the experiment's 2000 with
+! the Fox told and 2500 with nothing told. Marked
+! '*'. My own call is nowhere stated here: if this pass prints "RR73 to me", the decoder FOUND it
+! in free slots and the CRC-21 vouches for it as for any ordinary decode.
+! ALL OF IT IS SETTINGS (sfox_mod.f90): nothing here is final before there is on-air material -
+! every figure above comes from simulated transmissions.
+
+   integer kapf(50),m,j,iv,ios,ncalls,irank,npaths,ncrcs,islot,nfox
+   integer*1 vapf(50)
+   character*28 fb
+   real pys(0:127,0:127),snrwas
+
+   call sfox_config
+   if(nsfliston.eq.0) return
+! a Fox the receiver knows, as bits 1-28 of a message carry it (a compound call as its hash: sfox_known)
+   if(all(nfoxknown28.lt.0)) return
+   ncalls=0; ncrcs=0
+
+   f=f00; t=t00
+   fshift=1500.0 - (f+baud)
+   call twkfreq2(c0,c,NMAX,fsample,fshift)
+   call sfox_demod(c,1500.0,t,isync,s2,s3raw)
+   lnormed0=lnormed
+   if(lnormed0) s3rawp=s3plain
+   a=1.0; b=0.0                                   !no smoothing: what the estimate and its floor are laid on
+   s3=s3raw
+   call sfox_pctile(s3,128*128,50,base3)
+   s3=s3/base3
+   call qpc_likelihoods2(py,s3,3.16,1.0)
+   call qpc_scl_cand(0)                           !the pool pass's candidate sets do not act here: the Hound slots are free
+   do islot=1,2                                   !the DX call, then the remembered Fox when it is another
+      nfox=nfoxknown28(islot)
+      if(nfox.lt.0) cycle
+      if(islot.eq.2 .and. nfox.eq.nfoxknown28(1)) cycle
+      write(fb,'(b28.28)') nfox
+      kapf=0; vapf=0_1
+      do m=0,3
+         kapf(m+1)=49-m                           !message symbol m is x(49-m): sfox_pack reverses them
+         read(fb(7*m+1:7*m+7),'(b7)',iostat=ios) iv; vapf(m+1)=int(iv,1)
+      enddo
+      do kkk=1,nsflistlooks                       !the spectra themselves, then the likelihoods (a setting: two)
+         if(kkk.eq.1) then
+            pys=s3
+         else
+            pys=py
+         endif
+         do j=0,127
+            ss=sum(pys(:,j))
+            if(ss.gt.0.0) then
+               pys(:,j)=pys(:,j)/ss
+            else
+               pys(:,j)=0.0
+            endif
+         enddo
+         pyd=pys
+         ncalls=ncalls+1
+         irank=qpc_decode_scl(xdec,ydec,pyd,nsflistl,4,kapf,vapf,nsflistcrc,npaths)
+         ncrcs=ncrcs+npaths                       !paths the decoder tried against the CRC
+         xdec=xdec(49:0:-1)
+         crc_chk=iand(nhash2(xdec,n47,571),mask21)
+         crc_sent=128*128*xdec(47) + 128*xdec(48) + xdec(49)
+         if(crc_chk.ne.crc_sent) then
+            if(lsfstats) then                     !what the most probable word reads: the figure the floor is laid against
+               snrwas=snr; call sfox_estimate
+               write(0,'(a,i2,a,i2,a,i3,a,f7.2,a)') 'SuperFox list pass: Fox',islot,' look',kkk,', no CRC in',npaths,  &
+                    ' paths; the most probable word reads',snr,' dB'
+               snr=snrwas
+            endif
+            cycle
+         endif
+         write(msgbits,'(47b7.7)') xdec(0:46)
+! i3 = 0 Hounds, i3 = 2 free text and Hounds: the two layouts with the Fox's call in bits 1-28
+         if(msgbits(327:329).ne.'000' .and. msgbits(327:329).ne.'010') cycle
+         if(msgbits(1:28).ne.fb) cycle            !the Fox that was told (it is, by construction)
+         call sfox_estimate
+         if(.not.(snr.ge.sflistfloor)) then       !a NaN estimate does not pass either
+            if(lsfstats) write(0,'(a,f6.1,a,f6.1,a)') 'SuperFox list pass: a word with a good CRC reads',snr,  &
+                 ' dB, under its floor of',sflistfloor,' - rejected'
+            cycle
+         endif
+         crc_ok=.true.
+         lsfoxap=.true.                           !marked '*' as an a-priori decode is
+         fbest=f; tbest=t
+         if(lsfstats) write(0,'(a,i2,a,i3,a,i3,a,f7.2,a)') 'SuperFox list pass: Fox',islot,  &
+              ' told (1 the DX call, 2 the remembered one), decoded at look',kkk,', path of rank',irank,', reads',snr,' dB'
+         return
+      enddo
+   enddo
+   crc_ok=.false.
+   if(lsfstats) write(0,'(a,i3,a,i4,a)') 'SuperFox list pass:',ncalls,' looks,',ncrcs,' CRC checks, nothing'
+
+   return
+end subroutine sfox_listpass
 
 end subroutine qpc_decode2
 

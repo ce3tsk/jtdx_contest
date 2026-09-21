@@ -49,6 +49,12 @@ module sfox_mod
 !   JTDX_SFOX_POOLFLOOR=x   the SNR floor of its decodes, dB                       (default -19.5)
 !   JTDX_SFOX_POOLAGE=n     odd slots LISTENED TO in which a Hound may be absent before it leaves
 !                           the pool (the clock stands while I transmit); 0 = no pool   (default 4)
+!   JTDX_SFOX_LIST=0        the LIST pass off (below)                              (default on)
+!   JTDX_SFOX_LISTL=n       its list size, 1 to 256                                (default 64)
+!   JTDX_SFOX_LISTLOOKS=1|2 forms of the spectra it tries: themselves; the likelihoods too (default 2)
+!   JTDX_SFOX_LISTCRC=n     how many of the list's paths, best first, may be tried against the
+!                           CRC, 1 to 16                                           (default 4)
+!   JTDX_SFOX_LISTFLOOR=x   the SNR floor of its decodes, dB                       (default -17.3)
 !   JTDX_SFOX_NORMX=x       a tone bin is normalised when its mean power is over x times the
 !                           noise's (sfox_demod)                                   (default 2.0)
 ! The switches that were there before are read where they act: JTDX_SFOX_NORM=0 (sfox_demod),
@@ -83,6 +89,24 @@ module sfox_mod
   real, save :: sfpoolfloor=-19.5
   integer, save :: nsfpoolage=4
   integer, save :: nsfpoolfox=-1        !the Fox these Hounds answered, as pack28 writes it: the pool is THAT Fox's
+! CE3TSK 2026-09-21: THE LIST PASS (qpc_decode2.f90: sfox_listpass; SUPERFOX_DECODER_IDEAS.md 4.11 "S2
+! finished", test/experiments/sfox_scl row S2c): the pool pass without the pool - when the search,
+! stage A's pass and the pool pass have found nothing, the list decoder with the known Fox TOLD and the
+! Hound slots free. Nothing is remembered for it; these are its settings.
+! THE FLOOR, -17.3 dB, and what it was laid on (test/experiments/sfox_scl/run_listpass.py, results/
+! s6_*): a free list decoder picks the strongest tones, so even from NOISE its most probable word reads
+! -17.9 dB (median) - this floor is not the pool pass's -19.5, whose words are held to candidates. The
+! pass's TRUE decodes read -17.23 at the lowest (124 on AWGN; 62 fading: -16.70). At -17.3 the floor
+! costs none of them and passes 8 of 3998 words of noise alone (0.2 %) and 78 of 2000 of a Fox at -19 /
+! -20 dB (3.9 %): a chance CRC pass on a dead frequency, where a Hound waits longest, is 500 times less
+! likely to be printed. It does NOT part the words of a Fox just under the threshold (127 of 610 pass):
+! there the CRC stands alone, as in stage A. At -17.2 it would cost 1 true decode in 124, at -17.1 four.
+! The margin is thin and the figures are simulated ones - a SETTING, to be looked at with on-air material.
+  integer, save :: nsfliston=1
+  integer, save :: nsflistl=64
+  integer, save :: nsflistcrc=4
+  integer, save :: nsflistlooks=2
+  real, save :: sflistfloor=-17.3
   integer, save :: nsfme28=-1
   integer, save :: nsfprog=0
   logical, save :: lsfoxap=.false.
@@ -262,6 +286,43 @@ contains
        ios=1; if(sfox_isint(v(1:n))) read(v(1:n),*,iostat=ios) i
        if(ios.ne.0 .or. i.lt.0 .or. i.gt.1000) call sfox_badcfg('JTDX_SFOX_POOLAGE',v(1:n),'listened odd slots, 0 to 1000')
        nsfpoolage=i
+    endif
+    call get_environment_variable('JTDX_SFOX_LIST',v,n,ios)
+    if(ios.eq.-1) call sfox_badcfg('JTDX_SFOX_LIST',v,'at most 32 characters')
+    if(ios.eq.0 .and. n.gt.0) then
+       if(v(1:n).eq.'0') then
+          nsfliston=0
+       else if(v(1:n).ne.'1') then
+          call sfox_badcfg('JTDX_SFOX_LIST',v(1:n),'0 or 1')
+       endif
+    endif
+    call get_environment_variable('JTDX_SFOX_LISTL',v,n,ios)
+    if(ios.eq.-1) call sfox_badcfg('JTDX_SFOX_LISTL',v,'at most 32 characters')
+    if(ios.eq.0 .and. n.gt.0) then
+       ios=1; if(sfox_isint(v(1:n))) read(v(1:n),*,iostat=ios) i
+       if(ios.ne.0 .or. i.lt.1 .or. i.gt.256) call sfox_badcfg('JTDX_SFOX_LISTL',v(1:n),'a list size, 1 to 256')
+       nsflistl=i
+    endif
+    call get_environment_variable('JTDX_SFOX_LISTLOOKS',v,n,ios)
+    if(ios.eq.-1) call sfox_badcfg('JTDX_SFOX_LISTLOOKS',v,'at most 32 characters')
+    if(ios.eq.0 .and. n.gt.0) then
+       ios=1; if(sfox_isint(v(1:n))) read(v(1:n),*,iostat=ios) i
+       if(ios.ne.0 .or. i.lt.1 .or. i.gt.2) call sfox_badcfg('JTDX_SFOX_LISTLOOKS',v(1:n),'1 or 2')
+       nsflistlooks=i
+    endif
+    call get_environment_variable('JTDX_SFOX_LISTCRC',v,n,ios)
+    if(ios.eq.-1) call sfox_badcfg('JTDX_SFOX_LISTCRC',v,'at most 32 characters')
+    if(ios.eq.0 .and. n.gt.0) then
+       ios=1; if(sfox_isint(v(1:n))) read(v(1:n),*,iostat=ios) i
+       if(ios.ne.0 .or. i.lt.1 .or. i.gt.16) call sfox_badcfg('JTDX_SFOX_LISTCRC',v(1:n),'paths, 1 to 16')
+       nsflistcrc=i
+    endif
+    call get_environment_variable('JTDX_SFOX_LISTFLOOR',v,n,ios)
+    if(ios.eq.-1) call sfox_badcfg('JTDX_SFOX_LISTFLOOR',v,'at most 32 characters')
+    if(ios.eq.0 .and. n.gt.0) then
+       ios=1; if(sfox_isnum(v(1:n))) read(v(1:n),*,iostat=ios) x
+       if(ios.ne.0 .or. x.lt.-99.0 .or. x.gt.30.0) call sfox_badcfg('JTDX_SFOX_LISTFLOOR',v(1:n),'dB, -99 to 30')
+       sflistfloor=x
     endif
     call get_environment_variable('JTDX_SFOX_NORMX',v,n,ios)
     if(ios.eq.-1) call sfox_badcfg('JTDX_SFOX_NORMX',v,'at most 32 characters')
