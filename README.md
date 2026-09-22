@@ -216,23 +216,28 @@ are real recordings to measure it on, no figures are given for it. Recordings of
 receiver first, then everything this program does differently - is described in the **SuperFox
 explainer**, published with the other documents at [https://ce3tsk.com](https://ce3tsk.com).
 
-The receiver:
+The decoder starts from **WSJT-X 3.0.2's decoder** (by K1JT, K9AN and IV3NWV), ported and checked to
+decode what WSJT-X decodes, file by file, and adds, in the order of the release notes:
 
-- **WSJT-X 3.0.2's receiver** (by K1JT, K9AN and IV3NWV), ported and checked to decode what WSJT-X
-  decodes, file by file.
+- **CRC-aided successive-cancellation list decoding (CA-SCL)**, with a list decoder of its own: it keeps
+  the most probable paths at every decision and lets the CRC choose among them, so a wrong early
+  decision is no longer final. By the way, the new "CRC-aided successive-cancellation list decoding"
+  (CA-SCL) method that JTDX\_CONTEST rc08 now uses for SuperFox decoding is a technique used widely in
+  5G cell phone networks, i.e. JTDX\_CONTEST is using current, state-of-the-art technological
+  approaches for amateur radio.
 - **Tone bins that hold QRM are normalised**, so an FT8 caller inside the Fox's band does not swamp it.
-- **FT8 signals on top of the Fox are taken out** by this program's own FT8 decoder - silently, and
-  only when the Fox is not found without it; a quick round first, a deeper one if time allows.
-- **The search runs in threads**, with the same result at any thread count.
-- **A Fox it knows is decoded deeper** - the Fox in DX Call, or the Fox it last decoded; a Fox it does
-  not know is accepted down to MSHV's floor.
-- **Messages it can foresee** - the Fox's CQ, its answer to you - are decoded with that knowledge
-  (a-priori decoding, lines marked `*`).
-- **The Hounds you heard** in the odd period constrain the Fox's message (the *pool* pass), and when
-  none were heard **the Fox alone** does (the *list* pass) - both with a list decoder of its own,
-  lines marked `*`.
+- **A-priori decoding at four levels**: messages it can foresee - the Fox's CQ, its answer to you - are
+  decoded with that knowledge; **the Hounds you heard** in the odd period constrain the Fox's message
+  (the *pool* pass), and when none were heard **the Fox alone** does (the *list* pass) - lines marked
+  `*`.
+- **The search and the demodulation run in threads**, with the same result at any thread count.
+- **FT8 QRM on top of the Fox is taken out** by this program's own FT8 decoder - silently, and only
+  when the Fox is not found without it; a quick round first, a deeper one if time allows.
 - **MSHV's three sync windows**, as a last step when nothing else has decoded - it only ever adds
   decodes, never delays one (`JTDX_SFOX_SYNC3=0` switches it off).
+- **The Fox's code is checked online** (see *Verification* below).
+- **A Fox it knows is decoded deeper** - the Fox in DX Call, or the Fox it last decoded; a Fox it does
+  not know is accepted down to MSHV's floor.
 - Every one of these is a setting, read from the environment (`JTDX_SFOX_...`, `JTDX_SFQRM`); the
   explainer lists them. A value that cannot be read stops the decoder, naming it.
 
