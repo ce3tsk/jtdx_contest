@@ -420,6 +420,13 @@ themselves. JTDX\_CONTEST uses them to receive SuperFox and, in its test tool `s
 write test audio; it does not
 transmit the mode.
 
+**Patent notice for the SuperFox list decoder (CA-SCL).** The source code is available under the GNU
+GPL v3 and is intended for educational, simulation and research purposes. CRC-aided
+successive-cancellation list (CA-SCL) decoding of polar codes (`lib/superfox/qpc/qpc_scl.c`, called
+from `lib/superfox/qpc_decode2.f90`) is used in 5G; deploying it in commercial telecom networks may
+require Standard Essential Patent (SEP) licensing from the appropriate 3GPP patent pools. This notice
+is information only and adds no restriction to the GPL.
+
 The project welcomes contributions from those with programming,
 documentation or other relevant skills interested in supporting amateur radio development.
 

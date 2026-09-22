@@ -15,6 +15,12 @@
 //    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //    GNU General Public License for more details.
 //
+// PATENT NOTICE. The source code is available under the GNU GPL v3 and is intended for
+// educational, simulation and research purposes. CRC-aided successive-cancellation list
+// (CA-SCL) decoding of polar codes is used in 5G; deploying it in commercial telecom networks
+// may require Standard Essential Patent (SEP) licensing from the appropriate 3GPP patent pools.
+// This notice is information only and adds no restriction to the GPL.
+//
 // WHAT IT IS. WSJT-X's decoder (np_qpc.c, IV3NWV) is successive cancellation: it walks the
 // polar transform's 128 positions from 127 down to 0 and at every information position takes
 // the most probable of the 128 symbol values - ONE path, and a wrong early decision is final.

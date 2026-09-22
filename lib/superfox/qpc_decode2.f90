@@ -48,6 +48,11 @@ subroutine qpc_decode2(c0,fsync,ftol,xdec,ndepth,dth,damp,crc_ok,   &
         integer(c_signed_char), intent(in) :: vap(50)
       end subroutine qpc_decode_ap
    end interface
+! CE3TSK: PATENT NOTICE for the list decoder (CA-SCL) used here. The source code is available under
+! the GNU GPL v3 and is intended for educational, simulation and research purposes. CRC-aided
+! successive-cancellation list decoding of polar codes is used in 5G; deploying it in commercial
+! telecom networks may require Standard Essential Patent (SEP) licensing from the appropriate 3GPP
+! patent pools. This notice is information only and adds no restriction to the GPL.
 ! CE3TSK: qpc/qpc_scl.c - this program's LIST decoder, and the candidate sets of the Hound slots
    interface
       integer(c_int) function qpc_decode_scl(xdec, ydec, py, L, nap, kap, vap, ncrc, npaths) bind(C,name="qpc_decode_scl")
