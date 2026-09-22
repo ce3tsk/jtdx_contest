@@ -508,6 +508,16 @@ Format:
         <source>%1, downloaded</source>
         <translation>%1，已下载</translation>
     </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Mark as de&amp;fault</source>
+        <translation>标记为默认(&amp;F)</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>&amp;Unmark default</source>
+        <translation>取消默认标记(&amp;U)</translation>
+    </message>
 </context>
 <context>
     <name>CountryDat</name>
@@ -6182,6 +6192,91 @@ This is asked only once.</source>
         <location filename="../mainwindow.cpp"/>
         <source>Fox verification failed: %1</source>
         <translation>Fox 验证失败：%1</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Check for updates...</source>
+        <translation>检查更新...</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Asks ce3tsk.com whether a newer JTDX_contest is published, and shows what changed</source>
+        <translation>向 ce3tsk.com 查询是否已发布更新的 JTDX_contest，并显示更改内容</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>New update available</source>
+        <translation>有新的更新可用</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Check for updates</source>
+        <translation>检查更新</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>You are running the latest version of JTDX_contest (%1).</source>
+        <translation>您正在使用最新版本的 JTDX_contest (%1)。</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Published: %1</source>
+        <translation>发布版本：%1</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>no connection to the server</source>
+        <translation>无法连接到服务器</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>no SSL/TLS support on this system</source>
+        <translation>此系统不支持 SSL/TLS</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>the server did not answer in time</source>
+        <translation>服务器未及时响应</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>the answer was larger than expected</source>
+        <translation>响应大于预期</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>the server answered with HTTP status %1</source>
+        <translation>服务器返回 HTTP 状态 %1</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>the version information on the server could not be read</source>
+        <translation>无法读取服务器上的版本信息</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Could not check for updates: %1.</source>
+        <translation>无法检查更新：%1。</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>A new version of JTDX_contest is available: %1</source>
+        <translation>有新版本的 JTDX_contest 可用：%1</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>You are running %1.</source>
+        <translation>您正在使用 %1。</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>What is new:</source>
+        <translation>更新内容：</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Open download page</source>
+        <translation>打开下载页面</translation>
     </message>
 </context>
 <context>

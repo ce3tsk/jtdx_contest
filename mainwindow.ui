@@ -4727,9 +4727,9 @@ list. The list can be maintained in Settings (F2).</string>
     </property>
     <addaction name="actionWide_Waterfall"/>
     <addaction name="actionBand_buttons"/>
-    <addaction name="actionNarrow_controls"/>
     <addaction name="actionMessage_averaging"/>
     <addaction name="separator"/>
+    <addaction name="actionNarrow_controls"/>
     <addaction name="actionUse_dark_style"/>
    </widget>
    <widget class="QMenu" name="menuDecode">
@@ -5200,6 +5200,8 @@ list. The list can be maintained in Settings (F2).</string>
     <addaction name="separator"/>
     <addaction name="actionCopyright_Notice"/>
     <addaction name="separator"/>
+    <addaction name="actionCheck_for_updates"/>
+    <addaction name="separator"/>
     <addaction name="actionAbout"/>
    </widget>
    <widget class="QMenu" name="menuMode">
@@ -5319,6 +5321,14 @@ list. The list can be maintained in Settings (F2).</string>
    </property>
    <property name="shortcut">
     <string>F2</string>
+   </property>
+  </action>
+  <action name="actionCheck_for_updates">
+   <property name="text">
+    <string>Check for updates...</string>
+   </property>
+   <property name="toolTip">
+    <string>Asks ce3tsk.com whether a newer JTDX_contest is published, and shows what changed</string>
    </property>
   </action>
   <action name="actionAbout">

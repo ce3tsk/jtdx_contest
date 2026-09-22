@@ -71,6 +71,15 @@
 #include "HelpTextWindow.hpp"
 #include "Audio/BWFFile.hpp"
 #include "FoxVerifier.hpp"   // CE3TSK
+#include "UpdateChecker.hpp"   // CE3TSK: Help > Check for updates, and the update icon
+#include <QPainter>
+#include <QPainterPath>
+#include <QHBoxLayout>
+#include <QDialog>
+#include <QDialogButtonBox>
+#include <QPlainTextEdit>
+#include <QLabel>
+#include <QPushButton>
 
 #include "ui_mainwindow.h"
 #include "moc_mainwindow.cpp"
@@ -783,7 +792,33 @@ MainWindow::MainWindow(bool multiple, QSettings * settings, QSharedMemory *shdme
     kofi->setToolTip (tr ("Support JTDX_contest on Ko-fi"));
     connect (kofi, &QToolButton::clicked, this,
              [] { QDesktopServices::openUrl (QUrl {"https://ko-fi.com/ce3tsk"}); });
-    ui->menuBar->setCornerWidget (kofi, Qt::TopRightCorner);
+    /* CE3TSK 2026-09-22: and the UPDATE icon to its left - hidden until the background check finds a newer
+       version (UpdateChecker.hpp). Two arrows in a circle, drawn here in the Ko-fi cup's own colours, slowly
+       pulsing between the full colour and a mid tone (paintUpdateIcon); a click runs Help > Check for updates. */
+    m_updateButton = new QToolButton {this};
+    m_updateButton->setAutoRaise (true);
+    m_updateButton->setCursor (Qt::PointingHandCursor);
+    m_updateButton->setObjectName ("updateButton");
+    m_updateButton->setIconSize (QSize {28, 28});
+    m_updateButton->setFixedWidth (28);   // no padding either side: it sits right against the cup (the operator: closer)
+    m_updateButton->setToolTip (tr ("New update available"));
+    /* its place is kept while it is hidden, and a gap stands between it and the cup: the operator saw the two
+       collide, and the cup moved when the icon appeared */
+    { auto sp = m_updateButton->sizePolicy (); sp.setRetainSizeWhenHidden (true); m_updateButton->setSizePolicy (sp); }
+    m_updateButton->hide ();
+    connect (m_updateButton, &QToolButton::clicked, this, &MainWindow::on_actionCheck_for_updates_triggered);
+    m_updatePulse.setInterval (80);   // 12 Hz is smooth for a change this slow
+    connect (&m_updatePulse, &QTimer::timeout, this, [this] { paintUpdateIcon (updatePulsePhase ()); });
+    paintUpdateIcon (0.0);
+    auto * corner = new QWidget {this};
+    corner->setObjectName ("menuCorner");
+    corner->setStyleSheet ("#menuCorner {background: transparent;}");   // the menu bar's own colour shows through, not the window's
+    auto * row = new QHBoxLayout {corner};
+    row->setContentsMargins (0, 0, 0, 0);
+    row->setSpacing (0);
+    row->addWidget (m_updateButton);
+    row->addWidget (kofi);
+    ui->menuBar->setCornerWidget (corner, Qt::TopRightCorner);
   }
   connect(ui->menuFT4_decoding, &QMenu::aboutToShow, this, &MainWindow::refreshFT4Preset);   // CE3TSK: same for FT4
   connect(ui->menuFT2_decoding, &QMenu::aboutToShow, this, &MainWindow::refreshFT2Preset);   // CE3TSK step 5: and for FT2
@@ -993,6 +1028,42 @@ MainWindow::MainWindow(bool multiple, QSettings * settings, QSharedMemory *shdme
      called while "Verify Fox online" is off. The outcome travels as an int so that mainwindow.h
      needs no more than a forward declaration. */
   m_foxVerifier = new FoxVerifier {network_manager, "JTDX_contest/" + QCoreApplication::applicationVersion (), this};
+  /* CE3TSK 2026-09-22: Check for updates (UpdateChecker.hpp). The menu's check says every outcome; the background
+     check - 15 s after the start, then every 12 hours, off with ini UpdateCheck=false - says nothing at all and
+     only shows the update icon when a newer version is published. */
+  m_updateChecker = new UpdateChecker {network_manager, "JTDX_contest/" + QCoreApplication::applicationVersion (), this};
+  connect (m_updateChecker, &UpdateChecker::newer, this, [this] (UpdateChecker::Latest const& latest, bool silent) {
+      m_updateButton->show ();
+      if (!m_updatePulse.isActive ()) {m_updatePulseClock.start (); m_updatePulse.start ();}
+      if (!silent) showUpdateNewer (latest.version, latest.changelog, latest.url);
+    });
+  connect (m_updateChecker, &UpdateChecker::current, this, [this] (UpdateChecker::Latest const& latest, bool silent) {
+      m_updatePulse.stop (); m_updateButton->hide ();
+      if (!silent)
+        JTDXMessageBox::information_message (this, tr ("Check for updates"),
+                                             tr ("You are running the latest version of JTDX_contest (%1).").arg (version (true)),
+                                             latest.version != version (true) ? tr ("Published: %1").arg (latest.version) : QString {});
+    });
+  connect (m_updateChecker, &UpdateChecker::failed, this, [this] (UpdateChecker::Trouble trouble, QString const& detail, bool silent) {
+      if (silent) return;   // the background check never complains
+      QString why;
+      switch (trouble)
+        {
+        case UpdateChecker::Trouble::Network: why = tr ("no connection to the server"); break;
+        case UpdateChecker::Trouble::NoSsl: why = tr ("no SSL/TLS support on this system"); break;
+        case UpdateChecker::Trouble::Timeout: why = tr ("the server did not answer in time"); break;
+        case UpdateChecker::Trouble::TooLarge: why = tr ("the answer was larger than expected"); break;
+        case UpdateChecker::Trouble::HttpStatus: why = tr ("the server answered with HTTP status %1").arg (detail); break;
+        case UpdateChecker::Trouble::Unreadable: why = tr ("the version information on the server could not be read"); break;
+        }
+      JTDXMessageBox::warning_message (this, tr ("Check for updates"), tr ("Could not check for updates: %1.").arg (why),
+                                       UpdateChecker::url (),
+                                       (trouble == UpdateChecker::Trouble::HttpStatus || trouble == UpdateChecker::Trouble::Unreadable) ? QString {} : detail);
+    });
+  m_updateTimer.setInterval (12 * 3600 * 1000);
+  connect (&m_updateTimer, &QTimer::timeout, this, [this] { if (m_updateCheckAuto) m_updateChecker->check (true); });
+  m_updateTimer.start ();
+  QTimer::singleShot (15000, this, [this] { if (m_updateCheckAuto) m_updateChecker->check (true); });
   connect (m_foxVerifier, &FoxVerifier::result, this,
            [this] (QString const& call, QDateTime const& slotUtc, int hz, FoxVerifier::Outcome outcome, FoxVerifier::Trouble trouble, QString const& detail, QString const& server) {
              foxVerification (call, slotUtc, hz, static_cast<int> (outcome), static_cast<int> (trouble), detail, server);
@@ -1356,6 +1427,7 @@ MainWindow::~MainWindow()
 //-------------------------------------------------------- writeSettings()
 void MainWindow::writeSettings()
 {
+  parkDecodePreset (false);   // CE3TSK 2026-09-22: S-Hound's parked recipe, not its Default, is what the ini keeps (runs at close only)
   m_settings->beginGroup("MainWindow");
   m_settings->setValue("geometry",saveGeometry ());
   m_settings->setValue("geometryMinHint",minimumSizeHint ());   // CE3TSK: see restoreMainGeometry ()
@@ -1415,6 +1487,7 @@ void MainWindow::writeSettings()
   iniOnly ("SuperFoxTol", m_superFoxTol, 50);
   iniOnly ("SuperFoxFreq", m_superFoxBase, 750);
   iniOnly ("ShowOTP", m_showOTP, false);
+  iniOnly ("UpdateCheck", m_updateCheckAuto, true);   // CE3TSK 2026-09-22: false = no background update check
   // a list, best server first (FoxVerifier.hpp); QSettings writes it "a, b" and one server as plain text
   iniOnly ("OTPUrl", m_foxVerifier ? m_foxVerifier->base_urls () : QStringList {FoxVerifier::default_base_url ()}, QStringList {FoxVerifier::default_base_url ()});
   m_settings->setValue("ShowHarmonics",ui->actionShow_messages_decoded_from_harmonics->isChecked());
@@ -1497,7 +1570,7 @@ void MainWindow::writeSettings()
   m_settings->setValue("NFT8QSORXfreqSensitivity",m_nFT8RXfSens);
   m_settings->setValue("NFT4Depth",m_nFT4depth);
   m_settings->setValue("SwitchFilterOff",m_FilterState);
-  m_settings->setValue("RxFreq",ui->RxFreqSpinBox->value());
+  m_settings->setValue("RxFreq",m_rxParkedValid ? m_rxParked : ui->RxFreqSpinBox->value());   // CE3TSK: S-Hound's Fox frequency is not the operator's
   m_settings->setValue("TxFreq",ui->TxFreqSpinBox->value());
   m_settings->setValue("WSPRfreq",ui->WSPRfreqSpinBox->value());
   m_settings->setValue("DialFreq",QVariant::fromValue(m_lastMonitoredFrequency));
@@ -1779,6 +1852,7 @@ void MainWindow::readSettings()
   ui->actionVerify_Fox_online->setChecked(m_settings->value("FoxVerify",true).toBool());   // CE3TSK: WSJT-X's key names for the two below
   m_foxVerify = ui->actionVerify_Fox_online->isChecked ();
   m_showOTP = m_settings->value("ShowOTP",false).toBool();
+  m_updateCheckAuto = m_settings->value("UpdateCheck",true).toBool();   // CE3TSK: the background update check
   if (m_foxVerifier) m_foxVerifier->set_base_urls (m_settings->value("OTPUrl",FoxVerifier::default_base_url ()).toStringList ());   // one URL or "a, b": toStringList reads both
   ui->actionEnable_hound_mode->setChecked(m_settings->value("EnableHoundMode",false).toBool());
 
@@ -2014,10 +2088,15 @@ void MainWindow::readSettings()
   else if(m_FilterState==1) { ui->actionSwitch_Filter_OFF_at_sending_73->setChecked(true); on_actionSwitch_Filter_OFF_at_sending_73_triggered(true); }
   else if(m_FilterState==2) { ui->actionSwitch_Filter_OFF_at_getting_73->setChecked(true); on_actionSwitch_Filter_OFF_at_getting_73_triggered(true); }
 
-  ui->RxFreqSpinBox->setValue(100); // ensure a change is signaled
-  if(m_settings->value("RxFreq").toInt()>=0 && m_settings->value("RxFreq").toInt()<=5000)
-    ui->RxFreqSpinBox->setValue(m_settings->value("RxFreq",1500).toInt());
-  else ui->RxFreqSpinBox->setValue(1500);
+  { int const rxf = (m_settings->value("RxFreq").toInt()>=0 && m_settings->value("RxFreq").toInt()<=5000) ? m_settings->value("RxFreq",1500).toInt() : 1500;
+    /* CE3TSK 2026-09-21: S-Hound may already be in effect here (the mode is read above) - the box then follows
+       the Fox, and the operator's saved value is what it parks and hands back on the way out */
+    if (m_rxParkedValid) m_rxParked = rxf;
+    else {
+      ui->RxFreqSpinBox->setValue(100); // ensure a change is signaled
+      ui->RxFreqSpinBox->setValue(rxf);
+    }
+  }
 
   ui->WSPRfreqSpinBox->setValue(1400); // ensure a change is signaled
   if(m_settings->value("WSPRfreq").toInt()>=1400 && m_settings->value("WSPRfreq").toInt()<=1600)
@@ -2131,6 +2210,9 @@ void MainWindow::readSettings()
   dec_data.params.nstophint=1;
   m_nlasttx=0;
   m_delay=0;
+  /* CE3TSK 2026-09-22: S-Hound came into effect above, before the decoding controls were read - so what it parked
+     was the controls' defaults and what it applied was overwritten. Park again from what was just read. */
+  if (m_decodeParked) {m_decodeParked = false; parkDecodePreset (true);}
 }
 
 void MainWindow::setDecodedTextFont (QFont const& font)
@@ -2867,6 +2949,90 @@ void MainWindow::on_enableTxButton_clicked (bool checked)
   }
 }
 
+/* CE3TSK 2026-09-22: Help > Check for updates - and a click on the update icon (UpdateChecker.hpp) */
+void MainWindow::on_actionCheck_for_updates_triggered ()
+{
+  m_updateChecker->check (false);
+}
+
+/* CE3TSK 2026-09-22: the update icon - two arrows chasing each other round a circle, in the Ko-fi cup's colours
+   (contrib/support_cup_*.png: #3a4658 on the light style, #e8eaee on the dark one), phase 0 the full colour and 1 a
+   mid tone towards the menu bar's background */
+// one slow breath: 0 (the full colour) to 1 (the mid tone) and back in 2.4 s
+qreal MainWindow::updatePulsePhase () const
+{
+  return 0.5 - 0.5 * qCos (2.0 * M_PI * (m_updatePulseClock.elapsed () % 2400) / 2400.0);
+}
+
+void MainWindow::paintUpdateIcon (qreal phase)
+{
+  if (!m_updateButton) return;
+  QColor const full {m_useDarkStyle ? "#e8eaee" : "#3a4658"};
+  QColor const faint {m_useDarkStyle ? "#6b7585" : "#aab2bd"};
+  QColor const c {int (full.red () + (faint.red () - full.red ()) * phase),
+                  int (full.green () + (faint.green () - full.green ()) * phase),
+                  int (full.blue () + (faint.blue () - full.blue ()) * phase)};
+  qreal const dpr = devicePixelRatioF ();
+  QPixmap pm {QSize {28, 28} * dpr};
+  pm.setDevicePixelRatio (dpr);
+  pm.fill (Qt::transparent);
+  QPainter p {&pm};
+  p.setRenderHint (QPainter::Antialiasing);
+  QPen pen {c, 2.6, Qt::SolidLine, Qt::RoundCap};
+  p.setPen (pen);
+  QRectF const r {9.5, 5.5, 17.0, 17.0};   // drawn towards the cup's side of its square
+  // two arcs of about 130 degrees each, with a gap before each arrow head
+  p.drawArc (r, 30 * 16, 125 * 16);
+  p.drawArc (r, 210 * 16, 125 * 16);
+  p.setPen (Qt::NoPen);
+  p.setBrush (c);
+  auto head = [&p, &r] (qreal deg) {
+      qreal const a = qDegreesToRadians (deg);
+      QPointF const centre = r.center ();
+      qreal const rad = r.width () / 2.0;
+      QPointF const tip {centre.x () + rad * qCos (a), centre.y () - rad * qSin (a)};
+      QPointF const tangent {qSin (a), qCos (a)};          // the direction of travel (clockwise on screen)
+      QPointF const normal {qCos (a), -qSin (a)};
+      QPainterPath path;
+      path.moveTo (tip + tangent * 4.2);
+      path.lineTo (tip - tangent * 1.6 + normal * 3.6);
+      path.lineTo (tip - tangent * 1.6 - normal * 3.6);
+      path.closeSubpath ();
+      p.drawPath (path);
+    };
+  head (30);    // the end of each arc, pointing on round the circle
+  head (210);
+  p.end ();
+  m_updateButton->setIcon (QIcon {pm});
+}
+
+void MainWindow::showUpdateNewer (QString const& latest, QString const& changelog, QString const& page)
+{
+  QDialog dialog {this};
+  dialog.setWindowTitle (tr ("Check for updates"));
+  auto * layout = new QVBoxLayout {&dialog};
+  auto * headline = new QLabel {tr ("A new version of JTDX_contest is available: %1").arg (latest), &dialog};
+  QFont bold = headline->font (); bold.setBold (true); headline->setFont (bold);
+  layout->addWidget (headline);
+  layout->addWidget (new QLabel {tr ("You are running %1.").arg (version (true)), &dialog});
+  if (!changelog.isEmpty ())
+    {
+      layout->addWidget (new QLabel {tr ("What is new:"), &dialog});
+      auto * text = new QPlainTextEdit {changelog, &dialog};
+      text->setReadOnly (true);
+      text->setMinimumSize (480, 220);
+      layout->addWidget (text);
+    }
+  auto * buttons = new QDialogButtonBox {&dialog};
+  auto * open = buttons->addButton (tr ("Open download page"), QDialogButtonBox::AcceptRole);
+  buttons->addButton (QDialogButtonBox::Close);
+  open->setDefault (true);
+  connect (buttons, &QDialogButtonBox::accepted, &dialog, &QDialog::accept);
+  connect (buttons, &QDialogButtonBox::rejected, &dialog, &QDialog::reject);
+  layout->addWidget (buttons);
+  if (QDialog::Accepted == dialog.exec ()) QDesktopServices::openUrl (QUrl {page});   // UpdateChecker: https:// only
+}
+
 void MainWindow::enableTx_mode (bool state) { ui->enableTxButton->setChecked (state); on_enableTxButton_clicked (state); }
 void MainWindow::enableTxButton_off () { enableTx_mode (false); }
 
@@ -3380,15 +3546,19 @@ void MainWindow::rebuildBandButtons ()
   m_bandButtons.clear ();
   if (!ui->actionBand_buttons->isChecked ()) return;   // built when shown
   auto const * const frequencies = m_config.frequencies ();
-  bool const contest {m_config.special_op_id () != Configuration::SpecialOperatingActivity::NONE};
-  QList<Radio::Frequency> wanted;
+  /* CE3TSK 2026-09-22: the rows marked default ("*"), in the everyday list AND in a contest's - both tables can
+     mark and unmark them now (right click); a contest showed every row before. A list with no default row for the
+     mode at all shows every row, so the row never comes up empty. */
+  QList<Radio::Frequency> wanted, every;
   for (int row = 0; row < frequencies->rowCount (); ++row)
     {
       auto const source = frequencies->mapToSource (frequencies->index (row, FrequencyList_v2::frequency_column));
       if (!source.isValid ()) continue;
       auto const& item = frequencies->frequency_list ()[source.row ()];
-      if ((contest || item.default_) && !wanted.contains (item.frequency_)) wanted << item.frequency_;
+      if (!every.contains (item.frequency_)) every << item.frequency_;
+      if (item.default_ && !wanted.contains (item.frequency_)) wanted << item.frequency_;
     }
+  if (wanted.isEmpty ()) wanted = every;
   std::sort (wanted.begin (), wanted.end ());
   QHash<QString, int> per_band;
   for (auto const f : wanted) ++per_band[m_config.bands ()->find (f)];
@@ -3587,8 +3757,9 @@ void MainWindow::styleChanged()
 setDxCallEntryColour (m_dxCallEntryColour.isEmpty () ? QString {"#ffffff"} : m_dxCallEntryColour);
 setEnableTxButtonStyle ();
   /* CE3TSK: the Ko-fi artwork has a light and a dark variant, swap with the style */
-  if (auto * kofi = qobject_cast<QToolButton *> (ui->menuBar->cornerWidget (Qt::TopRightCorner)))
+  if (auto * kofi = ui->menuBar->findChild<QToolButton *> ("kofiButton"))   // in the corner's container since 2026-09-22
     kofi->setIcon (QIcon {m_useDarkStyle ? ":/support_cup_dark.png" : ":/support_cup_light.png"});
+  if (m_updateButton) paintUpdateIcon (m_updatePulse.isActive () ? updatePulsePhase () : 0.0);
   setLastLogdLabel();
   setAutoSeqButtonStyle(m_autoseq);
   setSpotButtonStyle ();
@@ -4534,6 +4705,18 @@ void MainWindow::superFoxSearchReset ()
   m_superFoxSince = 0;
   m_superFoxDial = static_cast<qint64> (m_freqNominal);
   m_superFoxFreqDisk = m_superFoxBase;
+  superFoxRxFollow (m_superFoxBase);   // the RX box back on the nominal tone too (a no-op outside S-Hound)
+}
+
+/* CE3TSK 2026-09-21: S-Hound mode - the RX box shows where the Fox is (m_rxFoxShown), and nothing else may move
+   it (on_RxFreqSpinBox_valueChanged puts it back); outside the mode this only remembers the value */
+void MainWindow::superFoxRxFollow (int hz)
+{
+  m_rxFoxShown = hz;
+  if (!m_superFoxApplied) return;
+  m_rxFoxForcing = true;
+  ui->RxFreqSpinBox->setValue (hz);
+  m_rxFoxForcing = false;
 }
 
 // an ordinary Hound off the common FT8 frequencies needs a split rig; a SuperFox Hound does not
@@ -4574,8 +4757,9 @@ bool MainWindow::houndTxControl (bool hound, bool enableToo)
    button reads S-Hound; the TX minute button is greyed on the odd period, the only one a Hound
    of a SuperFox has (m_txFirstParked keeps what the operator had). On every transition the list of Foxes decoded is emptied and the
    receiver's search frequency goes back to the Fox's nominal lowest tone (m_superFoxFreq, which
-   decode() sends instead of the RX box); on the way IN the RX box goes there too, but only so
-   that the marker sits on the Fox - nothing depends on it staying there. */
+   decode() sends instead of the RX box). The RX box follows the Fox while the mode is in effect - greyed,
+   where the receiver last decoded it, the operator's value parked and handed back on the way out
+   (m_rxParked, 2026-09-21: the Rx Frequency pane and the odd slot's Filter read it). */
 void MainWindow::applySuperFoxMode ()
 {
   bool const on = superFoxActive ();
@@ -4583,6 +4767,8 @@ void MainWindow::applySuperFoxMode ()
   m_superFoxApplied = on;               // first: the Hound switch-off below comes back in here
   ui->HoundButton->setText (on ? tr ("S-Hound") : tr ("Hound"));
   if (on != was) {
+    // the operator's RX value parked FIRST: the search reset below already puts the box on the Fox
+    if (on) { m_rxParked = ui->RxFreqSpinBox->value (); m_rxParkedValid = true; }
     superFoxSearchReset ();
     /* the TX period: the Fox has the even one, so the Hound's is the odd one and not a choice.
        Through the button's own slot, so that it does what a press does (a DX call whose messages
@@ -4596,7 +4782,23 @@ void MainWindow::applySuperFoxMode ()
       ui->TxMinuteButton->setEnabled (true);   // a mode slot that greys it (WSPR) does so after this
       if (m_txFirst != m_txFirstParked) { ui->TxMinuteButton->setChecked (m_txFirstParked); on_TxMinuteButton_clicked (m_txFirstParked); }
     }
-    if (on) ui->RxFreqSpinBox->setValue (m_superFoxBase);   // for the eye only: the marker on the Fox, its lines in Rx Frequency
+    /* the RX box: the operator's value parked, the box on the Fox and greyed (m_rxParked has the story); handed
+       back on the way out */
+    parkDecodePreset (on);   // CE3TSK 2026-09-22: the Default preset in S-Hound, the operator's back on the way out
+    if (on) {
+      superFoxRxFollow (m_superFoxBase);
+      ui->RxFreqSpinBox->setEnabled (false);
+    } else if (m_rxParkedValid) {
+      m_rxParkedValid = false;
+      /* enabled as the transmit path would have it (review: leaving the mode during a transmission, lock on and no
+         TX QSY, enabled the box until the next transmission started) */
+      ui->RxFreqSpinBox->setEnabled (!(m_transmitting && ui->pbTxLock->isChecked ()
+                                       && !(m_config.tx_QSY_allowed () || !m_config.split_mode ())));
+      /* review 2026-09-22: with Tx=Rx locked the operator's RX value is NOT handed back - the lock would drag TX to
+         it (on_RxFreqSpinBox_valueChanged), and TX is where the operator called the Fox from; on_pbT2R_clicked below
+         puts RX on TX instead, as the lock promises */
+      if (!txLockInEffect ()) ui->RxFreqSpinBox->setValue (m_rxParked);
+    }
     setStopHSym ();
     if (m_config.write_decoded_debug ()) writeToALLTXT (on ? "SuperFox mode on: the Fox's slot is decoded by the SuperFox receiver" : "SuperFox mode off");
   }
@@ -4607,6 +4809,7 @@ void MainWindow::applySuperFoxMode ()
   if (!on && was && txLockInEffect ()) on_pbT2R_clicked ();
   if (on) {
     ui->TxMinuteButton->setEnabled (false);   // every time, not only on the way in: commonActions () enables it in each mode slot
+    ui->RxFreqSpinBox->setEnabled (false);    // likewise: the RX box follows the Fox (m_rxParked)
     m_houndTXfreqJumps = false;
     ui->actionUse_TX_frequency_jumps->setChecked (false);
     ui->actionUse_TX_frequency_jumps->setEnabled (false);
@@ -5444,6 +5647,12 @@ void MainWindow::on_actionFT8PresetMaxEfficiency_triggered() { applyDecodePreset
 void MainWindow::applyDecodePreset(DecodePreset p)
 {
   auto const r = preset_recipe(p, effective_ft8_threads(m_ft8threads, QThread::idealThreadCount()));
+  // the ensemble preset means "auto"; the budgeted ones name their member count; P12: the side settings of every preset
+  applyDecodeRecipe (r, p==DecodePreset::Ensemble ? ENSEMBLE_AUTO : r.rx.ensemble, PRESET_EARLY_START, PRESET_WIDE_DXCALL_SEARCH);
+}
+
+void MainWindow::applyDecodeRecipe(DecodeRecipe const& r, int rxEnsembleEffort, bool earlyStart, bool wideDxSearch)
+{
   // the RX phase: the ordinary controls
   m_swl=r.rx.swl; ui->swlButton->setChecked(r.rx.swl);
   QAction* cycles[] = {ui->actionDecFT8cycles3, ui->actionDecFT8cycles4, ui->actionDecFT8cycles5, ui->actionDecFT8cycles6,
@@ -5459,17 +5668,46 @@ void MainWindow::applyDecodePreset(DecodePreset p)
   ui->actionFT8DeepOSD->setChecked(r.rx.deep_osd);
   ui->actionFT8TwoSlicings->setChecked(r.rx.two_pass);
   ui->actionFT8AltPass->setChecked(r.rx.alt_pass);
-  m_ft8EnsembleEffort = (p==DecodePreset::Ensemble) ? ENSEMBLE_AUTO : r.rx.ensemble; setEnsembleEffortAction();   // the ensemble preset means "auto"; the budgeted ones name their member count
+  m_ft8EnsembleEffort = rxEnsembleEffort; setEnsembleEffortAction();
   // the TX background phase and its recipe
   m_bgEnabled=r.background; m_bgSWL=r.bg.swl; m_nBgCycles=r.bg.cycles; m_nBgSWLCycles=r.bg.swl_cycles;
   m_bgSensitivity=r.bg.sensitivity; m_bgRXfSens=r.bg.rxf_sens; m_bgDeepOSD=r.bg.deep_osd; m_bgTwoSlicings=r.bg.two_pass;
   m_bgAltPass=r.bg.alt_pass; m_bgEnsembleEffort=r.bg.ensemble; m_bgClassic=r.bg_classic; setBackgroundActions();
   // P12: the side settings of every preset - the toggled slots keep the members, the decode
   // trigger follows the early-start value at once
-  ui->actionFT8EarlyStart->setChecked(PRESET_EARLY_START);
-  ui->actionFT8WidebandDXCallSearch->setChecked(PRESET_WIDE_DXCALL_SEARCH);
+  ui->actionFT8EarlyStart->setChecked(earlyStart);
+  ui->actionFT8WidebandDXCallSearch->setChecked(wideDxSearch);
   setStopHSym();
   refreshDecodePreset();
+}
+
+/* CE3TSK 2026-09-22: S-Hound mode parks the operator's FT8 recipe and runs the Default preset (3 cycles, no TX
+   background); the preset entries are greyed meanwhile. park=false hands the parked recipe back. */
+void MainWindow::parkDecodePreset(bool park)
+{
+  QAction* const presets[] = {ui->actionFT8PresetDefault, ui->actionFT8PresetMaxEfficiency, ui->actionFT8PresetMaxDecodes,
+                              ui->actionFT8PresetPipelineLight, ui->actionFT8PresetPipeline, ui->actionFT8PresetPipelineFull,
+                              ui->actionFT8PresetPipelineRun};
+  if (park && !m_decodeParked)
+    {
+      m_parkedRecipe = DecodeRecipe {{m_swl, m_nFT8Cycles, m_nFT8SWLCycles, m_ft8Sensitivity, m_nFT8RXfSens, m_ft8DeepOSD, m_ft8TwoSlicings,
+                                      m_ft8AltPass, 0 /* the effort is kept raw below */},
+                                     m_bgEnabled,
+                                     {m_bgSWL, m_nBgCycles, m_nBgSWLCycles, m_bgSensitivity, m_bgRXfSens, m_bgDeepOSD, m_bgTwoSlicings, m_bgAltPass,
+                                      m_bgEnsembleEffort},
+                                     m_bgClassic};
+      m_parkedEnsembleEffort = m_ft8EnsembleEffort;
+      m_parkedEarlyStart = ui->actionFT8EarlyStart->isChecked ();
+      m_parkedWideDxSearch = ui->actionFT8WidebandDXCallSearch->isChecked ();
+      m_decodeParked = true;
+      applyDecodePreset (DecodePreset::Default);
+    }
+  else if (!park && m_decodeParked)
+    {
+      m_decodeParked = false;
+      applyDecodeRecipe (m_parkedRecipe, m_parkedEnsembleEffort, m_parkedEarlyStart, m_parkedWideDxSearch);
+    }
+  for (auto * a : presets) a->setEnabled (!m_decodeParked);
 }
 
 /* CE3TSK: the RX and TX timing lamps, between the Contest and Preset lamps.
@@ -5726,7 +5964,11 @@ void MainWindow::freezeDecode(int n)                          //freezeDecode()
 {
   if(!m_decoderBusy) {
     if((n%100)==2) on_DecodeButton_clicked (true);
-    dec_data.params.nagainfil=1;
+    /* CE3TSK 2026-09-21: not in S-Hound mode. The flag narrows the NEXT decode to +-25 Hz around the RX frequency -
+       which there stays on the Fox - so a click after the Fox's decode left the following odd period hearing none
+       of the Hounds, and the pool pass counted that period as listened to with all of them absent. A double click
+       still decodes the last period again, whole. */
+    if (!m_superFoxApplied) dec_data.params.nagainfil=1;
   }
 }
 
@@ -6484,7 +6726,8 @@ void MainWindow::readFromStdout()                             //readFromStdout
         // search for a live decode, the replay's own for a replayed one
         { int const f = t.mid (15, 5).trimmed ().toInt ();
           if(m_diskData) { if(f > 0) m_superFoxFreqDisk = f; }
-          else { if(f > 0) m_superFoxFreq = f; m_superFoxSince = 0; m_superFoxDial = static_cast<qint64> (m_freqNominal); } }
+          else { if(f > 0) m_superFoxFreq = f; m_superFoxSince = 0; m_superFoxDial = static_cast<qint64> (m_freqNominal); }
+          if(f > 0) superFoxRxFollow (f); }   // CE3TSK: the RX box follows the Fox (a replay's too: it is what is on screen)
         // milestone 2: ask the verification server; shown only on request, and then as a plain line
         if(parts.size () >= 3) {
           askFoxCode (t, parts.at (1), parts.at (2));
@@ -9318,6 +9561,12 @@ void MainWindow::on_TxFreqSpinBox_valueChanged(int n)
 
 void MainWindow::on_RxFreqSpinBox_valueChanged(int n)
 {
+  /* CE3TSK 2026-09-21: S-Hound - the box follows the Fox; whatever else set it (a double click on a decode, the
+     DX call's line, clearDX, a band change) is put back. The put-back comes in here again, with the flag set. */
+  if (m_superFoxApplied && !m_rxFoxForcing && n != m_rxFoxShown) {
+    m_rxFoxForcing = true; ui->RxFreqSpinBox->setValue (m_rxFoxShown); m_rxFoxForcing = false;
+    return;
+  }
   m_wideGraph->setRxFreq(n);
   /* CE3TSK: while SuperFox mode is in effect the Tx=Rx lock never moves the TX frequency. A Hound
      keeps its own calling frequency for the whole QSO (SuperFox User Guide), and RX sits on the
@@ -9573,7 +9822,7 @@ void MainWindow::band_changed (Frequency f)
         superFoxSearchReset ();
         clearDX (" cleared, triggered by erase both windows option upon band change, delta frequency"); // Request from Boris UX8IW
         // CE3TSK: AFTER clearDX, which puts RX on TX in Hound mode: the marker back on the Fox
-        if (superFoxActive ()) ui->RxFreqSpinBox->setValue (m_superFoxBase);
+        if (superFoxActive ()) superFoxRxFollow (m_superFoxBase);
         if (m_autoEraseBC && !cleared) { // option: erase both windows if band is changed
             ui->decodedTextBrowser->clear();
             ui->decodedTextBrowser2->clear();
@@ -10557,7 +10806,7 @@ void MainWindow::transmitDisplay (bool transmitting)
     }
     auto QSY_allowed = !transmitting or m_config.tx_QSY_allowed () or !m_config.split_mode ();
     if (ui->pbTxLock->isChecked ()) {
-      ui->RxFreqSpinBox->setEnabled (QSY_allowed);
+      ui->RxFreqSpinBox->setEnabled (QSY_allowed && !m_superFoxApplied);   // CE3TSK: S-Hound keeps it greyed (on the Fox)
       ui->pbT2R->setEnabled (QSY_allowed);
     }
     if(m_mode!="WSPR") {

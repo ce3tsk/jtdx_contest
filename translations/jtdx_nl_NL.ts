@@ -508,6 +508,16 @@ Indeling:
         <source>%1, downloaded</source>
         <translation>%1, gedownload</translation>
     </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Mark as de&amp;fault</source>
+        <translation>Markeren als &amp;standaard</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>&amp;Unmark default</source>
+        <translation>Standaard&amp;markering verwijderen</translation>
+    </message>
 </context>
 <context>
     <name>CountryDat</name>
@@ -6183,6 +6193,91 @@ Dit wordt maar één keer gevraagd.</translation>
         <location filename="../mainwindow.cpp"/>
         <source>Fox verification failed: %1</source>
         <translation>Fox-verificatie mislukt: %1</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Check for updates...</source>
+        <translation>Controleren op updates...</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Asks ce3tsk.com whether a newer JTDX_contest is published, and shows what changed</source>
+        <translation>Vraagt ce3tsk.com of er een nieuwere JTDX_contest is gepubliceerd en toont wat er veranderd is</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>New update available</source>
+        <translation>Nieuwe update beschikbaar</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Check for updates</source>
+        <translation>Controleren op updates</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>You are running the latest version of JTDX_contest (%1).</source>
+        <translation>U gebruikt de nieuwste versie van JTDX_contest (%1).</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Published: %1</source>
+        <translation>Gepubliceerd: %1</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>no connection to the server</source>
+        <translation>geen verbinding met de server</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>no SSL/TLS support on this system</source>
+        <translation>geen SSL/TLS-ondersteuning op dit systeem</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>the server did not answer in time</source>
+        <translation>de server antwoordde niet op tijd</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>the answer was larger than expected</source>
+        <translation>het antwoord was groter dan verwacht</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>the server answered with HTTP status %1</source>
+        <translation>de server antwoordde met HTTP-status %1</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>the version information on the server could not be read</source>
+        <translation>de versie-informatie op de server kon niet worden gelezen</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Could not check for updates: %1.</source>
+        <translation>Controleren op updates is mislukt: %1.</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>A new version of JTDX_contest is available: %1</source>
+        <translation>Er is een nieuwe versie van JTDX_contest beschikbaar: %1</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>You are running %1.</source>
+        <translation>U gebruikt %1.</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>What is new:</source>
+        <translation>Nieuw:</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Open download page</source>
+        <translation>Downloadpagina openen</translation>
     </message>
 </context>
 <context>

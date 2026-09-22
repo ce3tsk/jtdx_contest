@@ -7,10 +7,15 @@ The GUI has been repaired throughout and the dark style now works.
 Designed, built and measured by **Tihomir Sokcevic, CE3TSK** — Santiago de Chile,
 2025–2026 · [https://ce3tsk.com](https://ce3tsk.com) · source code: [https://github.com/ce3tsk/jtdx\_contest](https://github.com/ce3tsk/jtdx_contest)
 
-Version string: `v3.0.0-rc07` · derivative work of JTDX by UA3DJY, ES1JA and the
+Version string: `v3.0.0-rc08` · derivative work of JTDX by UA3DJY, ES1JA and the
 HF community, WSJT-X by K1JT.
 
 Support this work: https://ko-fi.com/ce3tsk
+
+New versions: **Help → Check for updates...** shows whether a newer version is published and what changed, and
+opens the download page. In the background the program asks the same thing once after starting and every 12
+hours, and only shows a small update icon beside the Ko-fi cup when there is one. All it fetches is
+`https://ce3tsk.com/download/latest.json`; `UpdateCheck=false` in the ini file stops the background check.
 
 ---
 
@@ -195,182 +200,60 @@ come from it. Contest frequencies kept apart from the everyday band plan.
 
 ---
 
-### SuperFox DXpeditions (DXpedition → SuperFox mode)
+### SuperFox DXpeditions (DXpedition → SuperFox mode) - experimental
 
-DXpeditions running WSJT-X 2.7 or later, or MSHV, increasingly transmit **SuperFox**: one
-constant-envelope signal, 1512 Hz wide, that carries reports or RR73s for up to nine Hounds at
-once. JTDX could not read it - the Fox's slot simply stayed empty. JTDX\_CONTEST receives it
-(*SuperHound*): with Hound mode on and **DXpedition → SuperFox mode (S-Hound)** ticked - or a
-right click on the Hound button - the Fox's slot, the even one (00 and 30 s), goes to the
-SuperFox receiver and the odd slots to the FT8 decoder as before. The Hound button then reads
+DXpeditions running WSJT-X 2.7 or later, or MSHV, increasingly transmit **SuperFox**: one signal,
+1500 Hz wide, that answers up to nine Hounds at once. JTDX could not read it - the Fox's period
+stayed empty. JTDX\_CONTEST receives it (*SuperHound*): with Hound mode on, tick **DXpedition →
+SuperFox mode (S-Hound)** - or right-click the Hound button. The Fox's (even) period then goes to the
+SuperFox receiver, the odd periods to the FT8 decoder as before, and the Hound button reads
 **S-Hound**.
 
-The receiver is WSJT-X 3.0.2's (`lib/superfox`, by K1JT, K9AN and IV3NWV), ported and tested
-to print the same decodes as WSJT-X's own `sfrx`, file by file: half of the
-transmissions decode near −16.7 dB on a quiet channel and near −15.4 dB on a mid-latitude
-fading one. What to know about it:
+**SuperFox support is experimental.** It has been tested against WSJT-X's and MSHV's receivers on
+simulated transmissions and a few recordings, not yet on enough DXpeditions on the air; until there
+are real recordings to measure it on, no figures are given for it. Recordings of a working SuperFox
+(Save all, both periods) are very welcome: jtdx_contest@ce3tsk.com. How the receiver works - WSJT-X's
+receiver first, then everything this program does differently - is described in the **SuperFox
+explainer**, published with the other documents at [https://ce3tsk.com](https://ce3tsk.com).
 
-- **Tone bins that hold QRM are normalised - the one step of the receiver that is not WSJT-X's.**
-  The receiver weighs all 128 tone bins with one noise level. An FT8 caller at +10 dB is two
-  thousand times the noise in its own bin, where the Fox is five to twenty times - that bin wins
-  every symbol it is keyed in - and the symbol FFT leaks it over the whole band, so every other
-  bin's noise level is wrong as well. A bin whose mean power over the transmission is more than
-  twice the noise's is therefore divided by that mean. On a band without QRM no bin qualifies and
-  nothing changes: 360 test transmissions around the threshold, the same ones decoded as by
-  WSJT-X's receiver, to the last one; and on 78 bands without a Fox nothing is printed. With QRM
-  it is the difference in the figures below, and the Fox under three callers is printed after
-  0.06 s instead of 0.7. `JTDX_SFOX_NORM=0` in the environment switches the step off.
-- **A Fox whose call is known is decoded a little deeper.** WSJT-X's receiver throws a decode
-  away, CRC or not, when its estimated SNR is under −16.5 dB - that is what keeps the chance CRC
-  passes of an empty slot off the screen. A decode that carries the call you have in DX Call, or
-  the call of the Fox this receiver last decoded above that floor, is kept: in a slot without
-  that Fox a chance pass would have to hit the call's 28 bits as well. (With that Fox on the air
-  just under the threshold a wrong word can carry the right call - the decoder settles the call
-  early - and pass the CRC: 2 to 3 in ten million such periods, the order WSJT-X's receiver has
-  above its floor too; such a line would show a code that does not verify.) It is worth little -
-  7 more decodes in 120 transmissions between −16.5 and −17.5 dB, about 0.15 dB; a Fox that is
-  not known is treated exactly as before. `JTDX_SFOX_KNOWN=0` switches it off.
-- **A message that can be foreseen is decoded up to 4 dB deeper, and marked `*`.** When the search
-  has found nothing, the receiver tries - for a Fox it knows, as above - the messages it can state
-  almost whole, as FT8's a-priori decoding states `MyCall DxCall`: the Fox's **CQ** (with its grid,
-  from DX Grid or remembered from the last CQ this receiver decoded: half of them decode at
-  −21 dB instead of −17; without the grid −17.5), its answer to **you and nobody else** - your
-  report while you are calling, RR73 once you have sent your R+report, −20.7 and −21.4 dB - your
-  report or RR73 beside up to four reports to others (−18.4 to −19.4 dB), and messages of
-  **nothing but reports** (−18.5 to −19.2 dB); on a mid-latitude fading channel, where the plain
-  receiver stands at −15.4 dB, the CQ and the answer to you alone reach −20. As in FT8, what
-  concerns your own call is tried only while a transmission of yours is no more than two minutes
-  old and the QSO expects that answer - and only from the Fox in DX Call. It has to be whole
-  messages: the code's decoder settles its least reliable symbols first, the Hound slots hold
-  eight of the nine worst, and with one of them left open the rest of what is known is worth half
-  a dB - so **a busy Fox, with RR73s to others or a full message, gains nothing here**; that takes
-  the Hounds' calls, which the receiver does not collect yet. The pass is at most 44 decoder calls
-  against the search's 796, in each of the one to three looks the receiver takes at a slot.
-  Against false lines every stated bit must stand in the decoded word and its SNR estimate must
-  reach a floor of its own; measured, a false line would take 2·10⁹ periods of noise, 5·10⁷ under
-  FT8 signals - and about 2 million periods of *that Fox on the air and not decoded*, because a
-  nearly right guess makes a nearly right word and only the 21-bit CRC parts them (FT8's a-priori
-  decodes stand on 14 bits). Such a line would show the right Fox with a Hound, a report or your
-  own call that it did not send; the one that would matter - a false RR73 to you after your
-  R+report, which logs a QSO that was not completed - about once in a million periods spent
-  waiting for the RR73 of a Fox too weak to decode. A Fox this receiver remembers is forgotten
-  after four of its periods without a decode of it, and at once on a band or mode change, as the
-  FT8 hint lists are.
-  **None of this is final.** The figures come from simulated transmissions and two on-air
-  recordings, so until there is more on-air material the recipe is a set of settings, read from
-  the environment when the decoder starts (a value that cannot be read stops it, by name):
-  `JTDX_SFOX_AP=0` the pass off; `JTDX_SFOX_APFAM=cmor` the families tried (**c** the CQ, **m** the
-  answer to me alone, **o** me beside others, **r** reports only); `JTDX_SFOX_APFLOOR1=-20.5` and
-  `JTDX_SFOX_APFLOOR2=-18.7` the floors of whole and of partial messages; `JTDX_SFOX_APLOOKS=2`
-  how many forms of the spectra are tried; `JTDX_SFOX_APAGE=4` how many Fox periods a Fox is
-  remembered; and for the bin normalisation above `JTDX_SFOX_NORMX=2.0`, its factor.
-- **A busy Fox is decoded about 1.5 dB deeper when you have heard its Hounds (also marked `*`).**
-  The pass above has nothing for a Fox whose message is full of calls it cannot foresee. But in
-  S-Hound mode the odd periods go to this program's FT8 decoder, so it hears who calls and who
-  answers the Fox in DX Call - and those are the stations the Fox's next messages name. Their
-  calls form a *pool*. When the search and the pass above have found nothing, the receiver runs
-  a **list decoder** of its own (CRC-aided successive-cancellation list decoding: the 16 most
-  probable paths are kept where WSJT-X's decoder keeps one) with the Fox told and every Hound slot
-  of the message held to *one of the pool, your own call while your QSO runs, or empty*. It needs
-  no order, no placement and no guess at the message. Measured with a Fox working six Hounds, all
-  of them among 16 calls heard: half of the transmissions decode at −18.3 dB instead of −16.7, and
-  on a mid-latitude fading channel at −17.3 instead of −15.3. A Hound the Fox works that you did
-  *not* hear: the pass finds nothing and costs nothing - the ordinary search stands as before.
-  Two list decodes, about 10 ms, each time the receiver has looked at a period and found nothing
-  (up to three times a period when FT8 signals are taken out, see below). Against false lines -
-  which here would show calls that *were* heard - the CRC is tried on the best path only (with
-  the slots held to candidates every decode on record had the right path first), the message must
-  be a standard one, and its SNR estimate must reach −19.5 dB; nothing was printed in 300 periods
-  of noise and 200 of another Fox. Your own call is a candidate by the QSO's rule, slot by slot:
-  for a *report* once you have called, for *RR73* only after your R+report - "RR73 to me" while
-  you are only calling is a line no Fox can send, and it is not decoded. A Hound leaves the pool
-  when it has been absent from four odd periods *that were listened to* - while you call in every
-  odd period you hear nobody, and the pool keeps what it had; decoding a period again (the Decode
-  button) counts as nothing. The pool is emptied on a band or mode change, when DX Call changes
-  and when S-Hound mode is left. Settings, as provisional as the others: `JTDX_SFOX_POOL=0` the
-  pass off, `JTDX_SFOX_POOLL=16` the list size, `JTDX_SFOX_POOLLOOKS=2` the forms of the spectra
-  tried, `JTDX_SFOX_POOLCRC=1` the paths tried against the CRC, `JTDX_SFOX_POOLFLOOR=-19.5`,
-  `JTDX_SFOX_POOLAGE=4` - every figure here comes from simulated transmissions, and the defaults
-  will be looked at again with the first recordings of a working SuperFox. A value that cannot
-  be read - not a plain number, out of range, longer than 32 characters - stops the decoder with
-  a message that names it; it is never skipped.
-- **FT8 signals on top of the Fox are taken out - by this program's own FT8 decoder.** A
-  DXpedition works on a frequency of its own, so what lies on top of a SuperFox is mostly Hounds
-  calling in the Fox's period - and three of those at the Fox's own strength are enough to make
-  it unreadable. WSJT-X and MSHV decode and subtract such FT8 signals before they look for the
-  Fox. JTDX\_CONTEST looks for the Fox in the band as received first (0.02 s when it is there).
-  Only when that finds nothing does its own FT8 decoder go over the Fox's 1.5 kHz, **silently** -
-  nothing of it is printed: first the plain recipe, three cycles, which takes a few tenths of a
-  second, so that a Fox rescued this way is still reported **before the period ends and your
-  reply goes out on time**; and, if the Fox is still not there, SWL mode with five cycles and the
-  alternate pass. After each round every FT8 signal decoded is subtracted from the band as
-  received - its timing refined by what the subtraction leaves, as WSJT-X does - and the SuperFox
-  receiver runs again. The four-level hint memory, which these decodes keep filled from one Fox
-  slot to the next, serves both rounds. Measured with simulated Fox transmissions at −10 and
-  −13 dB under three and ten callers at 0 and +10 dB in the Fox's period (80 of them): WSJT-X's
-  receiver, which removes FT8 first, decodes 67; this receiver as WSJT-X wrote it and without the
-  FT8 step, none; with the bin normalisation alone 31; **with both 79**. Under nineteen different
-  recorded FT8 bands (114): WSJT-X's 83; ours 67, 80 with the normalisation alone, **89 with
-  both**. The two steps are complements: the normalisation deals with a few callers at once and
-  with what the subtraction leaves behind, the FT8 step with a band full of them. (The second,
-  deeper round runs only if it can be expected to end inside the RX budget - a DXpedition's
-  frequency passes, a crowded band does not. `JTDX_SFQRM=1` in the environment drops it,
-  `JTDX_SFQRM=0` the whole step.)
-- **A transmission that decodes takes about 0.02 s.** A slot with nothing to decode used to cost
-  up to 2 s of searching; it costs at most 0.4 s now (the search is WSJT-X's, unchanged in what it
-  tries and in what order - 62 % of its time was a sort that only ever served to find a median).
+The receiver:
 
-- **The receiver finds the Fox by itself.** It looks for the Fox's lowest tone at 750 Hz, 50 Hz
-  either side, and then follows where it last decoded it (`SuperFoxFreq` and `SuperFoxTol` in
-  the ini file, for a Fox that announces another frequency). After two of the Fox's periods
-  without a decode it looks at 750 Hz and at the last place in turn, and when you move the dial
-  by more than those 50 Hz it starts over at 750 Hz. The RX frequency box plays no part
-  in this: it is put on the Fox when the mode comes on so that the marker shows where the signal
-  is, and it may be moved, or dragged away by the end of a QSO, without the Fox being lost.
-  **Lock Tx=Rx** is ignored while the mode is on - a double click on a Fox line would otherwise
-  put your transmitter on top of the Fox.
-- **Call by double-clicking a decoded Fox line.** You stay on your own TX frequency for the
-  whole QSO - anywhere from 200 to 3000 Hz, not necessarily above 1000 Hz - and the program
-  never moves you: the Hound TX frequency control is off in this mode, and split operation is
-  not required.
-- **Your TX period is the odd one (15 and 45 s) and cannot be changed**: a SuperFox transmits in
-  the even periods and nowhere else. The TX minute button shows `TX 15/45` greyed while the mode
-  is on; what you had chosen before is put back when you leave it, and is what the settings keep.
-- **A Fox that has not been decoded cannot be called.** The transmission is halted and the
-  status bar says why. This is SuperFox's own operating rule: a Hound that cannot hear the Fox
-  has no chance of a QSO and only adds QRM. "Decoded" means within the last five minutes and on
-  this dial frequency: a Fox heard this morning, or before you moved, does not count.
-- **Is it really them?** A DXpedition can sign its transmissions with a one-time code (keys are
-  issued by the NCDXF). A SuperFox carries the code in every transmission, an old-style
-  multi-stream Fox sends it now and then as the free text `CALL.123456`. In Hound mode
-  JTDX\_CONTEST asks the verification server `www.9dx.cc` and shows the answer as a line at the
-  transmission's time and frequency - **`VP8PJ verified`** on green or **`VP8PJ invalid`** on red,
-  and the Hound button turns red for a minute on *invalid*. An unsigned Fox (code 000000) is not
-  asked about and gets no line; a callsign the server does not know, or no connection, is said
-  once in the status bar. What is sent: the Fox's callsign, the time and the code - switch it off
-  with **DXpedition → Verify Fox online (OTP)**. The lines that carry the code are hidden unless
-  `ShowOTP=true` in the ini file; they, and the verdict, are written to ALL.TXT like every other
-  decode, that is when *write decoded messages* is on. A Fox is asked about again if the question
-  failed (no network, no answer in time); a replayed recording is asked about only if its file
-  name says when it was made (`yymmdd_hhmmss.wav`).
-- **More than one verification server.** `www.9dx.cc` holds the keys the NCDXF issues. A station
-  may be registered with another provider instead - `hamdx.org` describes itself as an alternate
-  one and speaks the same protocol (MSHV ships both addresses). To have it asked too, put a list
-  into the `[Common]` section of the ini file, program closed, best server first:
-  `OTPUrl=https://www.9dx.cc, https://hamdx.org`. The list is a **ranking by trust, not a pool**:
-  a server is asked only when every server before it answered that it *does not know the
-  callsign*. An earlier server's verdict is final either way, and so is its failure to answer -
-  otherwise registering somebody else's callsign at the weakest provider on the list would buy a
-  "verified" whenever the better one objected or could not be reached. A verdict from any but the
-  first server names its server: **`VP8PJ verified (hamdx.org)`**. A later server sees only the
-  callsigns, times and codes of Foxes the earlier ones do not know. The default is `www.9dx.cc`
-  alone; who runs `hamdx.org`, and how it checks who may register a callsign, its site does not
-  say - what its verdict is worth to you is yours to judge.
-- **A Fox with a compound callsign** (`VP2X/K1JT`) sends only a hash of its call, and a busy one
-  never sends the one transmission that carries it in full - so its lines read `K1ABC <...> RR73`.
-  **Type the callsign into the DX Call box**: from the next Fox transmission on the lines read
-  `K1ABC <VP2X/K1JT> RR73`, and from then on the Fox can be called (the rule above counts a Fox
-  as decoded once it has been read under its callsign).
+- **WSJT-X 3.0.2's receiver** (by K1JT, K9AN and IV3NWV), ported and checked to decode what WSJT-X
+  decodes, file by file.
+- **Tone bins that hold QRM are normalised**, so an FT8 caller inside the Fox's band does not swamp it.
+- **FT8 signals on top of the Fox are taken out** by this program's own FT8 decoder - silently, and
+  only when the Fox is not found without it; a quick round first, a deeper one if time allows.
+- **The search runs in threads**, with the same result at any thread count.
+- **A Fox it knows is decoded deeper** - the Fox in DX Call, or the Fox it last decoded; a Fox it does
+  not know is accepted down to MSHV's floor.
+- **Messages it can foresee** - the Fox's CQ, its answer to you - are decoded with that knowledge
+  (a-priori decoding, lines marked `*`).
+- **The Hounds you heard** in the odd period constrain the Fox's message (the *pool* pass), and when
+  none were heard **the Fox alone** does (the *list* pass) - both with a list decoder of its own,
+  lines marked `*`.
+- **MSHV's three sync windows**, as a last step when nothing else has decoded - it only ever adds
+  decodes, never delays one (`JTDX_SFOX_SYNC3=0` switches it off).
+- Every one of these is a setting, read from the environment (`JTDX_SFOX_...`, `JTDX_SFQRM`); the
+  explainer lists them. A value that cannot be read stops the decoder, naming it.
+
+Operating:
+
+- **Call by double-clicking a decoded Fox line.** You stay on your own TX frequency, anywhere from 200
+  to 3000 Hz; the program never moves you, and **Lock Tx=Rx** is ignored in this mode.
+- **Your TX period is the odd one** and cannot be changed while the mode is on.
+- **A Fox that has not been decoded cannot be called** (recently, on this dial frequency) - SuperFox's
+  own rule.
+- **The receiver finds the Fox by itself**: it looks near 750 Hz and follows where it last decoded it
+  (`SuperFoxFreq`, `SuperFoxTol` in the ini file for a Fox announcing another frequency). The **RX
+  frequency** box follows the Fox and is greyed while the mode is on, so the marker and the Rx
+  Frequency window always show it; your own RX frequency comes back when you leave the mode.
+- **A compound Fox call** (`VP2X/K1JT`) arrives only as a hash: type it into DX Call and its lines read
+  `K1ABC <VP2X/K1JT> RR73`.
+- **Verification**: a signed Fox is checked online and shown as **`VP8PJ verified`** (green) or
+  **`VP8PJ invalid`** (red) - for SuperFox and for an old-style Fox's `CALL.123456`. It sends the Fox's
+  call, the time and the code to `www.9dx.cc`; switch it off with **DXpedition → Verify Fox online
+  (OTP)**. More servers can be listed, best first, in the ini file (`OTPUrl`); a later one is asked
+  only when the earlier ones do not know the call. The code lines are hidden unless `ShowOTP=true`.
 - JTDX\_CONTEST does **not** transmit SuperFox.
 
 ## Building

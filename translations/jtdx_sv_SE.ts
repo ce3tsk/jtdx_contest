@@ -509,6 +509,16 @@ Formatera:
         <source>%1, downloaded</source>
         <translation>%1, hämtad</translation>
     </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Mark as de&amp;fault</source>
+        <translation>&amp;Markera som standard</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>&amp;Unmark default</source>
+        <translation>&amp;Ta bort standardmarkering</translation>
+    </message>
 </context>
 <context>
     <name>CountryDat</name>
@@ -6185,6 +6195,91 @@ Detta frågas bara en gång.</translation>
         <location filename="../mainwindow.cpp"/>
         <source>Fox verification failed: %1</source>
         <translation>Fox-verifieringen misslyckades: %1</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Check for updates...</source>
+        <translation>Sök efter uppdateringar...</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Asks ce3tsk.com whether a newer JTDX_contest is published, and shows what changed</source>
+        <translation>Frågar ce3tsk.com om en nyare JTDX_contest har publicerats och visar vad som har ändrats</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>New update available</source>
+        <translation>Ny uppdatering tillgänglig</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Check for updates</source>
+        <translation>Sök efter uppdateringar</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>You are running the latest version of JTDX_contest (%1).</source>
+        <translation>Du använder den senaste versionen av JTDX_contest (%1).</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Published: %1</source>
+        <translation>Publicerad: %1</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>no connection to the server</source>
+        <translation>ingen anslutning till servern</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>no SSL/TLS support on this system</source>
+        <translation>inget stöd för SSL/TLS på detta system</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>the server did not answer in time</source>
+        <translation>servern svarade inte i tid</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>the answer was larger than expected</source>
+        <translation>svaret var större än väntat</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>the server answered with HTTP status %1</source>
+        <translation>servern svarade med HTTP-status %1</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>the version information on the server could not be read</source>
+        <translation>versionsinformationen på servern kunde inte läsas</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Could not check for updates: %1.</source>
+        <translation>Kunde inte söka efter uppdateringar: %1.</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>A new version of JTDX_contest is available: %1</source>
+        <translation>En ny version av JTDX_contest finns tillgänglig: %1</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>You are running %1.</source>
+        <translation>Du använder %1.</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>What is new:</source>
+        <translation>Nyheter:</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Open download page</source>
+        <translation>Öppna nedladdningssidan</translation>
     </message>
 </context>
 <context>

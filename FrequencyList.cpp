@@ -378,6 +378,23 @@ bool FrequencyList_v2::remove (Item f)
   return m_->removeRow (row);
 }
 
+bool FrequencyList_v2::set_default (QModelIndexList rows, bool on)
+{
+  bool changed {false};
+  for (auto const& index : rows)
+    {
+      auto const source = mapToSource (index);
+      if (!source.isValid () || source.row () >= m_->frequency_list_.size ()) continue;
+      auto& item = m_->frequency_list_[source.row ()];
+      if (item.default_ == on) continue;
+      item.default_ = on;
+      // the flag is shown in the frequency columns ("*") and read by every consumer of the list
+      Q_EMIT m_->dataChanged (m_->index (source.row (), 0), m_->index (source.row (), SENTINAL - 1));
+      changed = true;
+    }
+  return changed;
+}
+
 bool FrequencyList_v2::removeDisjointRows (QModelIndexList rows)
 {
   bool result {true};

@@ -509,6 +509,16 @@ Format:
         <source>%1, downloaded</source>
         <translation>%1, загружена</translation>
     </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Mark as de&amp;fault</source>
+        <translation>Отметить как по умолчанию</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>&amp;Unmark default</source>
+        <translation>Снять отметку по умолчанию</translation>
+    </message>
 </context>
 <context>
     <name>CountryDat</name>
@@ -6197,6 +6207,91 @@ This is asked only once.</source>
         <location filename="../mainwindow.cpp"/>
         <source>Fox verification failed: %1</source>
         <translation>Проверка Fox не удалась: %1</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Check for updates...</source>
+        <translation>Проверить обновления...</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Asks ce3tsk.com whether a newer JTDX_contest is published, and shows what changed</source>
+        <translation>Спрашивает ce3tsk.com, опубликована ли более новая версия JTDX_contest, и показывает, что изменилось</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>New update available</source>
+        <translation>Доступно новое обновление</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Check for updates</source>
+        <translation>Проверка обновлений</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>You are running the latest version of JTDX_contest (%1).</source>
+        <translation>У вас последняя версия JTDX_contest (%1).</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Published: %1</source>
+        <translation>Опубликована: %1</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>no connection to the server</source>
+        <translation>нет соединения с сервером</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>no SSL/TLS support on this system</source>
+        <translation>эта система не поддерживает SSL/TLS</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>the server did not answer in time</source>
+        <translation>сервер не ответил вовремя</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>the answer was larger than expected</source>
+        <translation>ответ оказался больше ожидаемого</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>the server answered with HTTP status %1</source>
+        <translation>сервер ответил с HTTP-статусом %1</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>the version information on the server could not be read</source>
+        <translation>не удалось прочитать сведения о версии на сервере</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Could not check for updates: %1.</source>
+        <translation>Не удалось проверить обновления: %1.</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>A new version of JTDX_contest is available: %1</source>
+        <translation>Доступна новая версия JTDX_contest: %1</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>You are running %1.</source>
+        <translation>У вас версия %1.</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>What is new:</source>
+        <translation>Что нового:</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Open download page</source>
+        <translation>Открыть страницу загрузки</translation>
     </message>
 </context>
 <context>

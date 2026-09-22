@@ -507,6 +507,9 @@ private:
   static FrequencyList_v2::FrequencyItems ft_only (FrequencyList_v2::FrequencyItems const&);
   static FrequencyList_v2::FrequencyItems contest_default_frequencies (SpecialOperatingActivity);
   void set_contest_default_frequencies ();
+  /* CE3TSK 2026-09-22: mark or unmark the selected rows of either table as default (the "*"); the band
+     buttons show the default rows, and best_working_frequency() goes by them */
+  void mark_default_frequencies (QTableView *, FrequencyList_v2 *, bool);
   FrequencyList_v2::FrequencyItems read_frequencies_file (QString const&);
 
   void delete_stations ();
@@ -706,6 +709,8 @@ private:
   QAction * save_frequencies_action_;
   QAction * merge_frequencies_action_;
   QAction * reset_frequencies_action_;
+  QAction * mark_default_frequencies_action_;     // CE3TSK
+  QAction * unmark_default_frequencies_action_;   // CE3TSK
   FrequencyDialog * frequency_dialog_;
   /* CE3TSK: the contest table's own actions and dialog. A separate FrequencyDialog is what
      keeps Insert honest - the table delegate alone would restrict editing but not inserting,
@@ -716,6 +721,8 @@ private:
   QAction * contest_save_frequencies_action_;
   QAction * contest_merge_frequencies_action_;
   QAction * contest_reset_frequencies_action_;
+  QAction * contest_mark_default_frequencies_action_;     // CE3TSK
+  QAction * contest_unmark_default_frequencies_action_;   // CE3TSK
   FrequencyDialog * contest_frequency_dialog_;
   QSortFilterProxyModel contest_modes_;
 
@@ -2006,6 +2013,19 @@ Configuration::impl::impl (Configuration * self, QNetworkAccessManager * network
   ui_->frequencies_table_view->insertAction (nullptr, reset_frequencies_action_);
   connect (reset_frequencies_action_, &QAction::triggered, this, &Configuration::impl::reset_frequencies);
 
+  /* CE3TSK 2026-09-22: the default mark ("*") set and cleared by hand - the operator: "a way to be able to mark a
+     frequency as default, both in normal and contest modes" */
+  { auto * const sep = new QAction {ui_->frequencies_table_view}; sep->setSeparator (true);
+    ui_->frequencies_table_view->insertAction (nullptr, sep); }
+  mark_default_frequencies_action_ = new QAction {tr ("Mark as de&fault"), ui_->frequencies_table_view};
+  ui_->frequencies_table_view->insertAction (nullptr, mark_default_frequencies_action_);
+  connect (mark_default_frequencies_action_, &QAction::triggered, this, [this] {
+      mark_default_frequencies (ui_->frequencies_table_view, &next_frequencies_, true); });
+  unmark_default_frequencies_action_ = new QAction {tr ("&Unmark default"), ui_->frequencies_table_view};
+  ui_->frequencies_table_view->insertAction (nullptr, unmark_default_frequencies_action_);
+  connect (unmark_default_frequencies_action_, &QAction::triggered, this, [this] {
+      mark_default_frequencies (ui_->frequencies_table_view, &next_frequencies_, false); });
+
   /* CE3TSK: the contest working frequency table. Same model class, same delegates and the
      same six actions as the everyday table above - only the model instance differs and the
      mode column is restricted. */
@@ -2049,6 +2069,17 @@ Configuration::impl::impl (Configuration * self, QNetworkAccessManager * network
   contest_reset_frequencies_action_ = new QAction {tr ("&Reset"), ui_->contest_frequencies_table_view};
   ui_->contest_frequencies_table_view->insertAction (nullptr, contest_reset_frequencies_action_);
   connect (contest_reset_frequencies_action_, &QAction::triggered, this, &Configuration::impl::reset_contest_frequencies);
+
+  { auto * const sep = new QAction {ui_->contest_frequencies_table_view}; sep->setSeparator (true);
+    ui_->contest_frequencies_table_view->insertAction (nullptr, sep); }
+  contest_mark_default_frequencies_action_ = new QAction {tr ("Mark as de&fault"), ui_->contest_frequencies_table_view};
+  ui_->contest_frequencies_table_view->insertAction (nullptr, contest_mark_default_frequencies_action_);
+  connect (contest_mark_default_frequencies_action_, &QAction::triggered, this, [this] {
+      mark_default_frequencies (ui_->contest_frequencies_table_view, &next_contest_frequencies_, true); });
+  contest_unmark_default_frequencies_action_ = new QAction {tr ("&Unmark default"), ui_->contest_frequencies_table_view};
+  ui_->contest_frequencies_table_view->insertAction (nullptr, contest_unmark_default_frequencies_action_);
+  connect (contest_unmark_default_frequencies_action_, &QAction::triggered, this, [this] {
+      mark_default_frequencies (ui_->contest_frequencies_table_view, &next_contest_frequencies_, false); });
 
   connect (ui_->pbContestDefaults, &QPushButton::clicked, this, &Configuration::impl::set_contest_default_frequencies);
 
@@ -2948,6 +2979,36 @@ void Configuration::impl::read_settings ()
                 }
               settings_->setValue ("FT2FrequenciesSeeded", true);
             }
+          /* CE3TSK 2026-09-22: FT2 rows that came back as ALL. A program that does not know FT2 - stock JTDX,
+             which shares this ini, or an older build of this one - reads the mode name "FT2" as the first mode,
+             ALL (qt_helpers.hpp, ENUM_QDATASTREAM_OPS_IMPL), and saves the rows back that way: on 2026-09-16 a stock
+             run did, and FT2's frequencies then sat in EVERY mode's band list and band buttons as defaults. So on
+             every load an ALL row on exactly one of FT2's shipped frequencies (same region) is FT2 again - every
+             load, because the next stock run does it again; only existing rows are touched, so an FT2 row the
+             operator deleted stays deleted. */
+          {
+            auto list = frequencies_.frequency_list ();
+            auto const ft2 = FrequencyList_v2::default_rows (Modes::FT2);
+            bool changed {false};
+            // an FT2 row already there (re-added by hand after a stock run) keeps the ALL copy from becoming a
+            // duplicate of it (review 2026-09-22)
+            auto const has_ft2 = [&list] (Radio::Frequency f, IARURegions::Region r) {
+                for (auto const& i : list) if (i.mode_ == Modes::FT2 && i.frequency_ == f && i.region_ == r) return true;
+                return false;
+              };
+            for (auto& item : list)
+              {
+                if (item.mode_ != Modes::ALL) continue;
+                for (auto const& row : ft2)
+                  {
+                    if (item.frequency_ == row.frequency_ && item.region_ == row.region_ && !has_ft2 (item.frequency_, item.region_))
+                      {
+                        item.mode_ = Modes::FT2; changed = true; break;
+                      }
+                  }
+              }
+            if (changed) frequencies_.frequency_list (list);
+          }
         }
       else
         {
@@ -4202,14 +4263,14 @@ void Configuration::impl::accept ()
 
   region_ = IARURegions::value (ui_->region_combo_box->currentText ());
 
-  if (frequencies_.frequency_list () != next_frequencies_.frequency_list ())
+  if (!identical_rows (frequencies_.frequency_list (), next_frequencies_.frequency_list ()))   // CE3TSK: the default mark counts too
     {
       frequencies_.frequency_list (next_frequencies_.frequency_list ());
       frequencies_.sort (FrequencyList_v2::frequency_column);
     }
 
   /* CE3TSK: the contest list commits the same way */
-  if (contest_frequencies_.frequency_list () != next_contest_frequencies_.frequency_list ())
+  if (!identical_rows (contest_frequencies_.frequency_list (), next_contest_frequencies_.frequency_list ()))
     {
       contest_frequencies_.frequency_list (next_contest_frequencies_.frequency_list ());
       contest_frequencies_.sort (FrequencyList_v2::frequency_column);
@@ -6663,6 +6724,13 @@ void Configuration::impl::reset_contest_frequencies ()
     {
       next_contest_frequencies_.frequency_list (ft_only (next_frequencies_.frequency_list ()));
     }
+}
+
+void Configuration::impl::mark_default_frequencies (QTableView * view, FrequencyList_v2 * list, bool on)
+{
+  auto selection_model = view->selectionModel ();
+  selection_model->select (selection_model->selection (), QItemSelectionModel::SelectCurrent | QItemSelectionModel::Rows);
+  list->set_default (selection_model->selectedRows (), on);
 }
 
 void Configuration::impl::delete_frequencies ()

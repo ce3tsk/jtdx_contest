@@ -130,6 +130,9 @@ public:
   QModelIndex add (Item);
   bool remove (Item);
   bool removeDisjointRows (QModelIndexList);
+  // CE3TSK 2026-09-22: mark (true) or unmark the given rows as default - what the band buttons and the
+  // best working frequency go by
+  bool set_default (QModelIndexList, bool);
 
   // Proxy API
   bool filterAcceptsRow (int source_row, QModelIndex const& parent) const override;
@@ -149,6 +152,20 @@ bool operator == (FrequencyList_v2::Item const& lhs, FrequencyList_v2::Item cons
     lhs.frequency_ == rhs.frequency_
     && lhs.region_ == rhs.region_
     && lhs.mode_ == rhs.mode_;
+}
+
+/* CE3TSK 2026-09-22 (review): the same rows INCLUDING the default mark. operator== above leaves default_ out - the
+   merge and remove(Item) depend on that - so comparing two lists with it misses a change of the mark alone, and the
+   settings dialog's OK threw away "Mark as default" / "Unmark default". */
+inline
+bool identical_rows (FrequencyList_v2::FrequencyItems const& a, FrequencyList_v2::FrequencyItems const& b)
+{
+  if (a.size () != b.size ()) return false;
+  for (int i = 0; i < a.size (); ++i)
+    {
+      if (!(a[i] == b[i]) || a[i].default_ != b[i].default_) return false;
+    }
+  return true;
 }
 
 QDataStream& operator << (QDataStream&, FrequencyList_v2::Item const&);

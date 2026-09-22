@@ -276,6 +276,7 @@ set (wsjtx_CXXSRCS
   FileDownload.cpp
   HttpFetch.cpp      # CE3TSK: one in-memory HTTP(S) GET on the same two transports (SUPERFOX_PLAN.md M2)
   FoxVerifier.cpp    # CE3TSK: checks a Fox's one-time code with the verification server
+  UpdateChecker.cpp  # CE3TSK: Help > Check for updates, latest.json on ce3tsk.com
   )
 
 set (wsjt_CXXSRCS

@@ -508,6 +508,16 @@ Formátum:
         <source>%1, downloaded</source>
         <translation>%1, letöltve</translation>
     </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Mark as de&amp;fault</source>
+        <translation>Megjelölés &amp;alapértelmezettként</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>&amp;Unmark default</source>
+        <translation>Alapértelmezett &amp;jelölés törlése</translation>
+    </message>
 </context>
 <context>
     <name>CountryDat</name>
@@ -6187,6 +6197,91 @@ Ezt csak egyszer kérdezzük meg.</translation>
         <location filename="../mainwindow.cpp"/>
         <source>Fox verification failed: %1</source>
         <translation>A Fox ellenőrzése sikertelen: %1</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Check for updates...</source>
+        <translation>Frissítések keresése...</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Asks ce3tsk.com whether a newer JTDX_contest is published, and shows what changed</source>
+        <translation>Megkérdezi a ce3tsk.com-ot, hogy megjelent-e újabb JTDX_contest, és megmutatja, mi változott</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>New update available</source>
+        <translation>Új frissítés érhető el</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Check for updates</source>
+        <translation>Frissítések keresése</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>You are running the latest version of JTDX_contest (%1).</source>
+        <translation>A JTDX_contest legújabb verzióját használod (%1).</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Published: %1</source>
+        <translation>Megjelent: %1</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>no connection to the server</source>
+        <translation>nincs kapcsolat a szerverrel</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>no SSL/TLS support on this system</source>
+        <translation>ez a rendszer nem támogatja az SSL/TLS-t</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>the server did not answer in time</source>
+        <translation>a szerver nem válaszolt időben</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>the answer was larger than expected</source>
+        <translation>a válasz a vártnál nagyobb volt</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>the server answered with HTTP status %1</source>
+        <translation>a szerver %1 HTTP-állapottal válaszolt</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>the version information on the server could not be read</source>
+        <translation>a szerveren lévő verzióadatok nem olvashatók</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Could not check for updates: %1.</source>
+        <translation>Nem sikerült frissítéseket keresni: %1.</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>A new version of JTDX_contest is available: %1</source>
+        <translation>Új JTDX_contest verzió érhető el: %1</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>You are running %1.</source>
+        <translation>A használt verzió: %1.</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>What is new:</source>
+        <translation>Újdonságok:</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Open download page</source>
+        <translation>Letöltési oldal megnyitása</translation>
     </message>
 </context>
 <context>

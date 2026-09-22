@@ -34,6 +34,12 @@ subroutine four2a(a,nfft,ndim,isign,iform)
   include 'fftw3.f90'                    !FFTW definitions
   save plan,nplan,nn,ns,nf,nl
 
+! CE3TSK 2026-09-21: nfft = -2 ASKS for the number of stored plans, returned in ndim (JTDX_MEMO_STATS prints it
+! after each period - test/decode/superfox.sh asserts that it stays put over many SuperFox slots in threads)
+  if(nfft.eq.-2) then
+     ndim=nplan
+     return
+  endif
   if(nfft.lt.0) go to 999
 
   nloc=loc(a)

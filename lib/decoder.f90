@@ -84,6 +84,7 @@ subroutine multimode_decoder(params)
   integer :: ldump,idumpstat
   integer :: nslicing,islicing,nhalf   ! CE3TSK: second slicing pass
   integer :: nsl4,nslpass4,nf4w,nf4lo(24),nf4hi(24),nthr4,ncore4,nuse4,ihalf4,nsldiv4,nhalf4,k8
+  integer :: nplanq; complex :: cplanq(1)   ! CE3TSK: four2a's plan count, for JTDX_MEMO_STATS
   real(8) :: sumdd4,sumdd8ck   ! CE3TSK: period checksums for the repeatability work
   integer :: kck   ! CE3TSK: the FT4 slice grid and its threads
   integer :: naltpass,ncyc0
@@ -621,7 +622,7 @@ if(lsfqrm) then   ! CE3TSK: SuperFox milestone 3 - the gate has the story
       lsfdeep=.false.
       call superfox_residual(lsfdecoded)
    endif
-   if(.not.lsfdecoded) call superfox_extra(lsfdecoded)   ! CE3TSK: MSHV's three sync windows, the LAST step (off by default)
+   if(.not.lsfdecoded) call superfox_extra(lsfdecoded)   ! CE3TSK: MSHV's three sync windows, the LAST step (on by default)
 endif
 laltdeferred=.false.
 if(lpipeline) then   ! the band after the recipe's passes: the deferred alternate pass and the retry unit work on it
@@ -1066,6 +1067,9 @@ call get_environment_variable('JTDX_MEMO_STATS',dumpfile,ldump,idumpstat)   ! CE
 if(idumpstat.eq.0) write(0,'(a,3f8.3)') 'sync8 wall total/spectra/lags:',tsync8,tsync8s,tsync8l
 if(idumpstat.eq.0) write(0,'(a,9(i3,a,f7.3))') 'sync8 by pass:',(k8,':',tsync8p(k8),k8=1,9)
 if(idumpstat.eq.0) write(0,'(a,9(i3,a,i4))') 'sync8 calls by pass:',(k8,':',nsync8p(k8),k8=1,9)
+if(idumpstat.eq.0) then   ! CE3TSK 2026-09-21: four2a's stored FFTW plans (it stops the program at 2100)
+  call four2a(cplanq,-2,nplanq,1,1); write(0,'(a,i5)') 'FFTW plans stored:',nplanq
+endif
 tsync8p=0.d0; nsync8p=0
 tsync8=0.d0; tsync8s=0.d0; tsync8l=0.d0
 1010 format('<DecodeFinished><avexdt>',f6.2,'<ncand>',i5,'<rxm>',i3,'<rxs>',f7.2)
@@ -1793,6 +1797,7 @@ contains
 ! Afterwards nothing of an FT8 decode may be left for the TX background phase, which would
 ! otherwise decode the PREVIOUS period's retained band again: with the arrays gone it prints
 ! its empty <BackgroundFinished> line (the dispatch at the top of this routine).
+    use sfox_mod, only : nsfdecthreads
     integer*2, allocatable, save :: iwave(:)
     integer :: nlast,nsfprog1
     logical, intent(out) :: ldecoded
@@ -1822,6 +1827,7 @@ contains
     if(params%lapmyc .and. params%nQSOProgress.eq.3) nsfprog1=2
     call sfox_grid(hisgrid(1:4))
     call sfox_me(mycall,nsfprog1)
+    nsfdecthreads=decoder_threads(params%nmt,omp_get_num_procs())   ! what JTDX_SFOX_THREADS=0 means (sfox_mod)
     tsffirst=omp_get_wtime()
     call sfrx_sub(nutc,params%nfqso,params%nsftol,iwave,ldecoded)
     tsffirst=omp_get_wtime()-tsffirst   ! the receiver's first pass: what one more candidate will cost (superfox_extra)
@@ -1881,8 +1887,9 @@ contains
   end subroutine superfox_residual
 
   subroutine superfox_extra(ldecoded)
-! CE3TSK 2026-09-21: MSHV'S THREE SYNC WINDOWS AS THE LAST STEP of a Fox slot (JTDX_SFOX_SYNC3=1, OFF by
-! default; SUPERFOX_DECODER_IDEAS.md 4.14, test/experiments/sfox_mshvdither). Called when the receiver, its
+! CE3TSK 2026-09-21: MSHV'S THREE SYNC WINDOWS AS THE LAST STEP of a Fox slot (ON by default since the evening of
+! 2026-09-21 - the operator, after the threads made it cheap; JTDX_SFOX_SYNC3=0 switches it off;
+! SUPERFOX_DECODER_IDEAS.md 4.14, test/experiments/sfox_mshvdither). Called when the receiver, its
 ! passes and the FT8 QRM remover have found nothing (or at once when the remover is off): the search and
 ! the passes run again on each distinct candidate of MSHV's windows (qpc_decode2's nsfextra, qpc_sync3.f90),
 ! on the last residual the remover made - or the band as received when it made none - and a candidate is

@@ -8,6 +8,12 @@ module sfox_mod
 ! that step, and whether the step touched any bin at all in the last call.
   real, save :: s3plain(0:127,0:127)
   logical, save :: lnormed=.false.
+! CE3TSK 2026-09-21: the demodulation in THREADS (sfox_demod.f90 sfox_demod_w; qpc_decode2.f90 sfox_search_mt).
+! sfox_demod's one-symbol work array lives here now, so that the search's per-thread buffers can be given the
+! SAME alignment - FFTW chooses its codelets by the alignment, and the same codelets give the same bits in every
+! thread; and JTDX_SFOX_NORM, read ONCE and serially (sfox_normcfg) before any thread demodulates. -1: not read.
+  complex, allocatable, save :: csfsym(:)
+  integer, save :: nsfnorm=-1
 ! CE3TSK 2026-09-20: the Fox calls the receiver KNOWS, for qpc_decode2's acceptance floor (there):
 ! slot 1 the operator's DX call (sfox_known, called by the decoder before each Fox slot), slot 2 the
 ! last Fox decoded ABOVE the floor. A call in the two forms a SuperFox message carries it in: the
@@ -55,7 +61,9 @@ module sfox_mod
 !   JTDX_SFOX_LISTANYFLOOR=x its SNR floor, dB                                       (default -16.95)
 !   JTDX_SFOX_LISTANYLOOKS=1|2|L the same for that round (83 of its 83 decodes on record came at the
 !                           likelihoods; kept at 2 until on-air material says)     (default 2)
-!   JTDX_SFOX_SYNC3=1       MSHV's THREE sync windows as the LAST step of a Fox slot (below)   (default OFF)
+!   JTDX_SFOX_SYNC3=0       MSHV's THREE sync windows as the LAST step of a Fox slot off (below)   (default ON)
+!   JTDX_SFOX_THREADS=n     threads for the ordinary search's decoder calls: 0 = as many as the FT8
+!                           decoder uses, 1 serial, n up to 64 (below)           (default 0)
 !   JTDX_SFOX_LIST=0        the LIST pass off (below)                              (default on)
 !   JTDX_SFOX_LISTL=n       its list size, 1 to 256                                (default 64)
 !   JTDX_SFOX_LISTLOOKS=1|2|L forms of the spectra it tries: themselves; the likelihoods too; L the
@@ -120,7 +128,17 @@ module sfox_mod
 ! of 600 (AWGN), 316 -> 331 (fading); DX call 357 -> 389, 350 -> 366 - about +0.15 to +0.25 dB, no line in
 ! 1000 periods of noise; about 1 s more in a slot in which nothing decodes. nsfextra: which candidate the
 ! receiver works on now (0 = the ordinary sync) - state, not a setting.
-  integer, save :: nsfsync3=0
+! CE3TSK 2026-09-21: THE SEARCH IN THREADS (SUPERFOX_DECODER_IDEAS.md 4.12; qpc_decode2.f90 sfox_search_mt). The
+! search's up to 796 decoder calls are independent: their inputs are prepared in the serial order - the
+! demodulation, the smoothing, the dithered copies from the one seeded random stream - and decoded in
+! parallel batches by this program's re-entrant decoder at list size 1 (qpc/qpc_scl.c: WSJT-X's decisions,
+! decision for decision; np_qpc.c keeps its work arrays static and cannot be called from two threads), and
+! the LOWEST-NUMBERED trial whose CRC passes is the one taken - never the first to finish - so the lines are
+! the serial search's at any thread count. nsfdecthreads: the FT8 decoder's thread count for this period
+! (decoder.f90 superfox_slot), what JTDX_SFOX_THREADS=0 means.
+  integer, save :: nsfthreads=0       !the operator, 2026-09-21: "use the FT8 thread count"
+  integer, save :: nsfdecthreads=1
+  integer, save :: nsfsync3=1       !ON by default since 2026-09-21 (the operator: "enable the 3 windows by default")
   integer, save :: nsfextra=0
   integer, save :: nsfliston=1
 ! CE3TSK 2026-09-21: ON PAR WITH MSHV FOR A FOX THAT IS NOT KNOWN (SUPERFOX_DECODER_IDEAS.md 4.14, idea 9):
@@ -321,12 +339,21 @@ contains
        if(ios.ne.0 .or. i.lt.0 .or. i.gt.1000) call sfox_badcfg('JTDX_SFOX_POOLAGE',v(1:n),'listened odd slots, 0 to 1000')
        nsfpoolage=i
     endif
+    call get_environment_variable('JTDX_SFOX_THREADS',v,n,ios)
+    if(ios.eq.-1) call sfox_badcfg('JTDX_SFOX_THREADS',v,'at most 32 characters')
+    if(ios.eq.0 .and. n.gt.0) then
+       ios=1; if(sfox_isint(v(1:n))) read(v(1:n),*,iostat=ios) i
+       if(ios.ne.0 .or. i.lt.0 .or. i.gt.64) call sfox_badcfg('JTDX_SFOX_THREADS',v(1:n),'0 (as the FT8 decoder) or 1 to 64')
+       nsfthreads=i
+    endif
     call get_environment_variable('JTDX_SFOX_SYNC3',v,n,ios)
     if(ios.eq.-1) call sfox_badcfg('JTDX_SFOX_SYNC3',v,'at most 32 characters')
     if(ios.eq.0 .and. n.gt.0) then
        if(v(1:n).eq.'1') then
           nsfsync3=1
-       else if(v(1:n).ne.'0') then
+       else if(v(1:n).eq.'0') then        !the default is ON now: 0 must be acted on, not merely accepted
+          nsfsync3=0
+       else
           call sfox_badcfg('JTDX_SFOX_SYNC3',v(1:n),'0 or 1')
        endif
     endif

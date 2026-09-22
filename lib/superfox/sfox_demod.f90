@@ -4,25 +4,69 @@ subroutine sfox_demod(crcvd,f,t,isync,s2,s3)
 ! instead of sorted for (sfox_pctile.f90 has the measurement) - and, the one step that is NOT
 ! WSJT-X's, the normalisation of tone bins that hold QRM (below). sfox_demod.f90.org is WSJT-X's.
 
+! CE3TSK 2026-09-21: the work is done by sfox_demod_w below, which takes its work array and returns what this
+! routine leaves in sfox_mod (s3plain, lnormed) as ARGUMENTS, so that the threaded search (qpc_decode2.f90
+! sfox_search_mt) can demodulate in several threads at once, each with buffers of its own. This routine is the
+! serial callers' interface and does exactly what it did.
+
   use sfox_mod
   complex crcvd(NMAX)                    !Signal as received
+  real s2(0:NQ-1,0:151)                  !Symbol spectra, including sync
+  real s3(0:NQ-1,0:NN)                   !Synchronized symbol spectra
+  integer isync(24)
+
 ! CE3TSK 2026-09-20 (review): c was "complex c(0:NSPS-1)" - NSPS is a module VARIABLE, so that is an
 ! automatic array, and gfortran takes automatic arrays from the heap. four2a keys its FFTW plans on
 ! the array's ADDRESS and stops the program at 2100 of them: six Fox slots in one process planned
 ! the same 1024-point transform at five addresses. It settled in every pattern tried, but nothing
 ! made it settle. Allocated once and kept, as sfrx_sub does for its own.
-  complex, allocatable, save :: c(:)     !Work array, one symbol long
+! (2026-09-21: the array is sfox_mod's csfsym now, for the threads' alignment - sfox_mod.f90.)
+  if(.not.allocated(csfsym)) allocate(csfsym(0:NSPS-1))
+  call sfox_normcfg
+  call sfox_demod_w(crcvd,f,t,isync,s2,s3,s3plain,lnormed,csfsym,nsfnorm)
+
+  return
+end subroutine sfox_demod
+
+subroutine sfox_normcfg
+
+! CE3TSK 2026-09-21: JTDX_SFOX_NORM=0 switches the normalisation of tone bins that hold QRM off (sfox_demod_w).
+! Read once, into sfox_mod's nsfnorm; the threaded search calls this serially before any thread demodulates.
+
+  use sfox_mod, only : nsfnorm
+  character envval*8
+
+  if(nsfnorm.ge.0) return
+  nsfnorm=1
+  call get_environment_variable('JTDX_SFOX_NORM',envval,nenv,istat)
+  if(istat.eq.0 .and. nenv.gt.0) then
+     if(envval(1:1).eq.'0') nsfnorm=0
+  endif
+
+  return
+end subroutine sfox_normcfg
+
+subroutine sfox_demod_w(crcvd,f,t,isync,s2,s3,s3pl,lnorm,c,nnorm)
+
+! CE3TSK 2026-09-21: sfox_demod's work (WSJT-X 3.0.2's, with the changes described above sfox_demod), re-entrant:
+! c is the caller's one-symbol work array, s3pl and lnorm are what sfox_demod leaves in sfox_mod's s3plain and
+! lnormed, nnorm is sfox_mod's nsfnorm (1: tone bins that hold QRM are normalised). Nothing is saved here and
+! nothing of sfox_mod is written - several threads may call it at once with arrays of their own.
+
+  use sfox_mod, only : NMAX,NQ,NN,NDS,NS,NSPS,sfnormx
+  complex crcvd(NMAX)                    !Signal as received
+  complex c(0:NSPS-1)                    !Work array, one symbol long (the caller's)
   real s2(0:NQ-1,0:151)                  !Symbol spectra, including sync
   real s3(0:NQ-1,0:NN)                   !Synchronized symbol spectra
+  real s3pl(0:127,0:127)                 !CE3TSK: s3 without the normalisation (sfox_mod's s3plain for sfox_demod)
+  logical lnorm                          !CE3TSK: the normalisation touched a bin (sfox_mod's lnormed)
+  integer nnorm
   integer isync(24)
   integer ipk(1)
   integer hist1(0:NQ-1),hist2(0:NQ-1)
   real rowmean
   real s2p(0:127,0:151)                  !CE3TSK: s2 without the normalisation, same blanking (for the SNR estimate)
-  character envval*8
-  integer, save :: nnorm=-1              !CE3TSK: 1 = bins that hold QRM are normalised (below); JTDX_SFOX_NORM=0: 0
 
-  if(.not.allocated(c)) allocate(c(0:NSPS-1))
   j0=nint(12000.0*(t+0.5))
   df=12000.0/NSPS
   i0=nint(f/df)-NQ/2
@@ -84,29 +128,23 @@ subroutine sfox_demod(crcvd,f,t,isync,s2,s3)
 ! should it misbehave on the air.
 ! "Twice" was found on simulated callers and recorded FT8 bands; until there is more on-air
 ! material the factor is a setting, JTDX_SFOX_NORMX (sfox_mod.f90, read by sfox_config).
-  if(nnorm.lt.0) then
-     nnorm=1
-     call get_environment_variable('JTDX_SFOX_NORM',envval,nenv,istat)
-     if(istat.eq.0 .and. nenv.gt.0) then
-        if(envval(1:1).eq.'0') nnorm=0
-     endif
-  endif
+! (2026-09-21: read by sfox_normcfg, handed in as nnorm)
 ! THE SNR ESTIMATE must not see the Fox's own bins divided. qpc_snr adds up the power at the decoded
 ! symbols, and a strong Fox, whose every bin qualifies, read +6 dB where WSJT-X's receiver reads
 ! +14 (a 0 dB Fox -3 for -1; at -10 dB and below nothing qualifies and nothing changed, which is
 ! why no identity test saw it - the bare-and-strong-Fox row of superfox.sh did). So the spectra
-! are kept WITHOUT the step as well (s2p, s3plain in sfox_mod - the same blanking decisions
+! are kept WITHOUT the step as well (s2p, s3pl - sfox_mod's s3plain for sfox_demod - the same blanking decisions
 ! below), and qpc_decode2, which knows the Fox's symbols once it has decoded, tells the bins that
 ! hold QRM - those that stand out from the other bins even without the Fox's own cells - from the
 ! ones the Fox lifted itself, and takes its estimate from the plain spectra of the latter
 ! (qpc_decode2.f90 has the rule). The decoding itself is untouched by this.
-  lnormed=.false.
+  lnorm=.false.
   if(nnorm.eq.1) then
      s2p=s2
      do i=0,NQ-1
         rowmean=sum(s2(i,1:NDS))/NDS
         if(rowmean.gt.1.443*sfnormx) then          !twice the noise's, unless set otherwise: JTDX_SFOX_NORMX (sfox_mod)
-           s2(i,:)=s2(i,:)*(1.443/rowmean); lnormed=.true.
+           s2(i,:)=s2(i,:)*(1.443/rowmean); lnorm=.true.
         endif
      enddo
   endif
@@ -134,7 +172,7 @@ subroutine sfox_demod(crcvd,f,t,isync,s2,s3)
      do i=0,127
         if(hist1(i).gt.12) then
              s2(i,:)=1.0
-             if(lnormed) s2p(i,:)=1.0
+             if(lnorm) s2p(i,:)=1.0
         endif
      enddo
   endif
@@ -143,7 +181,7 @@ subroutine sfox_demod(crcvd,f,t,isync,s2,s3)
      if(i2.ge.1) i2=i2-1
      if(i2.gt.120) i2=120
      s2(i2:i2+7,:)=1.0
-     if(lnormed) s2p(i2:i2+7,:)=1.0
+     if(lnorm) s2p(i2:i2+7,:)=1.0
   endif
 
   k3=0
@@ -156,17 +194,17 @@ subroutine sfox_demod(crcvd,f,t,isync,s2,s3)
   call sfox_pctile(s3,NQ*NN,50,base3)
   s3=s3/base3
 
-  if(lnormed) then                       !CE3TSK: the same, from the spectra without the step
+  if(lnorm) then                       !CE3TSK: the same, from the spectra without the step
      k3=0
-     s3plain(:,0)=0.
+     s3pl(:,0)=0.
      do n=1,NDS
         if(any(isync(1:NS).eq.n)) cycle
         k3=k3+1
-        s3plain(:,k3)=s2p(:,n)
+        s3pl(:,k3)=s2p(:,n)
      enddo
-     call sfox_pctile(s3plain,NQ*NN,50,base3)
-     s3plain=s3plain/base3
+     call sfox_pctile(s3pl,NQ*NN,50,base3)
+     s3pl=s3pl/base3
   endif
 
   return
-end subroutine sfox_demod
+end subroutine sfox_demod_w

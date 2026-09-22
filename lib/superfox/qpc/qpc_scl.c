@@ -69,7 +69,7 @@ uint32_t nhash2(const void* key, uint64_t length, uint32_t initval);
 #define SCL_NSLOT 9
 #define SCL_CMAX 64
 typedef struct { uint64_t m[SCL_NSLOT]; } scl_mask;
-static int cset_init = 0, cset_n[SCL_NSLOT];
+static int cset_init = 0, cset_n[SCL_NSLOT];   // cset_init: 0 not built, 1 being built, 2 built - read and set ATOMICALLY (cset_setup)
 static _Thread_local int cset_on = 0;            // the sets act only while the caller says so (qpc_scl_cand)
 static unsigned char cset_sym[SCL_NSLOT][SCL_CMAX][4];
 static signed char pos_slot[QPC_N], pos_j[QPC_N];
@@ -215,21 +215,36 @@ static int scl_node(int n, int d, int pos0, int P, const float* const* py, const
     return Q2;
 }
 
+// The maps from code positions to Hound slots are built ONCE per process. 2026-09-21, the search in threads
+// (qpc_decode2.f90 sfox_search_mt): the first call of this decoder may now come from several threads at once, and a
+// plain flag set "last" is no guarantee under the C memory model - one thread could build while another reads half
+// a map. So the flag is taken with an atomic compare-and-swap (exactly one thread builds), the others wait for it
+// with acquire loads, and the builder publishes with a release store. The caller also builds them from a serial
+// point before any batch (qpc_scl_init), so the wait is never reached in practice. The candidate SETS themselves
+// are laid only from serial code (the pool pass) and are read-only while threads decode.
 static void cset_setup(void)
 {
-    int i, j, m;
+    int i, j, m, expect = 0;
+    if (__atomic_load_n(&cset_init, __ATOMIC_ACQUIRE) == 2) return;
+    if (!__atomic_compare_exchange_n(&cset_init, &expect, 1, 0, __ATOMIC_ACQ_REL, __ATOMIC_ACQUIRE)) {
+        while (__atomic_load_n(&cset_init, __ATOMIC_ACQUIRE) != 2) { }   // another thread is building: its maps, when done
+        return;
+    }
     for (i = 0; i < QPC_N; i++) { pos_slot[i] = -1; pos_j[i] = 0; }
     for (i = 0; i < SCL_NSLOT; i++) { cset_n[i] = 0;
         for (j = 0; j < 4; j++) { m = 4 + 4 * i + j; pos_slot[qpccode.xpos[QPC_K - 1 - m]] = (signed char)i; pos_j[qpccode.xpos[QPC_K - 1 - m]] = (signed char)j; } }
-    cset_init = 1;                 // LAST: a second thread that finds the flag set must find the maps filled (review). The sets themselves
-}                                  // are one per process and are laid from a serial point - before any threads decode with them
+    __atomic_store_n(&cset_init, 2, __ATOMIC_RELEASE);
+}
+
+// build the shared maps now, from a serial point (qpc_decode2.f90 before the threaded search's batches)
+void qpc_scl_init(void) { cset_setup(); }
 
 // the candidate set of Hound slot `slot` (0..8): n calls as pack28 writes them, at most 64; n = 0: the
 // slot is not constrained. slot < 0: no slot is.
 void qpc_scl_setcand(int slot, int n, const int* n28)
 {
     int i, j;
-    if (!cset_init) cset_setup();
+    cset_setup();                  // a no-op once built (atomic)
     if (slot < 0) { for (i = 0; i < SCL_NSLOT; i++) cset_n[i] = 0; return; }
     if (slot >= SCL_NSLOT) return;
     if (n > SCL_CMAX) n = SCL_CMAX;
@@ -262,7 +277,7 @@ int qpc_decode_scl(unsigned char* xdec, unsigned char* ydec, float* py, int L, i
     for (k = 0; k < QPC_K; k++) f[qpccode.xpos[k]] = 0;          // the encoder writes its message there (qpc_encode); a decoder must not see it
     for (k = 0; k < nap; k++) if (kap[k] >= 0 && kap[k] < QPC_K) { f[qpccode.xpos[kap[k]]] = vap[k]; fsize[qpccode.xpos[kap[k]]] = 0; }
 
-    if (!cset_init) cset_setup();
+    cset_setup();                  // a no-op once built (atomic)
     { scl_mask m00; int i;
       for (i = 0; i < SCL_NSLOT; i++) m00.m[i] = (cset_n[i] >= 64) ? ~(uint64_t)0 : (((uint64_t)1 << cset_n[i]) - 1);
       in0[0] = py;

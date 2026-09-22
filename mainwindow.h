@@ -13,6 +13,7 @@
 #endif
 #include <QThread>
 #include <QTimer>
+#include <QElapsedTimer>   // CE3TSK: the update icon's pulse
 #include <QList>
 #include <QStringList>
 #include <QAudioDeviceInfo>
@@ -55,6 +56,8 @@ class QProcessEnvironment;
 class QSettings;
 class QNetworkAccessManager;
 class FoxVerifier;   /* CE3TSK */
+class UpdateChecker;   // CE3TSK
+class QToolButton;   // CE3TSK
 class QLineEdit;
 class QFont;
 class QHostInfo;
@@ -140,6 +143,7 @@ private slots:
   void on_filterButton_clicked (bool);
   void on_AGCcButton_clicked (bool);
   void on_actionAbout_triggered();
+  void on_actionCheck_for_updates_triggered();   // CE3TSK
   void on_enableTxButton_clicked (bool);
   void on_stopTxButton_clicked();
   void on_stopButton_clicked();
@@ -365,6 +369,13 @@ private slots:
   void on_actionFT8PresetPipelineLight_triggered();   // CE3TSK P10
   void on_actionFT8PresetMaxEfficiency_triggered();
   void applyDecodePreset(DecodePreset p);   // CE3TSK
+  /* CE3TSK 2026-09-22: a recipe onto the controls of both phases (what applyDecodePreset does for a named one), and
+     the PARKED recipe of S-Hound mode: the operator, "during superfox mode there cannot be any preset chosen ...
+     the default 3 cycles preset can be used and the previously chosen preset gets parked" - the Fox's period has no
+     TX background. Parked on the way in (and again at the end of readSettings, which brings the mode in before it
+     has read the decoding controls), handed back on the way out and before writeSettings writes the controls. */
+  void applyDecodeRecipe(DecodeRecipe const& r, int rxEnsembleEffort, bool earlyStart, bool wideDxSearch);
+  void parkDecodePreset(bool park);
   void refreshDecodePreset();
   void updateTimingLamps();   // CE3TSK: the RX / TX timing lamps
   void fitDecodeLabels();     // CE3TSK: keep the header line tall enough for the text it holds
@@ -806,6 +817,16 @@ private:
   bool m_txFirstParked = false;
   bool m_txFirstParkedValid = false;
   bool m_txPeriodForcing = false;   // set by applySuperFoxMode around its own change of the period
+  /* CE3TSK 2026-09-21: the RX frequency in S-Hound mode. The SuperFox receiver never reads it - decode() sends its
+     own search frequency in the Fox's slot - but the Rx Frequency pane takes the lines within 10 Hz of it, and the
+     odd slot's FT8 decode with Filter on keeps only +-290 Hz around it. So while the mode is in effect the box
+     FOLLOWS THE FOX: greyed, and set where the receiver last decoded it (superFoxRxFollow, m_rxFoxShown); anything
+     else that sets it is put back (on_RxFreqSpinBox_valueChanged). The operator's own value is parked on the way in,
+     handed back on the way out, and is what the ini file keeps. */
+  int m_rxParked = 1500;
+  bool m_rxParkedValid = false;
+  int m_rxFoxShown = 750;
+  bool m_rxFoxForcing = false;
   /* the Foxes this receiver has decoded, base call -> when last (ms since the epoch): the blind-
      call rule asks for a decode that is RECENT, not for one at some point since the band was
      chosen - a Fox heard at 10:00 that has gone QRT or moved is not a Fox one may still call at
@@ -831,6 +852,23 @@ private:
      minute after an answer (0 nothing, 1 verified, 2 invalid) and m_foxVerdictGen retires the timer
      of an older answer; m_foxTold keeps the status-bar notes to one per kind (per ten minutes). */
   FoxVerifier * m_foxVerifier = nullptr;
+  /* CE3TSK 2026-09-22: "Check for updates" (UpdateChecker.hpp): the Help menu's check, the silent background
+     check (m_updateTimer; ini UpdateCheck=false switches it off), and the update icon beside the Ko-fi cup that the
+     background check shows when a newer version is published - its colour pulses slowly (m_updatePulse). */
+  UpdateChecker * m_updateChecker = nullptr;
+  QToolButton * m_updateButton = nullptr;
+  QTimer m_updatePulse;                 // repaints at 12 Hz (review: an animation repainted and re-laid out the corner at 60 Hz)
+  QElapsedTimer m_updatePulseClock;     // the phase of the 2.4 s breath
+  qreal updatePulsePhase () const;
+  QTimer m_updateTimer;
+  bool m_updateCheckAuto = true;
+  bool m_decodeParked = false;          // CE3TSK: S-Hound's parked FT8 recipe (parkDecodePreset)
+  DecodeRecipe m_parkedRecipe {};
+  int m_parkedEnsembleEffort = 0;
+  bool m_parkedEarlyStart = false;
+  bool m_parkedWideDxSearch = false;
+  void paintUpdateIcon (qreal phase);
+  void showUpdateNewer (QString const& latest, QString const& changelog, QString const& page);
   bool m_foxVerify = true;
   bool m_showOTP = false;
   int m_foxVerdict = 0;
@@ -1158,6 +1196,7 @@ private:
   bool setTxFirst (bool first, bool syncButton);
   bool houndTxControl (bool hound, bool enableToo);
   void superFoxSearchReset ();
+  void superFoxRxFollow (int hz);   /* CE3TSK: S-Hound - the RX box on the Fox */
   // Hound's TX frequency control needs a split rig off the common FT8 frequencies; a SuperFox needs none
   bool houndSplitMissing () const;
   void applySuperFoxMode ();   /* CE3TSK */

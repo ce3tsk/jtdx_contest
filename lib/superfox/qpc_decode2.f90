@@ -19,6 +19,9 @@ subroutine qpc_decode2(c0,fsync,ftol,xdec,ndepth,dth,damp,crc_ok,   &
    use sfox_mod, only : sfsearchfloor,nsflistany,sflistanyfloor   !CE3TSK: the search's floor, the list round with nothing told
    use sfox_mod, only : nsflistanylooks                           !CE3TSK: and its looks
    use sfox_mod, only : nsfextra                                  !CE3TSK: the last step's sync candidate (decoder.f90 superfox_extra)
+   use sfox_mod, only : nsfthreads,nsfdecthreads                  !CE3TSK: the search in threads
+   use sfox_mod, only : csfsym,nsfnorm,NSPS                        !CE3TSK: and its demodulation in threads
+!$ use omp_lib, only : omp_get_thread_num
 
    parameter(NMAX=15*12000,NFT=365,NZ=100)
    complex c0(NMAX)                    !Signal as received
@@ -62,12 +65,16 @@ subroutine qpc_decode2(c0,fsync,ftol,xdec,ndepth,dth,damp,crc_ok,   &
         integer(c_int), intent(in), value :: slot, n
         integer(c_int), intent(in) :: n28(*)
       end subroutine qpc_scl_setcand
+      subroutine qpc_scl_init() bind(C,name="qpc_scl_init")
+      end subroutine qpc_scl_init
       subroutine qpc_scl_cand(on) bind(C,name="qpc_scl_cand")
         use iso_c_binding, only: c_int
         integer(c_int), intent(in), value :: on
       end subroutine qpc_scl_cand
    end interface
    integer, save :: nknown=-1            !CE3TSK: 1 = a known Fox is accepted below the floor; JTDX_SFOX_KNOWN=0: 0
+   integer nthrs
+   logical lsdone
    real f2x(3),t2x(3),snrx(3)            !CE3TSK: MSHV's three sync candidates (the last step)
    integer ordx(3),jcx
    integer nown
@@ -148,6 +155,16 @@ subroutine qpc_decode2(c0,fsync,ftol,xdec,ndepth,dth,damp,crc_ok,   &
    if(ndepth.gt.0) maxd=maxdither(ndepth)
    maxft=NZ
    if(snrsync.lt.4.0 .or. ndepth.le.0) maxft=1
+! CE3TSK 2026-09-21: the same search in threads (JTDX_SFOX_THREADS; sfox_search_mt below) - the same trials in
+! the same order, the lowest passing one taken: the lines are these loops' at any thread count
+   nthrs=nsfthreads
+   if(nthrs.eq.0) nthrs=nsfdecthreads
+   nthrs=min(nthrs,64)                !review 2026-09-21: the FT8 decoder's count has no cap, the buffer sets stop at 64
+   if(nthrs.gt.1) then
+      call sfox_search_mt(nthrs,lsdone)
+      if(lsdone) return
+      goto 800
+   endif
    do idith=1,maxft
       if(idith.ge.2) maxd=1
       deltaf=idf(idith)*0.5
@@ -209,7 +226,27 @@ subroutine qpc_decode2(c0,fsync,ftol,xdec,ndepth,dth,damp,crc_ok,   &
             crc_ok=crc_chk.eq.crc_sent
 
             if(crc_ok) then
-               call sfox_estimate       !the SNR: an internal routine below, the a-priori pass needs it too
+               call sfox_crcpass        !CE3TSK 2026-09-21: floor and known Fox, an internal routine now (the threaded search uses it)
+               return
+            endif
+         enddo    !kk: dither of smoothing weights
+      enddo       !kkk: dither of probabilities
+   enddo          !idith: dither of frequency and time
+800 continue                          !CE3TSK: the threaded search comes here when it found nothing
+   call sfox_appass                   !CE3TSK: nothing found - what can be STATED about the message is tried
+   if(.not.crc_ok) call sfox_poolpass !CE3TSK: and then WHO MAY BE IN IT: the Hounds heard
+   if(.not.crc_ok) call sfox_listpass !CE3TSK: and then the known Fox told and NOTHING said about the Hounds: the list decoder alone
+   return
+
+contains
+
+subroutine sfox_crcpass
+
+! CE3TSK 2026-09-21: what the search does with a word whose CRC passed - the SNR estimate, the floor and the
+! known-Fox exemption - moved here unchanged from the search's loop, so that the threaded search
+! (sfox_search_mt) takes exactly the same decision. The caller returns afterwards, whatever crc_ok is.
+
+   call sfox_estimate       !the SNR: an internal routine below, the a-priori pass needs it too
 ! CE3TSK 2026-09-20: THE FLOOR AND A FOX THAT IS KNOWN (SUPERFOX_DECODER_IDEAS.md idea 2;
 ! test/experiments/sfox_floor/). The floor is there because a slot without a Fox makes 400 decoder
 ! calls (796 when something gives the sync a peak) against a 21-bit CRC, and a chance pass reads about -19 dB. It also rejects CORRECT
@@ -231,27 +268,27 @@ subroutine qpc_decode2(c0,fsync,ftol,xdec,ndepth,dth,damp,crc_ok,   &
 ! accepts down to -16.95 dB for EVERY Fox, and the words the -16.5 dB floor throws away read -16.5 to
 ! -16.7 - true decodes (4.6) - while a chance CRC pass reads about -19. sfox_mod.f90 has the default
 ! and what it was measured on; -16.5 is WSJT-X's receiver, and the identity rows pin it.
-               if(.not.(snr.ge.sfsearchfloor)) then      !written so that a NaN estimate does not pass (review 2)
-                  if(nknown.lt.0) then
-                     nknown=1
-                     call get_environment_variable('JTDX_SFOX_KNOWN',envk,nenv,istat)
-                     if(istat.eq.0 .and. nenv.gt.0) then
-                        if(envk(1:1).eq.'0') nknown=0
-                     endif
-                  endif
-                  crc_ok=.false.
-                  if(nknown.eq.1) then
-                     write(msgbits,'(47b7.7)') xdec(0:46)
-                     read(msgbits(327:329),'(b3)') i3
-                     if(i3.eq.3) then
-                        read(msgbits(1:58),'(b58)') n58
-                        crc_ok=any(nfoxknown58.ge.0 .and. nfoxknown58.eq.n58)
-                     else
-                        read(msgbits(1:28),'(b28)') n28
-                        crc_ok=any(nfoxknown28.ge.0 .and. nfoxknown28.eq.n28)
-                     endif
-                  endif
-               endif
+   if(.not.(snr.ge.sfsearchfloor)) then      !written so that a NaN estimate does not pass (review 2)
+      if(nknown.lt.0) then
+         nknown=1
+         call get_environment_variable('JTDX_SFOX_KNOWN',envk,nenv,istat)
+         if(istat.eq.0 .and. nenv.gt.0) then
+            if(envk(1:1).eq.'0') nknown=0
+         endif
+      endif
+      crc_ok=.false.
+      if(nknown.eq.1) then
+         write(msgbits,'(47b7.7)') xdec(0:46)
+         read(msgbits(327:329),'(b3)') i3
+         if(i3.eq.3) then
+            read(msgbits(1:58),'(b58)') n58
+            crc_ok=any(nfoxknown58.ge.0 .and. nfoxknown58.eq.n58)
+         else
+            read(msgbits(1:28),'(b28)') n28
+            crc_ok=any(nfoxknown28.ge.0 .and. nfoxknown28.eq.n28)
+         endif
+      endif
+   endif
 ! NB the search ENDS here also when the floor has just rejected the word (the donor's behaviour),
 ! and the a-priori pass below is then not reached. That loses nothing - a rejected word is of a Fox
 ! that is not known, and the pass states only known ones - but test/decode/superfox.sh's rows
@@ -259,17 +296,322 @@ subroutine qpc_decode2(c0,fsync,ftol,xdec,ndepth,dth,damp,crc_ok,   &
 ! -17 dB is rejected HERE and never reaches the pass that would decode it at -20.
 !               write(61,3061) idith,kk,kkk,idf(idith),idt(idith),a,b
 !3061           format(5i5,2f8.3)
-               return
-            endif
-         enddo    !kk: dither of smoothing weights
-      enddo       !kkk: dither of probabilities
-   enddo          !idith: dither of frequency and time
-   call sfox_appass                   !CE3TSK: nothing found - what can be STATED about the message is tried
-   if(.not.crc_ok) call sfox_poolpass !CE3TSK: and then WHO MAY BE IN IT: the Hounds heard
-   if(.not.crc_ok) call sfox_listpass !CE3TSK: and then the known Fox told and NOTHING said about the Hounds: the list decoder alone
-   return
 
-contains
+   return
+end subroutine sfox_crcpass
+
+subroutine sfox_search_mt(nthr,ldone)
+
+! CE3TSK 2026-09-21: THE ORDINARY SEARCH IN THREADS (JTDX_SFOX_THREADS; SUPERFOX_DECODER_IDEAS.md 4.12). The same
+! trials as the serial loops above, in the same order - time/frequency step idith, smoothing weight kk, dither kkk -
+! but decoded in parallel batches, and the LOWEST-NUMBERED trial whose CRC passes is taken, never the first to
+! finish: so the result is the serial search's at any thread count. What stays serial is what cannot be shared:
+! the demodulation (four2a's FFTW plans are cached per array and not thread-safe), the smoothing, and the dithered
+! copies, which come from ONE seeded random stream and must be drawn in order. The decoder is this program's
+! re-entrant one at list size 1 (qpc/qpc_scl.c), which takes WSJT-X's decisions decision for decision - np_qpc.c
+! keeps its work arrays static. The first two trials of the first step stay serial and alone: most decodes come
+! there, and the common case must not wait for a batch. ldone: the search has decided (a decode, or a word the
+! floor rejected - the serial search returns then too); otherwise the passes follow.
+
+   integer, intent(in) :: nthr
+   logical, intent(out) :: ldone
+   integer, parameter :: MB=128
+! CE3TSK 2026-09-21: THE DEMODULATION IN THREADS (the thread-safe FFT path): what a thread needs to take a whole
+! time/frequency step - the shifted signal, the one-symbol FFT array, the spectra - one set per thread, made
+! ONCE and never moved: four2a keys its FFTW plans on the array's address (a moved array is a new plan, and the
+! program stops at 2100), and the FFT array starts at the SAME address modulo 64 as sfox_demod's own
+! (sfox_mod's csfsym): FFTW picks its codelets by the alignment, so every thread computes the serial bits.
+   type sfthr
+      complex, allocatable :: cw(:),cs(:)
+      real, allocatable :: s2(:,:),s3r(:,:),s3p(:,:),s3w(:,:)
+      integer :: k0=-1
+      logical :: chk=.false.
+   end type sfthr
+   type(sfthr), allocatable, save :: tb(:)
+! the review's finding (2026-09-21): the same alignment gives the same codelets only while FFTW plans alike - not
+! under -w 2 and up (MEASURE times every new array), nor after the JT9 paths (downsam9/10) have left FFTW's
+! thread count changed. So every buffer set is CHECKED once, when it is new: a step demodulated by it against the
+! serial demodulation of the same step, bit for bit (a plan never changes once four2a has it). A difference is
+! said on stderr and the later steps' demodulation then runs serially for the rest of the process (lmtbad) - the
+! lines stay the serial search's either way. JTDX_SFOX_FFTFAKE=1, a test hook, makes the check fail.
+   logical, save :: lmtbad=.false.
+   integer, save :: nfake=-1
+   logical lsame
+   character envf*8
+   integer nenvf,istf
+   real, allocatable, save :: pb(:,:,:)
+   integer*1, allocatable, save :: xb(:,:),yb(:,:)
+   logical, allocatable, save :: okb(:)
+   integer nb,j,np,npb,kz(50),iwin,is1,is2,isb,kkw,nstepb,it,k,kk2
+   integer*8 ial
+   real dfk,dtk,fk,tk,fshk,bk,basek,ssk
+   logical lnk
+   integer*1 vz(50),xr(0:49)
+   integer ccb,csb
+   real ssb
+
+   ldone=.false.; kz=0; vz=0_1
+! THE DETERMINISM RULES of the FT8, FT4 and FT2 threads, here: every trial's result is a function of its own
+! input alone (the decoder's buffers are thread-local, qpc_scl.c; no shared scalar is written in a batch - each
+! trial writes only its own slice of pb / xb / yb / okb), the inputs are made in the serial order, the one random
+! stream is drawn serially, the shared maps of the decoder are built HERE, serially, before any batch, and the
+! LOWEST-NUMBERED passing trial is taken after the batch's implicit barrier - so no result depends on which
+! thread ran what, or when; no lock is needed
+   call qpc_scl_init()
+   if(.not.allocated(pb)) then
+      allocate(pb(0:127,0:127,MB),xb(0:49,MB),yb(0:127,MB),okb(MB))
+   endif
+! the demodulation's shared pieces, serially, before any thread demodulates: the NORM setting, sfox_demod's
+! own array (whose alignment the threads copy) and one buffer set per thread (thread numbers 1 to 64)
+   call sfox_normcfg
+   if(.not.allocated(csfsym)) allocate(csfsym(0:NSPS-1))
+   if(.not.allocated(tb)) allocate(tb(64))
+   ial=mod(int(loc(csfsym(0)),8),64_8)
+   do it=1,nthr
+      if(tb(it)%k0.lt.0) then
+         allocate(tb(it)%cw(NMAX),tb(it)%cs(0:NSPS+7),tb(it)%s2(0:127,0:151),tb(it)%s3r(0:127,0:127), &
+              tb(it)%s3p(0:127,0:127),tb(it)%s3w(0:127,0:127))
+         do k=0,7
+            if(mod(int(loc(tb(it)%cs(k)),8),64_8).eq.ial) exit
+         enddo
+         if(k.gt.7) stop 'sfox_search_mt: no FFT array with the alignment of sfox_demod''s'
+         tb(it)%k0=k
+      endif
+   enddo
+
+! --- the first time/frequency step: four smoothing weights, maxd dithers each, a batch per weight
+   idith=1
+   deltaf=idf(idith)*0.5; deltat=idt(idith)*8.0/1024.0
+   f=f00+deltaf; t=t00+deltat
+   fshift=1500.0 - (f+baud)
+   call twkfreq2(c0,c,NMAX,fsample,fshift)
+   call sfox_demod(c,1500.0,t,isync,s2,s3raw)
+! the check of new buffer sets (above): this step once more through each, serially, compared bit for bit
+   if(nfake.lt.0) then
+      nfake=0
+      call get_environment_variable('JTDX_SFOX_FFTFAKE',envf,nenvf,istf)
+      if(istf.eq.0 .and. nenvf.gt.0) then
+         if(envf(1:1).eq.'1') nfake=1
+      endif
+   endif
+   do it=1,nthr
+      if(tb(it)%chk .or. lmtbad) cycle
+      call sfox_demod_w(c,1500.0,t,isync,tb(it)%s2,tb(it)%s3r,tb(it)%s3p,lnk,tb(it)%cs(tb(it)%k0:),nsfnorm)
+      tb(it)%chk=.true.
+      lsame=all(tb(it)%s2.eq.s2) .and. all(tb(it)%s3r.eq.s3raw) .and. (lnk.eqv.lnormed)
+      if(lsame .and. lnormed) lsame=all(tb(it)%s3p.eq.s3plain)
+      if(nfake.eq.1) lsame=.false.
+      if(.not.lsame) then
+         lmtbad=.true.
+         write(0,'(a,i3,a)') 'SuperFox receiver: the FFT of thread buffer',it, &
+              ' differs from the serial one - the search''s later steps are demodulated serially from now on'
+      endif
+   enddo
+   lnormed0=lnormed
+   if(lnormed0) s3rawp=s3plain
+   a=1.0; b=0.0
+   do kk=1,4
+      if(kk.eq.2) b=0.4
+      if(kk.eq.3) b=0.5
+      if(kk.eq.4) b=0.6
+      s3=s3raw
+      if(b.gt.0.0) then
+         do j=0,127
+            call smo121a(s3(:,j),128,a,b)
+         enddo
+      endif
+      call sfox_pctile(s3,128*128,50,base3)
+      s3=s3/base3
+      py0=s3
+      call qpc_likelihoods2(py,s3,3.16,1.0)
+      call random_seed(put=nseed)
+      nb=0
+      do kkk=1,maxd
+         nb=nb+1
+         if(kkk.eq.1) then
+            pb(:,:,nb)=py0
+         else
+            pyd=0.
+            if(kkk.gt.2) then
+               call random_number(pyd)
+               pyd=2.0*(pyd-0.5)
+            endif
+            where(py.gt.dth) pyd=0.
+            pb(:,:,nb)=py*(1.0 + damp*pyd)
+         endif
+         do j=0,127
+            ssb=sum(pb(:,j,nb))
+            if(ssb.gt.0.0) then
+               pb(:,j,nb)=pb(:,j,nb)/ssb
+            else
+               pb(:,j,nb)=0.0
+            endif
+         enddo
+! the first two trials of the first weight alone, before any batch: most decodes are there
+         if(kk.eq.1 .and. kkk.le.2) then
+            np=qpc_decode_scl(xb(:,1),yb(:,1),pb(:,:,1),1,0,kz,vz,1,npb)
+            xr=xb(49:0:-1,1)
+            ccb=iand(nhash2(xr,n47,571),mask21)
+            csb=128*128*xr(47) + 128*xr(48) + xr(49)
+            if(ccb.eq.csb) then
+               xdec=xr; ydec=yb(:,1); crc_ok=.true.
+               call sfox_crcpass
+               ldone=.true.; return
+            endif
+            nb=0
+            cycle
+         endif
+         if(nb.eq.MB .or. kkk.eq.maxd) then
+            call sfox_batch(nb,nthr,iwin,pb,xb,yb,okb,MB)
+            if(iwin.gt.0) then
+               xdec=xb(:,iwin); ydec=yb(:,iwin); crc_ok=.true.
+               call sfox_crcpass
+               ldone=.true.; return
+            endif
+            nb=0
+         endif
+      enddo
+   enddo
+
+! --- the other time/frequency steps: one trial per weight (the spectra themselves). 2026-09-21: WHOLE STEPS in
+! parallel - each thread shifts, demodulates, smooths and decodes a step's four trials with its own buffers
+! (tb) - nstepb steps a batch, trial k of the batch = weight kk of step is1+(k-1)/4, the serial order. The
+! batch's size decides only how much work may be thrown away, never which trial wins.
+   if(maxft.lt.2) then
+      crc_ok=.false.; return
+   endif
+   nstepb=min(MB/4,max(8,2*nthr))
+   is1=2
+   do while(is1.le.maxft)
+      is2=min(maxft,is1+nstepb-1)
+      nb=4*(is2-is1+1)
+      okb(1:nb)=.false.
+!$omp parallel do num_threads(nthr) schedule(dynamic,1) default(shared) if(.not.lmtbad) &
+!$omp& private(isb,it,dfk,dtk,fk,tk,fshk,lnk,kk2,bk,basek,j,ssk,k)
+      do isb=is1,is2
+         it=1
+!$       it=omp_get_thread_num()+1
+         dfk=idf(isb)*0.5; dtk=idt(isb)*8.0/1024.0
+         fk=f00+dfk; tk=t00+dtk
+         fshk=1500.0 - (fk+baud)
+         call twkfreq2(c0,tb(it)%cw,NMAX,fsample,fshk)
+         if(lmtbad) then            !one thread (the if clause): the serial demodulation, its FFT array
+            call sfox_demod(tb(it)%cw,1500.0,tk,isync,tb(it)%s2,tb(it)%s3r)
+         else
+            call sfox_demod_w(tb(it)%cw,1500.0,tk,isync,tb(it)%s2,tb(it)%s3r,tb(it)%s3p,lnk,tb(it)%cs(tb(it)%k0:),nsfnorm)
+         endif
+         bk=0.0
+         do kk2=1,4
+            if(kk2.eq.2) bk=0.4
+            if(kk2.eq.3) bk=0.5
+            if(kk2.eq.4) bk=0.6
+            k=4*(isb-is1)+kk2
+            tb(it)%s3w=tb(it)%s3r
+            if(bk.gt.0.0) then
+               do j=0,127
+                  call smo121a(tb(it)%s3w(:,j),128,1.0,bk)
+               enddo
+            endif
+            call sfox_pctile(tb(it)%s3w,128*128,50,basek)
+            pb(:,:,k)=tb(it)%s3w/basek
+            do j=0,127
+               ssk=sum(pb(:,j,k))
+               if(ssk.gt.0.0) then
+                  pb(:,j,k)=pb(:,j,k)/ssk
+               else
+                  pb(:,j,k)=0.0
+               endif
+            enddo
+            call sfox_trial(k,pb,xb,yb,okb,MB)
+         enddo
+      enddo
+!$omp end parallel do
+      iwin=0
+      do k=1,nb
+         if(okb(k)) then
+            iwin=k; exit
+         endif
+      enddo
+      if(iwin.gt.0) then
+! the winner: its step and weight again, so that the estimate sees the spectra the serial search had then
+         idith=is1+(iwin-1)/4; kkw=mod(iwin-1,4)+1
+         deltaf=idf(idith)*0.5; deltat=idt(idith)*8.0/1024.0
+         f=f00+deltaf; t=t00+deltat
+         fshift=1500.0 - (f+baud)
+         call twkfreq2(c0,c,NMAX,fsample,fshift)
+         call sfox_demod(c,1500.0,t,isync,s2,s3raw)
+         lnormed0=lnormed
+         if(lnormed0) s3rawp=s3plain
+         a=1.0; b=0.0
+         if(kkw.eq.2) b=0.4
+         if(kkw.eq.3) b=0.5
+         if(kkw.eq.4) b=0.6
+         s3=s3raw
+         if(b.gt.0.0) then
+            do j=0,127
+               call smo121a(s3(:,j),128,a,b)
+            enddo
+         endif
+         call sfox_pctile(s3,128*128,50,base3)
+         s3=s3/base3
+         xdec=xb(:,iwin); ydec=yb(:,iwin); crc_ok=.true.
+         call sfox_crcpass
+         ldone=.true.; return
+      endif
+      is1=is2+1
+   enddo
+   crc_ok=.false.
+   return
+end subroutine sfox_search_mt
+
+subroutine sfox_batch(n,nt,iwinner,pb,xb,yb,okb,mb)
+
+! CE3TSK 2026-09-21: decode trials 1..n of a batch of the threaded search in parallel (sfox_search_mt);
+! iwinner = the LOWEST-NUMBERED one whose CRC passed (0: none) - never the first to finish
+
+   integer, intent(in) :: n,nt,mb
+   integer, intent(out) :: iwinner
+   real :: pb(0:127,0:127,mb)
+   integer*1 :: xb(0:49,mb),yb(0:127,mb)
+   logical :: okb(mb)
+   integer :: k
+
+   okb(1:n)=.false.
+!$omp parallel do num_threads(nt) schedule(dynamic,1) default(shared) private(k)
+   do k=1,n
+      call sfox_trial(k,pb,xb,yb,okb,mb)
+   enddo
+!$omp end parallel do
+   iwinner=0
+   do k=1,n
+      if(okb(k)) then
+         iwinner=k; exit
+      endif
+   enddo
+
+end subroutine sfox_batch
+
+subroutine sfox_trial(k,pb,xb,yb,okb,mb)
+
+! CE3TSK 2026-09-21: one trial of the threaded search - WSJT-X's decisions (qpc_scl.c at L = 1) on the likelihoods
+! pb(:,:,k), the word into xb(:,k) and yb(:,k), okb(k) = its CRC passed. Writes only slice k; called from threads.
+
+   integer, intent(in) :: k,mb
+   real :: pb(0:127,0:127,mb)
+   integer*1 :: xb(0:49,mb),yb(0:127,mb)
+   logical :: okb(mb)
+   integer :: npk,cck,csk,irk,kz(50)
+   integer*1 :: xk(0:49),vz(50)
+
+   kz=0; vz=0_1
+   irk=qpc_decode_scl(xb(:,k),yb(:,k),pb(:,:,k),1,0,kz,vz,1,npk)
+   xk=xb(49:0:-1,k)
+   xb(:,k)=xk
+   cck=iand(nhash2(xk,n47,571),mask21)
+   csk=128*128*xk(47) + 128*xk(48) + xk(49)
+   okb(k)=cck.eq.csk
+
+end subroutine sfox_trial
 
 subroutine sfox_estimate
 
