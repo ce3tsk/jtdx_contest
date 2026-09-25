@@ -9989,7 +9989,7 @@ Install the setting?</source>
     </message>
     <message>
         <source>macOS allows too little shared memory. To raise the limit permanently, copy com.jtdx.sysctl.plist from the JTDX_contest installer (DMG) to /Library/LaunchDaemons and restart this Mac - see ReadMe.txt in the DMG.</source>
-        <translation>macOS permite muy poca memoria compartida. Para subir el límite de forma permanente, copie com.jtdx.sysctl.plist del instalador de JTDX_contest (DMG) a /Library/LaunchDaemons y reinicie este Mac - consulte ReadMe.txt en el DMG.</translation>
+        <translation>macOS permite demasiado poca memoria compartida. Para subir el límite de forma permanente, copie com.jtdx.sysctl.plist del instalador de JTDX_contest (DMG) a /Library/LaunchDaemons y reinicie este Mac - consulte ReadMe.txt en el DMG.</translation>
     </message>
 </context>
 <context>

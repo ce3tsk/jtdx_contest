@@ -63,7 +63,10 @@ if (EXISTS "${bundle}")
     # CE3TSK 2026-09-25: the TARGET's architecture. PROJECT_ARCHITECTURE is CMAKE_SYSTEM_PROCESSOR,
     # the build machine's, which is exactly what the comment above says not to use - it would
     # label an Intel disk image "Apple Silicon" on a cross-build with no lipo to ask.
+    # separate_arguments as on the lipo path: a universal build's "arm64 x86_64" has to become two
+    # list elements, or every foreach over it sees one architecture named "arm64 x86_64".
     set (archs "@finish_fallback_archs@")
+    separate_arguments (archs)
   endif ()
 
   if (otool)
@@ -168,8 +171,9 @@ if (EXISTS "${bundle}")
 endif ()
 
 if (EXISTS "${readme}")
-  if (NOT archs)
-    set (archs "@PROJECT_ARCHITECTURE@")
+  if (NOT archs)                       # the same fallback as above, for the same reason
+    set (archs "@finish_fallback_archs@")
+    separate_arguments (archs)
   endif ()
   # one phrase per kind of Mac, each with its own minimum when known
   set (silicon_min "")

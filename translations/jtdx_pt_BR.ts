@@ -9966,7 +9966,7 @@ Instalar o ajuste?</translation>
     </message>
     <message>
         <source>macOS allows too little shared memory. To raise the limit permanently, copy com.jtdx.sysctl.plist from the JTDX_contest installer (DMG) to /Library/LaunchDaemons and restart this Mac - see ReadMe.txt in the DMG.</source>
-        <translation>O macOS permite muito pouca memória compartilhada. Para aumentar o limite de forma permanente, copie com.jtdx.sysctl.plist do instalador do JTDX_contest (DMG) para /Library/LaunchDaemons e reinicie este Mac - veja o ReadMe.txt no DMG.</translation>
+        <translation>O macOS não permite memória compartilhada suficiente. Para aumentar o limite de forma permanente, copie com.jtdx.sysctl.plist do instalador do JTDX_contest (DMG) para /Library/LaunchDaemons e reinicie este Mac - veja o ReadMe.txt no DMG.</translation>
     </message>
 </context>
 <context>

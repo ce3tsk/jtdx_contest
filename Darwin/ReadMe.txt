@@ -47,7 +47,8 @@ change has been made by typing:
 
       sysctl -a | grep sysv.shm
 
-If shmmax is less than 14680064, write to jtdx_contest@ce3tsk.com, since
+If shmmax is less than 13692348 - or if shmall, counted in pages of the page size that
+"sysctl -n hw.pagesize" prints, comes to less than that - write to jtdx_contest@ce3tsk.com, since
 JTDX_contest will fail to load with an error message: "Unable to create shared
 memory segment".
 
@@ -119,10 +120,12 @@ use a Mac editor to examine the file.  (Do not use another editor - the file
 would probably be corrupted.)
 
 It is possible to run multiple instances of JTDX_contest simultaneously.  The setting
-allows 512 MB of shared memory in total, enough for about 39 instances at 13 MB (13692348)
-each.  If you ever need more, change the 536870912 (512 MB) in the com.jtdx.sysctl.plist
-file to (n * 13692348), where 'n' is the number of instances required to run
-simultaneously.
+allows 512 MB of shared memory in total, enough for about 39 instances at 13692348 bytes
+each (13 MB, which JTDX_contest's own message rounds up to 14).  If you ever need more,
+change the 536870912 (512 MB) in the com.jtdx.sysctl.plist file to (n * 14680064), where
+'n' is the number of instances you want to run at once.  That is 13692348 rounded up to
+14 MB - a whole number of pages at either page size, with room to spare, because the limit
+counts pages and other programs draw on the same pool.
 Remember to reboot your Mac afterwards.  The setting only ever raises the limits, so it
 does not reduce values that another program (WSJT-X, for example) has set higher.
 

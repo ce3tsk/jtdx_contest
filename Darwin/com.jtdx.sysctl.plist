@@ -8,7 +8,7 @@
                                   of 4 KB on Intel, 32768 of 16 KB on Apple Silicon - about 39
                                   JTDX_contest instances.  512 and not 256 MB because this daemon
                                   REPLACES stock JTDX's (same Label, same path), whose 17920 pages
-                                  are 73 MB where a page is 4 KB but 293 MB where it is 16 KB -
+                                  are 70 MB where a page is 4 KB but 280 MB where it is 16 KB -
                                   256 MB would have been a step DOWN on Apple Silicon
   Raise-only: a value another program's daemon (WSJT-X, stock JTDX) already set higher is kept,
   whichever runs first. shmall first, so the larger shmmax fits inside it. set -e: a failed step

@@ -134,8 +134,8 @@ from `/usr/local/bin`.
 
 JTDX\_contest needs one shared memory segment of about 13 MB per running instance, and
 macOS allows 4 MB. The launch daemon `Darwin/com.jtdx.sysctl.plist` raises the limits at
-every boot: `kern.sysv.shmmax` to 100 MB and `kern.sysv.shmall` to 256 MB, about 19
-instances (counted in pages of the Mac's page size, so 65536 pages on Intel and 16384 on
+every boot: `kern.sysv.shmmax` to 100 MB and `kern.sysv.shmall` to 512 MB, about 39
+instances (counted in pages of the Mac's page size, so 131072 pages on Intel and 32768 on
 Apple Silicon). It only ever raises them, and never lowers values another program has
 set higher.
 
@@ -691,8 +691,9 @@ Updated for this fork:
 - Fixed the plist name `com.wsjtx.sysctl.plist` to `com.jtdx.sysctl.plist`.
 - Help goes to jtdx\_contest@ce3tsk.com, not to the upstream author. The notes still
   credit Arvo ES1JA, whose JTDX notes they started from.
-- The shared memory check says "less than 14680064" is a problem, as larger values
-  also work.
+- The shared memory check asks for at least 13692348 - what one instance needs - rather
+  than the exact 14680064 stock JTDX's daemon happened to set, and it now also says how to
+  check `kern.sysv.shmall`, which is the limit the 512 MB change actually raises.
 
 `Darwin/developer read me.txt` got the same volume path fix, and a DMG file pattern
 (`jtdx-*-Darwin-*.dmg`) that matches the real file name.
@@ -703,7 +704,7 @@ Updated for this fork:
 4 MB. The launch daemon that raises the limit at boot (`com.jtdx.sysctl.plist`) only took
 effect for users who copied it into `/Library/LaunchDaemons` themselves with `sudo`. A
 `sudo sysctl -w …` on its own is lost at the next restart. Its values (14 MB per segment,
-70 MB in total) were also barely above what one instance needs.
+70 MB in total where a page is 4 KB) were also barely above what one instance needs.
 
 **Fix.**
 
@@ -722,7 +723,7 @@ effect for users who copied it into `/Library/LaunchDaemons` themselves with `su
   - The daemon's text is compiled in from `Darwin/com.jtdx.sysctl.plist`, through the
     header `jtdx_sysctl_plist.h`, which CMake generates from
     `Darwin/jtdx_sysctl_plist.h.in`. That keeps the plist the one place to edit.
-- `Darwin/com.jtdx.sysctl.plist`: 100 MB per segment and 256 MB in total, the page count
+- `Darwin/com.jtdx.sysctl.plist`: 100 MB per segment and 512 MB in total, the page count
   worked out from `hw.pagesize` at boot.
   - Raise-only, so it never lowers a value another program's daemon set higher, in either
     order.
@@ -751,7 +752,7 @@ effect for users who copied it into `/Library/LaunchDaemons` themselves with `su
 | `main.cpp` | macOS: offers to install the shared memory setting when the limits are too small |
 | `mac_shared_memory.hpp` | new: limit check and the install script run as root, all compiled in |
 | `Darwin/jtdx_sysctl_plist.h.in` | new: template for the header that compiles the daemon's text into the program |
-| `Darwin/com.jtdx.sysctl.plist` | 100 MB per segment, 256 MB in total (per page size), raise-only, `set -e` |
+| `Darwin/com.jtdx.sysctl.plist` | 100 MB per segment, 512 MB in total (per page size), raise-only, `set -e` |
 | `Darwin/developer read me.txt` | volume path and DMG file name pattern |
 | `BUILD_MACOS.md` | this document |
 

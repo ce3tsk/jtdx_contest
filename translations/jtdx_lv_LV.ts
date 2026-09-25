@@ -144,8 +144,8 @@
 %1
 Another application may be locking the directory</source>
         <translation>Kļūda izveidojot pagaidu direktoriju:
-% 1
- Cita programma var bloķēt direktoriju</translation>
+%1
+Cita programma var bloķēt direktoriju</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp" line="1411"/>
