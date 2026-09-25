@@ -9934,6 +9934,42 @@ soundcard changes</source>
         <source>Writable files in test location.  Use with caution, for testing only.</source>
         <translation>Kirjutatavad failid testimise asukohas.  Kasuta ettevaatlikult ainult testimiseks.</translation>
     </message>
+    <message>
+        <source>Shared memory</source>
+        <translation>Jagatud mälu</translation>
+    </message>
+    <message>
+        <source>JTDX_contest needs %1 MB of shared memory, more than macOS allows by default.</source>
+        <translation>JTDX_contest vajab %1 MB jagatud mälu, rohkem kui macOS vaikimisi lubab.</translation>
+    </message>
+    <message>
+        <source>It can raise the limit now, and at every start of this Mac, by installing a small system setting (/Library/LaunchDaemons/com.jtdx.sysctl.plist). macOS will ask for an administrator password.
+
+Install the setting?</source>
+        <translation>Piiri saab tõsta kohe ja selle Maci igal käivitusel, paigaldades väikese süsteemiseade (/Library/LaunchDaemons/com.jtdx.sysctl.plist). macOS küsib administraatori parooli.
+
+Kas paigaldada seade?</translation>
+    </message>
+    <message>
+        <source>JTDX_contest wants to install its shared memory setting.</source>
+        <translation>JTDX_contest soovib paigaldada oma jagatud mälu seade.</translation>
+    </message>
+    <message>
+        <source>Installing the shared memory setting failed.</source>
+        <translation>Jagatud mälu seade paigaldamine ebaõnnestus.</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>Viga</translation>
+    </message>
+    <message>
+        <source>Unable to create shared memory segment.</source>
+        <translation>Jagatud mälu segmenti ei õnnestu luua.</translation>
+    </message>
+    <message>
+        <source>macOS allows too little shared memory. To raise the limit permanently, copy com.jtdx.sysctl.plist from the JTDX_contest installer (DMG) to /Library/LaunchDaemons and restart this Mac - see ReadMe.txt in the DMG.</source>
+        <translation>macOS lubab liiga vähe jagatud mälu. Piiri püsivaks tõstmiseks kopeeri com.jtdx.sysctl.plist JTDX_contesti paigaldusfailist (DMG) kausta /Library/LaunchDaemons ja taaskäivita see Mac - vaata ReadMe.txt DMG-s.</translation>
+    </message>
 </context>
 <context>
     <name>wf_palette_design_dialog</name>

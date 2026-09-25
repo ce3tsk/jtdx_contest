@@ -410,19 +410,9 @@ endfunction()
 
 
 function(get_item_rpaths item rpaths_var)
+  # CE3TSK: read by gp_item_rpaths (GetPrerequisites.cmake), which caches it
   if(APPLE)
-    find_program(otool_cmd "otool")
-    mark_as_advanced(otool_cmd)
-  endif()
-
-  if(otool_cmd)
-    execute_process(
-      COMMAND "${otool_cmd}" -l "${item}"
-      OUTPUT_VARIABLE load_cmds_ov
-      )
-    string(REGEX REPLACE "[^\n]+cmd LC_RPATH\n[^\n]+\n[^\n]+path ([^\n]+) \\(offset[^\n]+\n" "rpath \\1\n" load_cmds_ov "${load_cmds_ov}")
-    string(REGEX MATCHALL "rpath [^\n]+" load_cmds_ov "${load_cmds_ov}")
-    string(REGEX REPLACE "rpath " "" load_cmds_ov "${load_cmds_ov}")
+    gp_item_rpaths("${item}" load_cmds_ov)
     if(load_cmds_ov)
       gp_append_unique(${rpaths_var} "${load_cmds_ov}")
     endif()
@@ -624,6 +614,7 @@ function(copy_resolved_item_into_bundle resolved_item resolved_embedded_item)
     endif()
   endif()
 
+  gp_clear_rpath_cache()   # CE3TSK: a file was (re)written, see gp_item_rpaths
 endfunction()
 
 
@@ -699,6 +690,7 @@ function(copy_resolved_framework_into_bundle resolved_item resolved_embedded_ite
     endif()
   endif()
 
+  gp_clear_rpath_cache()   # CE3TSK: files were (re)written, see gp_item_rpaths
 endfunction()
 
 
@@ -787,6 +779,7 @@ function(fixup_bundle_item resolved_embedded_item exepath dirs)
       message(FATAL_ERROR "Command failed:\n ${msg}")
     endif()
   endif()
+  gp_clear_rpath_cache()   # CE3TSK: install_name_tool may have deleted rpaths, see gp_item_rpaths
 endfunction()
 
 

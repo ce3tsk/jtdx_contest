@@ -9955,6 +9955,42 @@ cambios en la tarjeta de sonido</translation>
         <source>Writable files in test location.  Use with caution, for testing only.</source>
         <translation>Archivos grabables en la ubicación de prueba. Use con precaución, solo para pruebas.</translation>
     </message>
+    <message>
+        <source>Shared memory</source>
+        <translation>Memoria compartida</translation>
+    </message>
+    <message>
+        <source>JTDX_contest needs %1 MB of shared memory, more than macOS allows by default.</source>
+        <translation>JTDX_contest necesita %1 MB de memoria compartida, más de lo que macOS permite por defecto.</translation>
+    </message>
+    <message>
+        <source>It can raise the limit now, and at every start of this Mac, by installing a small system setting (/Library/LaunchDaemons/com.jtdx.sysctl.plist). macOS will ask for an administrator password.
+
+Install the setting?</source>
+        <translation>Puede subir el límite ahora, y en cada arranque de este Mac, instalando un pequeño ajuste del sistema (/Library/LaunchDaemons/com.jtdx.sysctl.plist). macOS pedirá una contraseña de administrador.
+
+¿Instalar el ajuste?</translation>
+    </message>
+    <message>
+        <source>JTDX_contest wants to install its shared memory setting.</source>
+        <translation>JTDX_contest quiere instalar su ajuste de memoria compartida.</translation>
+    </message>
+    <message>
+        <source>Installing the shared memory setting failed.</source>
+        <translation>No se pudo instalar el ajuste de memoria compartida.</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>Error</translation>
+    </message>
+    <message>
+        <source>Unable to create shared memory segment.</source>
+        <translation>No se puede crear el segmento de memoria compartida.</translation>
+    </message>
+    <message>
+        <source>macOS allows too little shared memory. To raise the limit permanently, copy com.jtdx.sysctl.plist from the JTDX_contest installer (DMG) to /Library/LaunchDaemons and restart this Mac - see ReadMe.txt in the DMG.</source>
+        <translation>macOS permite muy poca memoria compartida. Para subir el límite de forma permanente, copie com.jtdx.sysctl.plist del instalador de JTDX_contest (DMG) a /Library/LaunchDaemons y reinicie este Mac - consulte ReadMe.txt en el DMG.</translation>
+    </message>
 </context>
 <context>
     <name>wf_palette_design_dialog</name>

@@ -1,16 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  CE3TSK: launch daemon that raises the System V shared memory limits at every boot. JTDX_contest
+  needs one segment of about 13 MB (sizeof dec_data) per running instance; macOS allows 4 MB.
+    kern.sysv.shmmax = 104857600  100 MB, the largest single segment (a ceiling, reserves nothing)
+    kern.sysv.shmall = 512 MB     for all programs together, in pages of hw.pagesize: 131072 pages
+                                  of 4 KB on Intel, 32768 of 16 KB on Apple Silicon - about 39
+                                  JTDX_contest instances.  512 and not 256 MB because this daemon
+                                  REPLACES stock JTDX's (same Label, same path), whose 17920 pages
+                                  are 73 MB where a page is 4 KB but 293 MB where it is 16 KB -
+                                  256 MB would have been a step DOWN on Apple Silicon
+  Raise-only: a value another program's daemon (WSJT-X, stock JTDX) already set higher is kept,
+  whichever runs first. shmall first, so the larger shmmax fits inside it. set -e: a failed step
+  fails the whole command, rather than hiding behind a later one that worked. Same label as
+  stock JTDX's daemon, which it replaces with values at least as large.
+  Installed by JTDX_contest itself when it finds the limits too small - this text is compiled
+  into the program (jtdx_sysctl_plist.h, generated from this file), which writes it to
+  /Library/LaunchDaemons and runs the command below at once - or by hand: see ReadMe.txt.
+-->
 <plist version="1.0">
 <dict>
     <key>Label</key>
     <string>com.jtdx.sysctl</string>
     <key>Program</key>
-    <string>/usr/sbin/sysctl</string>
+    <string>/bin/sh</string>
     <key>ProgramArguments</key>
     <array>
-        <string>/usr/sbin/sysctl</string>
-        <string>kern.sysv.shmmax=14680064</string>
-        <string>kern.sysv.shmall=17920</string>
+        <string>/bin/sh</string>
+        <string>-c</string>
+        <string>set -e; p=$(/usr/sbin/sysctl -n hw.pagesize); n=$((536870912 / p)); a=$(/usr/sbin/sysctl -n kern.sysv.shmall); [ "$a" -ge "$n" ] || /usr/sbin/sysctl -w kern.sysv.shmall=$n; m=$(/usr/sbin/sysctl -n kern.sysv.shmmax); [ "$m" -ge 104857600 ] || /usr/sbin/sysctl -w kern.sysv.shmmax=104857600</string>
     </array>
     <key>RunAtLoad</key>
     <true/>

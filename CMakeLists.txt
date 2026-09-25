@@ -1448,6 +1448,15 @@ if (APPLE)
   set_target_properties (jtdx PROPERTIES OUTPUT_NAME "${WSJTX_BUNDLE_NAME}")
 endif ()
 
+# CE3TSK: main.cpp installs the shared memory launch daemon when the macOS limits are too small.
+# Its text is compiled in from Darwin/com.jtdx.sysctl.plist (jtdx_sysctl_plist.h) - not read from
+# the bundle at run time, where anything running as the user could change what then runs as root.
+if (APPLE)
+  file (READ "${CMAKE_CURRENT_SOURCE_DIR}/Darwin/com.jtdx.sysctl.plist" JTDX_SYSCTL_PLIST)
+  set_property (DIRECTORY APPEND PROPERTY CMAKE_CONFIGURE_DEPENDS Darwin/com.jtdx.sysctl.plist)
+  configure_file (Darwin/jtdx_sysctl_plist.h.in "${CMAKE_CURRENT_BINARY_DIR}/jtdx_sysctl_plist.h" @ONLY)
+endif ()
+
 target_include_directories (jtdx PRIVATE ${FFTW3_INCLUDE_DIRS})
 if (WIN32)
   target_link_libraries (jtdx winhttp)   # CE3TSK: WinHttpFetch, FileDownload's Windows transport
@@ -1855,11 +1864,12 @@ set (CPACK_PROJECT_CONFIG_FILE "${PROJECT_BINARY_DIR}/CMakeCPackOptions.cmake")
 
 include (CPack)
 
-# CE3TSK: re-sign the Mac bundle ad hoc once everything is in it (see Darwin/codesign). This has
-# to stay the last thing in the file: install rules run either top level first, then each
-# subdirectory in add_subdirectory order (policy CMP0082 OLD, today with a 3.7.2 minimum), or all
-# in declaration order (CMP0082 NEW) - last is after fixup_bundle and the manpages/doc installs
-# either way.
-if (APPLE AND NOT is_debug_build)
-  add_subdirectory (Darwin/codesign)
+# CE3TSK: finish the Mac bundle once everything is in it - minimum macOS into Info.plist and the
+# DMG's ReadMe, then an ad hoc re-signing (see Darwin/finish_bundle). This has to stay the last
+# thing in the file: install rules run either top level first, then each subdirectory in
+# add_subdirectory order (policy CMP0082 OLD, today with a 3.7.2 minimum), or all in declaration
+# order (CMP0082 NEW) - last is after fixup_bundle and the manpages/doc installs either way.
+# Debug builds too: Darwin/ReadMe.txt is installed for every build and needs filling in.
+if (APPLE)
+  add_subdirectory (Darwin/finish_bundle)
 endif ()

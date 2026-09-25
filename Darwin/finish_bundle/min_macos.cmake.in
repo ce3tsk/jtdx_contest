@@ -1,0 +1,220 @@
+# CE3TSK: works out the oldest macOS the installed bundle can run on and writes it where macOS
+# and users see it (see CMakeLists.txt next to this file). The bundle's own programs are built
+# for CMAKE_OSX_DEPLOYMENT_TARGET, but the libraries fixup_bundle copies in from MacPorts and
+# Homebrew were built for the macOS of the machine they were installed on - so the answer is the
+# highest minimum (LC_BUILD_VERSION minos, or LC_VERSION_MIN_MACOSX) of any binary in the bundle,
+# per architecture the main executable was built for.
+#  - Info.plist: LSMinimumSystemVersion (the lowest of the per-architecture minimums) and, for a
+#    bundle with several architectures, LSMinimumSystemVersionByArchitecture - an older macOS
+#    then refuses the app with a clear message instead of the app failing to load a library.
+#  - ReadMe.txt at the top of the DMG: {{DMG_FOR}} becomes e.g. "Apple Silicon Macs (M1 and
+#    later) with macOS 26 or later" - always filled in, with just the kind of Mac when the
+#    version can't be worked out, and a warning for a Debug build (nothing bundled, so it only
+#    runs on the Mac that built it).
+include ("@CMAKE_CURRENT_BINARY_DIR@/bundle_code.cmake")
+set (bundle "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/@WSJTX_BUNDLE_NAME@.app")
+set (readme "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/ReadMe.txt")
+set (main_exe "@WSJTX_BUNDLE_NAME@")
+set (debug_build @FINISH_DEBUG_BUILD@)
+bundle_tool ("@OTOOL_EXECUTABLE@" otool otool)
+bundle_tool ("@LIPO_EXECUTABLE@" lipo lipo)
+bundle_tool ("@PLUTIL_EXECUTABLE@" plutil plutil)
+bundle_tool ("/usr/libexec/PlistBuddy" PlistBuddy plistbuddy)
+
+# "arm64e" and "arm64" are the same Macs; LSMinimumSystemVersionByArchitecture uses "arm64"
+function (plist_arch arch var)
+  if (arch MATCHES "^arm64")
+    set (${var} arm64 PARENT_SCOPE)
+  else ()
+    set (${var} "${arch}" PARENT_SCOPE)
+  endif ()
+endfunction ()
+
+# "26.0" -> "macOS 26", "10.15" -> "macOS 10.15"
+function (macos_name version var)
+  if (version MATCHES "^([0-9]+)\\.0(\\.0)?$" AND CMAKE_MATCH_1 GREATER 10)
+    set (${var} "macOS ${CMAKE_MATCH_1}" PARENT_SCOPE)
+  else ()
+    set (${var} "macOS ${version}" PARENT_SCOPE)
+  endif ()
+endfunction ()
+
+set (archs "")
+set (keys "")        # kinds of Mac, as LSMinimumSystemVersionByArchitecture names them
+set (min_macos "")   # the lowest of their minimums (min_arm64, min_x86_64)
+if (EXISTS "${bundle}")
+  get_filename_component (bundle "${bundle}" REALPATH)
+  set (main "${bundle}/Contents/MacOS/${main_exe}")
+
+  # The architectures actually in the app - not the build machine's, which differ for a
+  # cross-build (e.g. Intel on Apple Silicon) or a universal build. lipo -info, not -archs:
+  # older Command Line Tools (macOS 10.15's) may not have -archs.
+  if (lipo)
+    execute_process (COMMAND "${lipo}" -info "${main}"
+      RESULT_VARIABLE rc OUTPUT_VARIABLE lipo_info ERROR_VARIABLE err OUTPUT_STRIP_TRAILING_WHITESPACE)
+    if (NOT rc AND lipo_info MATCHES "(is architecture|are): ([^:]*)$")
+      string (STRIP "${CMAKE_MATCH_2}" archs)
+      separate_arguments (archs)
+    else ()
+      message (WARNING "lipo -info ${main} failed (${rc}): ${err}${lipo_info} - assuming @finish_fallback_archs@")
+    endif ()
+  endif ()
+  if (NOT archs)
+    # CE3TSK 2026-09-25: the TARGET's architecture. PROJECT_ARCHITECTURE is CMAKE_SYSTEM_PROCESSOR,
+    # the build machine's, which is exactly what the comment above says not to use - it would
+    # label an Intel disk image "Apple Silicon" on a cross-build with no lipo to ask.
+    set (archs "@finish_fallback_archs@")
+  endif ()
+
+  if (otool)
+    bundle_code ("${bundle}" "${main_exe}" helpers plugins frameworks)
+    set (binaries "${main}" ${helpers} ${plugins})
+    foreach (framework IN LISTS frameworks)
+      framework_binary ("${framework}" binary)
+      list (APPEND binaries "${binary}")
+    endforeach ()
+    foreach (arch IN LISTS archs)
+      set (arch_min "")
+      foreach (binary IN LISTS binaries)
+        # otool exits 0 even for a file it can't read, or one without this architecture - only
+        # the absence of load commands in its output tells
+        execute_process (COMMAND "${otool}" -arch ${arch} -l "${binary}"
+          OUTPUT_VARIABLE load_cmds ERROR_VARIABLE err)
+        string (REGEX MATCHALL "minos [0-9.]+|LC_VERSION_MIN_MACOSX\n[^\n]*\n *version [0-9.]+" versions "${load_cmds}")
+        if (binary STREQUAL main AND NOT versions)
+          # the app's own executable must answer - otherwise the result would silently be wrong
+          message (FATAL_ERROR "otool found no minimum macOS in ${main} (${arch}):\n${err}${load_cmds}")
+        elseif (NOT load_cmds MATCHES "Load command")
+          # either not a binary at all, or a binary without this architecture - which would make
+          # the app fail on those Macs ("incompatible architecture"), so that one stops the install
+          set (other_archs "")
+          if (lipo)
+            execute_process (COMMAND "${lipo}" -info "${binary}"
+              RESULT_VARIABLE rc OUTPUT_VARIABLE other_info ERROR_QUIET OUTPUT_STRIP_TRAILING_WHITESPACE)
+            if (NOT rc AND other_info MATCHES "(is architecture|are): ([^:]*)$")
+              string (STRIP "${CMAKE_MATCH_2}" other_archs)
+            endif ()
+          endif ()
+          if (other_archs)
+            string (REPLACE " " ";" other_archs_list "${other_archs}")
+            list (FIND other_archs_list "${arch}" at)
+            if (at GREATER -1)
+              # the code is there - otool itself failed, and this binary's minimum would be missing
+              message (FATAL_ERROR "otool (${otool}) could not read ${binary}, although it has ${arch} code - check that this otool is current, e.g. the Command Line Tools' /usr/bin/otool")
+            endif ()
+            message (FATAL_ERROR "${binary} has no ${arch} code (only ${other_archs}), but the app is built for ${arch}: it would not load on those Macs")
+          endif ()
+          message (WARNING "${binary} is not a binary otool can read (${arch}) - its minimum macOS is not counted")
+        endif ()
+        foreach (version IN LISTS versions)
+          string (REGEX REPLACE "^.* ([0-9.]+)$" "\\1" version "${version}")
+          if (NOT arch_min OR version VERSION_GREATER arch_min)
+            set (arch_min "${version}")
+          endif ()
+        endforeach ()
+      endforeach ()
+      # per kind of Mac: arm64 and arm64e both run on Apple Silicon, so the higher one counts
+      plist_arch (${arch} key)
+      if (NOT min_${key} OR arch_min VERSION_GREATER min_${key})
+        set (min_${key} "${arch_min}")
+      endif ()
+      list (APPEND keys ${key})
+    endforeach ()
+    list (REMOVE_DUPLICATES keys)
+    foreach (key IN LISTS keys)
+      if (NOT min_macos OR min_${key} VERSION_LESS min_macos)
+        set (min_macos "${min_${key}}")
+      endif ()
+    endforeach ()
+  else ()
+    message (WARNING "otool not found: the minimum macOS is not recorded in Info.plist or the ReadMe")
+  endif ()
+
+  if (min_macos)
+    set (info_plist "${bundle}/Contents/Info.plist")
+    if (plutil)
+      execute_process (COMMAND "${plutil}" -replace LSMinimumSystemVersion -string "${min_macos}" "${info_plist}"
+        RESULT_VARIABLE rc OUTPUT_VARIABLE out ERROR_VARIABLE out)
+      if (rc)
+        message (FATAL_ERROR "setting LSMinimumSystemVersion in ${info_plist} failed (${rc}):\n${out}")
+      endif ()
+    else ()
+      message (WARNING "plutil not found: LSMinimumSystemVersion not set")
+    endif ()
+    list (LENGTH keys n_keys)
+    if (n_keys GREATER 1)
+      if (plistbuddy)
+        set (commands -c "Delete :LSMinimumSystemVersionByArchitecture" -c "Add :LSMinimumSystemVersionByArchitecture dict")
+        foreach (key IN LISTS keys)
+          list (APPEND commands -c "Add :LSMinimumSystemVersionByArchitecture:${key} string ${min_${key}}")
+        endforeach ()
+        # the Delete fails when the key isn't there yet, which PlistBuddy reports and goes on
+        execute_process (COMMAND "${plistbuddy}" ${commands} "${info_plist}" OUTPUT_QUIET ERROR_QUIET)
+        execute_process (COMMAND "${plistbuddy}" -c "Print :LSMinimumSystemVersionByArchitecture" "${info_plist}"
+          RESULT_VARIABLE rc OUTPUT_QUIET ERROR_QUIET)
+        if (rc)
+          message (FATAL_ERROR "setting LSMinimumSystemVersionByArchitecture in ${info_plist} failed")
+        endif ()
+      else ()
+        message (WARNING "PlistBuddy not found: LSMinimumSystemVersionByArchitecture not set")
+      endif ()
+    endif ()
+    set (summary "")
+    foreach (key IN LISTS keys)
+      list (APPEND summary "${key} ${min_${key}}")
+    endforeach ()
+    message (STATUS "Minimum macOS for ${bundle}: ${min_macos} (${summary})")
+  endif ()
+endif ()
+
+if (EXISTS "${readme}")
+  if (NOT archs)
+    set (archs "@PROJECT_ARCHITECTURE@")
+  endif ()
+  # one phrase per kind of Mac, each with its own minimum when known
+  set (silicon_min "")
+  set (intel_min "")
+  set (silicon 0)
+  set (intel 0)
+  foreach (arch IN LISTS archs)
+    if (arch MATCHES "^arm64")
+      set (silicon 1)
+    elseif (arch STREQUAL "x86_64")
+      set (intel 1)
+    endif ()
+  endforeach ()
+  set (silicon_min "${min_arm64}")
+  set (intel_min "${min_x86_64}")
+  set (silicon_text "Apple Silicon Macs (M1 and later)")
+  set (intel_text "Intel Macs")
+  if (NOT debug_build)
+    if (silicon_min)
+      macos_name ("${silicon_min}" name)
+      set (silicon_text "${silicon_text} with ${name} or later")
+    endif ()
+    if (intel_min)
+      macos_name ("${intel_min}" name)
+      set (intel_text "${intel_text} with ${name} or later")
+    endif ()
+  endif ()
+  if (silicon AND intel)
+    if (NOT debug_build AND silicon_min AND silicon_min STREQUAL intel_min)
+      macos_name ("${silicon_min}" name)
+      set (dmg_for "Apple Silicon and Intel Macs with ${name} or later")
+    else ()
+      set (dmg_for "${silicon_text}, and ${intel_text}")
+    endif ()
+  elseif (silicon)
+    set (dmg_for "${silicon_text}")
+  elseif (intel)
+    set (dmg_for "${intel_text}")
+  else ()
+    set (dmg_for "Macs")
+  endif ()
+  if (debug_build)
+    set (dmg_for "${dmg_for} - but it is a Debug test build, which only runs on a Mac with the same MacPorts and Homebrew libraries as the Mac that built it")
+  endif ()
+  file (READ "${readme}" text)
+  string (REPLACE "{{DMG_FOR}}" "${dmg_for}" text "${text}")
+  file (WRITE "${readme}" "${text}")
+endif ()

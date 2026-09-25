@@ -2,9 +2,10 @@
 # CMakeLists.txt next to this file). Signs inside out - the helper programs, dylibs, plugins and
 # frameworks first, then the bundle itself, which signs its main executable - instead of relying
 # on codesign --deep, which Apple deprecates for signing.
+include ("@CMAKE_CURRENT_BINARY_DIR@/bundle_code.cmake")
 set (bundle "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/@WSJTX_BUNDLE_NAME@.app")
 set (main_exe "@WSJTX_BUNDLE_NAME@")
-set (codesign "@CODESIGN_EXECUTABLE@")
+bundle_tool ("@CODESIGN_EXECUTABLE@" codesign codesign)
 
 if (NOT EXISTS "${bundle}")
   message (WARNING "${bundle} is not installed, nothing to sign")
@@ -24,10 +25,7 @@ function (sign_item item)
   endif ()
 endfunction ()
 
-file (GLOB helpers LIST_DIRECTORIES false "${bundle}/Contents/MacOS/*")
-list (REMOVE_ITEM helpers "${bundle}/Contents/MacOS/${main_exe}")
-file (GLOB_RECURSE plugins "${bundle}/Contents/PlugIns/*.dylib")
-file (GLOB frameworks "${bundle}/Contents/Frameworks/*.framework")
+bundle_code ("${bundle}" "${main_exe}" helpers plugins frameworks)
 foreach (item IN LISTS helpers plugins frameworks)
   sign_item ("${item}")
 endforeach ()

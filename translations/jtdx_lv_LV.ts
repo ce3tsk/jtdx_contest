@@ -6653,7 +6653,7 @@ Lūdzu, pārbaudiet, vai norādīts pareizs direktorijas nosaukums.</translation
     <message>
         <location filename="../soundin.cpp" line="145"/>
         <source>Error</source>
-        <translation>Kūda</translation>
+        <translation>Kļūda</translation>
     </message>
     <message>
         <location filename="../soundin.cpp" line="149"/>
@@ -6716,7 +6716,7 @@ Lūdzu, pārbaudiet, vai norādīts pareizs direktorijas nosaukums.</translation
     <message>
         <location filename="../soundout.cpp" line="115"/>
         <source>Error</source>
-        <translation>Kūda</translation>
+        <translation>Kļūda</translation>
     </message>
     <message>
         <location filename="../soundout.cpp" line="115"/>
@@ -9939,6 +9939,42 @@ izmaiņas</translation>
         <location filename="../main.cpp" line="154"/>
         <source>Writable files in test location.  Use with caution, for testing only.</source>
         <translation>Rakstāmi faili testa vietā. Lietojiet piesardzīgi, tikai testēšanai.</translation>
+    </message>
+    <message>
+        <source>Shared memory</source>
+        <translation>Koplietojamā atmiņa</translation>
+    </message>
+    <message>
+        <source>JTDX_contest needs %1 MB of shared memory, more than macOS allows by default.</source>
+        <translation>JTDX_contest nepieciešami %1 MB koplietojamās atmiņas — vairāk, nekā macOS pēc noklusējuma atļauj.</translation>
+    </message>
+    <message>
+        <source>It can raise the limit now, and at every start of this Mac, by installing a small system setting (/Library/LaunchDaemons/com.jtdx.sysctl.plist). macOS will ask for an administrator password.
+
+Install the setting?</source>
+        <translation>Ierobežojumu var palielināt tagad un ikreiz, kad šis Mac tiek startēts, uzstādot nelielu sistēmas iestatījumu (/Library/LaunchDaemons/com.jtdx.sysctl.plist). macOS pieprasīs administratora paroli.
+
+Uzstādīt iestatījumu?</translation>
+    </message>
+    <message>
+        <source>JTDX_contest wants to install its shared memory setting.</source>
+        <translation>JTDX_contest vēlas uzstādīt savu koplietojamās atmiņas iestatījumu.</translation>
+    </message>
+    <message>
+        <source>Installing the shared memory setting failed.</source>
+        <translation>Koplietojamās atmiņas iestatījuma uzstādīšana neizdevās.</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>Kļūda</translation>
+    </message>
+    <message>
+        <source>Unable to create shared memory segment.</source>
+        <translation>Nevar izveidot koplietojamās atmiņas segmentu.</translation>
+    </message>
+    <message>
+        <source>macOS allows too little shared memory. To raise the limit permanently, copy com.jtdx.sysctl.plist from the JTDX_contest installer (DMG) to /Library/LaunchDaemons and restart this Mac - see ReadMe.txt in the DMG.</source>
+        <translation>macOS atļauj pārāk maz koplietojamās atmiņas. Lai ierobežojumu palielinātu pastāvīgi, nokopējiet com.jtdx.sysctl.plist no JTDX_contest instalētāja (DMG) uz /Library/LaunchDaemons un pārstartējiet šo Mac - skatiet ReadMe.txt DMG failā.</translation>
     </message>
 </context>
 <context>

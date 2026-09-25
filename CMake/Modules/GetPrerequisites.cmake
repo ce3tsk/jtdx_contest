@@ -332,9 +332,48 @@ function(gp_item_default_embedded_path item default_embedded_path_var)
 endfunction()
 
 
+# CE3TSK: the LC_RPATHs of a Mach-O file as written in it (@loader_path etc. unexpanded), for
+# gp_resolve_item below and BundleUtilities' get_item_rpaths. Cached per file: get_prerequisites
+# asks about the same libraries over and over, and each answer is an otool run. BundleUtilities
+# calls gp_clear_rpath_cache whenever it copies or rewrites a file, so a changed file is re-read.
+function(gp_item_rpaths item rpaths_var)
+  get_filename_component(key "${item}" REALPATH)
+  get_property(is_cached GLOBAL PROPERTY "gp_rpaths:${key}" SET)
+  if(is_cached)
+    get_property(item_rpaths GLOBAL PROPERTY "gp_rpaths:${key}")
+  else()
+    set(item_rpaths "")
+    find_program(gp_otool_cmd "otool")
+    mark_as_advanced(gp_otool_cmd)
+    if(gp_otool_cmd AND EXISTS "${item}")
+      execute_process(COMMAND "${gp_otool_cmd}" -l "${item}" OUTPUT_VARIABLE load_cmds_ov ERROR_QUIET)
+      string(REGEX REPLACE "[^\n]+cmd LC_RPATH\n[^\n]+\n[^\n]+path ([^\n]+) \\(offset[^\n]+\n" "rpath \\1\n" load_cmds_ov "${load_cmds_ov}")
+      string(REGEX MATCHALL "rpath [^\n]+" load_cmds_ov "${load_cmds_ov}")
+      foreach(rpath_line ${load_cmds_ov})
+        string(REGEX REPLACE "^rpath " "" rpath_line "${rpath_line}")
+        list(APPEND item_rpaths "${rpath_line}")
+      endforeach()
+    endif()
+    set_property(GLOBAL PROPERTY "gp_rpaths:${key}" "${item_rpaths}")
+    set_property(GLOBAL APPEND PROPERTY gp_rpaths_cached_keys "${key}")
+  endif()
+  set(${rpaths_var} "${item_rpaths}" PARENT_SCOPE)
+endfunction()
+
+function(gp_clear_rpath_cache)
+  get_property(keys GLOBAL PROPERTY gp_rpaths_cached_keys)
+  foreach(key ${keys})
+    set_property(GLOBAL PROPERTY "gp_rpaths:${key}")
+  endforeach()
+  set_property(GLOBAL PROPERTY gp_rpaths_cached_keys "")
+endfunction()
+
+
+# CE3TSK: an optional 7th argument names a variable that is set to 1 when the item was found only
+# through the LC_RPATHs of the binary that loads it (see the @rpath branch), else 0.
 function(gp_resolve_item context item exepath dirs resolved_item_var)
   set(resolved 0)
-  set(gp_resolved_via_loader_rpath 0 PARENT_SCOPE)   # CE3TSK: see the @rpath branch below
+  set(loader_rpath_item "")
   set(resolved_item "${item}")
   if(ARGC GREATER 5)
     set(rpaths "${ARGV5}")
@@ -425,27 +464,20 @@ function(gp_resolve_item context item exepath dirs resolved_item_var)
       # unexpanded, so e.g. a Homebrew libgfortran's @rpath/libquadmath.0.dylib (found through
       # its own "@loader_path" rpath) was never resolved
       if(NOT resolved AND EXISTS "${context}")
-        find_program(gp_otool_cmd "otool")
-        mark_as_advanced(gp_otool_cmd)
-        if(gp_otool_cmd)
-          execute_process(COMMAND "${gp_otool_cmd}" -l "${context}" OUTPUT_VARIABLE load_cmds_ov)
-          string(REGEX REPLACE "[^\n]+cmd LC_RPATH\n[^\n]+\n[^\n]+path ([^\n]+) \\(offset[^\n]+\n" "rpath \\1\n" load_cmds_ov "${load_cmds_ov}")
-          string(REGEX MATCHALL "rpath [^\n]+" context_rpaths "${load_cmds_ov}")
-          get_filename_component(contextpath "${context}" PATH)
-          foreach(context_rpath ${context_rpaths})
-            string(REGEX REPLACE "^rpath " "" context_rpath "${context_rpath}")
-            string(REPLACE "@loader_path" "${contextpath}" context_rpath "${context_rpath}")
-            string(REPLACE "@executable_path" "${exepath}" context_rpath "${context_rpath}")
-            get_filename_component(ri "${context_rpath}/${norpath_item}" ABSOLUTE)
-            if(EXISTS "${ri}")
-              set(resolved 1)
-              set(resolved_item "${ri}")
-              set(gp_resolved_via_loader_rpath 1 PARENT_SCOPE)
-              break()
-            endif()
-          endforeach()
-          set(ri "ri-NOTFOUND")
-        endif()
+        gp_item_rpaths("${context}" context_rpaths)
+        get_filename_component(contextpath "${context}" PATH)
+        foreach(context_rpath ${context_rpaths})
+          string(REPLACE "@loader_path" "${contextpath}" context_rpath "${context_rpath}")
+          string(REPLACE "@executable_path" "${exepath}" context_rpath "${context_rpath}")
+          get_filename_component(ri "${context_rpath}/${norpath_item}" ABSOLUTE)
+          if(EXISTS "${ri}")
+            set(resolved 1)
+            set(resolved_item "${ri}")
+            set(loader_rpath_item "${ri}")
+            break()
+          endif()
+        endforeach()
+        set(ri "ri-NOTFOUND")
       endif()
 
     endif()
@@ -532,6 +564,14 @@ warning: cannot resolve item '${item}'
   endif()
 
   set(${resolved_item_var} "${resolved_item}" PARENT_SCOPE)
+  if(ARGC GREATER 6)
+    # still 1 only if the override hook above did not replace the answer
+    if(loader_rpath_item AND resolved_item STREQUAL loader_rpath_item)
+      set(${ARGV6} 1 PARENT_SCOPE)
+    else()
+      set(${ARGV6} 0 PARENT_SCOPE)
+    endif()
+  endif()
 endfunction()
 
 
@@ -941,8 +981,8 @@ function(get_prerequisites target prerequisites_var exclude_system recurse exepa
     # "@loader_path" rpath). Items resolvable the old way keep their @rpath name, which
     # fixup_bundle needs to rewrite the references to them.
     if(add_item AND item MATCHES "^@rpath/")
-      gp_resolve_item("${target}" "${item}" "${exepath}" "${dirs}" loader_resolved_item "${rpaths}")
-      if(gp_resolved_via_loader_rpath)
+      gp_resolve_item("${target}" "${item}" "${exepath}" "${dirs}" loader_resolved_item "${rpaths}" via_loader_rpath)
+      if(via_loader_rpath)
         set(item "${loader_resolved_item}")
       endif()
     endif()

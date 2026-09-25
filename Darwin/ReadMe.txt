@@ -8,15 +8,31 @@ JTDX_contest installs as JTDX_contest.app, so it does not replace a stock JTDX
 (jtdx.app) - both can stay in Applications.  If you have a previous version of
 JTDX_contest, you can rename it to JTDX_contest_previous before proceeding.
 
-This build runs on Apple Silicon Macs (M1 and later) with macOS 26 or later.
-It is not signed with an Apple Developer ID, so the first time you open it macOS
-will refuse: right-click (or Control-click) JTDX_contest in Applications, choose
-Open, and confirm.  After that it opens normally.
+This installer is for {{DMG_FOR}}.
+JTDX_contest is built separately for Apple Silicon and for Intel Macs; the
+installer's file name ends in -arm64.dmg (Apple Silicon) or -x86_64.dmg (Intel).
+
+The app is not signed with an Apple Developer ID, so the first time you open it
+macOS will refuse.  To allow it once:
+
+  macOS 15 Sequoia and later:  double-click JTDX_contest in Applications and close
+      the warning.  Then open System Settings > Privacy & Security, scroll down
+      to the message about JTDX_contest, click "Open Anyway" and confirm.
+  macOS 14 Sonoma and earlier:  right-click (or Control-click) JTDX_contest in
+      Applications, choose Open, and confirm.
+
+After that it opens normally.
 
 BEGIN:
 
-There are some system matters you must deal with first.  Open a Terminal window
-by going to Applications->Utilities and clicking on Terminal.
+JTDX_contest needs more shared memory than macOS allows by default.  Whenever it starts
+and finds the limit too small, JTDX_contest offers to raise it for you: click Yes and
+enter your password when macOS asks.  This installs a small system setting that stays in
+effect, also after restarts and JTDX_contest updates.  You can skip the rest of this
+section then.
+
+To do it by hand instead, open a Terminal window by going to Applications->Utilities
+and clicking on Terminal.
 
 Along with this ReadMe file there is a file:  com.jtdx.sysctl.plist  which must be copied to a
 system area by typing this line in the Terminal window and then pressing the Return key.
@@ -31,7 +47,7 @@ change has been made by typing:
 
       sysctl -a | grep sysv.shm
 
-If shmmax is not shown as 14680064 then write to jtdx_contest@ce3tsk.com, since
+If shmmax is less than 14680064, write to jtdx_contest@ce3tsk.com, since
 JTDX_contest will fail to load with an error message: "Unable to create shared
 memory segment".
 
@@ -102,18 +118,17 @@ has to be increased.  The com.jtdx.sysctl.plist file is used for this purpose.  
 use a Mac editor to examine the file.  (Do not use another editor - the file 
 would probably be corrupted.)
 
-It is possible to run multiple instances of JTDX_contest simultaneously.  If you wish to run more
-instances simultaneously, the shmall parameter in the com.jtdx.sysctl.plist file needs to be
-modified as follows.
+It is possible to run multiple instances of JTDX_contest simultaneously.  The setting
+allows 512 MB of shared memory in total, enough for about 39 instances at 13 MB (13692348)
+each.  If you ever need more, change the 536870912 (512 MB) in the com.jtdx.sysctl.plist
+file to (n * 13692348), where 'n' is the number of instances required to run
+simultaneously.
+Remember to reboot your Mac afterwards.  The setting only ever raises the limits, so it
+does not reduce values that another program (WSJT-X, for example) has set higher.
 
-The shmall parameter determines the amount of shared memory which is allocated in 4096 byte pages
-with 14MB (14680064) required for each instance.   The shmall parameter is calculated as: 
-(n * 14680064)/4096  where 'n' is the number of instances required to run simultaneously.
-Remember to reboot your Mac afterwards.
-
-Note that the shmmax parameter remains unchanged.  This is the maximum amount of shared memory that
-any one instance is allowed to request from the total shared memory allocation and should not
-be changed.
+The shmmax parameter is raised to 104857600 (100 MB) by the same setting.  It is the largest
+single block any one instance may ask for, a ceiling that reserves nothing, and it does not
+need changing.
 
 If two instances of JTDX_contest are running, it is likely that you might need additional
 audio devices, from two rigs for example.  Visit Audio MIDI Setup and create an Aggregate Device

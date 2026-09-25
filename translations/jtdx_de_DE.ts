@@ -9938,6 +9938,42 @@ Zurücksetzen der Funkgeräteschnittstelle und Übernahme etwaiger
         <source>Writable files in test location.  Use with caution, for testing only.</source>
         <translation>Schreibbare Dateien am Testort. Mit Vorsicht verwenden, nur zum Testen.</translation>
     </message>
+    <message>
+        <source>Shared memory</source>
+        <translation>Gemeinsamer Speicher</translation>
+    </message>
+    <message>
+        <source>JTDX_contest needs %1 MB of shared memory, more than macOS allows by default.</source>
+        <translation>JTDX_contest braucht %1 MB gemeinsamen Speicher, mehr als macOS standardmäßig erlaubt.</translation>
+    </message>
+    <message>
+        <source>It can raise the limit now, and at every start of this Mac, by installing a small system setting (/Library/LaunchDaemons/com.jtdx.sysctl.plist). macOS will ask for an administrator password.
+
+Install the setting?</source>
+        <translation>Das Limit kann jetzt und bei jedem Start dieses Macs angehoben werden, indem eine kleine Systemeinstellung installiert wird (/Library/LaunchDaemons/com.jtdx.sysctl.plist). macOS fragt dabei nach einem Administratorpasswort.
+
+Einstellung installieren?</translation>
+    </message>
+    <message>
+        <source>JTDX_contest wants to install its shared memory setting.</source>
+        <translation>JTDX_contest möchte seine Einstellung für gemeinsamen Speicher installieren.</translation>
+    </message>
+    <message>
+        <source>Installing the shared memory setting failed.</source>
+        <translation>Das Installieren der Einstellung für gemeinsamen Speicher ist fehlgeschlagen.</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>Fehler</translation>
+    </message>
+    <message>
+        <source>Unable to create shared memory segment.</source>
+        <translation>Gemeinsamer Speicherbereich kann nicht angelegt werden.</translation>
+    </message>
+    <message>
+        <source>macOS allows too little shared memory. To raise the limit permanently, copy com.jtdx.sysctl.plist from the JTDX_contest installer (DMG) to /Library/LaunchDaemons and restart this Mac - see ReadMe.txt in the DMG.</source>
+        <translation>macOS erlaubt zu wenig gemeinsamen Speicher. Um das Limit dauerhaft anzuheben, com.jtdx.sysctl.plist aus dem JTDX_contest-Installationsprogramm (DMG) nach /Library/LaunchDaemons kopieren und diesen Mac neu starten - siehe ReadMe.txt im DMG.</translation>
+    </message>
 </context>
 <context>
     <name>wf_palette_design_dialog</name>

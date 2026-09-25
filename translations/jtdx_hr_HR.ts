@@ -9943,6 +9943,42 @@ promjena zvučne kartice</translation>
         <source>Writable files in test location.  Use with caution, for testing only.</source>
         <translation>Datoteke koje se mogu pisati na testnoj lokaciji. Koristite s oprezom samo za testiranje.</translation>
     </message>
+    <message>
+        <source>Shared memory</source>
+        <translation>Dijeljena memorija</translation>
+    </message>
+    <message>
+        <source>JTDX_contest needs %1 MB of shared memory, more than macOS allows by default.</source>
+        <translation>JTDX_contest treba %1 MB dijeljene memorije, više nego što macOS dopušta prema zadanim postavkama.</translation>
+    </message>
+    <message>
+        <source>It can raise the limit now, and at every start of this Mac, by installing a small system setting (/Library/LaunchDaemons/com.jtdx.sysctl.plist). macOS will ask for an administrator password.
+
+Install the setting?</source>
+        <translation>Ograničenje se može podići sada, i pri svakom pokretanju ovog Maca, instaliranjem male sistemske postavke (/Library/LaunchDaemons/com.jtdx.sysctl.plist). macOS će zatražiti administratorsku lozinku.
+
+Instalirati postavku?</translation>
+    </message>
+    <message>
+        <source>JTDX_contest wants to install its shared memory setting.</source>
+        <translation>JTDX_contest želi instalirati svoju postavku dijeljene memorije.</translation>
+    </message>
+    <message>
+        <source>Installing the shared memory setting failed.</source>
+        <translation>Instaliranje postavke dijeljene memorije nije uspjelo.</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>Greška</translation>
+    </message>
+    <message>
+        <source>Unable to create shared memory segment.</source>
+        <translation>Nije moguće stvoriti segment dijeljene memorije.</translation>
+    </message>
+    <message>
+        <source>macOS allows too little shared memory. To raise the limit permanently, copy com.jtdx.sysctl.plist from the JTDX_contest installer (DMG) to /Library/LaunchDaemons and restart this Mac - see ReadMe.txt in the DMG.</source>
+        <translation>macOS dopušta premalo dijeljene memorije. Za trajno podizanje ograničenja kopirajte com.jtdx.sysctl.plist iz JTDX_contest instalacijskog programa (DMG) u /Library/LaunchDaemons i ponovno pokrenite ovaj Mac - vidi ReadMe.txt u DMG-u.</translation>
+    </message>
 </context>
 <context>
     <name>wf_palette_design_dialog</name>

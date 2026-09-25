@@ -9937,6 +9937,42 @@ soundcard changes</source>
         <source>Writable files in test location.  Use with caution, for testing only.</source>
         <translation>测试位置中的可写文件. 小心使用, 仅用于测试.</translation>
     </message>
+    <message>
+        <source>Shared memory</source>
+        <translation>共享内存</translation>
+    </message>
+    <message>
+        <source>JTDX_contest needs %1 MB of shared memory, more than macOS allows by default.</source>
+        <translation>JTDX_contest 需要 %1 MB 共享内存，超过 macOS 的默认限制。</translation>
+    </message>
+    <message>
+        <source>It can raise the limit now, and at every start of this Mac, by installing a small system setting (/Library/LaunchDaemons/com.jtdx.sysctl.plist). macOS will ask for an administrator password.
+
+Install the setting?</source>
+        <translation>安装一个小的系统设置（/Library/LaunchDaemons/com.jtdx.sysctl.plist）即可立即提高该限制，并在每次启动这台 Mac 时生效。macOS 会要求输入管理员密码。
+
+要安装该设置吗？</translation>
+    </message>
+    <message>
+        <source>JTDX_contest wants to install its shared memory setting.</source>
+        <translation>JTDX_contest 想要安装它的共享内存设置。</translation>
+    </message>
+    <message>
+        <source>Installing the shared memory setting failed.</source>
+        <translation>安装共享内存设置失败。</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>错误</translation>
+    </message>
+    <message>
+        <source>Unable to create shared memory segment.</source>
+        <translation>无法创建共享内存段。</translation>
+    </message>
+    <message>
+        <source>macOS allows too little shared memory. To raise the limit permanently, copy com.jtdx.sysctl.plist from the JTDX_contest installer (DMG) to /Library/LaunchDaemons and restart this Mac - see ReadMe.txt in the DMG.</source>
+        <translation>macOS 允许的共享内存太少。要永久提高该限制，请将 JTDX_contest 安装程序（DMG）中的 com.jtdx.sysctl.plist 复制到 /Library/LaunchDaemons，然后重新启动这台 Mac——参见 DMG 中的 ReadMe.txt。</translation>
+    </message>
 </context>
 <context>
     <name>wf_palette_design_dialog</name>

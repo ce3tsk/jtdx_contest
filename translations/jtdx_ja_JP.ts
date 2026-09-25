@@ -9804,6 +9804,42 @@ soundcard changes</source>
         <source>Writable files in test location.  Use with caution, for testing only.</source>
         <translation>テスト位置の書き込み可能なファイル。 テスト用です。注意して使いなさい。</translation>
     </message>
+    <message>
+        <source>Shared memory</source>
+        <translation>共有メモリ</translation>
+    </message>
+    <message>
+        <source>JTDX_contest needs %1 MB of shared memory, more than macOS allows by default.</source>
+        <translation>JTDX_contest には %1 MB の共有メモリが必要ですが、macOS の初期設定ではこれより小さい値しか許可されていません。</translation>
+    </message>
+    <message>
+        <source>It can raise the limit now, and at every start of this Mac, by installing a small system setting (/Library/LaunchDaemons/com.jtdx.sysctl.plist). macOS will ask for an administrator password.
+
+Install the setting?</source>
+        <translation>小さなシステム設定（/Library/LaunchDaemons/com.jtdx.sysctl.plist）をインストールすると、この上限を今すぐ、そしてこの Mac を起動するたびに引き上げられます。macOS が管理者パスワードを求めます。
+
+設定をインストールしますか？</translation>
+    </message>
+    <message>
+        <source>JTDX_contest wants to install its shared memory setting.</source>
+        <translation>JTDX_contest が共有メモリの設定をインストールしようとしています。</translation>
+    </message>
+    <message>
+        <source>Installing the shared memory setting failed.</source>
+        <translation>共有メモリ設定のインストールに失敗しました。</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>エラー</translation>
+    </message>
+    <message>
+        <source>Unable to create shared memory segment.</source>
+        <translation>共有メモリセグメントを作成できません。</translation>
+    </message>
+    <message>
+        <source>macOS allows too little shared memory. To raise the limit permanently, copy com.jtdx.sysctl.plist from the JTDX_contest installer (DMG) to /Library/LaunchDaemons and restart this Mac - see ReadMe.txt in the DMG.</source>
+        <translation>macOS が許可する共有メモリが小さすぎます。上限を恒久的に引き上げるには、JTDX_contest のインストーラ（DMG）にある com.jtdx.sysctl.plist を /Library/LaunchDaemons にコピーし、この Mac を再起動してください。詳しくは DMG 内の ReadMe.txt をご覧ください。</translation>
+    </message>
 </context>
 <context>
     <name>wf_palette_design_dialog</name>

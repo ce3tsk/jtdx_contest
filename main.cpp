@@ -32,6 +32,11 @@
 #include <QRandomGenerator>
 #endif
 
+#if defined (Q_OS_MAC)
+#include <QProcess>
+#include "mac_shared_memory.hpp"
+#endif
+
 #include "JTDXMessageBox.hpp"
 #include "revision_utils.hpp"
 #include "MetaDataRegistry.hpp"
@@ -133,6 +138,49 @@ namespace
         }
     }
   };
+
+#if defined (Q_OS_MAC)
+  /* CE3TSK: macOS allows 4 MB of System V shared memory per segment, JTDX needs sizeof (dec_data),
+     about 13 MB. The launch daemon com.jtdx.sysctl.plist raises the limits at every boot, but it
+     used to be in effect only for users who copied it into /Library/LaunchDaemons by hand, with
+     sudo, from the DMG - everybody else got "Unable to create shared memory segment" and nothing
+     more. Now, when the limits are what is too small, JTDX offers to install it: macOS asks for an
+     administrator password, a script compiled into this program (mac_shared_memory.hpp) writes
+     the daemon and raises the limits at once, and JTDX goes on starting. True when that worked. */
+  bool install_mac_shared_memory_setting (quint64 bytes)
+  {
+    auto const megabytes = QString::number ((bytes + 1048575u) / 1048576u);
+    if (JTDXMessageBox::Yes != JTDXMessageBox::query_message (nullptr
+            , QCoreApplication::translate ("main", "Shared memory")
+            , QCoreApplication::translate ("main", "JTDX_contest needs %1 MB of shared memory, more than macOS allows by default.").arg (megabytes)
+            , QCoreApplication::translate ("main", "It can raise the limit now, and at every start of this Mac, by installing a small "
+                                           "system setting (/Library/LaunchDaemons/com.jtdx.sysctl.plist). macOS will ask for an "
+                                           "administrator password.\n\nInstall the setting?")
+            , QString {}, JTDXMessageBox::Yes | JTDXMessageBox::No, JTDXMessageBox::Yes))
+      {
+        return false;
+      }
+    // The script and the password dialog's text go to osascript as arguments, the script quoted by
+    // AppleScript, so nothing in them needs escaping here. Without "with prompt" the dialog would
+    // say "osascript wants to make changes" - no mention of JTDX_contest, which looks suspicious.
+    QProcess osascript;
+    osascript.start ("/usr/bin/osascript", {
+        "-e", "on run argv"
+      , "-e", "do shell script \"/bin/sh -c \" & quoted form of (item 1 of argv) with prompt (item 2 of argv) with administrator privileges"
+      , "-e", "end run"
+      , QString::fromStdString (mac_shared_memory::install_script ())
+      , QCoreApplication::translate ("main", "JTDX_contest wants to install its shared memory setting.")});
+    if (!osascript.waitForFinished (-1)) return false;   // no timeout: the user is typing a password
+    if (osascript.exitStatus () == QProcess::NormalExit && osascript.exitCode () == 0) return true;
+    auto const error = QString::fromLocal8Bit (osascript.readAllStandardError ()).trimmed ();
+    if (!error.contains ("-128"))   // -128: the user cancelled the password prompt
+      {
+        JTDXMessageBox::warning_message (nullptr, QCoreApplication::translate ("main", "Shared memory")
+            , QCoreApplication::translate ("main", "Installing the shared memory setting failed."), error);
+      }
+    return false;
+  }
+#endif
 }
 
 int main(int argc, char *argv[])
@@ -396,9 +444,41 @@ int main(int argc, char *argv[])
 
         mem_jtdxjt9.setKey(a.applicationName ());
 
-        if(!mem_jtdxjt9.attach()) {
-          if (!mem_jtdxjt9.create(sizeof(struct dec_data))) {
-            JTDXMessageBox::critical_message (nullptr, "Error", "Unable to create shared memory segment.");
+        // CE3TSK: a segment left over by a crashed run - of stock JTDX, whose key "JTDX" is the same,
+        // or of an older JTDX_contest - can be smaller than this program's dec_data (this fork added
+        // nsftol), and the memset below would write past its end. Let it go instead: Qt removes it
+        // when nobody else is attached any more, and a fresh one is created below. Should another
+        // process still hold it, that create fails and says so.
+        if (mem_jtdxjt9.attach () && mem_jtdxjt9.size () < static_cast<int> (sizeof (struct dec_data))) {
+          mem_jtdxjt9.detach ();
+        }
+        if (!mem_jtdxjt9.isAttached ()) {
+          bool created = mem_jtdxjt9.create(sizeof(struct dec_data));
+#if defined (Q_OS_MAC)
+          // CE3TSK: offer to raise the macOS limits, see install_mac_shared_memory_setting
+          // ... and only when the limits are what stopped it: a segment another process still
+          // holds fails with AlreadyExists, which no system setting can help (review 2026-09-25)
+          if (!created && mem_jtdxjt9.error () != QSharedMemory::AlreadyExists
+              && mac_shared_memory::limits_too_small (sizeof (struct dec_data))
+              && install_mac_shared_memory_setting (sizeof (struct dec_data))) {
+            created = mem_jtdxjt9.create(sizeof(struct dec_data));
+          }
+#endif
+          if (!created) {
+#if defined (Q_OS_MAC)
+            JTDXMessageBox::critical_message (nullptr, QCoreApplication::translate ("main", "Error")
+                , QCoreApplication::translate ("main", "Unable to create shared memory segment.")
+                , mem_jtdxjt9.error () != QSharedMemory::AlreadyExists
+                  && mac_shared_memory::limits_too_small (sizeof (struct dec_data))
+                  ? QCoreApplication::translate ("main", "macOS allows too little shared memory. To raise the limit permanently, copy "
+                                                 "com.jtdx.sysctl.plist from the JTDX_contest installer (DMG) to "
+                                                 "/Library/LaunchDaemons and restart this Mac - see ReadMe.txt in the DMG.")
+                  : QString {}
+                , mem_jtdxjt9.errorString ());
+#else
+            JTDXMessageBox::critical_message (nullptr, QCoreApplication::translate ("main", "Error")
+                , QCoreApplication::translate ("main", "Unable to create shared memory segment."));
+#endif
             exit(1);
           }
         }

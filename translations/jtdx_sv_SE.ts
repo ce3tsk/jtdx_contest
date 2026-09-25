@@ -9945,6 +9945,42 @@ ljudkort ändras</translation>
         <source>Writable files in test location.  Use with caution, for testing only.</source>
         <translation>Skrivbara filer på en testplats. Använd med försiktighet, endast för test.</translation>
     </message>
+    <message>
+        <source>Shared memory</source>
+        <translation>Delat minne</translation>
+    </message>
+    <message>
+        <source>JTDX_contest needs %1 MB of shared memory, more than macOS allows by default.</source>
+        <translation>JTDX_contest behöver %1 MB delat minne, mer än macOS tillåter som standard.</translation>
+    </message>
+    <message>
+        <source>It can raise the limit now, and at every start of this Mac, by installing a small system setting (/Library/LaunchDaemons/com.jtdx.sysctl.plist). macOS will ask for an administrator password.
+
+Install the setting?</source>
+        <translation>Gränsen kan höjas nu, och vid varje start av den här Macen, genom att installera en liten systeminställning (/Library/LaunchDaemons/com.jtdx.sysctl.plist). macOS kommer att be om ett administratörslösenord.
+
+Installera inställningen?</translation>
+    </message>
+    <message>
+        <source>JTDX_contest wants to install its shared memory setting.</source>
+        <translation>JTDX_contest vill installera sin inställning för delat minne.</translation>
+    </message>
+    <message>
+        <source>Installing the shared memory setting failed.</source>
+        <translation>Installationen av inställningen för delat minne misslyckades.</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>Fel</translation>
+    </message>
+    <message>
+        <source>Unable to create shared memory segment.</source>
+        <translation>Det gick inte att skapa segmentet för delat minne.</translation>
+    </message>
+    <message>
+        <source>macOS allows too little shared memory. To raise the limit permanently, copy com.jtdx.sysctl.plist from the JTDX_contest installer (DMG) to /Library/LaunchDaemons and restart this Mac - see ReadMe.txt in the DMG.</source>
+        <translation>macOS tillåter för lite delat minne. För att höja gränsen permanent, kopiera com.jtdx.sysctl.plist från JTDX_contest-installeraren (DMG) till /Library/LaunchDaemons och starta om den här Macen - se ReadMe.txt i DMG-filen.</translation>
+    </message>
 </context>
 <context>
     <name>wf_palette_design_dialog</name>

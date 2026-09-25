@@ -9935,6 +9935,42 @@ soundcard changes</source>
         <source>Writable files in test location.  Use with caution, for testing only.</source>
         <translation>테스트 위치에 쓰기 가능한 파일을 둡니다. 주의해서 사용하십시오. 테스트 전용입니다.</translation>
     </message>
+    <message>
+        <source>Shared memory</source>
+        <translation>공유 메모리</translation>
+    </message>
+    <message>
+        <source>JTDX_contest needs %1 MB of shared memory, more than macOS allows by default.</source>
+        <translation>JTDX_contest에는 %1 MB의 공유 메모리가 필요하지만, macOS가 기본으로 허용하는 크기는 이보다 작습니다.</translation>
+    </message>
+    <message>
+        <source>It can raise the limit now, and at every start of this Mac, by installing a small system setting (/Library/LaunchDaemons/com.jtdx.sysctl.plist). macOS will ask for an administrator password.
+
+Install the setting?</source>
+        <translation>작은 시스템 설정(/Library/LaunchDaemons/com.jtdx.sysctl.plist)을 설치하면 지금 그리고 이 Mac을 켤 때마다 한도를 높일 수 있습니다. macOS가 관리자 암호를 요청합니다.
+
+설정을 설치할까요?</translation>
+    </message>
+    <message>
+        <source>JTDX_contest wants to install its shared memory setting.</source>
+        <translation>JTDX_contest가 공유 메모리 설정을 설치하려고 합니다.</translation>
+    </message>
+    <message>
+        <source>Installing the shared memory setting failed.</source>
+        <translation>공유 메모리 설정 설치에 실패했습니다.</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>오류</translation>
+    </message>
+    <message>
+        <source>Unable to create shared memory segment.</source>
+        <translation>공유 메모리 세그먼트를 만들 수 없습니다.</translation>
+    </message>
+    <message>
+        <source>macOS allows too little shared memory. To raise the limit permanently, copy com.jtdx.sysctl.plist from the JTDX_contest installer (DMG) to /Library/LaunchDaemons and restart this Mac - see ReadMe.txt in the DMG.</source>
+        <translation>macOS가 허용하는 공유 메모리가 너무 적습니다. 한도를 영구적으로 높이려면 JTDX_contest 설치 프로그램(DMG)의 com.jtdx.sysctl.plist를 /Library/LaunchDaemons로 복사한 뒤 이 Mac을 다시 시작하십시오. DMG의 ReadMe.txt를 참조하십시오.</translation>
+    </message>
 </context>
 <context>
     <name>wf_palette_design_dialog</name>

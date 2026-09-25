@@ -9942,6 +9942,42 @@ hangkártya módosítási tevékenységet</translation>
         <source>Writable files in test location.  Use with caution, for testing only.</source>
         <translation>Írható fájlok a teszt helyén.  Csak óvatosan használja, csak tesztelési célokra.</translation>
     </message>
+    <message>
+        <source>Shared memory</source>
+        <translation>Osztott memória</translation>
+    </message>
+    <message>
+        <source>JTDX_contest needs %1 MB of shared memory, more than macOS allows by default.</source>
+        <translation>A JTDX_contest %1 MB osztott memóriát igényel, többet, mint amennyit a macOS alapértelmezés szerint enged.</translation>
+    </message>
+    <message>
+        <source>It can raise the limit now, and at every start of this Mac, by installing a small system setting (/Library/LaunchDaemons/com.jtdx.sysctl.plist). macOS will ask for an administrator password.
+
+Install the setting?</source>
+        <translation>A korlát most és a Mac minden indításakor megemelhető egy kis rendszerbeállítás telepítésével (/Library/LaunchDaemons/com.jtdx.sysctl.plist). A macOS rendszergazdai jelszót fog kérni.
+
+Telepíti a beállítást?</translation>
+    </message>
+    <message>
+        <source>JTDX_contest wants to install its shared memory setting.</source>
+        <translation>A JTDX_contest telepíteni szeretné az osztott memória beállítását.</translation>
+    </message>
+    <message>
+        <source>Installing the shared memory setting failed.</source>
+        <translation>Az osztott memória beállításának telepítése nem sikerült.</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>Hiba</translation>
+    </message>
+    <message>
+        <source>Unable to create shared memory segment.</source>
+        <translation>Nem sikerült létrehozni az osztott memóriaszegmenst.</translation>
+    </message>
+    <message>
+        <source>macOS allows too little shared memory. To raise the limit permanently, copy com.jtdx.sysctl.plist from the JTDX_contest installer (DMG) to /Library/LaunchDaemons and restart this Mac - see ReadMe.txt in the DMG.</source>
+        <translation>A macOS túl kevés osztott memóriát enged. A korlát végleges megemeléséhez másolja a com.jtdx.sysctl.plist fájlt a JTDX_contest telepítőjéből (DMG) a /Library/LaunchDaemons mappába, és indítsa újra ezt a Macet - lásd a ReadMe.txt fájlt a DMG-ben.</translation>
+    </message>
 </context>
 <context>
     <name>wf_palette_design_dialog</name>

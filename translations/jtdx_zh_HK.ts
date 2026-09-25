@@ -9937,6 +9937,42 @@ soundcard changes</source>
         <source>Writable files in test location.  Use with caution, for testing only.</source>
         <translation>測試位置中的可寫檔案. 小心使用, 僅用於測試.</translation>
     </message>
+    <message>
+        <source>Shared memory</source>
+        <translation>共享記憶體</translation>
+    </message>
+    <message>
+        <source>JTDX_contest needs %1 MB of shared memory, more than macOS allows by default.</source>
+        <translation>JTDX_contest 需要 %1 MB 共享記憶體，超過 macOS 的預設限制。</translation>
+    </message>
+    <message>
+        <source>It can raise the limit now, and at every start of this Mac, by installing a small system setting (/Library/LaunchDaemons/com.jtdx.sysctl.plist). macOS will ask for an administrator password.
+
+Install the setting?</source>
+        <translation>安裝一個小的系統設定（/Library/LaunchDaemons/com.jtdx.sysctl.plist）便可立即提高此限制，並在每次啟動這部 Mac 時生效。macOS 會要求輸入管理員密碼。
+
+要安裝此設定嗎？</translation>
+    </message>
+    <message>
+        <source>JTDX_contest wants to install its shared memory setting.</source>
+        <translation>JTDX_contest 想要安裝它的共享記憶體設定。</translation>
+    </message>
+    <message>
+        <source>Installing the shared memory setting failed.</source>
+        <translation>安裝共享記憶體設定失敗。</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>錯誤</translation>
+    </message>
+    <message>
+        <source>Unable to create shared memory segment.</source>
+        <translation>無法建立共享記憶體區段。</translation>
+    </message>
+    <message>
+        <source>macOS allows too little shared memory. To raise the limit permanently, copy com.jtdx.sysctl.plist from the JTDX_contest installer (DMG) to /Library/LaunchDaemons and restart this Mac - see ReadMe.txt in the DMG.</source>
+        <translation>macOS 允許的共享記憶體太少。若要永久提高此限制，請將 JTDX_contest 安裝程式（DMG）中的 com.jtdx.sysctl.plist 複製到 /Library/LaunchDaemons，然後重新啟動這部 Mac——請參閱 DMG 中的 ReadMe.txt。</translation>
+    </message>
 </context>
 <context>
     <name>wf_palette_design_dialog</name>
