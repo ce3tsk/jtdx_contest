@@ -9,7 +9,7 @@ subroutine fillhash(numthreads,lfill)
   if(lfill) then
     do i=1,numthreads
       do m=1,nlast_calls(i)
-        nposition=nthrindex(i)+m
+        nposition=(i-1)*NSLICECALLS+m
         cw=last_calls(nposition)
 !print *,i,m,cw
         n10=ihashcall(cw,10)

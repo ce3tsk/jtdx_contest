@@ -2,6 +2,7 @@ module ft8_mod1
 
   parameter (NPS=180000,NFR=151680,NFILT1=4000,NFILT2=3400,numcqsig=20,numdeccq=40,nummycsig=5,numdecmyc=25,nmaxthreads=48) !NFRAME=1920*79
   integer, parameter :: NSLICE8MAX=24, NDEC8MAX=200
+  integer, parameter :: NINCALLSLICE=8   ! CE3TSK: incoming-call slots per slice, slice k's at (k-1)*NINCALLSLICE
   real*4 dd8(nps)
 ! CE3TSK: one audio buffer per decoder thread - decoder.f90 copies it in at each parallel region
 !$omp threadprivate(dd8)
@@ -14,11 +15,11 @@ module ft8_mod1
 ! another slice's message ("memory corruption?" in ft8mf1/ft8mfcq was this race). One set per
 ! slice; the serial tone8/cwfilter families (csynce, itone56, idtone25 rows 2+) stay shared.
   complex csyncsd(0:18,32,NSLICE8MAX),csyncsdcq(0:57,32,NSLICE8MAX)
-  character*37 allmessages(200),msgsd76(76,NSLICE8MAX),msg(56),msgroot,msgincall(8*nmaxthreads)
+  character*37 allmessages(200),msgsd76(76,NSLICE8MAX),msg(56),msgroot,msgincall(NINCALLSLICE*nmaxthreads)
   character lasthcall*12,mycall12_0*12,mycall12_00*12,hiscall12_0*12,hisgrid4*4
   character(len=12) :: mycall,hiscall,mybcall,hisbcall
   real allfreq(200),windowc1(0:54),windowx(0:200),pivalue,facx,twopi,facc1,dt,sumxdtt(24),avexdt, &
-       xdtincall(8*nmaxthreads)
+       xdtincall(NINCALLSLICE*nmaxthreads)
   integer itone76(76,79,NSLICE8MAX),idtone76(76,58,NSLICE8MAX)   ! CE3TSK: per slice, see above
   integer itone56(56,79),idtone56(56,58),idtone25(25,58),allsnrs(200),apsym(58),     &
           idtonemyc(58),mcq(29),mrrr(19),m73(19),mrr73(19),naptypes(0:5,27),icos7(0:6),graymap(0:7),nappasses(0:5), &
@@ -52,8 +53,10 @@ module ft8_mod1
   logical one(0:511,0:8),lqsomsgdcd,first_osd
   logical(1) lapmyc,lagcc,lagccbail,lhound,lenabledxcsearch,lwidedxcsearch,lmultinst,lskiptx1,ltxing
 ! CE3TSK: the decoder now works in up to nmaxthreads band slices (several per thread, see
-! decoder.f90); everything that was per thread is per slice. Incoming-call slots: 8 per slice.
-  integer :: maskincallthr(nmaxthreads+1)=(/ ((i-1)*8, i=1,nmaxthreads+1) /)
+! decoder.f90); everything that was per thread is per slice. Incoming-call slots: NINCALLSLICE per slice.
+! CE3TSK 2026-09-25: their offsets were a table, maskincallthr=(/ ((i-1)*8, i=1,nmaxthreads+1) /), whose
+! implied-do gfortran turns into a module variable i (__ft8_mod1_MOD_i) - the packjt77 nthrindex race
+! (see there) waiting for a unit to use this module without ONLY. Computed where used instead.
   integer :: nslicesft8=1
   real*8 :: tsync8=0.d0,tsync8s=0.d0,tsync8l=0.d0   ! CE3TSK: sync8 wall time: total, spectra, lag loops
   ! CE3TSK: the same split by decoding pass, and the call count per pass. Sharing the wide-band

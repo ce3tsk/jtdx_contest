@@ -1406,6 +1406,31 @@ else (${OPENMP_FOUND} OR APPLE)
   target_include_directories (jtdxjt9 PRIVATE ${CMAKE_BINARY_DIR}/fortran_modules)   # CE3TSK
 endif (${OPENMP_FOUND} OR APPLE)
 
+# CE3TSK 2026-09-25: fail the build when a Fortran module exports a variable that looks like a
+# leaked loop counter - the index of an implied-DO in a module initialiser, which every implicitly
+# typed user of the module then shares across the decoder threads (packjt77's i, rc02 to rc08: the
+# FT4 decoder crashed). See CMake/check_module_globals.cmake. It reads the library the decoder
+# links, and jtdxjt9 waits for it, so a failing check stops the decoder from being built. The
+# stamp is written only when the check passes, so a failed check runs again on the next build.
+if (CMAKE_NM)
+  if (TARGET wsjt_fort_omp)
+    set (module_check_lib wsjt_fort_omp)
+  else ()
+    set (module_check_lib wsjt_fort)
+  endif ()
+  set (module_check_stamp ${CMAKE_BINARY_DIR}/module_globals.stamp)
+  add_custom_command (OUTPUT ${module_check_stamp}
+    COMMAND ${CMAKE_COMMAND} -DNM=${CMAKE_NM} -DLIB=$<TARGET_FILE:${module_check_lib}>
+            -DSTAMP=${module_check_stamp} -P ${PROJECT_SOURCE_DIR}/CMake/check_module_globals.cmake
+    DEPENDS ${module_check_lib} ${PROJECT_SOURCE_DIR}/CMake/check_module_globals.cmake
+    COMMENT "Checking ${module_check_lib} for leaked Fortran loop variables"
+    VERBATIM)
+  add_custom_target (check_module_globals ALL DEPENDS ${module_check_stamp})
+  add_dependencies (jtdxjt9 check_module_globals)
+else ()
+  message (WARNING "No nm (CMAKE_NM): the check for leaked Fortran loop variables is skipped")
+endif ()
+
 # build the main application
 generate_version_info (jtdx_VERSION_RESOURCES
   NAME jtdx

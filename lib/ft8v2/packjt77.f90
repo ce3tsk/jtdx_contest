@@ -32,8 +32,13 @@ module packjt77
   integer, dimension(1:MAXHASH) :: ihash22=-1
   integer, dimension(1:5) :: itxhash22=-1
   integer, dimension(1:48) :: nlast_calls=0   ! CE3TSK: per slice
-  integer, dimension(1:49) :: nthrindex=(/ ((i-1)*100, i=1,49) /)   ! CE3TSK: 100 hash slots per slice (a single
+  parameter (NSLICECALLS=100)   ! CE3TSK: 100 hash slots per slice, slice k at (k-1)*NSLICECALLS in last_calls (a single
   ! thread keeps the whole band in slice 1; the old graded layout gave it 200, a crowded slice needs well over 20)
+  ! CE3TSK 2026-09-25: this was a table, nthrindex=(/ ((i-1)*100, i=1,49) /). gfortran makes the
+  ! implied-do's i a module variable (__packjt77_MOD_i), so every unit that uses packjt77 without
+  ! ONLY, and this module's own procedures, shared one global i as their loop counter across the
+  ! decoder threads: ft4b's dither loop ran to cd(3296) and genft4's to itmp(1343) under
+  ! -fbounds-check, and without it the loops silently skipped or repeated elements.
   integer :: nzhash=0
   integer :: nztxhash=0
   integer n28a,n28b
@@ -224,8 +229,8 @@ subroutine save_hash_call(c13,nthr)
   if(i.gt.0) cw(i:)='         '
   if(len(trim(cw)) .lt. 3) return
 
-  nposition=nthrindex(nthr)+nlast_calls(nthr)
-  if(nposition.lt.nthrindex(nthr+1)) then
+  nposition=(nthr-1)*NSLICECALLS+nlast_calls(nthr)
+  if(nposition.lt.nthr*NSLICECALLS) then
     nlast_calls(nthr)=nlast_calls(nthr)+1
     last_calls(nposition+1)=cw
 !print *,nthr,nlast_calls(nthr),nposition+1,last_calls(nposition+1)

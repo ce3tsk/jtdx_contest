@@ -15,7 +15,7 @@ subroutine ft8b(newdat1,nQSOProgress,nfqso,nftx,napwid,lsubtract,npos,freqsub,tm
                        msgroot,msgrootlen,allfreq,idtone25,lapmyc,idtonemyc,mycall,hiscall,lhound,apsymsp,                     &
                        ndxnsaptypes,apsymdxns1,apsymdxnsrrr,lenabledxcsearch,lwidedxcsearch,apcqsym,apsymdxnsrr73,apsymdxns73, &
                        mybcall,hisbcall,lskiptx1,nft8cycles,nft8swlcycles,ctwkw,ctwkn,nincallthr,msgincall,xdtincall,          &
-                       maskincallthr,ctwk256,numcqsig,numdeccq,evencq,oddcq,nummycsig,numdecmyc,evenmyc,oddmyc,idtone56,       &
+                       NINCALLSLICE,ctwk256,numcqsig,numdeccq,evencq,oddcq,nummycsig,numdecmyc,evenmyc,oddmyc,idtone56,       &
                        idtonecqdxcns,evenqso,oddqso,nmycnsaptypes,apsymmyns1,apsymmyns2,apsymmynsrr73,apsymmyns73,apsymdxstd,  &
                        apsymdxnsr73,apsymdxns732,ltxing,apsymmynsrrr,idtonedxcns73,idtonefox73,idtonespec
 
@@ -1998,8 +1998,9 @@ subroutine ft8b(newdat1,nQSOProgress,nfqso,nftx,napwid,lsubtract,npos,freqsub,tm
     if(mycalllen1.gt.2) then
       if(.not.ldupemsg .and. msg37(1:mycalllen1).eq.trim(mycall)//' ') then
         nincallthr(nthr)=nincallthr(nthr)+1
-        nindex=maskincallthr(nthr)+nincallthr(nthr)
-        if(nindex.lt.maskincallthr(nthr+1)) then
+        nindex=(nthr-1)*NINCALLSLICE+nincallthr(nthr)
+        ! CE3TSK 2026-09-25: .le. - nindex already counts this call, so .lt. kept one slot of each slice unused
+        if(nindex.le.nthr*NINCALLSLICE) then
           msgincall(nindex)=msg37
           xdtincall(nindex)=xdt-0.5
         else

@@ -90,9 +90,9 @@ subroutine sfox_known(call0,islot)
 ! to on every one of its 796 tries (its CRC does not pass; this is belt and braces). Lower case is
 ! taken as upper case: the GUI sends upper case, file mode's -x may not.
 
-  use packjt77, only : pack28     !pack28 is a module procedure in jtdx; ONLY it: the module also exports a loop
-                                  !variable i by accident (its nthrindex initialiser), which an implicitly
-                                  !typed unit would then share with every other user of the module (review 2)
+  use packjt77, only : pack28     !pack28 is a module procedure in jtdx; ONLY it: the module used to export a loop
+                                  !variable i by accident (its nthrindex initialiser, removed 2026-09-25), which an
+                                  !implicitly typed unit would then share with every other user of the module (review 2)
   use sfox_mod, only : nfoxknown28,nfoxknown58
   parameter (NTOKENS=2063592)
   character*(*) call0

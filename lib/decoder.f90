@@ -26,7 +26,7 @@ subroutine multimode_decoder(params)
                        evencopy,nlasttx,lqsomsgdcd,mycalllen1,msgroot,msgrootlen,lapmyc,lagcc,sumxdtt,avexdt,             &
                        nfawide,nfbwide,mycall,hiscall,lhound,mybcall,hisbcall,lenabledxcsearch,lwidedxcsearch,hisgrid4,   &
                        lmultinst,dd8,nft8cycles,nft8swlcycles,lskiptx1,ncandallthr,nincallthr,incall,msgincall,xdtincall, &
-                       maskincallthr,ltxing
+                       NINCALLSLICE,ltxing
   use ft4_mod1, only : llagcc,nFT4decd,nfafilt,nfbfilt,lfilter,lhidetest,lhidetelemetry,dd4
   use ft4_mod1, only : nseen4   ! CE3TSK: the period's printed-message list
   use ft4_mod1, only : lft2,tperiod4,ft4rxcost,nft4rxrun   ! CE3TSK: FT2 rides the FT4 chain; the learned RX costs are per mode
@@ -670,7 +670,7 @@ endif
 
     do i=1,nslicesft8
       do m=1,nincallthr(i)
-      nindex=maskincallthr(i)+m
+      nindex=(i-1)*NINCALLSLICE+m
       incall(30:2:-1)=incall(30-1:1:-1); incall(1)%msg=msgincall(nindex); incall(1)%xdt=xdtincall(nindex)
       enddo
     enddo
