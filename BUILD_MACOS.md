@@ -471,33 +471,17 @@ Check it: `rigctl --version` should report `Hamlib 4.7.2`, and
 `autoconf`, `automake` and `libtool` are only needed for this step. Remove them afterwards
 if space is tight: `sudo port uninstall autoconf automake libtool`.
 
-### 8.4 Get the source (and a patch kit, if there is one)
+### 8.4 Get the source
 
 The layout matches the Apple Silicon Mac: `~/dev/jtdx-prefix/` holds `jtdx_contest` and
-`build`.
+`build`. Clone the latest source; everything the Intel build needs is in the repository.
 
 ```bash
 mkdir -p ~/dev/jtdx-prefix && cd ~/dev/jtdx-prefix && git clone https://github.com/ce3tsk/jtdx_contest.git
 ```
 
-**With a patch kit** (such as `jtdx_contest-intel-macos.zip`): the kit holds changes
-that are not in the repository yet. Check out the commit its patches were made against,
-named on the `Base:` line at the top of each patch, and apply them. This reads the commit
-from the kit:
-
-```bash
-cd ~/dev/jtdx-prefix && unzip jtdx_contest-intel-macos.zip && git -C jtdx_contest checkout "$(sed -n 's/^Base: jtdx_contest //p' jtdx_contest-intel-macos/patches/0001-*.patch)"
-```
-
-```bash
-cd ~/dev/jtdx-prefix && jtdx_contest-intel-macos/patches/apply.sh ~/dev/jtdx-prefix/jtdx_contest
-```
-
-It should end with `Applied.`. Once those changes are in the repository, skip this and
-build the latest source.
-
-Alternatively, copy the already-patched `jtdx_contest` folder over from the Apple
-Silicon Mac, for example with a USB stick or AirDrop (about 70 MB).
+Alternatively, copy the `jtdx_contest` folder over from the Apple Silicon Mac, for example
+with a USB stick or AirDrop (about 70 MB).
 
 ### 8.5 Configure, build and package
 
