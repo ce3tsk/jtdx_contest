@@ -1,5 +1,6 @@
 // This source code file was last time modified by Arvo ES1JA on January 5th, 2019
 // All changes are shown in the patch file coming together with the full JTDX source code.
+// Changed since for JTDX_contest by Tihomir Sokcevic CE3TSK; those changes are marked CE3TSK.
 
 /*
  * From an ADIF file and cty.dat, get a call's DXCC entity and its worked before status

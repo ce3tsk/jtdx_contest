@@ -1,5 +1,6 @@
 // This source code file was last time modified by Arvo ES1JA on 20190224
 // All changes are shown in the patch file coming together with the full JTDX source code.
+// Changed since for JTDX_contest by Tihomir Sokcevic CE3TSK; those changes are marked CE3TSK.
 
 /*
 #Sov Mil Order of Malta:   15:  28:  EU:   41.90:   -12.43:    -1.0:  1A:

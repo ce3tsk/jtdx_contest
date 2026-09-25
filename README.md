@@ -297,6 +297,16 @@ several times in this fork (and the sample buffer's width once, 2026-09-03) and 
 mismatched pair decodes wrongly or not at all. `make install` puts them under the
 prefix; `jtdx -r NAME` runs a separate instance with its own `JTDX - NAME.ini`.
 
+**macOS (Apple Silicon, Homebrew GCC).** `BUILD_MACOS.md` in this directory has the whole
+recipe: prerequisites, configure, `make package` for the drag-and-drop `.dmg`, and what to check
+in the built bundle. Four build fixes were needed for a current toolchain and are in the tree -
+the Fortran code now gets the **Fortran** compiler's OpenMP flags (Apple clang has none, so
+`omp_get_num_procs()` became an implicit REAL and `decoder.f90` would not compile), the JPL
+ephemeris `SPLIT` subroutine was renamed `JPLSPLIT` because GCC 16 has a `SPLIT` intrinsic of its
+own, `fixup_bundle` is pointed at the real bundle executable and resolves Homebrew libgfortran's
+`@loader_path` libraries, and the packaged app is re-signed ad hoc so Apple Silicon will run it.
+Only the first two touch Linux and Windows, and there they produce the same `-fopenmp` as before.
+
 **Windows (JTSDK64, MinGW-w64 gfortran 8.1).** One toolchain difference matters for the
 threaded decoder: MinGW gcc implements `!$omp threadprivate` with *emulated* TLS, so every
 threadprivate variable lives in an exactly sized heap block instead of the static TLS segment

@@ -475,8 +475,7 @@ MainWindow::MainWindow(bool multiple, QSettings * settings, QSharedMemory *shdme
   m_messageClient {new MessageClient {QApplication::applicationName (), QCoreApplication::applicationVersion (),
                    m_config.udp_server_name (), m_config.udp_server_port (),
                    this}},
-  psk_Reporter {new PSK_Reporter {m_messageClient, this}},
-  m_manual {network_manager}
+  psk_Reporter {new PSK_Reporter {m_messageClient, this}}
 {
   ui->setupUi(this);
   m_bandButtonsTimer.setSingleShot (true);   // CE3TSK: View > Band buttons, see scheduleBandButtons ()
@@ -4064,8 +4063,18 @@ void MainWindow::on_pbSpotDXCall_clicked ()
 }
 
 void MainWindow::msgBox(QString t) { msgBox0.setText(t); msgBox0.translate_buttons(); msgBox0.exec(); }
-void MainWindow::on_actionJTDX_Web_Site_triggered() { m_manual.display_html_url (QUrl {"https://ce3tsk.com/"}, ""); }   /* CE3TSK: the fork's site (F1) - the only user of DisplayManual; JTDX's forum,
-                                                              sample-download and manual items are gone */
+/* CE3TSK 2026-09-25: F1 opens the fork's site in the browser, and asks the network nothing first.
+   It used to go through DisplayManual, JTDX's online-manual finder (removed with this fix, it had
+   no other user): that HEADs the manual's URL, on failure HEADs a language-stripped variant
+   ("_en_US" -> "_en"), and when that fails too gives up by opening "<manual name>-<version>.html"
+   instead - with the empty manual name this fork passes, https://ce3tsk.com/-3.0.0-rc08.html, a
+   404 page. It shows only where those requests fail, which is why Linux and macOS never saw it
+   and a Windows user did: Qt 5.15 on Windows can do TLS only through OpenSSL 1.1, which neither
+   Qt nor Windows ships, so an https request made through QNetworkAccessManager fails there at
+   once. That is why FileDownload and HttpFetch go through WinHTTP on Windows (CMakeLists.txt) and
+   still work; DisplayManual was the one place left asking Qt itself. The browser has its own TLS
+   and needs none of ours. */
+void MainWindow::on_actionJTDX_Web_Site_triggered() { QDesktopServices::openUrl (QUrl {"https://ce3tsk.com/"}); }
 
 void MainWindow::on_actionWide_Waterfall_triggered() { m_wideGraph->show(); } //Display Waterfalls
 
@@ -5867,7 +5876,7 @@ void MainWindow::on_actionKeyboard_shortcuts_triggered()
     m_shortcuts.reset (new HelpTextWindow {tr ("Keyboard Shortcuts"),
                                                //: Keyboard shortcuts help window contents
                                                tr (R"(<table cellspacing=1>
-  <tr><td><b>F1       </b></td><td>Online User's Guide</td><td><b>Ctrl+F1  </b></td><td>About JTDX_contest</td></tr>
+  <tr><td><b>F1       </b></td><td>JTDX_contest web site</td><td><b>Ctrl+F1  </b></td><td>About JTDX_contest</td></tr>
   <tr><td><b>F2       </b></td><td>Open configuration window</td></tr>
   <tr><td><b>F3       </b></td><td>Display keyboard shortcuts</td></tr>
   <tr><td><b>F4       </b></td><td>Clear DX Call/Grid and Tx messages</td><td><b>Alt+F4   </b></td><td>Exit program</td></tr>

@@ -1,4 +1,5 @@
-// last time modified by Arvo ES1JA on 20200127
+// last time modified by Arvo ES1JA on 20200127 (JTDX)
+// and rewritten in places for JTDX_contest by Tihomir Sokcevic CE3TSK since 2025
 
 #include <iostream>
 #include <exception>

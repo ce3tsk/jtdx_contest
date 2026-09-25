@@ -334,6 +334,7 @@ endfunction()
 
 function(gp_resolve_item context item exepath dirs resolved_item_var)
   set(resolved 0)
+  set(gp_resolved_via_loader_rpath 0 PARENT_SCOPE)   # CE3TSK: see the @rpath branch below
   set(resolved_item "${item}")
   if(ARGC GREATER 5)
     set(rpaths "${ARGV5}")
@@ -417,6 +418,34 @@ function(gp_resolve_item context item exepath dirs resolved_item_var)
         set(resolved 1)
         set(resolved_item "${ri}")
         set(ri "ri-NOTFOUND")
+      endif()
+
+      # CE3TSK: then the LC_RPATHs of the binary that loads the item, with @loader_path and
+      # @executable_path expanded - the rpaths passed in are the main executable's and hold them
+      # unexpanded, so e.g. a Homebrew libgfortran's @rpath/libquadmath.0.dylib (found through
+      # its own "@loader_path" rpath) was never resolved
+      if(NOT resolved AND EXISTS "${context}")
+        find_program(gp_otool_cmd "otool")
+        mark_as_advanced(gp_otool_cmd)
+        if(gp_otool_cmd)
+          execute_process(COMMAND "${gp_otool_cmd}" -l "${context}" OUTPUT_VARIABLE load_cmds_ov)
+          string(REGEX REPLACE "[^\n]+cmd LC_RPATH\n[^\n]+\n[^\n]+path ([^\n]+) \\(offset[^\n]+\n" "rpath \\1\n" load_cmds_ov "${load_cmds_ov}")
+          string(REGEX MATCHALL "rpath [^\n]+" context_rpaths "${load_cmds_ov}")
+          get_filename_component(contextpath "${context}" PATH)
+          foreach(context_rpath ${context_rpaths})
+            string(REGEX REPLACE "^rpath " "" context_rpath "${context_rpath}")
+            string(REPLACE "@loader_path" "${contextpath}" context_rpath "${context_rpath}")
+            string(REPLACE "@executable_path" "${exepath}" context_rpath "${context_rpath}")
+            get_filename_component(ri "${context_rpath}/${norpath_item}" ABSOLUTE)
+            if(EXISTS "${ri}")
+              set(resolved 1)
+              set(resolved_item "${ri}")
+              set(gp_resolved_via_loader_rpath 1 PARENT_SCOPE)
+              break()
+            endif()
+          endforeach()
+          set(ri "ri-NOTFOUND")
+        endif()
       endif()
 
     endif()
@@ -903,6 +932,18 @@ function(get_prerequisites target prerequisites_var exclude_system recurse exepa
 
       if(type STREQUAL "system")
         set(add_item 0)
+      endif()
+    endif()
+
+    # CE3TSK: an @rpath item that only the loading binary's own rpaths reach is listed by its
+    # full path - callers resolve the listed names again with the main executable as context,
+    # which cannot reach it (a Homebrew libgfortran's @rpath/libgcc_s.1.1.dylib, through its
+    # "@loader_path" rpath). Items resolvable the old way keep their @rpath name, which
+    # fixup_bundle needs to rewrite the references to them.
+    if(add_item AND item MATCHES "^@rpath/")
+      gp_resolve_item("${target}" "${item}" "${exepath}" "${dirs}" loader_resolved_item "${rpaths}")
+      if(gp_resolved_via_loader_rpath)
+        set(item "${loader_resolved_item}")
       endif()
     endif()
 

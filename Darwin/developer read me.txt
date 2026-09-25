@@ -19,7 +19,7 @@ The installer DMG is read only and shrunk to exactly the size of the contents, a
 The following recipe shows how to amend the content and layout of the DMG root folder:
 
 # convert the DMG to a R/W copy (substitute the DMG you have built)
-hdiutil convert JTDX*-Darwin.dmg -format UDRW -o rw.dmg
+hdiutil convert jtdx-*-Darwin-*.dmg -format UDRW -o rw.dmg
 
 # expand the R/W copy to make room for changes
 # first find the current number of sectors
@@ -37,7 +37,7 @@ hdiutil resize -sectors 110000 rw.dmg
 hdiutil attach rw.dmg
 
 # make the .DS_Store file writeable
-chmod 644 /Volumes/JTDX/.DS_Store
+chmod 644 /Volumes/JTDX_contest/.DS_Store
 
 # now you can change Finder view options, rearrange icons etc. Remember that you are
 # only changing the folder options, not the folder content as that is controlled by
@@ -49,13 +49,13 @@ chmod 644 /Volumes/JTDX/.DS_Store
 # ensures that the .DS_Store file is updated from Finder's cache.
 
 # make the .DS_Store file read only
-chmod 444 /Volumes/JTDX/.DS_Store
+chmod 444 /Volumes/JTDX_contest/.DS_Store
 
 # update the custom .DS_Store file in the source repository (NOTE the file name)
-cp /Volumes/JTDX/.DS_Store .../wsjtx/jtdx_DMG.DS_Store
+cp /Volumes/JTDX_contest/.DS_Store .../wsjtx/jtdx_DMG.DS_Store
 
 # dismount and eject the R/W DMG and discard it
-hdiutil detach /Volumes/JTDX
+hdiutil detach /Volumes/JTDX_contest
 rm rw.dmg
 
 # build a new package and try out the new installer to test your changes

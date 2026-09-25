@@ -15,7 +15,7 @@ jtdx - Weak signal communications program.
 == DESCRIPTION
 
 *jtdx* is a weak signal communications program supporting several operating
-modes: WSPR2, JT65, JT9, T10, FT8, FT4.
+modes: WSPR2, JT65, JT9, T10, FT8, FT4, FT2.
 
 JTDX_contest home page:: https://ce3tsk.com/
 
@@ -76,8 +76,7 @@ applications settings dialog.
 ~/.local/share/JTDX[ - RIGNAME]/save/samples/::
 
 Sample .WAV files suppied with the application are found in this
-directory, they may be played back in the application and are referred
-to in the user guide tutorial sections.
+directory, they may be played back in the application.
 
 ~/.local/share/JTDX[ - RIGNAME]/cty.dat::
 
@@ -97,12 +96,16 @@ for import into many Ham Radio logging programs.
 
 == AUTHOR
 
+Tihomir Sokcevic CE3TSK for the JTDX_contest changes.
+
 Joe Taylor, K1JT, Arvo Järve, ES1JA for JTDX Changes
 
 == COPYING
 
-*jtdx* is derivative of *wsjtx* Copyrighted (C) 2001 - 2015 by Joseph H. Taylor, Jr., K1JT,
-with contributions from additional authors.  JTDX is Open Source
+*jtdx_contest* is Copyright (C) 2025-2026 Tihomir Sokcevic CE3TSK, a derivative work of
+*jtdx*, Copyright (C) 2016-2022 Igor Chernikov, UA3DJY and Arvo Järve, ES1JA, which is itself
+derivative of *wsjtx* Copyrighted (C) 2001 - 2015 by Joseph H. Taylor, Jr., K1JT,
+with contributions from additional authors.  All of it is Open Source
 software, licensed under the GNU General Public License (GPLv3).
 
 *jtdx* includes the ``**Hamlib - Ham Radio Control Libraries**''

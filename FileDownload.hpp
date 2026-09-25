@@ -9,8 +9,8 @@
 
    - only this download's own reply is connected. The original also connected the network
      manager's finished() and deleteLater()'d every reply that finished on it; JTDX hands the
-     same manager to WSPRNet, EQSL and the manual viewer, whose replies it would have deleted
-     under them.
+     same manager to WSPRNet and EQSL (and, until 2026-09-25, to DisplayManual), whose replies it
+     would have deleted under them.
    - exactly one of complete() or error() per start. The original split failures between
      error() and download_error(), and its caller listened to one, so a missing SSL library or
      a redirect loop left the download button disabled for good.

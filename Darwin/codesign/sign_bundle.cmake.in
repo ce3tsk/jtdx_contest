@@ -1,0 +1,41 @@
+# CE3TSK: ad hoc re-signing of the installed Mac bundle, run as an install script (see
+# CMakeLists.txt next to this file). Signs inside out - the helper programs, dylibs, plugins and
+# frameworks first, then the bundle itself, which signs its main executable - instead of relying
+# on codesign --deep, which Apple deprecates for signing.
+set (bundle "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/@WSJTX_BUNDLE_NAME@.app")
+set (main_exe "@WSJTX_BUNDLE_NAME@")
+set (codesign "@CODESIGN_EXECUTABLE@")
+
+if (NOT EXISTS "${bundle}")
+  message (WARNING "${bundle} is not installed, nothing to sign")
+  return ()
+endif ()
+get_filename_component (bundle "${bundle}" REALPATH)
+if (NOT codesign)
+  message (WARNING "codesign not found: ${bundle} is NOT re-signed and will not run on Apple Silicon")
+  return ()
+endif ()
+
+function (sign_item item)
+  execute_process (COMMAND "${codesign}" --force --sign - "${item}"
+    RESULT_VARIABLE rc OUTPUT_VARIABLE out ERROR_VARIABLE out)
+  if (rc)
+    message (FATAL_ERROR "codesign of ${item} failed (${rc}):\n${out}")
+  endif ()
+endfunction ()
+
+file (GLOB helpers LIST_DIRECTORIES false "${bundle}/Contents/MacOS/*")
+list (REMOVE_ITEM helpers "${bundle}/Contents/MacOS/${main_exe}")
+file (GLOB_RECURSE plugins "${bundle}/Contents/PlugIns/*.dylib")
+file (GLOB frameworks "${bundle}/Contents/Frameworks/*.framework")
+foreach (item IN LISTS helpers plugins frameworks)
+  sign_item ("${item}")
+endforeach ()
+sign_item ("${bundle}")
+
+execute_process (COMMAND "${codesign}" --verify --deep --strict "${bundle}"
+  RESULT_VARIABLE rc OUTPUT_VARIABLE out ERROR_VARIABLE out)
+if (rc)
+  message (FATAL_ERROR "${bundle} does not verify after signing (${rc}):\n${out}")
+endif ()
+message (STATUS "Signed (ad hoc): ${bundle}")

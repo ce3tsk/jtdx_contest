@@ -1,5 +1,6 @@
 // This source code file was last time modified by Arvo ES1JA on January 29th, 2017
 // All changes are shown in the patch file coming together with the full JTDX source code.
+// Changed since for JTDX_contest by Tihomir Sokcevic CE3TSK; those changes are marked CE3TSK.
 
 /*
  * Reads an ADIF log file into memory

@@ -231,7 +231,9 @@ set (wsjt_qt_CXXSRCS
   MessageClient.cpp
   LettersSpinBox.cpp
   HelpTextWindow.cpp
-  DisplayManual.cpp
+# CE3TSK 2026-09-25: DisplayManual.cpp is gone - JTDX's online-manual finder. Its last user
+# was F1, which now opens the site directly; the finder's give-up path built a URL out of an
+# empty manual name and sent Windows users to a 404 (TODO.md 3.-1).
   FrequencyDelegate.cpp
   FrequencyDeltaDelegate.cpp
   )
@@ -248,6 +250,13 @@ set (wsjtx_CXXSRCS
   logbook/adif.cpp
   logbook/countrydat.cpp
   logbook/logbook.cpp
+  # CE3TSK: the geography tables compiled into the program - which grid squares a DXCC entity
+  # occupies, and which US state(s) a square covers.  The two *_data.cpp are GENERATED from
+  # geodata/*.json by geodata/make_geodata_headers.py; geodata/geodata_selftest.cpp and
+  # geodata_dump.cpp are standalone test programs and deliberately NOT built here.
+  geodata/geodata.cpp
+  geodata/dxcc_grids_data.cpp
+  geodata/grid_states_data.cpp
   qsohistory.cpp
   psk_reporter.cpp
   Modulator.cpp
@@ -1212,6 +1221,28 @@ endif (WIN32)
 # build a library of package functionality (without and optionally with OpenMP support)
 add_library (wsjt_cxx STATIC ${wsjt_CSRCS} ${wsjt_CXXSRCS})
 
+# CE3TSK: the Fortran code is compiled with the Fortran compiler's OpenMP flags. It used to get
+# OpenMP_C_FLAGS, which are the C compiler's: empty on a Mac (Apple clang has no OpenMP, so
+# omp_lib was skipped and omp_get_num_procs() became an implicit REAL), and clang syntax
+# (-Xclang -fopenmp) that gfortran rejects should a libomp ever be found there. FindOpenMP only
+# reports Fortran flags from CMake 3.9 (the minimum here is 3.7.2), hence the fallbacks: -fopenmp
+# on a Mac, where the Fortran compiler is gfortran, else the C flags (GCC's are the same).
+if (OpenMP_Fortran_FLAGS)
+  set (wsjt_fortran_openmp_flags ${OpenMP_Fortran_FLAGS})
+elseif (APPLE)
+  set (wsjt_fortran_openmp_flags -fopenmp)
+elseif (OpenMP_C_FLAGS)
+  set (wsjt_fortran_openmp_flags ${OpenMP_C_FLAGS})
+else ()
+  set (wsjt_fortran_openmp_flags)
+endif ()
+separate_arguments (wsjt_fortran_openmp_flags)
+function (wsjt_fortran_openmp target)
+  foreach (_flag ${wsjt_fortran_openmp_flags})
+    target_compile_options (${target} PRIVATE $<$<COMPILE_LANGUAGE:Fortran>:${_flag}>)
+  endforeach ()
+endfunction ()
+
 # build an OpenMP variant of the Fortran library routines
 add_library (wsjt_fort STATIC ${wsjt_FSRCS})
 target_link_libraries (wsjt_fort  ${FFTW3_LIBRARIES})
@@ -1219,10 +1250,15 @@ target_link_libraries (wsjt_fort  ${FFTW3_LIBRARIES})
 # in the working directory - the build root, where this variant writes its modules - before
 # any -I path, so the OpenMP variant would otherwise pick up modules compiled without the
 # OpenMP directives (ft8_mod1's THREADPRIVATE dd8) and fail to compile. Both variants now
-# produce identical module files; the plain one is only linked by the utility programs.
-if (OpenMP_C_FLAGS)
-  set_target_properties (wsjt_fort PROPERTIES COMPILE_FLAGS "${OpenMP_C_FLAGS}")
-endif ()
+# produce identical module files and objects. The plain one is linked by the utility programs
+# and, on a Mac, by jtdx itself (see its target_link_libraries below).
+wsjt_fortran_openmp (wsjt_fort)
+if (APPLE)
+  # CE3TSK: and what links it then needs libgomp. By name, as for jtdxjt9: the link line already
+  # carries gfortran's library directories, where a cached full path to libgomp would name a
+  # Homebrew Cellar version directory that a gcc upgrade deletes.
+  target_link_libraries (wsjt_fort gomp)
+endif (APPLE)
 # CE3TSK: and keep the plain variant's module files out of the build root - gfortran searches
 # the working directory (the build root) before any -I path, so a plain module there that is
 # one edit behind shadows the OpenMP variant's fresh one whenever a module changes.
@@ -1231,25 +1267,14 @@ file (MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/fortran_modules)
 if (${OPENMP_FOUND} OR APPLE)
   add_library (wsjt_fort_omp STATIC ${wsjt_FSRCS})
   target_link_libraries (wsjt_fort_omp  ${FFTW3_LIBRARIES})
-  if (OpenMP_C_FLAGS)
-    set_target_properties (wsjt_fort_omp
-      PROPERTIES
-      COMPILE_FLAGS "${OpenMP_C_FLAGS}"
-      )
-  endif ()
+  wsjt_fortran_openmp (wsjt_fort_omp)
   set_target_properties (wsjt_fort_omp
     PROPERTIES
     Fortran_MODULE_DIRECTORY ${CMAKE_BINARY_DIR}/fortran_modules_omp
     )
   file (MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/fortran_modules_omp)
   if (APPLE)
-    # On  Mac  we don't  have  working  OpenMP  support in  the  C/C++
-    # compilers so  we have to manually  set the correct flags  to get
-    # OpenMP support in jt9.
-    target_compile_options (wsjt_fort_omp
-      PRIVATE
-      $<$<COMPILE_LANGUAGE:Fortran>:-fopenmp>   # assumes GNU style Fortran compiler
-      )
+    target_link_libraries (wsjt_fort_omp gomp)
   endif (APPLE)
 endif (${OPENMP_FOUND} OR APPLE)
 
@@ -1351,10 +1376,7 @@ if (${OPENMP_FOUND} OR APPLE)
       Fortran_MODULE_DIRECTORY ${CMAKE_BINARY_DIR}/fortran_modules_omp
       LINK_LIBRARIES "gomp;gcc_s.1" # assume GNU libgcc OpenMP
       )
-      target_compile_options (jtdxjt9
-	PRIVATE
-     	$<$<COMPILE_LANGUAGE:Fortran>:-fopenmp>   # assumes GNU style Fortran compiler
-	)
+    wsjt_fortran_openmp (jtdxjt9)
   else (APPLE)
      if (OpenMP_C_FLAGS)
        set_target_properties (jtdxjt9
@@ -1644,7 +1666,13 @@ if (NOT is_debug_build)
       )
 
     # if a system Qt is used (e.g. installed in /usr/lib/), it will not be included in the installation
-    set (fixup_exe "\$ENV{DESTDIR}\${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_BINDIR}/${CMAKE_PROJECT_NAME}${CMAKE_EXECUTABLE_SUFFIX}")
+    if (APPLE)
+      # CE3TSK: the bundle executable is jtdx's OUTPUT_NAME, JTDX_contest, not jtdx
+      get_target_property (fixup_exe_name jtdx OUTPUT_NAME)
+      set (fixup_exe "\$ENV{DESTDIR}\${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_BINDIR}/${fixup_exe_name}")
+    else ()
+      set (fixup_exe "\$ENV{DESTDIR}\${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_BINDIR}/${CMAKE_PROJECT_NAME}${CMAKE_EXECUTABLE_SUFFIX}")
+    endif ()
 
     #get_filename_component (hamlib_lib_dir ${hamlib_LIBRARIES} PATH)
 
@@ -1826,3 +1854,12 @@ configure_file ("${PROJECT_SOURCE_DIR}/CMakeCPackOptions.cmake.in"
 set (CPACK_PROJECT_CONFIG_FILE "${PROJECT_BINARY_DIR}/CMakeCPackOptions.cmake")
 
 include (CPack)
+
+# CE3TSK: re-sign the Mac bundle ad hoc once everything is in it (see Darwin/codesign). This has
+# to stay the last thing in the file: install rules run either top level first, then each
+# subdirectory in add_subdirectory order (policy CMP0082 OLD, today with a 3.7.2 minimum), or all
+# in declaration order (CMP0082 NEW) - last is after fixup_bundle and the manpages/doc installs
+# either way.
+if (APPLE AND NOT is_debug_build)
+  add_subdirectory (Darwin/codesign)
+endif ()
