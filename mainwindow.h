@@ -12,6 +12,7 @@
 #include <QtGui>
 #endif
 #include <QThread>
+#include <memory>
 #include <QTimer>
 #include <QElapsedTimer>   // CE3TSK: the update icon's pulse
 #include <QList>
@@ -44,6 +45,7 @@
 #include "JTDXMessageBox.hpp"
 #include "qsohistory.h"
 #include "JTDXDateTime.h"
+#include "thread_shutdown.hpp"   // CE3TSK: m_audioThread's deleter
 
 
 //--------------------------------------------------------------- MainWindow
@@ -597,7 +599,11 @@ private:
      with 1 as well.  Seen after an in-place language restart. */
   bool m_outAttenuationRestored = false;
   int m_outAttenuationPreTune = -1;   // CE3TSK: the drive to come back to when a tune ends, -1 = none captured
-  QThread m_audioThread;
+  // CE3TSK 2026-09-26: owned through a deleter that stops the thread within a bound, and leaves
+  // it running if it is stuck in CoreAudio (thread_shutdown.hpp) - destroying a running QThread
+  // member is fatal. The deleter also runs if the constructor throws after start ().
+  std::unique_ptr<QThread, thread_shutdown::stop_and_delete> m_audioThread {
+    new QThread, thread_shutdown::stop_and_delete {thread_shutdown::audio_msecs, "Audio"}};
   QClipboard *clipboard = QGuiApplication::clipboard();
 
   double  m_TRperiod;

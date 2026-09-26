@@ -522,10 +522,10 @@ MainWindow::MainWindow(bool multiple, QSettings * settings, QSharedMemory *shdme
   // start audio thread and hook up slots & signals for shutdown management
   // these objects need to be in the audio thread so that invoking
   // their slots is done in a thread safe way
-  m_soundOutput->moveToThread (&m_audioThread);
-  m_modulator->moveToThread (&m_audioThread);
-  m_soundInput->moveToThread (&m_audioThread);
-  m_detector->moveToThread (&m_audioThread);
+  m_soundOutput->moveToThread (m_audioThread.get ());
+  m_modulator->moveToThread (m_audioThread.get ());
+  m_soundInput->moveToThread (m_audioThread.get ());
+  m_detector->moveToThread (m_audioThread.get ());
   bool ok;
   auto buffer_size = env.value ("JTDX_RX_AUDIO_BUFFER_FRAMES", "0").toInt (&ok);
   m_rx_audio_buffer_frames = ok && buffer_size ? buffer_size : default_rx_audio_buffer_frames;
@@ -536,14 +536,14 @@ MainWindow::MainWindow(bool multiple, QSettings * settings, QSharedMemory *shdme
   connect (m_soundOutput, &SoundOutput::error, this, &MainWindow::showSoundOutError);
   // connect (m_soundOutput, &SoundOutput::status, this, &MainWindow::showStatusMessage);
   connect (this, &MainWindow::outAttenuationChanged, m_soundOutput, &SoundOutput::setAttenuation);
-  connect (&m_audioThread, &QThread::finished, m_soundOutput, &QObject::deleteLater);
+  connect (m_audioThread.get (), &QThread::finished, m_soundOutput, &QObject::deleteLater);
 
   // hook up Modulator slots and disposal
   connect (this, &MainWindow::transmitFrequency, m_modulator, &Modulator::setFrequency);
   connect (this, &MainWindow::endTransmitMessage, m_modulator, &Modulator::stop);
   connect (this, &MainWindow::tune, m_modulator, &Modulator::tune);
   connect (this, &MainWindow::sendMessage, m_modulator, &Modulator::start);
-  connect (&m_audioThread, &QThread::finished, m_modulator, &QObject::deleteLater);
+  connect (m_audioThread.get (), &QThread::finished, m_modulator, &QObject::deleteLater);
 
   // hook up the audio input stream signals, slots and disposal
   connect (this, &MainWindow::startAudioInputStream, m_soundInput, &SoundInput::start);
@@ -552,7 +552,7 @@ MainWindow::MainWindow(bool multiple, QSettings * settings, QSharedMemory *shdme
   connect (this, &MainWindow::finished, m_soundInput, &SoundInput::stop);
   connect(m_soundInput, &SoundInput::error, this, &MainWindow::showSoundInError);
   // connect(m_soundInput, &SoundInput::status, this, &MainWindow::showStatusMessage);
-  connect (&m_audioThread, &QThread::finished, m_soundInput, &QObject::deleteLater);
+  connect (m_audioThread.get (), &QThread::finished, m_soundInput, &QObject::deleteLater);
 
   connect (this, &MainWindow::finished, this, &MainWindow::close);
 
@@ -560,7 +560,7 @@ MainWindow::MainWindow(bool multiple, QSettings * settings, QSharedMemory *shdme
   connect (this, &MainWindow::FFTSize, m_detector, &Detector::setBlockSize);
   
   connect(m_detector, &Detector::framesWritten, this, &MainWindow::dataSink,Qt::QueuedConnection);
-  connect (&m_audioThread, &QThread::finished, m_detector, &QObject::deleteLater);
+  connect (m_audioThread.get (), &QThread::finished, m_detector, &QObject::deleteLater);
 
   // setup the waterfall
   connect(m_wideGraph.data (), SIGNAL(freezeDecode2(int)),this,SLOT(freezeDecode(int)));
@@ -1189,7 +1189,7 @@ MainWindow::MainWindow(bool multiple, QSettings * settings, QSharedMemory *shdme
      memory segment. Here the throw unwinds cleanly into main.cpp's catch (review 2026-09-25). */
   check_decoder_identity (QDir::toNativeSeparators (m_appDir) + QDir::separator () + "jtdxjt9");
 
-  m_audioThread.start (m_audioThreadPriority);
+  m_audioThread->start (m_audioThreadPriority);
 
 #ifdef WIN32
   if (!m_multiple)
@@ -1426,8 +1426,12 @@ MainWindow::~MainWindow()
   }
   fftwf_forget_wisdom ();
   fftwf_cleanup ();
-  m_audioThread.quit ();
-  m_audioThread.wait ();
+  // CE3TSK 2026-09-26: bounded, through m_audioThread's deleter (thread_shutdown.hpp), and here
+  // rather than with the members so that audio still stops before the rest is torn down.
+  // SoundInput::start can sit in CoreAudio waiting on the audio server - a microphone permission
+  // prompt did it - and the unbounded wait here kept the program from quitting. The audio
+  // objects are deleted when the thread finishes, so a thread left running keeps them.
+  m_audioThread.reset ();
   remove_child_from_event_filter (this);
 }
 

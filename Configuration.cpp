@@ -176,6 +176,7 @@ extern "C" {
 #include <QtGui>
 #include "qt_helpers.hpp"
 #include "tooltip_wrap.hpp"   /* CE3TSK */
+#include "thread_shutdown.hpp"   /* CE3TSK */
 #include "MetaDataRegistry.hpp"
 #include "SettingsGroup.hpp"
 #include "FrequencyLineEdit.hpp"
@@ -2145,8 +2146,16 @@ Configuration::impl::impl (Configuration * self, QNetworkAccessManager * network
 
 Configuration::impl::~impl ()
 {
-  transceiver_thread_->quit ();
-  transceiver_thread_->wait ();
+  // CE3TSK 2026-09-26: bounded (thread_shutdown.hpp). Hamlib's rig_open against an FLRig that
+  // accepted the connection but never answered sat in read timeouts and retries for minutes, and
+  // the unbounded wait here left the program unable to quit. The limit leaves the shutdown that
+  // closeEvent queued - PTT off, split restore - room to finish on a slow rig. A thread left
+  // running is still inside Hamlib, so the factory keeps the backends registered: unregistering
+  // them would change Hamlib's global backend table under it.
+  if (!thread_shutdown::quit_and_wait (transceiver_thread_, thread_shutdown::rig_msecs, "Rig control"))
+    {
+      transceiver_factory_.keep_backends_registered ();
+    }
   write_settings ();
   temp_dir_.removeRecursively (); // clean up temp files
 }

@@ -159,9 +159,15 @@ public:
   // type
   //
   std::unique_ptr<Transceiver> create (ParameterPack const&, QThread * target_thread = nullptr);
-  
+
+  // CE3TSK 2026-09-26: do not unregister the Hamlib backends on destruction - for a shutdown
+  // that leaves a rig thread inside Hamlib (Configuration.cpp), whose global backend table
+  // must not change under it
+  void keep_backends_registered () {unregister_backends_ = false;}
+
 private:
   Transceivers transceivers_;
+  bool unregister_backends_ {true};
 };
 
 inline

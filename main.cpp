@@ -2,6 +2,8 @@
 // and rewritten in places for JTDX_contest by Tihomir Sokcevic CE3TSK since 2025
 
 #include <iostream>
+#include <cstdio>
+#include <cstdlib>
 #include <exception>
 #include <stdexcept>
 #include <string>
@@ -44,6 +46,7 @@
 #include "SettingsGroup.hpp"
 #include "TraceFile.hpp"
 #include "mainwindow.h"
+#include "thread_shutdown.hpp"   /* CE3TSK */
 #include "commons.h"
 #include "lib/init_random_seed.h"
 
@@ -107,6 +110,19 @@ namespace
 #endif
     }
   } seeding;
+
+  // CE3TSK 2026-09-26: end the process at once, for a worker thread left running at shutdown
+  // (thread_shutdown.hpp): release the shared memory segment, flush what is buffered, and skip the
+  // remaining destructors and exit handlers, Qt's included, which that thread could wake into.
+  // Settings and the instance lock are the caller's.
+  [[noreturn]] void leave_now (QSharedMemory& mem, int result)
+  {
+    mem.detach ();
+    std::cout.flush ();
+    std::cerr.flush ();
+    std::fflush (nullptr);
+    std::_Exit (result);
+  }
 
   // We  can't use  the GUI  after QApplication::exit()  is called  so
   // uncaught exceptions can  get lost on Windows  systems where there
@@ -517,6 +533,18 @@ int main(int argc, char *argv[])
         QObject::connect (&a, SIGNAL (lastWindowClosed()), &a, SLOT (quit()));
         result = a.exec();
       }
+      // CE3TSK 2026-09-26: a worker thread did not stop and was left running, stuck in a library
+      // call (thread_shutdown.hpp: the rig thread in Hamlib, the audio thread in CoreAudio). Do
+      // what the rest of the teardown is for - settings on disk, the instance lock dropped, the
+      // shared memory segment released - and leave at once.
+      if (thread_shutdown::abandoned ())
+        {
+          settings.sync ();
+#if QT_VERSION >= 0x050200
+          instance_lock.unlock ();
+#endif
+          leave_now (mem_jtdxjt9, result);
+        }
       return result;
     }
   catch (std::exception const& e)
@@ -530,5 +558,9 @@ int main(int argc, char *argv[])
       std::cerr << "Unexpected error\n";
       throw;			// hoping the runtime might tell us more about the exception
     }
+  // CE3TSK 2026-09-26: and after a failed start-up - a MainWindow constructor that threw after
+  // starting the audio thread, which then did not stop. The unwinding has synced the settings
+  // and dropped the instance lock.
+  if (thread_shutdown::abandoned ()) leave_now (mem_jtdxjt9, -1);
   return -1;
 }

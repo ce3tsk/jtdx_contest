@@ -49,7 +49,7 @@ TransceiverFactory::TransceiverFactory ()
 
 TransceiverFactory::~TransceiverFactory ()
 {
-  HamlibTransceiver::unregister_transceivers ();
+  if (unregister_backends_) HamlibTransceiver::unregister_transceivers ();
 }
 
 auto TransceiverFactory::supported_transceivers () const -> Transceivers const&

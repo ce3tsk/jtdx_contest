@@ -878,7 +878,18 @@ void TCITransceiver::onMessageReceived(const QString &str)
 
 void TCITransceiver::sendTextMessage(const QString &message)
 {
-    if (inConnected) commander_->sendTextMessage(message);
+    // CE3TSK 2026-09-26: flushed at once, not when the event loop next polls the socket. The wait
+    // after a command is a nested event loop (mysleep1..3), and at shutdown the queued quit that
+    // ends the rig thread is delivered inside it (thread_shutdown.hpp), so the loop may never poll
+    // the socket again. do_stop's close () still sends what is buffered when the stop gets that
+    // far; flushing here means a PTT off, or the split and mode restore, has left anyway - when
+    // the thread is then left running and the process ends without that close (measured: an
+    // unclosed QWebSocket whose loop ended right after sendTextMessage delivered 0 of 3 messages
+    // without flush (), 3 of 3 with it).
+    if (inConnected) {
+        commander_->sendTextMessage(message);
+        commander_->flush();
+    }
 }
 
 
