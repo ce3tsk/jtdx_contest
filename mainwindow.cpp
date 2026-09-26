@@ -5539,6 +5539,33 @@ static QIcon menu_dot(QColor const& colour)
   q.drawEllipse(3, 3, 10, 10);
   return QIcon(dot);
 }
+/* CE3TSK 2026-09-26: the chosen preset's dot, larger and with a tick in it. The operator: the tick
+   that marks the chosen preset shows on macOS, not on Linux. Qt draws the menus itself on Linux and
+   Windows, and there an entry that has an icon shows the icon IN PLACE of the check mark - the
+   chosen preset looked exactly like the others (the sandbox: the lamp said "Preset R", the menu showed
+   seven plain dots, not even a frame round the checked one). A native menu - macOS, or a desktop's
+   global menu bar - draws its own tick beside the icon, so there the dot is left as it is. The tick
+   is white over a dark outline, which reads on every colour of the table, the grey one included. */
+static QIcon menu_dot_ticked(QColor const& colour)
+{
+  QPixmap dot(16, 16); dot.fill(Qt::transparent);
+  QPainter q(&dot); q.setRenderHint(QPainter::Antialiasing); q.setBrush(colour); q.setPen(Qt::NoPen);
+  q.drawEllipse(1, 1, 14, 14);
+  QPolygonF tick; tick << QPointF(4.3, 8.2) << QPointF(6.9, 10.8) << QPointF(11.7, 5.4);
+  QPen pen(QColor(0, 0, 0, 150), 3.4, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
+  q.setBrush(Qt::NoBrush); q.setPen(pen); q.drawPolyline(tick);
+  pen.setColor(Qt::white); pen.setWidthF(1.8); q.setPen(pen); q.drawPolyline(tick);
+  return QIcon(dot);
+}
+// a marked preset's dot, which carries the tick while the preset is the chosen one (menu_dot_ticked)
+static void preset_dot(QAction* action, QColor const& colour, bool native_menus)
+{
+  action->setIcon(menu_dot(colour));
+  if (native_menus) return;   // the platform draws its own tick
+  auto const follow = [action, colour](bool on) { action->setIcon(on ? menu_dot_ticked(colour) : menu_dot(colour)); };
+  QObject::connect(action, &QAction::toggled, action, follow);
+  follow(action->isChecked());
+}
 /* CE3TSK: a preset entry's name for the menu, its whole description for the tooltip.
 
    Each preset action carries its full recipe as its label - "pipeline max decodes light:
@@ -5598,7 +5625,7 @@ void MainWindow::markRecommendedPresets()
     {ui->actionFT8PresetPipelineRun, QT_TR_NOOP("most results"), "+28.0 %, 13.3 s", DecodePreset::PipelineRun}};
   for (auto const& p : picks) {
     QFont f = p.action->font(); f.setBold(true); p.action->setFont(f);
-    p.action->setIcon(menu_dot(QColor(preset_colour(p.preset))));   // P13: the lamp's colour table
+    preset_dot(p.action, QColor(preset_colour(p.preset)), ui->menuBar->isNativeMenuBar());   // P13: the lamp's colour table
     p.action->setText(preset_menu_entry(p.action, QString("%1 (%2)").arg(tr(p.tier), p.cost)));
   }
   // the recommended one: underlined as well, and named so; the best-results pipeline underlined too
@@ -5757,7 +5784,7 @@ void MainWindow::markFT4Presets()
     {ui->actionFT4PresetMaxEffort, QT_TR_NOOP("max effort"), "+8.4 %, 0.69 s", FT4Preset::MaxEffort}};
   for (auto const& p : picks) {
     QFont f = p.action->font(); f.setBold(true); p.action->setFont(f);
-    p.action->setIcon(menu_dot(QColor(ft4_preset_colour(p.preset))));
+    preset_dot(p.action, QColor(ft4_preset_colour(p.preset)), ui->menuBar->isNativeMenuBar());
     p.action->setText(preset_menu_entry(p.action, QString("%1 (%2)").arg(tr(p.tier), p.cost)));
   }
   QFont f = ui->actionFT4PresetRecommended->font(); f.setUnderline(true); ui->actionFT4PresetRecommended->setFont(f);
@@ -5779,7 +5806,7 @@ void MainWindow::markFT2Presets()
     {ui->actionFT2PresetMaxEffort, QT_TR_NOOP("max effort"), "+12.5 % crowded, 0.56 s", FT2Preset::MaxEffort}};
   for (auto const& p : picks) {
     QFont f = p.action->font(); f.setBold(true); p.action->setFont(f);
-    p.action->setIcon(menu_dot(QColor(ft2_preset_colour(p.preset))));
+    preset_dot(p.action, QColor(ft2_preset_colour(p.preset)), ui->menuBar->isNativeMenuBar());
     p.action->setText(preset_menu_entry(p.action, QString("%1 (%2)").arg(tr(p.tier), p.cost)));
   }
   QFont f = ui->actionFT2PresetRecommended->font(); f.setUnderline(true); ui->actionFT2PresetRecommended->setFont(f);
