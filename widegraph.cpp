@@ -1,5 +1,6 @@
 #include "widegraph.h"
 #include <QApplication>
+#include <QTimer>   /* CE3TSK: the queued geometry restore */
 #include <QSettings>
 #include <qmath.h>
 #include "ui_widegraph.h"
@@ -58,12 +59,16 @@ WideGraph::WideGraph(QSettings * settings, JTDXDateTime * jtdxtime, QWidget *par
 
   //Restore user's settings
   m_settings->beginGroup("WideGraph");
-  restoreGeometry (m_settings->value ("geometry", saveGeometry ()).toByteArray ());
-  /* CE3TSK: a geometry saved when the window was dragged small, or with a smaller font,
-     can be below what the layout needs and Qt then crushes the children. sizeHint() is
-     what the layout wants and it tracks the application font; a larger saved size is
-     kept as it is. See UI_DARK_STYLE.md. */
-  resize (size ().expandedTo (sizeHint ()));
+  /* CE3TSK 2026-09-26: the size the operator left is applied here AND, properly, on the first
+     show - see restoreSavedGeometry (). See UI_DARK_STYLE.md. */
+  m_hadSavedGeometry = m_settings->contains ("geometry");
+  m_savedGeometry = m_settings->value ("geometry", saveGeometry ()).toByteArray ();
+  m_savedMinHint = m_settings->value ("geometryMinHint").toSize ();
+  restoreGeometry (m_savedGeometry);
+  /* Nothing has ever been saved - a fresh profile: open at what the layout asks for, exactly as
+     this window always did. Only a size the OPERATOR chose is worth defending against the layout,
+     and that one is applied after the first show, in restoreSavedGeometry (). */
+  if (!m_hadSavedGeometry) resize (size ().expandedTo (sizeHint ()));
 
   if(m_settings->value("PlotZero").toInt()>=-50 && m_settings->value("PlotZero").toInt()<=50)
     ui->widePlot->setPlotZero(m_settings->value("PlotZero", 0).toInt());
@@ -178,6 +183,42 @@ WideGraph::~WideGraph ()
 {
 }
 
+/* CE3TSK 2026-09-26: the operator's own size, restored where it sticks.
+   The waterfall reopened bigger than it was left, and the constructor is the wrong place to fix
+   that: while WideGraph is being built the controls row is still part of the layout (it is hidden
+   a few lines later when Controls is off), so minimumSizeHint () is transiently large - measured
+   863x185 against 200x100 once the layout has settled - and Qt widens the window to that transient
+   minimum when it is shown. The old code made it worse by clamping to sizeHint (), the PREFERRED
+   size (915x265 here), so a waterfall dragged short came back tall every time.
+   So the saved geometry is applied AGAIN, queued after the first show, when the layout has settled
+   and nothing will stretch it back. With no saved geometry at all - a fresh profile - the layout's
+   own sizeHint () still decides, as it always did; a size the operator chose prevails over it. The growth rule is the main window's (restoreMainGeometry,
+   2026-09-15): grow only by as much as the layout's minimum has RISEN since the geometry was saved
+   - which is what a larger application font does - and never past that minimum. */
+void WideGraph::showEvent (QShowEvent * e)
+{
+  QDialog::showEvent (e);
+  if (!m_geometryQueued)
+    {
+      m_geometryQueued = true;   // once per run, even if the operator closes and reopens it -
+      QTimer::singleShot (0, this, [this] { restoreSavedGeometry (); });   // a size set during
+    }                                        // the session must not be undone by a second show
+}
+
+void WideGraph::restoreSavedGeometry ()
+{
+  /* From here the window is what the operator will see, so saveSettings () may write it back. This
+     is set even for a fresh profile, or the size chosen in the very first session would never be
+     saved at all. */
+  m_geometryRestored = true;
+  if (!m_hadSavedGeometry) return;   // the constructor's sizeHint stands
+  restoreGeometry (m_savedGeometry);
+  if (!m_savedMinHint.isValid ()) return;   // saved before the minimum was recorded: as saved
+  auto const needed = minimumSizeHint ();
+  auto const growth = (needed - m_savedMinHint).expandedTo (QSize {0, 0});
+  resize (size ().expandedTo ((size () + growth).boundedTo (needed)));
+}
+
 void WideGraph::closeEvent (QCloseEvent * e)
 {
   saveSettings ();
@@ -187,7 +228,15 @@ void WideGraph::closeEvent (QCloseEvent * e)
 void WideGraph::saveSettings()                                           //saveSettings
 {
   m_settings->beginGroup ("WideGraph");
-  m_settings->setValue ("geometry", saveGeometry ());
+  /* CE3TSK 2026-09-26: the geometry only once the window has really been through a show. The
+     constructor calls this to write the defaults out, and at that moment the window still has the
+     size the layout wanted DURING construction - writing it here threw away the size the operator
+     had left, before restoreSavedGeometry () ever ran. */
+  if (m_geometryRestored)
+    {
+      m_settings->setValue ("geometry", saveGeometry ());
+      m_settings->setValue ("geometryMinHint", minimumSizeHint ());
+    }
   m_settings->setValue ("PlotZero", ui->widePlot->plotZero());
   m_settings->setValue ("PlotGain", ui->widePlot->plotGain());
   m_settings->setValue ("Plot2dGain", ui->widePlot->plot2dGain());

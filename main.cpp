@@ -23,6 +23,7 @@
 #include <QStandardPaths>
 #include <QStringList>
 #include <QLockFile>
+#include <QTimer>    /* CE3TSK: the queued raise of the main window at start-up */
 
 #if QT_VERSION >= 0x050200
 #include <QCommandLineParser>
@@ -503,6 +504,15 @@ int main(int argc, char *argv[])
 
         MainWindow w(multiple, &settings, &mem_jtdxjt9, downSampleFactor, new QNetworkAccessManager {&a}, env);
         w.show();
+        /* CE3TSK 2026-09-26: and the main window goes in FRONT. The wide graph is shown from the
+           MainWindow constructor, so it is mapped before this show () - on Windows the operator
+           found it sitting on top of the main window at every start (not reproducible on X11,
+           where the later show () wins). Queued, because raising a window the window manager has
+           not finished mapping does nothing; by the time the event loop turns, both are up. */
+        QTimer::singleShot (0, &w, [&w] {
+            // ... unless it was left minimised: restoreGeometry () brings that state back, and
+            // activateWindow () would deiconify a window the operator deliberately put away
+            if (!w.isMinimized ()) { w.raise (); w.activateWindow (); } });
 
         QObject::connect (&a, SIGNAL (lastWindowClosed()), &a, SLOT (quit()));
         result = a.exec();

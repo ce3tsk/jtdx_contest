@@ -68,6 +68,7 @@ public slots:
 
 protected:
   bool eventFilter (QObject * object, QEvent * event) override;   // CE3TSK: keeps Controls above the scale line
+  void showEvent (QShowEvent *) override;   // CE3TSK: see restoreSavedGeometry ()
   virtual void keyPressEvent( QKeyEvent *e );
   void closeEvent (QCloseEvent *);
 
@@ -92,6 +93,15 @@ private slots:
   void on_sbPercent2dPlot_valueChanged(int n);
 
 private:
+  /* CE3TSK 2026-09-26: the geometry the operator left, applied once the layout has settled.
+     See restoreSavedGeometry () in widegraph.cpp for why it cannot be done in the constructor. */
+  void restoreSavedGeometry ();
+  QByteArray m_savedGeometry;
+  QSize m_savedMinHint;
+  bool m_hadSavedGeometry {false};   // no geometry ever saved: the layout's own hint decides
+  bool m_geometryQueued {false};      // the deferred restore has been asked for
+  bool m_geometryRestored {false};    // ... and has run: only then may the geometry be saved
+
   void   readPalette();
 
   QScopedPointer<Ui::WideGraph> ui;
