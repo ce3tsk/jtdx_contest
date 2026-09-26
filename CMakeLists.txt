@@ -999,6 +999,34 @@ else (Fortran_COMPILER_NAME MATCHES "gfortran.*")
   set (CMAKE_Fortran_FLAGS_DEBUG   "${CMAKE_Fortran_FLAGS_DEBUG} -fbounds-check ${General_FFLAGS}")
 endif (Fortran_COMPILER_NAME MATCHES "gfortran.*")
 
+# CE3TSK 2026-09-26: a non-debug build must optimise its Fortran. The blocks above only APPEND to
+# CMAKE_Fortran_FLAGS_<CONFIG>, and the -O3 there comes from CMake's default when the cache is
+# first made. The macOS build directory of rc08 and rc09 had those cache entries empty, so both
+# DMGs shipped the decoder at gfortran's -O0: the same decodes, but about 3.3 times slower on one
+# thread. It was found only because a user's own build of the same tag decoded far better. The
+# last -O (or /O) option is the one the compiler obeys, so that is the one checked.
+if (NOT is_debug_build)
+  string (TOUPPER "${CMAKE_BUILD_TYPE}" build_type_upper)
+  string (REGEX MATCHALL "(^|[ \t])[-/]O[^ \t]*" fortran_opt_flags
+    " ${CMAKE_Fortran_FLAGS} ${CMAKE_Fortran_FLAGS_${build_type_upper}}")
+  list (LENGTH fortran_opt_flags n_opt_flags)
+  set (last_opt_flag)
+  if (n_opt_flags GREATER 0)
+    list (GET fortran_opt_flags -1 last_opt_flag)
+    string (STRIP "${last_opt_flag}" last_opt_flag)
+  endif ()
+  if (NOT last_opt_flag OR last_opt_flag MATCHES "^[-/]O[d0]$")
+    message (FATAL_ERROR
+      "The ${CMAKE_BUILD_TYPE} build would compile the Fortran decoder without optimisation.\n"
+      "  CMAKE_Fortran_FLAGS: '${CMAKE_Fortran_FLAGS}'\n"
+      "  CMAKE_Fortran_FLAGS_${build_type_upper}: '${CMAKE_Fortran_FLAGS_${build_type_upper}}'\n"
+      "The cached flags carry no optimisation level (or end in -O0), usually a CMakeCache.txt left "
+      "from an earlier configure. Set one in this build directory, for example\n"
+      "  cmake -DCMAKE_Fortran_FLAGS_${build_type_upper}=-O3 .\n"
+      "or configure a new, empty build directory.")
+  endif ()
+endif ()
+
 
 #
 # Linker setup
