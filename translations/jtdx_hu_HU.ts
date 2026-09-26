@@ -6292,8 +6292,8 @@ Ezt csak egyszer kérdezzük meg.</translation>
         <translation>Nem válaszolt.</translation>
     </message>
     <message>
-        <source>It is a JTDX_contest decoder, but not this build's.</source>
-        <translation>Ez JTDX_contest dekóder, de nem ehhez a fordításhoz tartozik.</translation>
+        <source>It is a %1 decoder, but not this build's.</source>
+        <translation>Ez %1 dekóder, de nem ehhez a fordításhoz tartozik.</translation>
     </message>
     <message>
         <source>It does not identify itself as this program's decoder, so it is another program - a stock JTDX or WSJT-X decoder, or one older than this check.</source>
@@ -6338,6 +6338,21 @@ Talált: %2
 Dekóder: %3
 
 Ez magának a dekódernek a hibája. Hárítsa el, ami az indulását akadályozza - hiányzó programkönyvtár, sérült telepítés, hiányzó futtatási jog -, majd indítsa újra.</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>It was killed before it could answer.</source>
+        <translation>Leállt, mielőtt válaszolhatott volna.</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>It failed to run; it ended with code %1.</source>
+        <translation>Nem tudott lefutni; %1 kóddal ért véget.</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>The decoder beside this program could not be run, so this program cannot decode anything.</source>
+        <translation>A program melletti dekódolót nem sikerült futtatni, így a program semmit sem tud dekódolni.</translation>
     </message>
 </context>
 <context>

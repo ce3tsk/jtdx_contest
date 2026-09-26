@@ -6288,8 +6288,8 @@ Dit wordt maar één keer gevraagd.</translation>
         <translation>Hij heeft niet geantwoord.</translation>
     </message>
     <message>
-        <source>It is a JTDX_contest decoder, but not this build's.</source>
-        <translation>Het is een JTDX_contest-decoder, maar niet die van deze build.</translation>
+        <source>It is a %1 decoder, but not this build's.</source>
+        <translation>Het is een %1-decoder, maar niet die van deze build.</translation>
     </message>
     <message>
         <source>It does not identify itself as this program's decoder, so it is another program - a stock JTDX or WSJT-X decoder, or one older than this check.</source>
@@ -6334,6 +6334,21 @@ Gevonden: %2
 Decoder: %3
 
 Dat is de fout van de decoder zelf. Verhelp wat het starten verhindert - een ontbrekende bibliotheek, een kapotte installatie, geen uitvoerrecht - en start opnieuw.</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>It was killed before it could answer.</source>
+        <translation>Hij werd afgebroken voordat hij kon antwoorden.</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>It failed to run; it ended with code %1.</source>
+        <translation>Hij kon niet draaien; hij eindigde met code %1.</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>The decoder beside this program could not be run, so this program cannot decode anything.</source>
+        <translation>De decoder naast dit programma kon niet worden uitgevoerd, dus het programma kan niets decoderen.</translation>
     </message>
 </context>
 <context>

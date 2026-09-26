@@ -6106,7 +6106,7 @@ This is asked only once.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>It is a JTDX_contest decoder, but not this build's.</source>
+        <source>It is a %1 decoder, but not this build's.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -6141,6 +6141,31 @@ Found:    %2
 Decoder: %3
 
 That is the decoder's own error. Put right whatever stops it starting - a missing library, a broken install, no permission to run it - and start again.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>It was killed before it could answer.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>It failed to run; it ended with code %1.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>The decoder beside this program could not be run, so this program cannot decode anything.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>Custom - the FT2 RX / TX background controls match no preset</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>FT* decoding preset - greyed while the mode is none of them</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

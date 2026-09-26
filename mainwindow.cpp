@@ -3986,7 +3986,7 @@ bool MainWindow::subProcessFailed (QProcess * process, int exit_code, QProcess::
 void MainWindow::check_decoder_identity (QString const& program)
 {
   /* CE3TSK: the one way out, for the author's own experiments - deploying a decoder built from a
-     different tree on purpose. Off by default, and it says so on stdout when it is used, because a
+     different tree on purpose. Off by default, and it says so on stderr when it is used, because a
      silent escape hatch is how a mismatched pair ends up on the air. */
   if (qEnvironmentVariableIsSet ("JTDX_NO_DECODER_CHECK"))
     {
@@ -3999,18 +3999,29 @@ void MainWindow::check_decoder_identity (QString const& program)
       .arg (PROJECT_NAME).arg (version (true)).arg (JTDX_IFACE_HASH)
       .arg (static_cast<qulonglong> (sizeof (struct dec_data)))};
   QProcess ask;
+  /* CE3TSK: probe from the temp directory. An older decoder - exactly the case this check exists
+     for - answers an unknown option by exporting FFTW wisdom to an uninitialised file name, and
+     it would drop that junk file wherever this program was started, usually the operator's home
+     (review 2026-09-25). */
+  ask.setWorkingDirectory (QDir::tempPath ());
   ask.start (program, QStringList {"-v"}, QIODevice::ReadOnly);
   QString answer;
   QString trouble;
   bool could_not_run {false};
+  QString why;            // what Qt says when the process never starts - the only fact we have
   if (!ask.waitForStarted (5000))
     {
       could_not_run = true;
+      why = ask.errorString ();
       trouble = tr ("It could not be started at all.");
     }
   else if (!ask.waitForFinished (10000))
     {
       ask.kill ();
+      ask.waitForFinished (1000);
+      // a decoder stalled on a hung mount cannot be diagnosed as the wrong build either
+      // (review 2026-09-25)
+      could_not_run = true;
       trouble = tr ("It did not answer.");
     }
   else
@@ -4026,13 +4037,17 @@ void MainWindow::check_decoder_identity (QString const& program)
          " error: unrecognised option: -v" and still exit 0), or one of ours from before this
          check existed. If it does begin that way, it is ours and the rest of the line says what
          differs, which the details below show side by side. */
-      if (ask.exitStatus () != QProcess::NormalExit || ask.exitCode () != 0)
+      if (ask.exitStatus () != QProcess::NormalExit)
+        {
+          could_not_run = true;
+          trouble = tr ("It was killed before it could answer.");
+        }
+      else if (ask.exitCode () != 0)
         {
           could_not_run = true;
           // a correct decoder that cannot start - a missing libgfortran, say - must not be
           // diagnosed as somebody else's program (review 2026-09-25)
-          trouble = tr ("It failed to run; the line below is what it said. This is not about which "
-                        "decoder is installed - it could not start at all.");
+          trouble = tr ("It failed to run; it ended with code %1.").arg (ask.exitCode ());
         }
       else if (answer.startsWith (QString {"%1 jtdxjt9 "}.arg (PROJECT_NAME)))
         {
@@ -4046,7 +4061,9 @@ void MainWindow::check_decoder_identity (QString const& program)
     }
   /* CE3TSK: the advice has to match the fault. Redeploying the pair fixes a mismatch; it does
      nothing for a decoder that cannot start because a library is missing (review 2026-09-25). */
-  auto const shown = answer.isEmpty () ? tr ("(no answer)") : answer;
+  // a non-executable file, a missing file, an empty file and a directory all answer nothing: what
+  // tells them apart is Qt's own reason, so show that instead of "(no answer)" (review 2026-09-25)
+  auto const shown = !answer.isEmpty () ? answer : (why.isEmpty () ? tr ("(no answer)") : why);
   QString details;
   if (could_not_run)
     {
@@ -4062,9 +4079,16 @@ void MainWindow::check_decoder_identity (QString const& program)
                     "directory.")
         .arg (expected).arg (shown).arg (program);
     }
-  JTDXMessageBox::critical_message (this, tr ("Wrong decoder"),
-      tr ("The decoder beside this program is not the one it was built with, so decoding would be "
-          "wrong or silent.") + "\n\n" + trouble, details);
+  /* CE3TSK: the opening sentence has to match the fault too - telling an operator whose decoder
+     died on a missing library that it "is not the one it was built with" sends them to redeploy a
+     pair that is already right (review 2026-09-25). */
+  auto const headline = could_not_run
+      ? tr ("The decoder beside this program could not be run, so this program cannot decode "
+            "anything.")
+      : tr ("The decoder beside this program is not the one it was built with, so decoding would "
+            "be wrong or silent.");
+  JTDXMessageBox::critical_message (this, tr ("Wrong decoder"), headline + "\n\n" + trouble,
+                                    details);
   throw std::runtime_error {"wrong decoder: expected [" + expected.toStdString ()
       + "] found [" + answer.toStdString () + "] at " + program.toStdString ()};
 }

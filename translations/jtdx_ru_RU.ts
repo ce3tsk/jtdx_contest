@@ -6302,8 +6302,8 @@ This is asked only once.</source>
         <translation>Он не ответил.</translation>
     </message>
     <message>
-        <source>It is a JTDX_contest decoder, but not this build's.</source>
-        <translation>Это декодер JTDX_contest, но не из этой сборки.</translation>
+        <source>It is a %1 decoder, but not this build's.</source>
+        <translation>Это декодер %1, но не из этой сборки.</translation>
     </message>
     <message>
         <source>It does not identify itself as this program's decoder, so it is another program - a stock JTDX or WSJT-X decoder, or one older than this check.</source>
@@ -6348,6 +6348,21 @@ That is the decoder's own error. Put right whatever stops it starting - a missin
 Декодер: %3
 
 Это собственная ошибка декодера. Устраните то, что мешает ему запуститься — отсутствующую библиотеку, повреждённую установку, отсутствие прав на запуск — и запустите снова.</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>It was killed before it could answer.</source>
+        <translation>Он был завершён, не успев ответить.</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>It failed to run; it ended with code %1.</source>
+        <translation>Он не смог выполниться: завершился с кодом %1.</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>The decoder beside this program could not be run, so this program cannot decode anything.</source>
+        <translation>Декодер рядом с этой программой не удалось запустить, поэтому программа не может ничего декодировать.</translation>
     </message>
 </context>
 <context>

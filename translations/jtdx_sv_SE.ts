@@ -6290,8 +6290,8 @@ Detta frågas bara en gång.</translation>
         <translation>Den svarade inte.</translation>
     </message>
     <message>
-        <source>It is a JTDX_contest decoder, but not this build's.</source>
-        <translation>Det är en JTDX_contest-avkodare, men inte den här byggets.</translation>
+        <source>It is a %1 decoder, but not this build's.</source>
+        <translation>Det är en %1-avkodare, men inte den här byggets.</translation>
     </message>
     <message>
         <source>It does not identify itself as this program's decoder, so it is another program - a stock JTDX or WSJT-X decoder, or one older than this check.</source>
@@ -6336,6 +6336,21 @@ Hittade: %2
 Avkodare: %3
 
 Det är avkodarens eget fel. Åtgärda det som hindrar den från att starta - ett saknat bibliotek, en trasig installation, saknad körrättighet - och starta om.</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>It was killed before it could answer.</source>
+        <translation>Den avbröts innan den hann svara.</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>It failed to run; it ended with code %1.</source>
+        <translation>Den kunde inte köras; den avslutades med kod %1.</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>The decoder beside this program could not be run, so this program cannot decode anything.</source>
+        <translation>Avkodaren bredvid detta program gick inte att köra, så programmet kan inte avkoda något alls.</translation>
     </message>
 </context>
 <context>

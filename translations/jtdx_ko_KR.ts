@@ -6288,8 +6288,8 @@ This is asked only once.</source>
         <translation>응답하지 않았습니다.</translation>
     </message>
     <message>
-        <source>It is a JTDX_contest decoder, but not this build's.</source>
-        <translation>JTDX_contest 디코더이지만 이 빌드의 것이 아닙니다.</translation>
+        <source>It is a %1 decoder, but not this build's.</source>
+        <translation>%1 디코더이지만 이 빌드의 것이 아닙니다.</translation>
     </message>
     <message>
         <source>It does not identify itself as this program's decoder, so it is another program - a stock JTDX or WSJT-X decoder, or one older than this check.</source>
@@ -6334,6 +6334,21 @@ That is the decoder's own error. Put right whatever stops it starting - a missin
 디코더: %3
 
 이것은 디코더 자체의 오류입니다. 실행을 막는 원인(누락된 라이브러리, 손상된 설치, 실행 권한 없음)을 해결한 뒤 다시 시작하십시오.</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>It was killed before it could answer.</source>
+        <translation>응답하기 전에 종료되었습니다.</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>It failed to run; it ended with code %1.</source>
+        <translation>실행하지 못했습니다. 종료 코드는 %1 입니다.</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>The decoder beside this program could not be run, so this program cannot decode anything.</source>
+        <translation>이 프로그램 옆의 디코더를 실행할 수 없어서 아무것도 디코딩할 수 없습니다.</translation>
     </message>
 </context>
 <context>

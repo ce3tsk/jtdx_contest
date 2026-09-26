@@ -6287,8 +6287,8 @@ This is asked only once.</source>
         <translation>它没有响应。</translation>
     </message>
     <message>
-        <source>It is a JTDX_contest decoder, but not this build's.</source>
-        <translation>这是 JTDX_contest 的解码器，但不是本次构建的。</translation>
+        <source>It is a %1 decoder, but not this build's.</source>
+        <translation>这是 %1 的解码器，但不是本次构建的。</translation>
     </message>
     <message>
         <source>It does not identify itself as this program's decoder, so it is another program - a stock JTDX or WSJT-X decoder, or one older than this check.</source>
@@ -6333,6 +6333,21 @@ That is the decoder's own error. Put right whatever stops it starting - a missin
 解码器：%3
 
 这是解码器自身的错误。请排除阻止它启动的原因——缺少的库、损坏的安装、没有执行权限——然后重新启动。</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>It was killed before it could answer.</source>
+        <translation>它在回答之前就被终止了。</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>It failed to run; it ended with code %1.</source>
+        <translation>它无法运行，退出代码为 %1。</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>The decoder beside this program could not be run, so this program cannot decode anything.</source>
+        <translation>本程序旁边的解码器无法运行，因此本程序无法解码。</translation>
     </message>
 </context>
 <context>

@@ -6292,8 +6292,8 @@ Der spørges kun én gang.</translation>
         <translation>Den svarede ikke.</translation>
     </message>
     <message>
-        <source>It is a JTDX_contest decoder, but not this build's.</source>
-        <translation>Det er en JTDX_contest-dekoder, men ikke denne bygnings.</translation>
+        <source>It is a %1 decoder, but not this build's.</source>
+        <translation>Det er en %1-dekoder, men ikke denne bygnings.</translation>
     </message>
     <message>
         <source>It does not identify itself as this program's decoder, so it is another program - a stock JTDX or WSJT-X decoder, or one older than this check.</source>
@@ -6338,6 +6338,21 @@ Fundet: %2
 Dekoder: %3
 
 Det er dekoderens egen fejl. Ret det, der forhindrer den i at starte - et manglende bibliotek, en ødelagt installation, manglende kørselsrettighed - og start igen.</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>It was killed before it could answer.</source>
+        <translation>Den blev dræbt, før den nåede at svare.</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>It failed to run; it ended with code %1.</source>
+        <translation>Den kunne ikke køre; den sluttede med kode %1.</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>The decoder beside this program could not be run, so this program cannot decode anything.</source>
+        <translation>Dekoderen ved siden af dette program kunne ikke køres, så programmet kan slet ikke dekode.</translation>
     </message>
 </context>
 <context>

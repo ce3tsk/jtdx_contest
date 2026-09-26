@@ -140,9 +140,11 @@ program jt9
   ! stack garbage, and jt9files() hands them to the decoder: a garbage hiscall made the
   ! "MyCall DxCall" a-priori passes decode differently from one run to the next (found with
   ! valgrind on the FT4 hint memory work, 2026-08-29; file mode only, the GUI clears its block)
-  wisfile=''   ! CE3TSK 2026-09-25: an unrecognised option jumps to the cleanup, which exports
-               ! FFTW wisdom to this name - uninitialised, it wrote a file with a junk name into
-               ! the caller's directory every time an older decoder was probed with -v
+  ! CE3TSK 2026-09-25: an unrecognised option jumps to the cleanup, which exports FFTW wisdom to
+  ! this name - uninitialised, it wrote a file with a junk name into the caller's directory. It
+  ! must be C_NULL_CHAR and not '': the name goes to C, and a blank-filled *520 with no NUL is read
+  ! past its end (strace showed 520 spaces plus adjacent stack bytes, review 2026-09-25)
+  wisfile=C_NULL_CHAR
   mycall=''; hiscall=''; mygrid=''; hisgrid=''
   do
      call getopt('hvs:e:a:b:r:m:p:d:f:w:t:9642TL:S:H:c:G:x:g:8C:K:E:R:A:WN:j:OyuzXQM:l:B:k:I:D:F:J:P:U:V:Y:Z:n:o:',   &
@@ -322,8 +324,9 @@ program jt9
 
 999 continue
 
-! Save wisdom and free memory
-  iret=fftwf_export_wisdom_to_filename(wisfile)
+! Save wisdom and free memory - but only if a name was ever built: the give-up path arrives here
+! with none, and C would be handed an empty file name (review 2026-09-25)
+  if(wisfile(1:1).ne.C_NULL_CHAR) iret=fftwf_export_wisdom_to_filename(wisfile)
   call four2a(a,-1,1,1,1)
   call filbig(-1.,0,0.,0,0.,0.,0)        !used for FFT plans
   call fftwf_cleanup_threads()

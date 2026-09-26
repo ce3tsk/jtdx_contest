@@ -6292,8 +6292,8 @@ Ovo se pita samo jednom.</translation>
         <translation>Nije odgovorio.</translation>
     </message>
     <message>
-        <source>It is a JTDX_contest decoder, but not this build's.</source>
-        <translation>To je JTDX_contest dekoder, ali ne iz ove gradnje.</translation>
+        <source>It is a %1 decoder, but not this build's.</source>
+        <translation>To je %1 dekoder, ali ne iz ove gradnje.</translation>
     </message>
     <message>
         <source>It does not identify itself as this program's decoder, so it is another program - a stock JTDX or WSJT-X decoder, or one older than this check.</source>
@@ -6338,6 +6338,21 @@ Pronađeno: %2
 Dekoder: %3
 
 To je greška samog dekodera. Otklonite ono što ga sprječava da se pokrene - nedostajuću biblioteku, oštećenu instalaciju, nedostatak prava izvršavanja - i pokrenite ponovno.</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>It was killed before it could answer.</source>
+        <translation>Prekinut je prije nego što je mogao odgovoriti.</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>It failed to run; it ended with code %1.</source>
+        <translation>Nije se mogao pokrenuti; završio je s kodom %1.</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>The decoder beside this program could not be run, so this program cannot decode anything.</source>
+        <translation>Dekoder pokraj ovog programa nije se mogao pokrenuti, pa program ne može ništa dekodirati.</translation>
     </message>
 </context>
 <context>

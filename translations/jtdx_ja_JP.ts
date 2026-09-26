@@ -6200,8 +6200,8 @@ This is asked only once.</source>
         <translation>応答がありませんでした。</translation>
     </message>
     <message>
-        <source>It is a JTDX_contest decoder, but not this build's.</source>
-        <translation>JTDX_contest のデコーダですが、このビルドのものではありません。</translation>
+        <source>It is a %1 decoder, but not this build's.</source>
+        <translation>%1 のデコーダですが、このビルドのものではありません。</translation>
     </message>
     <message>
         <source>It does not identify itself as this program's decoder, so it is another program - a stock JTDX or WSJT-X decoder, or one older than this check.</source>
@@ -6246,6 +6246,21 @@ That is the decoder's own error. Put right whatever stops it starting - a missin
 デコーダ: %3
 
 これはデコーダ自身のエラーです。起動を妨げている原因（ライブラリの不足、壊れたインストール、実行権限がないなど）を解消してから、もう一度起動してください。</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>It was killed before it could answer.</source>
+        <translation>応答する前に強制終了されました。</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>It failed to run; it ended with code %1.</source>
+        <translation>実行できませんでした。終了コードは %1 です。</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>The decoder beside this program could not be run, so this program cannot decode anything.</source>
+        <translation>このプログラムの隣にあるデコーダを実行できませんでした。そのため、まったくデコードできません。</translation>
     </message>
 </context>
 <context>

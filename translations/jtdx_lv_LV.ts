@@ -6287,8 +6287,8 @@ Tas tiek jautāts tikai vienu reizi.</translation>
         <translation>Tas neatbildēja.</translation>
     </message>
     <message>
-        <source>It is a JTDX_contest decoder, but not this build's.</source>
-        <translation>Tas ir JTDX_contest dekoders, bet ne no šī būvējuma.</translation>
+        <source>It is a %1 decoder, but not this build's.</source>
+        <translation>Tas ir %1 dekoders, bet ne no šī būvējuma.</translation>
     </message>
     <message>
         <source>It does not identify itself as this program's decoder, so it is another program - a stock JTDX or WSJT-X decoder, or one older than this check.</source>
@@ -6333,6 +6333,21 @@ Atrasts: %2
 Dekoders: %3
 
 Šī ir paša dekodera kļūda. Novērsiet to, kas neļauj tam startēt - trūkstošu bibliotēku, bojātu instalāciju, izpildes tiesību trūkumu - un palaidiet vēlreiz.</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>It was killed before it could answer.</source>
+        <translation>Tas tika apturēts, pirms paguva atbildēt.</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>It failed to run; it ended with code %1.</source>
+        <translation>Tas nespēja darboties; tas beidzās ar kodu %1.</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>The decoder beside this program could not be run, so this program cannot decode anything.</source>
+        <translation>Blakus šai programmai esošo dekodētāju neizdevās palaist, tāpēc programma nevar neko dekodēt.</translation>
     </message>
 </context>
 <context>

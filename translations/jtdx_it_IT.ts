@@ -6289,8 +6289,8 @@ La domanda viene posta una sola volta.</translation>
         <translation>Non ha risposto.</translation>
     </message>
     <message>
-        <source>It is a JTDX_contest decoder, but not this build's.</source>
-        <translation>È un decoder JTDX_contest, ma non quello di questa build.</translation>
+        <source>It is a %1 decoder, but not this build's.</source>
+        <translation>È un decoder %1, ma non quello di questa build.</translation>
     </message>
     <message>
         <source>It does not identify itself as this program's decoder, so it is another program - a stock JTDX or WSJT-X decoder, or one older than this check.</source>
@@ -6335,6 +6335,21 @@ Trovato: %2
 Decoder: %3
 
 Questo è l'errore del decoder stesso. Sistemare ciò che ne impedisce l'avvio - una libreria mancante, un'installazione rotta, il permesso di esecuzione assente - e riavviare.</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>It was killed before it could answer.</source>
+        <translation>È stato terminato prima di poter rispondere.</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>It failed to run; it ended with code %1.</source>
+        <translation>Non è riuscito a funzionare; è terminato con il codice %1.</translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp"/>
+        <source>The decoder beside this program could not be run, so this program cannot decode anything.</source>
+        <translation>Il decodificatore accanto a questo programma non è stato eseguito, quindi il programma non può decodificare nulla.</translation>
     </message>
 </context>
 <context>
