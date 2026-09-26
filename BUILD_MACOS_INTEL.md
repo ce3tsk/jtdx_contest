@@ -117,18 +117,22 @@ export SDKROOT=$(xcrun --show-sdk-path)
 ```
 
 ```bash
-cmake -DCMAKE_PREFIX_PATH=/opt/local/libexec/qt5 -DCMAKE_Fortran_COMPILER=/opt/local/bin/gfortran-mp-14 -DCMAKE_OSX_DEPLOYMENT_TARGET=10.15 -DCMAKE_OSX_SYSROOT=$SDKROOT -DCMAKE_BUILD_RPATH=/opt/local/lib/libgcc -DWSJT_GENERATE_DOCS=OFF -DWSJT_SKIP_MANPAGES=ON ../jtdx_contest
+cmake -DCMAKE_PREFIX_PATH=/opt/local/libexec/qt5 -DCMAKE_Fortran_COMPILER=/opt/local/bin/gfortran-mp-14 -DCMAKE_OSX_DEPLOYMENT_TARGET=10.15 -DCMAKE_OSX_SYSROOT=$SDKROOT -DCMAKE_BUILD_RPATH=/opt/local/lib/libgcc -DCMAKE_INSTALL_RPATH=/opt/local/lib/libgcc -DWSJT_GENERATE_DOCS=OFF -DWSJT_SKIP_MANPAGES=ON ../jtdx_contest
 ```
 
 `-DCMAKE_OSX_SYSROOT=$SDKROOT` is what lets CMake redirect Qt5Gui's hardcoded
 `/System/Library/Frameworks/OpenGL.framework/Headers` lookup into the SDK,
 where those headers actually live on 10.14 and later.
 
-`-DCMAKE_BUILD_RPATH=/opt/local/lib/libgcc` adds a runtime search path to every
-built binary so it can find `libgomp.1.dylib` (gfortran-mp-14's OpenMP runtime,
-linked with install\_name `@rpath/libgomp.1.dylib`). Without an rpath, `make
-package` fails in `fixup_bundle` with "otool can't open file:
-@rpath/libgomp.1.dylib", because the bundle-fixup step can't resolve the
+`-DCMAKE_BUILD_RPATH=/opt/local/lib/libgcc` and
+`-DCMAKE_INSTALL_RPATH=/opt/local/lib/libgcc` together add a runtime search
+path so every binary can find `libgomp.1.dylib` (gfortran-mp-14's OpenMP
+runtime, linked with install\_name `@rpath/libgomp.1.dylib`). Both are needed:
+the project sets `CMAKE_BUILD_WITH_INSTALL_RPATH FALSE`, so CMake strips the
+build rpath during install and uses the install rpath instead. Without the
+install rpath the *staged* binary that CPack hands to `fixup_bundle` has no
+rpath, and packaging fails with "otool can't open file:
+@rpath/libgomp.1.dylib" because the bundle-fixup step can't resolve the
 dependency to copy it into the `.app`.
 
 ```bash
@@ -162,10 +166,19 @@ enter your password.
   and packages there. The DMG verifies, is self-contained, records its minimum macOS (26.0)
   in `Info.plist` and its ReadMe, carries the 512 MB shared memory setting, and has the new
   texts in all translations.
-- **Not tested yet:** the Intel steps on macOS 10.15. This will be the first run on the
-  Air. The places most likely to need a tweak:
-  - which `gccNN` MacPorts offers for 10.15
-  - MacPorts packages that have to compile from source because no ready-built version
-    exists yet
-
-  `BUILD_MACOS.md` section 8.7 lists the likely problems and their fixes.
+- **Tested on the Intel Mac** (2026-09-26, macOS 10.15): the source builds and packages
+  with the four cmake flags in step 7 (`SDKROOT` in the environment, plus
+  `CMAKE_OSX_SYSROOT`, `CMAKE_BUILD_RPATH`, `CMAKE_INSTALL_RPATH` on the command line). The
+  DMG installs, launches, decodes from the microphone and transmits.
+- **libgcc\_s reexport patch, in `Darwin/finish_bundle/sign_bundle.cmake.in`:**
+  `fixup_bundle` copies `libgcc_s.1.dylib` and `libgcc_s.1.1.dylib` into `Contents/MacOS`
+  but does not rewrite the reexport reference `@rpath/libgcc_s.1.1.dylib` inside
+  `libgcc_s.1.dylib`, and it has already stripped the rpaths from the binaries. The loader
+  then cannot find `libgcc_s.1.1.dylib` and the decoder aborts with "Reason: image not
+  found" - JTDX\_contest shows "decoder could not be run". The patch rewrites the reference
+  to `@loader_path/libgcc_s.1.1.dylib` before ad hoc re-signing.
+- **Worth re-checking on Apple Silicon:** the patch above runs there too (the
+  `sign_bundle.cmake` script has no arch guard, and its `EXISTS` guards make it a no-op if
+  the two files are not in the bundle). It is likely needed - MacPorts gcc14 ships the
+  same `libgcc_s.1.dylib` reexport stub on arm64 - but the Apple Silicon test on `ad1c358`
+  may not have exercised the decoder path.

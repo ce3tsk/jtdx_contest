@@ -25,6 +25,24 @@ function (sign_item item)
   endif ()
 endfunction ()
 
+# CE3TSK: fixup_bundle copies libgcc_s.1.dylib and libgcc_s.1.1.dylib into
+# Contents/MacOS but does not rewrite the LC_REEXPORT_DYLIB in the former, so
+# it still resolves via @rpath/libgcc_s.1.1.dylib - and fixup_bundle has
+# already stripped the rpaths. The loader then cannot find libgcc_s.1.1.dylib
+# and the decoder aborts with "Reason: image not found". Rewrite the reexport
+# to @loader_path before signing so the signature seals the fix.
+if (EXISTS "${bundle}/Contents/MacOS/libgcc_s.1.dylib" AND
+    EXISTS "${bundle}/Contents/MacOS/libgcc_s.1.1.dylib")
+  execute_process (COMMAND install_name_tool
+    -change @rpath/libgcc_s.1.1.dylib @loader_path/libgcc_s.1.1.dylib
+    "${bundle}/Contents/MacOS/libgcc_s.1.dylib"
+    RESULT_VARIABLE rc OUTPUT_VARIABLE out ERROR_VARIABLE out)
+  if (rc)
+    message (FATAL_ERROR "install_name_tool of libgcc_s.1.dylib failed (${rc}):\n${out}")
+  endif ()
+  message (STATUS "Rewrote @rpath/libgcc_s.1.1.dylib in libgcc_s.1.dylib -> @loader_path")
+endif ()
+
 bundle_code ("${bundle}" "${main_exe}" helpers plugins frameworks)
 foreach (item IN LISTS helpers plugins frameworks)
   sign_item ("${item}")
