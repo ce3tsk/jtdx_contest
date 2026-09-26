@@ -107,9 +107,29 @@ commit.
 mkdir -p ~/dev/jtdx-prefix/build && cd ~/dev/jtdx-prefix/build
 ```
 
+Export `SDKROOT` in the same shell where you run `cmake` and `make`. Without
+it, the Command Line Tools compiler does not add `-isysroot`, so headers that
+live in the SDK (`<stdio.h>`, the `OpenGL.framework` headers Qt5Gui needs, and
+so on) are reported as missing:
+
 ```bash
-cmake -DCMAKE_PREFIX_PATH=/opt/local/libexec/qt5 -DCMAKE_Fortran_COMPILER=/opt/local/bin/gfortran-mp-14 -DCMAKE_OSX_DEPLOYMENT_TARGET=10.15 -DWSJT_GENERATE_DOCS=OFF -DWSJT_SKIP_MANPAGES=ON ../jtdx_contest
+export SDKROOT=$(xcrun --show-sdk-path)
 ```
+
+```bash
+cmake -DCMAKE_PREFIX_PATH=/opt/local/libexec/qt5 -DCMAKE_Fortran_COMPILER=/opt/local/bin/gfortran-mp-14 -DCMAKE_OSX_DEPLOYMENT_TARGET=10.15 -DCMAKE_OSX_SYSROOT=$SDKROOT -DCMAKE_BUILD_RPATH=/opt/local/lib/libgcc -DWSJT_GENERATE_DOCS=OFF -DWSJT_SKIP_MANPAGES=ON ../jtdx_contest
+```
+
+`-DCMAKE_OSX_SYSROOT=$SDKROOT` is what lets CMake redirect Qt5Gui's hardcoded
+`/System/Library/Frameworks/OpenGL.framework/Headers` lookup into the SDK,
+where those headers actually live on 10.14 and later.
+
+`-DCMAKE_BUILD_RPATH=/opt/local/lib/libgcc` adds a runtime search path to every
+built binary so it can find `libgomp.1.dylib` (gfortran-mp-14's OpenMP runtime,
+linked with install\_name `@rpath/libgomp.1.dylib`). Without an rpath, `make
+package` fails in `fixup_bundle` with "otool can't open file:
+@rpath/libgomp.1.dylib", because the bundle-fixup step can't resolve the
+dependency to copy it into the `.app`.
 
 ```bash
 make -j$(sysctl -n hw.ncpu) && make package
