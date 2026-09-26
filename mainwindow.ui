@@ -2931,7 +2931,7 @@ ZD8,ZD9,ZF,ZK3,ZL,ZL7,ZL8,ZL9,ZP,ZS,ZS8&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</str
                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Left mouse button: Erase data from DX Call and DX Grid windows. Right mouse button: Erase data from DX Call, DX Grid windows, QSO history and blacklist. CTRL+Right mouse button: add callsign from DX Call window to blacklist, erase data from DX Call, DX Grid windows and QSO history.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
               </property>
               <property name="text">
-               <string>Clear D&amp;X</string>
+               <string>ClearD&amp;X</string>
               </property>
              </widget>
             </item>
@@ -2959,7 +2959,7 @@ ZD8,ZD9,ZF,ZK3,ZL,ZL7,ZL8,ZL9,ZP,ZS,ZS8&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</str
                <string>Stop transmitting immediately</string>
               </property>
               <property name="text">
-               <string>&amp;Halt Tx</string>
+               <string>&amp;HaltTx</string>
               </property>
              </widget>
             </item>
@@ -2998,7 +2998,7 @@ ZD8,ZD9,ZF,ZK3,ZL,ZL7,ZL8,ZL9,ZP,ZS,ZS8&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</str
 }</string>
               </property>
               <property name="text">
-               <string>E&amp;nable Tx</string>
+               <string>E&amp;nableTx</string>
               </property>
               <property name="checkable">
                <bool>true</bool>
@@ -3071,7 +3071,7 @@ ZD8,ZD9,ZF,ZK3,ZL,ZL7,ZL8,ZL9,ZP,ZS,ZS8&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</str
                <string>Enter this QSO in ADIF log</string>
               </property>
               <property name="text">
-               <string>Log &amp;QSO</string>
+               <string>Log&amp;QSO</string>
               </property>
              </widget>
             </item>

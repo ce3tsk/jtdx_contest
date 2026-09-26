@@ -3752,7 +3752,8 @@ void MainWindow::rebuildBandButtons ()
    "right click on 10m would present the 10m non default frequencies". They are the rows of the button's band
    that have no button of their own (bandchannels.h), written as the tooltips write a frequency, the one the
    dial is on ticked; picking one does what a left click does, i.e. what picking that row in the band
-   selector does. A band with no other frequency opens nothing rather than an empty menu.
+   selector does. A band with no other frequency says so in one greyed entry (the operator, same day: it
+   opened nothing at first, which looked like a right click that had not worked).
 
    popup (), not exec (): the buttons are deleted and rebuilt from the list's signals - the band scheduler
    can switch the mode while the menu is open - and exec () would run that inside this button's own event
@@ -3763,10 +3764,10 @@ void MainWindow::showBandChannels (QPushButton * button, QPoint const& at)
   auto const channels = band_channel_frequencies (band_selector_rows (m_config.frequencies ()),
                                                   bands->find (button->property ("frequency").toULongLong ()),
                                                   [bands] (Radio::Frequency f) { return bands->find (f); });
-  if (channels.isEmpty ()) return;
   auto * const menu = new QMenu {this};
   menu->setAttribute (Qt::WA_DeleteOnClose);
   m_bandChannelsMenu = menu;
+  if (channels.isEmpty ()) menu->addAction (tr ("No other frequencies"))->setEnabled (false);
   for (auto const f : channels)
     {
       auto * const action = menu->addAction (band_button_mhz (f, 3));

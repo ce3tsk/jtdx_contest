@@ -3503,7 +3503,7 @@ ZD8,ZD9,ZF,ZK3,ZL,ZL7,ZL8,ZL9,ZP,ZS,ZS8&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</sou
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2877"/>
-        <source>E&amp;nable Tx</source>
+        <source>E&amp;nableTx</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3513,7 +3513,7 @@ ZD8,ZD9,ZF,ZK3,ZL,ZL7,ZL8,ZL9,ZP,ZS,ZS8&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</sou
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2838"/>
-        <source>&amp;Halt Tx</source>
+        <source>&amp;HaltTx</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3523,7 +3523,7 @@ ZD8,ZD9,ZF,ZK3,ZL,ZL7,ZL8,ZL9,ZP,ZS,ZS8&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</sou
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2950"/>
-        <source>Log &amp;QSO</source>
+        <source>Log&amp;QSO</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3583,7 +3583,7 @@ ZD8,ZD9,ZF,ZK3,ZL,ZL7,ZL8,ZL9,ZP,ZS,ZS8&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</sou
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2810"/>
-        <source>Clear D&amp;X</source>
+        <source>ClearD&amp;X</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -6171,6 +6171,11 @@ That is the decoder's own error. Put right whatever stops it starting - a missin
     <message>
         <location filename="../mainwindow.ui"/>
         <source>Mode buttons</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>No other frequencies</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
