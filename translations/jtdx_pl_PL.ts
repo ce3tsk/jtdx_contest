@@ -6351,6 +6351,11 @@ To błąd samego dekodera. Usuń to, co uniemożliwia jego uruchomienie - brakuj
         <source>The decoder beside this program could not be run, so this program cannot decode anything.</source>
         <translation>Dekodera obok tego programu nie udało się uruchomić, więc program nie może niczego dekodować.</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Mode buttons</source>
+        <translation>Przyciski emisji</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

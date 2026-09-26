@@ -6168,6 +6168,11 @@ That is the decoder's own error. Put right whatever stops it starting - a missin
         <source>FT* decoding preset - greyed while the mode is none of them</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Mode buttons</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

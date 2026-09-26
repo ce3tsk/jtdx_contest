@@ -6354,6 +6354,11 @@ To je greška samog dekodera. Otklonite ono što ga sprječava da se pokrene - n
         <source>The decoder beside this program could not be run, so this program cannot decode anything.</source>
         <translation>Dekoder pokraj ovog programa nije se mogao pokrenuti, pa program ne može ništa dekodirati.</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Mode buttons</source>
+        <translation>Gumbi moda</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

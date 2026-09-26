@@ -6364,6 +6364,11 @@ See on dekoodri enda viga. Kõrvalda see, mis takistab käivitumist - puuduv tee
         <source>The decoder beside this program could not be run, so this program cannot decode anything.</source>
         <translation>Selle programmi kõrval olevat dekoodrit ei õnnestunud käivitada, seega ei saa programm midagi dekodeerida.</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Mode buttons</source>
+        <translation>Tööliigi nupud</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

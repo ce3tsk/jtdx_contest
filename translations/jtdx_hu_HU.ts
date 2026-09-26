@@ -6354,6 +6354,11 @@ Ez magának a dekódernek a hibája. Hárítsa el, ami az indulását akadályoz
         <source>The decoder beside this program could not be run, so this program cannot decode anything.</source>
         <translation>A program melletti dekódolót nem sikerült futtatni, így a program semmit sem tud dekódolni.</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Mode buttons</source>
+        <translation>Üzemmódgombok</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

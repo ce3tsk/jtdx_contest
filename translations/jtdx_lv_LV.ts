@@ -4360,7 +4360,7 @@ Ar labo peles pogu JTDX iekšējais laiks tiek atgriezts uz sistēmas laiku.&lt;
     <message>
         <location filename="../mainwindow.ui" line="5275"/>
         <source>JT9+JT65</source>
-        <translation>JT65+JT65 {9+?}</translation>
+        <translation>JT9+JT65</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5283"/>
@@ -6348,6 +6348,11 @@ Dekoders: %3
         <location filename="../../mainwindow.cpp"/>
         <source>The decoder beside this program could not be run, so this program cannot decode anything.</source>
         <translation>Blakus šai programmai esošo dekodētāju neizdevās palaist, tāpēc programma nevar neko dekodēt.</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Mode buttons</source>
+        <translation>Modu pogas</translation>
     </message>
 </context>
 <context>

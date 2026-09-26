@@ -3,6 +3,7 @@
 #include <QDebug>
 #include <math.h>
 #include "commons.h"
+#include "blockgather.h"
 #include "moc_Detector.cpp"
 
 extern "C" {
@@ -29,7 +30,8 @@ Detector::Detector (unsigned frameRate, double periodLengthInSeconds,
 
 void Detector::setBlockSize (unsigned n)
 {
-  m_samplesPerFFT = n;
+  // CE3TSK 2026-09-26: m_buffer holds max_buffer_size samples a block, and no mode asks for more
+  m_samplesPerFFT = qBound (1u, n, static_cast<unsigned> (max_buffer_size));
 }
 
 bool Detector::reset ()
@@ -51,6 +53,21 @@ void Detector::clear ()
 
   // fill buffer with zeros (G4WJS commented out because it might cause decoder hangs)
   // qFill (dec_data.d2, dec_data.d2 + sizeof (dec_data.d2) / sizeof (dec_data.d2[0]), 0);
+}
+
+/* CE3TSK 2026-09-26: the body of the block-full branch of writeData, taken out as it was so the
+   blocks handed on after a shrink go through the same code (blockgather.h) */
+void Detector::processBlock (short * frames)
+{
+  qint32 framesToProcess (m_samplesPerFFT * m_downSampleFactor);
+  qint32 framesAfterDownSample (m_samplesPerFFT);
+  if(m_downSampleFactor > 1 && dec_data.params.kin>=0 &&
+     dec_data.params.kin < (NTMAX*12000 - framesAfterDownSample)) {
+    fil4_(frames, &framesToProcess, &dec_data.d2[dec_data.params.kin],
+          &framesAfterDownSample, &dec_data.dd2[dec_data.params.kin]);
+    dec_data.params.kin += framesAfterDownSample;
+  }
+  Q_EMIT framesWritten (dec_data.params.kin);
 }
 
 qint64 Detector::writeData (char const * data, qint64 maxSize)
@@ -80,31 +97,31 @@ qint64 Detector::writeData (char const * data, qint64 maxSize)
     }
 
     for (unsigned remaining = framesAccepted; remaining; ) {
-      size_t numFramesProcessed (qMin (m_samplesPerFFT *
-                                       m_downSampleFactor - m_bufferPos, remaining));
+      /* CE3TSK 2026-09-26: the block can SHRINK under a part-filled buffer (a switch into FT2),
+         and the unsigned "block - m_bufferPos" below then wrapped - the audio was stored past the
+         end of m_buffer until the period wrapped, and production crashed on it. The whole blocks
+         of the new size already gathered go out first; blockgather.h has the story. With no
+         down-sampling the frames are in d2 already, so the overdue block is announced and the
+         frames past it are kept in the count. */
+      size_t const block {static_cast<size_t> (m_samplesPerFFT) * m_downSampleFactor};
+      if (m_bufferPos > block) {
+        if (m_downSampleFactor > 1)
+          m_bufferPos = JTDX::rebase_blocks (&m_buffer[0], m_bufferPos, block,
+                                             [this] (short * frames) { processBlock (frames); });
+        else {
+          Q_EMIT framesWritten (dec_data.params.kin);   // the overdue block, once
+          m_bufferPos %= block;   // review: what is past the last whole block counts toward the next
+        }
+      }
+      size_t numFramesProcessed (qMin (block - m_bufferPos, static_cast<size_t> (remaining)));
 
       if(m_downSampleFactor > 1) {
         store (&data[(framesAccepted - remaining) * bytesPerFrame ()],
                numFramesProcessed, &m_buffer[m_bufferPos]);
         m_bufferPos += numFramesProcessed;
 
-        if(m_bufferPos==m_samplesPerFFT*m_downSampleFactor) {
-          qint32 framesToProcess (m_samplesPerFFT * m_downSampleFactor);
-          qint32 framesAfterDownSample (m_samplesPerFFT);
-          if(m_downSampleFactor > 1 && dec_data.params.kin>=0 &&
-             dec_data.params.kin < (NTMAX*12000 - framesAfterDownSample)) {
-            fil4_(&m_buffer[0], &framesToProcess, &dec_data.d2[dec_data.params.kin],
-                  &framesAfterDownSample, &dec_data.dd2[dec_data.params.kin]);
-            dec_data.params.kin += framesAfterDownSample;
-          } else {
-            // qDebug() << "framesToProcess     = " << framesToProcess;
-            // qDebug() << "dec_data.params.kin = " << dec_data.params.kin;
-            // qDebug() << "secondInPeriod      = " << secondInPeriod();
-            // qDebug() << "framesAfterDownSample" << framesAfterDownSample;
-          }
-//    printf("%s(%0.1f) frameswritten %d\n",m_jtdxtime->currentDateTimeUtc2().toString("hh:mm:ss.zzz").toStdString().c_str(),m_jtdxtime->GetOffset(),dec_data.params.kin);
-          Q_EMIT framesWritten (dec_data.params.kin);
-//    printf("%s(%0.1f) frameswritten done\n",m_jtdxtime->currentDateTimeUtc2().toString("hh:mm:ss.zzz").toStdString().c_str(),m_jtdxtime->GetOffset());
+        if(m_bufferPos==block) {
+          processBlock (&m_buffer[0]);
           m_bufferPos = 0;
         }
 

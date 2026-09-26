@@ -6350,6 +6350,11 @@ Dat is de fout van de decoder zelf. Verhelp wat het starten verhindert - een ont
         <source>The decoder beside this program could not be run, so this program cannot decode anything.</source>
         <translation>De decoder naast dit programma kon niet worden uitgevoerd, dus het programma kan niets decoderen.</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Mode buttons</source>
+        <translation>Modeknoppen</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

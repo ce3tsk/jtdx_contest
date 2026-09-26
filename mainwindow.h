@@ -155,6 +155,7 @@ private slots:
   void on_actionJTDX_Web_Site_triggered();
   void on_actionWide_Waterfall_triggered();
   void on_actionUse_dark_style_triggered (bool checked);   // CE3TSK
+  void on_actionMode_buttons_toggled (bool checked);   // CE3TSK
   void on_actionBand_buttons_toggled (bool checked);   // CE3TSK
   void on_actionNarrow_controls_toggled (bool checked);   // CE3TSK
   void on_actionOpen_triggered();
@@ -1057,6 +1058,7 @@ private:
   ContestUiParked m_uiParked;
   bool m_uiParkedValid = false;
   void applyContestLock (bool locked);   /* CE3TSK: grey or un-grey, never forces */
+  void parkContestState (QString const& mode);   // CE3TSK 2026-09-26: the contest park, shared
   void forceContestControls ();          /* CE3TSK: set them, only after parking */
 
   /* declared after m_logBook so it is destroyed first: it borrows that object's country
@@ -1167,6 +1169,14 @@ private:
   void setProgressBarStyle ();
   void applyPaneFloor ();   // CE3TSK: the right pane's floor under Narrow controls
   bool uiBuilt () const;   // CE3TSK: false until setupUi has installed the central widget
+  void buildModeButtons ();   // CE3TSK: View > Mode buttons
+  // CE3TSK 2026-09-26: the Mode menu's eight modes by the name m_mode carries, in one table
+  struct ModeEntry {char const * name; QAction * action; void (MainWindow::*slot) ();};
+  QVector<ModeEntry> const& modeTable () const;
+  mutable QVector<ModeEntry> m_modeTable;             // filled by modeTable () on first use
+  QAction * modeAction (QString const& mode) const;   // nullptr for a name that is no mode
+  bool runModeSlot (QString const& mode);             // that mode's slot, ungated; false if none
+  QActionGroup * m_modeGroup {nullptr};               // the eight; greyed while transmitting
   // CE3TSK: View > Band buttons
   void scheduleBandButtons ();
   void rebuildBandButtons ();

@@ -6340,6 +6340,11 @@ Esse é o erro do próprio decodificador. Corrija o que impede a inicialização
         <source>The decoder beside this program could not be run, so this program cannot decode anything.</source>
         <translation>O decodificador ao lado deste programa não pôde ser executado, portanto o programa não consegue decodificar nada.</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Mode buttons</source>
+        <translation>Botões de modo</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

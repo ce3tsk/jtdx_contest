@@ -46,6 +46,7 @@ protected:
 
 private:
   void clear ();		// discard buffer contents
+  void processBlock (short * frames);   // CE3TSK: down-sample one block into d2 and announce it
 
   unsigned m_frameRate;
   double m_period;

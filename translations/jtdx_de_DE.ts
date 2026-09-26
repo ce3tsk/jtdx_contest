@@ -6350,6 +6350,11 @@ Das ist der Fehler des Decoders selbst. Beheben Sie, was seinen Start verhindert
         <source>The decoder beside this program could not be run, so this program cannot decode anything.</source>
         <translation>Der Decoder neben diesem Programm ließ sich nicht ausführen, daher kann das Programm gar nicht dekodieren.</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Mode buttons</source>
+        <translation>Betriebsartentasten</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

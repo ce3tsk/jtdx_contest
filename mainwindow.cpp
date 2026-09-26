@@ -54,6 +54,10 @@
 #include "logfields.h"   // CE3TSK: what a log entry takes when the QSO skipped a step   /* CE3TSK: contest-mode rejection of signal-report messages */
 #include "decodelabel.h"   // CE3TSK
 #include "modetiming.h"   // CE3TSK: the per-mode timing constants
+#include "contestmode.h"   // CE3TSK 2026-09-26: the modes a contest allows
+#include "savedmode.h"     // CE3TSK 2026-09-26: the saved Mode/ModeTx made safe
+#include "bandschedule.h"  // CE3TSK 2026-09-26: which scheduler entry fires
+#include "actiongate.h"    // CE3TSK 2026-09-26: trigger () that obeys the enabled state
 #include "uilimits.h"      // CE3TSK: the .ui size limits against the current font
 #include <QPainter>
 #include <functional>   // CE3TSK P13: the recursive menu hook
@@ -651,15 +655,9 @@ MainWindow::MainWindow(bool multiple, QSettings * settings, QSharedMemory *shdme
   on_EraseButton_clicked ();
   clearDX ("");
 
-  QActionGroup* modeGroup = new QActionGroup(this);
-  ui->actionFT4->setActionGroup(modeGroup);
-  ui->actionFT2->setActionGroup(modeGroup);   // CE3TSK
-  ui->actionFT8->setActionGroup(modeGroup);
-  ui->actionJT65->setActionGroup(modeGroup);
-  ui->actionJT9_JT65->setActionGroup(modeGroup);
-  ui->actionJT9->setActionGroup(modeGroup);
-  ui->actionT10->setActionGroup(modeGroup);
-  ui->actionWSPR_2->setActionGroup(modeGroup);
+  m_modeGroup = new QActionGroup(this);   // CE3TSK 2026-09-26: kept, transmitDisplay () greys it
+  for (auto const& m : modeTable ()) m.action->setActionGroup(m_modeGroup);
+  buildModeButtons ();   // CE3TSK: View > Mode buttons, one per entry just grouped
 
   QActionGroup* languageGroup = new QActionGroup(this);
   ui->actionEnglish->setActionGroup(languageGroup);
@@ -1311,14 +1309,7 @@ MainWindow::MainWindow(bool multiple, QSettings * settings, QSharedMemory *shdme
   
   minuteTimer.start (ms_minute_error (m_jtdxtime) + 60 * 1000);
   
-  if(m_mode=="FT8") on_actionFT8_triggered();
-  else if(m_mode=="FT4") on_actionFT4_triggered();
-  else if(m_mode=="FT2") on_actionFT2_triggered();   // CE3TSK
-  else if(m_mode=="JT9+JT65") on_actionJT9_JT65_triggered();
-  else if(m_mode=="JT9") on_actionJT9_triggered();
-  else if(m_mode=="JT65") on_actionJT65_triggered();
-  else if(m_mode=="T10") on_actionT10_triggered();
-  else if(m_mode=="WSPR-2") on_actionWSPR_2_triggered();
+  runModeSlot (m_mode);   // CE3TSK 2026-09-26: modeTable (); readSettings accepts no other name
 
   if(m_mode!="FT8") { ui->actionEnable_hound_mode->setChecked(false); ui->actionEnable_hound_mode->setEnabled(false); }
 
@@ -1603,6 +1594,7 @@ void MainWindow::writeSettings()
   m_settings->setValue("73TxDisable",m_disable_TX_on_73);
   m_settings->setValue("ShowMainWindowTooltips",m_showTooltips);
   m_settings->setValue("ColorTxMessageButtons",m_colorTxMsgButtons);
+  m_settings->setValue("ModeButtons",ui->actionMode_buttons->isChecked ());   // CE3TSK
   m_settings->setValue("BandButtons",ui->actionBand_buttons->isChecked ());   // CE3TSK
   m_settings->setValue("NarrowControls",ui->actionNarrow_controls->isChecked ());   // CE3TSK
   m_settings->setValue("CallsignToClipboard",m_callToClipboard);
@@ -1664,6 +1656,14 @@ void MainWindow::readSettings()
      so the comparison is like with like. readSettings () sets the same value again later and
      that is then a no-op; the delayed re-restore stays as the safety net it was. */
   ui->actionNarrow_controls->setChecked (JTDX::narrow_allowance () > 0);
+  /* CE3TSK 2026-09-26, review: the Mode buttons row for the same reason. Unlike the band row,
+     which is empty until it is shown, it holds its eight buttons from the constructor on, so while
+     still visible it adds its height to minimumSizeHint () - against a hint saved with the row off
+     (the default), a compact window opened a row taller and snapped back a tick later. Read here
+     and only here; the visibility is set explicitly because setChecked (false) on the unchecked
+     action fires nothing. */
+  ui->actionMode_buttons->setChecked (m_settings->value ("Common/ModeButtons", false).toBool ());
+  ui->modeButtonsWidget->setVisible (ui->actionMode_buttons->isChecked ());
 
   m_settings->beginGroup("MainWindow");
   
@@ -1776,20 +1776,16 @@ void MainWindow::readSettings()
   m_mode=m_settings->value("Mode","FT8").toString();
   m_modeTx=m_settings->value("ModeTx","FT8").toString();
 
-  if(!m_mode.startsWith("FT") && !m_mode.startsWith("JT") && m_mode!="T10" && !m_mode.startsWith ("WSPR")) {
-     m_mode="FT8"; m_modeTx="FT8";
-  }
-
-  if(!m_modeTx.startsWith("FT") && !m_modeTx.startsWith("JT") && m_modeTx!="T10" && !m_modeTx.startsWith ("WSPR")) {
-    if(m_mode=="FT8") m_modeTx="FT8";
-	else if(m_mode=="FT4") m_modeTx="FT4";
-    else if(m_mode=="FT2") m_modeTx="FT2";   // CE3TSK
-    else if(m_mode=="JT9+JT65") m_modeTx="JT65";
-    else if(m_mode=="JT65") m_modeTx="JT65";
-    else if(m_mode=="JT9") m_modeTx="JT9";
-    else if(m_mode=="T10") m_modeTx="T10";
-    else if(m_modeTx.startsWith ("WSPR")) m_modeTx="WSPR-2";
-  }
+  /* CE3TSK 2026-09-26, review: exactly the eight modes of modeTable (), and the TX mode made to
+     agree - savedmode.h has what a prefix test let through (test_savedmode). And, with a contest
+     running (refreshSpecialOp (true) ran in the constructor, before this), only a mode the contest
+     allows: the lock greys the others, but the start-up dispatch runs the saved mode's slot
+     ungated, so an ini left in FT2 or JT65 mid-contest (possible before FT2 was locked) came back
+     in it, greyed and unparked. It starts in FT8 instead, as entering the contest would have. */
+  auto const known = [this] (QString const& mode) { return modeAction (mode) != nullptr; };
+  auto const allowed = [this] (QString const& mode) { return !m_wwDigi || contest_allows_mode (mode); };
+  QString const saved_mode {saved_mode_name (m_mode, known)};   // for a park at the end, below
+  normalise_saved_mode (m_mode, m_modeTx, known, allowed);
   if(m_modeTx.startsWith("JT9")) ui->pbTxMode->setText("Tx JT9  @");
   if(m_modeTx=="JT65") ui->pbTxMode->setText("Tx JT65  #");
 
@@ -1854,6 +1850,9 @@ void MainWindow::readSettings()
   m_settings->remove("ContestUiCallPrioCQ");
   m_settings->remove("ContestUiSingleShot");   /* CE3TSK: no longer parked */
   m_uiParked.mode = m_settings->value("ContestUiMode","").toString();
+  /* CE3TSK 2026-09-26, review: parked from an m_mode that an older build took by prefix - the same
+     rule as the saved Mode (savedmode.h): "WSPR..." is WSPR-2, any other unknown name FT8 */
+  if (!m_uiParked.mode.isEmpty ()) m_uiParked.mode = saved_mode_name (m_uiParked.mode, known);
   ui->actionAutoFilter->setChecked(m_settings->value("AutoFilter",false).toBool());
   /* CE3TSK: SuperFox mode is restored BEFORE Hound mode, because switching Hound on asks whether
      SuperFox is on (it lifts the split requirement and sets the RX frequency). */
@@ -2170,6 +2169,7 @@ void MainWindow::readSettings()
   m_colorTxMsgButtons=m_settings->value("ColorTxMessageButtons",true).toBool();
   ui->actionColor_Tx_message_buttons->setChecked(m_colorTxMsgButtons);
 
+  // CE3TSK: ModeButtons is read at the top, before the geometry is restored - see there
   ui->actionBand_buttons->setChecked (m_settings->value ("BandButtons", false).toBool ());   // CE3TSK
   /* CE3TSK: this setChecked is also what applies the narrow floors at start-up - it fires
      on_actionNarrow_controls_toggled, which sets the window minimum, refits the widget limits
@@ -2224,6 +2224,16 @@ void MainWindow::readSettings()
   /* CE3TSK 2026-09-22: S-Hound came into effect above, before the decoding controls were read - so what it parked
      was the controls' defaults and what it applied was overwritten. Park again from what was just read. */
   if (m_decodeParked) {m_decodeParked = false; parkDecodePreset (true);}
+  /* CE3TSK 2026-09-26, review: a contest selected with nothing parked (ContestUiParked false) - the
+     settings were accepted and the program ended before writing its own, or the ini predates the
+     park. Entering the contest parks the operator's controls and a mode it does not allow, then
+     forces its own; do that now, with every control read. normalise_saved_mode has already put the
+     station in FT8, and without the park the saved mode would be lost for good. */
+  if (m_wwDigi && !m_uiParkedValid)
+    {
+      parkContestState (saved_mode);
+      forceContestControls ();
+    }
 }
 
 void MainWindow::setDecodedTextFont (QFont const& font)
@@ -2796,14 +2806,7 @@ void MainWindow::on_actionSettings_triggered()               //Setup Dialog
  
       displayDialFrequency ();
 
-      if(m_mode=="FT8") on_actionFT8_triggered();
-      else if(m_mode=="FT4") on_actionFT4_triggered();
-      else if(m_mode=="FT2") on_actionFT2_triggered();   // CE3TSK
-      else if(m_mode=="JT9+JT65") on_actionJT9_JT65_triggered();
-      else if(m_mode=="JT9") on_actionJT9_triggered();
-      else if(m_mode=="JT65") on_actionJT65_triggered();
-      else if(m_mode=="T10") on_actionT10_triggered();
-      else if(m_mode=="WSPR-2") on_actionWSPR_2_triggered();
+      runModeSlot (m_mode);   // CE3TSK 2026-09-26: modeTable ()
 
 	  m_config.transceiver_online ();
 	  m_wideGraph->setTopJT65(m_config.ntopfreq65());
@@ -3172,15 +3175,17 @@ void MainWindow::keyPressEvent( QKeyEvent *e )                //keyPressEvent
     case Qt::Key_Escape:
       haltTx("TX halted via Escape button ");
       break;
+    /* CE3TSK 2026-09-26, review: through the actions and their gates, so the keys obey the Mode
+       menu's transmit gate - calling the slots switched FT8/FT4 under a running transmission */
     case Qt::Key_B:
       if(e->modifiers() & Qt::AltModifier) {
-        on_actionFT8_triggered();
+        trigger_if_enabled (ui->actionFT8);
         return;
       }
       break;
     case Qt::Key_C:
       if(e->modifiers() & Qt::AltModifier) {
-        on_actionFT4_triggered();
+        trigger_if_enabled (ui->actionFT4);
         return;
       }
       break;
@@ -3375,6 +3380,107 @@ void MainWindow::setProgressBarStyle ()
   QString cssSafe = QString("QProgressBar { border: 2px solid %1; border-radius: 5px; background: %2; text-align: center; } QProgressBar::chunk { background: %3; width: 1px; }").arg(Radio::convert_dark("#808080",m_useDarkStyle),Radio::convert_dark("#ffffff",m_useDarkStyle),Radio::convert_dark("#00ff00",m_useDarkStyle));
   QString cssTransmit = QString("QProgressBar { border: 2px solid %1; border-radius: 5px; background: %2; text-align: center; } QProgressBar::chunk { background: %3; width: 1px; }").arg(Radio::convert_dark("#808080",m_useDarkStyle),Radio::convert_dark("#ffffff",m_useDarkStyle),Radio::convert_dark("#ff0000",m_useDarkStyle));
   progressBar->setStyleSheet (m_transmitting ? cssTransmit : cssSafe);
+}
+
+/* CE3TSK: View > Mode buttons - a row above the band buttons with one button per entry of the Mode
+   menu, in the menu's order, styled as the band buttons are. Each button is a face of its menu
+   entry rather than a copy: label, checked, enabled and visible state are read back from the entry
+   whenever it changes (the tooltip once), so the contest lock that greys FT2, JT65 and the rest, the
+   transmit gate on the mode group, and a mode set from anywhere else - the saved mode at start-up,
+   a contest restoring its own - show on the row with no code of their own. Built once, in the
+   constructor, since the menu's entries are fixed; readSettings () runs the narrow rules and the
+   label watcher over the whole window afterwards, so the buttons need no fitting of their own
+   (the band buttons do, being rebuilt after it). */
+void MainWindow::on_actionMode_buttons_toggled (bool checked)
+{
+  ui->modeButtonsWidget->setVisible (checked);
+}
+
+/* CE3TSK 2026-09-26, review: the eight modes of the Mode menu, by the name m_mode carries, with
+   the action and the slot of each - the one list everything that turns a name into a mode reads:
+   readSettings' check, the dispatches at start-up, on accepting Settings and when the rig comes
+   online, the contest lock and restore, and the band scheduler. There used to be a chain of ifs in
+   each, to be kept in step by hand, which is how FT2 was missed by the contest lock.
+   test/mode_table.sh holds it to the Mode menu and to what each slot sets m_mode to. The slot is for the
+   callers that must set a mode whatever the menu allows (restoring state); the action for those
+   that must obey it (the scheduler, the keys, the Mode buttons - through actiongate.h). */
+/* CE3TSK 2026-09-26, review: the modes run on FT4's frame - FT4, and FT2 at twice its rate. They
+   share FT4's message set (no RRR: commonActions () parks and greys it, and the contest lock and its
+   exit must agree - the exit named FT4 alone and ticked RRR in FT2), its decoder chain (the TX
+   background switch) and its sequencer timing. One test for all of them, so the next member of
+   the family is added once. */
+static bool ft4_family (QString const& mode)
+{
+  return mode == "FT4" || mode == "FT2";
+}
+
+QVector<MainWindow::ModeEntry> const& MainWindow::modeTable () const
+{
+  // built on first use (after setupUi) and kept - review 2026-09-26: it was rebuilt on every call
+  if (m_modeTable.isEmpty ())
+    m_modeTable = {{"FT8", ui->actionFT8, &MainWindow::on_actionFT8_triggered},
+          {"FT4", ui->actionFT4, &MainWindow::on_actionFT4_triggered},
+          {"FT2", ui->actionFT2, &MainWindow::on_actionFT2_triggered},
+          {"JT65", ui->actionJT65, &MainWindow::on_actionJT65_triggered},
+          {"JT9+JT65", ui->actionJT9_JT65, &MainWindow::on_actionJT9_JT65_triggered},
+          {"JT9", ui->actionJT9, &MainWindow::on_actionJT9_triggered},
+          {"T10", ui->actionT10, &MainWindow::on_actionT10_triggered},
+          {"WSPR-2", ui->actionWSPR_2, &MainWindow::on_actionWSPR_2_triggered}};
+  return m_modeTable;
+}
+
+QAction * MainWindow::modeAction (QString const& mode) const
+{
+  for (auto const& m : modeTable ()) if (mode == m.name) return m.action;
+  return nullptr;
+}
+
+bool MainWindow::runModeSlot (QString const& mode)
+{
+  for (auto const& m : modeTable ())
+    if (mode == m.name)
+      {
+        (this->*m.slot) ();
+        return true;
+      }
+  return false;
+}
+
+void MainWindow::buildModeButtons ()
+{
+  for (auto * const action : ui->menuMode->actions ())
+    {
+      if (action->isSeparator () || action->menu ()) continue;
+      auto * const button = new QPushButton {ui->modeButtonsWidget};
+      button->setCheckable (true);
+      button->setFocusPolicy (Qt::NoFocus);
+      /* the tooltip is decided once: it is FT2's alone, and like every text here it changes only
+         with the language, which takes a restart - has_own_tooltip () builds a probe QAction, and
+         follow () runs for all eight at every start and end of a transmission */
+      button->setToolTip (has_own_tooltip (action) ? action->toolTip () : QString {});
+      auto const follow = [button, action]
+        {
+          button->setText (action->iconText ());   // the entry's text without its & mnemonic, as Qt strips it
+          button->setEnabled (action->isEnabled ());
+          button->setChecked (action->isChecked ());
+          button->setVisible (action->isVisible ());
+        };
+      follow ();
+      // one signal is enough: QAction emits changed () for a check change too, before toggled ()
+      connect (action, &QAction::changed, button, follow);
+      connect (button, &QPushButton::clicked, this, [action, follow]
+        {
+          /* the lit mode is left alone: picking the checked entry of the menu runs the whole mode
+             switch again, and switch_mode () then retunes the dial to the band's working frequency -
+             not what a click on the button already lit should do. The checked entry is always the
+             current mode (m_mode is only ever set by the eight mode slots, and readSettings accepts
+             no other). The click has unchecked the button, so the entry's state is read back either
+             way. */
+          if (!action->isChecked ()) trigger_if_enabled (action);   // a greyed button is not clicked, but ask anyway
+          follow ();
+        });
+      ui->modeButtonsLayout->addWidget (button);
+    }
 }
 
 /* CE3TSK: View > Band buttons - one button per frequency the band selector offers for the mode:
@@ -5027,6 +5133,22 @@ void MainWindow::on_actionDisableTx73_toggled(bool checked) { m_disable_TX_on_73
    precedes the parking, so forcing from there would capture the forced values as the
    operator's own and make the restore a no-op - the same harvest-before-force trap that
    clear_DX_ fell into in the settings dialog. This is called only after parking. */
+/* CE3TSK 2026-09-26, review: the park itself, shared by entering a contest (refreshSpecialOp) and
+   by a start-up that finds a contest selected with nothing parked (readSettings). The operator's
+   own values of the controls the contest forces, and the mode - parked only when it is not one the
+   contest allows; the empty string then means "nothing to restore", and leaving the contest keeps
+   whichever of FT8 or FT4 is current. */
+void MainWindow::parkContestState (QString const& mode)
+{
+  m_uiParked.autoTx = ui->AutoTxButton->isChecked ();
+  m_uiParked.skipTx1 = m_skipTx1;
+  m_uiParked.rrr = m_rrr;
+  m_uiParked.maxDistance = m_maxDistance;
+  m_uiParked.rprtPriority = m_rprtPriority;
+  m_uiParked.mode = contest_parked_mode (mode);   // contestmode.h
+  m_uiParkedValid = true;
+}
+
 void MainWindow::forceContestControls ()
 {
   if (ui->actionEnable_hound_mode->isChecked ()) ui->actionEnable_hound_mode->setChecked (false);
@@ -5087,9 +5209,11 @@ void MainWindow::applyContestLock (bool locked)
   ui->txrb1->setEnabled (!locked && !m_autoseq);
 
   /* RRR is two widgets as well, and FT4 has no RRR at all - commonActions() parks and
-     disables it there through m_savedRRR. Unlocking must not override that. */
-  ui->rrrCheckBox->setEnabled (!locked && m_mode != "FT4");
-  ui->rrr1CheckBox->setEnabled (!locked && m_mode != "FT4");
+     disables it there through m_savedRRR. Unlocking must not override that.
+     CE3TSK 2026-09-26, review: nor in FT2, which commonActions() treats as FT4 here. */
+  bool const rrr_mode {!ft4_family (m_mode)};
+  ui->rrrCheckBox->setEnabled (!locked && rrr_mode);
+  ui->rrr1CheckBox->setEnabled (!locked && rrr_mode);
 
   /* CE3TSK: Max distance and report priority are both forced off and greyed - either one
      would change the SNR tie-break the contest wants. */
@@ -5115,13 +5239,12 @@ void MainWindow::applyContestLock (bool locked)
     /* at rest: the same grey box the preset lamp below it uses for its uncoloured cases */
     ui->labelContest->setStyleSheet ("QLabel{border: 1px solid #808080; border-radius: 3px; padding: 1px 4px}");
 
-  /* FT8 and FT4 stay selectable; every other member of the mode group is greyed. WSPR is the
-     seventh member of that same group, so it needs no case of its own. */
-  ui->actionJT65->setEnabled (!locked);
-  ui->actionJT9_JT65->setEnabled (!locked);
-  ui->actionJT9->setEnabled (!locked);
-  ui->actionT10->setEnabled (!locked);
-  ui->actionWSPR_2->setEnabled (!locked);
+  /* FT8 and FT4 stay selectable; every other member of the mode group is greyed.
+     CE3TSK 2026-09-26, review: asked of contestmode.h for every mode of the table - the modes
+     used to be listed here by hand, and FT2, which came later, was missed: entering a contest
+     parks FT2 and forces FT8 like the rest, so leaving it live let one click (menu, or the Mode
+     buttons row) put the station in FT2 mid-contest, with nothing parked to undo it. */
+  for (auto const& m : modeTable ()) m.action->setEnabled (!locked || contest_allows_mode (m.name));
 }
 
 /* CE3TSK: (re)open the contest's own log, or drop it when no contest is running. The
@@ -5279,19 +5402,7 @@ void MainWindow::refreshSpecialOp (bool initial)
      specialOpSaved_ does for the settings dialog. */
   if (m_wwDigi)
     {
-      if (!m_uiParkedValid)
-        {
-          m_uiParked.autoTx = ui->AutoTxButton->isChecked ();
-          m_uiParked.skipTx1 = m_skipTx1;
-          m_uiParked.rrr = m_rrr;
-          m_uiParked.maxDistance = m_maxDistance;
-          m_uiParked.rprtPriority = m_rprtPriority;
-          /* the mode is parked only when it is not already one the contest allows, and the
-             empty string then means "nothing to restore": leaving the contest keeps whichever
-             of FT8 or FT4 is current. */
-          m_uiParked.mode = (m_mode == "FT8" || m_mode == "FT4") ? QString {} : m_mode;
-          m_uiParkedValid = true;
-        }
+      if (!m_uiParkedValid) parkContestState (m_mode);
       if (!m_uiParked.mode.isEmpty ()) on_actionFT8_triggered ();
       forceContestControls ();      /* only now, with the operator's own values safely parked */
       applyContestLock (true);
@@ -5303,17 +5414,11 @@ void MainWindow::refreshSpecialOp (bool initial)
          reads m_mode - AutoSeq off is grey in a non FT mode but light red in an FT one - and
          on_actionJT65_triggered() and its siblings do not refresh that style. Restoring the
          mode afterwards would leave the button coloured for the mode we were leaving. */
-      if (!m_uiParked.mode.isEmpty ())
-        {
-          QString const back = m_uiParked.mode;
-          if (back == "JT65") on_actionJT65_triggered ();
-          else if (back == "JT9+JT65") on_actionJT9_JT65_triggered ();
-          else if (back == "JT9") on_actionJT9_triggered ();
-          else if (back == "T10") on_actionT10_triggered ();
-          else if (back == "FT2") on_actionFT2_triggered ();   // CE3TSK
-          else if (back.startsWith ("WSPR")) on_actionWSPR_2_triggered ();
-          else on_actionFT8_triggered ();
-        }
+      /* contestmode.h: the parked mode, or - nothing parked - the one the contest ended in, which
+         is then left as it is. A parked name is one of modeTable ()'s (readSettings normalises an
+         old one); anything else would be FT8. */
+      QString const back {contest_mode_on_leaving (m_uiParked.mode, m_mode)};
+      if (back != m_mode && !runModeSlot (back)) on_actionFT8_triggered ();
       if (ui->AutoTxButton->isChecked () != m_uiParked.autoTx)
         { ui->AutoTxButton->setChecked (m_uiParked.autoTx); on_AutoTxButton_clicked (m_uiParked.autoTx); }
       if (m_skipTx1 != m_uiParked.skipTx1)
@@ -5329,7 +5434,7 @@ void MainWindow::refreshSpecialOp (bool initial)
          would overwrite that with false in the sequence FT8 with RRR on, switch to FT4,
          enter the contest - where our park sees m_rrr already false because FT4 turned it
          off - then leave: the operator's RRR setting would be lost on returning to FT8. */
-      if (m_mode == "FT4") { if (m_uiParked.rrr) m_savedRRR = true; }
+      if (ft4_family (m_mode)) { if (m_uiParked.rrr) m_savedRRR = true; }   // review: FT2 too
       else if (m_rrr != m_uiParked.rrr) ui->rrrCheckBox->setChecked (m_uiParked.rrr);
       m_uiParkedValid = false;
     }
@@ -6234,7 +6339,7 @@ void MainWindow::decode()                                       //decode()
   dec_data.params.lft4altpass=fr.alt ? 1 : 0;   // CE3TSK: FT4 expert
   dec_data.params.lft4deeposd=fr.deeposd ? 1 : 0;   // CE3TSK item 58
   dec_data.params.nft4bgensemble=ft4_bg_effort_members(fr.bg, ft4Threads());   // CE3TSK items 59/73: the target, auto resolved here
-  dec_data.params.nft4bgeffort=((m_mode=="FT4" || m_mode=="FT2") && fr.bgon) ? 1 : 0;   // CE3TSK item 78: the switch, sent as FT8's nft8bgeffort is - it alone decides whether the phase runs
+  dec_data.params.nft4bgeffort=(ft4_family (m_mode) && fr.bgon) ? 1 : 0;   // CE3TSK item 78: the switch, sent as FT8's nft8bgeffort is - it alone decides whether the phase runs
   dec_data.params.nft4bgdepth=fr.bgdepth;   // CE3TSK item 69
   dec_data.params.lft4bgdeeposd=fr.bgdeeposd ? 1 : 0;
   dec_data.params.lft4bgaltpass=fr.bgalt ? 1 : 0;
@@ -7743,10 +7848,17 @@ void MainWindow::guiUpdate()
 	  }
       transmitDisplay(false);
       setProgressBarStyle ();
-    } else if (!m_diskData && !m_txwatchdog) {
-      setTxStatusColour ("");
-      tx_status_label->setText("");
-      setProgressBarStyle ();
+    } else {
+      /* CE3TSK 2026-09-26, review: stopTx2 () hands the end of a transmission to the controls; this
+         once-a-second pass is the net behind it, and it ran only while monitoring - so an end that
+         missed stopTx2 with Monitor off left the Mode menu, the Mode buttons and the Tx/Rx frequency
+         controls greyed until Monitor was pressed. Outside a transmission it is idempotent. */
+      transmitDisplay (false);
+      if (!m_diskData && !m_txwatchdog) {
+        setTxStatusColour ("");
+        tx_status_label->setText("");
+        setProgressBarStyle ();
+      }
     }
     if(m_transmitting && !m_tune && (m_nseq==10 || m_nseq==11)) { m_lapmyc=1; m_mslastTX = m_jtdxtime->currentMSecsSinceEpoch2(); } //setting twice: make sure it is not skipped
     QDateTime tme = m_jtdxtime->currentDateTimeUtc2();
@@ -7764,23 +7876,16 @@ void MainWindow::guiUpdate()
 	if (clock_refresh_due(m_mode,isecond)) setClockStyle(false);   // CE3TSK: modetiming.h
 	// setting band scheduler
 	if((minute.toInt())%5==0 && second == "01" && m_config.usesched() && !m_enableTx) {
-        if (m_config.sched_hh_1() == hour && m_config.sched_mm_1() == minute) {
-          set_scheduler(m_config.sched_band_1(),m_config.sched_mix_1());
-        } else if (!m_config.sched_band_2().isEmpty ()) {
-          if (m_config.sched_hh_2() == hour && m_config.sched_mm_2() == minute) {
-            set_scheduler(m_config.sched_band_2(),m_config.sched_mix_2());
-          } else if (!m_config.sched_band_3().isEmpty ()) {
-            if (m_config.sched_hh_3() == hour && m_config.sched_mm_3() == minute) {
-              set_scheduler(m_config.sched_band_3(),m_config.sched_mix_3());
-            } else if (!m_config.sched_band_4().isEmpty ()) {
-              if (m_config.sched_hh_4() == hour && m_config.sched_mm_4() == minute) {
-                set_scheduler(m_config.sched_band_4(),m_config.sched_mix_4());
-              } else if (!m_config.sched_band_5().isEmpty () && m_config.sched_hh_4() == hour && m_config.sched_mm_4() == minute) {
-                set_scheduler(m_config.sched_band_5(),m_config.sched_mix_5());
-              }
-            }
-          }
-        }
+      /* CE3TSK 2026-09-26, review: the entry is chosen by bandschedule.h - the chain of ifs here
+         compared the fifth entry against the fourth's time and never fired it */
+      QVector<ScheduleEntry> const entries {   // test/mode_table.sh holds these rows to entries 1..5
+        {m_config.sched_hh_1 (), m_config.sched_mm_1 (), m_config.sched_band_1 (), m_config.sched_mix_1 ()},
+        {m_config.sched_hh_2 (), m_config.sched_mm_2 (), m_config.sched_band_2 (), m_config.sched_mix_2 ()},
+        {m_config.sched_hh_3 (), m_config.sched_mm_3 (), m_config.sched_band_3 (), m_config.sched_mix_3 ()},
+        {m_config.sched_hh_4 (), m_config.sched_mm_4 (), m_config.sched_band_4 (), m_config.sched_mix_4 ()},
+        {m_config.sched_hh_5 (), m_config.sched_mm_5 (), m_config.sched_band_5 (), m_config.sched_mix_5 ()}};
+      int const due {scheduled_entry (entries, hour, minute)};
+      if (due >= 0) set_scheduler (entries[due].band, entries[due].mixed);
     }
     m_sec0=nsec;
     if(!m_monitoring and !m_diskData) ui->signal_meter_widget->setValue(0);
@@ -7823,18 +7928,21 @@ void MainWindow::set_scheduler(QString const& setto,bool mixed)
   if (setto.contains(",")) { frq = setto.left(setto.indexOf(" ")).replace("*","").replace(",","").toInt(); }
   else { frq = setto.left(setto.indexOf(" ")).replace("*","").replace(".","").toInt(); }
 
-  if (mixed) {
-    newband="JT9+JT65";
-    on_actionJT9_JT65_triggered();
-  } else {
+  if (mixed) newband="JT9+JT65";
+  else {
     newband=setto.mid(setto.indexOf(" ")+1,4);
-    if (newband == "FT8") { on_actionFT8_triggered(); }
-    else if (newband == "FT4") { on_actionFT4_triggered(); }
-    else if (newband == "FT2") { on_actionFT2_triggered(); }   // CE3TSK
-    else if (newband == "JT65") { on_actionJT65_triggered(); }
-	else if (newband == "JT9") { on_actionJT9_triggered(); }
-	else if (newband == "T10") { on_actionT10_triggered(); }
-	else if (newband == "WSPR") { on_actionWSPR_2_triggered(); } 
+    if (newband == "WSPR") newband = "WSPR-2";   // the schedule names it in four letters
+  }
+  /* CE3TSK 2026-09-26, review: through the mode's ACTION, not its slot, so the scheduler obeys what
+     the Mode menu obeys - the contest lock (a scheduled JT65 or FT2 entry took the station out of
+     FT8/FT4 mid-contest, with nothing parked to undo it) and the transmit gate. An entry whose mode
+     is refused is skipped whole: its frequency belongs to that mode. A name that is no mode changes
+     the band only, as before. */
+  if (auto * const action = modeAction (newband)) {
+    if (!trigger_if_enabled (action)) {
+      if(m_config.write_decoded_debug()) writeToALLTXT("Scheduler entry skipped, mode not available now: " + setto);
+      return;
+    }
   }
 
   m_bandEdited = true;
@@ -7968,6 +8076,10 @@ void MainWindow::stopTx2()
     m_ntr=0;
   }
   last_tx_label->setText(tr("LastTx: ") + m_currentMessage.trimmed());
+  /* CE3TSK 2026-09-26, review: the controls come back as the PTT drops, not up to a second later
+     at guiUpdate's next pass. That pass stays as the net for an end that never comes through here
+     (Halt pressed before the PTT rose), and a transmission already begun again makes this a no-op. */
+  transmitDisplay (false);
 }
 
 void MainWindow::RxQSY()
@@ -9629,7 +9741,7 @@ void MainWindow::commonActions ()
   progressBar->setFormat("%v/"+QString::number(m_TRperiod));
   statusChanged();
   on_spotLineEdit_textChanged(ui->spotLineEdit->text());
-  if(m_mode=="FT4" || m_mode=="FT2") {   // CE3TSK: FT2 has FT4's message set and hint memory
+  if(ft4_family (m_mode)) {   // CE3TSK: FT2 has FT4's message set and hint memory
     if(m_rrr) { m_savedRRR=m_rrr; ui->rrrCheckBox->click(); }
     ui->rrrCheckBox->setEnabled(false); ui->rrr1CheckBox->setEnabled(false);
     if(!m_hint) ui->hintButton->click();
@@ -10559,7 +10671,7 @@ void MainWindow::handle_transceiver_update (Transceiver::TransceiverState const&
       if (m_tx_when_ready && g_iptt) {
 //          QThread::currentThread()->setPriority(QThread::HighestPriority);
           int ms_delay=1000*m_config.txDelay();
-          if(m_mode=="FT4" || m_mode=="FT2") ms_delay=20;   // CE3TSK step 6: FT2 starts 150 ms into the period, so the sequencer cannot take the default second
+          if(ft4_family (m_mode)) ms_delay=20;   // CE3TSK step 6: FT2 starts 150 ms into the period, so the sequencer cannot take the default second
           ptt1Timer.start(ms_delay);
 //          printf("ptt1Timer started\n");
           if(m_config.write_decoded_debug()) writeToALLTXT("ptt1Timer started");
@@ -10588,14 +10700,7 @@ void MainWindow::handle_transceiver_update (Transceiver::TransceiverState const&
   if (old_state.online () == false && s.online () == true) {
       on_monitorButton_clicked(true);
       if(m_config.write_decoded_debug()) writeToALLTXT("handle_transceiver_update: transceiver state transition from offline to online");
-      if(m_mode=="FT8") on_actionFT8_triggered();
-      else if(m_mode=="FT4") on_actionFT4_triggered();
-      else if(m_mode=="FT2") on_actionFT2_triggered();   // CE3TSK
-      else if(m_mode=="JT9+JT65") on_actionJT9_JT65_triggered();
-      else if(m_mode=="JT9") on_actionJT9_triggered();
-      else if(m_mode=="JT65") on_actionJT65_triggered();
-      else if(m_mode=="T10") on_actionT10_triggered();
-      else if(m_mode=="WSPR-2") on_actionWSPR_2_triggered();
+      runModeSlot (m_mode);   // CE3TSK 2026-09-26: modeTable ()
   }
   if (s.frequency () != old_state.frequency () || s.split () != m_splitMode) {
       m_splitMode = s.split ();
@@ -10959,13 +11064,18 @@ void MainWindow::transmitDisplay (bool transmitting)
       ui->RxFreqSpinBox->setEnabled (QSY_allowed && !m_superFoxApplied);   // CE3TSK: S-Hound keeps it greyed (on the Fox)
       ui->pbT2R->setEnabled (QSY_allowed);
     }
-    if(m_mode!="WSPR") {
+    if(!m_mode.startsWith ("WSPR")) {   // CE3TSK 2026-09-26, review: m_mode is "WSPR-2", never "WSPR"
       ui->TxFreqSpinBox->setEnabled (QSY_allowed);
       ui->pbR2T->setEnabled (QSY_allowed);
       ui->pbTxLock->setEnabled (QSY_allowed);
     }
     // the following are always disallowed in transmit
     ui->menuMode->setEnabled (!transmitting);
+    /* CE3TSK 2026-09-26, review: and the mode ACTIONS, so every face of them follows - the Mode
+       buttons row reads each action's enabled state, and gating one more widget here would have
+       to be repeated for every face added later. Qt keeps an action disabled on its own (the
+       contest lock's JT65 and the rest) disabled when the group comes back. */
+    m_modeGroup->setEnabled (!transmitting);
     if (!transmitting) {
       // allow mode switch in Rx when in dual mode
       if ("JT9+JT65" == m_mode) ui->pbTxMode->setEnabled (true);

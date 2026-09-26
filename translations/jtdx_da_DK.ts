@@ -6354,6 +6354,11 @@ Det er dekoderens egen fejl. Ret det, der forhindrer den i at starte - et mangle
         <source>The decoder beside this program could not be run, so this program cannot decode anything.</source>
         <translation>Dekoderen ved siden af dette program kunne ikke køres, så programmet kan slet ikke dekode.</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Mode buttons</source>
+        <translation>Modeknapper</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

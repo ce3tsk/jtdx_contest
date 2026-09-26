@@ -8,6 +8,7 @@
 #include <QRandomGenerator>
 #endif
 #include "commons.h"
+#include "blockgather.h"
 
 #include "NetworkServerLookup.hpp"
 
@@ -1074,6 +1075,22 @@ void TCITransceiver::txAudioData(quint32 len, float * data)
     commander_->sendBinaryMessage(tx);
 }
 
+/* CE3TSK 2026-09-26: the body of the block-full branch of writeAudioData, taken out as it was so
+   the blocks handed on after a shrink go through the same code (blockgather.h) */
+void TCITransceiver::processBlock (short * frames)
+{
+  qint32 framesToProcess (m_samplesPerFFT * m_downSampleFactor);
+  qint32 framesAfterDownSample (m_samplesPerFFT);
+  if(m_downSampleFactor > 1 && dec_data.params.kin>=0 &&
+     dec_data.params.kin < (NTMAX*12000 - framesAfterDownSample)) {
+    fil4_(frames, &framesToProcess, &dec_data.d2[dec_data.params.kin],
+          &framesAfterDownSample, &dec_data.dd2[dec_data.params.kin]);
+    dec_data.params.kin += framesAfterDownSample;
+  }
+//    printf("%s(%0.1f) frameswritten %d downSampleFactor %d samplesPerFFT %d\n",m_jtdxtime->currentDateTimeUtc2().toString("hh:mm:ss.zzz").toStdString().c_str(),m_jtdxtime->GetOffset(),dec_data.params.kin,m_downSampleFactor,m_samplesPerFFT);
+  Q_EMIT tciframeswritten (dec_data.params.kin);
+}
+
 quint32 TCITransceiver::writeAudioData (float * data, qint32 maxSize)
 {
   static unsigned mstr0=999999;
@@ -1112,8 +1129,17 @@ quint32 TCITransceiver::writeAudioData (float * data, qint32 maxSize)
     }
 
     for (unsigned remaining = framesAccepted; remaining; ) {
-      size_t numFramesProcessed (qMin (m_samplesPerFFT *
-                                       m_downSampleFactor - m_bufferPos, remaining));
+      /* CE3TSK 2026-09-26: the block can SHRINK under a part-filled buffer (a switch into FT2),
+         and the unsigned "block - m_bufferPos" below then wrapped - the audio was stored past the
+         end of m_buffer until the period wrapped. The same loop as Detector::writeData, which
+         crashed production on it. The whole blocks of the new size already gathered go out first;
+         blockgather.h has the story. TCI always down-samples by 4 (m_downSampleFactor is set so in
+         the constructor and in do_start), so unlike Detector there is no factor-1 case to handle. */
+      size_t const block {static_cast<size_t> (m_samplesPerFFT) * m_downSampleFactor};
+      if (m_bufferPos > block)
+        m_bufferPos = JTDX::rebase_blocks (&m_buffer[0], m_bufferPos, block,
+                                           [this] (short * frames) { processBlock (frames); });
+      size_t numFramesProcessed (qMin (block - m_bufferPos, static_cast<size_t> (remaining)));
 
       if(m_downSampleFactor > 1) {
 //  printf ("%s(%0.1f) writeAudioData maxs %d bytesPerFrame %ld Accepted %ld remaining %d Processed %ld Bufferpos %d kin %d\n",m_jtdxtime->currentDateTimeUtc2().toString("hh:mm:ss.zzz").toStdString().c_str(),
@@ -1122,23 +1148,8 @@ quint32 TCITransceiver::writeAudioData (float * data, qint32 maxSize)
                numFramesProcessed, &m_buffer[m_bufferPos]);
         m_bufferPos += numFramesProcessed;
 
-        if(m_bufferPos==m_samplesPerFFT*m_downSampleFactor) {
-          qint32 framesToProcess (m_samplesPerFFT * m_downSampleFactor);
-          qint32 framesAfterDownSample (m_samplesPerFFT);
-          if(m_downSampleFactor > 1 && dec_data.params.kin>=0 &&
-             dec_data.params.kin < (NTMAX*12000 - framesAfterDownSample)) {
-            fil4_(&m_buffer[0], &framesToProcess, &dec_data.d2[dec_data.params.kin],
-                  &framesAfterDownSample, &dec_data.dd2[dec_data.params.kin]);
-            dec_data.params.kin += framesAfterDownSample;
-          } else {
-            // qDebug() << "framesToProcess     = " << framesToProcess;
-            // qDebug() << "dec_data.params.kin = " << dec_data.params.kin;
-            // qDebug() << "secondInPeriod      = " << secondInPeriod();
-            // qDebug() << "framesAfterDownSample" << framesAfterDownSample;
-          }
-//    printf("%s(%0.1f) frameswritten %d downSampleFactor %d samplesPerFFT %d\n",m_jtdxtime->currentDateTimeUtc2().toString("hh:mm:ss.zzz").toStdString().c_str(),m_jtdxtime->GetOffset(),dec_data.params.kin,m_downSampleFactor,m_samplesPerFFT);
-          Q_EMIT tciframeswritten (dec_data.params.kin);
-//    printf("%s(%0.1f) frameswritten done\n",m_jtdxtime->currentDateTimeUtc2().toString("hh:mm:ss.zzz").toStdString().c_str(),m_jtdxtime->GetOffset());
+        if(m_bufferPos==block) {
+          processBlock (&m_buffer[0]);
           m_bufferPos = 0;
         }
 
@@ -1313,7 +1324,8 @@ quint32 TCITransceiver::writeAudioData (float * data, qint32 maxSize)
   fprintf (pFile,"%s(%0.1f) TCI do_blocksize:%d m_samplesPerFFT:%d state:%d\n",m_jtdxtime->currentDateTimeUtc2().toString("hh:mm:ss.zzz").toStdString().c_str(),m_jtdxtime->GetOffset(),blocksize,m_samplesPerFFT,state().blocksize());
   fclose (pFile);
 #endif
-  m_samplesPerFFT = blocksize;
+  // CE3TSK 2026-09-26: m_buffer holds max_buffer_size samples a block, and no mode asks for more
+  m_samplesPerFFT = qBound (1, blocksize, static_cast<qint32> (max_buffer_size));
 }
 
   void TCITransceiver::do_ptt (bool on)

@@ -6351,6 +6351,11 @@ Questo è l'errore del decoder stesso. Sistemare ciò che ne impedisce l'avvio -
         <source>The decoder beside this program could not be run, so this program cannot decode anything.</source>
         <translation>Il decodificatore accanto a questo programma non è stato eseguito, quindi il programma non può decodificare nulla.</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Mode buttons</source>
+        <translation>Pulsanti modo</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

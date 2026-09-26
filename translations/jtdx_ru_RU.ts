@@ -6364,6 +6364,11 @@ That is the decoder's own error. Put right whatever stops it starting - a missin
         <source>The decoder beside this program could not be run, so this program cannot decode anything.</source>
         <translation>Декодер рядом с этой программой не удалось запустить, поэтому программа не может ничего декодировать.</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Mode buttons</source>
+        <translation>Кнопки модуляций</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>
@@ -8813,7 +8818,7 @@ Right click for insert and delete options.</source>
     <message>
         <location filename="../Configuration.ui" line="2320"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Maximum 13 characters for free message&lt;br&gt;&lt;br&gt;Maximum 19 characters for directional CQ standard message.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Максимум 13 символов для любого свободного текстового сообщения&lt;br&gt;JT65 протокол: максимум 17 символов для стандартного направленного CQ сообщения, где направление две буквы.&lt;br&gt;FT8 протокол: максимум 19 символов для стандартного направленного CQ сообщения, где направление от двух до четырех букв.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt; {13 ?} {19 ?}</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Максимум 13 символов для свободного текстового сообщения&lt;br&gt;&lt;br&gt;Максимум 19 символов для стандартного направленного CQ сообщения.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="2494"/>

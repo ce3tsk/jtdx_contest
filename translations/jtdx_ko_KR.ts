@@ -6350,6 +6350,11 @@ That is the decoder's own error. Put right whatever stops it starting - a missin
         <source>The decoder beside this program could not be run, so this program cannot decode anything.</source>
         <translation>이 프로그램 옆의 디코더를 실행할 수 없어서 아무것도 디코딩할 수 없습니다.</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Mode buttons</source>
+        <translation>모드 버튼</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

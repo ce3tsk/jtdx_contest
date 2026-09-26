@@ -6355,6 +6355,11 @@ C'est l'erreur du décodeur lui-même. Corrigez ce qui l'empêche de démarrer -
         <source>The decoder beside this program could not be run, so this program cannot decode anything.</source>
         <translation>Le décodeur situé à côté de ce programme n'a pas pu être exécuté : le programme ne peut donc rien décoder.</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Mode buttons</source>
+        <translation>Boutons de mode</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

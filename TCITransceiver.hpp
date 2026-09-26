@@ -288,6 +288,7 @@ private:
   // the input sample rate
   unsigned m_bufferPos;
   quint32 writeAudioData (float * data, qint32 maxSize);
+  void processBlock (short * frames);   // CE3TSK: down-sample one block into d2 and announce it
   static size_t const bytesPerFrame = 2;
   // from Modulator
   quint16 readAudioData (float * data, qint32 maxSize);

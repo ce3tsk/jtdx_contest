@@ -6359,6 +6359,11 @@ Aquest és l'error del descodificador mateix. Corregiu allò que n'impedeix l'in
         <source>The decoder beside this program could not be run, so this program cannot decode anything.</source>
         <translation>El descodificador que hi ha al costat d'aquest programa no s'ha pogut executar, de manera que el programa no pot descodificar res.</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Mode buttons</source>
+        <translation>Botons de mode</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

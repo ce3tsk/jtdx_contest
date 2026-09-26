@@ -6349,6 +6349,11 @@ That is the decoder's own error. Put right whatever stops it starting - a missin
         <source>The decoder beside this program could not be run, so this program cannot decode anything.</source>
         <translation>本程式旁邊的解碼器無法執行，因此本程式無法解碼。</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Mode buttons</source>
+        <translation>模式按鈕</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

@@ -6352,6 +6352,11 @@ Det är avkodarens eget fel. Åtgärda det som hindrar den från att starta - et
         <source>The decoder beside this program could not be run, so this program cannot decode anything.</source>
         <translation>Avkodaren bredvid detta program gick inte att köra, så programmet kan inte avkoda något alls.</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Mode buttons</source>
+        <translation>Modknappar</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>
