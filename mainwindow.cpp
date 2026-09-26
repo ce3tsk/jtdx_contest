@@ -3656,15 +3656,19 @@ namespace
     return rows;
   }
 
-  // a frequency as the band buttons write it: the dial's decimal point, without its trailing zeros -
-  // "14,074 MHz" and "7,0475 MHz". khz keeps the kHz digits, so that a menu's column reads 7,056
-  // 7,071 7,080 rather than ending in "7,08"
-  QString band_button_mhz (Radio::Frequency f, bool khz = false)
+  // a frequency as the band buttons write it: Radio's MHz string in the dial's locale, without its
+  // trailing zeros - "14,074 MHz" and "7,0475 MHz". keep leaves at least that many decimals, so that a
+  // menu's column reads 7,056 7,071 7,080 rather than ending in "7,08"
+  QString band_button_mhz (Radio::Frequency f, int keep = 0)
   {
     QLocale const locale;
-    QString mhz {locale.toString (f / 1e6, 'f', 6)};
-    for (int decimals = 6; decimals > (khz ? 3 : 0) && mhz.endsWith (locale.zeroDigit ()); --decimals) mhz.chop (1);
-    if (mhz.endsWith (locale.decimalPoint ())) mhz.chop (1);
+    QString mhz {Radio::frequency_MHz_string (f, locale)};
+    int const point = mhz.lastIndexOf (locale.decimalPoint ());
+    if (point >= 0)
+      {
+        while (mhz.size () - point - 1 > keep && mhz.endsWith (locale.zeroDigit ())) mhz.chop (1);
+        if (mhz.endsWith (locale.decimalPoint ())) mhz.chop (1);
+      }
     return mhz + " MHz";
   }
 }
@@ -3690,6 +3694,10 @@ void MainWindow::scheduleBandButtons ()
 
 void MainWindow::rebuildBandButtons ()
 {
+  /* CE3TSK 2026-09-26, review: a right-click menu open over the old row goes with it - the band
+     scheduler can switch the mode under an open menu, and its entries were the old list's: picked,
+     one did nothing, or tuned a row the new list's menu would not have offered */
+  if (m_bandChannelsMenu) m_bandChannelsMenu->close ();
   qDeleteAll (m_bandButtons);
   m_bandButtons.clear ();
   if (!ui->actionBand_buttons->isChecked ()) return;   // built when shown
@@ -3748,8 +3756,7 @@ void MainWindow::rebuildBandButtons ()
 
    popup (), not exec (): the buttons are deleted and rebuilt from the list's signals - the band scheduler
    can switch the mode while the menu is open - and exec () would run that inside this button's own event
-   handler. The menu holds frequencies only, so a rebuild under it leaves it working; a frequency the new
-   list no longer has is ignored by selectBandButton (). */
+   handler. The rebuild closes the menu (m_bandChannelsMenu), so no entry of an old list can be picked. */
 void MainWindow::showBandChannels (QPushButton * button, QPoint const& at)
 {
   auto const bands = m_config.bands ();
@@ -3759,9 +3766,10 @@ void MainWindow::showBandChannels (QPushButton * button, QPoint const& at)
   if (channels.isEmpty ()) return;
   auto * const menu = new QMenu {this};
   menu->setAttribute (Qt::WA_DeleteOnClose);
+  m_bandChannelsMenu = menu;
   for (auto const f : channels)
     {
-      auto * const action = menu->addAction (band_button_mhz (f, true));
+      auto * const action = menu->addAction (band_button_mhz (f, 3));
       action->setCheckable (true);
       action->setChecked (f == m_freqNominal);
       connect (action, &QAction::triggered, this, [this, f] { selectBandButton (f); });

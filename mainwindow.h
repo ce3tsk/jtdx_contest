@@ -915,6 +915,7 @@ private:
   QString m_txStatusColour;
   QList<QPushButton *> m_bandButtons;              // CE3TSK: View > Band buttons
   QPointer<QAbstractItemModel> m_bandButtonsModel; // the list they were built from
+  QPointer<QMenu> m_bandChannelsMenu;               // CE3TSK 2026-09-26: a button's right-click menu, while open
   QList<QMetaObject::Connection> m_bandButtonsConnections;
   QTimer m_bandButtonsTimer;                       // one rebuild per burst of list changes
   QTimer m_dialWheelTimer;                         // CE3TSK: dial wheel tuning, one QSY per burst of notches
