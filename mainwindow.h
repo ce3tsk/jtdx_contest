@@ -1182,6 +1182,7 @@ private:
   void rebuildBandButtons ();
   void highlightBandButton ();
   void selectBandButton (Radio::Frequency frequency);
+  void showBandChannels (QPushButton * button, QPoint const& at);   // CE3TSK 2026-09-26: the right click
   bool dialFrequencyWheel (QWheelEvent * event);   // CE3TSK
   void lookupDxCallOnQrz ();                       // CE3TSK
   void applyDialWheel ();

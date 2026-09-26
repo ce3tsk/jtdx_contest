@@ -58,6 +58,7 @@
 #include "savedmode.h"     // CE3TSK 2026-09-26: the saved Mode/ModeTx made safe
 #include "bandschedule.h"  // CE3TSK 2026-09-26: which scheduler entry fires
 #include "actiongate.h"    // CE3TSK 2026-09-26: trigger () that obeys the enabled state
+#include "bandchannels.h"  // CE3TSK 2026-09-26: the band buttons, and the other frequencies on a right click
 #include "uilimits.h"      // CE3TSK: the .ui size limits against the current font
 #include <QPainter>
 #include <functional>   // CE3TSK P13: the recursive menu hook
@@ -3638,6 +3639,36 @@ void MainWindow::on_actionNarrow_controls_toggled (bool checked)
   QTimer::singleShot (0, this, [this] { JTDX::refresh_narrow_labels (this); applyPaneFloor (); });
 }
 
+namespace
+{
+  // CE3TSK 2026-09-26: the rows the band selector offers now, in its own order - the mode's and
+  // region's, or the contest's set while one runs
+  QList<BandRow> band_selector_rows (FrequencyList_v2 const * frequencies)
+  {
+    QList<BandRow> rows;
+    for (int row = 0; row < frequencies->rowCount (); ++row)
+      {
+        auto const source = frequencies->mapToSource (frequencies->index (row, FrequencyList_v2::frequency_column));
+        if (!source.isValid ()) continue;
+        auto const& item = frequencies->frequency_list ()[source.row ()];
+        rows << BandRow {item.frequency_, item.default_};
+      }
+    return rows;
+  }
+
+  // a frequency as the band buttons write it: the dial's decimal point, without its trailing zeros -
+  // "14,074 MHz" and "7,0475 MHz". khz keeps the kHz digits, so that a menu's column reads 7,056
+  // 7,071 7,080 rather than ending in "7,08"
+  QString band_button_mhz (Radio::Frequency f, bool khz = false)
+  {
+    QLocale const locale;
+    QString mhz {locale.toString (f / 1e6, 'f', 6)};
+    for (int decimals = 6; decimals > (khz ? 3 : 0) && mhz.endsWith (locale.zeroDigit ()); --decimals) mhz.chop (1);
+    if (mhz.endsWith (locale.decimalPoint ())) mhz.chop (1);
+    return mhz + " MHz";
+  }
+}
+
 void MainWindow::scheduleBandButtons ()
 {
   auto * const frequencies = m_config.frequencies ();
@@ -3662,21 +3693,11 @@ void MainWindow::rebuildBandButtons ()
   qDeleteAll (m_bandButtons);
   m_bandButtons.clear ();
   if (!ui->actionBand_buttons->isChecked ()) return;   // built when shown
-  auto const * const frequencies = m_config.frequencies ();
   /* CE3TSK 2026-09-22: the rows marked default ("*"), in the everyday list AND in a contest's - both tables can
      mark and unmark them now (right click); a contest showed every row before. A list with no default row for the
-     mode at all shows every row, so the row never comes up empty. */
-  QList<Radio::Frequency> wanted, every;
-  for (int row = 0; row < frequencies->rowCount (); ++row)
-    {
-      auto const source = frequencies->mapToSource (frequencies->index (row, FrequencyList_v2::frequency_column));
-      if (!source.isValid ()) continue;
-      auto const& item = frequencies->frequency_list ()[source.row ()];
-      if (!every.contains (item.frequency_)) every << item.frequency_;
-      if (item.default_ && !wanted.contains (item.frequency_)) wanted << item.frequency_;
-    }
-  if (wanted.isEmpty ()) wanted = every;
-  std::sort (wanted.begin (), wanted.end ());
+     mode at all shows every row, so the row never comes up empty. 2026-09-26: the rule moved to bandchannels.h,
+     beside the right click's, which offers the rows left without a button. */
+  auto const wanted = band_button_frequencies (band_selector_rows (m_config.frequencies ()));
   QHash<QString, int> per_band;
   for (auto const f : wanted) ++per_band[m_config.bands ()->find (f)];
   static QRegularExpression const metre_band {R"(^\d+m$)"};
@@ -3697,18 +3718,15 @@ void MainWindow::rebuildBandButtons ()
       // the tooltip says what the label does not: the frequency of a band button, the band of a
       // frequency button
       if (by_frequency && !band.isEmpty ()) button->setToolTip (band);
-      else
-        {
-          QLocale const locale;   // the dial's decimal point, without its trailing zeros: 14,074 and 7,0475
-          QString mhz {locale.toString (f / 1e6, 'f', 6)};
-          while (mhz.endsWith (locale.zeroDigit ())) mhz.chop (1);
-          if (mhz.endsWith (locale.decimalPoint ())) mhz.chop (1);
-          button->setToolTip (mhz + " MHz");
-        }
+      else button->setToolTip (band_button_mhz (f));
       button->setCheckable (true);
       button->setFocusPolicy (Qt::NoFocus);
       button->setProperty ("frequency", QVariant::fromValue<qulonglong> (f));
       connect (button, &QPushButton::clicked, this, [this, f] { selectBandButton (f); });
+      button->setContextMenuPolicy (Qt::CustomContextMenu);   // CE3TSK 2026-09-26: the band's other frequencies
+      connect (button, &QWidget::customContextMenuRequested, this, [this, button] (QPoint const& at) {
+          showBandChannels (button, at);
+        });
       ui->bandButtonsLayout->addWidget (button);
       m_bandButtons << button;
       /* CE3TSK 2026-09-18, review: these are made long after readSettings ran the narrow rules
@@ -3720,6 +3738,41 @@ void MainWindow::rebuildBandButtons ()
     }
   JTDX::watch_narrow_labels (ui->bandButtonsWidget);
   highlightBandButton ();
+}
+
+/* CE3TSK 2026-09-26: a right click on a band button offers the band's other frequencies - the operator:
+   "right click on 10m would present the 10m non default frequencies". They are the rows of the button's band
+   that have no button of their own (bandchannels.h), written as the tooltips write a frequency, the one the
+   dial is on ticked; picking one does what a left click does, i.e. what picking that row in the band
+   selector does. A band with no other frequency opens nothing rather than an empty menu.
+
+   popup (), not exec (): the buttons are deleted and rebuilt from the list's signals - the band scheduler
+   can switch the mode while the menu is open - and exec () would run that inside this button's own event
+   handler. The menu holds frequencies only, so a rebuild under it leaves it working; a frequency the new
+   list no longer has is ignored by selectBandButton (). */
+void MainWindow::showBandChannels (QPushButton * button, QPoint const& at)
+{
+  auto const bands = m_config.bands ();
+  auto const channels = band_channel_frequencies (band_selector_rows (m_config.frequencies ()),
+                                                  bands->find (button->property ("frequency").toULongLong ()),
+                                                  [bands] (Radio::Frequency f) { return bands->find (f); });
+  if (channels.isEmpty ()) return;
+  auto * const menu = new QMenu {this};
+  menu->setAttribute (Qt::WA_DeleteOnClose);
+  for (auto const f : channels)
+    {
+      auto * const action = menu->addAction (band_button_mhz (f, true));
+      action->setCheckable (true);
+      action->setChecked (f == m_freqNominal);
+      connect (action, &QAction::triggered, this, [this, f] { selectBandButton (f); });
+    }
+  /* the menu takes the pointer while it is over the button, so the button never hears it leave: it stayed
+     drawn hovered - over the lit colour, and after the dial had moved to another band - until the pointer
+     next crossed it (measured, tools/ui-check/bandchannels.sh). A popup covers what is under it, so the
+     button is left now; the pointer coming back over it is an ordinary enter. */
+  button->setAttribute (Qt::WA_UnderMouse, false);
+  button->update ();
+  menu->popup (button->mapToGlobal (at));
 }
 
 void MainWindow::selectBandButton (Radio::Frequency frequency)
