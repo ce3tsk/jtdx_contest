@@ -7,6 +7,7 @@ program jt9
 
   use options
   use prog_args
+  use jtdx_iface     ! CE3TSK: who this decoder is - the GUI checks it, see -v below
   use, intrinsic :: iso_c_binding
   use FFTW3
 !  use timer_module, only: timer
@@ -16,6 +17,7 @@ program jt9
   include 'jt9com.f90'
 
   integer(C_INT) iret
+  type(dec_data), allocatable :: szprobe   ! CE3TSK: -v only, to report sizeof(dec_data) honestly
 !  type(wav_header) wav
   character c
   character(len=500) optarg
@@ -35,8 +37,11 @@ program jt9
   logical :: lrxbudgetset=.false.   ! CE3TSK item 80: -l given (the RX budget's default is per mode otherwise)
   integer :: nsftol=0   ! CE3TSK: -o, SuperFox receive (SUPERFOX_PLAN.md): 0 off, else the sync search range in Hz
   logical :: read_files = .true., tx9 = .false., display_help = .false.
-  type (option) :: long_options(53) = [ &
+  type (option) :: long_options(54) = [ &
     option ('help', .false., 'h', 'Display this help message', ''),          &
+    option ('version', .false., 'v',                                      &
+        'Print name, version and shared-memory interface fingerprint',     &
+        ''),                                                               &
     option ('shmem',.true.,'s','Use shared memory for sample data','KEY'),   &
     option ('tr-period', .true., 'p', 'Tx/Rx period, default MINUTES=1',     &
         'MINUTES'),                                                          &
@@ -135,9 +140,12 @@ program jt9
   ! stack garbage, and jt9files() hands them to the decoder: a garbage hiscall made the
   ! "MyCall DxCall" a-priori passes decode differently from one run to the next (found with
   ! valgrind on the FT4 hint memory work, 2026-08-29; file mode only, the GUI clears its block)
+  wisfile=''   ! CE3TSK 2026-09-25: an unrecognised option jumps to the cleanup, which exports
+               ! FFTW wisdom to this name - uninitialised, it wrote a file with a junk name into
+               ! the caller's directory every time an older decoder was probed with -v
   mycall=''; hiscall=''; mygrid=''; hisgrid=''
   do
-     call getopt('hs:e:a:b:r:m:p:d:f:w:t:9642TL:S:H:c:G:x:g:8C:K:E:R:A:WN:j:OyuzXQM:l:B:k:I:D:F:J:P:U:V:Y:Z:n:o:',   &
+     call getopt('hvs:e:a:b:r:m:p:d:f:w:t:9642TL:S:H:c:G:x:g:8C:K:E:R:A:WN:j:OyuzXQM:l:B:k:I:D:F:J:P:U:V:Y:Z:n:o:',   &
           long_options,c,   &
           optarg,arglen,stat,offset,remain,.true.)
      if (stat .ne. 0) then
@@ -146,6 +154,17 @@ program jt9
      select case (c)
         case ('h')
            display_help = .true.
+        ! CE3TSK 2026-09-25: the identity line the GUI reads at start-up. One line, machine
+        ! readable, printed before any shared memory is touched: name, version, the fingerprint of
+        ! the interface declarations (commons.h + jt9com.f90) and the size of the block itself. A
+        ! decoder that is not this pair's - stock JTDX's, WSJT-X's, or one left over from an older
+        ! build - either prints something else or does not know the option at all.
+        case ('v')
+           allocate(szprobe)
+           write(*,'(a,1x,a,1x,a,1x,a,i0)') JTDX_IFACE_APP, 'jtdxjt9', JTDX_IFACE_VER,     &
+                'iface='//JTDX_IFACE_HASH//' dec_data=', storage_size(szprobe)/8
+           deallocate(szprobe)
+           stop
         case ('s')
            read_files = .false.
            shm_key = optarg(:arglen)

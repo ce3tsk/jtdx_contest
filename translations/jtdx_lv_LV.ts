@@ -6278,6 +6278,62 @@ Tas tiek jautāts tikai vienu reizi.</translation>
         <source>Open download page</source>
         <translation>Atvērt lejupielādes lapu</translation>
     </message>
+    <message>
+        <source>It could not be started at all.</source>
+        <translation>To vispār neizdevās palaist.</translation>
+    </message>
+    <message>
+        <source>It did not answer.</source>
+        <translation>Tas neatbildēja.</translation>
+    </message>
+    <message>
+        <source>It is a JTDX_contest decoder, but not this build's.</source>
+        <translation>Tas ir JTDX_contest dekoders, bet ne no šī būvējuma.</translation>
+    </message>
+    <message>
+        <source>It does not identify itself as this program's decoder, so it is another program - a stock JTDX or WSJT-X decoder, or one older than this check.</source>
+        <translation>Tas nepiesakās kā šīs programmas dekoders, tātad tā ir cita programma - oriģinālā JTDX vai WSJT-X dekoders vai tāds, kas ir vecāks par šo pārbaudi.</translation>
+    </message>
+    <message>
+        <source>Wrong decoder</source>
+        <translation>Nepareizs dekoders</translation>
+    </message>
+    <message>
+        <source>The decoder beside this program is not the one it was built with, so decoding would be wrong or silent.</source>
+        <translation>Dekoders blakus šai programmai nav tas, ar kuru programma tika būvēta, tāpēc dekodēšana būtu nepareiza vai tās nebūtu vispār.</translation>
+    </message>
+    <message>
+        <source>Expected: %1
+Found:    %2
+
+Decoder: %3
+
+Deploy jtdx and jtdxjt9 from the same build, and make sure no other JTDX or WSJT-X decoder is in that directory.</source>
+        <translation>Gaidīts: %1
+Atrasts: %2
+
+Dekoders: %3
+
+Uzstādiet jtdx un jtdxjt9 no viena būvējuma un pārliecinieties, ka šajā mapē nav cita JTDX vai WSJT-X dekodera.</translation>
+    </message>
+    <message>
+        <source>(no answer)</source>
+        <translation>(nav atbildes)</translation>
+    </message>
+    <message>
+        <source>Expected: %1
+Found:    %2
+
+Decoder: %3
+
+That is the decoder's own error. Put right whatever stops it starting - a missing library, a broken install, no permission to run it - and start again.</source>
+        <translation>Gaidīts: %1
+Atrasts: %2
+
+Dekoders: %3
+
+Šī ir paša dekodera kļūda. Novērsiet to, kas neļauj tam startēt - trūkstošu bibliotēku, bojātu instalāciju, izpildes tiesību trūkumu - un palaidiet vēlreiz.</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

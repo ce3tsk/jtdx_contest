@@ -9,6 +9,11 @@ extern "C"  {
 #define WSJTX_VERSION_MINOR @WSJTX_VERSION_MINOR@
 #define WSJTX_VERSION_PATCH @WSJTX_VERSION_PATCH@
 
+// CE3TSK 2026-09-25: the fingerprint of the GUI/decoder shared-memory interface
+// (commons.h + lib/jt9com.f90), compiled into both halves so a mismatched pair says so
+#define JTDX_IFACE_HASH "@JTDX_IFACE_HASH@"
+#define PROJECT_NAME "@PROJECT_NAME@"
+
 #define CONFIG_TEST_VERSION_MAJOR @CONFIG_TEST_VERSION_MAJOR@
 #define CONFIG_TEST_VERSION_MINOR @CONFIG_TEST_VERSION_MINOR@
 #define CONFIG_TEST_VERSION_PATCH @CONFIG_TEST_VERSION_PATCH@

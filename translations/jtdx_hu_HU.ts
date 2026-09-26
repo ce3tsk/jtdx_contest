@@ -6283,6 +6283,62 @@ Ezt csak egyszer kérdezzük meg.</translation>
         <source>Open download page</source>
         <translation>Letöltési oldal megnyitása</translation>
     </message>
+    <message>
+        <source>It could not be started at all.</source>
+        <translation>Egyáltalán nem sikerült elindítani.</translation>
+    </message>
+    <message>
+        <source>It did not answer.</source>
+        <translation>Nem válaszolt.</translation>
+    </message>
+    <message>
+        <source>It is a JTDX_contest decoder, but not this build's.</source>
+        <translation>Ez JTDX_contest dekóder, de nem ehhez a fordításhoz tartozik.</translation>
+    </message>
+    <message>
+        <source>It does not identify itself as this program's decoder, so it is another program - a stock JTDX or WSJT-X decoder, or one older than this check.</source>
+        <translation>Nem e program dekóderének mondja magát, tehát egy másik program - az eredeti JTDX vagy a WSJT-X dekódere, vagy ennél az ellenőrzésnél régebbi.</translation>
+    </message>
+    <message>
+        <source>Wrong decoder</source>
+        <translation>Rossz dekóder</translation>
+    </message>
+    <message>
+        <source>The decoder beside this program is not the one it was built with, so decoding would be wrong or silent.</source>
+        <translation>A program melletti dekóder nem az, amellyel a program készült, így a dekódolás hibás lenne, vagy el is maradna.</translation>
+    </message>
+    <message>
+        <source>Expected: %1
+Found:    %2
+
+Decoder: %3
+
+Deploy jtdx and jtdxjt9 from the same build, and make sure no other JTDX or WSJT-X decoder is in that directory.</source>
+        <translation>Várt: %1
+Talált: %2
+
+Dekóder: %3
+
+Telepítse a jtdx és a jtdxjt9 programot ugyanabból a fordításból, és győződjön meg róla, hogy nincs más JTDX- vagy WSJT-X-dekóder abban a könyvtárban.</translation>
+    </message>
+    <message>
+        <source>(no answer)</source>
+        <translation>(nincs válasz)</translation>
+    </message>
+    <message>
+        <source>Expected: %1
+Found:    %2
+
+Decoder: %3
+
+That is the decoder's own error. Put right whatever stops it starting - a missing library, a broken install, no permission to run it - and start again.</source>
+        <translation>Várt: %1
+Talált: %2
+
+Dekóder: %3
+
+Ez magának a dekódernek a hibája. Hárítsa el, ami az indulását akadályozza - hiányzó programkönyvtár, sérült telepítés, hiányzó futtatási jog -, majd indítsa újra.</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

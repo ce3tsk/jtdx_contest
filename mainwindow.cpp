@@ -7,6 +7,7 @@
 #include <thread>
 
 #include <QProcessEnvironment>
+#include <iostream>
 #include <QLineEdit>
 #include <QRegularExpression>
 #include <QRegularExpressionValidator>
@@ -1181,6 +1182,13 @@ MainWindow::MainWindow(bool multiple, QSettings * settings, QSharedMemory *shdme
      column is only ever as wide as its widest item asks to be. */
   dynamicButtonsInit();
 
+  /* CE3TSK 2026-09-25: is the decoder beside us ours, and of this build? Before the audio thread
+     starts, because the answer can be no: check_decoder_identity throws, and unwinding past a
+     RUNNING QThread makes Qt's ~QThread call qFatal ("Destroyed while thread is still running"),
+     which aborts the process - no handler in main, no message, a core file and a leaked shared
+     memory segment. Here the throw unwinds cleanly into main.cpp's catch (review 2026-09-25). */
+  check_decoder_identity (QDir::toNativeSeparators (m_appDir) + QDir::separator () + "jtdxjt9");
+
   m_audioThread.start (m_audioThreadPriority);
 
 #ifdef WIN32
@@ -1252,8 +1260,8 @@ MainWindow::MainWindow(bool multiple, QSettings * settings, QSharedMemory *shdme
      thread's mapping with the stack but does not size it. */
   new_env.insert  ("OMP_STACKSIZE", "24M");
   proc_jtdxjt9.setProcessEnvironment (new_env);
-  proc_jtdxjt9.start(QDir::toNativeSeparators (m_appDir) + QDir::separator () +
-          "jtdxjt9", jt9_args, QIODevice::ReadWrite | QIODevice::Unbuffered);
+  proc_jtdxjt9.start(QDir::toNativeSeparators (m_appDir) + QDir::separator () + "jtdxjt9",
+                     jt9_args, QIODevice::ReadWrite | QIODevice::Unbuffered);
 
   QString fname {QDir::toNativeSeparators(m_dataDir.absoluteFilePath ("wsjtx_wisdom.dat"))};
   QByteArray cfname=fname.toLocal8Bit();
@@ -3964,6 +3972,101 @@ bool MainWindow::subProcessFailed (QProcess * process, int exit_code, QProcess::
       return true;          // ensures exit if still constructing
     }
   return false;  
+}
+
+/* CE3TSK 2026-09-25: is the decoder beside us OUR decoder, of this build? jtdx writes commons.h's
+   dec_data into the shared segment and jtdxjt9 reads jt9com.f90's copy of it; the two are separate
+   files that must agree, and this fork has changed that block six times. A stale jtdxjt9 from an
+   older build - or stock JTDX's, or WSJT-X's, found first in the install directory - reads the
+   audio at the wrong offsets and decodes rubbish, silently. So the decoder is asked who it is
+   before any decoding starts: `jtdxjt9 -v` prints name, version, the fingerprint of the interface
+   declarations (CMake/InterfaceFingerprint.cmake) and sizeof(dec_data). Anything but an exact
+   match is fatal - with the numbers on screen, because "it decodes nothing" is what the operator
+   would otherwise have to diagnose. A decoder that does not know -v at all is not ours. */
+void MainWindow::check_decoder_identity (QString const& program)
+{
+  /* CE3TSK: the one way out, for the author's own experiments - deploying a decoder built from a
+     different tree on purpose. Off by default, and it says so on stdout when it is used, because a
+     silent escape hatch is how a mismatched pair ends up on the air. */
+  if (qEnvironmentVariableIsSet ("JTDX_NO_DECODER_CHECK"))
+    {
+      // std::cerr, not qDebug: QT_NO_DEBUG_OUTPUT compiles qDebug out of a release build, which
+      // would make the one escape hatch completely silent (review 2026-09-25)
+      std::cerr << "JTDX_NO_DECODER_CHECK is set: the decoder's identity is NOT checked\n";
+      return;
+    }
+  QString const expected {QString {"%1 jtdxjt9 %2 iface=%3 dec_data=%4"}
+      .arg (PROJECT_NAME).arg (version (true)).arg (JTDX_IFACE_HASH)
+      .arg (static_cast<qulonglong> (sizeof (struct dec_data)))};
+  QProcess ask;
+  ask.start (program, QStringList {"-v"}, QIODevice::ReadOnly);
+  QString answer;
+  QString trouble;
+  bool could_not_run {false};
+  if (!ask.waitForStarted (5000))
+    {
+      could_not_run = true;
+      trouble = tr ("It could not be started at all.");
+    }
+  else if (!ask.waitForFinished (10000))
+    {
+      ask.kill ();
+      trouble = tr ("It did not answer.");
+    }
+  else
+    {
+      answer = QString::fromLocal8Bit (ask.readAllStandardOutput ()).split ('\n').value (0).trimmed ();
+      if (answer.isEmpty ())   // stock JTDX and WSJT-X put "unrecognised option" on stderr
+        {
+          answer = QString::fromLocal8Bit (ask.readAllStandardError ()).split ('\n').value (0).trimmed ();
+        }
+      if (answer == expected) return;                  // the ordinary case: nothing to say
+      /* Ours answers "<name> jtdxjt9 <version> iface=... dec_data=...". Anything that does not
+         begin that way is a different program - stock JTDX's decoder, WSJT-X's jt9 (both print
+         " error: unrecognised option: -v" and still exit 0), or one of ours from before this
+         check existed. If it does begin that way, it is ours and the rest of the line says what
+         differs, which the details below show side by side. */
+      if (ask.exitStatus () != QProcess::NormalExit || ask.exitCode () != 0)
+        {
+          could_not_run = true;
+          // a correct decoder that cannot start - a missing libgfortran, say - must not be
+          // diagnosed as somebody else's program (review 2026-09-25)
+          trouble = tr ("It failed to run; the line below is what it said. This is not about which "
+                        "decoder is installed - it could not start at all.");
+        }
+      else if (answer.startsWith (QString {"%1 jtdxjt9 "}.arg (PROJECT_NAME)))
+        {
+          trouble = tr ("It is a %1 decoder, but not this build's.").arg (PROJECT_NAME);
+        }
+      else
+        {
+          trouble = tr ("It does not identify itself as this program's decoder, so it is another "
+                        "program - a stock JTDX or WSJT-X decoder, or one older than this check.");
+        }
+    }
+  /* CE3TSK: the advice has to match the fault. Redeploying the pair fixes a mismatch; it does
+     nothing for a decoder that cannot start because a library is missing (review 2026-09-25). */
+  auto const shown = answer.isEmpty () ? tr ("(no answer)") : answer;
+  QString details;
+  if (could_not_run)
+    {
+      details = tr ("Expected: %1\nFound:    %2\n\nDecoder: %3\n\nThat is the decoder's own "
+                    "error. Put right whatever stops it starting - a missing library, a broken "
+                    "install, no permission to run it - and start again.")
+        .arg (expected).arg (shown).arg (program);
+    }
+  else
+    {
+      details = tr ("Expected: %1\nFound:    %2\n\nDecoder: %3\n\nDeploy jtdx and jtdxjt9 from "
+                    "the same build, and make sure no other JTDX or WSJT-X decoder is in that "
+                    "directory.")
+        .arg (expected).arg (shown).arg (program);
+    }
+  JTDXMessageBox::critical_message (this, tr ("Wrong decoder"),
+      tr ("The decoder beside this program is not the one it was built with, so decoding would be "
+          "wrong or silent.") + "\n\n" + trouble, details);
+  throw std::runtime_error {"wrong decoder: expected [" + expected.toStdString ()
+      + "] found [" + answer.toStdString () + "] at " + program.toStdString ()};
 }
 
 void MainWindow::subProcessError (QProcess * process, QProcess::ProcessError)

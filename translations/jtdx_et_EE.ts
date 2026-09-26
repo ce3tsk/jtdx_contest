@@ -6293,6 +6293,62 @@ Seda küsitakse ainult üks kord.</translation>
         <source>Open download page</source>
         <translation>Ava allalaadimisleht</translation>
     </message>
+    <message>
+        <source>It could not be started at all.</source>
+        <translation>Seda ei õnnestunud üldse käivitada.</translation>
+    </message>
+    <message>
+        <source>It did not answer.</source>
+        <translation>See ei vastanud.</translation>
+    </message>
+    <message>
+        <source>It is a JTDX_contest decoder, but not this build's.</source>
+        <translation>See on JTDX_contesti dekooder, kuid mitte selle ehituse oma.</translation>
+    </message>
+    <message>
+        <source>It does not identify itself as this program's decoder, so it is another program - a stock JTDX or WSJT-X decoder, or one older than this check.</source>
+        <translation>See ei esitle end selle programmi dekoodrina, seega on tegu teise programmiga - algupärase JTDX-i või WSJT-X-i dekoodriga või sellest kontrollist vanemaga.</translation>
+    </message>
+    <message>
+        <source>Wrong decoder</source>
+        <translation>Vale dekooder</translation>
+    </message>
+    <message>
+        <source>The decoder beside this program is not the one it was built with, so decoding would be wrong or silent.</source>
+        <translation>Programmi kõrval olev dekooder ei ole see, millega programm ehitati: dekodeerimine oleks vale või jääks olemata.</translation>
+    </message>
+    <message>
+        <source>Expected: %1
+Found:    %2
+
+Decoder: %3
+
+Deploy jtdx and jtdxjt9 from the same build, and make sure no other JTDX or WSJT-X decoder is in that directory.</source>
+        <translation>Oodati: %1
+Leiti: %2
+
+Dekooder: %3
+
+Paigalda jtdx ja jtdxjt9 samast ehitusest ning veendu, et selles kaustas pole teist JTDX-i või WSJT-X-i dekoodrit.</translation>
+    </message>
+    <message>
+        <source>(no answer)</source>
+        <translation>(vastust pole)</translation>
+    </message>
+    <message>
+        <source>Expected: %1
+Found:    %2
+
+Decoder: %3
+
+That is the decoder's own error. Put right whatever stops it starting - a missing library, a broken install, no permission to run it - and start again.</source>
+        <translation>Oodati: %1
+Leiti: %2
+
+Dekooder: %3
+
+See on dekoodri enda viga. Kõrvalda see, mis takistab käivitumist - puuduv teek, katkine paigaldus, puuduv käivitusõigus - ja käivita uuesti.</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

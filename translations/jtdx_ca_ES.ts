@@ -6288,6 +6288,62 @@ Això només es pregunta una vegada.</translation>
         <source>Open download page</source>
         <translation>Obre la pàgina de descàrrega</translation>
     </message>
+    <message>
+        <source>It could not be started at all.</source>
+        <translation>No s'ha pogut iniciar de cap manera.</translation>
+    </message>
+    <message>
+        <source>It did not answer.</source>
+        <translation>No ha respost.</translation>
+    </message>
+    <message>
+        <source>It is a JTDX_contest decoder, but not this build's.</source>
+        <translation>És un descodificador de JTDX_contest, però no el d'aquesta compilació.</translation>
+    </message>
+    <message>
+        <source>It does not identify itself as this program's decoder, so it is another program - a stock JTDX or WSJT-X decoder, or one older than this check.</source>
+        <translation>No s'identifica com el descodificador d'aquest programa, de manera que és un altre programa: un descodificador del JTDX original o del WSJT-X, o un d'anterior a aquesta comprovació.</translation>
+    </message>
+    <message>
+        <source>Wrong decoder</source>
+        <translation>Descodificador incorrecte</translation>
+    </message>
+    <message>
+        <source>The decoder beside this program is not the one it was built with, so decoding would be wrong or silent.</source>
+        <translation>El descodificador que hi ha al costat d'aquest programa no és aquell amb què es va compilar, així que la descodificació seria incorrecta o no n'hi hauria cap.</translation>
+    </message>
+    <message>
+        <source>Expected: %1
+Found:    %2
+
+Decoder: %3
+
+Deploy jtdx and jtdxjt9 from the same build, and make sure no other JTDX or WSJT-X decoder is in that directory.</source>
+        <translation>Esperat: %1
+Trobat: %2
+
+Descodificador: %3
+
+Instal·leu jtdx i jtdxjt9 de la mateixa compilació i assegureu-vos que no hi ha cap altre descodificador de JTDX o WSJT-X en aquest directori.</translation>
+    </message>
+    <message>
+        <source>(no answer)</source>
+        <translation>(sense resposta)</translation>
+    </message>
+    <message>
+        <source>Expected: %1
+Found:    %2
+
+Decoder: %3
+
+That is the decoder's own error. Put right whatever stops it starting - a missing library, a broken install, no permission to run it - and start again.</source>
+        <translation>Esperat: %1
+Trobat: %2
+
+Descodificador: %3
+
+Aquest és l'error del descodificador mateix. Corregiu allò que n'impedeix l'inici - una biblioteca que falta, una instal·lació trencada, manca de permís d'execució - i torneu a iniciar.</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

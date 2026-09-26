@@ -6269,6 +6269,62 @@ Isto é perguntado apenas uma vez.</translation>
         <source>Open download page</source>
         <translation>Abrir a página de transferência</translation>
     </message>
+    <message>
+        <source>It could not be started at all.</source>
+        <translation>Não foi possível iniciá-lo.</translation>
+    </message>
+    <message>
+        <source>It did not answer.</source>
+        <translation>Não respondeu.</translation>
+    </message>
+    <message>
+        <source>It is a JTDX_contest decoder, but not this build's.</source>
+        <translation>É um descodificador do JTDX_contest, mas não o desta compilação.</translation>
+    </message>
+    <message>
+        <source>It does not identify itself as this program's decoder, so it is another program - a stock JTDX or WSJT-X decoder, or one older than this check.</source>
+        <translation>Não se identifica como o descodificador deste programa, portanto é outro programa: um descodificador do JTDX original ou do WSJT-X, ou um anterior a esta verificação.</translation>
+    </message>
+    <message>
+        <source>Wrong decoder</source>
+        <translation>Descodificador errado</translation>
+    </message>
+    <message>
+        <source>The decoder beside this program is not the one it was built with, so decoding would be wrong or silent.</source>
+        <translation>O descodificador que está junto deste programa não é aquele com que foi compilado, pelo que a descodificação sairia errada ou não haveria nenhuma.</translation>
+    </message>
+    <message>
+        <source>Expected: %1
+Found:    %2
+
+Decoder: %3
+
+Deploy jtdx and jtdxjt9 from the same build, and make sure no other JTDX or WSJT-X decoder is in that directory.</source>
+        <translation>Esperado: %1
+Encontrado: %2
+
+Descodificador: %3
+
+Instale o jtdx e o jtdxjt9 da mesma compilação e verifique que não existe outro descodificador do JTDX ou do WSJT-X nessa pasta.</translation>
+    </message>
+    <message>
+        <source>(no answer)</source>
+        <translation>(sem resposta)</translation>
+    </message>
+    <message>
+        <source>Expected: %1
+Found:    %2
+
+Decoder: %3
+
+That is the decoder's own error. Put right whatever stops it starting - a missing library, a broken install, no permission to run it - and start again.</source>
+        <translation>Esperado: %1
+Encontrado: %2
+
+Descodificador: %3
+
+Esse é o erro do próprio descodificador. Corrija o que impede o arranque - uma biblioteca em falta, uma instalação danificada, falta de permissão de execução - e inicie de novo.</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

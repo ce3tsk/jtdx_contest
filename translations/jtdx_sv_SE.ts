@@ -6281,6 +6281,62 @@ Detta frågas bara en gång.</translation>
         <source>Open download page</source>
         <translation>Öppna nedladdningssidan</translation>
     </message>
+    <message>
+        <source>It could not be started at all.</source>
+        <translation>Den gick inte att starta alls.</translation>
+    </message>
+    <message>
+        <source>It did not answer.</source>
+        <translation>Den svarade inte.</translation>
+    </message>
+    <message>
+        <source>It is a JTDX_contest decoder, but not this build's.</source>
+        <translation>Det är en JTDX_contest-avkodare, men inte den här byggets.</translation>
+    </message>
+    <message>
+        <source>It does not identify itself as this program's decoder, so it is another program - a stock JTDX or WSJT-X decoder, or one older than this check.</source>
+        <translation>Den identifierar sig inte som det här programmets avkodare, så det är ett annat program - en avkodare från ursprungliga JTDX eller WSJT-X, eller en som är äldre än den här kontrollen.</translation>
+    </message>
+    <message>
+        <source>Wrong decoder</source>
+        <translation>Fel avkodare</translation>
+    </message>
+    <message>
+        <source>The decoder beside this program is not the one it was built with, so decoding would be wrong or silent.</source>
+        <translation>Avkodaren bredvid det här programmet är inte den som programmet byggdes med, så avkodningen skulle bli fel eller utebli.</translation>
+    </message>
+    <message>
+        <source>Expected: %1
+Found:    %2
+
+Decoder: %3
+
+Deploy jtdx and jtdxjt9 from the same build, and make sure no other JTDX or WSJT-X decoder is in that directory.</source>
+        <translation>Förväntat: %1
+Hittade: %2
+
+Avkodare: %3
+
+Installera jtdx och jtdxjt9 från samma bygge och se till att ingen annan JTDX- eller WSJT-X-avkodare ligger i katalogen.</translation>
+    </message>
+    <message>
+        <source>(no answer)</source>
+        <translation>(inget svar)</translation>
+    </message>
+    <message>
+        <source>Expected: %1
+Found:    %2
+
+Decoder: %3
+
+That is the decoder's own error. Put right whatever stops it starting - a missing library, a broken install, no permission to run it - and start again.</source>
+        <translation>Förväntat: %1
+Hittade: %2
+
+Avkodare: %3
+
+Det är avkodarens eget fel. Åtgärda det som hindrar den från att starta - ett saknat bibliotek, en trasig installation, saknad körrättighet - och starta om.</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

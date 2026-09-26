@@ -1237,6 +1237,7 @@ private:
      Returns false with err set; err == EXISTS means the target was there already. */
   bool convert_wav_depth (QString const& fname, QString& oname, int& out_bits, QString& err);
   bool subProcessFailed (QProcess *, int exit_code, QProcess::ExitStatus);
+  void check_decoder_identity (QString const& program);
   void subProcessError (QProcess *, QProcess::ProcessError);
   void on_the_minute ();
   void toggle_skipTx1();

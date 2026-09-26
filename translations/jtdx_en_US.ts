@@ -6097,6 +6097,52 @@ This is asked only once.</source>
         <source>Open download page</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>It could not be started at all.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>It did not answer.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>It is a JTDX_contest decoder, but not this build's.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>It does not identify itself as this program's decoder, so it is another program - a stock JTDX or WSJT-X decoder, or one older than this check.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Wrong decoder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The decoder beside this program is not the one it was built with, so decoding would be wrong or silent.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Expected: %1
+Found:    %2
+
+Decoder: %3
+
+Deploy jtdx and jtdxjt9 from the same build, and make sure no other JTDX or WSJT-X decoder is in that directory.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>(no answer)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Expected: %1
+Found:    %2
+
+Decoder: %3
+
+That is the decoder's own error. Put right whatever stops it starting - a missing library, a broken install, no permission to run it - and start again.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

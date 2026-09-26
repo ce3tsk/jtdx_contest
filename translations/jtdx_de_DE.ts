@@ -6279,6 +6279,62 @@ Dies wird nur einmal gefragt.</translation>
         <source>Open download page</source>
         <translation>Download-Seite öffnen</translation>
     </message>
+    <message>
+        <source>It could not be started at all.</source>
+        <translation>Er konnte gar nicht gestartet werden.</translation>
+    </message>
+    <message>
+        <source>It did not answer.</source>
+        <translation>Er hat nicht geantwortet.</translation>
+    </message>
+    <message>
+        <source>It is a JTDX_contest decoder, but not this build's.</source>
+        <translation>Es ist ein JTDX_contest-Decoder, aber nicht der dieses Builds.</translation>
+    </message>
+    <message>
+        <source>It does not identify itself as this program's decoder, so it is another program - a stock JTDX or WSJT-X decoder, or one older than this check.</source>
+        <translation>Er weist sich nicht als Decoder dieses Programms aus, ist also ein anderes Programm - ein Decoder von stock JTDX oder WSJT-X, oder einer, der älter ist als diese Prüfung.</translation>
+    </message>
+    <message>
+        <source>Wrong decoder</source>
+        <translation>Falscher Decoder</translation>
+    </message>
+    <message>
+        <source>The decoder beside this program is not the one it was built with, so decoding would be wrong or silent.</source>
+        <translation>Der Decoder neben diesem Programm ist nicht der, mit dem es gebaut wurde; die Dekodierung wäre falsch oder bliebe stumm.</translation>
+    </message>
+    <message>
+        <source>Expected: %1
+Found:    %2
+
+Decoder: %3
+
+Deploy jtdx and jtdxjt9 from the same build, and make sure no other JTDX or WSJT-X decoder is in that directory.</source>
+        <translation>Erwartet: %1
+Gefunden: %2
+
+Decoder: %3
+
+jtdx und jtdxjt9 aus demselben Build installieren und sicherstellen, dass kein anderer JTDX- oder WSJT-X-Decoder in diesem Verzeichnis liegt.</translation>
+    </message>
+    <message>
+        <source>(no answer)</source>
+        <translation>(keine Antwort)</translation>
+    </message>
+    <message>
+        <source>Expected: %1
+Found:    %2
+
+Decoder: %3
+
+That is the decoder's own error. Put right whatever stops it starting - a missing library, a broken install, no permission to run it - and start again.</source>
+        <translation>Erwartet: %1
+Gefunden: %2
+
+Decoder: %3
+
+Das ist der Fehler des Decoders selbst. Beheben Sie, was seinen Start verhindert - eine fehlende Bibliothek, eine defekte Installation, ein fehlendes Ausführungsrecht - und starten Sie erneut.</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

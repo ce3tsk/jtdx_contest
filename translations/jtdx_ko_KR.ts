@@ -6279,6 +6279,62 @@ This is asked only once.</source>
         <source>Open download page</source>
         <translation>다운로드 페이지 열기</translation>
     </message>
+    <message>
+        <source>It could not be started at all.</source>
+        <translation>아예 실행할 수 없었습니다.</translation>
+    </message>
+    <message>
+        <source>It did not answer.</source>
+        <translation>응답하지 않았습니다.</translation>
+    </message>
+    <message>
+        <source>It is a JTDX_contest decoder, but not this build's.</source>
+        <translation>JTDX_contest 디코더이지만 이 빌드의 것이 아닙니다.</translation>
+    </message>
+    <message>
+        <source>It does not identify itself as this program's decoder, so it is another program - a stock JTDX or WSJT-X decoder, or one older than this check.</source>
+        <translation>이 프로그램의 디코더라고 밝히지 않으므로 다른 프로그램입니다. 원본 JTDX나 WSJT-X의 디코더이거나 이 검사보다 오래된 것입니다.</translation>
+    </message>
+    <message>
+        <source>Wrong decoder</source>
+        <translation>잘못된 디코더</translation>
+    </message>
+    <message>
+        <source>The decoder beside this program is not the one it was built with, so decoding would be wrong or silent.</source>
+        <translation>이 프로그램 옆에 있는 디코더는 이 프로그램이 빌드될 때 사용된 것이 아니므로 디코딩이 잘못되거나 전혀 되지 않습니다.</translation>
+    </message>
+    <message>
+        <source>Expected: %1
+Found:    %2
+
+Decoder: %3
+
+Deploy jtdx and jtdxjt9 from the same build, and make sure no other JTDX or WSJT-X decoder is in that directory.</source>
+        <translation>예상: %1
+발견: %2
+
+디코더: %3
+
+jtdx와 jtdxjt9를 같은 빌드에서 설치하고 해당 폴더에 다른 JTDX나 WSJT-X 디코더가 없는지 확인하십시오.</translation>
+    </message>
+    <message>
+        <source>(no answer)</source>
+        <translation>(응답 없음)</translation>
+    </message>
+    <message>
+        <source>Expected: %1
+Found:    %2
+
+Decoder: %3
+
+That is the decoder's own error. Put right whatever stops it starting - a missing library, a broken install, no permission to run it - and start again.</source>
+        <translation>예상: %1
+발견: %2
+
+디코더: %3
+
+이것은 디코더 자체의 오류입니다. 실행을 막는 원인(누락된 라이브러리, 손상된 설치, 실행 권한 없음)을 해결한 뒤 다시 시작하십시오.</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

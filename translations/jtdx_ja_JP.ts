@@ -6191,6 +6191,62 @@ This is asked only once.</source>
         <source>Open download page</source>
         <translation>ダウンロードページを開く</translation>
     </message>
+    <message>
+        <source>It could not be started at all.</source>
+        <translation>まったく起動できませんでした。</translation>
+    </message>
+    <message>
+        <source>It did not answer.</source>
+        <translation>応答がありませんでした。</translation>
+    </message>
+    <message>
+        <source>It is a JTDX_contest decoder, but not this build's.</source>
+        <translation>JTDX_contest のデコーダですが、このビルドのものではありません。</translation>
+    </message>
+    <message>
+        <source>It does not identify itself as this program's decoder, so it is another program - a stock JTDX or WSJT-X decoder, or one older than this check.</source>
+        <translation>このプログラムのデコーダだと名乗らないため、別のプログラムです。本家 JTDX や WSJT-X のデコーダ、あるいはこの確認より古いものと思われます。</translation>
+    </message>
+    <message>
+        <source>Wrong decoder</source>
+        <translation>デコーダが違います</translation>
+    </message>
+    <message>
+        <source>The decoder beside this program is not the one it was built with, so decoding would be wrong or silent.</source>
+        <translation>このプログラムの隣にあるデコーダは、ビルド時のものではありません。デコードが誤るか、まったく行われません。</translation>
+    </message>
+    <message>
+        <source>Expected: %1
+Found:    %2
+
+Decoder: %3
+
+Deploy jtdx and jtdxjt9 from the same build, and make sure no other JTDX or WSJT-X decoder is in that directory.</source>
+        <translation>期待: %1
+検出: %2
+
+デコーダ: %3
+
+jtdx と jtdxjt9 を同じビルドからインストールし、そのフォルダに本家 JTDX や WSJT-X のデコーダが入っていないことを確認してください。</translation>
+    </message>
+    <message>
+        <source>(no answer)</source>
+        <translation>（応答なし）</translation>
+    </message>
+    <message>
+        <source>Expected: %1
+Found:    %2
+
+Decoder: %3
+
+That is the decoder's own error. Put right whatever stops it starting - a missing library, a broken install, no permission to run it - and start again.</source>
+        <translation>期待: %1
+検出: %2
+
+デコーダ: %3
+
+これはデコーダ自身のエラーです。起動を妨げている原因（ライブラリの不足、壊れたインストール、実行権限がないなど）を解消してから、もう一度起動してください。</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

@@ -1365,7 +1365,7 @@ generate_version_info (jtdxjt9_VERSION_RESOURCES
   FILE_DESCRIPTION "jtdxjt9 - JTDX slow mode decoder"
   )
 
-add_executable (jtdxjt9 lib/jt9.f90 lib/jt9a.f90 ${jt9_CXXSRCS} jtdx.rc ${jtdjt9_VERSION_RESOURCES})
+add_executable (jtdxjt9 lib/jt9.f90 lib/jt9a.f90 ${PROJECT_BINARY_DIR}/jtdx_iface.f90 ${jt9_CXXSRCS} jtdx.rc ${jtdjt9_VERSION_RESOURCES})
 if (${OPENMP_FOUND} OR APPLE)
   if (APPLE)
     # On  Mac  we don't  have  working  OpenMP  support in  the  C/C++
@@ -1413,23 +1413,46 @@ endif (${OPENMP_FOUND} OR APPLE)
 # links, and jtdxjt9 waits for it, so a failing check stops the decoder from being built. The
 # stamp is written only when the check passes, so a failed check runs again on the next build.
 if (CMAKE_NM)
+  # CE3TSK 2026-09-25: BOTH Fortran libraries, not just the one jtdxjt9 links. wsjt_fort is what
+  # jtdx itself, every simulator and every test/fortran unit link, and it kept the leaked symbols
+  # for four days after the fix because only wsjt_fort_omp was being checked (test/module_checks.sh
+  # found it).
+  set (module_check_libs wsjt_fort)
   if (TARGET wsjt_fort_omp)
-    set (module_check_lib wsjt_fort_omp)
-  else ()
-    set (module_check_lib wsjt_fort)
+    list (APPEND module_check_libs wsjt_fort_omp)
   endif ()
-  set (module_check_stamp ${CMAKE_BINARY_DIR}/module_globals.stamp)
-  add_custom_command (OUTPUT ${module_check_stamp}
-    COMMAND ${CMAKE_COMMAND} -DNM=${CMAKE_NM} -DLIB=$<TARGET_FILE:${module_check_lib}>
-            -DSTAMP=${module_check_stamp} -P ${PROJECT_SOURCE_DIR}/CMake/check_module_globals.cmake
-    DEPENDS ${module_check_lib} ${PROJECT_SOURCE_DIR}/CMake/check_module_globals.cmake
-    COMMENT "Checking ${module_check_lib} for leaked Fortran loop variables"
-    VERBATIM)
-  add_custom_target (check_module_globals ALL DEPENDS ${module_check_stamp})
+  set (module_check_stamps)
+  foreach (module_check_lib IN LISTS module_check_libs)
+    set (module_check_stamp ${CMAKE_BINARY_DIR}/module_globals_${module_check_lib}.stamp)
+    add_custom_command (OUTPUT ${module_check_stamp}
+      COMMAND ${CMAKE_COMMAND} -DNM=${CMAKE_NM} -DLIB=$<TARGET_FILE:${module_check_lib}>
+              -DSTAMP=${module_check_stamp} -P ${PROJECT_SOURCE_DIR}/CMake/check_module_globals.cmake
+      DEPENDS ${module_check_lib} ${PROJECT_SOURCE_DIR}/CMake/check_module_globals.cmake
+      COMMENT "Checking ${module_check_lib} for leaked Fortran loop variables"
+      VERBATIM)
+    list (APPEND module_check_stamps ${module_check_stamp})
+  endforeach ()
+  add_custom_target (check_module_globals ALL DEPENDS ${module_check_stamps})
   add_dependencies (jtdxjt9 check_module_globals)
 else ()
   message (WARNING "No nm (CMAKE_NM): the check for leaked Fortran loop variables is skipped")
 endif ()
+
+# CE3TSK 2026-09-25: and the same thing at the source level, which catches what nm cannot - an
+# index whose name is longer than two characters, a module whose symbol an ONLY list elsewhere
+# hides, and the DATA form - and needs no toolchain support, so it runs even where CMAKE_NM is
+# empty. See CMake/check_module_implied_do.cmake for the measured table of what each check sees.
+set (implied_do_stamp ${CMAKE_BINARY_DIR}/module_implied_do.stamp)
+file (GLOB_RECURSE implied_do_sources ${PROJECT_SOURCE_DIR}/lib/*.f90 ${PROJECT_SOURCE_DIR}/lib/*.F90
+                                       ${PROJECT_SOURCE_DIR}/lib/*.f ${PROJECT_SOURCE_DIR}/lib/*.for)
+add_custom_command (OUTPUT ${implied_do_stamp}
+  COMMAND ${CMAKE_COMMAND} -DSRCDIR=${PROJECT_SOURCE_DIR}/lib -DSTAMP=${implied_do_stamp}
+          -P ${PROJECT_SOURCE_DIR}/CMake/check_module_implied_do.cmake
+  DEPENDS ${implied_do_sources} ${PROJECT_SOURCE_DIR}/CMake/check_module_implied_do.cmake
+  COMMENT "Checking lib for implied-DO in module-scope initialisers"
+  VERBATIM)
+add_custom_target (check_module_implied_do ALL DEPENDS ${implied_do_stamp})
+add_dependencies (jtdxjt9 check_module_implied_do)
 
 # build the main application
 generate_version_info (jtdx_VERSION_RESOURCES
@@ -1446,6 +1469,11 @@ add_executable (jtdx MACOSX_BUNDLE
   ${wsjtx_RESOURCES_RCC}
   ${jtdx_VERSION_RESOURCES}
   )
+# CE3TSK 2026-09-25: jtdx links wsjt_fort, so it waits for the leaked-loop-variable check too
+if (TARGET check_module_globals)
+  add_dependencies (jtdx check_module_globals)
+endif ()
+add_dependencies (jtdx check_module_implied_do)
 
 if (WSJT_CREATE_WINMAIN)
   set_target_properties (jtdx PROPERTIES WIN32_EXECUTABLE ON)
@@ -1639,6 +1667,24 @@ add_custom_target (revisiontag
 # once per build
 add_dependencies(wsjt_qt revisiontag)
 
+
+# CE3TSK 2026-09-25: the GUI/decoder interface fingerprint, compiled into both halves so that a
+# mismatched pair - a stale jtdxjt9 from an older build, or stock JTDX's / WSJT-X's decoder found
+# first - is reported at start-up instead of decoding rubbish. See CMake/InterfaceFingerprint.cmake
+# and the check in mainwindow.cpp; the decoder prints its own identity with `jtdxjt9 -v`.
+include (${PROJECT_SOURCE_DIR}/CMake/InterfaceFingerprint.cmake)
+jtdx_interface_fingerprint (JTDX_IFACE_HASH
+  "${PROJECT_SOURCE_DIR}/commons.h" "${PROJECT_SOURCE_DIR}/lib/jt9com.f90"
+  "${PROJECT_SOURCE_DIR}/lib/constants.f90")
+# ... and cmake must run again when any of them changes, or an incremental build keeps the old
+# hash and a pair that no longer agrees passes the check (review 2026-09-25)
+set_property (DIRECTORY APPEND PROPERTY CMAKE_CONFIGURE_DEPENDS
+  commons.h lib/jt9com.f90 lib/constants.f90)
+message (STATUS "Shared-memory interface fingerprint: ${JTDX_IFACE_HASH}")
+configure_file (
+  "${PROJECT_SOURCE_DIR}/lib/jtdx_iface.f90.in"
+  "${PROJECT_BINARY_DIR}/jtdx_iface.f90"
+  @ONLY)
 
 #
 # versioning and configuration

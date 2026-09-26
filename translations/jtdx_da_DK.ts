@@ -6283,6 +6283,62 @@ Der spørges kun én gang.</translation>
         <source>Open download page</source>
         <translation>Åbn download-siden</translation>
     </message>
+    <message>
+        <source>It could not be started at all.</source>
+        <translation>Den kunne slet ikke startes.</translation>
+    </message>
+    <message>
+        <source>It did not answer.</source>
+        <translation>Den svarede ikke.</translation>
+    </message>
+    <message>
+        <source>It is a JTDX_contest decoder, but not this build's.</source>
+        <translation>Det er en JTDX_contest-dekoder, men ikke denne bygnings.</translation>
+    </message>
+    <message>
+        <source>It does not identify itself as this program's decoder, so it is another program - a stock JTDX or WSJT-X decoder, or one older than this check.</source>
+        <translation>Den identificerer sig ikke som dette programs dekoder, så det er et andet program - en dekoder fra oprindelig JTDX eller WSJT-X, eller en der er ældre end denne kontrol.</translation>
+    </message>
+    <message>
+        <source>Wrong decoder</source>
+        <translation>Forkert dekoder</translation>
+    </message>
+    <message>
+        <source>The decoder beside this program is not the one it was built with, so decoding would be wrong or silent.</source>
+        <translation>Dekoderen ved siden af dette program er ikke den, programmet blev bygget med, så afkodningen ville blive forkert eller udeblive.</translation>
+    </message>
+    <message>
+        <source>Expected: %1
+Found:    %2
+
+Decoder: %3
+
+Deploy jtdx and jtdxjt9 from the same build, and make sure no other JTDX or WSJT-X decoder is in that directory.</source>
+        <translation>Forventet: %1
+Fundet: %2
+
+Dekoder: %3
+
+Installér jtdx og jtdxjt9 fra den samme bygning, og sørg for at der ikke ligger en anden JTDX- eller WSJT-X-dekoder i mappen.</translation>
+    </message>
+    <message>
+        <source>(no answer)</source>
+        <translation>(intet svar)</translation>
+    </message>
+    <message>
+        <source>Expected: %1
+Found:    %2
+
+Decoder: %3
+
+That is the decoder's own error. Put right whatever stops it starting - a missing library, a broken install, no permission to run it - and start again.</source>
+        <translation>Forventet: %1
+Fundet: %2
+
+Dekoder: %3
+
+Det er dekoderens egen fejl. Ret det, der forhindrer den i at starte - et manglende bibliotek, en ødelagt installation, manglende kørselsrettighed - og start igen.</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

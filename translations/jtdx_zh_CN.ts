@@ -6278,6 +6278,62 @@ This is asked only once.</source>
         <source>Open download page</source>
         <translation>打开下载页面</translation>
     </message>
+    <message>
+        <source>It could not be started at all.</source>
+        <translation>根本无法启动。</translation>
+    </message>
+    <message>
+        <source>It did not answer.</source>
+        <translation>它没有响应。</translation>
+    </message>
+    <message>
+        <source>It is a JTDX_contest decoder, but not this build's.</source>
+        <translation>这是 JTDX_contest 的解码器，但不是本次构建的。</translation>
+    </message>
+    <message>
+        <source>It does not identify itself as this program's decoder, so it is another program - a stock JTDX or WSJT-X decoder, or one older than this check.</source>
+        <translation>它没有表明自己是本程序的解码器，因此是另一个程序——原版 JTDX 或 WSJT-X 的解码器，或者比本检查更早的版本。</translation>
+    </message>
+    <message>
+        <source>Wrong decoder</source>
+        <translation>解码器不匹配</translation>
+    </message>
+    <message>
+        <source>The decoder beside this program is not the one it was built with, so decoding would be wrong or silent.</source>
+        <translation>本程序旁边的解码器并不是构建它时所用的那个，解码结果会出错或根本不解码。</translation>
+    </message>
+    <message>
+        <source>Expected: %1
+Found:    %2
+
+Decoder: %3
+
+Deploy jtdx and jtdxjt9 from the same build, and make sure no other JTDX or WSJT-X decoder is in that directory.</source>
+        <translation>期望：%1
+实际：%2
+
+解码器：%3
+
+请安装同一次构建的 jtdx 和 jtdxjt9，并确认该目录中没有其他 JTDX 或 WSJT-X 解码器。</translation>
+    </message>
+    <message>
+        <source>(no answer)</source>
+        <translation>（无响应）</translation>
+    </message>
+    <message>
+        <source>Expected: %1
+Found:    %2
+
+Decoder: %3
+
+That is the decoder's own error. Put right whatever stops it starting - a missing library, a broken install, no permission to run it - and start again.</source>
+        <translation>期望：%1
+实际：%2
+
+解码器：%3
+
+这是解码器自身的错误。请排除阻止它启动的原因——缺少的库、损坏的安装、没有执行权限——然后重新启动。</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

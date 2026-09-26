@@ -6293,6 +6293,62 @@ This is asked only once.</source>
         <source>Open download page</source>
         <translation>Открыть страницу загрузки</translation>
     </message>
+    <message>
+        <source>It could not be started at all.</source>
+        <translation>Его вообще не удалось запустить.</translation>
+    </message>
+    <message>
+        <source>It did not answer.</source>
+        <translation>Он не ответил.</translation>
+    </message>
+    <message>
+        <source>It is a JTDX_contest decoder, but not this build's.</source>
+        <translation>Это декодер JTDX_contest, но не из этой сборки.</translation>
+    </message>
+    <message>
+        <source>It does not identify itself as this program's decoder, so it is another program - a stock JTDX or WSJT-X decoder, or one older than this check.</source>
+        <translation>Он не представляется декодером этой программы, значит это другая программа — декодер оригинального JTDX или WSJT-X, либо более старый, чем эта проверка.</translation>
+    </message>
+    <message>
+        <source>Wrong decoder</source>
+        <translation>Не тот декодер</translation>
+    </message>
+    <message>
+        <source>The decoder beside this program is not the one it was built with, so decoding would be wrong or silent.</source>
+        <translation>Декодер рядом с этой программой — не тот, с которым она была собрана: декодирование будет неверным или его не будет вовсе.</translation>
+    </message>
+    <message>
+        <source>Expected: %1
+Found:    %2
+
+Decoder: %3
+
+Deploy jtdx and jtdxjt9 from the same build, and make sure no other JTDX or WSJT-X decoder is in that directory.</source>
+        <translation>Ожидалось: %1
+Найдено: %2
+
+Декодер: %3
+
+Установите jtdx и jtdxjt9 из одной сборки и убедитесь, что в этом каталоге нет другого декодера JTDX или WSJT-X.</translation>
+    </message>
+    <message>
+        <source>(no answer)</source>
+        <translation>(нет ответа)</translation>
+    </message>
+    <message>
+        <source>Expected: %1
+Found:    %2
+
+Decoder: %3
+
+That is the decoder's own error. Put right whatever stops it starting - a missing library, a broken install, no permission to run it - and start again.</source>
+        <translation>Ожидалось: %1
+Найдено: %2
+
+Декодер: %3
+
+Это собственная ошибка декодера. Устраните то, что мешает ему запуститься — отсутствующую библиотеку, повреждённую установку, отсутствие прав на запуск — и запустите снова.</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

@@ -6283,6 +6283,62 @@ Ovo se pita samo jednom.</translation>
         <source>Open download page</source>
         <translation>Otvori stranicu za preuzimanje</translation>
     </message>
+    <message>
+        <source>It could not be started at all.</source>
+        <translation>Uopće ga nije bilo moguće pokrenuti.</translation>
+    </message>
+    <message>
+        <source>It did not answer.</source>
+        <translation>Nije odgovorio.</translation>
+    </message>
+    <message>
+        <source>It is a JTDX_contest decoder, but not this build's.</source>
+        <translation>To je JTDX_contest dekoder, ali ne iz ove gradnje.</translation>
+    </message>
+    <message>
+        <source>It does not identify itself as this program's decoder, so it is another program - a stock JTDX or WSJT-X decoder, or one older than this check.</source>
+        <translation>Ne predstavlja se kao dekoder ovog programa, dakle riječ je o drugom programu - dekoderu izvornog JTDX-a ili WSJT-X-a, ili starijem od ove provjere.</translation>
+    </message>
+    <message>
+        <source>Wrong decoder</source>
+        <translation>Pogrešan dekoder</translation>
+    </message>
+    <message>
+        <source>The decoder beside this program is not the one it was built with, so decoding would be wrong or silent.</source>
+        <translation>Dekoder uz ovaj program nije onaj s kojim je program izgrađen, pa bi dekodiranje bilo pogrešno ili ga uopće ne bi bilo.</translation>
+    </message>
+    <message>
+        <source>Expected: %1
+Found:    %2
+
+Decoder: %3
+
+Deploy jtdx and jtdxjt9 from the same build, and make sure no other JTDX or WSJT-X decoder is in that directory.</source>
+        <translation>Očekivano: %1
+Pronađeno: %2
+
+Dekoder: %3
+
+Instalirajte jtdx i jtdxjt9 iz iste gradnje i provjerite da u toj mapi nema drugog JTDX ili WSJT-X dekodera.</translation>
+    </message>
+    <message>
+        <source>(no answer)</source>
+        <translation>(nema odgovora)</translation>
+    </message>
+    <message>
+        <source>Expected: %1
+Found:    %2
+
+Decoder: %3
+
+That is the decoder's own error. Put right whatever stops it starting - a missing library, a broken install, no permission to run it - and start again.</source>
+        <translation>Očekivano: %1
+Pronađeno: %2
+
+Dekoder: %3
+
+To je greška samog dekodera. Otklonite ono što ga sprječava da se pokrene - nedostajuću biblioteku, oštećenu instalaciju, nedostatak prava izvršavanja - i pokrenite ponovno.</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>
