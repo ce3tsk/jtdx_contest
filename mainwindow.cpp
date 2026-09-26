@@ -4003,7 +4003,14 @@ void MainWindow::check_decoder_identity (QString const& program)
      for - answers an unknown option by exporting FFTW wisdom to an uninitialised file name, and
      it would drop that junk file wherever this program was started, usually the operator's home
      (review 2026-09-25). */
-  ask.setWorkingDirectory (QDir::tempPath ());
+  /* ... but only into a directory that is really there. QProcess reports "failed to start" when
+     it cannot change into the working directory, and a probe that cannot run would refuse a pair
+     that is perfectly good. Measured with Qt 5.15: TMPDIR naming nothing usable makes
+     QDir::tempPath () return an EMPTY string - not the bad path - and an empty working directory
+     means "do not change", so the probe still runs. QDir {""}.exists () is true (it is the
+     current directory), which is why this asks QFileInfo instead (review 2026-09-26). */
+  auto const probe_dir = QDir::tempPath ();
+  if (!probe_dir.isEmpty () && QFileInfo {probe_dir}.isDir ()) ask.setWorkingDirectory (probe_dir);
   ask.start (program, QStringList {"-v"}, QIODevice::ReadOnly);
   QString answer;
   QString trouble;
@@ -4089,8 +4096,11 @@ void MainWindow::check_decoder_identity (QString const& program)
             "be wrong or silent.");
   JTDXMessageBox::critical_message (this, tr ("Wrong decoder"), headline + "\n\n" + trouble,
                                     details);
+  // the same fact the dialog shows, so a run from a terminal - where main.cpp prints this and
+  // nothing else - is as diagnosable as the dialog is (review 2026-09-26)
+  auto const logged = answer.isEmpty () ? why : answer;
   throw std::runtime_error {"wrong decoder: expected [" + expected.toStdString ()
-      + "] found [" + answer.toStdString () + "] at " + program.toStdString ()};
+      + "] found [" + logged.toStdString () + "] at " + program.toStdString ()};
 }
 
 void MainWindow::subProcessError (QProcess * process, QProcess::ProcessError)
