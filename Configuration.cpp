@@ -6807,6 +6807,12 @@ void Configuration::impl::load_frequencies ()
   QCoreApplication::translate ("QPlatformTheme", "Cancel");
   QCoreApplication::translate ("QPlatformTheme", "Close");
   QFileDialog::tr ("Show ");
+  // ... and on Linux desktops of the GNOME family (GNOME, XFCE, Cinnamon, MATE) Qt's platform plugin takes
+  // the same buttons from context QGnomeTheme, with a keyboard letter (fix review 2026-09-27, checked
+  // under a real X display - the offscreen platform never picks that theme)
+  QCoreApplication::translate ("QGnomeTheme", "&OK");
+  QCoreApplication::translate ("QGnomeTheme", "&Cancel");
+  QCoreApplication::translate ("QGnomeTheme", "&Close");
 
   QFileDialog* fileDlg=new QFileDialog(this);
     fileDlg->setWindowTitle(tr ("Load Working Frequencies"));

@@ -37,11 +37,6 @@
 <context>
     <name>CAboutDlg</name>
     <message>
-        <location filename="../about.ui" line="23"/>
-        <source>About JTDX</source>
-        <translation>Acerca de JTDX</translation>
-    </message>
-    <message>
         <location filename="../about.ui" line="71"/>
         <source>OK</source>
         <translation>Aceptar</translation>
@@ -2360,7 +2355,7 @@ Formato:
     <message>
         <location filename="../decodedtext.cpp" line="28"/>
         <source>ALLCALL7.TXT is too short or broken?</source>
-        <translation>ALLCALLt.TXT es demasiado corto o ¿esta roto?</translation>
+        <translation>ALLCALL7.TXT es demasiado corto o ¿esta roto?</translation>
     </message>
     <message>
         <location filename="../decodedtext.cpp" line="29"/>
@@ -3437,7 +3432,7 @@ UA2,UA9,UK,UN,UR,V2,V3,V4,V5,V6,V7,V8,VE,VK,VK0H,VK0M,VK9C,VK9L,VK9M,VK9N,VK9W,V
 VP2E,VP2M,VP2V,VP5,VP6,VP6/D,VP8,VP8/G,VP8/H,VP8/O,VP8/S,VP9,VQ9,VR,VU,VU4,VU7,XE,&lt;br&gt;
 XF4,XT,XU,XW,XX9,XZ,YA,YB,YI,YJ,YK,YL,YN,YO,YS,YU,YV,YV0,Z2,Z3,Z6,Z8,ZA,ZB,ZC4,ZD7,&lt;br&gt;
 ZD8,ZD9,ZF,ZK3,ZL,ZL7,ZL8,ZL9,ZP,ZS,ZS8&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Lista separada por comas de los países buscados: el prefijo principal del país se utilizará en esta lista. Para el prefijo indicativo compuesto se reconoce al comienzo del indicativo. La selección automática en AutoSeq 1..7 procesará el país deseado de acuerdo con las notificaciones / prioridades elegidas, esta funcionalidad no es compatible con AutoSeq0. Solo modos que no son FT8: a veces, el indicativo base se copiará del mensaje decodificado: al guardar, dicho usuario de QSO tendrá que cambiar el indicativo correspondiente a uno compuesto si es necesario. Lista de los principales prefijos de país:1A,1S,3A,3B6,3B8,3B9,3C,3C0,3D2,3D2/C,&lt;br&gt;
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Lista separada por comas de los países buscados: el prefijo principal del país se utilizará en esta lista. Para el prefijo indicativo compuesto se reconoce al comienzo del indicativo. La selección automática en AutoSeq 1..7 procesará el país deseado de acuerdo con las notificaciones/prioridades elegidas, esta funcionalidad no es compatible con AutoSeq0. Solo modos que no son FT8: a veces, el indicativo base se copiará del mensaje decodificado: al guardar, dicho usuario de QSO tendrá que cambiar el indicativo correspondiente a uno compuesto si es necesario. Lista de los principales prefijos de país:1A,1S,3A,3B6,3B8,3B9,3C,3C0,3D2,3D2/C,&lt;br&gt;
 3D2/R,3DA,3V,3W,3X,3Y/B,3Y/P,4J,4L,4O,4S,4U1I,4U1U,*4U1V,4W,4X,5A,5B,5H,5N,5R,5T,&lt;br&gt;
 5U,5V,5W,5X,5Z,6W,6Y,7O,7P,7Q,7X,8P,8Q,8R,9A,9G,9H,9J,9K,9L,9M2,9M6,9N,9Q,9U,9V,9X,&lt;br&gt;
 9Y,A2,A3,A4,A5,A6,A7,A9,AP,BS7,BV,BV9P,BY,C2,C3,C5,C6,C9,CE,CE0X,CE0Y,CE0Z,CE9,CM,&lt;br&gt;
@@ -3580,11 +3575,6 @@ ZD8,ZD9,ZF,ZK3,ZL,ZL7,ZL8,ZL9,ZP,ZS,ZS8&lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</t
         <location filename="../mainwindow.ui" line="3078"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Increase number of decoding attempts&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Aumentar el número de intentos de decodificación &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="3092"/>
-        <source>S&amp;WL mode</source>
-        <translation>Modo S&amp;WL</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2980"/>
@@ -4054,11 +4044,6 @@ l hacer clic con el botón derecho del mouse, la hora interna de JTDX vuelve a l
         <translation>Decodificar</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4639"/>
-        <source>FT8 threads</source>
-        <translation>Hilos FT8</translation>
-    </message>
-    <message>
         <location filename="../mainwindow.ui" line="4669"/>
         <source>JT9 WSPR decoding</source>
         <translation>Decodificación JT9 WSPR</translation>
@@ -4153,11 +4138,6 @@ l hacer clic con el botón derecho del mouse, la hora interna de JTDX vuelve a l
         <location filename="../mainwindow.ui" line="5320"/>
         <source>F2</source>
         <translation>F2</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="4904"/>
-        <source>About JTDX</source>
-        <translation>Acerca de JTDX</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4907"/>
@@ -4579,21 +4559,6 @@ l hacer clic con el botón derecho del mouse, la hora interna de JTDX vuelve a l
         <location filename="../mainwindow.ui" line="5696"/>
         <source>Messages with wanted call to RX frequency window</source>
         <translation>Mensajes con llamada deseada a la ventana de frecuencia RX</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="5704"/>
-        <source>use low thresholds</source>
-        <translation>usar umbrales bajos</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="5739"/>
-        <source>use subpass</source>
-        <translation>usar subpass</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="5750"/>
-        <source>minimum</source>
-        <translation>minimo</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5758"/>
@@ -5064,12 +5029,6 @@ l hacer clic con el botón derecho del mouse, la hora interna de JTDX vuelve a l
         <location filename="../mainwindow.cpp" line="4019"/>
         <source>Confirm change Language</source>
         <translation>Confirmar cambio de idioma</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.cpp" line="4015"/>
-        <location filename="../mainwindow.cpp" line="4022"/>
-        <source>Are You sure to change UI Language to English, JTDX will restart?</source>
-        <translation>¿Está seguro de cambiar el idioma de la interfaz de usuario a Español?, JTDX se reiniciará?</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="4192"/>
@@ -6552,6 +6511,24 @@ Verifique que se haya proporcionado el nombre de directorio correcto.</translati
         <location filename="../Configuration.cpp" line="5431"/>
         <source>Date Modified</source>
         <translation>Fecha de modificación</translation>
+    </message>
+</context>
+<context>
+    <name>QGnomeTheme</name>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>&amp;OK</source>
+        <translation>&amp;Aceptar</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>&amp;Cancel</source>
+        <translation>&amp;Cancelar</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>&amp;Close</source>
+        <translation>&amp;Cerrar</translation>
     </message>
 </context>
 <context>
@@ -8698,10 +8675,6 @@ Haga clic derecho para insertar y eliminar opciones.</translation>
         <translation>por modo</translation>
     </message>
     <message>
-        <source>0.5</source>
-        <translation type="obsolete">0.5</translation>
-    </message>
-    <message>
         <location filename="../Configuration.ui" line="763"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Request switch on rig power when supported in Hamlib.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Solicita que se encienda el equipo cuando sea compatible con Hamlib.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
@@ -8780,11 +8753,6 @@ Haga clic derecho para insertar y eliminar opciones.</translation>
         <location filename="../Configuration.ui" line="3554"/>
         <source>Beep as well</source>
         <translation>Pitido también</translation>
-    </message>
-    <message>
-        <location filename="../Configuration.ui" line="3441"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Highlight messages with grid squares which do not exist in the wsjtx_log.adi log file.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt;Resalte los mensajes con locator que no existen en el archivo de registro wsjtx_log.adi. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3444"/>

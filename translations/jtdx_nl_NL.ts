@@ -37,11 +37,6 @@
 <context>
     <name>CAboutDlg</name>
     <message>
-        <location filename="../about.ui" line="23"/>
-        <source>About JTDX</source>
-        <translation>Band</translation>
-    </message>
-    <message>
         <location filename="../about.ui" line="71"/>
         <source>OK</source>
         <translation>Band</translation>
@@ -3579,11 +3574,6 @@ ZD8,ZD9,ZF,ZK3,ZL,ZL7,ZL8,ZL9,ZP,ZS,ZS8&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</tra
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Het aantal decodeerpogingen verhogen&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3092"/>
-        <source>S&amp;WL mode</source>
-        <translation>S&amp;WL-modus</translation>
-    </message>
-    <message>
         <location filename="../mainwindow.ui" line="2980"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Activates group of decoders based on the matched filters, in FT8 mode activates FT8AP functionality&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Schakelt een groep decoders op basis van aangepaste filters in; in FT8 wordt FT8AP ingeschakeld&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
@@ -4007,11 +3997,6 @@ De lijst beheert u bij Instellingen (F2).</translation>
         <translation>Decoderen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4639"/>
-        <source>FT8 threads</source>
-        <translation>FT8-threads</translation>
-    </message>
-    <message>
         <location filename="../mainwindow.ui" line="4669"/>
         <source>JT9 WSPR decoding</source>
         <translation>JT9/WSPR-decodering</translation>
@@ -4151,11 +4136,6 @@ De lijst beheert u bij Instellingen (F2).</translation>
         <location filename="../mainwindow.ui" line="5320"/>
         <source>F2</source>
         <translation>F2</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="4904"/>
-        <source>About JTDX</source>
-        <translation>Over JTDX</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4907"/>
@@ -4577,21 +4557,6 @@ De lijst beheert u bij Instellingen (F2).</translation>
         <location filename="../mainwindow.ui" line="5696"/>
         <source>Messages with wanted call to RX frequency window</source>
         <translation>Berichten met een gezochte roepnaam in het Rx-frequentievenster</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="5704"/>
-        <source>use low thresholds</source>
-        <translation>lage drempels gebruiken</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="5739"/>
-        <source>use subpass</source>
-        <translation>subdoorgang gebruiken</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="5750"/>
-        <source>minimum</source>
-        <translation>minimum</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5766"/>
@@ -5123,12 +5088,6 @@ De lijst beheert u bij Instellingen (F2).</translation>
         <location filename="../mainwindow.cpp" line="4019"/>
         <source>Confirm change Language</source>
         <translation>Taalwijziging bevestigen</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.cpp" line="4015"/>
-        <location filename="../mainwindow.cpp" line="4022"/>
-        <source>Are You sure to change UI Language to English, JTDX will restart?</source>
-        <translation>Wilt u de taal van de interface op Nederlands zetten? JTDX start opnieuw op.</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="4192"/>
@@ -6544,6 +6503,24 @@ Controleer of de mapnaam juist is.</translation>
         <location filename="../Configuration.cpp" line="5431"/>
         <source>Date Modified</source>
         <translation>Gewijzigd op</translation>
+    </message>
+</context>
+<context>
+    <name>QGnomeTheme</name>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>&amp;OK</source>
+        <translation>&amp;OK</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>&amp;Cancel</source>
+        <translation>&amp;Annuleren</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>&amp;Close</source>
+        <translation>&amp;Sluiten</translation>
     </message>
 </context>
 <context>
@@ -8746,11 +8723,6 @@ Rechtsklik om in te voegen of te verwijderen.</translation>
         <location filename="../Configuration.ui" line="3421"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Highlight messages with DXCC countries which are new in the mode according to the data from wsjtx_log.adi log file.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Berichten met DXCC-landen die volgens wsjtx_log.adi in de mode nieuw zijn, markeren.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <location filename="../Configuration.ui" line="3441"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Highlight messages with grid squares which do not exist in the wsjtx_log.adi log file.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Berichten met locators markeren die niet in wsjtx_log.adi voorkomen.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3444"/>

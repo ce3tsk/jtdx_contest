@@ -37,11 +37,6 @@
 <context>
     <name>CAboutDlg</name>
     <message>
-        <location filename="../about.ui" line="23"/>
-        <source>About JTDX</source>
-        <translation>JTDX névjegye</translation>
-    </message>
-    <message>
         <location filename="../about.ui" line="71"/>
         <source>OK</source>
         <translation>OK</translation>
@@ -3579,11 +3574,6 @@ ZD8,ZD9,ZF,ZK3,ZL,ZL7,ZL8,ZL9,ZP,ZS,ZS8&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</tra
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;A dekódolási kísérletek számának növelése&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3092"/>
-        <source>S&amp;WL mode</source>
-        <translation>S&amp;WL mód</translation>
-    </message>
-    <message>
         <location filename="../mainwindow.ui" line="2980"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Activates group of decoders based on the matched filters, in FT8 mode activates FT8AP functionality&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Növeli a dekódolási módok számát. FT8 üzemmódban aktiválja az FT8AP funkciót&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
@@ -4047,11 +4037,6 @@ A listát a menü, Fájl -&gt; Beállítások (F2)-ban lehet karbantartani.</tra
         <translation>Dekódolás</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4639"/>
-        <source>FT8 threads</source>
-        <translation>Az FT8 folyamatok száma</translation>
-    </message>
-    <message>
         <location filename="../mainwindow.ui" line="4669"/>
         <source>JT9 WSPR decoding</source>
         <translation>JT9 WSPR dekódolás</translation>
@@ -4146,11 +4131,6 @@ A listát a menü, Fájl -&gt; Beállítások (F2)-ban lehet karbantartani.</tra
         <location filename="../mainwindow.ui" line="5320"/>
         <source>F2</source>
         <translation>F2</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="4904"/>
-        <source>About JTDX</source>
-        <translation>JTDX névjegye</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4907"/>
@@ -4275,7 +4255,7 @@ A listát a menü, Fájl -&gt; Beállítások (F2)-ban lehet karbantartani.</tra
     <message>
         <location filename="../mainwindow.ui" line="5147"/>
         <source>Erase ALL.TXT</source>
-        <translation>Az ALL.txt fájl törlése</translation>
+        <translation>Az ALL.TXT fájl törlése</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5152"/>
@@ -4572,21 +4552,6 @@ A listát a menü, Fájl -&gt; Beállítások (F2)-ban lehet karbantartani.</tra
         <location filename="../mainwindow.ui" line="5696"/>
         <source>Messages with wanted call to RX frequency window</source>
         <translation>A figyelt hívójelet tartalmazó üzenetek az RX frekvencia ablakban jelenjenek meg</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="5704"/>
-        <source>use low thresholds</source>
-        <translation>Alacsony küszöbérték</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="5739"/>
-        <source>use subpass</source>
-        <translation>Részletesebb kódolás</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="5750"/>
-        <source>minimum</source>
-        <translation>Minimális</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5758"/>
@@ -5137,12 +5102,6 @@ A listát a menü, Fájl -&gt; Beállítások (F2)-ban lehet karbantartani.</tra
         <translation>A nyelvváltozás megerősítése</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="4015"/>
-        <location filename="../mainwindow.cpp" line="4022"/>
-        <source>Are You sure to change UI Language to English, JTDX will restart?</source>
-        <translation>Biztos, hogy magyarra változtatja a felületet, a JTDX-et újraindítja?</translation>
-    </message>
-    <message>
         <location filename="../mainwindow.cpp" line="4192"/>
         <source>Please choose another Tx frequency. JTDX will not knowingly transmit another mode in the WSPR sub-band.</source>
         <translation>Kérjük, válasszon másik Tx frekvenciát. A JTDX szándékosan nem kapcsol adásra egy másik üzemmódban a WSPR alsávban.</translation>
@@ -5194,10 +5153,6 @@ A listát a menü, Fájl -&gt; Beállítások (F2)-ban lehet karbantartani.</tra
         <location filename="../mainwindow.cpp" line="7134"/>
         <source>Pwr&lt;br&gt;%1 W</source>
         <translation>Pwr&lt;br&gt;%1 W</translation>
-    </message>
-    <message>
-        <source>Last Tx: </source>
-        <translation type="obsolete">Utolsó Tx: </translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="5664"/>
@@ -5258,7 +5213,7 @@ már a CALL3.TXT-ben van, szeretné cserélni?</translation>
     <message>
         <location filename="../mainwindow.cpp" line="6428"/>
         <source>Are you sure you want to erase file ALL.TXT ?</source>
-        <translation>Biztos, hogy törli az ALL.txt fájlt?</translation>
+        <translation>Biztos, hogy törli az ALL.TXT fájlt?</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="6440"/>
@@ -6548,6 +6503,24 @@ Ellenőrizze, hogy a helyes könyvtárnevet adta-e meg.</translation>
         <location filename="../Configuration.cpp" line="5431"/>
         <source>Date Modified</source>
         <translation>Módosítás dátuma</translation>
+    </message>
+</context>
+<context>
+    <name>QGnomeTheme</name>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>&amp;OK</source>
+        <translation>&amp;OK</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>&amp;Cancel</source>
+        <translation>&amp;Mégse</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>&amp;Close</source>
+        <translation>&amp;Bezár</translation>
     </message>
 </context>
 <context>
@@ -8359,12 +8332,12 @@ egy 73 vagy szabad szöveges üzenet küldésekor.</translation>
     <message>
         <location filename="../Configuration.ui" line="2703"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Allows to configure data for recording into the ALL.TXT file. Recording of TX messages can not be switched off.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Az elküldött szöveges üzenetek rögzítését nem lehet letiltani.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Beállítható, milyen adatok kerüljenek az ALL.TXT fájlba. Az elküldött szöveges üzenetek rögzítését nem lehet letiltani.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="2706"/>
         <source>Recording to ALL.TXT</source>
-        <translation>Az ALL.txt fájl mentési beállításai</translation>
+        <translation>Az ALL.TXT fájl mentési beállításai</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="2728"/>
@@ -8685,10 +8658,6 @@ A jobb gombbal kattintva, a beillesztési és törlési lehetőségek elérhető
         <translation>üzemmódonként</translation>
     </message>
     <message>
-        <source>0.5</source>
-        <translation type="obsolete">0.5</translation>
-    </message>
-    <message>
         <location filename="../Configuration.ui" line="763"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Request switch on rig power when supported in Hamlib.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;A rádió bekapcsolásának kérése, ha a Hamlib támogatja.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
@@ -8767,11 +8736,6 @@ A jobb gombbal kattintva, a beillesztési és törlési lehetőségek elérhető
         <location filename="../Configuration.ui" line="3554"/>
         <source>Beep as well</source>
         <translation>Hangjelzés is</translation>
-    </message>
-    <message>
-        <location filename="../Configuration.ui" line="3441"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Highlight messages with grid squares which do not exist in the wsjtx_log.adi log file.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Kiemelten jelöli az olyan QRA kockákat, amelyek még nincsenek a wsjtx_log.adi logfájlban.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3444"/>

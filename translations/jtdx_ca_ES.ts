@@ -40,11 +40,6 @@
 <context>
     <name>CAboutDlg</name>
     <message>
-        <location filename="../about.ui" line="23"/>
-        <source>About JTDX</source>
-        <translation>Quant a JTDX</translation>
-    </message>
-    <message>
         <location filename="../about.ui" line="71"/>
         <source>OK</source>
         <translation>D&apos;acord</translation>
@@ -3440,7 +3435,7 @@ UA2,UA9,UK,UN,UR,V2,V3,V4,V5,V6,V7,V8,VE,VK,VK0H,VK0M,VK9C,VK9L,VK9M,VK9N,VK9W,V
 VP2E,VP2M,VP2V,VP5,VP6,VP6/D,VP8,VP8/G,VP8/H,VP8/O,VP8/S,VP9,VQ9,VR,VU,VU4,VU7,XE,&lt;br&gt;
 XF4,XT,XU,XW,XX9,XZ,YA,YB,YI,YJ,YK,YL,YN,YO,YS,YU,YV,YV0,Z2,Z3,Z6,Z8,ZA,ZB,ZC4,ZD7,&lt;br&gt;
 ZD8,ZD9,ZF,ZK3,ZL,ZL7,ZL8,ZL9,ZP,ZS,ZS8&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Llista separada per comes dels països buscats: el prefix principal de país s&apos;utilitzarà en aquesta llista. Pel prefix indicatiu compost es reconeix al començament de l&apos;indicatiu. La selecció automàtica en AutoSeq 1..7 processarà el país desitjat d&apos;acord amb les notificacions / prioritats elegides, aquesta funcionalitat no és compatible amb AutoSeq0. Només modes que no són FT8: de vegades, l&apos;indicatiu base es copiarà del missatge descodificat: a l&apos;iniciar sessió, aquest usuari de QSO haurà de canviar l&apos;indicatiu corresponent al compost un si és necessari. Llista dels principals prefixos de país:1A,1C,1S,3A,3B6,3B8,3B9,3C,3C0,3D2,3D2/C,&lt;br&gt;
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Llista separada per comes dels països buscats: el prefix principal de país s'utilitzarà en aquesta llista. Pel prefix indicatiu compost es reconeix al començament de l'indicatiu. La selecció automàtica en AutoSeq 1..7 processarà el país desitjat d'acord amb les notificacions/prioritats elegides, aquesta funcionalitat no és compatible amb AutoSeq0. Només modes que no són FT8: de vegades, l'indicatiu base es copiarà del missatge descodificat: a l'iniciar sessió, aquest usuari de QSO haurà de canviar l'indicatiu corresponent al compost un si és necessari. Llista dels principals prefixos de país:1A,1C,1S,3A,3B6,3B8,3B9,3C,3C0,3D2,3D2/C,&lt;br&gt;
 3D2/R,3DA,3V,3W,3X,3Y/B,3Y/P,4J,4L,4O,4S,4U1I,4U1U,*4U1V,4W,4X,5A,5B,5H,5N,5R,5T,&lt;br&gt;
 5U,5V,5W,5X,5Z,6W,6Y,7O,7P,7Q,7X,8P,8Q,8R,9A,9G,9H,9J,9K,9L,9M2,9M6,9N,9Q,9U,9V,9X,&lt;br&gt;
 9Y,A2,A3,A4,A5,A6,A7,A9,AP,BS7,BV,BV9P,BY,C2,C3,C5,C6,C9,CE,CE0X,CE0Y,CE0Z,CE9,CM,&lt;br&gt;
@@ -3583,11 +3578,6 @@ ZD8,ZD9,ZF,ZK3,ZL,ZL7,ZL8,ZL9,ZP,ZS,ZS8&lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</t
         <location filename="../mainwindow.ui" line="3078"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Increase number of decoding attempts&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Augmentar el nombre d&apos;intents de descodificació &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="3092"/>
-        <source>S&amp;WL mode</source>
-        <translation>Mode S&amp;WL</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2980"/>
@@ -4053,11 +4043,6 @@ En fer clic amb el botó dret del ratolí, l&apos;hora interna de JTDX torna a l
         <translation>Descodificar</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4639"/>
-        <source>FT8 threads</source>
-        <translation>Fils FT8</translation>
-    </message>
-    <message>
         <location filename="../mainwindow.ui" line="4669"/>
         <source>JT9 WSPR decoding</source>
         <translation>Descodificació JT9 WSPR</translation>
@@ -4153,11 +4138,6 @@ En fer clic amb el botó dret del ratolí, l&apos;hora interna de JTDX torna a l
         <location filename="../mainwindow.ui" line="5320"/>
         <source>F2</source>
         <translation>F2</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="4904"/>
-        <source>About JTDX</source>
-        <translation>Quant a JTDX</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4907"/>
@@ -4579,21 +4559,6 @@ En fer clic amb el botó dret del ratolí, l&apos;hora interna de JTDX torna a l
         <location filename="../mainwindow.ui" line="5696"/>
         <source>Messages with wanted call to RX frequency window</source>
         <translation>Missatges amb indicatiu desitjat a la finestra de Freqüència RX</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="5704"/>
-        <source>use low thresholds</source>
-        <translation>utilitzar llindars baixos</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="5739"/>
-        <source>use subpass</source>
-        <translation>utilitzar subpass</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="5750"/>
-        <source>minimum</source>
-        <translation>mínim</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5758"/>
@@ -5063,12 +5028,6 @@ En fer clic amb el botó dret del ratolí, l&apos;hora interna de JTDX torna a l
         <location filename="../mainwindow.cpp" line="4019"/>
         <source>Confirm change Language</source>
         <translation>Confirmar canvi d&apos;idioma</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.cpp" line="4015"/>
-        <location filename="../mainwindow.cpp" line="4022"/>
-        <source>Are You sure to change UI Language to English, JTDX will restart?</source>
-        <translation>Estàs segur de canviar l&apos;idioma de la interfície d&apos;usuari al català ? JTDX es reiniciarà!</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="4192"/>
@@ -6553,6 +6512,24 @@ Verifica el nom del directori correcte.</translation>
         <location filename="../Configuration.cpp" line="5431"/>
         <source>Date Modified</source>
         <translation>Data de modificació</translation>
+    </message>
+</context>
+<context>
+    <name>QGnomeTheme</name>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>&amp;OK</source>
+        <translation>&amp;Acceptar</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>&amp;Cancel</source>
+        <translation>&amp;Cancel·lar</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>&amp;Close</source>
+        <translation>&amp;Tanca</translation>
     </message>
 </context>
 <context>
@@ -8698,10 +8675,6 @@ Fes clic dret per inserir i eliminar opcions.</translation>
         <translation>per modes</translation>
     </message>
     <message>
-        <source>0.5</source>
-        <translation type="obsolete">0.5</translation>
-    </message>
-    <message>
         <location filename="../Configuration.ui" line="763"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Request switch on rig power when supported in Hamlib.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Encen l’alimentació del equip quan s’admet a Hamlib.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
@@ -8780,11 +8753,6 @@ Fes clic dret per inserir i eliminar opcions.</translation>
         <location filename="../Configuration.ui" line="3554"/>
         <source>Beep as well</source>
         <translation>Xiulet també</translation>
-    </message>
-    <message>
-        <location filename="../Configuration.ui" line="3441"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Highlight messages with grid squares which do not exist in the wsjtx_log.adi log file.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt;Ressalta els missatges amb locator que no existeixen en l&apos;arxiu de log wsjtx_log.adi. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3444"/>

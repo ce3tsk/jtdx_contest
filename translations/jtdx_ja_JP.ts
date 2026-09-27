@@ -37,11 +37,6 @@
 <context>
     <name>CAboutDlg</name>
     <message>
-        <location filename="../about.ui" line="23"/>
-        <source>About JTDX</source>
-        <translation>JTDXについて</translation>
-    </message>
-    <message>
         <location filename="../about.ui" line="71"/>
         <source>OK</source>
         <translation>OK</translation>
@@ -3408,7 +3403,7 @@ UA2,UA9,UK,UN,UR,V2,V3,V4,V5,V6,V7,V8,VE,VK,VK0H,VK0M,VK9C,VK9L,VK9M,VK9N,VK9W,V
 VP2E,VP2M,VP2V,VP5,VP6,VP6/D,VP8,VP8/G,VP8/H,VP8/O,VP8/S,VP9,VQ9,VR,VU,VU4,VU7,XE,&lt;br&gt;
 XF4,XT,XU,XW,XX9,XZ,YA,YB,YI,YJ,YK,YL,YN,YO,YS,YU,YV,YV0,Z2,Z3,Z6,Z8,ZA,ZB,ZC4,ZD7,&lt;br&gt;
 ZD8,ZD9,ZF,ZK3,ZL,ZL7,ZL8,ZL9,ZP,ZS,ZS8&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt; &lt;head /&gt; &lt;body&gt; &lt;p&gt;希望する国をコンマで区切りリストを作成：このリストでは、主要国のプリフィックスが使用されます。複合コールサインの場合、プリフィックスはコールサインの先頭で認識されます。 AutoSeq 1..7での自動選択は、選択された通知/優先度に従って希望する国を処理します。この機能はAutoSeq0ではサポートされていません。非FT8モードのみ：場合によっては、ベースコールサインがデコードされたメッセージからコピーされます。そのようなQSOユーザーをログに記録する場合、必要に応じてコールサインを複合コールサインに変更する必要があります。主な国のプリフィックスのリスト：1A,1S,3A,3B6,3B8,3B9,3C,3C0,3D2,3D2 / C,&lt;br&gt;3D2 / R,3DA,3V,3W,3X,3Y / B,3Y / P,4J,4L,4O,4S,4U1I,4U1U,* 4U1V,4W,4X,5A,5B,5H,5N,5R,5T ,&lt;br&gt;5U,5V,5W,5X,5Z,6W,6Y,7O,7P,7Q,7X,8P,8Q,8R,9A,9G,9H,9J,9K,9L,9M2,9M6,9N,9Q,9U, 9V,9X,&lt;br&gt;9Y,A2,A3,A4,A5,A6,A7,A9,AP,BS7,BV,BV9P,BY,C2,C3,C5,C6,C9,CE,CE0X,CE0Y,CE0Z,CE9,CM,&lt;br &gt;CN,CP,CT,CT3,CU,CX,CY0,CY9,D2,D4,D6,DL,DU,E3,E4,E5 / N,E5 / S,E6,E7,EA,EA6,EA8,EA9, EI,&lt;br&gt;EK,EL,EP,ER,ES,ET,EU,EX,EY,EZ,F,FG,FH,FJ,FK,FK / C,FM,FO,FO / A,FO / C,FO / M, FP,FR,FS,&lt;br&gt;FT / G,FT / J,FT / T,FT / W,FT / X,FT / Z,FW,FY,G,GD,GI,GJ,* GM / S,GM,GU,GW,H4,H40 ,HA,HB,HB0,HC,&lt;br&gt;HC8,HH,HI,HK,HK0 / A,HK0 / M,HL,HP,HR,HS,HV,HZ,I,* IG9,IS,* IT9,J2,J3,J5,J6,J7,J8, JA,&lt;br&gt;JD / M,JD / O,JT,JW,* JW / B,JX,JY,K,KG4,KH0,KH1,KH2,KH3,KH4,KH5,KH6,KH7K,KH8,KH8 / S,KH9,KL ,&lt;br&gt;KP1,KP2,KP4,KP5,LA,LU,LX,LY,LZ,OA,OD,OE,OH,OH0,OJ0,OK,OM,ON,OX,OY,OZ,P2,P4,P5,PA, &lt;br&gt;PJ2,PJ4,PJ5,PJ7,PY,PY0F,PY0S,PY0T,PZ,R1FJ,S0,S2,S5,S7,S9,SM,SP,ST,SU,SV,SV / A,SV5,&lt;br&gt;SV9,T2,T30,T31,T32,T33,T5,T7,T8,TA,* TA1,TF,TG,TI,TI9,TJ,TK,TL,TN,TR,TT,TU,TY,TZ,UA ,&lt;br&gt;UA2,UA9,UK,UN,UR,V2,V3,V4,V5,V6,V7,V8,VE,VK,VK0H,VK0M,VK9C,VK9L,VK9M,VK9N,VK9W,VK9X,&lt;br&gt;VP2E,VP2M,VP2V,VP5,VP6,VP6 / D,VP8,VP8 / G,VP8 / H,VP8 / O,VP8 / S,VP9,VQ9,VR,VU,VU4,VU7,XE,&lt;br&gt;XF4,XT,XU,XW,XX9,XZ,YA,YB,YI,YJ,YK,YL,YN,YO,YS,YU,YV,YV0,Z2,Z3,Z6,Z8,ZA,ZB,ZC4, ZD7,&lt;br&gt;ZD8,ZD9,ZF,ZK3,ZL,ZL7,ZL8,ZL9,ZP,ZS,ZS8 &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt; &lt;head /&gt; &lt;body&gt; &lt;p&gt;希望する国をコンマで区切りリストを作成：このリストでは、主要国のプリフィックスが使用されます。複合コールサインの場合、プリフィックスはコールサインの先頭で認識されます。 AutoSeq 1..7での自動選択は、選択された通知/優先度に従って希望する国を処理します。この機能はAutoSeq0ではサポートされていません。非FT8モードのみ：場合によっては、ベースコールサインがデコードされたメッセージからコピーされます。そのようなQSOユーザーをログに記録する場合、必要に応じてコールサインを複合コールサインに変更する必要があります。主な国のプリフィックスのリスト：1A,1S,3A,3B6,3B8,3B9,3C,3C0,3D2,3D2/C,&lt;br&gt;3D2/R,3DA,3V,3W,3X,3Y/B,3Y/P,4J,4L,4O,4S,4U1I,4U1U,* 4U1V,4W,4X,5A,5B,5H,5N,5R,5T ,&lt;br&gt;5U,5V,5W,5X,5Z,6W,6Y,7O,7P,7Q,7X,8P,8Q,8R,9A,9G,9H,9J,9K,9L,9M2,9M6,9N,9Q,9U, 9V,9X,&lt;br&gt;9Y,A2,A3,A4,A5,A6,A7,A9,AP,BS7,BV,BV9P,BY,C2,C3,C5,C6,C9,CE,CE0X,CE0Y,CE0Z,CE9,CM,&lt;br &gt;CN,CP,CT,CT3,CU,CX,CY0,CY9,D2,D4,D6,DL,DU,E3,E4,E5/N,E5/S,E6,E7,EA,EA6,EA8,EA9, EI,&lt;br&gt;EK,EL,EP,ER,ES,ET,EU,EX,EY,EZ,F,FG,FH,FJ,FK,FK/C,FM,FO,FO/A,FO/C,FO/M, FP,FR,FS,&lt;br&gt;FT/G,FT/J,FT/T,FT/W,FT/X,FT/Z,FW,FY,G,GD,GI,GJ,* GM/S,GM,GU,GW,H4,H40 ,HA,HB,HB0,HC,&lt;br&gt;HC8,HH,HI,HK,HK0/A,HK0/M,HL,HP,HR,HS,HV,HZ,I,* IG9,IS,* IT9,J2,J3,J5,J6,J7,J8, JA,&lt;br&gt;JD/M,JD/O,JT,JW,* JW/B,JX,JY,K,KG4,KH0,KH1,KH2,KH3,KH4,KH5,KH6,KH7K,KH8,KH8/S,KH9,KL ,&lt;br&gt;KP1,KP2,KP4,KP5,LA,LU,LX,LY,LZ,OA,OD,OE,OH,OH0,OJ0,OK,OM,ON,OX,OY,OZ,P2,P4,P5,PA, &lt;br&gt;PJ2,PJ4,PJ5,PJ7,PY,PY0F,PY0S,PY0T,PZ,R1FJ,S0,S2,S5,S7,S9,SM,SP,ST,SU,SV,SV/A,SV5,&lt;br&gt;SV9,T2,T30,T31,T32,T33,T5,T7,T8,TA,* TA1,TF,TG,TI,TI9,TJ,TK,TL,TN,TR,TT,TU,TY,TZ,UA ,&lt;br&gt;UA2,UA9,UK,UN,UR,V2,V3,V4,V5,V6,V7,V8,VE,VK,VK0H,VK0M,VK9C,VK9L,VK9M,VK9N,VK9W,VK9X,&lt;br&gt;VP2E,VP2M,VP2V,VP5,VP6,VP6/D,VP8,VP8/G,VP8/H,VP8/O,VP8/S,VP9,VQ9,VR,VU,VU4,VU7,XE,&lt;br&gt;XF4,XT,XU,XW,XX9,XZ,YA,YB,YI,YJ,YK,YL,YN,YO,YS,YU,YV,YV0,Z2,Z3,Z6,Z8,ZA,ZB,ZC4, ZD7,&lt;br&gt;ZD8,ZD9,ZF,ZK3,ZL,ZL7,ZL8,ZL9,ZP,ZS,ZS8 &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2134"/>
@@ -3536,11 +3531,6 @@ ZD8,ZD9,ZF,ZK3,ZL,ZL7,ZL8,ZL9,ZP,ZS,ZS8&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</sou
         <location filename="../mainwindow.ui" line="3078"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Increase number of decoding attempts&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt; &lt;head /&gt; &lt;body&gt; &lt;p&gt;デコードの試行回数を増やす&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="3092"/>
-        <source>S&amp;WL mode</source>
-        <translation>SWLモード</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2980"/>
@@ -4065,11 +4055,6 @@ Click by right mouse&apos;s button sets JTDX internal time back to system time.&
         <translation>デコード</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4639"/>
-        <source>FT8 threads</source>
-        <translation>FT8スレッド</translation>
-    </message>
-    <message>
         <location filename="../mainwindow.ui" line="4669"/>
         <source>JT9 WSPR decoding</source>
         <translation>JT9 WSPRデコード</translation>
@@ -4164,11 +4149,6 @@ Click by right mouse&apos;s button sets JTDX internal time back to system time.&
         <location filename="../mainwindow.ui" line="5320"/>
         <source>F2</source>
         <translation>F2</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="4904"/>
-        <source>About JTDX</source>
-        <translation>JTDXについて</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4907"/>
@@ -4565,21 +4545,6 @@ Click by right mouse&apos;s button sets JTDX internal time back to system time.&
         <location filename="../mainwindow.ui" line="5696"/>
         <source>Messages with wanted call to RX frequency window</source>
         <translation>欲しい局に登録した局のメッセージを右側、RX周波数ウィンドウに表示</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="5704"/>
-        <source>use low thresholds</source>
-        <translation>低いしきいを使用</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="5739"/>
-        <source>use subpass</source>
-        <translation>サブパスを使用</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="5750"/>
-        <source>minimum</source>
-        <translation>最小</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5758"/>
@@ -6521,6 +6486,24 @@ Please verify the correct directory name was given.</source>
     </message>
 </context>
 <context>
+    <name>QGnomeTheme</name>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>&amp;OK</source>
+        <translation>OK(&amp;O)</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>&amp;Cancel</source>
+        <translation>キャンセル(&amp;C)</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>&amp;Close</source>
+        <translation>閉じる(&amp;C)</translation>
+    </message>
+</context>
+<context>
     <name>QMessageBox</name>
     <message>
         <location filename="../JTDXMessageBox.cpp" line="91"/>
@@ -7462,10 +7445,6 @@ Please verify the correct directory name was given.</source>
         <translation>ﾎﾟｰﾘﾝｸﾞ間隔：</translation>
     </message>
     <message>
-        <source>0.5</source>
-        <translation type="obsolete">0.5</translation>
-    </message>
-    <message>
         <location filename="../Configuration.ui" line="811"/>
         <source>S meter</source>
         <translation>Sメーター</translation>
@@ -8284,7 +8263,7 @@ Please verify the correct directory name was given.</source>
     <message>
         <location filename="../Configuration.ui" line="3321"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Highlight messages with CQ Zones which do not exist in the wsjtx_log.adi log file.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;ログファイルに存在しないCQゾーンのメッセージを強調表示します。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;wsjtx_log.adiログファイルに存在しないCQゾーンのメッセージを強調表示します。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3324"/>
@@ -8294,17 +8273,17 @@ Please verify the correct directory name was given.</source>
     <message>
         <location filename="../Configuration.ui" line="3331"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Highlight messages with CQ Zones which are new on the band according to the data from wsjtx_log.adi log file.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;ログファイルからのデータに従い、バンド上で新しいCQゾーンのメッセージを強調表示します。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;wsjtx_log.adiログファイルからのデータに従い、バンド上で新しいCQゾーンのメッセージを強調表示します。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3341"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Highlight messages with CQ Zones which are new in the mode according to the data from wsjtx_log.adi log file.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;ログファイルからのデータに従い、モードで新しいCQゾーンのメッセージを強調表示します。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;wsjtx_log.adiログファイルからのデータに従い、モードで新しいCQゾーンのメッセージを強調表示します。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3361"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Highlight messages with ITU Zones which do not exist in the wsjtx_log.adi log file.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;ログファイルに存在しないITUゾーンのメッセージを強調表示します。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;wsjtx_log.adiログファイルに存在しないITUゾーンのメッセージを強調表示します。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3364"/>
@@ -8314,12 +8293,12 @@ Please verify the correct directory name was given.</source>
     <message>
         <location filename="../Configuration.ui" line="3371"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Highlight messages with ITU Zones which are new on the band according to the data from wsjtx_log.adi log file.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;ログファイルのデータに従い、バンド上で新しいITUゾーンのメッセージを強調表示します。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;wsjtx_log.adiログファイルのデータに従い、バンド上で新しいITUゾーンのメッセージを強調表示します。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3381"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Highlight messages with ITU Zones which are new in the mode according to the data from wsjtx_log.adi log file.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;ログファイルからのデータに従い、モードで新しいITUゾーンのメッセージを強調表示します。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;wsjtx_log.adiログファイルからのデータに従い、モードで新しいITUゾーンのメッセージを強調表示します。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3404"/>
@@ -9163,7 +9142,7 @@ UA2,UA9,UK,UN,UR,V2,V3,V4,V5,V6,V7,V8,VE,VK,VK0H,VK0M,VK9C,VK9L,VK9M,VK9N,VK9W,V
 VP2E,VP2M,VP2V,VP5,VP6,VP6/D,VP8,VP8/G,VP8/H,VP8/O,VP8/S,VP9,VQ9,VR,VU,VU4,VU7,XE,&lt;br&gt;
 XF4,XT,XU,XW,XX9,XZ,YA,YB,YI,YJ,YK,YL,YN,YO,YS,YU,YV,YV0,Z2,Z3,Z6,Z8,ZA,ZB,ZC4,ZD7,&lt;br&gt;
 ZD8,ZD9,ZF,ZK3,ZL,ZL7,ZL8,ZL9,ZP,ZS,ZS8&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt; &lt;head /&gt; &lt;body&gt; &lt;p&gt; cty.datファイルに基づく国のプリフィックスのリスト。カンマで区切ります。&lt;br&gt;ギャップ(空白)は使えません。使えるリストは次のとおりです：1A、1S、3A、3B6,3B8,3B9,3C、3C0,3D2,3D2 / C、&lt;br&gt;3D2 / R、3DA、3V、3W、3X、3Y / B、3Y / P、4J、4L、4O、4S、4U1I、4U1U、* 4U1V、4W、4X、5A、5B、5H、5N、5R、5T 、&lt;br&gt;5U、5V、5W、5X、5Z、6W、6Y、7O、7P、7Q、7X、8P、8Q、8R、9A、9G、9H、9J、9K、9L、9M2,9M6、9N、9Q、9U、 9V、9X、&lt;br&gt;9Y、A2、A3、A4、A5、A6、A7、A9、AP、BS7、BV、BV9P、BY、C2、C3、C5、C6、C9、CE、CE0X、CE0Y、CE0Z、CE9、CM、&lt;br &gt;CN、CP、CT、CT3、CU、CX、CY0、CY9、D2、D4、D6、DL、DU、E3、E4、E5 / N、E5 / S、E6、E7、EA、EA6、EA8、EA9、 EI、&lt;br&gt;EK、EL、EP、ER、ES、ET、EU、EX、EY、EZ、F、FG、FH、FJ、FK、FK / C、FM、FO、FO / A、FO / C、FO / M、 FP、FR、FS、&lt;br&gt;FT / G、FT / J、FT / T、FT / W、FT / X、FT / Z、FW、FY、G、GD、GI、GJ、* GM / S、GM、GU、GW、H4、H40 、HA、HB、HB0、HC、&lt;br&gt;HC8、HH、HI、HK、HK0 / A、HK0 / M、HL、HP、HR、HS、HV、HZ、I、* IG9、IS、* IT9、J2、J3、J5、J6、J7、J8、 JA、&lt;br&gt;JD / M、JD / O、JT、JW、* JW / B、JX、JY、K、KG4、KH0、KH1、KH2、KH3、KH4、KH5、KH6、KH7K、KH8、KH8 / S、KH9、KL 、&lt;br&gt;KP1、KP2、KP4、KP5、LA、LU、LX、LY、LZ、OA、OD、OE、OH、OH0、OJ0、OK、OM、ON、OX、OY、OZ、P2、P4、P5、PA、 &lt;br&gt;PJ2、PJ4、PJ5、PJ7、PY、PY0F、PY0S、PY0T、PZ、R1FJ、S0、S2、S5、S7、S9、SM、SP、ST、SU、SV、SV / A、SV5、&lt;br&gt;SV9、T2、T30、T31、T32、T33、T5、T7、T8、TA、* TA1、TF、TG、TI、TI9、TJ、TK、TL、TN、TR、TT、TU、TY、TZ、UA 、&lt;br&gt;UA2、UA9、UK、UN、UR、V2、V3、V4、V5、V6、V7、V8、VE、VK、VK0H、VK0M、VK9C、VK9L、VK9M、VK9N、VK9W、VK9X、&lt;br&gt;VP2E、VP2M、VP2V、VP5、VP6、VP6 / D、VP8、VP8 / G、VP8 / H、VP8 / O、VP8 / S、VP9、VQ9、VR、VU、VU4、VU7、XE、&lt;br&gt;XF4、XT、XU、XW、XX9、XZ、YA、YB、YI、YJ、YK、YL、YN、YO、YS、YU、YV、YV0、Z2、Z3、Z6、Z8、ZA、ZB、ZC4、 ZD7、&lt;br&gt;ZD8、ZD9、ZF、ZK3、ZL、ZL7、ZL8、ZL9、ZP、ZS、ZS8 .&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt; &lt;head /&gt; &lt;body&gt; &lt;p&gt; cty.datファイルに基づく国のプリフィックスのリスト。カンマで区切ります。&lt;br&gt;ギャップ(空白)は使えません。使えるリストは次のとおりです：1A、1S、3A、3B6,3B8,3B9,3C、3C0,3D2,3D2/C、&lt;br&gt;3D2/R、3DA、3V、3W、3X、3Y/B、3Y/P、4J、4L、4O、4S、4U1I、4U1U、* 4U1V、4W、4X、5A、5B、5H、5N、5R、5T 、&lt;br&gt;5U、5V、5W、5X、5Z、6W、6Y、7O、7P、7Q、7X、8P、8Q、8R、9A、9G、9H、9J、9K、9L、9M2,9M6、9N、9Q、9U、 9V、9X、&lt;br&gt;9Y、A2、A3、A4、A5、A6、A7、A9、AP、BS7、BV、BV9P、BY、C2、C3、C5、C6、C9、CE、CE0X、CE0Y、CE0Z、CE9、CM、&lt;br &gt;CN、CP、CT、CT3、CU、CX、CY0、CY9、D2、D4、D6、DL、DU、E3、E4、E5/N、E5/S、E6、E7、EA、EA6、EA8、EA9、 EI、&lt;br&gt;EK、EL、EP、ER、ES、ET、EU、EX、EY、EZ、F、FG、FH、FJ、FK、FK/C、FM、FO、FO/A、FO/C、FO/M、 FP、FR、FS、&lt;br&gt;FT/G、FT/J、FT/T、FT/W、FT/X、FT/Z、FW、FY、G、GD、GI、GJ、* GM/S、GM、GU、GW、H4、H40 、HA、HB、HB0、HC、&lt;br&gt;HC8、HH、HI、HK、HK0/A、HK0/M、HL、HP、HR、HS、HV、HZ、I、* IG9、IS、* IT9、J2、J3、J5、J6、J7、J8、 JA、&lt;br&gt;JD/M、JD/O、JT、JW、* JW/B、JX、JY、K、KG4、KH0、KH1、KH2、KH3、KH4、KH5、KH6、KH7K、KH8、KH8/S、KH9、KL 、&lt;br&gt;KP1、KP2、KP4、KP5、LA、LU、LX、LY、LZ、OA、OD、OE、OH、OH0、OJ0、OK、OM、ON、OX、OY、OZ、P2、P4、P5、PA、 &lt;br&gt;PJ2、PJ4、PJ5、PJ7、PY、PY0F、PY0S、PY0T、PZ、R1FJ、S0、S2、S5、S7、S9、SM、SP、ST、SU、SV、SV/A、SV5、&lt;br&gt;SV9、T2、T30、T31、T32、T33、T5、T7、T8、TA、* TA1、TF、TG、TI、TI9、TJ、TK、TL、TN、TR、TT、TU、TY、TZ、UA 、&lt;br&gt;UA2、UA9、UK、UN、UR、V2、V3、V4、V5、V6、V7、V8、VE、VK、VK0H、VK0M、VK9C、VK9L、VK9M、VK9N、VK9W、VK9X、&lt;br&gt;VP2E、VP2M、VP2V、VP5、VP6、VP6/D、VP8、VP8/G、VP8/H、VP8/O、VP8/S、VP9、VQ9、VR、VU、VU4、VU7、XE、&lt;br&gt;XF4、XT、XU、XW、XX9、XZ、YA、YB、YI、YJ、YK、YL、YN、YO、YS、YU、YV、YV0、Z2、Z3、Z6、Z8、ZA、ZB、ZC4、 ZD7、&lt;br&gt;ZD8、ZD9、ZF、ZK3、ZL、ZL7、ZL8、ZL9、ZP、ZS、ZS8 .&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="5118"/>

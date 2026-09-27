@@ -37,11 +37,6 @@
 <context>
     <name>CAboutDlg</name>
     <message>
-        <location filename="../about.ui" line="23"/>
-        <source>About JTDX</source>
-        <translation>Par JTDX</translation>
-    </message>
-    <message>
         <location filename="../about.ui" line="71"/>
         <source>OK</source>
         <translation>Labi</translation>
@@ -3578,11 +3573,6 @@ ZD8,ZD9,ZF,ZK3,ZL,ZL7,ZL8,ZL9,ZP,ZS,ZS8&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</tra
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Palielināt dekodēšanas mēģinājumu skaitu&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3092"/>
-        <source>S&amp;WL mode</source>
-        <translation>S&amp;WL režīms</translation>
-    </message>
-    <message>
         <location filename="../mainwindow.ui" line="2980"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Activates group of decoders based on the matched filters, in FT8 mode activates FT8AP functionality&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Aktivizē uz saskaņotiem filtriem balstītu dekodētāju grupu; FT8 modē aktivizē FT8AP funkcionalitāti&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
@@ -4046,11 +4036,6 @@ Ar labo peles pogu JTDX iekšējais laiks tiek atgriezts uz sistēmas laiku.&lt;
         <translation>Dekodēšana</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4639"/>
-        <source>FT8 threads</source>
-        <translation>FT8 pavedieni</translation>
-    </message>
-    <message>
         <location filename="../mainwindow.ui" line="4669"/>
         <source>JT9 WSPR decoding</source>
         <translation>JT9 WSPR dekodēšana</translation>
@@ -4145,11 +4130,6 @@ Ar labo peles pogu JTDX iekšējais laiks tiek atgriezts uz sistēmas laiku.&lt;
         <location filename="../mainwindow.ui" line="5320"/>
         <source>F2</source>
         <translation>F2</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="4904"/>
-        <source>About JTDX</source>
-        <translation>Par JTDX</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4907"/>
@@ -4571,21 +4551,6 @@ Ar labo peles pogu JTDX iekšējais laiks tiek atgriezts uz sistēmas laiku.&lt;
         <location filename="../mainwindow.ui" line="5696"/>
         <source>Messages with wanted call to RX frequency window</source>
         <translation>Ziņojumi ar meklēto izsaukuma signālu uztveršanas frekvences logā</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="5704"/>
-        <source>use low thresholds</source>
-        <translation>lietot zemus sliekšņus</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="5739"/>
-        <source>use subpass</source>
-        <translation>lietot apakšgājienu</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="5750"/>
-        <source>minimum</source>
-        <translation>minimums</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5758"/>
@@ -5134,12 +5099,6 @@ Ar labo peles pogu JTDX iekšējais laiks tiek atgriezts uz sistēmas laiku.&lt;
         <location filename="../mainwindow.cpp" line="4019"/>
         <source>Confirm change Language</source>
         <translation>Apstiprināt valodas maiņu</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.cpp" line="4015"/>
-        <location filename="../mainwindow.cpp" line="4022"/>
-        <source>Are You sure to change UI Language to English, JTDX will restart?</source>
-        <translation>Vai tiešām mainīt lietotāja saskarnes valodu uz latviešu? JTDX tiks restartēts.</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="4192"/>
@@ -6543,6 +6502,24 @@ Lūdzu, pārbaudiet, vai norādīts pareizs direktorijas nosaukums.</translation
         <location filename="../Configuration.cpp" line="5431"/>
         <source>Date Modified</source>
         <translation>Datums izmainīts</translation>
+    </message>
+</context>
+<context>
+    <name>QGnomeTheme</name>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>&amp;OK</source>
+        <translation>&amp;Labi</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>&amp;Cancel</source>
+        <translation>&amp;Atcelt</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>&amp;Close</source>
+        <translation>&amp;Aizvērt</translation>
     </message>
 </context>
 <context>
@@ -8276,10 +8253,6 @@ lauki DX Call un DX Grid tiktu notīrīti.</translation>
         <translation>Dažas žurnālu programmas nepieņem JT-65 vai JT9 kā atpazītu modi.</translation>
     </message>
     <message>
-        <source>0.5</source>
-        <translation type="obsolete">0.5</translation>
-    </message>
-    <message>
         <location filename="../Configuration.ui" line="763"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Request switch on rig power when supported in Hamlib.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Pieprasīt transīvera ieslēgšanu, ja Hamlib to atbalsta.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
@@ -8750,11 +8723,6 @@ Ar labo peles pogu var ievietot un dzēst.</translation>
         <location filename="../Configuration.ui" line="3421"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Highlight messages with DXCC countries which are new in the mode according to the data from wsjtx_log.adi log file.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Izcelt ziņojumus ar DXCC valstīm, kuras pēc wsjtx_log.adi žurnāla datiem šajā modē ir jaunas.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <location filename="../Configuration.ui" line="3441"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Highlight messages with grid squares which do not exist in the wsjtx_log.adi log file.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Izcelt ziņojumus ar lokātoriem, kuru nav wsjtx_log.adi žurnāla failā.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3444"/>

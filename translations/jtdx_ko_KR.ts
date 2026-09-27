@@ -37,11 +37,6 @@
 <context>
     <name>CAboutDlg</name>
     <message>
-        <location filename="../about.ui" line="23"/>
-        <source>About JTDX</source>
-        <translation>JTDX 정보</translation>
-    </message>
-    <message>
         <location filename="../about.ui" line="71"/>
         <source>OK</source>
         <translation>확인</translation>
@@ -3579,11 +3574,6 @@ ZD8,ZD9,ZF,ZK3,ZL,ZL7,ZL8,ZL9,ZP,ZS,ZS8&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</tra
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;디코딩 시도 횟수를 늘립니다&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3092"/>
-        <source>S&amp;WL mode</source>
-        <translation>SWL 모드(&amp;W)</translation>
-    </message>
-    <message>
         <location filename="../mainwindow.ui" line="2980"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Activates group of decoders based on the matched filters, in FT8 mode activates FT8AP functionality&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;정합 필터 기반 디코더 묶음을 켭니다. FT8 모드에서는 FT8AP 기능을 켭니다&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
@@ -4047,11 +4037,6 @@ Enter를 누르면 현재 문구가 목록에 추가됩니다.
         <translation>디코드</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4639"/>
-        <source>FT8 threads</source>
-        <translation>FT8 스레드</translation>
-    </message>
-    <message>
         <location filename="../mainwindow.ui" line="4669"/>
         <source>JT9 WSPR decoding</source>
         <translation>JT9/WSPR 디코딩</translation>
@@ -4146,11 +4131,6 @@ Enter를 누르면 현재 문구가 목록에 추가됩니다.
         <location filename="../mainwindow.ui" line="5320"/>
         <source>F2</source>
         <translation>F2</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="4904"/>
-        <source>About JTDX</source>
-        <translation>JTDX 정보</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4907"/>
@@ -4572,21 +4552,6 @@ Enter를 누르면 현재 문구가 목록에 추가됩니다.
         <location filename="../mainwindow.ui" line="5696"/>
         <source>Messages with wanted call to RX frequency window</source>
         <translation>찾는 호출부호가 든 메시지를 RX 주파수 창에</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="5704"/>
-        <source>use low thresholds</source>
-        <translation>낮은 임계값 사용</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="5739"/>
-        <source>use subpass</source>
-        <translation>보조 패스 사용</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="5750"/>
-        <source>minimum</source>
-        <translation>최소</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5758"/>
@@ -5123,12 +5088,6 @@ Enter를 누르면 현재 문구가 목록에 추가됩니다.
         <location filename="../mainwindow.cpp" line="4019"/>
         <source>Confirm change Language</source>
         <translation>언어 변경 확인</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.cpp" line="4015"/>
-        <location filename="../mainwindow.cpp" line="4022"/>
-        <source>Are You sure to change UI Language to English, JTDX will restart?</source>
-        <translation>인터페이스 언어를 한국어로 바꾸시겠습니까? JTDX가 다시 시작됩니다.</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="4192"/>
@@ -6544,6 +6503,24 @@ Please verify the correct directory name was given.</source>
         <location filename="../Configuration.cpp" line="5431"/>
         <source>Date Modified</source>
         <translation>수정한 날짜</translation>
+    </message>
+</context>
+<context>
+    <name>QGnomeTheme</name>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>&amp;OK</source>
+        <translation>확인(&amp;O)</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>&amp;Cancel</source>
+        <translation>취소(&amp;C)</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>&amp;Close</source>
+        <translation>닫기(&amp;C)</translation>
     </message>
 </context>
 <context>
@@ -8761,11 +8738,6 @@ Right click for insert and delete options.</source>
         <location filename="../Configuration.ui" line="3554"/>
         <source>Beep as well</source>
         <translation>소리도 울림</translation>
-    </message>
-    <message>
-        <location filename="../Configuration.ui" line="3441"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Highlight messages with grid squares which do not exist in the wsjtx_log.adi log file.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;로그 파일 wsjtx_log.adi에 없는 그리드의 메시지를 강조합니다.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3444"/>

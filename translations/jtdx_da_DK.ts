@@ -37,11 +37,6 @@
 <context>
     <name>CAboutDlg</name>
     <message>
-        <location filename="../about.ui" line="23"/>
-        <source>About JTDX</source>
-        <translation>Om JTDX</translation>
-    </message>
-    <message>
         <location filename="../about.ui" line="71"/>
         <source>OK</source>
         <translation>OK</translation>
@@ -3432,7 +3427,7 @@ UA2,UA9,UK,UN,UR,V2,V3,V4,V5,V6,V7,V8,VE,VK,VK0H,VK0M,VK9C,VK9L,VK9M,VK9N,VK9W,V
 VP2E,VP2M,VP2V,VP5,VP6,VP6/D,VP8,VP8/G,VP8/H,VP8/O,VP8/S,VP9,VQ9,VR,VU,VU4,VU7,XE,&lt;br&gt;
 XF4,XT,XU,XW,XX9,XZ,YA,YB,YI,YJ,YK,YL,YN,YO,YS,YU,YV,YV0,Z2,Z3,Z6,Z8,ZA,ZB,ZC4,ZD7,&lt;br&gt;
 ZD8,ZD9,ZF,ZK3,ZL,ZL7,ZL8,ZL9,ZP,ZS,ZS8&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Kommasepareret liste over de ønskede lande:landets hoved præfiks skal bruges i denne liste. For sammensatte kaldesignaler genkendes præfikset i begyndelsen af ​​kaldesignalet. Autoselektion under AutoSekv 1..7 behandler ønsket land i henhold til de valgte meddelser / prioriteringer, denne funktionalitet understøttes ikke under AutoSekv0. Kun ikke FT8 Modes: undertiden kopieres basisopkaldsignalet fra den afkodede meddelelse: når sådan en QSO logges kan det være nødvendigt at ændre  kaldesignal til det korrekt sammensatte. Liste over landes hoved præfikser: 1A, 1S, 3A, 3B6,3B8,3B9,3C, 3C0,3D2,3D2 / C,&lt;br&gt;
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Kommasepareret liste over de ønskede lande:landets hoved præfiks skal bruges i denne liste. For sammensatte kaldesignaler genkendes præfikset i begyndelsen af ​​kaldesignalet. Autoselektion under AutoSekv 1..7 behandler ønsket land i henhold til de valgte meddelser/prioriteringer, denne funktionalitet understøttes ikke under AutoSekv0. Kun ikke FT8 Modes: undertiden kopieres basisopkaldsignalet fra den afkodede meddelelse: når sådan en QSO logges kan det være nødvendigt at ændre  kaldesignal til det korrekt sammensatte. Liste over landes hoved præfikser: 1A, 1S, 3A, 3B6,3B8,3B9,3C, 3C0,3D2,3D2/C,&lt;br&gt;
 3D2/R,3DA,3V,3W,3X,3Y/B,3Y/P,4J,4L,4O,4S,4U1I,4U1U,*4U1V,4W,4X,5A,5B,5H,5N,5R,5T,&lt;br&gt;
 5U,5V,5W,5X,5Z,6W,6Y,7O,7P,7Q,7X,8P,8Q,8R,9A,9G,9H,9J,9K,9L,9M2,9M6,9N,9Q,9U,9V,9X,&lt;br&gt;
 9Y,A2,A3,A4,A5,A6,A7,A9,AP,BS7,BV,BV9P,BY,C2,C3,C5,C6,C9,CE,CE0X,CE0Y,CE0Z,CE9,CM,&lt;br&gt;
@@ -3575,11 +3570,6 @@ ZD8,ZD9,ZF,ZK3,ZL,ZL7,ZL8,ZL9,ZP,ZS,ZS8&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</tra
         <location filename="../mainwindow.ui" line="3078"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Increase number of decoding attempts&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Sæt antallet af dekodnings forsøg op&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="3092"/>
-        <source>S&amp;WL mode</source>
-        <translation>S&amp;WL mode</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2980"/>
@@ -4050,11 +4040,6 @@ liste. Listen kan oprettes og vedligeholdes under Indstillinger (F2).</translati
         <translation>Dekod</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4639"/>
-        <source>FT8 threads</source>
-        <translation>FT tråde</translation>
-    </message>
-    <message>
         <location filename="../mainwindow.ui" line="4669"/>
         <source>JT9 WSPR decoding</source>
         <translation>JT9 WSPR dekodning</translation>
@@ -4149,11 +4134,6 @@ liste. Listen kan oprettes og vedligeholdes under Indstillinger (F2).</translati
         <location filename="../mainwindow.ui" line="5320"/>
         <source>F2</source>
         <translation>F2</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="4904"/>
-        <source>About JTDX</source>
-        <translation>Om JTDX</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4907"/>
@@ -4577,21 +4557,6 @@ liste. Listen kan oprettes og vedligeholdes under Indstillinger (F2).</translati
         <translation>Meddelser med Ønsket kaldesignal til RX frekvens vinduet</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5704"/>
-        <source>use low thresholds</source>
-        <translation>Brug lav tærskel</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="5739"/>
-        <source>use subpass</source>
-        <translation>Brug subpass</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="5750"/>
-        <source>minimum</source>
-        <translation>minimum</translation>
-    </message>
-    <message>
         <location filename="../mainwindow.ui" line="5758"/>
         <source>early start of decoder</source>
         <translation>Tidlig start af Dekoder</translation>
@@ -4761,7 +4726,7 @@ liste. Listen kan oprettes og vedligeholdes under Indstillinger (F2).</translati
     <message>
         <location filename="../mainwindow.ui" line="6128"/>
         <source>13</source>
-        <translation>12</translation>
+        <translation>13</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="6136"/>
@@ -5059,12 +5024,6 @@ liste. Listen kan oprettes og vedligeholdes under Indstillinger (F2).</translati
         <location filename="../mainwindow.cpp" line="4019"/>
         <source>Confirm change Language</source>
         <translation>Bekræft skif af sprog</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.cpp" line="4015"/>
-        <location filename="../mainwindow.cpp" line="4022"/>
-        <source>Are You sure to change UI Language to English, JTDX will restart?</source>
-        <translation>Er du sikker på du vil skifte UI Bruger sprog til Dansk, JTDX vil genstarte?</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="4192"/>
@@ -6551,6 +6510,24 @@ Kontroller, at det korrekte navn blev angivet.</translation>
     </message>
 </context>
 <context>
+    <name>QGnomeTheme</name>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>&amp;OK</source>
+        <translation>&amp;OK</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>&amp;Cancel</source>
+        <translation>&amp;Fortryd</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>&amp;Close</source>
+        <translation>&amp;Luk</translation>
+    </message>
+</context>
+<context>
     <name>QMessageBox</name>
     <message>
         <location filename="../JTDXMessageBox.cpp" line="91"/>
@@ -7084,7 +7061,7 @@ Kontroller, at det korrekte navn blev angivet.</translation>
     <message>
         <location filename="../widegraph.ui" line="240"/>
         <source>JT65  </source>
-        <translation>JT56  </translation>
+        <translation>JT65  </translation>
     </message>
     <message>
         <location filename="../widegraph.ui" line="270"/>
@@ -8689,10 +8666,6 @@ Højreklik for at indsætte eller slette indstillinger.</translation>
         <translation>pr Mode</translation>
     </message>
     <message>
-        <source>0.5</source>
-        <translation type="obsolete">0.5</translation>
-    </message>
-    <message>
         <location filename="../Configuration.ui" line="763"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Request switch on rig power when supported in Hamlib.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Tænd for Radioen, hvis den understøttes i Hamlib.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
@@ -8771,11 +8744,6 @@ Højreklik for at indsætte eller slette indstillinger.</translation>
         <location filename="../Configuration.ui" line="3554"/>
         <source>Beep as well</source>
         <translation>Også lyd</translation>
-    </message>
-    <message>
-        <location filename="../Configuration.ui" line="3441"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Highlight messages with grid squares which do not exist in the wsjtx_log.adi log file.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Fremhæv beskeder med Grid felter, der ikke findes i wsjtx_log.adi-logfilen. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3444"/>
@@ -9521,7 +9489,7 @@ AA1AAA, BB1BB, CC1CC &lt;/ p&gt; &lt;/ body&gt; &lt;/ html&gt;</translation>
         <location filename="../Configuration.ui" line="6226"/>
         <location filename="../Configuration.ui" line="6483"/>
         <source>13</source>
-        <translation>12</translation>
+        <translation>13</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="5460"/>
