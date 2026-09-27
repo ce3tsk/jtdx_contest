@@ -60,6 +60,7 @@
 #include "actiongate.h"    // CE3TSK 2026-09-26: trigger () that obeys the enabled state
 #include "bandchannels.h"  // CE3TSK 2026-09-26: the band buttons, and the other frequencies on a right click
 #include "uilimits.h"      // CE3TSK: the .ui size limits against the current font
+#include "geometryrestore.h"  // CE3TSK 2026-09-26: one restore rule for the main window, Wide Graph, Log QSO
 #include <QPainter>
 #include <functional>   // CE3TSK P13: the recursive menu hook
 #include <QThread>                  /* CE3TSK: 16 bit wav expansion */
@@ -1621,11 +1622,11 @@ void MainWindow::writeSettings()
    minimumSizeHint (), both threw a narrowed width away. See UI_DARK_STYLE.md. */
 void MainWindow::restoreMainGeometry ()
 {
-  restoreGeometry (m_geometry);
-  if (!m_geometryMinHint.isValid ()) return;   // saved before the minimum was recorded: as saved
-  auto const needed = minimumSizeHint ();
-  auto const growth = (needed - m_geometryMinHint).expandedTo (QSize {0, 0});
-  resize (size ().expandedTo ((size () + growth).boundedTo (needed)));
+  /* CE3TSK 2026-09-26: the rule lives in geometryrestore.h, shared with the Wide Graph and the Log
+     QSO dialog. A geometry Qt refuses (either screen more than 25 % wider than the other) leaves
+     the window as it is - the .ui's 814x514, measured, which fits every control - so the result is
+     not needed here: the start-up path around this call keeps its own floors and clamps. */
+  JTDX::restore_grown_geometry (this, m_geometry, m_geometryMinHint);
 }
 
 //---------------------------------------------------------- readSettings()

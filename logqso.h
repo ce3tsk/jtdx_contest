@@ -48,7 +48,8 @@ signals:
                   , QString const& eqslcomments, QByteArray const& myadif2);
 
 protected:
-  void hideEvent (QHideEvent *);
+  void hideEvent (QHideEvent *) override;
+  void showEvent (QShowEvent *) override;   // CE3TSK: see restoreSavedGeometry ()
 
 private:
   void loadSettings ();
@@ -75,6 +76,14 @@ private:
   bool m_enable_tcp_connection;
   bool m_debug;
   JTDXDateTime * m_jtdxtime;
+  /* CE3TSK 2026-09-26: the size and place the operator left, restored after the first show as the
+     Wide Graph's are - see restoreSavedGeometry () in logqso.cpp. */
+  void restoreSavedGeometry ();
+  QByteArray m_savedGeometry;
+  QSize m_savedMinHint;
+  bool m_hadSavedGeometry {false};   // no geometry ever saved: the layout's own hint decides
+  bool m_geometryQueued {false};      // the deferred restore has been asked for
+  bool m_geometryRestored {false};    // ... and has run: only then may the geometry be saved
 };
 
 #endif // LogQSO_H

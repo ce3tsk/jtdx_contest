@@ -3,6 +3,8 @@
 #include <QTcpSocket>
 #include <QString>
 #include <QSettings>
+#include <QTimer>   /* CE3TSK: the queued geometry restore */
+#include "geometryrestore.h"   /* CE3TSK 2026-09-26: the restore rule, shared */
 #include <QStandardPaths>
 #include <QDir>
 #include <QDebug>
@@ -39,12 +41,26 @@ LogQSO::~LogQSO ()
 void LogQSO::loadSettings ()
 {
   m_settings->beginGroup ("LogQSO");
-  restoreGeometry (m_settings->value ("geometry", saveGeometry ()).toByteArray ());
+  /* CE3TSK 2026-09-26: the size and place the operator left are applied here AND, properly, after
+     the first show - see restoreSavedGeometry (). */
+  m_savedGeometry = m_settings->value ("geometry").toByteArray ();
+  m_savedMinHint = m_settings->value ("geometryMinHint").toSize ();
+  /* A geometry Qt refuses counts as none: restoreGeometry () bails out when either screen - the one
+     it was saved on, the one now - is more than 25 % wider than the other (geometryrestore.h).
+     Measured: a 2240 px screen's geometry on a 1600 px one was refused, and without the line below
+     the dialog opened at the .ui's 374 px with its fields crushed. As for a fresh profile, the size
+     and place the operator then uses on this screen are what the next hide saves - the refused
+     geometry is replaced, as the main window's and the Wide Graph's are. */
+  m_hadSavedGeometry = JTDX::restore_grown_geometry (this, m_savedGeometry, QSize {});   // as saved: the growth rule waits for the settled layout
   /* CE3TSK: the .ui rect (374px) is narrower than the layout wants, so the date/time and
      band fields were crushed and lost characters. sizeHint() is the width the layout
-     actually needs and it tracks the application font, so grow to it - a larger saved
-     geometry is kept as it is. */
-  resize (size ().expandedTo (sizeHint ()));
+     actually needs and it tracks the application font, so grow to it - when no saved geometry
+     was restored (a fresh profile, or one Qt refused).
+     2026-09-26: ONLY there. It used to apply to a saved size too, and sizeHint () is the
+     PREFERRED size: a dialog the operator had made smaller came back at 525x263 every time
+     (measured: left at 480x240). A size the operator chose now prevails, as the Wide Graph's
+     does since the same day. */
+  if (!m_hadSavedGeometry) resize (size ().expandedTo (sizeHint ()));
   ui->cbTxPower->setChecked (m_settings->value ("SaveTxPower", false).toBool ());
   ui->cbComments->setChecked (m_settings->value ("SaveComments", false).toBool ());
   ui->cbEqslComments->setChecked (m_settings->value ("SaveEQSLComments", false).toBool ());
@@ -57,7 +73,13 @@ void LogQSO::loadSettings ()
 void LogQSO::storeSettings () const
 {
   m_settings->beginGroup ("LogQSO");
-  m_settings->setValue ("geometry", saveGeometry ());
+  /* CE3TSK 2026-09-26: the geometry only once the saved one has been put back after a show - a
+     hide before that would write the constructor's size over the one the operator left. */
+  if (m_geometryRestored)
+    {
+      m_settings->setValue ("geometry", saveGeometry ());
+      m_settings->setValue ("geometryMinHint", minimumSizeHint ());
+    }
   m_settings->setValue ("SaveTxPower", ui->cbTxPower->isChecked ());
   m_settings->setValue ("SaveComments", ui->cbComments->isChecked ());
   m_settings->setValue ("SaveEQSLComments", ui->cbEqslComments->isChecked ());
@@ -127,7 +149,20 @@ void LogQSO::initLogQSO(QString const& hisCall, QString const& hisGrid, QString 
   ui->band->setText(m_config->bands ()->find (dialFreq));
 
   if(!autologging) {
+	 /* CE3TSK 2026-09-26, the operator: the dialog must open in front, so that it stays
+	    visible. show () alone neither raises a dialog that is already open nor brings one over
+	    another window of the program - measured: with the Wide Graph clicked over an open Log
+	    QSO, asking for the dialog again left it under the Wide Graph. The dialog only stays
+	    above the main window, its parent. So it is raised, and a minimized one is restored
+	    (show () leaves it minimized) - only the minimized flag is cleared, so a maximized one
+	    comes back maximized. A dialog ALREADY OPEN is not activated: the automatic prompt to log
+	    (MainWindow's logQSOTimer) arrives while the operator may be typing, and with the
+	    keyboard taken Enter would log the QSO and Esc cancel it (review 2026-09-26). A dialog
+	    that was closed is still given the keyboard by the window manager as it is mapped -
+	    measured, as the build before this change did too; left so. */
+	 setWindowState (windowState () & ~Qt::WindowMinimized);
 	 show ();
+	 raise ();
   }
   else {
 	 accept();
@@ -314,6 +349,40 @@ void LogQSO::accept()
     if(fopen) f2.close();
   }
   QDialog::accept();
+}
+
+/* CE3TSK 2026-09-26: the operator's own size and place, restored where they stick - the Wide
+   Graph's reasoning (widegraph.cpp, restoreSavedGeometry), which this follows. In
+   the constructor the layout has not settled: the eQSL row is still there (initLogQSO hides it
+   when eQSL is off), and a window manager may place a dialog over its parent when it is first
+   mapped. So the saved geometry is applied AGAIN, queued after the first show. The growth rule is
+   the main window's (restoreMainGeometry, 2026-09-15): grow only by as much as the layout's
+   minimum has RISEN since the geometry was saved - which is what a larger application font does -
+   and never past that minimum - one function for the three windows, geometryrestore.h. */
+void LogQSO::showEvent (QShowEvent * e)
+{
+  QDialog::showEvent (e);
+  if (!m_geometryQueued)
+    {
+      m_geometryQueued = true;   // once per run: a size set during the session is not undone
+      QTimer::singleShot (0, this, [this] { restoreSavedGeometry (); });   // by the next show
+    }
+}
+
+void LogQSO::restoreSavedGeometry ()
+{
+  m_geometryRestored = true;   // from here the window is what the operator sees - saved on hide
+  if (!m_hadSavedGeometry)
+    {
+      /* None saved, or refused: the height the layout needs NOW. The constructor measured it with
+         the eQSL row still in the layout, and a window does not shrink when a row goes, so with
+         eQSL off the dialog kept an empty band the height of that row (review 2026-09-26; 264 px
+         against 232, measured). Only the height: the constructor's width holds every field (525 px
+         here), while sizeHint () at this point asks for 952 px - measured, far too wide. */
+      resize (width (), qMin (height (), sizeHint ().height ()));
+      return;
+    }
+  JTDX::restore_grown_geometry (this, m_savedGeometry, m_savedMinHint);   // geometryrestore.h
 }
 
 // closeEvent is only called from the system menu close widget for a

@@ -1,6 +1,7 @@
 #include "widegraph.h"
 #include <QApplication>
 #include <QTimer>   /* CE3TSK: the queued geometry restore */
+#include "geometryrestore.h"   /* CE3TSK 2026-09-26: the restore rule, shared */
 #include <QSettings>
 #include <qmath.h>
 #include "ui_widegraph.h"
@@ -61,10 +62,13 @@ WideGraph::WideGraph(QSettings * settings, JTDXDateTime * jtdxtime, QWidget *par
   m_settings->beginGroup("WideGraph");
   /* CE3TSK 2026-09-26: the size the operator left is applied here AND, properly, on the first
      show - see restoreSavedGeometry (). See UI_DARK_STYLE.md. */
-  m_hadSavedGeometry = m_settings->contains ("geometry");
-  m_savedGeometry = m_settings->value ("geometry", saveGeometry ()).toByteArray ();
+  m_savedGeometry = m_settings->value ("geometry").toByteArray ();
   m_savedMinHint = m_settings->value ("geometryMinHint").toSize ();
-  restoreGeometry (m_savedGeometry);
+  /* 2026-09-26: a geometry Qt refuses (either screen more than 25 % wider than the other -
+     geometryrestore.h) counts as none: the window then opens as a fresh profile does, instead of at
+     the .ui's 834x520 (measured). Only restored here - the growth rule waits for the settled layout,
+     in restoreSavedGeometry (), because the minimum is transiently large during construction. */
+  m_hadSavedGeometry = JTDX::restore_grown_geometry (this, m_savedGeometry, QSize {});   // as saved, and a refusal logged
   /* Nothing has ever been saved - a fresh profile: open at what the layout asks for, exactly as
      this window always did. Only a size the OPERATOR chose is worth defending against the layout,
      and that one is applied after the first show, in restoreSavedGeometry (). */
@@ -194,7 +198,8 @@ WideGraph::~WideGraph ()
    and nothing will stretch it back. With no saved geometry at all - a fresh profile - the layout's
    own sizeHint () still decides, as it always did; a size the operator chose prevails over it. The growth rule is the main window's (restoreMainGeometry,
    2026-09-15): grow only by as much as the layout's minimum has RISEN since the geometry was saved
-   - which is what a larger application font does - and never past that minimum. */
+   - which is what a larger application font does - and never past that minimum. Since 2026-09-26
+   it is one function for the three windows, geometryrestore.h. */
 void WideGraph::showEvent (QShowEvent * e)
 {
   QDialog::showEvent (e);
@@ -211,12 +216,8 @@ void WideGraph::restoreSavedGeometry ()
      is set even for a fresh profile, or the size chosen in the very first session would never be
      saved at all. */
   m_geometryRestored = true;
-  if (!m_hadSavedGeometry) return;   // the constructor's sizeHint stands
-  restoreGeometry (m_savedGeometry);
-  if (!m_savedMinHint.isValid ()) return;   // saved before the minimum was recorded: as saved
-  auto const needed = minimumSizeHint ();
-  auto const growth = (needed - m_savedMinHint).expandedTo (QSize {0, 0});
-  resize (size ().expandedTo ((size () + growth).boundedTo (needed)));
+  if (!m_hadSavedGeometry) return;   // none saved, or refused: the constructor's sizeHint stands
+  JTDX::restore_grown_geometry (this, m_savedGeometry, m_savedMinHint);   // geometryrestore.h
 }
 
 void WideGraph::closeEvent (QCloseEvent * e)
