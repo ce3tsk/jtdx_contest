@@ -2429,7 +2429,7 @@ Formato:
         <location filename="../WFPalette.cpp" line="223"/>
         <location filename="../WFPalette.cpp" line="234"/>
         <source>Palettes (*.pal)</source>
-        <translation>Paletas (* .pal)</translation>
+        <translation>Paletas (*.pal)</translation>
     </message>
     <message>
         <location filename="../WFPalette.cpp" line="234"/>
@@ -3079,7 +3079,7 @@ Formato:
     <message>
         <location filename="../mainwindow.ui" line="175"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Avg: accumulated average DT of decoded signals on current band.&lt;/p&gt;&lt;p&gt;Lag: it is decoder lag calculated relatively to beginning of next interval, negative values mean there is spare time available to increase decoding depth, positive values is decoder&apos;s lag into TX or next interval meaning there may be no enough CPU resources for selected decoding depth to provide reliable signal transmission.&lt;/p&gt;&lt;p&gt;&lt;/p&gt;&lt;p&gt;Lag depends on CPU performance, noise conditions, band fullness and other programs using computer, it can be decreased by reducing waterfall bandwidth. If Lag is constantly negative then CPU handling well interval decoding and you can try to make decoding more aggressive to get more decodes.&lt;/p&gt;&lt;p&gt;FT8: if Lag is 0 .. 0.4 then you can still use Autoseq 3/7 (autoselect will trigger change of TX message early enough to transmit full message). If Lag &gt; 0.4 then you should try to decrease decoding aggressivity. If still Lag &gt; 0.4 then Autoseq 2/6 should be used as responding to incoming call will be partially damaged at transmission in AutoSeq 3/7. If constantly Lag  &gt; 2 then your CPU is unsuitable to operate in FT8 with current decoder settings. Sure You can monitor as SWL.&lt;/p&gt;&lt;p&gt;/xx: number of decoded messages in last interval.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Pro: promedio acumulado de DT de las señales decodificadas en la banda actual.&lt;/p&gt;&lt;p&gt;Ret: es el retardo del decodificador calculado en relación con el comienzo del siguiente intervalo, los valores negativos significan que hay tiempo libre disponible para aumentar la profundidad de decodificación, los valores positivos son el retardo del decodificador hacia el TX o el siguiente intervalo, lo que significa que puede que no haya suficientes recursos de CPU para la profundidad de decodificación seleccionada para proporcionar una transmisión fiable de la señal. &lt;/p&gt;&lt;p&gt;&lt;&lt;/p&gt;&lt;p&gt;El retardo depende del rendimiento de la CPU, las condiciones de ruido, la plenitud de la banda y otros programas que utilizan la computadora, puede ser disminuido reduciendo el ancho de banda de la cascada. Si el Ret es constantemente negativo entonces la CPU maneja bien la decodificación de intervalo  y puede tratar de hacer la decodificación más agresiva para obtener más decodificaciones.&lt;/p&gt;&lt;p&gt;FT8: si el Ret es 0 .. 0.4 entonces todavía puede usar Autoseq 3/7 (la autoselección ejecutará el cambio del mensaje TX lo suficientemente temprano para transmitir el mensaje completo). Si Ret &gt; 0.4 entonces deberías intentar disminuir la agresividad de la decodificación. Si todavía Ret &gt; 0.4 entonces debería usar Autoseq 2/6 ya que la respuesta a la llamada entrante se dañará parcialmente en la transmisión en AutoSeq 3/7. Si constantemente Ret &gt; 2 entonces su CPU no es apta para operar en FT8 con la configuración actual del decodificador. Seguro Puede monitorear como SWL.&lt;/p&gt;&lt;p&gt;/xx: número de mensajes decodificados en el último intervalo.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Pro: promedio acumulado de DT de las señales decodificadas en la banda actual.&lt;/p&gt;&lt;p&gt;Ret: es el retardo del decodificador calculado en relación con el comienzo del siguiente intervalo, los valores negativos significan que hay tiempo libre disponible para aumentar la profundidad de decodificación, los valores positivos son el retardo del decodificador hacia el TX o el siguiente intervalo, lo que significa que puede que no haya suficientes recursos de CPU para la profundidad de decodificación seleccionada para proporcionar una transmisión fiable de la señal.&lt;/p&gt;&lt;p&gt;&lt;/p&gt;&lt;p&gt;El retardo depende del rendimiento de la CPU, las condiciones de ruido, la plenitud de la banda y otros programas que utilizan la computadora, puede ser disminuido reduciendo el ancho de banda de la cascada. Si el Ret es constantemente negativo entonces la CPU maneja bien la decodificación de intervalo  y puede tratar de hacer la decodificación más agresiva para obtener más decodificaciones.&lt;/p&gt;&lt;p&gt;FT8: si el Ret es 0 .. 0.4 entonces todavía puede usar Autoseq 3/7 (la autoselección ejecutará el cambio del mensaje TX lo suficientemente temprano para transmitir el mensaje completo). Si Ret &gt; 0.4 entonces deberías intentar disminuir la agresividad de la decodificación. Si todavía Ret &gt; 0.4 entonces debería usar Autoseq 2/6 ya que la respuesta a la llamada entrante se dañará parcialmente en la transmisión en AutoSeq 3/7. Si constantemente Ret &gt; 2 entonces su CPU no es apta para operar en FT8 con la configuración actual del decodificador. Seguro Puede monitorear como SWL.&lt;/p&gt;&lt;p&gt;/xx: número de mensajes decodificados en el último intervalo.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="181"/>
@@ -3215,7 +3215,7 @@ Formato:
     <message>
         <location filename="../mainwindow.ui" line="1371"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:18pt;&quot;&gt;01:23:45 &lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;centro&quot;&gt;&lt;span style=&quot; tamaño de fuente:18pt;&quot;&gt;01:23:45 &lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align="center"&gt;&lt;span style=" font-size:18pt;"&gt;01:23:45 &lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1405"/>
@@ -4202,7 +4202,7 @@ l hacer clic con el botón derecho del mouse, la hora interna de JTDX vuelve a l
     <message>
         <location filename="../mainwindow.ui" line="4941"/>
         <source>Delete all *.wav &amp;&amp; *.c2 files in SaveDir</source>
-        <translation>Eliminar todos los archivos * .wav y * .c2 en  directorio Save</translation>
+        <translation>Eliminar todos los archivos *.wav y *.c2 en el directorio Save</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4952"/>
@@ -5121,68 +5121,6 @@ l hacer clic con el botón derecho del mouse, la hora interna de JTDX vuelve a l
         <location filename="../mainwindow.cpp" line="5721"/>
         <source>Add to CALL3.TXT</source>
         <translation>Añade a CALL3.TXT</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.cpp" line="3179"/>
-        <source>&lt;table cellspacing=1&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F1       &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Online User&apos;s Guide&lt;/td&gt;&lt;td&gt;&lt;b&gt;Ctrl+F1  &lt;/b&gt;&lt;/td&gt;&lt;td&gt;About JTDX&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F2       &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Open configuration window&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F3       &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Display keyboard shortcuts&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F4       &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Clear DX Call/Grid and Tx messages&lt;/td&gt;&lt;td&gt;&lt;b&gt;Alt+F4   &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Exit program&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F5       &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Display special mouse commands&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F6       &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Open next file in directory&lt;/td&gt;&lt;td&gt;&lt;b&gt;Shift+F6 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Decode all remaining files in directory&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F7       &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Open log by assigned in the operating system viewer&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F11      &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Move Rx frequency down 1 Hz&lt;/td&gt;&lt;td&gt;&lt;b&gt;Ctrl+F11 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Move Rx and Tx frequencies down 1 Hz&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F12      &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Move Rx frequency up 1 Hz&lt;/td&gt;&lt;td&gt;&lt;b&gt;Ctrl+F12 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Move Rx and Tx frequencies up 1 Hz&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+1-6  &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Set now transmission to this number on Tab 1&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Ctl+1-6  &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Set next transmission to this number on Tab 1&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+Ctrl+A    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Clear wanted callsign list&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+B/C  &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Switch to FT8/FT4 mode&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+D    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Decode again at QSO frequency&lt;/td&gt;&lt;td&gt;&lt;b&gt;Shift+D  &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Full decode (both windows)&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+E    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Erase&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+F    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Toggle bypass all text filters&lt;/td&gt;&lt;td&gt;&lt;b&gt;Ctrl+F   &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Edit the free text message box&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+G    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Generate standard messages&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+H    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Halt Tx&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Ctrl+L   &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Lookup callsign in database, generate standard messages&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+M    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Monitor&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+N    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Enable Tx&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+Q    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Log QSO&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+S    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Stop monitoring&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+T    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Tune&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+V    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Save the most recently completed *.wav file&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+Z    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Filter, this shortcut is being supported in main UI and widegraph UI&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Esc    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Halt Tx&lt;/td&gt;&lt;/tr&gt;
-&lt;/table&gt;</source>
-        <extracomment>Keyboard shortcuts help window contents</extracomment>
-        <translation>&lt;table cellspacing=1&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F1 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Guía del usuario en línea&lt;/td&gt;&lt;td&gt;&lt;b&gt;Ctrl+F1 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Acerca de JTDX&lt;/td&gt;&lt;/tr&gt;.
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F2 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Abrir la ventana de configuración&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F3 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Mostrar los atajos de teclado&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F4 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Borrar los campos Llamada Dx/Locator y Tx&lt;/td&gt;&lt;td&gt;&lt;b&gt;Alt+F4 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Salir del programa&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F5 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Mostrar comandos especiales del mouse&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F6 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Abrir el siguiente archivo del directorio&lt;/td&gt;&lt;td&gt;&lt;b&gt;Mayúsculas+F6 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Decodificar los archivos restantes del directorio&lt;/td&gt;&lt;/tr&gt;.
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F7 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Abrir el registro asignado en el visor del sistema operativo&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F11 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Mover la frecuencia Rx hacia abajo 1 Hz&lt;/td&gt;&lt;td&gt;&lt;b&gt;Ctrl+F11 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Mover las frecuencias Rx y Tx hacia abajo 1 Hz&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F12 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Subir la frecuencia de Rx 1 Hz&lt;/td&gt;&lt;td&gt;&lt;b&gt;Ctrl+F12 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Subir las frecuencias de Rx y Tx 1 Hz&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+1-6 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Ajustar ahora la transmisión a este número en la pestaña 1&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Ctl+1-6 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Ajuste la siguiente transmisión a este número en la pestaña 1&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+Ctrl+A &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Borrar lista de indicativos deseados&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+B/C &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Cambiar al modo FT8/FT4&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+D &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Decodificar de nuevo en la frecuencia del QSO&lt;/td&gt;&lt;td&gt;&lt;b&gt;Mayúsculas+D &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Decodificación completa (ambas ventanas)&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+E&lt;/b&gt;&lt;/td&gt;&lt;td&gt;Borrar&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+F &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Saltar todos los filtros de texto&lt;/td&gt;&lt;td&gt;&lt;b&gt;Ctrl+F &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Editar el cuadro de mensaje de texto libre&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+G &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Generar mensajes estándar&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+H &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Detener TX&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Ctrl+L &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Buscar indicativo en la base de datos, generar mensajes estándar&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+M &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Monitorizar&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+N &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Habilitar Tx&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+Q&lt;/b&gt;&lt;/td&gt;&lt;td&gt;Registrar QSO&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+S &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Detener la monitorización&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+T&lt;/b&gt;&lt;/td&gt;&lt;td&gt;Sintonizar&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+V&lt;/b&gt;&lt;/td&gt;&lt;td&gt;Guardar el archivo *.wav más reciente&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+Z &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Filtro, este atajo es compatible en la UI principal y en la UI amplia&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Esc &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Detener Tx&lt;/td&gt;&lt;/tr&gt;
-&lt;/table&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="3218"/>
@@ -6419,7 +6357,7 @@ Ese es el error del propio decodificador. Corrija lo que impide que arranque (un
     <message>
         <location filename="../Configuration.cpp" line="5393"/>
         <source>&amp;Save</source>
-        <translation>&amp;Salvar</translation>
+        <translation>&amp;Guardar</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp" line="5395"/>
@@ -6454,7 +6392,7 @@ Ese es el error del propio decodificador. Corrija lo que impide que arranque (un
     <message>
         <location filename="../Configuration.cpp" line="5400"/>
         <source>Show &amp;hidden files</source>
-        <translation>Mostrar &amp;ocultar archivos</translation>
+        <translation>Mostrar archivos &amp;ocultos</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp" line="5401"/>
@@ -6484,7 +6422,7 @@ Ese es el error del propio decodificador. Corrija lo que impide que arranque (un
     <message>
         <location filename="../Configuration.cpp" line="5412"/>
         <source>Alt+Left</source>
-        <translation>Alt+Izquierdo</translation>
+        <translation>Alt+Left</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp" line="5413"/>
@@ -6499,22 +6437,22 @@ Ese es el error del propio decodificador. Corrija lo que impide que arranque (un
     <message>
         <location filename="../Configuration.cpp" line="5415"/>
         <source>Alt+Right</source>
-        <translation>Alt+Derecho</translation>
+        <translation>Alt+Right</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp" line="5416"/>
         <source>Parent Directory</source>
-        <translation>Directorio principal</translation>
+        <translation>Directorio superior</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp" line="5417"/>
         <source>Go to the parent directory</source>
-        <translation>Ir al directorio principal</translation>
+        <translation>Ir al directorio superior</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp" line="5418"/>
         <source>Alt+Up</source>
-        <translation>Alt+Arriba</translation>
+        <translation>Alt+Up</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp" line="5419"/>
@@ -6586,6 +6524,11 @@ Verifique que se haya proporcionado el nombre de directorio correcto.</translati
         <location filename="../Configuration.cpp" line="5409"/>
         <source>Recent Places</source>
         <translation>Lugares recientes</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Show </source>
+        <translation>Mostrar </translation>
     </message>
 </context>
 <context>
@@ -6681,6 +6624,24 @@ Verifique que se haya proporcionado el nombre de directorio correcto.</translati
         <location filename="../WFPalette.cpp" line="258"/>
         <source>Error writing waterfall palette file &quot;%1&quot;: %2.</source>
         <translation>Error al escribir el archivo de paleta en cascada &quot;%1&quot;: %2.</translation>
+    </message>
+</context>
+<context>
+    <name>QPlatformTheme</name>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>OK</source>
+        <translation>Aceptar</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Cancel</source>
+        <translation>Cancelar</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Close</source>
+        <translation>Cerrar</translation>
     </message>
 </context>
 <context>
@@ -7734,7 +7695,7 @@ período tranquilo cuando se realiza la decodificación.</translation>
     <message>
         <location filename="../Configuration.ui" line="1121"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Flow control protocol used between this computer and your radio&apos;s CAT interface (usually &amp;quot;None&amp;quot; but some require &amp;quot;Hardware&amp;quot;).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Protocolo de control de flujo utilizado entre esta computadora y la interfaz CAT de su radio (generalmente &amp;quot;Ninguno&amp;quot; pero algunos requieren &amp;quot;Hardware &amp;quot;). &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Protocolo de control de flujo utilizado entre esta computadora y la interfaz CAT de su radio (generalmente &amp;quot;Ninguno&amp;quot; pero algunos requieren &amp;quot;Hardware&amp;quot;).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1124"/>
@@ -8510,7 +8471,7 @@ para evaluar la propagación y el rendimiento del sistema.</translation>
     <message>
         <location filename="../Configuration.ui" line="2947"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Optional hostname of network service to receive decodes.&lt;/p&gt;&lt;p&gt;Formats:&lt;/p&gt;&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;hostname&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;IPv4 address&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;IPv6 address&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;IPv4 multicast group address&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;IPv6 multicast group address&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;Clearing this field will disable the broadcasting of UDP status updates.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Nombre de host opcional del servicio de red para recibir decodificaciones. &lt;/p&gt; &lt;p&gt; Formatos: &lt;/p&gt; &lt;ul style = &quot;margin-top: 0px; margin-bottom: 0px; margen-izquierda: 0px; margen-derecha: 0px; -qt-list-indent: 1; &quot;&gt; &lt;li style =&quot; margin-top: 12px; margin-bottom: 0px; margin-left: 0px; margin- derecha: 0px; -qt-block-indent: 0; text-indent: 0px; &quot;&gt; hostname &lt;/li&gt; &lt;li style =&quot; margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin -right: 0px; -qt-block-indent: 0; text-indent: 0px; &quot;&gt; dirección IPv4 &lt;/li&gt; &lt;li style =&quot; margin-top: 0px; margin-bottom: 0px; margin-left: 0px ; margin-right: 0px; -qt-block-indent: 0; text-indent: 0px; &quot;&gt; dirección IPv6 &lt;/li&gt; &lt;li style =&quot; margin-top: 0px; margin-bottom: 0px; margin-left : 0px; margen-derecho: 0px; -qt-block-indent: 0; text-indent: 0px; &quot;&gt; Dirección de grupo de multidifusión IPv4 &lt;/li&gt; &lt;li style =&quot; margin-top: 0px; margin-bottom: 0px ; margin-left: 0px; margin-right: 0px; -qt-block-indent: 0; text-indent: 0px; &quot;&gt; Dirección de grupo de multidifusión IPv6 &lt;/li&gt; &lt;/ul&gt; &lt;p&gt; Borrar este campo deshabilitará la difusión de actualizaciones de estado UDP. &lt;/ p &gt; &lt;/body&gt; &lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Nombre de host opcional del servicio de red para recibir decodificaciones.&lt;/p&gt;&lt;p&gt;Formatos:&lt;/p&gt;&lt;ul style="margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;"&gt;&lt;li style=" margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;hostname&lt;/li&gt;&lt;li style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;dirección IPv4&lt;/li&gt;&lt;li style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;dirección IPv6&lt;/li&gt;&lt;li style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Dirección de grupo de multidifusión IPv4&lt;/li&gt;&lt;li style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Dirección de grupo de multidifusión IPv6&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;Borrar este campo deshabilitará la difusión de actualizaciones de estado UDP.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="2957"/>
@@ -9746,7 +9707,7 @@ AA1AAA, BB1BB, CC1CC &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
     <message>
         <location filename="../Configuration.ui" line="6680"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Activating band scheduler&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Activación del planificador de banda &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Activación del planificador de banda&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="6683"/>

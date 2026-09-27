@@ -2406,17 +2406,17 @@ Format:
     <message>
         <location filename="../WFPalette.cpp" line="191"/>
         <source>&amp;Delete</source>
-        <translation>&amp;削除</translation>
+        <translation>削除(&amp;D)</translation>
     </message>
     <message>
         <location filename="../WFPalette.cpp" line="200"/>
         <source>&amp;Insert ...</source>
-        <translation>&amp;挿入…</translation>
+        <translation>挿入(&amp;I)…</translation>
     </message>
     <message>
         <location filename="../WFPalette.cpp" line="208"/>
         <source>Insert &amp;after ...</source>
-        <translation>&amp;r ...の後に挿入...</translation>
+        <translation>後に挿入(&amp;A)…</translation>
     </message>
     <message>
         <location filename="../WFPalette.cpp" line="223"/>
@@ -2427,7 +2427,7 @@ Format:
         <location filename="../WFPalette.cpp" line="223"/>
         <location filename="../WFPalette.cpp" line="234"/>
         <source>Palettes (*.pal)</source>
-        <translation>パレット（*.pal）</translation>
+        <translation>パレット (*.pal)</translation>
     </message>
     <message>
         <location filename="../WFPalette.cpp" line="234"/>
@@ -4962,7 +4962,7 @@ Click by right mouse&apos;s button sets JTDX internal time back to system time.&
         <location filename="../mainwindow.cpp" line="2954"/>
         <source>Are you sure you want to delete all *.wav and *.c2 files in
 </source>
-        <translation>ディレクトリ内の全ての*.wav ， *.c2 ファイルを削除してもいいですか--&gt;
+        <translation>ディレクトリ内の全ての*.wav ， *.c2 ファイルを削除してもいいですか→
 </translation>
     </message>
     <message>
@@ -5056,13 +5056,13 @@ Click by right mouse&apos;s button sets JTDX internal time back to system time.&
   &lt;/tr&gt;
 &lt;/table&gt;
 </source>
-        <translation>&lt;table cellpadding=&quot;5&quot;&gt;
-  &lt;tbody&gt;&lt;tr&gt;
-    &lt;th style=&quot;text-align:right&quot;&gt;クリックする場所&lt;/th&gt;
-    &lt;th style=&quot;text-align:left&quot;&gt;動作&lt;/th&gt;
+        <translation>&lt;table cellpadding=5&gt;
+  &lt;tr&gt;
+    &lt;th align="right"&gt;クリックする場所&lt;/th&gt;
+    &lt;th align="left"&gt;動作&lt;/th&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
-    &lt;td style=&quot;text-align:right&quot;&gt;ウォーターフォール：&lt;/td&gt;
+    &lt;td align="right"&gt;ウォーターフォール：&lt;/td&gt;
     &lt;td&gt;Rx周波数の設定。&lt;br&gt;
         ダブルクリックでRxの周波数を設定し、そこをデコードします。&lt;br&gt;
         Ctrlキーを押しながらクリックすると、RxとTxの周波数を設定できます。&lt;br&gt;
@@ -5072,7 +5072,7 @@ Click by right mouse&apos;s button sets JTDX internal time back to system time.&
         右ボタンでTX周波数を設定
     &lt;/td&gt; &lt;/tr&gt;
 &lt;tr&gt;
-    &lt;td style=&quot;text-align:right&quot;&gt;デコードされたテキスト：&lt;/td&gt;
+    &lt;td align="right"&gt;デコードされたテキスト：&lt;/td&gt;
     &lt;td&gt;ダブルクリックで2つ目のコールサインをDx Callにコピー&lt;br&gt;
         ロケーターをDx Gridにコピーし、RxとTxの周波数をデコードされた&lt;br&gt;信号の周波数に変更し、標準メッセージを生成します。&lt;br&gt;
         最初のコールサインが自分のものである場合、Tx周波数は&lt;br&gt;CTRLを押しながらでないと変更されません。&lt;br&gt;
@@ -5080,13 +5080,13 @@ Click by right mouse&apos;s button sets JTDX internal time back to system time.&
         CTRL+ALT+ダブルクリックで、デコードされた&lt;br&gt;メッセージから2つ目のコールサインを希望するコールサインリストに追加します。
     &lt;/td&gt; &lt;/tr&gt;
 &lt;tr&gt;
-    &lt;td style=&quot;text-align:right&quot;&gt;消去ボタン：&lt;/td&gt;
+    &lt;td align="right"&gt;消去ボタン：&lt;/td&gt;
     &lt;td&gt;右ボタンでQSOウィンドウを消去します。&lt;br&gt;
         左のボタンをクリックすると、バンド・アクティビティ・ウィンドウが消去されます&lt;br&gt;
         左または右のボタンをダブルクリックすると、QSO&lt;br&gt;とバンド・アクティビティ・ウィンドウが消去されます。
     &lt;/td&gt;
   &lt;/tr&gt;
-&lt;/tbody&gt;&lt;/table&gt;
+&lt;/table&gt;
 </translation>
     </message>
     <message>
@@ -6368,7 +6368,7 @@ That is the decoder's own error. Put right whatever stops it starting - a missin
     <message>
         <location filename="../Configuration.cpp" line="5402"/>
         <source>Look in:</source>
-        <translation>中をのぞく:</translation>
+        <translation>アドレス:</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp" line="5403"/>
@@ -6378,7 +6378,7 @@ That is the decoder's own error. Put right whatever stops it starting - a missin
     <message>
         <location filename="../Configuration.cpp" line="5410"/>
         <source>Back</source>
-        <translation>後ろ</translation>
+        <translation>戻る</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp" line="5411"/>
@@ -6393,7 +6393,7 @@ That is the decoder's own error. Put right whatever stops it starting - a missin
     <message>
         <location filename="../Configuration.cpp" line="5413"/>
         <source>Forward</source>
-        <translation>前</translation>
+        <translation>進む</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp" line="5414"/>
@@ -6491,6 +6491,11 @@ Please verify the correct directory name was given.</source>
         <source>Recent Places</source>
         <translation>最近の場所</translation>
     </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Show </source>
+        <translation>表示 </translation>
+    </message>
 </context>
 <context>
     <name>QFileSystemModel</name>
@@ -6584,6 +6589,24 @@ Please verify the correct directory name was given.</source>
         <location filename="../WFPalette.cpp" line="258"/>
         <source>Error writing waterfall palette file &quot;%1&quot;: %2.</source>
         <translation>ウォーターフォールパレットファイル &quot;%1&quot;の書き込みエラー：%2。</translation>
+    </message>
+</context>
+<context>
+    <name>QPlatformTheme</name>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>OK</source>
+        <translation>OK</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Cancel</source>
+        <translation>キャンセル</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Close</source>
+        <translation>閉じる</translation>
     </message>
 </context>
 <context>
@@ -7375,7 +7398,7 @@ Please verify the correct directory name was given.</source>
     <message>
         <location filename="../Configuration.ui" line="487"/>
         <source>Mon&amp;itor off at startup</source>
-        <translation>&amp;起動時にモニターはオフ</translation>
+        <translation>起動時にモニターはオフ(&amp;I)</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="513"/>
@@ -7416,7 +7439,7 @@ Please verify the correct directory name was given.</source>
     <message>
         <location filename="../Configuration.ui" line="648"/>
         <source>Periodic CW ID Inter&amp;val:</source>
-        <translation>&amp;周期的なCW ID インターバル：</translation>
+        <translation>周期的なCW ID インターバル(&amp;V)：</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="693"/>
@@ -8853,12 +8876,12 @@ and DX Grid fields when a 73 or free text message is sent.</source>
     <message>
         <location filename="../Configuration.ui" line="356"/>
         <source>&amp;Scroll message windows down</source>
-        <translation>&amp;最新の受信局を上部に表示し下にスクロール</translation>
+        <translation>最新の受信局を上部に表示し下にスクロール(&amp;S)</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="376"/>
         <source>&amp;Hide partially transmitted messages</source>
-        <translation>&amp;部分的に送られたメッセージを隠す</translation>
+        <translation>部分的に送られたメッセージを隠す(&amp;H)</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="431"/>
@@ -8941,7 +8964,7 @@ for assessing propagation and system performance.</source>
     <message>
         <location filename="../Configuration.ui" line="2947"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Optional hostname of network service to receive decodes.&lt;/p&gt;&lt;p&gt;Formats:&lt;/p&gt;&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;hostname&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;IPv4 address&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;IPv6 address&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;IPv4 multicast group address&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;IPv6 multicast group address&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;Clearing this field will disable the broadcasting of UDP status updates.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt; &lt;head /&gt; &lt;body&gt; &lt;p&gt;デコードを受信するネットワークサービスのオプションのホスト名。&lt;/p&gt;&lt;p&gt;フォーマット：:&lt;/p&gt;&lt;ul style = &quot;margin-top：0px; margin-bottom： 0px; margin-left：0px; margin-right：0px; -qt-list-indent：1; &quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt; hostnamee&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;IPv4アドレス&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;IPv6アドレス&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;IPv4マルチキャストグループアドレス&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;IPv6マルチキャストグループアドレス&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;このフィールドをクリアするとUDPステータス更新のブロードキャストが無効になります。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;デコードを受信するネットワークサービスのオプションのホスト名。&lt;/p&gt;&lt;p&gt;フォーマット：&lt;/p&gt;&lt;ul style="margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;"&gt;&lt;li style=" margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;hostnamee&lt;/li&gt;&lt;li style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;IPv4アドレス&lt;/li&gt;&lt;li style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;IPv6アドレス&lt;/li&gt;&lt;li style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;IPv4マルチキャストグループアドレス&lt;/li&gt;&lt;li style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;IPv6マルチキャストグループアドレス&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;このフィールドをクリアするとUDPステータス更新のブロードキャストが無効になります。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="2994"/>

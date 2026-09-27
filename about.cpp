@@ -46,7 +46,10 @@ CAboutDlg::CAboutDlg(QWidget *parent, bool useDarkStyle) :
                          /* the support button, shipped as a Qt resource (contrib/support*_*.png, 252x44):
                             a QLabel does not fetch remote images */
                          "<a href=\"https://ko-fi.com/ce3tsk\"><img src=\":/" + wordmark + "_" + QString {useDarkStyle ? "dark" : "light"}
-                         + ".png\" width=\"340\" height=\"59\" alt=\"" + tr ("Support this work on Ko-fi") + "\"></a><br><br>"
+                         + ".png\" width=\"340\" height=\"59\" alt=\""
+                         /* escaped: a translation lands inside alt="...", and a " in it would end the
+                            attribute and let the rest rewrite the image (fix review 2026-09-27) */
+                         + tr ("Support this work on Ko-fi").toHtmlEscaped () + "\"></a><br><br>"
                          + tr ("A rebuilt FT8 and FT4 decoder - alternate pass, ensemble, pipelined RX phase and TX<br>"
                                "background, four-period hint memory, fixed data races, measured presets - and built-in<br>"
                                "support for the WW Digi DX Contest: the grid exchange, points and multipliers, a separate<br>"

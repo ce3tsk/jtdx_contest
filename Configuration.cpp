@@ -6798,6 +6798,16 @@ void Configuration::impl::load_frequencies ()
   QFileSystemModel::tr("Type");
   QFileSystemModel::tr("Date Modified");
 
+  // CE3TSK 2026-09-27: Qt 5 takes the text of every standard button - a QDialogButtonBox's OK,
+  // Cancel and Close, the file chooser's Cancel - from context QPlatformTheme (the QDialogButtonBox
+  // and QFileDialog "Cancel"/"OK" lines above are read by nothing since Qt 4), and the file
+  // chooser's column menu is QFileDialog "Show " + the column's name. No shipped package carries
+  // Qt's own catalogues, so without these the buttons and that menu are English in every language.
+  QCoreApplication::translate ("QPlatformTheme", "OK");
+  QCoreApplication::translate ("QPlatformTheme", "Cancel");
+  QCoreApplication::translate ("QPlatformTheme", "Close");
+  QFileDialog::tr ("Show ");
+
   QFileDialog* fileDlg=new QFileDialog(this);
     fileDlg->setWindowTitle(tr ("Load Working Frequencies"));
   fileDlg->setFileMode(QFileDialog::ExistingFile);

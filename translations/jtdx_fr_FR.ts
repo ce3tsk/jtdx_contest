@@ -2494,7 +2494,7 @@ Format:
         <location filename="../FrequencyList.cpp" line="513"/>
         <location filename="../FrequencyList.cpp" line="700"/>
         <source>IARU Region</source>
-        <translation>Region IARU</translation>
+        <translation>Région IARU</translation>
     </message>
     <message>
         <location filename="../FrequencyList.cpp" line="534"/>
@@ -2883,7 +2883,7 @@ Format:
         <location filename="../IARURegions.cpp" line="58"/>
         <location filename="../IARURegions.cpp" line="85"/>
         <source>IARU Region</source>
-        <translation>Region &amp; IARU</translation>
+        <translation>Région IARU</translation>
     </message>
 </context>
 <context>
@@ -3159,7 +3159,7 @@ Format:
         <location filename="../mainwindow.ui" line="820"/>
         <location filename="../mainwindow.ui" line="830"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Type of the propagation.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;tête/&gt;&lt;corps&gt;&lt;p&gt;Type de propagation.&lt;/p&gt;&lt;/corps&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Type de propagation.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="823"/>
@@ -3217,12 +3217,12 @@ Format:
     <message>
         <location filename="../mainwindow.ui" line="1371"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:18pt;&quot;&gt;01:23:45 &lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:18pt ;&quot;&gt;01:23:45 &lt;/span&gt;&lt;/p&gt;&lt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align="center"&gt;&lt;span style=" font-size:18pt;"&gt;01:23:45 &lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1405"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Toggle TX minute&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;tête/&gt;&lt;p&gt;Partage Pair/Impair TX&lt;/p&gt;&lt;/corps&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Partage Pair/Impair TX&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1411"/>
@@ -3264,7 +3264,7 @@ Format:
     <message>
         <location filename="../mainwindow.ui" line="1479"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Signal report (dB)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;tête/&gt;&gt;corps&gt;&lt;p&gt;Rapport sur le signal (dB)&lt;/p&gt;&lt;/corps&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Rapport sur le signal (dB)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1482"/>
@@ -3302,7 +3302,7 @@ Format:
     <message>
         <location filename="../mainwindow.ui" line="1769"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Use different Rx/Tx AF frequencies or set Tx frequency equal to Rx AF frequency.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;tête/&gt;&gt;corps&gt;&lt;p&gt;Utiliser différentes fréquences Rx/Tx AF ou régler la fréquence Tx sur la fréquence Rx AF.&lt;/p&gt;&lt;/corps&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Utiliser différentes fréquences Rx/Tx AF ou régler la fréquence Tx sur la fréquence Rx AF.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1775"/>
@@ -3469,7 +3469,7 @@ ZD8,ZD9,ZF,ZK3,ZL,ZL7,ZL8,ZL9,ZP,ZS,ZS8&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</tra
     <message>
         <location filename="../mainwindow.ui" line="2425"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Transmit a pure tone. Tune timer can be set in General tab of the settings.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;tête/&gt;&lt;corps&gt;&lt;p&gt;Transmettre un ton pure. La minuterie peut être réglée dans l&apos;onglet Général des paramètres.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Transmettre un ton pure. La minuterie peut être réglée dans l'onglet Général des paramètres.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2439"/>
@@ -3500,7 +3500,7 @@ ZD8,ZD9,ZF,ZK3,ZL,ZL7,ZL8,ZL9,ZP,ZS,ZS8&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</tra
     <message>
         <location filename="../mainwindow.ui" line="2557"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Single shot QSO AutoSeq option&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;tête/&gt;&lt;corps&gt;&lt;p&gt;Option QSO AutoSeq en un seul coup&lt;/p&gt;&lt;/corps&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Option QSO AutoSeq en un seul coup&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2571"/>
@@ -3570,7 +3570,7 @@ ZD8,ZD9,ZF,ZK3,ZL,ZL7,ZL8,ZL9,ZP,ZS,ZS8&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</tra
     <message>
         <location filename="../mainwindow.ui" line="2779"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Left mouse button: Erase decoded text(left) window. Right mouse button: Erase QSO Frequency window. Double-click for both windows.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;tête/&gt;&gt;corps&gt;&lt;p&gt;Bouton gauche de la souris : Efface la fenêtre de texte décodé(gauche). Bouton droit de la souris : Effacer la fenêtre de fréquence QSO. Double-clic pour les deux fenêtres.&lt;/p&gt;&lt;/corps&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Bouton gauche de la souris : Efface la fenêtre de texte décodé(gauche). Bouton droit de la souris : Effacer la fenêtre de fréquence QSO. Double-clic pour les deux fenêtres.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2782"/>
@@ -3620,7 +3620,7 @@ ZD8,ZD9,ZF,ZK3,ZL,ZL7,ZL8,ZL9,ZP,ZS,ZS8&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</tra
     <message>
         <location filename="../mainwindow.ui" line="2807"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Left mouse button: Erase data from DX Call and DX Grid windows. Right mouse button: Erase data from DX Call, DX Grid windows, QSO history and blacklist. CTRL+Right mouse button: add callsign from DX Call window to blacklist, erase data from DX Call, DX Grid windows and QSO history.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;tête/&gt;&gt;corps&gt;&lt;p&gt;Bouton gauche de la souris : Effacez les données des fenêtres DX Call et DX Grid. Bouton droit de la souris : Efface les données des fenêtres DX Call, DX Grid, de l&apos;historique des QSO et de la liste noire. CTRL+Bouton droit de la souris : ajouter l&apos;indicatif de la fenêtre DX Call à la liste noire, effacer les données des fenêtres DX Call, DX Grid et de l&apos;historique des QSO.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Bouton gauche de la souris : Effacez les données des fenêtres DX Call et DX Grid. Bouton droit de la souris : Efface les données des fenêtres DX Call, DX Grid, de l'historique des QSO et de la liste noire. CTRL+Bouton droit de la souris : ajouter l'indicatif de la fenêtre DX Call à la liste noire, effacer les données des fenêtres DX Call, DX Grid et de l'historique des QSO.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2810"/>
@@ -4223,7 +4223,7 @@ ou sélectionnez une macro prédéfinie dans la liste déroulante.
     <message>
         <location filename="../mainwindow.ui" line="5074"/>
         <source>F1</source>
-        <translation>Site web du JTDX</translation>
+        <translation>F1</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5079"/>
@@ -5119,68 +5119,6 @@ ou sélectionnez une macro prédéfinie dans la liste déroulante.
         <translation>Ajouter à CALL3.TXT</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="3179"/>
-        <source>&lt;table cellspacing=1&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F1       &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Online User&apos;s Guide&lt;/td&gt;&lt;td&gt;&lt;b&gt;Ctrl+F1  &lt;/b&gt;&lt;/td&gt;&lt;td&gt;About JTDX&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F2       &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Open configuration window&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F3       &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Display keyboard shortcuts&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F4       &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Clear DX Call/Grid and Tx messages&lt;/td&gt;&lt;td&gt;&lt;b&gt;Alt+F4   &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Exit program&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F5       &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Display special mouse commands&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F6       &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Open next file in directory&lt;/td&gt;&lt;td&gt;&lt;b&gt;Shift+F6 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Decode all remaining files in directory&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F7       &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Open log by assigned in the operating system viewer&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F11      &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Move Rx frequency down 1 Hz&lt;/td&gt;&lt;td&gt;&lt;b&gt;Ctrl+F11 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Move Rx and Tx frequencies down 1 Hz&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F12      &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Move Rx frequency up 1 Hz&lt;/td&gt;&lt;td&gt;&lt;b&gt;Ctrl+F12 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Move Rx and Tx frequencies up 1 Hz&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+1-6  &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Set now transmission to this number on Tab 1&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Ctl+1-6  &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Set next transmission to this number on Tab 1&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+Ctrl+A    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Clear wanted callsign list&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+B/C  &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Switch to FT8/FT4 mode&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+D    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Decode again at QSO frequency&lt;/td&gt;&lt;td&gt;&lt;b&gt;Shift+D  &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Full decode (both windows)&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+E    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Erase&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+F    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Toggle bypass all text filters&lt;/td&gt;&lt;td&gt;&lt;b&gt;Ctrl+F   &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Edit the free text message box&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+G    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Generate standard messages&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+H    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Halt Tx&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Ctrl+L   &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Lookup callsign in database, generate standard messages&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+M    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Monitor&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+N    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Enable Tx&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+Q    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Log QSO&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+S    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Stop monitoring&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+T    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Tune&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+V    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Save the most recently completed *.wav file&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+Z    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Filter, this shortcut is being supported in main UI and widegraph UI&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Esc    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Halt Tx&lt;/td&gt;&lt;/tr&gt;
-&lt;/table&gt;</source>
-        <extracomment>Keyboard shortcuts help window contents</extracomment>
-        <translation>&lt;table cellpacing=1&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F1 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Guide de l&apos;utilisateur en ligne&lt;/td&gt;&lt;td&gt;&lt;b&gt;Ctrl+F1 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;A propos de JTDX&lt;/tr&gt;.
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F2 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Ouvrir la fenêtre de configuration&lt;/td&gt;&lt;/tr&gt;.
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F3 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Afficher les raccourcis clavier&lt;/td&gt;&lt;/tr&gt;.
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F4 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Effacer les messages d&apos;appel/de grille et de Tx DX&lt;/td&gt;&lt;b&gt;Alt+F4 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Exit le programme&lt;/td&gt;&lt;/tr&gt;.
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F5 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Afficher les commandes spéciales de la souris&lt;/td&gt;&lt;/tr&gt;.
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F6 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Ouvrir le fichier suivant dans le répertoire&lt;/td&gt;&lt;td&gt;&lt;b&gt;Shift+F6 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Décoder tous les fichiers restants dans le répertoire&lt;/td&gt;&lt;/tr&gt;.
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F7 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Ouvrir le journal par affectation dans la visionneuse du système d&apos;exploitation&lt;/td&gt;&lt;/tr&gt;.
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F11 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Move Rx frequency down 1 Hz&lt;/td&gt;&lt;td&gt;&lt;b&gt;Ctrl+F11 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Move Rx and Tx frequencies down 1 Hz&lt;/td&gt;&lt;/tr&gt;.
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F12 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Move Rx frequency up 1 Hz&lt;/td&gt;&lt;td&gt;&lt;b&gt;Ctrl+F12 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Move Rx and Tx frequencies up 1 Hz&lt;/td&gt;&lt;/tr&gt;.
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+1-6 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Régler maintenant la transmission à ce numéro sur l&apos;onglet 1&lt;/td&gt;&lt;/tr&gt;.
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Ctl+1-6 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Régler la prochaine transmission à ce numéro sur l&apos;onglet 1&lt;/td&gt;&lt;/tr&gt;.
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+Ctrl+A &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Effacer la liste des indicatifs recherchés&lt;/td&gt;&lt;/tr&gt;.
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+B/C &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Commutation en mode FT8/FT4&lt;/td&gt;&lt;/tr&gt;.
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+D &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Décoder à nouveau à la fréquence QSO&lt;/td&gt;&lt;td&gt;&lt;b&gt;Shift+D &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Décodage complet (les deux fenêtres)&lt;/td&gt;&lt;/tr&gt;.
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+E &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Erasement&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+F &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Togging bypass all text filters&lt;/td&gt;&lt;td&gt;&lt;b&gt;Ctrl+F &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Editer la boîte de message en texte libre&lt;/td&gt;&lt;/tr&gt;.
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+G &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Générer des messages standard&lt;/td&gt;&lt;/tr&gt;.
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+H&lt;/b&gt;&lt;/td&gt;&lt;td&gt;Halt Tx&lt;/td&gt;&lt;/tr&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Ctrl+L &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Consulter l&apos;indicatif dans la base de données, générer des messages standard&lt;/td&gt;&lt;/tr&gt;.
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+M &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Moniteur&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+N &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Activer Tx&lt;/td&gt;&lt;/tr&gt;.
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+Q &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Journal de QSO&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+S &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Arrêter la surveillance&lt;/td&gt;&lt;/tr&gt;.
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+T &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Tune&lt;/td&gt;&lt;/tr&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+V &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Enregistrer le dernier fichier *.wav complété&lt;/td&gt;&lt;/tr&gt;.
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+Z &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Filtre, ce raccourci est pris en charge dans l&apos;interface utilisateur principale et l&apos;interface utilisateur du widegraph&lt;/td&gt;&lt;/tr&gt;.
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Esc &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Halt Tx&lt;/td&gt;&lt;/tr&gt;.
-&lt;/tableau&gt;</translation>
-    </message>
-    <message>
         <location filename="../mainwindow.cpp" line="3218"/>
         <source>&lt;table cellpadding=5&gt;
   &lt;tr&gt;
@@ -5222,11 +5160,11 @@ ou sélectionnez une macro prédéfinie dans la liste déroulante.
 </source>
         <translation>&lt;table cellpadding=5&gt;
   &lt;tr&gt;
-    &lt;th align=&quot;right&quot;&gt;Cliquez sur&lt;/th&gt;
-    &lt;th align=&quot;left&quot;&gt;Action&lt;/th&gt;
+    &lt;th align="right"&gt;Cliquez sur&lt;/th&gt;
+    &lt;th align="left"&gt;Action&lt;/th&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
-    &lt;td align=&quot;right&quot;&gt;Chute d&apos;eau:&lt;/td&gt;
+    &lt;td align="right"&gt;Chute d'eau:&lt;/td&gt;
     &lt;td&gt;Définir la fréquence Rx.&lt;br/&gt;
         Double-clic pour régler la fréquence Rx et y décoder.&lt;br/&gt;
         Ctrl-clic pour régler les fréquences Rx et Tx.&lt;br/&gt;
@@ -5237,26 +5175,26 @@ ou sélectionnez une macro prédéfinie dans la liste déroulante.
     &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
-    &lt;td align=&quot;right&quot;&gt;Texte décodé:&lt;/td&gt;
+    &lt;td align="right"&gt;Texte décodé:&lt;/td&gt;
     &lt;td&gt;Double-clic pour copier le deuxième indicatif vers Dx Call,&lt;br/&gt;
-        locator à Dx Grid ; changer les fréquences Rx et Tx en&lt;br/&gt;.
+        locator à Dx Grid ; changer les fréquences Rx et Tx en&lt;br/&gt;
         fréquence du signal décodé ; générez des messages standard.&lt;br/&gt;
-        Si le premier indicatif d&apos;appel est le vôtre, la fréquence Tx n&apos;est pas&lt;br/&gt;
+        Si le premier indicatif d'appel est le vôtre, la fréquence Tx n'est pas&lt;br/&gt;
         modifiée sauf si la touche CTRL est maintenue enfoncée lors du double-clic.&lt;br/&gt;&lt;br/&gt;
         ALT+double-clic arrêtera également la Tx si le bouton Enable Tx est actif.&lt;br/&gt;&lt;br/&gt;
-        CTRL+ALT+double-clic ajoutera seulement le deuxième indicatif du message décodé&lt;br/&gt;.
+        CTRL+ALT+double-clic ajoutera seulement le deuxième indicatif du message décodé&lt;br/&gt;
         message dans la liste des indicatifs recherchés.
     &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
-    &lt;td align=&quot;right&quot;&gt;Bouton d&apos;effacement:&lt;/td&gt;
+    &lt;td align="right"&gt;Bouton d'effacement:&lt;/td&gt;
     &lt;td&gt;Cliquez sur le bouton droit pour effacer la fenêtre QSO.&lt;br/&gt;
-        Cliquez sur le bouton gauche pour effacer la fenêtre d&apos;activité de bande.&lt;br/&gt;
-        Double-cliquez sur le bouton gauche ou droit pour effacer les fenêtres QSO&lt;br/&gt;
-        et les fenêtres d&apos;activité de bande.
+        Cliquez sur le bouton gauche pour effacer la fenêtre d'activité de bande.&lt;br/&gt;
+        Double-cliquez sur le bouton gauche ou droit pour effacer les fenêtres QSO &lt;br/&gt;
+        et les fenêtres d'activité de bande.
     &lt;/td&gt;
   &lt;/tr&gt;
-&lt;/tableau&gt;
+&lt;/table&gt;
 </translation>
     </message>
     <message>
@@ -5336,7 +5274,7 @@ est déjà dans CALL3.TXT, souhaitez-vous le remplacer ?</translation>
     <message>
         <location filename="../mainwindow.cpp" line="7070"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Push button to allow Tx/Rx AF frequencies split operation.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;tête/&gt;&gt;corps&gt;&lt;p&gt;Split inactif &lt;/p&gt;&lt;/corps&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Split inactif&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="7073"/>
@@ -5346,7 +5284,7 @@ est déjà dans CALL3.TXT, souhaitez-vous le remplacer ?</translation>
     <message>
         <location filename="../mainwindow.cpp" line="7074"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Push button to lock Tx frequency to the Rx AF frequency.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;tête/&gt;&gt;corps&gt;&lt;p&gt;Split inactif &lt;/p&gt;&lt;/corps&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Split inactif&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="7222"/>
@@ -5982,35 +5920,35 @@ Serveur UDP %2:%3</translation>
   &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+Z    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Filter, this shortcut is being supported in main UI and widegraph UI&lt;/td&gt;&lt;/tr&gt;
   &lt;tr&gt;&lt;td&gt;&lt;b&gt;Esc    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Halt Tx&lt;/td&gt;&lt;/tr&gt;
 &lt;/table&gt;</source>
-        <translation>&lt;table cellpacing=1&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F1 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Site web de JTDX_contest&lt;/td&gt;&lt;td&gt;&lt;b&gt;Ctrl+F1 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;A propos de JTDX_contest&lt;/tr&gt;.
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F2 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Ouvrir la fenêtre de configuration&lt;/td&gt;&lt;/tr&gt;.
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F3 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Afficher les raccourcis clavier&lt;/td&gt;&lt;/tr&gt;.
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F4 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Effacer les messages d'appel/de grille et de Tx DX&lt;/td&gt;&lt;b&gt;Alt+F4 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Exit le programme&lt;/td&gt;&lt;/tr&gt;.
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F5 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Afficher les commandes spéciales de la souris&lt;/td&gt;&lt;/tr&gt;.
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F6 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Ouvrir le fichier suivant dans le répertoire&lt;/td&gt;&lt;td&gt;&lt;b&gt;Shift+F6 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Décoder tous les fichiers restants dans le répertoire&lt;/td&gt;&lt;/tr&gt;.
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F7 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Ouvrir le journal par affectation dans la visionneuse du système d'exploitation&lt;/td&gt;&lt;/tr&gt;.
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F11 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Move Rx frequency down 1 Hz&lt;/td&gt;&lt;td&gt;&lt;b&gt;Ctrl+F11 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Move Rx and Tx frequencies down 1 Hz&lt;/td&gt;&lt;/tr&gt;.
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F12 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Move Rx frequency up 1 Hz&lt;/td&gt;&lt;td&gt;&lt;b&gt;Ctrl+F12 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Move Rx and Tx frequencies up 1 Hz&lt;/td&gt;&lt;/tr&gt;.
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+1-6 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Régler maintenant la transmission à ce numéro sur l'onglet 1&lt;/td&gt;&lt;/tr&gt;.
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Ctl+1-6 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Régler la prochaine transmission à ce numéro sur l'onglet 1&lt;/td&gt;&lt;/tr&gt;.
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+Ctrl+A &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Effacer la liste des indicatifs recherchés&lt;/td&gt;&lt;/tr&gt;.
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+B/C &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Commutation en mode FT8/FT4&lt;/td&gt;&lt;/tr&gt;.
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+D &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Décoder à nouveau à la fréquence QSO&lt;/td&gt;&lt;td&gt;&lt;b&gt;Shift+D &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Décodage complet (les deux fenêtres)&lt;/td&gt;&lt;/tr&gt;.
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+E &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Erasement&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+F &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Togging bypass all text filters&lt;/td&gt;&lt;td&gt;&lt;b&gt;Ctrl+F &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Editer la boîte de message en texte libre&lt;/td&gt;&lt;/tr&gt;.
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+G &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Générer des messages standard&lt;/td&gt;&lt;/tr&gt;.
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+H&lt;/b&gt;&lt;/td&gt;&lt;td&gt;Halt Tx&lt;/td&gt;&lt;/tr&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Ctrl+L &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Consulter l'indicatif dans la base de données, générer des messages standard&lt;/td&gt;&lt;/tr&gt;.
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+M &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Moniteur&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+N &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Activer Tx&lt;/td&gt;&lt;/tr&gt;.
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+Q &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Journal de QSO&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+S &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Arrêter la surveillance&lt;/td&gt;&lt;/tr&gt;.
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+T &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Tune&lt;/td&gt;&lt;/tr&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+V &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Enregistrer le dernier fichier *.wav complété&lt;/td&gt;&lt;/tr&gt;.
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+Z &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Filtre, ce raccourci est pris en charge dans l'interface utilisateur principale et l'interface utilisateur du widegraph&lt;/td&gt;&lt;/tr&gt;.
-  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Esc &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Halt Tx&lt;/td&gt;&lt;/tr&gt;.
-&lt;/tableau&gt;</translation>
+        <translation>&lt;table cellspacing=1&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F1       &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Site web de JTDX_contest&lt;/td&gt;&lt;td&gt;&lt;b&gt;Ctrl+F1  &lt;/b&gt;&lt;/td&gt;&lt;td&gt;A propos de JTDX_contest&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F2       &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Ouvrir la fenêtre de configuration&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F3       &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Afficher les raccourcis clavier&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F4       &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Effacer les messages d'appel/de grille et de Tx DX&lt;/td&gt;&lt;td&gt;&lt;b&gt;Alt+F4   &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Exit le programme&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F5       &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Afficher les commandes spéciales de la souris&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F6       &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Ouvrir le fichier suivant dans le répertoire&lt;/td&gt;&lt;td&gt;&lt;b&gt;Shift+F6 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Décoder tous les fichiers restants dans le répertoire&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F7       &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Ouvrir le journal par affectation dans la visionneuse du système d'exploitation&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F11      &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Move Rx frequency down 1 Hz&lt;/td&gt;&lt;td&gt;&lt;b&gt;Ctrl+F11 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Move Rx and Tx frequencies down 1 Hz&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;F12      &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Move Rx frequency up 1 Hz&lt;/td&gt;&lt;td&gt;&lt;b&gt;Ctrl+F12 &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Move Rx and Tx frequencies up 1 Hz&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+1-6  &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Régler maintenant la transmission à ce numéro sur l'onglet 1&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Ctl+1-6  &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Régler la prochaine transmission à ce numéro sur l'onglet 1&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+Ctrl+A    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Effacer la liste des indicatifs recherchés&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+B/C  &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Commutation en mode FT8/FT4&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+D    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Décoder à nouveau à la fréquence QSO&lt;/td&gt;&lt;td&gt;&lt;b&gt;Shift+D  &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Décodage complet (les deux fenêtres)&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+E    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Erasement&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+F    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Togging bypass all text filters&lt;/td&gt;&lt;td&gt;&lt;b&gt;Ctrl+F   &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Editer la boîte de message en texte libre&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+G    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Générer des messages standard&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+H    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Halt Tx&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Ctrl+L   &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Consulter l'indicatif dans la base de données, générer des messages standard&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+M    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Moniteur&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+N    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Activer Tx&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+Q    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Journal de QSO&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+S    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Arrêter la surveillance&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+T    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Tune&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+V    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Enregistrer le dernier fichier *.wav complété&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Alt+Z    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Filtre, ce raccourci est pris en charge dans l'interface utilisateur principale et l'interface utilisateur du widegraph&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Esc    &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Halt Tx&lt;/td&gt;&lt;/tr&gt;
+&lt;/table&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp"/>
@@ -6401,7 +6339,7 @@ C'est l'erreur du décodeur lui-même. Corrigez ce qui l'empêche de démarrer -
     <message>
         <location filename="../Configuration.cpp" line="5390"/>
         <source>File &amp;name:</source>
-        <translation>Fichier &amp;nom :</translation>
+        <translation>&amp;Nom de fichier :</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp" line="5391"/>
@@ -6416,7 +6354,7 @@ C'est l'erreur du décodeur lui-même. Corrigez ce qui l'empêche de démarrer -
     <message>
         <location filename="../Configuration.cpp" line="5393"/>
         <source>&amp;Save</source>
-        <translation>&amp;Sauver</translation>
+        <translation>&amp;Enregistrer</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp" line="5394"/>
@@ -6436,7 +6374,7 @@ C'est l'erreur du décodeur lui-même. Corrigez ce qui l'empêche de démarrer -
     <message>
         <location filename="../Configuration.cpp" line="5397"/>
         <source>Delete</source>
-        <translation>Delete</translation>
+        <translation>Supprimer</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp" line="5398"/>
@@ -6451,7 +6389,7 @@ C'est l'erreur du décodeur lui-même. Corrigez ce qui l'empêche de démarrer -
     <message>
         <location filename="../Configuration.cpp" line="5400"/>
         <source>Show &amp;hidden files</source>
-        <translation>Afficher &amp; fichiers cachés</translation>
+        <translation>Afficher les fic&amp;hiers cachés</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp" line="5401"/>
@@ -6461,7 +6399,7 @@ C'est l'erreur du décodeur lui-même. Corrigez ce qui l'empêche de démarrer -
     <message>
         <location filename="../Configuration.cpp" line="5402"/>
         <source>Look in:</source>
-        <translation>Regardez :</translation>
+        <translation>Voir dans :</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp" line="5403"/>
@@ -6502,47 +6440,47 @@ Veuillez vérifier que le nom correct du répertoire a été donné.</translatio
     <message>
         <location filename="../Configuration.cpp" line="5410"/>
         <source>Back</source>
-        <translation>Retour</translation>
+        <translation>Précédent</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp" line="5411"/>
         <source>Go back</source>
-        <translation>Revenir en arrière</translation>
+        <translation>Aller à l'élément précédent</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp" line="5412"/>
         <source>Alt+Left</source>
-        <translation>Alt+Gauche</translation>
+        <translation>Alt+Left</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp" line="5413"/>
         <source>Forward</source>
-        <translation>Transmettre</translation>
+        <translation>Suivant</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp" line="5414"/>
         <source>Go forward</source>
-        <translation>Continuer</translation>
+        <translation>Aller à l'élément suivant</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp" line="5415"/>
         <source>Alt+Right</source>
-        <translation>Alt+Droit</translation>
+        <translation>Alt+Right</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp" line="5416"/>
         <source>Parent Directory</source>
-        <translation>Répertoire des parents</translation>
+        <translation>Dossier parent</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp" line="5417"/>
         <source>Go to the parent directory</source>
-        <translation>Allez dans le répertoire parent</translation>
+        <translation>Aller au dossier parent</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp" line="5418"/>
         <source>Alt+Up</source>
-        <translation>Alt+Haut</translation>
+        <translation>Alt+Up</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp" line="5419"/>
@@ -6577,12 +6515,17 @@ Veuillez vérifier que le nom correct du répertoire a été donné.</translatio
     <message>
         <location filename="../Configuration.cpp" line="5425"/>
         <source>Sidebar</source>
-        <translation>Encadré</translation>
+        <translation>Barre latérale</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp" line="5426"/>
         <source>List of places and bookmarks</source>
         <translation>Liste des lieux et des signets</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Show </source>
+        <translation>Afficher </translation>
     </message>
 </context>
 <context>
@@ -6677,6 +6620,24 @@ Veuillez vérifier que le nom correct du répertoire a été donné.</translatio
         <location filename="../WFPalette.cpp" line="258"/>
         <source>Error writing waterfall palette file &quot;%1&quot;: %2.</source>
         <translation>Erreur d&apos;écriture dans le fichier de la palette de cascades &quot;%1&quot; : %2.</translation>
+    </message>
+</context>
+<context>
+    <name>QPlatformTheme</name>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>OK</source>
+        <translation>OK</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Cancel</source>
+        <translation>Annuler</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Close</source>
+        <translation>Fermer</translation>
     </message>
 </context>
 <context>
@@ -7114,7 +7075,7 @@ Veuillez vérifier que le nom correct du répertoire a été donné.</translatio
     <message>
         <location filename="../widegraph.ui" line="234"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Decode JT9 only above this frequency&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;tête/&gt;&gt;corps&gt;&lt;p&gt;Décoder JT9 uniquement au-dessus de cette fréquence&lt;/p&gt;&lt;/corps&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Décoder JT9 uniquement au-dessus de cette fréquence&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../widegraph.ui" line="237"/>
@@ -7155,7 +7116,7 @@ Veuillez vérifier que le nom correct du répertoire a été donné.</translatio
     <message>
         <location filename="../widegraph.ui" line="326"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Frequency at left edge of waterfall&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;tête/&gt;&lt;corps&gt;&lt;p&gt;Fréquence au bord gauche de la chute d&apos;eau&lt;/p&gt;&lt;/corps&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Fréquence au bord gauche de la chute d'eau&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../widegraph.ui" line="329"/>
@@ -7210,7 +7171,7 @@ Veuillez vérifier que le nom correct du répertoire a été donné.</translatio
     <message>
         <location filename="../widegraph.ui" line="481"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Flatten spectral baseline over the full displayed interval.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&gt;&gt;tête/&gt;&lt;corps&gt;&lt;p&gt;Base spectrale plate sur tout l&apos;intervalle affiché.&lt;/p&gt;&lt;/corps&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Base spectrale plate sur tout l'intervalle affiché.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../widegraph.ui" line="484"/>
@@ -7220,7 +7181,7 @@ Veuillez vérifier que le nom correct du répertoire a été donné.</translatio
     <message>
         <location filename="../widegraph.ui" line="501"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Select data for spectral display&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;tête/&gt;&gt;corps&gt;&lt;p&gt;Sélectionner les données pour l&apos;affichage spectral&lt;/p&gt;&lt;/corps&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Sélectionner les données pour l'affichage spectral&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../widegraph.ui" line="508"/>
@@ -7235,7 +7196,7 @@ Veuillez vérifier que le nom correct du répertoire a été donné.</translatio
     <message>
         <location filename="../widegraph.ui" line="533"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Set fractional size of spectrum in this window.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Définir la taille fractionnaire du spectre dans cette fenêtre.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Définir la taille fractionnaire du spectre dans cette fenêtre.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../widegraph.ui" line="539"/>
@@ -7331,7 +7292,7 @@ Veuillez vérifier que le nom correct du répertoire a été donné.</translatio
     <message>
         <location filename="../Configuration.ui" line="125"/>
         <source>IARU Region:</source>
-        <translation>Region IARU:</translation>
+        <translation>Région IARU:</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="135"/>
@@ -7438,7 +7399,7 @@ jjhhmmssAAAA)</translation>
     <message>
         <location filename="../Configuration.ui" line="373"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When TX message is changed previous message will not be shown if it was transmitted for less than 2 seconds.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Lorsqu&apos;un message TX est modifié, le message précédent ne sera pas affiché s&apos;il a été transmis pendant moins de 2 secondes.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Lorsqu'un message TX est modifié, le message précédent ne sera pas affiché s'il a été transmis pendant moins de 2 secondes.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="396"/>
@@ -7499,7 +7460,7 @@ jjhhmmssAAAA)</translation>
     <message>
         <location filename="../Configuration.ui" line="570"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Number of seconds before tune is aborted&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;tête/&gt;&lt;corps&gt;&lt;p&gt;Nombre de secondes avant l&apos;interruption de la chanson&lt;/p&gt;&lt;/corps&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Nombre de secondes avant l'interruption de la chanson&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="576"/>
@@ -7514,7 +7475,7 @@ jjhhmmssAAAA)</translation>
     <message>
         <location filename="../Configuration.ui" line="607"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Check this if you wish to automatically return to the last monitored frequency when monitor is enabled, leave it unchecked if you wish to have the current rig frequency maintained.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;-tête/&gt;&gt;corps&gt;&lt;p&gt;Cochez cette case si vous souhaitez revenir automatiquement à la dernière fréquence surveillée lorsque la surveillance est activée, laissez-la non cochée si vous souhaitez que la fréquence actuelle de la plate-forme soit maintenue.&lt;/p&gt;&lt;/corps&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Cochez cette case si vous souhaitez revenir automatiquement à la dernière fréquence surveillée lorsque la surveillance est activée, laissez-la non cochée si vous souhaitez que la fréquence actuelle de la plate-forme soit maintenue.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="619"/>
@@ -7724,7 +7685,7 @@ une période de calme lorsque le décodage est effectué.</translation>
     <message>
         <location filename="../Configuration.ui" line="1121"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Flow control protocol used between this computer and your radio&apos;s CAT interface (usually &amp;quot;None&amp;quot; but some require &amp;quot;Hardware&amp;quot;).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&gt;&gt;head/&gt;&lt;body&gt;&lt;p&gt;Protocole de contrôle de flux utilisé entre cet ordinateur et l&apos;interface CAT de votre radio (généralement &amp;quot;None&amp;quot ; mais certains exigent &amp;quot;Hardware&amp;quot ;).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Protocole de contrôle de flux utilisé entre cet ordinateur et l'interface CAT de votre radio (généralement &amp;quot;None&amp;quot; mais certains exigent &amp;quot;Hardware&amp;quot;).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1124"/>
@@ -7819,7 +7780,7 @@ d&apos;autre interface matérielle pour les PTT.</translation>
     <message>
         <location filename="../Configuration.ui" line="1323"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Use the RS-232 DTR control line to toggle your radio&apos;s PTT, requires hardware to inteface the line.&lt;/p&gt;&lt;p&gt;Some commercial interface units also use this method.&lt;/p&gt;&lt;p&gt;The DTR control line of the CAT serial port may be used for this or a DTR control line on a different serial port may be used.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&gt;&gt;head/&gt;&lt;body&gt;&lt;p&gt;Utilisez la ligne de contrôle DTR RS-232 pour basculer le PTT de votre radio, nécessite du matériel pour interfacer la ligne.&lt;/p&gt;&lt;p&gt;Certaines unités d&apos;interface commerciales utilisent également cette méthode.&lt;/p&gt;&lt;p&gt;La ligne de contrôle DTR du port série du CAT peut être utilisée pour cela ou une ligne de contrôle DTR sur un port série différent peut être utilisée.&lt;/p&gt;&lt;/body&gt;&lt;/html</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Utilisez la ligne de contrôle DTR RS-232 pour basculer le PTT de votre radio, nécessite du matériel pour interfacer la ligne.&lt;/p&gt;&lt;p&gt;Certaines unités d'interface commerciales utilisent également cette méthode.&lt;/p&gt;&lt;p&gt;La ligne de contrôle DTR du port série du CAT peut être utilisée pour cela ou une ligne de contrôle DTR sur un port série différent peut être utilisée.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1326"/>
@@ -7839,7 +7800,7 @@ d&apos;autre interface matérielle pour les PTT.</translation>
     <message>
         <location filename="../Configuration.ui" line="1352"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Use the RS-232 RTS control line to toggle your radio&apos;s PTT, requires hardware to inteface the line.&lt;/p&gt;&lt;p&gt;Some commercial interface units also use this method.&lt;/p&gt;&lt;p&gt;The RTS control line of the CAT serial port may be used for this or a RTS control line on a different serial port may be used. Note that this option is not available on the CAT serial port when hardware flow control is used.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&gt;&gt;head/&gt;&lt;body&gt;&lt;p&gt;Utilisez la ligne de contrôle RTS RS-232 pour basculer le PTT de votre radio, nécessite du matériel pour interfacer la ligne.&lt;/p&gt;&lt;p&gt;Certains appareils d&apos;interface commerciaux utilisent également cette méthode.&lt;/p&gt;&lt;p&gt;La ligne de contrôle RTS du port série du CAT peut être utilisée pour cela ou une ligne de contrôle RTS sur un port série différent peut être utilisée. Notez que cette option n&apos;est pas disponible sur le port série du CAT lorsque le contrôle de flux matériel est utilisé.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Utilisez la ligne de contrôle RTS RS-232 pour basculer le PTT de votre radio, nécessite du matériel pour interfacer la ligne.&lt;/p&gt;&lt;p&gt;Certains appareils d'interface commerciaux utilisent également cette méthode.&lt;/p&gt;&lt;p&gt;La ligne de contrôle RTS du port série du CAT peut être utilisée pour cela ou une ligne de contrôle RTS sur un port série différent peut être utilisée. Notez que cette option n'est pas disponible sur le port série du CAT lorsque le contrôle de flux matériel est utilisé.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1355"/>
@@ -7849,7 +7810,7 @@ d&apos;autre interface matérielle pour les PTT.</translation>
     <message>
         <location filename="../Configuration.ui" line="1386"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Select the RS-232 serial port utilised for PTT control, this option is available when DTR or RTS is selected above as a transmit method.&lt;/p&gt;&lt;p&gt;This port can be the same one as the one used for CAT control.&lt;/p&gt;&lt;p&gt;For some interface types the special value CAT may be chosen, this is used for non-serial CAT interfaces that can control serial port control lines remotely (OmniRig for example).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&gt; tête/&gt;&gt; corps&gt;&lt;p&gt;Sélectionnez le port série RS-232 utilisé pour le contrôle PTT, cette option est disponible lorsque DTR ou RTS est sélectionné ci-dessus comme méthode de transmission.&lt;/p&gt;&lt;p&gt;Ce port peut être le même que celui utilisé pour le contrôle CAT. &lt;/p&gt;&lt;p&gt;Pour certains types d&apos;interface, la valeur spéciale CAT peut être choisie, elle est utilisée pour les interfaces CAT non série qui peuvent contrôler les lignes de commande de port série à distance (OmniRig par exemple).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Sélectionnez le port série RS-232 utilisé pour le contrôle PTT, cette option est disponible lorsque DTR ou RTS est sélectionné ci-dessus comme méthode de transmission.&lt;/p&gt;&lt;p&gt;Ce port peut être le même que celui utilisé pour le contrôle CAT.&lt;/p&gt;&lt;p&gt;Pour certains types d'interface, la valeur spéciale CAT peut être choisie, elle est utilisée pour les interfaces CAT non série qui peuvent contrôler les lignes de commande de port série à distance (OmniRig par exemple).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1411"/>
@@ -8218,7 +8179,7 @@ les deux ici.</translation>
     <message>
         <location filename="../Configuration.ui" line="2340"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Drag and drop items to rearrange order. Right click for item specific actions. Click, SHIFT+Click and, CRTL+Click to select items. @ symbol is being substituted with DX call, &amp; symbol with user&apos;s base callsign, # symbol with report to be transmitted, ^ symbol with correspondent&apos;s name retrieved from the log where name shall not exceed 7 chars.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;tête/&gt;&gt;corps&gt;&gt;p&gt;glisser et déposer des objets pour réorganiser l&apos;ordre. Cliquez avec le bouton droit de la souris pour des actions spécifiques à un élément. Cliquer, SHIFT+Cliquer et, CRTL+Cliquer pour sélectionner les éléments. Le symbole @ est remplacé par l&apos;appel DX, &amp; le symbole par l&apos;indicatif de base de l&apos;utilisateur, le symbole # avec le rapport à transmettre, le symbole ^ avec le nom du correspondant récupéré dans le journal où le nom ne doit pas dépasser 7 caractères.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;glisser et déposer des objets pour réorganiser l'ordre. Cliquez avec le bouton droit de la souris pour des actions spécifiques à un élément. Cliquer, SHIFT+Cliquer et, CRTL+Cliquer pour sélectionner les éléments. Le symbole @ est remplacé par l'appel DX, &amp; le symbole par l'indicatif de base de l'utilisateur, le symbole # avec le rapport à transmettre, le symbole ^ avec le nom du correspondant récupéré dans le journal où le nom ne doit pas dépasser 7 caractères.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="2391"/>
@@ -9218,7 +9179,7 @@ Cliquez avec le bouton droit de la souris pour les options d&apos;insertion et d
         <location filename="../Configuration.ui" line="5043"/>
         <location filename="../Configuration.ui" line="5108"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enable option&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;tête/&gt;&gt;corps&gt;&lt;p&gt;Activer l&apos;option&lt;/p&gt;&lt;/corps&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Activer l'option&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="5046"/>
@@ -9325,7 +9286,7 @@ AA1AAA,BB1BB,CC1CC&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
         <location filename="../Configuration.ui" line="5220"/>
         <location filename="../Configuration.ui" line="5243"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Filter will be applied out of the RX frequency.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;tête/&gt;&gt;corps&gt;&lt;p&gt;Filtre sera appliqué à partir de la fréquence RX.&lt;/p&gt;&lt;/corps&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Filtre sera appliqué à partir de la fréquence RX.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="5200"/>
@@ -9424,7 +9385,7 @@ AA1AAA,BB1BB,CC1CC&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
         <location filename="../Configuration.ui" line="6409"/>
         <location filename="../Configuration.ui" line="6547"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Select time&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;tête/&gt;&gt;corps&gt;&lt;p&gt;Sélectionner l&apos;heure&lt;/p&gt;&lt;/corps&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Sélectionner l'heure&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="5390"/>
@@ -9737,7 +9698,7 @@ AA1AAA,BB1BB,CC1CC&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
         <location filename="../Configuration.ui" line="6374"/>
         <location filename="../Configuration.ui" line="6631"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Select band&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;tête/&gt;&lt;corps&gt;&lt;p&gt;Sélectionner la bande&lt;/p&gt;&lt;/corps&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Sélectionner la bande&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="6680"/>
