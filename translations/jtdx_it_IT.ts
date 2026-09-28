@@ -3088,7 +3088,7 @@ Formato:
     <message>
         <location filename="../mainwindow.ui" line="667"/>
         <source>USB dial frequency. The mouse wheel and clicks tune it: over the 100, 10 or 1 kHz digit by that digit's step, anywhere else by 1 kHz. Wheel up or a right click tunes up, wheel down or a left click tunes down; a step never leaves the band.</source>
-        <translation>Frequenza USB di lavoro. La rotella del mouse e i clic la sintonizzano: sulla cifra dei 100, 10 o 1 kHz, del passo di quella cifra; altrove, di 1 kHz. Rotella in su o clic con il tasto destro sale, rotella in giù o clic con il tasto sinistro scende; un passo non esce mai dalla banda.</translation>
+        <translation>Frequenza USB di lavoro. La rotella del mouse e i clic la sintonizzano: sulla cifra dei 100, 10 o 1 kHz a passi di quella cifra, altrove a passi di 1 kHz. La rotella in su o un clic con il tasto destro la alza, la rotella in giù o un clic con il tasto sinistro la abbassa; un passo non esce mai dalla banda.</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="679"/>
