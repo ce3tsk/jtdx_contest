@@ -601,7 +601,6 @@ set (wsjt_CSRCS
   lib/wsprd/nhash.c
   lib/tab.c
   lib/usleep.c
-  lib/wisdom.c
   lib/wrapkarn.c
 # CE3TSK: the SuperFox polar code (127,50) over GF(128) by Nico Palermo IV3NWV, from WSJT-X
 # 3.0.2 lib/superfox/qpc, unchanged (GPL v3). np_qpc.c keeps its work arrays in file-static
@@ -1717,6 +1716,14 @@ configure_file (
 #
 # versioning and configuration
 #
+
+# CE3TSK 2026-09-28: wsjtx_config.h passes the Fortran hidden string lengths as size_t, which is
+# gfortran 8 and later; any other Fortran compiler stops here. It used to test the C++ compiler's
+# __GNUC__, 4 under Apple clang, so every macOS build passed int (Luigi IW5DNZ).
+# See CMake/FortranCharlen.cmake.
+include (${PROJECT_SOURCE_DIR}/CMake/FortranCharlen.cmake)
+jtdx_require_fortran_charlen ("${CMAKE_Fortran_COMPILER_ID}" "${CMAKE_Fortran_COMPILER_VERSION}")
+
 configure_file (
   "${PROJECT_SOURCE_DIR}/wsjtx_config.h.in"
   "${PROJECT_BINARY_DIR}/wsjtx_config.h"

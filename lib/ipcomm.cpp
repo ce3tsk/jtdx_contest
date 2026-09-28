@@ -24,7 +24,7 @@ extern "C" {
   struct jt9com * address_jtdxjt9_();
   int size_jtdxjt9_();
 // Multiple instances:  wrapper for QSharedMemory::setKey()
-  bool setkey_jtdxjt9_(char* mykey, int mykey_len);
+  bool setkey_jtdxjt9_(char* mykey, fortran_charlen_t mykey_len);  // CE3TSK 2026-09-28: was int
 
   bool acquire_jtdxjt9_();
   bool release_jtdxjt9_();
@@ -39,12 +39,10 @@ struct jt9com * address_jtdxjt9_() {return reinterpret_cast<struct jt9com *>(mem
 int size_jtdxjt9_() {return (int)mem_jtdxjt9.size();}
 
 // Multiple instances:
-bool setkey_jtdxjt9_(char* mykey, int mykey_len) {
-   char *tempstr = (char *)calloc(mykey_len+1,1);
-   memset(tempstr, 0, mykey_len+1);
-   strncpy(tempstr, mykey, mykey_len);
-   QString s1 = QString(QLatin1String(tempstr));
-   mem_jtdxjt9.setKey(s1);
+bool setkey_jtdxjt9_(char* mykey, fortran_charlen_t mykey_len) {
+   // CE3TSK 2026-09-28: the key up to its length or its first NUL, as the strncpy into a
+   // calloc'd copy gave it - a copy that was never freed (test/setkey_ipcomm.sh)
+   mem_jtdxjt9.setKey(QString::fromLatin1(mykey, int(qstrnlen(mykey, mykey_len))));
    return true;}
 
 bool acquire_jtdxjt9_() {return sem_jtdxjt9.acquire();}

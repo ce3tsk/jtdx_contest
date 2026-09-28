@@ -23,7 +23,7 @@ extern "C"
 #include "FC.h"
   void FC_grayline (int const * year, int const * month, int const * nday, float const * uth, char const * my_grid
                    , int const * nduration, int * isun
-                   , int my_grid_len);
+                   , fortran_charlen_t my_grid_len);  // CE3TSK 2026-09-28: was int
 #endif
 };
 

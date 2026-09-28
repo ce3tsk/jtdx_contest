@@ -98,7 +98,7 @@ extern "C" {
   void symspec_(struct dec_data *, int* k, int* ntrperiod, int* nsps,
                 float* px, float s[], float* df3, int* nhsym, int* npts8);
 
-  void four2a_(_Complex float *, int * nfft, int * ndim, int * isign, int * iform, fortran_charlen_t);
+  void four2a_(_Complex float *, int * nfft, int * ndim, int * isign, int * iform);
 				
   void genft8_(char* msg, int* i3, int* n3, int* ntxhash, char* msgsent, char ft8msgbits[], int itone[], fortran_charlen_t, fortran_charlen_t);
 
@@ -125,8 +125,6 @@ extern "C" {
                fortran_charlen_t, fortran_charlen_t);
 
   void morse_(char* msg, int* icw, int* ncw, fortran_charlen_t);
-
-  int ptt_(int nport, int ntx, int* iptt, int* nopen);
 
   void wspr_downsample_(short int d2[], int* k);
   int savec2_(char* fname, int* TR_seconds, double* dial_freq, fortran_charlen_t);
@@ -1415,7 +1413,7 @@ MainWindow::~MainWindow()
     int isign {1};
     int iform {1};
     // free FFT plan resources
-    four2a_ (nullptr, &nfft, &ndim, &isign, &iform, 0);
+    four2a_ (nullptr, &nfft, &ndim, &isign, &iform);
   }
   fftwf_forget_wisdom ();
   fftwf_cleanup ();

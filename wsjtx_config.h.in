@@ -1,6 +1,10 @@
 #ifndef WSJTX_CONFIG_H__
 #define WSJTX_CONFIG_H__
 
+/* CE3TSK 2026-09-28: size_t for fortran_charlen_t below. Included here, outside the extern "C"
+   block, where a standard header belongs: libc++'s <stddef.h> is itself a C++ wrapper. */
+#include <stddef.h>
+
 #ifdef __cplusplus
 extern "C"  {
 #endif
@@ -49,17 +53,12 @@ extern "C"  {
 #	endif
 #endif
 
-  /* typedef for consistent gfortran ABI for charlen type hidden arguments */
-#if __GNUC__ > 7
-#ifdef __cplusplus
-#include <cstddef>
-#else
-#include <stddef.h>
-#endif
+  /* typedef for consistent gfortran ABI for charlen type hidden arguments
+     CE3TSK 2026-09-28: size_t, what gfortran 8 and later pass; CMake/FortranCharlen.cmake refuses
+     any other Fortran compiler. This used to choose int or size_t with `#if __GNUC__ > 7`, a test
+     of the C/C++ compiler: Apple clang reports 4, so macOS passed int lengths to a gfortran that
+     reads size_t (Luigi IW5DNZ). No choice here, so none can silently default to the wrong one. */
   typedef size_t fortran_charlen_t;
-#else
-  typedef int fortran_charlen_t;
-#endif
 
 #ifdef __cplusplus
 }

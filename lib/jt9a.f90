@@ -19,6 +19,7 @@ subroutine jt9a()
   end interface
 
   integer*1 attach_jtdxjt9
+  integer*1 setkey_jtdxjt9,detach_jtdxjt9 !CE3TSK 2026-09-28: C++ bool, as attach; undeclared they were implicit REAL
   integer size_jtdxjt9
 ! Multiple instances:
   character*80 mykey
