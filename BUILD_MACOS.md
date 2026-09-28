@@ -13,6 +13,7 @@ with a current toolchain (Homebrew GCC 16, CMake 4, macOS 26 on Apple Silicon).
 - [6. Check the installer](#6-check-the-installer)
 - [7. Distributing the DMG](#7-distributing-the-dmg)
 - [8. Intel Macs: building on macOS 10.15 Catalina](#8-intel-macs-building-on-macos-1015-catalina)
+- [9. Apple Silicon for macOS 15 Sequoia: building in a VM](#9-apple-silicon-for-macos-15-sequoia-building-in-a-vm)
 - [Changes made](#changes-made)
 - [Effect on Linux and Windows](#effect-on-linux-and-windows)
 - [Troubleshooting](#troubleshooting)
@@ -33,7 +34,7 @@ What the reference build used. Other versions may work; these are known to work.
 | FFTW (single precision) | 3.3.11 (`/opt/local/lib`) | MacPorts `fftw-3-single +gfortran` |
 | Boost (headers) | 1.76 (`/opt/local/include`) | MacPorts `boost` |
 | libusb | `/opt/local/lib` | MacPorts `libusb-devel` |
-| Hamlib | 4.7.2 (`/usr/local/lib`), built for macOS 11.0 | git tag `4.7.2`, see [step 1.2](#12-hamlib-472) |
+| Hamlib | 4.7.2 (`/usr/local/lib`), to be built for macOS 11.0 as in [step 1.2](#12-hamlib-472). The rc09 DMG still has the first build, which declares macOS 26.0 | git tag `4.7.2` |
 | Documentation tools | asciidoctor 2.0.26, asciidoc, texinfo | MacPorts |
 
 The source tree is `jtdx_contest/` and the build directory is `build/` next to it:
@@ -359,7 +360,9 @@ The reference DMG passes both checks. Its decoder loads `libgomp`, `libgfortran`
   FFTW and ICU require macOS 26.0 and Qt requires 14.0, so the DMG runs on
   **macOS 26 or later**. Packaging works this out itself ([step 5](#5-create-the-installer-dmg),
   point 3). It writes the value into the app's `Info.plist` and the DMG's `ReadMe.txt`,
-  and prints `Minimum macOS for …` during `make package`. To see it in a built app:
+  and prints `Minimum macOS for …` during `make package`. For a DMG that also runs on
+  macOS 15 Sequoia, build it in a Sequoia VM, see
+  [section 9](#9-apple-silicon-for-macos-15-sequoia-building-in-a-vm). To see it in a built app:
 
   ```bash
   /usr/libexec/PlistBuddy -c "Print :LSMinimumSystemVersion" JTDX_contest.app/Contents/Info.plist
@@ -395,7 +398,9 @@ Reference machine: **MacBook Air 13-inch, Mid 2012** (model A1466, EMC 2559, mod
 identifier `MacBookAir5,2`), whose newest macOS is **10.15.7 Catalina**. A DMG built on it
 runs on **Intel Macs with macOS 10.15 or later**, which covers practically every Intel Mac
 from 2012 onwards. It probably also runs on Apple Silicon through Rosetta 2, but those
-users should take the Apple Silicon DMG.
+users should take the Apple Silicon DMG. A DMG built as in
+[section 9](#9-apple-silicon-for-macos-15-sequoia-building-in-a-vm) runs on macOS 15 and
+later.
 
 This machine differs from the Apple Silicon build in four ways:
 
@@ -530,6 +535,297 @@ Then copy the DMG off the Air and delete the ~300 MB of staging files in
 | cmake warns `RIGCTL_EXE not found` | Hamlib isn't installed in `/usr/local`, or `/usr/local/bin` isn't on `PATH`. Redo [8.3](#83-build-hamlib-472). |
 | `make package`: `cannot resolve item` / `otool failed` for a gcc library | Check that the gfortran passed to cmake is the MacPorts one (`/opt/local/bin/gfortran-mp-NN`). |
 | macOS says JTDX\_contest needs a newer macOS | That Mac's macOS is older than the one the DMG was built on (10.15 for the Intel DMG). |
+
+---
+
+## 9. Apple Silicon for macOS 15 Sequoia: building in a VM
+
+The Apple Silicon DMG from [step 5](#5-create-the-installer-dmg) needs **macOS 26**, so
+it won't open on macOS 15 Sequoia. The rc09 DMG shows why: 46 of its 75 binaries declare
+macOS 26.0 as their minimum. They come from three places:
+
+- **Homebrew:** gfortran's runtime (`libgfortran`, `libgomp`, `libquadmath`).
+- **MacPorts:** FFTW, ICU, glib, pcre2, zstd, dbus, libusb, freetype, OpenSSL and others.
+- **`/usr/local`:** Hamlib.
+
+JTDX\_contest's own programs declare 11.0 and Qt 14.0. So moving everything to MacPorts
+on the macOS 26 Mac changes nothing by itself. Both package managers build for the macOS
+they run on.
+
+On the macOS 26 Mac, only MacPorts can build for an older macOS. It has a
+`macosx_deployment_target` setting in `macports.conf`, but then it can't use its
+ready-built packages. Everything would be compiled from source: about 200 ports,
+including LLVM/clang, three Pythons and the X11 libraries (counted on 28 September
+2026). On the reference Mac, with 6 cores and 8 GB, that takes all night or longer.
+
+So this section does what the Intel build does ([section 8](#8-intel-macs-building-on-macos-1015-catalina)):
+it **builds on the oldest macOS to support**, here in a virtual machine on the same Mac.
+MacPorts' ready-built packages for macOS 15 are made for 15.0, so most packages just
+download, and the DMG runs on **macOS 15 Sequoia and later**.
+
+Because the DMG also runs on macOS 26, it replaces the one from step 5. Only one Apple
+Silicon DMG is needed.
+
+Differences from the macOS 26 build:
+
+- **MacPorts for everything, gfortran included** (`gcc15`), as on Intel. Homebrew is not
+  used in the VM.
+- **Two VMs.**
+  - `sequoia-build` holds MacPorts, the source and the build. Keep it for the next
+    releases.
+  - `sequoia-test` is a fresh macOS without MacPorts, made anew for each test. On it, a
+    library the app still loads from `/opt/local` fails, as it would for a user.
+- The VMs run with [Tart](https://tart.run), which uses macOS's own virtualization.
+  - Its macOS 15 image is about 25 GB and is downloaded once.
+  - The macOS 15 image asks for 8 GB of memory, which is all of the reference Mac's
+    RAM. The commands below give each VM 4 GB and 4 CPUs. Run one VM at a time.
+  - Username and password inside the VMs are `admin` / `admin`.
+
+### 9.1 Create the build VM
+
+On the Mac. Homebrew here only installs the VM tool; nothing from it goes into the DMG.
+
+```bash
+brew install openai/tools/tart
+```
+
+```bash
+tart clone ghcr.io/cirruslabs/macos-sequoia-vanilla:latest sequoia-build && tart set sequoia-build --cpu 4 --memory 4096
+```
+
+A folder for passing files between the Mac and the VMs:
+
+```bash
+mkdir -p ~/dev/jtdx-prefix/sequoia
+```
+
+Start the VM with that folder shared. Inside the VM it is
+`/Volumes/My Shared Files/sequoia`:
+
+```bash
+tart run --dir=sequoia:$HOME/dev/jtdx-prefix/sequoia sequoia-build
+```
+
+The VM opens in a window. Run the commands in 9.2 to 9.6 in its Terminal. You can also
+run them from the Mac through `ssh admin@$(tart ip sequoia-build)`.
+
+**Don't update the VM to macOS 26.** Its packages would then be made for 26.0 again. Minor
+Sequoia updates (15.x) are fine.
+
+### 9.2 Prepare the build VM
+
+Check that it runs macOS 15:
+
+```bash
+sw_vers -productVersion
+```
+
+The Command Line Tools are already in the image: version 16.4, with clang 17 and the
+macOS 15.5 SDK, on 28 September 2026. `clang --version` shows it. If it doesn't, install
+them and click **Install** in the dialog:
+
+```bash
+xcode-select --install
+```
+
+Install **MacPorts** with its macOS 15 Sequoia package (the newest version is listed on
+https://www.macports.org/install.php). `sudo` asks for no password in these images:
+
+```bash
+cd ~/Downloads && curl -LO https://github.com/macports/macports-base/releases/download/v2.12.6/MacPorts-2.12.6-15-Sequoia.pkg && sudo installer -pkg MacPorts-2.12.6-15-Sequoia.pkg -target /
+```
+
+Installed like this, MacPorts doesn't add itself to `PATH`. Add it for the Terminal:
+
+```bash
+grep -q /opt/local/bin ~/.zprofile 2>/dev/null || echo 'export PATH=/opt/local/bin:/opt/local/sbin:$PATH' >> ~/.zprofile
+```
+
+Open a new Terminal window (or ssh session), then:
+
+```bash
+sudo port selfupdate
+```
+
+### 9.3 Install the packages
+
+The same packages as the macOS 26 build ([step 1.1](#11-tools-and-libraries)), plus
+`gcc15` for gfortran and `cmake`:
+
+```bash
+sudo port install gcc15 cmake qt5 fftw-3-single +gfortran boost libusb-devel pkgconfig asciidoctor asciidoc texinfo autoconf automake libtool
+```
+
+- `gcc15` provides `/opt/local/bin/gfortran-mp-15`. It is also the compiler that
+  `fftw-3-single +gfortran` is built with, so only one GCC is installed.
+- `+gfortran` isn't the default variant, so `fftw-3-single` compiles instead of
+  downloading. So may any package that has no ready-built version for macOS 15 yet.
+
+Check that the libraries are made for macOS 15. Every line should say `minos 15.0` or
+lower:
+
+```bash
+otool -l /opt/local/lib/libfftw3f.3.dylib /opt/local/lib/libgcc/libgfortran.5.dylib /opt/local/libexec/qt5/lib/QtCore.framework/QtCore | grep minos
+```
+
+### 9.4 Build Hamlib 4.7.2
+
+As in [step 1.2](#12-hamlib-472), built for macOS 11.0 into the VM's `/usr/local`:
+
+```bash
+mkdir -p ~/dev && cd ~/dev && git clone --branch 4.7.2 --depth 1 https://github.com/Hamlib/Hamlib.git
+```
+
+```bash
+cd ~/dev/Hamlib && ./bootstrap && ./configure --prefix=/usr/local --enable-shared --disable-static --disable-winradio --without-readline --without-indi --without-cxx-binding CFLAGS="-g -O2 -mmacosx-version-min=11.0 -I/opt/local/include" LDFLAGS="-mmacosx-version-min=11.0" LIBUSB_LIBS="-L/opt/local/lib -lusb-1.0"
+```
+
+```bash
+make -j$(sysctl -n hw.ncpu) && sudo make install
+```
+
+```bash
+rigctl --version; otool -l /usr/local/lib/libhamlib.4.dylib | grep minos
+```
+
+This should show `Hamlib 4.7.2` and `minos 11.0`.
+
+### 9.5 Configure, build and package
+
+The source, the latest from GitHub:
+
+```bash
+mkdir -p ~/dev/jtdx-prefix && cd ~/dev/jtdx-prefix && git clone https://github.com/ce3tsk/jtdx_contest.git
+```
+
+To build changes that aren't on GitHub yet, copy the `jtdx_contest` folder into
+`~/dev/jtdx-prefix/sequoia` on the Mac. Then copy it from
+`/Volumes/My Shared Files/sequoia` to `~/dev/jtdx-prefix` in the VM.
+
+```bash
+mkdir -p ~/dev/jtdx-prefix/build && cd ~/dev/jtdx-prefix/build
+```
+
+```bash
+export SDKROOT=$(xcrun --show-sdk-path)
+```
+
+```bash
+cmake -DCMAKE_PREFIX_PATH=/opt/local/libexec/qt5 -DCMAKE_Fortran_COMPILER=/opt/local/bin/gfortran-mp-15 -DCMAKE_OSX_SYSROOT=$SDKROOT -DCMAKE_BUILD_RPATH=/opt/local/lib/libgcc -DCMAKE_INSTALL_RPATH=/opt/local/lib/libgcc ../jtdx_contest
+```
+
+- The options are the ones tested on the Intel build (`BUILD_MACOS_INTEL.md`, step 7).
+- The two RPATH options are needed because MacPorts' `libgomp` for macOS 15 is linked as
+  `@rpath/libgomp.1.dylib`, as `gcc14`'s was on Intel. Without them, packaging can't
+  find it.
+- Leave the deployment target alone. As on the macOS 26 build, the app's own programs
+  declare 11.0, and the libraries decide the minimum.
+
+Check that the Fortran code is optimized. The line must contain `-O3`:
+
+```bash
+grep '^Fortran_FLAGS =' CMakeFiles/jtdxjt9.dir/flags.make
+```
+
+```bash
+make -j$(sysctl -n hw.ncpu) && make package
+```
+
+It should end with `CPack: - package: …/jtdx-<version>-Darwin-arm64.dmg generated.`, the
+same name as the DMG from step 5. CPack doesn't show the packaging scripts' messages when
+they succeed, so the `Minimum macOS for …` line doesn't appear. Check the minimum in 9.6
+instead.
+
+### 9.6 Check the DMG
+
+In the build VM:
+
+```bash
+cd ~/dev/jtdx-prefix/build && M=$(hdiutil attach -readonly -nobrowse jtdx-*-Darwin-arm64.dmg | tail -1 | cut -f3-) && codesign --verify --deep --strict "$M/JTDX_contest.app" && /usr/libexec/PlistBuddy -c "Print :LSMinimumSystemVersion" "$M/JTDX_contest.app/Contents/Info.plist" && grep "installer is for" "$M/ReadMe.txt"
+```
+
+This should print `15.0` and "…Apple Silicon Macs (M1 and later) with macOS 15 or later".
+
+Then check that nothing is loaded from outside the bundle, and that nothing requires a
+macOS newer than 15.0. The first command should print `self-contained`, the second
+nothing:
+
+```bash
+find "$M/JTDX_contest.app" -type f \( -perm +111 -o -name "*.dylib" \) -exec otool -L {} \; | grep -E "/opt/(homebrew|local)|/usr/local" || echo "self-contained"
+```
+
+```bash
+find "$M/JTDX_contest.app" -type f \( -perm +111 -o -name "*.dylib" \) -exec sh -c 'v=$(otool -l "$1" | awk "/minos|LC_VERSION_MIN_MACOSX/{f=1} f&&/(minos|version) /{print \$2; exit}"); case "$v" in 1[0-4]|1[0-4].*|15|15.0|"") ;; *) echo "$v $1";; esac' _ {} \; ; hdiutil detach "$M"
+```
+
+Copy the DMG out. On the Mac it appears in `~/dev/jtdx-prefix/sequoia`:
+
+```bash
+cp ~/dev/jtdx-prefix/build/jtdx-*-Darwin-arm64.dmg "/Volumes/My Shared Files/sequoia/"
+```
+
+Then shut the build VM down (Apple menu → Shut Down). For the next release, start it
+again as in 9.1, and run `sudo port selfupdate && sudo port upgrade outdated`. Then run
+`git pull` in `~/dev/jtdx-prefix/jtdx_contest` and repeat 9.5 and 9.6.
+
+### 9.7 Test on a clean macOS 15
+
+On the Mac, make a fresh VM from the same image. This reuses the download:
+
+```bash
+tart clone ghcr.io/cirruslabs/macos-sequoia-vanilla:latest sequoia-test && tart set sequoia-test --cpu 4 --memory 4096
+```
+
+Make a test recording in the shared folder. It uses `ft8sim` from the macOS 26 build and
+contains one FT8 signal, "CQ K1ABC FN42" at 1500 Hz and −10 dB, in
+`000000_000001.wav`:
+
+```bash
+cd ~/dev/jtdx-prefix/sequoia && ../build/ft8sim "CQ K1ABC FN42" 1500.0 0.0 0.1 1.0 0 1 -10
+```
+
+```bash
+tart run --dir=sequoia:$HOME/dev/jtdx-prefix/sequoia sequoia-test
+```
+
+In the test VM:
+
+1. Open `/Volumes/My Shared Files/sequoia` in Finder, open the DMG, and drag
+   JTDX\_contest to Applications.
+2. Start JTDX\_contest. It must open, with no "requires a newer macOS" message.
+   - A file copied through the shared folder has no quarantine flag, so the Gatekeeper
+     refusal from [step 7](#7-distributing-the-dmg) doesn't appear here.
+3. Answer **Yes** when it offers to install the shared memory setting (password `admin`).
+4. Switch to FT8. Choose **File → Open** and select `000000_000001.wav` in
+   `/Volumes/My Shared Files/sequoia`. A decode of `CQ K1ABC FN42` near 1500 Hz should
+   appear. That runs the decoder `jtdxjt9` with the bundled gfortran runtime.
+5. In Terminal, check the bundled Hamlib and libusb. This should print `Hamlib 4.7.2`:
+   ```bash
+   /Applications/JTDX_contest.app/Contents/MacOS/rigctl-jtdx --version
+   ```
+
+If the app doesn't start, run
+`/Applications/JTDX_contest.app/Contents/MacOS/JTDX_contest` in Terminal. The loader
+names any missing library or symbol there.
+
+Afterwards, on the Mac, delete the test VM so the next test starts clean:
+
+```bash
+tart delete sequoia-test
+```
+
+The same steps with `ghcr.io/cirruslabs/macos-sonoma-vanilla:latest` and MacPorts'
+macOS 14 package should give a DMG for macOS 14 and later. That hasn't been tried.
+
+### 9.8 If something fails
+
+| Symptom | Fix |
+|---|---|
+| [9.6](#96-check-the-dmg) shows a minimum above 15.0 | Something in the bundle wasn't made for macOS 15, or the VM was updated to macOS 26. The last command in 9.6 names the files. |
+| `port install` compiles for a long time | That package has no ready-built version for macOS 15, for example `fftw-3-single +gfortran`. Let it finish. |
+| `make package`: `otool can't open file: @rpath/libgomp.1.dylib` | The two RPATH options are missing from the cmake command in [9.5](#95-configure-build-and-package). Reconfigure in an empty build folder. |
+| "decoder could not be run" in the test VM | Run `/Applications/JTDX_contest.app/Contents/MacOS/jtdxjt9` in Terminal to see the loader's message. If it names `libgcc_s.1.1.dylib`, see the libgcc\_s reexport patch in `BUILD_MACOS_INTEL.md`. |
+| The app starts in the build VM but not in the test VM | It still loads something from `/opt/local` or `/usr/local`. The `self-contained` check in [9.6](#96-check-the-dmg) shows what. |
 
 ---
 

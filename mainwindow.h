@@ -896,6 +896,7 @@ private:
   bool m_qsoLogged;
   bool m_logInitNeeded;
   bool m_dataFilesChanged;   // CE3TSK: the pending log init also rereads cty.dat and the LoTW list
+  bool m_logBookLoaded;      // CE3TSK: enable_DXCC_entity has loaded m_logBook, and with it cty.dat
   bool m_dxCallHidden;       // CE3TSK: DX Call is green after a right-click hid the call
   bool m_wantedchkd;
   bool m_menus;

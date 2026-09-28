@@ -345,6 +345,7 @@ MainWindow::MainWindow(bool multiple, QSettings * settings, QSharedMemory *shdme
   m_qsoLogged {false},
   m_logInitNeeded {false},
   m_dataFilesChanged {false},
+  m_logBookLoaded {false},
   m_dxCallHidden {false},
   m_wantedchkd {false},
   m_menus {true},
@@ -10212,10 +10213,17 @@ void MainWindow::band_changed (Frequency f)
 
 void MainWindow::enable_DXCC_entity ()
 {
-  if (m_mode.left(4)!="WSPR" && (m_callNotif != m_config.callNotif() || m_callsign != m_config.my_callsign() || m_gridNotif != m_config.gridNotif() || m_grid != m_config.my_grid() || m_timeFrom != m_config.timeFrom() || m_countryNameTranslated != m_config.countryNameTranslated() || m_strictdirCQ != m_config.strictdirCQ())) {
-    if (m_callNotif != m_config.callNotif() || m_callsign != m_config.my_callsign() || m_gridNotif != m_config.gridNotif() || m_grid != m_config.my_grid() || m_timeFrom != m_config.timeFrom() || m_countryNameTranslated != m_config.countryNameTranslated()) {
+  /* CE3TSK: the logbook, and with it cty.dat, is only (re)loaded here when a setting differs from
+     its cached copy. The cached copies start as the settings' defaults, so on a fresh install
+     with no callsign nothing differed, cty.dat was never read, and every call showed "where?"
+     until a callsign was entered or a cty.dat/LoTW download forced a load. Load it the first
+     time regardless. */
+  bool const firstLoad {!m_logBookLoaded};
+  if (m_mode.left(4)!="WSPR" && (firstLoad || m_callNotif != m_config.callNotif() || m_callsign != m_config.my_callsign() || m_gridNotif != m_config.gridNotif() || m_grid != m_config.my_grid() || m_timeFrom != m_config.timeFrom() || m_countryNameTranslated != m_config.countryNameTranslated() || m_strictdirCQ != m_config.strictdirCQ())) {
+    if (firstLoad || m_callNotif != m_config.callNotif() || m_callsign != m_config.my_callsign() || m_gridNotif != m_config.gridNotif() || m_grid != m_config.my_grid() || m_timeFrom != m_config.timeFrom() || m_countryNameTranslated != m_config.countryNameTranslated()) {
       m_qsoHistory.init(); if(m_config.write_decoded_debug()) writeToALLTXT("QSO history initialized by enable_DXCC_entity");
       m_logBook.init(m_config.callNotif() ? m_config.my_callsign() : "",m_config.gridNotif() ? m_config.my_grid() : "",m_config.timeFrom(),"wsjtx_log.adi",nullptr,m_config.countryNameTranslated());
+      m_logBookLoaded = true;
       refreshContestLog(true);   /* CE3TSK: country data has just been read */
       m_callsign = m_config.my_callsign();
       m_grid = m_config.my_grid();
