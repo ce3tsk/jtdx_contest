@@ -2269,7 +2269,7 @@ Format:
     <message>
         <location filename="../DXLabSuiteCommanderTransceiver.cpp" line="129"/>
         <source>DX Lab Suite Commander didn&apos;t respond correctly reading frequency: </source>
-        <translation>DX Lab Suite Commanderは読み取り頻度を正しく応答しませんでした： </translation>
+        <translation>DX Lab Suite Commanderは周波数の読み取りに正しく応答しませんでした： </translation>
     </message>
     <message>
         <location filename="../DXLabSuiteCommanderTransceiver.cpp" line="176"/>
@@ -2509,7 +2509,7 @@ Format:
         <location filename="../FrequencyList.cpp" line="620"/>
         <location filename="../FrequencyList.cpp" line="704"/>
         <source>Mode Frequency</source>
-        <translation>モード 周波数</translation>
+        <translation>モード周波数</translation>
     </message>
 </context>
 <context>
@@ -2591,7 +2591,7 @@ Format:
     <message>
         <location filename="../HRDTransceiver.cpp" line="1160"/>
         <source>Ham Radio Deluxe retries exhausted sending command &quot;%1&quot;</source>
-        <translation>Ham Radio Deluxeは、コマンド「%1」の送信を使い果たしました</translation>
+        <translation>Ham Radio Deluxeはコマンド「%1」の送信再試行回数を使い切りました</translation>
     </message>
     <message>
         <location filename="../HRDTransceiver.cpp" line="1173"/>
@@ -3429,7 +3429,7 @@ ZD8,ZD9,ZF,ZK3,ZL,ZL7,ZL8,ZL9,ZP,ZS,ZS8&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</tra
         <location filename="../mainwindow.ui" line="2339"/>
         <location filename="../mainwindow.cpp" line="6290"/>
         <source>Rx Frequency</source>
-        <translation>Rx  Frequency</translation>
+        <translation>Rx周波数</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2425"/>
@@ -3535,7 +3535,7 @@ ZD8,ZD9,ZF,ZK3,ZL,ZL7,ZL8,ZL9,ZP,ZS,ZS8&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</tra
     <message>
         <location filename="../mainwindow.ui" line="2779"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Left mouse button: Erase decoded text(left) window. Right mouse button: Erase QSO Frequency window. Double-click for both windows.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt; &lt;head /&gt; &lt;body&gt; &lt;p&gt;マウスの左ボタン：デコードされたテキスト（左）ウィンドウを消去します。 マウスの右ボタン：QSO Frequencyウィンドウを消去します。 両方のウィンドウをダブルクリックします。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;左クリック：デコードテキスト（左）ウィンドウを消去します。右クリック：QSO周波数ウィンドウを消去します。ダブルクリック：両方のウィンドウを消去します。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2782"/>
@@ -3580,7 +3580,7 @@ ZD8,ZD9,ZF,ZK3,ZL,ZL7,ZL8,ZL9,ZP,ZS,ZS8&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</tra
     <message>
         <location filename="../mainwindow.ui" line="2810"/>
         <source>ClearD&amp;X</source>
-        <translation>クリアーDX</translation>
+        <translation>DXをクリア</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3202"/>
@@ -3787,8 +3787,8 @@ list. The list can be maintained in Settings (F2).</source>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="282"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Lost audio blocks. FT8 15sec interval has 52 blocks of audio data, where decoder being triggered if audio data reached 51 blocks in &apos;SWL/late strat of decoder&apos; modes or 50 blocks otherwise. Under Windows OS there were multiple reports audio data being lost, for Windows OS there is workaround implemented to start FT8 decoder if there at least 46 out of 52 audio blocks received. Lost audio blocks notification lets user know there is something wrong in the setup.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;音声ブロックのロスがありました。FT8 15秒間隔には52ブロックのオーディオデータがあり、オーディオデータが「デコーダーのSWLモード、またはlate strat of decoderモードでは51ブロックに達した場合にデコードが開始され、それ以外の場合は50ブロックからになります。Windows OSでは、複数のオーディオデータが失われたレポートがあります。WindowsOSでは、52個のオーディオブロックのうち少なくとも46個が受信された場合にFT8デコーダーを起動するための回避策が実装されています。紛失した音声ブロックの通知により、セットアップに問題があることがユーザーに通知されます。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Lost audio blocks. FT8 15sec interval has 52 blocks of audio data, where decoder being triggered if audio data reached 51 blocks in &apos;SWL/late start of decoder&apos; modes or 50 blocks otherwise. Under Windows OS there were multiple reports audio data being lost, for Windows OS there is workaround implemented to start FT8 decoder if there at least 46 out of 52 audio blocks received. Lost audio blocks notification lets user know there is something wrong in the setup.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;音声ブロックが欠落しています。FT8の15秒周期には52ブロックの音声データがあります。デコーダは、SWL／デコーダ遅延開始モードでは51ブロック、それ以外では50ブロックに達すると起動します。Windowsでは音声データ欠落の報告が複数あったため、52ブロック中少なくとも46ブロックを受信していればFT8デコーダを起動する回避策が実装されています。この通知は、設定に問題がある可能性を知らせるものです。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1683"/>
@@ -4137,7 +4137,7 @@ Click by right mouse&apos;s button sets JTDX internal time back to system time.&
     <message>
         <location filename="../mainwindow.ui" line="4838"/>
         <source>Auto RX frequency Filter</source>
-        <translation>応答があった場合自動的に周波数フィルタ ON</translation>
+        <translation>Rx周波数自動フィルタ</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4863"/>
@@ -4359,7 +4359,7 @@ Click by right mouse&apos;s button sets JTDX internal time back to system time.&
     <message>
         <location filename="../mainwindow.ui" line="5248"/>
         <source>Tx freq locked to Rx freq</source>
-        <translation>Tx freqはRx freqにロック</translation>
+        <translation>Tx周波数をRx周波数にロック</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5256"/>
@@ -4888,7 +4888,7 @@ Click by right mouse&apos;s button sets JTDX internal time back to system time.&
         <location filename="../mainwindow.cpp" line="3080"/>
         <location filename="../mainwindow.cpp" line="6622"/>
         <source>Hound mode TX frequency control requires *Split* rig control (either *Rig* or *Fake It* set in the *Settings | Radio* tab.)</source>
-        <translation>HoundモードのTX周波数制御には、「Splitc操作」設定が必要です（設定&gt;無線機タブで「Rig」または「Fake It」のいずれかを設定）</translation>
+        <translation>HoundモードのTX周波数制御には、リグのスプリット制御が必要です（［設定］&gt;［無線機］タブで「Rig」または「Fake It」を設定してください）。</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="2705"/>
@@ -5107,7 +5107,7 @@ Click by right mouse&apos;s button sets JTDX internal time back to system time.&
     <message>
         <location filename="../mainwindow.cpp" line="4203"/>
         <source>Please choose another Tx frequency. JTDX will not allow to Call below 1000 Hz in DXped mode.</source>
-        <translation>他のTx周波数を選択してください。JTDXはDXpedモードで1000Hz以下のCallを許可しません。</translation>
+        <translation>別のTx周波数を選択してください。JTDXはDXpedモードで1000 Hz未満での呼び出しを許可しません。</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="4208"/>
@@ -5902,7 +5902,7 @@ UDP server %2:%3</source>
     <message>
         <location filename="../mainwindow.cpp"/>
         <source>Are You sure to change UI Language to English? JTDX will close, please start it again.</source>
-        <translation>UI言語を日本語に変更しますか？ JTDXを終了します。再度起動してください。</translation>
+        <translation>UI言語を日本語に変更しますか？ JTDXを終了します。変更を反映するには再度起動してください。</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp"/>
@@ -6099,7 +6099,7 @@ This is asked only once.</source>
     <message>
         <location filename="../mainwindow.cpp"/>
         <source>New update available</source>
-        <translation>新しい更新があります</translation>
+        <translation>新しいバージョンがあります</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp"/>
@@ -6114,7 +6114,7 @@ This is asked only once.</source>
     <message>
         <location filename="../mainwindow.cpp"/>
         <source>Published: %1</source>
-        <translation>公開: %1</translation>
+        <translation>公開版：%1</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp"/>
@@ -6149,12 +6149,12 @@ This is asked only once.</source>
     <message>
         <location filename="../mainwindow.cpp"/>
         <source>Could not check for updates: %1.</source>
-        <translation>更新を確認できませんでした: %1。</translation>
+        <translation>更新を確認できませんでした：%1。</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp"/>
         <source>A new version of JTDX_contest is available: %1</source>
-        <translation>新しいバージョンの JTDX_contest があります: %1</translation>
+        <translation>JTDX_contestの新しいバージョン %1 が利用できます。</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp"/>
@@ -6164,7 +6164,7 @@ This is asked only once.</source>
     <message>
         <location filename="../mainwindow.cpp"/>
         <source>What is new:</source>
-        <translation>変更点:</translation>
+        <translation>変更点：</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp"/>
@@ -6181,19 +6181,19 @@ This is asked only once.</source>
     </message>
     <message>
         <source>It is a %1 decoder, but not this build's.</source>
-        <translation>%1 のデコーダですが、このビルドのものではありません。</translation>
+        <translation>これは%1のデコーダですが、このビルドに対応するものではありません。</translation>
     </message>
     <message>
         <source>It does not identify itself as this program's decoder, so it is another program - a stock JTDX or WSJT-X decoder, or one older than this check.</source>
-        <translation>このプログラムのデコーダだと名乗らないため、別のプログラムです。本家 JTDX や WSJT-X のデコーダ、あるいはこの確認より古いものと思われます。</translation>
+        <translation>このプログラム用のデコーダとして識別されないため、別のプログラムのデコーダです。本家JTDXやWSJT-Xのデコーダ、またはこの確認機能が追加される以前のものと考えられます。</translation>
     </message>
     <message>
         <source>Wrong decoder</source>
-        <translation>デコーダが違います</translation>
+        <translation>デコーダが一致しません</translation>
     </message>
     <message>
         <source>The decoder beside this program is not the one it was built with, so decoding would be wrong or silent.</source>
-        <translation>このプログラムの隣にあるデコーダは、ビルド時のものではありません。デコードが誤るか、まったく行われません。</translation>
+        <translation>このプログラムと同じフォルダにあるデコーダは、このビルドに対応するものではありません。このままでは正しくデコードできないか、まったくデコードできません。</translation>
     </message>
     <message>
         <source>Expected: %1
@@ -6202,12 +6202,12 @@ Found:    %2
 Decoder: %3
 
 Deploy jtdx and jtdxjt9 from the same build, and make sure no other JTDX or WSJT-X decoder is in that directory.</source>
-        <translation>期待: %1
-検出: %2
+        <translation>期待値: %1
+検出値: %2
 
 デコーダ: %3
 
-jtdx と jtdxjt9 を同じビルドからインストールし、そのフォルダに本家 JTDX や WSJT-X のデコーダが入っていないことを確認してください。</translation>
+同じビルドのjtdxとjtdxjt9を配置し、そのフォルダに本家JTDXやWSJT-Xのデコーダが入っていないことを確認してください。</translation>
     </message>
     <message>
         <source>(no answer)</source>
@@ -6220,12 +6220,12 @@ Found:    %2
 Decoder: %3
 
 That is the decoder's own error. Put right whatever stops it starting - a missing library, a broken install, no permission to run it - and start again.</source>
-        <translation>期待: %1
-検出: %2
+        <translation>期待値: %1
+検出値: %2
 
 デコーダ: %3
 
-これはデコーダ自身のエラーです。起動を妨げている原因（ライブラリの不足、壊れたインストール、実行権限がないなど）を解消してから、もう一度起動してください。</translation>
+これはデコーダ自身のエラーです。起動を妨げている原因（ライブラリの不足、インストールの破損、実行権限がないなど）を解消してから、もう一度起動してください。</translation>
     </message>
     <message>
         <location filename="../../mainwindow.cpp"/>
@@ -6240,7 +6240,7 @@ That is the decoder's own error. Put right whatever stops it starting - a missin
     <message>
         <location filename="../../mainwindow.cpp"/>
         <source>The decoder beside this program could not be run, so this program cannot decode anything.</source>
-        <translation>このプログラムの隣にあるデコーダを実行できませんでした。そのため、まったくデコードできません。</translation>
+        <translation>このプログラムと同じフォルダにあるデコーダを起動できないため、このプログラムではデコードできません。</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
@@ -7381,12 +7381,12 @@ Please verify the correct directory name was given.</source>
     <message>
         <location filename="../Configuration.ui" line="396"/>
         <source>Show outgoing transmitted messages in the Rx frequency window.</source>
-        <translation>送信されたメッセージをRx 周波数ウィンドウのメッセージを表示。</translation>
+        <translation>送信したメッセージをRx周波数ウィンドウに表示します。</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="399"/>
         <source>&amp;Tx messages to Rx frequency window</source>
-        <translation>Rx 周波数ウィンドウにTxメッセージ表示</translation>
+        <translation>Rx周波数ウィンドウにTxメッセージを表示</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="458"/>
@@ -8230,10 +8230,7 @@ Please verify the correct directory name was given.</source>
     <message>
         <location filename="../Configuration.ui" line="3697"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Hide hint character in marker field.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;ヒントデコード使用のマークを表示しない.&#x3000;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;
-&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;°：LoTWヒントデコード&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;
-&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;*&#x3000;：単なるヒントデコード&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;
-</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;マーカーフィールドのヒント記号を表示しません。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3700"/>
@@ -8288,7 +8285,7 @@ Please verify the correct directory name was given.</source>
     <message>
         <location filename="../Configuration.ui" line="3324"/>
         <source>Check and highlight new CQZ</source>
-        <translation>新しいCQ Zoneをチェックして強調表示する</translation>
+        <translation>新しいCQゾーンをチェックして強調表示する</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3331"/>
@@ -8308,7 +8305,7 @@ Please verify the correct directory name was given.</source>
     <message>
         <location filename="../Configuration.ui" line="3364"/>
         <source>Check and highlight new ITUZ</source>
-        <translation>新しいITU Zoneをチェックして強調表示する</translation>
+        <translation>新しいITUゾーンをチェックして強調表示する</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3371"/>
@@ -8555,7 +8552,7 @@ Please verify the correct directory name was given.</source>
     <message>
         <location filename="../Configuration.ui" line="4355"/>
         <source>New DXCC on Band/Mode</source>
-        <translation>バンド／モード毎のNew DXCC</translation>
+        <translation>バンド／モードごとの新しいDXCC</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="4425"/>
@@ -8565,7 +8562,7 @@ Please verify the correct directory name was given.</source>
     <message>
         <location filename="../Configuration.ui" line="4495"/>
         <source>New Grid on Band/Mode</source>
-        <translation>バンド／モード毎のNewグリッド</translation>
+        <translation>バンド／モードごとの新しいグリッド</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="4565"/>
@@ -8575,7 +8572,7 @@ Please verify the correct directory name was given.</source>
     <message>
         <location filename="../Configuration.ui" line="4635"/>
         <source>New Prefix on Band/Mode</source>
-        <translation>バンド／モード毎のNewプリフィックス</translation>
+        <translation>バンド／モードごとの新しいプリフィックス</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="4705"/>
@@ -8585,7 +8582,7 @@ Please verify the correct directory name was given.</source>
     <message>
         <location filename="../Configuration.ui" line="4775"/>
         <source>New Call on Band/Mode</source>
-        <translation>バンド／モード毎のNewコールサイン</translation>
+        <translation>バンド／モードごとの新しいコールサイン</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="4845"/>
@@ -8773,14 +8770,14 @@ this setting allows you to select which audio input will be used
     <message>
         <location filename="../Configuration.ui" line="1486"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;USB is usually the correct modulation mode,&lt;/p&gt;&lt;p&gt;unless the radio has a special data or packet mode setting&lt;/p&gt;&lt;p&gt;for AFSK operation.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt; &lt;head /&gt; &lt;body&gt; &lt;p&gt; USBは通常、正しい変調モードです,&lt;/p&gt;&lt;p&gt;無線機にAFSK操作用の特別なデータまたはパケットモード設定がある場合を除きます&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;通常はUSBが適切な変調モードです。&lt;/p&gt;&lt;p&gt;ただし、無線機にAFSK運用専用のデータモードまたはパケットモードがある場合は、&lt;/p&gt;&lt;p&gt;そのモードを使用してください。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1502"/>
         <source>Don&apos;t allow the program to set the radio mode
 (not recommended but use if the wrong mode
 or bandwidth is selected).</source>
-        <translation>JTDXによる無線機のモードの設定を許可しない（推奨されません。リグがUSBモードにならないときや、誤った帯域幅が選択されしまう場合にのみ使います）。</translation>
+        <translation>JTDXによる無線機のモード設定を許可しない（推奨されません。無線機がUSBモードにならない場合や、誤った帯域幅が選択されてしまう場合にのみ使用してください）。</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1599"/>
@@ -8826,7 +8823,7 @@ both here.</source>
     <message>
         <location filename="../Configuration.ui" line="2243"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;By default autoselection ignoring received/transmitted direction of CQ if there is a valid &apos;new DXCC&apos; message decoded, either incoming call or selection from decoded CQ/73 messages. This option eliminates &apos;new DXCC&apos; exception in autoselection for directional CQ processing.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt; &lt;head /&gt; &lt;body&gt; &lt;p&gt;デフォルトでは、有効な「新しいDXCC」からのCQ/73メッセージがデコードされた場合、指定のあるCQの送受信を無視します。このオプションは指定CQの自動選択の例外で「新しいDXCC」を優先します。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;デフォルトの自動選択では、有効な「新しいDXCC」のメッセージ（自局への呼び出し、またはデコードされたCQ/73メッセージからの選択）がある場合、CQの送受信方向指定を無視します。このオプションを有効にすると、その「新しいDXCC」の例外を無効にし、方向指定CQとして厳密に処理します。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="2320"/>
@@ -8963,7 +8960,7 @@ for assessing propagation and system performance.</source>
     <message>
         <location filename="../Configuration.ui" line="2947"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Optional hostname of network service to receive decodes.&lt;/p&gt;&lt;p&gt;Formats:&lt;/p&gt;&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;hostname&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;IPv4 address&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;IPv6 address&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;IPv4 multicast group address&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;IPv6 multicast group address&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;Clearing this field will disable the broadcasting of UDP status updates.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;デコードを受信するネットワークサービスのオプションのホスト名。&lt;/p&gt;&lt;p&gt;フォーマット：&lt;/p&gt;&lt;ul style="margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;"&gt;&lt;li style=" margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;hostnamee&lt;/li&gt;&lt;li style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;IPv4アドレス&lt;/li&gt;&lt;li style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;IPv6アドレス&lt;/li&gt;&lt;li style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;IPv4マルチキャストグループアドレス&lt;/li&gt;&lt;li style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;IPv6マルチキャストグループアドレス&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;このフィールドをクリアするとUDPステータス更新のブロードキャストが無効になります。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;デコードを受信するネットワークサービスのホスト名（任意）。&lt;/p&gt;&lt;p&gt;形式：&lt;/p&gt;&lt;ul style="margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;"&gt;&lt;li style=" margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;hostname&lt;/li&gt;&lt;li style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;IPv4アドレス&lt;/li&gt;&lt;li style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;IPv6アドレス&lt;/li&gt;&lt;li style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;IPv4マルチキャストグループアドレス&lt;/li&gt;&lt;li style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;IPv6マルチキャストグループアドレス&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;このフィールドを空にすると、UDPステータス更新のブロードキャストが無効になります。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="2994"/>
@@ -9000,7 +8997,7 @@ for assessing propagation and system performance.</source>
         <location filename="../Configuration.ui" line="3239"/>
         <source>Items may be edited.
 Right click for insert and delete options.</source>
-        <translation>アイテムは編集可能です。挿入および削除オプションを右クリックします。</translation>
+        <translation>項目は編集できます。右クリックすると挿入・削除のオプションを表示します。</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3401"/>
@@ -9065,7 +9062,7 @@ Right click for insert and delete options.</source>
     <message>
         <location filename="../Configuration.ui" line="3614"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;By default &apos;CQ&apos; and &apos;MyCall&apos; messages being only checked, this setting allows to check also other received standard messages for new DXCC, Grid, Call. &apos;Other standard message&apos; color being used for the notification&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt; &lt;head /&gt; &lt;body&gt; &lt;p&gt;デフォルトでは「CQ」および「MyCall」メッセージのみがチェックされるため、この設定により、新しいDXCC、Grid、Callの他の受信標準メッセージもチェックできます。 通知に使用されている「その他の標準メッセージ」の色&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;デフォルトでは「CQ」および「MyCall」メッセージのみをチェックします。この設定を有効にすると、その他の受信した標準メッセージについても、新しいDXCC、グリッド、コールサインをチェックします。通知には「その他の標準メッセージ」の色を使用します。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3637"/>
@@ -9116,27 +9113,27 @@ Right click for insert and delete options.</source>
     <message>
         <location filename="../Configuration.ui" line="3923"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Set text color for non (&apos;CQ&apos; and &apos;MyCall&apos;) standard messages&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt; &lt;head /&gt; &lt;body&gt; &lt;p&gt;非標準メッセージ（「CQ」および「MyCall」）のテキスト色を設定&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;「CQ」および「MyCall」以外の標準メッセージの文字色を設定します。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="4005"/>
         <source>New CQZ</source>
-        <translation>新しいCQ Zone</translation>
+        <translation>新しいCQゾーン</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="4075"/>
         <source>New CQZ on Band/Mode</source>
-        <translation>バンド/モード毎のNew CQ Zone</translation>
+        <translation>バンド／モードごとの新しいCQゾーン</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="4145"/>
         <source>New ITUZ</source>
-        <translation>新しいITU Zone</translation>
+        <translation>新しいITUゾーン</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="4215"/>
         <source>New ITUZ on Band/Mode</source>
-        <translation>バンド/モード毎のNew ITU Zone</translation>
+        <translation>バンド／モードごとの新しいITUゾーン</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="5020"/>
@@ -9900,7 +9897,7 @@ soundcard changes</source>
     <message>
         <location filename="../main.cpp" line="144"/>
         <source>&lt;style&gt; can be Fusion (default) or Windows</source>
-        <translation>&lt;スタイル&gt;はフュージョン（デフォルト）またはWindowsであるかもしれない</translation>
+        <translation>&lt;style&gt; には Fusion（既定）または Windows を指定できます</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="145"/>
@@ -9969,7 +9966,7 @@ Install the setting?</source>
     <message>
         <location filename="../wf_palette_design_dialog.ui" line="23"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Double click a color to edit it.&lt;/p&gt;&lt;p&gt;Right click to insert or delete colors.&lt;/p&gt;&lt;p&gt;Colors at the top represent weak signals&lt;/p&gt;&lt;p&gt;and colors at the bottom represent strong&lt;/p&gt;&lt;p&gt;signals. You can have up to 256 colors.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt; &lt;head /&gt; &lt;body&gt; &lt;p&gt;色をダブルクリックして編集します。&lt;/p&gt;&lt;p&gt;右クリックして色を挿入または削除します。&lt;/p&gt;&lt;p&gt;上部の色は弱い信号を表します.&lt;/p&gt;&lt;p&gt;および下部の色は強い信号を表します.&lt;/p&gt;&lt;p&gt;最大256色まで使用できます。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;色をダブルクリックすると編集できます。&lt;/p&gt;&lt;p&gt;右クリックすると色を挿入または削除できます。&lt;/p&gt;&lt;p&gt;上部の色は弱い信号を表し、&lt;/p&gt;&lt;p&gt;下部の色は強い信号を表します。&lt;/p&gt;&lt;p&gt;最大256色まで使用できます。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 </TS>

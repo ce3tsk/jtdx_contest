@@ -3082,7 +3082,7 @@ Format:
     </message>
     <message>
         <location filename="../mainwindow.ui" line="282"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Lost audio blocks. FT8 15sec interval has 52 blocks of audio data, where decoder being triggered if audio data reached 51 blocks in &apos;SWL/late strat of decoder&apos; modes or 50 blocks otherwise. Under Windows OS there were multiple reports audio data being lost, for Windows OS there is workaround implemented to start FT8 decoder if there at least 46 out of 52 audio blocks received. Lost audio blocks notification lets user know there is something wrong in the setup.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Lost audio blocks. FT8 15sec interval has 52 blocks of audio data, where decoder being triggered if audio data reached 51 blocks in &apos;SWL/late start of decoder&apos; modes or 50 blocks otherwise. Under Windows OS there were multiple reports audio data being lost, for Windows OS there is workaround implemented to start FT8 decoder if there at least 46 out of 52 audio blocks received. Lost audio blocks notification lets user know there is something wrong in the setup.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;丟失的音頻片段. FT8 15秒間隔有 52 個音訊數據塊, 如果音訊數據在 &apos;SWL/解碼器的後期層&apos; 模式下達到 51 個塊, 或者以其他模式達到 50 個塊,則觸發解碼器. 在 Windows 作業系統下, 有多個報告音訊數據丟失, 對於 Windows 作業系統, 如果收到 52 個音訊塊中至少有 46 個,則實施啟動 FT8 解碼器的解決方法. 丟失的音訊塊通知可讓使用者知道設定中出現問題 .&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
