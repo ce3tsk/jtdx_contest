@@ -6256,6 +6256,11 @@ Dekoders: %3
         <source>No other frequencies</source>
         <translation>Citu frekvenču nav</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Band and mode buttons in one row</source>
+        <translation>Joslu un modu pogas vienā rindā</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

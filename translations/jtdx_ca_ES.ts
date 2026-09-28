@@ -6266,6 +6266,11 @@ Aquest és l'error del descodificador mateix. Corregiu allò que n'impedeix l'in
         <source>No other frequencies</source>
         <translation>No hi ha altres freqüències</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Band and mode buttons in one row</source>
+        <translation>Botons de banda i de mode en una fila</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

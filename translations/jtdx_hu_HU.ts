@@ -6257,6 +6257,11 @@ Ez magának a dekódernek a hibája. Hárítsa el, ami az indulását akadályoz
         <source>No other frequencies</source>
         <translation>Nincs más frekvencia</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Band and mode buttons in one row</source>
+        <translation>Sáv- és üzemmódgombok egy sorban</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

@@ -1598,6 +1598,7 @@ void MainWindow::writeSettings()
   m_settings->setValue("ColorTxMessageButtons",m_colorTxMsgButtons);
   m_settings->setValue("ModeButtons",ui->actionMode_buttons->isChecked ());   // CE3TSK
   m_settings->setValue("BandButtons",ui->actionBand_buttons->isChecked ());   // CE3TSK
+  m_settings->setValue("BandModeButtons",ui->actionBand_mode_buttons->isChecked ());   // CE3TSK 2026-09-28
   m_settings->setValue("NarrowControls",ui->actionNarrow_controls->isChecked ());   // CE3TSK
   m_settings->setValue("CallsignToClipboard",m_callToClipboard);
   m_settings->setValue("Crossband160mJA",m_crossbandOptionEnabled);
@@ -1665,7 +1666,11 @@ void MainWindow::readSettings()
      and only here; the visibility is set explicitly because setChecked (false) on the unchecked
      action fires nothing. */
   ui->actionMode_buttons->setChecked (m_settings->value ("Common/ModeButtons", false).toBool ());
-  ui->modeButtonsWidget->setVisible (ui->actionMode_buttons->isChecked ());
+  /* CE3TSK 2026-09-28: and the one-row option for the same reason - it decides whether the mode
+     buttons sit on a row of their own or share it with the band buttons, i.e. the height of the
+     rows. BandButtons is read further down, where it always was; the band row is empty until then. */
+  ui->actionBand_mode_buttons->setChecked (m_settings->value ("Common/BandModeButtons", false).toBool ());
+  applyButtonRows ();
 
   m_settings->beginGroup("MainWindow");
   
@@ -2184,7 +2189,7 @@ void MainWindow::readSettings()
      The narrow state is now applied before that restore, above, so the first one is already
      correct - and restoring again from the toggle would throw away a position the operator is
      looking at. */
-  ui->bandButtonsWidget->setVisible (ui->actionBand_buttons->isChecked ());
+  applyButtonRows ();   // CE3TSK: the band row, as read just above
 
   m_callToClipboard=m_settings->value("CallsignToClipboard",true).toBool();
   ui->actionCallsign_to_clipboard->setChecked(m_callToClipboard);
@@ -3393,9 +3398,70 @@ void MainWindow::setProgressBarStyle ()
    constructor, since the menu's entries are fixed; readSettings () runs the narrow rules and the
    label watcher over the whole window afterwards, so the buttons need no fitting of their own
    (the band buttons do, being rebuilt after it). */
-void MainWindow::on_actionMode_buttons_toggled (bool checked)
+void MainWindow::on_actionMode_buttons_toggled (bool /* checked */)
 {
-  ui->modeButtonsWidget->setVisible (checked);
+  applyButtonRows ();
+}
+
+/* CE3TSK 2026-09-28: View > Band and mode buttons in one row - the operator: "an alternative option in the View
+   menu ... mutually exclusive to the other 2 settings, if unified is not enabled then it looks like now, else ...
+   the single rows are replaced and their menu entries are greyed out". The two entries keep their ticks while
+   greyed, and those decide the rows again once the option is off.
+
+   The one row carries the band buttons and the first four modes of the Mode menu - FT8, FT4, FT2 and JT65. The
+   menu is in order of use, and the operator chose those four, always, over the rest stepping aside as the window
+   narrows. A mode outside them has no button on the one row, lit or not; the Mode menu still shows it.
+
+   The two rows are one box (buttonRowsLayout) turned on its side: stacked, 3 px apart as the grid had them and
+   the modes on top, or side by side - band buttons first, then the modes, the operator's order - with a wider gap
+   between the groups. It is a layout, not a widget, so with both rows off it is empty and the grid leaves no
+   spacing for it - as it left none for two hidden rows. */
+static int const MODE_BUTTONS_ON_ONE_ROW {4};
+
+void MainWindow::on_actionBand_mode_buttons_toggled (bool /* checked */)
+{
+  applyButtonRows ();
+  /* the band buttons follow through the list's timer, a pass of the event loop later, not here (review 2026-09-28):
+     at start-up this runs from the top of readSettings, before the saved geometry is restored, and buttons built
+     there would count in the minimum the restore compares with the one saved at exit - built from the list as it
+     is before the saved mode is back, so a window could open wider and snap back. The band row on its own has
+     always been built after the restore. */
+  m_bandButtonsTimer.start ();
+}
+
+bool MainWindow::bandButtonsShown () const
+{
+  return ui->actionBand_mode_buttons->isChecked () || ui->actionBand_buttons->isChecked ();
+}
+
+void MainWindow::applyButtonRows ()
+{
+  bool const one_row {ui->actionBand_mode_buttons->isChecked ()};
+  ui->actionMode_buttons->setEnabled (!one_row);
+  ui->actionBand_buttons->setEnabled (!one_row);
+  // the one row runs right to left - the box holds the modes first - so the band buttons lead: the operator's order
+  ui->buttonRowsLayout->setDirection (one_row ? QBoxLayout::RightToLeft : QBoxLayout::TopToBottom);
+  ui->buttonRowsLayout->setSpacing (one_row ? 12 : 3);
+  ui->modeButtonsWidget->setVisible (one_row || ui->actionMode_buttons->isChecked ());
+  ui->bandButtonsWidget->setVisible (bandButtonsShown ());
+  for (int i = 0; i < m_modeButtons.size (); ++i)
+    {
+      auto * const button = m_modeButtons[i].first;
+      bool const off_row {one_row && i >= MODE_BUTTONS_ON_ONE_ROW};
+      button->setProperty ("jtdxOffRow", off_row);   // read by the button's own follow () too
+      button->setVisible (m_modeButtons[i].second->isVisible () && !off_row);
+    }
+  shareButtonRow ();
+}
+
+/* CE3TSK 2026-09-28: each group's share of the one row follows its button count, so a mode button comes out as
+   wide as a band button on a window wide enough to spare room - left to itself the box gave each group half.
+   Stacked, a stretch would act on the height, so there is none. */
+void MainWindow::shareButtonRow ()
+{
+  bool const one_row {ui->actionBand_mode_buttons->isChecked ()};
+  ui->buttonRowsLayout->setStretch (0, one_row ? qMin (MODE_BUTTONS_ON_ONE_ROW, m_modeButtons.size ()) : 0);
+  ui->buttonRowsLayout->setStretch (1, one_row ? m_bandButtons.size () : 0);
 }
 
 /* CE3TSK 2026-09-26, review: the eight modes of the Mode menu, by the name m_mode carries, with
@@ -3465,7 +3531,7 @@ void MainWindow::buildModeButtons ()
           button->setText (action->iconText ());   // the entry's text without its & mnemonic, as Qt strips it
           button->setEnabled (action->isEnabled ());
           button->setChecked (action->isChecked ());
-          button->setVisible (action->isVisible ());
+          button->setVisible (action->isVisible () && !button->property ("jtdxOffRow").toBool ());   // applyButtonRows ()
         };
       follow ();
       // one signal is enough: QAction emits changed () for a check change too, before toggled ()
@@ -3482,6 +3548,7 @@ void MainWindow::buildModeButtons ()
           follow ();
         });
       ui->modeButtonsLayout->addWidget (button);
+      m_modeButtons << qMakePair (button, action);   // CE3TSK 2026-09-28: for the one row
     }
 }
 
@@ -3490,9 +3557,9 @@ void MainWindow::buildModeButtons ()
    contest is selected, every entry of that contest's own set. The list is re-filtered on each
    mode change and swapped on each contest change, so the buttons are rebuilt from its change
    signals, coalesced to one rebuild per pass of the event loop. */
-void MainWindow::on_actionBand_buttons_toggled (bool checked)
+void MainWindow::on_actionBand_buttons_toggled (bool /* checked */)
 {
-  ui->bandButtonsWidget->setVisible (checked);
+  applyButtonRows ();
   rebuildBandButtons ();
 }
 
@@ -3701,7 +3768,7 @@ void MainWindow::rebuildBandButtons ()
   if (m_bandChannelsMenu) m_bandChannelsMenu->close ();
   qDeleteAll (m_bandButtons);
   m_bandButtons.clear ();
-  if (!ui->actionBand_buttons->isChecked ()) return;   // built when shown
+  if (!bandButtonsShown ()) return;   // built when shown - on their own row or on the one row
   /* CE3TSK 2026-09-22: the rows marked default ("*"), in the everyday list AND in a contest's - both tables can
      mark and unmark them now (right click); a contest showed every row before. A list with no default row for the
      mode at all shows every row, so the row never comes up empty. 2026-09-26: the rule moved to bandchannels.h,
@@ -3746,6 +3813,7 @@ void MainWindow::rebuildBandButtons ()
       JTDX::fit_one (button);
     }
   JTDX::watch_narrow_labels (ui->bandButtonsWidget);
+  shareButtonRow ();   // CE3TSK 2026-09-28: the band group's share of the one row
   highlightBandButton ();
 }
 
@@ -3974,6 +4042,15 @@ setEnableTxButtonStyle ();
   ui->AGCcButton->setStyleSheet(QString("QPushButton:checked{background: %1}").arg(Radio::convert_dark("#00ff00",m_useDarkStyle)));
   ui->hintButton->setStyleSheet(QString("QPushButton:checked{background: %1}").arg(Radio::convert_dark("#00ff00",m_useDarkStyle)));
   ui->syncButton->setStyleSheet(QString("QPushButton:checked{background: %1}").arg(Radio::convert_dark("#00ff00",m_useDarkStyle)));
+  /* CE3TSK 2026-09-28: the band and mode buttons light up in the green of AnsB4 and the other toggles above, not
+     the style's grey - the operator: "all 3 should use the green highlight that is used elsewhere e.g. AnsB4 instead
+     of the grey one". Set on the two rows rather than on each button: it reaches every button they hold, the band
+     buttons that are rebuilt with the list included, in both layouts (two rows or one), and it stays clear of the
+     buttons' own sheets, which the narrow-label rules write (uilimits.h). The nearer sheet wins over the
+     application's, as each toggle's own does. */
+  auto const lit = QString ("QPushButton:checked{background: %1}").arg (Radio::convert_dark ("#00ff00", m_useDarkStyle));
+  ui->modeButtonsWidget->setStyleSheet (lit);
+  ui->bandButtonsWidget->setStyleSheet (lit);
   ui->DecodeButton->setStyleSheet(QString("QPushButton:checked{background: %1}").arg(Radio::convert_dark("#00ffff",m_useDarkStyle)));
   /* CE3TSK: the colours that follow a state rather than the style alone, painted again so a switch
      looks the way a fresh start in the new style would (see setRigLamp) */

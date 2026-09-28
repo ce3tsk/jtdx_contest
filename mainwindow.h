@@ -157,6 +157,7 @@ private slots:
   void on_actionUse_dark_style_triggered (bool checked);   // CE3TSK
   void on_actionMode_buttons_toggled (bool checked);   // CE3TSK
   void on_actionBand_buttons_toggled (bool checked);   // CE3TSK
+  void on_actionBand_mode_buttons_toggled (bool checked);   // CE3TSK 2026-09-28
   void on_actionNarrow_controls_toggled (bool checked);   // CE3TSK
   void on_actionOpen_triggered();
   void on_actionConvert_bit_depth_triggered();   /* CE3TSK */
@@ -1172,6 +1173,11 @@ private:
   void applyPaneFloor ();   // CE3TSK: the right pane's floor under Narrow controls
   bool uiBuilt () const;   // CE3TSK: false until setupUi has installed the central widget
   void buildModeButtons ();   // CE3TSK: View > Mode buttons
+  QVector<QPair<QPushButton *, QAction *>> m_modeButtons;   // CE3TSK 2026-09-28: in the menu's order
+  // CE3TSK 2026-09-28: View > Band and mode buttons in one row
+  bool bandButtonsShown () const;   // on their own row or on the one row
+  void applyButtonRows ();          // the rows and the View entries, from the three settings
+  void shareButtonRow ();           // each group's share of the one row
   // CE3TSK 2026-09-26: the Mode menu's eight modes by the name m_mode carries, in one table
   struct ModeEntry {char const * name; QAction * action; void (MainWindow::*slot) ();};
   QVector<ModeEntry> const& modeTable () const;

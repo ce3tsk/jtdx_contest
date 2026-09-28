@@ -6261,6 +6261,11 @@ Det er dekoderens egen fejl. Ret det, der forhindrer den i at starte - et mangle
         <source>No other frequencies</source>
         <translation>Ingen andre frekvenser</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Band and mode buttons in one row</source>
+        <translation>Bånd- og modeknapper på én række</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

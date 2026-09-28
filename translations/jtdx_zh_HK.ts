@@ -6256,6 +6256,11 @@ That is the decoder's own error. Put right whatever stops it starting - a missin
         <source>No other frequencies</source>
         <translation>沒有其他頻率</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Band and mode buttons in one row</source>
+        <translation>波段和模式按鈕合為一行</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

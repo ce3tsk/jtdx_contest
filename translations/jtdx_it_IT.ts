@@ -6258,6 +6258,11 @@ Questo è l'errore del decoder stesso. Sistemare ciò che ne impedisce l'avvio -
         <source>No other frequencies</source>
         <translation>Nessun'altra frequenza</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Band and mode buttons in one row</source>
+        <translation>Pulsanti banda e modo su una riga</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

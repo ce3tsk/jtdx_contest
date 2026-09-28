@@ -6257,6 +6257,11 @@ Dat is de fout van de decoder zelf. Verhelp wat het starten verhindert - een ont
         <source>No other frequencies</source>
         <translation>Geen andere frequenties</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Band and mode buttons in one row</source>
+        <translation>Band- en modeknoppen op één rij</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

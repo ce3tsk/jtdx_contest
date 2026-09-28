@@ -6257,6 +6257,11 @@ That is the decoder's own error. Put right whatever stops it starting - a missin
         <source>No other frequencies</source>
         <translation>다른 주파수 없음</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Band and mode buttons in one row</source>
+        <translation>밴드 버튼과 모드 버튼을 한 줄로</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

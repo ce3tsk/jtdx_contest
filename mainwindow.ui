@@ -53,7 +53,7 @@
      <height>16777215</height>
     </size>
    </property>
-   <layout class="QGridLayout" name="gridLayout_3" rowstretch="0,0,1">
+   <layout class="QGridLayout" name="gridLayout_3" rowstretch="0,1">
     <property name="leftMargin">
      <number>2</number>
     </property>
@@ -70,60 +70,67 @@
      <number>3</number>
     </property>
     <item row="0" column="0">
-     <widget class="QWidget" name="modeButtonsWidget" native="true">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
+     <layout class="QVBoxLayout" name="buttonRowsLayout">
+      <property name="spacing">
+       <number>3</number>
       </property>
-      <layout class="QHBoxLayout" name="modeButtonsLayout">
-       <property name="spacing">
-        <number>3</number>
-       </property>
-       <property name="leftMargin">
-        <number>0</number>
-       </property>
-       <property name="topMargin">
-        <number>0</number>
-       </property>
-       <property name="rightMargin">
-        <number>0</number>
-       </property>
-       <property name="bottomMargin">
-        <number>0</number>
-       </property>
-      </layout>
-     </widget>
+      <item>
+       <widget class="QWidget" name="modeButtonsWidget" native="true">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <layout class="QHBoxLayout" name="modeButtonsLayout">
+         <property name="spacing">
+          <number>3</number>
+         </property>
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+        </layout>
+       </widget>
+      </item>
+      <item>
+       <widget class="QWidget" name="bandButtonsWidget" native="true">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <layout class="QHBoxLayout" name="bandButtonsLayout">
+         <property name="spacing">
+          <number>3</number>
+         </property>
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+        </layout>
+       </widget>
+      </item>
+     </layout>
     </item>
     <item row="1" column="0">
-     <widget class="QWidget" name="bandButtonsWidget" native="true">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <layout class="QHBoxLayout" name="bandButtonsLayout">
-       <property name="spacing">
-        <number>3</number>
-       </property>
-       <property name="leftMargin">
-        <number>0</number>
-       </property>
-       <property name="topMargin">
-        <number>0</number>
-       </property>
-       <property name="rightMargin">
-        <number>0</number>
-       </property>
-       <property name="bottomMargin">
-        <number>0</number>
-       </property>
-      </layout>
-     </widget>
-    </item>
-    <item row="2" column="0">
      <widget class="QSplitter" name="splitter">
       <property name="orientation">
        <enum>Qt::Horizontal</enum>
@@ -4755,6 +4762,7 @@ list. The list can be maintained in Settings (F2).</string>
     <addaction name="actionWide_Waterfall"/>
     <addaction name="actionMode_buttons"/>
     <addaction name="actionBand_buttons"/>
+    <addaction name="actionBand_mode_buttons"/>
     <addaction name="actionMessage_averaging"/>
     <addaction name="separator"/>
     <addaction name="actionNarrow_controls"/>
@@ -5386,6 +5394,14 @@ list. The list can be maintained in Settings (F2).</string>
    </property>
    <property name="text">
     <string>Band buttons</string>
+   </property>
+  </action>
+  <action name="actionBand_mode_buttons">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Band and mode buttons in one row</string>
    </property>
   </action>
   <action name="actionNarrow_controls">

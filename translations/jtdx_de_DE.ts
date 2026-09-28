@@ -6257,6 +6257,11 @@ Das ist der Fehler des Decoders selbst. Beheben Sie, was seinen Start verhindert
         <source>No other frequencies</source>
         <translation>Keine weiteren Frequenzen</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Band and mode buttons in one row</source>
+        <translation>Band- und Betriebsartentasten in einer Reihe</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

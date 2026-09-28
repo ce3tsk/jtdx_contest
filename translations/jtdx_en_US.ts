@@ -6098,6 +6098,11 @@ That is the decoder's own error. Put right whatever stops it starting - a missin
         <source>No other frequencies</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Band and mode buttons in one row</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

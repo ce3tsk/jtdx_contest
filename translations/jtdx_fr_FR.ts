@@ -6261,6 +6261,11 @@ C'est l'erreur du décodeur lui-même. Corrigez ce qui l'empêche de démarrer -
         <source>No other frequencies</source>
         <translation>Aucune autre fréquence</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Band and mode buttons in one row</source>
+        <translation>Boutons de bande et de mode sur une ligne</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

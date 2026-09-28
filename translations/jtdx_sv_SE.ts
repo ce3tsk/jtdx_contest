@@ -6259,6 +6259,11 @@ Det är avkodarens eget fel. Åtgärda det som hindrar den från att starta - et
         <source>No other frequencies</source>
         <translation>Inga andra frekvenser</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Band and mode buttons in one row</source>
+        <translation>Band- och modknappar på en rad</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

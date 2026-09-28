@@ -6265,6 +6265,11 @@ Ese es el error del propio decodificador. Corrija lo que impide que arranque (un
         <source>No other frequencies</source>
         <translation>No hay otras frecuencias</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Band and mode buttons in one row</source>
+        <translation>Botones de banda y de modo en una fila</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

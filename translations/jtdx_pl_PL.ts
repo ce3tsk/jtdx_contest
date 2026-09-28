@@ -6257,6 +6257,11 @@ To błąd samego dekodera. Usuń to, co uniemożliwia jego uruchomienie - brakuj
         <source>No other frequencies</source>
         <translation>Brak innych częstotliwości</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Band and mode buttons in one row</source>
+        <translation>Przyciski pasm i emisji w jednym rzędzie</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

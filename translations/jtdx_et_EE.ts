@@ -6271,6 +6271,11 @@ See on dekoodri enda viga. Kõrvalda see, mis takistab käivitumist - puuduv tee
         <source>No other frequencies</source>
         <translation>Muid sagedusi pole</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Band and mode buttons in one row</source>
+        <translation>Sagedusala ja tööliigi nupud ühes reas</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

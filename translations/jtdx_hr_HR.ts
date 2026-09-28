@@ -6261,6 +6261,11 @@ To je greška samog dekodera. Otklonite ono što ga sprječava da se pokrene - n
         <source>No other frequencies</source>
         <translation>Nema drugih frekvencija</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Band and mode buttons in one row</source>
+        <translation>Gumbi opsega i moda u jednom redu</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>
