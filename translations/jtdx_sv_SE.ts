@@ -3098,8 +3098,8 @@ Formatera:
     </message>
     <message>
         <location filename="../mainwindow.ui" line="667"/>
-        <source>USB dial frequency</source>
-        <translation>USB-sändningsfrekvens</translation>
+        <source>USB dial frequency. The mouse wheel and clicks tune it: over the 100, 10 or 1 kHz digit by that digit's step, anywhere else by 1 kHz. Wheel up or a right click tunes up, wheel down or a left click tunes down; a step never leaves the band.</source>
+        <translation>USB-sändningsfrekvens. Mushjulet och klick ställer in den: över 100-, 10- eller 1-kHz-siffran med den siffrans steg, överallt annars med 1 kHz. Hjulet uppåt eller högerklick höjer, hjulet nedåt eller vänsterklick sänker; ett steg lämnar aldrig bandet.</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="679"/>

@@ -3100,8 +3100,8 @@ Format:
     </message>
     <message>
         <location filename="../mainwindow.ui" line="667"/>
-        <source>USB dial frequency</source>
-        <translation>USB valgt frekvens</translation>
+        <source>USB dial frequency. The mouse wheel and clicks tune it: over the 100, 10 or 1 kHz digit by that digit's step, anywhere else by 1 kHz. Wheel up or a right click tunes up, wheel down or a left click tunes down; a step never leaves the band.</source>
+        <translation>USB valgt frekvens. Musehjulet og klik indstiller den: over 100-, 10- eller 1-kHz-cifferet i det ciffers trin, alle andre steder i trin på 1 kHz. Hjulet op eller højreklik går op, hjulet ned eller venstreklik går ned; et trin forlader aldrig båndet.</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="679"/>

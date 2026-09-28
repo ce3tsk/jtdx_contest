@@ -3097,8 +3097,8 @@ Format:
     </message>
     <message>
         <location filename="../mainwindow.ui" line="667"/>
-        <source>USB dial frequency</source>
-        <translation>Częstotliwość na wskaźniku w trybie USB</translation>
+        <source>USB dial frequency. The mouse wheel and clicks tune it: over the 100, 10 or 1 kHz digit by that digit's step, anywhere else by 1 kHz. Wheel up or a right click tunes up, wheel down or a left click tunes down; a step never leaves the band.</source>
+        <translation>Częstotliwość na wskaźniku w trybie USB. Kółko myszy i kliknięcia ją stroją: nad cyfrą 100, 10 lub 1 kHz o krok tej cyfry, w każdym innym miejscu o 1 kHz. Kółko w górę lub kliknięcie prawym przyciskiem podnosi, kółko w dół lub kliknięcie lewym przyciskiem obniża; krok nigdy nie wychodzi poza pasmo.</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="679"/>

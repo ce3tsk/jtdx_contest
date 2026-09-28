@@ -3097,8 +3097,8 @@ Format:
     </message>
     <message>
         <location filename="../mainwindow.ui" line="667"/>
-        <source>USB dial frequency</source>
-        <translation>USB 다이얼 주파수</translation>
+        <source>USB dial frequency. The mouse wheel and clicks tune it: over the 100, 10 or 1 kHz digit by that digit's step, anywhere else by 1 kHz. Wheel up or a right click tunes up, wheel down or a left click tunes down; a step never leaves the band.</source>
+        <translation>USB 다이얼 주파수. 마우스 휠과 클릭으로 조정합니다: 100, 10, 1 kHz 자리 위에서는 그 자리 단위로, 그 밖의 곳에서는 1 kHz 단위로 바뀝니다. 휠을 위로 돌리거나 오른쪽 클릭하면 올라가고, 아래로 돌리거나 왼쪽 클릭하면 내려갑니다. 밴드를 벗어나지 않습니다.</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="679"/>

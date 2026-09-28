@@ -3097,8 +3097,8 @@ Indeling:
     </message>
     <message>
         <location filename="../mainwindow.ui" line="667"/>
-        <source>USB dial frequency</source>
-        <translation>USB-afstemfrequentie</translation>
+        <source>USB dial frequency. The mouse wheel and clicks tune it: over the 100, 10 or 1 kHz digit by that digit's step, anywhere else by 1 kHz. Wheel up or a right click tunes up, wheel down or a left click tunes down; a step never leaves the band.</source>
+        <translation>USB-afstemfrequentie. Het muiswiel en klikken stemmen deze af: boven het cijfer van 100, 10 of 1 kHz met de stap van dat cijfer, overal elders met 1 kHz. Wiel omhoog of rechtsklik gaat omhoog, wiel omlaag of linksklik gaat omlaag; een stap verlaat nooit de band.</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="679"/>

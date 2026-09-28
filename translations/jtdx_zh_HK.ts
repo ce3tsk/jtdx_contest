@@ -3097,8 +3097,8 @@ Format:
     </message>
     <message>
         <location filename="../mainwindow.ui" line="667"/>
-        <source>USB dial frequency</source>
-        <translation>上邊帶頻率</translation>
+        <source>USB dial frequency. The mouse wheel and clicks tune it: over the 100, 10 or 1 kHz digit by that digit's step, anywhere else by 1 kHz. Wheel up or a right click tunes up, wheel down or a left click tunes down; a step never leaves the band.</source>
+        <translation>上邊帶頻率。滑鼠滾輪和單擊可調諧：在 100、10 或 1 kHz 數位上按該位步進，其他位置按 1 kHz 步進。滾輪向上或右鍵單擊升高，滾輪向下或左鍵單擊降低；步進不會超出波段。</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="679"/>

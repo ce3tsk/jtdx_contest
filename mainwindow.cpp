@@ -59,6 +59,7 @@
 #include "bandschedule.h"  // CE3TSK 2026-09-26: which scheduler entry fires
 #include "actiongate.h"    // CE3TSK 2026-09-26: trigger () that obeys the enabled state
 #include "bandchannels.h"  // CE3TSK 2026-09-26: the band buttons, and the other frequencies on a right click
+#include "dialtuning.h"    // CE3TSK: the dial's wheel and clicks, the step under the pointer
 #include "uilimits.h"      // CE3TSK: the .ui size limits against the current font
 #include "geometryrestore.h"  // CE3TSK 2026-09-26: one restore rule for the main window, Wide Graph, Log QSO
 #include <QPainter>
@@ -3817,45 +3818,58 @@ void MainWindow::highlightBandButton ()
   for (auto * const button : m_bandButtons) button->setChecked (button == lit);
 }
 
-/* CE3TSK: tuning with the mouse wheel over the dial frequency. Only the three kHz digits after the
-   decimal point respond - in "7.074 000" the 0, the 7 and the 4 - so a notch moves the dial by
-   100, 10 or 1 kHz, carrying into the next digit the way a sum does (7.079 + 1 kHz = 7.080,
-   7.000 - 1 kHz = 6.999). The MHz digits would change the band and the Hz digits are finer than
-   any use, so both are left alone, and so is a step that would take the dial out of the band it
-   is in. Notches in a burst show on the display at once and reach the rig as one QSY 200 ms after
-   the last, through band_changed () like the band selector; until the rig reports the new
-   frequency the display holds the target. Nothing happens while transmitting or tuning. */
+/* CE3TSK: tuning from the dial frequency's label, with the mouse wheel (2026-09-15) and with clicks
+   (2026-09-28). Over one of the three kHz digits after the decimal point - in "7.074 000" the 0,
+   the 7 and the 4 - a notch or a click moves the dial by 100, 10 or 1 kHz; anywhere else on the
+   label by 1 kHz, as the 1 kHz digit does. The wheel up and a right click step up, the wheel down
+   and a left click down. The steps carry the way a sum does (7.079 + 1 kHz = 7.080) and a step
+   that would take the dial out of the band it is in is refused; dialtuning.h has the rules and
+   test_dialtuning pins them. Steps in a burst show on the display at once and reach the rig as one
+   QSY 200 ms after the last, through band_changed () like the band selector; until the rig reports
+   the new frequency the display holds the target. Nothing happens while transmitting or tuning -
+   but the label keeps its clicks even then: a right click that went on to the main window would
+   clear the DX call there whenever the Clear DX button has the focus (mousePressEvent). */
 bool MainWindow::dialFrequencyWheel (QWheelEvent * event)
 {
   if (m_transmitting || m_tune) return false;
-  auto const * const label = ui->labDialFreq;
-  auto const text = label->text ();   // "7.074 000": the kHz digits are 7, 6 and 5 from the end in any locale
-  if (text.size () < 8) return false;
-  QFontMetrics const metrics {label->font ()};
-  int const margin {label->margin ()};
-  auto const area = label->contentsRect ().adjusted (margin, margin, -margin, -margin);
-  int const left {area.left () + (area.width () - metrics.horizontalAdvance (text)) / 2};   // the .ui centres the text
-  int const x {event->position ().toPoint ().x ()};
-  int digit {-1};
-  for (int i = 0; i < 3; ++i)
-    {
-      int const at {text.size () - 7 + i};
-      int const from {left + metrics.horizontalAdvance (text.left (at))};
-      if (text.at (at).isDigit () && x >= from && x < from + metrics.horizontalAdvance (text.at (at))) digit = i;
-    }
-  if (digit < 0) return false;
   m_dialWheelDelta += event->angleDelta ().y ();
   int const notches {m_dialWheelDelta / 120};
   if (!notches) return true;   // part of a notch, from a touchpad
   m_dialWheelDelta -= notches * 120;
+  dialStep (notches * dialStepAt (event->position ().toPoint ().x ()));
+  return true;
+}
+
+// a press, or the second press of a double click: two quick clicks are two steps
+bool MainWindow::dialFrequencyClick (QMouseEvent * event)
+{
+  int const direction {dial_click_direction (event->button ())};
+  if (!direction) return false;
+  if (!m_transmitting && !m_tune) dialStep (direction * dialStepAt (event->pos ().x ()));
+  return true;
+}
+
+qint64 MainWindow::dialStepAt (int x) const
+{
+  auto const * const label = ui->labDialFreq;
+  auto const text = label->text ();
+  QFontMetrics const metrics {label->font ()};
+  int const margin {label->margin ()};
+  auto const area = label->contentsRect ().adjusted (margin, margin, -margin, -margin);
+  int const left {area.left () + (area.width () - metrics.horizontalAdvance (text)) / 2};   // the .ui centres the text
+  return dial_step_at (text, metrics, left, x);
+}
+
+void MainWindow::dialStep (qint64 hz)
+{
   Frequency const from {dialWheelHolding () ? m_dialWheelTarget : m_freqNominal};
-  qint64 const to {static_cast<qint64> (from) + notches * (digit == 0 ? 100000 : digit == 1 ? 10000 : 1000)};
-  if (to <= 0 || m_config.bands ()->find (static_cast<Frequency> (to)) != m_config.bands ()->find (from)) return true;   // stays in its band
-  m_dialWheelTarget = static_cast<Frequency> (to);
+  auto const * const bands = m_config.bands ();
+  auto const to = dial_step_target (from, hz, [bands] (Frequency f) { return bands->find (f); });
+  if (!to) return;   // no frequency yet, or the step leaves the band
+  m_dialWheelTarget = to;
   m_dialWheelClock.start ();
   m_dialWheelTimer.start ();
   displayDialFrequency ();
-  return true;
 }
 
 void MainWindow::applyDialWheel ()
@@ -3863,7 +3877,7 @@ void MainWindow::applyDialWheel ()
   auto const target = m_dialWheelTarget;
   if (m_transmitting || m_tune || target == m_freqNominal) return;
   m_bandEdited = true;
-  band_changed (target); if(m_config.write_decoded_debug()) writeToALLTXT("Band changed from dial wheel, frequency: " + QString::number(target));
+  band_changed (target); if(m_config.write_decoded_debug()) writeToALLTXT("Band changed from the dial (wheel or click), frequency: " + QString::number(target));
   m_dialWheelClock.start ();   // hold the target on the display while the rig catches up
   displayDialFrequency ();
 }
@@ -4015,6 +4029,9 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)  //eventFilter()
       // fall through
     case QEvent::MouseButtonPress:
       txwatchdog (false);
+      // CE3TSK 2026-09-28: a click on the dial frequency steps it (the key press falls through to here)
+      if (event->type () == QEvent::MouseButtonPress && object == ui->labDialFreq
+          && dialFrequencyClick (static_cast<QMouseEvent *> (event))) return true;
       break;
 
     case QEvent::ChildAdded:
@@ -4032,11 +4049,13 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)  //eventFilter()
       break;
 
     case QEvent::Wheel:
-      // CE3TSK: the wheel over a kHz digit of the dial frequency tunes it
+      // CE3TSK: the wheel over the dial frequency tunes it
       if (object == ui->labDialFreq && dialFrequencyWheel (static_cast<QWheelEvent *> (event))) return true;
       break;
 
     case QEvent::MouseButtonDblClick:
+      // CE3TSK 2026-09-28: Qt makes the second of two quick presses a double click - still a step
+      if (object == ui->labDialFreq && dialFrequencyClick (static_cast<QMouseEvent *> (event))) return true;
       // CE3TSK: the DX Call button or the callsign box looks the call up on qrz.com
       if (object == ui->pbSpotDXCall || object == ui->dxCallEntry)
         {

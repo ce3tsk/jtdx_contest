@@ -919,9 +919,9 @@ private:
   QPointer<QMenu> m_bandChannelsMenu;               // CE3TSK 2026-09-26: a button's right-click menu, while open
   QList<QMetaObject::Connection> m_bandButtonsConnections;
   QTimer m_bandButtonsTimer;                       // one rebuild per burst of list changes
-  QTimer m_dialWheelTimer;                         // CE3TSK: dial wheel tuning, one QSY per burst of notches
-  QElapsedTimer m_dialWheelClock;                  // since the last notch or wheel QSY, see dialWheelHolding ()
-  Radio::Frequency m_dialWheelTarget {0};          // where the wheel has taken the dial
+  QTimer m_dialWheelTimer;                         // CE3TSK: tuning from the dial (wheel, clicks), one QSY per burst of steps
+  QElapsedTimer m_dialWheelClock;                  // since the last step or dial QSY, see dialWheelHolding ()
+  Radio::Frequency m_dialWheelTarget {0};          // where the wheel and the clicks have taken the dial
   int m_dialWheelDelta {0};                        // wheel angle short of a whole notch (touchpads)
   bool m_lostaudio;
   bool m_lasthint;
@@ -1186,6 +1186,9 @@ private:
   void selectBandButton (Radio::Frequency frequency);
   void showBandChannels (QPushButton * button, QPoint const& at);   // CE3TSK 2026-09-26: the right click
   bool dialFrequencyWheel (QWheelEvent * event);   // CE3TSK
+  bool dialFrequencyClick (QMouseEvent * event);   // CE3TSK 2026-09-28: clicks on the dial step it too
+  qint64 dialStepAt (int x) const;                 //   the step under the pointer, see dialtuning.h
+  void dialStep (qint64 hz);                       //   the wheel's and the clicks' one way to the dial
   void lookupDxCallOnQrz ();                       // CE3TSK
   void applyDialWheel ();
   bool dialWheelHolding () const;

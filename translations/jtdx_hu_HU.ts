@@ -3097,8 +3097,8 @@ Formátum:
     </message>
     <message>
         <location filename="../mainwindow.ui" line="667"/>
-        <source>USB dial frequency</source>
-        <translation>A VFO frekvenciája USB-üzemmódban</translation>
+        <source>USB dial frequency. The mouse wheel and clicks tune it: over the 100, 10 or 1 kHz digit by that digit's step, anywhere else by 1 kHz. Wheel up or a right click tunes up, wheel down or a left click tunes down; a step never leaves the band.</source>
+        <translation>A VFO frekvenciája USB-üzemmódban. Az egérgörgő és a kattintások hangolják: a 100, 10 vagy 1 kHz-es számjegy fölött annak a számjegynek a lépésével, bárhol máshol 1 kHz-cel. Görgő felfelé vagy jobb kattintás növeli, görgő lefelé vagy bal kattintás csökkenti; egy lépés sosem hagyja el a sávot.</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="679"/>

@@ -3100,8 +3100,8 @@ Format:
     </message>
     <message>
         <location filename="../mainwindow.ui" line="667"/>
-        <source>USB dial frequency</source>
-        <translation>Отображение частоты трансивера в режиме USB</translation>
+        <source>USB dial frequency. The mouse wheel and clicks tune it: over the 100, 10 or 1 kHz digit by that digit's step, anywhere else by 1 kHz. Wheel up or a right click tunes up, wheel down or a left click tunes down; a step never leaves the band.</source>
+        <translation>Отображение частоты трансивера в режиме USB. Колесо мыши и щелчки перестраивают её: над цифрой 100, 10 или 1 кГц — на шаг этой цифры, в любом другом месте — на 1 кГц. Колесо вверх или щелчок правой кнопкой повышают, колесо вниз или щелчок левой кнопкой понижают; шаг никогда не выводит за пределы диапазона.</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="679"/>

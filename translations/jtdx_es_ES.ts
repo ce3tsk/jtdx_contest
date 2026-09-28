@@ -3099,8 +3099,8 @@ Formato:
     </message>
     <message>
         <location filename="../mainwindow.ui" line="667"/>
-        <source>USB dial frequency</source>
-        <translation>Frecuencia de dial USB</translation>
+        <source>USB dial frequency. The mouse wheel and clicks tune it: over the 100, 10 or 1 kHz digit by that digit's step, anywhere else by 1 kHz. Wheel up or a right click tunes up, wheel down or a left click tunes down; a step never leaves the band.</source>
+        <translation>Frecuencia de dial USB. La rueda del ratón y los clics la sintonizan: sobre el dígito de 100, 10 o 1 kHz, en el paso de ese dígito; en cualquier otro lugar, en 1 kHz. Rueda hacia arriba o clic derecho sube, rueda hacia abajo o clic izquierdo baja; un paso nunca sale de la banda.</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="679"/>

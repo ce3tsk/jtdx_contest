@@ -3101,8 +3101,8 @@ Format:
     </message>
     <message>
         <location filename="../mainwindow.ui" line="667"/>
-        <source>USB dial frequency</source>
-        <translation>Fréquence Trx USB</translation>
+        <source>USB dial frequency. The mouse wheel and clicks tune it: over the 100, 10 or 1 kHz digit by that digit's step, anywhere else by 1 kHz. Wheel up or a right click tunes up, wheel down or a left click tunes down; a step never leaves the band.</source>
+        <translation>Fréquence Trx USB. La molette de la souris et les clics la règlent : sur le chiffre des 100, 10 ou 1 kHz, du pas de ce chiffre ; partout ailleurs, de 1 kHz. Molette vers le haut ou clic droit monte, molette vers le bas ou clic gauche descend ; un pas ne quitte jamais la bande.</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="679"/>

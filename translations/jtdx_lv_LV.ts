@@ -3096,8 +3096,8 @@ Formāts:
     </message>
     <message>
         <location filename="../mainwindow.ui" line="667"/>
-        <source>USB dial frequency</source>
-        <translation>USB skalas frekvence</translation>
+        <source>USB dial frequency. The mouse wheel and clicks tune it: over the 100, 10 or 1 kHz digit by that digit's step, anywhere else by 1 kHz. Wheel up or a right click tunes up, wheel down or a left click tunes down; a step never leaves the band.</source>
+        <translation>USB skalas frekvence. Peles ritenītis un klikšķi to regulē: virs 100, 10 vai 1 kHz cipara par šī cipara soli, jebkur citur par 1 kHz. Ritenītis uz augšu vai klikšķis ar labo peles pogu palielina, ritenītis uz leju vai klikšķis ar kreiso peles pogu samazina; solis nekad neiziet ārpus joslas.</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="679"/>

@@ -3076,8 +3076,8 @@ Format:
     </message>
     <message>
         <location filename="../mainwindow.ui" line="667"/>
-        <source>USB dial frequency</source>
-        <translation>周波数</translation>
+        <source>USB dial frequency. The mouse wheel and clicks tune it: over the 100, 10 or 1 kHz digit by that digit's step, anywhere else by 1 kHz. Wheel up or a right click tunes up, wheel down or a left click tunes down; a step never leaves the band.</source>
+        <translation>周波数。マウスホイールとクリックで変更できます。100、10、1 kHz の桁の上ではその桁の刻みで、それ以外の場所では 1 kHz 刻みで変わります。ホイールを上に回すか右クリックで上がり、下に回すか左クリックで下がります。バンドの外には出ません。</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="679"/>
@@ -5043,27 +5043,33 @@ Click by right mouse&apos;s button sets JTDX internal time back to system time.&
   &lt;/tr&gt;
   &lt;tr&gt;
     &lt;td align="right"&gt;ウォーターフォール：&lt;/td&gt;
-    &lt;td&gt;Rx周波数の設定。&lt;br&gt;
-        ダブルクリックでRxの周波数を設定し、そこをデコードします。&lt;br&gt;
-        Ctrlキーを押しながらクリックすると、RxとTxの周波数を設定できます。&lt;br&gt;
-        TX=RXのロック解除:&lt;br&gt;
-        左ボタンでRXの周波数を設定&lt;br&gt;
-        ALT+左ボタンでRXの周波数を設定し、Filterをオンにする&lt;br&gt;
-        右ボタンでTX周波数を設定
-    &lt;/td&gt; &lt;/tr&gt;
-&lt;tr&gt;
+    &lt;td&gt;Rx 周波数を設定します。&lt;br/&gt;
+        ダブルクリックで Rx 周波数を設定し、その周波数をデコードします。&lt;br/&gt;
+        Ctrl+クリックで Rx 周波数と Tx 周波数を設定します。&lt;br/&gt;
+        TX=RX のロック解除時：&lt;br/&gt;
+        左ボタンで RX 周波数を設定&lt;br/&gt;
+        ALT+左ボタンで RX 周波数を設定し、Filter をオンにします&lt;br/&gt;
+        右ボタンで TX 周波数を設定します
+    &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
     &lt;td align="right"&gt;デコードされたテキスト：&lt;/td&gt;
-    &lt;td&gt;ダブルクリックで2つ目のコールサインをDx Callにコピー&lt;br&gt;
-        ロケーターをDx Gridにコピーし、RxとTxの周波数をデコードされた&lt;br&gt;信号の周波数に変更し、標準メッセージを生成します。&lt;br&gt;
-        最初のコールサインが自分のものである場合、Tx周波数は&lt;br&gt;CTRLを押しながらでないと変更されません。&lt;br&gt;
-        また、ALT+ダブルクリックは、Enable Txボタンがアクティブな場合、Txを停止します。&lt;br&gt;
-        CTRL+ALT+ダブルクリックで、デコードされた&lt;br&gt;メッセージから2つ目のコールサインを希望するコールサインリストに追加します。
-    &lt;/td&gt; &lt;/tr&gt;
-&lt;tr&gt;
-    &lt;td align="right"&gt;消去ボタン：&lt;/td&gt;
-    &lt;td&gt;右ボタンでQSOウィンドウを消去します。&lt;br&gt;
-        左のボタンをクリックすると、バンド・アクティビティ・ウィンドウが消去されます&lt;br&gt;
-        左または右のボタンをダブルクリックすると、QSO&lt;br&gt;とバンド・アクティビティ・ウィンドウが消去されます。
+    &lt;td&gt;ダブルクリックで 2 つ目のコールサインを Dx Call に、&lt;br/&gt;
+        ロケーターを Dx Grid にコピーし、Rx と Tx の周波数を&lt;br/&gt;
+        デコード信号の周波数に変更して、標準メッセージを生成します。&lt;br/&gt;
+        最初のコールサインが自局の場合、ダブルクリック時に CTRL を押していない限り、&lt;br/&gt;
+        Tx 周波数は変更されません。&lt;br/&gt;&lt;br/&gt;
+        ALT+ダブルクリックでは、Enable Tx ボタンが有効な場合、Tx も停止します。&lt;br/&gt;&lt;br/&gt;
+        CTRL+ALT+ダブルクリックでは、デコードされた&lt;br/&gt;
+        メッセージの 2 つ目のコールサインを Wanted callsign list に追加するだけです。
+    &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td align="right"&gt;Erase ボタン：&lt;/td&gt;
+    &lt;td&gt;右ボタンをクリックすると QSO ウィンドウを消去します。&lt;br/&gt;
+        左ボタンをクリックすると Band Activity ウィンドウを消去します。&lt;br/&gt;
+        左または右ボタンをダブルクリックすると QSO &lt;br/&gt;
+        と Band Activity ウィンドウを消去します。
     &lt;/td&gt;
   &lt;/tr&gt;
 &lt;/table&gt;
@@ -5261,7 +5267,7 @@ UDP server %2:%3</source>
     <message>
         <location filename="../mainwindow.cpp" line="7303"/>
         <source>Transmit digital gain</source>
-        <translation>デジタルのゲインを送信</translation>
+        <translation>送信用デジタルゲイン</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="7323"/>
@@ -8708,7 +8714,9 @@ Please verify the correct directory name was given.</source>
 This might be required under your countries licence regulations.
 It will not interfere with other users as it is always sent in the
 quiet period when decoding is done.</source>
-        <translation>CW IDを数分ごとに定期的に送信します。これは、国のライセンス規制の下で必要になる場合があります。常に送信されるため、他のユーザーに干渉しませんデコードが行われる静かな期間に出されます。。</translation>
+        <translation>CW ID を数分ごとに定期的に送信します。
+国によっては、免許上の規則でこれが必要になる場合があります。
+デコード処理が終わった静かな時間帯に送信されるため、他のユーザーに干渉しません。</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="734"/>
@@ -8791,7 +8799,10 @@ Click again to deactivate. Normally no power should be
 output since there is no audio being generated at this time.
 Check that any Tx indication on your radio and/or your
 radio interface behave as expected.</source>
-        <translation>送信状態をアクティブにします。再度クリックして無効にします。 通常パワーはは現時点では音声が生成されていないため出力されません。無線機の送信表示を確認してください。送信状態になっていればOKです。</translation>
+        <translation>送信機を送信状態にします。もう一度クリックすると解除します。
+この時点では音声が生成されていないため、通常は送信出力は出ないはずです。
+無線機および／または無線機インターフェースの送信表示が、
+期待どおりに動作することを確認してください。</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1774"/>
@@ -8841,7 +8852,8 @@ both here.</source>
 saved by this program.
 Check this option to save the sent and received reports in the
 comments field.</source>
-        <translation>一部のロギングプログラムは、このタイプのレポートを受け入れません。このプログラムによって保存されました。このオプションをオンにすると、送受信されたレポートをコメントフィールドに記録します。。</translation>
+        <translation>一部のロギングプログラムでは、このプログラムが保存する形式のレポートを受け付けない場合があります。
+このオプションを有効にすると、送受信したレポートをコメント欄に保存します。</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="2476"/>
@@ -9742,7 +9754,7 @@ soundcard changes</source>
     <message>
         <location filename="../Configuration.ui" line="6985"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Settings depend on the CPU power, try to use maximum number of decoding passes for overcrowded HF bands.&lt;br&gt;&lt;br&gt;Number of decoding passes may be decreased for low populated HF/VHF bands while an increase of the number of decoding attempts might bring better decoding efficiency for the weak signals there.&lt;br&gt;&lt;br&gt;Number of decoding attempts affecting decoding efficiency of the low SNR signals: wideband or RX frequency one.&lt;br&gt;&lt;br&gt;Number of decoding passes affecting maximum number of the signals that can be decoded on the same frequency or located close to each other with largely overlapped spectra, it is possible to decode up to 4 signals on the same frequency and up to 7 signals on the RX frequency if number of decoding passes is set to 4.&lt;br&gt;&lt;br&gt;Increase number of decoding attempts to the value allowing to get decoding finished until end of the RX minute interval.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt; &lt;head /&gt; &lt;body&gt; &lt;p&gt;設定はCPUパワーに依存します。過密なHFバンドにはデコードパスの最大数を使用してください。&lt;br&gt; &lt;br&gt;混雑の少ないHF / VHF帯域では、デコードパスの数を減らすことができますが、デコードの試行回数を増やすと、弱い信号のデコード効率が向上する可能性があります&lt;br&gt; &lt;br&gt;低SNR信号のデコード効率に影響するデコード試行回数：広帯域またはRX周波数1。&lt;br &gt; &lt;br&gt;同じ周波数でデコードできる、またはスペクトルが大きく重なり合って互いに近接して配置できる信号の最大数に影響するデコードパスの数、同じ周波数で最大4つの信号、最大7つの信号をデコードできます。 デコードパスの数が4に設定されている場合、RX周波数で信号を送信します。&lt;br&gt; &lt;br&gt; RX分間隔が終了するまでデコードを終了できる値までデコード試行回数を増やします。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;設定は CPU 性能に依存します。混雑した HF バンドでは、デコードパス数を最大にするようにしてください。&lt;br&gt;&lt;br&gt;信号の少ない HF/VHF バンドではデコードパス数を減らせます。一方、デコード試行回数を増やすと、弱い信号のデコード効率が向上する場合があります。&lt;br&gt;&lt;br&gt;低 SNR 信号のデコード効率に影響するのは、ワイドバンドまたは RX 周波数でのデコード試行回数です。&lt;br&gt;&lt;br&gt;デコードパス数は、同一周波数上、またはスペクトルが大きく重なって近接する信号を同時にデコードできる最大数に影響します。デコードパス数を 4 に設定すると、同一周波数で最大 4 信号、RX 周波数では最大 7 信号をデコードできます。&lt;br&gt;&lt;br&gt;RX の 1 分間隔が終了するまでにデコードが完了する範囲で、デコード試行回数を増やしてください。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="7073"/>

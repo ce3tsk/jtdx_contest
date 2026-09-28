@@ -3097,8 +3097,8 @@ Format:
     </message>
     <message>
         <location filename="../mainwindow.ui" line="667"/>
-        <source>USB dial frequency</source>
-        <translation>USB odabrana frekvencija</translation>
+        <source>USB dial frequency. The mouse wheel and clicks tune it: over the 100, 10 or 1 kHz digit by that digit's step, anywhere else by 1 kHz. Wheel up or a right click tunes up, wheel down or a left click tunes down; a step never leaves the band.</source>
+        <translation>USB odabrana frekvencija. Kotačić miša i klikovi je podešavaju: iznad znamenke 100, 10 ili 1 kHz za korak te znamenke, bilo gdje drugdje za 1 kHz. Kotačić prema gore ili desni klik povećava, kotačić prema dolje ili lijevi klik smanjuje; korak nikad ne izlazi iz pojasa.</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="679"/>
