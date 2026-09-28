@@ -6485,6 +6485,11 @@ Veuillez vérifier que le nom correct du répertoire a été donné.</translatio
         <source>Show </source>
         <translation>Afficher </translation>
     </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Directories</source>
+        <translation>Dossiers</translation>
+    </message>
 </context>
 <context>
     <name>QFileSystemModel</name>

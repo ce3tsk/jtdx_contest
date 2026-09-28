@@ -6495,6 +6495,11 @@ Palun kontrolli kataloogi nime.</translation>
         <source>Show </source>
         <translation>Näita </translation>
     </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Directories</source>
+        <translation>Kataloogid</translation>
+    </message>
 </context>
 <context>
     <name>QFileSystemModel</name>
@@ -6524,7 +6529,7 @@ Palun kontrolli kataloogi nime.</translation>
     <message>
         <location filename="../Configuration.cpp"/>
         <source>&amp;OK</source>
-        <translation>&amp;Kinnita</translation>
+        <translation>Ki&amp;nnita</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp"/>

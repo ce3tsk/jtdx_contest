@@ -3434,7 +3434,7 @@ UA2,UA9,UK,UN,UR,V2,V3,V4,V5,V6,V7,V8,VE,VK,VK0H,VK0M,VK9C,VK9L,VK9M,VK9N,VK9W,V
 VP2E,VP2M,VP2V,VP5,VP6,VP6/D,VP8,VP8/G,VP8/H,VP8/O,VP8/S,VP9,VQ9,VR,VU,VU4,VU7,XE,&lt;br&gt;
 XF4,XT,XU,XW,XX9,XZ,YA,YB,YI,YJ,YK,YL,YN,YO,YS,YU,YV,YV0,Z2,Z3,Z6,Z8,ZA,ZB,ZC4,ZD7,&lt;br&gt;
 ZD8,ZD9,ZF,ZK3,ZL,ZL7,ZL8,ZL9,ZP,ZS,ZS8&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt; Elenco separato da virgole dei paesi ricercati: il prefisso del paese principale deve essere utilizzato in questo elenco. Per i nominativi composti, il prefisso viene riconosciuto all'inizio del nominativo. La selezione automatica in AutoSeq 1..7 elaborerà il Paese desiderato in base alle notifiche/priorità scelte, questa funzionalità non è supportata in AutoSeq0. Solo modalità non FT8: a volte il nominativo di base verrà copiato dal messaggio decodificato: quando si registra tale utente QSO dovrà cambiare il nominativo del corrispondente in composto se necessario. Elenco dei principali prefissi nazionali: 1A, 1S, 3A, 3B6,3B8,3B9,3C, 3C0,3D2,3D2/C, &lt;br&gt;
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt; Elenco separato da virgole dei paesi ricercati: il prefisso del paese principale deve essere utilizzato in questo elenco. Per i nominativi composti, il prefisso viene riconosciuto all'inizio del nominativo. La selezione automatica in AutoSeq 1..7 elaborerà il Paese desiderato in base alle notifiche/priorità scelte, questa funzionalità non è supportata in AutoSeq0. Solo modalità non FT8: a volte il nominativo di base verrà copiato dal messaggio decodificato: quando si registra tale utente QSO dovrà cambiare il nominativo del corrispondente in composto se necessario. Elenco dei principali prefissi nazionali: 1A,1S,3A,3B6,3B8,3B9,3C,3C0,3D2,3D2/C,&lt;br&gt;
 3D2/R,3DA,3V,3W,3X,3Y/B,3Y/P,4J,4L,4O,4S,4U1I,4U1U,*4U1V,4W,4X,5A,5B,5H,5N,5R,5T,&lt;br&gt;
 5U,5V,5W,5X,5Z,6W,6Y,7O,7P,7Q,7X,8P,8Q,8R,9A,9G,9H,9J,9K,9L,9M2,9M6,9N,9Q,9U,9V,9X,&lt;br&gt;
 9Y,A2,A3,A4,A5,A6,A7,A9,AP,BS7,BV,BV9P,BY,C2,C3,C5,C6,C9,CE,CE0X,CE0Y,CE0Z,CE9,CM,&lt;br&gt;
@@ -6482,6 +6482,11 @@ Verificare che il nome della cartella sia corretto.</translation>
         <source>Show </source>
         <translation>Mostra </translation>
     </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Directories</source>
+        <translation>Cartelle</translation>
+    </message>
 </context>
 <context>
     <name>QFileSystemModel</name>
@@ -6511,7 +6516,7 @@ Verificare che il nome della cartella sia corretto.</translation>
     <message>
         <location filename="../Configuration.cpp"/>
         <source>&amp;OK</source>
-        <translation>&amp;Conferma</translation>
+        <translation>C&amp;onferma</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp"/>

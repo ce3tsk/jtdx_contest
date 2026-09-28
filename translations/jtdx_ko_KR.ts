@@ -6481,6 +6481,11 @@ Please verify the correct directory name was given.</source>
         <source>Show </source>
         <translation>표시 </translation>
     </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Directories</source>
+        <translation>디렉터리</translation>
+    </message>
 </context>
 <context>
     <name>QFileSystemModel</name>

@@ -6480,6 +6480,11 @@ Please verify the correct directory name was given.</source>
         <source>Show </source>
         <translation>顯示 </translation>
     </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Directories</source>
+        <translation>目錄</translation>
+    </message>
 </context>
 <context>
     <name>QFileSystemModel</name>

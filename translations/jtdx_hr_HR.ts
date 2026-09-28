@@ -3906,7 +3906,7 @@ popis. Popis se može održavati u Postavkama (F2).</translation>
     <message>
         <location filename="../mainwindow.ui" line="4256"/>
         <source>Send this standard (generated) message</source>
-        <translation>Pošaljite ovu standardnu ​​(generiranu) poruku</translation>
+        <translation>Pošaljite ovu standardnu (generiranu) poruku</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4259"/>
@@ -6485,6 +6485,11 @@ Provjerite je li dato točno ime imenika.</translation>
         <source>Show </source>
         <translation>Prikaži </translation>
     </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Directories</source>
+        <translation>Direktoriji</translation>
+    </message>
 </context>
 <context>
     <name>QFileSystemModel</name>
@@ -7449,7 +7454,7 @@ Provjerite je li dato točno ime imenika.</translation>
     <message>
         <location filename="../Configuration.ui" line="597"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Some rigs are not able to process CAT commands while transmitting. This means that if you are operating in split mode you may have to uncheck this option.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Neki uređaji ne mogu obrađivati ​​CAT naredbe tijekom prijenosa. To znači da ako želite raditi u Split načinu rada, možda ćete morati poništiti ovu opciju.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Neki uređaji ne mogu obrađivati CAT naredbe tijekom prijenosa. To znači da ako želite raditi u Split načinu rada, možda ćete morati poništiti ovu opciju.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="607"/>
@@ -7531,7 +7536,7 @@ mirnom periodu kada se vrši dekodiranje.</translation>
     <message>
         <location filename="../Configuration.ui" line="840"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Request output power data from transceiver: CAT shall be set up via Hamlib, Hamlib does support getting output power data for some transceivers.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Zatražite podatke o izlaznoj snazi ​​od primopredajnika: CAT se postavlja putem Hamliba, Hamlib podržava dobivanje podataka o izlaznoj snazi ​​za neke primopredajnike.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Zatražite podatke o izlaznoj snazi od primopredajnika: CAT se postavlja putem Hamliba, Hamlib podržava dobivanje podataka o izlaznoj snazi za neke primopredajnike.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="843"/>
@@ -8148,7 +8153,7 @@ oboje ovdje.</translation>
     <message>
         <location filename="../Configuration.ui" line="2320"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Maximum 13 characters for free message&lt;br&gt;&lt;br&gt;Maximum 19 characters for directional CQ standard message.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Maksimalno 13 znakova je podržano za slobodnu poruku&lt;br&gt;&lt;br&gt;Maksimalno 19 znakovaje podržano za CQ usmjerenu standardnu ​​poruku.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Maksimalno 13 znakova je podržano za slobodnu poruku&lt;br&gt;&lt;br&gt;Maksimalno 19 znakovaje podržano za CQ usmjerenu standardnu poruku.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="2330"/>
@@ -8440,7 +8445,7 @@ za procjenu rasprostiranja i performansi sustava.</translation>
     <message>
         <location filename="../Configuration.ui" line="3028"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Messages marked by questionmark will not be passed to JTAlert and other UDP based software.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Poruke označene upitnikom neće se prosljeđivati ​​JTAlertu i drugom UDP softveru.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Poruke označene upitnikom neće se prosljeđivati JTAlertu i drugom UDP softveru.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3031"/>
@@ -9739,7 +9744,7 @@ AA1AAA,BB1BB,CC1CC&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     <message>
         <location filename="../Configuration.ui" line="6892"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Activate two additional frequency mask JT65 decoding passes for overcrowded band conditions. This decoding passes being activated automatically if there are few signals on the band. Use this setting only for fast CPU.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Aktivirajte dva dodatna frekvencijska maska ​​za JT65 dekodiranje u uvjetima prenapučenog opsega. Ovo dekodiranje automatski se aktivira ako na pojasu ima malo signala. Ovu postavku koristite samo za brzi CPU.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Aktivirajte dva dodatna frekvencijska maska za JT65 dekodiranje u uvjetima prenapučenog opsega. Ovo dekodiranje automatski se aktivira ako na pojasu ima malo signala. Ovu postavku koristite samo za brzi CPU.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="6898"/>
@@ -9771,7 +9776,7 @@ AA1AAA,BB1BB,CC1CC&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     <message>
         <location filename="../Configuration.ui" line="6985"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Settings depend on the CPU power, try to use maximum number of decoding passes for overcrowded HF bands.&lt;br&gt;&lt;br&gt;Number of decoding passes may be decreased for low populated HF/VHF bands while an increase of the number of decoding attempts might bring better decoding efficiency for the weak signals there.&lt;br&gt;&lt;br&gt;Number of decoding attempts affecting decoding efficiency of the low SNR signals: wideband or RX frequency one.&lt;br&gt;&lt;br&gt;Number of decoding passes affecting maximum number of the signals that can be decoded on the same frequency or located close to each other with largely overlapped spectra, it is possible to decode up to 4 signals on the same frequency and up to 7 signals on the RX frequency if number of decoding passes is set to 4.&lt;br&gt;&lt;br&gt;Increase number of decoding attempts to the value allowing to get decoding finished until end of the RX minute interval.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Postavke ovise o snazi ​​CPU-a, pokušajte upotrijebiti maksimalni broj prijelaza za dekodiranje za prenapučene HF opsege.&lt;br&gt;&lt;br&gt;Broj ciklusa za dekodiranje može se smanjiti za slabo aktivne HF / VHF opsege, povećanje broja pokušaja dekodiranja može dovesti do veće učinkovitosti dekodiranja za slabe signale tamo.&lt;br&gt;&lt;br&gt;Broj pokušaja dekodiranja koji utječu na efikasnost dekodiranja slabih SNR signala: širokopojasni ili RX frekvencija jedan. &lt;br&gt; &lt;br&gt; Broj prolaza dekodiranja koji utječu na maksimalni broj signala koji se mogu dekodirati na istoj frekvenciji ili se nalaze blizu jedni drugima s međusobnim preklapanjima spektra, moguće je dekodirati do 4 signala na istoj frekvenciji i do 7 signala na RX frekvenciji ako je broj dekodirnih prolaza postavljen na 4.&lt;br&gt;&lt;br&gt;Povećajte broj pokušaja dekodiranja do vrijednosti koja omogućuje dovršenje dekodiranja do kraja intervala RX minuta.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Postavke ovise o snazi CPU-a, pokušajte upotrijebiti maksimalni broj prijelaza za dekodiranje za prenapučene HF opsege.&lt;br&gt;&lt;br&gt;Broj ciklusa za dekodiranje može se smanjiti za slabo aktivne HF / VHF opsege, povećanje broja pokušaja dekodiranja može dovesti do veće učinkovitosti dekodiranja za slabe signale tamo.&lt;br&gt;&lt;br&gt;Broj pokušaja dekodiranja koji utječu na efikasnost dekodiranja slabih SNR signala: širokopojasni ili RX frekvencija jedan. &lt;br&gt; &lt;br&gt; Broj prolaza dekodiranja koji utječu na maksimalni broj signala koji se mogu dekodirati na istoj frekvenciji ili se nalaze blizu jedni drugima s međusobnim preklapanjima spektra, moguće je dekodirati do 4 signala na istoj frekvenciji i do 7 signala na RX frekvenciji ako je broj dekodirnih prolaza postavljen na 4.&lt;br&gt;&lt;br&gt;Povećajte broj pokušaja dekodiranja do vrijednosti koja omogućuje dovršenje dekodiranja do kraja intervala RX minuta.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="7073"/>

@@ -6481,6 +6481,11 @@ Bitte prüfen Sie, ob der Verzeichnisname richtig angegeben wurde.</translation>
         <source>Show </source>
         <translation>Anzeigen </translation>
     </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Directories</source>
+        <translation>Verzeichnisse</translation>
+    </message>
 </context>
 <context>
     <name>QFileSystemModel</name>

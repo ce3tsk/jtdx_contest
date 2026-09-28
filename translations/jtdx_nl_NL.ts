@@ -6481,6 +6481,11 @@ Controleer of de mapnaam juist is.</translation>
         <source>Show </source>
         <translation>Tonen </translation>
     </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Directories</source>
+        <translation>Mappen</translation>
+    </message>
 </context>
 <context>
     <name>QFileSystemModel</name>

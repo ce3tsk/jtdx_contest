@@ -6319,6 +6319,11 @@ Please verify the correct directory name was given.</source>
         <source>Show </source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Directories</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QFileSystemModel</name>

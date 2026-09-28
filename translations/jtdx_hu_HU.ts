@@ -6481,6 +6481,11 @@ Ellenőrizze, hogy a helyes könyvtárnevet adta-e meg.</translation>
         <source>Show </source>
         <translation>Megjelenítés </translation>
     </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Directories</source>
+        <translation>Könyvtárak</translation>
+    </message>
 </context>
 <context>
     <name>QFileSystemModel</name>

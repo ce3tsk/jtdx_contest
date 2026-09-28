@@ -6495,6 +6495,11 @@ Please verify the correct directory name was given.</source>
         <source>Show </source>
         <translation>Показать </translation>
     </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Directories</source>
+        <translation>Папки</translation>
+    </message>
 </context>
 <context>
     <name>QFileSystemModel</name>
@@ -6529,7 +6534,7 @@ Please verify the correct directory name was given.</source>
     <message>
         <location filename="../Configuration.cpp"/>
         <source>&amp;Cancel</source>
-        <translation>&amp;Отменить</translation>
+        <translation>О&amp;тменить</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp"/>
@@ -7288,7 +7293,7 @@ Please verify the correct directory name was given.</source>
     <message>
         <location filename="../Configuration.ui" line="145"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Type 2 compound callsigns are those with prefixes or suffixes not included in the allowed shortlist (See Help-&amp;gt;Add-on prefixes and suffixes).&lt;/p&gt;&lt;p&gt;This option determines which generated messages should contain your full type 2 compound call sign rather than your base callsign. It only applies if you have a type 2 compound callsign.&lt;/p&gt;&lt;p&gt;This option controls the way the messages that are used to answer CQ calls are generated. Generated messages 6 (CQ) and 5 (73) will always contain your full callsign. The JT65 and JT9 protocols allow for some standard messages with your full call at the expense of another piece of information such as the DX call or your locator.&lt;/p&gt;&lt;p&gt;Choosing message 1 omits the DX callsign which may be an issue when replying to CQ calls. Choosing message 3 also omits the DX callsign and many versions of this and other software will not extract the report. Choosing neither means that your full callsign only goes in your message 5 (73) so your QSO partner my log the wrong callsign.&lt;/p&gt;&lt;p&gt;None of these options are perfect, message 3 is best but be aware your QSO partner may not log the report you send them.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Составные(дробные) позывные второго типа - это те, у которых есть префиксы или суффиксы, не включенные в разрешенный список (см. Помощь-&gt;Список дополнительных префиксов и суффиксов)&lt;/p&gt;&lt;p&gt;Эта опция определяет, какие созданные сообщения должны содержать Ваш полный составной позывной второго типа вместо Вашего основного(домашнего) позывного. Эта настройка применяется только если Вы используете составной позывной второго типа.&lt;/p&gt;&lt;p&gt;Этот опция определяет способ создания сообщений, которые используются для ответа на вызовы CQ. Сгенерированные сообщения Tx6 (CQ) и Tx5 ​​(73) всегда будут содержать Ваш полный составной позывной. Протоколы JT65 и JT9 позволяют использовать некоторые стандартные сообщения с Вашим полным составным позывным в ущерб другой информации, такой как позывной корреспондента или Ваш QTH квадрат.&lt;/p&gt;&lt;p&gt;При выбор сообщения Tx1 исключается позывной корреспондента, что может быть проблемой при ответе на сообщения CQ. Выбор сообщения Tx3 также исключает позывной корреспондента, и разные версии этого и другого программного обеспечения не будут извлекать из принятого сообщения рапорт. Выбрав Tx5, Ваш полный позывной будет передан только в сообщении 73, поэтому Ваш корреспондент может внести QSO в свой лог с Вашим неполным(домашним) позывным.&lt;/p&gt;&lt;p&gt;Среди этих вариантов нет идеального, лучше использовать сообщение Tx3, но помните что в этом случае Ваш корреспондент может забыть внести в лог принятый от Вас рапорт.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Составные(дробные) позывные второго типа - это те, у которых есть префиксы или суффиксы, не включенные в разрешенный список (см. Помощь-&gt;Список дополнительных префиксов и суффиксов)&lt;/p&gt;&lt;p&gt;Эта опция определяет, какие созданные сообщения должны содержать Ваш полный составной позывной второго типа вместо Вашего основного(домашнего) позывного. Эта настройка применяется только если Вы используете составной позывной второго типа.&lt;/p&gt;&lt;p&gt;Этот опция определяет способ создания сообщений, которые используются для ответа на вызовы CQ. Сгенерированные сообщения Tx6 (CQ) и Tx5 (73) всегда будут содержать Ваш полный составной позывной. Протоколы JT65 и JT9 позволяют использовать некоторые стандартные сообщения с Вашим полным составным позывным в ущерб другой информации, такой как позывной корреспондента или Ваш QTH квадрат.&lt;/p&gt;&lt;p&gt;При выбор сообщения Tx1 исключается позывной корреспондента, что может быть проблемой при ответе на сообщения CQ. Выбор сообщения Tx3 также исключает позывной корреспондента, и разные версии этого и другого программного обеспечения не будут извлекать из принятого сообщения рапорт. Выбрав Tx5, Ваш полный позывной будет передан только в сообщении 73, поэтому Ваш корреспондент может внести QSO в свой лог с Вашим неполным(домашним) позывным.&lt;/p&gt;&lt;p&gt;Среди этих вариантов нет идеального, лучше использовать сообщение Tx3, но помните что в этом случае Ваш корреспондент может забыть внести в лог принятый от Вас рапорт.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="152"/>

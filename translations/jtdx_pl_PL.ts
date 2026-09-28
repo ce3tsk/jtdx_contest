@@ -6481,6 +6481,11 @@ Upewnić się, że podano właściwą nazwę katalogu.</translation>
         <source>Show </source>
         <translation>Pokaż </translation>
     </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Directories</source>
+        <translation>Katalogi</translation>
+    </message>
 </context>
 <context>
     <name>QFileSystemModel</name>

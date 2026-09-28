@@ -6480,6 +6480,11 @@ Lūdzu, pārbaudiet, vai norādīts pareizs direktorijas nosaukums.</translation
         <source>Show </source>
         <translation>Rādīt </translation>
     </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Directories</source>
+        <translation>Direktorijas</translation>
+    </message>
 </context>
 <context>
     <name>QFileSystemModel</name>
