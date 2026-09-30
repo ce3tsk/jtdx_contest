@@ -197,6 +197,7 @@ extern "C" {
 
 #include "pimpl_impl.hpp"
 #include "uilimits.h"   // CE3TSK: the .ui size limits against the current font
+#include "contestprofile.h"   // CE3TSK: JTDX_contest's own notification colours
 
 #include "ui_Configuration.h"
 #include "moc_Configuration.cpp"
@@ -457,9 +458,16 @@ private:
   typedef QList<QAudioDeviceInfo> AudioDevices;
 
   void read_settings ();
-  bool colors_differ_from_recommended () const;      // CE3TSK
-  void apply_recommended_colors ();            // CE3TSK
   void write_settings ();
+  void write_own_colors ();   // CE3TSK: the notification colours and the style, see contestprofile.h
+
+  /* CE3TSK: every notification colour - its key, and the live and pending members that hold it.
+     read_settings and write_own_colors both go through this one list, so no colour can come from or
+     go to the shared stock JTDX key while its neighbours use JTDX_contest's own. NOT through it yet:
+     the Recommended colors button (on_pbDefaultColors_clicked) and the accept path (color_X_ =
+     next_color_X_) still name all 34 by hand - a colour added here must be added there too. */
+  struct ColorSlot { char const * key; QColor impl::* live; QColor impl::* next; };
+  static ColorSlot const color_slots[];   // NOT "slots": Qt's moc macro expands it away
 
   bool load_audio_devices (QAudio::Mode, QComboBox *, QAudioDeviceInfo *);
   void update_audio_channels (QComboBox const *, int, QComboBox *, bool);
@@ -896,7 +904,6 @@ private:
   bool autolog_;
   bool insert_blank_;
   bool useDarkStyle_;
-  bool recommendedColorsOffered_;   // CE3TSK: the one-time colour offer has been made
   bool countryName_;
   bool countryPrefix_;
   bool countryNameTranslated_;   // CE3TSK
@@ -1068,6 +1075,43 @@ private:
   
 
   friend class Configuration;
+};
+
+Configuration::impl::ColorSlot const Configuration::impl::color_slots[] = {
+  {"colorCQ",              &impl::color_CQ_,              &impl::next_color_CQ_},
+  {"colorCQ_dark",         &impl::color_CQ_dark_,         &impl::next_color_CQ_dark_},
+  {"colorMyCall",          &impl::color_MyCall_,          &impl::next_color_MyCall_},
+  {"colorMyCall_dark",     &impl::color_MyCall_dark_,     &impl::next_color_MyCall_dark_},
+  {"colorStandardCall",    &impl::color_StandardCall_,    &impl::next_color_StandardCall_},
+  {"colorStandardCall_dark", &impl::color_StandardCall_dark_, &impl::next_color_StandardCall_dark_},
+  {"colorTxMsg",           &impl::color_TxMsg_,           &impl::next_color_TxMsg_},
+  {"colorTxMsg_dark",      &impl::color_TxMsg_dark_,      &impl::next_color_TxMsg_dark_},
+  {"colorWorkedCall",      &impl::color_WorkedCall_,      &impl::next_color_WorkedCall_},
+  {"colorWorkedCall_dark", &impl::color_WorkedCall_dark_, &impl::next_color_WorkedCall_dark_},
+  {"colorNewCQZ",          &impl::color_NewCQZ_,          &impl::next_color_NewCQZ_},
+  {"colorNewCQZ_dark",     &impl::color_NewCQZ_dark_,     &impl::next_color_NewCQZ_dark_},
+  {"colorNewCQZBand",      &impl::color_NewCQZBand_,      &impl::next_color_NewCQZBand_},
+  {"colorNewCQZBand_dark", &impl::color_NewCQZBand_dark_, &impl::next_color_NewCQZBand_dark_},
+  {"colorNewITUZ",         &impl::color_NewITUZ_,         &impl::next_color_NewITUZ_},
+  {"colorNewITUZ_dark",    &impl::color_NewITUZ_dark_,    &impl::next_color_NewITUZ_dark_},
+  {"colorNewITUZBand",     &impl::color_NewITUZBand_,     &impl::next_color_NewITUZBand_},
+  {"colorNewITUZBand_dark", &impl::color_NewITUZBand_dark_, &impl::next_color_NewITUZBand_dark_},
+  {"colorNewDXCC",         &impl::color_NewDXCC_,         &impl::next_color_NewDXCC_},
+  {"colorNewDXCC_dark",    &impl::color_NewDXCC_dark_,    &impl::next_color_NewDXCC_dark_},
+  {"colorNewDXCCBand",     &impl::color_NewDXCCBand_,     &impl::next_color_NewDXCCBand_},
+  {"colorNewDXCCBand_dark", &impl::color_NewDXCCBand_dark_, &impl::next_color_NewDXCCBand_dark_},
+  {"colorNewGrid",         &impl::color_NewGrid_,         &impl::next_color_NewGrid_},
+  {"colorNewGrid_dark",    &impl::color_NewGrid_dark_,    &impl::next_color_NewGrid_dark_},
+  {"colorNewGridBand",     &impl::color_NewGridBand_,     &impl::next_color_NewGridBand_},
+  {"colorNewGridBand_dark", &impl::color_NewGridBand_dark_, &impl::next_color_NewGridBand_dark_},
+  {"colorNewPx",           &impl::color_NewPx_,           &impl::next_color_NewPx_},
+  {"colorNewPx_dark",      &impl::color_NewPx_dark_,      &impl::next_color_NewPx_dark_},
+  {"colorNewPxBand",       &impl::color_NewPxBand_,       &impl::next_color_NewPxBand_},
+  {"colorNewPxBand_dark",  &impl::color_NewPxBand_dark_,  &impl::next_color_NewPxBand_dark_},
+  {"colorNewCall",         &impl::color_NewCall_,         &impl::next_color_NewCall_},
+  {"colorNewCall_dark",    &impl::color_NewCall_dark_,    &impl::next_color_NewCall_dark_},
+  {"colorNewCallBand",     &impl::color_NewCallBand_,     &impl::next_color_NewCallBand_},
+  {"colorNewCallBand_dark", &impl::color_NewCallBand_dark_, &impl::next_color_NewCallBand_dark_},
 };
 
 #include "Configuration.moc"
@@ -2666,6 +2710,7 @@ void Configuration::impl::done (int r)
 
 void Configuration::impl::read_settings ()
 {
+  auto const colors_from = contest_profile::origin (*settings_);   // CE3TSK: outside the group, it reads [Common] too
   SettingsGroup g {settings_, "Configuration"};
   restoreGeometry (settings_->value ("window/geometry").toByteArray ());
 
@@ -2681,46 +2726,32 @@ void Configuration::impl::read_settings ()
   content_ = settings_->value ("Content", "").toString ();
   countries_= settings_->value ("CountryFilterList", "").toString ();
   callsigns_= settings_->value ("CallsignFilterList", "").toString ();
-  next_color_CQ_ = color_CQ_ = settings_->value("colorCQ",recommended_color("colorCQ")).toString();
-  next_color_MyCall_ = color_MyCall_ = settings_->value("colorMyCall",recommended_color("colorMyCall")).toString();
-  next_color_StandardCall_ = color_StandardCall_ = settings_->value("colorStandardCall",recommended_color("colorStandardCall")).toString();
-  next_color_TxMsg_ = color_TxMsg_ = settings_->value("colorTxMsg",recommended_color("colorTxMsg")).toString();
-  next_color_NewCQZ_ = color_NewCQZ_ = settings_->value("colorNewCQZ",recommended_color("colorNewCQZ")).toString();
-  next_color_NewCQZBand_ = color_NewCQZBand_ = settings_->value("colorNewCQZBand",recommended_color("colorNewCQZBand")).toString();
-  next_color_NewITUZ_ = color_NewITUZ_ = settings_->value("colorNewITUZ",recommended_color("colorNewITUZ")).toString();
-  next_color_NewITUZBand_ = color_NewITUZBand_ = settings_->value("colorNewITUZBand",recommended_color("colorNewITUZBand")).toString();
-  next_color_NewDXCC_ = color_NewDXCC_ = settings_->value("colorNewDXCC",recommended_color("colorNewDXCC")).toString();
-  next_color_NewDXCCBand_ = color_NewDXCCBand_ = settings_->value("colorNewDXCCBand",recommended_color("colorNewDXCCBand")).toString();
-  next_color_NewGrid_ = color_NewGrid_ = settings_->value("colorNewGrid",recommended_color("colorNewGrid")).toString();
-  next_color_NewGridBand_ = color_NewGridBand_ = settings_->value("colorNewGridBand",recommended_color("colorNewGridBand")).toString();
-  next_color_NewPx_ = color_NewPx_ = settings_->value("colorNewPx",recommended_color("colorNewPx")).toString();
-  next_color_NewPxBand_ = color_NewPxBand_ = settings_->value("colorNewPxBand",recommended_color("colorNewPxBand")).toString();
-  next_color_NewCall_ = color_NewCall_ = settings_->value("colorNewCall",recommended_color("colorNewCall")).toString();
-  next_color_NewCallBand_ = color_NewCallBand_ = settings_->value("colorNewCallBand",recommended_color("colorNewCallBand")).toString();
-  next_color_WorkedCall_ = color_WorkedCall_ = settings_->value("colorWorkedCall",recommended_color("colorWorkedCall")).toString();
-  next_color_CQ_dark_ = color_CQ_dark_ = settings_->value("colorCQ_dark",recommended_color("colorCQ_dark")).toString();
-  next_color_MyCall_dark_ = color_MyCall_dark_ = settings_->value("colorMyCall_dark",recommended_color("colorMyCall_dark")).toString();
-  next_color_StandardCall_dark_ = color_StandardCall_dark_ = settings_->value("colorStandardCall_dark",recommended_color("colorStandardCall_dark")).toString();
-  next_color_TxMsg_dark_ = color_TxMsg_dark_ = settings_->value("colorTxMsg_dark",recommended_color("colorTxMsg_dark")).toString();
-  next_color_NewCQZ_dark_ = color_NewCQZ_dark_ = settings_->value("colorNewCQZ_dark",recommended_color("colorNewCQZ_dark")).toString();
-  next_color_NewCQZBand_dark_ = color_NewCQZBand_dark_ = settings_->value("colorNewCQZBand_dark",recommended_color("colorNewCQZBand_dark")).toString();
-  next_color_NewITUZ_dark_ = color_NewITUZ_dark_ = settings_->value("colorNewITUZ_dark",recommended_color("colorNewITUZ_dark")).toString();
-  next_color_NewITUZBand_dark_ = color_NewITUZBand_dark_ = settings_->value("colorNewITUZBand_dark",recommended_color("colorNewITUZBand_dark")).toString();
-  next_color_NewDXCC_dark_ = color_NewDXCC_dark_ = settings_->value("colorNewDXCC_dark",recommended_color("colorNewDXCC_dark")).toString();
-  next_color_NewDXCCBand_dark_ = color_NewDXCCBand_dark_ = settings_->value("colorNewDXCCBand_dark",recommended_color("colorNewDXCCBand_dark")).toString();
-  next_color_NewGrid_dark_ = color_NewGrid_dark_ = settings_->value("colorNewGrid_dark",recommended_color("colorNewGrid_dark")).toString();
-  next_color_NewGridBand_dark_ = color_NewGridBand_dark_ = settings_->value("colorNewGridBand_dark",recommended_color("colorNewGridBand_dark")).toString();
-  next_color_NewPx_dark_ = color_NewPx_dark_ = settings_->value("colorNewPx_dark",recommended_color("colorNewPx_dark")).toString();
-  next_color_NewPxBand_dark_ = color_NewPxBand_dark_ = settings_->value("colorNewPxBand_dark",recommended_color("colorNewPxBand_dark")).toString();
-  next_color_NewCall_dark_ = color_NewCall_dark_ = settings_->value("colorNewCall_dark",recommended_color("colorNewCall_dark")).toString();
-  next_color_NewCallBand_dark_ = color_NewCallBand_dark_ = settings_->value("colorNewCallBand_dark",recommended_color("colorNewCallBand_dark")).toString();
-  next_color_WorkedCall_dark_ = color_WorkedCall_dark_ = settings_->value("colorWorkedCall_dark",recommended_color("colorWorkedCall_dark")).toString();
-  /* CE3TSK: dark by default - a fresh install starts in the dark style; an existing profile
-     keeps whatever it saved, because the key is then present in the ini. Seeded on the first
-     run so the state is written down rather than implied by a default no one can see. */
-  if (!settings_->contains ("UseDarkStyle")) settings_->setValue ("UseDarkStyle", true);
-  useDarkStyle_ = settings_->value ("UseDarkStyle", true).toBool ();
-  recommendedColorsOffered_ = settings_->value ("RecommendedColorsOffered", false).toBool ();   // CE3TSK
+  /* CE3TSK 2026-09-29: the notification colours and the dark style are JTDX_contest's own copy,
+     beside stock JTDX's keys of the same names, which this program no longer writes -
+     contestprofile.h says why, and where the copy starts from. A key missing from the copy reads
+     as its recommended value, and so does every key on a first run: a fresh install and a profile
+     arriving from stock JTDX both start with the recommended colours in the dark style, with no
+     question asked. The copy is written at once, so it is taken from the shared keys only once,
+     however this session ends. */
+  auto own_setting = [&] (QString const& key, QVariant const& recommended) {
+    switch (colors_from)
+      {
+      case contest_profile::Origin::own: return settings_->value (contest_profile::own_key (key), recommended);
+      case contest_profile::Origin::earlier_contest: return settings_->value (key, recommended);
+      case contest_profile::Origin::first_run: break;
+      }
+    return recommended;
+  };
+  for (auto const& c : color_slots)
+    {
+      this->*(c.live) = this->*(c.next) = QColor {own_setting (c.key, recommended_color (c.key)).toString ()};
+    }
+  useDarkStyle_ = own_setting ("UseDarkStyle", true).toBool ();
+  if (contest_profile::Origin::own != colors_from)
+    {
+      write_own_colors ();
+      settings_->sync ();
+    }
 
   next_font_.fromString (settings_->value ("Font", QGuiApplication::font ().toString ()).toString ());
   if (next_font_ != font_ || useDarkStyle_)
@@ -3257,46 +3288,12 @@ void Configuration::impl::write_settings ()
   SettingsGroup g {settings_, "Configuration"};
 
   settings_->setValue ("MyCall", my_callsign_);
-  settings_->setValue ("RecommendedColorsOffered", recommendedColorsOffered_);   // CE3TSK
   settings_->setValue ("MyGrid", my_grid_);
   settings_->setValue ("timeFromLogFiltering", timeFrom_);
   settings_->setValue ("Content", content_);
   settings_->setValue ("CountryFilterList", countries_);
   settings_->setValue ("CallsignFilterList", callsigns_);
-  settings_->setValue("colorCQ",color_CQ_);
-  settings_->setValue("colorMyCall",color_MyCall_);
-  settings_->setValue("colorTxMsg",color_TxMsg_);
-  settings_->setValue("colorNewCQZ",color_NewCQZ_);
-  settings_->setValue("colorNewCQZBand",color_NewCQZBand_);
-  settings_->setValue("colorNewITUZ",color_NewITUZ_);
-  settings_->setValue("colorNewITUZBand",color_NewITUZBand_);
-  settings_->setValue("colorNewDXCC",color_NewDXCC_);
-  settings_->setValue("colorNewDXCCBand",color_NewDXCCBand_);
-  settings_->setValue("colorNewGrid",color_NewGrid_);
-  settings_->setValue("colorNewGridBand",color_NewGridBand_);
-  settings_->setValue("colorNewPx",color_NewPx_);
-  settings_->setValue("colorNewPxBand",color_NewPxBand_);
-  settings_->setValue("colorNewCall",color_NewCall_);
-  settings_->setValue("colorNewCallBand",color_NewCallBand_);
-  settings_->setValue("colorStandardCall",color_StandardCall_);
-  settings_->setValue("colorWorkedCall",color_WorkedCall_);
-  settings_->setValue("colorCQ_dark",color_CQ_dark_);
-  settings_->setValue("colorMyCall_dark",color_MyCall_dark_);
-  settings_->setValue("colorTxMsg_dark",color_TxMsg_dark_);
-  settings_->setValue("colorNewCQZ_dark",color_NewCQZ_dark_);
-  settings_->setValue("colorNewCQZBand_dark",color_NewCQZBand_dark_);
-  settings_->setValue("colorNewITUZ_dark",color_NewITUZ_dark_);
-  settings_->setValue("colorNewITUZBand_dark",color_NewITUZBand_dark_);
-  settings_->setValue("colorNewDXCC_dark",color_NewDXCC_dark_);
-  settings_->setValue("colorNewDXCCBand_dark",color_NewDXCCBand_dark_);
-  settings_->setValue("colorNewGrid_dark",color_NewGrid_dark_);
-  settings_->setValue("colorNewGridBand_dark",color_NewGridBand_dark_);
-  settings_->setValue("colorNewPx_dark",color_NewPx_dark_);
-  settings_->setValue("colorNewPxBand_dark",color_NewPxBand_dark_);
-  settings_->setValue("colorNewCall_dark",color_NewCall_dark_);
-  settings_->setValue("colorNewCallBand_dark",color_NewCallBand_dark_);
-  settings_->setValue("colorStandardCall_dark",color_StandardCall_dark_);
-  settings_->setValue("colorWorkedCall_dark",color_WorkedCall_dark_);
+  write_own_colors ();   // CE3TSK: never the shared keys, see contestprofile.h
   settings_->setValue ("Font", font_.toString ());
   settings_->setValue ("DecodedTextFont", decoded_text_font_.toString ());
   settings_->setValue ("IDint", id_interval_);
@@ -3421,7 +3418,6 @@ void Configuration::impl::write_settings ()
   settings_->setValue ("PromptToLog", prompt_to_log_);
   settings_->setValue ("AutoQSOLogging", autolog_);
   settings_->setValue ("InsertBlank", insert_blank_);
-  settings_->setValue ("UseDarkStyle", useDarkStyle_);
   settings_->setValue ("countryName", countryName_);
   settings_->setValue ("countryPrefix", countryPrefix_);
   settings_->setValue ("countryNameTranslated", countryNameTranslated_);
@@ -5548,91 +5544,15 @@ void Configuration::impl::on_pbTxMsg_clicked()
     }
 }
 
-/* CE3TSK: restore the recommended colors - both styles at once, so switching the style
-   later finds a sane palette too. The swatches are repainted by handing the existing
-   text-color handler the current state, which redraws every one of them. */
-/* CE3TSK: does this profile carry a notification colour that is not the recommended one?
-   Read from the settings rather than from the members: at start-up the two agree, and a key
-   that was never written reads back as its recommended default, so an untouched profile
-   correctly reports "no difference" and is never asked. */
-bool Configuration::impl::colors_differ_from_recommended () const
+/* CE3TSK 2026-09-29: the notification colours and the style go to JTDX_contest's own keys only,
+   never to the shared ones stock JTDX reads (contestprofile.h). RecommendedColorsOffered stays in
+   the file, true, for an older JTDX_contest started on this profile: it would otherwise offer its
+   colours again, and that offer wrote the shared keys. Runs inside the Configuration group. */
+void Configuration::impl::write_own_colors ()
 {
-  SettingsGroup g {settings_, "Configuration"};
-  for (auto const& c : recommended_colors)
-    {
-      for (auto const& key : {QString {c.key}, QString {c.key} + "_dark"})
-        {
-          if (QColor {settings_->value (key, recommended_color (key)).toString ()}
-              != QColor {recommended_color (key)}) return true;
-        }
-    }
-  return false;
-}
-
-/* CE3TSK: set every notification colour to the recommended one, live and pending both. The
-   pending copies matter: nothing re-syncs them when the settings dialog opens, so leaving them
-   behind would mean the next OK in that dialog quietly put the old colours back. */
-void Configuration::impl::apply_recommended_colors ()
-{
-  struct Slot { char const * key; QColor impl::* live; QColor impl::* next; };
-  static Slot const color_slots[] = {   // NOT "slots": Qt's moc macro expands it away
-    {"colorCQ",              &impl::color_CQ_,              &impl::next_color_CQ_},
-    {"colorCQ_dark",         &impl::color_CQ_dark_,         &impl::next_color_CQ_dark_},
-    {"colorMyCall",          &impl::color_MyCall_,          &impl::next_color_MyCall_},
-    {"colorMyCall_dark",     &impl::color_MyCall_dark_,     &impl::next_color_MyCall_dark_},
-    {"colorStandardCall",    &impl::color_StandardCall_,    &impl::next_color_StandardCall_},
-    {"colorStandardCall_dark", &impl::color_StandardCall_dark_, &impl::next_color_StandardCall_dark_},
-    {"colorTxMsg",           &impl::color_TxMsg_,           &impl::next_color_TxMsg_},
-    {"colorTxMsg_dark",      &impl::color_TxMsg_dark_,      &impl::next_color_TxMsg_dark_},
-    {"colorWorkedCall",      &impl::color_WorkedCall_,      &impl::next_color_WorkedCall_},
-    {"colorWorkedCall_dark", &impl::color_WorkedCall_dark_, &impl::next_color_WorkedCall_dark_},
-    {"colorNewCQZ",          &impl::color_NewCQZ_,          &impl::next_color_NewCQZ_},
-    {"colorNewCQZ_dark",     &impl::color_NewCQZ_dark_,     &impl::next_color_NewCQZ_dark_},
-    {"colorNewCQZBand",      &impl::color_NewCQZBand_,      &impl::next_color_NewCQZBand_},
-    {"colorNewCQZBand_dark", &impl::color_NewCQZBand_dark_, &impl::next_color_NewCQZBand_dark_},
-    {"colorNewITUZ",         &impl::color_NewITUZ_,         &impl::next_color_NewITUZ_},
-    {"colorNewITUZ_dark",    &impl::color_NewITUZ_dark_,    &impl::next_color_NewITUZ_dark_},
-    {"colorNewITUZBand",     &impl::color_NewITUZBand_,     &impl::next_color_NewITUZBand_},
-    {"colorNewITUZBand_dark", &impl::color_NewITUZBand_dark_, &impl::next_color_NewITUZBand_dark_},
-    {"colorNewDXCC",         &impl::color_NewDXCC_,         &impl::next_color_NewDXCC_},
-    {"colorNewDXCC_dark",    &impl::color_NewDXCC_dark_,    &impl::next_color_NewDXCC_dark_},
-    {"colorNewDXCCBand",     &impl::color_NewDXCCBand_,     &impl::next_color_NewDXCCBand_},
-    {"colorNewDXCCBand_dark", &impl::color_NewDXCCBand_dark_, &impl::next_color_NewDXCCBand_dark_},
-    {"colorNewGrid",         &impl::color_NewGrid_,         &impl::next_color_NewGrid_},
-    {"colorNewGrid_dark",    &impl::color_NewGrid_dark_,    &impl::next_color_NewGrid_dark_},
-    {"colorNewGridBand",     &impl::color_NewGridBand_,     &impl::next_color_NewGridBand_},
-    {"colorNewGridBand_dark", &impl::color_NewGridBand_dark_, &impl::next_color_NewGridBand_dark_},
-    {"colorNewPx",           &impl::color_NewPx_,           &impl::next_color_NewPx_},
-    {"colorNewPx_dark",      &impl::color_NewPx_dark_,      &impl::next_color_NewPx_dark_},
-    {"colorNewPxBand",       &impl::color_NewPxBand_,       &impl::next_color_NewPxBand_},
-    {"colorNewPxBand_dark",  &impl::color_NewPxBand_dark_,  &impl::next_color_NewPxBand_dark_},
-    {"colorNewCall",         &impl::color_NewCall_,         &impl::next_color_NewCall_},
-    {"colorNewCall_dark",    &impl::color_NewCall_dark_,    &impl::next_color_NewCall_dark_},
-    {"colorNewCallBand",     &impl::color_NewCallBand_,     &impl::next_color_NewCallBand_},
-    {"colorNewCallBand_dark", &impl::color_NewCallBand_dark_, &impl::next_color_NewCallBand_dark_},
-  };
-  for (auto const& c : color_slots) this->*(c.live) = this->*(c.next) = QColor {recommended_color (c.key)};
-}
-
-bool Configuration::recommended_colors_offer_pending () const
-{
-  return !m_->recommendedColorsOffered_ && m_->colors_differ_from_recommended ();
-}
-
-void Configuration::accept_recommended_colors ()
-{
-  m_->apply_recommended_colors ();
-  m_->recommendedColorsOffered_ = true;
-  /* the colours are tuned for the dark style. Switch it the way View > Use dark style does, so the
-     style sheet is loaded too - setting the flag alone left the window light until a restart. */
-  set_dark_style (true);
-  m_->write_settings ();
-}
-
-void Configuration::decline_recommended_colors ()
-{
-  m_->recommendedColorsOffered_ = true;                  // asked once, never again
-  m_->write_settings ();
+  for (auto const& c : color_slots) settings_->setValue (contest_profile::own_key (c.key), this->*(c.live));
+  settings_->setValue (contest_profile::own_key ("UseDarkStyle"), useDarkStyle_);
+  settings_->setValue ("RecommendedColorsOffered", true);
 }
 
 void Configuration::set_dark_style (bool dark)
@@ -5649,6 +5569,9 @@ void Configuration::fit_widget_size_limits ()
   m_->fit_size_limits ();
 }
 
+/* CE3TSK: restore the recommended colors - both styles at once, so switching the style
+   later finds a sane palette too. The swatches are repainted by handing the existing
+   text-color handler the current state, which redraws every one of them. */
 void Configuration::impl::on_pbDefaultColors_clicked()
 {
   next_color_CQ_ = QColor {recommended_color ("colorCQ")};

@@ -5910,43 +5910,6 @@ UDP-server %2:%3</translation>
         <translation>Weet u zeker dat u de taal van de interface wilt wijzigen naar Nederlands? JTDX wordt afgesloten, start het opnieuw.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp"/>
-        <source>Recommended colours</source>
-        <translation>Aanbevolen kleuren</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.cpp"/>
-        <source>Use the recommended notification colours?</source>
-        <translation>De aanbevolen meldingskleuren gebruiken?</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.cpp"/>
-        <source>This profile carries notification colours from an earlier setup. JTDX_contest ships a set that was checked against every background each colour can appear on, and meets the AA contrast level of the WCAG accessibility guidelines, so the decodes stay legible.
-
-Choosing Yes also switches on the new dark style, which those colours are made for.
-
-You can go back to the light style at any time in Settings, General; and the recommended colours can be set again later in Settings, Notifications.
-
-This is asked only once.</source>
-        <translation>Dit profiel bevat meldingskleuren uit een eerdere installatie. JTDX_contest levert een set die is gecontroleerd tegen elke achtergrond waarop een kleur kan verschijnen en die het AA-contrastniveau van de WCAG-toegankelijkheidsrichtlijnen haalt, zodat de decodes leesbaar blijven.
-
-Met Ja wordt ook de nieuwe donkere stijl ingeschakeld, waarvoor die kleuren gemaakt zijn.
-
-U kunt altijd terug naar de lichte stijl via Instellingen, Algemeen; en de aanbevolen kleuren kunnen later opnieuw worden ingesteld via Instellingen, Meldingen.
-
-Dit wordt maar één keer gevraagd.</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.cpp"/>
-        <source>&amp;Yes, use them</source>
-        <translation>&amp;Ja, gebruiken</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.cpp"/>
-        <source>&amp;No, keep mine</source>
-        <translation>&amp;Nee, de mijne houden</translation>
-    </message>
-    <message>
         <location filename="../mainwindow.ui"/>
         <source>TX|</source>
         <translation>TX|</translation>
@@ -9995,6 +9958,31 @@ Instelling installeren?</translation>
     <message>
         <source>macOS allows too little shared memory. To raise the limit permanently, copy com.jtdx.sysctl.plist from the JTDX_contest installer (DMG) to /Library/LaunchDaemons and restart this Mac - see ReadMe.txt in the DMG.</source>
         <translation>macOS staat te weinig gedeeld geheugen toe. Kopieer com.jtdx.sysctl.plist uit het JTDX_contest-installatieprogramma (DMG) naar /Library/LaunchDaemons en start deze Mac opnieuw op om de limiet blijvend te verhogen - zie ReadMe.txt in de DMG.</translation>
+    </message>
+    <message>
+        <location filename="../main.cpp"/>
+        <source>The settings file could not be copied. This program keeps a copy of it before it first saves anything in it, and does not start without one.</source>
+        <translation>Het instellingenbestand kon niet worden gekopieerd. Dit programma maakt er een kopie van voordat het er voor het eerst iets in opslaat, en start niet zonder die kopie.</translation>
+    </message>
+    <message>
+        <location filename="../contestprofile.h"/>
+        <source>The copy could not be recorded in the settings file.</source>
+        <translation>De kopie kon niet in het instellingenbestand worden vastgelegd.</translation>
+    </message>
+    <message>
+        <location filename="../contestprofile.h"/>
+        <source>%1
+could not be copied to
+%2:
+%3
+
+Fix the cause and press %4, or press %5 to quit.</source>
+        <translation>%1
+kon niet worden gekopieerd naar
+%2:
+%3
+
+Verhelp de oorzaak en druk op „%4”, of druk op „%5” om af te sluiten.</translation>
     </message>
 </context>
 <context>

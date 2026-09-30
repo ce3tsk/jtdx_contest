@@ -5900,43 +5900,6 @@ Servidor UDP %2:%3</translation>
         <translation>Tem a certeza de que deseja mudar o idioma da interface para Português? O JTDX será fechado, volte a abri-lo.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp"/>
-        <source>Recommended colours</source>
-        <translation>Cores recomendadas</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.cpp"/>
-        <source>Use the recommended notification colours?</source>
-        <translation>Utilizar as cores de notificação recomendadas?</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.cpp"/>
-        <source>This profile carries notification colours from an earlier setup. JTDX_contest ships a set that was checked against every background each colour can appear on, and meets the AA contrast level of the WCAG accessibility guidelines, so the decodes stay legible.
-
-Choosing Yes also switches on the new dark style, which those colours are made for.
-
-You can go back to the light style at any time in Settings, General; and the recommended colours can be set again later in Settings, Notifications.
-
-This is asked only once.</source>
-        <translation>Este perfil traz cores de notificação de uma configuração anterior. O JTDX_contest inclui um conjunto verificado contra cada fundo em que cada cor pode aparecer e que cumpre o nível de contraste AA das diretrizes de acessibilidade WCAG, de modo que as descodificações se mantenham legíveis.
-
-Escolher Sim também activa o novo estilo escuro, para o qual essas cores foram feitas.
-
-Pode voltar ao estilo claro quando quiser em Definições, Geral; e as cores recomendadas podem ser aplicadas novamente mais tarde em Definições, Notificações.
-
-Isto é perguntado apenas uma vez.</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.cpp"/>
-        <source>&amp;Yes, use them</source>
-        <translation>&amp;Sim, utilizar</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.cpp"/>
-        <source>&amp;No, keep mine</source>
-        <translation>&amp;Não, manter as minhas</translation>
-    </message>
-    <message>
         <location filename="../mainwindow.ui"/>
         <source>TX|</source>
         <translation>TX|</translation>
@@ -9985,6 +9948,31 @@ Instalar a definição?</translation>
     <message>
         <source>macOS allows too little shared memory. To raise the limit permanently, copy com.jtdx.sysctl.plist from the JTDX_contest installer (DMG) to /Library/LaunchDaemons and restart this Mac - see ReadMe.txt in the DMG.</source>
         <translation>O macOS permite demasiado pouca memória partilhada. Para aumentar o limite de forma permanente, copie com.jtdx.sysctl.plist do instalador do JTDX_contest (DMG) para /Library/LaunchDaemons e reinicie este Mac - veja o ReadMe.txt no DMG.</translation>
+    </message>
+    <message>
+        <location filename="../main.cpp"/>
+        <source>The settings file could not be copied. This program keeps a copy of it before it first saves anything in it, and does not start without one.</source>
+        <translation>Não foi possível copiar o ficheiro de configurações. Este programa faz uma cópia dele antes de guardar o que quer que seja nele pela primeira vez, e não arranca sem essa cópia.</translation>
+    </message>
+    <message>
+        <location filename="../contestprofile.h"/>
+        <source>The copy could not be recorded in the settings file.</source>
+        <translation>Não foi possível registar a cópia no ficheiro de configurações.</translation>
+    </message>
+    <message>
+        <location filename="../contestprofile.h"/>
+        <source>%1
+could not be copied to
+%2:
+%3
+
+Fix the cause and press %4, or press %5 to quit.</source>
+        <translation>%1
+não pôde ser copiado para
+%2:
+%3
+
+Corrija a causa e prima «%4», ou prima «%5» para sair.</translation>
     </message>
 </context>
 <context>

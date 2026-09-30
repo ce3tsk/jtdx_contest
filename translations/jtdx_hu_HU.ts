@@ -5910,43 +5910,6 @@ UDP szerver %2:%3</translation>
         <translation>Biztos, hogy a felület nyelvét magyarra változtatja? A JTDX bezárul, indítsa el újra.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp"/>
-        <source>Recommended colours</source>
-        <translation>Ajánlott színek</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.cpp"/>
-        <source>Use the recommended notification colours?</source>
-        <translation>Használjuk az ajánlott értesítési színeket?</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.cpp"/>
-        <source>This profile carries notification colours from an earlier setup. JTDX_contest ships a set that was checked against every background each colour can appear on, and meets the AA contrast level of the WCAG accessibility guidelines, so the decodes stay legible.
-
-Choosing Yes also switches on the new dark style, which those colours are made for.
-
-You can go back to the light style at any time in Settings, General; and the recommended colours can be set again later in Settings, Notifications.
-
-This is asked only once.</source>
-        <translation>Ez a profil egy korábbi beállításból hozott értesítési színeket. A JTDX_contest olyan készletet tartalmaz, amelyet minden háttérrel szemben ellenőriztek, amelyen az adott szín megjelenhet, és amely megfelel a WCAG akadálymentességi irányelvek AA kontrasztszintjének, így a dekódolások olvashatók maradnak.
-
-Az Igen egyben bekapcsolja az új sötét stílust is, amelyhez ezek a színek készültek.
-
-A világos stílusra bármikor visszatérhet a Beállítások, Általános lapon; az ajánlott színek pedig később is beállíthatók a Beállítások, Értesítések lapon.
-
-Ezt csak egyszer kérdezzük meg.</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.cpp"/>
-        <source>&amp;Yes, use them</source>
-        <translation>&amp;Igen, használjuk</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.cpp"/>
-        <source>&amp;No, keep mine</source>
-        <translation>&amp;Nem, marad a sajátom</translation>
-    </message>
-    <message>
         <location filename="../mainwindow.ui"/>
         <source>TX|</source>
         <translation>TX|</translation>
@@ -9993,6 +9956,31 @@ Telepíti a beállítást?</translation>
     <message>
         <source>macOS allows too little shared memory. To raise the limit permanently, copy com.jtdx.sysctl.plist from the JTDX_contest installer (DMG) to /Library/LaunchDaemons and restart this Mac - see ReadMe.txt in the DMG.</source>
         <translation>A macOS túl kevés osztott memóriát enged. A korlát végleges megemeléséhez másolja a com.jtdx.sysctl.plist fájlt a JTDX_contest telepítőjéből (DMG) a /Library/LaunchDaemons mappába, és indítsa újra ezt a Macet - lásd a ReadMe.txt fájlt a DMG-ben.</translation>
+    </message>
+    <message>
+        <location filename="../main.cpp"/>
+        <source>The settings file could not be copied. This program keeps a copy of it before it first saves anything in it, and does not start without one.</source>
+        <translation>A beállítási fájlt nem sikerült lemásolni. Ez a program másolatot készít róla, mielőtt először bármit mentene bele, és másolat nélkül nem indul el.</translation>
+    </message>
+    <message>
+        <location filename="../contestprofile.h"/>
+        <source>The copy could not be recorded in the settings file.</source>
+        <translation>A másolatot nem sikerült bejegyezni a beállítási fájlba.</translation>
+    </message>
+    <message>
+        <location filename="../contestprofile.h"/>
+        <source>%1
+could not be copied to
+%2:
+%3
+
+Fix the cause and press %4, or press %5 to quit.</source>
+        <translation>%1
+nem sikerült átmásolni ide:
+%2
+%3
+
+Hárítsa el az okot, és nyomja meg az „%4” gombot, vagy a kilépéshez nyomja meg a „%5” gombot.</translation>
     </message>
 </context>
 <context>

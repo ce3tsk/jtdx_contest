@@ -5911,43 +5911,6 @@ UDP server %2:%3</source>
         <translation>UI言語を日本語に変更しますか？ JTDXを終了します。変更を反映するには再度起動してください。</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp"/>
-        <source>Recommended colours</source>
-        <translation>推奨色</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.cpp"/>
-        <source>Use the recommended notification colours?</source>
-        <translation>推奨通知色を使用しますか？</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.cpp"/>
-        <source>This profile carries notification colours from an earlier setup. JTDX_contest ships a set that was checked against every background each colour can appear on, and meets the AA contrast level of the WCAG accessibility guidelines, so the decodes stay legible.
-
-Choosing Yes also switches on the new dark style, which those colours are made for.
-
-You can go back to the light style at any time in Settings, General; and the recommended colours can be set again later in Settings, Notifications.
-
-This is asked only once.</source>
-        <translation>このプロファイルには、以前の設定から引き継がれた通知色があります。JTDX_contest には、各色が表示される可能性のあるすべての背景との組み合わせを確認し、WCAGアクセシビリティガイドラインのAAコントラスト基準を満たす通知色セットが付属しているため、デコード表示の可読性が保たれます。
-
-［はい］を選ぶと、新しいダークスタイルも有効になります。この色セットはダークスタイル向けに調整されています。
-
-いつでも［設定］→［一般］でライトスタイルに戻せます。また、推奨色は後から［設定］→［通知］で再設定できます。
-
-この確認は一度だけ表示されます。</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.cpp"/>
-        <source>&amp;Yes, use them</source>
-        <translation>はい、使用する(&amp;Y)</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.cpp"/>
-        <source>&amp;No, keep mine</source>
-        <translation>いいえ、自分の設定を維持(&amp;N)</translation>
-    </message>
-    <message>
         <location filename="../mainwindow.ui"/>
         <source>TX|</source>
         <translation>TX|</translation>
@@ -9971,6 +9934,31 @@ Install the setting?</source>
     <message>
         <source>macOS allows too little shared memory. To raise the limit permanently, copy com.jtdx.sysctl.plist from the JTDX_contest installer (DMG) to /Library/LaunchDaemons and restart this Mac - see ReadMe.txt in the DMG.</source>
         <translation>macOS が許可する共有メモリが小さすぎます。上限を恒久的に引き上げるには、JTDX_contest のインストーラ（DMG）にある com.jtdx.sysctl.plist を /Library/LaunchDaemons にコピーし、この Mac を再起動してください。詳しくは DMG 内の ReadMe.txt をご覧ください。</translation>
+    </message>
+    <message>
+        <location filename="../main.cpp"/>
+        <source>The settings file could not be copied. This program keeps a copy of it before it first saves anything in it, and does not start without one.</source>
+        <translation>設定ファイルをコピーできませんでした。このプログラムは、設定ファイルに初めて何かを保存する前にそのコピーを作成し、コピーがない状態では起動しません。</translation>
+    </message>
+    <message>
+        <location filename="../contestprofile.h"/>
+        <source>The copy could not be recorded in the settings file.</source>
+        <translation>コピーを設定ファイルに記録できませんでした。</translation>
+    </message>
+    <message>
+        <location filename="../contestprofile.h"/>
+        <source>%1
+could not be copied to
+%2:
+%3
+
+Fix the cause and press %4, or press %5 to quit.</source>
+        <translation>次のファイルをコピーできませんでした：
+%1
+コピー先：%2
+%3
+
+原因を取り除いてから「%4」を押すか、「%5」を押して終了してください。</translation>
     </message>
 </context>
 <context>

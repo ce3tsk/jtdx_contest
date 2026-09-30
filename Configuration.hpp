@@ -183,12 +183,6 @@ public:
   bool insert_blank () const;
   bool useDarkStyle () const;
 
-  /* CE3TSK: the one-time offer of the recommended notification colours. A user arriving from
-     stock JTDX brings colours that were never checked for contrast - several of them are close
-     to unreadable on the dark style. Offer the measured set once, then never ask again. */
-  bool recommended_colors_offer_pending () const;
-  void accept_recommended_colors ();
-  void decline_recommended_colors ();
   /* CE3TSK: switch the dark style from outside the Settings dialog (View > Use dark style). It
      takes effect at once, as accepting Settings with the box changed does, and is saved; the
      dialog's check box shows it the next time it opens. useDarkStyle () tells whether the switch

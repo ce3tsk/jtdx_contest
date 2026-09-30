@@ -5924,43 +5924,6 @@ UDP server %2:%3</translation>
         <translation>Kas soovite vahetada kasutajaliidese keeleks Eesti? JTDX suletakse, käivitage see uuesti.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp"/>
-        <source>Recommended colours</source>
-        <translation>Soovitatud värvid</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.cpp"/>
-        <source>Use the recommended notification colours?</source>
-        <translation>Kas kasutada soovitatud teavitusvärve?</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.cpp"/>
-        <source>This profile carries notification colours from an earlier setup. JTDX_contest ships a set that was checked against every background each colour can appear on, and meets the AA contrast level of the WCAG accessibility guidelines, so the decodes stay legible.
-
-Choosing Yes also switches on the new dark style, which those colours are made for.
-
-You can go back to the light style at any time in Settings, General; and the recommended colours can be set again later in Settings, Notifications.
-
-This is asked only once.</source>
-        <translation>Sellel profiilil on teavitusvärvid varasemast seadistusest. JTDX_contest sisaldab komplekti, mida on kontrollitud iga tausta suhtes, millel värv esineda saab, ja mis vastab WCAG ligipääsetavusjuhiste AA kontrastitasemele, nii et dekodeeringud jäävad loetavaks.
-
-Jah valimisel lülitatakse sisse ka uus tume stiil, mille jaoks need värvid on tehtud.
-
-Hele stiili saab igal ajal tagasi valida menüüst Seaded, Üldine; ja soovitatud värvid saab hiljem uuesti määrata menüüst Seaded, Teavitused.
-
-Seda küsitakse ainult üks kord.</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.cpp"/>
-        <source>&amp;Yes, use them</source>
-        <translation>&amp;Jah, kasuta neid</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.cpp"/>
-        <source>&amp;No, keep mine</source>
-        <translation>&amp;Ei, jäta minu omad</translation>
-    </message>
-    <message>
         <location filename="../mainwindow.ui"/>
         <source>TX|</source>
         <translation>TX|</translation>
@@ -9993,6 +9956,31 @@ Kas paigaldada seade?</translation>
     <message>
         <source>macOS allows too little shared memory. To raise the limit permanently, copy com.jtdx.sysctl.plist from the JTDX_contest installer (DMG) to /Library/LaunchDaemons and restart this Mac - see ReadMe.txt in the DMG.</source>
         <translation>macOS lubab liiga vähe jagatud mälu. Piiri püsivaks tõstmiseks kopeeri com.jtdx.sysctl.plist JTDX_contesti paigaldusfailist (DMG) kausta /Library/LaunchDaemons ja taaskäivita see Mac - vaata ReadMe.txt DMG-s.</translation>
+    </message>
+    <message>
+        <location filename="../main.cpp"/>
+        <source>The settings file could not be copied. This program keeps a copy of it before it first saves anything in it, and does not start without one.</source>
+        <translation>Seadete faili ei õnnestunud kopeerida. See programm teeb sellest koopia, enne kui salvestab sinna esimest korda midagi, ega käivitu ilma koopiata.</translation>
+    </message>
+    <message>
+        <location filename="../contestprofile.h"/>
+        <source>The copy could not be recorded in the settings file.</source>
+        <translation>Koopiat ei õnnestunud seadete faili kirja panna.</translation>
+    </message>
+    <message>
+        <location filename="../contestprofile.h"/>
+        <source>%1
+could not be copied to
+%2:
+%3
+
+Fix the cause and press %4, or press %5 to quit.</source>
+        <translation>%1
+ei õnnestunud kopeerida asukohta
+%2:
+%3
+
+Kõrvalda põhjus ja vajuta „%4” või vajuta väljumiseks „%5”.</translation>
     </message>
 </context>
 <context>

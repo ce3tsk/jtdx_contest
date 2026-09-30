@@ -5910,43 +5910,6 @@ srever UDP %2:%3</translation>
         <translation>Czy na pewno chcesz zmienić język interfejsu na Polski? JTDX zostanie zamknięty, uruchom go ponownie.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp"/>
-        <source>Recommended colours</source>
-        <translation>Zalecane kolory</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.cpp"/>
-        <source>Use the recommended notification colours?</source>
-        <translation>Użyć zalecanych kolorów powiadomień?</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.cpp"/>
-        <source>This profile carries notification colours from an earlier setup. JTDX_contest ships a set that was checked against every background each colour can appear on, and meets the AA contrast level of the WCAG accessibility guidelines, so the decodes stay legible.
-
-Choosing Yes also switches on the new dark style, which those colours are made for.
-
-You can go back to the light style at any time in Settings, General; and the recommended colours can be set again later in Settings, Notifications.
-
-This is asked only once.</source>
-        <translation>Ten profil zawiera kolory powiadomień z wcześniejszej konfiguracji. JTDX_contest dostarcza zestaw sprawdzony względem każdego tła, na którym dany kolor może się pojawić, spełniający poziom kontrastu AA wytycznych dostępności WCAG, dzięki czemu dekodowania pozostają czytelne.
-
-Wybranie Tak włącza także nowy ciemny styl, z myślą o którym te kolory powstały.
-
-Do jasnego stylu można wrócić w każdej chwili w Ustawieniach, Ogólne; a zalecane kolory można ustawić ponownie później w Ustawieniach, Powiadomienia.
-
-To pytanie pojawia się tylko raz.</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.cpp"/>
-        <source>&amp;Yes, use them</source>
-        <translation>&amp;Tak, użyj ich</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.cpp"/>
-        <source>&amp;No, keep mine</source>
-        <translation>&amp;Nie, zostaw moje</translation>
-    </message>
-    <message>
         <location filename="../mainwindow.ui"/>
         <source>TX|</source>
         <translation>TX|</translation>
@@ -9998,6 +9961,31 @@ Zainstalować ustawienie?</translation>
     <message>
         <source>macOS allows too little shared memory. To raise the limit permanently, copy com.jtdx.sysctl.plist from the JTDX_contest installer (DMG) to /Library/LaunchDaemons and restart this Mac - see ReadMe.txt in the DMG.</source>
         <translation>macOS pozwala na zbyt mało pamięci współdzielonej. Aby trwale podnieść limit, skopiuj com.jtdx.sysctl.plist z instalatora JTDX_contest (DMG) do /Library/LaunchDaemons i uruchom ponownie tego Maca - zobacz ReadMe.txt w pliku DMG.</translation>
+    </message>
+    <message>
+        <location filename="../main.cpp"/>
+        <source>The settings file could not be copied. This program keeps a copy of it before it first saves anything in it, and does not start without one.</source>
+        <translation>Nie udało się skopiować pliku ustawień. Ten program tworzy jego kopię, zanim po raz pierwszy cokolwiek w nim zapisze, i nie uruchamia się bez niej.</translation>
+    </message>
+    <message>
+        <location filename="../contestprofile.h"/>
+        <source>The copy could not be recorded in the settings file.</source>
+        <translation>Nie udało się zapisać informacji o kopii w pliku ustawień.</translation>
+    </message>
+    <message>
+        <location filename="../contestprofile.h"/>
+        <source>%1
+could not be copied to
+%2:
+%3
+
+Fix the cause and press %4, or press %5 to quit.</source>
+        <translation>%1
+nie udało się skopiować do
+%2:
+%3
+
+Usuń przyczynę i naciśnij „%4” albo naciśnij „%5”, aby zakończyć.</translation>
     </message>
 </context>
 <context>

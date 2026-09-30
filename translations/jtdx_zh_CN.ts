@@ -5909,43 +5909,6 @@ UDP 服务器 %2:%3</translation>
         <translation>确定要将用户界面语言更改为简体中文吗? JTDX 将关闭，请重新启动它。</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp"/>
-        <source>Recommended colours</source>
-        <translation>推荐配色</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.cpp"/>
-        <source>Use the recommended notification colours?</source>
-        <translation>使用推荐的通知配色吗？</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.cpp"/>
-        <source>This profile carries notification colours from an earlier setup. JTDX_contest ships a set that was checked against every background each colour can appear on, and meets the AA contrast level of the WCAG accessibility guidelines, so the decodes stay legible.
-
-Choosing Yes also switches on the new dark style, which those colours are made for.
-
-You can go back to the light style at any time in Settings, General; and the recommended colours can be set again later in Settings, Notifications.
-
-This is asked only once.</source>
-        <translation>此配置文件沿用了先前设置中的通知颜色。JTDX_contest 提供了一套配色，已针对每种颜色可能出现的每一种背景逐一核对，并达到 WCAG 无障碍指南的 AA 对比度等级，使解码内容始终清晰易读。
-
-选择「是」也会同时启用新的深色样式，这套配色正是为它而设。
-
-您随时可以在「设置」的「常规」中改回浅色样式；推荐配色也可以稍后在「设置」的「通知」中重新应用。
-
-此提示只出现一次。</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.cpp"/>
-        <source>&amp;Yes, use them</source>
-        <translation>是，使用推荐配色(&amp;Y)</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.cpp"/>
-        <source>&amp;No, keep mine</source>
-        <translation>否，保留我的配色(&amp;N)</translation>
-    </message>
-    <message>
         <location filename="../mainwindow.ui"/>
         <source>TX|</source>
         <translation>TX|</translation>
@@ -9996,6 +9959,31 @@ Install the setting?</source>
     <message>
         <source>macOS allows too little shared memory. To raise the limit permanently, copy com.jtdx.sysctl.plist from the JTDX_contest installer (DMG) to /Library/LaunchDaemons and restart this Mac - see ReadMe.txt in the DMG.</source>
         <translation>macOS 允许的共享内存太少。要永久提高该限制，请将 JTDX_contest 安装程序（DMG）中的 com.jtdx.sysctl.plist 复制到 /Library/LaunchDaemons，然后重新启动这台 Mac——参见 DMG 中的 ReadMe.txt。</translation>
+    </message>
+    <message>
+        <location filename="../main.cpp"/>
+        <source>The settings file could not be copied. This program keeps a copy of it before it first saves anything in it, and does not start without one.</source>
+        <translation>无法复制设置文件。本程序在第一次向其中保存任何内容之前会先复制一份，没有副本则不会启动。</translation>
+    </message>
+    <message>
+        <location filename="../contestprofile.h"/>
+        <source>The copy could not be recorded in the settings file.</source>
+        <translation>无法在设置文件中记录该副本。</translation>
+    </message>
+    <message>
+        <location filename="../contestprofile.h"/>
+        <source>%1
+could not be copied to
+%2:
+%3
+
+Fix the cause and press %4, or press %5 to quit.</source>
+        <translation>无法复制以下文件：
+%1
+目标位置：%2
+%3
+
+请排除原因后按“%4”，或按“%5”退出。</translation>
     </message>
 </context>
 <context>

@@ -5914,43 +5914,6 @@ UDP server %2:%3</translation>
         <translation>Jeste li sigurni da želite promijeniti jezik sučelja na Hrvatski? JTDX će se zatvoriti, pokrenite ga ponovno.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp"/>
-        <source>Recommended colours</source>
-        <translation>Preporučene boje</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.cpp"/>
-        <source>Use the recommended notification colours?</source>
-        <translation>Želite li koristiti preporučene boje obavijesti?</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.cpp"/>
-        <source>This profile carries notification colours from an earlier setup. JTDX_contest ships a set that was checked against every background each colour can appear on, and meets the AA contrast level of the WCAG accessibility guidelines, so the decodes stay legible.
-
-Choosing Yes also switches on the new dark style, which those colours are made for.
-
-You can go back to the light style at any time in Settings, General; and the recommended colours can be set again later in Settings, Notifications.
-
-This is asked only once.</source>
-        <translation>Ovaj profil nosi boje obavijesti iz ranije postavke. JTDX_contest donosi skup koji je provjeren na svakoj pozadini na kojoj se pojedina boja može pojaviti i koji zadovoljava AA razinu kontrasta iz WCAG smjernica za pristupačnost, pa dekodiranja ostaju čitljiva.
-
-Odabir Da ujedno uključuje novi tamni stil, za koji su te boje i napravljene.
-
-Na svijetli stil možete se vratiti bilo kada u Postavke, Općenito; a preporučene boje mogu se ponovno postaviti kasnije u Postavke, Obavijesti.
-
-Ovo se pita samo jednom.</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.cpp"/>
-        <source>&amp;Yes, use them</source>
-        <translation>&amp;Da, koristi ih</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.cpp"/>
-        <source>&amp;No, keep mine</source>
-        <translation>&amp;Ne, zadrži moje</translation>
-    </message>
-    <message>
         <location filename="../mainwindow.ui"/>
         <source>TX|</source>
         <translation>TX|</translation>
@@ -10002,6 +9965,31 @@ Instalirati postavku?</translation>
     <message>
         <source>macOS allows too little shared memory. To raise the limit permanently, copy com.jtdx.sysctl.plist from the JTDX_contest installer (DMG) to /Library/LaunchDaemons and restart this Mac - see ReadMe.txt in the DMG.</source>
         <translation>macOS dopušta premalo dijeljene memorije. Za trajno podizanje ograničenja kopirajte com.jtdx.sysctl.plist iz JTDX_contest instalacijskog programa (DMG) u /Library/LaunchDaemons i ponovno pokrenite ovaj Mac - vidi ReadMe.txt u DMG-u.</translation>
+    </message>
+    <message>
+        <location filename="../main.cpp"/>
+        <source>The settings file could not be copied. This program keeps a copy of it before it first saves anything in it, and does not start without one.</source>
+        <translation>Datoteku postavki nije bilo moguće kopirati. Ovaj program izrađuje kopiju datoteke prije nego što u nju prvi put išta spremi i bez te kopije se ne pokreće.</translation>
+    </message>
+    <message>
+        <location filename="../contestprofile.h"/>
+        <source>The copy could not be recorded in the settings file.</source>
+        <translation>Kopiju nije bilo moguće zabilježiti u datoteci postavki.</translation>
+    </message>
+    <message>
+        <location filename="../contestprofile.h"/>
+        <source>%1
+could not be copied to
+%2:
+%3
+
+Fix the cause and press %4, or press %5 to quit.</source>
+        <translation>%1
+nije bilo moguće kopirati u
+%2:
+%3
+
+Otklonite uzrok i pritisnite „%4” ili pritisnite „%5” za izlaz iz programa.</translation>
     </message>
 </context>
 <context>

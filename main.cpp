@@ -47,6 +47,7 @@
 #include "TraceFile.hpp"
 #include "mainwindow.h"
 #include "thread_shutdown.hpp"   /* CE3TSK */
+#include "contestprofile.h"      /* CE3TSK: the copy of the ini on the first start */
 #include "commons.h"
 #include "lib/init_random_seed.h"
 
@@ -407,12 +408,10 @@ int main(int argc, char *argv[])
         /* CE3TSK: no Language key means this ini has never chosen one - take the operating
            system's language and write it down, so the next start and the Language menu both
            see a settled value. An empty key counts as never chosen too. A key that is present
-           is never second-guessed. */
-        if (settings.value ("Language").toString ().isEmpty ())
-          {
-            settings.setValue ("Language", default_ui_language ());
-          }
-        lang = settings.value ("Language","en_US").toString();
+           is never second-guessed. Written below, after the first-start copy of the ini: nothing
+           may be saved before it (2026-09-30). */
+        bool const language_unset = settings.value ("Language").toString ().isEmpty ();
+        lang = language_unset ? default_ui_language () : settings.value ("Language").toString ();
         settings.endGroup();
         if (files_OK) has_style = a.removeTranslator (&translator_from_files);
         if (resources_OK) has_style = a.removeTranslator (&translator_from_resources);
@@ -456,6 +455,40 @@ int main(int argc, char *argv[])
               files_OK = a.installTranslator (&translator_from_files);
           }
         }
+        /* CE3TSK 2026-09-29: the first start of JTDX_contest on a profile stock JTDX has written keeps
+           a copy of the file as it was - JTDX.ini as JTDX_original_20260929_225900.ini beside it, local
+           time - before the first key is written (the Language seed just below is the first; nothing
+           above writes to the ini). The notification colours no longer need it (this program keeps its
+           own, contestprofile.h), but every other setting is still shared with stock JTDX. The copy's
+           name goes into the ini (JTDX_contest\OriginalCopy) and to stderr, and it is taken once: a
+           start that ends before Configuration has run does not copy again.
+           The operator, 2026-09-30: the copy must ALWAYS be made before anything is saved. So without
+           a copy there is no start: a copy that cannot be made is said, with Retry (after fixing the
+           cause) or Close, which ends the program here - nothing has been written, and the next start
+           tries again. There is deliberately no "start anyway" (contest_profile::ask_retry). Asked
+           here, after the translators are installed, so the box is in the operator's language. */
+        {
+          QString copy, error;
+          for (;;)
+            {
+              auto const backup = contest_profile::backup_first_run (settings, settings_file
+                                                                    , QDateTime::currentDateTime (), &copy, &error);
+              if (contest_profile::Backup::made == backup)
+                {
+                  std::cerr << "First start on this settings file: copied " << settings_file.toStdString ()
+                            << " to " << copy.toStdString () << '\n';
+                }
+              if (contest_profile::Backup::failed != backup) break;
+              std::cerr << "Could not copy " << settings_file.toStdString () << " to " << copy.toStdString ()
+                        << ": " << error.toStdString () << '\n';
+              if (!contest_profile::ask_retry (a.applicationName (), settings_file, copy, error))
+                {
+                  return -1;
+                }
+            }
+        }
+        if (language_unset) settings.setValue ("Common/Language", lang);
+
         // Create and initialize shared memory segment
         // Multiple instances: use rig_name as shared memory key
 

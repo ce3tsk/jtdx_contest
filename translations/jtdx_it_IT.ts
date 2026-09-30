@@ -126,7 +126,7 @@
     <message>
         <location filename="../Configuration.cpp" line="1373"/>
         <source>&amp;Cancel</source>
-        <translation>&amp;Cancella</translation>
+        <translation>A&amp;nnulla</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp" line="1388"/>
@@ -297,7 +297,7 @@ Formato:
         <location filename="../Configuration.cpp" line="5438"/>
         <location filename="../Configuration.cpp" line="5469"/>
         <source>Cancel</source>
-        <translation>Cancella</translation>
+        <translation>Annulla</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp" line="5434"/>
@@ -2476,7 +2476,7 @@ Formato:
     <message>
         <location filename="../Configuration.cpp" line="233"/>
         <source>&amp;Cancel</source>
-        <translation>&amp;Cancella</translation>
+        <translation>&amp;Annulla</translation>
     </message>
 </context>
 <context>
@@ -2929,7 +2929,7 @@ Formato:
     <message>
         <location filename="../JTDXMessageBox.cpp" line="48"/>
         <source>&amp;Retry</source>
-        <translation>Indiet&amp;ro</translation>
+        <translation>&amp;Riprova</translation>
     </message>
     <message>
         <location filename="../JTDXMessageBox.cpp" line="49"/>
@@ -2944,7 +2944,7 @@ Formato:
     <message>
         <location filename="../JTDXMessageBox.cpp" line="51"/>
         <source>&amp;Cancel</source>
-        <translation>&amp;Cancella</translation>
+        <translation>&amp;Annulla</translation>
     </message>
     <message>
         <location filename="../JTDXMessageBox.cpp" line="52"/>
@@ -3054,7 +3054,7 @@ Formato:
     <message>
         <location filename="../logqso.cpp" line="28"/>
         <source>&amp;Cancel</source>
-        <translation>&amp;Cancella</translation>
+        <translation>&amp;Annulla</translation>
     </message>
     <message>
         <location filename="../logqso.cpp" line="222"/>
@@ -5911,43 +5911,6 @@ server DP %2:%3</translation>
         <translation>Sei sicuro di voler cambiare la lingua dell'interfaccia in Italiano? JTDX si chiuderà, riavvialo.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp"/>
-        <source>Recommended colours</source>
-        <translation>Colori consigliati</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.cpp"/>
-        <source>Use the recommended notification colours?</source>
-        <translation>Usare i colori di notifica consigliati?</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.cpp"/>
-        <source>This profile carries notification colours from an earlier setup. JTDX_contest ships a set that was checked against every background each colour can appear on, and meets the AA contrast level of the WCAG accessibility guidelines, so the decodes stay legible.
-
-Choosing Yes also switches on the new dark style, which those colours are made for.
-
-You can go back to the light style at any time in Settings, General; and the recommended colours can be set again later in Settings, Notifications.
-
-This is asked only once.</source>
-        <translation>Questo profilo porta colori di notifica da una configurazione precedente. JTDX_contest include un set verificato su ogni sfondo su cui ciascun colore può comparire, che raggiunge il livello di contrasto AA delle linee guida di accessibilità WCAG, così le decodifiche restano leggibili.
-
-Scegliendo Sì si attiva anche il nuovo stile scuro, per cui quei colori sono pensati.
-
-Si può tornare allo stile chiaro in qualsiasi momento in Impostazioni, Generale; e i colori consigliati si possono impostare di nuovo più tardi in Impostazioni, Notifiche.
-
-La domanda viene posta una sola volta.</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.cpp"/>
-        <source>&amp;Yes, use them</source>
-        <translation>&amp;Sì, usali</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.cpp"/>
-        <source>&amp;No, keep mine</source>
-        <translation>&amp;No, tengo i miei</translation>
-    </message>
-    <message>
         <location filename="../mainwindow.ui"/>
         <source>TX|</source>
         <translation>TX|</translation>
@@ -6334,7 +6297,7 @@ Questo è l'errore del decoder stesso. Sistemare ciò che ne impedisce l'avvio -
     <message>
         <location filename="../Configuration.cpp" line="5394"/>
         <source>Cancel</source>
-        <translation>Cancella</translation>
+        <translation>Annulla</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp" line="5398"/>
@@ -6526,7 +6489,7 @@ Verificare che il nome della cartella sia corretto.</translation>
     <message>
         <location filename="../Configuration.cpp"/>
         <source>&amp;Cancel</source>
-        <translation>&amp;Cancella</translation>
+        <translation>&amp;Annulla</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp"/>
@@ -6615,7 +6578,7 @@ Verificare che il nome della cartella sia corretto.</translation>
     <message>
         <location filename="../Configuration.cpp"/>
         <source>Cancel</source>
-        <translation>Cancella</translation>
+        <translation>Annulla</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp"/>
@@ -6784,7 +6747,7 @@ Verificare che il nome della cartella sia corretto.</translation>
     <message>
         <location filename="../Configuration.cpp" line="278"/>
         <source>&amp;Cancel</source>
-        <translation>&amp;Cancella</translation>
+        <translation>A&amp;nnulla</translation>
     </message>
 </context>
 <context>
@@ -9998,6 +9961,31 @@ Installare l'impostazione?</translation>
     <message>
         <source>macOS allows too little shared memory. To raise the limit permanently, copy com.jtdx.sysctl.plist from the JTDX_contest installer (DMG) to /Library/LaunchDaemons and restart this Mac - see ReadMe.txt in the DMG.</source>
         <translation>macOS consente troppo poca memoria condivisa. Per alzare il limite in modo permanente, copiare com.jtdx.sysctl.plist dall'installer di JTDX_contest (DMG) in /Library/LaunchDaemons e riavviare questo Mac - vedere ReadMe.txt nel DMG.</translation>
+    </message>
+    <message>
+        <location filename="../main.cpp"/>
+        <source>The settings file could not be copied. This program keeps a copy of it before it first saves anything in it, and does not start without one.</source>
+        <translation>Non è stato possibile copiare il file di configurazione. Questo programma ne fa una copia prima di salvarvi qualcosa per la prima volta, e non si avvia senza di essa.</translation>
+    </message>
+    <message>
+        <location filename="../contestprofile.h"/>
+        <source>The copy could not be recorded in the settings file.</source>
+        <translation>Non è stato possibile registrare la copia nel file di configurazione.</translation>
+    </message>
+    <message>
+        <location filename="../contestprofile.h"/>
+        <source>%1
+could not be copied to
+%2:
+%3
+
+Fix the cause and press %4, or press %5 to quit.</source>
+        <translation>%1
+non è stato possibile copiarlo in
+%2:
+%3
+
+Eliminare la causa e premere «%4», oppure premere «%5» per uscire.</translation>
     </message>
 </context>
 <context>

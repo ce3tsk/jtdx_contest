@@ -5919,43 +5919,6 @@ Servidor UDP %2:%3</translation>
         <translation>Estàs segur de canviar l'idioma de la interfície d'usuari al català? JTDX es tancarà, torna a obrir-lo.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp"/>
-        <source>Recommended colours</source>
-        <translation>Colors recomanats</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.cpp"/>
-        <source>Use the recommended notification colours?</source>
-        <translation>Voleu utilitzar els colors de notificació recomanats?</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.cpp"/>
-        <source>This profile carries notification colours from an earlier setup. JTDX_contest ships a set that was checked against every background each colour can appear on, and meets the AA contrast level of the WCAG accessibility guidelines, so the decodes stay legible.
-
-Choosing Yes also switches on the new dark style, which those colours are made for.
-
-You can go back to the light style at any time in Settings, General; and the recommended colours can be set again later in Settings, Notifications.
-
-This is asked only once.</source>
-        <translation>Aquest perfil porta colors de notificació d'una configuració anterior. JTDX_contest inclou un joc que s'ha comprovat contra cadascun dels fons on pot aparèixer cada color, i que compleix el nivell de contrast AA de les directrius d'accessibilitat WCAG, de manera que les descodificacions es continuen llegint bé.
-
-Si trieu Sí, també s'activarà el nou estil fosc, per al qual estan fets aquests colors.
-
-Podeu tornar a l'estil clar quan vulgueu a Configuració, General; i els colors recomanats es poden tornar a aplicar més endavant a Configuració, Notificacions.
-
-Això només es pregunta una vegada.</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.cpp"/>
-        <source>&amp;Yes, use them</source>
-        <translation>&amp;Sí, utilitza'ls</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.cpp"/>
-        <source>&amp;No, keep mine</source>
-        <translation>&amp;No, conserva els meus</translation>
-    </message>
-    <message>
         <location filename="../mainwindow.ui"/>
         <source>TX|</source>
         <translation>TX|</translation>
@@ -10010,6 +9973,31 @@ Voleu instal·lar l’ajust?</translation>
     <message>
         <source>macOS allows too little shared memory. To raise the limit permanently, copy com.jtdx.sysctl.plist from the JTDX_contest installer (DMG) to /Library/LaunchDaemons and restart this Mac - see ReadMe.txt in the DMG.</source>
         <translation>macOS permet massa poca memòria compartida. Per apujar el límit de manera permanent, copieu com.jtdx.sysctl.plist de l’instal·lador de JTDX_contest (DMG) a /Library/LaunchDaemons i reinicieu aquest Mac - vegeu ReadMe.txt al DMG.</translation>
+    </message>
+    <message>
+        <location filename="../main.cpp"/>
+        <source>The settings file could not be copied. This program keeps a copy of it before it first saves anything in it, and does not start without one.</source>
+        <translation>No s'ha pogut copiar l'arxiu de configuració. Aquest programa en fa una còpia abans de desar-hi res per primera vegada, i no s'inicia sense aquesta còpia.</translation>
+    </message>
+    <message>
+        <location filename="../contestprofile.h"/>
+        <source>The copy could not be recorded in the settings file.</source>
+        <translation>No s'ha pogut registrar la còpia a l'arxiu de configuració.</translation>
+    </message>
+    <message>
+        <location filename="../contestprofile.h"/>
+        <source>%1
+could not be copied to
+%2:
+%3
+
+Fix the cause and press %4, or press %5 to quit.</source>
+        <translation>%1
+no s'ha pogut copiar a
+%2:
+%3
+
+Resoleu la causa i premeu «%4», o premeu «%5» per sortir.</translation>
     </message>
 </context>
 <context>

@@ -1398,7 +1398,6 @@ MainWindow::MainWindow(bool multiple, QSettings * settings, QSharedMemory *shdme
 
   m_bHisCallStd=stdCall(m_hisCall); styleChanged();
   m_config.fit_widget_size_limits ();   // CE3TSK: the pass the font setting ran before these widgets existed
-  QTimer::singleShot (0, this, &MainWindow::offerRecommendedColors);   // CE3TSK: the one-time colour offer
   // this must be the last statement of constructor
   if (!m_valid) throw std::runtime_error {"Fatal initialization exception"};
 }
@@ -2672,44 +2671,6 @@ void MainWindow::showSoundInError(const QString& errorMsg) { JTDXMessageBox::cri
 void MainWindow::showSoundOutError(const QString& errorMsg) { JTDXMessageBox::critical_message(this, "", tr("Error in SoundOutput"), errorMsg); }
 void MainWindow::showStatusMessage(const QString& statusMsg) { statusBar()->showMessage(statusMsg); }
 
-
-/* CE3TSK: asked once, on the first run of JTDX_contest with a profile whose notification
-   colours are not the recommended ones - i.e. a user arriving from stock JTDX with colours
-   that were never checked for contrast. Fired from the constructor through a zero timer so
-   the main window is up and the dialog has a parent to centre on. */
-void MainWindow::offerRecommendedColors ()
-{
-  if (!m_config.recommended_colors_offer_pending ()) return;
-
-  QMessageBox mb {this};
-  mb.setIcon (QMessageBox::Question);
-  mb.setWindowTitle (QApplication::applicationName () + " - " + tr ("Recommended colours"));
-  mb.setTextFormat (Qt::PlainText);
-  mb.setText (tr ("Use the recommended notification colours?"));
-  mb.setInformativeText (
-      tr ("This profile carries notification colours from an earlier setup. JTDX_contest ships a "
-          "set that was checked against every background each colour can appear on, and meets the "
-          "AA contrast level of the WCAG accessibility guidelines, so the decodes stay legible.\n\n"
-          "Choosing Yes also switches on the new dark style, which those colours are made for.\n\n"
-          "You can go back to the light style at any time in Settings, General; and the recommended "
-          "colours can be set again later in Settings, Notifications.\n\n"
-          "This is asked only once."));
-  mb.setStandardButtons (QMessageBox::Yes | QMessageBox::No);
-  mb.setDefaultButton (QMessageBox::Yes);
-  mb.button (QMessageBox::Yes)->setText (tr ("&Yes, use them"));
-  mb.button (QMessageBox::No)->setText (tr ("&No, keep mine"));
-
-  if (QMessageBox::Yes == mb.exec ())
-    {
-      m_config.accept_recommended_colors ();
-      darkStyleChanged ();   // the same follow-up as a style change from Settings
-      if (m_config.write_decoded_debug ()) writeToALLTXT ("Recommended colours and dark style applied on first run");
-    }
-  else
-    {
-      m_config.decline_recommended_colors ();
-    }
-}
 
 void MainWindow::on_actionSettings_triggered()               //Setup Dialog
 {

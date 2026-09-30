@@ -5909,43 +5909,6 @@ UDP serveris %2:%3</translation>
         <translation>Vai tiešām vēlaties mainīt saskarnes valodu uz Latviešu? JTDX tiks aizvērts, palaidiet to vēlreiz.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp"/>
-        <source>Recommended colours</source>
-        <translation>Ieteicamās krāsas</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.cpp"/>
-        <source>Use the recommended notification colours?</source>
-        <translation>Vai izmantot ieteicamās paziņojumu krāsas?</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.cpp"/>
-        <source>This profile carries notification colours from an earlier setup. JTDX_contest ships a set that was checked against every background each colour can appear on, and meets the AA contrast level of the WCAG accessibility guidelines, so the decodes stay legible.
-
-Choosing Yes also switches on the new dark style, which those colours are made for.
-
-You can go back to the light style at any time in Settings, General; and the recommended colours can be set again later in Settings, Notifications.
-
-This is asked only once.</source>
-        <translation>Šajā profilā ir paziņojumu krāsas no iepriekšējiem iestatījumiem. JTDX_contest piedāvā kopu, kas pārbaudīta pret katru fonu, uz kura attiecīgā krāsa var parādīties, un kas atbilst WCAG pieejamības vadlīniju AA kontrasta līmenim, tāpēc atkodējumi paliek salasāmi.
-
-Izvēloties Jā, tiek ieslēgts arī jaunais tumšais stils, kuram šīs krāsas ir domātas.
-
-Uz gaišo stilu var atgriezties jebkurā laikā sadaļā Iestatījumi, Vispārīgi; un ieteicamās krāsas vēlāk var iestatīt no jauna sadaļā Iestatījumi, Paziņojumi.
-
-Tas tiek jautāts tikai vienu reizi.</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.cpp"/>
-        <source>&amp;Yes, use them</source>
-        <translation>&amp;Jā, izmantot tās</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.cpp"/>
-        <source>&amp;No, keep mine</source>
-        <translation>&amp;Nē, paturēt manas</translation>
-    </message>
-    <message>
         <location filename="../mainwindow.ui"/>
         <source>TX|</source>
         <translation>TX|</translation>
@@ -9995,6 +9958,31 @@ Uzstādīt iestatījumu?</translation>
     <message>
         <source>macOS allows too little shared memory. To raise the limit permanently, copy com.jtdx.sysctl.plist from the JTDX_contest installer (DMG) to /Library/LaunchDaemons and restart this Mac - see ReadMe.txt in the DMG.</source>
         <translation>macOS atļauj pārāk maz koplietojamās atmiņas. Lai ierobežojumu palielinātu pastāvīgi, nokopējiet com.jtdx.sysctl.plist no JTDX_contest instalētāja (DMG) uz /Library/LaunchDaemons un pārstartējiet šo Mac - skatiet ReadMe.txt DMG failā.</translation>
+    </message>
+    <message>
+        <location filename="../main.cpp"/>
+        <source>The settings file could not be copied. This program keeps a copy of it before it first saves anything in it, and does not start without one.</source>
+        <translation>Iestatījumu failu neizdevās nokopēt. Šī programma izveido tā kopiju, pirms pirmo reizi tajā kaut ko saglabā, un bez kopijas netiek palaista.</translation>
+    </message>
+    <message>
+        <location filename="../contestprofile.h"/>
+        <source>The copy could not be recorded in the settings file.</source>
+        <translation>Kopiju neizdevās reģistrēt iestatījumu failā.</translation>
+    </message>
+    <message>
+        <location filename="../contestprofile.h"/>
+        <source>%1
+could not be copied to
+%2:
+%3
+
+Fix the cause and press %4, or press %5 to quit.</source>
+        <translation>%1
+neizdevās nokopēt uz
+%2:
+%3
+
+Novērsiet cēloni un nospiediet „%4”, vai nospiediet „%5”, lai izietu.</translation>
     </message>
 </context>
 <context>
