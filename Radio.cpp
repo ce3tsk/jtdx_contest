@@ -209,6 +209,7 @@ namespace
     {"#dcdcdc", "#dcdcdc", "#434343"},
     {"#e0e0e0", "#e0e0e0", "#434343"},
     {"#e1e1e1", "#e1e1e1", "#434343"},
+    {"#e60000", "#e60000", "#ff7878"},   // the red wave underline of a likely false decode (falsedecodes.h) - a line one pixel thick, not a background: in the dark style only its LUMINANCE shows it on the category colours, so the brightest red that still reads as red (2.0:1 on the dimmest, 3.7:1 on New DXCC magenta; #ff0000 is 1.3 and 2.4); the operator, 2026-09-30
     {"#fdedc5", "#fdedc5", "#563f03"},
     {"#ff0000", "#ff0000", "#8c0000"},
     {"#ff3c3c", "#ff3c3c", "#8c0000"},

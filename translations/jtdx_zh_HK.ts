@@ -9886,6 +9886,46 @@ soundcard changes</source>
         <source>Download the latest LoTW user activity file from ARRL. Stations that uploaded to LoTW during the last 365 days are treated as LoTW users.</source>
         <translation>從 ARRL 下載最新的 LoTW 用戶活動檔案。過去 365 天內上傳過 LoTW 的電台將被視為 LoTW 用戶。</translation>
     </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>False decodes</source>
+        <translation>錯誤解碼</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>A decode whose grid square lies outside the DXCC entity of the station that sent it - for a call such as DL/CE3TSK or CE3TSK/DL, outside Germany - is kept, but the grid is underlined in red and the country is shown as ?Chile?. Its ALL.TXT line ends with lc:grid and the entity's prefix, and it is sent to UDP clients as a low-confidence decode.</source>
+        <translation>網格位於發射電台 DXCC 實體之外的解碼（對於 DL/CE3TSK 或 CE3TSK/DL 這樣的呼號，即位於德國之外）會被保留，但網格會加紅色底線，國家顯示為 ?Chile?。它在 ALL.TXT 中的行以 lc:grid 和該實體的字首結尾，並以低可信度解碼傳送給 UDP 用戶端。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Mark decodes whose grid is outside the callsign's country</source>
+        <translation>標記網格位於呼號所屬國家之外的解碼</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>The automatic sequencer does not pick such a decode on its own; a double click still answers it. A station heard with the same doubtful grid in two different periods is most likely operating away from home, and is answered again - false decodes do not repeat.</source>
+        <translation>自動程序（AutoSeq）不會自行選擇此類解碼；雙擊仍可應答。在兩個不同週期中以同一個可疑網格被收到的電台，很可能正在其本國之外操作，因此會再次被應答——錯誤解碼不會重複出現。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Do not answer automatically</source>
+        <translation>不自動應答</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Below 30 MHz a call signing /R (rover) is almost always a false decode: /R is a single bit of the message. The decode is kept, with the /R call underlined in red. Its ALL.TXT line ends with lc:rover, and it is sent to UDP clients as a low-confidence decode.</source>
+        <translation>在 30 MHz 以下，帶 /R（流動）的呼號幾乎總是錯誤解碼：/R 只是訊息中的一個位元。該解碼會被保留，/R 呼號加紅色底線。它在 ALL.TXT 中的行以 lc:rover 結尾，並以低可信度解碼傳送給 UDP 用戶端。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Mark /R (rover) calls on HF</source>
+        <translation>標記 HF 上的 /R（流動）呼號</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>The automatic sequencer does not pick such a decode on its own; a double click still answers it.</source>
+        <translation>自動程序（AutoSeq）不會自行選擇此類解碼；雙擊仍可應答。</translation>
+    </message>
 </context>
 <context>
     <name>main</name>

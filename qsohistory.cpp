@@ -195,7 +195,7 @@ QsoHistory::Status QsoHistory::autoseq(QString &callsign, QString &grid, QString
             foreach(QString key,_data.keys()) {
               on_black=_blackdata.value(key,0);
               tt=_data[key];
-              if (on_black == 0 && tt.time == max_r_time && !tt.continent.isEmpty() && (!lastcalled || tt.time == tt.b_time) &&
+              if (on_black == 0 && tt.time == max_r_time && !tt.continent.isEmpty() && !tt.doubtful && (!lastcalled || tt.time == tt.b_time) &&
                   (tt.status == RCALL || tt.status == RREPORT || tt.status == RRREPORT || tt.status == RRR || tt.status == RRR73 || 
                     ((tt.status == RCQ || tt.status == RFIN) && !mycall && ((tt.priority > 16 && tt.priority < 20))))) {
                 if (!lastcalled && tt.time == tt.b_time) priority = a_init;
@@ -246,7 +246,7 @@ QsoHistory::Status QsoHistory::autoseq(QString &callsign, QString &grid, QString
             foreach(QString key,_data.keys()) {
               on_black=_blackdata.value(key,0);
               tt=_data[key];
-              if (on_black == 0 && ((tt.time - _CQ.time < 300 && tt.time >= 300) || (tt.time < 300 && tt.time - (_CQ.time - 86100) < 300))  && !tt.continent.isEmpty() && (!lastcalled || tt.time == tt.b_time) &&
+              if (on_black == 0 && ((tt.time - _CQ.time < 300 && tt.time >= 300) || (tt.time < 300 && tt.time - (_CQ.time - 86100) < 300))  && !tt.continent.isEmpty() && !tt.doubtful && (!lastcalled || tt.time == tt.b_time) &&
                   (tt.status == RCALL || tt.status == RREPORT || tt.status == RRREPORT || tt.status == RRR || tt.status == RRR73 || 
                     ((tt.status == RCQ || tt.status == RFIN) && !mycall && ((tt.priority > 16 && tt.priority < 20))))) {
                 if (!lastcalled && tt.time == tt.b_time) priority = a_init;
@@ -299,7 +299,7 @@ QsoHistory::Status QsoHistory::autoseq(QString &callsign, QString &grid, QString
               is_called.time=0;
               is_called=_calldata.value(key,is_called);
               tt=_data[key];
-              if ((is_called.rep == -35 || is_called.rep < tt.s_rep.toInt() || (tt.b_time > 300 && tt.b_time - is_called.time > 300) || (tt.b_time <= 300 && is_called.time - tt.b_time < 86100)) && on_black == 0 && tt.time == max_r_time && (tt.status == RCQ || (tt.status == RFIN && tt.priority > 0)) && !tt.continent.isEmpty()) {
+              if ((is_called.rep == -35 || is_called.rep < tt.s_rep.toInt() || (tt.b_time > 300 && tt.b_time - is_called.time > 300) || (tt.b_time <= 300 && is_called.time - tt.b_time < 86100)) && on_black == 0 && tt.time == max_r_time && (tt.status == RCQ || (tt.status == RFIN && tt.priority > 0)) && !tt.continent.isEmpty() && !tt.doubtful) {
 //                printf("autosel:%s %d %d (%d,%d,%s,%d)\n",tt.call.toStdString().c_str(),ret,algo,tt.status,tt.priority,tt.s_rep.toStdString().c_str(),tt.distance);
                 if (tt.priority > priority || 
                     (priority > b_init && tt.priority == priority && 
@@ -409,7 +409,7 @@ void QsoHistory::rx(QString const& callsign,int freq)
    must survive being set before or after init() clears the QSO data. */
 void QsoHistory::wwdigi(bool state) { _wwDigi = state; }
 
-void QsoHistory::message(QString const& callsign, Status status, int priority, QString const& param, QString const& tyyp, QString const& continent, QString const& mpx, unsigned time, QString const& rep, int freq, QString const& mode)
+void QsoHistory::message(QString const& callsign, Status status, int priority, QString const& param, QString const& tyyp, QString const& continent, QString const& mpx, unsigned time, QString const& rep, int freq, QString const& mode, Doubt doubt)
 {
     if (_working)
     {
@@ -459,6 +459,8 @@ void QsoHistory::message(QString const& callsign, Status status, int priority, Q
           t.distance = 0;
           t.mode = "";
           t = _data.value(Radio::base_callsign (callsign),t);
+          QString const known_grid = t.grid;        /* CE3TSK: see Doubt - a doubtful grid never replaces it */
+          int const known_distance = t.distance;
           if (time >= t.time || time == 0 || status >= t.status || status == RREPORT) {
             if (status > NONE) {
               t.time = time;
@@ -793,6 +795,13 @@ void QsoHistory::message(QString const& callsign, Status status, int priority, Q
                never move a start already recorded, so no existing QSO changes. RCQ and RFIN are
                excluded on purpose - merely hearing him call CQ does not start a QSO. */
             if (t.b_time == 0 && status >= RCALL) t.b_time = time;
+            if (DOUBT_CLEAR == doubt) {t.doubtful = false; t.clean_time = time;}   /* CE3TSK: see Doubt */
+            else if (DOUBT_SET == doubt) {
+              /* the grid of a likely false decode must not replace one we know: it would reach the DX Grid box
+                 and the log. With none known it is kept - a WW Digi traveller's exchange is his real grid. */
+              if (!known_grid.isEmpty ()) {t.grid = known_grid; t.distance = known_distance;}
+              if (t.clean_time != time) t.doubtful = true;
+            }
             _data.insert(Radio::base_callsign (callsign),t);
           }
           

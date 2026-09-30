@@ -1,5 +1,6 @@
 #include "displaytext.h"
 
+#include <algorithm>
 #include <QtGlobal>
 #include <QApplication>
 #include <QMouseEvent>
@@ -19,6 +20,16 @@ static bool isGrid4 (QString const& w)
   if (w.length () != 4 || w == "RR73") return false;
   return w[0] >= 'A' && w[0] <= 'R' && w[1] >= 'A' && w[1] <= 'R'
       && w[2] >= '0' && w[2] <= '9' && w[3] >= '0' && w[3] <= '9';
+}
+
+/* CE3TSK 2026-09-30: what a word in doubt looks like (falsedecodes.h) - the format it would have had,
+   with a red wave underline, the spell checker's mark. Its own colour-table row: the dark style's
+   red for a background is too dark to see as a line. */
+QTextCharFormat DisplayText::doubtFormat (QTextCharFormat f) const
+{
+  f.setUnderlineStyle (QTextCharFormat::WaveUnderline);
+  f.setUnderlineColor (QColor {Radio::convert_dark ("#e60000", useDarkStyle_)});
+  return f;
 }
 
 DisplayText::DisplayText(QWidget *parent) :
@@ -147,7 +158,7 @@ void DisplayText::insertLineSpacer(QString const& line)
     appendText (line, Radio::convert_dark("#d3d3d3",useDarkStyle_), Radio::convert_dark("#000000",useDarkStyle_), 0, " ", Radio::convert_dark("#000000",useDarkStyle_), " ", true);
 }
 
-void DisplayText::appendText(QString const& text, QString const& bg, QString const& color, int std_type, QString const& servis, QString const& servis_color, QString const& cntry, bool forceBold, bool strikethrough, bool underlined, bool DXped, bool overwrite, bool wanted)
+void DisplayText::appendText(QString const& text, QString const& bg, QString const& color, int std_type, QString const& servis, QString const& servis_color, QString const& cntry, bool forceBold, bool strikethrough, bool underlined, bool DXped, bool overwrite, bool wanted, QList<QPair<int, int>> const& doubtful, int cntryDoubtFrom)
 {
     QString servbg, s;
     if (std_type == 2) servbg = Radio::convert_dark("#ff0000",useDarkStyle_);
@@ -208,7 +219,21 @@ void DisplayText::appendText(QString const& text, QString const& bg, QString con
             m_charFormat.setFontItalic(true); m_charFormat.setForeground(QColor(color_MyCall_)); m_charFormat.setFontOverline(true);
             if (!underlined && !DXped) m_charFormat.setFontUnderline(true);
             }
-        cursor.insertText (text.mid(ft,26),m_charFormat);
+        /* CE3TSK 2026-09-30: the words in doubt get a red wave underline over whatever this segment
+           already carries - the spell checker's mark (falsedecodes.h). A copy of the format, so
+           nothing of it leaks into the rest of the line. */
+        {
+          int pos = ft;
+          int const end = qMin (ft + 26, text.size ());
+          for (auto const& d : doubtful) {
+            int const a = qMax (d.first, pos), b = qMin (d.first + d.second, end);
+            if (a >= b) continue;
+            cursor.insertText (text.mid (pos, a - pos), m_charFormat);
+            cursor.insertText (text.mid (a, b - a), doubtFormat (m_charFormat));
+            pos = b;
+          }
+          cursor.insertText (text.mid (pos, qMax (0, end - pos)), m_charFormat);
+        }
         if (wanted) {
             m_charFormat.setFontItalic(false); m_charFormat.setFontOverline(false);
             if (!underlined && !DXped) m_charFormat.setFontUnderline(false);
@@ -220,7 +245,11 @@ void DisplayText::appendText(QString const& text, QString const& bg, QString con
         cursor.insertText (servis.left(1),m_charFormat);
         m_charFormat.setBackground (QColor(Radio::convert_dark("#ffffff",useDarkStyle_)));
         m_charFormat.setForeground(QColor(Radio::convert_dark("#000000",useDarkStyle_)));
-        cursor.insertText (cntry,m_charFormat);
+        if (cntryDoubtFrom >= 0 && cntryDoubtFrom < cntry.size ()) {   // CE3TSK: ?Chile?
+            cursor.insertText (cntry.left (cntryDoubtFrom), m_charFormat);
+            cursor.insertText (cntry.mid (cntryDoubtFrom), doubtFormat (m_charFormat));
+        } else
+            cursor.insertText (cntry,m_charFormat);
     } else {
         cursor.insertText (text.trimmed(),m_charFormat);
     }
@@ -279,6 +308,8 @@ int DisplayText::displayDecodedText(DecodedText* decodedText, QString myCall, QS
     QString checkMode;
     QString rep_type;
     unsigned c_time = 0;
+    false_decodes::Verdict const& doubt = decodedText->verdict ();   /* CE3TSK 2026-09-30 */
+    int cntryDoubtFrom = -1;
     if (!decodedText->isDebug() && app_mode != "WSPR-2") {
         c_time = decodedText->timeInSeconds();
         if (c_time != 0 && c_time != max_r_time) {
@@ -911,6 +942,13 @@ int DisplayText::displayDecodedText(DecodedText* decodedText, QString myCall, QS
                 // do some obvious abbreviations, don't care if we using just prefixes here, not big deal to run some replace's
                 cntry = items[2];
             }
+            /* CE3TSK 2026-09-30: the grid does not lie in the country of this call (falsedecodes.h) -
+               ?Chile?, the leading mark first so a window narrowed by the splitter still shows it.
+               Only when the country shown is the call that was judged. */
+            if ((doubt.reasons & false_decodes::Grid) && checkCall == false_decodes::bareCall (doubt.sender)) {
+                cntry = '?' + cntry + '?';
+                cntryDoubtFrom = 0;
+            }
         }
         if (!bwantedCall && !bwantedPrefix && !bwantedGrid && !bwantedCountry) {
             if (hideContinents_.contains(items[0]) && std_type != 2 && !jt65bc) {
@@ -969,6 +1007,26 @@ int DisplayText::displayDecodedText(DecodedText* decodedText, QString myCall, QS
     if (bypassAllFilters || bypassRxfFilters) {
             show_line = true;
     }
+    /* CE3TSK 2026-09-30: a likely false decode (falsedecodes.h) keeps its colour, but rings no bell
+       and raises no window, and what is in doubt - the grid, a /R call - is underlined in red. The
+       words are found as whole words from the message column on, the last one of each. */
+    QList<QPair<int, int>> doubtful;
+    if (doubt.marked ()) {
+        beep = false;
+        actwind = false;
+        int const from = messageText.mid (4, 1) == " " ? 21 : 23;   // where appendText () starts the message
+        auto underline = [&] (QString const& word) {
+            int at = -1;
+            for (int i = messageText.indexOf (word, from); i >= 0 && !word.isEmpty (); i = messageText.indexOf (word, i + 1)) {
+                int const e = i + word.size ();
+                if (messageText.at (i - 1) == ' ' && (e == messageText.size () || messageText.at (e) == ' ')) at = i;
+            }
+            if (at >= 0) doubtful << qMakePair (at, word.size ());
+        };
+        for (auto const& r : doubt.rovers) underline (r);
+        if (doubt.reasons & false_decodes::Grid) underline (doubt.grid);
+        std::sort (doubtful.begin (), doubtful.end ());
+    }
     if (show_line) {
         if (actwind) {
             if (windowPopup && window != NULL) {
@@ -1006,7 +1064,14 @@ int DisplayText::displayDecodedText(DecodedText* decodedText, QString myCall, QS
     }
     if (show_line) {
         if (!checkCall.isEmpty () && (std_type == 1 || std_type == 2 || std_type == 4 || (std_type == 3 && !param.isEmpty()))) {
-            qsoHistory.message(checkCall,status,priority,param,tyyp,countryName.left(2),mpx,c_time,decodedText->report(),decodedText->frequencyOffset(),checkMode);
+            /* CE3TSK 2026-09-30: the sequencer's side of a likely false decode - set or cleared by
+               the message it is judged on, and only when this entry is the call that was judged. Only an
+               ordinary decode clears it: a hint, a-priori or TX-background one can reproduce the very call
+               it was fed, so it holds a station back but never releases one (Verdict::reliable). */
+            QsoHistory::Doubt const d = checkCall != false_decodes::bareCall (doubt.sender) ? QsoHistory::DOUBT_KEEP
+                                      : doubt.noAnswer ? QsoHistory::DOUBT_SET
+                                      : doubt.reliable ? QsoHistory::DOUBT_CLEAR : QsoHistory::DOUBT_KEEP;
+            qsoHistory.message(checkCall,status,priority,param,tyyp,countryName.left(2),mpx,c_time,decodedText->report(),decodedText->frequencyOffset(),checkMode,d);
         } 
         if (std_type == 2) {
             if(!redMarker_) std_type = 0;
@@ -1027,8 +1092,9 @@ int DisplayText::displayDecodedText(DecodedText* decodedText, QString myCall, QS
             QString p = contest_points_tag (contestPts);
             if (!cntry.isEmpty () && !cntry.startsWith (' ')) p += ' ';
             cntry = p + cntry;
+            if (cntryDoubtFrom >= 0) cntryDoubtFrom += p.size ();   // CE3TSK: ?Chile? moved along
         }
-        appendText(messageText, bgColor, txtColor, std_type, servis, servisColor, cntry, forceBold, strikethrough, underlined, decodedText->isDXped(), false, bwantedCall||bwantedGrid||bwantedPrefix||bwantedCountry);
+        appendText(messageText, bgColor, txtColor, std_type, servis, servisColor, cntry, forceBold, strikethrough, underlined, decodedText->isDXped(), false, bwantedCall||bwantedGrid||bwantedPrefix||bwantedCountry, doubtful, cntryDoubtFrom);
         wastx_ = false;
     }
         if (notified) inotified |= 1;

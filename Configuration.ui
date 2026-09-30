@@ -5407,6 +5407,74 @@ AA1AAA,BB1BB,CC1CC&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
           </widget>
          </item>
          <item>
+          <widget class="QGroupBox" name="falseDecodes_group_box">
+           <property name="title">
+            <string>False decodes</string>
+           </property>
+           <layout class="QGridLayout" name="falseDecodes_grid_layout">
+            <property name="leftMargin">
+             <number>3</number>
+            </property>
+            <property name="rightMargin">
+             <number>3</number>
+            </property>
+            <item row="0" column="0">
+             <widget class="QCheckBox" name="falseDecodeGridMark_check_box">
+              <property name="toolTip">
+               <string>A decode whose grid square lies outside the DXCC entity of the station that sent it - for a call such as DL/CE3TSK or CE3TSK/DL, outside Germany - is kept, but the grid is underlined in red and the country is shown as ?Chile?. Its ALL.TXT line ends with lc:grid and the entity's prefix, and it is sent to UDP clients as a low-confidence decode.</string>
+              </property>
+              <property name="text">
+               <string>Mark decodes whose grid is outside the callsign's country</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="1">
+             <widget class="QCheckBox" name="falseDecodeGridNoAnswer_check_box">
+              <property name="toolTip">
+               <string>The automatic sequencer does not pick such a decode on its own; a double click still answers it. A station heard with the same doubtful grid in two different periods is most likely operating away from home, and is answered again - false decodes do not repeat.</string>
+              </property>
+              <property name="text">
+               <string>Do not answer automatically</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="0">
+             <widget class="QCheckBox" name="falseDecodeRoverMark_check_box">
+              <property name="toolTip">
+               <string>Below 30 MHz a call signing /R (rover) is almost always a false decode: /R is a single bit of the message. The decode is kept, with the /R call underlined in red. Its ALL.TXT line ends with lc:rover, and it is sent to UDP clients as a low-confidence decode.</string>
+              </property>
+              <property name="text">
+               <string>Mark /R (rover) calls on HF</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="1">
+             <widget class="QCheckBox" name="falseDecodeRoverNoAnswer_check_box">
+              <property name="toolTip">
+               <string>The automatic sequencer does not pick such a decode on its own; a double click still answers it.</string>
+              </property>
+              <property name="text">
+               <string>Do not answer automatically</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="2" rowspan="2">
+             <spacer name="falseDecodes_horizontal_spacer">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>10</width>
+                <height>10</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
+          </widget>
+         </item>
+         <item>
           <spacer name="verticalSpacer_21">
            <property name="orientation">
             <enum>Qt::Vertical</enum>

@@ -9884,6 +9884,46 @@ soundcard changes</source>
         <source>Download the latest LoTW user activity file from ARRL. Stations that uploaded to LoTW during the last 365 days are treated as LoTW users.</source>
         <translation>ARRL에서 최신 LoTW 사용자 활동 파일을 다운로드합니다. 최근 365일 이내에 LoTW에 업로드한 국은 LoTW 사용자로 간주됩니다.</translation>
     </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>False decodes</source>
+        <translation>잘못된 디코드</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>A decode whose grid square lies outside the DXCC entity of the station that sent it - for a call such as DL/CE3TSK or CE3TSK/DL, outside Germany - is kept, but the grid is underlined in red and the country is shown as ?Chile?. Its ALL.TXT line ends with lc:grid and the entity's prefix, and it is sent to UDP clients as a low-confidence decode.</source>
+        <translation>송신국의 DXCC 엔티티 밖에 그리드가 있는 디코드(DL/CE3TSK나 CE3TSK/DL 같은 호출부호라면 독일 밖)는 유지되지만, 그리드에 빨간 밑줄이 그어지고 국가는 ?Chile?로 표시됩니다. ALL.TXT의 해당 줄은 lc:grid와 엔티티 접두어로 끝나며, UDP 클라이언트에는 신뢰도가 낮은 디코드로 전송됩니다.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Mark decodes whose grid is outside the callsign's country</source>
+        <translation>그리드가 호출부호의 국가 밖에 있는 디코드 표시</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>The automatic sequencer does not pick such a decode on its own; a double click still answers it. A station heard with the same doubtful grid in two different periods is most likely operating away from home, and is answered again - false decodes do not repeat.</source>
+        <translation>AutoSeq는 이런 디코드를 스스로 선택하지 않습니다. 더블클릭하면 여전히 응답할 수 있습니다. 서로 다른 두 주기에 같은 의심스러운 그리드로 수신된 국은 본국 밖에서 운용 중일 가능성이 높으므로 다시 응답 대상이 됩니다. 잘못된 디코드는 반복되지 않습니다.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Do not answer automatically</source>
+        <translation>자동으로 응답하지 않음</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Below 30 MHz a call signing /R (rover) is almost always a false decode: /R is a single bit of the message. The decode is kept, with the /R call underlined in red. Its ALL.TXT line ends with lc:rover, and it is sent to UDP clients as a low-confidence decode.</source>
+        <translation>30 MHz 미만에서 /R(로버)이 붙은 호출부호는 거의 항상 잘못된 디코드입니다. /R은 메시지의 비트 하나에 불과하기 때문입니다. 디코드는 유지되며 /R 호출부호에 빨간 밑줄이 그어집니다. ALL.TXT의 해당 줄은 lc:rover로 끝나며, UDP 클라이언트에는 신뢰도가 낮은 디코드로 전송됩니다.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Mark /R (rover) calls on HF</source>
+        <translation>HF에서 /R(로버) 호출부호 표시</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>The automatic sequencer does not pick such a decode on its own; a double click still answers it.</source>
+        <translation>AutoSeq는 이런 디코드를 스스로 선택하지 않습니다. 더블클릭하면 여전히 응답할 수 있습니다.</translation>
+    </message>
 </context>
 <context>
     <name>main</name>

@@ -9892,6 +9892,46 @@ promjena zvučne kartice</translation>
         <source>Download the latest LoTW user activity file from ARRL. Stations that uploaded to LoTW during the last 365 days are treated as LoTW users.</source>
         <translation>Preuzmi najnoviju datoteku aktivnosti LoTW korisnika s ARRL-a. Stanice koje su u zadnjih 365 dana poslale podatke na LoTW smatraju se LoTW korisnicima.</translation>
     </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>False decodes</source>
+        <translation>Lažna dekodiranja</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>A decode whose grid square lies outside the DXCC entity of the station that sent it - for a call such as DL/CE3TSK or CE3TSK/DL, outside Germany - is kept, but the grid is underlined in red and the country is shown as ?Chile?. Its ALL.TXT line ends with lc:grid and the entity's prefix, and it is sent to UDP clients as a low-confidence decode.</source>
+        <translation>Dekodiranje čiji je lokator izvan DXCC entiteta stanice koja ga je poslala - za znak poput DL/CE3TSK ili CE3TSK/DL izvan Njemačke - zadržava se, ali lokator se podvlači crveno, a zemlja se prikazuje kao ?Chile?. Njegov redak u ALL.TXT završava s lc:grid i prefiksom entiteta, a UDP klijentima šalje se kao dekodiranje niske pouzdanosti.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Mark decodes whose grid is outside the callsign's country</source>
+        <translation>Označi dekodiranja čiji je lokator izvan zemlje pozivnog znaka</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>The automatic sequencer does not pick such a decode on its own; a double click still answers it. A station heard with the same doubtful grid in two different periods is most likely operating away from home, and is answered again - false decodes do not repeat.</source>
+        <translation>AutoSeq takvo dekodiranje ne odabire sam od sebe; dvoklik i dalje odgovara na njega. Stanica koja se u dva različita razdoblja čuje s istim sumnjivim lokatorom najvjerojatnije radi izvan matične zemlje i ponovno joj se odgovara - lažna dekodiranja se ne ponavljaju.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Do not answer automatically</source>
+        <translation>Ne odgovaraj automatski</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Below 30 MHz a call signing /R (rover) is almost always a false decode: /R is a single bit of the message. The decode is kept, with the /R call underlined in red. Its ALL.TXT line ends with lc:rover, and it is sent to UDP clients as a low-confidence decode.</source>
+        <translation>Ispod 30 MHz pozivni znak s /R (rover) gotovo je uvijek lažno dekodiranje: /R je samo jedan bit poruke. Dekodiranje se zadržava, a znak s /R podvlači se crveno. Njegov redak u ALL.TXT završava s lc:rover, a UDP klijentima šalje se kao dekodiranje niske pouzdanosti.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Mark /R (rover) calls on HF</source>
+        <translation>Označi /R (rover) pozivne znakove na KV</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>The automatic sequencer does not pick such a decode on its own; a double click still answers it.</source>
+        <translation>AutoSeq takvo dekodiranje ne odabire sam od sebe; dvoklik i dalje odgovara na njega.</translation>
+    </message>
 </context>
 <context>
     <name>main</name>

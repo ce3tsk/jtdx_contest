@@ -9883,6 +9883,46 @@ hangkártya módosítási tevékenységet</translation>
         <source>Download the latest LoTW user activity file from ARRL. Stations that uploaded to LoTW during the last 365 days are treated as LoTW users.</source>
         <translation>A legújabb LoTW-felhasználói aktivitásfájl letöltése az ARRL-től. Azok az állomások számítanak LoTW-felhasználónak, amelyek az elmúlt 365 napban töltöttek fel adatot a LoTW-be.</translation>
     </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>False decodes</source>
+        <translation>Hamis dekódolások</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>A decode whose grid square lies outside the DXCC entity of the station that sent it - for a call such as DL/CE3TSK or CE3TSK/DL, outside Germany - is kept, but the grid is underlined in red and the country is shown as ?Chile?. Its ALL.TXT line ends with lc:grid and the entity's prefix, and it is sent to UDP clients as a low-confidence decode.</source>
+        <translation>Az a dekódolás, amelynek QRA kockája a küldő állomás DXCC entitásán kívül esik - egy DL/CE3TSK vagy CE3TSK/DL hívójelnél Németországon kívül -, megmarad, de a QRA kocka pirossal alá lesz húzva, az ország pedig ?Chile? alakban jelenik meg. Az ALL.TXT-ben a sora lc:grid és az entitás prefixe végződéssel zárul, az UDP kliensek pedig alacsony megbízhatóságú dekódolásként kapják meg.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Mark decodes whose grid is outside the callsign's country</source>
+        <translation>A hívójel országán kívüli QRA kockájú dekódolások megjelölése</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>The automatic sequencer does not pick such a decode on its own; a double click still answers it. A station heard with the same doubtful grid in two different periods is most likely operating away from home, and is answered again - false decodes do not repeat.</source>
+        <translation>Az automatikus sorrend (AutoSeq) magától nem választ ilyen dekódolást; dupla kattintással továbbra is válaszolhat rá. Az az állomás, amely két különböző periódusban ugyanazzal a kétes QRA kockával hallható, nagy valószínűséggel otthonától távol forgalmaz, és ismét választ kap - a hamis dekódolások nem ismétlődnek.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Do not answer automatically</source>
+        <translation>Ne válaszoljon automatikusan</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Below 30 MHz a call signing /R (rover) is almost always a false decode: /R is a single bit of the message. The decode is kept, with the /R call underlined in red. Its ALL.TXT line ends with lc:rover, and it is sent to UDP clients as a low-confidence decode.</source>
+        <translation>30 MHz alatt a /R (rover) hívójel szinte mindig hamis dekódolás: a /R az üzenet egyetlen bitje. A dekódolás megmarad, a /R hívójel pirossal alá lesz húzva. Az ALL.TXT-ben a sora lc:rover végződéssel zárul, az UDP kliensek pedig alacsony megbízhatóságú dekódolásként kapják meg.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Mark /R (rover) calls on HF</source>
+        <translation>A /R (rover) hívójelek megjelölése rövidhullámon</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>The automatic sequencer does not pick such a decode on its own; a double click still answers it.</source>
+        <translation>Az automatikus sorrend (AutoSeq) magától nem választ ilyen dekódolást; dupla kattintással továbbra is válaszolhat rá.</translation>
+    </message>
 </context>
 <context>
     <name>main</name>

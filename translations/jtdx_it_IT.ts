@@ -9888,6 +9888,46 @@ modifiche alla scheda audio</translation>
         <source>Download the latest LoTW user activity file from ARRL. Stations that uploaded to LoTW during the last 365 days are treated as LoTW users.</source>
         <translation>Scarica il file di attività degli utenti LoTW più recente dall'ARRL. Le stazioni che hanno caricato su LoTW negli ultimi 365 giorni sono considerate utenti LoTW.</translation>
     </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>False decodes</source>
+        <translation>Decodifiche false</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>A decode whose grid square lies outside the DXCC entity of the station that sent it - for a call such as DL/CE3TSK or CE3TSK/DL, outside Germany - is kept, but the grid is underlined in red and the country is shown as ?Chile?. Its ALL.TXT line ends with lc:grid and the entity's prefix, and it is sent to UDP clients as a low-confidence decode.</source>
+        <translation>Una decodifica la cui griglia si trova fuori dall'entità DXCC della stazione che l'ha trasmessa - per un nominativo come DL/CE3TSK o CE3TSK/DL, fuori dalla Germania - viene mantenuta, ma la griglia è sottolineata in rosso e il paese è mostrato come ?Chile?. La sua riga in ALL.TXT termina con lc:grid e il prefisso dell'entità, e viene inviata ai client UDP come decodifica a bassa affidabilità.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Mark decodes whose grid is outside the callsign's country</source>
+        <translation>Segna le decodifiche con la griglia fuori dal paese del nominativo</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>The automatic sequencer does not pick such a decode on its own; a double click still answers it. A station heard with the same doubtful grid in two different periods is most likely operating away from home, and is answered again - false decodes do not repeat.</source>
+        <translation>La sequenza automatica (AutoSeq) non sceglie da sola una tale decodifica; un doppio click risponde comunque. Una stazione ascoltata con la stessa griglia dubbia in due periodi diversi molto probabilmente opera lontano da casa, e le si risponde di nuovo - le decodifiche false non si ripetono.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Do not answer automatically</source>
+        <translation>Non rispondere automaticamente</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Below 30 MHz a call signing /R (rover) is almost always a false decode: /R is a single bit of the message. The decode is kept, with the /R call underlined in red. Its ALL.TXT line ends with lc:rover, and it is sent to UDP clients as a low-confidence decode.</source>
+        <translation>Sotto i 30 MHz un nominativo con /R (rover) è quasi sempre una decodifica falsa: /R è un singolo bit del messaggio. La decodifica viene mantenuta, con il nominativo /R sottolineato in rosso. La sua riga in ALL.TXT termina con lc:rover, e viene inviata ai client UDP come decodifica a bassa affidabilità.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Mark /R (rover) calls on HF</source>
+        <translation>Segna i nominativi /R (rover) in HF</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>The automatic sequencer does not pick such a decode on its own; a double click still answers it.</source>
+        <translation>La sequenza automatica (AutoSeq) non sceglie da sola una tale decodifica; un doppio click risponde comunque.</translation>
+    </message>
 </context>
 <context>
     <name>main</name>

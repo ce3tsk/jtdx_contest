@@ -31,6 +31,7 @@ public:
   void init(const QString filename,const QString filename2,bool translated = false);
   void load();
   QString find(const QString prefix); // return country name or ""
+  bool loaded () const {return !_data.isEmpty ();}   // CE3TSK: cty.dat was read - see MainWindow::countryUnknown
   QString find2(const QString call); // return lotw date or ""
 
   /* CE3TSK: the version a cty.dat or LoTW user activity file carries - cty.dat's =VERyyyymmdd

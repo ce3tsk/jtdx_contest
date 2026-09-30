@@ -269,6 +269,12 @@ public:
   bool enable_tcp_connection () const;
   bool write_decoded () const;
   bool write_decoded_debug () const;
+  /* CE3TSK 2026-09-30: Settings > Filters > False decodes (falsedecodes.h) - each "no answer" is
+     read only together with its "mark", and all four default to on */
+  bool falseDecodeGridMark () const;
+  bool falseDecodeGridNoAnswer () const;
+  bool falseDecodeRoverMark () const;
+  bool falseDecodeRoverNoAnswer () const;
   bool udpWindowToFront () const;
   bool udpWindowRestore () const;
   Bands * bands ();

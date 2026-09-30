@@ -581,6 +581,8 @@ private:
   Q_SLOT void on_autolog_check_box_clicked(bool checked);
   Q_SLOT void on_write_decoded_check_box_clicked(bool checked);
   Q_SLOT void on_write_decoded_debug_check_box_clicked(bool checked);
+  Q_SLOT void on_falseDecodeGridMark_check_box_toggled (bool checked);    /* CE3TSK */
+  Q_SLOT void on_falseDecodeRoverMark_check_box_toggled (bool checked);   /* CE3TSK */
   Q_SLOT void on_txtColor_check_box_clicked(bool checked);
   Q_SLOT void on_workedStriked_check_box_clicked(bool checked);
   Q_SLOT void on_workedUnderlined_check_box_clicked(bool checked);
@@ -1059,6 +1061,10 @@ private:
   bool enable_udp2_broadcast_;
   bool write_decoded_;
   bool write_decoded_debug_;
+  bool falseDecodeGridMark_;       /* CE3TSK */
+  bool falseDecodeGridNoAnswer_;
+  bool falseDecodeRoverMark_;
+  bool falseDecodeRoverNoAnswer_;
   bool udpWindowToFront_;
   bool udpWindowRestore_;
   DataMode data_mode_;
@@ -1473,6 +1479,10 @@ bool Configuration::enable_udp2_broadcast () const {return m_->enable_udp2_broad
 bool Configuration::enable_tcp_connection () const {return m_->enable_tcp_connection_;}
 bool Configuration::write_decoded () const {return m_->write_decoded_;}
 bool Configuration::write_decoded_debug () const {return m_->write_decoded_debug_;}
+bool Configuration::falseDecodeGridMark () const {return m_->falseDecodeGridMark_;}
+bool Configuration::falseDecodeGridNoAnswer () const {return m_->falseDecodeGridNoAnswer_;}
+bool Configuration::falseDecodeRoverMark () const {return m_->falseDecodeRoverMark_;}
+bool Configuration::falseDecodeRoverNoAnswer () const {return m_->falseDecodeRoverNoAnswer_;}
 bool Configuration::udpWindowToFront () const {return m_->udpWindowToFront_;}
 bool Configuration::udpWindowRestore () const {return m_->udpWindowRestore_;}
 Bands * Configuration::bands () {return &m_->bands_;}
@@ -2677,6 +2687,13 @@ Radio::convert_dark("#fafbfe",useDarkStyle_),Radio::convert_dark("#dcdef1",useDa
   ui_->TCP_checkBox->setChecked (enable_tcp_connection_);
   ui_->write_decoded_check_box->setChecked (write_decoded_);
   ui_->write_decoded_debug_check_box->setChecked (write_decoded_debug_);
+  ui_->falseDecodeGridMark_check_box->setChecked (falseDecodeGridMark_);
+  ui_->falseDecodeGridNoAnswer_check_box->setChecked (falseDecodeGridNoAnswer_);
+  ui_->falseDecodeRoverMark_check_box->setChecked (falseDecodeRoverMark_);
+  ui_->falseDecodeRoverNoAnswer_check_box->setChecked (falseDecodeRoverNoAnswer_);
+  // toggled () does not fire for a box that already holds the value, so the greying is set here too
+  ui_->falseDecodeGridNoAnswer_check_box->setEnabled (falseDecodeGridMark_);
+  ui_->falseDecodeRoverNoAnswer_check_box->setEnabled (falseDecodeRoverMark_);
 
   ui_->calibration_intercept_spin_box->setValue (frequency_calibration_intercept_);
   ui_->calibration_slope_ppm_spin_box->setValue (frequency_calibration_slope_ppm_);
@@ -3257,6 +3274,12 @@ void Configuration::impl::read_settings ()
 
   write_decoded_ = settings_->value ("WriteDecodedALLTXT", true).toBool ();
   write_decoded_debug_ = settings_->value ("WriteDecodedDebugALLTXT", false).toBool ();
+  /* CE3TSK 2026-09-30: JTDX_contest's own keys, beside the colours (contestprofile.h) - stock JTDX
+     has no such settings. On by default, so a fresh install and an upgrade both start marking. */
+  falseDecodeGridMark_ = settings_->value (contest_profile::own_key ("FalseDecodeGridMark"), true).toBool ();
+  falseDecodeGridNoAnswer_ = settings_->value (contest_profile::own_key ("FalseDecodeGridNoAnswer"), true).toBool ();
+  falseDecodeRoverMark_ = settings_->value (contest_profile::own_key ("FalseDecodeRoverMark"), true).toBool ();
+  falseDecodeRoverNoAnswer_ = settings_->value (contest_profile::own_key ("FalseDecodeRoverNoAnswer"), true).toBool ();
   udpWindowToFront_ = settings_->value ("udpWindowToFront",false).toBool ();
   udpWindowRestore_ = settings_->value ("udpWindowRestore",false).toBool ();
   frequency_calibration_intercept_ = settings_->value ("CalibrationIntercept", 0.).toDouble ();
@@ -3520,6 +3543,10 @@ void Configuration::impl::write_settings ()
   settings_->setValue ("EnableTCPConnection", enable_tcp_connection_);
   settings_->setValue ("WriteDecodedALLTXT", write_decoded_);
   settings_->setValue ("WriteDecodedDebugALLTXT", write_decoded_debug_);
+  settings_->setValue (contest_profile::own_key ("FalseDecodeGridMark"), falseDecodeGridMark_);   /* CE3TSK */
+  settings_->setValue (contest_profile::own_key ("FalseDecodeGridNoAnswer"), falseDecodeGridNoAnswer_);
+  settings_->setValue (contest_profile::own_key ("FalseDecodeRoverMark"), falseDecodeRoverMark_);
+  settings_->setValue (contest_profile::own_key ("FalseDecodeRoverNoAnswer"), falseDecodeRoverNoAnswer_);
   settings_->setValue ("udpWindowToFront", udpWindowToFront_);
   settings_->setValue ("udpWindowRestore", udpWindowRestore_);
   settings_->setValue ("CalibrationIntercept", frequency_calibration_intercept_);
@@ -4254,6 +4281,10 @@ void Configuration::impl::accept ()
   enable_tcp_connection_ = ui_->TCP_checkBox->isChecked ();
   write_decoded_ = ui_->write_decoded_check_box->isChecked ();
   write_decoded_debug_ = ui_->write_decoded_debug_check_box->isChecked ();
+  falseDecodeGridMark_ = ui_->falseDecodeGridMark_check_box->isChecked ();   /* CE3TSK */
+  falseDecodeGridNoAnswer_ = ui_->falseDecodeGridNoAnswer_check_box->isChecked ();
+  falseDecodeRoverMark_ = ui_->falseDecodeRoverMark_check_box->isChecked ();
+  falseDecodeRoverNoAnswer_ = ui_->falseDecodeRoverNoAnswer_check_box->isChecked ();
   udpWindowToFront_ = ui_->udpWindowToFront->isChecked ();
   udpWindowRestore_ = ui_->udpWindowRestore->isChecked ();
   enable_udp1_adif_sending_ = ui_->udp1_adif_enable_check_box->isChecked ();
@@ -4509,6 +4540,18 @@ void Configuration::impl::on_write_decoded_check_box_clicked(bool checked)
 void Configuration::impl::on_write_decoded_debug_check_box_clicked(bool checked)
 {
   if(checked) ui_->write_decoded_check_box->setChecked(false);
+}
+
+/* CE3TSK 2026-09-30: "do not answer" means nothing without its mark, so it is greyed with it - its
+   own value is kept, and is back when the mark is */
+void Configuration::impl::on_falseDecodeGridMark_check_box_toggled (bool checked)
+{
+  ui_->falseDecodeGridNoAnswer_check_box->setEnabled (checked);
+}
+
+void Configuration::impl::on_falseDecodeRoverMark_check_box_toggled (bool checked)
+{
+  ui_->falseDecodeRoverNoAnswer_check_box->setEnabled (checked);
 }
 
 void Configuration::impl::on_txtColor_check_box_clicked(bool checked)

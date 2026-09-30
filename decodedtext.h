@@ -13,6 +13,7 @@
 #include <QString>
 #include <QRegularExpression>
 #include <QHash>
+#include "falsedecodes.h"   /* CE3TSK */
 
 
 /*
@@ -51,6 +52,7 @@ public:
     bool isJT9();
     bool isTX();
     bool isHint();
+    static bool isHintMarker (QString const& marker);   // CE3TSK: '*', the degree sign, '^' or the cross
     bool isPipeline();   // CE3TSK: decoded in the TX background (marker | or the hint cross)
     bool isStandardMessage () const {return is_standard_;}
 
@@ -81,7 +83,14 @@ public:
     // returns a string of the SNR field with a leading + or - followed by two digits
     QString report();
 
+    /* CE3TSK 2026-09-30: whether this is a likely false decode (falsedecodes.h). The main window
+       judges each decode once, before ALL.TXT, and hands the verdict on with it - to both windows,
+       the UDP clients and the sequencer - so none of them can disagree. Empty until then. */
+    void setVerdict (false_decodes::Verdict const& v) {verdict_ = v;}
+    false_decodes::Verdict const& verdict () const {return verdict_;}
+
 private:
+    false_decodes::Verdict verdict_;
      enum Columns { column_time    = 0,
                     column_snr     = 5,
                     column_dt      = 9,

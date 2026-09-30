@@ -9887,6 +9887,46 @@ Zurücksetzen der Funkgeräteschnittstelle und Übernahme etwaiger
         <source>Download the latest LoTW user activity file from ARRL. Stations that uploaded to LoTW during the last 365 days are treated as LoTW users.</source>
         <translation>Die neueste LoTW-Aktivitätsdatei von der ARRL herunterladen. Stationen, die in den letzten 365 Tagen zu LoTW hochgeladen haben, gelten als LoTW-Nutzer.</translation>
     </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>False decodes</source>
+        <translation>Fehldekodierungen</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>A decode whose grid square lies outside the DXCC entity of the station that sent it - for a call such as DL/CE3TSK or CE3TSK/DL, outside Germany - is kept, but the grid is underlined in red and the country is shown as ?Chile?. Its ALL.TXT line ends with lc:grid and the entity's prefix, and it is sent to UDP clients as a low-confidence decode.</source>
+        <translation>Eine Dekodierung, deren Locator außerhalb der DXCC-Entität der sendenden Station liegt - bei einem Rufzeichen wie DL/CE3TSK oder CE3TSK/DL außerhalb Deutschlands -, bleibt erhalten, aber der Locator wird rot unterstrichen und das Land als ?Chile? angezeigt. Ihre Zeile in ALL.TXT endet mit lc:grid und dem Präfix der Entität, und sie geht an UDP-Clients als Dekodierung mit geringer Zuverlässigkeit.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Mark decodes whose grid is outside the callsign's country</source>
+        <translation>Dekodierungen markieren, deren Locator außerhalb des Landes des Rufzeichens liegt</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>The automatic sequencer does not pick such a decode on its own; a double click still answers it. A station heard with the same doubtful grid in two different periods is most likely operating away from home, and is answered again - false decodes do not repeat.</source>
+        <translation>Die automatische Ablaufsteuerung (AutoSeq) wählt eine solche Dekodierung nicht von sich aus; ein Doppelklick beantwortet sie trotzdem. Eine Station, die in zwei verschiedenen Perioden mit demselben zweifelhaften Locator gehört wird, funkt höchstwahrscheinlich fern der Heimat und wird wieder beantwortet - Fehldekodierungen wiederholen sich nicht.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Do not answer automatically</source>
+        <translation>Nicht automatisch beantworten</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Below 30 MHz a call signing /R (rover) is almost always a false decode: /R is a single bit of the message. The decode is kept, with the /R call underlined in red. Its ALL.TXT line ends with lc:rover, and it is sent to UDP clients as a low-confidence decode.</source>
+        <translation>Unterhalb von 30 MHz ist ein Rufzeichen mit /R (Rover) fast immer eine Fehldekodierung: /R ist ein einzelnes Bit der Nachricht. Die Dekodierung bleibt erhalten, das /R-Rufzeichen wird rot unterstrichen. Ihre Zeile in ALL.TXT endet mit lc:rover, und sie geht an UDP-Clients als Dekodierung mit geringer Zuverlässigkeit.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Mark /R (rover) calls on HF</source>
+        <translation>/R-Rufzeichen (Rover) auf KW markieren</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>The automatic sequencer does not pick such a decode on its own; a double click still answers it.</source>
+        <translation>Die automatische Ablaufsteuerung (AutoSeq) wählt eine solche Dekodierung nicht von sich aus; ein Doppelklick beantwortet sie trotzdem.</translation>
+    </message>
 </context>
 <context>
     <name>main</name>

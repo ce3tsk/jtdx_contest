@@ -7074,6 +7074,16 @@ void MainWindow::readFromStdout()                             //readFromStdout
           }
         } else continue;
       }
+      DecodedText decodedtext {QString::fromUtf8 (t.constData ()).remove (QRegularExpression {"\r|\n"}),this};
+      /* CE3TSK 2026-09-30: a likely false decode (falsedecodes.h) is judged once, here, before
+         ALL.TXT - the file, both windows, the UDP clients and the sequencer all read this verdict.
+         Debug lines and free text (',' and '.', FT8, FT4 and FT2 alike) are never judged. It reads
+         the message field as printed, not message () - which drops brackets and cuts long lines. A
+         hint or a-priori decode, and any decode of the TX background, is no second hearing. */
+      if (!decodedtext.isDebug () && !decodedtext.isNonStd1 () && !decodedtext.isNonStd2 ())
+        decodedtext.setVerdict (m_falseDecodes.judge (false_decodes::messageField (decodedtext.string ()), m_freqNominal
+                                                      , decodedtext.timeInSeconds (), decodedtext.isHint () || decodedtext.isPipeline ()
+                                                      , falseDecodeSettings (), [this] (QString const& call) {return dxccOf (call);}));
       if(t.indexOf(m_baseCall.toLatin1()) >= 0 || m_config.write_decoded() || m_config.write_decoded_debug()) {
         QFile f {m_dataDir.absoluteFilePath (m_jtdxtime->currentDateTimeUtc2().toString("yyyyMM_")+"ALL.TXT")};
         if (f.open(QIODevice::WriteOnly | QIODevice::Text | QIODevice::Append)) {
@@ -7090,6 +7100,17 @@ void MainWindow::readFromStdout()                             //readFromStdout
 
             m_RxLog=0;
           }
+          /* CE3TSK 2026-09-30: a likely false decode ends in its tag, "lc:grid CE" (falsedecodes.h);
+             every other line is written exactly as before */
+          if (decodedtext.verdict ().marked ())
+            out << m_jtdxtime->currentDateTimeUtc2().toString("yyyyMMdd_")
+                << false_decodes::tagged (QString::fromUtf8 (t.trimmed ()), decodedtext.verdict ()) <<
+#if QT_VERSION < QT_VERSION_CHECK(5, 15, 0)
+                 endl;
+#else
+                 Qt::endl;
+#endif
+          else
           out << m_jtdxtime->currentDateTimeUtc2().toString("yyyyMMdd_") << t.trimmed() << 
 #if QT_VERSION < QT_VERSION_CHECK(5, 15, 0)
                  endl;
@@ -7176,7 +7197,8 @@ void MainWindow::readFromStdout()                             //readFromStdout
             m_blankLine = false;
           }
  
-       if (!m_notified && m_config.beepOnFirstMsg () && !m_diskData) {
+       /* CE3TSK 2026-09-30: nor for a likely false decode (falsedecodes.h) - the next one rings instead */
+       if (!m_notified && m_config.beepOnFirstMsg () && !m_diskData && !decodedtext.verdict ().marked ()) {
           if (m_windowPopup) {
 			 this->showNormal();
 			 this->raise();
@@ -7186,7 +7208,6 @@ void MainWindow::readFromStdout()                             //readFromStdout
           m_notified=true;
        }
 	   
-      DecodedText decodedtext {QString::fromUtf8 (t.constData ()).remove (QRegularExpression {"\r|\n"}),this};
 //      DecodedText decodedtext {"161545  -4  0.1 1939 & CQ RT9K/4    ",this};
 	  QString tcut = t.replace("\n","");
 	  if (!m_mode.startsWith("FT")) {
@@ -7315,7 +7336,7 @@ void MainWindow::readFromStdout()                             //readFromStdout
 
       if((!m_config.prevent_spotting_false () || (m_config.prevent_spotting_false () && !decodedtext.isWrong ()))
          && (!m_config.filterUDP () || (m_config.filterUDP () && notified & 2))) {
-         postDecode (true, decodedtext.string ());
+         postDecode (true, decodedtext.string (), decodedtext.verdict ().lowConfidence ());   // CE3TSK: see Verdict
       }
       // find and extract any report for myCall
       QString rpt_type;
@@ -7334,7 +7355,12 @@ void MainWindow::readFromStdout()                             //readFromStdout
         int snr = decodedtext.snr();
         Frequency frequency = m_freqNominal + audioFrequency;
         pskSetLocal ();
-        if(gridOK(grid) && !gridRR73(grid) && !decodedtext.isHint() && !decodedtext.isWrong())
+        /* CE3TSK 2026-09-30: a likely false decode (falsedecodes.h) is not spotted, as a hint or an error
+           decode is not - the spot would put a call on the map where the message itself is in doubt. After
+           the second hearing a grid-only mark is trusted (Verdict::lowConfidence). Nor is a sender whose
+           country cty.dat does not know - an unallocated prefix; /MM and /AM excepted (unknownCountry). */
+        if(gridOK(grid) && !gridRR73(grid) && !decodedtext.isHint() && !decodedtext.isWrong() && !decodedtext.verdict ().lowConfidence ()
+           && !countryUnknown (deCall))
           {
             // qDebug() << "To PSKreporter:" << deCall << grid << frequency << msgmode << snr;
             psk_Reporter->addRemoteStation(deCall,grid,QString::number(frequency),msgmode,
@@ -8553,6 +8579,8 @@ void MainWindow::processMessage(QString const& messages, int position, bool alt,
   int i9=m_QSOText.indexOf(decodedtext.string());
   if (i9<0 and !decodedtext.isTX() and m_decodedText2) {
     DecodedText decodedtext {t2disp,this};
+    /* CE3TSK 2026-09-30: the copy keeps its marks (falsedecodes.h) - read back as the replay reads it */
+    decodedtext.setVerdict (windowVerdict (t2disp));
 	if (!t2.contains (m_baseCall) || !m_showMyCallMsgRxWindow) {
 		ui->decodedTextBrowser2->displayDecodedText(&decodedtext
                                                   ,m_baseCall
@@ -11330,34 +11358,94 @@ void MainWindow::replayDecodes ()
           if (parts.size () >= 5 && parts[3].contains ('.')) { // WSPR
               postWSPRDecode (false, parts);
           } else {
-              auto eom_pos = message.indexOf (' ', 35);
-              // we always want at least the characters to position 35
-              if (eom_pos < 35)
-                {
-                  eom_pos = message.size () - 1;
-                }
-              postDecode (false, message.left (eom_pos + 1));
+              /* CE3TSK 2026-09-30: the line up to the window's marker - 49 characters for FT8, FT4 and FT2
+                 (seconds in the time), 40 for JT65 and JT9 - so the time, the report and the WHOLE message
+                 go out, without the marker and the country after it. It used to be cut at the first space
+                 at or after column 35, which took a long message's last word - often its grid - with it.
+                 The window's own marker says whether it was a hint decode ('*', the LoTW hint's degree
+                 sign, the cross); and the line is looked up again (recall) - reported as it was live, but
+                 no second hearing (falsedecodes.h). No DecodedText is built: a full window is 10 000 lines. */
+              int const eom = message.indexOf (' ') > 4 ? 49 : 40;
+              QString const line = message.left (eom);
+              postDecode (false, line
+                          , DecodedText::isHintMarker (message.mid (eom, 1))
+                            || windowVerdict (line).lowConfidence ());
           }
       }
     }
   statusChanged ();
 }
 
-void MainWindow::postDecode (bool is_new, QString const& message)
+void MainWindow::postDecode (bool is_new, QString const& message, bool lowConfidence)
 {
   auto const& decode = message.trimmed ();
   QStringList parts = decode.left (22).split (' ', SkipEmptyParts);
   if (parts.size () >= 5) {
       auto has_seconds = parts[0].size () > 4;
-      bool low_confidence=(QChar {'*'} == decode.mid (has_seconds ? 23 + 24 : 21 + 24, 1)) || (QChar {'^'} == decode.mid (has_seconds ? 23 + 24 : 21 + 24, 1));
+      /* CE3TSK 2026-09-30: a hint or a-priori decode is read where DecodedText reads its marker - column
+         47, or 49 when the time carries seconds. This used to test column 47 (23 + 24) whatever the
+         time, so for FT8, FT4 and FT2, whose time always has seconds, it met the padding of the
+         message field and never flagged a hint decode; the TX background's hint cross was never
+         asked at all. lowConfidence: a likely false decode (falsedecodes.h). */
+      bool low_confidence = DecodedText::isHintMarker (decode.mid (false_decodes::markerColumn (decode), 1)) || lowConfidence;
       m_messageClient->decode (is_new
                                , QTime::fromString (parts[0], has_seconds ? "hhmmss" : "hhmm")
                                , parts[1].toInt ()
                                , parts[2].toFloat (), parts[3].toUInt (), parts[4]
-                               , decode.mid (has_seconds ? 23 : 21, 23)
+                               /* CE3TSK 2026-09-30: the whole message field - 26 characters, its padding
+                                  dropped. It was cut at 23 (mid (x, 23)), the width of an older layout,
+                                  as the hint column above was, so a longer message reached the UDP
+                                  clients short. replyToUDP matches a returned text on the first 42
+                                  characters of the line, which this leaves as they were. */
+                               , decode.mid (has_seconds ? 23 : 21, 26).trimmed ()
                                , low_confidence
                                , m_diskData);
   }
+}
+
+/* CE3TSK 2026-09-30: the four settings of Settings > Filters > False decodes (falsedecodes.h) */
+false_decodes::Settings MainWindow::falseDecodeSettings () const
+{
+  false_decodes::Settings s;
+  s.gridMark = m_config.falseDecodeGridMark ();
+  s.gridNoAnswer = m_config.falseDecodeGridNoAnswer ();
+  s.roverMark = m_config.falseDecodeRoverMark ();
+  s.roverNoAnswer = m_config.falseDecodeRoverNoAnswer ();
+  return s;
+}
+
+/* CE3TSK 2026-09-30: cty.dat's entry for a call through the lookup the windows use for the country
+   column, so the entity a decode is judged against is the one the operator reads */
+QString MainWindow::dxccOf (QString const& call)
+{
+  QString country;
+  (m_wwDigi ? m_contestLog : m_logBook).getDXCC (call, country);
+  return country;
+}
+
+/* CE3TSK 2026-09-30: the verdict of a line read back from a window - the UDP replay, a double click. One place,
+   so the two cannot drift apart. It is looked up again (Judge::recall): reported as it was live, never a hearing.
+   A window keeps no free-text marker (',' and '.' - the live path never judges free text), so a MARKED line is
+   packed to find out (DecodedText::isStandardMessage: false only for free text) - built only then, since a
+   window holds 10 000 lines. */
+false_decodes::Verdict MainWindow::windowVerdict (QString const& line)
+{
+  auto const v = m_falseDecodes.recall (false_decodes::messageField (line), m_freqNominal, falseDecodeSettings ()
+                                        , [this] (QString const& call) {return dxccOf (call);});
+  if (v.marked ())
+    {
+      DecodedText d {line};
+      if (!d.isStandardMessage ()) return false_decodes::Verdict {};
+    }
+  return v;
+}
+
+/* CE3TSK 2026-09-30: a sender cty.dat cannot place (false_decodes::unknownCountry) - but only once cty.dat has been
+   read: an empty table would make every call unknown, and not one spot would go out */
+bool MainWindow::countryUnknown (QString const& call)
+{
+  return (m_wwDigi ? m_contestLog : m_logBook).countryData ()->loaded ()
+    && false_decodes::unknownCountry (call, [this] (QString const& c) {return dxccOf (c);});
 }
 
 void MainWindow::postWSPRDecode (bool is_new, QStringList parts)

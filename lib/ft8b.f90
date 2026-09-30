@@ -1799,14 +1799,25 @@ subroutine ft8b(newdat1,nQSOProgress,nfqso,nftx,napwid,lsubtract,npos,freqsub,tm
             falsedec=.false.; call chkflscall('CQ          ',call_a,falsedec)
             if(falsedec) then; nbadcrc=1; msg37=''; return; endif
           else if(len_trim(call_b).gt.2) then
-            ispc4=index(msg37((ispc3+1):),' ')+ispc3; grid=''
-            if(ispc4-ispc3.eq.5 .and. msg37(ispc3+1:ispc3+1).gt.'@' .and. msg37(ispc3+1:ispc3+1).lt.'S' .and. &
-               msg37(ispc3+2:ispc3+2).gt.'@' .and. msg37(ispc3+2:ispc3+2).lt.'S' .and. &
-               msg37(ispc3+3:ispc3+3).lt.':' .and. msg37(ispc3+4:ispc3+4).lt.':') grid=msg37(ispc3+1:ispc4-1)
-            if(grid.ne.'') then
-              call chkgrid(call_b,grid,lchkcall,lgvalid,lwrongcall)
-              if(lwrongcall .or. .not.lgvalid) then; nbadcrc=1; msg37=''; return; endif
+! CE3TSK 2026-09-30, the operator: "CALL1 CALL2 R GRID" is the WW Digi and ARRL Digi exchange, and a station
+! sends it from its contest mode whether ours is on or not. It used to go through chkgrid, which drops a grid
+! outside the prefix's own table at ANY SNR - a station operating away from home lost its roger, and the QSO
+! stalled. Now only the FORM is checked: what follows the R must be a 4-character grid, two letters A-R and
+! two digits; "R AA0", "R 345", "R AAAA" or nothing at all is dropped. Whether the grid fits the call is the
+! GUI's question (falsedecodes.h): it marks the line, and the sequencer does not answer it on its own.
+! A call whose prefix is not allocated at all (chkgrid's lwrongcall: C0, C1, C7, 1C..1Z ...) is still dropped -
+! that is the callsign, not geography, and the GUI cannot judge a country it does not know (the operator, A1).
+            ispc4=index(msg37((ispc3+1):),' ')+ispc3
+            if(.not.(ispc4-ispc3.eq.5 .and. &
+                     msg37(ispc3+1:ispc3+1).ge.'A' .and. msg37(ispc3+1:ispc3+1).le.'R' .and. &
+                     msg37(ispc3+2:ispc3+2).ge.'A' .and. msg37(ispc3+2:ispc3+2).le.'R' .and. &
+                     msg37(ispc3+3:ispc3+3).ge.'0' .and. msg37(ispc3+3:ispc3+3).le.'9' .and. &
+                     msg37(ispc3+4:ispc3+4).ge.'0' .and. msg37(ispc3+4:ispc3+4).le.'9')) then
+              nbadcrc=1; msg37=''; return
             endif
+            grid=msg37(ispc3+1:ispc4-1)
+            call chkgrid(call_b,grid,lchkcall,lgvalid,lwrongcall)
+            if(lwrongcall) then; nbadcrc=1; msg37=''; return; endif
           endif
         endif
       endif

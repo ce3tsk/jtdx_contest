@@ -36,7 +36,10 @@ signals:
     void selectCallsign(bool alt, bool ctrl);
 
 public slots:
-  void appendText(QString const& text, QString const& bg = "#ffffff", QString const& color = "#000000", int std_type = 0, QString const& servis = " ", QString const& servis_color = "#000000", QString const& cntry = " ", bool forceBold = false, bool strikethrough = false, bool underline = false, bool DXped = false, bool overwrite = false, bool wanted = false);
+  /* CE3TSK 2026-09-30: doubtful - (column, length) of the words of `text` in doubt, cntryDoubtFrom -
+     where the doubtful part of `cntry` starts (-1: none); both get the red wave underline of a
+     likely false decode (falsedecodes.h) */
+  void appendText(QString const& text, QString const& bg = "#ffffff", QString const& color = "#000000", int std_type = 0, QString const& servis = " ", QString const& servis_color = "#000000", QString const& cntry = " ", bool forceBold = false, bool strikethrough = false, bool underline = false, bool DXped = false, bool overwrite = false, bool wanted = false, QList<QPair<int, int>> const& doubtful = QList<QPair<int, int>> (), int cntryDoubtFrom = -1);
 
 protected:
     void mouseDoubleClickEvent(QMouseEvent *e);
@@ -102,6 +105,7 @@ private:
     QsoHistory::Status mystatus_ = QsoHistory::NONE;
     unsigned max_r_time = 0;
     QTextCharFormat m_charFormat;
+    QTextCharFormat doubtFormat (QTextCharFormat f) const;   /* CE3TSK: f with the red wave underline */
     unsigned last_tx = 0;
     QString mygrid_ = "";
     QString myhisCall_ = "";

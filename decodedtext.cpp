@@ -84,8 +84,15 @@ QString DecodedText::CQersCall(QString& grid,QString& tyyp)
 
 bool DecodedText::isHint()
 {
-  	return string_.mid(47 + padding_,1) == "*" || string_.mid(47 + padding_,1) == "°" || string_.mid(47 + padding_,1) == "^"
-  	    || string_.mid(47 + padding_,1) == QString::fromUtf8("┼");   // CE3TSK: a hint decode in the TX background (pipeline)
+  	return isHintMarker (string_.mid(47 + padding_,1));
+}
+
+// CE3TSK 2026-09-30: the one list of the hint and a-priori markers - isHint () above, and the UDP
+// low-confidence bit, which reads a line's marker without building a DecodedText for it
+bool DecodedText::isHintMarker (QString const& marker)
+{
+  	return marker == "*" || marker == "°" || marker == "^"
+  	    || marker == QString::fromUtf8("┼");   // CE3TSK: a hint decode in the TX background (pipeline)
 }
 
 // CE3TSK: a pipeline message - decoded in the TX background phase: '|', or the cross for a

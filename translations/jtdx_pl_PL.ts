@@ -9888,6 +9888,46 @@ zmiany dla karty dźwiękowej</translation>
         <source>Download the latest LoTW user activity file from ARRL. Stations that uploaded to LoTW during the last 365 days are treated as LoTW users.</source>
         <translation>Pobierz najnowszy plik aktywności użytkowników LoTW z ARRL. Stacje, które w ciągu ostatnich 365 dni przesłały dane do LoTW, są traktowane jako użytkownicy LoTW.</translation>
     </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>False decodes</source>
+        <translation>Fałszywe dekodowania</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>A decode whose grid square lies outside the DXCC entity of the station that sent it - for a call such as DL/CE3TSK or CE3TSK/DL, outside Germany - is kept, but the grid is underlined in red and the country is shown as ?Chile?. Its ALL.TXT line ends with lc:grid and the entity's prefix, and it is sent to UDP clients as a low-confidence decode.</source>
+        <translation>Dekodowanie, którego lokator leży poza jednostką DXCC stacji nadającej - dla znaku takiego jak DL/CE3TSK lub CE3TSK/DL poza Niemcami - zostaje zachowane, ale lokator jest podkreślony na czerwono, a kraj wyświetlany jako ?Chile?. Jego wiersz w ALL.TXT kończy się znacznikiem lc:grid i prefiksem jednostki, a klienci UDP otrzymują je jako dekodowanie o niskiej wiarygodności.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Mark decodes whose grid is outside the callsign's country</source>
+        <translation>Oznaczaj dekodowania z lokatorem spoza kraju znaku wywoławczego</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>The automatic sequencer does not pick such a decode on its own; a double click still answers it. A station heard with the same doubtful grid in two different periods is most likely operating away from home, and is answered again - false decodes do not repeat.</source>
+        <translation>Automatyczna sekwencja (AutoSeq) sama nie wybiera takiego dekodowania; podwójne kliknięcie nadal na nie odpowiada. Stacja słyszana z tym samym wątpliwym lokatorem w dwóch różnych okresach najpewniej pracuje poza swoim krajem i znów otrzymuje odpowiedź - fałszywe dekodowania się nie powtarzają.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Do not answer automatically</source>
+        <translation>Nie odpowiadaj automatycznie</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Below 30 MHz a call signing /R (rover) is almost always a false decode: /R is a single bit of the message. The decode is kept, with the /R call underlined in red. Its ALL.TXT line ends with lc:rover, and it is sent to UDP clients as a low-confidence decode.</source>
+        <translation>Poniżej 30 MHz znak z /R (rover) to prawie zawsze fałszywe dekodowanie: /R to pojedynczy bit wiadomości. Dekodowanie zostaje zachowane, a znak z /R jest podkreślony na czerwono. Jego wiersz w ALL.TXT kończy się znacznikiem lc:rover, a klienci UDP otrzymują je jako dekodowanie o niskiej wiarygodności.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Mark /R (rover) calls on HF</source>
+        <translation>Oznaczaj znaki /R (rover) na KF</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>The automatic sequencer does not pick such a decode on its own; a double click still answers it.</source>
+        <translation>Automatyczna sekwencja (AutoSeq) sama nie wybiera takiego dekodowania; podwójne kliknięcie nadal na nie odpowiada.</translation>
+    </message>
 </context>
 <context>
     <name>main</name>
