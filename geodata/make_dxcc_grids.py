@@ -85,6 +85,9 @@ ALIAS = {
     'Republic of Kosovo': 'Kosovo', 'Republic of South Sudan': 'South Sudan',
     'Reunion Island': 'Reunion', 'West Malaysia': 'Malaysia',
     'Western Kiribati': 'Kiribati', 'Central Kiribati': 'Kiribati', 'Eastern Kiribati': 'Kiribati',
+    # 2026-10-01: without it KH0 was a 120 km disk around Saipan, and the northern islands (Pagan, Agrihan,
+    # Farallon de Pajaros - QK28 QK29 QL20) were outside the Marianas
+    'Mariana Islands': 'Northern Mariana Islands',
 }
 # Entities that share one ADMINISTRATION.  DXCC counts them apart - that is what DXCC is for - but a
 # station of one may legitimately transmit from another: a KL7 holder living in Ohio, an Asiatic-Russia
@@ -115,7 +118,37 @@ GROUPS = {
     'NL': ['Netherlands', 'Curacao', 'Bonaire', 'Sint Maarten', 'Aruba'],
 }
 
-MULTI = {'Palestine': ['West Bank', 'Gaza']}          # entities that need more than one map unit
+# Entities that need more than one map unit.  Natural Earth keeps some regions apart from the state they
+# belong to, and nothing else matches them, so the entity row lost them (2026-10-01, found by
+# test/geodata_gap_check.py): Somaliland and Puntland - all of northern Somalia, 24 squares not even next to
+# a Somalia square; 6O3T in LJ29 (Hargeisa) was heard here 179 times and marked as outside Somalia every
+# time - and, harmless only because each missing square neighbours one the row has, Iraqi Kurdistan,
+# Vojvodina (Novi Sad, JN95) and Bougainville.
+MULTI = {'Palestine': ['West Bank', 'Gaza'],
+         'Somalia': ['Somalia', 'Somaliland', 'Puntland'],
+         'Iraq': ['Iraq', 'Iraqi Kurdistan'],
+         'Serbia': ['Serbia', 'Vojvodina'],
+         'Papua New Guinea': ['Papua New Guinea', 'Bougainville']}
+# Land an entity owns that the steps below cannot find (2026-10-01) - the Franz Josef Land fault again: an
+# island or point row is built from what lies near the cty.dat coordinate, so part of an entity that sits
+# inside another map unit, or far from that coordinate, was "outside" it.  Added to the row, never instead
+# of it: no square is taken away.
+#   ADD_LAND    prefix -> (the map unit the land sits inside, a box holding it and nothing else of that unit)
+#   ADD_POINTS  prefix -> further parts of the entity, (lon, lat): their square is added
+ADD_LAND = {
+    'VU4':  ('India', (91.5, 6.0, 94.5, 14.5)),          # the Nicobar Islands (NJ66-NJ69), with the Andamans
+    'VU7':  ('India', (71.0, 8.0, 74.3, 12.7)),          # Minicoy (MJ68), with the rest of Lakshadweep
+    'JD/o': ('Japan', (140.5, 24.0, 143.0, 28.0)),       # the Volcano Islands, Iwo Jima (QL04 QL05)
+    'H40':  ('Solomon Is.', (165.0, -13.0, 171.0, -9.0)),   # the whole province, Tikopia (RH47) with it
+}
+ADD_POINTS = {
+    'KH5':  [(-160.02, -0.37)],      # Jarvis Island, about 1 000 km from Palmyra
+    '3B6':  [(59.60, -16.50)],       # St. Brandon (Cargados Carajos), about 700 km from Agalega
+    'E5/s': [(-159.78, -18.86)],     # Aitutaki
+    'CE0Y': [(-105.36, -26.47)],     # Sala y Gomez, part of the Easter Island entity
+    'VP8/g': [(-42.03, -53.55)],     # Shag Rocks (GD86; Black Rock, GD96, is next to it), 250 km west
+}
+
 def wrap(lon): return ((lon + 180.0) % 360.0) - 180.0      # the antimeridian: 180 is -180
 def field(lon): return chr(ord('A') + int((wrap(lon) + 180) // 20))
 def gridname(lon, lat):
@@ -254,7 +287,10 @@ for name, cont, lat, lon in ents:
         geom = SPECIAL[pfx]
     elif pfx in ADMIN1:
         geom = ADMIN1[pfx]; source[pfx] = 'admin1'
-    elif name in MULTI and all(norm(u) in units for u in MULTI[name]):
+    elif name in MULTI:
+        lost = [u for u in MULTI[name] if norm(u) not in units]
+        if lost:          # loud: falling back to one unit would quietly lose the regions MULTI exists for
+            raise SystemExit('FAILED: %s needs the map units %s, not in %s' % (name, lost, NE))
         geom = unary_union([units[norm(u)] for u in MULTI[name]])
     elif key in units:
         geom = units[key]
@@ -302,9 +338,25 @@ for name, cont, lat, lon in ents:
             x += 2
         squares.add(gridname(lon, lat))
         source[pfx] = 'point'
+    if pfx in ADD_LAND:
+        unit, bx = ADD_LAND[pfx]
+        if norm(unit) not in units: raise SystemExit('FAILED: ADD_LAND %s: no map unit %r' % (pfx, unit))
+        land = units[norm(unit)].intersection(box(*bx))
+        if land.is_empty: raise SystemExit('FAILED: ADD_LAND %s: nothing of %s in %s' % (pfx, unit, bx))
+        x0, y0, x1, y1 = land.bounds; x = (int((x0 + 180) // 2) * 2) - 180
+        while x <= x1:
+            y = int(y0 // 1)
+            while y <= y1:
+                if land.intersects(box(x, y, x + 2, y + 1)): squares.add(gridname(x + 1, y + 0.5))
+                y += 1
+            x += 2
+    for plon, plat in ADD_POINTS.get(pfx, []): squares.add(gridname(plon, plat))
     if not squares: raise SystemExit('FAILED: no grid square for %s (%s)' % (pfx, name))
     rows[pfx] = (name, sorted(squares))
     group[pfx] = GROUP_OF.get(name, '')
+for k in list(ADD_LAND) + list(ADD_POINTS) + list(MULTI):       # a mistyped key would add nothing, silently
+    if k not in rows and k not in [n for n, _ in rows.values()]:
+        raise SystemExit('FAILED: %s in ADD_LAND/ADD_POINTS/MULTI names no entity' % k)
 import collections as _c
 print('entities %d: %s' % (len(rows), dict(_c.Counter(source.values()))))
 _sov = [p for p, v in source.items() if v == 'sovereign']
@@ -324,6 +376,8 @@ HEAD = ('# DXCC entity -> the 4-character Maidenhead grid squares it occupies.\n
         '#   split = cut from a finer source: K/KL/KH6 from the US Census state boundaries (exact),\n'
         '#   UA/UA9 by cutting Russia at 60 deg E (approximate - the DXCC line follows the Urals),\n'
         '#   R1FJ = Russia north of 79 deg N between 30 and 70 deg E (Franz Josef Land).\n'
+        '#   VU4 VU7 JD/o H40 KH5 3B6 E5/s CE0Y VP8/g also carry land added by hand (ADD_LAND, ADD_POINTS in\n'
+        '#   the builder) - parts of the entity far from its coordinate or inside another map unit.\n'
         '#   A matched parent keeps its whole polygon, so Spain still lists the Canary squares of EA8:\n'
         '#   the table errs on the permissive side, which is the safe direction for a plausibility test.\n'
         '#\n'
