@@ -9892,11 +9892,6 @@ izmaiņas</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
-        <source>A decode whose grid square lies outside the DXCC entity of the station that sent it - for a call such as DL/CE3TSK or CE3TSK/DL, outside Germany - is kept, but the grid is underlined in red and the country is shown as ?Chile?. Its ALL.TXT line ends with lc:grid and the entity's prefix, and it is sent to UDP clients as a low-confidence decode.</source>
-        <translation>Dekodēšana, kuras lokators atrodas ārpus to raidījušās stacijas DXCC vienības - izsaukuma signālam kā DL/CE3TSK vai CE3TSK/DL ārpus Vācijas -, tiek saglabāta, bet lokators tiek pasvītrots sarkanā krāsā un valsts tiek parādīta kā ?Chile?. Tās rinda failā ALL.TXT beidzas ar lc:grid un vienības prefiksu, un UDP klientiem tā tiek nosūtīta kā zemas ticamības dekodēšana.</translation>
-    </message>
-    <message>
-        <location filename="../Configuration.ui"/>
         <source>Mark decodes whose grid is outside the callsign's country</source>
         <translation>Atzīmēt dekodēšanas, kuru lokators ir ārpus izsaukuma signāla valsts</translation>
     </message>
@@ -9924,6 +9919,31 @@ izmaiņas</translation>
         <location filename="../Configuration.ui"/>
         <source>The automatic sequencer does not pick such a decode on its own; a double click still answers it.</source>
         <translation>Automātiskā secība (AutoSeq) šādu dekodēšanu pati neizvēlas; dubultklikšķis uz to joprojām atbild.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Mark weak decodes where both calls sign /P</source>
+        <translation>Atzīmēt vājas dekodēšanas, kurās abiem izsaukuma signāliem ir /P</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>A decode whose grid square lies outside the DXCC entity of the station that sent it - outside Chile for CE3TSK, outside Germany for CE3TSK/DL or DL/CE3TSK - is kept, but the grid is underlined in red and the country is shown between question marks, as ?Chile? or ?Germany?. Its ALL.TXT line ends with lc:grid and the entity's prefix, and it is sent to UDP clients as a low-confidence decode.</source>
+        <translation>Dekodēšana, kuras lokators atrodas ārpus to raidījušās stacijas DXCC vienības - ārpus Čīles izsaukuma signālam CE3TSK, ārpus Vācijas signālam CE3TSK/DL vai DL/CE3TSK -, tiek saglabāta, bet lokators tiek pasvītrots sarkanā krāsā un valsts tiek parādīta starp jautājuma zīmēm, kā ?Chile? vai ?Germany?. Tās rinda failā ALL.TXT beidzas ar lc:grid un vienības prefiksu, un UDP klientiem tā tiek nosūtīta kā zemas ticamības dekodēšana.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Below 30 MHz, a decode in which both calls sign /P (portable) is almost always a false decode when it is weak (-20 dB or below): /P is a single bit per call of the message type portable calls use, while genuine park-to-park contacts are stronger. The decode is kept, with the /P calls underlined in red, and is never answered automatically - a double click still answers it. Its ALL.TXT line ends with lc:portable, and it is sent to UDP clients as a low-confidence decode.</source>
+        <translation>Zem 30 MHz dekodēšana, kurā abiem izsaukuma signāliem ir /P (portatīvs), gandrīz vienmēr ir kļūdaina dekodēšana, ja tā ir vāja (-20 dB vai mazāk): /P ir tikai viens bits uz izsaukuma signālu ziņojuma tipā, ko izmanto portatīvie izsaukuma signāli, bet īsti parks-parks sakari ir stiprāki. Dekodēšana tiek saglabāta, /P izsaukuma signāli tiek pasvītroti sarkanā krāsā, un uz to nekad netiek atbildēts automātiski - dubultklikšķis uz to joprojām atbild. Tās rinda failā ALL.TXT beidzas ar lc:portable, un UDP klientiem tā tiek nosūtīta kā zemas ticamības dekodēšana.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>A call whose prefix belongs to no country in cty.dat - shown as where? in the country column - is most likely a false decode, on any band. The decode is kept, with the call and where? underlined in red, and is never answered automatically - a double click still answers it. Its ALL.TXT line ends with lc:where, and it is sent to UDP clients as a low-confidence decode. Maritime and aeronautical mobile calls (/MM, /AM) have no country and are never marked.</source>
+        <translation>Izsaukuma signāls, kura prefikss cty.dat nepieder nevienai valstij - valsts kolonnā parādīts kā nezināma teritorija? -, visticamāk, ir kļūdaina dekodēšana jebkurā joslā. Dekodēšana tiek saglabāta, izsaukuma signāls un nezināma teritorija? tiek pasvītroti sarkanā krāsā, un uz to nekad netiek atbildēts automātiski - dubultklikšķis uz to joprojām atbild. Tās rinda failā ALL.TXT beidzas ar lc:where, un UDP klientiem tā tiek nosūtīta kā zemas ticamības dekodēšana. Jūras un aviācijas mobilajiem izsaukuma signāliem (/MM, /AM) nav valsts, un tie nekad netiek atzīmēti.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Mark calls with no known country (where?)</source>
+        <translation>Atzīmēt izsaukuma signālus bez zināmas valsts (nezināma teritorija?)</translation>
     </message>
 </context>
 <context>

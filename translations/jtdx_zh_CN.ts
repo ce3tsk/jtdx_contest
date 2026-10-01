@@ -9893,11 +9893,6 @@ soundcard changes</source>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
-        <source>A decode whose grid square lies outside the DXCC entity of the station that sent it - for a call such as DL/CE3TSK or CE3TSK/DL, outside Germany - is kept, but the grid is underlined in red and the country is shown as ?Chile?. Its ALL.TXT line ends with lc:grid and the entity's prefix, and it is sent to UDP clients as a low-confidence decode.</source>
-        <translation>网格位于发射电台 DXCC 实体之外的解码（对于 DL/CE3TSK 或 CE3TSK/DL 这样的呼号，即位于德国之外）会被保留，但网格会加红色下划线，国家显示为 ?Chile?。它在 ALL.TXT 中的行以 lc:grid 和该实体的前缀结尾，并以低可信度解码发送给 UDP 客户端。</translation>
-    </message>
-    <message>
-        <location filename="../Configuration.ui"/>
         <source>Mark decodes whose grid is outside the callsign's country</source>
         <translation>标记网格位于呼号所属国家之外的解码</translation>
     </message>
@@ -9925,6 +9920,31 @@ soundcard changes</source>
         <location filename="../Configuration.ui"/>
         <source>The automatic sequencer does not pick such a decode on its own; a double click still answers it.</source>
         <translation>自动程序（AutoSeq）不会自行选择此类解码；双击仍可应答。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Mark weak decodes where both calls sign /P</source>
+        <translation>标记两个呼号都带 /P 的弱解码</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>A decode whose grid square lies outside the DXCC entity of the station that sent it - outside Chile for CE3TSK, outside Germany for CE3TSK/DL or DL/CE3TSK - is kept, but the grid is underlined in red and the country is shown between question marks, as ?Chile? or ?Germany?. Its ALL.TXT line ends with lc:grid and the entity's prefix, and it is sent to UDP clients as a low-confidence decode.</source>
+        <translation>网格位于发射电台 DXCC 实体之外的解码（对 CE3TSK 即位于智利之外，对 CE3TSK/DL 或 DL/CE3TSK 即位于德国之外）会被保留，但网格会加红色下划线，国家显示在问号之间，如 ?Chile? 或 ?Germany?。它在 ALL.TXT 中的行以 lc:grid 和该实体的前缀结尾，并以低可信度解码发送给 UDP 客户端。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Below 30 MHz, a decode in which both calls sign /P (portable) is almost always a false decode when it is weak (-20 dB or below): /P is a single bit per call of the message type portable calls use, while genuine park-to-park contacts are stronger. The decode is kept, with the /P calls underlined in red, and is never answered automatically - a double click still answers it. Its ALL.TXT line ends with lc:portable, and it is sent to UDP clients as a low-confidence decode.</source>
+        <translation>在 30 MHz 以下，两个呼号都带 /P（便携）的解码，若信号弱（-20 dB 或更低），几乎总是错误解码：/P 只是便携呼号所用消息类型中每个呼号的一个比特，而真正的公园对公园通联信号更强。该解码会被保留，/P 呼号加红色下划线，并且从不自动应答——双击仍可应答。它在 ALL.TXT 中的行以 lc:portable 结尾，并以低可信度解码发送给 UDP 客户端。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>A call whose prefix belongs to no country in cty.dat - shown as where? in the country column - is most likely a false decode, on any band. The decode is kept, with the call and where? underlined in red, and is never answered automatically - a double click still answers it. Its ALL.TXT line ends with lc:where, and it is sent to UDP clients as a low-confidence decode. Maritime and aeronautical mobile calls (/MM, /AM) have no country and are never marked.</source>
+        <translation>前缀在 cty.dat 中不属于任何国家的呼号（国家栏显示为 不详?）很可能是错误解码，在任何波段都是如此。该解码会被保留，呼号和 不详? 加红色下划线，并且从不自动应答——双击仍可应答。它在 ALL.TXT 中的行以 lc:where 结尾，并以低可信度解码发送给 UDP 客户端。海上移动和航空移动呼号（/MM、/AM）没有国家，从不标记。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Mark calls with no known country (where?)</source>
+        <translation>标记国家不详的呼号（不详?）</translation>
     </message>
 </context>
 <context>

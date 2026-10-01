@@ -9891,11 +9891,6 @@ soundcard changes</source>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
-        <source>A decode whose grid square lies outside the DXCC entity of the station that sent it - for a call such as DL/CE3TSK or CE3TSK/DL, outside Germany - is kept, but the grid is underlined in red and the country is shown as ?Chile?. Its ALL.TXT line ends with lc:grid and the entity's prefix, and it is sent to UDP clients as a low-confidence decode.</source>
-        <translation>송신국의 DXCC 엔티티 밖에 그리드가 있는 디코드(DL/CE3TSK나 CE3TSK/DL 같은 호출부호라면 독일 밖)는 유지되지만, 그리드에 빨간 밑줄이 그어지고 국가는 ?Chile?로 표시됩니다. ALL.TXT의 해당 줄은 lc:grid와 엔티티 접두어로 끝나며, UDP 클라이언트에는 신뢰도가 낮은 디코드로 전송됩니다.</translation>
-    </message>
-    <message>
-        <location filename="../Configuration.ui"/>
         <source>Mark decodes whose grid is outside the callsign's country</source>
         <translation>그리드가 호출부호의 국가 밖에 있는 디코드 표시</translation>
     </message>
@@ -9923,6 +9918,31 @@ soundcard changes</source>
         <location filename="../Configuration.ui"/>
         <source>The automatic sequencer does not pick such a decode on its own; a double click still answers it.</source>
         <translation>AutoSeq는 이런 디코드를 스스로 선택하지 않습니다. 더블클릭하면 여전히 응답할 수 있습니다.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Mark weak decodes where both calls sign /P</source>
+        <translation>두 호출부호 모두 /P인 약한 디코드 표시</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>A decode whose grid square lies outside the DXCC entity of the station that sent it - outside Chile for CE3TSK, outside Germany for CE3TSK/DL or DL/CE3TSK - is kept, but the grid is underlined in red and the country is shown between question marks, as ?Chile? or ?Germany?. Its ALL.TXT line ends with lc:grid and the entity's prefix, and it is sent to UDP clients as a low-confidence decode.</source>
+        <translation>송신국의 DXCC 엔티티 밖에 그리드가 있는 디코드(CE3TSK라면 칠레 밖, CE3TSK/DL이나 DL/CE3TSK라면 독일 밖)는 유지되지만, 그리드에 빨간 밑줄이 그어지고 국가는 ?Chile?나 ?Germany?처럼 물음표 사이에 표시됩니다. ALL.TXT의 해당 줄은 lc:grid와 엔티티 접두어로 끝나며, UDP 클라이언트에는 신뢰도가 낮은 디코드로 전송됩니다.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Below 30 MHz, a decode in which both calls sign /P (portable) is almost always a false decode when it is weak (-20 dB or below): /P is a single bit per call of the message type portable calls use, while genuine park-to-park contacts are stronger. The decode is kept, with the /P calls underlined in red, and is never answered automatically - a double click still answers it. Its ALL.TXT line ends with lc:portable, and it is sent to UDP clients as a low-confidence decode.</source>
+        <translation>30 MHz 미만에서 두 호출부호 모두 /P(이동)인 디코드는 약한 경우(-20 dB 이하) 거의 항상 잘못된 디코드입니다. /P는 이동 호출부호가 쓰는 메시지 형식에서 호출부호당 비트 하나에 불과하며, 실제 공원 간 교신은 더 강하게 수신됩니다. 디코드는 유지되고 /P 호출부호에 빨간 밑줄이 그어지며, 자동으로는 절대 응답하지 않습니다. 더블클릭하면 여전히 응답할 수 있습니다. ALL.TXT의 해당 줄은 lc:portable로 끝나며, UDP 클라이언트에는 신뢰도가 낮은 디코드로 전송됩니다.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>A call whose prefix belongs to no country in cty.dat - shown as where? in the country column - is most likely a false decode, on any band. The decode is kept, with the call and where? underlined in red, and is never answered automatically - a double click still answers it. Its ALL.TXT line ends with lc:where, and it is sent to UDP clients as a low-confidence decode. Maritime and aeronautical mobile calls (/MM, /AM) have no country and are never marked.</source>
+        <translation>cty.dat에서 어느 국가에도 속하지 않는 프리픽스의 호출부호(국가 열에 어디?로 표시)는 어느 밴드에서든 잘못된 디코드일 가능성이 높습니다. 디코드는 유지되고 호출부호와 어디?에 빨간 밑줄이 그어지며, 자동으로는 절대 응답하지 않습니다. 더블클릭하면 여전히 응답할 수 있습니다. ALL.TXT의 해당 줄은 lc:where로 끝나며, UDP 클라이언트에는 신뢰도가 낮은 디코드로 전송됩니다. 해상 이동 및 항공 이동 호출부호(/MM, /AM)는 국가가 없으므로 표시하지 않습니다.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Mark calls with no known country (where?)</source>
+        <translation>국가를 알 수 없는 호출부호 표시 (어디?)</translation>
     </message>
 </context>
 <context>

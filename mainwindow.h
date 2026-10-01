@@ -935,9 +935,9 @@ private:
   /* CE3TSK 2026-09-30: likely false decodes (falsedecodes.h) - judged once per decode, and the memory
      of calls heard twice with the same doubtful grid */
   false_decodes::Judge m_falseDecodes;
-  false_decodes::Settings falseDecodeSettings () const;
+  false_decodes::Settings falseDecodeSettings ();
   QString dxccOf (QString const& call);
-  false_decodes::Verdict windowVerdict (QString const& line);   /* CE3TSK: a line read back from a window */
+  false_decodes::Verdict windowVerdict (QString const& windowLine);   /* CE3TSK: a line read back from a window */
   bool countryUnknown (QString const& call);                    /* CE3TSK: A3, for PSK Reporter */
   /* CE3TSK: the QSO that finished most recently, and when - the state sequencer_hooks.cpp owns */
   QString m_finishedCall;

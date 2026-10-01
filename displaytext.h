@@ -18,6 +18,10 @@ class DisplayText : public QTextEdit
 public:
     explicit DisplayText(QWidget *parent = 0);
     void setConfiguration(Configuration const *);
+    /* CE3TSK 2026-09-30: where a window line's marker stands - right after the message, where
+       displayDecodedText cuts the decoder's line: 49 for FT8, FT4 and FT2 (seconds in the time), 40 for
+       JT65 and JT9. The country follows it. */
+    static int lineMarkerColumn (QString const& line) {return line.indexOf (' ') > 4 ? 49 : 40;}
     void setMyContinent (QString const&);
     void setContentFont (QFont const&);
     void insertLineSpacer(QString const&);

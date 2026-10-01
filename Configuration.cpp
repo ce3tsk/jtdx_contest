@@ -1065,6 +1065,8 @@ private:
   bool falseDecodeGridNoAnswer_;
   bool falseDecodeRoverMark_;
   bool falseDecodeRoverNoAnswer_;
+  bool falseDecodePortableMark_;
+  bool falseDecodeWhereMark_;
   bool udpWindowToFront_;
   bool udpWindowRestore_;
   DataMode data_mode_;
@@ -1483,6 +1485,8 @@ bool Configuration::falseDecodeGridMark () const {return m_->falseDecodeGridMark
 bool Configuration::falseDecodeGridNoAnswer () const {return m_->falseDecodeGridNoAnswer_;}
 bool Configuration::falseDecodeRoverMark () const {return m_->falseDecodeRoverMark_;}
 bool Configuration::falseDecodeRoverNoAnswer () const {return m_->falseDecodeRoverNoAnswer_;}
+bool Configuration::falseDecodePortableMark () const {return m_->falseDecodePortableMark_;}
+bool Configuration::falseDecodeWhereMark () const {return m_->falseDecodeWhereMark_;}
 bool Configuration::udpWindowToFront () const {return m_->udpWindowToFront_;}
 bool Configuration::udpWindowRestore () const {return m_->udpWindowRestore_;}
 Bands * Configuration::bands () {return &m_->bands_;}
@@ -2691,6 +2695,8 @@ Radio::convert_dark("#fafbfe",useDarkStyle_),Radio::convert_dark("#dcdef1",useDa
   ui_->falseDecodeGridNoAnswer_check_box->setChecked (falseDecodeGridNoAnswer_);
   ui_->falseDecodeRoverMark_check_box->setChecked (falseDecodeRoverMark_);
   ui_->falseDecodeRoverNoAnswer_check_box->setChecked (falseDecodeRoverNoAnswer_);
+  ui_->falseDecodePortableMark_check_box->setChecked (falseDecodePortableMark_);
+  ui_->falseDecodeWhereMark_check_box->setChecked (falseDecodeWhereMark_);
   // toggled () does not fire for a box that already holds the value, so the greying is set here too
   ui_->falseDecodeGridNoAnswer_check_box->setEnabled (falseDecodeGridMark_);
   ui_->falseDecodeRoverNoAnswer_check_box->setEnabled (falseDecodeRoverMark_);
@@ -3280,6 +3286,8 @@ void Configuration::impl::read_settings ()
   falseDecodeGridNoAnswer_ = settings_->value (contest_profile::own_key ("FalseDecodeGridNoAnswer"), true).toBool ();
   falseDecodeRoverMark_ = settings_->value (contest_profile::own_key ("FalseDecodeRoverMark"), true).toBool ();
   falseDecodeRoverNoAnswer_ = settings_->value (contest_profile::own_key ("FalseDecodeRoverNoAnswer"), true).toBool ();
+  falseDecodePortableMark_ = settings_->value (contest_profile::own_key ("FalseDecodePortableMark"), true).toBool ();
+  falseDecodeWhereMark_ = settings_->value (contest_profile::own_key ("FalseDecodeWhereMark"), true).toBool ();
   udpWindowToFront_ = settings_->value ("udpWindowToFront",false).toBool ();
   udpWindowRestore_ = settings_->value ("udpWindowRestore",false).toBool ();
   frequency_calibration_intercept_ = settings_->value ("CalibrationIntercept", 0.).toDouble ();
@@ -3547,6 +3555,8 @@ void Configuration::impl::write_settings ()
   settings_->setValue (contest_profile::own_key ("FalseDecodeGridNoAnswer"), falseDecodeGridNoAnswer_);
   settings_->setValue (contest_profile::own_key ("FalseDecodeRoverMark"), falseDecodeRoverMark_);
   settings_->setValue (contest_profile::own_key ("FalseDecodeRoverNoAnswer"), falseDecodeRoverNoAnswer_);
+  settings_->setValue (contest_profile::own_key ("FalseDecodePortableMark"), falseDecodePortableMark_);
+  settings_->setValue (contest_profile::own_key ("FalseDecodeWhereMark"), falseDecodeWhereMark_);
   settings_->setValue ("udpWindowToFront", udpWindowToFront_);
   settings_->setValue ("udpWindowRestore", udpWindowRestore_);
   settings_->setValue ("CalibrationIntercept", frequency_calibration_intercept_);
@@ -4285,6 +4295,8 @@ void Configuration::impl::accept ()
   falseDecodeGridNoAnswer_ = ui_->falseDecodeGridNoAnswer_check_box->isChecked ();
   falseDecodeRoverMark_ = ui_->falseDecodeRoverMark_check_box->isChecked ();
   falseDecodeRoverNoAnswer_ = ui_->falseDecodeRoverNoAnswer_check_box->isChecked ();
+  falseDecodePortableMark_ = ui_->falseDecodePortableMark_check_box->isChecked ();
+  falseDecodeWhereMark_ = ui_->falseDecodeWhereMark_check_box->isChecked ();
   udpWindowToFront_ = ui_->udpWindowToFront->isChecked ();
   udpWindowRestore_ = ui_->udpWindowRestore->isChecked ();
   enable_udp1_adif_sending_ = ui_->udp1_adif_enable_check_box->isChecked ();

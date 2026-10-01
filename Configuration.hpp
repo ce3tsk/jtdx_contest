@@ -275,6 +275,8 @@ public:
   bool falseDecodeGridNoAnswer () const;
   bool falseDecodeRoverMark () const;
   bool falseDecodeRoverNoAnswer () const;
+  bool falseDecodePortableMark () const;   // no "do not answer" of its own (falsedecodes.h)
+  bool falseDecodeWhereMark () const;      // nor this one: a call of no country is never picked anyway
   bool udpWindowToFront () const;
   bool udpWindowRestore () const;
   Bands * bands ();

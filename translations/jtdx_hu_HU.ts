@@ -9890,11 +9890,6 @@ hangkártya módosítási tevékenységet</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
-        <source>A decode whose grid square lies outside the DXCC entity of the station that sent it - for a call such as DL/CE3TSK or CE3TSK/DL, outside Germany - is kept, but the grid is underlined in red and the country is shown as ?Chile?. Its ALL.TXT line ends with lc:grid and the entity's prefix, and it is sent to UDP clients as a low-confidence decode.</source>
-        <translation>Az a dekódolás, amelynek QRA kockája a küldő állomás DXCC entitásán kívül esik - egy DL/CE3TSK vagy CE3TSK/DL hívójelnél Németországon kívül -, megmarad, de a QRA kocka pirossal alá lesz húzva, az ország pedig ?Chile? alakban jelenik meg. Az ALL.TXT-ben a sora lc:grid és az entitás prefixe végződéssel zárul, az UDP kliensek pedig alacsony megbízhatóságú dekódolásként kapják meg.</translation>
-    </message>
-    <message>
-        <location filename="../Configuration.ui"/>
         <source>Mark decodes whose grid is outside the callsign's country</source>
         <translation>A hívójel országán kívüli QRA kockájú dekódolások megjelölése</translation>
     </message>
@@ -9922,6 +9917,31 @@ hangkártya módosítási tevékenységet</translation>
         <location filename="../Configuration.ui"/>
         <source>The automatic sequencer does not pick such a decode on its own; a double click still answers it.</source>
         <translation>Az automatikus sorrend (AutoSeq) magától nem választ ilyen dekódolást; dupla kattintással továbbra is válaszolhat rá.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Mark weak decodes where both calls sign /P</source>
+        <translation>A gyenge dekódolások megjelölése, amelyekben mindkét hívójel /P</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>A decode whose grid square lies outside the DXCC entity of the station that sent it - outside Chile for CE3TSK, outside Germany for CE3TSK/DL or DL/CE3TSK - is kept, but the grid is underlined in red and the country is shown between question marks, as ?Chile? or ?Germany?. Its ALL.TXT line ends with lc:grid and the entity's prefix, and it is sent to UDP clients as a low-confidence decode.</source>
+        <translation>Az a dekódolás, amelynek QRA kockája a küldő állomás DXCC entitásán kívül esik - CE3TSK esetén Chilén kívül, CE3TSK/DL vagy DL/CE3TSK esetén Németországon kívül -, megmarad, de a QRA kocka pirossal alá lesz húzva, az ország pedig kérdőjelek között jelenik meg, például ?Chile? vagy ?Germany?. Az ALL.TXT-ben a sora lc:grid és az entitás prefixe végződéssel zárul, az UDP kliensek pedig alacsony megbízhatóságú dekódolásként kapják meg.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Below 30 MHz, a decode in which both calls sign /P (portable) is almost always a false decode when it is weak (-20 dB or below): /P is a single bit per call of the message type portable calls use, while genuine park-to-park contacts are stronger. The decode is kept, with the /P calls underlined in red, and is never answered automatically - a double click still answers it. Its ALL.TXT line ends with lc:portable, and it is sent to UDP clients as a low-confidence decode.</source>
+        <translation>30 MHz alatt az a dekódolás, amelyben mindkét hívójel /P (hordozható), szinte mindig hamis dekódolás, ha gyenge (-20 dB vagy alatta): a /P hívójelenként egyetlen bit abban az üzenettípusban, amelyet a hordozható hívójelek használnak, míg a valódi park-park összeköttetések erősebbek. A dekódolás megmarad, a /P hívójelek pirossal alá lesznek húzva, és sosem kap automatikus választ - dupla kattintással továbbra is válaszolhat rá. Az ALL.TXT-ben a sora lc:portable végződéssel zárul, az UDP kliensek pedig alacsony megbízhatóságú dekódolásként kapják meg.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>A call whose prefix belongs to no country in cty.dat - shown as where? in the country column - is most likely a false decode, on any band. The decode is kept, with the call and where? underlined in red, and is never answered automatically - a double click still answers it. Its ALL.TXT line ends with lc:where, and it is sent to UDP clients as a low-confidence decode. Maritime and aeronautical mobile calls (/MM, /AM) have no country and are never marked.</source>
+        <translation>Az a hívójel, amelynek előtagja a cty.dat szerint egyetlen országhoz sem tartozik - az ország oszlopban ország? jelenik meg -, nagy valószínűséggel hamis dekódolás, bármelyik sávon. A dekódolás megmarad, a hívójel és az ország? felirat pirossal alá lesz húzva, és sosem kap automatikus választ - dupla kattintással továbbra is válaszolhat rá. Az ALL.TXT-ben a sora lc:where végződéssel zárul, az UDP kliensek pedig alacsony megbízhatóságú dekódolásként kapják meg. A tengeri és légi mobil hívójeleknek (/MM, /AM) nincs országuk, ezért sosem lesznek megjelölve.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Mark calls with no known country (where?)</source>
+        <translation>Ismert ország nélküli hívójelek megjelölése (ország?)</translation>
     </message>
 </context>
 <context>

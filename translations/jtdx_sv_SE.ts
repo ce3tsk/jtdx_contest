@@ -9897,11 +9897,6 @@ ljudkort ändras</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
-        <source>A decode whose grid square lies outside the DXCC entity of the station that sent it - for a call such as DL/CE3TSK or CE3TSK/DL, outside Germany - is kept, but the grid is underlined in red and the country is shown as ?Chile?. Its ALL.TXT line ends with lc:grid and the entity's prefix, and it is sent to UDP clients as a low-confidence decode.</source>
-        <translation>En avkodning vars grid ligger utanför DXCC-entiteten för stationen som sände den - för en anropssignal som DL/CE3TSK eller CE3TSK/DL utanför Tyskland - behålls, men grid-rutan stryks under med rött och landet visas som ?Chile?. Dess rad i ALL.TXT slutar med lc:grid och entitetens prefix, och den skickas till UDP-klienter som en avkodning med låg tillförlitlighet.</translation>
-    </message>
-    <message>
-        <location filename="../Configuration.ui"/>
         <source>Mark decodes whose grid is outside the callsign's country</source>
         <translation>Markera avkodningar vars grid ligger utanför anropssignalens land</translation>
     </message>
@@ -9929,6 +9924,31 @@ ljudkort ändras</translation>
         <location filename="../Configuration.ui"/>
         <source>The automatic sequencer does not pick such a decode on its own; a double click still answers it.</source>
         <translation>Den automatiska sekvensen (AutoSeq) väljer inte själv en sådan avkodning; ett dubbelklick besvarar den ändå.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Mark weak decodes where both calls sign /P</source>
+        <translation>Markera svaga avkodningar där båda anropssignalerna har /P</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>A decode whose grid square lies outside the DXCC entity of the station that sent it - outside Chile for CE3TSK, outside Germany for CE3TSK/DL or DL/CE3TSK - is kept, but the grid is underlined in red and the country is shown between question marks, as ?Chile? or ?Germany?. Its ALL.TXT line ends with lc:grid and the entity's prefix, and it is sent to UDP clients as a low-confidence decode.</source>
+        <translation>En avkodning vars grid ligger utanför DXCC-entiteten för stationen som sände den - utanför Chile för CE3TSK, utanför Tyskland för CE3TSK/DL eller DL/CE3TSK - behålls, men grid-rutan stryks under med rött och landet visas mellan frågetecken, som ?Chile? eller ?Germany?. Dess rad i ALL.TXT slutar med lc:grid och entitetens prefix, och den skickas till UDP-klienter som en avkodning med låg tillförlitlighet.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Below 30 MHz, a decode in which both calls sign /P (portable) is almost always a false decode when it is weak (-20 dB or below): /P is a single bit per call of the message type portable calls use, while genuine park-to-park contacts are stronger. The decode is kept, with the /P calls underlined in red, and is never answered automatically - a double click still answers it. Its ALL.TXT line ends with lc:portable, and it is sent to UDP clients as a low-confidence decode.</source>
+        <translation>Under 30 MHz är en avkodning där båda anropssignalerna har /P (portabel) nästan alltid en falsk avkodning när den är svag (-20 dB eller lägre): /P är en enda bit per anropssignal i den meddelandetyp som portabla anropssignaler använder, medan äkta park-till-park-förbindelser är starkare. Avkodningen behålls, med /P-anropssignalerna understrukna med rött, och den besvaras aldrig automatiskt - ett dubbelklick besvarar den ändå. Dess rad i ALL.TXT slutar med lc:portable, och den skickas till UDP-klienter som en avkodning med låg tillförlitlighet.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>A call whose prefix belongs to no country in cty.dat - shown as where? in the country column - is most likely a false decode, on any band. The decode is kept, with the call and where? underlined in red, and is never answered automatically - a double click still answers it. Its ALL.TXT line ends with lc:where, and it is sent to UDP clients as a low-confidence decode. Maritime and aeronautical mobile calls (/MM, /AM) have no country and are never marked.</source>
+        <translation>En anropssignal vars prefix inte hör till något land i cty.dat - visas som Var? i landskolumnen - är med största sannolikhet en falsk avkodning, på alla band. Avkodningen behålls, med anropssignalen och Var? understrukna med rött, och den besvaras aldrig automatiskt - ett dubbelklick besvarar den ändå. Dess rad i ALL.TXT slutar med lc:where, och den skickas till UDP-klienter som en avkodning med låg tillförlitlighet. Maritima och aeronautiska mobila anropssignaler (/MM, /AM) har inget land och markeras aldrig.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Mark calls with no known country (where?)</source>
+        <translation>Markera anropssignaler utan känt land (Var?)</translation>
     </message>
 </context>
 <context>

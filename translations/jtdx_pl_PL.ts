@@ -9895,11 +9895,6 @@ zmiany dla karty dźwiękowej</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
-        <source>A decode whose grid square lies outside the DXCC entity of the station that sent it - for a call such as DL/CE3TSK or CE3TSK/DL, outside Germany - is kept, but the grid is underlined in red and the country is shown as ?Chile?. Its ALL.TXT line ends with lc:grid and the entity's prefix, and it is sent to UDP clients as a low-confidence decode.</source>
-        <translation>Dekodowanie, którego lokator leży poza jednostką DXCC stacji nadającej - dla znaku takiego jak DL/CE3TSK lub CE3TSK/DL poza Niemcami - zostaje zachowane, ale lokator jest podkreślony na czerwono, a kraj wyświetlany jako ?Chile?. Jego wiersz w ALL.TXT kończy się znacznikiem lc:grid i prefiksem jednostki, a klienci UDP otrzymują je jako dekodowanie o niskiej wiarygodności.</translation>
-    </message>
-    <message>
-        <location filename="../Configuration.ui"/>
         <source>Mark decodes whose grid is outside the callsign's country</source>
         <translation>Oznaczaj dekodowania z lokatorem spoza kraju znaku wywoławczego</translation>
     </message>
@@ -9927,6 +9922,31 @@ zmiany dla karty dźwiękowej</translation>
         <location filename="../Configuration.ui"/>
         <source>The automatic sequencer does not pick such a decode on its own; a double click still answers it.</source>
         <translation>Automatyczna sekwencja (AutoSeq) sama nie wybiera takiego dekodowania; podwójne kliknięcie nadal na nie odpowiada.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Mark weak decodes where both calls sign /P</source>
+        <translation>Oznaczaj słabe dekodowania, w których oba znaki mają /P</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>A decode whose grid square lies outside the DXCC entity of the station that sent it - outside Chile for CE3TSK, outside Germany for CE3TSK/DL or DL/CE3TSK - is kept, but the grid is underlined in red and the country is shown between question marks, as ?Chile? or ?Germany?. Its ALL.TXT line ends with lc:grid and the entity's prefix, and it is sent to UDP clients as a low-confidence decode.</source>
+        <translation>Dekodowanie, którego lokator leży poza jednostką DXCC stacji nadającej - poza Chile dla CE3TSK, poza Niemcami dla CE3TSK/DL lub DL/CE3TSK - zostaje zachowane, ale lokator jest podkreślony na czerwono, a kraj wyświetlany między znakami zapytania, jako ?Chile? lub ?Germany?. Jego wiersz w ALL.TXT kończy się znacznikiem lc:grid i prefiksem jednostki, a klienci UDP otrzymują je jako dekodowanie o niskiej wiarygodności.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Below 30 MHz, a decode in which both calls sign /P (portable) is almost always a false decode when it is weak (-20 dB or below): /P is a single bit per call of the message type portable calls use, while genuine park-to-park contacts are stronger. The decode is kept, with the /P calls underlined in red, and is never answered automatically - a double click still answers it. Its ALL.TXT line ends with lc:portable, and it is sent to UDP clients as a low-confidence decode.</source>
+        <translation>Poniżej 30 MHz dekodowanie, w którym oba znaki mają /P (praca przenośna), to prawie zawsze fałszywe dekodowanie, gdy jest słabe (-20 dB lub mniej): /P to pojedynczy bit na znak w typie wiadomości używanym przez znaki przenośne, a prawdziwe łączności park-park są silniejsze. Dekodowanie zostaje zachowane, znaki z /P są podkreślone na czerwono i nigdy nie otrzymuje automatycznej odpowiedzi - podwójne kliknięcie nadal na nie odpowiada. Jego wiersz w ALL.TXT kończy się znacznikiem lc:portable, a klienci UDP otrzymują je jako dekodowanie o niskiej wiarygodności.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>A call whose prefix belongs to no country in cty.dat - shown as where? in the country column - is most likely a false decode, on any band. The decode is kept, with the call and where? underlined in red, and is never answered automatically - a double click still answers it. Its ALL.TXT line ends with lc:where, and it is sent to UDP clients as a low-confidence decode. Maritime and aeronautical mobile calls (/MM, /AM) have no country and are never marked.</source>
+        <translation>Znak, którego prefiks według cty.dat nie należy do żadnego kraju - w kolumnie kraju pokazany jako gdzie? - to najprawdopodobniej fałszywe dekodowanie, na każdym paśmie. Dekodowanie zostaje zachowane, znak i gdzie? są podkreślone na czerwono i nigdy nie otrzymuje automatycznej odpowiedzi - podwójne kliknięcie nadal na nie odpowiada. Jego wiersz w ALL.TXT kończy się znacznikiem lc:where, a klienci UDP otrzymują je jako dekodowanie o niskiej wiarygodności. Znaki ruchome morskie i lotnicze (/MM, /AM) nie mają kraju i nigdy nie są oznaczane.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Mark calls with no known country (where?)</source>
+        <translation>Oznaczaj znaki bez znanego kraju (gdzie?)</translation>
     </message>
 </context>
 <context>

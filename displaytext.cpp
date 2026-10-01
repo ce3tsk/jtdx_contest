@@ -943,11 +943,14 @@ int DisplayText::displayDecodedText(DecodedText* decodedText, QString myCall, QS
                 cntry = items[2];
             }
             /* CE3TSK 2026-09-30: the grid does not lie in the country of this call (falsedecodes.h) -
-               ?Chile?, the leading mark first so a window narrowed by the splitter still shows it.
+               ?Chile?, the leading mark first so a window narrowed by the splitter still shows it; a call
+               of no country has its where? (or ?) underlined as it stands - it is a question already.
                Only when the country shown is the call that was judged. */
-            if ((doubt.reasons & false_decodes::Grid) && checkCall == false_decodes::bareCall (doubt.sender)) {
-                cntry = '?' + cntry + '?';
-                cntryDoubtFrom = 0;
+            if (checkCall == false_decodes::bareCall (doubt.sender)) {
+                if (doubt.reasons & false_decodes::Grid) {
+                    cntry = '?' + cntry + '?';
+                    cntryDoubtFrom = 0;
+                } else if (doubt.reasons & false_decodes::Where) cntryDoubtFrom = 0;
             }
         }
         if (!bwantedCall && !bwantedPrefix && !bwantedGrid && !bwantedCountry) {
@@ -1008,8 +1011,9 @@ int DisplayText::displayDecodedText(DecodedText* decodedText, QString myCall, QS
             show_line = true;
     }
     /* CE3TSK 2026-09-30: a likely false decode (falsedecodes.h) keeps its colour, but rings no bell
-       and raises no window, and what is in doubt - the grid, a /R call - is underlined in red. The
-       words are found as whole words from the message column on, the last one of each. */
+       and raises no window, and what is in doubt - the grid, a /R call, the two /P calls, a call of no country - is
+       underlined in red. The words are found as whole words from the message column on, the last one of each; a word
+       found twice (a /R call of no country) is drawn once - appendText () skips a span it has passed. */
     QList<QPair<int, int>> doubtful;
     if (doubt.marked ()) {
         beep = false;
@@ -1024,7 +1028,9 @@ int DisplayText::displayDecodedText(DecodedText* decodedText, QString myCall, QS
             if (at >= 0) doubtful << qMakePair (at, word.size ());
         };
         for (auto const& r : doubt.rovers) underline (r);
+        for (auto const& c : doubt.portables) underline (c);
         if (doubt.reasons & false_decodes::Grid) underline (doubt.grid);
+        if (doubt.reasons & false_decodes::Where) underline (doubt.sender);
         std::sort (doubtful.begin (), doubtful.end ());
     }
     if (show_line) {

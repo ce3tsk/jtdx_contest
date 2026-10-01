@@ -7083,7 +7083,8 @@ void MainWindow::readFromStdout()                             //readFromStdout
       if (!decodedtext.isDebug () && !decodedtext.isNonStd1 () && !decodedtext.isNonStd2 ())
         decodedtext.setVerdict (m_falseDecodes.judge (false_decodes::messageField (decodedtext.string ()), m_freqNominal
                                                       , decodedtext.timeInSeconds (), decodedtext.isHint () || decodedtext.isPipeline ()
-                                                      , falseDecodeSettings (), [this] (QString const& call) {return dxccOf (call);}));
+                                                      , falseDecodeSettings (), [this] (QString const& call) {return dxccOf (call);}
+                                                      , decodedtext.snr ()));
       if(t.indexOf(m_baseCall.toLatin1()) >= 0 || m_config.write_decoded() || m_config.write_decoded_debug()) {
         QFile f {m_dataDir.absoluteFilePath (m_jtdxtime->currentDateTimeUtc2().toString("yyyyMM_")+"ALL.TXT")};
         if (f.open(QIODevice::WriteOnly | QIODevice::Text | QIODevice::Append)) {
@@ -11365,11 +11366,11 @@ void MainWindow::replayDecodes ()
                  The window's own marker says whether it was a hint decode ('*', the LoTW hint's degree
                  sign, the cross); and the line is looked up again (recall) - reported as it was live, but
                  no second hearing (falsedecodes.h). No DecodedText is built: a full window is 10 000 lines. */
-              int const eom = message.indexOf (' ') > 4 ? 49 : 40;
+              int const eom = DisplayText::lineMarkerColumn (message);
               QString const line = message.left (eom);
               postDecode (false, line
                           , DecodedText::isHintMarker (message.mid (eom, 1))
-                            || windowVerdict (line).lowConfidence ());
+                            || windowVerdict (message).lowConfidence ());
           }
       }
     }
@@ -11403,14 +11404,19 @@ void MainWindow::postDecode (bool is_new, QString const& message, bool lowConfid
   }
 }
 
-/* CE3TSK 2026-09-30: the four settings of Settings > Filters > False decodes (falsedecodes.h) */
-false_decodes::Settings MainWindow::falseDecodeSettings () const
+/* CE3TSK 2026-09-30: the six settings of Settings > Filters > False decodes (falsedecodes.h), and our base call -
+   the both-/P rule never marks a message with it. The where? mark only once cty.dat has been read: an empty
+   table makes every call "where?", and every decode would be marked (as countryUnknown below). */
+false_decodes::Settings MainWindow::falseDecodeSettings ()
 {
   false_decodes::Settings s;
   s.gridMark = m_config.falseDecodeGridMark ();
   s.gridNoAnswer = m_config.falseDecodeGridNoAnswer ();
   s.roverMark = m_config.falseDecodeRoverMark ();
   s.roverNoAnswer = m_config.falseDecodeRoverNoAnswer ();
+  s.portableMark = m_config.falseDecodePortableMark ();
+  s.whereMark = m_config.falseDecodeWhereMark () && (m_wwDigi ? m_contestLog : m_logBook).countryData ()->loaded ();
+  s.ownCall = m_baseCall;
   return s;
 }
 
@@ -11428,10 +11434,15 @@ QString MainWindow::dxccOf (QString const& call)
    A window keeps no free-text marker (',' and '.' - the live path never judges free text), so a MARKED line is
    packed to find out (DecodedText::isStandardMessage: false only for free text) - built only then, since a
    window holds 10 000 lines. */
-false_decodes::Verdict MainWindow::windowVerdict (QString const& line)
+false_decodes::Verdict MainWindow::windowVerdict (QString const& windowLine)
 {
+  // the line as the window shows it: the message, then the window's marker and the country - cut at the
+  // marker; the SNR, its second field, serves the portable rule
+  int const eom = DisplayText::lineMarkerColumn (windowLine);
+  QString const line = windowLine.left (eom);
+  int const snr = line.section (' ', 1, 1, QString::SectionSkipEmpty).toInt ();
   auto const v = m_falseDecodes.recall (false_decodes::messageField (line), m_freqNominal, falseDecodeSettings ()
-                                        , [this] (QString const& call) {return dxccOf (call);});
+                                        , [this] (QString const& call) {return dxccOf (call);}, snr);
   if (v.marked ())
     {
       DecodedText d {line};

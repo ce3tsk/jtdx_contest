@@ -9868,11 +9868,6 @@ soundcard changes</source>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
-        <source>A decode whose grid square lies outside the DXCC entity of the station that sent it - for a call such as DL/CE3TSK or CE3TSK/DL, outside Germany - is kept, but the grid is underlined in red and the country is shown as ?Chile?. Its ALL.TXT line ends with lc:grid and the entity's prefix, and it is sent to UDP clients as a low-confidence decode.</source>
-        <translation>送信局のDXCCエンティティの外にあるグリッドを持つデコード（DL/CE3TSKやCE3TSK/DLのようなコールサインならドイツの外）は残されますが、グリッドに赤い下線が引かれ、国は?Chile?と表示されます。ALL.TXTの行末にはlc:gridとエンティティのプリフィックスが付き、UDPクライアントには信頼度の低いデコードとして送られます。</translation>
-    </message>
-    <message>
-        <location filename="../Configuration.ui"/>
         <source>Mark decodes whose grid is outside the callsign's country</source>
         <translation>グリッドがコールサインの国の外にあるデコードに印を付ける</translation>
     </message>
@@ -9900,6 +9895,31 @@ soundcard changes</source>
         <location filename="../Configuration.ui"/>
         <source>The automatic sequencer does not pick such a decode on its own; a double click still answers it.</source>
         <translation>AutoSeqはこのようなデコードを自分からは選びません。ダブルクリックすれば応答できます。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Mark weak decodes where both calls sign /P</source>
+        <translation>両方のコールサインに/Pが付いた弱いデコードに印を付ける</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>A decode whose grid square lies outside the DXCC entity of the station that sent it - outside Chile for CE3TSK, outside Germany for CE3TSK/DL or DL/CE3TSK - is kept, but the grid is underlined in red and the country is shown between question marks, as ?Chile? or ?Germany?. Its ALL.TXT line ends with lc:grid and the entity's prefix, and it is sent to UDP clients as a low-confidence decode.</source>
+        <translation>送信局のDXCCエンティティの外にあるグリッドを持つデコード（CE3TSKならチリの外、CE3TSK/DLやDL/CE3TSKならドイツの外）は残されますが、グリッドに赤い下線が引かれ、国は?Chile?や?Germany?のように疑問符で囲んで表示されます。ALL.TXTの行末にはlc:gridとエンティティのプリフィックスが付き、UDPクライアントには信頼度の低いデコードとして送られます。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Below 30 MHz, a decode in which both calls sign /P (portable) is almost always a false decode when it is weak (-20 dB or below): /P is a single bit per call of the message type portable calls use, while genuine park-to-park contacts are stronger. The decode is kept, with the /P calls underlined in red, and is never answered automatically - a double click still answers it. Its ALL.TXT line ends with lc:portable, and it is sent to UDP clients as a low-confidence decode.</source>
+        <translation>30 MHz未満では、両方のコールサインに/P（移動）が付いたデコードは、弱い場合（-20 dB以下）、ほぼ常に誤デコードです。/Pは移動局のコールサインが使うメッセージ形式でコールサインごとにわずか1ビットであり、本物の公園間（P2P）交信はもっと強く受信されます。デコードは残され、/Pのコールサインに赤い下線が引かれ、自動では応答しません。ダブルクリックすれば応答できます。ALL.TXTの行末にはlc:portableが付き、UDPクライアントには信頼度の低いデコードとして送られます。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>A call whose prefix belongs to no country in cty.dat - shown as where? in the country column - is most likely a false decode, on any band. The decode is kept, with the call and where? underlined in red, and is never answered automatically - a double click still answers it. Its ALL.TXT line ends with lc:where, and it is sent to UDP clients as a low-confidence decode. Maritime and aeronautical mobile calls (/MM, /AM) have no country and are never marked.</source>
+        <translation>cty.dat でどの国にも属さないプリフィックスのコールサイン（国名欄に どこ? と表示）は、どのバンドでも誤デコードである可能性が高いです。デコードは残され、コールサインと どこ? に赤い下線が引かれ、自動では応答しません。ダブルクリックすれば応答できます。ALL.TXTの行末にはlc:whereが付き、UDPクライアントには信頼度の低いデコードとして送られます。海上移動・航空移動のコールサイン（/MM、/AM）には国がなく、印は付きません。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Mark calls with no known country (where?)</source>
+        <translation>国が不明なコールサインに印を付ける（どこ?）</translation>
     </message>
 </context>
 <context>

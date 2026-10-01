@@ -1,9 +1,10 @@
 // -*- Mode: C++ -*-
 /* CE3TSK 2026-09-30: decodes that are likely false - marked, never rejected.
 
-   Each detector is a row of Settings > Filters > False decodes, with two settings: mark it, and do
-   not answer it automatically (the second greyed while the first is off). All four are on by
-   default, so any of them can be switched off if it misbehaves.
+   Each detector is a row of Settings > Filters > False decodes: mark it and, for the grid and /R rows,
+   do not answer it automatically (greyed while its mark is off); the /P /P and where? rows have the mark
+   only, and their marks always hold. All of them are on by default, so any of them can be switched off
+   if it misbehaves.
 
      grid   the grid in the message does not lie in the DXCC entity of the call that sent it. The
             entity is the one the country column shows - cty.dat through the program's own lookup,
@@ -13,9 +14,27 @@
      rover  a call signing /R below 30 MHz. /R is one bit per call in a standard FT8/FT4 message,
             so a false decode sets it by chance, while a real rover is a VHF station - on HF this
             station has one confirmed /R QSO in its whole log.
+     portable  both calls signing /P below 30 MHz, at -20 dB or weaker - from the TX background
+            too, which gets no exception (the operator, 2026-09-30). /P is one bit per call of the
+            message type portable calls use, so a false decode sets both a quarter of the time;
+            genuine park-to-park traffic is stronger. Measured over 15 months of this station's logs:
+            96 such decodes, at least 90 false (test/experiments/false_decodes/slashp.py). Such a message is between two other stations
+            unless we sign /P ourselves - and a message with our own call is never marked by this
+            rule - so its row has no "do not answer" setting: a mark there always holds (the
+            operator, 2026-09-30).
+     where  the call that sent it has no country in cty.dat - the window's "where?" - on any band
+            (the operator, 2026-09-30). /MM and /AM have no country by design and are never marked
+            (unknownCountry), and only a word shaped as a call is one (callShaped): SuperFox's and
+            JT65's free text carry no marker. The sequencer never picked such a call on its own
+            anyway (QsoHistory wants a continent), so its row has no "do not answer" setting either.
+            Silent until cty.dat is read: an empty table would make every call "where?" (the
+            caller's guard). Measured on this station, June to September 2026, replays left out: 222
+            such decodes, at least 166 false; the rest three real callers - NI6BB/BB61 (a square as
+            a suffix), J01UHK (a zero for an O), JD4CLU.
 
-   A marked decode is shown with a red wave underline under what is in doubt (the grid, the /R call)
-   and its country as ?Chile? (or ?CE?), carries the tag "lc:grid CE" / "lc:rover" in ALL.TXT and
+   A marked decode is shown with a red wave underline under what is in doubt (the grid, the /R or /P
+   calls, the call of no country) and its country as ?Chile? (or ?CE?) - or "where?" underlined, carries
+   the tag "lc:grid CE" / "lc:rover" / "lc:portable" / "lc:where" in ALL.TXT and
    the low-confidence bit in the UDP Decode message, rings no bell and raises no window, and - with
    the second setting of its row - is not picked by the auto-sequencer on its own. A double click
    still works it.
@@ -25,7 +44,8 @@
    RI0SP in BR77) - false decodes do not repeat. It stays marked, and may be answered. A hint or
    a-priori decode is not a second hearing: the a-priori decoder is fed with the callsigns already
    heard, so it can reproduce the very call it was given - and neither is any decode of the TX
-   background, where an a-priori decode is printed '|' like the others. /R has no such exception.
+   background, where an a-priori decode is printed '|' like the others. /R, the both-/P rule and
+   where? have no such exception.
 
    Every check reads the line's messageField (), never DecodedText::message (), which is shortened.
 
@@ -44,7 +64,7 @@
 
 namespace false_decodes
 {
-  enum Reason : unsigned {None = 0u, Grid = 1u, Rover = 2u};
+  enum Reason : unsigned {None = 0u, Grid = 1u, Rover = 2u, Portable = 4u, Where = 8u};
 
   struct Settings
   {
@@ -52,6 +72,9 @@ namespace false_decodes
     bool gridNoAnswer {true};    // read only together with gridMark
     bool roverMark {true};
     bool roverNoAnswer {true};   // read only together with roverMark
+    bool portableMark {true};    // no "do not answer" of its own: a mark here always holds (the operator)
+    bool whereMark {true};       // nor here: QsoHistory never picks a call of no country; false until cty.dat is read
+    QString ownCall;             // our base call: a /P /P message to or from us is never a portable mark
   };
 
   struct Verdict
@@ -61,6 +84,7 @@ namespace false_decodes
     QString grid;            // with Grid: the grid in doubt
     QString entity;          // with Grid: the cty.dat prefix it was judged against ("CE", "VP8/O")
     QStringList rovers;      // with Rover: the /R calls, as printed
+    QStringList portables;   // with Portable: the two /P calls, as printed
     bool gridFits {false};   // the grid was judged and lies in the entity
     bool repeated {false};   // the same doubtful grid from this call in an earlier period
     bool noAnswer {false};   // the auto-sequencer must not pick the sender on its own
@@ -69,8 +93,8 @@ namespace false_decodes
     // Whether it goes out as doubtful: the UDP clients' low-confidence bit, and no PSK Reporter spot. After
     // the second hearing a grid-only mark is trusted there - the station is answered, and a spot at the grid
     // it sends is most likely right (the operator, 2026-09-30, C). The underline and the ALL.TXT tag stay, as
-    // the record of the conflict; /R is never trusted.
-    bool lowConfidence () const {return marked () && !(repeated && !(reasons & Rover));}
+    // the record of the conflict; /R, a weak /P /P and a call of no country are never trusted.
+    bool lowConfidence () const {return marked () && !(repeated && !(reasons & (Rover | Portable | Where)));}
   };
 
   // a call as printed, without the brackets of a resolved hash; "" for an unresolved one (<...>)
@@ -89,14 +113,15 @@ namespace false_decodes
         && g[2] >= '0' && g[2] <= '9' && g[3] >= '0' && g[3] <= '9';
   }
 
-  // a call signing /R: "K1ABC/R", "<K1ABC/R>". What stands before the /R must hold a digit and a
-  // letter, so free text such as "TNX/R" is not read as a call.
-  inline bool isRover (QString const& printed)
+  // the shape of a call: three characters or more, letters, digits and '/' only, a digit and a letter among them -
+  // so a word of free text is not read as one: "TNX" before a /R, or the "200" of SuperFox's "CALL 200 TO 3000 HZ UP",
+  // which carries no free-text marker (nor does JT65's) and would otherwise be a sender of no country
+  inline bool callShaped (QString const& printed)
   {
     QString const c = bareCall (printed);
-    if (!c.endsWith ("/R") || c.size () < 5) return false;
+    if (c.size () < 3) return false;
     bool digit = false, letter = false;
-    for (QChar const ch : c.left (c.size () - 2))
+    for (QChar const ch : c)
       {
         if (ch >= '0' && ch <= '9') digit = true;
         else if (ch >= 'A' && ch <= 'Z') letter = true;
@@ -105,10 +130,27 @@ namespace false_decodes
     return digit && letter;
   }
 
+  // a call signing a one-letter suffix: "K1ABC/R", "<K1ABC/P>" - what stands before it shaped as a call
+  inline bool signsSuffix (QString const& printed, QString const& suffix)
+  {
+    QString const c = bareCall (printed);
+    return c.endsWith (suffix) && callShaped (c.left (c.size () - suffix.size ()));
+  }
+  inline bool isRover (QString const& printed) {return signsSuffix (printed, "/R");}
+  inline bool isPortable (QString const& printed) {return signsSuffix (printed, "/P");}
+
+  // a call's base, the longest of its '/' parts: "CE3TSK" for CE3TSK/P, DL/CE3TSK, <CE3TSK/P>
+  inline QString baseOf (QString const& printed)
+  {
+    QString best;
+    for (auto const& part : bareCall (printed).split ('/')) if (part.size () > best.size ()) best = part;
+    return best;
+  }
+
   inline bool isHf (double dialHz) {return dialHz > 0. && dialHz < 30.e6;}
 
   // A sender whose country cty.dat does not know ("where?"): not spotted to PSK Reporter, whatever the
-  // message (the operator, 2026-09-30, A3) - an unallocated prefix is a false decode. /MM and /AM have no
+  // message (the operator, 2026-09-30, A3) - an unallocated prefix is a false decode - and the where? mark. /MM and /AM have no
   // country by design and are not counted: a maritime or aeronautical mobile station is real, and its spot
   // says where it is. An unresolved hash names nobody and is not counted either.
   template<typename EntityOf>
@@ -162,6 +204,8 @@ namespace false_decodes
     QStringList r;
     if (v.reasons & Grid) r << "grid";
     if (v.reasons & Rover) r << "rover";
+    if (v.reasons & Portable) r << "portable";
+    if (v.reasons & Where) r << "where";
     if (r.isEmpty ()) return {};
     QString t {"lc:" + r.join (',')};
     if (v.reasons & Grid) t += ' ' + v.entity;
@@ -199,9 +243,11 @@ namespace false_decodes
     /* The mark alone. No memory is read or written, so it can be asked again at any time (the UDP
        replay of the window and a double click do). `message` is the line's messageField (); entityOf is
        the country lookup of the windows: cty.dat's "continent,prefix,name,cqz,ituz" for a call, with "?"
-       as the prefix when it is unknown. */
+       as the prefix when it is unknown; `snr` serves the portable rule only - at its default (0 dB) it
+       stays silent. */
     template<typename EntityOf>
-    static Verdict mark (QString const& message, double dialHz, Settings const& s, EntityOf entityOf)
+    static Verdict mark (QString const& message, double dialHz, Settings const& s, EntityOf entityOf
+                         , int snr = 0)
     {
       Verdict v;
       Parts const p = parts (message);
@@ -227,7 +273,20 @@ namespace false_decodes
           for (auto const& c : p.calls) if (isRover (c)) v.rovers << c;
           if (!v.rovers.isEmpty ()) v.reasons |= Rover;
         }
-      v.noAnswer = ((v.reasons & Grid) && s.gridNoAnswer) || ((v.reasons & Rover) && s.roverNoAnswer);
+      // both calls /P and weak, the TX background included (the operator, 2026-09-30, measured in
+      // test/experiments/false_decodes/slashp.py): stronger, it is genuine park-to-park traffic. Never when
+      // one of the calls is ours: signing /P ourselves, a weak park-to-park caller is exactly what we want.
+      if (s.portableMark && isHf (dialHz) && 2 == p.calls.size () && isPortable (p.calls[0]) && isPortable (p.calls[1])
+          && snr <= -20 && (s.ownCall.isEmpty () || (baseOf (p.calls[0]) != s.ownCall && baseOf (p.calls[1]) != s.ownCall)))
+        {
+          v.portables = p.calls;
+          v.reasons |= Portable;
+        }
+      // the sender has no country ("where?"), on any band - and is shaped as a call, so the second word of a free
+      // text without a marker is not taken for one (callShaped); it excludes Grid, which judges only a known country
+      if (s.whereMark && callShaped (p.sender) && unknownCountry (p.sender, entityOf)) v.reasons |= Where;
+      v.noAnswer = ((v.reasons & Grid) && s.gridNoAnswer) || ((v.reasons & Rover) && s.roverNoAnswer)
+                || (v.reasons & (Portable | Where));
       return v;
     }
 
@@ -237,9 +296,10 @@ namespace false_decodes
        background - where the decoders print '|' over an a-priori decode's '*', so the two cannot be
        told apart there. */
     template<typename EntityOf>
-    Verdict judge (QString const& message, double dialHz, unsigned period, bool unreliable, Settings const& s, EntityOf entityOf)
+    Verdict judge (QString const& message, double dialHz, unsigned period, bool unreliable, Settings const& s, EntityOf entityOf
+                   , int snr)   // required: a caller that forgot it would switch the portable rule off unseen
     {
-      Verdict v = mark (message, dialHz, s, entityOf);
+      Verdict v = mark (message, dialHz, s, entityOf, snr);
       v.reliable = !unreliable;   // a hint, a-priori or background decode releases no one (Verdict::reliable)
       QString const key = bareCall (v.sender);
       if (key.isEmpty ()) return v;
@@ -267,9 +327,10 @@ namespace false_decodes
     /* The mark with what the memory says, and nothing written: a decode looked up again (the UDP replay of the
        window, a double click) is no hearing, but a station already heard twice is reported as it was live. */
     template<typename EntityOf>
-    Verdict recall (QString const& message, double dialHz, Settings const& s, EntityOf entityOf) const
+    Verdict recall (QString const& message, double dialHz, Settings const& s, EntityOf entityOf
+                    , int snr) const   // required, as judge's
     {
-      Verdict v = mark (message, dialHz, s, entityOf);
+      Verdict v = mark (message, dialHz, s, entityOf, snr);
       v.reliable = false;         // a line read again is no new message: it holds, and releases, no one
       if (v.reasons & Grid) remembered (v, s);
       return v;
@@ -283,7 +344,7 @@ namespace false_decodes
       if (seen_.cend () != it && it->grid == v.grid && it->repeated)
         {
           v.repeated = true;
-          v.noAnswer = (v.reasons & Rover) && s.roverNoAnswer;
+          v.noAnswer = ((v.reasons & Rover) && s.roverNoAnswer) || (v.reasons & (Portable | Where));
         }
     }
 
