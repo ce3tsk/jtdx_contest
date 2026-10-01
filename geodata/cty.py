@@ -102,6 +102,7 @@ def km(a,b):
 def wrap(lon): return ((lon + 180.0) % 360.0) - 180.0      # the antimeridian: 180 is -180
 def gridname(lon, lat):
     """the 4-character Maidenhead square holding a point"""
+    lat = min(89.999, max(-90.0, lat))                      # fields are A..R, never S (the north pole is in R)
     return (chr(ord('A') + int((wrap(lon) + 180) // 20)) + chr(ord('A') + int((lat + 90) // 10))
             + str(int(((lon + 180) % 20) // 2)) + str(int(((lat + 90) % 10) // 1)))
 def norm(s):

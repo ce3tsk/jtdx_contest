@@ -44,8 +44,9 @@ Natural Earth and Census sources (`geodata/README.md` there).
 The tables themselves - where the geography comes from, how each entity's squares were derived and how far
 each row can be trusted - are documented in the work tree's `geodata/README.md`. Every row carries a
 `source` (`poly`, `admin1`, `islands`, `point`, `split`, `sovereign`); a `point` row is a 120 km disk around
-a coordinate, not a border - some rows also carry far-off parts of the entity added by hand, and the table's
-header names them - and a consumer that wants strictness should say so.
+a coordinate, not a border - and some rows also carry land added by hand, which the source tag does not show:
+`make_dxcc_grids.py` beside this file lists it (`ADD_LAND`, `ADD_POINTS`, and the regions joined in `MULTI`; KH6,
+tagged `split`, carries the Northwestern Hawaiian Islands that way). A consumer that wants strictness should say so.
 
 ## Packing
 

@@ -83,12 +83,11 @@ TERRITORIES = {'PR', 'VI', 'GU', 'AS', 'MP'}
 WAS_STATES = set(('AL AK AZ AR CA CO CT DE FL GA HI ID IL IN IA KS KY LA ME MD MA MI MN MS MO MT NE NV '
                   'NH NJ NM NY NC ND OH OK OR PA RI SC SD TN TX UT VT VA WA WV WI WY').split())
 
-def wrap(lon):   return ((lon + 180.0) % 360.0) - 180.0    # the antimeridian: 180 is -180
-def field(lon):  return chr(ord('A') + int((wrap(lon) + 180) // 20))
-def square(lon): return str(int(((wrap(lon) + 180) % 20) // 2))
-def gridname(lon, lat):
-    lat = min(89.999, max(-90.0, lat))                      # fields are A..R, never S
-    return field(lon) + chr(ord('A') + int((lat + 90) // 10)) + square(lon) + str(int(((lat + 90) % 10) // 1))
+# the square naming is cty.py's, shared with make_dxcc_grids.py and the geodata tests (second review 2026-10-01)
+sys.dont_write_bytecode = True          # no __pycache__ beside the sources, in either tree
+sys.path.insert(0, HERE if os.path.exists(os.path.join(HERE, 'cty.py'))
+                else os.path.join(HERE, '..', 'test', 'experiments', 'false_decodes'))
+from cty import gridname
 
 # Both inputs are checked before the polygon pass: the population file used to be looked for only
 # after every state had been scanned, minutes in (review 2026-09-24).

@@ -14,7 +14,6 @@
 #include <QPainterPath>
 #include <QPaintEvent>
 #include <QScrollBar>
-#include <QFontMetricsF>
 
 #include "Configuration.hpp"
 #include "qt_helpers.hpp"
@@ -76,7 +75,11 @@ void DisplayText::paintEvent (QPaintEvent *e)
   QPainter p {viewport ()};
   p.setRenderHint (QPainter::Antialiasing, true);
   p.setClipRect (e->rect ());
-  QPointF const offset {-qreal (horizontalScrollBar ()->value ()), -qreal (verticalScrollBar ()->value ())};
+  // where QTextEdit itself draws the document: in a right-to-left layout the horizontal offset is maximum - value
+  // (QTextEditPrivate::horizontalOffset), not value - else a sideways-scrolled window draws the waves off their words
+  QScrollBar const* const hbar = horizontalScrollBar ();
+  QPointF const offset {-qreal (isRightToLeft () ? hbar->maximum () - hbar->value () : hbar->value ()),
+                        -qreal (verticalScrollBar ()->value ())};
   qreal const top = e->rect ().top (), bottom = e->rect ().bottom ();
   auto* const docLayout = document ()->documentLayout ();
   // a wave reaches a little into the line below (there is no room under the letters inside a line - it is ascent
@@ -95,10 +98,10 @@ void DisplayText::paintEvent (QPaintEvent *e)
           int const from = fr.position () - b.position (), to = from + fr.length ();
           QTextLine const line = b.layout ()->lineForTextPosition (from);
           if (!line.isValid ()) continue;
-          QFontMetricsF const fm {fr.charFormat ().font ()};
           // just under the letters - its foot reaches ~1.5 px into the next line, which is painted by now (inside
-          // the line it would cut through the letters, measured 2026-10-01)
-          qreal const y = r.top () + line.y () + line.ascent () + fm.descent () - 1.;
+          // the line it would cut through the letters, measured 2026-10-01). The line's own descent, as laid out: a
+          // format without a font of its own, or another screen's DPI, would put the font's metrics elsewhere
+          qreal const y = r.top () + line.y () + line.ascent () + line.descent () - 1.;
           drawWave (p, r.left () + line.cursorToX (from), r.left () + line.cursorToX (to), y, fr.charFormat ().underlineColor ());
         }
     }

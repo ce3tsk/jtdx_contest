@@ -35,7 +35,7 @@ WHERE IT IS APPROXIMATE, and it says so per entity:
     EA8.  For a plausibility test that errs on the permissive side, which is the safe direction; a
     later pass can subtract the children.
 """
-import os, sys, json, math, re, hashlib, unicodedata, shapefile
+import os, sys, json, math, hashlib, shapefile
 from datetime import date, datetime, timezone
 from shapely.geometry import shape, box, Point
 from shapely.ops import unary_union
@@ -67,16 +67,13 @@ CLAIM = ('derived from public-domain sources (cty.dat, Natural Earth) and statin
 ALIAS = {
     'Fed. Rep. of Germany': 'Germany', 'Timor - Leste': 'East Timor', 'Bosnia-Herzegovina':
     'Bosnia and Herzegovina', 'Dem. Rep. of the Congo': 'Democratic Republic of the Congo',
-    'Republic of Korea': 'South Korea', 'DPR of Korea': 'North Korea', 'Rep. of South Africa':
-    'South Africa', 'United States': 'United States of America', 'Czech Republic': 'Czechia',
+    'Republic of Korea': 'South Korea', 'DPR of Korea': 'North Korea', 'Czech Republic': 'Czechia',
     'Trinidad & Tobago': 'Trinidad and Tobago', 'Antigua & Barbuda': 'Antigua and Barbuda',
     'St. Kitts & Nevis': 'Saint Kitts and Nevis', 'St. Vincent': 'Saint Vincent and the Grenadines',
     'St. Lucia': 'Saint Lucia', 'Turks & Caicos Islands': 'Turks and Caicos Islands',
     'Sao Tome & Principe': 'São Tomé and Principe', 'Wallis & Futuna Islands': 'Wallis and Futuna',
-    'Vatican City': 'Vatican', 'Burma': 'Myanmar', 'Ivory Coast': "Côte d'Ivoire",
-    'Cape Verde': 'Cabo Verde', 'Swaziland': 'eSwatini', 'Turkey': 'Turkiye',
-    'European Russia': 'Russia', 'Asiatic Russia': 'Russia',
-    'The Gambia': 'Gambia', 'Macedonia': 'North Macedonia',
+    'Vatican City': 'Vatican',
+    'The Gambia': 'Gambia',
     # found by review 2026-09-24: these nine exist in Natural Earth under another name, and without
     # the alias each fell back to a 120 km disk around its cty.dat coordinate - Bratislava was not in
     # Slovakia, Izmir not in Asiatic Turkey, Kuala Lumpur not in West Malaysia.
@@ -84,6 +81,9 @@ ALIAS = {
     'Republic of Kosovo': 'Kosovo', 'Republic of South Sudan': 'South Sudan',
     'Reunion Island': 'Reunion', 'West Malaysia': 'Malaysia',
     'Western Kiribati': 'Kiribati', 'Central Kiribati': 'Kiribati', 'Eastern Kiribati': 'Kiribati',
+    # 2026-10-01 (review): ten dead entries removed - seven spellings cty.dat no longer uses (Burma, Ivory Coast, Cape
+    # Verde, Swaziland, Turkey, Macedonia, Rep. of South Africa) and United States / European / Asiatic Russia, which
+    # the split branch builds before any alias is read. The guard after the loop now refuses such entries.
     # 2026-10-01: without it KH0 was a 120 km disk around Saipan, and the northern islands (Pagan, Agrihan,
     # Farallon de Pajaros - QK28 QK29 QL20) were outside the Marianas
     'Mariana Islands': 'Northern Mariana Islands',
@@ -351,11 +351,22 @@ for name, cont, lat, lon in ents:
     if not squares: raise SystemExit('FAILED: no grid square for %s (%s)' % (pfx, name))
     rows[pfx] = (name, sorted(squares))
     group[pfx] = GROUP_OF.get(name, '')
-# a key that names nothing would add nothing, silently - and each table has its own key: MULTI the cty.dat
-# entity NAME (it is read as `name in MULTI`), ADD_LAND and ADD_POINTS the PREFIX (`pfx in ADD_LAND`), so a
-# key from the wrong one is as dead as a typo (review 2026-10-01)
+# a key that names nothing would add nothing, silently - and each table has its own key: MULTI and ALIAS the cty.dat
+# entity NAME (read as `name in MULTI`, `ALIAS.get (name)`), ADD_LAND and ADD_POINTS the PREFIX (`pfx in ADD_LAND`), so
+# a key from the wrong one is as dead as a typo (review 2026-10-01). And a name the split or admin1 branch builds is
+# never looked up in MULTI or ALIAS at all; an ALIAS value no map unit has falls back to a 120 km disk (second review).
 _names = {n for n, _ in rows.values()}
-for table, keys, space, what in (('MULTI', MULTI, _names, 'an entity name'), ('ADD_LAND', ADD_LAND, rows, 'a prefix'),
+_built_first = {rows[p][0] for p, v in source.items() if v in ('split', 'admin1')}
+for table, keys in (('MULTI', MULTI), ('ALIAS', ALIAS)):
+    for k in keys:
+        if k in _built_first:
+            raise SystemExit('FAILED: %s key %r: that entity is built by the split or admin1 branch, the entry does '
+                             'nothing' % (table, k))
+for k, v in ALIAS.items():
+    if norm(v) not in units and norm(v) not in sovereign:
+        raise SystemExit('FAILED: ALIAS %r -> %r: no Natural Earth map unit is called that' % (k, v))
+for table, keys, space, what in (('MULTI', MULTI, _names, 'an entity name'), ('ALIAS', ALIAS, _names, 'an entity name'),
+                                 ('ADD_LAND', ADD_LAND, rows, 'a prefix'),
                                  ('ADD_POINTS', ADD_POINTS, rows, 'a prefix')):
     for k in keys:
         if k not in space: raise SystemExit('FAILED: %s key %r is not %s' % (table, k, what))
@@ -375,7 +386,8 @@ HEAD = ('# DXCC entity -> the 4-character Maidenhead grid squares it occupies.\n
         '#   layer (dxcc_admin1_subset.json); islands = minor-island polygons within %d km of\n'
         '#   the cty.dat coordinate (that layer has no names, so the match is geographic); point = the\n'
         '#   coordinate itself and everything within %d km of it.\n'
-        '#   split = cut from a finer source: K/KL/KH6 from the US Census state boundaries (exact),\n'
+        '#   split = cut from a finer source: K/KL/KH6 from the US Census state boundaries (exact - KH6 also carries\n'
+        '#   the Northwestern Hawaiian Islands, added by hand),\n'
         '#   UA/UA9 by cutting Russia at 60 deg E (approximate - the DXCC line follows the Urals),\n'
         '#   R1FJ = Russia north of 79 deg N between 30 and 70 deg E (Franz Josef Land).\n'
         '#   %s\n'
