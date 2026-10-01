@@ -39,7 +39,6 @@ import os, sys, json, math, re, hashlib, unicodedata, shapefile
 from datetime import date, datetime, timezone
 from shapely.geometry import shape, box, Point
 from shapely.ops import unary_union
-from shapely.prepared import prep
 from shapely.strtree import STRtree
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -58,7 +57,7 @@ ISLAND_KM    = 200.0     # how far from that coordinate to accept minor-island p
 sys.dont_write_bytecode = True          # no __pycache__ beside the sources, in either tree
 sys.path.insert(0, HERE if os.path.exists(os.path.join(HERE, 'cty.py'))
                 else os.path.join(HERE, '..', 'test', 'experiments', 'false_decodes'))
-from cty import load_cty, cty_path                         # the resolver already in the tree
+from cty import load_cty, cty_path, gridname, norm, squares_of   # the resolver, and the helpers the gap check shares
 
 BUILT_BY = ('built by tools/make_dxcc_grids.py of JTDX_CONTEST, Tihomir Sokcevic CE3TSK '
             '(the script is GPL v3)')
@@ -120,15 +119,17 @@ GROUPS = {
 
 # Entities that need more than one map unit.  Natural Earth keeps some regions apart from the state they
 # belong to, and nothing else matches them, so the entity row lost them (2026-10-01, found by
-# test/geodata_gap_check.py): Somaliland and Puntland - all of northern Somalia, 24 squares not even next to
-# a Somalia square; 6O3T in LJ29 (Hargeisa) was heard here 179 times and marked as outside Somalia every
-# time - and, harmless only because each missing square neighbours one the row has, Iraqi Kurdistan,
-# Vojvodina (Novi Sad, JN95) and Bougainville.
+# test/geodata_gap_check.py): Somaliland and Puntland - all of northern Somalia, 21 squares, 19 of them not
+# even next to a Somalia square; 6O3T in LJ29 (Hargeisa) was heard here 179 times and marked as outside
+# Somalia every time - and, harmless only because each missing square neighbours one the row has, Iraqi
+# Kurdistan, Vojvodina (Novi Sad, JN95) and Bougainville. The Paracels: no DXCC entity of their own, held by
+# China and kept apart by Natural Earth - a Chinese station there sent OK66 and was outside China.
 MULTI = {'Palestine': ['West Bank', 'Gaza'],
          'Somalia': ['Somalia', 'Somaliland', 'Puntland'],
          'Iraq': ['Iraq', 'Iraqi Kurdistan'],
          'Serbia': ['Serbia', 'Vojvodina'],
-         'Papua New Guinea': ['Papua New Guinea', 'Bougainville']}
+         'Papua New Guinea': ['Papua New Guinea', 'Bougainville'],
+         'China': ['China', 'Paracel Is.']}
 # Land an entity owns that the steps below cannot find (2026-10-01) - the Franz Josef Land fault again: an
 # island or point row is built from what lies near the cty.dat coordinate, so part of an entity that sits
 # inside another map unit, or far from that coordinate, was "outside" it.  Added to the row, never instead
@@ -144,21 +145,34 @@ ADD_LAND = {
 ADD_POINTS = {
     'KH5':  [(-160.02, -0.37)],      # Jarvis Island, about 1 000 km from Palmyra
     '3B6':  [(59.60, -16.50)],       # St. Brandon (Cargados Carajos), about 700 km from Agalega
-    'E5/s': [(-159.78, -18.86)],     # Aitutaki
+    'E5/s': [(-159.78, -18.86), (-163.17, -18.05)],   # Aitutaki, Palmerston
     'CE0Y': [(-105.36, -26.47)],     # Sala y Gomez, part of the Easter Island entity
     'VP8/g': [(-42.03, -53.55)],     # Shag Rocks (GD86; Black Rock, GD96, is next to it), 250 km west
+    # second round, the review of 2026-10-01 and the nearest-entity sweep of test/geodata_gap_check.py
+    'FT/j': [(40.37, -22.36), (39.69, -21.48)],                  # Europa, Bassas da India
+    '1S':   [(111.92, 8.64), (113.84, 7.37), (112.91, 7.85)],    # Spratly I., Layang-Layang, Amboyna Cay
+    'ZD9':  [(-9.88, -40.32)],                                   # Gough Island, 412 km from Tristan
+    'KH6':  [(-161.92, 23.06), (-164.70, 23.58), (-166.28, 23.87), (-167.99, 25.00),   # the Northwestern
+             (-170.60, 25.42), (-171.73, 25.77), (-173.96, 26.06), (-175.83, 27.83)],   # Hawaiian Islands *
+    'E5/n': [(-163.11, -13.25)],                                 # Suwarrow
+    'FO/a': [(-144.33, -27.60), (-143.53, -27.92), (-154.70, -21.80)],   # Rapa, Marotiri, Iles Maria
+    'V6':   [(143.91, 7.37), (144.45, 7.25), (143.04, 6.68), (144.50, 8.60),   # Woleai Ifalik Eauripik Faraulep
+             (154.28, 8.15)],                                    # Minto Reef
+    'P2':   [(159.45, -4.57)],                                   # Nukumanu, Bougainville province
+    # Matthew and Hunter Islands, claimed by both Vanuatu and France (New Caledonia): in BOTH rows - the table is
+    # a plausibility check, and a station of either claimant there must not be marked (the operator, 2026-10-01)
+    'YJ':   [(171.32, -22.35), (172.05, -22.40)],                # Matthew, Hunter
+    'FK':   [(171.32, -22.35), (172.05, -22.40)],                # Matthew, Hunter
+    'V7':   [(160.83, 9.82), (170.10, 12.24)],                   # Ujelang, Bikar
+    'T32':  [(-150.22, -9.95)],                                  # Caroline Island
+    'ZL9':  [(179.05, -47.75), (178.80, -49.68), (166.60, -48.02)],    # Bounty, Antipodes, Snares
+    'S7':   [(51.12, -10.17), (51.03, -9.23)],                   # Farquhar, Providence and St. Pierre
 }
+# * Nihoa, Necker, French Frigate Shoals, Gardner Pinnacles, Maro Reef, Laysan, Lisianski, Pearl and Hermes -
+#   the Census 'HI' shape that KH6 is cut from holds the main islands only; Midway and Kure are entities of
+#   their own.  Palmerston (E5/s) is in the first round's table below.
 
-def wrap(lon): return ((lon + 180.0) % 360.0) - 180.0      # the antimeridian: 180 is -180
-def field(lon): return chr(ord('A') + int((wrap(lon) + 180) // 20))
-def gridname(lon, lat):
-    return (field(lon) + chr(ord('A') + int((lat + 90) // 10))
-            + str(int(((lon + 180) % 20) // 2)) + str(int(((lat + 90) % 10) // 1)))
-def norm(s):
-    s = unicodedata.normalize('NFKD', s)                    # fold accents, do not strip them:
-    s = ''.join(c for c in s if not unicodedata.combining(c))   # "Côte d'Ivoire" -> "cote divoire"
-    s = s.lower().replace('&', 'and').replace('st.', 'saint')
-    return re.sub(r'[^a-z0-9 ]', '', s).strip()
+# gridname, norm and squares_of come from cty.py: test/geodata_gap_check.py uses the same three.
 
 # Three splits the map units cannot give us, done from data already in the tree:
 #   K / KL / KH6  - the US Census state boundaries (geodata/cb_2023_us_state_20m), exact.
@@ -308,18 +322,7 @@ for name, cont, lat, lon in ents:
             geom = unary_union(near); source[pfx] = 'islands'
             squares.add(gridname(lon, lat))      # the layer has no names: never lose our own square
     if geom is not None:
-        pg = prep(geom)
-        minx, miny, maxx, maxy = geom.bounds
-        x = (int((minx + 180) // 2) * 2) - 180
-        while x <= maxx:
-            y = int(miny // 1)
-            while y <= maxy:
-                if x >= 180: y += 1; continue           # the wrap-around duplicate of -180
-                cell = box(x, y, x + 2, y + 1)
-                if pg.intersects(cell):
-                    squares.add(gridname(x + 1, y + 0.5))
-                y += 1
-            x += 2
+        squares |= squares_of(geom)
         p = geom.representative_point()          # never lose an entity smaller than a square
         squares.add(gridname(p.x, p.y))
         source.setdefault(pfx, 'split' if pfx in SPECIAL else 'poly')
@@ -343,20 +346,19 @@ for name, cont, lat, lon in ents:
         if norm(unit) not in units: raise SystemExit('FAILED: ADD_LAND %s: no map unit %r' % (pfx, unit))
         land = units[norm(unit)].intersection(box(*bx))
         if land.is_empty: raise SystemExit('FAILED: ADD_LAND %s: nothing of %s in %s' % (pfx, unit, bx))
-        x0, y0, x1, y1 = land.bounds; x = (int((x0 + 180) // 2) * 2) - 180
-        while x <= x1:
-            y = int(y0 // 1)
-            while y <= y1:
-                if land.intersects(box(x, y, x + 2, y + 1)): squares.add(gridname(x + 1, y + 0.5))
-                y += 1
-            x += 2
+        squares |= squares_of(land)
     for plon, plat in ADD_POINTS.get(pfx, []): squares.add(gridname(plon, plat))
     if not squares: raise SystemExit('FAILED: no grid square for %s (%s)' % (pfx, name))
     rows[pfx] = (name, sorted(squares))
     group[pfx] = GROUP_OF.get(name, '')
-for k in list(ADD_LAND) + list(ADD_POINTS) + list(MULTI):       # a mistyped key would add nothing, silently
-    if k not in rows and k not in [n for n, _ in rows.values()]:
-        raise SystemExit('FAILED: %s in ADD_LAND/ADD_POINTS/MULTI names no entity' % k)
+# a key that names nothing would add nothing, silently - and each table has its own key: MULTI the cty.dat
+# entity NAME (it is read as `name in MULTI`), ADD_LAND and ADD_POINTS the PREFIX (`pfx in ADD_LAND`), so a
+# key from the wrong one is as dead as a typo (review 2026-10-01)
+_names = {n for n, _ in rows.values()}
+for table, keys, space, what in (('MULTI', MULTI, _names, 'an entity name'), ('ADD_LAND', ADD_LAND, rows, 'a prefix'),
+                                 ('ADD_POINTS', ADD_POINTS, rows, 'a prefix')):
+    for k in keys:
+        if k not in space: raise SystemExit('FAILED: %s key %r is not %s' % (table, k, what))
 import collections as _c
 print('entities %d: %s' % (len(rows), dict(_c.Counter(source.values()))))
 _sov = [p for p, v in source.items() if v == 'sovereign']
@@ -376,8 +378,9 @@ HEAD = ('# DXCC entity -> the 4-character Maidenhead grid squares it occupies.\n
         '#   split = cut from a finer source: K/KL/KH6 from the US Census state boundaries (exact),\n'
         '#   UA/UA9 by cutting Russia at 60 deg E (approximate - the DXCC line follows the Urals),\n'
         '#   R1FJ = Russia north of 79 deg N between 30 and 70 deg E (Franz Josef Land).\n'
-        '#   VU4 VU7 JD/o H40 KH5 3B6 E5/s CE0Y VP8/g also carry land added by hand (ADD_LAND, ADD_POINTS in\n'
-        '#   the builder) - parts of the entity far from its coordinate or inside another map unit.\n'
+        '#   %s\n'
+        '#   also carry land added by hand (ADD_LAND, ADD_POINTS in the builder) - parts of the entity far from\n'
+        '#   its coordinate or inside another map unit.\n'
         '#   A matched parent keeps its whole polygon, so Spain still lists the Canary squares of EA8:\n'
         '#   the table errs on the permissive side, which is the safe direction for a plausibility test.\n'
         '#\n'
@@ -388,7 +391,7 @@ HEAD = ('# DXCC entity -> the 4-character Maidenhead grid squares it occupies.\n
         '# version %s (built %s), %s.\n'
         '# This table is %s\n'
         '# See geodata/README.md.  A JSON twin of this table is dxcc_grids.json.\n'
-        % (ISLAND_KM, POINT_KM, VERSION, BUILT, BUILT_BY, CLAIM))
+        % (ISLAND_KM, POINT_KM, ' '.join(sorted(set(ADD_LAND) | set(ADD_POINTS))), VERSION, BUILT, BUILT_BY, CLAIM))
 body = ''.join('%-8s %-9s %-3s %4d  %-28s %s\n'
                % (pfx, source[pfx], group[pfx] or '-', len(rows[pfx][1]), rows[pfx][0],
                   ' '.join(rows[pfx][1])) for pfx in sorted(rows))

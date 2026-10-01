@@ -96,6 +96,46 @@ def km(a,b):
     p=math.pi/180
     x=math.sin((la2-la1)*p/2)**2+math.cos(la1*p)*math.cos(la2*p)*math.sin((lo2-lo1)*p/2)**2
     return 12742*math.asin(min(1,math.sqrt(x)))
+# CE3TSK 2026-10-01: the square naming, name keying and square scan that tools/make_dxcc_grids.py and
+# test/geodata_gap_check.py share - one copy, so the test can never key a map unit or scan a polygon
+# differently from the builder it checks (review 2026-10-01).
+def wrap(lon): return ((lon + 180.0) % 360.0) - 180.0      # the antimeridian: 180 is -180
+def gridname(lon, lat):
+    """the 4-character Maidenhead square holding a point"""
+    return (chr(ord('A') + int((wrap(lon) + 180) // 20)) + chr(ord('A') + int((lat + 90) // 10))
+            + str(int(((lon + 180) % 20) // 2)) + str(int(((lat + 90) % 10) // 1)))
+def norm(s):
+    """a place name as a key: accents folded, not stripped ("Côte d'Ivoire" -> "cote divoire")"""
+    import unicodedata
+    s = unicodedata.normalize('NFKD', s)
+    s = ''.join(c for c in s if not unicodedata.combining(c))
+    s = s.lower().replace('&', 'and').replace('st.', 'saint')
+    return re.sub(r'[^a-z0-9 ]', '', s).strip()
+def squares_of(geom):
+    """every square a shapely geometry touches at all - permissive by design (geodata/README.md)"""
+    from shapely.geometry import box
+    from shapely.prepared import prep
+    out = set(); pg = prep(geom)
+    minx, miny, maxx, maxy = geom.bounds
+    x = (int((minx + 180) // 2) * 2) - 180
+    while x <= maxx:
+        y = int(miny // 1)
+        while y <= maxy:
+            if x >= 180: y += 1; continue           # the wrap-around duplicate of -180
+            if pg.intersects(box(x, y, x + 2, y + 1)): out.add(gridname(x + 1, y + 0.5))
+            y += 1
+        x += 2
+    return out
+def around(sq):
+    """a square and its eight neighbours - what geodata::gridFitsEntity accepts for it"""
+    lon = (ord(sq[0]) - 65) * 10 + int(sq[2]); lat = (ord(sq[1]) - 65) * 10 + int(sq[3]); out = set()
+    for a in (-1, 0, 1):
+        for b in (-1, 0, 1):
+            la = lat + b
+            if 0 <= la < 180:
+                lo = (lon + a) % 180
+                out.add(chr(65 + lo // 10) + chr(65 + la // 10) + str(lo % 10) + str(la % 10))
+    return out
 if __name__=='__main__':
     ents,pref,exact=load_cty(); print('cty.dat: %d entities, %d prefixes, %d exact'%(len(ents),len(pref),len(exact)))
     for c in ['CE3TSK','T1TA7I1J/RI','5NVR/B7FIBP','VO4MEQRXPIH','PV9DJZ/R','9B4NFA','L64ANH/R','MG0QYG','KM8XIH','WF6RRZ','LZ1ST','VE7SL','VK2EFM','KH8WW','VP8PJ']:

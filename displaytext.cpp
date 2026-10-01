@@ -7,6 +7,14 @@
 #include <QTextCharFormat>
 #include <QFont>
 #include <QTextCursor>
+#include <QTextBlock>
+#include <QTextLayout>
+#include <QAbstractTextDocumentLayout>
+#include <QPainter>
+#include <QPainterPath>
+#include <QPaintEvent>
+#include <QScrollBar>
+#include <QFontMetricsF>
 
 #include "Configuration.hpp"
 #include "qt_helpers.hpp"
@@ -24,12 +32,76 @@ static bool isGrid4 (QString const& w)
 
 /* CE3TSK 2026-09-30: what a word in doubt looks like (falsedecodes.h) - the format it would have had,
    with a red wave underline, the spell checker's mark. Its own colour-table row: the dark style's
-   red for a background is too dark to see as a line. */
+   red for a background is too dark to see as a line.
+   2026-10-01, the operator: the wave is drawn by the window itself, 2 px thick, in both styles - Qt's own
+   WaveUnderline is one pixel, and in the dark style it all but vanished on the category colours (option C of
+   the comparison: the same reds, twice as thick). So the span carries DoubtProperty and its colour, Qt draws
+   no underline under it (any underline the segment had gives way to the wave, as it did before), and
+   paintEvent () draws the wave over Qt's text. */
 QTextCharFormat DisplayText::doubtFormat (QTextCharFormat f) const
 {
-  f.setUnderlineStyle (QTextCharFormat::WaveUnderline);
+  f.setUnderlineStyle (QTextCharFormat::NoUnderline);
   f.setUnderlineColor (QColor {Radio::convert_dark ("#e60000", useDarkStyle_)});
+  f.setProperty (DoubtProperty, true);
   return f;
+}
+
+namespace
+{
+  qreal const waveWidth = 2.;    // the pen
+  qreal const waveAmp = 1.5;     // above and below the centre line
+  qreal const waveHalf = 3.;     // half a period
+
+  void drawWave (QPainter& p, qreal x0, qreal x1, qreal y, QColor const& c)
+  {
+    QPainterPath path {QPointF {x0, y}};
+    bool up = true;
+    for (qreal x = x0; x < x1; x += waveHalf, up = !up)
+      {
+        qreal const xe = qMin (x + waveHalf, x1);
+        path.quadTo ((x + xe) / 2., y + (up ? -2. : 2.) * waveAmp, xe, y);   // the curve reaches half its control
+      }
+    QPen pen {c, waveWidth};
+    pen.setCapStyle (Qt::RoundCap);
+    pen.setJoinStyle (Qt::RoundJoin);
+    p.setPen (pen);
+    p.setBrush (Qt::NoBrush);
+    p.drawPath (path);
+  }
+}
+
+void DisplayText::paintEvent (QPaintEvent *e)
+{
+  QTextEdit::paintEvent (e);
+  QPainter p {viewport ()};
+  p.setRenderHint (QPainter::Antialiasing, true);
+  p.setClipRect (e->rect ());
+  QPointF const offset {-qreal (horizontalScrollBar ()->value ()), -qreal (verticalScrollBar ()->value ())};
+  qreal const top = e->rect ().top (), bottom = e->rect ().bottom ();
+  auto* const docLayout = document ()->documentLayout ();
+  // a wave reaches a little into the line below (there is no room under the letters inside a line - it is ascent
+  // plus descent, 3 px at 11 pt), so a repaint of that line alone must redraw the wave of the line above it
+  QTextBlock b = cursorForPosition (QPoint {0, qMax (0, int (top))}).block ();
+  if (b.previous ().isValid ()) b = b.previous ();
+  for (; b.isValid (); b = b.next ())
+    {
+      QRectF const r = docLayout->blockBoundingRect (b).translated (offset);
+      if (r.top () > bottom) break;
+      if (r.bottom () + waveAmp + waveWidth < top || !b.layout ()) continue;
+      for (auto it = b.begin (); !it.atEnd (); ++it)
+        {
+          QTextFragment const fr = it.fragment ();
+          if (!fr.isValid () || !isDoubt (fr.charFormat ())) continue;
+          int const from = fr.position () - b.position (), to = from + fr.length ();
+          QTextLine const line = b.layout ()->lineForTextPosition (from);
+          if (!line.isValid ()) continue;
+          QFontMetricsF const fm {fr.charFormat ().font ()};
+          // just under the letters - its foot reaches ~1.5 px into the next line, which is painted by now (inside
+          // the line it would cut through the letters, measured 2026-10-01)
+          qreal const y = r.top () + line.y () + line.ascent () + fm.descent () - 1.;
+          drawWave (p, r.left () + line.cursorToX (from), r.left () + line.cursorToX (to), y, fr.charFormat ().underlineColor ());
+        }
+    }
 }
 
 DisplayText::DisplayText(QWidget *parent) :

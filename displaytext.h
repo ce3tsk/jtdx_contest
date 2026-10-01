@@ -22,6 +22,10 @@ public:
        displayDecodedText cuts the decoder's line: 49 for FT8, FT4 and FT2 (seconds in the time), 40 for
        JT65 and JT9. The country follows it. */
     static int lineMarkerColumn (QString const& line) {return line.indexOf (' ') > 4 ? 49 : 40;}
+    /* CE3TSK 2026-10-01: a word in doubt (falsedecodes.h) carries this property and its colour as the underline
+       colour; the window draws the wave itself (paintEvent), 2 px thick - Qt's own WaveUnderline is one pixel. */
+    static constexpr int DoubtProperty = QTextFormat::UserProperty + 0x7d0;
+    static bool isDoubt (QTextCharFormat const& f) {return f.property (DoubtProperty).toBool ();}
     void setMyContinent (QString const&);
     void setContentFont (QFont const&);
     void insertLineSpacer(QString const&);
@@ -47,6 +51,7 @@ public slots:
 
 protected:
     void mouseDoubleClickEvent(QMouseEvent *e);
+    void paintEvent (QPaintEvent *e) override;   /* CE3TSK: Qt's text, then the waves of the words in doubt */
 
 private:
 
@@ -109,7 +114,7 @@ private:
     QsoHistory::Status mystatus_ = QsoHistory::NONE;
     unsigned max_r_time = 0;
     QTextCharFormat m_charFormat;
-    QTextCharFormat doubtFormat (QTextCharFormat f) const;   /* CE3TSK: f with the red wave underline */
+    QTextCharFormat doubtFormat (QTextCharFormat f) const;   /* CE3TSK: f marked in doubt, for the red wave */
     unsigned last_tx = 0;
     QString mygrid_ = "";
     QString myhisCall_ = "";

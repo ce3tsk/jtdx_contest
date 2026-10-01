@@ -6,7 +6,7 @@ the generated `.cpp` files and linked in.
 | file | what |
 |---|---|
 | `geodata.h` / `.cpp` | the API, hand-written: pack a grid square, its neighbours, does this entity occupy it, which US states does it cover |
-| `dxcc_grids_data.h` / `.cpp` | **generated** - 346 DXCC entities, 15 859 entity-square pairs; 31 KB of squares, 44 KB compiled |
+| `dxcc_grids_data.h` / `.cpp` | **generated** - 346 DXCC entities, 15 966 entity-square pairs (2026-10-01); 31 KB of squares, 44 KB compiled |
 | `grid_states_data.h` / `.cpp` | **generated** - 723 grid squares, 1 005 square-state entries, 11 KB compiled |
 | `geodata_selftest.cpp` | a standalone self-test, not part of the program |
 | `geodata_dump.cpp` | prints every entity and square as the compiled tables see them, for the checker |
@@ -44,7 +44,8 @@ Natural Earth and Census sources (`geodata/README.md` there).
 The tables themselves - where the geography comes from, how each entity's squares were derived and how far
 each row can be trusted - are documented in the work tree's `geodata/README.md`. Every row carries a
 `source` (`poly`, `admin1`, `islands`, `point`, `split`, `sovereign`); a `point` row is a 120 km disk around
-a coordinate, not a border, and a consumer that wants strictness should say so.
+a coordinate, not a border - some rows also carry far-off parts of the entity added by hand, and the table's
+header names them - and a consumer that wants strictness should say so.
 
 ## Packing
 
