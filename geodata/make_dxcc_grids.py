@@ -127,10 +127,11 @@ def norm(s):
     s = s.lower().replace('&', 'and').replace('st.', 'saint')
     return re.sub(r'[^a-z0-9 ]', '', s).strip()
 
-# Two splits the map units cannot give us, done from data already in the tree:
+# Three splits the map units cannot give us, done from data already in the tree:
 #   K / KL / KH6  - the US Census state boundaries (geodata/cb_2023_us_state_20m), exact.
 #   UA / UA9      - Russia cut at 60 deg E.  The DXCC line follows the Urals and the Caucasus, so
 #                   this is an APPROXIMATION, and squares near the cut belong to both halves here.
+#   R1FJ          - Franz Josef Land: Russia north of 79 deg N between 30 and 70 deg E (2026-10-01).
 US_SHP = os.path.join(DATA, 'cb_2023_us_state_20m')
 def us_parts():
     if not os.path.exists(US_SHP + '.shp'):
@@ -220,12 +221,25 @@ for sr in r.shapeRecords():
 units = {k: unary_union(v) for k, v in units.items()}
 sovereign = {k: unary_union(v) for k, v in sovereign.items()}
 _ru = units.get(norm('Russia'))
-if _ru is not None:                                   # the 60 deg E approximation, see the note above
-    # The cut is in the EASTERN hemisphere only.  Chukotka and Wrangel lie at -180..-169, so a plain
-    # "lon < 60" window put them in EUROPEAN Russia (review 2026-09-24): every Bering-Strait square
-    # was attributed to UA and UA9 had none.
-    SPECIAL['UA']  = _ru.intersection(box(19, -90, 60, 90))
-    SPECIAL['UA9'] = _ru.intersection(unary_union([box(60, -90, 180, 90), box(-180, -90, -160, 90)]))
+if _ru is None:          # loud: without it UA, UA9 and R1FJ would quietly fall back to something smaller
+    raise SystemExit('FAILED: no Russia in %s - UA, UA9 and R1FJ are cut from it' % NE)
+# the 60 deg E approximation, see the note above.  The cut is in the EASTERN hemisphere only.  Chukotka
+# and Wrangel lie at -180..-169, so a plain "lon < 60" window put them in EUROPEAN Russia (review
+# 2026-09-24): every Bering-Strait square was attributed to UA and UA9 had none.
+SPECIAL['UA']  = _ru.intersection(box(19, -90, 60, 90))
+SPECIAL['UA9'] = _ru.intersection(unary_union([box(60, -90, 180, 90), box(-180, -90, -160, 90)]))
+# Franz Josef Land (2026-10-01).  It has no map unit of its own - its islands are part of Russia's
+# polygon - so it fell to the minor-islands branch, which gave it its coordinate's own square (LR40) and
+# one small island (LR71), and none of the large islands east of 56 deg E: RI1FJL's real LR90 was marked
+# as a grid outside its country.  Russia north of 79 deg N between 30 and 70 deg E is the archipelago and
+# nothing else - 36 islands from 46 to 65.5 deg E, and Victoria Island at 36.7 deg E, sometimes counted
+# apart; kept, the permissive direction.  The minor-island polygons in the same box join it.
+_fjl_box = box(30, 79, 70, 83)
+SPECIAL['R1FJ'] = unary_union([_ru.intersection(_fjl_box)]
+                              + [g for g in ISLANDS if g.intersects(_fjl_box)])
+if SPECIAL['R1FJ'].is_empty or not (79.5 < SPECIAL['R1FJ'].bounds[1] and SPECIAL['R1FJ'].bounds[3] < 82.5):
+    raise SystemExit('FAILED: the Franz Josef Land cut is empty or reaches outside the archipelago: %s'
+                     % (SPECIAL['R1FJ'].bounds,))
 print('Natural Earth: %d name keys' % len(units))
 
 rows, source, group = {}, {}, {}
@@ -308,7 +322,8 @@ HEAD = ('# DXCC entity -> the 4-character Maidenhead grid squares it occupies.\n
         '#   the cty.dat coordinate (that layer has no names, so the match is geographic); point = the\n'
         '#   coordinate itself and everything within %d km of it.\n'
         '#   split = cut from a finer source: K/KL/KH6 from the US Census state boundaries (exact),\n'
-        '#   UA/UA9 by cutting Russia at 60 deg E (approximate - the DXCC line follows the Urals).\n'
+        '#   UA/UA9 by cutting Russia at 60 deg E (approximate - the DXCC line follows the Urals),\n'
+        '#   R1FJ = Russia north of 79 deg N between 30 and 70 deg E (Franz Josef Land).\n'
         '#   A matched parent keeps its whole polygon, so Spain still lists the Canary squares of EA8:\n'
         '#   the table errs on the permissive side, which is the safe direction for a plausibility test.\n'
         '#\n'

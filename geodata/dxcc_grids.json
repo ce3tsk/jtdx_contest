@@ -1,7 +1,7 @@
 {
- "version": "20260924_225954",
- "content": "231d2ad487a0",
- "built": "2026-09-24",
+ "version": "20261001_161020",
+ "content": "cbf6a4c551b5",
+ "built": "2026-10-01",
  "tool": "tools/make_dxcc_grids.py",
  "project": "JTDX_CONTEST",
  "author": "Tihomir Sokcevic CE3TSK",
@@ -11349,11 +11349,30 @@
   },
   "R1FJ": {
    "name": "Franz Josef Land",
-   "source": "islands",
+   "source": "split",
    "group": "",
    "grids": [
+    "KR80",
+    "LQ59",
+    "LQ99",
+    "LR20",
+    "LR30",
     "LR40",
-    "LR71"
+    "LR50",
+    "LR51",
+    "LR60",
+    "LR70",
+    "LR71",
+    "LR80",
+    "LR81",
+    "LR90",
+    "LR91",
+    "MR00",
+    "MR01",
+    "MR10",
+    "MR11",
+    "MR20",
+    "MR21"
    ]
   },
   "S0": {
