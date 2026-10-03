@@ -9950,6 +9950,16 @@ ljudkort ändras</translation>
         <source>Mark calls with no known country (where?)</source>
         <translation>Markera anropssignaler utan känt land (Var?)</translation>
     </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Append the US state of a US station's grid square to its DXCC name or prefix, as in U.S.A.-CA. A square shared by several states names them all, the one with the most people first: U.S.A.-NY/MA.</source>
+        <translation>Lägger till delstaten där en amerikansk stations grid ligger efter dess DXCC-namn eller prefix, till exempel U.S.A.-CA. Ligger griden i flera delstater visas alla, den med flest invånare först: U.S.A.-NY/MA.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Sh&amp;ow US states</source>
+        <translation>Visa &amp;USA-delstater</translation>
+    </message>
 </context>
 <context>
     <name>main</name>

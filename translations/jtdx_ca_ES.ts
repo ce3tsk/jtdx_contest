@@ -9960,6 +9960,16 @@ canvi en la targeta de so</translation>
         <source>Mark calls with no known country (where?)</source>
         <translation>Marcar els indicatius sense país conegut (sense DXCC !)</translation>
     </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Append the US state of a US station's grid square to its DXCC name or prefix, as in U.S.A.-CA. A square shared by several states names them all, the one with the most people first: U.S.A.-NY/MA.</source>
+        <translation>Afegeix al nom o prefix DXCC d'una estació dels EUA l'estat on es troba el seu locator, per exemple U.S.A.-CA. Si el locator abasta diversos estats, es mostren tots, primer el més poblat: U.S.A.-NY/MA.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Sh&amp;ow US states</source>
+        <translation>Mostrar es&amp;tats dels EUA</translation>
+    </message>
 </context>
 <context>
     <name>main</name>

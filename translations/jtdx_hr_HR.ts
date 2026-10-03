@@ -9952,6 +9952,16 @@ promjena zvučne kartice</translation>
         <source>Mark calls with no known country (where?)</source>
         <translation>Označi pozivne znakove bez poznate zemlje (gdje?)</translation>
     </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Append the US state of a US station's grid square to its DXCC name or prefix, as in U.S.A.-CA. A square shared by several states names them all, the one with the most people first: U.S.A.-NY/MA.</source>
+        <translation>Dodaje DXCC imenu ili prefiksu američke stanice saveznu državu u kojoj leži njezin lokator, npr. U.S.A.-CA. Ako lokator obuhvaća više saveznih država, navode se sve, najprije ona s najviše stanovnika: U.S.A.-NY/MA.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Sh&amp;ow US states</source>
+        <translation>Prikaži save&amp;zne države SAD-a</translation>
+    </message>
 </context>
 <context>
     <name>main</name>

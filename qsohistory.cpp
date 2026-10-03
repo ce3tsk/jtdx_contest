@@ -363,6 +363,14 @@ void QsoHistory::time(unsigned time)
     }
 }
 
+/* CE3TSK 2026-10-02: see qsohistory.h */
+QString QsoHistory::gridSentBy (QString const& callsign) const
+{
+    if (!_working) return {};
+    auto const t = _data.constFind (Radio::base_callsign (callsign));
+    return t != _data.constEnd () && t->gridCall == callsign ? t->grid : QString {};
+}
+
 QsoHistory::Status QsoHistory::status(QString const& callsign, QString &grid)
 {
     if (_working)
@@ -460,6 +468,7 @@ void QsoHistory::message(QString const& callsign, Status status, int priority, Q
           t.mode = "";
           t = _data.value(Radio::base_callsign (callsign),t);
           QString const known_grid = t.grid;        /* CE3TSK: see Doubt - a doubtful grid never replaces it */
+          QString const known_gridCall = t.gridCall;
           int const known_distance = t.distance;
           if (time >= t.time || time == 0 || status >= t.status || status == RREPORT) {
             if (status > NONE) {
@@ -489,6 +498,7 @@ void QsoHistory::message(QString const& callsign, Status status, int priority, Q
               case NONE:
                 {
                   if (!param.isEmpty()) {
+                    if (param != t.grid) t.gridCall = callsign;   /* CE3TSK: see gridSentBy () */
                     t.grid = param;
                     t.distance=Distance(_mylatlng,fromQth(param));
                   }
@@ -530,6 +540,7 @@ void QsoHistory::message(QString const& callsign, Status status, int priority, Q
                       t.status = status;
                       if (priority > t.priority) t.priority = priority;
                       if (!param.isEmpty()) {
+                        if (param != t.grid) t.gridCall = callsign;   /* CE3TSK: see gridSentBy () */
                         t.grid = param;
                         t.distance=Distance(_mylatlng,fromQth(param));
                       }
@@ -552,6 +563,7 @@ void QsoHistory::message(QString const& callsign, Status status, int priority, Q
                   t.status = status;
                   t.priority = priority;
                   if (!param.isEmpty()) {
+                    if (param != t.grid) t.gridCall = callsign;   /* CE3TSK: see gridSentBy () */
                     t.grid = param;
                     t.distance=Distance(_mylatlng,fromQth(param));
                   }
@@ -646,6 +658,7 @@ void QsoHistory::message(QString const& callsign, Status status, int priority, Q
                         t.s_rep = rep;
                         if (t.grid.isEmpty () && param.length () == 4 && param != "RR73"
                             && _gridRe.match(param).hasMatch()) {
+                          if (param != t.grid) t.gridCall = callsign;   /* CE3TSK: see gridSentBy () */
                           t.grid = param;
                           t.distance = Distance(_mylatlng,fromQth(param));
                         }
@@ -799,7 +812,7 @@ void QsoHistory::message(QString const& callsign, Status status, int priority, Q
             else if (DOUBT_SET == doubt) {
               /* the grid of a likely false decode must not replace one we know: it would reach the DX Grid box
                  and the log. With none known it is kept - a WW Digi traveller's exchange is his real grid. */
-              if (!known_grid.isEmpty ()) {t.grid = known_grid; t.distance = known_distance;}
+              if (!known_grid.isEmpty ()) {t.grid = known_grid; t.gridCall = known_gridCall; t.distance = known_distance;}
               if (t.clean_time != time) t.doubtful = true;
             }
             _data.insert(Radio::base_callsign (callsign),t);

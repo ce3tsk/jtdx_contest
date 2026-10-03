@@ -1,7 +1,7 @@
 {
- "version": "20260924_225940",
- "content": "893707096b13",
- "built": "2026-09-24",
+ "version": "20261003_035646",
+ "content": "edcaca2ab6d6",
+ "built": "2026-10-03",
  "tool": "tools/make_grid_states.py",
  "project": "JTDX_CONTEST",
  "author": "Tihomir Sokcevic CE3TSK",
@@ -28,6 +28,7 @@
   "dc": "counted as Maryland (Worked All States)",
   "territories": "left out (separate DXCC entities, not states)",
   "sliver": "a state under 0.1% of a squares area is dropped unless it holds people",
+  "at sea": "people whose tract centre lies where their state has no land in the square are left out",
   "square": "2 degrees of longitude by 1 degree of latitude"
  },
  "fields": {
@@ -94,16 +95,6 @@
      "s": "AK",
      "p": 0,
      "a": 0.113
-    }
-   ]
-  },
-  "AO24": {
-   "pop": 978,
-   "states": [
-    {
-     "s": "AK",
-     "p": 1.0,
-     "a": 0.0
     }
    ]
   },

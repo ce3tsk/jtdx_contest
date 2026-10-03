@@ -196,6 +196,7 @@ public:
   bool countryName () const;
   bool countryPrefix () const;
   bool countryNameTranslated () const;   // CE3TSK: DXCC names in the UI language
+  bool usStates () const;   // CE3TSK 2026-10-02: a US station's state(s) after its DXCC name or prefix (usstates.h)
   bool callNotif () const;
   bool gridNotif () const;
   bool otherMessagesMarker () const;

@@ -7,7 +7,7 @@ the generated `.cpp` files and linked in.
 |---|---|
 | `geodata.h` / `.cpp` | the API, hand-written: pack a grid square, its neighbours, does this entity occupy it, which US states does it cover |
 | `dxcc_grids_data.h` / `.cpp` | **generated** - 346 DXCC entities, 15 966 entity-square pairs (2026-10-01); 31 KB of squares, 44 KB compiled |
-| `grid_states_data.h` / `.cpp` | **generated** - 723 grid squares, 1 005 square-state entries, 11 KB compiled |
+| `grid_states_data.h` / `.cpp` | **generated** - 722 grid squares, 1 004 square-state entries, 11 KB compiled |
 | `geodata_selftest.cpp` | a standalone self-test, not part of the program |
 | `geodata_dump.cpp` | prints every entity and square as the compiled tables see them, for the checker |
 | `dxcc_grids.json`, `grid_states.json` | the source tables the generator reads |

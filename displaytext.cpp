@@ -17,6 +17,7 @@
 
 #include "Configuration.hpp"
 #include "qt_helpers.hpp"
+#include "usstates.h"   /* CE3TSK 2026-10-02 */
 
 #include "moc_displaytext.cpp"
 
@@ -126,6 +127,7 @@ void DisplayText::setConfiguration(Configuration const * config)
   specialOp_ = config->special_op_id();   /* CE3TSK */
   displayCountryName_ = config->countryName();
   displayCountryPrefix_ = config->countryPrefix();
+  displayUSStates_ = config->usStates();   /* CE3TSK */
   displayNewCQZ_ = config->newCQZ();
   displayNewCQZBand_ = config->newCQZBand();
   displayNewCQZBandMode_ = config->newCQZBandMode();
@@ -506,11 +508,14 @@ int DisplayText::displayDecodedText(DecodedText* decodedText, QString myCall, QS
                         checkCall = hisCall;
                     }
                     if (!checkCall.isEmpty ()) {
-                        if (hisCall.isEmpty () && (myhisCall_.isEmpty () || !checkCall.contains(myhisCall_))) {
-                            mystatus_ = qsoHistory2.status(Radio::base_callsign (checkCall),mygrid_);
-                            myhisCall_ = Radio::base_callsign (checkCall);
+                        /* CE3TSK 2026-10-02: the same station by its base call, not a call that merely contains it -
+                           with K1AB in the QSO, K1ABC calling took K1AB's status and grid, and showed K1AB's state (review) */
+                        QString const base = Radio::base_callsign (checkCall);
+                        if (hisCall.isEmpty () && (myhisCall_.isEmpty () || base != myhisCall_)) {
+                            mystatus_ = qsoHistory2.status(base,mygrid_);
+                            myhisCall_ = base;
                         }
-                        if ((!hisCall.isEmpty () && checkCall.contains(hisCall)) || (!myhisCall_.isEmpty () && checkCall.contains(myhisCall_))) {
+                        if ((!hisCall.isEmpty () && base == hisCall) || (!myhisCall_.isEmpty () && base == myhisCall_)) {
                             mystatus_ = status;
                             if (grid.isEmpty () && !mygrid_.isEmpty ()) {
                                 grid = mygrid_;
@@ -1016,6 +1021,18 @@ int DisplayText::displayDecodedText(DecodedText* decodedText, QString myCall, QS
             } else {
                 // do some obvious abbreviations, don't care if we using just prefixes here, not big deal to run some replace's
                 cntry = items[2];
+            }
+            /* CE3TSK 2026-10-02: a US station's state or states from its grid square - "U.S.A.-CA", "K-NY/MA"
+               (usstates.h) - the grid this line carries, from its sender, or else the one this very call sent
+               before. Not the window's own grid: that one comes from the history of the BASE call (and from the
+               DX boxes), so VE3ABC's FN03 would put VE3ABC/W1 in New York (review). A grid in doubt below never
+               names a state: every state square fits a US call (test/geodata_tables_check.py), and no other
+               call is placed. */
+            if (displayUSStates_) {
+                auto const said = false_decodes::parts (false_decodes::messageField (decodedText->string ()));
+                QString const stateGrid = false_decodes::bareCall (said.sender) == checkCall && false_decodes::judgeableGrid (said.grid)
+                                          ? said.grid : qsoHistory2.gridSentBy (checkCall);
+                cntry += us_states::suffix (items[1], stateGrid);
             }
             /* CE3TSK 2026-09-30: the grid does not lie in the country of this call (falsedecodes.h) -
                ?Chile?, the leading mark first so a window narrowed by the splitter still shows it; a call

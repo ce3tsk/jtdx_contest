@@ -9948,6 +9948,16 @@ modifiche alla scheda audio</translation>
         <source>Mark calls with no known country (where?)</source>
         <translation>Segna i nominativi senza paese noto (Boohhh?)</translation>
     </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Append the US state of a US station's grid square to its DXCC name or prefix, as in U.S.A.-CA. A square shared by several states names them all, the one with the most people first: U.S.A.-NY/MA.</source>
+        <translation>Aggiunge al nome del Paese o al prefisso di una stazione statunitense lo Stato in cui si trova la sua griglia, ad esempio U.S.A.-CA. Se la griglia è condivisa da più Stati, li elenca tutti, a partire dal più popoloso: U.S.A.-NY/MA.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Sh&amp;ow US states</source>
+        <translation>M&amp;ostra gli Stati USA</translation>
+    </message>
 </context>
 <context>
     <name>main</name>

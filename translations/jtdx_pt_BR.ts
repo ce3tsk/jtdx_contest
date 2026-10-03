@@ -9937,6 +9937,16 @@ alteração na placa de som</translation>
         <source>Mark calls with no known country (where?)</source>
         <translation>Marcar indicativos sem país conhecido (onde?)</translation>
     </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Append the US state of a US station's grid square to its DXCC name or prefix, as in U.S.A.-CA. A square shared by several states names them all, the one with the most people first: U.S.A.-NY/MA.</source>
+        <translation>Acrescenta ao nome ou prefixo DXCC de uma estação dos EUA o estado em que fica o seu grid, por exemplo U.S.A.-CA. Se o grid abrange vários estados, mostra todos, primeiro o mais populoso: U.S.A.-NY/MA.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Sh&amp;ow US states</source>
+        <translation>Mostrar e&amp;stados dos EUA</translation>
+    </message>
 </context>
 <context>
     <name>main</name>

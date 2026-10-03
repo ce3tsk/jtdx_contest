@@ -9921,6 +9921,16 @@ soundcard changes</source>
         <source>Mark calls with no known country (where?)</source>
         <translation>国が不明なコールサインに印を付ける（どこ?）</translation>
     </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Append the US state of a US station's grid square to its DXCC name or prefix, as in U.S.A.-CA. A square shared by several states names them all, the one with the most people first: U.S.A.-NY/MA.</source>
+        <translation>米国局のDXCC名またはプリフィックスに、そのグリッドがある州を付加します（例: U.S.A.-CA）。複数の州にまたがるグリッドでは、すべての州を人口の多い順に表示します（例: U.S.A.-NY/MA）。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Sh&amp;ow US states</source>
+        <translation>米国の州を表示</translation>
+    </message>
 </context>
 <context>
     <name>main</name>

@@ -10013,6 +10013,16 @@ soundcard changes</source>
         <source>Mark calls with no known country (where?)</source>
         <translation>Отмечать позывные без известной страны (страна?)</translation>
     </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Append the US state of a US station's grid square to its DXCC name or prefix, as in U.S.A.-CA. A square shared by several states names them all, the one with the most people first: U.S.A.-NY/MA.</source>
+        <translation>Добавляет к названию страны или префиксу DXCC американской станции штат, в котором лежит её локатор, например U.S.A.-CA. Если локатор охватывает несколько штатов, показываются все, начиная с самого населённого: U.S.A.-NY/MA.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Sh&amp;ow US states</source>
+        <translation>Показывать &amp;штаты США</translation>
+    </message>
 </context>
 <context>
     <name>main</name>

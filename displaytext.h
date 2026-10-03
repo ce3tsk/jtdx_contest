@@ -67,6 +67,7 @@ private:
     bool useDarkStyle_;
     bool displayCountryName_;
     bool displayCountryPrefix_;
+    bool displayUSStates_ = true;   /* CE3TSK 2026-10-02: "U.S.A.-CA" (usstates.h) */
     bool displayNewCQZ_;
     bool displayNewCQZBand_;
     bool displayNewCQZBandMode_;

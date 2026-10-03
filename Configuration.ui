@@ -423,6 +423,16 @@
               </property>
              </widget>
             </item>
+            <item row="4" column="1">
+             <widget class="QCheckBox" name="usStates_check_box">
+              <property name="toolTip">
+               <string>Append the US state of a US station's grid square to its DXCC name or prefix, as in U.S.A.-CA. A square shared by several states names them all, the one with the most people first: U.S.A.-NY/MA.</string>
+              </property>
+              <property name="text">
+               <string>Sh&amp;ow US states</string>
+              </property>
+             </widget>
+            </item>
             <item row="0" column="0">
              <widget class="QCheckBox" name="insert_blank_check_box">
               <property name="toolTip">

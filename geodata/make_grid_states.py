@@ -87,7 +87,7 @@ WAS_STATES = set(('AL AK AZ AR CA CO CT DE FL GA HI ID IL IN IA KS KY LA ME MD M
 sys.dont_write_bytecode = True          # no __pycache__ beside the sources, in either tree
 sys.path.insert(0, HERE if os.path.exists(os.path.join(HERE, 'cty.py'))
                 else os.path.join(HERE, '..', 'test', 'experiments', 'false_decodes'))
-from cty import gridname
+from cty import gridname, grid_ll
 
 # Both inputs are checked before the polygon pass: the population file used to be looked for only
 # after every state had been scanned, minutes in (review 2026-09-24).
@@ -150,6 +150,19 @@ with open(POP, encoding='utf-8-sig') as fh:
         pop.setdefault(g, {})[usps] = pop.setdefault(g, {}).get(usps, 0) + n
         tracts += 1
 print('tracts read: %d' % tracts)
+# A tract is counted where its population-weighted centre falls, and the centre of a tract spread over islands
+# can lie at sea, in a square where its state has no land at all: Aleutians West tract 000100 - 978 people on
+# Adak, Atka and the Pribilofs - is centred in the Bering Sea, in AO24 (found by review 2026-10-02: that square
+# named a state that no US call could be in, see test/geodata_tables_check.py). Such people are left out - the
+# squares they live in are listed by their land - and the run names each one. 2026-10-02.
+at_sea = sorted((g, usps, n) for g, byst in pop.items() for usps, n in byst.items()
+                if usps not in rows.get(g, {}) and usps in states
+                and not states[usps].intersects(box(grid_ll(g)[1] - 1, grid_ll(g)[0] - 0.5,
+                                                    grid_ll(g)[1] + 1, grid_ll(g)[0] + 0.5)))
+for g, usps, n in at_sea:
+    print('  left out: %d people of %s whose tract centres lie in %s, where %s has no land' % (n, usps, g, usps))
+    del pop[g][usps]
+    if not pop[g]: del pop[g]
 # a state can hold people in a square whose area share fell below the sliver threshold: keep it, area 0
 for g, byst in pop.items():
     for usps in byst: rows.setdefault(g, {}).setdefault(usps, 0.0)
@@ -183,6 +196,7 @@ RULES = {'order': 'by share of population, ties broken by share of area',
          'territories': 'included' if KEEP_TERR else 'left out (separate DXCC entities, not states)',
          'sliver': 'a state under %.1f%% of a squares area is dropped unless it holds people'
                    % (MIN_FRACTION * 100),
+         'at sea': 'people whose tract centre lies where their state has no land in the square are left out',
          'square': '2 degrees of longitude by 1 degree of latitude'}
 BUILT   = date.today().isoformat()
 VERSION = datetime.now(timezone.utc).strftime('%Y%m%d_%H%M%S')   # the table's own version stamp
@@ -202,7 +216,7 @@ with open(OUT, 'w') as fh:
         fh.write('# %s: %s\n#   %s\n#   %s - %s\n'
                  % (src['what'], src['file'], src['url'], src['publisher'], src['licence']))
     fh.write('#\n')
-    for k in ('order', 'dc', 'territories', 'sliver', 'square'):
+    for k in ('order', 'dc', 'territories', 'sliver', 'at sea', 'square'):
         fh.write('# %-12s %s\n' % (k + ':', RULES[k]))
     fh.write('#\n# version %s (built %s), %s.\n' % (VERSION, BUILT, BUILT_BY))
     fh.write('# This table is derived from public-domain US Census data and states facts about\n'

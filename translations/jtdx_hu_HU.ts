@@ -9943,6 +9943,16 @@ hangkártya módosítási tevékenységet</translation>
         <source>Mark calls with no known country (where?)</source>
         <translation>Ismert ország nélküli hívójelek megjelölése (ország?)</translation>
     </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Append the US state of a US station's grid square to its DXCC name or prefix, as in U.S.A.-CA. A square shared by several states names them all, the one with the most people first: U.S.A.-NY/MA.</source>
+        <translation>Egy amerikai állomás DXCC-nevéhez vagy prefixéhez hozzáfűzi azt az államot, amelyben a QRA kockája fekszik, például U.S.A.-CA. Ha a kocka több államra esik, mindet felsorolja, a legnépesebbel kezdve: U.S.A.-NY/MA.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Sh&amp;ow US states</source>
+        <translation>USA-államok megjele&amp;nítése</translation>
+    </message>
 </context>
 <context>
     <name>main</name>

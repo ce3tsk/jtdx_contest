@@ -9945,6 +9945,16 @@ izmaiņas</translation>
         <source>Mark calls with no known country (where?)</source>
         <translation>Atzīmēt izsaukuma signālus bez zināmas valsts (nezināma teritorija?)</translation>
     </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Append the US state of a US station's grid square to its DXCC name or prefix, as in U.S.A.-CA. A square shared by several states names them all, the one with the most people first: U.S.A.-NY/MA.</source>
+        <translation>Pievieno ASV stacijas DXCC nosaukumam vai prefiksam štatu, kurā atrodas tās lokators, piemēram, U.S.A.-CA. Ja lokators aptver vairākus štatus, tiek parādīti visi, vispirms tas, kurā ir visvairāk iedzīvotāju: U.S.A.-NY/MA.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Sh&amp;ow US states</source>
+        <translation>&amp;Norādīt ASV štatu</translation>
+    </message>
 </context>
 <context>
     <name>main</name>

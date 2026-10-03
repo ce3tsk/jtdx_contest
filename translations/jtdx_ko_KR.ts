@@ -9944,6 +9944,16 @@ soundcard changes</source>
         <source>Mark calls with no known country (where?)</source>
         <translation>국가를 알 수 없는 호출부호 표시 (어디?)</translation>
     </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Append the US state of a US station's grid square to its DXCC name or prefix, as in U.S.A.-CA. A square shared by several states names them all, the one with the most people first: U.S.A.-NY/MA.</source>
+        <translation>미국 국의 DXCC 이름이나 접두사에 그 그리드가 있는 주를 덧붙입니다(예: U.S.A.-CA). 그리드가 여러 주에 걸쳐 있으면 인구가 많은 순서로 모두 표시합니다(예: U.S.A.-NY/MA).</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Sh&amp;ow US states</source>
+        <translation>미국 주 표시(&amp;O)</translation>
+    </message>
 </context>
 <context>
     <name>main</name>

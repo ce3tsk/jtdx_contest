@@ -9945,6 +9945,16 @@ wijzigingen aan de geluidskaart</translation>
         <source>Mark calls with no known country (where?)</source>
         <translation>Roepnamen zonder bekend land markeren (waar?)</translation>
     </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Append the US state of a US station's grid square to its DXCC name or prefix, as in U.S.A.-CA. A square shared by several states names them all, the one with the most people first: U.S.A.-NY/MA.</source>
+        <translation>Voegt aan de DXCC-naam of het prefix van een Amerikaans station de staat toe waarin zijn locator ligt, bijvoorbeeld U.S.A.-CA. Ligt de locator in meerdere staten, dan worden ze allemaal genoemd, de staat met de meeste inwoners eerst: U.S.A.-NY/MA.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Sh&amp;ow US states</source>
+        <translation>&amp;Amerikaanse staten tonen</translation>
+    </message>
 </context>
 <context>
     <name>main</name>

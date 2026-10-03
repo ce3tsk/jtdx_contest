@@ -564,6 +564,7 @@ private:
   Q_SLOT void handle_transceiver_update (TransceiverState const&, unsigned sequence_number);
   Q_SLOT void handle_transceiver_failure (QString const& reason);
   Q_SLOT void on_countryName_check_box_clicked(bool checked);
+  Q_SLOT void on_usStates_check_box_clicked (bool checked);   /* CE3TSK 2026-10-02 */
   Q_SLOT void on_cty_download_push_button_clicked (bool);    // CE3TSK: data file updates
   Q_SLOT void on_lotw_download_push_button_clicked (bool);
   void start_data_file_download (FileDownload&, char const * url, char const * file_name,
@@ -909,6 +910,8 @@ private:
   bool countryName_;
   bool countryPrefix_;
   bool countryNameTranslated_;   // CE3TSK
+  bool usStates_;   /* CE3TSK 2026-10-02 */
+  bool usStatesPending_;   /* CE3TSK: Show US states as last clicked in the open dialog - kept while the box is greyed */
   bool callNotif_;
   bool gridNotif_;
   bool otherMessagesMarker_;
@@ -1269,6 +1272,7 @@ bool Configuration::useDarkStyle () const {return m_->useDarkStyle_;}
 bool Configuration::countryName () const {return m_->countryName_;}
 bool Configuration::countryPrefix () const {return m_->countryPrefix_;}
 bool Configuration::countryNameTranslated () const {return m_->countryNameTranslated_;}
+bool Configuration::usStates () const {return m_->usStates_;}
 bool Configuration::callNotif () const {return m_->callNotif_;}
 bool Configuration::gridNotif () const {return m_->gridNotif_;}
 bool Configuration::otherMessagesMarker () const {return m_->otherMessagesMarker_;}
@@ -1892,10 +1896,8 @@ Configuration::impl::impl (Configuration * self, QNetworkAccessManager * network
   ui_->udp2_server_port_spin_box->setMaximum (std::numeric_limits<port_type>::max ());
 
   // Dependent checkboxes 
-  ui_->countryPrefix_check_box->setChecked(countryName_ && countryPrefix_);
-  ui_->countryPrefix_check_box->setEnabled(countryName_);
-  ui_->countryNameTranslated_check_box->setChecked(countryName_ && countryNameTranslated_);
-  ui_->countryNameTranslated_check_box->setEnabled(countryName_);
+  usStatesPending_ = usStates_;   // CE3TSK: the boxes under Show DXCC names, checked and enabled, in one place
+  on_countryName_check_box_clicked (countryName_);
 
   // CE3TSK: data file updates - exactly one of complete() or error() arrives per download
   for (FileDownload * download : {&cty_download_, &lotw_download_})
@@ -2547,8 +2549,11 @@ Radio::convert_dark("#fafbfe",useDarkStyle_),Radio::convert_dark("#dcdef1",useDa
   ui_->insert_blank_check_box->setChecked (insert_blank_);
   ui_->useDarkStyle_check_box->setChecked (useDarkStyle_);
   ui_->countryName_check_box->setChecked (countryName_);
-  ui_->countryPrefix_check_box->setChecked (countryName_ && countryPrefix_);
-  ui_->countryNameTranslated_check_box->setChecked (countryName_ && countryNameTranslated_);
+  /* CE3TSK 2026-10-02: the boxes under it, checked AND enabled - only checked was restored here, so after a Cancel
+     (reject () reverts through here) Show US states could come back greyed under a ticked Show DXCC names, or
+     enabled under an unticked one (review) */
+  usStatesPending_ = usStates_;
+  on_countryName_check_box_clicked (countryName_);
   ui_->callNotif_check_box->setChecked (callNotif_);
   ui_->gridNotif_check_box->setChecked (gridNotif_ && callNotif_);
   ui_->otherMessagesMarker_check_box->setChecked (otherMessagesMarker_);
@@ -3136,6 +3141,7 @@ void Configuration::impl::read_settings ()
   countryName_ = settings_->value ("countryName", true).toBool ();
   countryPrefix_ = settings_->value ("countryPrefix", false).toBool ();
   countryNameTranslated_ = settings_->value ("countryNameTranslated", false).toBool ();
+  usStates_ = settings_->value (contest_profile::own_key ("ShowUSStates"), true).toBool ();   /* CE3TSK */
 
   if(settings_->value ("callsignLogFiltering").toString()=="false" || settings_->value ("callsignLogFiltering").toString()=="true")
     callNotif_ = settings_->value ("callsignLogFiltering").toBool ();
@@ -3452,6 +3458,7 @@ void Configuration::impl::write_settings ()
   settings_->setValue ("countryName", countryName_);
   settings_->setValue ("countryPrefix", countryPrefix_);
   settings_->setValue ("countryNameTranslated", countryNameTranslated_);
+  settings_->setValue (contest_profile::own_key ("ShowUSStates"), usStates_);   /* CE3TSK */
   settings_->setValue ("callsignLogFiltering", callNotif_);
   settings_->setValue ("gridLogFiltering", gridNotif_);
   settings_->setValue ("OtherStandardMessagesMarker", otherMessagesMarker_);
@@ -4118,6 +4125,9 @@ void Configuration::impl::accept ()
   countryName_ = ui_->countryName_check_box->isChecked ();
   countryPrefix_ = ui_->countryPrefix_check_box->isChecked ();
   countryNameTranslated_ = ui_->countryNameTranslated_check_box->isChecked ();
+  /* CE3TSK: the box shows unticked while it is greyed, as its neighbours do - but its value is the one last
+     clicked, so switching the DXCC names off (and on again) neither loses it nor brings back an older one */
+  usStates_ = usStatesPending_;
   callNotif_ = ui_->callNotif_check_box->isChecked ();
   gridNotif_ = ui_->gridNotif_check_box->isChecked ();
   otherMessagesMarker_ = ui_->otherMessagesMarker_check_box->isChecked ();
@@ -4485,6 +4495,13 @@ void Configuration::impl::on_countryName_check_box_clicked(bool checked)
   ui_->countryPrefix_check_box->setEnabled(checked);
   ui_->countryNameTranslated_check_box->setChecked(checked && countryNameTranslated_);
   ui_->countryNameTranslated_check_box->setEnabled(checked);
+  ui_->usStates_check_box->setChecked(checked && usStatesPending_);   // CE3TSK
+  ui_->usStates_check_box->setEnabled(checked);
+}
+
+void Configuration::impl::on_usStates_check_box_clicked (bool checked)   // CE3TSK 2026-10-02
+{
+  usStatesPending_ = checked;
 }
 
 void Configuration::impl::on_callNotif_check_box_clicked(bool checked)

@@ -9947,6 +9947,16 @@ Zurücksetzen der Funkgeräteschnittstelle und Übernahme etwaiger
         <source>Mark calls with no known country (where?)</source>
         <translation>Rufzeichen ohne bekanntes Land markieren (wo?)</translation>
     </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Append the US state of a US station's grid square to its DXCC name or prefix, as in U.S.A.-CA. A square shared by several states names them all, the one with the most people first: U.S.A.-NY/MA.</source>
+        <translation>Hängt den US-Bundesstaat, in dem der Locator einer US-Station liegt, an ihren DXCC-Namen oder ihr Präfix an, etwa U.S.A.-CA. Liegt der Locator in mehreren Bundesstaaten, werden alle genannt, der mit den meisten Einwohnern zuerst: U.S.A.-NY/MA.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Sh&amp;ow US states</source>
+        <translation>US-Bundes&amp;staaten anzeigen</translation>
+    </message>
 </context>
 <context>
     <name>main</name>

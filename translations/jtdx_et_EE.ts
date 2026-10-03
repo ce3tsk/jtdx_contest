@@ -9943,6 +9943,16 @@ soundcard changes</source>
         <source>Mark calls with no known country (where?)</source>
         <translation>Märgista kutsungid, millel pole teadaolevat riiki (teadmata?)</translation>
     </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Append the US state of a US station's grid square to its DXCC name or prefix, as in U.S.A.-CA. A square shared by several states names them all, the one with the most people first: U.S.A.-NY/MA.</source>
+        <translation>Lisab USA jaama DXCC nimele või prefiksile osariigi, kus asub tema ruut, näiteks U.S.A.-CA. Kui ruut jääb mitme osariigi alale, kuvatakse kõik, enim elanikega osariik esimesena: U.S.A.-NY/MA.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Sh&amp;ow US states</source>
+        <translation>&amp;Näita USA osariike</translation>
+    </message>
 </context>
 <context>
     <name>main</name>

@@ -9960,6 +9960,16 @@ cambios en la tarjeta de sonido</translation>
         <source>Mark calls with no known country (where?)</source>
         <translation>Marcar indicativos sin país conocido (¿dónde?)</translation>
     </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Append the US state of a US station's grid square to its DXCC name or prefix, as in U.S.A.-CA. A square shared by several states names them all, the one with the most people first: U.S.A.-NY/MA.</source>
+        <translation>Añade al nombre o prefijo DXCC de una estación de EE. UU. el estado en el que está su locator, por ejemplo U.S.A.-CA. Si el locator abarca varios estados, se muestran todos, primero el más poblado: U.S.A.-NY/MA.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Sh&amp;ow US states</source>
+        <translation>M&amp;ostrar estados de EE. UU.</translation>
+    </message>
 </context>
 <context>
     <name>main</name>

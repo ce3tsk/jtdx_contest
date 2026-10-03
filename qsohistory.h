@@ -33,6 +33,11 @@ class QsoHistory
 	void owndata (QString const& mycontinent, QString const& myprefix, QString const& mygrid, bool strictdirCQ);
 	void wwdigi (bool state); /* CE3TSK: WW Digi contest mode */
 	Status status(QString const& callsign, QString &grid);
+	/* CE3TSK 2026-10-02: the grid this very call sent - "" when the one kept came from another form of it.
+	   An entry is keyed by the BASE call, so VE3ABC's FN03 is also VE3ABC/W1's and KH6/K1ABC's BL11 K1ABC's.
+	   The sender changes only with the grid: the window hands the grid it looked up back as the message's
+	   parameter, and "CQ KH6/K1ABC" storing K1ABC's FN42 again must not make it KH6/K1ABC's. */
+	QString gridSentBy (QString const& callsign) const;
 	Status autoseq(QString &callsign, QString &grid, QString &rep, int &rx, int &tx, unsigned &time, int &count, int &prio, QString &mode);
 	Status log_data(QString const& callsign, unsigned &time, QString &rrep, QString &srep);
 	int remove(QString const& callsign);
@@ -52,6 +57,7 @@ class QsoHistory
  	struct QSO
  	{
 	  QString	call,grid,r_rep,s_rep,tyyp,continent,mpx,mode;
+	  QString	gridCall;   /* CE3TSK: the call, in full, that sent grid - see gridSentBy () */
 	  Status	status,srx_c,srx_p,stx_c,stx_p;
 	  unsigned	b_time,time;
 	  int		distance,rx,tx,count,priority;

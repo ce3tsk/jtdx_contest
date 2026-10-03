@@ -9946,6 +9946,16 @@ soundcard changes</source>
         <source>Mark calls with no known country (where?)</source>
         <translation>標記國家不詳的呼號（不詳?）</translation>
     </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Append the US state of a US station's grid square to its DXCC name or prefix, as in U.S.A.-CA. A square shared by several states names them all, the one with the most people first: U.S.A.-NY/MA.</source>
+        <translation>在美國電台的 DXCC 國家或地區名稱或前綴後附加其網格所在的州，例如 U.S.A.-CA。網格跨越多個州時全部列出，人口最多的州在前：U.S.A.-NY/MA。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Sh&amp;ow US states</source>
+        <translation>顯示美國州(&amp;O)</translation>
+    </message>
 </context>
 <context>
     <name>main</name>
