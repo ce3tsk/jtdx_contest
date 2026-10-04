@@ -622,29 +622,8 @@ private:
   Q_SLOT void on_workedUnderlined_check_box_clicked(bool checked);
   Q_SLOT void on_workedColor_check_box_clicked(bool checked);
   Q_SLOT void on_workedDontShow_check_box_clicked(bool checked);
-  Q_SLOT void on_newCQZ_check_box_clicked(bool checked);
-  Q_SLOT void on_newITUZ_check_box_clicked(bool checked);
-  Q_SLOT void on_newDXCC_check_box_clicked(bool checked);
-  Q_SLOT void on_newState_check_box_clicked(bool checked);
-  Q_SLOT void on_newCall_check_box_clicked(bool checked);
-  Q_SLOT void on_newPx_check_box_clicked(bool checked);
   Q_SLOT void on_rbSpecialOpNone_toggled(bool checked);   /* CE3TSK */
   Q_SLOT void on_rbSpecialOpWWDigi_toggled(bool checked); /* CE3TSK */
-  Q_SLOT void on_newGrid_check_box_clicked(bool checked);
-  Q_SLOT void on_newCQZBand_check_box_clicked(bool checked);
-  Q_SLOT void on_newITUZBand_check_box_clicked(bool checked);
-  Q_SLOT void on_newDXCCBand_check_box_clicked(bool checked);
-  Q_SLOT void on_newStateBand_check_box_clicked(bool checked);
-  Q_SLOT void on_newStateBandMode_check_box_clicked(bool checked);   // CE3TSK 2026-10-04
-  Q_SLOT void on_newCallBand_check_box_clicked(bool checked);
-  Q_SLOT void on_newPxBand_check_box_clicked(bool checked);
-  Q_SLOT void on_newGridBand_check_box_clicked(bool checked);
-  Q_SLOT void on_newCQZBandMode_check_box_clicked(bool checked);
-  Q_SLOT void on_newITUZBandMode_check_box_clicked(bool checked);
-  Q_SLOT void on_newDXCCBandMode_check_box_clicked(bool checked);
-  Q_SLOT void on_newCallBandMode_check_box_clicked(bool checked);
-  Q_SLOT void on_newPxBandMode_check_box_clicked(bool checked);
-  Q_SLOT void on_newGridBandMode_check_box_clicked(bool checked);
   Q_SLOT void on_newPotential_check_box_clicked(bool checked);
 
   Q_SLOT void on_eqsluser_edit_textEdited(const QString &arg1);
@@ -1037,11 +1016,11 @@ private:
     bool newPx = false;
     bool newPxBand = false;
     bool newPxBandMode = false;
-    /* CE3TSK: the beeps for those same four tiers. Forcing a parent off cascades through
-       on_newDXCC_check_box_clicked() and its siblings, which uncheck the beep box as well,
-       and accept() harvests it afterwards - so without parking these the operator loses
-       them for good. newGrid's beep needs no entry: that parent is forced on, so the
-       cascade preserves it. */
+    /* CE3TSK: the beeps for those same tiers. Forcing a parent off cascades through
+       cascade (), which unchecks the beep box as well, and accept() harvests it
+       afterwards - so without parking these the operator loses them for good. The grid
+       and call beeps need no entry: those parents are forced on, so the cascade
+       preserves them. */
     bool beepOnNewCQZ = false;
     bool beepOnNewITUZ = false;
     bool beepOnNewDXCC = false;
@@ -1064,6 +1043,37 @@ private:
     return SpecialOperatingActivity::NONE != specialOp_ && SpecialOperatingActivity::NONE == next_specialOp_ && specialOpSaved_;
   }
   bool own (bool member, bool SpecialOpSettings::* parked) const {return leaving_contest () ? dlgEntrySpecialOp_.*parked : member;}
+  /* CE3TSK 2026-10-04 (review item 9): the seven highlight tiers - new grid, call, CQ zone, ITU zone, DXCC, US state and
+     prefix - each a box of its own with three under it: per band, per band and mode, and its beep. How the 28 hang
+     together - a child greyed and unticked under an unticked tier, what a contest forces and parks, what OK reads,
+     which keys hold them - was spelled out by hand in thirteen places, and one of them reading the wrong set went
+     unseen (review 2026-10-04, finding 1). Now one row per tier, tiers[] below the class, and every routine walks it.
+     A new tier is a row - plus its members, getters, preview labels and colours, which keep their names. */
+  enum class Forced {Free, On, Off};             // what a contest does to a box
+  enum class Fallback {Off, On, FreshInstall};   // a key the profile lacks: off, on, or on for a fresh install only
+  struct TierBox
+  {
+    QCheckBox * Ui::configuration_dialog::* box;
+    bool impl::* live;
+    bool impl::* next;                  // the dialog's staged copy - a beep has none
+    bool SpecialOpSettings::* parked;   // where a contest parks it - nullptr: not parked (the grid and call beeps)
+    char const * key;                   // its settings key
+    char const * parked_key;            // the key of its parked value - nullptr with parked
+    bool ours;                          // both under JTDX_contest\ (contest_profile::own_key) - the state tier's
+    Fallback fallback;
+    Forced contest;
+  };
+  struct Tier
+  {
+    TierBox self, band, band_mode, beep;
+    bool keeps_children;   // OK reads per band and per band+mode only while the tier is on: their values kept while greyed
+    QLabel * Ui::configuration_dialog::* samples[6];   // the previews: plain, Mc, Sc, and the same per band
+  };
+  static Tier const tiers[];
+  void cascade (Tier const&, bool on);      // the tier ticked or unticked: its children follow - what a click does
+  SpecialOpSettings own_settings () const;  // the operator's own set, as the members hold it
+  void set_own_settings (SpecialOpSettings const&);   // and that set back into the members
+  static QString tier_key (char const * key, bool ours) {return ours ? contest_profile::own_key (key) : QString {key};}
   bool specialOpSaved_;
   bool newPotential_;
   bool hideAfrica_;
@@ -1162,6 +1172,62 @@ Configuration::impl::PhantomOption const Configuration::impl::phantom_options[] 
   {"RoverNoAnswer", &impl::phantomDecodeRoverNoAnswer_, &Ui::configuration_dialog::phantomDecodeRoverNoAnswer_check_box},
   {"PortableMark",  &impl::phantomDecodePortableMark_, &Ui::configuration_dialog::phantomDecodePortableMark_check_box},
   {"WhereMark",     &impl::phantomDecodeWhereMark_, &Ui::configuration_dialog::phantomDecodeWhereMark_check_box},
+};
+
+/* CE3TSK 2026-10-04 (review item 9): see Tier. Columns: box, live, staged, parked, key, parked key, ours, fallback,
+   what WW Digi forces. */
+Configuration::impl::Tier const Configuration::impl::tiers[] = {
+  // new grid: in WW Digi the field is the multiplier, counted once per band - per band and mode off, FT4 and FT8 share
+  // it and per mode would count it twice; its beep stays the operator's, never parked
+  {
+    {&Ui::configuration_dialog::newGrid_check_box, &impl::newGrid_, &impl::next_newGrid_, &SpecialOpSettings::newGrid, "newGrid", "SpecialOpSavedNewGrid", false, Fallback::On, Forced::On},
+    {&Ui::configuration_dialog::newGridBand_check_box, &impl::newGridBand_, &impl::next_newGridBand_, &SpecialOpSettings::newGridBand, "newGridBand", "SpecialOpSavedNewGridBand", false, Fallback::On, Forced::On},
+    {&Ui::configuration_dialog::newGridBandMode_check_box, &impl::newGridBandMode_, &impl::next_newGridBandMode_, &SpecialOpSettings::newGridBandMode, "newGridBandMode", "SpecialOpSavedNewGridBandMode", false, Fallback::Off, Forced::Off},
+    {&Ui::configuration_dialog::beep_on_newGrid_check_box, &impl::beepOnNewGrid_, nullptr, nullptr, "BeepOnNewGrid", nullptr, false, Fallback::Off, Forced::Free},
+    false, {&Ui::configuration_dialog::labNewGrid, &Ui::configuration_dialog::labNewMcGrid, &Ui::configuration_dialog::labNewScGrid, &Ui::configuration_dialog::labNewGridBand, &Ui::configuration_dialog::labNewMcGridBand, &Ui::configuration_dialog::labNewScGridBand}},
+  // new call: a station counts once per band in WW Digi whatever the mode - per band IS the dupe check, per band and mode
+  // off (the modes share the once-per-band rule); its beep stays the operator's
+  {
+    {&Ui::configuration_dialog::newCall_check_box, &impl::newCall_, &impl::next_newCall_, &SpecialOpSettings::newCall, "newCall", "SpecialOpSavedNewCall", false, Fallback::On, Forced::On},
+    {&Ui::configuration_dialog::newCallBand_check_box, &impl::newCallBand_, &impl::next_newCallBand_, &SpecialOpSettings::newCallBand, "newCallBand", "SpecialOpSavedNewCallBand", false, Fallback::On, Forced::On},
+    {&Ui::configuration_dialog::newCallBandMode_check_box, &impl::newCallBandMode_, &impl::next_newCallBandMode_, &SpecialOpSettings::newCallBandMode, "newCallBandMode", "SpecialOpSavedNewCallBandMode", false, Fallback::On, Forced::Off},
+    {&Ui::configuration_dialog::beep_on_newCall_check_box, &impl::beepOnNewCall_, nullptr, nullptr, "BeepOnNewCall", nullptr, false, Fallback::Off, Forced::Free},
+    false, {&Ui::configuration_dialog::labNewCall, &Ui::configuration_dialog::labNewMcCall, &Ui::configuration_dialog::labNewScCall, &Ui::configuration_dialog::labNewCallBand, &Ui::configuration_dialog::labNewMcCallBand, &Ui::configuration_dialog::labNewScCallBand}},
+  // the five a digital grid contest does not score: their colours would contradict the ranking - contest points rank
+  // 36..49, new DXCC 26/27, new US state 19/20 (priorities.h) - so a contest turns them off, beeps included
+  {
+    {&Ui::configuration_dialog::newCQZ_check_box, &impl::newCQZ_, &impl::next_newCQZ_, &SpecialOpSettings::newCQZ, "newCQZ", "SpecialOpSavedNewCQZ", false, Fallback::Off, Forced::Off},
+    {&Ui::configuration_dialog::newCQZBand_check_box, &impl::newCQZBand_, &impl::next_newCQZBand_, &SpecialOpSettings::newCQZBand, "newCQZBand", "SpecialOpSavedNewCQZBand", false, Fallback::Off, Forced::Off},
+    {&Ui::configuration_dialog::newCQZBandMode_check_box, &impl::newCQZBandMode_, &impl::next_newCQZBandMode_, &SpecialOpSettings::newCQZBandMode, "newCQZBandMode", "SpecialOpSavedNewCQZBandMode", false, Fallback::Off, Forced::Off},
+    {&Ui::configuration_dialog::beep_on_newCQZ_check_box, &impl::beepOnNewCQZ_, nullptr, &SpecialOpSettings::beepOnNewCQZ, "BeepOnNewCQZ", "SpecialOpSavedBeepOnNewCQZ", false, Fallback::Off, Forced::Off},
+    false, {&Ui::configuration_dialog::labNewCQZ, &Ui::configuration_dialog::labNewMcCQZ, &Ui::configuration_dialog::labNewScCQZ, &Ui::configuration_dialog::labNewCQZBand, &Ui::configuration_dialog::labNewMcCQZBand, &Ui::configuration_dialog::labNewScCQZBand}},
+  {
+    {&Ui::configuration_dialog::newITUZ_check_box, &impl::newITUZ_, &impl::next_newITUZ_, &SpecialOpSettings::newITUZ, "newITUZ", "SpecialOpSavedNewITUZ", false, Fallback::Off, Forced::Off},
+    {&Ui::configuration_dialog::newITUZBand_check_box, &impl::newITUZBand_, &impl::next_newITUZBand_, &SpecialOpSettings::newITUZBand, "newITUZBand", "SpecialOpSavedNewITUZBand", false, Fallback::Off, Forced::Off},
+    {&Ui::configuration_dialog::newITUZBandMode_check_box, &impl::newITUZBandMode_, &impl::next_newITUZBandMode_, &SpecialOpSettings::newITUZBandMode, "newITUZBandMode", "SpecialOpSavedNewITUZBandMode", false, Fallback::Off, Forced::Off},
+    {&Ui::configuration_dialog::beep_on_newITUZ_check_box, &impl::beepOnNewITUZ_, nullptr, &SpecialOpSettings::beepOnNewITUZ, "BeepOnNewITUZ", "SpecialOpSavedBeepOnNewITUZ", false, Fallback::Off, Forced::Off},
+    false, {&Ui::configuration_dialog::labNewITUZ, &Ui::configuration_dialog::labNewMcITUZ, &Ui::configuration_dialog::labNewScITUZ, &Ui::configuration_dialog::labNewITUZBand, &Ui::configuration_dialog::labNewMcITUZBand, &Ui::configuration_dialog::labNewScITUZBand}},
+  {
+    {&Ui::configuration_dialog::newDXCC_check_box, &impl::newDXCC_, &impl::next_newDXCC_, &SpecialOpSettings::newDXCC, "newDXCC", "SpecialOpSavedNewDXCC", false, Fallback::On, Forced::Off},
+    {&Ui::configuration_dialog::newDXCCBand_check_box, &impl::newDXCCBand_, &impl::next_newDXCCBand_, &SpecialOpSettings::newDXCCBand, "newDXCCBand", "SpecialOpSavedNewDXCCBand", false, Fallback::On, Forced::Off},
+    {&Ui::configuration_dialog::newDXCCBandMode_check_box, &impl::newDXCCBandMode_, &impl::next_newDXCCBandMode_, &SpecialOpSettings::newDXCCBandMode, "newDXCCBandMode", "SpecialOpSavedNewDXCCBandMode", false, Fallback::On, Forced::Off},
+    {&Ui::configuration_dialog::beep_on_newDXCC_check_box, &impl::beepOnNewDXCC_, nullptr, &SpecialOpSettings::beepOnNewDXCC, "BeepOnNewDXCC", "SpecialOpSavedBeepOnNewDXCC", false, Fallback::Off, Forced::Off},
+    false, {&Ui::configuration_dialog::labNewDXCC, &Ui::configuration_dialog::labNewMcDXCC, &Ui::configuration_dialog::labNewScDXCC, &Ui::configuration_dialog::labNewDXCCBand, &Ui::configuration_dialog::labNewMcDXCCBand, &Ui::configuration_dialog::labNewScDXCCBand}},
+  // the US state: its keys are ours (JTDX_contest\\) - on for a fresh install, OFF for a profile that already exists (every
+  // JTDX writes newDXCC), so an upgrade never changes what the autoselect answers; per band and mode off unless asked
+  // for; and OK keeps its per band and per band+mode while the tier is off (review 2026-10-03)
+  {
+    {&Ui::configuration_dialog::newState_check_box, &impl::newState_, &impl::next_newState_, &SpecialOpSettings::newState, "NewState", "SpecialOpSavedNewState", true, Fallback::FreshInstall, Forced::Off},
+    {&Ui::configuration_dialog::newStateBand_check_box, &impl::newStateBand_, &impl::next_newStateBand_, &SpecialOpSettings::newStateBand, "NewStateBand", "SpecialOpSavedNewStateBand", true, Fallback::On, Forced::Off},
+    {&Ui::configuration_dialog::newStateBandMode_check_box, &impl::newStateBandMode_, &impl::next_newStateBandMode_, &SpecialOpSettings::newStateBandMode, "NewStateBandMode", "SpecialOpSavedNewStateBandMode", true, Fallback::Off, Forced::Off},
+    {&Ui::configuration_dialog::beep_on_newState_check_box, &impl::beepOnNewState_, nullptr, &SpecialOpSettings::beepOnNewState, "BeepOnNewState", "SpecialOpSavedBeepOnNewState", true, Fallback::Off, Forced::Off},
+    true, {&Ui::configuration_dialog::labNewState, &Ui::configuration_dialog::labNewMcState, &Ui::configuration_dialog::labNewScState, &Ui::configuration_dialog::labNewStateBand, &Ui::configuration_dialog::labNewMcStateBand, &Ui::configuration_dialog::labNewScStateBand}},
+  {
+    {&Ui::configuration_dialog::newPx_check_box, &impl::newPx_, &impl::next_newPx_, &SpecialOpSettings::newPx, "newPx", "SpecialOpSavedNewPx", false, Fallback::Off, Forced::Off},
+    {&Ui::configuration_dialog::newPxBand_check_box, &impl::newPxBand_, &impl::next_newPxBand_, &SpecialOpSettings::newPxBand, "newPxBand", "SpecialOpSavedNewPxBand", false, Fallback::Off, Forced::Off},
+    {&Ui::configuration_dialog::newPxBandMode_check_box, &impl::newPxBandMode_, &impl::next_newPxBandMode_, &SpecialOpSettings::newPxBandMode, "newPxBandMode", "SpecialOpSavedNewPxBandMode", false, Fallback::Off, Forced::Off},
+    {&Ui::configuration_dialog::beep_on_newPx_check_box, &impl::beepOnNewPx_, nullptr, &SpecialOpSettings::beepOnNewPx, "BeepOnNewPx", "SpecialOpSavedBeepOnNewPx", false, Fallback::Off, Forced::Off},
+    false, {&Ui::configuration_dialog::labNewPx, &Ui::configuration_dialog::labNewMcPx, &Ui::configuration_dialog::labNewScPx, &Ui::configuration_dialog::labNewPxBand, &Ui::configuration_dialog::labNewMcPxBand, &Ui::configuration_dialog::labNewScPxBand}},
 };
 
 Configuration::impl::ColorSlot const Configuration::impl::color_slots[] = {
@@ -1886,26 +1952,21 @@ Configuration::impl::impl (Configuration * self, QNetworkAccessManager * network
   ui_->setupUi (this);
   wrap_tooltips (this);   /* CE3TSK: Qt does not word-wrap a plain tooltip, see tooltip_wrap.hpp */
   call_tooltip_ = ui_->callsign_line_edit->toolTip ();   // CE3TSK 2026-10-04: refresh_own_marks adds to them
-  {
-    // CE3TSK 2026-10-04 (review): see leaving_contest () - a child the operator clicks there goes into the own set
-    struct OwnBox {QCheckBox * box; bool SpecialOpSettings::* field;};
-    OwnBox const own_boxes[] = {
-      {ui_->newGridBand_check_box, &SpecialOpSettings::newGridBand}, {ui_->newGridBandMode_check_box, &SpecialOpSettings::newGridBandMode},
-      {ui_->newCallBand_check_box, &SpecialOpSettings::newCallBand}, {ui_->newCallBandMode_check_box, &SpecialOpSettings::newCallBandMode},
-      {ui_->newCQZBand_check_box, &SpecialOpSettings::newCQZBand}, {ui_->newCQZBandMode_check_box, &SpecialOpSettings::newCQZBandMode},
-      {ui_->beep_on_newCQZ_check_box, &SpecialOpSettings::beepOnNewCQZ},
-      {ui_->newITUZBand_check_box, &SpecialOpSettings::newITUZBand}, {ui_->newITUZBandMode_check_box, &SpecialOpSettings::newITUZBandMode},
-      {ui_->beep_on_newITUZ_check_box, &SpecialOpSettings::beepOnNewITUZ},
-      {ui_->newDXCCBand_check_box, &SpecialOpSettings::newDXCCBand}, {ui_->newDXCCBandMode_check_box, &SpecialOpSettings::newDXCCBandMode},
-      {ui_->beep_on_newDXCC_check_box, &SpecialOpSettings::beepOnNewDXCC},
-      {ui_->newStateBand_check_box, &SpecialOpSettings::newStateBand}, {ui_->newStateBandMode_check_box, &SpecialOpSettings::newStateBandMode},
-      {ui_->beep_on_newState_check_box, &SpecialOpSettings::beepOnNewState},
-      {ui_->newPxBand_check_box, &SpecialOpSettings::newPxBand}, {ui_->newPxBandMode_check_box, &SpecialOpSettings::newPxBandMode},
-      {ui_->beep_on_newPx_check_box, &SpecialOpSettings::beepOnNewPx},
-    };
-    for (auto const& o : own_boxes)
-      connect (o.box, &QCheckBox::clicked, this, [this, o] (bool checked) {if (leaving_contest ()) dlgEntrySpecialOp_.*o.field = checked;});
-  }
+  /* CE3TSK 2026-10-04 (review item 9): the tier boxes, one table - a tier cascades to the three under it, a child
+     stages its value; and while a contest is being left (leaving_contest ()) a child clicked goes into the operator's
+     own set as well, so OK keeps it even if its tier is turned off afterwards */
+  for (auto const& t : tiers)
+    {
+      connect (ui_.data ()->*t.self.box, &QCheckBox::clicked, this, [this, &t] (bool on) {cascade (t, on);});
+      for (auto const * o : {&t.band, &t.band_mode, &t.beep})
+        if (o->next || o->parked)   // the grid and call beeps: nothing to stage, nothing to record
+          connect (ui_.data ()->*o->box, &QCheckBox::clicked, this, [this, o] (bool on) {
+              if (o->parked && leaving_contest ()) dlgEntrySpecialOp_.*o->parked = on;
+              if (!o->next) return;
+              this->*o->next = on;
+              refresh_samples ();   // CE3TSK 2026-10-03: every sample from the staged values (item 10)
+            });
+    }
   grid_tooltip_ = ui_->grid_line_edit->toolTip ();
 
   {
@@ -2036,48 +2097,12 @@ Configuration::impl::impl (Configuration * self, QNetworkAccessManager * network
 
   refresh_worked_options ();   // CE3TSK 2026-10-03 (item 10)
 
-  ui_->newCQZBand_check_box->setChecked(newCQZ_ && newCQZBand_);
-  ui_->newCQZBand_check_box->setEnabled(newCQZ_);
-  ui_->newITUZBand_check_box->setChecked(newITUZ_ && newITUZBand_);
-  ui_->newITUZBand_check_box->setEnabled(newITUZ_);
-  ui_->newDXCCBand_check_box->setChecked(newDXCC_ && newDXCCBand_);
-  ui_->newStateBand_check_box->setChecked(newState_ && newStateBand_);
-  ui_->newStateBandMode_check_box->setChecked(newState_ && newStateBandMode_);
-  ui_->newStateBandMode_check_box->setEnabled(newState_);
-  ui_->newDXCCBand_check_box->setEnabled(newDXCC_);
-  ui_->newStateBand_check_box->setEnabled(newState_);
-  ui_->newCallBand_check_box->setChecked(newCall_ && newCallBand_);
-  ui_->newCallBand_check_box->setEnabled(newCall_);
-  ui_->newPxBand_check_box->setChecked(newPx_ && newPxBand_);
-  ui_->newPxBand_check_box->setEnabled(newPx_);
-  ui_->newGridBand_check_box->setChecked(newGrid_ && newGridBand_);
-  ui_->newGridBand_check_box->setEnabled(newGrid_);
-  ui_->newCQZBandMode_check_box->setChecked(newCQZ_ && newCQZBandMode_);
-  ui_->newCQZBandMode_check_box->setEnabled(newCQZ_);
-  ui_->newITUZBandMode_check_box->setChecked(newITUZ_ && newITUZBandMode_);
-  ui_->newITUZBandMode_check_box->setEnabled(newITUZ_);
-  ui_->newDXCCBandMode_check_box->setChecked(newDXCC_ && newDXCCBandMode_);
-  ui_->newDXCCBandMode_check_box->setEnabled(newDXCC_);
-  ui_->newCallBandMode_check_box->setChecked(newCall_ && newCallBandMode_);
-  ui_->newCallBandMode_check_box->setEnabled(newCall_);
-  ui_->newPxBandMode_check_box->setChecked(newPx_ && newPxBandMode_);
-  ui_->newPxBandMode_check_box->setEnabled(newPx_);
-  ui_->newGridBandMode_check_box->setChecked(newGrid_ && newGridBandMode_);
-  ui_->newGridBandMode_check_box->setEnabled(newGrid_);
-  ui_->beep_on_newCQZ_check_box->setChecked(newCQZ_ && beepOnNewCQZ_);
-  ui_->beep_on_newCQZ_check_box->setEnabled(newCQZ_);
-  ui_->beep_on_newITUZ_check_box->setChecked(newITUZ_ && beepOnNewITUZ_);
-  ui_->beep_on_newITUZ_check_box->setEnabled(newITUZ_);
-  ui_->beep_on_newDXCC_check_box->setChecked(newDXCC_ && beepOnNewDXCC_);
-  ui_->beep_on_newState_check_box->setChecked(newState_ && beepOnNewState_);
-  ui_->beep_on_newDXCC_check_box->setEnabled(newDXCC_);
-  ui_->beep_on_newState_check_box->setEnabled(newState_);
-  ui_->beep_on_newCall_check_box->setChecked(newCall_ && beepOnNewCall_);
-  ui_->beep_on_newCall_check_box->setEnabled(newCall_);
-  ui_->beep_on_newPx_check_box->setChecked(newPx_ && beepOnNewPx_);
-  ui_->beep_on_newPx_check_box->setEnabled(newPx_);
-  ui_->beep_on_newGrid_check_box->setChecked(newGrid_ && beepOnNewGrid_);
-  ui_->beep_on_newGrid_check_box->setEnabled(newGrid_);
+  for (auto const& t : tiers)   // CE3TSK 2026-10-04 (review item 9): the children under their tiers
+    for (auto const * o : {&t.band, &t.band_mode, &t.beep})
+      {
+        (ui_.data ()->*o->box)->setChecked (this->*t.self.live && this->*o->live);
+        (ui_.data ()->*o->box)->setEnabled (this->*t.self.live);
+      }
   if(content_.isEmpty ()) {
      ui_->enableContent_check_box->setChecked(false);
      ui_->enableContent_check_box->setEnabled(false);
@@ -2371,27 +2396,8 @@ Radio::convert_dark("#fafbfe",useDarkStyle_),Radio::convert_dark("#dcdef1",useDa
   next_workedStriked_ = workedStriked_;
   next_workedUnderlined_ = workedUnderlined_;
   next_workedDontShow_ = workedDontShow_;
-  next_newCQZ_ = newCQZ_;
-  next_newCQZBand_ = newCQZBand_;
-  next_newCQZBandMode_ = newCQZBandMode_;
-  next_newITUZ_ = newITUZ_;
-  next_newITUZBand_ = newITUZBand_;
-  next_newITUZBandMode_ = newITUZBandMode_;
-  next_newDXCC_ = newDXCC_;
-  next_newState_ = newState_;
-  next_newDXCCBand_ = newDXCCBand_;
-  next_newStateBand_ = newStateBand_;
-  next_newStateBandMode_ = newStateBandMode_;
-  next_newDXCCBandMode_ = newDXCCBandMode_;
-  next_newGrid_ = newGrid_;
-  next_newGridBand_ = newGridBand_;
-  next_newGridBandMode_ = newGridBandMode_;
-  next_newPx_ = newPx_;
-  next_newPxBand_ = newPxBand_;
-  next_newPxBandMode_ = newPxBandMode_;
-  next_newCall_ = newCall_;
-  next_newCallBand_ = newCallBand_;
-  next_newCallBandMode_ = newCallBandMode_;
+  for (auto const& t : tiers)   // CE3TSK 2026-10-04 (review item 9)
+    for (auto const * o : {&t.self, &t.band, &t.band_mode}) this->*o->next = this->*o->live;
   next_newPotential_ = newPotential_;
   if (txtColor_){
     ui_->labCQ->setStyleSheet(QString("background: %1;color: %2").arg(useDarkStyle_? color_CQ_dark_.name() : color_CQ_.name(),Radio::convert_dark("#ffffff",useDarkStyle_)));
@@ -2648,70 +2654,18 @@ Radio::convert_dark("#fafbfe",useDarkStyle_),Radio::convert_dark("#dcdef1",useDa
   /* CE3TSK 2026-10-03 (item 10): enabled as well as ticked - a Cancel left them greyed - and the worked samples
      counting the prefix tier, which the first of them had lost */
   refresh_worked_options ();
-  ui_->newCQZ_check_box->setChecked (newCQZ_);
-  ui_->newCQZBand_check_box->setChecked (newCQZBand_ && newCQZ_);
-  ui_->newCQZBandMode_check_box->setChecked (newCQZBandMode_ && newCQZ_);
-  ui_->newITUZ_check_box->setChecked (newITUZ_);
-  ui_->newITUZBand_check_box->setChecked (newITUZBand_ && newITUZ_);
-  ui_->newITUZBandMode_check_box->setChecked (newITUZBandMode_ && newITUZ_);
-  ui_->newDXCC_check_box->setChecked (newDXCC_);
-  ui_->newState_check_box->setChecked (newState_);
-  ui_->newDXCCBand_check_box->setChecked (newDXCCBand_ && newDXCC_);
-  ui_->newStateBand_check_box->setChecked (newStateBand_ && newState_);
-  ui_->newStateBandMode_check_box->setChecked (newStateBandMode_ && newState_);
-  ui_->newDXCCBandMode_check_box->setChecked (newDXCCBandMode_ && newDXCC_);
-  ui_->newCall_check_box->setChecked (newCall_);
-  ui_->newCallBand_check_box->setChecked (newCallBand_ && newCall_);
-  ui_->newCallBandMode_check_box->setChecked (newCallBandMode_ && newCall_);
-  ui_->newPx_check_box->setChecked (newPx_);
-  ui_->newPxBand_check_box->setChecked (newPxBand_ && newPx_);
-  ui_->newPxBandMode_check_box->setChecked (newPxBandMode_ && newPx_);
-  ui_->newGrid_check_box->setChecked (newGrid_);
-  ui_->newGridBand_check_box->setChecked (newGridBand_ && newGrid_);
-  ui_->newGridBandMode_check_box->setChecked (newGridBandMode_ && newGrid_);
+  for (auto const& t : tiers)   // CE3TSK 2026-10-04 (review item 9)
+    {
+      (ui_.data ()->*t.self.box)->setChecked (this->*t.self.live);
+      for (auto const * o : {&t.band, &t.band_mode}) (ui_.data ()->*o->box)->setChecked (this->*o->live && this->*t.self.live);
+    }
   /* CE3TSK: show the stored special operating activity and let it take over the grid
      highlighting widgets. Done after the check boxes are populated above so the forced
      state is what the operator sees. */
   /* remember the operator's own choice before the radio below fires its slot: if a contest
      is already committed the live flags hold its forced values, and the real choice is the
      parked triple */
-  if (specialOpSaved_) {
-    dlgEntrySpecialOp_ = savedSpecialOp_;
-  } else {
-    dlgEntrySpecialOp_.newGrid = newGrid_;
-    dlgEntrySpecialOp_.newGridBand = newGridBand_;
-    dlgEntrySpecialOp_.newGridBandMode = newGridBandMode_;
-    dlgEntrySpecialOp_.newCall = newCall_;
-    dlgEntrySpecialOp_.newCallBand = newCallBand_;
-    dlgEntrySpecialOp_.newCallBandMode = newCallBandMode_;
-    dlgEntrySpecialOp_.autolog = autolog_;
-    dlgEntrySpecialOp_.clearDX = clear_DX_;
-    dlgEntrySpecialOp_.distanceInComments = distance_in_comments_;
-    dlgEntrySpecialOp_.promptToLog = prompt_to_log_;
-    dlgEntrySpecialOp_.logAsRTTY = log_as_RTTY_;
-    dlgEntrySpecialOp_.reportInComments = report_in_comments_;
-    dlgEntrySpecialOp_.newCQZ = newCQZ_;
-    dlgEntrySpecialOp_.newCQZBand = newCQZBand_;
-    dlgEntrySpecialOp_.newCQZBandMode = newCQZBandMode_;
-    dlgEntrySpecialOp_.newITUZ = newITUZ_;
-    dlgEntrySpecialOp_.newITUZBand = newITUZBand_;
-    dlgEntrySpecialOp_.newITUZBandMode = newITUZBandMode_;
-    dlgEntrySpecialOp_.newDXCC = newDXCC_;
-    dlgEntrySpecialOp_.newState = newState_;
-    dlgEntrySpecialOp_.newDXCCBand = newDXCCBand_;
-    dlgEntrySpecialOp_.newStateBand = newStateBand_;
-    dlgEntrySpecialOp_.newStateBandMode = newStateBandMode_;
-    dlgEntrySpecialOp_.newDXCCBandMode = newDXCCBandMode_;
-    dlgEntrySpecialOp_.newPx = newPx_;
-    dlgEntrySpecialOp_.newPxBand = newPxBand_;
-    dlgEntrySpecialOp_.newPxBandMode = newPxBandMode_;
-    dlgEntrySpecialOp_.beepOnNewCQZ = beepOnNewCQZ_;
-    dlgEntrySpecialOp_.beepOnNewITUZ = beepOnNewITUZ_;
-    dlgEntrySpecialOp_.beepOnNewDXCC = beepOnNewDXCC_;
-    dlgEntrySpecialOp_.beepOnNewState = beepOnNewState_;
-    dlgEntrySpecialOp_.beepOnNewPx = beepOnNewPx_;
-    dlgEntrySpecialOp_.usesched = usesched_;
-  }
+  dlgEntrySpecialOp_ = specialOpSaved_ ? savedSpecialOp_ : own_settings ();
   switch (specialOp_) {
     case SpecialOperatingActivity::WW_DIGI: ui_->rbSpecialOpWWDigi->setChecked (true); break;
     default: ui_->rbSpecialOpNone->setChecked (true); break;
@@ -2736,13 +2690,7 @@ Radio::convert_dark("#fafbfe",useDarkStyle_),Radio::convert_dark("#dcdef1",useDa
   ui_->hide_TX_messages_check_box->setChecked (hide_TX_messages_);
   ui_->decode_at_52s_check_box->setChecked(decode_at_52s_);
   ui_->beep_on_my_call_check_box->setChecked(beepOnMyCall_);
-  ui_->beep_on_newCQZ_check_box->setChecked(beepOnNewCQZ_ && newCQZ_);
-  ui_->beep_on_newITUZ_check_box->setChecked(beepOnNewITUZ_ && newITUZ_);
-  ui_->beep_on_newDXCC_check_box->setChecked(beepOnNewDXCC_ && newDXCC_);
-  ui_->beep_on_newState_check_box->setChecked(beepOnNewState_ && newState_);
-  ui_->beep_on_newGrid_check_box->setChecked(beepOnNewGrid_ && newGrid_);
-  ui_->beep_on_newPx_check_box->setChecked(beepOnNewPx_ && newPx_);
-  ui_->beep_on_newCall_check_box->setChecked(beepOnNewCall_ && newCall_);
+  for (auto const& t : tiers) (ui_.data ()->*t.beep.box)->setChecked (this->*t.beep.live && this->*t.self.live);   // CE3TSK 2026-10-04 (review item 9)
   ui_->beep_on_firstMsg_check_box->setChecked(beepOnFirstMsg_);
   ui_->type_2_msg_gen_combo_box->setCurrentIndex (type_2_msg_gen_);
   select_stored_rig ();   // CE3TSK: same silent-no-op trap as enumerate_rigs
@@ -3243,27 +3191,18 @@ void Configuration::impl::read_settings ()
 
   if(settings_->value ("workedDontShow").toString()=="false" || settings_->value ("workedDontShow").toString()=="true")
     next_workedDontShow_ = workedDontShow_ = settings_->value ("workedDontShow").toBool ();
-  else next_workedDontShow_ = false;
+  else next_workedDontShow_ = workedDontShow_ = false;   /* CE3TSK 2026-10-04: the live value too - a profile without the
+     key (a fresh install until the first OK) left it unset, so worked stations were hidden or not by whatever the
+     memory held (inherited from JTDX; found by the review item 9 comparison, test_unsetsettings) */
 
-  next_newCQZ_ = newCQZ_ = settings_->value ("newCQZ", false).toBool ();
-  next_newCQZBand_ = newCQZBand_ = settings_->value ("newCQZBand", false).toBool ();
-  next_newCQZBandMode_ = newCQZBandMode_ = settings_->value ("newCQZBandMode", false).toBool ();
-  next_newITUZ_ = newITUZ_ = settings_->value ("newITUZ", false).toBool ();
-  next_newITUZBand_ = newITUZBand_ = settings_->value ("newITUZBand", false).toBool ();
-  next_newITUZBandMode_ = newITUZBandMode_ = settings_->value ("newITUZBandMode", false).toBool ();
-  next_newDXCC_ = newDXCC_ = settings_->value ("newDXCC", true).toBool ();
-  /* CE3TSK 2026-10-03 (review): on for a fresh install, OFF for a profile that already exists - every JTDX writes
-     newDXCC - so an upgrade never changes what the autoselect answers (a profile with every tier off answers
-     anyone; one more tier on would make it answer only new ones) */
-  next_newState_ = newState_ = settings_->value (contest_profile::own_key ("NewState"), !settings_->contains ("newDXCC")).toBool ();
-  next_newDXCCBand_ = newDXCCBand_ = settings_->value ("newDXCCBand", true).toBool ();
-  next_newStateBand_ = newStateBand_ = settings_->value (contest_profile::own_key ("NewStateBand"), true).toBool ();
-  // CE3TSK 2026-10-04: off unless asked for - turning it on changes what is highlighted and answered
-  next_newStateBandMode_ = newStateBandMode_ = settings_->value (contest_profile::own_key ("NewStateBandMode"), false).toBool ();
-  next_newDXCCBandMode_ = newDXCCBandMode_ = settings_->value ("newDXCCBandMode", true).toBool ();
-  next_newGrid_ = newGrid_ = settings_->value ("newGrid", true).toBool ();
-  next_newGridBand_ = newGridBand_ = settings_->value ("newGridBand", true).toBool ();
-  next_newGridBandMode_ = newGridBandMode_ = settings_->value ("newGridBandMode", false).toBool ();
+  /* CE3TSK 2026-10-04 (review item 9): the tiers, one table - tiers[] holds each key and its default */
+  for (auto const& t : tiers)
+    for (auto const * o : {&t.self, &t.band, &t.band_mode, &t.beep})
+      {
+        bool const fallback = Fallback::FreshInstall == o->fallback ? !settings_->contains ("newDXCC") : Fallback::On == o->fallback;
+        this->*o->live = settings_->value (tier_key (o->key, o->ours), fallback).toBool ();
+        if (o->next) this->*o->next = this->*o->live;
+      }
   /* CE3TSK: special operating activity. Migrated once from the WWDigiContest boolean that
      used to live under [Common] with the Misc menu item, so an existing contest setting is
      carried over rather than silently reset. */
@@ -3286,12 +3225,6 @@ void Configuration::impl::read_settings ()
      three grid settings. SpecialOpSaved replaced it when the parked set grew. Nothing reads
      it, so drop it rather than leave it in the file for good. */
   settings_->remove ("SpecialOpGridSaved");
-  next_newPx_ = newPx_ = settings_->value ("newPx", false).toBool ();
-  next_newPxBand_ = newPxBand_ = settings_->value ("newPxBand", false).toBool ();
-  next_newPxBandMode_ = newPxBandMode_ = settings_->value ("newPxBandMode", false).toBool ();
-  next_newCall_ = newCall_ = settings_->value ("newCall", true).toBool ();
-  next_newCallBand_ = newCallBand_ = settings_->value ("newCallBand", true).toBool ();
-  next_newCallBandMode_ = newCallBandMode_ = settings_->value ("newCallBandMode", true).toBool ();
   next_newPotential_ = newPotential_ = settings_->value ("newPotential", false).toBool ();
   otherMessagesMarker_ = settings_->value ("OtherStandardMessagesMarker", true).toBool () && !newPotential_;
   RR73Marker_= settings_->value ("73RR73Marker", true).toBool ();   /* CE3TSK: it also sets QsoHistory::RFIN, the only way auto sequence sees a station that has just signed off */
@@ -3310,13 +3243,6 @@ void Configuration::impl::read_settings ()
   hide_TX_messages_ = settings_->value ("HideTxMessages", false).toBool ();
   decode_at_52s_ = settings_->value("Decode52",false).toBool ();
   beepOnMyCall_ = settings_->value("BeepOnMyCall", false).toBool();
-  beepOnNewCQZ_ = settings_->value("BeepOnNewCQZ", false).toBool();
-  beepOnNewITUZ_ = settings_->value("BeepOnNewITUZ", false).toBool();
-  beepOnNewDXCC_ = settings_->value("BeepOnNewDXCC", false).toBool();
-  beepOnNewState_ = settings_->value(contest_profile::own_key ("BeepOnNewState"), false).toBool();
-  beepOnNewGrid_ = settings_->value("BeepOnNewGrid", false).toBool();
-  beepOnNewPx_ = settings_->value("BeepOnNewPx", false).toBool();
-  beepOnNewCall_ = settings_->value("BeepOnNewCall", false).toBool();
 
   /* CE3TSK: the parked set, read after every setting it shadows so that a key absent from
      the file can fall back to the live value. That matters when a build adds a setting to
@@ -3326,40 +3252,27 @@ void Configuration::impl::read_settings ()
   auto parked = [this] (QString const& key, bool live) {
     return settings_->contains (key) ? settings_->value (key).toBool () : live;
   };
-  savedSpecialOp_.newGrid = parked ("SpecialOpSavedNewGrid", newGrid_);
-  savedSpecialOp_.newGridBand = parked ("SpecialOpSavedNewGridBand", newGridBand_);
-  savedSpecialOp_.newGridBandMode = parked ("SpecialOpSavedNewGridBandMode", newGridBandMode_);
-  savedSpecialOp_.newCall = parked ("SpecialOpSavedNewCall", newCall_);
-  savedSpecialOp_.newCallBand = parked ("SpecialOpSavedNewCallBand", newCallBand_);
-  savedSpecialOp_.newCallBandMode = parked ("SpecialOpSavedNewCallBandMode", newCallBandMode_);
+  for (auto const& t : tiers)   // CE3TSK 2026-10-04 (review item 9)
+    for (auto const * o : {&t.self, &t.band, &t.band_mode, &t.beep})
+      if (o->parked) savedSpecialOp_.*o->parked = parked (tier_key (o->parked_key, o->ours), this->*o->live);
   savedSpecialOp_.autolog = parked ("SpecialOpSavedAutolog", autolog_);
   savedSpecialOp_.clearDX = parked ("SpecialOpSavedClearDX", clear_DX_);
   savedSpecialOp_.distanceInComments = parked ("SpecialOpSavedDistanceComments", distance_in_comments_);
   savedSpecialOp_.promptToLog = parked ("SpecialOpSavedPromptToLog", prompt_to_log_);
   savedSpecialOp_.logAsRTTY = parked ("SpecialOpSavedLogAsRTTY", log_as_RTTY_);
   savedSpecialOp_.reportInComments = parked ("SpecialOpSavedReportComments", report_in_comments_);
-  savedSpecialOp_.newCQZ = parked ("SpecialOpSavedNewCQZ", newCQZ_);
-  savedSpecialOp_.newCQZBand = parked ("SpecialOpSavedNewCQZBand", newCQZBand_);
-  savedSpecialOp_.newCQZBandMode = parked ("SpecialOpSavedNewCQZBandMode", newCQZBandMode_);
-  savedSpecialOp_.newITUZ = parked ("SpecialOpSavedNewITUZ", newITUZ_);
-  savedSpecialOp_.newITUZBand = parked ("SpecialOpSavedNewITUZBand", newITUZBand_);
-  savedSpecialOp_.newITUZBandMode = parked ("SpecialOpSavedNewITUZBandMode", newITUZBandMode_);
-  savedSpecialOp_.newDXCC = parked ("SpecialOpSavedNewDXCC", newDXCC_);
-  savedSpecialOp_.newState = parked (contest_profile::own_key ("SpecialOpSavedNewState"), newState_);
-  savedSpecialOp_.newDXCCBand = parked ("SpecialOpSavedNewDXCCBand", newDXCCBand_);
-  savedSpecialOp_.newStateBand = parked (contest_profile::own_key ("SpecialOpSavedNewStateBand"), newStateBand_);
-  savedSpecialOp_.newStateBandMode = parked (contest_profile::own_key ("SpecialOpSavedNewStateBandMode"), newStateBandMode_);
-  savedSpecialOp_.newDXCCBandMode = parked ("SpecialOpSavedNewDXCCBandMode", newDXCCBandMode_);
-  savedSpecialOp_.newPx = parked ("SpecialOpSavedNewPx", newPx_);
-  savedSpecialOp_.newPxBand = parked ("SpecialOpSavedNewPxBand", newPxBand_);
-  savedSpecialOp_.newPxBandMode = parked ("SpecialOpSavedNewPxBandMode", newPxBandMode_);
-  savedSpecialOp_.beepOnNewCQZ = parked ("SpecialOpSavedBeepOnNewCQZ", beepOnNewCQZ_);
-  savedSpecialOp_.beepOnNewITUZ = parked ("SpecialOpSavedBeepOnNewITUZ", beepOnNewITUZ_);
-  savedSpecialOp_.beepOnNewDXCC = parked ("SpecialOpSavedBeepOnNewDXCC", beepOnNewDXCC_);
-  savedSpecialOp_.beepOnNewState = parked (contest_profile::own_key ("SpecialOpSavedBeepOnNewState"), beepOnNewState_);
-  savedSpecialOp_.beepOnNewPx = parked ("SpecialOpSavedBeepOnNewPx", beepOnNewPx_);
   savedSpecialOp_.usesched = parked ("SpecialOpSavedUseSched", usesched_);
   specialOpSaved_ = settings_->value ("SpecialOpSaved", false).toBool ();
+  /* CE3TSK 2026-10-04 (review): an activity this build does not offer - only None and WW Digi are; the others come from
+     a hand-edited profile or another build - is left here, as choosing None and OK leaves a contest. The dialog showed
+     None for it, but OK applied that activity's forcing and silently overwrote the operator's tier edits. Its parked
+     set comes back, so no parked set is left behind without a contest (it would be handed back on some later exit). */
+  if (SpecialOperatingActivity::NONE != specialOp_ && SpecialOperatingActivity::WW_DIGI != specialOp_)
+    {
+      specialOp_ = SpecialOperatingActivity::NONE;
+      if (specialOpSaved_) set_own_settings (savedSpecialOp_);
+      specialOpSaved_ = false;
+    }
   beepOnFirstMsg_ = settings_->value("BeepOnFirstMsg", false).toBool();
   rig_params_.poll_interval = settings_->value ("Polling", 1).toInt (); if(!(rig_params_.poll_interval>=0 && rig_params_.poll_interval<=999)) rig_params_.poll_interval=1;
   rig_params_.split_mode = settings_->value ("SplitMode", QVariant::fromValue (TransceiverFactory::split_mode_none)).value<TransceiverFactory::SplitMode> ();
@@ -3649,61 +3562,19 @@ void Configuration::impl::write_settings ()
   settings_->setValue ("workedStriked", workedStriked_);
   settings_->setValue ("workedUnderlined", workedUnderlined_);
   settings_->setValue ("workedDontShow", workedDontShow_);
-  settings_->setValue ("newCQZ", newCQZ_);
-  settings_->setValue ("newCQZBand", newCQZBand_);
-  settings_->setValue ("newCQZBandMode", newCQZBandMode_);
-  settings_->setValue ("newITUZ", newITUZ_);
-  settings_->setValue ("newITUZBand", newITUZBand_);
-  settings_->setValue ("newITUZBandMode", newITUZBandMode_);
-  settings_->setValue ("newDXCC", newDXCC_);
-  settings_->setValue (contest_profile::own_key ("NewState"), newState_);
-  settings_->setValue ("newDXCCBand", newDXCCBand_);
-  settings_->setValue (contest_profile::own_key ("NewStateBand"), newStateBand_);
-  settings_->setValue (contest_profile::own_key ("NewStateBandMode"), newStateBandMode_);
-  settings_->setValue ("newDXCCBandMode", newDXCCBandMode_);
-  settings_->setValue ("newCall", newCall_);
-  settings_->setValue ("newCallBand", newCallBand_);
-  settings_->setValue ("newCallBandMode", newCallBandMode_);
-  settings_->setValue ("newPx", newPx_);
-  settings_->setValue ("newPxBand", newPxBand_);
-  settings_->setValue ("newPxBandMode", newPxBandMode_);
-  settings_->setValue ("newGrid", newGrid_);
-  settings_->setValue ("newGridBand", newGridBand_);
-  settings_->setValue ("newGridBandMode", newGridBandMode_);
+  for (auto const& t : tiers)   // CE3TSK 2026-10-04 (review item 9)
+    for (auto const * o : {&t.self, &t.band, &t.band_mode, &t.beep}) settings_->setValue (tier_key (o->key, o->ours), this->*o->live);
   /* CE3TSK: special operating activity and the grid highlighting it parked */
   settings_->setValue ("SpecialOpActivity", static_cast<int> (specialOp_));
-  settings_->setValue ("SpecialOpSavedNewGrid", savedSpecialOp_.newGrid);
-  settings_->setValue ("SpecialOpSavedNewGridBand", savedSpecialOp_.newGridBand);
-  settings_->setValue ("SpecialOpSavedNewGridBandMode", savedSpecialOp_.newGridBandMode);
-  settings_->setValue ("SpecialOpSavedNewCall", savedSpecialOp_.newCall);
-  settings_->setValue ("SpecialOpSavedNewCallBand", savedSpecialOp_.newCallBand);
-  settings_->setValue ("SpecialOpSavedNewCallBandMode", savedSpecialOp_.newCallBandMode);
+  for (auto const& t : tiers)   // CE3TSK 2026-10-04 (review item 9)
+    for (auto const * o : {&t.self, &t.band, &t.band_mode, &t.beep})
+      if (o->parked) settings_->setValue (tier_key (o->parked_key, o->ours), savedSpecialOp_.*o->parked);
   settings_->setValue ("SpecialOpSavedAutolog", savedSpecialOp_.autolog);
   settings_->setValue ("SpecialOpSavedClearDX", savedSpecialOp_.clearDX);
   settings_->setValue ("SpecialOpSavedDistanceComments", savedSpecialOp_.distanceInComments);
   settings_->setValue ("SpecialOpSavedPromptToLog", savedSpecialOp_.promptToLog);
   settings_->setValue ("SpecialOpSavedLogAsRTTY", savedSpecialOp_.logAsRTTY);
   settings_->setValue ("SpecialOpSavedReportComments", savedSpecialOp_.reportInComments);
-  settings_->setValue ("SpecialOpSavedNewCQZ", savedSpecialOp_.newCQZ);
-  settings_->setValue ("SpecialOpSavedNewCQZBand", savedSpecialOp_.newCQZBand);
-  settings_->setValue ("SpecialOpSavedNewCQZBandMode", savedSpecialOp_.newCQZBandMode);
-  settings_->setValue ("SpecialOpSavedNewITUZ", savedSpecialOp_.newITUZ);
-  settings_->setValue ("SpecialOpSavedNewITUZBand", savedSpecialOp_.newITUZBand);
-  settings_->setValue ("SpecialOpSavedNewITUZBandMode", savedSpecialOp_.newITUZBandMode);
-  settings_->setValue ("SpecialOpSavedNewDXCC", savedSpecialOp_.newDXCC);
-  settings_->setValue (contest_profile::own_key ("SpecialOpSavedNewState"), savedSpecialOp_.newState);
-  settings_->setValue ("SpecialOpSavedNewDXCCBand", savedSpecialOp_.newDXCCBand);
-  settings_->setValue (contest_profile::own_key ("SpecialOpSavedNewStateBand"), savedSpecialOp_.newStateBand);
-  settings_->setValue (contest_profile::own_key ("SpecialOpSavedNewStateBandMode"), savedSpecialOp_.newStateBandMode);
-  settings_->setValue ("SpecialOpSavedNewDXCCBandMode", savedSpecialOp_.newDXCCBandMode);
-  settings_->setValue ("SpecialOpSavedNewPx", savedSpecialOp_.newPx);
-  settings_->setValue ("SpecialOpSavedNewPxBand", savedSpecialOp_.newPxBand);
-  settings_->setValue ("SpecialOpSavedNewPxBandMode", savedSpecialOp_.newPxBandMode);
-  settings_->setValue ("SpecialOpSavedBeepOnNewCQZ", savedSpecialOp_.beepOnNewCQZ);
-  settings_->setValue ("SpecialOpSavedBeepOnNewITUZ", savedSpecialOp_.beepOnNewITUZ);
-  settings_->setValue ("SpecialOpSavedBeepOnNewDXCC", savedSpecialOp_.beepOnNewDXCC);
-  settings_->setValue (contest_profile::own_key ("SpecialOpSavedBeepOnNewState"), savedSpecialOp_.beepOnNewState);
-  settings_->setValue ("SpecialOpSavedBeepOnNewPx", savedSpecialOp_.beepOnNewPx);
   settings_->setValue ("SpecialOpSavedUseSched", savedSpecialOp_.usesched);
   settings_->setValue ("SpecialOpSaved", specialOpSaved_);
   settings_->setValue ("newPotential", newPotential_);
@@ -3724,13 +3595,6 @@ void Configuration::impl::write_settings ()
   settings_->setValue ("SplitMode", QVariant::fromValue (rig_params_.split_mode));
   settings_->setValue ("Decode52", decode_at_52s_);
   settings_->setValue ("BeepOnMyCall", beepOnMyCall_);
-  settings_->setValue ("BeepOnNewCQZ", beepOnNewCQZ_);
-  settings_->setValue ("BeepOnNewITUZ", beepOnNewITUZ_);
-  settings_->setValue ("BeepOnNewDXCC", beepOnNewDXCC_);
-  settings_->setValue (contest_profile::own_key ("BeepOnNewState"), beepOnNewState_);
-  settings_->setValue ("BeepOnNewGrid", beepOnNewGrid_);
-  settings_->setValue ("BeepOnNewPx", beepOnNewPx_);
-  settings_->setValue ("BeepOnNewCall", beepOnNewCall_);
   settings_->setValue ("BeepOnFirstMsg", beepOnFirstMsg_);
   settings_->setValue ("UDPServer", udp_server_name_);
   settings_->setValue ("UDPServerPort", udp_server_port_);
@@ -4042,40 +3906,7 @@ void Configuration::impl::accept ()
      entering a contest can park the operator's own choice. Taken here, ahead of the check
      box harvest further down, because by then the forced values have overwritten it. */
   bool const was_special_op = (specialOp_ != SpecialOperatingActivity::NONE);
-  SpecialOpSettings prev_special_op;
-  prev_special_op.newGrid = newGrid_;
-  prev_special_op.newGridBand = newGridBand_;
-  prev_special_op.newGridBandMode = newGridBandMode_;
-  prev_special_op.newCall = newCall_;
-  prev_special_op.newCallBand = newCallBand_;
-  prev_special_op.newCallBandMode = newCallBandMode_;
-  prev_special_op.autolog = autolog_;
-  prev_special_op.clearDX = clear_DX_;
-  prev_special_op.distanceInComments = distance_in_comments_;
-  prev_special_op.promptToLog = prompt_to_log_;
-  prev_special_op.logAsRTTY = log_as_RTTY_;
-  prev_special_op.reportInComments = report_in_comments_;
-  prev_special_op.newCQZ = newCQZ_;
-  prev_special_op.newCQZBand = newCQZBand_;
-  prev_special_op.newCQZBandMode = newCQZBandMode_;
-  prev_special_op.newITUZ = newITUZ_;
-  prev_special_op.newITUZBand = newITUZBand_;
-  prev_special_op.newITUZBandMode = newITUZBandMode_;
-  prev_special_op.newDXCC = newDXCC_;
-  prev_special_op.newState = newState_;
-  prev_special_op.newDXCCBand = newDXCCBand_;
-  prev_special_op.newStateBand = newStateBand_;
-  prev_special_op.newStateBandMode = newStateBandMode_;
-  prev_special_op.newDXCCBandMode = newDXCCBandMode_;
-  prev_special_op.newPx = newPx_;
-  prev_special_op.newPxBand = newPxBand_;
-  prev_special_op.newPxBandMode = newPxBandMode_;
-  prev_special_op.beepOnNewCQZ = beepOnNewCQZ_;
-  prev_special_op.beepOnNewITUZ = beepOnNewITUZ_;
-  prev_special_op.beepOnNewDXCC = beepOnNewDXCC_;
-  prev_special_op.beepOnNewState = beepOnNewState_;
-  prev_special_op.beepOnNewPx = beepOnNewPx_;
-  prev_special_op.usesched = usesched_;
+  SpecialOpSettings const prev_special_op = own_settings ();
 
   // extract all rig related configuration parameters into temporary
   // structure for checking if the rig needs re-opening without
@@ -4335,27 +4166,13 @@ void Configuration::impl::accept ()
   workedStriked_ = ui_->workedStriked_check_box->isChecked ();
   workedUnderlined_ = ui_->workedUnderlined_check_box->isChecked ();
   workedDontShow_ = ui_->workedDontShow_check_box->isChecked ();
-  newCQZ_ = ui_->newCQZ_check_box->isChecked ();
-  newCQZBand_ = ui_->newCQZBand_check_box->isChecked ();
-  newCQZBandMode_ = ui_->newCQZBandMode_check_box->isChecked ();
-  newITUZ_ = ui_->newITUZ_check_box->isChecked ();
-  newITUZBand_ = ui_->newITUZBand_check_box->isChecked ();
-  newITUZBandMode_ = ui_->newITUZBandMode_check_box->isChecked ();
-  newDXCC_ = ui_->newDXCC_check_box->isChecked ();
-  newState_ = ui_->newState_check_box->isChecked ();
-  newDXCCBand_ = ui_->newDXCCBand_check_box->isChecked ();
-  if (newState_) newStateBand_ = ui_->newStateBand_check_box->isChecked ();   // CE3TSK: its own value kept while greyed (review)
-  if (newState_) newStateBandMode_ = ui_->newStateBandMode_check_box->isChecked ();   // CE3TSK 2026-10-04: likewise
-  newDXCCBandMode_ = ui_->newDXCCBandMode_check_box->isChecked ();
-  newCall_ = ui_->newCall_check_box->isChecked ();
-  newCallBand_ = ui_->newCallBand_check_box->isChecked ();
-  newCallBandMode_ = ui_->newCallBandMode_check_box->isChecked ();
-  newPx_ = ui_->newPx_check_box->isChecked ();
-  newPxBand_ = ui_->newPxBand_check_box->isChecked ();
-  newPxBandMode_ = ui_->newPxBandMode_check_box->isChecked ();
-  newGrid_ = ui_->newGrid_check_box->isChecked ();
-  newGridBand_ = ui_->newGridBand_check_box->isChecked ();
-  newGridBandMode_ = ui_->newGridBandMode_check_box->isChecked ();
+  for (auto const& t : tiers)   // CE3TSK 2026-10-04 (review item 9)
+    {
+      this->*t.self.live = (ui_.data ()->*t.self.box)->isChecked ();
+      for (auto const * o : {&t.band, &t.band_mode})
+        if (!t.keeps_children || this->*t.self.live) this->*o->live = (ui_.data ()->*o->box)->isChecked ();
+      this->*t.beep.live = (ui_.data ()->*t.beep.box)->isChecked ();
+    }
 
   newPotential_ = ui_->newPotential_check_box->isChecked ();
   hideAfrica_= ui_->Africa_check_box->isChecked ();
@@ -4376,13 +4193,6 @@ void Configuration::impl::accept ()
   save_directory_.setPath (ui_->save_path_display_label->text ());
   decode_at_52s_ = ui_->decode_at_52s_check_box->isChecked ();
   beepOnMyCall_ = ui_->beep_on_my_call_check_box->isChecked();
-  beepOnNewCQZ_ = ui_->beep_on_newCQZ_check_box->isChecked();
-  beepOnNewITUZ_ = ui_->beep_on_newITUZ_check_box->isChecked();
-  beepOnNewDXCC_ = ui_->beep_on_newDXCC_check_box->isChecked();
-  beepOnNewState_ = ui_->beep_on_newState_check_box->isChecked();
-  beepOnNewGrid_ = ui_->beep_on_newGrid_check_box->isChecked();
-  beepOnNewPx_ = ui_->beep_on_newPx_check_box->isChecked();
-  beepOnNewCall_ = ui_->beep_on_newCall_check_box->isChecked();
 
   /* CE3TSK: commit the special operating activity and the settings it owns. Placed after
      every harvest above - clear_DX_ and the tier beeps included - so nothing it forces is
@@ -4397,40 +4207,15 @@ void Configuration::impl::accept ()
       savedSpecialOp_ = prev_special_op;
       specialOpSaved_ = true;
     }
-    newGrid_ = true;              // the field is the multiplier
-    newGridBand_ = true;          // counted once per band
-    newGridBandMode_ = false;     // FT4 and FT8 share it, per mode would double count
-    newCall_ = true;              // CE3TSK: a station counts once per band - this is the dupe check
-    newCallBand_ = true;
-    newCallBandMode_ = false;     // the modes share the once-per-band rule
+    for (auto const& t : tiers)   // CE3TSK 2026-10-04 (review item 9): what the contest needs - tiers[] says why
+      for (auto const * o : {&t.self, &t.band, &t.band_mode, &t.beep})
+        if (Forced::Free != o->contest) this->*o->live = Forced::On == o->contest;
     autolog_ = true;
     clear_DX_ = true;
     distance_in_comments_ = true;
     prompt_to_log_ = false;       // mutually exclusive with autolog
     log_as_RTTY_ = false;         // the log must record the mode actually used
     report_in_comments_ = false;  // the exchange is a grid, the dB report is noise
-    /* CE3TSK: none of these are scored in a digital grid contest, and their colors would
-       contradict the ranking - contest points rank 36..49, new DXCC 26/27, new US state 19/20 (priorities.h). */
-    newCQZ_ = false;
-    newCQZBand_ = false;
-    newCQZBandMode_ = false;
-    newITUZ_ = false;
-    newITUZBand_ = false;
-    newITUZBandMode_ = false;
-    newDXCC_ = false;
-    newState_ = false;
-    newDXCCBand_ = false;
-    newStateBand_ = false;
-    newStateBandMode_ = false;
-    newDXCCBandMode_ = false;
-    newPx_ = false;
-    newPxBand_ = false;
-    newPxBandMode_ = false;
-    beepOnNewCQZ_ = false;
-    beepOnNewITUZ_ = false;
-    beepOnNewDXCC_ = false;
-    beepOnNewState_ = false;
-    beepOnNewPx_ = false;
     usesched_ = false;
   } else if (was_special_op && specialOpSaved_) {
     /* CE3TSK 2026-10-04 (review): leaving the contest in this dialog. Selecting "None" handed the operator's own values
@@ -4439,25 +4224,9 @@ void Configuration::impl::accept ()
        cannot show comes from the operator's own set: the children of a tier that is off - greyed, unticked - keep the
        values that set holds, the parked ones or what was clicked while leaving (leaving_contest). */
     auto const keep = [] (bool parent, bool& child, bool parked) {if (!parent) child = parked;};
-    keep (newGrid_, newGridBand_, dlgEntrySpecialOp_.newGridBand);
-    keep (newGrid_, newGridBandMode_, dlgEntrySpecialOp_.newGridBandMode);
-    keep (newCall_, newCallBand_, dlgEntrySpecialOp_.newCallBand);
-    keep (newCall_, newCallBandMode_, dlgEntrySpecialOp_.newCallBandMode);
-    keep (newCQZ_, newCQZBand_, dlgEntrySpecialOp_.newCQZBand);
-    keep (newCQZ_, newCQZBandMode_, dlgEntrySpecialOp_.newCQZBandMode);
-    keep (newCQZ_, beepOnNewCQZ_, dlgEntrySpecialOp_.beepOnNewCQZ);
-    keep (newITUZ_, newITUZBand_, dlgEntrySpecialOp_.newITUZBand);
-    keep (newITUZ_, newITUZBandMode_, dlgEntrySpecialOp_.newITUZBandMode);
-    keep (newITUZ_, beepOnNewITUZ_, dlgEntrySpecialOp_.beepOnNewITUZ);
-    keep (newDXCC_, newDXCCBand_, dlgEntrySpecialOp_.newDXCCBand);
-    keep (newDXCC_, newDXCCBandMode_, dlgEntrySpecialOp_.newDXCCBandMode);
-    keep (newDXCC_, beepOnNewDXCC_, dlgEntrySpecialOp_.beepOnNewDXCC);
-    keep (newState_, newStateBand_, dlgEntrySpecialOp_.newStateBand);
-    keep (newState_, newStateBandMode_, dlgEntrySpecialOp_.newStateBandMode);
-    keep (newState_, beepOnNewState_, dlgEntrySpecialOp_.beepOnNewState);
-    keep (newPx_, newPxBand_, dlgEntrySpecialOp_.newPxBand);
-    keep (newPx_, newPxBandMode_, dlgEntrySpecialOp_.newPxBandMode);
-    keep (newPx_, beepOnNewPx_, dlgEntrySpecialOp_.beepOnNewPx);
+    for (auto const& t : tiers)
+      for (auto const * o : {&t.band, &t.band_mode, &t.beep})
+        if (o->parked) keep (this->*t.self.live, this->*o->live, dlgEntrySpecialOp_.*o->parked);
     specialOpSaved_ = false;
   }
   specialOp_ = chosen;
@@ -5140,94 +4909,59 @@ void Configuration::impl::on_newPotential_check_box_clicked(bool checked)
   if(checked) ui_->otherMessagesMarker_check_box->setChecked(false);
 }
 
-void Configuration::impl::on_newCQZ_check_box_clicked(bool checked)
+/* CE3TSK 2026-10-04 (review item 9): a tier ticked or unticked, by a click or by the dialog - the three under it follow:
+   ticked, each takes its own value (the operator's own set while a contest is being left, see own ()), unticked,
+   each is unticked and greyed. What the seven tier slots did, one per tier. */
+void Configuration::impl::cascade (Tier const& t, bool on)
 {
-  next_newCQZ_ = checked;
-  ui_->newCQZBand_check_box->setChecked(checked && own (newCQZBand_, &SpecialOpSettings::newCQZBand));
-  next_newCQZBand_ = checked && own (newCQZBand_, &SpecialOpSettings::newCQZBand);
-  ui_->newCQZBand_check_box->setEnabled(checked);
-  ui_->beep_on_newCQZ_check_box->setChecked(checked && own (beepOnNewCQZ_, &SpecialOpSettings::beepOnNewCQZ));
-  ui_->beep_on_newCQZ_check_box->setEnabled(checked);
-  ui_->newCQZBandMode_check_box->setChecked(checked && own (newCQZBandMode_, &SpecialOpSettings::newCQZBandMode));
-  next_newCQZBandMode_ = checked && own (newCQZBandMode_, &SpecialOpSettings::newCQZBandMode);
-  ui_->newCQZBandMode_check_box->setEnabled(checked);
+  this->*t.self.next = on;
+  for (auto const * o : {&t.band, &t.band_mode, &t.beep})
+    {
+      bool const value = on && (o->parked ? own (this->*o->live, o->parked) : this->*o->live);
+      (ui_.data ()->*o->box)->setChecked (value);
+      if (o->next) this->*o->next = value;
+      (ui_.data ()->*o->box)->setEnabled (on);
+    }
   refresh_samples ();   // CE3TSK 2026-10-03: every sample from the staged values (item 10)
   refresh_worked_options ();   // CE3TSK 2026-10-03: the worked options follow the tiers (item 10)
 }
 
-void Configuration::impl::on_newITUZ_check_box_clicked(bool checked)
+/* CE3TSK 2026-10-04 (review item 9): the operator's own set as the members hold it - what a contest parks on entry
+   (accept) and what the dialog hands back when None is chosen in it (initialize_models) */
+Configuration::impl::SpecialOpSettings Configuration::impl::own_settings () const
 {
-  next_newITUZ_ = checked;
-  ui_->newITUZBand_check_box->setChecked(checked && own (newITUZBand_, &SpecialOpSettings::newITUZBand));
-  next_newITUZBand_ = checked && own (newITUZBand_, &SpecialOpSettings::newITUZBand);
-  ui_->newITUZBand_check_box->setEnabled(checked);
-  ui_->beep_on_newITUZ_check_box->setChecked(checked && own (beepOnNewITUZ_, &SpecialOpSettings::beepOnNewITUZ));
-  ui_->beep_on_newITUZ_check_box->setEnabled(checked);
-  ui_->newITUZBandMode_check_box->setChecked(checked && own (newITUZBandMode_, &SpecialOpSettings::newITUZBandMode));
-  next_newITUZBandMode_ = checked && own (newITUZBandMode_, &SpecialOpSettings::newITUZBandMode);
-  ui_->newITUZBandMode_check_box->setEnabled(checked);
-  refresh_samples ();   // CE3TSK 2026-10-03: every sample from the staged values (item 10)
-  refresh_worked_options ();   // CE3TSK 2026-10-03: the worked options follow the tiers (item 10)
+  SpecialOpSettings s;
+  for (auto const& t : tiers)
+    for (auto const * o : {&t.self, &t.band, &t.band_mode, &t.beep})
+      if (o->parked) s.*o->parked = this->*o->live;
+  s.autolog = autolog_;
+  s.clearDX = clear_DX_;
+  s.distanceInComments = distance_in_comments_;
+  s.promptToLog = prompt_to_log_;
+  s.logAsRTTY = log_as_RTTY_;
+  s.reportInComments = report_in_comments_;
+  s.usesched = usesched_;
+  return s;
 }
 
-void Configuration::impl::on_newDXCC_check_box_clicked(bool checked)
+/* CE3TSK 2026-10-04 (review): own_settings () the other way round - what leaving a contest hands back, here for one
+   this build does not offer (read_settings) */
+void Configuration::impl::set_own_settings (SpecialOpSettings const& s)
 {
-  next_newDXCC_ = checked;
-  ui_->newDXCCBand_check_box->setChecked(checked && own (newDXCCBand_, &SpecialOpSettings::newDXCCBand));
-  next_newDXCCBand_ = checked && own (newDXCCBand_, &SpecialOpSettings::newDXCCBand);
-  ui_->newDXCCBand_check_box->setEnabled(checked);
-  ui_->beep_on_newDXCC_check_box->setChecked(checked && own (beepOnNewDXCC_, &SpecialOpSettings::beepOnNewDXCC));
-  ui_->beep_on_newDXCC_check_box->setEnabled(checked);
-  ui_->newDXCCBandMode_check_box->setChecked(checked && own (newDXCCBandMode_, &SpecialOpSettings::newDXCCBandMode));
-  next_newDXCCBandMode_ = checked && own (newDXCCBandMode_, &SpecialOpSettings::newDXCCBandMode);
-  ui_->newDXCCBandMode_check_box->setEnabled(checked);
-  refresh_samples ();   // CE3TSK 2026-10-03: every sample from the staged values (item 10)
-  refresh_worked_options ();   // CE3TSK 2026-10-03: the worked options follow the tiers (item 10)
-}
-
-void Configuration::impl::on_newState_check_box_clicked(bool checked)
-{
-  next_newState_ = checked;
-  ui_->newStateBand_check_box->setChecked(checked && own (newStateBand_, &SpecialOpSettings::newStateBand));
-  next_newStateBand_ = checked && own (newStateBand_, &SpecialOpSettings::newStateBand);
-  ui_->newStateBand_check_box->setEnabled(checked);
-  ui_->newStateBandMode_check_box->setChecked(checked && own (newStateBandMode_, &SpecialOpSettings::newStateBandMode));
-  next_newStateBandMode_ = checked && own (newStateBandMode_, &SpecialOpSettings::newStateBandMode);
-  ui_->newStateBandMode_check_box->setEnabled(checked);
-  ui_->beep_on_newState_check_box->setChecked(checked && own (beepOnNewState_, &SpecialOpSettings::beepOnNewState));
-  ui_->beep_on_newState_check_box->setEnabled(checked);
-  refresh_samples ();   // CE3TSK 2026-10-03: every sample from the staged values (item 10)
-  refresh_worked_options ();   // CE3TSK 2026-10-03: the worked options follow the tiers (item 10)
-}
-
-void Configuration::impl::on_newCall_check_box_clicked(bool checked)
-{
-  next_newCall_ = checked;
-  ui_->newCallBand_check_box->setChecked(checked && own (newCallBand_, &SpecialOpSettings::newCallBand));
-  next_newCallBand_ = checked && own (newCallBand_, &SpecialOpSettings::newCallBand);
-  ui_->newCallBand_check_box->setEnabled(checked);
-  ui_->beep_on_newCall_check_box->setChecked(checked && beepOnNewCall_);
-  ui_->beep_on_newCall_check_box->setEnabled(checked);
-  ui_->newCallBandMode_check_box->setChecked(checked && own (newCallBandMode_, &SpecialOpSettings::newCallBandMode));
-  next_newCallBandMode_ = checked && own (newCallBandMode_, &SpecialOpSettings::newCallBandMode);
-  ui_->newCallBandMode_check_box->setEnabled(checked);
-  refresh_samples ();   // CE3TSK 2026-10-03: every sample from the staged values (item 10)
-  refresh_worked_options ();   // CE3TSK 2026-10-03: the worked options follow the tiers (item 10)
-}
-
-void Configuration::impl::on_newPx_check_box_clicked(bool checked)
-{
-  next_newPx_ = checked;
-  ui_->newPxBand_check_box->setChecked(checked && own (newPxBand_, &SpecialOpSettings::newPxBand));
-  next_newPxBand_ = checked && own (newPxBand_, &SpecialOpSettings::newPxBand);
-  ui_->newPxBand_check_box->setEnabled(checked);
-  ui_->beep_on_newPx_check_box->setChecked(checked && own (beepOnNewPx_, &SpecialOpSettings::beepOnNewPx));
-  ui_->beep_on_newPx_check_box->setEnabled(checked);
-  ui_->newPxBandMode_check_box->setChecked(checked && own (newPxBandMode_, &SpecialOpSettings::newPxBandMode));
-  next_newPxBandMode_ = checked && own (newPxBandMode_, &SpecialOpSettings::newPxBandMode);
-  ui_->newPxBandMode_check_box->setEnabled(checked);
-  refresh_samples ();   // CE3TSK 2026-10-03: every sample from the staged values (item 10)
-  refresh_worked_options ();   // CE3TSK 2026-10-03: the worked options follow the tiers (item 10)
+  for (auto const& t : tiers)
+    for (auto const * o : {&t.self, &t.band, &t.band_mode, &t.beep})
+      if (o->parked)
+        {
+          this->*o->live = s.*o->parked;
+          if (o->next) this->*o->next = this->*o->live;
+        }
+  autolog_ = s.autolog;
+  clear_DX_ = s.clearDX;
+  distance_in_comments_ = s.distanceInComments;
+  prompt_to_log_ = s.promptToLog;
+  log_as_RTTY_ = s.logAsRTTY;
+  report_in_comments_ = s.reportInComments;
+  usesched_ = s.usesched;
 }
 
 /* CE3TSK: while a contest owns the grid highlighting, show the settings it requires and
@@ -5237,23 +4971,21 @@ void Configuration::impl::on_newPx_check_box_clicked(bool checked)
 void Configuration::impl::apply_special_op_lock (bool locked)
 {
   if (locked) {
-    /* setChecked() emits toggled, not clicked, so on_newGrid_check_box_clicked() would not
-       run and the next_ staging copies would keep their old values. Those drive the color
-       preview labels and the worked-before check boxes, so call the slot rather than poking
-       the widgets, then apply on top the two band settings the contest dictates. */
-    ui_->newGrid_check_box->setChecked (true);
-    on_newGrid_check_box_clicked (true);
-    ui_->newGridBand_check_box->setChecked (true);
-    next_newGridBand_ = true;
-    ui_->newGridBandMode_check_box->setChecked (false);
-    next_newGridBandMode_ = false;
-    /* CE3TSK: the new call triple, the same way - the dupe check of the contest */
-    ui_->newCall_check_box->setChecked (true);
-    on_newCall_check_box_clicked (true);
-    ui_->newCallBand_check_box->setChecked (true);
-    next_newCallBand_ = true;
-    ui_->newCallBandMode_check_box->setChecked (false);
-    next_newCallBandMode_ = false;
+    /* setChecked() emits toggled, not clicked, so nothing would cascade and the next_ staging copies would keep their
+       old values - they drive the colour previews and the worked-before boxes. So each tier goes through cascade (), as
+       a click does, and then its children take what the contest forces (tiers[] says what, and why). */
+    for (auto const& t : tiers)
+      {
+        bool const on = Forced::On == t.self.contest;
+        (ui_.data ()->*t.self.box)->setChecked (on);
+        cascade (t, on);
+        for (auto const * o : {&t.band, &t.band_mode, &t.beep})
+          if (Forced::Free != o->contest)
+            {
+              (ui_.data ()->*o->box)->setChecked (Forced::On == o->contest);
+              if (o->next) this->*o->next = Forced::On == o->contest;
+            }
+      }
     refresh_samples ();   // CE3TSK 2026-10-03: the samples follow the forced values (item 10)
     /* the logging settings a contest dictates. autolog and prompt_to_log are already
        mutually exclusive in this dialog, so both are set explicitly rather than relying on
@@ -5265,30 +4997,17 @@ void Configuration::impl::apply_special_op_lock (bool locked)
     ui_->log_as_RTTY_check_box->setChecked (false);
     ui_->report_in_comments_check_box->setChecked (false);
     ui_->UseSched_check_box->setChecked (false);
-    /* CE3TSK: the tiers a contest does not score. Driven through the slots, which cascade to
-       the band and band+mode children and keep the next_ staging copies in step - poking the
-       widgets directly would leave the preview labels and the worked-before boxes stale. */
-    ui_->newDXCC_check_box->setChecked (false);  on_newDXCC_check_box_clicked (false);
-    ui_->newState_check_box->setChecked (false);  on_newState_check_box_clicked (false);
-    ui_->newCQZ_check_box->setChecked (false);   on_newCQZ_check_box_clicked (false);
-    ui_->newITUZ_check_box->setChecked (false);  on_newITUZ_check_box_clicked (false);
-    ui_->newPx_check_box->setChecked (false);    on_newPx_check_box_clicked (false);
   }
-  ui_->newGrid_check_box->setEnabled (!locked);
-  ui_->newGridBand_check_box->setEnabled (!locked && ui_->newGrid_check_box->isChecked ());
-  ui_->newGridBandMode_check_box->setEnabled (!locked && ui_->newGrid_check_box->isChecked ());
-  ui_->beep_on_newGrid_check_box->setEnabled (ui_->newGrid_check_box->isChecked ());
-  ui_->newCall_check_box->setEnabled (!locked);
-  ui_->newCallBand_check_box->setEnabled (!locked && ui_->newCall_check_box->isChecked ());
-  ui_->newCallBandMode_check_box->setEnabled (!locked && ui_->newCall_check_box->isChecked ());
-  ui_->beep_on_newCall_check_box->setEnabled (ui_->newCall_check_box->isChecked ());
-  ui_->beep_on_newState_check_box->setEnabled (ui_->newState_check_box->isChecked ());   // CE3TSK 2026-10-03 (review)
-  /* CE3TSK 2026-10-03: the four unscored tiers' beeps follow their parents too - a Cancel (initialize_models comes
-     through here) left them greyed under a ticked parent; pre-existing, fixed on the operator's word */
-  ui_->beep_on_newDXCC_check_box->setEnabled (ui_->newDXCC_check_box->isChecked ());
-  ui_->beep_on_newCQZ_check_box->setEnabled (ui_->newCQZ_check_box->isChecked ());
-  ui_->beep_on_newITUZ_check_box->setEnabled (ui_->newITUZ_check_box->isChecked ());
-  ui_->beep_on_newPx_check_box->setEnabled (ui_->newPx_check_box->isChecked ());
+  /* the tiers: locked by a contest, their children greyed under a tier that is off - as stock JTDX already tied them;
+     a beep follows its tier alone, contest or not, so the grid and call beeps stay the operator's. CE3TSK 2026-10-03:
+     a Cancel (initialize_models comes through here) had left the beeps greyed under a ticked tier. */
+  for (auto const& t : tiers)
+    {
+      auto * const self = ui_.data ()->*t.self.box;
+      self->setEnabled (!locked);
+      for (auto const * o : {&t.band, &t.band_mode}) (ui_.data ()->*o->box)->setEnabled (!locked && self->isChecked ());
+      (ui_.data ()->*t.beep.box)->setEnabled (self->isChecked ());
+    }
   ui_->autolog_check_box->setEnabled (!locked);
   ui_->clear_DX_check_box->setEnabled (!locked);
   ui_->distance_in_comments_check_box->setEnabled (!locked);
@@ -5331,28 +5050,13 @@ void Configuration::impl::apply_special_op_lock (bool locked)
      no claim on. A disabled view also receives no right click, so the context menu actions
      are blocked with it. */
   ui_->frequencies_table_view->setEnabled (!locked);
-  /* the four parents, and their children which stock JTDX already ties to the parent */
-  ui_->newDXCC_check_box->setEnabled (!locked);
-  ui_->newState_check_box->setEnabled (!locked);
-  ui_->newDXCCBand_check_box->setEnabled (!locked && ui_->newDXCC_check_box->isChecked ());
-  ui_->newStateBand_check_box->setEnabled (!locked && ui_->newState_check_box->isChecked ());
-  ui_->newStateBandMode_check_box->setEnabled (!locked && ui_->newState_check_box->isChecked ());
-  ui_->newDXCCBandMode_check_box->setEnabled (!locked && ui_->newDXCC_check_box->isChecked ());
-  ui_->newCQZ_check_box->setEnabled (!locked);
-  ui_->newCQZBand_check_box->setEnabled (!locked && ui_->newCQZ_check_box->isChecked ());
-  ui_->newCQZBandMode_check_box->setEnabled (!locked && ui_->newCQZ_check_box->isChecked ());
-  ui_->newITUZ_check_box->setEnabled (!locked);
-  ui_->newITUZBand_check_box->setEnabled (!locked && ui_->newITUZ_check_box->isChecked ());
-  ui_->newITUZBandMode_check_box->setEnabled (!locked && ui_->newITUZ_check_box->isChecked ());
-  ui_->newPx_check_box->setEnabled (!locked);
-  ui_->newPxBand_check_box->setEnabled (!locked && ui_->newPx_check_box->isChecked ());
-  ui_->newPxBandMode_check_box->setEnabled (!locked && ui_->newPx_check_box->isChecked ());
 }
 
 /* CE3TSK 2026-10-03: see the declarations (review item 10) */
 bool Configuration::impl::any_tier_staged () const
 {
-  return next_newCQZ_ || next_newITUZ_ || next_newDXCC_ || next_newState_ || next_newGrid_ || next_newPx_ || next_newCall_;
+  for (auto const& t : tiers) if (this->*t.self.next) return true;   // CE3TSK 2026-10-04 (review item 9)
+  return false;
 }
 
 void Configuration::impl::refresh_worked_options ()
@@ -5373,20 +5077,12 @@ void Configuration::impl::refresh_worked_options ()
 
 void Configuration::impl::refresh_samples ()
 {
-  struct Tier {bool on, band; QLabel * main, * mc, * sc, * bmain, * bmc, * bsc;};
-  Tier const tiers[] = {
-    {next_newCQZ_, next_newCQZBand_ || next_newCQZBandMode_, ui_->labNewCQZ, ui_->labNewMcCQZ, ui_->labNewScCQZ, ui_->labNewCQZBand, ui_->labNewMcCQZBand, ui_->labNewScCQZBand},
-    {next_newITUZ_, next_newITUZBand_ || next_newITUZBandMode_, ui_->labNewITUZ, ui_->labNewMcITUZ, ui_->labNewScITUZ, ui_->labNewITUZBand, ui_->labNewMcITUZBand, ui_->labNewScITUZBand},
-    {next_newDXCC_, next_newDXCCBand_ || next_newDXCCBandMode_, ui_->labNewDXCC, ui_->labNewMcDXCC, ui_->labNewScDXCC, ui_->labNewDXCCBand, ui_->labNewMcDXCCBand, ui_->labNewScDXCCBand},
-    {next_newState_, next_newStateBand_ || next_newStateBandMode_, ui_->labNewState, ui_->labNewMcState, ui_->labNewScState, ui_->labNewStateBand, ui_->labNewMcStateBand, ui_->labNewScStateBand},
-    {next_newGrid_, next_newGridBand_ || next_newGridBandMode_, ui_->labNewGrid, ui_->labNewMcGrid, ui_->labNewScGrid, ui_->labNewGridBand, ui_->labNewMcGridBand, ui_->labNewScGridBand},
-    {next_newPx_, next_newPxBand_ || next_newPxBandMode_, ui_->labNewPx, ui_->labNewMcPx, ui_->labNewScPx, ui_->labNewPxBand, ui_->labNewMcPxBand, ui_->labNewScPxBand},
-    {next_newCall_, next_newCallBand_ || next_newCallBandMode_, ui_->labNewCall, ui_->labNewMcCall, ui_->labNewScCall, ui_->labNewCallBand, ui_->labNewMcCallBand, ui_->labNewScCallBand},
-  };
-  for (auto const& t : tiers)
+  for (auto const& t : tiers)   // CE3TSK 2026-10-04 (review item 9): the labels are in the tier table
     {
-      show_samples (t.main, t.mc, t.sc, t.on);
-      show_samples (t.bmain, t.bmc, t.bsc, t.on && t.band);
+      bool const on = this->*t.self.next;
+      auto const label = [&] (int i) {return ui_.data ()->*t.samples[i];};
+      show_samples (label (0), label (1), label (2), on);
+      show_samples (label (3), label (4), label (5), on && (this->*t.band.next || this->*t.band_mode.next));
     }
   ui_->labStandardCall->setVisible (next_newPotential_);
   ui_->labWorkedScCall->setVisible (any_tier_staged () && next_newPotential_);
@@ -5405,22 +5101,10 @@ void Configuration::impl::on_rbSpecialOpNone_toggled(bool checked)
   if (!checked) return;
   next_specialOp_ = SpecialOperatingActivity::NONE;
   /* Hand the operator's own choice back straight away so the dialog previews what OK does,
-     through the slot so the staging copies and preview labels follow. Restored from the
+     through cascade () so the staging copies and preview labels follow. Restored from the
      dialog entry triple, not from saved*_: the latter only becomes valid once a contest has
      been committed, so selecting one and going back inside a single dialog session would
      otherwise leave the forced values on display. */
-  ui_->newGrid_check_box->setChecked (dlgEntrySpecialOp_.newGrid);
-  on_newGrid_check_box_clicked (dlgEntrySpecialOp_.newGrid);
-  ui_->newGridBand_check_box->setChecked (dlgEntrySpecialOp_.newGridBand && dlgEntrySpecialOp_.newGrid);
-  next_newGridBand_ = dlgEntrySpecialOp_.newGridBand && dlgEntrySpecialOp_.newGrid;
-  ui_->newGridBandMode_check_box->setChecked (dlgEntrySpecialOp_.newGridBandMode && dlgEntrySpecialOp_.newGrid);
-  next_newGridBandMode_ = dlgEntrySpecialOp_.newGridBandMode && dlgEntrySpecialOp_.newGrid;
-  ui_->newCall_check_box->setChecked (dlgEntrySpecialOp_.newCall);
-  on_newCall_check_box_clicked (dlgEntrySpecialOp_.newCall);
-  ui_->newCallBand_check_box->setChecked (dlgEntrySpecialOp_.newCallBand && dlgEntrySpecialOp_.newCall);
-  next_newCallBand_ = dlgEntrySpecialOp_.newCallBand && dlgEntrySpecialOp_.newCall;
-  ui_->newCallBandMode_check_box->setChecked (dlgEntrySpecialOp_.newCallBandMode && dlgEntrySpecialOp_.newCall);
-  next_newCallBandMode_ = dlgEntrySpecialOp_.newCallBandMode && dlgEntrySpecialOp_.newCall;
   ui_->autolog_check_box->setChecked (dlgEntrySpecialOp_.autolog);
   ui_->clear_DX_check_box->setChecked (dlgEntrySpecialOp_.clearDX);
   ui_->distance_in_comments_check_box->setChecked (dlgEntrySpecialOp_.distanceInComments);
@@ -5428,51 +5112,23 @@ void Configuration::impl::on_rbSpecialOpNone_toggled(bool checked)
   ui_->log_as_RTTY_check_box->setChecked (dlgEntrySpecialOp_.logAsRTTY);
   ui_->report_in_comments_check_box->setChecked (dlgEntrySpecialOp_.reportInComments);
   ui_->UseSched_check_box->setChecked (dlgEntrySpecialOp_.usesched);
-  /* CE3TSK: hand the unscored tiers back, parents first so the cascade sets the children,
-     then the children explicitly because the cascade ANDs them with the committed value. */
-  ui_->newDXCC_check_box->setChecked (dlgEntrySpecialOp_.newDXCC);
-  ui_->newState_check_box->setChecked (dlgEntrySpecialOp_.newState);
-  on_newDXCC_check_box_clicked (dlgEntrySpecialOp_.newDXCC);
-  on_newState_check_box_clicked (dlgEntrySpecialOp_.newState);
-  /* CE3TSK: the slot above sets the beep from the member, which is still forced
-     false here, so hand it back explicitly like the band children. */
-  ui_->beep_on_newDXCC_check_box->setChecked (dlgEntrySpecialOp_.beepOnNewDXCC && dlgEntrySpecialOp_.newDXCC);
-  ui_->beep_on_newState_check_box->setChecked (dlgEntrySpecialOp_.beepOnNewState && dlgEntrySpecialOp_.newState);
-  ui_->newDXCCBand_check_box->setChecked (dlgEntrySpecialOp_.newDXCCBand && dlgEntrySpecialOp_.newDXCC);
-  ui_->newStateBand_check_box->setChecked (dlgEntrySpecialOp_.newStateBand && dlgEntrySpecialOp_.newState);
-  ui_->newStateBandMode_check_box->setChecked (dlgEntrySpecialOp_.newStateBandMode && dlgEntrySpecialOp_.newState);
-  next_newDXCCBand_ = dlgEntrySpecialOp_.newDXCCBand && dlgEntrySpecialOp_.newDXCC;
-  next_newStateBand_ = dlgEntrySpecialOp_.newStateBand && dlgEntrySpecialOp_.newState;
-  next_newStateBandMode_ = dlgEntrySpecialOp_.newStateBandMode && dlgEntrySpecialOp_.newState;
-  ui_->newDXCCBandMode_check_box->setChecked (dlgEntrySpecialOp_.newDXCCBandMode && dlgEntrySpecialOp_.newDXCC);
-  next_newDXCCBandMode_ = dlgEntrySpecialOp_.newDXCCBandMode && dlgEntrySpecialOp_.newDXCC;
-  ui_->newCQZ_check_box->setChecked (dlgEntrySpecialOp_.newCQZ);
-  on_newCQZ_check_box_clicked (dlgEntrySpecialOp_.newCQZ);
-  /* CE3TSK: the slot above sets the beep from the member, which is still forced
-     false here, so hand it back explicitly like the band children. */
-  ui_->beep_on_newCQZ_check_box->setChecked (dlgEntrySpecialOp_.beepOnNewCQZ && dlgEntrySpecialOp_.newCQZ);
-  ui_->newCQZBand_check_box->setChecked (dlgEntrySpecialOp_.newCQZBand && dlgEntrySpecialOp_.newCQZ);
-  next_newCQZBand_ = dlgEntrySpecialOp_.newCQZBand && dlgEntrySpecialOp_.newCQZ;
-  ui_->newCQZBandMode_check_box->setChecked (dlgEntrySpecialOp_.newCQZBandMode && dlgEntrySpecialOp_.newCQZ);
-  next_newCQZBandMode_ = dlgEntrySpecialOp_.newCQZBandMode && dlgEntrySpecialOp_.newCQZ;
-  ui_->newITUZ_check_box->setChecked (dlgEntrySpecialOp_.newITUZ);
-  on_newITUZ_check_box_clicked (dlgEntrySpecialOp_.newITUZ);
-  /* CE3TSK: the slot above sets the beep from the member, which is still forced
-     false here, so hand it back explicitly like the band children. */
-  ui_->beep_on_newITUZ_check_box->setChecked (dlgEntrySpecialOp_.beepOnNewITUZ && dlgEntrySpecialOp_.newITUZ);
-  ui_->newITUZBand_check_box->setChecked (dlgEntrySpecialOp_.newITUZBand && dlgEntrySpecialOp_.newITUZ);
-  next_newITUZBand_ = dlgEntrySpecialOp_.newITUZBand && dlgEntrySpecialOp_.newITUZ;
-  ui_->newITUZBandMode_check_box->setChecked (dlgEntrySpecialOp_.newITUZBandMode && dlgEntrySpecialOp_.newITUZ);
-  next_newITUZBandMode_ = dlgEntrySpecialOp_.newITUZBandMode && dlgEntrySpecialOp_.newITUZ;
-  ui_->newPx_check_box->setChecked (dlgEntrySpecialOp_.newPx);
-  on_newPx_check_box_clicked (dlgEntrySpecialOp_.newPx);
-  /* CE3TSK: the slot above sets the beep from the member, which is still forced
-     false here, so hand it back explicitly like the band children. */
-  ui_->beep_on_newPx_check_box->setChecked (dlgEntrySpecialOp_.beepOnNewPx && dlgEntrySpecialOp_.newPx);
-  ui_->newPxBand_check_box->setChecked (dlgEntrySpecialOp_.newPxBand && dlgEntrySpecialOp_.newPx);
-  next_newPxBand_ = dlgEntrySpecialOp_.newPxBand && dlgEntrySpecialOp_.newPx;
-  ui_->newPxBandMode_check_box->setChecked (dlgEntrySpecialOp_.newPxBandMode && dlgEntrySpecialOp_.newPx);
-  next_newPxBandMode_ = dlgEntrySpecialOp_.newPxBandMode && dlgEntrySpecialOp_.newPx;
+  /* CE3TSK: the tiers, each through cascade () as a click does, then its children and beep explicitly from this same
+     set. The cascade already gives them the operator's own values - the members while no contest is committed, this set
+     while a committed one is being left (leaving_contest) - so the explicit part matters only for a profile with a
+     parked set but no contest, where this set is the parked one and the members are not (test_interlock and
+     test_tiergolden pin it). The grid and call beeps are not parked: the cascade gives them their own value. */
+  for (auto const& t : tiers)
+    {
+      bool const on = dlgEntrySpecialOp_.*t.self.parked;
+      (ui_.data ()->*t.self.box)->setChecked (on);
+      cascade (t, on);
+      for (auto const * o : {&t.band, &t.band_mode, &t.beep})
+        if (o->parked)
+          {
+            (ui_.data ()->*o->box)->setChecked (on && dlgEntrySpecialOp_.*o->parked);
+            if (o->next) this->*o->next = on && dlgEntrySpecialOp_.*o->parked;
+          }
+    }
   refresh_samples ();   // CE3TSK 2026-10-03: every tier's samples from the values handed back (item 10)
   apply_special_op_lock (false);
 }
@@ -5482,105 +5138,6 @@ void Configuration::impl::on_rbSpecialOpWWDigi_toggled(bool checked)
   if (!checked) return;
   next_specialOp_ = SpecialOperatingActivity::WW_DIGI;
   apply_special_op_lock (true);
-}
-
-void Configuration::impl::on_newGrid_check_box_clicked(bool checked)
-{
-  next_newGrid_ = checked;
-  ui_->newGridBand_check_box->setChecked(checked && own (newGridBand_, &SpecialOpSettings::newGridBand));
-  next_newGridBand_ = checked && own (newGridBand_, &SpecialOpSettings::newGridBand);
-  ui_->newGridBand_check_box->setEnabled(checked);
-  ui_->beep_on_newGrid_check_box->setChecked(checked && beepOnNewGrid_);
-  ui_->beep_on_newGrid_check_box->setEnabled(checked);
-  ui_->newGridBandMode_check_box->setChecked(checked && own (newGridBandMode_, &SpecialOpSettings::newGridBandMode));
-  next_newGridBandMode_ = checked && own (newGridBandMode_, &SpecialOpSettings::newGridBandMode);
-  ui_->newGridBandMode_check_box->setEnabled(checked);
-  refresh_samples ();   // CE3TSK 2026-10-03: every sample from the staged values (item 10)
-  refresh_worked_options ();   // CE3TSK 2026-10-03: the worked options follow the tiers (item 10)
-}
-
-void Configuration::impl::on_newCQZBand_check_box_clicked(bool checked)
-{
-  next_newCQZBand_ = checked;
-  refresh_samples ();   // CE3TSK 2026-10-03: every sample from the staged values (item 10)
-}
-
-void Configuration::impl::on_newITUZBand_check_box_clicked(bool checked)
-{
-  next_newITUZBand_ = checked;
-  refresh_samples ();   // CE3TSK 2026-10-03: every sample from the staged values (item 10)
-}
-
-void Configuration::impl::on_newDXCCBand_check_box_clicked(bool checked)
-{
-  next_newDXCCBand_ = checked;
-  refresh_samples ();   // CE3TSK 2026-10-03: every sample from the staged values (item 10)
-}
-
-void Configuration::impl::on_newStateBandMode_check_box_clicked(bool checked)   // CE3TSK 2026-10-04
-{
-  next_newStateBandMode_ = checked;
-  refresh_samples ();
-}
-
-void Configuration::impl::on_newStateBand_check_box_clicked(bool checked)
-{
-  next_newStateBand_ = checked;
-  refresh_samples ();   // CE3TSK 2026-10-03: every sample from the staged values (item 10)
-}
-
-void Configuration::impl::on_newCallBand_check_box_clicked(bool checked)
-{
-  next_newCallBand_ = checked;
-  refresh_samples ();   // CE3TSK 2026-10-03: every sample from the staged values (item 10)
-}
-
-void Configuration::impl::on_newPxBand_check_box_clicked(bool checked)
-{
-  next_newPxBand_ = checked;
-  refresh_samples ();   // CE3TSK 2026-10-03: every sample from the staged values (item 10)
-}
-
-void Configuration::impl::on_newGridBand_check_box_clicked(bool checked)
-{
-  next_newGridBand_ = checked;
-  refresh_samples ();   // CE3TSK 2026-10-03: every sample from the staged values (item 10)
-}
-
-void Configuration::impl::on_newCQZBandMode_check_box_clicked(bool checked)
-{
-  next_newCQZBandMode_ = checked;
-  refresh_samples ();   // CE3TSK 2026-10-03: every sample from the staged values (item 10)
-}
-
-void Configuration::impl::on_newITUZBandMode_check_box_clicked(bool checked)
-{
-  next_newITUZBandMode_ = checked;
-  refresh_samples ();   // CE3TSK 2026-10-03: every sample from the staged values (item 10)
-}
-
-void Configuration::impl::on_newDXCCBandMode_check_box_clicked(bool checked)
-{
-  next_newDXCCBandMode_ = checked;
-  refresh_samples ();   // CE3TSK 2026-10-03: every sample from the staged values (item 10)
-}
-
-void Configuration::impl::on_newCallBandMode_check_box_clicked(bool checked)
-{
-  next_newCallBandMode_ = checked;
-  refresh_samples ();   // CE3TSK 2026-10-03: every sample from the staged values (item 10)
-}
-
-void Configuration::impl::on_newPxBandMode_check_box_clicked(bool checked)
-{
-  next_newPxBandMode_ = checked;
-  refresh_samples ();   // CE3TSK 2026-10-03: every sample from the staged values (item 10)
-}
-
-void Configuration::impl::on_newGridBandMode_check_box_clicked(bool checked)
-{
-  next_newGridBandMode_ = checked;
-  refresh_samples ();   // CE3TSK 2026-10-03: every sample from the staged values (item 10)
 }
 
 void Configuration::impl::on_pbCQmsg_clicked()
