@@ -19,9 +19,9 @@ class QsoHistory
  public:
 //                  0     1    2    3      4      5        6        7         8         9   10   11     12     13   14   15   16
 	enum Status {NONE, RFIN, RCQ, SCQ, RCALL, SCALL, RREPORT, SREPORT, RRREPORT, SRREPORT, RRR, SRR, RRR73, SRR73, R73, S73, FIN};
-	/* CE3TSK 2026-09-30: a likely false decode (falsedecodes.h) the autoselect must not pick on its
+	/* CE3TSK 2026-09-30: a likely phantom decode (phantomdecodes.h) the autoselect must not pick on its
 	   own. The doubt belongs to the latest message from the station, not to the station: each one
-	   received sets or clears it, so a false decode that borrowed a real call holds him back only
+	   received sets or clears it, so a phantom decode that borrowed a real call holds him back only
 	   until his next clean message; within one period a clean message wins, so a doubtful decode
 	   printed after it (a later pass, the TX background) cannot hold him back either. Our own
 	   transmissions leave it as it is (DOUBT_KEEP). */

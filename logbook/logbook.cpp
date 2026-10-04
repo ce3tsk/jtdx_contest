@@ -3,6 +3,7 @@
 // Changed since for JTDX_contest by Tihomir Sokcevic CE3TSK; those changes are marked CE3TSK.
 
 #include "logbook.h"
+#include "../usstates.h"   /* CE3TSK */
 #include <QDebug>
 #include <QFontMetrics>
 #include <QStandardPaths>
@@ -13,6 +14,7 @@ namespace
 {
   auto countryFileName = "cty.dat";
   auto lotwFileName = "lotw-user-activity.csv";
+  auto licenseFileName = "us-license-states.txt";   /* CE3TSK 2026-10-03 */
 }
 
 CountryDat* LogBook::countryData () { return _shared ? _shared : &_countries; }
@@ -34,6 +36,8 @@ void LogBook::init(const QString mycall,const QString mygrid,const QString mydat
       auto const lotwDataFilename = CountryDat::fileToUse (dataPath, lotwFileName, &CountryDat::lotwVersion);
       _countries.init(countryDataFilename,lotwDataFilename,translatedCountryNames);
       _countries.load();
+      /* CE3TSK 2026-10-03: the licence states, before the log - its worked-state index reads them */
+      _countries.loadLicenses (CountryDat::fileToUse (dataPath, licenseFileName, &LicenseStates::version));
     }
 
   _log.init(dataPath.absoluteFilePath (logFileName), countryData ());
@@ -169,6 +173,21 @@ void LogBook::matchGrid(/*in*/const QString gridsquare,
         
         // qDebug() << "Logbook:" << call << ":" << countryName << "Cty B4:" << countryWorkedBefore << "call B4:" << callWorkedBefore << "Freq B4:" << dialFreq << "Band B4:" << band << "Mode B4:" << mode;
     }
+}
+
+/* CE3TSK 2026-10-03: Worked All States - see logbook.h */
+QString LogBook::matchState(QString const& masterPrefix, QString const& call, QString const& grid, bool &WorkedBefore,
+                            bool &WorkedBeforeBand, double dialFreq, QString const& mode)
+{
+    QString const state = us_states::clearState (masterPrefix, grid, countries ().licenseState (call));
+    if (state.isEmpty ()) {
+        WorkedBefore = WorkedBeforeBand = true;   // no state to count: nothing to mark
+        return state;
+    }
+    QString const band = ADIF::bandFromFrequency (dialFreq / 1.e6);
+    WorkedBefore = _log.matchState (state);
+    WorkedBeforeBand = WorkedBefore && _log.matchState (state, band, mode);   // neither band nor mode: the all answer, WorkedBefore
+    return state;
 }
 
 void LogBook::matchPX(/*in*/const QString call,

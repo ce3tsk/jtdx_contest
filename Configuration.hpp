@@ -2,6 +2,7 @@
 #define CONFIGURATION_HPP_
 
 #include <QObject>
+#include <functional>
 #include <QFont>
 
 #include "Radio.hpp"
@@ -216,7 +217,11 @@ public:
   bool newITUZBand () const;
   bool newITUZBandMode () const;
   bool newDXCC () const;
+  bool newState () const;   // CE3TSK 2026-10-03: Worked All States (displaytext.cpp, logbook matchState)
+  bool anyNewTierChosen () const;   // CE3TSK 2026-10-03: any new-one tier chosen, zones included (the autoselect)
   bool newDXCCBand () const;
+  bool newStateBand () const;
+  bool newStateBandMode () const;   // CE3TSK 2026-10-04: Worked All States per mode
   bool newDXCCBandMode () const;
   bool newPx () const;
   bool newPxBand () const;
@@ -252,6 +257,7 @@ public:
   bool beepOnNewCQZ () const;
   bool beepOnNewITUZ () const;
   bool beepOnNewDXCC () const;
+  bool beepOnNewState () const;
   bool beepOnNewGrid () const;
   bool beepOnNewPx () const;
   bool beepOnNewCall () const;
@@ -270,14 +276,14 @@ public:
   bool enable_tcp_connection () const;
   bool write_decoded () const;
   bool write_decoded_debug () const;
-  /* CE3TSK 2026-09-30: Settings > Filters > False decodes (falsedecodes.h) - each "no answer" is
+  /* CE3TSK 2026-09-30: Settings > Filters > Phantom decodes (phantomdecodes.h) - each "no answer" is
      read only together with its "mark", and all four default to on */
-  bool falseDecodeGridMark () const;
-  bool falseDecodeGridNoAnswer () const;
-  bool falseDecodeRoverMark () const;
-  bool falseDecodeRoverNoAnswer () const;
-  bool falseDecodePortableMark () const;   // no "do not answer" of its own (falsedecodes.h)
-  bool falseDecodeWhereMark () const;      // nor this one: a call of no country is never picked anyway
+  bool phantomDecodeGridMark () const;
+  bool phantomDecodeGridNoAnswer () const;
+  bool phantomDecodeRoverMark () const;
+  bool phantomDecodeRoverNoAnswer () const;
+  bool phantomDecodePortableMark () const;   // no "do not answer" of its own (phantomdecodes.h)
+  bool phantomDecodeWhereMark () const;      // nor this one: a call of no country is never picked anyway
   bool udpWindowToFront () const;
   bool udpWindowRestore () const;
   Bands * bands ();
@@ -301,7 +307,9 @@ public:
   QColor color_NewITUZ () const;
   QColor color_NewITUZBand () const;
   QColor color_NewDXCC () const;
+  QColor color_NewState () const;
   QColor color_NewDXCCBand () const;
+  QColor color_NewStateBand () const;
   QColor color_NewCall () const;
   QColor color_NewCallBand () const;
   QColor color_NewPx () const;
@@ -339,6 +347,9 @@ public:
   void transceiver_offline ();
   void add_callsign_hideFilter (QString);
   void set_jtdxtime (JTDXDateTime*);
+  /* CE3TSK 2026-10-04: how Settings looks up a call's DXCC country (LogBook::getDXCC's answer, "" while cty.dat is not
+     read) - for the check of the operator's own call and grid (ownstation.h). Unset, nothing is checked. */
+  void set_country_lookup (std::function<QString (QString const&)>);
   // Set transceiver frequency in Hertz.
   Q_SLOT void transceiver_frequency (Frequency);
 

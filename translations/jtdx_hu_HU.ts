@@ -289,11 +289,6 @@ Formátum:
         <translation>A JTDX dekódolt szövegének betűtípus választása</translation>
     </message>
     <message>
-        <location filename="../Configuration.cpp" line="4902"/>
-        <source>Enter Grid error: 4/6/8/10 char grid will be accepted</source>
-        <translation>Hibás QTH-lokátor: 4/6/8/10 karakter fogadható el</translation>
-    </message>
-    <message>
         <location filename="../Configuration.cpp" line="5438"/>
         <location filename="../Configuration.cpp" line="5469"/>
         <source>Cancel</source>
@@ -512,6 +507,46 @@ Formátum:
         <location filename="../Configuration.cpp"/>
         <source>&amp;Unmark default</source>
         <translation>Alapértelmezett &amp;jelölés törlése</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>The downloaded file is not a list of US license states.</source>
+        <translation>A letöltött fájl nem az amerikai engedélyek államainak listája.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>No DXCC country in cty.dat has the prefix of %1.</source>
+        <translation>A cty.dat egyik DXCC országához sem tartozik a(z) %1 előtagja.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>A grid has 4, 6, 8, 10 or 12 characters, as IO91, IO91wm, IO91wm99, IO91wm99aa or IO91wm99aa00.</source>
+        <translation>Egy QRA lokátor 4, 6, 8, 10 vagy 12 karakteres, például IO91, IO91wm, IO91wm99, IO91wm99aa vagy IO91wm99aa00.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Your grid %1 does not lie in %2, the DXCC country of %3.</source>
+        <translation>A(z) %1 QRA lokátor nem %2 területén fekszik, amely a(z) %3 DXCC országa.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Check your call and grid</source>
+        <translation>Ellenőrizze a hívójelét és a QRA lokátorát</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Distances, PSK Reporter spots and the WW Digi exchange are worked out from them.</source>
+        <translation>A távolságok, a PSK Reporter spotok és a WW Digi csereüzenet ezekből számítódnak.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>&amp;Keep it</source>
+        <translation>&amp;Megtartom</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>&amp;Correct it</source>
+        <translation>&amp;Javítom</translation>
     </message>
 </context>
 <context>
@@ -1438,7 +1473,7 @@ Formátum:
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="219"/>
-        <source>U.S.A.</source>
+        <source>USA</source>
         <translation>USA</translation>
     </message>
     <message>
@@ -9692,8 +9727,8 @@ AA1AAA,BB1BB,CC1CC&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
         <location filename="../Configuration.ui" line="6858"/>
         <location filename="../Configuration.ui" line="6871"/>
         <location filename="../Configuration.ui" line="7029"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This DT window being used only for RX frequency CALL3 data based Hint decoders focused on CQ and &apos;mycall hiscall hisgrid&apos; messages. Higher values may increase number of the false decodes.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Csak a Hint dekóderekhez használható, amelyek a CALL3 adatbázis CQ üzenetek és &apos;mycall hiscall hisgrid&apos;  adatait veszik alapul. A magasabb értékek növelhetik a hamis dekódolások számát.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This DT window being used only for RX frequency CALL3 data based Hint decoders focused on CQ and 'mycall hiscall hisgrid' messages. Higher values may increase number of the phantom decodes.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Csak a Hint dekóderekhez használható, amelyek a CALL3 adatbázis CQ üzenetek és 'mycall hiscall hisgrid'  adatait veszik alapul. A magasabb értékek növelhetik a fantomdekódolások számát.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="6861"/>
@@ -9885,8 +9920,8 @@ hangkártya módosítási tevékenységet</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
-        <source>False decodes</source>
-        <translation>Hamis dekódolások</translation>
+        <source>Phantom decodes</source>
+        <translation>Fantomdekódolások</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
@@ -9895,8 +9930,8 @@ hangkártya módosítási tevékenységet</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
-        <source>The automatic sequencer does not pick such a decode on its own; a double click still answers it. A station heard with the same doubtful grid in two different periods is most likely operating away from home, and is answered again - false decodes do not repeat.</source>
-        <translation>Az automatikus sorrend (AutoSeq) magától nem választ ilyen dekódolást; dupla kattintással továbbra is válaszolhat rá. Az az állomás, amely két különböző periódusban ugyanazzal a kétes QRA kockával hallható, nagy valószínűséggel otthonától távol forgalmaz, és ismét választ kap - a hamis dekódolások nem ismétlődnek.</translation>
+        <source>The automatic sequencer does not pick such a decode on its own; a double click still answers it. A station heard with the same doubtful grid in two different periods is most likely operating away from home, and is answered again - phantom decodes do not repeat.</source>
+        <translation>Az automatikus sorrend (AutoSeq) magától nem választ ilyen dekódolást; dupla kattintással továbbra is válaszolhat rá. Az az állomás, amely két különböző periódusban ugyanazzal a kétes QRA kockával hallható, nagy valószínűséggel otthonától távol forgalmaz, és ismét választ kap - a fantomdekódolások nem ismétlődnek.</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
@@ -9905,8 +9940,8 @@ hangkártya módosítási tevékenységet</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
-        <source>Below 30 MHz a call signing /R (rover) is almost always a false decode: /R is a single bit of the message. The decode is kept, with the /R call underlined in red. Its ALL.TXT line ends with lc:rover, and it is sent to UDP clients as a low-confidence decode.</source>
-        <translation>30 MHz alatt a /R (rover) hívójel szinte mindig hamis dekódolás: a /R az üzenet egyetlen bitje. A dekódolás megmarad, a /R hívójel pirossal alá lesz húzva. Az ALL.TXT-ben a sora lc:rover végződéssel zárul, az UDP kliensek pedig alacsony megbízhatóságú dekódolásként kapják meg.</translation>
+        <source>Below 30 MHz a call signing /R (rover) is almost always a phantom decode: /R is a single bit of the message. The decode is kept, with the /R call underlined in red. Its ALL.TXT line ends with lc:rover, and it is sent to UDP clients as a low-confidence decode.</source>
+        <translation>30 MHz alatt a /R (rover) hívójel szinte mindig fantomdekódolás: a /R az üzenet egyetlen bitje. A dekódolás megmarad, a /R hívójel pirossal alá lesz húzva. Az ALL.TXT-ben a sora lc:rover végződéssel zárul, az UDP kliensek pedig alacsony megbízhatóságú dekódolásként kapják meg.</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
@@ -9930,13 +9965,13 @@ hangkártya módosítási tevékenységet</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
-        <source>Below 30 MHz, a decode in which both calls sign /P (portable) is almost always a false decode when it is weak (-20 dB or below): /P is a single bit per call of the message type portable calls use, while genuine park-to-park contacts are stronger. The decode is kept, with the /P calls underlined in red, and is never answered automatically - a double click still answers it. Its ALL.TXT line ends with lc:portable, and it is sent to UDP clients as a low-confidence decode.</source>
-        <translation>30 MHz alatt az a dekódolás, amelyben mindkét hívójel /P (hordozható), szinte mindig hamis dekódolás, ha gyenge (-20 dB vagy alatta): a /P hívójelenként egyetlen bit abban az üzenettípusban, amelyet a hordozható hívójelek használnak, míg a valódi park-park összeköttetések erősebbek. A dekódolás megmarad, a /P hívójelek pirossal alá lesznek húzva, és sosem kap automatikus választ - dupla kattintással továbbra is válaszolhat rá. Az ALL.TXT-ben a sora lc:portable végződéssel zárul, az UDP kliensek pedig alacsony megbízhatóságú dekódolásként kapják meg.</translation>
+        <source>Below 30 MHz, a decode in which both calls sign /P (portable) is almost always a phantom decode when it is weak (-20 dB or below): /P is a single bit per call of the message type portable calls use, while genuine park-to-park contacts are stronger. The decode is kept, with the /P calls underlined in red, and is never answered automatically - a double click still answers it. Its ALL.TXT line ends with lc:portable, and it is sent to UDP clients as a low-confidence decode.</source>
+        <translation>30 MHz alatt az a dekódolás, amelyben mindkét hívójel /P (hordozható), szinte mindig fantomdekódolás, ha gyenge (-20 dB vagy alatta): a /P hívójelenként egyetlen bit abban az üzenettípusban, amelyet a hordozható hívójelek használnak, míg a valódi park-park összeköttetések erősebbek. A dekódolás megmarad, a /P hívójelek pirossal alá lesznek húzva, és sosem kap automatikus választ - dupla kattintással továbbra is válaszolhat rá. Az ALL.TXT-ben a sora lc:portable végződéssel zárul, az UDP kliensek pedig alacsony megbízhatóságú dekódolásként kapják meg.</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
-        <source>A call whose prefix belongs to no country in cty.dat - shown as where? in the country column - is most likely a false decode, on any band. The decode is kept, with the call and where? underlined in red, and is never answered automatically - a double click still answers it. Its ALL.TXT line ends with lc:where, and it is sent to UDP clients as a low-confidence decode. Maritime and aeronautical mobile calls (/MM, /AM) have no country and are never marked.</source>
-        <translation>Az a hívójel, amelynek előtagja a cty.dat szerint egyetlen országhoz sem tartozik - az ország oszlopban ország? jelenik meg -, nagy valószínűséggel hamis dekódolás, bármelyik sávon. A dekódolás megmarad, a hívójel és az ország? felirat pirossal alá lesz húzva, és sosem kap automatikus választ - dupla kattintással továbbra is válaszolhat rá. Az ALL.TXT-ben a sora lc:where végződéssel zárul, az UDP kliensek pedig alacsony megbízhatóságú dekódolásként kapják meg. A tengeri és légi mobil hívójeleknek (/MM, /AM) nincs országuk, ezért sosem lesznek megjelölve.</translation>
+        <source>A call whose prefix belongs to no country in cty.dat - shown as where? in the country column - is most likely a phantom decode, on any band. The decode is kept, with the call and where? underlined in red, and is never answered automatically - a double click still answers it. Its ALL.TXT line ends with lc:where, and it is sent to UDP clients as a low-confidence decode. Maritime and aeronautical mobile calls (/MM, /AM) have no country and are never marked.</source>
+        <translation>Az a hívójel, amelynek előtagja a cty.dat szerint egyetlen országhoz sem tartozik - az ország oszlopban ország? jelenik meg -, nagy valószínűséggel fantomdekódolás, bármelyik sávon. A dekódolás megmarad, a hívójel és az ország? felirat pirossal alá lesz húzva, és sosem kap automatikus választ - dupla kattintással továbbra is válaszolhat rá. Az ALL.TXT-ben a sora lc:where végződéssel zárul, az UDP kliensek pedig alacsony megbízhatóságú dekódolásként kapják meg. A tengeri és légi mobil hívójeleknek (/MM, /AM) nincs országuk, ezért sosem lesznek megjelölve.</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
@@ -9945,13 +9980,53 @@ hangkártya módosítási tevékenységet</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
-        <source>Append the US state of a US station's grid square to its DXCC name or prefix, as in U.S.A.-CA. A square shared by several states names them all, the one with the most people first: U.S.A.-NY/MA.</source>
-        <translation>Egy amerikai állomás DXCC-nevéhez vagy prefixéhez hozzáfűzi azt az államot, amelyben a QRA kockája fekszik, például U.S.A.-CA. Ha a kocka több államra esik, mindet felsorolja, a legnépesebbel kezdve: U.S.A.-NY/MA.</translation>
+        <source>Append the US state of a US station's grid square to its DXCC name or prefix, as in USA, CA. A square shared by several states names them all, the one with the most people first: USA, NY/MA - or only the state of the station's US license, when that is one of them: USA, MA.</source>
+        <translation>Egy amerikai állomás DXCC-nevéhez vagy prefixéhez hozzáfűzi azt az államot, amelyben a QRA kockája fekszik, például USA, CA. Ha a kocka több államra esik, mindet felsorolja, a legnépesebbel kezdve: USA, NY/MA - vagy csak az állomás amerikai engedélyének államát, ha az ezek egyike: USA, MA.</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
         <source>Sh&amp;ow US states</source>
         <translation>USA-államok megjele&amp;nítése</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Highlight messages from US stations whose state is not in the wsjtx_log.adi log file yet. The state comes from the grid square, in the log and in the decoded message alike: a square that lies in a single state counts for it; a square several states share counts for the state of the station's US license when that is one of them, and otherwise for none.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Kiemelten jelöli azokat az amerikai állomásokat, amelyek állama még nem szerepel a wsjtx_log.adi logfájlban. Az állam a QRA kockából adódik, a logban és a dekódolt üzenetben egyaránt: az egyetlen államba eső kocka annak az államnak számít; a több állam által megosztott kocka az állomás amerikai engedélyének államának számít, ha az ezek egyike, egyébként egyiknek sem.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Check and highlight new US states</source>
+        <translation>Új USA-állam</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Highlight messages from US stations whose state is new on the band according to the wsjtx_log.adi log file. The state comes from the grid square and, in a square several states share, from the station's US license, as for new US states.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Kiemelten jelöli azokat az amerikai állomásokat, amelyek állama új a sávban a wsjtx_log.adi logfájl adatai szerint. Az állam a QRA kockából, a több állam által megosztott kockában pedig az állomás amerikai engedélyéből adódik, ahogy az új amerikai államoknál.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>New US State</source>
+        <translation>Új USA-állam</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>New US State on Band</source>
+        <translation>Új USA-állam Sávban</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>US licenses:</source>
+        <translation>Amerikai engedélyek:</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Download the latest list of US license states from ce3tsk.com, built from the FCC's amateur license file. In a grid square several states share, a US station counts for the state of its license when that state is one of the square's.</source>
+        <translation>Az amerikai engedélyek államainak legújabb listájának letöltése a ce3tsk.com-ról, az FCC amatőr engedélyfájlja alapján. A több állam által megosztott QRA kockában egy amerikai állomás az engedélye szerinti államnak számít, ha az a kocka államainak egyike.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Highlight messages from US stations whose state is new in the mode according to the wsjtx_log.adi log file. The state comes from the grid square and, in a square several states share, from the station's US license, as for new US states.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Kiemelten jelöli azokat az amerikai állomásokat, amelyek állama új az üzemmódban a wsjtx_log.adi logfájl adatai szerint. Az állam a QRA kockából, a több állam által megosztott kockában pedig az állomás amerikai engedélyéből adódik, ahogy az új amerikai államoknál.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>

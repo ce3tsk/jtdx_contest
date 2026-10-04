@@ -41,7 +41,7 @@
      11): the plain 6-cycle non-SWL decode, the pass sequence no SWL unit runs. Measured on
      207 on-air periods beside the old plain decoder: the pipeline finds 270 messages the
      6/9-cycle decoder does not, the 6-cycle decoder 11 the pipeline does not; as a unit in
-     the pipeline background it adds 6 (5 real, one false decode) in 6 periods for 0.3-0.5 s
+     the pipeline background it adds 6 (5 real, one phantom decode) in 6 periods for 0.3-0.5 s
      and loses nothing. The old decoder's other extra finds were JTDX's DX-call search on a
      clicked station.
 
@@ -279,7 +279,7 @@ inline FT4Recipe ft4_preset_recipe (FT4Preset p)
        on the sparse hours is 6 of 1856 - so "recommended" is background 6 alone, the recipe
        that is never worse at reply time on either file, and it carries the "best value" mark;
        and six reply-time members are the most at reply time on both files (+2.8 crowded, 1842
-       against 1811 on the night hour, 0.57 s mean / 1.29 s worst, one false decode in seven
+       against 1811 on the night hour, 0.57 s mean / 1.29 s worst, one phantom decode in seven
        crowded runs where the background recipes had none). */
     /* item 69 measured the background phase's own settings (both recorded hours, reply time
        unchanged in every row): against 6 plain background members (1856 night / 559 day),

@@ -55,7 +55,7 @@ constexpr int FT2_BG_MARGIN_DEFAULT = 5;    // tenths: the background stops this
    fit, for three decodes' difference (318 against 321). Six is available in the menu for anyone
    whose machine has the headroom.
 
-   THE PRICE OF THE EXTRAS, stated plainly: they roughly triple the false decodes on the night set,
+   THE PRICE OF THE EXTRAS, stated plainly: they roughly triple the phantom decodes on the night set,
    from 2 to 7 in 240 periods (max effort 10). That is the same trade FT4's recommended tier makes.
 
    Field order is FT4Recipe's: depth, alt, members, deeposd, bg, bgdepth, bgdeeposd, bgalt,

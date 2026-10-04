@@ -19,6 +19,7 @@
 #include <QDate>
 #include <QByteArray>
 #include <QDir>
+#include "licensestates.h"   /* CE3TSK 2026-10-03 */
 
 class CountryDat
 {
@@ -45,6 +46,11 @@ public:
      newer data is never shadowed by an old download. version receives the chosen copy's. */
   static QString fileToUse (QDir const& dataDir, QString const& fileName,
                             QDate (* versionOf) (QByteArray const&), QDate * version = nullptr);
+  /* CE3TSK 2026-10-03: the state of a US call's licence, the second layer of Worked All States (licensestates.h) - read
+     beside cty.dat by LogBook::init, and copied with this object as the rest is (the array is shared, not copied) */
+  void loadLicenses (QString const& filename) {_licenses.load (filename);}
+  QString licenseState (QString const& call) const {return _licenses.state (call);}
+  int licenseCount () const {return _licenses.size ();}
    
 private:
   QString _extractName(const QString line);
@@ -60,6 +66,7 @@ private:
   QHash<QString, QString> _data2;
   QHash<QString, QString> _name;
   bool _translated = false;   /* CE3TSK: see tr() */
+  LicenseStates _licenses;    /* CE3TSK 2026-10-03: see licenseState () */
 };
 
 #endif

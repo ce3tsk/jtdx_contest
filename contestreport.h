@@ -7,7 +7,7 @@
 
 /* CE3TSK: WW Digi contest - the exchange is the 4 character grid, never a signal report.
    A standard message that ends in a report ("K1ABC W9XYZ -10", "K1ABC W9XYZ R-10", also
-   "+05" / "R+05") is therefore either a station not in the contest or a false decode: an
+   "+05" / "R+05") is therefore either a station not in the contest or a phantom decode: an
    a-priori codeword's random g15 field decodes as a report about as often as it decodes as
    a grid, and the report form has no grid consistency check to fail (chkgrid). In contest
    mode such a line is dropped before ALL.TXT, the windows, the UDP clients and the

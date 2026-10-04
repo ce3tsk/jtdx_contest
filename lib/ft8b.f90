@@ -1804,7 +1804,7 @@ subroutine ft8b(newdat1,nQSOProgress,nfqso,nftx,napwid,lsubtract,npos,freqsub,tm
 ! outside the prefix's own table at ANY SNR - a station operating away from home lost its roger, and the QSO
 ! stalled. Now only the FORM is checked: what follows the R must be a 4-character grid, two letters A-R and
 ! two digits; "R AA0", "R 345", "R AAAA" or nothing at all is dropped. Whether the grid fits the call is the
-! GUI's question (falsedecodes.h): it marks the line, and the sequencer does not answer it on its own.
+! GUI's question (phantomdecodes.h): it marks the line, and the sequencer does not answer it on its own.
 ! A call whose prefix is not allocated at all (chkgrid's lwrongcall: C0, C1, C7, 1C..1Z ...) is still dropped -
 ! that is the callsign, not geography, and the GUI cannot judge a country it does not know (the operator, A1).
             ispc4=index(msg37((ispc3+1):),' ')+ispc3

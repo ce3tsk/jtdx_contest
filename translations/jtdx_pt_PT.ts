@@ -279,11 +279,6 @@ Format:
         <translation>Seleccionador de fonte do texto do descodificadorJTDX</translation>
     </message>
     <message>
-        <location filename="../Configuration.cpp" line="4902"/>
-        <source>Enter Grid error: 4/6/8/10 char grid will be accepted</source>
-        <translation>Indique erro no Grid: são aceites caracteres 4/6/8/10 no Grid</translation>
-    </message>
-    <message>
         <location filename="../Configuration.cpp" line="5434"/>
         <source>Load Working Frequencies</source>
         <translation>Carregar frequências de trabalho</translation>
@@ -502,6 +497,46 @@ Format:
         <location filename="../Configuration.cpp"/>
         <source>&amp;Unmark default</source>
         <translation>&amp;Desmarcar como predefinida</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>The downloaded file is not a list of US license states.</source>
+        <translation>O ficheiro transferido não é uma lista de estados das licenças dos EUA.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>No DXCC country in cty.dat has the prefix of %1.</source>
+        <translation>Nenhum país DXCC do cty.dat tem o prefixo de %1.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>A grid has 4, 6, 8, 10 or 12 characters, as IO91, IO91wm, IO91wm99, IO91wm99aa or IO91wm99aa00.</source>
+        <translation>Um grid tem 4, 6, 8, 10 ou 12 caracteres, como IO91, IO91wm, IO91wm99, IO91wm99aa ou IO91wm99aa00.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Your grid %1 does not lie in %2, the DXCC country of %3.</source>
+        <translation>O seu grid %1 não fica em %2, o país DXCC de %3.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Check your call and grid</source>
+        <translation>Verifique o seu indicativo e o seu grid</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Distances, PSK Reporter spots and the WW Digi exchange are worked out from them.</source>
+        <translation>As distâncias, os spots do PSK Reporter e a troca do WW Digi são calculados a partir deles.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>&amp;Keep it</source>
+        <translation>&amp;Manter</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>&amp;Correct it</source>
+        <translation>&amp;Corrigir</translation>
     </message>
 </context>
 <context>
@@ -1428,7 +1463,7 @@ Format:
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="219"/>
-        <source>U.S.A.</source>
+        <source>USA</source>
         <translation>EUA</translation>
     </message>
     <message>
@@ -9684,8 +9719,8 @@ AA1AAA, BB1BB, CC1CC &lt;/p&gt; &lt;/body&gt; &lt;/ html</translation>
         <location filename="../Configuration.ui" line="6858"/>
         <location filename="../Configuration.ui" line="6871"/>
         <location filename="../Configuration.ui" line="7029"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This DT window being used only for RX frequency CALL3 data based Hint decoders focused on CQ and &apos;mycall hiscall hisgrid&apos; messages. Higher values may increase number of the false decodes.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Esta janela DT está a ser usada apenas para descodificadores de dica baseados em dados CALL3 de frequência RX, focados nas mensagens CQ e &apos;mycall hiscall hisgrid&apos;. Valores mais altos podem aumentar o número de descodificações falsas. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This DT window being used only for RX frequency CALL3 data based Hint decoders focused on CQ and 'mycall hiscall hisgrid' messages. Higher values may increase number of the phantom decodes.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Esta janela DT está a ser usada apenas para descodificadores de dica baseados em dados CALL3 de frequência RX, focados nas mensagens CQ e 'mycall hiscall hisgrid'. Valores mais altos podem aumentar o número de descodificações fantasma. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="6861"/>
@@ -9877,8 +9912,8 @@ alterações na placa de som</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
-        <source>False decodes</source>
-        <translation>Descodificações falsas</translation>
+        <source>Phantom decodes</source>
+        <translation>Descodificações fantasma</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
@@ -9887,8 +9922,8 @@ alterações na placa de som</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
-        <source>The automatic sequencer does not pick such a decode on its own; a double click still answers it. A station heard with the same doubtful grid in two different periods is most likely operating away from home, and is answered again - false decodes do not repeat.</source>
-        <translation>A sequência automática (AutoSeq) não escolhe por si só uma descodificação destas; um duplo clique continua a responder-lhe. Uma estação ouvida com o mesmo grid duvidoso em dois períodos diferentes está muito provavelmente a operar longe de casa, e volta a ter resposta - as descodificações falsas não se repetem.</translation>
+        <source>The automatic sequencer does not pick such a decode on its own; a double click still answers it. A station heard with the same doubtful grid in two different periods is most likely operating away from home, and is answered again - phantom decodes do not repeat.</source>
+        <translation>A sequência automática (AutoSeq) não escolhe por si só uma descodificação destas; um duplo clique continua a responder-lhe. Uma estação ouvida com o mesmo grid duvidoso em dois períodos diferentes está muito provavelmente a operar longe de casa, e volta a ter resposta - as descodificações fantasma não se repetem.</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
@@ -9897,8 +9932,8 @@ alterações na placa de som</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
-        <source>Below 30 MHz a call signing /R (rover) is almost always a false decode: /R is a single bit of the message. The decode is kept, with the /R call underlined in red. Its ALL.TXT line ends with lc:rover, and it is sent to UDP clients as a low-confidence decode.</source>
-        <translation>Abaixo de 30 MHz, um indicativo com /R (rover) é quase sempre uma descodificação falsa: /R é um único bit da mensagem. A descodificação é mantida, com o indicativo /R sublinhado a vermelho. A respetiva linha no ALL.TXT termina com lc:rover, e é enviada aos clientes UDP como descodificação de baixa confiança.</translation>
+        <source>Below 30 MHz a call signing /R (rover) is almost always a phantom decode: /R is a single bit of the message. The decode is kept, with the /R call underlined in red. Its ALL.TXT line ends with lc:rover, and it is sent to UDP clients as a low-confidence decode.</source>
+        <translation>Abaixo de 30 MHz, um indicativo com /R (rover) é quase sempre uma descodificação fantasma: /R é um único bit da mensagem. A descodificação é mantida, com o indicativo /R sublinhado a vermelho. A respetiva linha no ALL.TXT termina com lc:rover, e é enviada aos clientes UDP como descodificação de baixa confiança.</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
@@ -9922,13 +9957,13 @@ alterações na placa de som</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
-        <source>Below 30 MHz, a decode in which both calls sign /P (portable) is almost always a false decode when it is weak (-20 dB or below): /P is a single bit per call of the message type portable calls use, while genuine park-to-park contacts are stronger. The decode is kept, with the /P calls underlined in red, and is never answered automatically - a double click still answers it. Its ALL.TXT line ends with lc:portable, and it is sent to UDP clients as a low-confidence decode.</source>
-        <translation>Abaixo de 30 MHz, uma descodificação em que os dois indicativos usam /P (portátil) é quase sempre uma descodificação falsa quando é fraca (-20 dB ou menos): /P é um único bit por indicativo no tipo de mensagem que os indicativos portáteis usam, enquanto os contactos reais de parque a parque são mais fortes. A descodificação é mantida, com os indicativos /P sublinhados a vermelho, e nunca é respondida automaticamente - um duplo clique continua a responder-lhe. A respetiva linha no ALL.TXT termina com lc:portable, e é enviada aos clientes UDP como descodificação de baixa confiança.</translation>
+        <source>Below 30 MHz, a decode in which both calls sign /P (portable) is almost always a phantom decode when it is weak (-20 dB or below): /P is a single bit per call of the message type portable calls use, while genuine park-to-park contacts are stronger. The decode is kept, with the /P calls underlined in red, and is never answered automatically - a double click still answers it. Its ALL.TXT line ends with lc:portable, and it is sent to UDP clients as a low-confidence decode.</source>
+        <translation>Abaixo de 30 MHz, uma descodificação em que os dois indicativos usam /P (portátil) é quase sempre uma descodificação fantasma quando é fraca (-20 dB ou menos): /P é um único bit por indicativo no tipo de mensagem que os indicativos portáteis usam, enquanto os contactos reais de parque a parque são mais fortes. A descodificação é mantida, com os indicativos /P sublinhados a vermelho, e nunca é respondida automaticamente - um duplo clique continua a responder-lhe. A respetiva linha no ALL.TXT termina com lc:portable, e é enviada aos clientes UDP como descodificação de baixa confiança.</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
-        <source>A call whose prefix belongs to no country in cty.dat - shown as where? in the country column - is most likely a false decode, on any band. The decode is kept, with the call and where? underlined in red, and is never answered automatically - a double click still answers it. Its ALL.TXT line ends with lc:where, and it is sent to UDP clients as a low-confidence decode. Maritime and aeronautical mobile calls (/MM, /AM) have no country and are never marked.</source>
-        <translation>Um indicativo cujo prefixo não pertence a nenhum país no cty.dat - mostrado como onde? na coluna do país - é muito provavelmente uma descodificação falsa, em qualquer banda. A descodificação é mantida, com o indicativo e onde? sublinhados a vermelho, e nunca é respondida automaticamente - um duplo clique continua a responder-lhe. A respetiva linha no ALL.TXT termina com lc:where, e é enviada aos clientes UDP como descodificação de baixa confiança. Os indicativos móveis marítimos e aeronáuticos (/MM, /AM) não têm país e nunca são marcados.</translation>
+        <source>A call whose prefix belongs to no country in cty.dat - shown as where? in the country column - is most likely a phantom decode, on any band. The decode is kept, with the call and where? underlined in red, and is never answered automatically - a double click still answers it. Its ALL.TXT line ends with lc:where, and it is sent to UDP clients as a low-confidence decode. Maritime and aeronautical mobile calls (/MM, /AM) have no country and are never marked.</source>
+        <translation>Um indicativo cujo prefixo não pertence a nenhum país no cty.dat - mostrado como onde? na coluna do país - é muito provavelmente uma descodificação fantasma, em qualquer banda. A descodificação é mantida, com o indicativo e onde? sublinhados a vermelho, e nunca é respondida automaticamente - um duplo clique continua a responder-lhe. A respetiva linha no ALL.TXT termina com lc:where, e é enviada aos clientes UDP como descodificação de baixa confiança. Os indicativos móveis marítimos e aeronáuticos (/MM, /AM) não têm país e nunca são marcados.</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
@@ -9937,13 +9972,53 @@ alterações na placa de som</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
-        <source>Append the US state of a US station's grid square to its DXCC name or prefix, as in U.S.A.-CA. A square shared by several states names them all, the one with the most people first: U.S.A.-NY/MA.</source>
-        <translation>Acrescenta ao nome ou prefixo DXCC de uma estação dos EUA o estado em que se situa o seu grid, por exemplo U.S.A.-CA. Se o grid abrange vários estados, mostra-os todos, primeiro o mais populoso: U.S.A.-NY/MA.</translation>
+        <source>Append the US state of a US station's grid square to its DXCC name or prefix, as in USA, CA. A square shared by several states names them all, the one with the most people first: USA, NY/MA - or only the state of the station's US license, when that is one of them: USA, MA.</source>
+        <translation>Acrescenta ao nome ou prefixo DXCC de uma estação dos EUA o estado em que se situa o seu grid, por exemplo USA, CA. Se o grid abrange vários estados, mostra-os todos, primeiro o mais populoso: USA, NY/MA - ou só o estado da licença americana da estação, quando é um deles: USA, MA.</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
         <source>Sh&amp;ow US states</source>
         <translation>&amp;Juntar estados dos EUA</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Highlight messages from US stations whose state is not in the wsjtx_log.adi log file yet. The state comes from the grid square, in the log and in the decoded message alike: a square that lies in a single state counts for it; a square several states share counts for the state of the station's US license when that is one of them, and otherwise for none.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Realça mensagens de estações dos EUA cujo estado ainda não está no arquivo de log wsjtx_log.adi. O estado vem do grid, no log e na mensagem descodificada: um grid que fica num único estado conta para esse estado; um grid partilhado por vários estados conta para o estado da licença americana da estação quando é um deles, e caso contrário para nenhum.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Check and highlight new US states</source>
+        <translation>Marcar e realçar novos estados dos EUA</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Highlight messages from US stations whose state is new on the band according to the wsjtx_log.adi log file. The state comes from the grid square and, in a square several states share, from the station's US license, as for new US states.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Realça mensagens de estações dos EUA cujo estado é novo na banda de acordo com o arquivo de log wsjtx_log.adi. O estado vem do grid e, num grid partilhado por vários estados, da licença americana da estação, como para os novos estados dos EUA.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>New US State</source>
+        <translation>Novo estado dos EUA</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>New US State on Band</source>
+        <translation>Novo estado dos EUA na Banda</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>US licenses:</source>
+        <translation>Licenças dos EUA:</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Download the latest list of US license states from ce3tsk.com, built from the FCC's amateur license file. In a grid square several states share, a US station counts for the state of its license when that state is one of the square's.</source>
+        <translation>Transfere de ce3tsk.com a lista mais recente de estados das licenças dos EUA, gerada a partir do ficheiro de licenças de radioamador da FCC. Num grid partilhado por vários estados, uma estação dos EUA conta para o estado da sua licença quando esse estado é um dos do grid.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Highlight messages from US stations whose state is new in the mode according to the wsjtx_log.adi log file. The state comes from the grid square and, in a square several states share, from the station's US license, as for new US states.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Realça mensagens de estações dos EUA cujo estado é novo no modo de acordo com o arquivo de log wsjtx_log.adi. O estado vem do grid e, num grid partilhado por vários estados, da licença americana da estação, como para os novos estados dos EUA.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>

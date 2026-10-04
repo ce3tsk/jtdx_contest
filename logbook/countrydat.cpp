@@ -234,7 +234,7 @@ void CountryDat::init(const QString filename,const QString filename2,bool transl
     _name.insert("Bear Island",tr("Bear Is."));
     _name.insert("Jan Mayen",tr("Jan Mayen"));
     _name.insert("Jordan",tr("Jordan"));
-    _name.insert("United States",tr("U.S.A."));
+    _name.insert("United States",tr("USA"));   // CE3TSK 2026-10-03: was "U.S.A." (the operator)
     _name.insert("Guantanamo Bay",tr("Guantanamo Bay"));
     _name.insert("Mariana Islands",tr("Mariana Is."));
     _name.insert("Baker & Howland Islands",tr("Baker & Howland Is."));

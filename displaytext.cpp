@@ -18,6 +18,8 @@
 #include "Configuration.hpp"
 #include "qt_helpers.hpp"
 #include "usstates.h"   /* CE3TSK 2026-10-02 */
+#include "priorities.h"   /* CE3TSK 2026-10-03 */
+namespace dp = decode_priority;
 
 #include "moc_displaytext.cpp"
 
@@ -30,7 +32,7 @@ static bool isGrid4 (QString const& w)
       && w[2] >= '0' && w[2] <= '9' && w[3] >= '0' && w[3] <= '9';
 }
 
-/* CE3TSK 2026-09-30: what a word in doubt looks like (falsedecodes.h) - the format it would have had,
+/* CE3TSK 2026-09-30: what a word in doubt looks like (phantomdecodes.h) - the format it would have had,
    with a red wave underline, the spell checker's mark. Its own colour-table row: the dark style's
    red for a background is too dark to see as a line.
    2026-10-01, the operator: the wave is drawn by the window itself, 2 px thick, in both styles - Qt's own
@@ -137,6 +139,14 @@ void DisplayText::setConfiguration(Configuration const * config)
   displayNewDXCC_ = config->newDXCC();
   displayNewDXCCBand_ = config->newDXCCBand();
   displayNewDXCCBandMode_ = config->newDXCCBandMode();
+  displayNewState_ = config->newState();   /* CE3TSK 2026-10-03: Worked All States */
+  displayNewStateBand_ = config->newStateBand();
+  displayNewStateBandMode_ = config->newStateBandMode();
+  /* CE3TSK 2026-10-03 (review): the tier list once - the decode path read it in three copies. The call tiers need
+     nothing but the call, so they judge every decode; grid and the new US state judge only a decode they can place
+     (displayDecodedText, "judged") */
+  callTiers_ = config->newCQZ () || config->newITUZ () || config->newDXCC () || config->newPx () || config->newCall ();
+  anyTier_ = callTiers_ || config->newGrid () || config->newState ();
   displayNewGrid_ = config->newGrid();
   wwDigi_ = config->wwDigi(); /* CE3TSK: WW Digi contest, grid is the exchange and the field is the multiplier */
   displayNewGridBand_ = config->newGridBand();
@@ -156,6 +166,7 @@ void DisplayText::setConfiguration(Configuration const * config)
   beepOnNewCQZ_ = config->beepOnNewCQZ();
   beepOnNewITUZ_ = config->beepOnNewITUZ();
   beepOnNewDXCC_ = config->beepOnNewDXCC();
+  beepOnNewState_ = config->beepOnNewState();   /* CE3TSK 2026-10-03: Worked All States */
   beepOnNewGrid_ = config->beepOnNewGrid();
   beepOnNewPx_ = config->beepOnNewPx();
   beepOnNewCall_ = config->beepOnNewCall();
@@ -183,6 +194,8 @@ void DisplayText::setConfiguration(Configuration const * config)
   color_NewITUZBand_ = config->color_NewITUZBand().name();
   color_NewDXCC_ = config->color_NewDXCC().name();
   color_NewDXCCBand_ = config->color_NewDXCCBand().name();
+  color_NewState_ = config->color_NewState().name();   /* CE3TSK */
+  color_NewStateBand_ = config->color_NewStateBand().name();
   color_NewGrid_ = config->color_NewGrid().name();
   color_NewGridBand_ = config->color_NewGridBand().name();
   color_NewPx_ = config->color_NewPx().name();
@@ -297,7 +310,7 @@ void DisplayText::appendText(QString const& text, QString const& bg, QString con
             if (!underlined && !DXped) m_charFormat.setFontUnderline(true);
             }
         /* CE3TSK 2026-09-30: the words in doubt get a red wave underline over whatever this segment
-           already carries - the spell checker's mark (falsedecodes.h). A copy of the format, so
+           already carries - the spell checker's mark (phantomdecodes.h). A copy of the format, so
            nothing of it leaks into the rest of the line. */
         {
           int pos = ft;
@@ -385,7 +398,7 @@ int DisplayText::displayDecodedText(DecodedText* decodedText, QString myCall, QS
     QString checkMode;
     QString rep_type;
     unsigned c_time = 0;
-    false_decodes::Verdict const& doubt = decodedText->verdict ();   /* CE3TSK 2026-09-30 */
+    phantom_decodes::Verdict const& doubt = decodedText->verdict ();   /* CE3TSK 2026-09-30 */
     int cntryDoubtFrom = -1;
     if (!decodedText->isDebug() && app_mode != "WSPR-2") {
         c_time = decodedText->timeInSeconds();
@@ -576,9 +589,27 @@ int DisplayText::displayDecodedText(DecodedText* decodedText, QString myCall, QS
         bool callB4BandMode = true;
         bool gridB4 = true;
         bool gridB4BandMode = true;
+        bool stateB4 = true;        /* CE3TSK 2026-10-03: Worked All States */
+        bool stateB4Band = true;
+        bool stateJudged = false;   // a US call in a square of a single state: the tier has a state to judge
+        /* CE3TSK 2026-10-02: the grid a US station's state is read from - the one this line carries, from its sender,
+           or else the one this very call sent before. Not the window's own grid: that one comes from the history of
+           the BASE call (and from the DX boxes), so VE3ABC's FN03 would put VE3ABC/W1 in New York (review). */
+        // parsed once, and only for a US entity's call - asked for by the state lookup and the state display (review)
+        QString stateGridValue;
+        bool stateGridParsed = false;
+        auto stateGrid = [&] () -> QString const& {
+            if (!stateGridParsed) {
+                stateGridParsed = true;
+                auto const said = phantom_decodes::parts (phantom_decodes::messageField (decodedText->string ()));
+                stateGridValue = phantom_decodes::bareCall (said.sender) == checkCall && phantom_decodes::judgeableGrid (said.grid)
+                                 ? said.grid : qsoHistory2.gridSentBy (checkCall);
+            }
+            return stateGridValue;
+        };
         logBook.getLOTW(/*in*/ checkCall, /*out*/ lotw);
         if (!lotw.isEmpty ()) {
-            priority = 1;
+            priority = dp::LoTW;
         }
         if (displayPotential_ && std_type == 3) {
             txtColor = color_StandardCall_;
@@ -592,7 +623,7 @@ int DisplayText::displayDecodedText(DecodedText* decodedText, QString myCall, QS
         } else {
             checkMode = app_mode;
         }
-        if (!jt65bc && (displayCountryName_ || displayNewCQZ_ || displayNewITUZ_ || displayNewDXCC_ || displayNewCall_ || displayNewGrid_ || displayNewPx_)) {
+        if (!jt65bc && (displayCountryName_ || anyTier_)) {
             if (!displayNewCQZ_ && !displayNewITUZ_ && !displayNewDXCC_ && displayCountryName_ && !displayNewCall_ && !displayNewPx_) {
                         logBook.getDXCC(/*in*/ checkCall, /*out*/ countryName);
                     }
@@ -635,23 +666,35 @@ int DisplayText::displayDecodedText(DecodedText* decodedText, QString myCall, QS
                     logBook.matchDXCC(/*in*/ checkCall, /*out*/ countryName, countryB4 ,countryB4BandMode);
                 }
             }
+            /* CE3TSK 2026-10-03: Worked All States - a state only from a square of a single state, here and in the log
+               (us_states::clearState). Never in WW Digi, whatever the profile says. The country is fetched when nothing
+               above did: the code below reads it. */
+            if (displayNewState_ && !wwDigi_) {
+                if (countryName.isEmpty ()) logBook.getDXCC (checkCall, countryName);
+                QString const prefix = countryName.section (',', 1, 1).trimmed ();
+                if (us_states::usEntity (prefix))   // the state worked out once (matchState answers with it)
+                    stateJudged = !logBook.matchState (prefix, checkCall, stateGrid (), stateB4, stateB4Band, displayNewStateBand_ ? dialFreq : 0,
+                                                       displayNewStateBandMode_ ? checkMode : QString {}).isEmpty ();
+            }
             /* CE3TSK: WW Digi contest - wwDigi_ switches these lookups from the 4 character
                square to the 2 character field, which is the contest multiplier. The square
                scores nothing in WW Digi, so the two are mutually exclusive and the existing
                new grid settings, colours and beep simply describe a field instead. */
-            if (displayNewGrid_) {
+            // CE3TSK 2026-10-03: one square asked as the options count it - the decode's own, and below (item 6) one heard before
+            auto matchGridAt = [&] (QString const& square, bool& b4, bool& b4BandMode) {
                 if (displayNewGridBand_ || displayNewGridBandMode_) {
                     if (displayNewGridBand_ && displayNewGridBandMode_) {
-                        logBook.matchGrid(/*in*/grid.trimmed(),/*out*/gridB4,gridB4BandMode,/*in*/dialFreq,checkMode,wwDigi_);
+                        logBook.matchGrid(/*in*/square,/*out*/b4,b4BandMode,/*in*/dialFreq,checkMode,wwDigi_);
                     } else if (displayNewGridBand_) {
-                        logBook.matchGrid(/*in*/grid.trimmed(),/*out*/gridB4,gridB4BandMode,/*in*/dialFreq,"",wwDigi_);
+                        logBook.matchGrid(/*in*/square,/*out*/b4,b4BandMode,/*in*/dialFreq,"",wwDigi_);
                     } else {
-                        logBook.matchGrid(/*in*/grid.trimmed(),/*out*/gridB4,gridB4BandMode,/*in*/0,checkMode,wwDigi_);
+                        logBook.matchGrid(/*in*/square,/*out*/b4,b4BandMode,/*in*/0,checkMode,wwDigi_);
                     }
                 } else {
-                    logBook.matchGrid(/*in*/ grid.trimmed(), /*out*/ gridB4 ,gridB4BandMode,/*in*/0,"",wwDigi_);
+                    logBook.matchGrid(/*in*/ square, /*out*/ b4 ,b4BandMode,/*in*/0,"",wwDigi_);
                 }
-            }
+            };
+            if (displayNewGrid_) matchGridAt (grid.trimmed (), gridB4, gridB4BandMode);
             if (displayNewPx_) {
                 if (displayNewPxBand_ || displayNewPxBandMode_) {
                     if (displayNewPxBand_ && displayNewPxBandMode_) {
@@ -679,9 +722,34 @@ int DisplayText::displayDecodedText(DecodedText* decodedText, QString myCall, QS
                 }
             }
 
-            if (displayNewCQZ_ || displayNewITUZ_ || displayNewDXCC_ || displayNewCall_ || displayNewGrid_ || displayNewPx_) {
+            if (anyTier_) {
 //Worked
-                if ((displayPotential_ && std_type == 3) || (std_type != 3)) {
+                /* CE3TSK 2026-10-03 (review items 7 and 6, the operator): a decode is "worked" only when a tier that is on
+                   could judge it. The call tiers - zones, DXCC, prefix, call - judge every decode; the new US state only a
+                   US call in a square of a single state; the grid tier one with a grid - its own or the one the history
+                   holds for the call (what matchGrid above was given), or else the grid this call last sent on this band
+                   in any line. That last one because a hidden line never reaches the history (so the autoselect never
+                   picks it): with "don't show it", a station whose CQ in a worked square was hidden would have no grid
+                   for its reports and RR73 after it. Heard in a worked square, the decode is worked; in a new one it is
+                   not judged - the ranking and the history never see that grid. A decode no tier on could judge - a
+                   report from a call never heard with a grid when only grid and state are on, a DX call when only the
+                   state is - is shown plainly and never hidden by "don't show it". */
+                bool gridJudged = false;
+                if (displayNewGrid_ && !checkCall.isEmpty ()) {
+                    QString const key = checkCall + QLatin1Char ('@') + ADIF::bandFromFrequency (dialFreq / 1.e6);
+                    if (!grid.trimmed ().isEmpty ()) {
+                        if (gridsHeard_.size () > 20000) gridsHeard_.clear ();   // a bound a session never reaches
+                        gridsHeard_.insert (key, grid.trimmed ());
+                        gridJudged = true;
+                    } else if (gridsHeard_.contains (key)) {
+                        bool b4 = true, b4BandMode = true;
+                        matchGridAt (gridsHeard_.value (key), b4, b4BandMode);
+                        gridJudged = b4 && b4BandMode;
+                    }
+                }
+                bool const judged = callTiers_ || gridJudged || (displayNewState_ && stateJudged);
+                if (!judged) {
+                } else if ((displayPotential_ && std_type == 3) || (std_type != 3)) {
                     if (displayWorkedColor_) {
                         bgColor = color_WorkedCall_;
                     }
@@ -710,8 +778,8 @@ int DisplayText::displayDecodedText(DecodedText* decodedText, QString myCall, QS
                     if ((displayPotential_ && std_type == 3) || std_type != 3) {
                         forceBold = true;
                         bgColor = color_NewGrid_;
-                        if (!lotw.isEmpty ()) priority = 49;
-                        else priority = 48;
+                        if (!lotw.isEmpty ()) priority = dp::NewField + 1;
+                        else priority = dp::NewField;
                         strikethrough = false;
                         underlined = false;
                         actwind = true;
@@ -721,16 +789,16 @@ int DisplayText::displayDecodedText(DecodedText* decodedText, QString myCall, QS
                     }
                     else if (otherMessagesMarker_) {
                         servis = servis.left(1) + color_NewGrid_;
-                        if (!lotw.isEmpty ()) priority = 49;
-                        else priority = 48;
+                        if (!lotw.isEmpty ()) priority = dp::NewField + 1;
+                        else priority = dp::NewField;
                         new_marker = true;
                     }
                 } else if (displayNewCQZ_ && !cqzB4) {
                     if ((displayPotential_ && std_type == 3) || std_type != 3) {
                         forceBold = true;
                         bgColor = color_NewCQZ_;
-                        if (!lotw.isEmpty ()) priority = 31;
-                        else priority = 30;
+                        if (!lotw.isEmpty ()) priority = dp::NewCQZ + 1;
+                        else priority = dp::NewCQZ;
                         strikethrough = false;
                         underlined = false;
                         actwind = true;
@@ -740,16 +808,16 @@ int DisplayText::displayDecodedText(DecodedText* decodedText, QString myCall, QS
                     }
                     else if (otherMessagesMarker_) {
                         servis = servis.left(1) + color_NewCQZ_;
-                        if (!lotw.isEmpty ()) priority = 31;
-                        else priority = 30;
+                        if (!lotw.isEmpty ()) priority = dp::NewCQZ + 1;
+                        else priority = dp::NewCQZ;
                         new_marker = true;
                     }
                 } else if ((displayNewCQZBand_ || displayNewCQZBandMode_) && !cqzB4BandMode) {
                     if ((displayPotential_ && std_type == 3) || std_type != 3) {
                         forceBold = true;
                         bgColor = color_NewCQZBand_;
-                        if (!lotw.isEmpty ()) priority = 29;
-                        else priority = 28;
+                        if (!lotw.isEmpty ()) priority = dp::NewCQZBand + 1;
+                        else priority = dp::NewCQZBand;
                         strikethrough = false;
                         underlined = false;
                         actwind = true;
@@ -759,16 +827,16 @@ int DisplayText::displayDecodedText(DecodedText* decodedText, QString myCall, QS
                     }
                     else if (otherMessagesMarker_) {
                         servis = servis.left(1) + color_NewCQZBand_;
-                        if (!lotw.isEmpty ()) priority = 29;
-                        else priority = 28;
+                        if (!lotw.isEmpty ()) priority = dp::NewCQZBand + 1;
+                        else priority = dp::NewCQZBand;
                         new_marker = true;
                     }
                 } else if (displayNewITUZ_ && !ituzB4) {
                     if ((displayPotential_ && std_type == 3) || std_type != 3) {
                         forceBold = true;
                         bgColor = color_NewITUZ_;
-                        if (!lotw.isEmpty ()) priority = 27;
-                        else priority = 26;
+                        if (!lotw.isEmpty ()) priority = dp::NewITUZ + 1;
+                        else priority = dp::NewITUZ;
                         strikethrough = false;
                         underlined = false;
                         actwind = true;
@@ -778,16 +846,16 @@ int DisplayText::displayDecodedText(DecodedText* decodedText, QString myCall, QS
                     }
                     else if (otherMessagesMarker_) {
                         servis = servis.left(1) + color_NewITUZ_;
-                        if (!lotw.isEmpty ()) priority = 27;
-                        else priority = 26;
+                        if (!lotw.isEmpty ()) priority = dp::NewITUZ + 1;
+                        else priority = dp::NewITUZ;
                         new_marker = true;
                     }
                 } else if ((displayNewITUZBand_ || displayNewITUZBandMode_) && !ituzB4BandMode) {
                     if ((displayPotential_ && std_type == 3) || std_type != 3) {
                         forceBold = true;
                         bgColor = color_NewITUZBand_;
-                        if (!lotw.isEmpty ()) priority = 25;
-                        else priority = 24;
+                        if (!lotw.isEmpty ()) priority = dp::NewITUZBand + 1;
+                        else priority = dp::NewITUZBand;
                         strikethrough = false;
                         underlined = false;
                         actwind = true;
@@ -797,16 +865,16 @@ int DisplayText::displayDecodedText(DecodedText* decodedText, QString myCall, QS
                     }
                     else if (otherMessagesMarker_) {
                         servis = servis.left(1) + color_NewITUZBand_;
-                        if (!lotw.isEmpty ()) priority = 25;
-                        else priority = 24;
+                        if (!lotw.isEmpty ()) priority = dp::NewITUZBand + 1;
+                        else priority = dp::NewITUZBand;
                         new_marker = true;
                     }
                 } else if (displayNewDXCC_ && !countryB4) {
                     if ((displayPotential_ && std_type == 3) || std_type != 3) {
                         forceBold = true;
                         bgColor = color_NewDXCC_;
-                        if (!lotw.isEmpty ()) priority = 23;
-                        else priority = 22;
+                        if (!lotw.isEmpty ()) priority = dp::NewDXCC + 1;
+                        else priority = dp::NewDXCC;
                         strikethrough = false;
                         underlined = false;
                         actwind = true;
@@ -816,16 +884,16 @@ int DisplayText::displayDecodedText(DecodedText* decodedText, QString myCall, QS
                     }
                     else if (otherMessagesMarker_) {
                         servis = servis.left(1) + color_NewDXCC_;
-                        if (!lotw.isEmpty ()) priority = 23;
-                        else priority = 22;
+                        if (!lotw.isEmpty ()) priority = dp::NewDXCC + 1;
+                        else priority = dp::NewDXCC;
                         new_marker = true;
                     }
                 } else if ((displayNewDXCCBand_ || displayNewDXCCBandMode_) && !countryB4BandMode) {
                     if ((displayPotential_ && std_type == 3) || std_type != 3) {
                         forceBold = true;
                         bgColor = color_NewDXCCBand_;
-                        if (!lotw.isEmpty ()) priority = 21;
-                        else priority = 20;
+                        if (!lotw.isEmpty ()) priority = dp::NewDXCCBand + 1;
+                        else priority = dp::NewDXCCBand;
                         strikethrough = false;
                         underlined = false;
                         actwind = true;
@@ -835,8 +903,52 @@ int DisplayText::displayDecodedText(DecodedText* decodedText, QString myCall, QS
                     }
                     else if (otherMessagesMarker_) {
                         servis = servis.left(1) + color_NewDXCCBand_;
-                        if (!lotw.isEmpty ()) priority = 21;
-                        else priority = 20;
+                        if (!lotw.isEmpty ()) priority = dp::NewDXCCBand + 1;
+                        else priority = dp::NewDXCCBand;
+                        new_marker = true;
+                    }
+                /* CE3TSK 2026-10-03: Worked All States, below new DXCC and above new grid, with a level of its own - below the
+                   wanted lists too (the operator). A state counts only from a square of a single state (us_states::clearState).
+                   Its behaviour is chosen in priorities.h, not inherited from the range it sits in: the answer counter gives up
+                   on it as on a new grid, it is not called while we call CQ, the strict directional CQ exception stays DXCC's,
+                   and the wanted lists lift it into their band. Off in a contest: the dialog forces it off with the other
+                   unscored tiers, and the lookup above is skipped in WW Digi even where a profile was never through it. */
+                } else if (displayNewState_ && !stateB4) {
+                    if ((displayPotential_ && std_type == 3) || std_type != 3) {
+                        forceBold = true;
+                        bgColor = color_NewState_;
+                        if (!lotw.isEmpty ()) priority = dp::NewState + 1;
+                        else priority = dp::NewState;
+                        strikethrough = false;
+                        underlined = false;
+                        actwind = true;
+                        if (beepOnNewState_) {
+                            beep = true;
+                        }
+                    }
+                    else if (otherMessagesMarker_) {
+                        servis = servis.left(1) + color_NewState_;
+                        if (!lotw.isEmpty ()) priority = dp::NewState + 1;
+                        else priority = dp::NewState;
+                        new_marker = true;
+                    }
+                } else if ((displayNewStateBand_ || displayNewStateBandMode_) && !stateB4Band) {   // CE3TSK 2026-10-04: or per mode
+                    if ((displayPotential_ && std_type == 3) || std_type != 3) {
+                        forceBold = true;
+                        bgColor = color_NewStateBand_;
+                        if (!lotw.isEmpty ()) priority = dp::NewStateBand + 1;
+                        else priority = dp::NewStateBand;
+                        strikethrough = false;
+                        underlined = false;
+                        actwind = true;
+                        if (beepOnNewState_) {
+                            beep = true;
+                        }
+                    }
+                    else if (otherMessagesMarker_) {
+                        servis = servis.left(1) + color_NewStateBand_;
+                        if (!lotw.isEmpty ()) priority = dp::NewStateBand + 1;
+                        else priority = dp::NewStateBand;
                         new_marker = true;
                     }
                 /* CE3TSK: !wwDigi_ - in contest mode this tier is handled at the head of the
@@ -845,8 +957,8 @@ int DisplayText::displayDecodedText(DecodedText* decodedText, QString myCall, QS
                     if ((displayPotential_ && std_type == 3) || std_type != 3) {
                         forceBold = true;
                         bgColor = color_NewGrid_;
-                        if (!lotw.isEmpty ()) priority = 16;
-                        else priority = 15;
+                        if (!lotw.isEmpty ()) priority = dp::NewGrid + 1;
+                        else priority = dp::NewGrid;
                         strikethrough = false;
                         underlined = false;
                         actwind = true;
@@ -856,16 +968,16 @@ int DisplayText::displayDecodedText(DecodedText* decodedText, QString myCall, QS
                     }
                     else  if (otherMessagesMarker_) {
                         servis = servis.left(1) + color_NewGrid_;
-                        if (!lotw.isEmpty ()) priority = 16;
-                        else priority = 15;
+                        if (!lotw.isEmpty ()) priority = dp::NewGrid + 1;
+                        else priority = dp::NewGrid;
                         new_marker = true;
                     }
                 } else if (!wwDigi_ && (displayNewGridBand_ || displayNewGridBandMode_) && !gridB4BandMode) { /* CE3TSK: see above */
                     if ((displayPotential_ && std_type == 3) || std_type != 3) {
                         forceBold = true;
                         bgColor = color_NewGridBand_;
-                        if (!lotw.isEmpty ()) priority = 14;
-                        else priority = 13;
+                        if (!lotw.isEmpty ()) priority = dp::NewGridBand + 1;
+                        else priority = dp::NewGridBand;
                         strikethrough = false;
                         underlined = false;
                         actwind = true;
@@ -875,16 +987,16 @@ int DisplayText::displayDecodedText(DecodedText* decodedText, QString myCall, QS
                     }
                     else if (otherMessagesMarker_) {
                         servis = servis.left(1) + color_NewGridBand_;
-                        if (!lotw.isEmpty ()) priority = 14;
-                        else priority = 13;
+                        if (!lotw.isEmpty ()) priority = dp::NewGridBand + 1;
+                        else priority = dp::NewGridBand;
                         new_marker = true;
                     }
                 } else  if (displayNewPx_ && !pxB4) {
                     if ((displayPotential_ && std_type == 3) || std_type != 3) {
                         forceBold = true;
                         bgColor = color_NewPx_;
-                        if (!lotw.isEmpty ()) priority = 12;
-                        else priority = 11;
+                        if (!lotw.isEmpty ()) priority = dp::NewPx + 1;
+                        else priority = dp::NewPx;
                         strikethrough = false;
                         underlined = false;
                         actwind = true;
@@ -894,16 +1006,16 @@ int DisplayText::displayDecodedText(DecodedText* decodedText, QString myCall, QS
                     }
                     else  if (otherMessagesMarker_) {
                         servis = servis.left(1) + color_NewPx_;
-                        if (!lotw.isEmpty ()) priority = 12;
-                        else priority = 11;
+                        if (!lotw.isEmpty ()) priority = dp::NewPx + 1;
+                        else priority = dp::NewPx;
                         new_marker = true;
                     }
                 } else if ((displayNewPxBand_ || displayNewPxBandMode_) && !pxB4BandMode) {
                     if ((displayPotential_ && std_type == 3) || std_type != 3) {
                         forceBold = true;
                         bgColor = color_NewPxBand_;
-                        if (!lotw.isEmpty ()) priority = 10;
-                        else priority = 9;
+                        if (!lotw.isEmpty ()) priority = dp::NewPxBand + 1;
+                        else priority = dp::NewPxBand;
                         strikethrough = false;
                         underlined = false;
                         actwind = true;
@@ -913,16 +1025,16 @@ int DisplayText::displayDecodedText(DecodedText* decodedText, QString myCall, QS
                     }
                     else  if (otherMessagesMarker_) {
                         servis = servis.left(1) + color_NewPxBand_;
-                        if (!lotw.isEmpty ()) priority = 10;
-                        else priority = 9;
+                        if (!lotw.isEmpty ()) priority = dp::NewPxBand + 1;
+                        else priority = dp::NewPxBand;
                         new_marker = true;
                     }
                 } else  if (displayNewCall_ && !callB4) {
                     if ((displayPotential_ && std_type == 3) || std_type != 3) {
                         forceBold = true;
                         bgColor = color_NewCall_;
-                        if (!lotw.isEmpty ()) priority = 8;
-                        else priority = 7;
+                        if (!lotw.isEmpty ()) priority = dp::NewCall + 1;
+                        else priority = dp::NewCall;
                         strikethrough = false;
                         underlined = false;
                         actwind = true;
@@ -932,16 +1044,16 @@ int DisplayText::displayDecodedText(DecodedText* decodedText, QString myCall, QS
                     }
                     else  if (otherMessagesMarker_) {
                         servis = servis.left(1) + color_NewCall_;
-                        if (!lotw.isEmpty ()) priority = 8;
-                        else priority = 7;
+                        if (!lotw.isEmpty ()) priority = dp::NewCall + 1;
+                        else priority = dp::NewCall;
                         new_marker = true;
                     }
                 } else if ((displayNewCallBand_ || displayNewCallBandMode_) && !callB4BandMode) {
                     if ((displayPotential_ && std_type == 3) || std_type != 3) {
                         forceBold = true;
                         bgColor = wwDigi_ ? color_NewCall_ : color_NewCallBand_;   /* CE3TSK: one colour in a contest - once per band is the dupe rule itself */
-                        if (!lotw.isEmpty ()) priority = 6;
-                        else priority = 5;
+                        if (!lotw.isEmpty ()) priority = dp::NewCallBand + 1;
+                        else priority = dp::NewCallBand;
                         strikethrough = false;
                         underlined = false;
                         actwind = true;
@@ -951,12 +1063,12 @@ int DisplayText::displayDecodedText(DecodedText* decodedText, QString myCall, QS
                     }
                     else  if (otherMessagesMarker_) {
                         servis = servis.left(1) + (wwDigi_ ? color_NewCall_ : color_NewCallBand_);
-                        if (!lotw.isEmpty ()) priority = 6;
-                        else priority = 5;
+                        if (!lotw.isEmpty ()) priority = dp::NewCallBand + 1;
+                        else priority = dp::NewCallBand;
                         new_marker = true;
                     }
                 } 
-                if (displayWorkedDontShow_ && std_type != 2 && ((!forceBold && ((displayPotential_ && std_type == 3) || std_type != 3)) || (!new_marker && otherMessagesMarker_ && std_type == 3))) {
+                if (judged && displayWorkedDontShow_ && std_type != 2 && ((!forceBold && ((displayPotential_ && std_type == 3) || std_type != 3)) || (!new_marker && otherMessagesMarker_ && std_type == 3))) {
                     show_line = false;
                 }
             }
@@ -964,6 +1076,9 @@ int DisplayText::displayDecodedText(DecodedText* decodedText, QString myCall, QS
             logBook.getDXCC(/*in*/ checkCall, /*out*/ countryName);
         }
 
+        /* CE3TSK 2026-10-03 (review): no lookup above fills the country when only grid (or state in WW Digi) is on and no
+           country names are shown - items[1] then read past an empty list */
+        if (countryName.isEmpty ()) logBook.getDXCC (checkCall, countryName);
         QStringList items = countryName.split(',');
         mpx = items[1];
 
@@ -988,23 +1103,25 @@ int DisplayText::displayDecodedText(DecodedText* decodedText, QString myCall, QS
                 break;
             }
         }
-        if (bwantedCall && priority < 5) {
-            priority = 4;
+        /* CE3TSK 2026-10-03: the wanted lists by the named levels (priorities.h) - over no new tier their low band, over a
+           tier below the chased class the wanted band, which ranks above a new US state since the same day */
+        if (bwantedCall && dp::noNewTier (priority)) {
+            priority = dp::WantedCallOld;
             beep = true;
-        } else if ((bwantedPrefix || bwantedGrid) && priority < 5) {
-            priority = 3;
+        } else if ((bwantedPrefix || bwantedGrid) && dp::noNewTier (priority)) {
+            priority = dp::WantedPrefixOld;
 //            beep = true;
-        } else if (bwantedCountry && priority < 5) {
-            priority = 2;
+        } else if (bwantedCountry && dp::noNewTier (priority)) {
+            priority = dp::WantedCountryOld;
 //            beep = true;
-        } else if (bwantedCall && priority < 20) {
-            priority = 19;
+        } else if (bwantedCall && dp::wantedMayLift (priority)) {
+            priority = dp::WantedCall;
             beep = true;
-        } else if ((bwantedPrefix || bwantedGrid) && priority < 20) {
-            priority = 18;
+        } else if ((bwantedPrefix || bwantedGrid) && dp::wantedMayLift (priority)) {
+            priority = dp::WantedPrefix;
             beep = true;
-        } else if (bwantedCountry && priority < 20) {
-            priority = 17;
+        } else if (bwantedCountry && dp::wantedMayLift (priority)) {
+            priority = dp::WantedCountry;
             beep = true;
         }
          
@@ -1022,27 +1139,20 @@ int DisplayText::displayDecodedText(DecodedText* decodedText, QString myCall, QS
                 // do some obvious abbreviations, don't care if we using just prefixes here, not big deal to run some replace's
                 cntry = items[2];
             }
-            /* CE3TSK 2026-10-02: a US station's state or states from its grid square - "U.S.A.-CA", "K-NY/MA"
-               (usstates.h) - the grid this line carries, from its sender, or else the one this very call sent
-               before. Not the window's own grid: that one comes from the history of the BASE call (and from the
-               DX boxes), so VE3ABC's FN03 would put VE3ABC/W1 in New York (review). A grid in doubt below never
-               names a state: every state square fits a US call (test/geodata_tables_check.py), and no other
-               call is placed. */
-            if (displayUSStates_) {
-                auto const said = false_decodes::parts (false_decodes::messageField (decodedText->string ()));
-                QString const stateGrid = false_decodes::bareCall (said.sender) == checkCall && false_decodes::judgeableGrid (said.grid)
-                                          ? said.grid : qsoHistory2.gridSentBy (checkCall);
-                cntry += us_states::suffix (items[1], stateGrid);
-            }
-            /* CE3TSK 2026-09-30: the grid does not lie in the country of this call (falsedecodes.h) -
+            /* CE3TSK 2026-10-02: a US station's state or states from its grid square - "USA, CA", "K, NY/MA"
+               (usstates.h), from stateGrid above; since 2026-10-03 a shared square the call's licence resolves names
+               that state alone, "USA, MA". A grid in doubt below never names a state: every state square fits a US call
+               (test/geodata_tables_check.py), and no other call is placed. */
+            if (displayUSStates_ && us_states::usEntity (items[1])) cntry += us_states::suffix (items[1], stateGrid (), logBook.licenseState (checkCall));
+            /* CE3TSK 2026-09-30: the grid does not lie in the country of this call (phantomdecodes.h) -
                ?Chile?, the leading mark first so a window narrowed by the splitter still shows it; a call
                of no country has its where? (or ?) underlined as it stands - it is a question already.
                Only when the country shown is the call that was judged. */
-            if (checkCall == false_decodes::bareCall (doubt.sender)) {
-                if (doubt.reasons & false_decodes::Grid) {
+            if (checkCall == phantom_decodes::bareCall (doubt.sender)) {
+                if (doubt.reasons & phantom_decodes::Grid) {
                     cntry = '?' + cntry + '?';
                     cntryDoubtFrom = 0;
-                } else if (doubt.reasons & false_decodes::Where) cntryDoubtFrom = 0;
+                } else if (doubt.reasons & phantom_decodes::Where) cntryDoubtFrom = 0;
             }
         }
         if (!bwantedCall && !bwantedPrefix && !bwantedGrid && !bwantedCountry) {
@@ -1102,7 +1212,7 @@ int DisplayText::displayDecodedText(DecodedText* decodedText, QString myCall, QS
     if (bypassAllFilters || bypassRxfFilters) {
             show_line = true;
     }
-    /* CE3TSK 2026-09-30: a likely false decode (falsedecodes.h) keeps its colour, but rings no bell
+    /* CE3TSK 2026-09-30: a likely phantom decode (phantomdecodes.h) keeps its colour, but rings no bell
        and raises no window, and what is in doubt - the grid, a /R call, the two /P calls, a call of no country - is
        underlined in red. The words are found as whole words from the message column on, the last one of each; a word
        found twice (a /R call of no country) is drawn once - appendText () skips a span it has passed. */
@@ -1121,8 +1231,8 @@ int DisplayText::displayDecodedText(DecodedText* decodedText, QString myCall, QS
         };
         for (auto const& r : doubt.rovers) underline (r);
         for (auto const& c : doubt.portables) underline (c);
-        if (doubt.reasons & false_decodes::Grid) underline (doubt.grid);
-        if (doubt.reasons & false_decodes::Where) underline (doubt.sender);
+        if (doubt.reasons & phantom_decodes::Grid) underline (doubt.grid);
+        if (doubt.reasons & phantom_decodes::Where) underline (doubt.sender);
         std::sort (doubtful.begin (), doubtful.end ());
     }
     if (show_line) {
@@ -1143,8 +1253,9 @@ int DisplayText::displayDecodedText(DecodedText* decodedText, QString myCall, QS
         txtColor = Radio::convert_dark("#000000",useDarkStyle_);
     }
 
-    /* CE3TSK: contest points as a ranking tier, sitting below the new field tier (48/49, both
-       the never-worked and the new-on-this-band field since 2026-08-29) and above New CQ zone (30/31): 1 point ranks 32/33, 7 points 44/45, the odd
+    /* CE3TSK: contest points as a ranking tier, sitting below the new field tier (52/53, both
+       the never-worked and the new-on-this-band field since 2026-08-29) and above New CQ zone (34/35): 1 point ranks 36/37, 7 points 48/49
+       (four higher since 2026-10-03, when the new US state got a level of its own - 17-20, the wanted band moving to 21-23; priorities.h), the odd
        value being the LOTW variant as everywhere else in this ladder.
 
        Applied as a maximum AFTER the chain rather than as another "else if" inside it. Every
@@ -1156,17 +1267,17 @@ int DisplayText::displayDecodedText(DecodedText* decodedText, QString myCall, QS
     if (specialOp_ != Configuration::SpecialOperatingActivity::NONE && !grid.isEmpty()) {
         contestPts = contest_points (specialOp_, grid_distance_km (myGrid_, grid, true));
         if (contestPts > 0) {
-            int const pp = 30 + 2 * contestPts + (lotw.isEmpty () ? 0 : 1);
+            int const pp = dp::ContestPointsBase + 2 * contestPts + (lotw.isEmpty () ? 0 : 1);
             if (pp > priority) priority = pp;
         }
     }
     if (show_line) {
         if (!checkCall.isEmpty () && (std_type == 1 || std_type == 2 || std_type == 4 || (std_type == 3 && !param.isEmpty()))) {
-            /* CE3TSK 2026-09-30: the sequencer's side of a likely false decode - set or cleared by
+            /* CE3TSK 2026-09-30: the sequencer's side of a likely phantom decode - set or cleared by
                the message it is judged on, and only when this entry is the call that was judged. Only an
                ordinary decode clears it: a hint, a-priori or TX-background one can reproduce the very call
                it was fed, so it holds a station back but never releases one (Verdict::reliable). */
-            QsoHistory::Doubt const d = checkCall != false_decodes::bareCall (doubt.sender) ? QsoHistory::DOUBT_KEEP
+            QsoHistory::Doubt const d = checkCall != phantom_decodes::bareCall (doubt.sender) ? QsoHistory::DOUBT_KEEP
                                       : doubt.noAnswer ? QsoHistory::DOUBT_SET
                                       : doubt.reliable ? QsoHistory::DOUBT_CLEAR : QsoHistory::DOUBT_KEEP;
             qsoHistory.message(checkCall,status,priority,param,tyyp,countryName.left(2),mpx,c_time,decodedText->report(),decodedText->frequencyOffset(),checkMode,d);

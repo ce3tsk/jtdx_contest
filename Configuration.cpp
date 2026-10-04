@@ -162,6 +162,8 @@ extern "C" {
 #include <QStringList>
 #include <QStringListModel>
 #include <QLineEdit>
+#include <QMessageBox>   /* CE3TSK 2026-10-04 */
+#include <QPushButton>
 #include <QRegExpValidator>
 #include <QIntValidator>
 #include <QThread>
@@ -194,6 +196,7 @@ extern "C" {
 #include "JTDXMessageBox.hpp"
 #include "FileDownload.hpp"            /* CE3TSK */
 #include "logbook/countrydat.h"       /* CE3TSK */
+#include "ownstation.h"                /* CE3TSK 2026-10-04 */
 
 #include "pimpl_impl.hpp"
 #include "uilimits.h"   // CE3TSK: the .ui size limits against the current font
@@ -211,6 +214,9 @@ namespace
   char const * const lotw_url {"https://lotw.arrl.org/lotw-user-activity.csv"};
   char const * const cty_file_name {"cty.dat"};
   char const * const lotw_file_name {"lotw-user-activity.csv"};
+  // CE3TSK 2026-10-03: the US licence states (licensestates.h), rebuilt from the FCC's file and published by the project
+  char const * const license_url {"https://ce3tsk.com/download/us-license-states.txt"};
+  char const * const license_file_name {"us-license-states.txt"};
 
   // these undocumented flag values when stored in (Qt::UserRole - 1)
   // of a ComboBox item model index allow the item to be enabled or
@@ -246,6 +252,10 @@ namespace
     {"colorNewITUZBand", "#c0d0a0", "#4f593b"},
     {"colorNewDXCC", "#ff6fff", "#800080"},
     {"colorNewDXCCBand", "#d792d7", "#813981"},
+    /* CE3TSK 2026-10-03: Worked All States, blue - a hue no other row uses; worst text pair 4.78 light, 4.40 dark,
+       and 6.45 / 3.52 for the band row */
+    {"colorNewState", "#7fb0ff", "#1e3f8a"},
+    {"colorNewStateBand", "#b4ccf4", "#3a527a"},
     {"colorNewGrid", "#f88b80", "#005f5f"},
     {"colorNewGridBand", "#80d0d0", "#2a5e5e"},
     {"colorNewPx", "#00c34e", "#006000"},
@@ -468,6 +478,18 @@ private:
      next_color_X_) still name all 34 by hand - a colour added here must be added there too. */
   struct ColorSlot { char const * key; QColor impl::* live; QColor impl::* next; };
   static ColorSlot const color_slots[];   // NOT "slots": Qt's moc macro expands it away
+  /* CE3TSK 2026-10-04 (review): the six phantom-decode options and the suffixes of their keys - one table for
+     read_settings and write_settings, which used to spell the six out three times */
+  struct PhantomOption { char const * name; bool impl::* member; QCheckBox * Ui::configuration_dialog::* box; };
+  static PhantomOption const phantom_options[];
+  /* CE3TSK 2026-10-04: the check of the operator's own call and grid (ownstation.h) */
+  std::function<QString (QString const&)> country_lookup_;
+  QString call_tooltip_, grid_tooltip_;   // the boxes' own tooltips, before a doubt is added
+  own_station::Verdict own_verdict () const;
+  QString own_call_doubt (own_station::Verdict const&) const;
+  QString own_grid_doubt (own_station::Verdict const&) const;
+  void refresh_own_marks ();
+  bool own_station_confirmed ();
 
   bool load_audio_devices (QAudio::Mode, QComboBox *, QAudioDeviceInfo *);
   void update_audio_channels (QComboBox const *, int, QComboBox *, bool);
@@ -478,6 +500,15 @@ private:
   void initialize_models ();
   /* CE3TSK: force and grey the settings a contest owns */
   void apply_special_op_lock (bool locked);
+  /* CE3TSK 2026-10-03 (review item 10): is any "new one" tier on in the open dialog - and the one place the "worked"
+     options and their samples are set from it; eight copies did this, and one had lost a tier */
+  bool any_tier_staged () const;
+  void refresh_worked_options ();
+  /* every tier's sample labels from the staged values - overall, and band only under a ticked tier (review 2026-10-03,
+     items 3 and 10: the per-slot copies were replaced, and an upgraded profile showed the band samples of an unticked
+     new US state); each as three - the main one, "my call", and "other messages" (only with that option) */
+  void refresh_samples ();
+  void show_samples (QLabel * main, QLabel * mc, QLabel * sc, bool on);
   bool split_mode () const
   {
     return
@@ -547,6 +578,7 @@ private:
   Q_SLOT void on_delete_macro_push_button_clicked (bool = false);
   Q_SLOT void on_PTT_method_button_group_buttonClicked (int);
   Q_SLOT void on_callsign_line_edit_textChanged ();
+  Q_SLOT void on_callsign_line_edit_editingFinished ();   // CE3TSK 2026-10-04
   Q_SLOT void on_grid_line_edit_textChanged ();
   Q_SLOT void on_grid_line_edit_editingFinished ();
   Q_SLOT void on_content_line_edit_textChanged(QString const&);
@@ -567,6 +599,7 @@ private:
   Q_SLOT void on_usStates_check_box_clicked (bool checked);   /* CE3TSK 2026-10-02 */
   Q_SLOT void on_cty_download_push_button_clicked (bool);    // CE3TSK: data file updates
   Q_SLOT void on_lotw_download_push_button_clicked (bool);
+  Q_SLOT void on_license_download_push_button_clicked (bool);   // CE3TSK 2026-10-03
   void start_data_file_download (FileDownload&, char const * url, char const * file_name,
                                  QDate (* version_of) (QByteArray const&), QString const& not_that_file);
   void data_file_download_failed (char const * file_name, FileDownload::Failure, QString const& detail);
@@ -582,8 +615,8 @@ private:
   Q_SLOT void on_autolog_check_box_clicked(bool checked);
   Q_SLOT void on_write_decoded_check_box_clicked(bool checked);
   Q_SLOT void on_write_decoded_debug_check_box_clicked(bool checked);
-  Q_SLOT void on_falseDecodeGridMark_check_box_toggled (bool checked);    /* CE3TSK */
-  Q_SLOT void on_falseDecodeRoverMark_check_box_toggled (bool checked);   /* CE3TSK */
+  Q_SLOT void on_phantomDecodeGridMark_check_box_toggled (bool checked);    /* CE3TSK */
+  Q_SLOT void on_phantomDecodeRoverMark_check_box_toggled (bool checked);   /* CE3TSK */
   Q_SLOT void on_txtColor_check_box_clicked(bool checked);
   Q_SLOT void on_workedStriked_check_box_clicked(bool checked);
   Q_SLOT void on_workedUnderlined_check_box_clicked(bool checked);
@@ -592,6 +625,7 @@ private:
   Q_SLOT void on_newCQZ_check_box_clicked(bool checked);
   Q_SLOT void on_newITUZ_check_box_clicked(bool checked);
   Q_SLOT void on_newDXCC_check_box_clicked(bool checked);
+  Q_SLOT void on_newState_check_box_clicked(bool checked);
   Q_SLOT void on_newCall_check_box_clicked(bool checked);
   Q_SLOT void on_newPx_check_box_clicked(bool checked);
   Q_SLOT void on_rbSpecialOpNone_toggled(bool checked);   /* CE3TSK */
@@ -600,6 +634,8 @@ private:
   Q_SLOT void on_newCQZBand_check_box_clicked(bool checked);
   Q_SLOT void on_newITUZBand_check_box_clicked(bool checked);
   Q_SLOT void on_newDXCCBand_check_box_clicked(bool checked);
+  Q_SLOT void on_newStateBand_check_box_clicked(bool checked);
+  Q_SLOT void on_newStateBandMode_check_box_clicked(bool checked);   // CE3TSK 2026-10-04
   Q_SLOT void on_newCallBand_check_box_clicked(bool checked);
   Q_SLOT void on_newPxBand_check_box_clicked(bool checked);
   Q_SLOT void on_newGridBand_check_box_clicked(bool checked);
@@ -624,7 +660,9 @@ private:
   Q_SLOT void on_pbNewITUZ_clicked();
   Q_SLOT void on_pbNewITUZBand_clicked();
   Q_SLOT void on_pbNewDXCC_clicked();
+  Q_SLOT void on_pbNewState_clicked();
   Q_SLOT void on_pbNewDXCCBand_clicked();
+  Q_SLOT void on_pbNewStateBand_clicked();
   Q_SLOT void on_pbNewCall_clicked();
   Q_SLOT void on_pbNewCallBand_clicked();
   Q_SLOT void on_pbNewPx_clicked();
@@ -678,6 +716,7 @@ private:
   QNetworkAccessManager * network_manager_;   // CE3TSK: data file updates
   FileDownload cty_download_;
   FileDownload lotw_download_;
+  FileDownload license_download_;   // CE3TSK 2026-10-03
   QDir temp_dir_;
   QDir default_save_directory_;
   QDir save_directory_;
@@ -778,9 +817,13 @@ private:
   QColor color_NewITUZBand_;
   QColor next_color_NewITUZBand_;
   QColor color_NewDXCC_;
+  QColor color_NewState_;
   QColor next_color_NewDXCC_;
+  QColor next_color_NewState_;
   QColor color_NewDXCCBand_;
+  QColor color_NewStateBand_;
   QColor next_color_NewDXCCBand_;
+  QColor next_color_NewStateBand_;
   QColor color_NewGrid_;
   QColor next_color_NewGrid_;
   QColor color_NewGridBand_;
@@ -812,9 +855,13 @@ private:
   QColor color_NewITUZBand_dark_;
   QColor next_color_NewITUZBand_dark_;
   QColor color_NewDXCC_dark_;
+  QColor color_NewState_dark_;
   QColor next_color_NewDXCC_dark_;
+  QColor next_color_NewState_dark_;
   QColor color_NewDXCCBand_dark_;
+  QColor color_NewStateBand_dark_;
   QColor next_color_NewDXCCBand_dark_;
+  QColor next_color_NewStateBand_dark_;
   QColor color_NewGrid_dark_;
   QColor next_color_NewGrid_dark_;
   QColor color_NewGridBand_dark_;
@@ -931,7 +978,10 @@ private:
   bool newITUZBand_;
   bool newITUZBandMode_;
   bool newDXCC_;
+  bool newState_;
   bool newDXCCBand_;
+  bool newStateBand_;
+  bool newStateBandMode_;   // CE3TSK 2026-10-04: per mode, as the other tiers have it
   bool newDXCCBandMode_;
   bool newCall_;
   bool newCallBand_;
@@ -979,7 +1029,10 @@ private:
     bool newITUZBand = false;
     bool newITUZBandMode = false;
     bool newDXCC = true;
+    bool newState = true;
     bool newDXCCBand = true;
+    bool newStateBand = true;
+    bool newStateBandMode = false;
     bool newDXCCBandMode = true;
     bool newPx = false;
     bool newPxBand = false;
@@ -992,6 +1045,7 @@ private:
     bool beepOnNewCQZ = false;
     bool beepOnNewITUZ = false;
     bool beepOnNewDXCC = false;
+    bool beepOnNewState = false;
     /* CE3TSK: automatic band switching. A contest picks its own bands, and the scheduler
        combo boxes stay bound to the everyday frequency list, so leaving it running would
        move the radio to a frequency the contest list does not contain. */
@@ -1001,6 +1055,15 @@ private:
   SpecialOperatingActivity specialOp_;
   SpecialOpSettings savedSpecialOp_;
   SpecialOpSettings dlgEntrySpecialOp_;
+  /* CE3TSK 2026-10-04 (review): leaving a contest in this dialog - "None" chosen while a committed contest holds the
+     operator's own values parked. The members still hold what the contest forced, so a tier ticked there refills its
+     children from the operator's own set, dlgEntrySpecialOp_ (handed back by on_rbSpecialOpNone_toggled), and a child
+     clicked there is recorded in it - so OK keeps it even if its tier is turned off afterwards (accept, keep) */
+  bool leaving_contest () const
+  {
+    return SpecialOperatingActivity::NONE != specialOp_ && SpecialOperatingActivity::NONE == next_specialOp_ && specialOpSaved_;
+  }
+  bool own (bool member, bool SpecialOpSettings::* parked) const {return leaving_contest () ? dlgEntrySpecialOp_.*parked : member;}
   bool specialOpSaved_;
   bool newPotential_;
   bool hideAfrica_;
@@ -1022,7 +1085,10 @@ private:
   bool next_newITUZBand_;
   bool next_newITUZBandMode_;
   bool next_newDXCC_;
+  bool next_newState_;
   bool next_newDXCCBand_;
+  bool next_newStateBand_;
+  bool next_newStateBandMode_;
   bool next_newDXCCBandMode_;
   bool next_newCall_;
   bool next_newCallBand_;
@@ -1048,6 +1114,7 @@ private:
   bool beepOnNewCQZ_;
   bool beepOnNewITUZ_;
   bool beepOnNewDXCC_;
+  bool beepOnNewState_;
   bool beepOnNewGrid_;
   bool beepOnNewCall_;
   bool beepOnNewPx_;
@@ -1064,12 +1131,12 @@ private:
   bool enable_udp2_broadcast_;
   bool write_decoded_;
   bool write_decoded_debug_;
-  bool falseDecodeGridMark_;       /* CE3TSK */
-  bool falseDecodeGridNoAnswer_;
-  bool falseDecodeRoverMark_;
-  bool falseDecodeRoverNoAnswer_;
-  bool falseDecodePortableMark_;
-  bool falseDecodeWhereMark_;
+  bool phantomDecodeGridMark_;       /* CE3TSK */
+  bool phantomDecodeGridNoAnswer_;
+  bool phantomDecodeRoverMark_;
+  bool phantomDecodeRoverNoAnswer_;
+  bool phantomDecodePortableMark_;
+  bool phantomDecodeWhereMark_;
   bool udpWindowToFront_;
   bool udpWindowRestore_;
   DataMode data_mode_;
@@ -1086,6 +1153,15 @@ private:
   
 
   friend class Configuration;
+};
+
+Configuration::impl::PhantomOption const Configuration::impl::phantom_options[] = {
+  {"GridMark",      &impl::phantomDecodeGridMark_, &Ui::configuration_dialog::phantomDecodeGridMark_check_box},
+  {"GridNoAnswer",  &impl::phantomDecodeGridNoAnswer_, &Ui::configuration_dialog::phantomDecodeGridNoAnswer_check_box},
+  {"RoverMark",     &impl::phantomDecodeRoverMark_, &Ui::configuration_dialog::phantomDecodeRoverMark_check_box},
+  {"RoverNoAnswer", &impl::phantomDecodeRoverNoAnswer_, &Ui::configuration_dialog::phantomDecodeRoverNoAnswer_check_box},
+  {"PortableMark",  &impl::phantomDecodePortableMark_, &Ui::configuration_dialog::phantomDecodePortableMark_check_box},
+  {"WhereMark",     &impl::phantomDecodeWhereMark_, &Ui::configuration_dialog::phantomDecodeWhereMark_check_box},
 };
 
 Configuration::impl::ColorSlot const Configuration::impl::color_slots[] = {
@@ -1108,9 +1184,13 @@ Configuration::impl::ColorSlot const Configuration::impl::color_slots[] = {
   {"colorNewITUZBand",     &impl::color_NewITUZBand_,     &impl::next_color_NewITUZBand_},
   {"colorNewITUZBand_dark", &impl::color_NewITUZBand_dark_, &impl::next_color_NewITUZBand_dark_},
   {"colorNewDXCC",         &impl::color_NewDXCC_,         &impl::next_color_NewDXCC_},
+  {"colorNewState",         &impl::color_NewState_,         &impl::next_color_NewState_},
   {"colorNewDXCC_dark",    &impl::color_NewDXCC_dark_,    &impl::next_color_NewDXCC_dark_},
+  {"colorNewState_dark",    &impl::color_NewState_dark_,    &impl::next_color_NewState_dark_},
   {"colorNewDXCCBand",     &impl::color_NewDXCCBand_,     &impl::next_color_NewDXCCBand_},
+  {"colorNewStateBand",     &impl::color_NewStateBand_,     &impl::next_color_NewStateBand_},
   {"colorNewDXCCBand_dark", &impl::color_NewDXCCBand_dark_, &impl::next_color_NewDXCCBand_dark_},
+  {"colorNewStateBand_dark", &impl::color_NewStateBand_dark_, &impl::next_color_NewStateBand_dark_},
   {"colorNewGrid",         &impl::color_NewGrid_,         &impl::next_color_NewGrid_},
   {"colorNewGrid_dark",    &impl::color_NewGrid_dark_,    &impl::next_color_NewGrid_dark_},
   {"colorNewGridBand",     &impl::color_NewGridBand_,     &impl::next_color_NewGridBand_},
@@ -1154,7 +1234,10 @@ bool Configuration::restart_audio_output () const {return m_->restart_sound_outp
 bool Configuration::restart_tci () const {return m_->restart_tci_device_;}
 auto Configuration::type_2_msg_gen () const -> Type2MsgGen {return m_->type_2_msg_gen_;}
 QString Configuration::my_callsign () const {return m_->my_callsign_;}
-QString Configuration::my_grid () const {return m_->my_grid_;}
+/* CE3TSK 2026-10-04: the first 8 characters at most (the operator) - the box takes a locator of 12 (IO91wm99aa00),
+   but everything the program does with it - FT8, distances, the log, PSK Reporter, UDP - uses 8 at most: a 12
+   character grid ran past a fixed array in QsoHistory::fromQth and aborted production. */
+QString Configuration::my_grid () const {return m_->my_grid_.left (8);}
 QString Configuration::timeFrom () const {return m_->timeFrom_;}
 QString Configuration::content () const {return m_->content_;}
 QString Configuration::countries () const {return m_->countries_;}
@@ -1179,7 +1262,9 @@ QColor Configuration::color_NewCQZBand () const {return m_->useDarkStyle_? m_->c
 QColor Configuration::color_NewITUZ () const {return m_->useDarkStyle_? m_->color_NewITUZ_dark_ : m_->color_NewITUZ_;}
 QColor Configuration::color_NewITUZBand () const {return m_->useDarkStyle_? m_->color_NewITUZBand_dark_ : m_->color_NewITUZBand_;}
 QColor Configuration::color_NewDXCC () const {return m_->useDarkStyle_? m_->color_NewDXCC_dark_ : m_->color_NewDXCC_;}
+QColor Configuration::color_NewState () const {return m_->useDarkStyle_? m_->color_NewState_dark_ : m_->color_NewState_;}
 QColor Configuration::color_NewDXCCBand () const {return m_->useDarkStyle_? m_->color_NewDXCCBand_dark_ : m_->color_NewDXCCBand_;}
+QColor Configuration::color_NewStateBand () const {return m_->useDarkStyle_? m_->color_NewStateBand_dark_ : m_->color_NewStateBand_;}
 QColor Configuration::color_NewGrid () const {return m_->useDarkStyle_? m_->color_NewGrid_dark_ : m_->color_NewGrid_;}
 QColor Configuration::color_NewGridBand () const {return m_->useDarkStyle_? m_->color_NewGridBand_dark_ : m_->color_NewGridBand_;}
 QColor Configuration::color_NewCall () const {return m_->useDarkStyle_? m_->color_NewCall_dark_ : m_->color_NewCall_;}
@@ -1292,7 +1377,16 @@ bool Configuration::newITUZ () const {return m_->newITUZ_;}
 bool Configuration::newITUZBand () const {return m_->newITUZBand_;}
 bool Configuration::newITUZBandMode () const {return m_->newITUZBandMode_;}
 bool Configuration::newDXCC () const {return m_->newDXCC_;}
+bool Configuration::newState () const {return m_->newState_;}
+/* CE3TSK 2026-10-03 (review): any new-one tier chosen - the zones included, which the autoselect's copy of this left out;
+   grid as the operator chose it, not as a contest forces it */
+bool Configuration::anyNewTierChosen () const
+{
+  return m_->newCQZ_ || m_->newITUZ_ || m_->newDXCC_ || m_->newState_ || newGridUserChoice () || m_->newPx_ || m_->newCall_;
+}
 bool Configuration::newDXCCBand () const {return m_->newDXCCBand_;}
+bool Configuration::newStateBand () const {return m_->newStateBand_;}
+bool Configuration::newStateBandMode () const {return m_->newStateBandMode_;}
 bool Configuration::newDXCCBandMode () const {return m_->newDXCCBandMode_;}
 bool Configuration::newCall () const {return m_->newCall_;}
 bool Configuration::newCallBand () const {return m_->newCallBand_;}
@@ -1468,6 +1562,7 @@ bool Configuration::beepOnMyCall () const {return m_->beepOnMyCall_;}
 bool Configuration::beepOnNewCQZ () const {return m_->beepOnNewCQZ_;}
 bool Configuration::beepOnNewITUZ () const {return m_->beepOnNewITUZ_;}
 bool Configuration::beepOnNewDXCC () const {return m_->beepOnNewDXCC_;}
+bool Configuration::beepOnNewState () const {return m_->beepOnNewState_;}
 bool Configuration::beepOnNewGrid () const {return m_->beepOnNewGrid_;}
 bool Configuration::beepOnNewCall () const {return m_->beepOnNewCall_;}
 bool Configuration::beepOnNewPx () const {return m_->beepOnNewPx_;}
@@ -1485,12 +1580,12 @@ bool Configuration::enable_udp2_broadcast () const {return m_->enable_udp2_broad
 bool Configuration::enable_tcp_connection () const {return m_->enable_tcp_connection_;}
 bool Configuration::write_decoded () const {return m_->write_decoded_;}
 bool Configuration::write_decoded_debug () const {return m_->write_decoded_debug_;}
-bool Configuration::falseDecodeGridMark () const {return m_->falseDecodeGridMark_;}
-bool Configuration::falseDecodeGridNoAnswer () const {return m_->falseDecodeGridNoAnswer_;}
-bool Configuration::falseDecodeRoverMark () const {return m_->falseDecodeRoverMark_;}
-bool Configuration::falseDecodeRoverNoAnswer () const {return m_->falseDecodeRoverNoAnswer_;}
-bool Configuration::falseDecodePortableMark () const {return m_->falseDecodePortableMark_;}
-bool Configuration::falseDecodeWhereMark () const {return m_->falseDecodeWhereMark_;}
+bool Configuration::phantomDecodeGridMark () const {return m_->phantomDecodeGridMark_;}
+bool Configuration::phantomDecodeGridNoAnswer () const {return m_->phantomDecodeGridNoAnswer_;}
+bool Configuration::phantomDecodeRoverMark () const {return m_->phantomDecodeRoverMark_;}
+bool Configuration::phantomDecodeRoverNoAnswer () const {return m_->phantomDecodeRoverNoAnswer_;}
+bool Configuration::phantomDecodePortableMark () const {return m_->phantomDecodePortableMark_;}
+bool Configuration::phantomDecodeWhereMark () const {return m_->phantomDecodeWhereMark_;}
 bool Configuration::udpWindowToFront () const {return m_->udpWindowToFront_;}
 bool Configuration::udpWindowRestore () const {return m_->udpWindowRestore_;}
 Bands * Configuration::bands () {return &m_->bands_;}
@@ -1790,6 +1885,28 @@ Configuration::impl::impl (Configuration * self, QNetworkAccessManager * network
 {
   ui_->setupUi (this);
   wrap_tooltips (this);   /* CE3TSK: Qt does not word-wrap a plain tooltip, see tooltip_wrap.hpp */
+  call_tooltip_ = ui_->callsign_line_edit->toolTip ();   // CE3TSK 2026-10-04: refresh_own_marks adds to them
+  {
+    // CE3TSK 2026-10-04 (review): see leaving_contest () - a child the operator clicks there goes into the own set
+    struct OwnBox {QCheckBox * box; bool SpecialOpSettings::* field;};
+    OwnBox const own_boxes[] = {
+      {ui_->newGridBand_check_box, &SpecialOpSettings::newGridBand}, {ui_->newGridBandMode_check_box, &SpecialOpSettings::newGridBandMode},
+      {ui_->newCallBand_check_box, &SpecialOpSettings::newCallBand}, {ui_->newCallBandMode_check_box, &SpecialOpSettings::newCallBandMode},
+      {ui_->newCQZBand_check_box, &SpecialOpSettings::newCQZBand}, {ui_->newCQZBandMode_check_box, &SpecialOpSettings::newCQZBandMode},
+      {ui_->beep_on_newCQZ_check_box, &SpecialOpSettings::beepOnNewCQZ},
+      {ui_->newITUZBand_check_box, &SpecialOpSettings::newITUZBand}, {ui_->newITUZBandMode_check_box, &SpecialOpSettings::newITUZBandMode},
+      {ui_->beep_on_newITUZ_check_box, &SpecialOpSettings::beepOnNewITUZ},
+      {ui_->newDXCCBand_check_box, &SpecialOpSettings::newDXCCBand}, {ui_->newDXCCBandMode_check_box, &SpecialOpSettings::newDXCCBandMode},
+      {ui_->beep_on_newDXCC_check_box, &SpecialOpSettings::beepOnNewDXCC},
+      {ui_->newStateBand_check_box, &SpecialOpSettings::newStateBand}, {ui_->newStateBandMode_check_box, &SpecialOpSettings::newStateBandMode},
+      {ui_->beep_on_newState_check_box, &SpecialOpSettings::beepOnNewState},
+      {ui_->newPxBand_check_box, &SpecialOpSettings::newPxBand}, {ui_->newPxBandMode_check_box, &SpecialOpSettings::newPxBandMode},
+      {ui_->beep_on_newPx_check_box, &SpecialOpSettings::beepOnNewPx},
+    };
+    for (auto const& o : own_boxes)
+      connect (o.box, &QCheckBox::clicked, this, [this, o] (bool checked) {if (leaving_contest ()) dlgEntrySpecialOp_.*o.field = checked;});
+  }
+  grid_tooltip_ = ui_->grid_line_edit->toolTip ();
 
   {
     ui_->configuration_dialog_button_box->button(QDialogButtonBox::Ok)->setText(tr("&OK"));
@@ -1881,7 +1998,7 @@ Configuration::impl::impl (Configuration * self, QNetworkAccessManager * network
   // validation
   //
   ui_->callsign_line_edit->setValidator (new QRegExpValidator {QRegExp {"[A-Za-z0-9/-]+"}, this});
-  ui_->grid_line_edit->setValidator (new QRegExpValidator {QRegExp {"[A-Ra-r]{1,1}|[A-Ra-r]{2,2}|[A-Ra-r]{2,2}[0-9]{1,1}|[A-Ra-r]{2,2}[0-9]{2,2}|[A-Ra-r]{2,2}[0-9]{2,2}[A-Xa-x]{1,1}|[A-Ra-r]{2,2}[0-9]{2,2}[A-Xa-x]{2,2}|[A-Ra-r]{2,2}[0-9]{2,2}[A-Xa-x]{2,2}[0-9]{1,1}|[A-Ra-r]{2,2}[0-9]{2,2}[A-Xa-x]{2,2}[0-9]{2,2}|[A-Ra-r]{2,2}[0-9]{2,2}[A-Xa-x]{2,2}[0-9]{2,2}[A-Xa-x]{1,1}|[A-Ra-r]{2,2}[0-9]{2,2}[A-Xa-x]{2,2}[0-9]{2,2}[A-Xa-x]{2,2}"}, this});
+  ui_->grid_line_edit->setValidator (new QRegExpValidator {QRegExp {"[A-Ra-r]{1,1}|[A-Ra-r]{2,2}|[A-Ra-r]{2,2}[0-9]{1,1}|[A-Ra-r]{2,2}[0-9]{2,2}|[A-Ra-r]{2,2}[0-9]{2,2}[A-Xa-x]{1,1}|[A-Ra-r]{2,2}[0-9]{2,2}[A-Xa-x]{2,2}|[A-Ra-r]{2,2}[0-9]{2,2}[A-Xa-x]{2,2}[0-9]{1,1}|[A-Ra-r]{2,2}[0-9]{2,2}[A-Xa-x]{2,2}[0-9]{2,2}|[A-Ra-r]{2,2}[0-9]{2,2}[A-Xa-x]{2,2}[0-9]{2,2}[A-Xa-x]{1,1}|[A-Ra-r]{2,2}[0-9]{2,2}[A-Xa-x]{2,2}[0-9]{2,2}[A-Xa-x]{2,2}|[A-Ra-r]{2,2}[0-9]{2,2}[A-Xa-x]{2,2}[0-9]{2,2}[A-Xa-x]{2,2}[0-9]{1,1}|[A-Ra-r]{2,2}[0-9]{2,2}[A-Xa-x]{2,2}[0-9]{2,2}[A-Xa-x]{2,2}[0-9]{2,2}"}, this});   // CE3TSK 2026-10-04: to 12 characters (IO91wm99aa00)
   ui_->logTime_line_edit->setValidator (new QRegExpValidator {QRegExp {"[0-9]+"}, this});
   ui_->content_line_edit->setValidator (new QRegExpValidator {QRegExp {"[A-Za-z0-9,]+"}, this});
   ui_->countries_line_edit->setValidator (new QRegExpValidator {QRegExp {"[A-Za-z0-9,/*]+"}, this});
@@ -1900,7 +2017,7 @@ Configuration::impl::impl (Configuration * self, QNetworkAccessManager * network
   on_countryName_check_box_clicked (countryName_);
 
   // CE3TSK: data file updates - exactly one of complete() or error() arrives per download
-  for (FileDownload * download : {&cty_download_, &lotw_download_})
+  for (FileDownload * download : {&cty_download_, &lotw_download_, &license_download_})
     {
       connect (download, &FileDownload::complete, this, [this] (QString const&) {
           update_data_file_labels ();
@@ -1908,7 +2025,8 @@ Configuration::impl::impl (Configuration * self, QNetworkAccessManager * network
         });
       connect (download, &FileDownload::error, this, [this, download] (FileDownload::Failure failure, QString const& detail) {
           update_data_file_labels ();
-          data_file_download_failed (download == &cty_download_ ? cty_file_name : lotw_file_name, failure, detail);
+          data_file_download_failed (download == &cty_download_ ? cty_file_name
+                                     : download == &lotw_download_ ? lotw_file_name : license_file_name, failure, detail);
         });
     }
   ui_->gridNotif_check_box->setChecked(callNotif_ && gridNotif_);
@@ -1916,21 +2034,18 @@ Configuration::impl::impl (Configuration * self, QNetworkAccessManager * network
   ui_->blueMarker_check_box->setChecked(redMarker_ && blueMarker_);
   ui_->blueMarker_check_box->setEnabled(redMarker_);
 
-  ui_->workedColor_check_box->setChecked((newCQZ_ || newITUZ_ || newDXCC_ || newGrid_ || newPx_ || newCall_) && workedColor_);
-  ui_->workedColor_check_box->setEnabled(newCQZ_ || newITUZ_ || newDXCC_ || newGrid_ || newPx_ || newCall_);
-  ui_->workedStriked_check_box->setChecked((newCQZ_ || newITUZ_ || newDXCC_ || newGrid_ || newPx_ || newCall_) && !workedUnderlined_ && workedStriked_);
-  ui_->workedStriked_check_box->setEnabled((newCQZ_ || newITUZ_ || newDXCC_ || newGrid_ || newPx_ || newCall_) && !workedUnderlined_);
-  ui_->workedUnderlined_check_box->setChecked((newCQZ_ || newITUZ_ || newDXCC_ || newGrid_ || newPx_ || newCall_) && !workedStriked_ && workedUnderlined_);
-  ui_->workedUnderlined_check_box->setEnabled((newCQZ_ || newITUZ_ || newDXCC_ || newGrid_ || newPx_ || newCall_) && !workedStriked_);
-  ui_->workedDontShow_check_box->setChecked((newCQZ_ || newITUZ_ || newDXCC_ || newGrid_ || newPx_ || newCall_) && workedDontShow_);
-  ui_->workedDontShow_check_box->setEnabled(newCQZ_ || newITUZ_ || newDXCC_ || newGrid_ || newPx_ || newCall_);
+  refresh_worked_options ();   // CE3TSK 2026-10-03 (item 10)
 
   ui_->newCQZBand_check_box->setChecked(newCQZ_ && newCQZBand_);
   ui_->newCQZBand_check_box->setEnabled(newCQZ_);
   ui_->newITUZBand_check_box->setChecked(newITUZ_ && newITUZBand_);
   ui_->newITUZBand_check_box->setEnabled(newITUZ_);
   ui_->newDXCCBand_check_box->setChecked(newDXCC_ && newDXCCBand_);
+  ui_->newStateBand_check_box->setChecked(newState_ && newStateBand_);
+  ui_->newStateBandMode_check_box->setChecked(newState_ && newStateBandMode_);
+  ui_->newStateBandMode_check_box->setEnabled(newState_);
   ui_->newDXCCBand_check_box->setEnabled(newDXCC_);
+  ui_->newStateBand_check_box->setEnabled(newState_);
   ui_->newCallBand_check_box->setChecked(newCall_ && newCallBand_);
   ui_->newCallBand_check_box->setEnabled(newCall_);
   ui_->newPxBand_check_box->setChecked(newPx_ && newPxBand_);
@@ -1954,7 +2069,9 @@ Configuration::impl::impl (Configuration * self, QNetworkAccessManager * network
   ui_->beep_on_newITUZ_check_box->setChecked(newITUZ_ && beepOnNewITUZ_);
   ui_->beep_on_newITUZ_check_box->setEnabled(newITUZ_);
   ui_->beep_on_newDXCC_check_box->setChecked(newDXCC_ && beepOnNewDXCC_);
+  ui_->beep_on_newState_check_box->setChecked(newState_ && beepOnNewState_);
   ui_->beep_on_newDXCC_check_box->setEnabled(newDXCC_);
+  ui_->beep_on_newState_check_box->setEnabled(newState_);
   ui_->beep_on_newCall_check_box->setChecked(newCall_ && beepOnNewCall_);
   ui_->beep_on_newCall_check_box->setEnabled(newCall_);
   ui_->beep_on_newPx_check_box->setChecked(newPx_ && beepOnNewPx_);
@@ -2230,19 +2347,9 @@ void Configuration::impl::initialize_models ()
   fill_port_combo_box (ui_->PTT_port_combo_box);
   ui_->PTT_port_combo_box->addItem ("CAT");
 
-  auto pal = ui_->callsign_line_edit->palette ();
-  if (my_callsign_.isEmpty ())
-    {
-      pal.setColor (QPalette::Base, Radio::convert_dark("#ffccff",useDarkStyle_));
-    }
-  else
-    {
-      pal.setColor (QPalette::Base, Radio::convert_dark("#ffffff",useDarkStyle_));
-    }
-  ui_->callsign_line_edit->setPalette (pal);
-  ui_->grid_line_edit->setPalette (pal);
   ui_->callsign_line_edit->setText (my_callsign_);
   ui_->grid_line_edit->setText (my_grid_);
+  refresh_own_marks ();   // CE3TSK 2026-10-04: the empty call's tint as before, and the doubts of ownstation.h
   ui_->logTime_line_edit->setText (timeFrom_);
   ui_->content_line_edit->setText (content_);
   ui_->countries_line_edit->setText (countries_);
@@ -2271,7 +2378,10 @@ Radio::convert_dark("#fafbfe",useDarkStyle_),Radio::convert_dark("#dcdef1",useDa
   next_newITUZBand_ = newITUZBand_;
   next_newITUZBandMode_ = newITUZBandMode_;
   next_newDXCC_ = newDXCC_;
+  next_newState_ = newState_;
   next_newDXCCBand_ = newDXCCBand_;
+  next_newStateBand_ = newStateBand_;
+  next_newStateBandMode_ = newStateBandMode_;
   next_newDXCCBandMode_ = newDXCCBandMode_;
   next_newGrid_ = newGrid_;
   next_newGridBand_ = newGridBand_;
@@ -2292,7 +2402,9 @@ Radio::convert_dark("#fafbfe",useDarkStyle_),Radio::convert_dark("#dcdef1",useDa
     ui_->labNewITUZ->setStyleSheet(QString("font-weight: bold;background: %2;color: %1").arg(useDarkStyle_? color_NewITUZ_dark_.name() : color_NewITUZ_.name(),useDarkStyle_? color_CQ_dark_.name() : color_CQ_.name()));
     ui_->labNewITUZBand->setStyleSheet(QString("font-weight: bold;background: %2;color: %1").arg(useDarkStyle_? color_NewITUZBand_dark_.name() : color_NewITUZBand_.name(),useDarkStyle_? color_CQ_dark_.name() : color_CQ_.name()));
     ui_->labNewDXCC->setStyleSheet(QString("font-weight: bold;background: %2;color: %1").arg(useDarkStyle_? color_NewDXCC_dark_.name() : color_NewDXCC_.name(),useDarkStyle_? color_CQ_dark_.name() : color_CQ_.name()));
+    ui_->labNewState->setStyleSheet(QString("font-weight: bold;background: %2;color: %1").arg(useDarkStyle_? color_NewState_dark_.name() : color_NewState_.name(),useDarkStyle_? color_CQ_dark_.name() : color_CQ_.name()));
     ui_->labNewDXCCBand->setStyleSheet(QString("font-weight: bold;background: %2;color: %1").arg(useDarkStyle_? color_NewDXCCBand_dark_.name() : color_NewDXCCBand_.name(),useDarkStyle_? color_CQ_dark_.name() : color_CQ_.name()));
+    ui_->labNewStateBand->setStyleSheet(QString("font-weight: bold;background: %2;color: %1").arg(useDarkStyle_? color_NewStateBand_dark_.name() : color_NewStateBand_.name(),useDarkStyle_? color_CQ_dark_.name() : color_CQ_.name()));
     ui_->labNewGrid->setStyleSheet(QString("font-weight: bold;background: %2;color: %1").arg(useDarkStyle_? color_NewGrid_dark_.name() : color_NewGrid_.name(),useDarkStyle_? color_CQ_dark_.name() : color_CQ_.name()));
     ui_->labNewGridBand->setStyleSheet(QString("font-weight: bold;background: %2;color: %1").arg(useDarkStyle_? color_NewGridBand_dark_.name() : color_NewGridBand_.name(),useDarkStyle_? color_CQ_dark_.name() : color_CQ_.name()));
     ui_->labNewPx->setStyleSheet(QString("font-weight: bold;background: %2;color: %1").arg(useDarkStyle_? color_NewPx_dark_.name() : color_NewPx_.name(),useDarkStyle_? color_CQ_dark_.name() : color_CQ_.name()));
@@ -2331,7 +2443,9 @@ Radio::convert_dark("#fafbfe",useDarkStyle_),Radio::convert_dark("#dcdef1",useDa
     ui_->labNewMcITUZ->setStyleSheet(QString("font-weight: bold;background: %2;color: %1").arg(useDarkStyle_? color_NewITUZ_dark_.name() : color_NewITUZ_.name(),useDarkStyle_? color_MyCall_dark_.name() : color_MyCall_.name()));
     ui_->labNewMcITUZBand->setStyleSheet(QString("font-weight: bold;background: %2;color: %1").arg(useDarkStyle_? color_NewITUZBand_dark_.name() : color_NewITUZBand_.name(),useDarkStyle_? color_MyCall_dark_.name() : color_MyCall_.name()));
     ui_->labNewMcDXCC->setStyleSheet(QString("font-weight: bold;background: %2;color: %1").arg(useDarkStyle_? color_NewDXCC_dark_.name() : color_NewDXCC_.name(),useDarkStyle_? color_MyCall_dark_.name() : color_MyCall_.name()));
+    ui_->labNewMcState->setStyleSheet(QString("font-weight: bold;background: %2;color: %1").arg(useDarkStyle_? color_NewState_dark_.name() : color_NewState_.name(),useDarkStyle_? color_MyCall_dark_.name() : color_MyCall_.name()));
     ui_->labNewMcDXCCBand->setStyleSheet(QString("font-weight: bold;background: %2;color: %1").arg(useDarkStyle_? color_NewDXCCBand_dark_.name() : color_NewDXCCBand_.name(),useDarkStyle_? color_MyCall_dark_.name() : color_MyCall_.name()));
+    ui_->labNewMcStateBand->setStyleSheet(QString("font-weight: bold;background: %2;color: %1").arg(useDarkStyle_? color_NewStateBand_dark_.name() : color_NewStateBand_.name(),useDarkStyle_? color_MyCall_dark_.name() : color_MyCall_.name()));
     ui_->labNewMcGrid->setStyleSheet(QString("font-weight: bold;background: %2;color: %1").arg(useDarkStyle_? color_NewGrid_dark_.name() : color_NewGrid_.name(),useDarkStyle_? color_MyCall_dark_.name() : color_MyCall_.name()));
     ui_->labNewMcGridBand->setStyleSheet(QString("font-weight: bold;background: %2;color: %1").arg(useDarkStyle_? color_NewGridBand_dark_.name() : color_NewGridBand_.name(),useDarkStyle_? color_MyCall_dark_.name() : color_MyCall_.name()));
     ui_->labNewMcPx->setStyleSheet(QString("font-weight: bold;background: %2;color: %1").arg(useDarkStyle_? color_NewPx_dark_.name() : color_NewPx_.name(),useDarkStyle_? color_MyCall_dark_.name() : color_MyCall_.name()));
@@ -2343,7 +2457,9 @@ Radio::convert_dark("#fafbfe",useDarkStyle_),Radio::convert_dark("#dcdef1",useDa
     ui_->labNewScITUZ->setStyleSheet(QString("font-weight: bold;background: %2;color: %1").arg(useDarkStyle_? color_NewITUZ_dark_.name() : color_NewITUZ_.name(),useDarkStyle_? color_StandardCall_dark_.name() : color_StandardCall_.name()));
     ui_->labNewScITUZBand->setStyleSheet(QString("font-weight: bold;background: %2;color: %1").arg(useDarkStyle_? color_NewITUZBand_dark_.name() : color_NewITUZBand_.name(),useDarkStyle_? color_StandardCall_dark_.name() : color_StandardCall_.name()));
     ui_->labNewScDXCC->setStyleSheet(QString("font-weight: bold;background: %2;color: %1").arg(useDarkStyle_? color_NewDXCC_dark_.name() : color_NewDXCC_.name(),useDarkStyle_? color_StandardCall_dark_.name() : color_StandardCall_.name()));
+    ui_->labNewScState->setStyleSheet(QString("font-weight: bold;background: %2;color: %1").arg(useDarkStyle_? color_NewState_dark_.name() : color_NewState_.name(),useDarkStyle_? color_StandardCall_dark_.name() : color_StandardCall_.name()));
     ui_->labNewScDXCCBand->setStyleSheet(QString("font-weight: bold;background: %2;color: %1").arg(useDarkStyle_? color_NewDXCCBand_dark_.name() : color_NewDXCCBand_.name(),useDarkStyle_? color_StandardCall_dark_.name() : color_StandardCall_.name()));
+    ui_->labNewScStateBand->setStyleSheet(QString("font-weight: bold;background: %2;color: %1").arg(useDarkStyle_? color_NewStateBand_dark_.name() : color_NewStateBand_.name(),useDarkStyle_? color_StandardCall_dark_.name() : color_StandardCall_.name()));
     ui_->labNewScGrid->setStyleSheet(QString("font-weight: bold;background: %2;color: %1").arg(useDarkStyle_? color_NewGrid_dark_.name() : color_NewGrid_.name(),useDarkStyle_? color_StandardCall_dark_.name() : color_StandardCall_.name()));
     ui_->labNewScGridBand->setStyleSheet(QString("font-weight: bold;background: %2;color: %1").arg(useDarkStyle_? color_NewGridBand_dark_.name() : color_NewGridBand_.name(),useDarkStyle_? color_StandardCall_dark_.name() : color_StandardCall_.name()));
     ui_->labNewScPx->setStyleSheet(QString("font-weight: bold;background: %2;color: %1").arg(useDarkStyle_? color_NewPx_dark_.name() : color_NewPx_.name(),useDarkStyle_? color_StandardCall_dark_.name() : color_StandardCall_.name()));
@@ -2359,7 +2475,9 @@ Radio::convert_dark("#fafbfe",useDarkStyle_),Radio::convert_dark("#dcdef1",useDa
     ui_->labNewITUZ->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? color_NewITUZ_dark_.name() : color_NewITUZ_.name(),useDarkStyle_? color_CQ_dark_.name() : color_CQ_.name()));
     ui_->labNewITUZBand->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? color_NewITUZBand_dark_.name() : color_NewITUZBand_.name(),useDarkStyle_? color_CQ_dark_.name() : color_CQ_.name()));
     ui_->labNewDXCC->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? color_NewDXCC_dark_.name() : color_NewDXCC_.name(),useDarkStyle_? color_CQ_dark_.name() : color_CQ_.name()));
+    ui_->labNewState->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? color_NewState_dark_.name() : color_NewState_.name(),useDarkStyle_? color_CQ_dark_.name() : color_CQ_.name()));
     ui_->labNewDXCCBand->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? color_NewDXCCBand_dark_.name() : color_NewDXCCBand_.name(),useDarkStyle_? color_CQ_dark_.name() : color_CQ_.name()));
+    ui_->labNewStateBand->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? color_NewStateBand_dark_.name() : color_NewStateBand_.name(),useDarkStyle_? color_CQ_dark_.name() : color_CQ_.name()));
     ui_->labNewGrid->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? color_NewGrid_dark_.name() : color_NewGrid_.name(),useDarkStyle_? color_CQ_dark_.name() : color_CQ_.name()));
     ui_->labNewGridBand->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? color_NewGridBand_dark_.name() : color_NewGridBand_.name(),useDarkStyle_? color_CQ_dark_.name() : color_CQ_.name()));
     ui_->labNewPx->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? color_NewPx_dark_.name() : color_NewPx_.name(),useDarkStyle_? color_CQ_dark_.name() : color_CQ_.name()));
@@ -2398,7 +2516,9 @@ Radio::convert_dark("#fafbfe",useDarkStyle_),Radio::convert_dark("#dcdef1",useDa
     ui_->labNewMcITUZ->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? color_NewITUZ_dark_.name() : color_NewITUZ_.name(),useDarkStyle_? color_MyCall_dark_.name() : color_MyCall_.name()));
     ui_->labNewMcITUZBand->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? color_NewITUZBand_dark_.name() : color_NewITUZBand_.name(),useDarkStyle_? color_MyCall_dark_.name() : color_MyCall_.name()));
     ui_->labNewMcDXCC->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? color_NewDXCC_dark_.name() : color_NewDXCC_.name(),useDarkStyle_? color_MyCall_dark_.name() : color_MyCall_.name()));
+    ui_->labNewMcState->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? color_NewState_dark_.name() : color_NewState_.name(),useDarkStyle_? color_MyCall_dark_.name() : color_MyCall_.name()));
     ui_->labNewMcDXCCBand->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? color_NewDXCCBand_dark_.name() : color_NewDXCCBand_.name(),useDarkStyle_? color_MyCall_dark_.name() : color_MyCall_.name()));
+    ui_->labNewMcStateBand->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? color_NewStateBand_dark_.name() : color_NewStateBand_.name(),useDarkStyle_? color_MyCall_dark_.name() : color_MyCall_.name()));
     ui_->labNewMcGrid->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? color_NewGrid_dark_.name() : color_NewGrid_.name(),useDarkStyle_? color_MyCall_dark_.name() : color_MyCall_.name()));
     ui_->labNewMcGridBand->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? color_NewGridBand_dark_.name() : color_NewGridBand_.name(),useDarkStyle_? color_MyCall_dark_.name() : color_MyCall_.name()));
     ui_->labNewMcPx->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? color_NewPx_dark_.name() : color_NewPx_.name(),useDarkStyle_? color_MyCall_dark_.name() : color_MyCall_.name()));
@@ -2410,7 +2530,9 @@ Radio::convert_dark("#fafbfe",useDarkStyle_),Radio::convert_dark("#dcdef1",useDa
     ui_->labNewScITUZ->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? color_NewITUZ_dark_.name() : color_NewITUZ_.name(),useDarkStyle_? color_StandardCall_dark_.name() : color_StandardCall_.name()));
     ui_->labNewScITUZBand->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? color_NewITUZBand_dark_.name() : color_NewITUZBand_.name(),useDarkStyle_? color_StandardCall_dark_.name() : color_StandardCall_.name()));
     ui_->labNewScDXCC->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? color_NewDXCC_dark_.name() : color_NewDXCC_.name(),useDarkStyle_? color_StandardCall_dark_.name() : color_StandardCall_.name()));
+    ui_->labNewScState->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? color_NewState_dark_.name() : color_NewState_.name(),useDarkStyle_? color_StandardCall_dark_.name() : color_StandardCall_.name()));
     ui_->labNewScDXCCBand->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? color_NewDXCCBand_dark_.name() : color_NewDXCCBand_.name(),useDarkStyle_? color_StandardCall_dark_.name() : color_StandardCall_.name()));
+    ui_->labNewScStateBand->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? color_NewStateBand_dark_.name() : color_NewStateBand_.name(),useDarkStyle_? color_StandardCall_dark_.name() : color_StandardCall_.name()));
     ui_->labNewScGrid->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? color_NewGrid_dark_.name() : color_NewGrid_.name(),useDarkStyle_? color_StandardCall_dark_.name() : color_StandardCall_.name()));
     ui_->labNewScGridBand->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? color_NewGridBand_dark_.name() : color_NewGridBand_.name(),useDarkStyle_? color_StandardCall_dark_.name() : color_StandardCall_.name()));
     ui_->labNewScPx->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? color_NewPx_dark_.name() : color_NewPx_.name(),useDarkStyle_? color_StandardCall_dark_.name() : color_StandardCall_.name()));
@@ -2418,49 +2540,10 @@ Radio::convert_dark("#fafbfe",useDarkStyle_),Radio::convert_dark("#dcdef1",useDa
     ui_->labNewScCall->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? color_NewCall_dark_.name() : color_NewCall_.name(),useDarkStyle_? color_StandardCall_dark_.name() : color_StandardCall_.name()));
     ui_->labNewScCallBand->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? color_NewCallBand_dark_.name() : color_NewCallBand_.name(),useDarkStyle_? color_StandardCall_dark_.name() : color_StandardCall_.name()));
   }
-  ui_->labNewCQZ->setVisible(newCQZ_);
-  ui_->labNewCQZBand->setVisible(newCQZBandMode_ || newCQZBand_);
-  ui_->labNewITUZ->setVisible(newITUZ_);
-  ui_->labNewITUZBand->setVisible(newITUZBandMode_ || newITUZBand_);
-  ui_->labNewDXCC->setVisible(newDXCC_);
-  ui_->labNewDXCCBand->setVisible(newDXCCBandMode_ || newDXCCBand_);
-  ui_->labNewGrid->setVisible(newGrid_);
-  ui_->labNewGridBand->setVisible(newGridBandMode_ || newGridBand_);
-  ui_->labNewPx->setVisible(newPx_);
-  ui_->labNewPxBand->setVisible(newPxBandMode_ || newPxBand_);
-  ui_->labNewCall->setVisible(newCall_);
-  ui_->labNewCallBand->setVisible(newCallBandMode_ || newCallBand_);
-  ui_->labWorkedCall->setVisible(newCQZ_ || newITUZ_ || newDXCC_ || newGrid_ || newCall_);
-  ui_->labNewMcCQZ->setVisible(newCQZ_);
-  ui_->labNewMcCQZBand->setVisible(newCQZBandMode_ || newCQZBand_);
-  ui_->labNewMcITUZ->setVisible(newITUZ_);
-  ui_->labNewMcITUZBand->setVisible(newITUZBandMode_ || newITUZBand_);
-  ui_->labNewMcDXCC->setVisible(newDXCC_);
-  ui_->labNewMcDXCCBand->setVisible(newDXCCBandMode_ || newDXCCBand_);
-  ui_->labNewMcGrid->setVisible(newGrid_);
-  ui_->labNewMcGridBand->setVisible(newGridBandMode_ || newGridBand_);
-  ui_->labNewMcPx->setVisible(newPx_);
-  ui_->labNewMcPxBand->setVisible(newPxBandMode_ || newPxBand_);
-  ui_->labNewMcCall->setVisible(newCall_);
-  ui_->labNewMcCallBand->setVisible(newCallBandMode_ || newCallBand_);
-  ui_->labWorkedMcCall->setVisible(newCQZ_ || newITUZ_ || newDXCC_ || newGrid_ || newPx_ || newCall_);
-  ui_->labStandardCall->setVisible(newPotential_);
+  refresh_samples ();   // CE3TSK 2026-10-03: every sample from the staged values (item 10)
 //  ui_->labStandardCall->setVisible((!newCQZ_ && !newITUZ_ && !newDXCC_ && !newGrid_ && !newCall_) && newPotential_);
 //  ui_->labCQ->setVisible(!newCQZ_ && !newITUZ_ && !newDXCC_ && !newGrid_ && !newCall_);
 //  ui_->labMyCall->setVisible(!newCQZ_ && !newITUZ_ && !newDXCC_ && !newGrid_ && !newCall_);
-  ui_->labNewScCQZ->setVisible(newCQZ_ && newPotential_);
-  ui_->labNewScCQZBand->setVisible((newCQZBandMode_ || newCQZBand_) && newPotential_);
-  ui_->labNewScITUZ->setVisible(newITUZ_ && newPotential_);
-  ui_->labNewScITUZBand->setVisible((newITUZBandMode_ || newITUZBand_) && newPotential_);
-  ui_->labNewScDXCC->setVisible(newDXCC_ && newPotential_);
-  ui_->labNewScDXCCBand->setVisible((newDXCCBandMode_ || newDXCCBand_) && newPotential_);
-  ui_->labNewScGrid->setVisible(newGrid_ && newPotential_);
-  ui_->labNewScGridBand->setVisible((newGridBandMode_ || newGridBand_) && newPotential_);
-  ui_->labNewScPx->setVisible(newPx_ && newPotential_);
-  ui_->labNewScPxBand->setVisible((newPxBandMode_ || newPxBand_) && newPotential_);
-  ui_->labNewScCall->setVisible(newCall_ && newPotential_);
-  ui_->labNewScCallBand->setVisible((newCallBandMode_ || newCallBand_) && newPotential_);
-  ui_->labWorkedScCall->setVisible((newCQZ_ || newITUZ_ || newDXCC_ || newGrid_ || newPx_ || newCall_) && newPotential_);
 
   ui_->CW_id_interval_spin_box->setValue (id_interval_);  
   ui_->sbNtrials->setValue (ntrials_);
@@ -2562,10 +2645,9 @@ Radio::convert_dark("#fafbfe",useDarkStyle_),Radio::convert_dark("#dcdef1",useDa
   ui_->blueMarker_check_box->setChecked (redMarker_ && blueMarker_);
   ui_->hideHint_check_box->setChecked (hidehintMarker_);
   ui_->txtColor_check_box->setChecked (txtColor_);
-  ui_->workedColor_check_box->setChecked (workedColor_ && (newCQZ_ || newITUZ_ || newDXCC_ || newCall_ || newPx_ || newGrid_));
-  ui_->workedStriked_check_box->setChecked (!workedUnderlined_ && workedStriked_ && (newCQZ_ || newITUZ_ || newDXCC_ || newCall_ || newPx_ || newGrid_));
-  ui_->workedUnderlined_check_box->setChecked (!workedStriked_ && workedUnderlined_ && (newCQZ_ || newITUZ_ || newDXCC_ || newCall_ || newPx_ || newGrid_));
-  ui_->workedDontShow_check_box->setChecked (workedDontShow_ && (newCQZ_ || newITUZ_ || newDXCC_ || newCall_ || newPx_ || newGrid_));
+  /* CE3TSK 2026-10-03 (item 10): enabled as well as ticked - a Cancel left them greyed - and the worked samples
+     counting the prefix tier, which the first of them had lost */
+  refresh_worked_options ();
   ui_->newCQZ_check_box->setChecked (newCQZ_);
   ui_->newCQZBand_check_box->setChecked (newCQZBand_ && newCQZ_);
   ui_->newCQZBandMode_check_box->setChecked (newCQZBandMode_ && newCQZ_);
@@ -2573,7 +2655,10 @@ Radio::convert_dark("#fafbfe",useDarkStyle_),Radio::convert_dark("#dcdef1",useDa
   ui_->newITUZBand_check_box->setChecked (newITUZBand_ && newITUZ_);
   ui_->newITUZBandMode_check_box->setChecked (newITUZBandMode_ && newITUZ_);
   ui_->newDXCC_check_box->setChecked (newDXCC_);
+  ui_->newState_check_box->setChecked (newState_);
   ui_->newDXCCBand_check_box->setChecked (newDXCCBand_ && newDXCC_);
+  ui_->newStateBand_check_box->setChecked (newStateBand_ && newState_);
+  ui_->newStateBandMode_check_box->setChecked (newStateBandMode_ && newState_);
   ui_->newDXCCBandMode_check_box->setChecked (newDXCCBandMode_ && newDXCC_);
   ui_->newCall_check_box->setChecked (newCall_);
   ui_->newCallBand_check_box->setChecked (newCallBand_ && newCall_);
@@ -2612,7 +2697,10 @@ Radio::convert_dark("#fafbfe",useDarkStyle_),Radio::convert_dark("#dcdef1",useDa
     dlgEntrySpecialOp_.newITUZBand = newITUZBand_;
     dlgEntrySpecialOp_.newITUZBandMode = newITUZBandMode_;
     dlgEntrySpecialOp_.newDXCC = newDXCC_;
+    dlgEntrySpecialOp_.newState = newState_;
     dlgEntrySpecialOp_.newDXCCBand = newDXCCBand_;
+    dlgEntrySpecialOp_.newStateBand = newStateBand_;
+    dlgEntrySpecialOp_.newStateBandMode = newStateBandMode_;
     dlgEntrySpecialOp_.newDXCCBandMode = newDXCCBandMode_;
     dlgEntrySpecialOp_.newPx = newPx_;
     dlgEntrySpecialOp_.newPxBand = newPxBand_;
@@ -2620,6 +2708,7 @@ Radio::convert_dark("#fafbfe",useDarkStyle_),Radio::convert_dark("#dcdef1",useDa
     dlgEntrySpecialOp_.beepOnNewCQZ = beepOnNewCQZ_;
     dlgEntrySpecialOp_.beepOnNewITUZ = beepOnNewITUZ_;
     dlgEntrySpecialOp_.beepOnNewDXCC = beepOnNewDXCC_;
+    dlgEntrySpecialOp_.beepOnNewState = beepOnNewState_;
     dlgEntrySpecialOp_.beepOnNewPx = beepOnNewPx_;
     dlgEntrySpecialOp_.usesched = usesched_;
   }
@@ -2650,6 +2739,7 @@ Radio::convert_dark("#fafbfe",useDarkStyle_),Radio::convert_dark("#dcdef1",useDa
   ui_->beep_on_newCQZ_check_box->setChecked(beepOnNewCQZ_ && newCQZ_);
   ui_->beep_on_newITUZ_check_box->setChecked(beepOnNewITUZ_ && newITUZ_);
   ui_->beep_on_newDXCC_check_box->setChecked(beepOnNewDXCC_ && newDXCC_);
+  ui_->beep_on_newState_check_box->setChecked(beepOnNewState_ && newState_);
   ui_->beep_on_newGrid_check_box->setChecked(beepOnNewGrid_ && newGrid_);
   ui_->beep_on_newPx_check_box->setChecked(beepOnNewPx_ && newPx_);
   ui_->beep_on_newCall_check_box->setChecked(beepOnNewCall_ && newCall_);
@@ -2696,15 +2786,10 @@ Radio::convert_dark("#fafbfe",useDarkStyle_),Radio::convert_dark("#dcdef1",useDa
   ui_->TCP_checkBox->setChecked (enable_tcp_connection_);
   ui_->write_decoded_check_box->setChecked (write_decoded_);
   ui_->write_decoded_debug_check_box->setChecked (write_decoded_debug_);
-  ui_->falseDecodeGridMark_check_box->setChecked (falseDecodeGridMark_);
-  ui_->falseDecodeGridNoAnswer_check_box->setChecked (falseDecodeGridNoAnswer_);
-  ui_->falseDecodeRoverMark_check_box->setChecked (falseDecodeRoverMark_);
-  ui_->falseDecodeRoverNoAnswer_check_box->setChecked (falseDecodeRoverNoAnswer_);
-  ui_->falseDecodePortableMark_check_box->setChecked (falseDecodePortableMark_);
-  ui_->falseDecodeWhereMark_check_box->setChecked (falseDecodeWhereMark_);
+  for (auto const& o : phantom_options) (ui_.data ()->*o.box)->setChecked (this->*o.member);   /* CE3TSK 2026-10-04: one table */
   // toggled () does not fire for a box that already holds the value, so the greying is set here too
-  ui_->falseDecodeGridNoAnswer_check_box->setEnabled (falseDecodeGridMark_);
-  ui_->falseDecodeRoverNoAnswer_check_box->setEnabled (falseDecodeRoverMark_);
+  ui_->phantomDecodeGridNoAnswer_check_box->setEnabled (phantomDecodeGridMark_);
+  ui_->phantomDecodeRoverNoAnswer_check_box->setEnabled (phantomDecodeRoverMark_);
 
   ui_->calibration_intercept_spin_box->setValue (frequency_calibration_intercept_);
   ui_->calibration_slope_ppm_spin_box->setValue (frequency_calibration_slope_ppm_);
@@ -2955,7 +3040,7 @@ void Configuration::impl::read_settings ()
   spot_to_dxsummit_ = settings_->value ("AllowSpotsDXSummit", false).toBool ();
   /* CE3TSK: off by the operator's decision 2026-09-16 - their own station has run it off for
      years. It does mean a fresh install forwards decodes flagged isWrong () to UDP consumers such
-     as JTAlert, which may re-spot them; the fork's false-decode report gate (irpt>105) is what
+     as JTAlert, which may re-spot them; the fork's phantom-decode report gate (irpt>105) is what
      keeps the worst of them out of reports. */
   prevent_spotting_false_ = settings_->value ("preventFalseUDPspots", false).toBool ();
 
@@ -3167,7 +3252,14 @@ void Configuration::impl::read_settings ()
   next_newITUZBand_ = newITUZBand_ = settings_->value ("newITUZBand", false).toBool ();
   next_newITUZBandMode_ = newITUZBandMode_ = settings_->value ("newITUZBandMode", false).toBool ();
   next_newDXCC_ = newDXCC_ = settings_->value ("newDXCC", true).toBool ();
+  /* CE3TSK 2026-10-03 (review): on for a fresh install, OFF for a profile that already exists - every JTDX writes
+     newDXCC - so an upgrade never changes what the autoselect answers (a profile with every tier off answers
+     anyone; one more tier on would make it answer only new ones) */
+  next_newState_ = newState_ = settings_->value (contest_profile::own_key ("NewState"), !settings_->contains ("newDXCC")).toBool ();
   next_newDXCCBand_ = newDXCCBand_ = settings_->value ("newDXCCBand", true).toBool ();
+  next_newStateBand_ = newStateBand_ = settings_->value (contest_profile::own_key ("NewStateBand"), true).toBool ();
+  // CE3TSK 2026-10-04: off unless asked for - turning it on changes what is highlighted and answered
+  next_newStateBandMode_ = newStateBandMode_ = settings_->value (contest_profile::own_key ("NewStateBandMode"), false).toBool ();
   next_newDXCCBandMode_ = newDXCCBandMode_ = settings_->value ("newDXCCBandMode", true).toBool ();
   next_newGrid_ = newGrid_ = settings_->value ("newGrid", true).toBool ();
   next_newGridBand_ = newGridBand_ = settings_->value ("newGridBand", true).toBool ();
@@ -3221,6 +3313,7 @@ void Configuration::impl::read_settings ()
   beepOnNewCQZ_ = settings_->value("BeepOnNewCQZ", false).toBool();
   beepOnNewITUZ_ = settings_->value("BeepOnNewITUZ", false).toBool();
   beepOnNewDXCC_ = settings_->value("BeepOnNewDXCC", false).toBool();
+  beepOnNewState_ = settings_->value(contest_profile::own_key ("BeepOnNewState"), false).toBool();
   beepOnNewGrid_ = settings_->value("BeepOnNewGrid", false).toBool();
   beepOnNewPx_ = settings_->value("BeepOnNewPx", false).toBool();
   beepOnNewCall_ = settings_->value("BeepOnNewCall", false).toBool();
@@ -3252,7 +3345,10 @@ void Configuration::impl::read_settings ()
   savedSpecialOp_.newITUZBand = parked ("SpecialOpSavedNewITUZBand", newITUZBand_);
   savedSpecialOp_.newITUZBandMode = parked ("SpecialOpSavedNewITUZBandMode", newITUZBandMode_);
   savedSpecialOp_.newDXCC = parked ("SpecialOpSavedNewDXCC", newDXCC_);
+  savedSpecialOp_.newState = parked (contest_profile::own_key ("SpecialOpSavedNewState"), newState_);
   savedSpecialOp_.newDXCCBand = parked ("SpecialOpSavedNewDXCCBand", newDXCCBand_);
+  savedSpecialOp_.newStateBand = parked (contest_profile::own_key ("SpecialOpSavedNewStateBand"), newStateBand_);
+  savedSpecialOp_.newStateBandMode = parked (contest_profile::own_key ("SpecialOpSavedNewStateBandMode"), newStateBandMode_);
   savedSpecialOp_.newDXCCBandMode = parked ("SpecialOpSavedNewDXCCBandMode", newDXCCBandMode_);
   savedSpecialOp_.newPx = parked ("SpecialOpSavedNewPx", newPx_);
   savedSpecialOp_.newPxBand = parked ("SpecialOpSavedNewPxBand", newPxBand_);
@@ -3260,6 +3356,7 @@ void Configuration::impl::read_settings ()
   savedSpecialOp_.beepOnNewCQZ = parked ("SpecialOpSavedBeepOnNewCQZ", beepOnNewCQZ_);
   savedSpecialOp_.beepOnNewITUZ = parked ("SpecialOpSavedBeepOnNewITUZ", beepOnNewITUZ_);
   savedSpecialOp_.beepOnNewDXCC = parked ("SpecialOpSavedBeepOnNewDXCC", beepOnNewDXCC_);
+  savedSpecialOp_.beepOnNewState = parked (contest_profile::own_key ("SpecialOpSavedBeepOnNewState"), beepOnNewState_);
   savedSpecialOp_.beepOnNewPx = parked ("SpecialOpSavedBeepOnNewPx", beepOnNewPx_);
   savedSpecialOp_.usesched = parked ("SpecialOpSavedUseSched", usesched_);
   specialOpSaved_ = settings_->value ("SpecialOpSaved", false).toBool ();
@@ -3288,12 +3385,13 @@ void Configuration::impl::read_settings ()
   write_decoded_debug_ = settings_->value ("WriteDecodedDebugALLTXT", false).toBool ();
   /* CE3TSK 2026-09-30: JTDX_contest's own keys, beside the colours (contestprofile.h) - stock JTDX
      has no such settings. On by default, so a fresh install and an upgrade both start marking. */
-  falseDecodeGridMark_ = settings_->value (contest_profile::own_key ("FalseDecodeGridMark"), true).toBool ();
-  falseDecodeGridNoAnswer_ = settings_->value (contest_profile::own_key ("FalseDecodeGridNoAnswer"), true).toBool ();
-  falseDecodeRoverMark_ = settings_->value (contest_profile::own_key ("FalseDecodeRoverMark"), true).toBool ();
-  falseDecodeRoverNoAnswer_ = settings_->value (contest_profile::own_key ("FalseDecodeRoverNoAnswer"), true).toBool ();
-  falseDecodePortableMark_ = settings_->value (contest_profile::own_key ("FalseDecodePortableMark"), true).toBool ();
-  falseDecodeWhereMark_ = settings_->value (contest_profile::own_key ("FalseDecodeWhereMark"), true).toBool ();
+  /* CE3TSK 2026-10-04: the keys were named FalseDecode* until the operator renamed false decodes phantom decodes (a
+     false decode implies a fault in the decoder; these are decodes noise made plausible) - a profile saved before
+     keeps its choices. write_settings writes both keys with the same value, so they differ only when an older build
+     (a rollback) wrote the old one later - which then wins (review); a profile with only the new key reads that */
+  for (auto const& o : phantom_options)
+    this->*o.member = settings_->value (contest_profile::own_key (QString {"FalseDecode"} + o.name),
+                                        settings_->value (contest_profile::own_key (QString {"PhantomDecode"} + o.name), true)).toBool ();
   udpWindowToFront_ = settings_->value ("udpWindowToFront",false).toBool ();
   udpWindowRestore_ = settings_->value ("udpWindowRestore",false).toBool ();
   frequency_calibration_intercept_ = settings_->value ("CalibrationIntercept", 0.).toDouble ();
@@ -3318,6 +3416,86 @@ void Configuration::add_callsign_hideFilter (QString basecall)
 void Configuration::set_jtdxtime (JTDXDateTime * jtdxtime)
 {
   m_->jtdxtime_ = jtdxtime;
+}
+
+void Configuration::set_country_lookup (std::function<QString (QString const&)> lookup)   // CE3TSK 2026-10-04
+{
+  m_->country_lookup_ = lookup;
+}
+
+/* CE3TSK 2026-10-04: the operator's own call and grid as the boxes hold them, judged as a decode's (ownstation.h) - the
+   grid's form always, the country check only with the lookup MainWindow hands over */
+own_station::Verdict Configuration::impl::own_verdict () const
+{
+  auto const none = [] (QString const&) {return QString {};};
+  QString const call = ui_->callsign_line_edit->text (), grid = ui_->grid_line_edit->text ();
+  return country_lookup_ ? own_station::judge (call, grid, country_lookup_) : own_station::judge (call, grid, none);
+}
+
+QString Configuration::impl::own_call_doubt (own_station::Verdict const& v) const
+{
+  if (own_station::Call::NoCountry != v.call) return {};
+  return tr ("No DXCC country in cty.dat has the prefix of %1.").arg (ui_->callsign_line_edit->text ().trimmed ().toUpper ());
+}
+
+QString Configuration::impl::own_grid_doubt (own_station::Verdict const& v) const
+{
+  switch (v.grid)
+    {
+    case own_station::Grid::Malformed:
+      return tr ("A grid has 4, 6, 8, 10 or 12 characters, as IO91, IO91wm, IO91wm99, IO91wm99aa or IO91wm99aa00.");
+    case own_station::Grid::Outside:
+      return tr ("Your grid %1 does not lie in %2, the DXCC country of %3.")
+        .arg (v.square, v.country, ui_->callsign_line_edit->text ().trimmed ().toUpper ());
+    case own_station::Grid::Fine: break;
+    }
+  return {};
+}
+
+/* the boxes as the values are typed: pink while empty (as before), red while in doubt, white when fine - the doubt
+   ahead of the box's own tooltip (the operator, 2026-10-04) */
+void Configuration::impl::refresh_own_marks ()
+{
+  auto const v = own_verdict ();
+  auto mark = [this] (QLineEdit * box, QString const& doubt, QString const& own) {
+      bool const empty = box->text ().trimmed ().isEmpty ();
+      /* a style sheet, not the palette: the dark style's sheet (darkstyle.qss) gives every QLineEdit its background,
+         and a sheet beats the palette - in the dark style neither the red nor the pink ever showed (the operator).
+         Nothing in doubt: no sheet of our own, the style's background. Nothing else sets a sheet on these two boxes.
+         Set only when it changes: every setStyleSheet restyles the box, and this runs on each keystroke (review). */
+      QString const sheet = empty || !doubt.isEmpty ()
+        ? QString {"QLineEdit {background-color: %1;}"}.arg (Radio::convert_dark (empty ? "#ffccff" : "#ff9c9c", useDarkStyle_))
+        : QString {};
+      if (box->styleSheet () != sheet) box->setStyleSheet (sheet);
+      box->setToolTip (doubt.isEmpty () ? own : "<p>" + doubt.toHtmlEscaped () + "</p>" + own);
+    };
+  mark (ui_->callsign_line_edit, own_call_doubt (v), call_tooltip_);
+  mark (ui_->grid_line_edit, own_grid_doubt (v), grid_tooltip_);
+}
+
+/* asked on OK: keep a call or grid in doubt, or go back and correct it - a warning, never a refusal for a doubtful
+   country; a grid that is not a whole locator cannot be kept (the FT8 message would carry it), so that question offers
+   only "Correct it". "Correct it" puts the focus on the box in doubt, on the call when both are (the operator) */
+bool Configuration::impl::own_station_confirmed ()
+{
+  auto const v = own_verdict ();
+  if (v.fine ()) return true;
+  QStringList doubts;
+  for (auto const& d : {own_call_doubt (v), own_grid_doubt (v)}) if (!d.isEmpty ()) doubts << d;
+  QMessageBox q {QMessageBox::Warning, tr ("Check your call and grid"), doubts.join ("\n\n"), QMessageBox::NoButton, this};
+  q.setInformativeText (tr ("Distances, PSK Reporter spots and the WW Digi exchange are worked out from them."));
+  QPushButton * const keep = own_station::Grid::Malformed == v.grid ? nullptr : q.addButton (tr ("&Keep it"), QMessageBox::AcceptRole);
+  QPushButton * const fix = q.addButton (tr ("&Correct it"), QMessageBox::RejectRole);
+  q.setDefaultButton (fix);
+  q.setEscapeButton (fix);
+  q.exec ();
+  if (keep && q.clickedButton () == keep) return true;
+  QLineEdit * const box = own_station::Call::Fine != v.call ? ui_->callsign_line_edit : ui_->grid_line_edit;
+  for (int i = 0; i < ui_->configuration_tabs->count (); ++i)
+    if (ui_->configuration_tabs->widget (i)->isAncestorOf (box)) ui_->configuration_tabs->setCurrentIndex (i);
+  box->setFocus ();
+  box->selectAll ();
+  return false;
 }
 
 void Configuration::impl::write_settings ()
@@ -3478,7 +3656,10 @@ void Configuration::impl::write_settings ()
   settings_->setValue ("newITUZBand", newITUZBand_);
   settings_->setValue ("newITUZBandMode", newITUZBandMode_);
   settings_->setValue ("newDXCC", newDXCC_);
+  settings_->setValue (contest_profile::own_key ("NewState"), newState_);
   settings_->setValue ("newDXCCBand", newDXCCBand_);
+  settings_->setValue (contest_profile::own_key ("NewStateBand"), newStateBand_);
+  settings_->setValue (contest_profile::own_key ("NewStateBandMode"), newStateBandMode_);
   settings_->setValue ("newDXCCBandMode", newDXCCBandMode_);
   settings_->setValue ("newCall", newCall_);
   settings_->setValue ("newCallBand", newCallBand_);
@@ -3510,7 +3691,10 @@ void Configuration::impl::write_settings ()
   settings_->setValue ("SpecialOpSavedNewITUZBand", savedSpecialOp_.newITUZBand);
   settings_->setValue ("SpecialOpSavedNewITUZBandMode", savedSpecialOp_.newITUZBandMode);
   settings_->setValue ("SpecialOpSavedNewDXCC", savedSpecialOp_.newDXCC);
+  settings_->setValue (contest_profile::own_key ("SpecialOpSavedNewState"), savedSpecialOp_.newState);
   settings_->setValue ("SpecialOpSavedNewDXCCBand", savedSpecialOp_.newDXCCBand);
+  settings_->setValue (contest_profile::own_key ("SpecialOpSavedNewStateBand"), savedSpecialOp_.newStateBand);
+  settings_->setValue (contest_profile::own_key ("SpecialOpSavedNewStateBandMode"), savedSpecialOp_.newStateBandMode);
   settings_->setValue ("SpecialOpSavedNewDXCCBandMode", savedSpecialOp_.newDXCCBandMode);
   settings_->setValue ("SpecialOpSavedNewPx", savedSpecialOp_.newPx);
   settings_->setValue ("SpecialOpSavedNewPxBand", savedSpecialOp_.newPxBand);
@@ -3518,6 +3702,7 @@ void Configuration::impl::write_settings ()
   settings_->setValue ("SpecialOpSavedBeepOnNewCQZ", savedSpecialOp_.beepOnNewCQZ);
   settings_->setValue ("SpecialOpSavedBeepOnNewITUZ", savedSpecialOp_.beepOnNewITUZ);
   settings_->setValue ("SpecialOpSavedBeepOnNewDXCC", savedSpecialOp_.beepOnNewDXCC);
+  settings_->setValue (contest_profile::own_key ("SpecialOpSavedBeepOnNewState"), savedSpecialOp_.beepOnNewState);
   settings_->setValue ("SpecialOpSavedBeepOnNewPx", savedSpecialOp_.beepOnNewPx);
   settings_->setValue ("SpecialOpSavedUseSched", savedSpecialOp_.usesched);
   settings_->setValue ("SpecialOpSaved", specialOpSaved_);
@@ -3542,6 +3727,7 @@ void Configuration::impl::write_settings ()
   settings_->setValue ("BeepOnNewCQZ", beepOnNewCQZ_);
   settings_->setValue ("BeepOnNewITUZ", beepOnNewITUZ_);
   settings_->setValue ("BeepOnNewDXCC", beepOnNewDXCC_);
+  settings_->setValue (contest_profile::own_key ("BeepOnNewState"), beepOnNewState_);
   settings_->setValue ("BeepOnNewGrid", beepOnNewGrid_);
   settings_->setValue ("BeepOnNewPx", beepOnNewPx_);
   settings_->setValue ("BeepOnNewCall", beepOnNewCall_);
@@ -3558,12 +3744,12 @@ void Configuration::impl::write_settings ()
   settings_->setValue ("EnableTCPConnection", enable_tcp_connection_);
   settings_->setValue ("WriteDecodedALLTXT", write_decoded_);
   settings_->setValue ("WriteDecodedDebugALLTXT", write_decoded_debug_);
-  settings_->setValue (contest_profile::own_key ("FalseDecodeGridMark"), falseDecodeGridMark_);   /* CE3TSK */
-  settings_->setValue (contest_profile::own_key ("FalseDecodeGridNoAnswer"), falseDecodeGridNoAnswer_);
-  settings_->setValue (contest_profile::own_key ("FalseDecodeRoverMark"), falseDecodeRoverMark_);
-  settings_->setValue (contest_profile::own_key ("FalseDecodeRoverNoAnswer"), falseDecodeRoverNoAnswer_);
-  settings_->setValue (contest_profile::own_key ("FalseDecodePortableMark"), falseDecodePortableMark_);
-  settings_->setValue (contest_profile::own_key ("FalseDecodeWhereMark"), falseDecodeWhereMark_);
+  /* CE3TSK: the phantom-decode options. Since 2026-10-04 under the new keys AND the old ones, with the same values: a
+     build of before that day - a rollback, the published rc09 - reads only the old keys and would find every option
+     back at its default (review). The old keys can go once no such build is in use. */
+  for (auto const& o : phantom_options)
+    for (char const * prefix : {"PhantomDecode", "FalseDecode"})
+      settings_->setValue (contest_profile::own_key (QString {prefix} + o.name), this->*o.member);
   settings_->setValue ("udpWindowToFront", udpWindowToFront_);
   settings_->setValue ("udpWindowRestore", udpWindowRestore_);
   settings_->setValue ("CalibrationIntercept", frequency_calibration_intercept_);
@@ -3850,6 +4036,7 @@ void Configuration::impl::accept ()
     {
       return;			// not accepting
     }
+  if (!own_station_confirmed ()) return;   // CE3TSK 2026-10-04: the operator chose to correct the call or grid
 
   /* CE3TSK: capture the grid highlighting as committed before this dialog run, so that
      entering a contest can park the operator's own choice. Taken here, ahead of the check
@@ -3875,7 +4062,10 @@ void Configuration::impl::accept ()
   prev_special_op.newITUZBand = newITUZBand_;
   prev_special_op.newITUZBandMode = newITUZBandMode_;
   prev_special_op.newDXCC = newDXCC_;
+  prev_special_op.newState = newState_;
   prev_special_op.newDXCCBand = newDXCCBand_;
+  prev_special_op.newStateBand = newStateBand_;
+  prev_special_op.newStateBandMode = newStateBandMode_;
   prev_special_op.newDXCCBandMode = newDXCCBandMode_;
   prev_special_op.newPx = newPx_;
   prev_special_op.newPxBand = newPxBand_;
@@ -3883,6 +4073,7 @@ void Configuration::impl::accept ()
   prev_special_op.beepOnNewCQZ = beepOnNewCQZ_;
   prev_special_op.beepOnNewITUZ = beepOnNewITUZ_;
   prev_special_op.beepOnNewDXCC = beepOnNewDXCC_;
+  prev_special_op.beepOnNewState = beepOnNewState_;
   prev_special_op.beepOnNewPx = beepOnNewPx_;
   prev_special_op.usesched = usesched_;
 
@@ -3932,7 +4123,9 @@ void Configuration::impl::accept ()
   color_NewITUZ_ = next_color_NewITUZ_;
   color_NewITUZBand_ = next_color_NewITUZBand_;
   color_NewDXCC_ = next_color_NewDXCC_;
+  color_NewState_ = next_color_NewState_;
   color_NewDXCCBand_ = next_color_NewDXCCBand_;
+  color_NewStateBand_ = next_color_NewStateBand_;
   color_NewGrid_ = next_color_NewGrid_;
   color_NewGridBand_ = next_color_NewGridBand_;
   color_NewPx_ = next_color_NewPx_;
@@ -3949,7 +4142,9 @@ void Configuration::impl::accept ()
   color_NewITUZ_dark_ = next_color_NewITUZ_dark_;
   color_NewITUZBand_dark_ = next_color_NewITUZBand_dark_;
   color_NewDXCC_dark_ = next_color_NewDXCC_dark_;
+  color_NewState_dark_ = next_color_NewState_dark_;
   color_NewDXCCBand_dark_ = next_color_NewDXCCBand_dark_;
+  color_NewStateBand_dark_ = next_color_NewStateBand_dark_;
   color_NewGrid_dark_ = next_color_NewGrid_dark_;
   color_NewGridBand_dark_ = next_color_NewGridBand_dark_;
   color_NewPx_dark_ = next_color_NewPx_dark_;
@@ -4147,7 +4342,10 @@ void Configuration::impl::accept ()
   newITUZBand_ = ui_->newITUZBand_check_box->isChecked ();
   newITUZBandMode_ = ui_->newITUZBandMode_check_box->isChecked ();
   newDXCC_ = ui_->newDXCC_check_box->isChecked ();
+  newState_ = ui_->newState_check_box->isChecked ();
   newDXCCBand_ = ui_->newDXCCBand_check_box->isChecked ();
+  if (newState_) newStateBand_ = ui_->newStateBand_check_box->isChecked ();   // CE3TSK: its own value kept while greyed (review)
+  if (newState_) newStateBandMode_ = ui_->newStateBandMode_check_box->isChecked ();   // CE3TSK 2026-10-04: likewise
   newDXCCBandMode_ = ui_->newDXCCBandMode_check_box->isChecked ();
   newCall_ = ui_->newCall_check_box->isChecked ();
   newCallBand_ = ui_->newCallBand_check_box->isChecked ();
@@ -4181,6 +4379,7 @@ void Configuration::impl::accept ()
   beepOnNewCQZ_ = ui_->beep_on_newCQZ_check_box->isChecked();
   beepOnNewITUZ_ = ui_->beep_on_newITUZ_check_box->isChecked();
   beepOnNewDXCC_ = ui_->beep_on_newDXCC_check_box->isChecked();
+  beepOnNewState_ = ui_->beep_on_newState_check_box->isChecked();
   beepOnNewGrid_ = ui_->beep_on_newGrid_check_box->isChecked();
   beepOnNewPx_ = ui_->beep_on_newPx_check_box->isChecked();
   beepOnNewCall_ = ui_->beep_on_newCall_check_box->isChecked();
@@ -4211,7 +4410,7 @@ void Configuration::impl::accept ()
     log_as_RTTY_ = false;         // the log must record the mode actually used
     report_in_comments_ = false;  // the exchange is a grid, the dB report is noise
     /* CE3TSK: none of these are scored in a digital grid contest, and their colors would
-       contradict the ranking - contest points rank 32..45, new DXCC 22/23. */
+       contradict the ranking - contest points rank 36..49, new DXCC 26/27, new US state 19/20 (priorities.h). */
     newCQZ_ = false;
     newCQZBand_ = false;
     newCQZBandMode_ = false;
@@ -4219,7 +4418,10 @@ void Configuration::impl::accept ()
     newITUZBand_ = false;
     newITUZBandMode_ = false;
     newDXCC_ = false;
+    newState_ = false;
     newDXCCBand_ = false;
+    newStateBand_ = false;
+    newStateBandMode_ = false;
     newDXCCBandMode_ = false;
     newPx_ = false;
     newPxBand_ = false;
@@ -4227,38 +4429,35 @@ void Configuration::impl::accept ()
     beepOnNewCQZ_ = false;
     beepOnNewITUZ_ = false;
     beepOnNewDXCC_ = false;
+    beepOnNewState_ = false;
     beepOnNewPx_ = false;
     usesched_ = false;
   } else if (was_special_op && specialOpSaved_) {
-    newGrid_ = savedSpecialOp_.newGrid;
-    newGridBand_ = savedSpecialOp_.newGridBand;
-    newGridBandMode_ = savedSpecialOp_.newGridBandMode;
-    newCall_ = savedSpecialOp_.newCall;
-    newCallBand_ = savedSpecialOp_.newCallBand;
-    newCallBandMode_ = savedSpecialOp_.newCallBandMode;
-    autolog_ = savedSpecialOp_.autolog;
-    clear_DX_ = savedSpecialOp_.clearDX;
-    distance_in_comments_ = savedSpecialOp_.distanceInComments;
-    prompt_to_log_ = savedSpecialOp_.promptToLog;
-    log_as_RTTY_ = savedSpecialOp_.logAsRTTY;
-    report_in_comments_ = savedSpecialOp_.reportInComments;
-    newCQZ_ = savedSpecialOp_.newCQZ;
-    newCQZBand_ = savedSpecialOp_.newCQZBand;
-    newCQZBandMode_ = savedSpecialOp_.newCQZBandMode;
-    newITUZ_ = savedSpecialOp_.newITUZ;
-    newITUZBand_ = savedSpecialOp_.newITUZBand;
-    newITUZBandMode_ = savedSpecialOp_.newITUZBandMode;
-    newDXCC_ = savedSpecialOp_.newDXCC;
-    newDXCCBand_ = savedSpecialOp_.newDXCCBand;
-    newDXCCBandMode_ = savedSpecialOp_.newDXCCBandMode;
-    newPx_ = savedSpecialOp_.newPx;
-    newPxBand_ = savedSpecialOp_.newPxBand;
-    newPxBandMode_ = savedSpecialOp_.newPxBandMode;
-    beepOnNewCQZ_ = savedSpecialOp_.beepOnNewCQZ;
-    beepOnNewITUZ_ = savedSpecialOp_.beepOnNewITUZ;
-    beepOnNewDXCC_ = savedSpecialOp_.beepOnNewDXCC;
-    beepOnNewPx_ = savedSpecialOp_.beepOnNewPx;
-    usesched_ = savedSpecialOp_.usesched;
+    /* CE3TSK 2026-10-04 (review): leaving the contest in this dialog. Selecting "None" handed the operator's own values
+       back into the boxes (on_rbSpecialOpNone_toggled) and everything above read the boxes - so a box changed after
+       the hand-back counts, where this branch used to overwrite all of them with the parked set. Only what a box
+       cannot show comes from the operator's own set: the children of a tier that is off - greyed, unticked - keep the
+       values that set holds, the parked ones or what was clicked while leaving (leaving_contest). */
+    auto const keep = [] (bool parent, bool& child, bool parked) {if (!parent) child = parked;};
+    keep (newGrid_, newGridBand_, dlgEntrySpecialOp_.newGridBand);
+    keep (newGrid_, newGridBandMode_, dlgEntrySpecialOp_.newGridBandMode);
+    keep (newCall_, newCallBand_, dlgEntrySpecialOp_.newCallBand);
+    keep (newCall_, newCallBandMode_, dlgEntrySpecialOp_.newCallBandMode);
+    keep (newCQZ_, newCQZBand_, dlgEntrySpecialOp_.newCQZBand);
+    keep (newCQZ_, newCQZBandMode_, dlgEntrySpecialOp_.newCQZBandMode);
+    keep (newCQZ_, beepOnNewCQZ_, dlgEntrySpecialOp_.beepOnNewCQZ);
+    keep (newITUZ_, newITUZBand_, dlgEntrySpecialOp_.newITUZBand);
+    keep (newITUZ_, newITUZBandMode_, dlgEntrySpecialOp_.newITUZBandMode);
+    keep (newITUZ_, beepOnNewITUZ_, dlgEntrySpecialOp_.beepOnNewITUZ);
+    keep (newDXCC_, newDXCCBand_, dlgEntrySpecialOp_.newDXCCBand);
+    keep (newDXCC_, newDXCCBandMode_, dlgEntrySpecialOp_.newDXCCBandMode);
+    keep (newDXCC_, beepOnNewDXCC_, dlgEntrySpecialOp_.beepOnNewDXCC);
+    keep (newState_, newStateBand_, dlgEntrySpecialOp_.newStateBand);
+    keep (newState_, newStateBandMode_, dlgEntrySpecialOp_.newStateBandMode);
+    keep (newState_, beepOnNewState_, dlgEntrySpecialOp_.beepOnNewState);
+    keep (newPx_, newPxBand_, dlgEntrySpecialOp_.newPxBand);
+    keep (newPx_, newPxBandMode_, dlgEntrySpecialOp_.newPxBandMode);
+    keep (newPx_, beepOnNewPx_, dlgEntrySpecialOp_.beepOnNewPx);
     specialOpSaved_ = false;
   }
   specialOp_ = chosen;
@@ -4301,12 +4500,7 @@ void Configuration::impl::accept ()
   enable_tcp_connection_ = ui_->TCP_checkBox->isChecked ();
   write_decoded_ = ui_->write_decoded_check_box->isChecked ();
   write_decoded_debug_ = ui_->write_decoded_debug_check_box->isChecked ();
-  falseDecodeGridMark_ = ui_->falseDecodeGridMark_check_box->isChecked ();   /* CE3TSK */
-  falseDecodeGridNoAnswer_ = ui_->falseDecodeGridNoAnswer_check_box->isChecked ();
-  falseDecodeRoverMark_ = ui_->falseDecodeRoverMark_check_box->isChecked ();
-  falseDecodeRoverNoAnswer_ = ui_->falseDecodeRoverNoAnswer_check_box->isChecked ();
-  falseDecodePortableMark_ = ui_->falseDecodePortableMark_check_box->isChecked ();
-  falseDecodeWhereMark_ = ui_->falseDecodeWhereMark_check_box->isChecked ();
+  for (auto const& o : phantom_options) this->*o.member = (ui_.data ()->*o.box)->isChecked ();   /* CE3TSK 2026-10-04: one table */
   udpWindowToFront_ = ui_->udpWindowToFront->isChecked ();
   udpWindowRestore_ = ui_->udpWindowRestore->isChecked ();
   enable_udp1_adif_sending_ = ui_->udp1_adif_enable_check_box->isChecked ();
@@ -4438,6 +4632,12 @@ void Configuration::impl::on_lotw_download_push_button_clicked (bool)
                             tr ("The downloaded file is not a LoTW user activity file."));
 }
 
+void Configuration::impl::on_license_download_push_button_clicked (bool)   // CE3TSK 2026-10-03
+{
+  start_data_file_download (license_download_, license_url, license_file_name, &LicenseStates::version,
+                            tr ("The downloaded file is not a list of US license states."));
+}
+
 void Configuration::impl::start_data_file_download (FileDownload& download, char const * url, char const * file_name,
                                                     QDate (* version_of) (QByteArray const&), QString const& not_that_file)
 {
@@ -4487,6 +4687,7 @@ void Configuration::impl::update_data_file_labels ()
     };
   show (ui_->cty_file_status_label, ui_->cty_download_push_button, cty_download_, cty_file_name, &CountryDat::ctyVersion);
   show (ui_->lotw_file_status_label, ui_->lotw_download_push_button, lotw_download_, lotw_file_name, &CountryDat::lotwVersion);
+  show (ui_->license_file_status_label, ui_->license_download_push_button, license_download_, license_file_name, &LicenseStates::version);
 }
 
 void Configuration::impl::on_countryName_check_box_clicked(bool checked)
@@ -4573,14 +4774,14 @@ void Configuration::impl::on_write_decoded_debug_check_box_clicked(bool checked)
 
 /* CE3TSK 2026-09-30: "do not answer" means nothing without its mark, so it is greyed with it - its
    own value is kept, and is back when the mark is */
-void Configuration::impl::on_falseDecodeGridMark_check_box_toggled (bool checked)
+void Configuration::impl::on_phantomDecodeGridMark_check_box_toggled (bool checked)
 {
-  ui_->falseDecodeGridNoAnswer_check_box->setEnabled (checked);
+  ui_->phantomDecodeGridNoAnswer_check_box->setEnabled (checked);
 }
 
-void Configuration::impl::on_falseDecodeRoverMark_check_box_toggled (bool checked)
+void Configuration::impl::on_phantomDecodeRoverMark_check_box_toggled (bool checked)
 {
-  ui_->falseDecodeRoverNoAnswer_check_box->setEnabled (checked);
+  ui_->phantomDecodeRoverNoAnswer_check_box->setEnabled (checked);
 }
 
 void Configuration::impl::on_txtColor_check_box_clicked(bool checked)
@@ -4595,7 +4796,9 @@ void Configuration::impl::on_txtColor_check_box_clicked(bool checked)
     ui_->labNewITUZ->setStyleSheet(QString("font-weight: bold;background: %2;color: %1").arg(useDarkStyle_? next_color_NewITUZ_dark_.name() : next_color_NewITUZ_.name(),useDarkStyle_? next_color_CQ_dark_.name() : next_color_CQ_.name()));
     ui_->labNewITUZBand->setStyleSheet(QString("font-weight: bold;background: %2;color: %1").arg(useDarkStyle_? next_color_NewITUZBand_dark_.name() : next_color_NewITUZBand_.name(),useDarkStyle_? next_color_CQ_dark_.name() : next_color_CQ_.name()));
     ui_->labNewDXCC->setStyleSheet(QString("font-weight: bold;background: %2;color: %1").arg(useDarkStyle_? next_color_NewDXCC_dark_.name() : next_color_NewDXCC_.name(),useDarkStyle_? next_color_CQ_dark_.name() : next_color_CQ_.name()));
+    ui_->labNewState->setStyleSheet(QString("font-weight: bold;background: %2;color: %1").arg(useDarkStyle_? next_color_NewState_dark_.name() : next_color_NewState_.name(),useDarkStyle_? next_color_CQ_dark_.name() : next_color_CQ_.name()));
     ui_->labNewDXCCBand->setStyleSheet(QString("font-weight: bold;background: %2;color: %1").arg(useDarkStyle_? next_color_NewDXCCBand_dark_.name() : next_color_NewDXCCBand_.name(),useDarkStyle_? next_color_CQ_dark_.name() : next_color_CQ_.name()));
+    ui_->labNewStateBand->setStyleSheet(QString("font-weight: bold;background: %2;color: %1").arg(useDarkStyle_? next_color_NewStateBand_dark_.name() : next_color_NewStateBand_.name(),useDarkStyle_? next_color_CQ_dark_.name() : next_color_CQ_.name()));
     ui_->labNewGrid->setStyleSheet(QString("font-weight: bold;background: %2;color: %1").arg(useDarkStyle_? next_color_NewGrid_dark_.name() : next_color_NewGrid_.name(),useDarkStyle_? next_color_CQ_dark_.name() : next_color_CQ_.name()));
     ui_->labNewGridBand->setStyleSheet(QString("font-weight: bold;background: %2;color: %1").arg(useDarkStyle_? next_color_NewGridBand_dark_.name() : next_color_NewGridBand_.name(),useDarkStyle_? next_color_CQ_dark_.name() : next_color_CQ_.name()));
     ui_->labNewPx->setStyleSheet(QString("font-weight: bold;background: %2;color: %1").arg(useDarkStyle_? next_color_NewPx_dark_.name() : next_color_NewPx_.name(),useDarkStyle_? next_color_CQ_dark_.name() : next_color_CQ_.name()));
@@ -4634,7 +4837,9 @@ void Configuration::impl::on_txtColor_check_box_clicked(bool checked)
     ui_->labNewMcITUZ->setStyleSheet(QString("font-weight: bold;background: %2;color: %1").arg(useDarkStyle_? next_color_NewITUZ_dark_.name() : next_color_NewITUZ_.name(),useDarkStyle_? next_color_MyCall_dark_.name() : next_color_MyCall_.name()));
     ui_->labNewMcITUZBand->setStyleSheet(QString("font-weight: bold;background: %2;color: %1").arg(useDarkStyle_? next_color_NewITUZBand_dark_.name() : next_color_NewITUZBand_.name(),useDarkStyle_? next_color_MyCall_dark_.name() : next_color_MyCall_.name()));
     ui_->labNewMcDXCC->setStyleSheet(QString("font-weight: bold;background: %2;color: %1").arg(useDarkStyle_? next_color_NewDXCC_dark_.name() : next_color_NewDXCC_.name(),useDarkStyle_? next_color_MyCall_dark_.name() : next_color_MyCall_.name()));
+    ui_->labNewMcState->setStyleSheet(QString("font-weight: bold;background: %2;color: %1").arg(useDarkStyle_? next_color_NewState_dark_.name() : next_color_NewState_.name(),useDarkStyle_? next_color_MyCall_dark_.name() : next_color_MyCall_.name()));
     ui_->labNewMcDXCCBand->setStyleSheet(QString("font-weight: bold;background: %2;color: %1").arg(useDarkStyle_? next_color_NewDXCCBand_dark_.name() : next_color_NewDXCCBand_.name(),useDarkStyle_? next_color_MyCall_dark_.name() : next_color_MyCall_.name()));
+    ui_->labNewMcStateBand->setStyleSheet(QString("font-weight: bold;background: %2;color: %1").arg(useDarkStyle_? next_color_NewStateBand_dark_.name() : next_color_NewStateBand_.name(),useDarkStyle_? next_color_MyCall_dark_.name() : next_color_MyCall_.name()));
     ui_->labNewMcGrid->setStyleSheet(QString("font-weight: bold;background: %2;color: %1").arg(useDarkStyle_? next_color_NewGrid_dark_.name() : next_color_NewGrid_.name(),useDarkStyle_? next_color_MyCall_dark_.name() : next_color_MyCall_.name()));
     ui_->labNewMcGridBand->setStyleSheet(QString("font-weight: bold;background: %2;color: %1").arg(useDarkStyle_? next_color_NewGridBand_dark_.name() : next_color_NewGridBand_.name(),useDarkStyle_? next_color_MyCall_dark_.name() : next_color_MyCall_.name()));
     ui_->labNewMcPx->setStyleSheet(QString("font-weight: bold;background: %2;color: %1").arg(useDarkStyle_? next_color_NewPx_dark_.name() : next_color_NewPx_.name(),useDarkStyle_? next_color_MyCall_dark_.name() : next_color_MyCall_.name()));
@@ -4646,7 +4851,9 @@ void Configuration::impl::on_txtColor_check_box_clicked(bool checked)
     ui_->labNewScITUZ->setStyleSheet(QString("font-weight: bold;background: %2;color: %1").arg(useDarkStyle_? next_color_NewITUZ_dark_.name() : next_color_NewITUZ_.name(),useDarkStyle_? next_color_StandardCall_dark_.name() : next_color_StandardCall_.name()));
     ui_->labNewScITUZBand->setStyleSheet(QString("font-weight: bold;background: %2;color: %1").arg(useDarkStyle_? next_color_NewITUZBand_dark_.name() : next_color_NewITUZBand_.name(),useDarkStyle_? next_color_StandardCall_dark_.name() : next_color_StandardCall_.name()));
     ui_->labNewScDXCC->setStyleSheet(QString("font-weight: bold;background: %2;color: %1").arg(useDarkStyle_? next_color_NewDXCC_dark_.name() : next_color_NewDXCC_.name(),useDarkStyle_? next_color_StandardCall_dark_.name() : next_color_StandardCall_.name()));
+    ui_->labNewScState->setStyleSheet(QString("font-weight: bold;background: %2;color: %1").arg(useDarkStyle_? next_color_NewState_dark_.name() : next_color_NewState_.name(),useDarkStyle_? next_color_StandardCall_dark_.name() : next_color_StandardCall_.name()));
     ui_->labNewScDXCCBand->setStyleSheet(QString("font-weight: bold;background: %2;color: %1").arg(useDarkStyle_? next_color_NewDXCCBand_dark_.name() : next_color_NewDXCCBand_.name(),useDarkStyle_? next_color_StandardCall_dark_.name() : next_color_StandardCall_.name()));
+    ui_->labNewScStateBand->setStyleSheet(QString("font-weight: bold;background: %2;color: %1").arg(useDarkStyle_? next_color_NewStateBand_dark_.name() : next_color_NewStateBand_.name(),useDarkStyle_? next_color_StandardCall_dark_.name() : next_color_StandardCall_.name()));
     ui_->labNewScGrid->setStyleSheet(QString("font-weight: bold;background: %2;color: %1").arg(useDarkStyle_? next_color_NewGrid_dark_.name() : next_color_NewGrid_.name(),useDarkStyle_? next_color_StandardCall_dark_.name() : next_color_StandardCall_.name()));
     ui_->labNewScGridBand->setStyleSheet(QString("font-weight: bold;background: %2;color: %1").arg(useDarkStyle_? next_color_NewGridBand_dark_.name() : next_color_NewGridBand_.name(),useDarkStyle_? next_color_StandardCall_dark_.name() : next_color_StandardCall_.name()));
     ui_->labNewScPx->setStyleSheet(QString("font-weight: bold;background: %2;color: %1").arg(useDarkStyle_? next_color_NewPx_dark_.name() : next_color_NewPx_.name(),useDarkStyle_? next_color_StandardCall_dark_.name() : next_color_StandardCall_.name()));
@@ -4662,7 +4869,9 @@ void Configuration::impl::on_txtColor_check_box_clicked(bool checked)
     ui_->labNewITUZ->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? next_color_NewITUZ_dark_.name() : next_color_NewITUZ_.name(),useDarkStyle_? next_color_CQ_dark_.name() : next_color_CQ_.name()));
     ui_->labNewITUZBand->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? next_color_NewITUZBand_dark_.name() : next_color_NewITUZBand_.name(),useDarkStyle_? next_color_CQ_dark_.name() : next_color_CQ_.name()));
     ui_->labNewDXCC->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? next_color_NewDXCC_dark_.name() : next_color_NewDXCC_.name(),useDarkStyle_? next_color_CQ_dark_.name() : next_color_CQ_.name()));
+    ui_->labNewState->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? next_color_NewState_dark_.name() : next_color_NewState_.name(),useDarkStyle_? next_color_CQ_dark_.name() : next_color_CQ_.name()));
     ui_->labNewDXCCBand->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? next_color_NewDXCCBand_dark_.name() : next_color_NewDXCCBand_.name(),useDarkStyle_? next_color_CQ_dark_.name() : next_color_CQ_.name()));
+    ui_->labNewStateBand->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? next_color_NewStateBand_dark_.name() : next_color_NewStateBand_.name(),useDarkStyle_? next_color_CQ_dark_.name() : next_color_CQ_.name()));
     ui_->labNewGrid->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? next_color_NewGrid_dark_.name() : next_color_NewGrid_.name(),useDarkStyle_? next_color_CQ_dark_.name() : next_color_CQ_.name()));
     ui_->labNewGridBand->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? next_color_NewGridBand_dark_.name() : next_color_NewGridBand_.name(),useDarkStyle_? next_color_CQ_dark_.name() : next_color_CQ_.name()));
     ui_->labNewPx->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? next_color_NewPx_dark_.name() : next_color_NewPx_.name(),useDarkStyle_? next_color_CQ_dark_.name() : next_color_CQ_.name()));
@@ -4701,7 +4910,9 @@ void Configuration::impl::on_txtColor_check_box_clicked(bool checked)
     ui_->labNewMcITUZ->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? next_color_NewITUZ_dark_.name() : next_color_NewITUZ_.name(),useDarkStyle_? next_color_MyCall_dark_.name() : next_color_MyCall_.name()));
     ui_->labNewMcITUZBand->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? next_color_NewITUZBand_dark_.name() : next_color_NewITUZBand_.name(),useDarkStyle_? next_color_MyCall_dark_.name() : next_color_MyCall_.name()));
     ui_->labNewMcDXCC->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? next_color_NewDXCC_dark_.name() : next_color_NewDXCC_.name(),useDarkStyle_? next_color_MyCall_dark_.name() : next_color_MyCall_.name()));
+    ui_->labNewMcState->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? next_color_NewState_dark_.name() : next_color_NewState_.name(),useDarkStyle_? next_color_MyCall_dark_.name() : next_color_MyCall_.name()));
     ui_->labNewMcDXCCBand->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? next_color_NewDXCCBand_dark_.name() : next_color_NewDXCCBand_.name(),useDarkStyle_? next_color_MyCall_dark_.name() : next_color_MyCall_.name()));
+    ui_->labNewMcStateBand->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? next_color_NewStateBand_dark_.name() : next_color_NewStateBand_.name(),useDarkStyle_? next_color_MyCall_dark_.name() : next_color_MyCall_.name()));
     ui_->labNewMcGrid->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? next_color_NewGrid_dark_.name() : next_color_NewGrid_.name(),useDarkStyle_? next_color_MyCall_dark_.name() : next_color_MyCall_.name()));
     ui_->labNewMcGridBand->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? next_color_NewGridBand_dark_.name() : next_color_NewGridBand_.name(),useDarkStyle_? next_color_MyCall_dark_.name() : next_color_MyCall_.name()));
     ui_->labNewMcPx->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? next_color_NewPx_dark_.name() : next_color_NewPx_.name(),useDarkStyle_? next_color_MyCall_dark_.name() : next_color_MyCall_.name()));
@@ -4713,7 +4924,9 @@ void Configuration::impl::on_txtColor_check_box_clicked(bool checked)
     ui_->labNewScITUZ->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? next_color_NewITUZ_dark_.name() : next_color_NewITUZ_.name(),useDarkStyle_? next_color_StandardCall_dark_.name() : next_color_StandardCall_.name()));
     ui_->labNewScITUZBand->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? next_color_NewITUZBand_dark_.name() : next_color_NewITUZBand_.name(),useDarkStyle_? next_color_StandardCall_dark_.name() : next_color_StandardCall_.name()));
     ui_->labNewScDXCC->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? next_color_NewDXCC_dark_.name() : next_color_NewDXCC_.name(),useDarkStyle_? next_color_StandardCall_dark_.name() : next_color_StandardCall_.name()));
+    ui_->labNewScState->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? next_color_NewState_dark_.name() : next_color_NewState_.name(),useDarkStyle_? next_color_StandardCall_dark_.name() : next_color_StandardCall_.name()));
     ui_->labNewScDXCCBand->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? next_color_NewDXCCBand_dark_.name() : next_color_NewDXCCBand_.name(),useDarkStyle_? next_color_StandardCall_dark_.name() : next_color_StandardCall_.name()));
+    ui_->labNewScStateBand->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? next_color_NewStateBand_dark_.name() : next_color_NewStateBand_.name(),useDarkStyle_? next_color_StandardCall_dark_.name() : next_color_StandardCall_.name()));
     ui_->labNewScGrid->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? next_color_NewGrid_dark_.name() : next_color_NewGrid_.name(),useDarkStyle_? next_color_StandardCall_dark_.name() : next_color_StandardCall_.name()));
     ui_->labNewScGridBand->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? next_color_NewGridBand_dark_.name() : next_color_NewGridBand_.name(),useDarkStyle_? next_color_StandardCall_dark_.name() : next_color_StandardCall_.name()));
     ui_->labNewScPx->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? next_color_NewPx_dark_.name() : next_color_NewPx_.name(),useDarkStyle_? next_color_StandardCall_dark_.name() : next_color_StandardCall_.name()));
@@ -4794,6 +5007,7 @@ void Configuration::impl::on_workedStriked_check_box_clicked(bool checked)
 {
   next_workedStriked_ = checked;
   ui_->workedUnderlined_check_box->setChecked(!checked && workedUnderlined_);
+  next_workedUnderlined_ = !checked && workedUnderlined_;   // CE3TSK 2026-10-03: the staged copy follows the box (review)
   ui_->workedUnderlined_check_box->setEnabled(!checked);
   if (next_txtColor_) {
     if (next_workedColor_) {
@@ -4858,6 +5072,7 @@ void Configuration::impl::on_workedUnderlined_check_box_clicked(bool checked)
 {
   next_workedUnderlined_ = checked;
   ui_->workedStriked_check_box->setChecked(!checked && workedStriked_);
+  next_workedStriked_ = !checked && workedStriked_;   // CE3TSK 2026-10-03: the staged copy follows the box (review)
   ui_->workedStriked_check_box->setEnabled(!checked);
   if (next_txtColor_) {
     if (next_workedColor_) {
@@ -4921,171 +5136,98 @@ void Configuration::impl::on_workedUnderlined_check_box_clicked(bool checked)
 void Configuration::impl::on_newPotential_check_box_clicked(bool checked)
 {
   next_newPotential_ = checked;
-  ui_->labStandardCall->setVisible(checked);
-  ui_->labNewScCQZ->setVisible(next_newCQZ_ && checked);
-  ui_->labNewScCQZBand->setVisible((next_newCQZBandMode_ || next_newCQZBand_) && checked);
-  ui_->labNewScITUZ->setVisible(next_newITUZ_ && checked);
-  ui_->labNewScITUZBand->setVisible((next_newITUZBandMode_ || next_newITUZBand_) && checked);
-  ui_->labNewScDXCC->setVisible(next_newDXCC_ && checked);
-  ui_->labNewScDXCCBand->setVisible((next_newDXCCBandMode_ || next_newDXCCBand_) && checked);
-  ui_->labNewScGrid->setVisible(next_newGrid_ && checked);
-  ui_->labNewScGridBand->setVisible((next_newGridBandMode_ || next_newGridBand_) && checked);
-  ui_->labNewScPx->setVisible(next_newPx_ && checked);
-  ui_->labNewScPxBand->setVisible((next_newPxBandMode_ || next_newPxBand_) && checked);
-  ui_->labNewScCall->setVisible(next_newCall_ && checked);
-  ui_->labNewScCallBand->setVisible((next_newCallBandMode_ || next_newCallBand_) && checked);
-  ui_->labWorkedScCall->setVisible((next_newCQZ_ || next_newITUZ_ || next_newDXCC_ || next_newGrid_ || next_newPx_ || next_newCall_) && checked);
+  refresh_samples ();   // CE3TSK 2026-10-03: every sample from the staged values (item 10)
   if(checked) ui_->otherMessagesMarker_check_box->setChecked(false);
 }
 
 void Configuration::impl::on_newCQZ_check_box_clicked(bool checked)
 {
   next_newCQZ_ = checked;
-  ui_->newCQZBand_check_box->setChecked(checked && newCQZBand_);
-  next_newCQZBand_ = checked && newCQZBand_;
+  ui_->newCQZBand_check_box->setChecked(checked && own (newCQZBand_, &SpecialOpSettings::newCQZBand));
+  next_newCQZBand_ = checked && own (newCQZBand_, &SpecialOpSettings::newCQZBand);
   ui_->newCQZBand_check_box->setEnabled(checked);
-  ui_->beep_on_newCQZ_check_box->setChecked(checked && beepOnNewCQZ_);
+  ui_->beep_on_newCQZ_check_box->setChecked(checked && own (beepOnNewCQZ_, &SpecialOpSettings::beepOnNewCQZ));
   ui_->beep_on_newCQZ_check_box->setEnabled(checked);
-  ui_->newCQZBandMode_check_box->setChecked(checked && newCQZBandMode_);
-  next_newCQZBandMode_ = checked && newCQZBandMode_;
+  ui_->newCQZBandMode_check_box->setChecked(checked && own (newCQZBandMode_, &SpecialOpSettings::newCQZBandMode));
+  next_newCQZBandMode_ = checked && own (newCQZBandMode_, &SpecialOpSettings::newCQZBandMode);
   ui_->newCQZBandMode_check_box->setEnabled(checked);
-  ui_->workedColor_check_box->setChecked((next_newCQZ_ || next_newITUZ_ || next_newDXCC_ || next_newGrid_ || next_newPx_ || next_newCall_) && next_workedColor_);
-  ui_->workedColor_check_box->setEnabled(next_newCQZ_ || next_newITUZ_ || next_newDXCC_ || next_newGrid_ || next_newPx_ || next_newCall_);
-  ui_->workedStriked_check_box->setChecked((next_newCQZ_ || next_newITUZ_ || next_newDXCC_ || next_newGrid_ || next_newPx_ || next_newCall_) && !next_workedUnderlined_ && next_workedStriked_);
-  ui_->workedStriked_check_box->setEnabled((next_newCQZ_ || next_newITUZ_ || next_newDXCC_ || next_newGrid_ || next_newPx_ || next_newCall_) && !next_workedUnderlined_);
-  ui_->workedUnderlined_check_box->setChecked((next_newCQZ_ || next_newITUZ_ || next_newDXCC_ || next_newGrid_ || next_newPx_ || next_newCall_) && !next_workedStriked_ && next_workedUnderlined_);
-  ui_->workedUnderlined_check_box->setEnabled((next_newCQZ_ || next_newITUZ_ || next_newDXCC_ || next_newGrid_ || next_newPx_ || next_newCall_) && !next_workedStriked_);
-  ui_->workedDontShow_check_box->setChecked((next_newCQZ_ || next_newITUZ_ || next_newDXCC_ || next_newGrid_ || next_newPx_ || next_newCall_) && next_workedDontShow_);
-  ui_->workedDontShow_check_box->setEnabled(next_newCQZ_ || next_newITUZ_ || next_newDXCC_ || next_newGrid_ || next_newPx_ || next_newCall_);
-  ui_->labNewCQZ->setVisible(next_newCQZ_);
-  ui_->labNewMcCQZ->setVisible(next_newCQZ_);
-  ui_->labNewScCQZ->setVisible(next_newCQZ_ && next_newPotential_);
-  ui_->labNewCQZBand->setVisible(next_newCQZBand_ || next_newCQZBandMode_);
-  ui_->labNewMcCQZBand->setVisible(next_newCQZBand_ || next_newCQZBandMode_);
-  ui_->labNewScCQZBand->setVisible((next_newCQZBand_ || next_newCQZBandMode_) && next_newPotential_);
-  ui_->labWorkedCall->setVisible(next_newCQZ_ || next_newITUZ_ || next_newDXCC_ || next_newGrid_ || next_newPx_ || next_newCall_);
-  ui_->labWorkedMcCall->setVisible(next_newCQZ_ || next_newITUZ_ || next_newDXCC_ || next_newGrid_ || next_newPx_ || next_newCall_);
-  ui_->labWorkedScCall->setVisible((next_newCQZ_ || next_newITUZ_ || next_newDXCC_ || next_newGrid_ || next_newPx_ || next_newCall_) && next_newPotential_);
+  refresh_samples ();   // CE3TSK 2026-10-03: every sample from the staged values (item 10)
+  refresh_worked_options ();   // CE3TSK 2026-10-03: the worked options follow the tiers (item 10)
 }
 
 void Configuration::impl::on_newITUZ_check_box_clicked(bool checked)
 {
   next_newITUZ_ = checked;
-  ui_->newITUZBand_check_box->setChecked(checked && newITUZBand_);
-  next_newITUZBand_ = checked && newITUZBand_;
+  ui_->newITUZBand_check_box->setChecked(checked && own (newITUZBand_, &SpecialOpSettings::newITUZBand));
+  next_newITUZBand_ = checked && own (newITUZBand_, &SpecialOpSettings::newITUZBand);
   ui_->newITUZBand_check_box->setEnabled(checked);
-  ui_->beep_on_newITUZ_check_box->setChecked(checked && beepOnNewITUZ_);
+  ui_->beep_on_newITUZ_check_box->setChecked(checked && own (beepOnNewITUZ_, &SpecialOpSettings::beepOnNewITUZ));
   ui_->beep_on_newITUZ_check_box->setEnabled(checked);
-  ui_->newITUZBandMode_check_box->setChecked(checked && newITUZBandMode_);
-  next_newITUZBandMode_ = checked && newITUZBandMode_;
+  ui_->newITUZBandMode_check_box->setChecked(checked && own (newITUZBandMode_, &SpecialOpSettings::newITUZBandMode));
+  next_newITUZBandMode_ = checked && own (newITUZBandMode_, &SpecialOpSettings::newITUZBandMode);
   ui_->newITUZBandMode_check_box->setEnabled(checked);
-  ui_->workedColor_check_box->setChecked((next_newCQZ_ || next_newITUZ_ || next_newDXCC_ || next_newGrid_ || next_newPx_ || next_newCall_) && next_workedColor_);
-  ui_->workedColor_check_box->setEnabled(next_newCQZ_ || next_newITUZ_ || next_newDXCC_ || next_newGrid_ || next_newPx_ || next_newCall_);
-  ui_->workedStriked_check_box->setChecked((next_newCQZ_ || next_newITUZ_ || next_newDXCC_ || next_newGrid_ || next_newPx_ || next_newCall_) && !next_workedUnderlined_ && next_workedStriked_);
-  ui_->workedStriked_check_box->setEnabled((next_newCQZ_ || next_newITUZ_ || next_newDXCC_ || next_newGrid_ || next_newPx_ || next_newCall_) && !next_workedUnderlined_);
-  ui_->workedUnderlined_check_box->setChecked((next_newCQZ_ || next_newITUZ_ || next_newDXCC_ || next_newGrid_ || next_newPx_ || next_newCall_) && !next_workedStriked_ && next_workedUnderlined_);
-  ui_->workedUnderlined_check_box->setEnabled((next_newCQZ_ || next_newITUZ_ || next_newDXCC_ || next_newGrid_ || next_newPx_ || next_newCall_) && !next_workedStriked_);
-  ui_->workedDontShow_check_box->setChecked((next_newCQZ_ || next_newITUZ_ || next_newDXCC_ || next_newGrid_ || next_newPx_ || next_newCall_) && next_workedDontShow_);
-  ui_->workedDontShow_check_box->setEnabled(next_newCQZ_ || next_newITUZ_ || next_newDXCC_ || next_newGrid_ || next_newPx_ || next_newCall_);
-  ui_->labNewITUZ->setVisible(next_newITUZ_);
-  ui_->labNewMcITUZ->setVisible(next_newITUZ_);
-  ui_->labNewScITUZ->setVisible(next_newITUZ_ && next_newPotential_);
-  ui_->labNewITUZBand->setVisible(next_newITUZBand_ || next_newITUZBandMode_);
-  ui_->labNewMcITUZBand->setVisible(next_newITUZBand_ || next_newITUZBandMode_);
-  ui_->labNewScITUZBand->setVisible((next_newITUZBand_ || next_newITUZBandMode_) && next_newPotential_);
-  ui_->labWorkedCall->setVisible(next_newCQZ_ || next_newITUZ_ || next_newDXCC_ || next_newGrid_ || next_newPx_ || next_newCall_);
-  ui_->labWorkedMcCall->setVisible(next_newCQZ_ || next_newITUZ_ || next_newDXCC_ || next_newGrid_ || next_newPx_ || next_newCall_);
-  ui_->labWorkedScCall->setVisible((next_newCQZ_ || next_newITUZ_ || next_newDXCC_ || next_newGrid_ || next_newPx_ || next_newCall_) && next_newPotential_);
+  refresh_samples ();   // CE3TSK 2026-10-03: every sample from the staged values (item 10)
+  refresh_worked_options ();   // CE3TSK 2026-10-03: the worked options follow the tiers (item 10)
 }
 
 void Configuration::impl::on_newDXCC_check_box_clicked(bool checked)
 {
   next_newDXCC_ = checked;
-  ui_->newDXCCBand_check_box->setChecked(checked && newDXCCBand_);
-  next_newDXCCBand_ = checked && newDXCCBand_;
+  ui_->newDXCCBand_check_box->setChecked(checked && own (newDXCCBand_, &SpecialOpSettings::newDXCCBand));
+  next_newDXCCBand_ = checked && own (newDXCCBand_, &SpecialOpSettings::newDXCCBand);
   ui_->newDXCCBand_check_box->setEnabled(checked);
-  ui_->beep_on_newDXCC_check_box->setChecked(checked && beepOnNewDXCC_);
+  ui_->beep_on_newDXCC_check_box->setChecked(checked && own (beepOnNewDXCC_, &SpecialOpSettings::beepOnNewDXCC));
   ui_->beep_on_newDXCC_check_box->setEnabled(checked);
-  ui_->newDXCCBandMode_check_box->setChecked(checked && newDXCCBandMode_);
-  next_newDXCCBandMode_ = checked && newDXCCBandMode_;
+  ui_->newDXCCBandMode_check_box->setChecked(checked && own (newDXCCBandMode_, &SpecialOpSettings::newDXCCBandMode));
+  next_newDXCCBandMode_ = checked && own (newDXCCBandMode_, &SpecialOpSettings::newDXCCBandMode);
   ui_->newDXCCBandMode_check_box->setEnabled(checked);
-  ui_->workedColor_check_box->setChecked((next_newCQZ_ || next_newITUZ_ || next_newDXCC_ || next_newGrid_ || next_newPx_ || next_newCall_) && next_workedColor_);
-  ui_->workedColor_check_box->setEnabled(next_newCQZ_ || next_newITUZ_ || next_newDXCC_ || next_newGrid_ || next_newPx_ || next_newCall_);
-  ui_->workedStriked_check_box->setChecked((next_newCQZ_ || next_newITUZ_ || next_newDXCC_ || next_newGrid_ || next_newPx_ || next_newCall_) && !next_workedUnderlined_ && next_workedStriked_);
-  ui_->workedStriked_check_box->setEnabled((next_newCQZ_ || next_newITUZ_ || next_newDXCC_ || next_newGrid_ || next_newPx_ || next_newCall_) && !next_workedUnderlined_);
-  ui_->workedUnderlined_check_box->setChecked((next_newCQZ_ || next_newITUZ_ || next_newDXCC_ || next_newGrid_ || next_newPx_ || next_newCall_) && !next_workedStriked_ && next_workedUnderlined_);
-  ui_->workedUnderlined_check_box->setEnabled((next_newCQZ_ || next_newITUZ_ || next_newDXCC_ || next_newGrid_ || next_newPx_ || next_newCall_) && !next_workedStriked_);
-  ui_->workedDontShow_check_box->setChecked((next_newCQZ_ || next_newITUZ_ || next_newDXCC_ || next_newGrid_ || next_newPx_ || next_newCall_) && next_workedDontShow_);
-  ui_->workedDontShow_check_box->setEnabled(next_newCQZ_ || next_newITUZ_ || next_newDXCC_ || next_newGrid_ || next_newPx_ || next_newCall_);
-  ui_->labNewDXCC->setVisible(next_newDXCC_);
-  ui_->labNewMcDXCC->setVisible(next_newDXCC_);
-  ui_->labNewScDXCC->setVisible(next_newDXCC_ && next_newPotential_);
-  ui_->labNewDXCCBand->setVisible(next_newDXCCBand_ || next_newDXCCBandMode_);
-  ui_->labNewMcDXCCBand->setVisible(next_newDXCCBand_ || next_newDXCCBandMode_);
-  ui_->labNewScDXCCBand->setVisible((next_newDXCCBand_ || next_newDXCCBandMode_) && next_newPotential_);
-  ui_->labWorkedCall->setVisible(next_newCQZ_ || next_newITUZ_ || next_newDXCC_ || next_newGrid_ || next_newPx_ || next_newCall_);
-  ui_->labWorkedMcCall->setVisible(next_newCQZ_ || next_newITUZ_ || next_newDXCC_ || next_newGrid_ || next_newPx_ || next_newCall_);
-  ui_->labWorkedScCall->setVisible((next_newCQZ_ || next_newITUZ_ || next_newDXCC_ || next_newGrid_ || next_newPx_ || next_newCall_) && next_newPotential_);
+  refresh_samples ();   // CE3TSK 2026-10-03: every sample from the staged values (item 10)
+  refresh_worked_options ();   // CE3TSK 2026-10-03: the worked options follow the tiers (item 10)
+}
+
+void Configuration::impl::on_newState_check_box_clicked(bool checked)
+{
+  next_newState_ = checked;
+  ui_->newStateBand_check_box->setChecked(checked && own (newStateBand_, &SpecialOpSettings::newStateBand));
+  next_newStateBand_ = checked && own (newStateBand_, &SpecialOpSettings::newStateBand);
+  ui_->newStateBand_check_box->setEnabled(checked);
+  ui_->newStateBandMode_check_box->setChecked(checked && own (newStateBandMode_, &SpecialOpSettings::newStateBandMode));
+  next_newStateBandMode_ = checked && own (newStateBandMode_, &SpecialOpSettings::newStateBandMode);
+  ui_->newStateBandMode_check_box->setEnabled(checked);
+  ui_->beep_on_newState_check_box->setChecked(checked && own (beepOnNewState_, &SpecialOpSettings::beepOnNewState));
+  ui_->beep_on_newState_check_box->setEnabled(checked);
+  refresh_samples ();   // CE3TSK 2026-10-03: every sample from the staged values (item 10)
+  refresh_worked_options ();   // CE3TSK 2026-10-03: the worked options follow the tiers (item 10)
 }
 
 void Configuration::impl::on_newCall_check_box_clicked(bool checked)
 {
   next_newCall_ = checked;
-  ui_->newCallBand_check_box->setChecked(checked && newCallBand_);
-  next_newCallBand_ = checked && newCallBand_;
+  ui_->newCallBand_check_box->setChecked(checked && own (newCallBand_, &SpecialOpSettings::newCallBand));
+  next_newCallBand_ = checked && own (newCallBand_, &SpecialOpSettings::newCallBand);
   ui_->newCallBand_check_box->setEnabled(checked);
   ui_->beep_on_newCall_check_box->setChecked(checked && beepOnNewCall_);
   ui_->beep_on_newCall_check_box->setEnabled(checked);
-  ui_->newCallBandMode_check_box->setChecked(checked && newCallBandMode_);
-  next_newCallBandMode_ = checked && newCallBandMode_;
+  ui_->newCallBandMode_check_box->setChecked(checked && own (newCallBandMode_, &SpecialOpSettings::newCallBandMode));
+  next_newCallBandMode_ = checked && own (newCallBandMode_, &SpecialOpSettings::newCallBandMode);
   ui_->newCallBandMode_check_box->setEnabled(checked);
-  ui_->workedColor_check_box->setChecked((next_newCQZ_ || next_newITUZ_ || next_newDXCC_ || next_newGrid_ || next_newPx_ || next_newCall_) && next_workedColor_);
-  ui_->workedColor_check_box->setEnabled(next_newCQZ_ || next_newITUZ_ || next_newDXCC_ || next_newGrid_ || next_newPx_ || next_newCall_);
-  ui_->workedStriked_check_box->setChecked((next_newCQZ_ || next_newITUZ_ || next_newDXCC_ || next_newGrid_ || next_newPx_ || next_newCall_) && !next_workedUnderlined_ && next_workedStriked_);
-  ui_->workedStriked_check_box->setEnabled((next_newCQZ_ || next_newITUZ_ || next_newDXCC_ || next_newGrid_ || next_newPx_ || next_newCall_) && !next_workedUnderlined_);
-  ui_->workedUnderlined_check_box->setChecked((next_newCQZ_ || next_newITUZ_ || next_newDXCC_ || next_newGrid_ || next_newPx_ || next_newCall_) && !next_workedStriked_ && next_workedUnderlined_);
-  ui_->workedUnderlined_check_box->setEnabled((next_newCQZ_ || next_newITUZ_ || next_newDXCC_ || next_newGrid_ || next_newPx_ || next_newCall_) && !next_workedStriked_);
-  ui_->workedDontShow_check_box->setChecked((next_newCQZ_ || next_newITUZ_ || next_newDXCC_ || next_newGrid_ || next_newPx_ || next_newCall_) && next_workedDontShow_);
-  ui_->workedDontShow_check_box->setEnabled(next_newCQZ_ || next_newITUZ_ || next_newDXCC_ || next_newGrid_ || next_newPx_ || next_newCall_);
-  ui_->labNewCall->setVisible(next_newCall_);
-  ui_->labNewMcCall->setVisible(next_newCall_);
-  ui_->labNewScCall->setVisible(next_newCall_ && next_newPotential_);
-  ui_->labNewCallBand->setVisible(next_newCallBand_ || next_newCallBandMode_);
-  ui_->labNewMcCallBand->setVisible(next_newCallBand_ || next_newCallBandMode_);
-  ui_->labNewScCallBand->setVisible((next_newCallBand_ || next_newCallBandMode_) && next_newPotential_);
-  ui_->labWorkedCall->setVisible(next_newCQZ_ || next_newITUZ_ || next_newDXCC_ || next_newGrid_ || next_newPx_ || next_newCall_);
-  ui_->labWorkedMcCall->setVisible(next_newCQZ_ || next_newITUZ_ || next_newDXCC_ || next_newGrid_ || next_newPx_ || next_newCall_);
-  ui_->labWorkedScCall->setVisible((next_newCQZ_ || next_newITUZ_ || next_newDXCC_ || next_newGrid_ || next_newPx_ || next_newCall_) && next_newPotential_);
+  refresh_samples ();   // CE3TSK 2026-10-03: every sample from the staged values (item 10)
+  refresh_worked_options ();   // CE3TSK 2026-10-03: the worked options follow the tiers (item 10)
 }
 
 void Configuration::impl::on_newPx_check_box_clicked(bool checked)
 {
   next_newPx_ = checked;
-  ui_->newPxBand_check_box->setChecked(checked && newPxBand_);
-  next_newPxBand_ = checked && newPxBand_;
+  ui_->newPxBand_check_box->setChecked(checked && own (newPxBand_, &SpecialOpSettings::newPxBand));
+  next_newPxBand_ = checked && own (newPxBand_, &SpecialOpSettings::newPxBand);
   ui_->newPxBand_check_box->setEnabled(checked);
-  ui_->beep_on_newPx_check_box->setChecked(checked && beepOnNewPx_);
+  ui_->beep_on_newPx_check_box->setChecked(checked && own (beepOnNewPx_, &SpecialOpSettings::beepOnNewPx));
   ui_->beep_on_newPx_check_box->setEnabled(checked);
-  ui_->newPxBandMode_check_box->setChecked(checked && newPxBandMode_);
-  next_newPxBandMode_ = checked && newPxBandMode_;
+  ui_->newPxBandMode_check_box->setChecked(checked && own (newPxBandMode_, &SpecialOpSettings::newPxBandMode));
+  next_newPxBandMode_ = checked && own (newPxBandMode_, &SpecialOpSettings::newPxBandMode);
   ui_->newPxBandMode_check_box->setEnabled(checked);
-  ui_->workedColor_check_box->setChecked((next_newCQZ_ || next_newITUZ_ || next_newDXCC_ || next_newGrid_ || next_newPx_ || next_newCall_) && next_workedColor_);
-  ui_->workedColor_check_box->setEnabled(next_newCQZ_ || next_newITUZ_ || next_newDXCC_ || next_newGrid_ || next_newPx_ || next_newCall_);
-  ui_->workedStriked_check_box->setChecked((next_newCQZ_ || next_newITUZ_ || next_newDXCC_ || next_newGrid_ || next_newPx_ || next_newCall_) && !next_workedUnderlined_ && next_workedStriked_);
-  ui_->workedStriked_check_box->setEnabled((next_newCQZ_ || next_newITUZ_ || next_newDXCC_ || next_newGrid_ || next_newPx_ || next_newCall_) && !next_workedUnderlined_);
-  ui_->workedUnderlined_check_box->setChecked((next_newCQZ_ || next_newITUZ_ || next_newDXCC_ || next_newGrid_ || next_newPx_ || next_newCall_) && !next_workedStriked_ && next_workedUnderlined_);
-  ui_->workedUnderlined_check_box->setEnabled((next_newCQZ_ || next_newITUZ_ || next_newDXCC_ || next_newGrid_ || next_newPx_ || next_newCall_) && !next_workedStriked_);
-  ui_->workedDontShow_check_box->setChecked((next_newCQZ_ || next_newITUZ_ || next_newDXCC_ || next_newGrid_ || next_newPx_ || next_newCall_) && next_workedDontShow_);
-  ui_->workedDontShow_check_box->setEnabled(next_newCQZ_ || next_newITUZ_ || next_newDXCC_ || next_newGrid_ || next_newPx_ || next_newCall_);
-  ui_->labNewPx->setVisible(next_newPx_);
-  ui_->labNewMcPx->setVisible(next_newPx_);
-  ui_->labNewScPx->setVisible(next_newPx_ && next_newPotential_);
-  ui_->labNewPxBand->setVisible(next_newPxBand_ || next_newPxBandMode_);
-  ui_->labNewMcPxBand->setVisible(next_newPxBand_ || next_newPxBandMode_);
-  ui_->labNewScPxBand->setVisible((next_newPxBand_ || next_newPxBandMode_) && next_newPotential_);
-  ui_->labWorkedCall->setVisible(next_newCQZ_ || next_newITUZ_ || next_newDXCC_ || next_newGrid_ || next_newPx_ || next_newCall_);
-  ui_->labWorkedMcCall->setVisible(next_newCQZ_ || next_newITUZ_ || next_newDXCC_ || next_newGrid_ || next_newPx_ || next_newCall_);
-  ui_->labWorkedScCall->setVisible((next_newCQZ_ || next_newITUZ_ || next_newDXCC_ || next_newGrid_ || next_newPx_ || next_newCall_) && next_newPotential_);
+  refresh_samples ();   // CE3TSK 2026-10-03: every sample from the staged values (item 10)
+  refresh_worked_options ();   // CE3TSK 2026-10-03: the worked options follow the tiers (item 10)
 }
 
 /* CE3TSK: while a contest owns the grid highlighting, show the settings it requires and
@@ -5105,7 +5247,6 @@ void Configuration::impl::apply_special_op_lock (bool locked)
     next_newGridBand_ = true;
     ui_->newGridBandMode_check_box->setChecked (false);
     next_newGridBandMode_ = false;
-    ui_->labNewGridBand->setVisible (true);
     /* CE3TSK: the new call triple, the same way - the dupe check of the contest */
     ui_->newCall_check_box->setChecked (true);
     on_newCall_check_box_clicked (true);
@@ -5113,7 +5254,7 @@ void Configuration::impl::apply_special_op_lock (bool locked)
     next_newCallBand_ = true;
     ui_->newCallBandMode_check_box->setChecked (false);
     next_newCallBandMode_ = false;
-    ui_->labNewCallBand->setVisible (true);
+    refresh_samples ();   // CE3TSK 2026-10-03: the samples follow the forced values (item 10)
     /* the logging settings a contest dictates. autolog and prompt_to_log are already
        mutually exclusive in this dialog, so both are set explicitly rather than relying on
        one slot to clear the other - setChecked() would not fire it anyway. */
@@ -5128,6 +5269,7 @@ void Configuration::impl::apply_special_op_lock (bool locked)
        the band and band+mode children and keep the next_ staging copies in step - poking the
        widgets directly would leave the preview labels and the worked-before boxes stale. */
     ui_->newDXCC_check_box->setChecked (false);  on_newDXCC_check_box_clicked (false);
+    ui_->newState_check_box->setChecked (false);  on_newState_check_box_clicked (false);
     ui_->newCQZ_check_box->setChecked (false);   on_newCQZ_check_box_clicked (false);
     ui_->newITUZ_check_box->setChecked (false);  on_newITUZ_check_box_clicked (false);
     ui_->newPx_check_box->setChecked (false);    on_newPx_check_box_clicked (false);
@@ -5140,6 +5282,13 @@ void Configuration::impl::apply_special_op_lock (bool locked)
   ui_->newCallBand_check_box->setEnabled (!locked && ui_->newCall_check_box->isChecked ());
   ui_->newCallBandMode_check_box->setEnabled (!locked && ui_->newCall_check_box->isChecked ());
   ui_->beep_on_newCall_check_box->setEnabled (ui_->newCall_check_box->isChecked ());
+  ui_->beep_on_newState_check_box->setEnabled (ui_->newState_check_box->isChecked ());   // CE3TSK 2026-10-03 (review)
+  /* CE3TSK 2026-10-03: the four unscored tiers' beeps follow their parents too - a Cancel (initialize_models comes
+     through here) left them greyed under a ticked parent; pre-existing, fixed on the operator's word */
+  ui_->beep_on_newDXCC_check_box->setEnabled (ui_->newDXCC_check_box->isChecked ());
+  ui_->beep_on_newCQZ_check_box->setEnabled (ui_->newCQZ_check_box->isChecked ());
+  ui_->beep_on_newITUZ_check_box->setEnabled (ui_->newITUZ_check_box->isChecked ());
+  ui_->beep_on_newPx_check_box->setEnabled (ui_->newPx_check_box->isChecked ());
   ui_->autolog_check_box->setEnabled (!locked);
   ui_->clear_DX_check_box->setEnabled (!locked);
   ui_->distance_in_comments_check_box->setEnabled (!locked);
@@ -5184,7 +5333,10 @@ void Configuration::impl::apply_special_op_lock (bool locked)
   ui_->frequencies_table_view->setEnabled (!locked);
   /* the four parents, and their children which stock JTDX already ties to the parent */
   ui_->newDXCC_check_box->setEnabled (!locked);
+  ui_->newState_check_box->setEnabled (!locked);
   ui_->newDXCCBand_check_box->setEnabled (!locked && ui_->newDXCC_check_box->isChecked ());
+  ui_->newStateBand_check_box->setEnabled (!locked && ui_->newState_check_box->isChecked ());
+  ui_->newStateBandMode_check_box->setEnabled (!locked && ui_->newState_check_box->isChecked ());
   ui_->newDXCCBandMode_check_box->setEnabled (!locked && ui_->newDXCC_check_box->isChecked ());
   ui_->newCQZ_check_box->setEnabled (!locked);
   ui_->newCQZBand_check_box->setEnabled (!locked && ui_->newCQZ_check_box->isChecked ());
@@ -5195,6 +5347,56 @@ void Configuration::impl::apply_special_op_lock (bool locked)
   ui_->newPx_check_box->setEnabled (!locked);
   ui_->newPxBand_check_box->setEnabled (!locked && ui_->newPx_check_box->isChecked ());
   ui_->newPxBandMode_check_box->setEnabled (!locked && ui_->newPx_check_box->isChecked ());
+}
+
+/* CE3TSK 2026-10-03: see the declarations (review item 10) */
+bool Configuration::impl::any_tier_staged () const
+{
+  return next_newCQZ_ || next_newITUZ_ || next_newDXCC_ || next_newState_ || next_newGrid_ || next_newPx_ || next_newCall_;
+}
+
+void Configuration::impl::refresh_worked_options ()
+{
+  bool const any = any_tier_staged ();
+  ui_->workedColor_check_box->setChecked (any && next_workedColor_);
+  ui_->workedColor_check_box->setEnabled (any);
+  ui_->workedStriked_check_box->setChecked (any && !next_workedUnderlined_ && next_workedStriked_);
+  ui_->workedStriked_check_box->setEnabled (any && !next_workedUnderlined_);
+  ui_->workedUnderlined_check_box->setChecked (any && !next_workedStriked_ && next_workedUnderlined_);
+  ui_->workedUnderlined_check_box->setEnabled (any && !next_workedStriked_);
+  ui_->workedDontShow_check_box->setChecked (any && next_workedDontShow_);
+  ui_->workedDontShow_check_box->setEnabled (any);
+  ui_->labWorkedCall->setVisible (any);
+  ui_->labWorkedMcCall->setVisible (any);
+  ui_->labWorkedScCall->setVisible (any && next_newPotential_);
+}
+
+void Configuration::impl::refresh_samples ()
+{
+  struct Tier {bool on, band; QLabel * main, * mc, * sc, * bmain, * bmc, * bsc;};
+  Tier const tiers[] = {
+    {next_newCQZ_, next_newCQZBand_ || next_newCQZBandMode_, ui_->labNewCQZ, ui_->labNewMcCQZ, ui_->labNewScCQZ, ui_->labNewCQZBand, ui_->labNewMcCQZBand, ui_->labNewScCQZBand},
+    {next_newITUZ_, next_newITUZBand_ || next_newITUZBandMode_, ui_->labNewITUZ, ui_->labNewMcITUZ, ui_->labNewScITUZ, ui_->labNewITUZBand, ui_->labNewMcITUZBand, ui_->labNewScITUZBand},
+    {next_newDXCC_, next_newDXCCBand_ || next_newDXCCBandMode_, ui_->labNewDXCC, ui_->labNewMcDXCC, ui_->labNewScDXCC, ui_->labNewDXCCBand, ui_->labNewMcDXCCBand, ui_->labNewScDXCCBand},
+    {next_newState_, next_newStateBand_ || next_newStateBandMode_, ui_->labNewState, ui_->labNewMcState, ui_->labNewScState, ui_->labNewStateBand, ui_->labNewMcStateBand, ui_->labNewScStateBand},
+    {next_newGrid_, next_newGridBand_ || next_newGridBandMode_, ui_->labNewGrid, ui_->labNewMcGrid, ui_->labNewScGrid, ui_->labNewGridBand, ui_->labNewMcGridBand, ui_->labNewScGridBand},
+    {next_newPx_, next_newPxBand_ || next_newPxBandMode_, ui_->labNewPx, ui_->labNewMcPx, ui_->labNewScPx, ui_->labNewPxBand, ui_->labNewMcPxBand, ui_->labNewScPxBand},
+    {next_newCall_, next_newCallBand_ || next_newCallBandMode_, ui_->labNewCall, ui_->labNewMcCall, ui_->labNewScCall, ui_->labNewCallBand, ui_->labNewMcCallBand, ui_->labNewScCallBand},
+  };
+  for (auto const& t : tiers)
+    {
+      show_samples (t.main, t.mc, t.sc, t.on);
+      show_samples (t.bmain, t.bmc, t.bsc, t.on && t.band);
+    }
+  ui_->labStandardCall->setVisible (next_newPotential_);
+  ui_->labWorkedScCall->setVisible (any_tier_staged () && next_newPotential_);
+}
+
+void Configuration::impl::show_samples (QLabel * main, QLabel * mc, QLabel * sc, bool on)
+{
+  main->setVisible (on);
+  mc->setVisible (on);
+  sc->setVisible (on && next_newPotential_);
 }
 
 /* CE3TSK: radio buttons are exclusive, so only the newly checked one needs to act */
@@ -5213,14 +5415,12 @@ void Configuration::impl::on_rbSpecialOpNone_toggled(bool checked)
   next_newGridBand_ = dlgEntrySpecialOp_.newGridBand && dlgEntrySpecialOp_.newGrid;
   ui_->newGridBandMode_check_box->setChecked (dlgEntrySpecialOp_.newGridBandMode && dlgEntrySpecialOp_.newGrid);
   next_newGridBandMode_ = dlgEntrySpecialOp_.newGridBandMode && dlgEntrySpecialOp_.newGrid;
-  ui_->labNewGridBand->setVisible (next_newGridBand_ || next_newGridBandMode_);
   ui_->newCall_check_box->setChecked (dlgEntrySpecialOp_.newCall);
   on_newCall_check_box_clicked (dlgEntrySpecialOp_.newCall);
   ui_->newCallBand_check_box->setChecked (dlgEntrySpecialOp_.newCallBand && dlgEntrySpecialOp_.newCall);
   next_newCallBand_ = dlgEntrySpecialOp_.newCallBand && dlgEntrySpecialOp_.newCall;
   ui_->newCallBandMode_check_box->setChecked (dlgEntrySpecialOp_.newCallBandMode && dlgEntrySpecialOp_.newCall);
   next_newCallBandMode_ = dlgEntrySpecialOp_.newCallBandMode && dlgEntrySpecialOp_.newCall;
-  ui_->labNewCallBand->setVisible (next_newCallBand_ || next_newCallBandMode_);
   ui_->autolog_check_box->setChecked (dlgEntrySpecialOp_.autolog);
   ui_->clear_DX_check_box->setChecked (dlgEntrySpecialOp_.clearDX);
   ui_->distance_in_comments_check_box->setChecked (dlgEntrySpecialOp_.distanceInComments);
@@ -5231,12 +5431,19 @@ void Configuration::impl::on_rbSpecialOpNone_toggled(bool checked)
   /* CE3TSK: hand the unscored tiers back, parents first so the cascade sets the children,
      then the children explicitly because the cascade ANDs them with the committed value. */
   ui_->newDXCC_check_box->setChecked (dlgEntrySpecialOp_.newDXCC);
+  ui_->newState_check_box->setChecked (dlgEntrySpecialOp_.newState);
   on_newDXCC_check_box_clicked (dlgEntrySpecialOp_.newDXCC);
+  on_newState_check_box_clicked (dlgEntrySpecialOp_.newState);
   /* CE3TSK: the slot above sets the beep from the member, which is still forced
      false here, so hand it back explicitly like the band children. */
   ui_->beep_on_newDXCC_check_box->setChecked (dlgEntrySpecialOp_.beepOnNewDXCC && dlgEntrySpecialOp_.newDXCC);
+  ui_->beep_on_newState_check_box->setChecked (dlgEntrySpecialOp_.beepOnNewState && dlgEntrySpecialOp_.newState);
   ui_->newDXCCBand_check_box->setChecked (dlgEntrySpecialOp_.newDXCCBand && dlgEntrySpecialOp_.newDXCC);
+  ui_->newStateBand_check_box->setChecked (dlgEntrySpecialOp_.newStateBand && dlgEntrySpecialOp_.newState);
+  ui_->newStateBandMode_check_box->setChecked (dlgEntrySpecialOp_.newStateBandMode && dlgEntrySpecialOp_.newState);
   next_newDXCCBand_ = dlgEntrySpecialOp_.newDXCCBand && dlgEntrySpecialOp_.newDXCC;
+  next_newStateBand_ = dlgEntrySpecialOp_.newStateBand && dlgEntrySpecialOp_.newState;
+  next_newStateBandMode_ = dlgEntrySpecialOp_.newStateBandMode && dlgEntrySpecialOp_.newState;
   ui_->newDXCCBandMode_check_box->setChecked (dlgEntrySpecialOp_.newDXCCBandMode && dlgEntrySpecialOp_.newDXCC);
   next_newDXCCBandMode_ = dlgEntrySpecialOp_.newDXCCBandMode && dlgEntrySpecialOp_.newDXCC;
   ui_->newCQZ_check_box->setChecked (dlgEntrySpecialOp_.newCQZ);
@@ -5266,6 +5473,7 @@ void Configuration::impl::on_rbSpecialOpNone_toggled(bool checked)
   next_newPxBand_ = dlgEntrySpecialOp_.newPxBand && dlgEntrySpecialOp_.newPx;
   ui_->newPxBandMode_check_box->setChecked (dlgEntrySpecialOp_.newPxBandMode && dlgEntrySpecialOp_.newPx);
   next_newPxBandMode_ = dlgEntrySpecialOp_.newPxBandMode && dlgEntrySpecialOp_.newPx;
+  refresh_samples ();   // CE3TSK 2026-10-03: every tier's samples from the values handed back (item 10)
   apply_special_op_lock (false);
 }
 
@@ -5279,127 +5487,100 @@ void Configuration::impl::on_rbSpecialOpWWDigi_toggled(bool checked)
 void Configuration::impl::on_newGrid_check_box_clicked(bool checked)
 {
   next_newGrid_ = checked;
-  ui_->newGridBand_check_box->setChecked(checked && newGridBand_);
-  next_newGridBand_ = checked && newGridBand_;
+  ui_->newGridBand_check_box->setChecked(checked && own (newGridBand_, &SpecialOpSettings::newGridBand));
+  next_newGridBand_ = checked && own (newGridBand_, &SpecialOpSettings::newGridBand);
   ui_->newGridBand_check_box->setEnabled(checked);
   ui_->beep_on_newGrid_check_box->setChecked(checked && beepOnNewGrid_);
   ui_->beep_on_newGrid_check_box->setEnabled(checked);
-  ui_->newGridBandMode_check_box->setChecked(checked && newGridBandMode_);
-  next_newGridBandMode_ = checked && newGridBandMode_;
+  ui_->newGridBandMode_check_box->setChecked(checked && own (newGridBandMode_, &SpecialOpSettings::newGridBandMode));
+  next_newGridBandMode_ = checked && own (newGridBandMode_, &SpecialOpSettings::newGridBandMode);
   ui_->newGridBandMode_check_box->setEnabled(checked);
-  ui_->workedColor_check_box->setChecked((next_newCQZ_ || next_newITUZ_ || next_newDXCC_ || next_newGrid_ || next_newPx_ || next_newCall_) && next_workedColor_);
-  ui_->workedColor_check_box->setEnabled(next_newCQZ_ || next_newITUZ_ || next_newDXCC_ || next_newGrid_ || next_newPx_ || next_newCall_);
-  ui_->workedStriked_check_box->setChecked((next_newCQZ_ || next_newITUZ_ || next_newDXCC_ || next_newGrid_ || next_newPx_ || next_newCall_) && !next_workedUnderlined_ && next_workedStriked_);
-  ui_->workedStriked_check_box->setEnabled((next_newCQZ_ || next_newITUZ_ || next_newDXCC_ || next_newGrid_ || next_newPx_ || next_newCall_) && !next_workedUnderlined_);
-  ui_->workedUnderlined_check_box->setChecked((next_newCQZ_ || next_newITUZ_ || next_newDXCC_ || next_newGrid_ || next_newPx_ || next_newCall_) && !next_workedStriked_ && next_workedUnderlined_);
-  ui_->workedUnderlined_check_box->setEnabled((next_newCQZ_ || next_newITUZ_ || next_newDXCC_ || next_newGrid_ || next_newPx_ || next_newCall_) && !next_workedStriked_);
-  ui_->workedDontShow_check_box->setChecked((next_newCQZ_ || next_newITUZ_ || next_newDXCC_ || next_newGrid_ || next_newPx_ || next_newCall_) && next_workedDontShow_);
-  ui_->workedDontShow_check_box->setEnabled(next_newCQZ_ || next_newITUZ_ || next_newDXCC_ || next_newGrid_ || next_newPx_ || next_newCall_);
-  ui_->labNewGrid->setVisible(next_newGrid_);
-  ui_->labNewMcGrid->setVisible(next_newGrid_);
-  ui_->labNewScGrid->setVisible(next_newGrid_ && next_newPotential_);
-  ui_->labNewGridBand->setVisible(next_newGridBand_ || next_newGridBandMode_);
-  ui_->labNewMcGridBand->setVisible(next_newGridBand_ || next_newGridBandMode_);
-  ui_->labNewScGridBand->setVisible((next_newGridBand_ || next_newGridBandMode_) && next_newPotential_);
-  ui_->labWorkedCall->setVisible(next_newCQZ_ || next_newITUZ_ || next_newDXCC_ || next_newGrid_ || next_newPx_ || next_newCall_);
-  ui_->labWorkedMcCall->setVisible(next_newCQZ_ || next_newITUZ_ || next_newDXCC_ || next_newGrid_ || next_newPx_ || next_newCall_);
-  ui_->labWorkedScCall->setVisible((next_newCQZ_ || next_newITUZ_ || next_newDXCC_ || next_newGrid_ || next_newPx_ || next_newCall_) && next_newPotential_);
+  refresh_samples ();   // CE3TSK 2026-10-03: every sample from the staged values (item 10)
+  refresh_worked_options ();   // CE3TSK 2026-10-03: the worked options follow the tiers (item 10)
 }
 
 void Configuration::impl::on_newCQZBand_check_box_clicked(bool checked)
 {
   next_newCQZBand_ = checked;
-  ui_->labNewCQZBand->setVisible(next_newCQZBand_ || next_newCQZBandMode_);
-  ui_->labNewMcCQZBand->setVisible(next_newCQZBand_ || next_newCQZBandMode_);
-  ui_->labNewScCQZBand->setVisible((next_newCQZBand_ || next_newCQZBandMode_) && next_newPotential_);
+  refresh_samples ();   // CE3TSK 2026-10-03: every sample from the staged values (item 10)
 }
 
 void Configuration::impl::on_newITUZBand_check_box_clicked(bool checked)
 {
   next_newITUZBand_ = checked;
-  ui_->labNewITUZBand->setVisible(next_newITUZBand_ || next_newITUZBandMode_);
-  ui_->labNewMcITUZBand->setVisible(next_newITUZBand_ || next_newITUZBandMode_);
-  ui_->labNewScITUZBand->setVisible((next_newITUZBand_ || next_newITUZBandMode_) && next_newPotential_);
+  refresh_samples ();   // CE3TSK 2026-10-03: every sample from the staged values (item 10)
 }
 
 void Configuration::impl::on_newDXCCBand_check_box_clicked(bool checked)
 {
   next_newDXCCBand_ = checked;
-  ui_->labNewDXCCBand->setVisible(next_newDXCCBand_ || next_newDXCCBandMode_);
-  ui_->labNewMcDXCCBand->setVisible(next_newDXCCBand_ || next_newDXCCBandMode_);
-  ui_->labNewScDXCCBand->setVisible((next_newDXCCBand_ || next_newDXCCBandMode_) && next_newPotential_);
+  refresh_samples ();   // CE3TSK 2026-10-03: every sample from the staged values (item 10)
+}
+
+void Configuration::impl::on_newStateBandMode_check_box_clicked(bool checked)   // CE3TSK 2026-10-04
+{
+  next_newStateBandMode_ = checked;
+  refresh_samples ();
+}
+
+void Configuration::impl::on_newStateBand_check_box_clicked(bool checked)
+{
+  next_newStateBand_ = checked;
+  refresh_samples ();   // CE3TSK 2026-10-03: every sample from the staged values (item 10)
 }
 
 void Configuration::impl::on_newCallBand_check_box_clicked(bool checked)
 {
   next_newCallBand_ = checked;
-  ui_->labNewCallBand->setVisible(next_newCallBand_ || next_newCallBandMode_);
-  ui_->labNewMcCallBand->setVisible(next_newCallBand_ || next_newCallBandMode_);
-  ui_->labNewScCallBand->setVisible((next_newCallBand_ || next_newCallBandMode_) && next_newPotential_);
+  refresh_samples ();   // CE3TSK 2026-10-03: every sample from the staged values (item 10)
 }
 
 void Configuration::impl::on_newPxBand_check_box_clicked(bool checked)
 {
   next_newPxBand_ = checked;
-  ui_->labNewPxBand->setVisible(next_newPxBand_ || next_newPxBandMode_);
-  ui_->labNewMcPxBand->setVisible(next_newPxBand_ || next_newPxBandMode_);
-  ui_->labNewScPxBand->setVisible((next_newPxBand_ || next_newPxBandMode_) && next_newPotential_);
+  refresh_samples ();   // CE3TSK 2026-10-03: every sample from the staged values (item 10)
 }
 
 void Configuration::impl::on_newGridBand_check_box_clicked(bool checked)
 {
   next_newGridBand_ = checked;
-  ui_->labNewGridBand->setVisible(next_newGridBand_ || next_newGridBandMode_);
-  ui_->labNewMcGridBand->setVisible(next_newGridBand_ || next_newGridBandMode_);
-  ui_->labNewScGridBand->setVisible((next_newGridBand_ || next_newGridBandMode_) && next_newPotential_);
+  refresh_samples ();   // CE3TSK 2026-10-03: every sample from the staged values (item 10)
 }
 
 void Configuration::impl::on_newCQZBandMode_check_box_clicked(bool checked)
 {
   next_newCQZBandMode_ = checked;
-  ui_->labNewCQZBand->setVisible(next_newCQZBand_ || next_newCQZBandMode_);
-  ui_->labNewMcCQZBand->setVisible(next_newCQZBand_ || next_newCQZBandMode_);
-  ui_->labNewScCQZBand->setVisible((next_newCQZBand_ || next_newCQZBandMode_) && next_newPotential_);
+  refresh_samples ();   // CE3TSK 2026-10-03: every sample from the staged values (item 10)
 }
 
 void Configuration::impl::on_newITUZBandMode_check_box_clicked(bool checked)
 {
   next_newITUZBandMode_ = checked;
-  ui_->labNewITUZBand->setVisible(next_newITUZBand_ || next_newITUZBandMode_);
-  ui_->labNewMcITUZBand->setVisible(next_newITUZBand_ || next_newITUZBandMode_);
-  ui_->labNewScITUZBand->setVisible((next_newITUZBand_ || next_newITUZBandMode_) && next_newPotential_);
+  refresh_samples ();   // CE3TSK 2026-10-03: every sample from the staged values (item 10)
 }
 
 void Configuration::impl::on_newDXCCBandMode_check_box_clicked(bool checked)
 {
   next_newDXCCBandMode_ = checked;
-  ui_->labNewDXCCBand->setVisible(next_newDXCCBand_ || next_newDXCCBandMode_);
-  ui_->labNewMcDXCCBand->setVisible(next_newDXCCBand_ || next_newDXCCBandMode_);
-  ui_->labNewScDXCCBand->setVisible((next_newDXCCBand_ || next_newDXCCBandMode_) && next_newPotential_);
+  refresh_samples ();   // CE3TSK 2026-10-03: every sample from the staged values (item 10)
 }
 
 void Configuration::impl::on_newCallBandMode_check_box_clicked(bool checked)
 {
   next_newCallBandMode_ = checked;
-  ui_->labNewCallBand->setVisible(next_newCallBand_ || next_newCallBandMode_);
-  ui_->labNewMcCallBand->setVisible(next_newCallBand_ || next_newCallBandMode_);
-  ui_->labNewScCallBand->setVisible((next_newCallBand_ || next_newCallBandMode_) && next_newPotential_);
+  refresh_samples ();   // CE3TSK 2026-10-03: every sample from the staged values (item 10)
 }
 
 void Configuration::impl::on_newPxBandMode_check_box_clicked(bool checked)
 {
   next_newPxBandMode_ = checked;
-  ui_->labNewPxBand->setVisible(next_newPxBand_ || next_newPxBandMode_);
-  ui_->labNewMcPxBand->setVisible(next_newPxBand_ || next_newPxBandMode_);
-  ui_->labNewScPxBand->setVisible((next_newPxBand_ || next_newPxBandMode_) && next_newPotential_);
+  refresh_samples ();   // CE3TSK 2026-10-03: every sample from the staged values (item 10)
 }
 
 void Configuration::impl::on_newGridBandMode_check_box_clicked(bool checked)
 {
   next_newGridBandMode_ = checked;
-  ui_->labNewGridBand->setVisible(next_newGridBand_ || next_newGridBandMode_);
-  ui_->labNewMcGridBand->setVisible(next_newGridBand_ || next_newGridBandMode_);
-  ui_->labNewScGridBand->setVisible((next_newGridBand_ || next_newGridBandMode_) && next_newPotential_);
+  refresh_samples ();   // CE3TSK 2026-10-03: every sample from the staged values (item 10)
 }
 
 void Configuration::impl::on_pbCQmsg_clicked()
@@ -5415,7 +5596,9 @@ void Configuration::impl::on_pbCQmsg_clicked()
         ui_->labNewITUZ->setStyleSheet(QString("font-weight: bold;background: %2;color: %1").arg(useDarkStyle_? next_color_NewITUZ_dark_.name() : next_color_NewITUZ_.name(),useDarkStyle_? next_color_CQ_dark_.name() : next_color_CQ_.name()));
         ui_->labNewITUZBand->setStyleSheet(QString("font-weight: bold;background: %2;color: %1").arg(useDarkStyle_? next_color_NewITUZBand_dark_.name() : next_color_NewITUZBand_.name(),useDarkStyle_? next_color_CQ_dark_.name() : next_color_CQ_.name()));
         ui_->labNewDXCC->setStyleSheet(QString("font-weight: bold;background: %2;color: %1").arg(useDarkStyle_? next_color_NewDXCC_dark_.name() : next_color_NewDXCC_.name(),useDarkStyle_? next_color_CQ_dark_.name() : next_color_CQ_.name()));
+        ui_->labNewState->setStyleSheet(QString("font-weight: bold;background: %2;color: %1").arg(useDarkStyle_? next_color_NewState_dark_.name() : next_color_NewState_.name(),useDarkStyle_? next_color_CQ_dark_.name() : next_color_CQ_.name()));
         ui_->labNewDXCCBand->setStyleSheet(QString("font-weight: bold;background: %2;color: %1").arg(useDarkStyle_? next_color_NewDXCCBand_dark_.name() : next_color_NewDXCCBand_.name(),useDarkStyle_? next_color_CQ_dark_.name() : next_color_CQ_.name()));
+        ui_->labNewStateBand->setStyleSheet(QString("font-weight: bold;background: %2;color: %1").arg(useDarkStyle_? next_color_NewStateBand_dark_.name() : next_color_NewStateBand_.name(),useDarkStyle_? next_color_CQ_dark_.name() : next_color_CQ_.name()));
         ui_->labNewGrid->setStyleSheet(QString("font-weight: bold;background: %2;color: %1").arg(useDarkStyle_? next_color_NewGrid_dark_.name() : next_color_NewGrid_.name(),useDarkStyle_? next_color_CQ_dark_.name() : next_color_CQ_.name()));
         ui_->labNewGridBand->setStyleSheet(QString("font-weight: bold;background: %2;color: %1").arg(useDarkStyle_? next_color_NewGridBand_dark_.name() : next_color_NewGridBand_.name(),useDarkStyle_? next_color_CQ_dark_.name() : next_color_CQ_.name()));
         ui_->labNewPx->setStyleSheet(QString("font-weight: bold;background: %2;color: %1").arg(useDarkStyle_? next_color_NewPx_dark_.name() : next_color_NewPx_.name(),useDarkStyle_? next_color_CQ_dark_.name() : next_color_CQ_.name()));
@@ -5444,7 +5627,9 @@ void Configuration::impl::on_pbCQmsg_clicked()
         ui_->labNewITUZ->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? next_color_NewITUZ_dark_.name() : next_color_NewITUZ_.name(),useDarkStyle_? next_color_CQ_dark_.name() : next_color_CQ_.name()));
         ui_->labNewITUZBand->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? next_color_NewITUZBand_dark_.name() : next_color_NewITUZBand_.name(),useDarkStyle_? next_color_CQ_dark_.name() : next_color_CQ_.name()));
         ui_->labNewDXCC->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? next_color_NewDXCC_dark_.name() : next_color_NewDXCC_.name(),useDarkStyle_? next_color_CQ_dark_.name() : next_color_CQ_.name()));
+        ui_->labNewState->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? next_color_NewState_dark_.name() : next_color_NewState_.name(),useDarkStyle_? next_color_CQ_dark_.name() : next_color_CQ_.name()));
         ui_->labNewDXCCBand->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? next_color_NewDXCCBand_dark_.name() : next_color_NewDXCCBand_.name(),useDarkStyle_? next_color_CQ_dark_.name() : next_color_CQ_.name()));
+        ui_->labNewStateBand->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? next_color_NewStateBand_dark_.name() : next_color_NewStateBand_.name(),useDarkStyle_? next_color_CQ_dark_.name() : next_color_CQ_.name()));
         ui_->labNewGrid->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? next_color_NewGrid_dark_.name() : next_color_NewGrid_.name(),useDarkStyle_? next_color_CQ_dark_.name() : next_color_CQ_.name()));
         ui_->labNewGridBand->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? next_color_NewGridBand_dark_.name() : next_color_NewGridBand_.name(),useDarkStyle_? next_color_CQ_dark_.name() : next_color_CQ_.name()));
         ui_->labNewPx->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? next_color_NewPx_dark_.name() : next_color_NewPx_.name(),useDarkStyle_? next_color_CQ_dark_.name() : next_color_CQ_.name()));
@@ -5483,7 +5668,9 @@ void Configuration::impl::on_pbMyCall_clicked()
         ui_->labNewMcITUZ->setStyleSheet(QString("font-weight: bold;background: %2;color: %1").arg(useDarkStyle_? next_color_NewITUZ_dark_.name() : next_color_NewITUZ_.name(),useDarkStyle_? next_color_MyCall_dark_.name() : next_color_MyCall_.name()));
         ui_->labNewMcITUZBand->setStyleSheet(QString("font-weight: bold;background: %2;color: %1").arg(useDarkStyle_? next_color_NewITUZBand_dark_.name() : next_color_NewITUZBand_.name(),useDarkStyle_? next_color_MyCall_dark_.name() : next_color_MyCall_.name()));
         ui_->labNewMcDXCC->setStyleSheet(QString("font-weight: bold;background: %2;color: %1").arg(useDarkStyle_? next_color_NewDXCC_dark_.name() : next_color_NewDXCC_.name(),useDarkStyle_? next_color_MyCall_dark_.name() : next_color_MyCall_.name()));
+        ui_->labNewMcState->setStyleSheet(QString("font-weight: bold;background: %2;color: %1").arg(useDarkStyle_? next_color_NewState_dark_.name() : next_color_NewState_.name(),useDarkStyle_? next_color_MyCall_dark_.name() : next_color_MyCall_.name()));
         ui_->labNewMcDXCCBand->setStyleSheet(QString("font-weight: bold;background: %2;color: %1").arg(useDarkStyle_? next_color_NewDXCCBand_dark_.name() : next_color_NewDXCCBand_.name(),useDarkStyle_? next_color_MyCall_dark_.name() : next_color_MyCall_.name()));
+        ui_->labNewMcStateBand->setStyleSheet(QString("font-weight: bold;background: %2;color: %1").arg(useDarkStyle_? next_color_NewStateBand_dark_.name() : next_color_NewStateBand_.name(),useDarkStyle_? next_color_MyCall_dark_.name() : next_color_MyCall_.name()));
         ui_->labNewMcGrid->setStyleSheet(QString("font-weight: bold;background: %2;color: %1").arg(useDarkStyle_? next_color_NewGrid_dark_.name() : next_color_NewGrid_.name(),useDarkStyle_? next_color_MyCall_dark_.name() : next_color_MyCall_.name()));
         ui_->labNewMcGridBand->setStyleSheet(QString("font-weight: bold;background: %2;color: %1").arg(useDarkStyle_? next_color_NewGridBand_dark_.name() : next_color_NewGridBand_.name(),useDarkStyle_? next_color_MyCall_dark_.name() : next_color_MyCall_.name()));
         ui_->labNewMcPx->setStyleSheet(QString("font-weight: bold;background: %2;color: %1").arg(useDarkStyle_? next_color_NewPx_dark_.name() : next_color_NewPx_.name(),useDarkStyle_? next_color_MyCall_dark_.name() : next_color_MyCall_.name()));
@@ -5512,7 +5699,9 @@ void Configuration::impl::on_pbMyCall_clicked()
         ui_->labNewMcITUZ->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? next_color_NewITUZ_dark_.name() : next_color_NewITUZ_.name(),useDarkStyle_? next_color_MyCall_dark_.name() : next_color_MyCall_.name()));
         ui_->labNewMcITUZBand->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? next_color_NewITUZBand_dark_.name() : next_color_NewITUZBand_.name(),useDarkStyle_? next_color_MyCall_dark_.name() : next_color_MyCall_.name()));
         ui_->labNewMcDXCC->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? next_color_NewDXCC_dark_.name() : next_color_NewDXCC_.name(),useDarkStyle_? next_color_MyCall_dark_.name() : next_color_MyCall_.name()));
+        ui_->labNewMcState->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? next_color_NewState_dark_.name() : next_color_NewState_.name(),useDarkStyle_? next_color_MyCall_dark_.name() : next_color_MyCall_.name()));
         ui_->labNewMcDXCCBand->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? next_color_NewDXCCBand_dark_.name() : next_color_NewDXCCBand_.name(),useDarkStyle_? next_color_MyCall_dark_.name() : next_color_MyCall_.name()));
+        ui_->labNewMcStateBand->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? next_color_NewStateBand_dark_.name() : next_color_NewStateBand_.name(),useDarkStyle_? next_color_MyCall_dark_.name() : next_color_MyCall_.name()));
         ui_->labNewMcGrid->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? next_color_NewGrid_dark_.name() : next_color_NewGrid_.name(),useDarkStyle_? next_color_MyCall_dark_.name() : next_color_MyCall_.name()));
         ui_->labNewMcGridBand->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? next_color_NewGridBand_dark_.name() : next_color_NewGridBand_.name(),useDarkStyle_? next_color_MyCall_dark_.name() : next_color_MyCall_.name()));
         ui_->labNewMcPx->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? next_color_NewPx_dark_.name() : next_color_NewPx_.name(),useDarkStyle_? next_color_MyCall_dark_.name() : next_color_MyCall_.name()));
@@ -5551,7 +5740,9 @@ void Configuration::impl::on_pbStandardCall_clicked()
         ui_->labNewScITUZ->setStyleSheet(QString("font-weight: bold;background: %2;color: %1").arg(useDarkStyle_? next_color_NewITUZ_dark_.name() : next_color_NewITUZ_.name(),useDarkStyle_? next_color_StandardCall_dark_.name() : next_color_StandardCall_.name()));
         ui_->labNewScITUZBand->setStyleSheet(QString("font-weight: bold;background: %2;color: %1").arg(useDarkStyle_? next_color_NewITUZBand_dark_.name() : next_color_NewITUZBand_.name(),useDarkStyle_? next_color_StandardCall_dark_.name() : next_color_StandardCall_.name()));
         ui_->labNewScDXCC->setStyleSheet(QString("font-weight: bold;background: %2;color: %1").arg(useDarkStyle_? next_color_NewDXCC_dark_.name() : next_color_NewDXCC_.name(),useDarkStyle_? next_color_StandardCall_dark_.name() : next_color_StandardCall_.name()));
+        ui_->labNewScState->setStyleSheet(QString("font-weight: bold;background: %2;color: %1").arg(useDarkStyle_? next_color_NewState_dark_.name() : next_color_NewState_.name(),useDarkStyle_? next_color_StandardCall_dark_.name() : next_color_StandardCall_.name()));
         ui_->labNewScDXCCBand->setStyleSheet(QString("font-weight: bold;background: %2;color: %1").arg(useDarkStyle_? next_color_NewDXCCBand_dark_.name() : next_color_NewDXCCBand_.name(),useDarkStyle_? next_color_StandardCall_dark_.name() : next_color_StandardCall_.name()));
+        ui_->labNewScStateBand->setStyleSheet(QString("font-weight: bold;background: %2;color: %1").arg(useDarkStyle_? next_color_NewStateBand_dark_.name() : next_color_NewStateBand_.name(),useDarkStyle_? next_color_StandardCall_dark_.name() : next_color_StandardCall_.name()));
         ui_->labNewScGrid->setStyleSheet(QString("font-weight: bold;background: %2;color: %1").arg(useDarkStyle_? next_color_NewGrid_dark_.name() : next_color_NewGrid_.name(),useDarkStyle_? next_color_StandardCall_dark_.name() : next_color_StandardCall_.name()));
         ui_->labNewScGridBand->setStyleSheet(QString("font-weight: bold;background: %2;color: %1").arg(useDarkStyle_? next_color_NewGridBand_dark_.name() : next_color_NewGridBand_.name(),useDarkStyle_? next_color_StandardCall_dark_.name() : next_color_StandardCall_.name()));
         ui_->labNewScPx->setStyleSheet(QString("font-weight: bold;background: %2;color: %1").arg(useDarkStyle_? next_color_NewPx_dark_.name() : next_color_NewPx_.name(),useDarkStyle_? next_color_StandardCall_dark_.name() : next_color_StandardCall_.name()));
@@ -5580,7 +5771,9 @@ void Configuration::impl::on_pbStandardCall_clicked()
         ui_->labNewScITUZ->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? next_color_NewITUZ_dark_.name() : next_color_NewITUZ_.name(),useDarkStyle_? next_color_StandardCall_dark_.name() : next_color_StandardCall_.name()));
         ui_->labNewScITUZBand->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? next_color_NewITUZBand_dark_.name() : next_color_NewITUZBand_.name(),useDarkStyle_? next_color_StandardCall_dark_.name() : next_color_StandardCall_.name()));
         ui_->labNewScDXCC->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? next_color_NewDXCC_dark_.name() : next_color_NewDXCC_.name(),useDarkStyle_? next_color_StandardCall_dark_.name() : next_color_StandardCall_.name()));
+        ui_->labNewScState->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? next_color_NewState_dark_.name() : next_color_NewState_.name(),useDarkStyle_? next_color_StandardCall_dark_.name() : next_color_StandardCall_.name()));
         ui_->labNewScDXCCBand->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? next_color_NewDXCCBand_dark_.name() : next_color_NewDXCCBand_.name(),useDarkStyle_? next_color_StandardCall_dark_.name() : next_color_StandardCall_.name()));
+        ui_->labNewScStateBand->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? next_color_NewStateBand_dark_.name() : next_color_NewStateBand_.name(),useDarkStyle_? next_color_StandardCall_dark_.name() : next_color_StandardCall_.name()));
         ui_->labNewScGrid->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? next_color_NewGrid_dark_.name() : next_color_NewGrid_.name(),useDarkStyle_? next_color_StandardCall_dark_.name() : next_color_StandardCall_.name()));
         ui_->labNewScGridBand->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? next_color_NewGridBand_dark_.name() : next_color_NewGridBand_.name(),useDarkStyle_? next_color_StandardCall_dark_.name() : next_color_StandardCall_.name()));
         ui_->labNewScPx->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? next_color_NewPx_dark_.name() : next_color_NewPx_.name(),useDarkStyle_? next_color_StandardCall_dark_.name() : next_color_StandardCall_.name()));
@@ -5665,9 +5858,13 @@ void Configuration::impl::on_pbDefaultColors_clicked()
   next_color_NewITUZBand_ = QColor {recommended_color ("colorNewITUZBand")};
   next_color_NewITUZBand_dark_ = QColor {recommended_color ("colorNewITUZBand_dark")};
   next_color_NewDXCC_ = QColor {recommended_color ("colorNewDXCC")};
+  next_color_NewState_ = QColor {recommended_color ("colorNewState")};
   next_color_NewDXCC_dark_ = QColor {recommended_color ("colorNewDXCC_dark")};
+  next_color_NewState_dark_ = QColor {recommended_color ("colorNewState_dark")};
   next_color_NewDXCCBand_ = QColor {recommended_color ("colorNewDXCCBand")};
+  next_color_NewStateBand_ = QColor {recommended_color ("colorNewStateBand")};
   next_color_NewDXCCBand_dark_ = QColor {recommended_color ("colorNewDXCCBand_dark")};
+  next_color_NewStateBand_dark_ = QColor {recommended_color ("colorNewStateBand_dark")};
   next_color_NewGrid_ = QColor {recommended_color ("colorNewGrid")};
   next_color_NewGrid_dark_ = QColor {recommended_color ("colorNewGrid_dark")};
   next_color_NewGridBand_ = QColor {recommended_color ("colorNewGridBand")};
@@ -5774,6 +5971,24 @@ void Configuration::impl::on_pbNewDXCC_clicked()
     }
 }
 
+void Configuration::impl::on_pbNewState_clicked()
+{
+  auto new_color = QColorDialog::getColor(QColor(useDarkStyle_? next_color_NewState_dark_.name() : next_color_NewState_.name()), this, "New US State Messages Color");
+  if (new_color.isValid ())
+    {
+      if (useDarkStyle_) next_color_NewState_dark_ = new_color; else next_color_NewState_ = new_color;
+      if (next_txtColor_) {
+        ui_->labNewState->setStyleSheet(QString("font-weight: bold;background: %2;color: %1").arg(useDarkStyle_? next_color_NewState_dark_.name() : next_color_NewState_.name(),useDarkStyle_? next_color_CQ_dark_.name() : next_color_CQ_.name()));
+        ui_->labNewMcState->setStyleSheet(QString("font-weight: bold;background: %2;color: %1").arg(useDarkStyle_? next_color_NewState_dark_.name() : next_color_NewState_.name(),useDarkStyle_? next_color_MyCall_dark_.name() : next_color_MyCall_.name()));
+        ui_->labNewScState->setStyleSheet(QString("font-weight: bold;background: %2;color: %1").arg(useDarkStyle_? next_color_NewState_dark_.name() : next_color_NewState_.name(),useDarkStyle_? next_color_StandardCall_dark_.name() : next_color_StandardCall_.name()));
+      } else {
+        ui_->labNewState->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? next_color_NewState_dark_.name() : next_color_NewState_.name(),useDarkStyle_? next_color_CQ_dark_.name() : next_color_CQ_.name()));
+        ui_->labNewMcState->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? next_color_NewState_dark_.name() : next_color_NewState_.name(),useDarkStyle_? next_color_MyCall_dark_.name() : next_color_MyCall_.name()));
+        ui_->labNewScState->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? next_color_NewState_dark_.name() : next_color_NewState_.name(),useDarkStyle_? next_color_StandardCall_dark_.name() : next_color_StandardCall_.name()));
+      }
+    }
+}
+
 void Configuration::impl::on_pbNewDXCCBand_clicked()
 {
   auto new_color = QColorDialog::getColor(QColor(useDarkStyle_? next_color_NewDXCCBand_dark_.name() : next_color_NewDXCCBand_.name()), this, "New DXCC on Band/Mode Messages Color");
@@ -5788,6 +6003,24 @@ void Configuration::impl::on_pbNewDXCCBand_clicked()
         ui_->labNewDXCCBand->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? next_color_NewDXCCBand_dark_.name() : next_color_NewDXCCBand_.name(),useDarkStyle_? next_color_CQ_dark_.name() : next_color_CQ_.name()));
         ui_->labNewMcDXCCBand->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? next_color_NewDXCCBand_dark_.name() : next_color_NewDXCCBand_.name(),useDarkStyle_? next_color_MyCall_dark_.name() : next_color_MyCall_.name()));
         ui_->labNewScDXCCBand->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? next_color_NewDXCCBand_dark_.name() : next_color_NewDXCCBand_.name(),useDarkStyle_? next_color_StandardCall_dark_.name() : next_color_StandardCall_.name()));
+      }
+    }
+}
+
+void Configuration::impl::on_pbNewStateBand_clicked()
+{
+  auto new_color = QColorDialog::getColor(QColor(useDarkStyle_? next_color_NewStateBand_dark_.name() : next_color_NewStateBand_.name()), this, "New US State on Band Messages Color");
+  if (new_color.isValid ())
+    {
+      if (useDarkStyle_) next_color_NewStateBand_dark_ = new_color; else next_color_NewStateBand_ = new_color;
+      if (next_txtColor_) {
+        ui_->labNewStateBand->setStyleSheet(QString("font-weight: bold;background: %2;color: %1").arg(useDarkStyle_? next_color_NewStateBand_dark_.name() : next_color_NewStateBand_.name(),useDarkStyle_? next_color_CQ_dark_.name() : next_color_CQ_.name()));
+        ui_->labNewMcStateBand->setStyleSheet(QString("font-weight: bold;background: %2;color: %1").arg(useDarkStyle_? next_color_NewStateBand_dark_.name() : next_color_NewStateBand_.name(),useDarkStyle_? next_color_MyCall_dark_.name() : next_color_MyCall_.name()));
+        ui_->labNewScStateBand->setStyleSheet(QString("font-weight: bold;background: %2;color: %1").arg(useDarkStyle_? next_color_NewStateBand_dark_.name() : next_color_NewStateBand_.name(),useDarkStyle_? next_color_StandardCall_dark_.name() : next_color_StandardCall_.name()));
+      } else {
+        ui_->labNewStateBand->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? next_color_NewStateBand_dark_.name() : next_color_NewStateBand_.name(),useDarkStyle_? next_color_CQ_dark_.name() : next_color_CQ_.name()));
+        ui_->labNewMcStateBand->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? next_color_NewStateBand_dark_.name() : next_color_NewStateBand_.name(),useDarkStyle_? next_color_MyCall_dark_.name() : next_color_MyCall_.name()));
+        ui_->labNewScStateBand->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? next_color_NewStateBand_dark_.name() : next_color_NewStateBand_.name(),useDarkStyle_? next_color_StandardCall_dark_.name() : next_color_StandardCall_.name()));
       }
     }
 }
@@ -6078,22 +6311,28 @@ void Configuration::impl::on_callsign_line_edit_textChanged ()
 {
   auto pos = ui_->callsign_line_edit->cursorPosition (); ui_->callsign_line_edit->setText (ui_->callsign_line_edit->text ().toUpper ());
   ui_->callsign_line_edit->setCursorPosition (pos);
+  refresh_own_marks ();   // CE3TSK 2026-10-04: red while in doubt, as it is typed
+}
+
+void Configuration::impl::on_callsign_line_edit_editingFinished ()   // CE3TSK 2026-10-04
+{
+  refresh_own_marks ();
 }
 
 void Configuration::impl::on_grid_line_edit_textChanged ()
 {
   auto pos = ui_->grid_line_edit->cursorPosition (); auto text = ui_->grid_line_edit->text ();
   ui_->grid_line_edit->setText (text.left (4).toUpper () + text.mid (4).toLower ()); ui_->grid_line_edit->setCursorPosition (pos);
+  refresh_own_marks ();   // CE3TSK 2026-10-04: red while in doubt, as it is typed
 }
 void Configuration::impl::on_grid_line_edit_editingFinished ()
 {
+  /* CE3TSK 2026-10-04: a grid of one to three characters no longer pops a box and empties the field on leaving it - the
+     box stays red while it is not a whole locator, and OK will not save it (own_station_confirmed). A stray odd
+     character is still dropped, as before, now up to 12 characters. */
   auto text = ui_->grid_line_edit->text (); auto grid_size = text.length();
-  if (grid_size == 3 || grid_size == 2 || grid_size == 1) {
-    JTDXMessageBox::critical_message (this, "JTDX", tr ("Enter Grid error: 4/6/8/10 char grid will be accepted"));
-    ui_->grid_line_edit->setFocus();
-    ui_->grid_line_edit->clear ();
-  }
-  else if (grid_size == 9 ||  grid_size == 7 ||  grid_size == 5) ui_->grid_line_edit->setText (text.left(grid_size - 1));
+  if (grid_size == 11 || grid_size == 9 ||  grid_size == 7 ||  grid_size == 5) ui_->grid_line_edit->setText (text.left(grid_size - 1));
+  refresh_own_marks ();   // CE3TSK 2026-10-04
 }
 void Configuration::impl::on_content_line_edit_textChanged (QString const& text)
 {

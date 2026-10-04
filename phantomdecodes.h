@@ -1,7 +1,7 @@
 // -*- Mode: C++ -*-
-/* CE3TSK 2026-09-30: decodes that are likely false - marked, never rejected.
+/* CE3TSK 2026-09-30: likely phantom decodes - marked, never rejected.
 
-   Each detector is a row of Settings > Filters > False decodes: mark it and, for the grid and /R rows,
+   Each detector is a row of Settings > Filters > Phantom decodes: mark it and, for the grid and /R rows,
    do not answer it automatically (greyed while its mark is off); the /P /P and where? rows have the mark
    only, and their marks always hold. All of them are on by default, so any of them can be switched off
    if it misbehaves.
@@ -12,13 +12,13 @@
             are never judged at all - and geodata::gridFitsEntity decides, with its tolerances: the
             eight neighbouring squares and the entity's administration count as inside.
      rover  a call signing /R below 30 MHz. /R is one bit per call in a standard FT8/FT4 message,
-            so a false decode sets it by chance, while a real rover is a VHF station - on HF this
+            so a phantom decode sets it by chance, while a real rover is a VHF station - on HF this
             station has one confirmed /R QSO in its whole log.
      portable  both calls signing /P below 30 MHz, at -20 dB or weaker - from the TX background
             too, which gets no exception (the operator, 2026-09-30). /P is one bit per call of the
-            message type portable calls use, so a false decode sets both a quarter of the time;
+            message type portable calls use, so a phantom decode sets both a quarter of the time;
             genuine park-to-park traffic is stronger. Measured over 15 months of this station's logs:
-            96 such decodes, at least 90 false (test/experiments/false_decodes/slashp.py). Such a message is between two other stations
+            96 such decodes, at least 90 of them phantoms (test/experiments/phantom_decodes/slashp.py). Such a message is between two other stations
             unless we sign /P ourselves - and a message with our own call is never marked by this
             rule - so its row has no "do not answer" setting: a mark there always holds (the
             operator, 2026-09-30).
@@ -41,7 +41,7 @@
 
    One exception to "not picked": a call heard with the SAME doubtful grid in two different periods
    is most likely a station operating away from home without a location prefix (DP0POL in GC45,
-   RI0SP in BR77) - false decodes do not repeat. It stays marked, and may be answered. A hint or
+   RI0SP in BR77) - phantom decodes do not repeat. It stays marked, and may be answered. A hint or
    a-priori decode is not a second hearing: the a-priori decoder is fed with the callsigns already
    heard, so it can reproduce the very call it was given - and neither is any decode of the TX
    background, where an a-priori decode is printed '|' like the others. /R, the both-/P rule and
@@ -50,10 +50,10 @@
    Every check reads the line's messageField (), never DecodedText::message (), which is shortened.
 
    Qt Core only, and no cty.dat of its own: the country lookup is handed in, so the harness
-   (test_falsedecodes) can drive all of it. */
+   (test_phantomdecodes) can drive all of it. */
 
-#ifndef FALSEDECODES_H
-#define FALSEDECODES_H
+#ifndef PHANTOMDECODES_H
+#define PHANTOMDECODES_H
 
 #include <QChar>
 #include <QHash>
@@ -62,7 +62,7 @@
 #include <QStringList>
 #include "geodata/geodata.h"
 
-namespace false_decodes
+namespace phantom_decodes
 {
   enum Reason : unsigned {None = 0u, Grid = 1u, Rover = 2u, Portable = 4u, Where = 8u};
 
@@ -150,7 +150,7 @@ namespace false_decodes
   inline bool isHf (double dialHz) {return dialHz > 0. && dialHz < 30.e6;}
 
   // A sender whose country cty.dat does not know ("where?"): not spotted to PSK Reporter, whatever the
-  // message (the operator, 2026-09-30, A3) - an unallocated prefix is a false decode - and the where? mark. /MM and /AM have no
+  // message (the operator, 2026-09-30, A3) - an unallocated prefix is a phantom decode - and the where? mark. /MM and /AM have no
   // country by design and are not counted: a maritime or aeronautical mobile station is real, and its spot
   // says where it is. An unresolved hash names nobody and is not counted either.
   template<typename EntityOf>
@@ -274,7 +274,7 @@ namespace false_decodes
           if (!v.rovers.isEmpty ()) v.reasons |= Rover;
         }
       // both calls /P and weak, the TX background included (the operator, 2026-09-30, measured in
-      // test/experiments/false_decodes/slashp.py): stronger, it is genuine park-to-park traffic. Never when
+      // test/experiments/phantom_decodes/slashp.py): stronger, it is genuine park-to-park traffic. Never when
       // one of the calls is ours: signing /P ourselves, a weak park-to-park caller is exactly what we want.
       if (s.portableMark && isHf (dialHz) && 2 == p.calls.size () && isPortable (p.calls[0]) && isPortable (p.calls[1])
           && snr <= -20 && (s.ownCall.isEmpty () || (baseOf (p.calls[0]) != s.ownCall && baseOf (p.calls[1]) != s.ownCall)))

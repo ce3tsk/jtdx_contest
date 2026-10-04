@@ -8,7 +8,7 @@ subroutine chkflscall(call_a,call_b,falsedec)
 ! that is every QSO between two stations licensed since (measured on the 240 on-air
 ! periods: 44 of 5267 classical decodes and 53 of 6095 light-preset decodes thrown away,
 ! all but three or four of them real - RI1FJL KN6JIB DM13, ER35MD N7EYE DM33 at -13 dB -
-! for one or two false decodes an hour). Off: chkflscall never flags anything, the file
+! for one or two phantom decodes an hour). Off: chkflscall never flags anything, the file
 ! may stay in place. Set to .true. to restore the lookup.
   logical, parameter :: LALLCALL7_FILTER=.false.
 

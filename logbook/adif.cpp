@@ -4,10 +4,26 @@
 
 #include "adif.h"
 #include "../Radio.hpp"
+#include "../usstates.h"   /* CE3TSK */
 #include <QFile>
 #include <QTextStream>
 //#include <QDateTime>
 #include <QDebug>
+
+namespace
+{
+  /* CE3TSK 2026-10-04 (review): the lookup every match function shares - worked at all, in a mode, on a band, or on a
+     band in a mode - over the four counts each index keeps under key, key+mode, key+band and key+band+mode. It was
+     written out eight times. */
+  bool workedIn (QHash<QString, int> const& all, QHash<QString, int> const& inMode, QHash<QString, int> const& onBand,
+                 QHash<QString, int> const& onBandInMode, QString const& key, QString const& band, QString const& mode)
+  {
+    if (band.isEmpty () && mode.isEmpty ()) return all.value (key, 0) > 0;
+    if (band.isEmpty ()) return inMode.value (key + mode, 0) > 0;
+    if (mode.isEmpty ()) return onBand.value (key + band, 0) > 0;
+    return onBandInMode.value (key + band + mode, 0) > 0;
+  }
+}
 
 /*
 <CALL:4>W1XT<BAND:3>20m<FREQ:6>14.076<GRIDSQUARE:4>DM33<MODE:4>JT65<RST_RCVD:3>-21<RST_SENT:3>-14<QSO_DATE:8>20110422<TIME_ON:4>0417<TIME_OFF:4>0424<TX_PWR:1>4<COMMENT:34>1st JT65A QSO.   Him: mag loop 20W<STATION_CALLSIGN:6>VK3ACF<MY_GRIDSQUARE:6>qf22lb<eor>
@@ -95,6 +111,10 @@ void ADIF::load(const QString mycall,const QString mygrid,const QString mydate)
     _fieldsbandWorked.clear();
     _fieldsmodeWorked.clear();
     _fieldsbandmodeWorked.clear();
+    _statesWorked.clear();       /* CE3TSK */
+    _statesbandWorked.clear();
+    _statesmodeWorked.clear();
+    _statesbandmodeWorked.clear();
     _counts.clear();
     
     QFile inputFile(_filename);
@@ -137,9 +157,9 @@ void ADIF::load(const QString mycall,const QString mygrid,const QString mydate)
                     if (!country.isEmpty ()) { //  country was found
                         QStringList items = country.split(',');
                         _countriesWorked.insert(items[0]+','+items[1]+','+items[2], _countriesWorked.value(items[0]+','+items[1]+','+items[2],0)+1);
-                        _countriesbandWorked.insert(items[0]+','+items[1]+','+items[2]+q.band, _countriesWorked.value(items[0]+','+items[1]+','+items[2]+q.band,0)+1);
-                        _countriesmodeWorked.insert(items[0]+','+items[1]+','+items[2]+q.mode, _countriesWorked.value(items[0]+','+items[1]+','+items[2]+q.mode,0)+1);
-                        _countriesbandmodeWorked.insert(items[0]+','+items[1]+','+items[2]+q.band+q.mode, _countriesWorked.value(items[0]+','+items[1]+','+items[2]+q.band+q.mode,0)+1);
+                        _countriesbandWorked.insert(items[0]+','+items[1]+','+items[2]+q.band, _countriesbandWorked.value(items[0]+','+items[1]+','+items[2]+q.band,0)+1);   /* CE3TSK: its own count (review) */
+                        _countriesmodeWorked.insert(items[0]+','+items[1]+','+items[2]+q.mode, _countriesmodeWorked.value(items[0]+','+items[1]+','+items[2]+q.mode,0)+1);   /* CE3TSK: its own count (review) */
+                        _countriesbandmodeWorked.insert(items[0]+','+items[1]+','+items[2]+q.band+q.mode, _countriesbandmodeWorked.value(items[0]+','+items[1]+','+items[2]+q.band+q.mode,0)+1);   /* CE3TSK: its own count (review) */
                         _cqzWorked.insert(items[3],_cqzWorked.value(items[3],0)+1);
                         _cqzbandWorked.insert(items[3]+q.band,_cqzbandWorked.value(items[3]+q.band,0)+1);
                         _cqzmodeWorked.insert(items[3]+q.mode,_cqzmodeWorked.value(items[3]+q.mode,0)+1);
@@ -148,6 +168,7 @@ void ADIF::load(const QString mycall,const QString mygrid,const QString mydate)
                         _ituzbandWorked.insert(items[4]+q.band,_ituzbandWorked.value(items[4]+q.band,0)+1);
                         _ituzmodeWorked.insert(items[4]+q.mode,_ituzmodeWorked.value(items[4]+q.mode,0)+1);
                         _ituzbandmodeWorked.insert(items[4]+q.band+q.mode,_ituzbandmodeWorked.value(items[4]+q.band+q.mode,0)+1);
+                        addState (items[1], q.call, q.gridsquare, q.band, q.mode);   /* CE3TSK: Worked All States */
                     }
                     if (q.gridsquare.length() > 3) { // grid exists
                         _gridsWorked.insert(q.gridsquare.left(4).toUpper(),_gridsWorked.value(q.gridsquare.left(4).toUpper(),0)+1);
@@ -197,7 +218,11 @@ void ADIF::add(const QString call, const QString band, const QString mode, const
     QSO q;
     q.call = call;
     q.band = band;
-    q.mode = mode;
+    /* CE3TSK 2026-10-04 (review): the mode as load () reads it from the file - upper case, JT9/JT65 folded - so a QSO
+       logged now counts per mode as it will after a restart (the Log QSO box takes a typed "ft8") */
+    q.mode = mode.toUpper ();
+    if (q.mode.left (3) == "JT9") q.mode = "JT9";
+    else if (q.mode.left (4) == "JT65") q.mode = "JT65";
     q.date = date;
     q.gridsquare = gridsquare;
     q.name = name;
@@ -215,9 +240,9 @@ void ADIF::add(const QString call, const QString band, const QString mode, const
     if (!country.isEmpty ()) {
         QStringList items = country.split(',');
         _countriesWorked.insert(items[0]+','+items[1]+','+items[2], _countriesWorked.value(items[0]+','+items[1]+','+items[2],0)+1);
-        _countriesbandWorked.insert(items[0]+','+items[1]+','+items[2]+q.band, _countriesWorked.value(items[0]+','+items[1]+','+items[2]+q.band,0)+1);
-        _countriesmodeWorked.insert(items[0]+','+items[1]+','+items[2]+q.mode, _countriesWorked.value(items[0]+','+items[1]+','+items[2]+q.mode,0)+1);
-        _countriesbandmodeWorked.insert(items[0]+','+items[1]+','+items[2]+q.band+q.mode, _countriesWorked.value(items[0]+','+items[1]+','+items[2]+q.band+q.mode,0)+1);
+        _countriesbandWorked.insert(items[0]+','+items[1]+','+items[2]+q.band, _countriesbandWorked.value(items[0]+','+items[1]+','+items[2]+q.band,0)+1);   /* CE3TSK: its own count (review) */
+        _countriesmodeWorked.insert(items[0]+','+items[1]+','+items[2]+q.mode, _countriesmodeWorked.value(items[0]+','+items[1]+','+items[2]+q.mode,0)+1);   /* CE3TSK: its own count (review) */
+        _countriesbandmodeWorked.insert(items[0]+','+items[1]+','+items[2]+q.band+q.mode, _countriesbandmodeWorked.value(items[0]+','+items[1]+','+items[2]+q.band+q.mode,0)+1);   /* CE3TSK: its own count (review) */
         _cqzWorked.insert(items[3],_cqzWorked.value(items[3],0)+1);
         _cqzbandWorked.insert(items[3]+q.band,_cqzbandWorked.value(items[3]+q.band,0)+1);
         _cqzmodeWorked.insert(items[3]+q.mode,_cqzmodeWorked.value(items[3]+q.mode,0)+1);
@@ -226,6 +251,7 @@ void ADIF::add(const QString call, const QString band, const QString mode, const
         _ituzbandWorked.insert(items[4]+q.band,_ituzbandWorked.value(items[4]+q.band,0)+1);
         _ituzmodeWorked.insert(items[4]+q.mode,_ituzmodeWorked.value(items[4]+q.mode,0)+1);
         _ituzbandmodeWorked.insert(items[4]+q.band+q.mode,_ituzbandmodeWorked.value(items[4]+q.band+q.mode,0)+1);
+        addState (items[1], q.call, q.gridsquare, q.band, q.mode);   /* CE3TSK: Worked All States */
     }
     if (q.gridsquare.length() > 3) {
         _gridsWorked.insert(q.gridsquare.left(4).toUpper(),_gridsWorked.value(q.gridsquare.left(4).toUpper(),0)+1);
@@ -245,20 +271,15 @@ void ADIF::add(const QString call, const QString band, const QString mode, const
 bool ADIF::match(const QString call, const QString band, const QString mode)
 {
 
-    if (band.isEmpty () && mode.isEmpty ()) return _callsWorked.value(call,0) > 0;
-    else if (band.isEmpty ()) return _callsmodeWorked.value(call+mode,0) > 0;
-    else if (mode.isEmpty ()) return _callsbandWorked.value(call+band,0) > 0;
-    else return _callsbandmodeWorked.value(call+band+mode,0) > 0;
+    return workedIn (_callsWorked, _callsmodeWorked, _callsbandWorked, _callsbandmodeWorked, call, band, mode);   /* CE3TSK */
 }    
 
 // return true if in the log same band and mode
 bool ADIF::matchPx(const QString call, const QString band, const QString mode)
 {
     
-    if (band.isEmpty () && mode.isEmpty ()) return _pxsWorked.value(Radio::striped_prefix(Radio::effective_prefix(call)),0) > 0;
-    else if (band.isEmpty ()) return _pxsmodeWorked.value(Radio::striped_prefix(Radio::effective_prefix(call))+mode,0) > 0;
-    else if (mode.isEmpty ()) return _pxsbandWorked.value(Radio::striped_prefix(Radio::effective_prefix(call))+band,0) > 0;
-    else return _pxsbandmodeWorked.value(Radio::striped_prefix(Radio::effective_prefix(call))+band+mode,0) > 0;
+    return workedIn (_pxsWorked, _pxsmodeWorked, _pxsbandWorked, _pxsbandmodeWorked,   /* CE3TSK */
+                     Radio::striped_prefix (Radio::effective_prefix (call)), band, mode);
 }    
 
 // return true if in the log same band and mode
@@ -293,46 +314,49 @@ bool ADIF::getData(const QString call, QString &gridsquare, QString &name)
 // return true if in the log same band and mode
 bool ADIF::matchCqz(const QString Cqz, const QString band, const QString mode)
 {
-    if (band.isEmpty () && mode.isEmpty ()) return _cqzWorked.value(Cqz,0) > 0;
-    else if (band.isEmpty ()) return _cqzmodeWorked.value(Cqz+mode,0) > 0;
-    else if (mode.isEmpty ()) return _cqzbandWorked.value(Cqz+band,0) > 0;
-    else return _cqzbandmodeWorked.value(Cqz+band+mode,0) > 0;
+    return workedIn (_cqzWorked, _cqzmodeWorked, _cqzbandWorked, _cqzbandmodeWorked, Cqz, band, mode);   /* CE3TSK */
 }    
 
 // return true if in the log same band and mode
 bool ADIF::matchItuz(const QString Ituz, const QString band, const QString mode)
 {
-    if (band.isEmpty () && mode.isEmpty ()) return _ituzWorked.value(Ituz,0) > 0;
-    else if (band.isEmpty ()) return _ituzmodeWorked.value(Ituz+mode,0) > 0;
-    else if (mode.isEmpty ()) return _ituzbandWorked.value(Ituz+band,0) > 0;
-    else return _ituzbandmodeWorked.value(Ituz+band+mode,0) > 0;
+    return workedIn (_ituzWorked, _ituzmodeWorked, _ituzbandWorked, _ituzbandmodeWorked, Ituz, band, mode);   /* CE3TSK */
 }    
 
 // return true if in the log same band and mode
 bool ADIF::matchCountry(const QString countryName, const QString band, const QString mode)
 {
-    if (band.isEmpty () && mode.isEmpty ()) return _countriesWorked.value(countryName,0) > 0;
-    else if (band.isEmpty ()) return _countriesmodeWorked.value(countryName+mode,0) > 0;
-    else if (mode.isEmpty ()) return _countriesbandWorked.value(countryName+band,0) > 0;
-    else return _countriesbandmodeWorked.value(countryName+band+mode,0) > 0;
+    return workedIn (_countriesWorked, _countriesmodeWorked, _countriesbandWorked, _countriesbandmodeWorked,   /* CE3TSK */
+                     countryName, band, mode);
 }    
 
 // return true if in the log same band and mode
 bool ADIF::matchGrid(const QString gridsquare, const QString band, const QString mode)
 {
-    if (band.isEmpty () && mode.isEmpty ()) return _gridsWorked.value(gridsquare,0) > 0;
-    else if (band.isEmpty ()) return _gridsmodeWorked.value(gridsquare+mode,0) > 0;
-    else if (mode.isEmpty ()) return _gridsbandWorked.value(gridsquare+band,0) > 0;
-    else return _gridsbandmodeWorked.value(gridsquare+band+mode,0) > 0;
+    return workedIn (_gridsWorked, _gridsmodeWorked, _gridsbandWorked, _gridsbandmodeWorked, gridsquare, band, mode);   /* CE3TSK */
+}
+
+/* CE3TSK 2026-10-03: Worked All States - see adif.h */
+void ADIF::addState (QString const& masterPrefix, QString const& call, QString const& gridsquare, QString const& band, QString const& mode)
+{
+    QString const state = us_states::clearState (masterPrefix, gridsquare, _countries.licenseState (call));
+    if (state.isEmpty ()) return;
+    _statesWorked.insert (state, _statesWorked.value (state, 0) + 1);
+    _statesbandWorked.insert (state + band, _statesbandWorked.value (state + band, 0) + 1);
+    _statesmodeWorked.insert (state + mode, _statesmodeWorked.value (state + mode, 0) + 1);   // CE3TSK 2026-10-04
+    _statesbandmodeWorked.insert (state + band + mode, _statesbandmodeWorked.value (state + band + mode, 0) + 1);
+}
+
+/* CE3TSK 2026-10-04: at all, on a band, in a mode, or on a band in a mode - as matchCountry asks the DXCC tier */
+bool ADIF::matchState (QString const& state, QString const& band, QString const& mode) const
+{
+    return workedIn (_statesWorked, _statesmodeWorked, _statesbandWorked, _statesbandmodeWorked, state, band, mode);
 }
 
 /* CE3TSK: WW Digi contest - worked before test on the 2 character Maidenhead field */
 bool ADIF::matchField(const QString field, const QString band, const QString mode)
 {
-    if (band.isEmpty () && mode.isEmpty ()) return _fieldsWorked.value(field,0) > 0;
-    else if (band.isEmpty ()) return _fieldsmodeWorked.value(field+mode,0) > 0;
-    else if (mode.isEmpty ()) return _fieldsbandWorked.value(field+band,0) > 0;
-    else return _fieldsbandmodeWorked.value(field+band+mode,0) > 0;
+    return workedIn (_fieldsWorked, _fieldsmodeWorked, _fieldsbandWorked, _fieldsbandmodeWorked, field, band, mode);   /* CE3TSK */
 }
 
 QList<QString> ADIF::getCallList()

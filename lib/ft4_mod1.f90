@@ -169,7 +169,7 @@ module ft4_mod1
   ! every frequency, so the 2500 Hz reference band of the SNR estimate covers 5000 Hz of real audio -
   ! twice the noise, 3 dB. Measured 2026-09-16 with ft2sim, 20 files per level: truth -5 read -8,
   ! truth -8 read -11 (the offset shrinks at threshold, as an SNR estimator's bias does, so the
-  ! strong-signal figure is the one to trust). Applied to the reported SNR and to the false-decode
+  ! strong-signal figure is the one to trust). Applied to the reported SNR and to the phantom-decode
   ! gate together, so the gate keeps the physical threshold it had.
   real :: ft2snroff=3.0
 

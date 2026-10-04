@@ -86,7 +86,7 @@ WAS_STATES = set(('AL AK AZ AR CA CO CT DE FL GA HI ID IL IN IA KS KY LA ME MD M
 # the square naming is cty.py's, shared with make_dxcc_grids.py and the geodata tests (second review 2026-10-01)
 sys.dont_write_bytecode = True          # no __pycache__ beside the sources, in either tree
 sys.path.insert(0, HERE if os.path.exists(os.path.join(HERE, 'cty.py'))
-                else os.path.join(HERE, '..', 'test', 'experiments', 'false_decodes'))
+                else os.path.join(HERE, '..', 'test', 'experiments', 'phantom_decodes'))
 from cty import gridname, grid_ll
 
 # Both inputs are checked before the polygon pass: the population file used to be looked for only

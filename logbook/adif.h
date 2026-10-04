@@ -41,6 +41,10 @@ class ADIF
            it needs its own index. It cannot be answered from the grid hashes, which are
            keyed by the 4 character square. */
         bool matchField(const QString field, const QString band="", const QString mode="");
+        /* CE3TSK 2026-10-03: Worked All States - a two-letter state, worked at all or on a band. Only a US entity's
+           QSO counts, in a square of a single state, or in a shared one for the state of the call's licence when that is
+           one of the square's (us_states::clearState) - otherwise a shared square counts for none. */
+        bool matchState(QString const& state, QString const& band = "", QString const& mode = "") const;   // CE3TSK 2026-10-04: and per mode
         QList<QString> getCallList();
         /* CE3TSK: contest scoring. This log holds only contest QSOs, so the field+band hash
            built for the highlighting is already the multiplier set - its size is the count,
@@ -94,6 +98,11 @@ class ADIF
         QHash<QString, int> _fieldsbandWorked;
         QHash<QString, int> _fieldsmodeWorked;
         QHash<QString, int> _fieldsbandmodeWorked;
+        QHash<QString, int> _statesWorked;       /* CE3TSK: see matchState () */
+        QHash<QString, int> _statesbandWorked;
+        QHash<QString, int> _statesmodeWorked;       /* CE3TSK 2026-10-04: per mode, and per band and mode */
+        QHash<QString, int> _statesbandmodeWorked;
+        void addState (QString const& masterPrefix, QString const& call, QString const& gridsquare, QString const& band, QString const& mode);
         QString _filename;
         CountryDat _countries;
 

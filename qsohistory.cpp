@@ -4,6 +4,7 @@
  */
 
 #include "qsohistory.h"
+#include "priorities.h"   /* CE3TSK 2026-10-03: the named levels and the rules read from them */
 void QsoHistory::init()
 {
     _data.clear();
@@ -34,10 +35,13 @@ QsoHistory::latlng QsoHistory::fromQth(QString const& qth) {
     else if (qthLen < 6)  myqth = qth.left(4).toUpper() + "LL55LL";
     else if (qthLen < 8)  myqth = qth.left(6).toUpper() + "55LL";
     else if (qthLen < 10) myqth+= qth.left(8).toUpper() + "LL";
-    else myqth = qth.toUpper();
+    /* CE3TSK 2026-10-04: ten characters at most - l[] holds ten. A 12 character My Grid (IO91wm99aa00) was copied
+       whole and its 11th and 12th ran past l[], smashing the stack (production aborted). Configuration::my_grid ()
+       hands on 8 at most now; this cap keeps any other caller with a longer string from doing the same. */
+    else myqth = qth.left(10).toUpper();
     if (_gridRe.match(myqth).hasMatch()) {
       int l [10];
-      for(int i=0; i < myqth.length(); i++) l[i] = myqth.at(i).toLatin1() - 65; 
+      for(int i=0; i < 10 && i < myqth.length(); i++) l[i] = myqth.at(i).toLatin1() - 65; 
       l[2] += 17; 
       l[3] += 17;
       l[6] += 17; 
@@ -152,7 +156,7 @@ QsoHistory::Status QsoHistory::autoseq(QString &callsign, QString &grid, QString
               if(t.stx_c == SCALL && ret == RREPORT) count = 1;
               else count = t.count + 1;
             } else if(((t.tyyp.size () == 2 && t.tyyp != mycontinent_ && t.tyyp != _CQ.call.left(2) && t.tyyp != myprefix_ && (t.tyyp != "DX" || t.continent == mycontinent_)) || 
-                    (t.tyyp.size () == 1 && t.tyyp != _CQ.call.left(1) && t.tyyp != myprefix_)) && (!_strictdirCQ || (t.priority < 20 && t.status != RCQ))) {
+                    (t.tyyp.size () == 1 && t.tyyp != _CQ.call.left(1) && t.tyyp != myprefix_)) && (!_strictdirCQ || (!decode_priority::dxccClass (t.priority) && t.status != RCQ))) {
               count = 1;    
             } else count = t.count;
             if (t.grid.length() >3) grid = t.grid;
@@ -180,10 +184,10 @@ QsoHistory::Status QsoHistory::autoseq(QString &callsign, QString &grid, QString
           algo=time;
           dist = 0;
           if (algo & 128) a_init=-1;
-          else a_init=4;
+          else a_init=decode_priority::WantedCallOld;   // CE3TSK 2026-10-03: new ones only - above the wanted lists over no new tier
           if (algo & 64) b_init=-1;
-          else if (algo & 256) b_init=8;
-          else b_init=4;
+          else if (algo & 256) b_init=decode_priority::NewCall + 1;   // CE3TSK 2026-10-03: higher than a new call
+          else b_init=decode_priority::WantedCallOld;   // CE3TSK 2026-10-03: new ones only, as a_init
           if (myas_active && _data.size() > 0) { //my CQ answers && _CQ.count > 0 
             QSO tt,t;
             int priority = a_init;
@@ -197,7 +201,7 @@ QsoHistory::Status QsoHistory::autoseq(QString &callsign, QString &grid, QString
               tt=_data[key];
               if (on_black == 0 && tt.time == max_r_time && !tt.continent.isEmpty() && !tt.doubtful && (!lastcalled || tt.time == tt.b_time) &&
                   (tt.status == RCALL || tt.status == RREPORT || tt.status == RRREPORT || tt.status == RRR || tt.status == RRR73 || 
-                    ((tt.status == RCQ || tt.status == RFIN) && !mycall && ((tt.priority > 16 && tt.priority < 20))))) {
+                    ((tt.status == RCQ || tt.status == RFIN) && !mycall && decode_priority::wanted (tt.priority)))) {
                 if (!lastcalled && tt.time == tt.b_time) priority = a_init;
                 if (tt.priority > priority || 
                       (priority > a_init && (((tt.status == RCALL || tt.status == RREPORT || tt.status == RRREPORT) && !mycall) || (tt.priority == priority &&
@@ -205,7 +209,7 @@ QsoHistory::Status QsoHistory::autoseq(QString &callsign, QString &grid, QString
                                             || (algo & 16 && ((tt.status == RCALL && !tt.s_rep.isEmpty () && tt.s_rep.toInt() > rep.toInt() && Rrep == "-60")
                                                               ||(tt.status == RREPORT && !tt.s_rep.isEmpty () && tt.s_rep.toInt() > Rrep.toInt()))))) 
                           || (algo & 32 && tt.distance > dist)))))) {
-                  if(_CQ.tyyp.isEmpty () || (_strictdirCQ && (tt.priority > 16 || (tt.priority > 1 && tt.priority < 5))) || _CQ.tyyp == tt.continent || _CQ.tyyp == tt.mpx || tt.call.startsWith(_CQ.tyyp) || (_CQ.tyyp == "DX" && tt.continent != mycontinent_)) {
+                  if(_CQ.tyyp.isEmpty () || (_strictdirCQ && decode_priority::ourDirectionWaived (tt.priority)) || _CQ.tyyp == tt.continent || _CQ.tyyp == tt.mpx || tt.call.startsWith(_CQ.tyyp) || (_CQ.tyyp == "DX" && tt.continent != mycontinent_)) {
                     t = tt;
                     if (tt.time == tt.b_time) lastcalled = true;
                     if (tt.status == RCALL || tt.status == RREPORT) mycall = true;
@@ -248,7 +252,7 @@ QsoHistory::Status QsoHistory::autoseq(QString &callsign, QString &grid, QString
               tt=_data[key];
               if (on_black == 0 && ((tt.time - _CQ.time < 300 && tt.time >= 300) || (tt.time < 300 && tt.time - (_CQ.time - 86100) < 300))  && !tt.continent.isEmpty() && !tt.doubtful && (!lastcalled || tt.time == tt.b_time) &&
                   (tt.status == RCALL || tt.status == RREPORT || tt.status == RRREPORT || tt.status == RRR || tt.status == RRR73 || 
-                    ((tt.status == RCQ || tt.status == RFIN) && !mycall && ((tt.priority > 16 && tt.priority < 20))))) {
+                    ((tt.status == RCQ || tt.status == RFIN) && !mycall && decode_priority::wanted (tt.priority)))) {
                 if (!lastcalled && tt.time == tt.b_time) priority = a_init;
                 if (tt.priority > priority || 
                       (priority > a_init && (((tt.status == RCALL || tt.status == RREPORT || tt.status == RRREPORT) && !mycall) || (tt.priority == priority &&
@@ -256,7 +260,7 @@ QsoHistory::Status QsoHistory::autoseq(QString &callsign, QString &grid, QString
                                             || (algo & 16 && ((tt.status == RCALL && !tt.s_rep.isEmpty () && tt.s_rep.toInt() > rep.toInt() && Rrep == "-60")
                                                               ||(tt.status == RREPORT && !tt.s_rep.isEmpty () && tt.s_rep.toInt() > Rrep.toInt()))))) 
                           || (algo & 32 && tt.distance > dist)))))) {
-                  if(_CQ.tyyp.isEmpty () || (_strictdirCQ && (tt.priority > 16 || (tt.priority > 1 && tt.priority < 5))) || _CQ.tyyp == tt.continent || _CQ.tyyp == tt.mpx || tt.call.startsWith(_CQ.tyyp) || (_CQ.tyyp == "DX" && tt.continent != mycontinent_)) {
+                  if(_CQ.tyyp.isEmpty () || (_strictdirCQ && decode_priority::ourDirectionWaived (tt.priority)) || _CQ.tyyp == tt.continent || _CQ.tyyp == tt.mpx || tt.call.startsWith(_CQ.tyyp) || (_CQ.tyyp == "DX" && tt.continent != mycontinent_)) {
                     t = tt;
                     if (tt.time == tt.b_time) lastcalled = true;
                     if (tt.status == RCALL || tt.status == RREPORT) mycall = true;
@@ -306,8 +310,8 @@ QsoHistory::Status QsoHistory::autoseq(QString &callsign, QString &grid, QString
                     ((!(algo & 32) && !tt.s_rep.isEmpty () && tt.s_rep.toInt() > rep.toInt())
                     || (algo & 32 && tt.distance > dist)))) {
 //                  printf("1\n");
-                  if ((tt.tyyp.isEmpty () || tt.tyyp.size () > 2 || (_strictdirCQ && tt.priority > 19) || tt.tyyp == mycontinent_ || _CQ.call.startsWith(tt.tyyp) || tt.tyyp == myprefix_ || (tt.tyyp == "DX" && tt.continent != mycontinent_))
-                      && (_CQ.tyyp.isEmpty () || _CQ.tyyp == tt.continent || (_strictdirCQ && (tt.priority > 16 || (tt.priority > 1 && tt.priority < 5))) || tt.call.startsWith(_CQ.tyyp) || (_CQ.tyyp == "DX" && tt.continent != mycontinent_))) {
+                  if ((tt.tyyp.isEmpty () || tt.tyyp.size () > 2 || (_strictdirCQ && decode_priority::dxccClass (tt.priority)) || tt.tyyp == mycontinent_ || _CQ.call.startsWith(tt.tyyp) || tt.tyyp == myprefix_ || (tt.tyyp == "DX" && tt.continent != mycontinent_))
+                      && (_CQ.tyyp.isEmpty () || _CQ.tyyp == tt.continent || (_strictdirCQ && decode_priority::ourDirectionWaived (tt.priority)) || tt.call.startsWith(_CQ.tyyp) || (_CQ.tyyp == "DX" && tt.continent != mycontinent_))) {
 //                    printf("selected\n");
                     t = tt;
                     priority = tt.priority;
@@ -810,7 +814,7 @@ void QsoHistory::message(QString const& callsign, Status status, int priority, Q
             if (t.b_time == 0 && status >= RCALL) t.b_time = time;
             if (DOUBT_CLEAR == doubt) {t.doubtful = false; t.clean_time = time;}   /* CE3TSK: see Doubt */
             else if (DOUBT_SET == doubt) {
-              /* the grid of a likely false decode must not replace one we know: it would reach the DX Grid box
+              /* the grid of a likely phantom decode must not replace one we know: it would reach the DX Grid box
                  and the log. With none known it is kept - a WW Digi traveller's exchange is his real grid. */
               if (!known_grid.isEmpty ()) {t.grid = known_grid; t.gridCall = known_gridCall; t.distance = known_distance;}
               if (t.clean_time != time) t.doubtful = true;

@@ -59,6 +59,17 @@ public:
                       /* CE3TSK: WW Digi contest - match on the 2 character field, the
                          contest multiplier, instead of the 4 character square */
                       bool fieldOnly=false);
+    /* CE3TSK 2026-10-03, Worked All States: has the state of this grid square been worked - at all, and on the band of
+       dialFreq - by a station of the entity with this cty.dat master prefix ("K", "KL", "KH6")? The caller has the
+       prefix already (getDXCC's second field), so the call is not looked up twice (review). Only a US entity has a
+       state to ask about - in a square of a single state, or in a shared one when the call's licence is in one of its
+       states (us_states::clearState); for any other both answers are true, so nothing is marked. */
+    QString matchState(QString const& masterPrefix, QString const& call, QString const& grid, bool &WorkedBefore,
+                       bool &WorkedBeforeBand, double dialFreq = 0,
+                       QString const& mode = {});   // the state it judged, "" when none (review: so it is worked out once)
+                                                    // WorkedBeforeBand: on dialFreq's band and/or in mode, whichever is given
+    /* CE3TSK 2026-10-03: the state of the call's US licence (CountryDat::licenseState), "" when it has none */
+    QString licenseState (QString const& call) {return countries ().licenseState (call);}
     void matchPX(/*in*/ const QString call,
               /*out*/ QString &countryName,
                       bool &WorkedBefore,

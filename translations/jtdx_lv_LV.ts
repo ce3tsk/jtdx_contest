@@ -289,11 +289,6 @@ Formāts:
         <translation>JTDX dekodēšanas tekstam izvēlētais fonts</translation>
     </message>
     <message>
-        <location filename="../Configuration.cpp" line="4902"/>
-        <source>Enter Grid error: 4/6/8/10 char grid will be accepted</source>
-        <translation>kļūda ievadot QTH lokātoru: atbalsta 4/6/8/10 simbolus</translation>
-    </message>
-    <message>
         <location filename="../Configuration.cpp" line="5434"/>
         <source>Load Working Frequencies</source>
         <translation>Lejupielādējiet darba frekvences</translation>
@@ -512,6 +507,46 @@ Formāts:
         <location filename="../Configuration.cpp"/>
         <source>&amp;Unmark default</source>
         <translation>Noņemt noklusējuma atzīmi</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>The downloaded file is not a list of US license states.</source>
+        <translation>Lejupielādētais fails nav ASV licenču štatu saraksts.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>No DXCC country in cty.dat has the prefix of %1.</source>
+        <translation>Nevienai cty.dat DXCC valstij nav izsaukuma signāla %1 prefiksa.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>A grid has 4, 6, 8, 10 or 12 characters, as IO91, IO91wm, IO91wm99, IO91wm99aa or IO91wm99aa00.</source>
+        <translation>Lokatoram ir 4, 6, 8, 10 vai 12 rakstzīmes, piemēram, IO91, IO91wm, IO91wm99, IO91wm99aa vai IO91wm99aa00.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Your grid %1 does not lie in %2, the DXCC country of %3.</source>
+        <translation>Jūsu lokators %1 neatrodas valstī %2, kas ir izsaukuma signāla %3 DXCC valsts.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Check your call and grid</source>
+        <translation>Pārbaudiet savu izsaukuma signālu un lokatoru</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Distances, PSK Reporter spots and the WW Digi exchange are worked out from them.</source>
+        <translation>No tiem tiek aprēķināti attālumi, PSK Reporter ziņojumi un WW Digi apmaiņa.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>&amp;Keep it</source>
+        <translation>&amp;Paturēt</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>&amp;Correct it</source>
+        <translation>&amp;Labot</translation>
     </message>
 </context>
 <context>
@@ -1438,8 +1473,8 @@ Formāts:
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="219"/>
-        <source>U.S.A.</source>
-        <translation>Amerikas Savienotās Valstis</translation>
+        <source>USA</source>
+        <translation>ASV</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="220"/>
@@ -9694,8 +9729,8 @@ AA1AAA,BB1BB,CC1CC&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
         <location filename="../Configuration.ui" line="6858"/>
         <location filename="../Configuration.ui" line="6871"/>
         <location filename="../Configuration.ui" line="7029"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This DT window being used only for RX frequency CALL3 data based Hint decoders focused on CQ and &apos;mycall hiscall hisgrid&apos; messages. Higher values may increase number of the false decodes.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Šis DT logs tiek lietots tikai uztveršanas frekvences CALL3 datu norāžu dekodētājiem, kas orientēti uz CQ un 'mycall hiscall hisgrid' ziņojumiem. Lielākas vērtības var palielināt kļūdaino dekodējumu skaitu.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This DT window being used only for RX frequency CALL3 data based Hint decoders focused on CQ and 'mycall hiscall hisgrid' messages. Higher values may increase number of the phantom decodes.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Šis DT logs tiek lietots tikai uztveršanas frekvences CALL3 datu norāžu dekodētājiem, kas orientēti uz CQ un 'mycall hiscall hisgrid' ziņojumiem. Lielākas vērtības var palielināt fantoma dekodējumu skaitu.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="6861"/>
@@ -9887,8 +9922,8 @@ izmaiņas</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
-        <source>False decodes</source>
-        <translation>Kļūdainas dekodēšanas</translation>
+        <source>Phantom decodes</source>
+        <translation>Fantoma dekodēšanas</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
@@ -9897,8 +9932,8 @@ izmaiņas</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
-        <source>The automatic sequencer does not pick such a decode on its own; a double click still answers it. A station heard with the same doubtful grid in two different periods is most likely operating away from home, and is answered again - false decodes do not repeat.</source>
-        <translation>Automātiskā secība (AutoSeq) šādu dekodēšanu pati neizvēlas; dubultklikšķis uz to joprojām atbild. Stacija, kas divos dažādos periodos dzirdēta ar to pašu apšaubāmo lokatoru, visticamāk strādā ārpus savas mītnes zemes, un tai atkal tiek atbildēts - kļūdainas dekodēšanas neatkārtojas.</translation>
+        <source>The automatic sequencer does not pick such a decode on its own; a double click still answers it. A station heard with the same doubtful grid in two different periods is most likely operating away from home, and is answered again - phantom decodes do not repeat.</source>
+        <translation>Automātiskā secība (AutoSeq) šādu dekodēšanu pati neizvēlas; dubultklikšķis uz to joprojām atbild. Stacija, kas divos dažādos periodos dzirdēta ar to pašu apšaubāmo lokatoru, visticamāk strādā ārpus savas mītnes zemes, un tai atkal tiek atbildēts - fantoma dekodēšanas neatkārtojas.</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
@@ -9907,8 +9942,8 @@ izmaiņas</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
-        <source>Below 30 MHz a call signing /R (rover) is almost always a false decode: /R is a single bit of the message. The decode is kept, with the /R call underlined in red. Its ALL.TXT line ends with lc:rover, and it is sent to UDP clients as a low-confidence decode.</source>
-        <translation>Zem 30 MHz izsaukuma signāls ar /R (rover) gandrīz vienmēr ir kļūdaina dekodēšana: /R ir tikai viens ziņojuma bits. Dekodēšana tiek saglabāta, un /R izsaukuma signāls tiek pasvītrots sarkanā krāsā. Tās rinda failā ALL.TXT beidzas ar lc:rover, un UDP klientiem tā tiek nosūtīta kā zemas ticamības dekodēšana.</translation>
+        <source>Below 30 MHz a call signing /R (rover) is almost always a phantom decode: /R is a single bit of the message. The decode is kept, with the /R call underlined in red. Its ALL.TXT line ends with lc:rover, and it is sent to UDP clients as a low-confidence decode.</source>
+        <translation>Zem 30 MHz izsaukuma signāls ar /R (rover) gandrīz vienmēr ir fantoma dekodēšana: /R ir tikai viens ziņojuma bits. Dekodēšana tiek saglabāta, un /R izsaukuma signāls tiek pasvītrots sarkanā krāsā. Tās rinda failā ALL.TXT beidzas ar lc:rover, un UDP klientiem tā tiek nosūtīta kā zemas ticamības dekodēšana.</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
@@ -9932,13 +9967,13 @@ izmaiņas</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
-        <source>Below 30 MHz, a decode in which both calls sign /P (portable) is almost always a false decode when it is weak (-20 dB or below): /P is a single bit per call of the message type portable calls use, while genuine park-to-park contacts are stronger. The decode is kept, with the /P calls underlined in red, and is never answered automatically - a double click still answers it. Its ALL.TXT line ends with lc:portable, and it is sent to UDP clients as a low-confidence decode.</source>
-        <translation>Zem 30 MHz dekodēšana, kurā abiem izsaukuma signāliem ir /P (portatīvs), gandrīz vienmēr ir kļūdaina dekodēšana, ja tā ir vāja (-20 dB vai mazāk): /P ir tikai viens bits uz izsaukuma signālu ziņojuma tipā, ko izmanto portatīvie izsaukuma signāli, bet īsti parks-parks sakari ir stiprāki. Dekodēšana tiek saglabāta, /P izsaukuma signāli tiek pasvītroti sarkanā krāsā, un uz to nekad netiek atbildēts automātiski - dubultklikšķis uz to joprojām atbild. Tās rinda failā ALL.TXT beidzas ar lc:portable, un UDP klientiem tā tiek nosūtīta kā zemas ticamības dekodēšana.</translation>
+        <source>Below 30 MHz, a decode in which both calls sign /P (portable) is almost always a phantom decode when it is weak (-20 dB or below): /P is a single bit per call of the message type portable calls use, while genuine park-to-park contacts are stronger. The decode is kept, with the /P calls underlined in red, and is never answered automatically - a double click still answers it. Its ALL.TXT line ends with lc:portable, and it is sent to UDP clients as a low-confidence decode.</source>
+        <translation>Zem 30 MHz dekodēšana, kurā abiem izsaukuma signāliem ir /P (portatīvs), gandrīz vienmēr ir fantoma dekodēšana, ja tā ir vāja (-20 dB vai mazāk): /P ir tikai viens bits uz izsaukuma signālu ziņojuma tipā, ko izmanto portatīvie izsaukuma signāli, bet īsti parks-parks sakari ir stiprāki. Dekodēšana tiek saglabāta, /P izsaukuma signāli tiek pasvītroti sarkanā krāsā, un uz to nekad netiek atbildēts automātiski - dubultklikšķis uz to joprojām atbild. Tās rinda failā ALL.TXT beidzas ar lc:portable, un UDP klientiem tā tiek nosūtīta kā zemas ticamības dekodēšana.</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
-        <source>A call whose prefix belongs to no country in cty.dat - shown as where? in the country column - is most likely a false decode, on any band. The decode is kept, with the call and where? underlined in red, and is never answered automatically - a double click still answers it. Its ALL.TXT line ends with lc:where, and it is sent to UDP clients as a low-confidence decode. Maritime and aeronautical mobile calls (/MM, /AM) have no country and are never marked.</source>
-        <translation>Izsaukuma signāls, kura prefikss cty.dat nepieder nevienai valstij - valsts kolonnā parādīts kā nezināma teritorija? -, visticamāk, ir kļūdaina dekodēšana jebkurā joslā. Dekodēšana tiek saglabāta, izsaukuma signāls un nezināma teritorija? tiek pasvītroti sarkanā krāsā, un uz to nekad netiek atbildēts automātiski - dubultklikšķis uz to joprojām atbild. Tās rinda failā ALL.TXT beidzas ar lc:where, un UDP klientiem tā tiek nosūtīta kā zemas ticamības dekodēšana. Jūras un aviācijas mobilajiem izsaukuma signāliem (/MM, /AM) nav valsts, un tie nekad netiek atzīmēti.</translation>
+        <source>A call whose prefix belongs to no country in cty.dat - shown as where? in the country column - is most likely a phantom decode, on any band. The decode is kept, with the call and where? underlined in red, and is never answered automatically - a double click still answers it. Its ALL.TXT line ends with lc:where, and it is sent to UDP clients as a low-confidence decode. Maritime and aeronautical mobile calls (/MM, /AM) have no country and are never marked.</source>
+        <translation>Izsaukuma signāls, kura prefikss cty.dat nepieder nevienai valstij - valsts kolonnā parādīts kā nezināma teritorija? -, visticamāk, ir fantoma dekodēšana jebkurā joslā. Dekodēšana tiek saglabāta, izsaukuma signāls un nezināma teritorija? tiek pasvītroti sarkanā krāsā, un uz to nekad netiek atbildēts automātiski - dubultklikšķis uz to joprojām atbild. Tās rinda failā ALL.TXT beidzas ar lc:where, un UDP klientiem tā tiek nosūtīta kā zemas ticamības dekodēšana. Jūras un aviācijas mobilajiem izsaukuma signāliem (/MM, /AM) nav valsts, un tie nekad netiek atzīmēti.</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
@@ -9947,13 +9982,53 @@ izmaiņas</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
-        <source>Append the US state of a US station's grid square to its DXCC name or prefix, as in U.S.A.-CA. A square shared by several states names them all, the one with the most people first: U.S.A.-NY/MA.</source>
-        <translation>Pievieno ASV stacijas DXCC nosaukumam vai prefiksam štatu, kurā atrodas tās lokators, piemēram, U.S.A.-CA. Ja lokators aptver vairākus štatus, tiek parādīti visi, vispirms tas, kurā ir visvairāk iedzīvotāju: U.S.A.-NY/MA.</translation>
+        <source>Append the US state of a US station's grid square to its DXCC name or prefix, as in USA, CA. A square shared by several states names them all, the one with the most people first: USA, NY/MA - or only the state of the station's US license, when that is one of them: USA, MA.</source>
+        <translation>Pievieno ASV stacijas DXCC nosaukumam vai prefiksam štatu, kurā atrodas tās lokators, piemēram, USA, CA. Ja lokators aptver vairākus štatus, tiek parādīti visi, vispirms tas, kurā ir visvairāk iedzīvotāju: USA, NY/MA - vai tikai stacijas ASV licences štats, ja tas ir viens no tiem: USA, MA.</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
         <source>Sh&amp;ow US states</source>
         <translation>&amp;Norādīt ASV štatu</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Highlight messages from US stations whose state is not in the wsjtx_log.adi log file yet. The state comes from the grid square, in the log and in the decoded message alike: a square that lies in a single state counts for it; a square several states share counts for the state of the station's US license when that is one of them, and otherwise for none.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Izcelt ziņojumus no ASV stacijām, kuru štata vēl nav wsjtx_log.adi žurnālā. Štatu nosaka lokators gan žurnālā, gan dekodētajā ziņojumā: lokators, kas atrodas vienā štatā, skaitās šim štatam; lokators, ko dala vairāki štati, skaitās stacijas ASV licences štatam, ja tas ir viens no tiem, citādi nevienam.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Check and highlight new US states</source>
+        <translation>Pārbaudīt un izcelt jaunus ASV štatus</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Highlight messages from US stations whose state is new on the band according to the wsjtx_log.adi log file. The state comes from the grid square and, in a square several states share, from the station's US license, as for new US states.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Izcelt ziņojumus no ASV stacijām, kuru štats pēc wsjtx_log.adi žurnāla datiem šajā joslā ir jauns. Štatu nosaka lokators un, ja lokatoru dala vairāki štati, stacijas ASV licence, tāpat kā jauniem ASV štatiem.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>New US State</source>
+        <translation>Jauns ASV štats</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>New US State on Band</source>
+        <translation>Jauns ASV štats joslā</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>US licenses:</source>
+        <translation>ASV licences:</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Download the latest list of US license states from ce3tsk.com, built from the FCC's amateur license file. In a grid square several states share, a US station counts for the state of its license when that state is one of the square's.</source>
+        <translation>Lejupielādēt jaunāko ASV licenču štatu sarakstu no ce3tsk.com, kas sagatavots no FCC radioamatieru licenču faila. Lokatorā, ko dala vairāki štati, ASV stacija skaitās savas licences štatam, ja šis štats ir viens no lokatora štatiem.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Highlight messages from US stations whose state is new in the mode according to the wsjtx_log.adi log file. The state comes from the grid square and, in a square several states share, from the station's US license, as for new US states.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Izcelt ziņojumus no ASV stacijām, kuru štats pēc wsjtx_log.adi žurnāla datiem šajā modē ir jauns. Štatu nosaka lokators un, ja lokatoru dala vairāki štati, stacijas ASV licence, tāpat kā jauniem ASV štatiem.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>

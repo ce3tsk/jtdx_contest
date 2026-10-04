@@ -289,11 +289,6 @@ Format:
         <translation>JTDX 解碼文本字型選擇</translation>
     </message>
     <message>
-        <location filename="../Configuration.cpp" line="4902"/>
-        <source>Enter Grid error: 4/6/8/10 char grid will be accepted</source>
-        <translation>輸入網格錯誤: 祗接受4/6/8/10字元網格</translation>
-    </message>
-    <message>
         <location filename="../Configuration.cpp" line="5438"/>
         <location filename="../Configuration.cpp" line="5469"/>
         <source>Cancel</source>
@@ -512,6 +507,46 @@ Format:
         <location filename="../Configuration.cpp"/>
         <source>&amp;Unmark default</source>
         <translation>取消預設標記(&amp;U)</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>The downloaded file is not a list of US license states.</source>
+        <translation>下載的檔案不是美國牌照州列表。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>No DXCC country in cty.dat has the prefix of %1.</source>
+        <translation>cty.dat 中沒有任何 DXCC 實體使用 %1 的前綴。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>A grid has 4, 6, 8, 10 or 12 characters, as IO91, IO91wm, IO91wm99, IO91wm99aa or IO91wm99aa00.</source>
+        <translation>網格為 4、6、8、10 或 12 個字元，例如 IO91、IO91wm、IO91wm99、IO91wm99aa 或 IO91wm99aa00。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Your grid %1 does not lie in %2, the DXCC country of %3.</source>
+        <translation>你的網格 %1 不在 %3 的 DXCC 實體 %2 之內。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Check your call and grid</source>
+        <translation>檢查你的呼號和網格</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Distances, PSK Reporter spots and the WW Digi exchange are worked out from them.</source>
+        <translation>距離、PSK Reporter 報告和 WW Digi 交換資訊都由它們算出。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>&amp;Keep it</source>
+        <translation>保留(&amp;K)</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>&amp;Correct it</source>
+        <translation>修改(&amp;C)</translation>
     </message>
 </context>
 <context>
@@ -1438,8 +1473,8 @@ Format:
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="219"/>
-        <source>U.S.A.</source>
-        <translation>美國.</translation>
+        <source>USA</source>
+        <translation>美國</translation>
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="220"/>
@@ -9695,8 +9730,8 @@ AA1AAA,BB1BB,CC1CC&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
         <location filename="../Configuration.ui" line="6858"/>
         <location filename="../Configuration.ui" line="6871"/>
         <location filename="../Configuration.ui" line="7029"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This DT window being used only for RX frequency CALL3 data based Hint decoders focused on CQ and &apos;mycall hiscall hisgrid&apos; messages. Higher values may increase number of the false decodes.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;此 DT 視窗僅用於基於接收頻率 CALL3 數據的提示解碼, 專注於 CQ 和&quot;我的呼叫他調用他網格&quot;訊息.值越高, 假解碼數就越多.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This DT window being used only for RX frequency CALL3 data based Hint decoders focused on CQ and 'mycall hiscall hisgrid' messages. Higher values may increase number of the phantom decodes.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;此 DT 視窗僅用於基於接收頻率 CALL3 數據的提示解碼, 專注於 CQ 和"我的呼叫他調用他網格"訊息.值越高, 幻影解碼數就越多.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="6861"/>
@@ -9888,8 +9923,8 @@ soundcard changes</source>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
-        <source>False decodes</source>
-        <translation>錯誤解碼</translation>
+        <source>Phantom decodes</source>
+        <translation>幻影解碼</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
@@ -9898,8 +9933,8 @@ soundcard changes</source>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
-        <source>The automatic sequencer does not pick such a decode on its own; a double click still answers it. A station heard with the same doubtful grid in two different periods is most likely operating away from home, and is answered again - false decodes do not repeat.</source>
-        <translation>自動程序（AutoSeq）不會自行選擇此類解碼；雙擊仍可應答。在兩個不同週期中以同一個可疑網格被收到的電台，很可能正在其本國之外操作，因此會再次被應答——錯誤解碼不會重複出現。</translation>
+        <source>The automatic sequencer does not pick such a decode on its own; a double click still answers it. A station heard with the same doubtful grid in two different periods is most likely operating away from home, and is answered again - phantom decodes do not repeat.</source>
+        <translation>自動程序（AutoSeq）不會自行選擇此類解碼；雙擊仍可應答。在兩個不同週期中以同一個可疑網格被收到的電台，很可能正在其本國之外操作，因此會再次被應答——幻影解碼不會重複出現。</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
@@ -9908,8 +9943,8 @@ soundcard changes</source>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
-        <source>Below 30 MHz a call signing /R (rover) is almost always a false decode: /R is a single bit of the message. The decode is kept, with the /R call underlined in red. Its ALL.TXT line ends with lc:rover, and it is sent to UDP clients as a low-confidence decode.</source>
-        <translation>在 30 MHz 以下，帶 /R（流動）的呼號幾乎總是錯誤解碼：/R 只是訊息中的一個位元。該解碼會被保留，/R 呼號加紅色底線。它在 ALL.TXT 中的行以 lc:rover 結尾，並以低可信度解碼傳送給 UDP 用戶端。</translation>
+        <source>Below 30 MHz a call signing /R (rover) is almost always a phantom decode: /R is a single bit of the message. The decode is kept, with the /R call underlined in red. Its ALL.TXT line ends with lc:rover, and it is sent to UDP clients as a low-confidence decode.</source>
+        <translation>在 30 MHz 以下，帶 /R（流動）的呼號幾乎總是幻影解碼：/R 只是訊息中的一個位元。該解碼會被保留，/R 呼號加紅色底線。它在 ALL.TXT 中的行以 lc:rover 結尾，並以低可信度解碼傳送給 UDP 用戶端。</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
@@ -9933,13 +9968,13 @@ soundcard changes</source>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
-        <source>Below 30 MHz, a decode in which both calls sign /P (portable) is almost always a false decode when it is weak (-20 dB or below): /P is a single bit per call of the message type portable calls use, while genuine park-to-park contacts are stronger. The decode is kept, with the /P calls underlined in red, and is never answered automatically - a double click still answers it. Its ALL.TXT line ends with lc:portable, and it is sent to UDP clients as a low-confidence decode.</source>
-        <translation>在 30 MHz 以下，兩個呼號都帶 /P（便攜）的解碼，若信號弱（-20 dB 或更低），幾乎總是錯誤解碼：/P 只是便攜呼號所用訊息類型中每個呼號的一個位元，而真正的公園對公園通聯信號更強。該解碼會被保留，/P 呼號加紅色底線，並且從不自動應答——雙擊仍可應答。它在 ALL.TXT 中的行以 lc:portable 結尾，並以低可信度解碼傳送給 UDP 用戶端。</translation>
+        <source>Below 30 MHz, a decode in which both calls sign /P (portable) is almost always a phantom decode when it is weak (-20 dB or below): /P is a single bit per call of the message type portable calls use, while genuine park-to-park contacts are stronger. The decode is kept, with the /P calls underlined in red, and is never answered automatically - a double click still answers it. Its ALL.TXT line ends with lc:portable, and it is sent to UDP clients as a low-confidence decode.</source>
+        <translation>在 30 MHz 以下，兩個呼號都帶 /P（便攜）的解碼，若信號弱（-20 dB 或更低），幾乎總是幻影解碼：/P 只是便攜呼號所用訊息類型中每個呼號的一個位元，而真正的公園對公園通聯信號更強。該解碼會被保留，/P 呼號加紅色底線，並且從不自動應答——雙擊仍可應答。它在 ALL.TXT 中的行以 lc:portable 結尾，並以低可信度解碼傳送給 UDP 用戶端。</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
-        <source>A call whose prefix belongs to no country in cty.dat - shown as where? in the country column - is most likely a false decode, on any band. The decode is kept, with the call and where? underlined in red, and is never answered automatically - a double click still answers it. Its ALL.TXT line ends with lc:where, and it is sent to UDP clients as a low-confidence decode. Maritime and aeronautical mobile calls (/MM, /AM) have no country and are never marked.</source>
-        <translation>前綴在 cty.dat 中不屬於任何國家的呼號（國家欄顯示為 不詳?）很可能是錯誤解碼，在任何波段都是如此。該解碼會被保留，呼號和 不詳? 加紅色底線，並且從不自動應答——雙擊仍可應答。它在 ALL.TXT 中的行以 lc:where 結尾，並以低可信度解碼傳送給 UDP 用戶端。海上流動和航空流動呼號（/MM、/AM）沒有國家，從不標記。</translation>
+        <source>A call whose prefix belongs to no country in cty.dat - shown as where? in the country column - is most likely a phantom decode, on any band. The decode is kept, with the call and where? underlined in red, and is never answered automatically - a double click still answers it. Its ALL.TXT line ends with lc:where, and it is sent to UDP clients as a low-confidence decode. Maritime and aeronautical mobile calls (/MM, /AM) have no country and are never marked.</source>
+        <translation>前綴在 cty.dat 中不屬於任何國家的呼號（國家欄顯示為 不詳?）很可能是幻影解碼，在任何波段都是如此。該解碼會被保留，呼號和 不詳? 加紅色底線，並且從不自動應答——雙擊仍可應答。它在 ALL.TXT 中的行以 lc:where 結尾，並以低可信度解碼傳送給 UDP 用戶端。海上流動和航空流動呼號（/MM、/AM）沒有國家，從不標記。</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
@@ -9948,13 +9983,53 @@ soundcard changes</source>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
-        <source>Append the US state of a US station's grid square to its DXCC name or prefix, as in U.S.A.-CA. A square shared by several states names them all, the one with the most people first: U.S.A.-NY/MA.</source>
-        <translation>在美國電台的 DXCC 國家或地區名稱或前綴後附加其網格所在的州，例如 U.S.A.-CA。網格跨越多個州時全部列出，人口最多的州在前：U.S.A.-NY/MA。</translation>
+        <source>Append the US state of a US station's grid square to its DXCC name or prefix, as in USA, CA. A square shared by several states names them all, the one with the most people first: USA, NY/MA - or only the state of the station's US license, when that is one of them: USA, MA.</source>
+        <translation>在美國電台的 DXCC 國家或地區名稱或前綴後附加其網格所在的州，例如 USA, CA。網格跨越多個州時全部列出，人口最多的州在前：USA, NY/MA；若電台美國牌照所在的州是其中之一，則只顯示該州：USA, MA。</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
         <source>Sh&amp;ow US states</source>
         <translation>顯示美國州(&amp;O)</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Highlight messages from US stations whose state is not in the wsjtx_log.adi log file yet. The state comes from the grid square, in the log and in the decoded message alike: a square that lies in a single state counts for it; a square several states share counts for the state of the station's US license when that is one of them, and otherwise for none.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;突出顯示 wsjtx_log.adi 日誌檔案中尚未有其州的美國電台的訊息。無論在日誌中還是在解碼訊息中，州都由網格決定：位於單個州內的網格計為該州；由多個州共享的網格，若電台美國牌照所在的州是其中之一，則計為該州，否則不計為任何州。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Check and highlight new US states</source>
+        <translation>突出顯示新美國州</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Highlight messages from US stations whose state is new on the band according to the wsjtx_log.adi log file. The state comes from the grid square and, in a square several states share, from the station's US license, as for new US states.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;突出顯示根據 wsjtx_log.adi 日誌檔案在波段中屬於新州的美國電台的訊息。州由網格決定，在由多個州共享的網格中由電台的美國牌照決定，與新美國州相同。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>New US State</source>
+        <translation>新美國州</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>New US State on Band</source>
+        <translation>新美國州 波段</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>US licenses:</source>
+        <translation>美國牌照：</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Download the latest list of US license states from ce3tsk.com, built from the FCC's amateur license file. In a grid square several states share, a US station counts for the state of its license when that state is one of the square's.</source>
+        <translation>從 ce3tsk.com 下載最新的美國牌照州列表，該列表根據 FCC 業餘無線電牌照檔案產生。在由多個州共享的網格中，若美國電台牌照所在的州是該網格的州之一，則該電台計為其牌照所在的州。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Highlight messages from US stations whose state is new in the mode according to the wsjtx_log.adi log file. The state comes from the grid square and, in a square several states share, from the station's US license, as for new US states.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;突出顯示根據 wsjtx_log.adi 日誌檔案在模式中屬於新州的美國電台的訊息。州由網格決定，在由多個州共享的網格中由電台的美國牌照決定，與新美國州相同。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>

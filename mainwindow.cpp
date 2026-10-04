@@ -1,6 +1,7 @@
 //-------------------------------------------------------- MainWindow
 
 #include "mainwindow.h"
+#include "priorities.h"   /* CE3TSK 2026-10-03 */
 #include <cinttypes>
 #include <limits>
 #include <fftw3.h>
@@ -502,6 +503,11 @@ MainWindow::MainWindow(bool multiple, QSettings * settings, QSharedMemory *shdme
   ui->menuMode->setToolTipsVisible (true);
   ui->menuDXpedition->setToolTipsVisible (true);   // CE3TSK: two tooltips, SuperFox mode's and the Fox verifier's
   m_config.set_jtdxtime (m_jtdxtime);
+  /* CE3TSK 2026-10-04: Settings checks the operator's own call and grid against cty.dat (ownstation.h) - the
+     logbook the windows use, and nothing while cty.dat is not read */
+  m_config.set_country_lookup ([this] (QString const& call) -> QString {
+      return (m_wwDigi ? m_contestLog : m_logBook).countryData ()->loaded () ? dxccOf (call) : QString {};
+    });
   ui->decodedTextBrowser->setConfiguration (&m_config);
   ui->decodedTextBrowser2->setConfiguration (&m_config);
   refreshSpecialOp (true); /* CE3TSK: initial, must not clear DX or halt TX */
@@ -6681,7 +6687,7 @@ void MainWindow::process_Auto()
       grid = m_hisGrid;
       m_status = QsoHistory::NONE;
     } else if ((m_status == QsoHistory::RCQ || m_status == QsoHistory::SCALL || (m_status == QsoHistory::SREPORT && m_skipTx1 && !m_houndMode)) && m_config.answerCQCount() &&
-        ((prio > 4 && prio < 17) || prio < 2 || m_strictdirCQ) && (m_config.nAnswerCQCounter() <= count || replyOtherOverridesCounters ())) {
+        (decode_priority::counterGivesUp (prio) || m_strictdirCQ) && (m_config.nAnswerCQCounter() <= count || replyOtherOverridesCounters ())) {
       clearDX (" cleared, RCQ/SCALL/SREPORT count reached");
       if (replyOtherOverridesCounters ())
           counters2 = false;
@@ -6737,8 +6743,10 @@ void MainWindow::process_Auto()
     /* CE3TSK: newGridUserChoice() not newGrid(): a contest forces grid highlighting on, and
        reading the forced value here would make autoselect behave as if wanted-criteria had
        been set when the operator set none, quietly refusing worked-before stations. */
-    if ((!m_config.newDXCC() && !m_config.newGridUserChoice() && !m_config.newPx() && !m_config.newCall()) || m_answerWorkedB4) time |= 128;
-    if ((!m_config.newDXCC() && !m_config.newGridUserChoice() && !m_config.newPx() && !m_config.newCall()) || m_callWorkedB4) time |= 64;
+    /* CE3TSK 2026-10-03: one answer to "is any new-one tier chosen" (Configuration::anyNewTierChosen) - the new US state
+       counts, and so do the zones, which this copy had left out: a zone-only profile answered worked-before stations */
+    if (!m_config.anyNewTierChosen () || m_answerWorkedB4) time |= 128;
+    if (!m_config.anyNewTierChosen () || m_callWorkedB4) time |= 64;
     else if (m_callHigherNewCall) time |= 256;
     if (m_rprtPriority) time |= 16;
     if (m_maxDistance) time |= 32;
@@ -6749,14 +6757,17 @@ void MainWindow::process_Auto()
       else if(m_status == QsoHistory::NONE) StrDirection = " auto sequence is not started;";
       QString StrPriority = "";
       if (!hisCall.isEmpty ()) {
-        if (prio > 45) StrPriority = " New Grid Field "; /* CE3TSK: WW Digi multiplier, 48/49 (46/47 no longer used since 2026-08-29) */
-        else if (prio > 31) StrPriority = QString {" Contest points %1 "}.arg ((prio - 30) / 2); /* CE3TSK: 32/33 is 1 point, 44/45 is 7 */
-        else if (prio > 27) StrPriority = " New CQZ ";
-        else if (prio > 23) StrPriority = " New ITUZ ";
-        else if (prio > 19) StrPriority = " New DXCC ";
-        else if (prio == 19 ||  prio == 4) StrPriority = " Wanted Call ";
-        else if (prio == 18 ||  prio == 3) StrPriority = " Wanted Prefix ";
-        else if (prio == 17 ||  prio == 2) StrPriority = " Wanted Country ";
+        /* CE3TSK 2026-10-03: by the named levels (priorities.h) */
+        namespace dp = decode_priority;
+        if (prio >= dp::NewField) StrPriority = " New Grid Field "; /* CE3TSK: WW Digi multiplier */
+        else if (prio > dp::ContestPointsBase + 1) StrPriority = QString {" Contest points %1 "}.arg ((prio - dp::ContestPointsBase) / 2);
+        else if (prio >= dp::NewCQZBand) StrPriority = " New CQZ ";
+        else if (prio >= dp::NewITUZBand) StrPriority = " New ITUZ ";
+        else if (prio >= dp::NewDXCCBand) StrPriority = " New DXCC ";
+        else if (prio == dp::WantedCall ||  prio == dp::WantedCallOld) StrPriority = " Wanted Call ";
+        else if (prio == dp::WantedPrefix ||  prio == dp::WantedPrefixOld) StrPriority = " Wanted Prefix ";
+        else if (prio == dp::WantedCountry ||  prio == dp::WantedCountryOld) StrPriority = " Wanted Country ";
+        else if (prio >= dp::NewStateBand) StrPriority = " New US State ";
         if (m_status > QsoHistory::RREPORT) StrPriority += " Resume interrupted QSO ";
       }
       writeToALLTXT("hisCall:" + hisCall + "mode:" + mode + StrPriority + " time:" + QString::number(time) +  " autoselect: " + StrDirection + " status: " + StrStatus[m_status] + " count: " + QString::number(count)+ " prio: " + QString::number(prio));
@@ -7034,7 +7045,7 @@ void MainWindow::readFromStdout()                             //readFromStdout
       return;
     } else {
       /* CE3TSK: WW Digi - a message ending in a signal report is not contest traffic (the
-         exchange is the grid) and is as likely a false decode as not; dropped here, before
+         exchange is the grid) and is as likely a phantom decode as not; dropped here, before
          ALL.TXT, both windows, the UDP clients and the sequencer (contestreport.h). */
       if(m_wwDigi && contest_report_message (QString::fromUtf8 (t))) {   /* UTF-8: the decoder's markers include the multibyte ┼ */
         if(m_config.write_decoded_debug()) writeToALLTXT("contest: report message rejected " + QString::fromUtf8 (t).trimmed());
@@ -7075,15 +7086,15 @@ void MainWindow::readFromStdout()                             //readFromStdout
         } else continue;
       }
       DecodedText decodedtext {QString::fromUtf8 (t.constData ()).remove (QRegularExpression {"\r|\n"}),this};
-      /* CE3TSK 2026-09-30: a likely false decode (falsedecodes.h) is judged once, here, before
+      /* CE3TSK 2026-09-30: a likely phantom decode (phantomdecodes.h) is judged once, here, before
          ALL.TXT - the file, both windows, the UDP clients and the sequencer all read this verdict.
          Debug lines and free text (',' and '.', FT8, FT4 and FT2 alike) are never judged. It reads
          the message field as printed, not message () - which drops brackets and cuts long lines. A
          hint or a-priori decode, and any decode of the TX background, is no second hearing. */
       if (!decodedtext.isDebug () && !decodedtext.isNonStd1 () && !decodedtext.isNonStd2 ())
-        decodedtext.setVerdict (m_falseDecodes.judge (false_decodes::messageField (decodedtext.string ()), m_freqNominal
+        decodedtext.setVerdict (m_phantomDecodes.judge (phantom_decodes::messageField (decodedtext.string ()), m_freqNominal
                                                       , decodedtext.timeInSeconds (), decodedtext.isHint () || decodedtext.isPipeline ()
-                                                      , falseDecodeSettings (), [this] (QString const& call) {return dxccOf (call);}
+                                                      , phantomDecodeSettings (), [this] (QString const& call) {return dxccOf (call);}
                                                       , decodedtext.snr ()));
       if(t.indexOf(m_baseCall.toLatin1()) >= 0 || m_config.write_decoded() || m_config.write_decoded_debug()) {
         QFile f {m_dataDir.absoluteFilePath (m_jtdxtime->currentDateTimeUtc2().toString("yyyyMM_")+"ALL.TXT")};
@@ -7101,11 +7112,11 @@ void MainWindow::readFromStdout()                             //readFromStdout
 
             m_RxLog=0;
           }
-          /* CE3TSK 2026-09-30: a likely false decode ends in its tag, "lc:grid CE" (falsedecodes.h);
+          /* CE3TSK 2026-09-30: a likely phantom decode ends in its tag, "lc:grid CE" (phantomdecodes.h);
              every other line is written exactly as before */
           if (decodedtext.verdict ().marked ())
             out << m_jtdxtime->currentDateTimeUtc2().toString("yyyyMMdd_")
-                << false_decodes::tagged (QString::fromUtf8 (t.trimmed ()), decodedtext.verdict ()) <<
+                << phantom_decodes::tagged (QString::fromUtf8 (t.trimmed ()), decodedtext.verdict ()) <<
 #if QT_VERSION < QT_VERSION_CHECK(5, 15, 0)
                  endl;
 #else
@@ -7198,7 +7209,7 @@ void MainWindow::readFromStdout()                             //readFromStdout
             m_blankLine = false;
           }
  
-       /* CE3TSK 2026-09-30: nor for a likely false decode (falsedecodes.h) - the next one rings instead */
+       /* CE3TSK 2026-09-30: nor for a likely phantom decode (phantomdecodes.h) - the next one rings instead */
        if (!m_notified && m_config.beepOnFirstMsg () && !m_diskData && !decodedtext.verdict ().marked ()) {
           if (m_windowPopup) {
 			 this->showNormal();
@@ -7356,7 +7367,7 @@ void MainWindow::readFromStdout()                             //readFromStdout
         int snr = decodedtext.snr();
         Frequency frequency = m_freqNominal + audioFrequency;
         pskSetLocal ();
-        /* CE3TSK 2026-09-30: a likely false decode (falsedecodes.h) is not spotted, as a hint or an error
+        /* CE3TSK 2026-09-30: a likely phantom decode (phantomdecodes.h) is not spotted, as a hint or an error
            decode is not - the spot would put a call on the map where the message itself is in doubt. After
            the second hearing a grid-only mark is trusted (Verdict::lowConfidence). Nor is a sender whose
            country cty.dat does not know - an unallocated prefix; /MM and /AM excepted (unknownCountry). */
@@ -8580,7 +8591,7 @@ void MainWindow::processMessage(QString const& messages, int position, bool alt,
   int i9=m_QSOText.indexOf(decodedtext.string());
   if (i9<0 and !decodedtext.isTX() and m_decodedText2) {
     DecodedText decodedtext {t2disp,this};
-    /* CE3TSK 2026-09-30: the copy keeps its marks (falsedecodes.h) - read back as the replay reads it */
+    /* CE3TSK 2026-09-30: the copy keeps its marks (phantomdecodes.h) - read back as the replay reads it */
     decodedtext.setVerdict (windowVerdict (t2disp));
 	if (!t2.contains (m_baseCall) || !m_showMyCallMsgRxWindow) {
 		ui->decodedTextBrowser2->displayDecodedText(&decodedtext
@@ -11365,7 +11376,7 @@ void MainWindow::replayDecodes ()
                  at or after column 35, which took a long message's last word - often its grid - with it.
                  The window's own marker says whether it was a hint decode ('*', the LoTW hint's degree
                  sign, the cross); and the line is looked up again (recall) - reported as it was live, but
-                 no second hearing (falsedecodes.h). No DecodedText is built: a full window is 10 000 lines. */
+                 no second hearing (phantomdecodes.h). No DecodedText is built: a full window is 10 000 lines. */
               int const eom = DisplayText::lineMarkerColumn (message);
               QString const line = message.left (eom);
               postDecode (false, line
@@ -11387,8 +11398,8 @@ void MainWindow::postDecode (bool is_new, QString const& message, bool lowConfid
          47, or 49 when the time carries seconds. This used to test column 47 (23 + 24) whatever the
          time, so for FT8, FT4 and FT2, whose time always has seconds, it met the padding of the
          message field and never flagged a hint decode; the TX background's hint cross was never
-         asked at all. lowConfidence: a likely false decode (falsedecodes.h). */
-      bool low_confidence = DecodedText::isHintMarker (decode.mid (false_decodes::markerColumn (decode), 1)) || lowConfidence;
+         asked at all. lowConfidence: a likely phantom decode (phantomdecodes.h). */
+      bool low_confidence = DecodedText::isHintMarker (decode.mid (phantom_decodes::markerColumn (decode), 1)) || lowConfidence;
       m_messageClient->decode (is_new
                                , QTime::fromString (parts[0], has_seconds ? "hhmmss" : "hhmm")
                                , parts[1].toInt ()
@@ -11404,18 +11415,18 @@ void MainWindow::postDecode (bool is_new, QString const& message, bool lowConfid
   }
 }
 
-/* CE3TSK 2026-09-30: the six settings of Settings > Filters > False decodes (falsedecodes.h), and our base call -
+/* CE3TSK 2026-09-30: the six settings of Settings > Filters > Phantom decodes (phantomdecodes.h), and our base call -
    the both-/P rule never marks a message with it. The where? mark only once cty.dat has been read: an empty
    table makes every call "where?", and every decode would be marked (as countryUnknown below). */
-false_decodes::Settings MainWindow::falseDecodeSettings ()
+phantom_decodes::Settings MainWindow::phantomDecodeSettings ()
 {
-  false_decodes::Settings s;
-  s.gridMark = m_config.falseDecodeGridMark ();
-  s.gridNoAnswer = m_config.falseDecodeGridNoAnswer ();
-  s.roverMark = m_config.falseDecodeRoverMark ();
-  s.roverNoAnswer = m_config.falseDecodeRoverNoAnswer ();
-  s.portableMark = m_config.falseDecodePortableMark ();
-  s.whereMark = m_config.falseDecodeWhereMark () && (m_wwDigi ? m_contestLog : m_logBook).countryData ()->loaded ();
+  phantom_decodes::Settings s;
+  s.gridMark = m_config.phantomDecodeGridMark ();
+  s.gridNoAnswer = m_config.phantomDecodeGridNoAnswer ();
+  s.roverMark = m_config.phantomDecodeRoverMark ();
+  s.roverNoAnswer = m_config.phantomDecodeRoverNoAnswer ();
+  s.portableMark = m_config.phantomDecodePortableMark ();
+  s.whereMark = m_config.phantomDecodeWhereMark () && (m_wwDigi ? m_contestLog : m_logBook).countryData ()->loaded ();
   s.ownCall = m_baseCall;
   return s;
 }
@@ -11434,29 +11445,29 @@ QString MainWindow::dxccOf (QString const& call)
    A window keeps no free-text marker (',' and '.' - the live path never judges free text), so a MARKED line is
    packed to find out (DecodedText::isStandardMessage: false only for free text) - built only then, since a
    window holds 10 000 lines. */
-false_decodes::Verdict MainWindow::windowVerdict (QString const& windowLine)
+phantom_decodes::Verdict MainWindow::windowVerdict (QString const& windowLine)
 {
   // the line as the window shows it: the message, then the window's marker and the country - cut at the
   // marker; the SNR, its second field, serves the portable rule
   int const eom = DisplayText::lineMarkerColumn (windowLine);
   QString const line = windowLine.left (eom);
   int const snr = line.section (' ', 1, 1, QString::SectionSkipEmpty).toInt ();
-  auto const v = m_falseDecodes.recall (false_decodes::messageField (line), m_freqNominal, falseDecodeSettings ()
+  auto const v = m_phantomDecodes.recall (phantom_decodes::messageField (line), m_freqNominal, phantomDecodeSettings ()
                                         , [this] (QString const& call) {return dxccOf (call);}, snr);
   if (v.marked ())
     {
       DecodedText d {line};
-      if (!d.isStandardMessage ()) return false_decodes::Verdict {};
+      if (!d.isStandardMessage ()) return phantom_decodes::Verdict {};
     }
   return v;
 }
 
-/* CE3TSK 2026-09-30: a sender cty.dat cannot place (false_decodes::unknownCountry) - but only once cty.dat has been
+/* CE3TSK 2026-09-30: a sender cty.dat cannot place (phantom_decodes::unknownCountry) - but only once cty.dat has been
    read: an empty table would make every call unknown, and not one spot would go out */
 bool MainWindow::countryUnknown (QString const& call)
 {
   return (m_wwDigi ? m_contestLog : m_logBook).countryData ()->loaded ()
-    && false_decodes::unknownCountry (call, [this] (QString const& c) {return dxccOf (c);});
+    && phantom_decodes::unknownCountry (call, [this] (QString const& c) {return dxccOf (c);});
 }
 
 void MainWindow::postWSPRDecode (bool is_new, QStringList parts)

@@ -574,7 +574,7 @@ subroutine unpack77(c77,nrx,msg,unpk77_success,nthr)
      else
         irpt=igrid4-MAXGRID4
 ! CE3TSK: a transmitter encodes reports -50..+49 only (irpt 5..105, see pack77 below); a larger
-! value is a false decode - random bits behind an a-priori callsign passing the CRC - that
+! value is a phantom decode - random bits behind an a-priori callsign passing the CRC - that
 ! used to print as "CE3TSK JW1GPY/R 216"
         if(irpt.gt.105) unpk77_success=.false.
         if(irpt.eq.1) msg=trim(call_1)//' '//trim(call_2)

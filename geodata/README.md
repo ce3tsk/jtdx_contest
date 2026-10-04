@@ -1,146 +1,76 @@
 # geodata - geography compiled into the program
 
-Two lookup tables and the small API over them. Nothing here is read from disk at run time: the data is in
-the generated `.cpp` files and linked in.
+Two lookup tables, linked into the program from generated `.cpp` files, and the generator of the US licence
+state file. This page says how to regenerate them.
 
 | file | what |
 |---|---|
-| `geodata.h` / `.cpp` | the API, hand-written: pack a grid square, its neighbours, does this entity occupy it, which US states does it cover |
-| `dxcc_grids_data.h` / `.cpp` | **generated** - 346 DXCC entities, 15 966 entity-square pairs (2026-10-01); 31 KB of squares, 44 KB compiled |
-| `grid_states_data.h` / `.cpp` | **generated** - 722 grid squares, 1 004 square-state entries, 11 KB compiled |
-| `geodata_selftest.cpp` | a standalone self-test, not part of the program |
-| `geodata_dump.cpp` | prints every entity and square as the compiled tables see them, for the checker |
-| `dxcc_grids.json`, `grid_states.json` | the source tables the generator reads |
-| `make_geodata_headers.py`, `geodata_check.py` | json -> C++, and the checker |
-| `make_dxcc_grids.py`, `make_grid_states.py`, `extract_admin1_subset.py`, `cty.py` | geography -> json; they need the source data, see below |
+| `geodata.h` / `.cpp` | the API over the tables, hand-written |
+| `dxcc_grids_data.h` / `.cpp` | **generated** - the grid squares each DXCC entity occupies |
+| `grid_states_data.h` / `.cpp` | **generated** - the US state or states of each grid square |
+| `dxcc_grids.json`, `grid_states.json` | the source tables the C++ is generated from |
+| `make_geodata_headers.py` | json -> C++ |
+| `geodata_check.py`, `geodata_selftest.cpp`, `geodata_dump.cpp` | the checker and the two programs it compiles |
+| `make_dxcc_grids.py`, `extract_admin1_subset.py`, `cty.py` | geography -> `dxcc_grids.json` |
+| `make_grid_states.py` | geography -> `grid_states.json` |
+| `make_license_states.py` | the FCC licence file -> `../us-license-states.txt` |
 
-**The generated files are built, not edited.** There are two levels, and every script for both is here:
+The generated files are built, never edited by hand.
 
-    geography -> json        make_dxcc_grids.py, make_grid_states.py, extract_admin1_subset.py, cty.py
-    json -> C++              make_geodata_headers.py, then geodata_check.py to verify
+## The C++ from the json
 
-**Level 2 runs here as it stands** - the json is in this folder, so the C++ can be rebuilt and checked from
-the public tree alone:
+The json is in this folder, so this step needs nothing else:
 
-    cd geodata
-    python3 make_geodata_headers.py      # rewrites the four *_data.{h,cpp} files from the json here
+    python3 make_geodata_headers.py      # rewrites the four *_data.{h,cpp} files from the json
     python3 geodata_check.py             # compiles them and compares every row with the json
 
-**Level 1 needs the geography**, which is not shipped here (about 9 MB): `cty.dat`, the US Census state
-boundaries and centres of population, and two Natural Earth layers. Each script says exactly which file it
-wants and where to fetch it if you run it without one. Drop them in this folder - or run the scripts from
-the work tree, where they already sit - and:
+Run the checker after every regeneration: the build does not compare the `.cpp` files with the json.
 
-    python3 make_dxcc_grids.py           # 346 entities -> the squares they occupy
-    python3 make_grid_states.py          # grid square -> US state(s), by people and by area
+## The json from the geography
 
-Run from the work tree instead (`python3 tools/make_dxcc_grids.py`) and they read and write the work
-tree's `geodata/` - **one directory, not both trees**: level 1 writes the json where its sources are, and
-copying it into the two program trees is a separate step. Level 2 is the one that writes both trees, which
-is why `make_geodata_headers.py` run from `tools/` updates `jtdx_contest/geodata/` and `src/geodata/` at
-once. The json files here are copies of the work tree's, which is where they are built from cty.dat and the
-Natural Earth and Census sources (`geodata/README.md` there).
+The source data is not shipped here: download the files listed under Data sources below and put them in
+this folder. Each script names the file it wants if it is missing.
 
-The tables themselves - where the geography comes from, how each entity's squares were derived and how far
-each row can be trusted - are documented in the work tree's `geodata/README.md`. Every row carries a
-`source` (`poly`, `admin1`, `islands`, `point`, `split`, `sovereign`); a `point` row is a 120 km disk around
-a coordinate, not a border - and some rows also carry land added by hand, which the source tag does not show:
-`make_dxcc_grids.py` beside this file lists it (`ADD_LAND`, `ADD_POINTS`, and the regions joined in `MULTI`; KH6,
-tagged `split`, carries the Northwestern Hawaiian Islands that way). A consumer that wants strictness should say so.
+| table | script | input |
+|---|---|---|
+| `dxcc_grids.json` | `make_dxcc_grids.py` | `cty.dat`; Natural Earth admin-0 map units and minor islands; the US Census state boundaries (K, KL and KH6 are cut from them); `dxcc_admin1_subset.json`, the admin-1 subset below |
+| `dxcc_admin1_subset.json` | `extract_admin1_subset.py` | Natural Earth admin-1 states and provinces |
+| `grid_states.json` | `make_grid_states.py` | US Census state boundaries and centres of population |
 
-## Packing
+    python3 extract_admin1_subset.py path/to/ne_10m_admin_1_states_provinces
+    python3 make_dxcc_grids.py
+    python3 make_grid_states.py
 
-A 4-character Maidenhead square is one of 18 x 18 x 10 x 10 = 32 400 values, so it fits a `uint16_t`:
+Then generate the C++ and run the checker as above. The scripts need `pyshp` and `shapely`.
 
-    code = ((fieldLon * 18 + fieldLat) * 10 + squareLon) * 10 + squareLat
+The shipped `dxcc_grids.json` was built from the cty.dat of its build date (the json's `version`). A fresh
+download gives a slightly different table: AD1C revises cty.dat several times a year. The checker cannot notice
+the difference - it compares the C++ with the json, not the json with cty.dat.
 
-Each entity's squares are sorted, so membership is a binary search - at most 3 327 values (Antarctica).
-Everything is read-only and safe to call from any thread.
+## The US licence state file
 
-## Four rules the API keeps
+`../us-license-states.txt` - the state of each US amateur licence, bundled with the program and offered for
+download under Settings > General > Data files - is built from the FCC's weekly Universal Licensing System
+file of the Amateur Radio Service, https://data.fcc.gov/download/pub/uls/complete/l_amat.zip (about 200 MB,
+renewed every Sunday):
 
-- **Never judge what it cannot judge.** `gridFitsEntity` returns true for an unknown entity, an
-  unparsable grid, **and an entity the table holds no squares for**. The caller is asking "is this
-  implausible?", and silence is not evidence.
-- **One administration, several entities.** `gridFitsEntity` accepts any square of the entity's group
-  (`US` covers K, KL, KH6, KP4 ...; `RU` covers European and Asiatic Russia and Kaliningrad) unless the
-  caller passes `sameAdmin = false`. A KL7 holder living in Ohio is not an impossible station. Measured:
-  it halves the real decodes the test would reject and costs 2.8 % of its detections, all of which the
-  other conditions catch - see the work tree's `geodata/README.md`.
-- **Upper case, as the air is.** `packGrid` takes `FF46`, not `ff46`; a rejected grid reads as
-  "no answer", which for `statesOfGrid` and `gridPopulation` is indistinguishable from "nothing here".
-- **Tolerance is asked for, not assumed.** By default the eight neighbouring squares are accepted too,
-  because a square is only 110-220 km wide and operators send neighbouring locators; pass `false` for the
-  strict test.
+    python3 make_license_states.py path/to/l_amat.zip     # writes ../us-license-states.txt
 
-## In the build, not yet called
+It keeps every active licence and those that ended within the two years before the file, takes the state of
+the licensee's mailing address, counts Washington DC as Maryland, and keeps only the states that share a grid
+square with another state (read from `grid_states.json`). The run stops if the FCC file's format has
+changed.
 
-`geodata.cpp`, `dxcc_grids_data.cpp` and `grid_states_data.cpp` are listed in `CMakeLists.txt` and compile
-with the program (2026-09-24). Nothing calls the API yet, so with `-Wl,--gc-sections` the linker drops all
-of it again and the binary does not grow - the wiring is in place for the feature that will use it, and the
-`version` / `content` stamps are there for **Help - About**. The external-file override is still to come;
-the work tree's `geodata/README.md` describes it under "How this reaches the program".
+## Data sources
 
-`geodata_selftest.cpp` and `geodata_dump.cpp` are deliberately **not** in `CMakeLists.txt` - they have
-their own `main()`. `geodata_check.py` compiles both with `-Wall -Wextra -Werror` on every run, so they
-cannot rot unnoticed.
+| data | file | link | rights |
+|---|---|---|---|
+| DXCC entities and prefixes | `cty.dat` (the big version), by Jim Reisert AD1C | http://www.country-files.com/bigcty/cty.dat | MIT licence |
+| country borders | Natural Earth 1:10m admin-0 map units | https://naciscdn.org/naturalearth/10m/cultural/ne_10m_admin_0_map_units.zip | public domain |
+| small islands | Natural Earth 1:10m minor islands | https://naciscdn.org/naturalearth/10m/physical/ne_10m_minor_islands.zip | public domain |
+| provinces that are entities of their own | Natural Earth 1:10m admin-1 states and provinces | https://naciscdn.org/naturalearth/10m/cultural/ne_10m_admin_1_states_provinces.zip | public domain |
+| US state boundaries (both tables) | US Census Bureau cartographic boundaries, 1:20m, 2023 | https://www2.census.gov/geo/tiger/GENZ2023/shp/cb_2023_us_state_20m.zip | US Government, public domain |
+| US population | US Census Bureau 2020 centres of population by tract | https://www2.census.gov/geo/docs/reference/cenpop2020/tract/CenPop2020_Mean_TR.txt | US Government, public domain |
+| US amateur licences | FCC Universal Licensing System, Amateur Radio Service, weekly complete file | https://data.fcc.gov/download/pub/uls/complete/l_amat.zip | US Government public record |
 
-**One thing the build does not check**: nothing ties the generated `.cpp` to the `.json` beside it. Edit
-the json and the next build happily links the old table; only `geodata_check.py` notices, and no test runs
-as part of a build in this project. Regenerating and running the checker after touching a table is a step
-a person has to take.
-
-## Review, 2026-09-24
-
-This code was reviewed independently the day it was written. **The hand-written C++ came back clean**:
-exhaustive ASan+UBSan sweeps over all 32 400 valid and 33 136 invalid codes found nothing, `-Wconversion
--Wsign-conversion -Wshadow -Wformat=2 -Wcast-qual` are silent, `-pedantic-errors` C++11 passes, every array
-matches its declared count (checked from the object files, not by counting commas), and the generator is
-byte-stable. Four things were fixed:
-
-1. **The generator did not validate the states path** the way it validates the dxcc one. A bad square key
-   became `-1` and a share of 1.004 became `256` in `uint8_t` arrays - a narrowing error at best, and with
-   `-Wno-narrowing` a silently corrupted table whose binary search then returns wrong answers. It now
-   refuses both.
-2. **`gridFitsEntity` judged an entity it holds no squares for.** Unreachable today - the builder refuses
-   to emit an empty entity - but it would have turned a new entity into "this station is impossible",
-   which is the opposite of the rule.
-3. **`near` is a macro in the Windows SDK** (`minwindef.h`). The local array is now `around`.
-4. **The header promised more than the code did**: `unpackGrid` writes one byte for a code no square has,
-   `packGrid` is upper-case only, and `statesOfGrid` returning 0 means "no answer", not "no states". The
-   comments now say so. `entityIndex` also became a binary search, the generator having been taught to
-   guarantee the prefix order it needs.
-
-## Second review, 2026-09-24 (after the build wiring)
-
-A second independent pass went over the wiring and the API again. It confirmed the data: `prefix[]`
-strictly ascending under `strcmp`, every `offset[]` monotone and ending exactly at its count, squares
-ascending within each entity, every index inside its array, no mutable state anywhere, and both
-`geodata_selftest.cpp` and `geodata_dump.cpp` still compiling clean under `-Wall -Wextra -Werror`. **One
-real defect came out of it, and it mattered:**
-
-**`entityIndex` was case-sensitive, and the program's own resolver upper-cases what it returns.** cty.dat
-spells twenty-nine primary prefixes with a lower-case suffix - `3Y/b` Bouvet, `3Y/p` Peter I, `VP8/o` South
-Orkney, `SV/a` Mount Athos, `FT/x` Kerguelen, `JD/m` Minami Torishima and the rest - while
-`CountryDat::_extractMasterPrefix` ends in `toUpper()`. Fed from there, `entityIndex("VP8/O")` returned
--1, and since "unknown entity" means **never judge**, the plausibility test would have been silently off
-for exactly the rare entities a doubtful decode most often claims. The exact binary search is still the
-fast path; when it misses, a case-insensitive scan of the 346 prefixes follows (no two differ by case
-alone, so a hit is unambiguous). `geodata_check.py` now tests both spellings of five prefixes, because
-nothing in the old test set used a lower-case one.
-
-A fourth round then reviewed those fixes, and found that `geodata_check.py` had been taking the self-test
-on trust: it ignored the exit code and asserted nothing about which lines came back, so a self-test that
-crashed, was truncated, or simply lost the new block read as "all match". It now checks the exit code and
-the whole inventory of expected lines, and each `case` line carries the prefix that was actually matched -
-two spellings agreeing on the *wrong* entity would have passed before. The generator refuses a table in
-which two prefixes differ by case alone, since that is what makes the fallback unambiguous, and the
-self-test covers the two shapes a sloppy comparison gets wrong: a prefix that is a strict prefix of another
-(`K`, `KH6`, `KL`) and one starting with punctuation (`*GM/s`).
-
-Three documentation faults were fixed with it: this file still said the component was not in the build;
-the generated banners and the header pointed at `tools/` and `test/`, which exist only in the author's work
-tree and not in the tree these files ship in; and the static-footprint figures counted the square
-arrays only. Measured from the object files, the two tables together are **55 KB** - 44 KB of entities and
-squares, 11 KB of grid-square-to-state - and the earlier 31 KB / 7 KB / 4.4 KB each counted one array of
-several.
+Each generated table carries a note with its source.

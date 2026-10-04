@@ -289,11 +289,6 @@ Indeling:
         <translation>JTDX lettertype voor gedecodeerde tekst</translation>
     </message>
     <message>
-        <location filename="../Configuration.cpp" line="4902"/>
-        <source>Enter Grid error: 4/6/8/10 char grid will be accepted</source>
-        <translation>Fout in locator: 4/6/8/10 tekens worden geaccepteerd</translation>
-    </message>
-    <message>
         <location filename="../Configuration.cpp" line="5434"/>
         <source>Load Working Frequencies</source>
         <translation>Werkfrequenties laden</translation>
@@ -512,6 +507,46 @@ Indeling:
         <location filename="../Configuration.cpp"/>
         <source>&amp;Unmark default</source>
         <translation>Standaard&amp;markering verwijderen</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>The downloaded file is not a list of US license states.</source>
+        <translation>Het gedownloade bestand is geen lijst met staten van Amerikaanse licenties.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>No DXCC country in cty.dat has the prefix of %1.</source>
+        <translation>Geen DXCC-land in cty.dat heeft het prefix van %1.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>A grid has 4, 6, 8, 10 or 12 characters, as IO91, IO91wm, IO91wm99, IO91wm99aa or IO91wm99aa00.</source>
+        <translation>Een locator heeft 4, 6, 8, 10 of 12 tekens, zoals IO91, IO91wm, IO91wm99, IO91wm99aa of IO91wm99aa00.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Your grid %1 does not lie in %2, the DXCC country of %3.</source>
+        <translation>Uw locator %1 ligt niet in %2, het DXCC-land van %3.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Check your call and grid</source>
+        <translation>Controleer uw roepnaam en locator</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Distances, PSK Reporter spots and the WW Digi exchange are worked out from them.</source>
+        <translation>Afstanden, PSK Reporter-spots en de WW Digi-uitwisseling worden daaruit berekend.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>&amp;Keep it</source>
+        <translation>&amp;Behouden</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>&amp;Correct it</source>
+        <translation>&amp;Corrigeren</translation>
     </message>
 </context>
 <context>
@@ -1438,7 +1473,7 @@ Indeling:
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="219"/>
-        <source>U.S.A.</source>
+        <source>USA</source>
         <translation>VS</translation>
     </message>
     <message>
@@ -9694,8 +9729,8 @@ AA1AAA,BB1BB,CC1CC&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
         <location filename="../Configuration.ui" line="6858"/>
         <location filename="../Configuration.ui" line="6871"/>
         <location filename="../Configuration.ui" line="7029"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This DT window being used only for RX frequency CALL3 data based Hint decoders focused on CQ and &apos;mycall hiscall hisgrid&apos; messages. Higher values may increase number of the false decodes.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dit DT-venster geldt alleen voor de op CALL3 gebaseerde hint-decoders op de Rx-frequentie, gericht op CQ- en 'mycall hiscall hisgrid'-berichten. Hogere waarden kunnen meer valse decodes opleveren.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This DT window being used only for RX frequency CALL3 data based Hint decoders focused on CQ and 'mycall hiscall hisgrid' messages. Higher values may increase number of the phantom decodes.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dit DT-venster geldt alleen voor de op CALL3 gebaseerde hint-decoders op de Rx-frequentie, gericht op CQ- en 'mycall hiscall hisgrid'-berichten. Hogere waarden kunnen meer fantoomdecoderingen opleveren.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="6861"/>
@@ -9887,8 +9922,8 @@ wijzigingen aan de geluidskaart</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
-        <source>False decodes</source>
-        <translation>Valse decoderingen</translation>
+        <source>Phantom decodes</source>
+        <translation>Fantoomdecoderingen</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
@@ -9897,8 +9932,8 @@ wijzigingen aan de geluidskaart</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
-        <source>The automatic sequencer does not pick such a decode on its own; a double click still answers it. A station heard with the same doubtful grid in two different periods is most likely operating away from home, and is answered again - false decodes do not repeat.</source>
-        <translation>De automatische volgorde (AutoSeq) kiest zo'n decodering niet uit zichzelf; met een dubbelklik beantwoordt u haar toch. Een station dat in twee verschillende perioden met dezelfde twijfelachtige locator wordt gehoord, werkt vrijwel zeker van buiten zijn thuisland en wordt weer beantwoord - valse decoderingen herhalen zich niet.</translation>
+        <source>The automatic sequencer does not pick such a decode on its own; a double click still answers it. A station heard with the same doubtful grid in two different periods is most likely operating away from home, and is answered again - phantom decodes do not repeat.</source>
+        <translation>De automatische volgorde (AutoSeq) kiest zo'n decodering niet uit zichzelf; met een dubbelklik beantwoordt u haar toch. Een station dat in twee verschillende perioden met dezelfde twijfelachtige locator wordt gehoord, werkt vrijwel zeker van buiten zijn thuisland en wordt weer beantwoord - fantoomdecoderingen herhalen zich niet.</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
@@ -9907,8 +9942,8 @@ wijzigingen aan de geluidskaart</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
-        <source>Below 30 MHz a call signing /R (rover) is almost always a false decode: /R is a single bit of the message. The decode is kept, with the /R call underlined in red. Its ALL.TXT line ends with lc:rover, and it is sent to UDP clients as a low-confidence decode.</source>
-        <translation>Onder 30 MHz is een roepnaam met /R (rover) bijna altijd een valse decodering: /R is maar één bit van het bericht. De decodering blijft staan, met de /R-roepnaam rood onderstreept. De regel in ALL.TXT eindigt op lc:rover, en de decodering gaat naar UDP-clients als decodering met lage betrouwbaarheid.</translation>
+        <source>Below 30 MHz a call signing /R (rover) is almost always a phantom decode: /R is a single bit of the message. The decode is kept, with the /R call underlined in red. Its ALL.TXT line ends with lc:rover, and it is sent to UDP clients as a low-confidence decode.</source>
+        <translation>Onder 30 MHz is een roepnaam met /R (rover) bijna altijd een fantoomdecodering: /R is maar één bit van het bericht. De decodering blijft staan, met de /R-roepnaam rood onderstreept. De regel in ALL.TXT eindigt op lc:rover, en de decodering gaat naar UDP-clients als decodering met lage betrouwbaarheid.</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
@@ -9932,13 +9967,13 @@ wijzigingen aan de geluidskaart</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
-        <source>Below 30 MHz, a decode in which both calls sign /P (portable) is almost always a false decode when it is weak (-20 dB or below): /P is a single bit per call of the message type portable calls use, while genuine park-to-park contacts are stronger. The decode is kept, with the /P calls underlined in red, and is never answered automatically - a double click still answers it. Its ALL.TXT line ends with lc:portable, and it is sent to UDP clients as a low-confidence decode.</source>
-        <translation>Onder 30 MHz is een decodering waarin beide roepnamen /P (portabel) dragen bijna altijd een valse decodering als ze zwak is (-20 dB of lager): /P is maar één bit per roepnaam in het berichttype dat portabele roepnamen gebruiken, terwijl echte park-naar-park-verbindingen sterker zijn. De decodering blijft staan, met de /P-roepnamen rood onderstreept, en wordt nooit automatisch beantwoord - met een dubbelklik beantwoordt u haar toch. De regel in ALL.TXT eindigt op lc:portable, en de decodering gaat naar UDP-clients als decodering met lage betrouwbaarheid.</translation>
+        <source>Below 30 MHz, a decode in which both calls sign /P (portable) is almost always a phantom decode when it is weak (-20 dB or below): /P is a single bit per call of the message type portable calls use, while genuine park-to-park contacts are stronger. The decode is kept, with the /P calls underlined in red, and is never answered automatically - a double click still answers it. Its ALL.TXT line ends with lc:portable, and it is sent to UDP clients as a low-confidence decode.</source>
+        <translation>Onder 30 MHz is een decodering waarin beide roepnamen /P (portabel) dragen bijna altijd een fantoomdecodering als ze zwak is (-20 dB of lager): /P is maar één bit per roepnaam in het berichttype dat portabele roepnamen gebruiken, terwijl echte park-naar-park-verbindingen sterker zijn. De decodering blijft staan, met de /P-roepnamen rood onderstreept, en wordt nooit automatisch beantwoord - met een dubbelklik beantwoordt u haar toch. De regel in ALL.TXT eindigt op lc:portable, en de decodering gaat naar UDP-clients als decodering met lage betrouwbaarheid.</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
-        <source>A call whose prefix belongs to no country in cty.dat - shown as where? in the country column - is most likely a false decode, on any band. The decode is kept, with the call and where? underlined in red, and is never answered automatically - a double click still answers it. Its ALL.TXT line ends with lc:where, and it is sent to UDP clients as a low-confidence decode. Maritime and aeronautical mobile calls (/MM, /AM) have no country and are never marked.</source>
-        <translation>Een roepnaam waarvan het prefix in cty.dat bij geen enkel land hoort - in de landkolom getoond als waar? - is hoogstwaarschijnlijk een valse decodering, op elke band. De decodering blijft staan, met de roepnaam en waar? rood onderstreept, en wordt nooit automatisch beantwoord - met een dubbelklik beantwoordt u haar toch. De regel in ALL.TXT eindigt op lc:where, en de decodering gaat naar UDP-clients als decodering met lage betrouwbaarheid. Maritiem en aeronautisch mobiele roepnamen (/MM, /AM) hebben geen land en worden nooit gemarkeerd.</translation>
+        <source>A call whose prefix belongs to no country in cty.dat - shown as where? in the country column - is most likely a phantom decode, on any band. The decode is kept, with the call and where? underlined in red, and is never answered automatically - a double click still answers it. Its ALL.TXT line ends with lc:where, and it is sent to UDP clients as a low-confidence decode. Maritime and aeronautical mobile calls (/MM, /AM) have no country and are never marked.</source>
+        <translation>Een roepnaam waarvan het prefix in cty.dat bij geen enkel land hoort - in de landkolom getoond als waar? - is hoogstwaarschijnlijk een fantoomdecodering, op elke band. De decodering blijft staan, met de roepnaam en waar? rood onderstreept, en wordt nooit automatisch beantwoord - met een dubbelklik beantwoordt u haar toch. De regel in ALL.TXT eindigt op lc:where, en de decodering gaat naar UDP-clients als decodering met lage betrouwbaarheid. Maritiem en aeronautisch mobiele roepnamen (/MM, /AM) hebben geen land en worden nooit gemarkeerd.</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
@@ -9947,13 +9982,53 @@ wijzigingen aan de geluidskaart</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
-        <source>Append the US state of a US station's grid square to its DXCC name or prefix, as in U.S.A.-CA. A square shared by several states names them all, the one with the most people first: U.S.A.-NY/MA.</source>
-        <translation>Voegt aan de DXCC-naam of het prefix van een Amerikaans station de staat toe waarin zijn locator ligt, bijvoorbeeld U.S.A.-CA. Ligt de locator in meerdere staten, dan worden ze allemaal genoemd, de staat met de meeste inwoners eerst: U.S.A.-NY/MA.</translation>
+        <source>Append the US state of a US station's grid square to its DXCC name or prefix, as in USA, CA. A square shared by several states names them all, the one with the most people first: USA, NY/MA - or only the state of the station's US license, when that is one of them: USA, MA.</source>
+        <translation>Voegt aan de DXCC-naam of het prefix van een Amerikaans station de staat toe waarin zijn locator ligt, bijvoorbeeld USA, CA. Ligt de locator in meerdere staten, dan worden ze allemaal genoemd, de staat met de meeste inwoners eerst: USA, NY/MA - of alleen de staat van de Amerikaanse licentie van het station, als die er een van is: USA, MA.</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
         <source>Sh&amp;ow US states</source>
         <translation>&amp;Amerikaanse staten tonen</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Highlight messages from US stations whose state is not in the wsjtx_log.adi log file yet. The state comes from the grid square, in the log and in the decoded message alike: a square that lies in a single state counts for it; a square several states share counts for the state of the station's US license when that is one of them, and otherwise for none.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Berichten markeren van Amerikaanse stations waarvan de staat nog niet in wsjtx_log.adi staat. De staat volgt uit de locator, in het log en in het gedecodeerde bericht: een locator die in één staat ligt telt voor die staat; een locator die meerdere staten delen, telt voor de staat van de Amerikaanse licentie van het station als die er een van is, en anders voor geen enkele.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Check and highlight new US states</source>
+        <translation>Nieuwe Amerikaanse staten controleren en markeren</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Highlight messages from US stations whose state is new on the band according to the wsjtx_log.adi log file. The state comes from the grid square and, in a square several states share, from the station's US license, as for new US states.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Berichten markeren van Amerikaanse stations waarvan de staat volgens wsjtx_log.adi op de band nieuw is. De staat volgt uit de locator en, bij een locator die meerdere staten delen, uit de Amerikaanse licentie van het station, zoals bij nieuwe Amerikaanse staten.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>New US State</source>
+        <translation>Nieuwe Amerikaanse staat</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>New US State on Band</source>
+        <translation>Nieuwe Amerikaanse staat op band</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>US licenses:</source>
+        <translation>Amerikaanse licenties:</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Download the latest list of US license states from ce3tsk.com, built from the FCC's amateur license file. In a grid square several states share, a US station counts for the state of its license when that state is one of the square's.</source>
+        <translation>Download de nieuwste lijst met staten van Amerikaanse licenties van ce3tsk.com, gemaakt uit het amateurlicentiebestand van de FCC. In een locator die meerdere staten delen, telt een Amerikaans station voor de staat van zijn licentie als die staat een van de staten van de locator is.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Highlight messages from US stations whose state is new in the mode according to the wsjtx_log.adi log file. The state comes from the grid square and, in a square several states share, from the station's US license, as for new US states.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Berichten markeren van Amerikaanse stations waarvan de staat volgens wsjtx_log.adi in de mode nieuw is. De staat volgt uit de locator en, bij een locator die meerdere staten delen, uit de Amerikaanse licentie van het station, zoals bij nieuwe Amerikaanse staten.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>

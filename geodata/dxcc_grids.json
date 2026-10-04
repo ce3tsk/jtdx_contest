@@ -5,7 +5,7 @@
  "tool": "tools/make_dxcc_grids.py",
  "project": "JTDX_CONTEST",
  "author": "Tihomir Sokcevic CE3TSK",
- "rights": "This table is derived from public-domain sources (cty.dat, Natural Earth) and stating facts about geography; no rights of any kind are claimed over it, and it may be used freely.",
+ "rights": "This table is derived from cty.dat (MIT licence) and Natural Earth (public domain), stating facts about geography; no rights of its own are claimed over it (review 2026-10-04: it called cty.dat public domain).",
  "tool_licence": "GPL v3",
  "point_km": 120.0,
  "island_km": 200.0,

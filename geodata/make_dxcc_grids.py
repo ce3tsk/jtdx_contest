@@ -56,13 +56,13 @@ ISLAND_KM    = 200.0     # how far from that coordinate to accept minor-island p
 # safe direction, and an area threshold silently loses the tiny entities (Spratly, the reefs).
 sys.dont_write_bytecode = True          # no __pycache__ beside the sources, in either tree
 sys.path.insert(0, HERE if os.path.exists(os.path.join(HERE, 'cty.py'))
-                else os.path.join(HERE, '..', 'test', 'experiments', 'false_decodes'))
+                else os.path.join(HERE, '..', 'test', 'experiments', 'phantom_decodes'))
 from cty import load_cty, cty_path, gridname, norm, squares_of   # the resolver, and the helpers the gap check shares
 
 BUILT_BY = ('built by tools/make_dxcc_grids.py of JTDX_CONTEST, Tihomir Sokcevic CE3TSK '
             '(the script is GPL v3)')
-CLAIM = ('derived from public-domain sources (cty.dat, Natural Earth) and stating facts about '
-         'geography; no rights of any kind are claimed over it, and it may be used freely.')
+CLAIM = ('derived from cty.dat (MIT licence) and Natural Earth (public domain), stating facts about '
+         'geography; no rights of its own are claimed over it (review 2026-10-04: it called cty.dat public domain).')
 # cty.dat spells some entities differently from Natural Earth
 ALIAS = {
     'Fed. Rep. of Germany': 'Germany', 'Timor - Leste': 'East Timor', 'Bosnia-Herzegovina':

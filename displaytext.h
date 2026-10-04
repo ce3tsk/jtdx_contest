@@ -4,6 +4,7 @@
 #define DISPLAYTEXT_H
 
 #include <QTextEdit>
+#include <QHash>
 #include "logbook/logbook.h"
 #include "decodedtext.h"
 #include "qsohistory.h"
@@ -22,7 +23,7 @@ public:
        displayDecodedText cuts the decoder's line: 49 for FT8, FT4 and FT2 (seconds in the time), 40 for
        JT65 and JT9. The country follows it. */
     static int lineMarkerColumn (QString const& line) {return line.indexOf (' ') > 4 ? 49 : 40;}
-    /* CE3TSK 2026-10-01: a word in doubt (falsedecodes.h) carries this property and its colour as the underline
+    /* CE3TSK 2026-10-01: a word in doubt (phantomdecodes.h) carries this property and its colour as the underline
        colour; the window draws the wave itself (paintEvent), 2 px thick - Qt's own WaveUnderline is one pixel. */
     static constexpr int DoubtProperty = QTextFormat::UserProperty + 0x7d0;
     static bool isDoubt (QTextCharFormat const& f) {return f.property (DoubtProperty).toBool ();}
@@ -46,7 +47,7 @@ signals:
 public slots:
   /* CE3TSK 2026-09-30: doubtful - (column, length) of the words of `text` in doubt, cntryDoubtFrom -
      where the doubtful part of `cntry` starts (-1: none); both get the red wave underline of a
-     likely false decode (falsedecodes.h) */
+     likely phantom decode (phantomdecodes.h) */
   void appendText(QString const& text, QString const& bg = "#ffffff", QString const& color = "#000000", int std_type = 0, QString const& servis = " ", QString const& servis_color = "#000000", QString const& cntry = " ", bool forceBold = false, bool strikethrough = false, bool underline = false, bool DXped = false, bool overwrite = false, bool wanted = false, QList<QPair<int, int>> const& doubtful = QList<QPair<int, int>> (), int cntryDoubtFrom = -1);
 
 protected:
@@ -67,7 +68,7 @@ private:
     bool useDarkStyle_;
     bool displayCountryName_;
     bool displayCountryPrefix_;
-    bool displayUSStates_ = true;   /* CE3TSK 2026-10-02: "U.S.A.-CA" (usstates.h) */
+    bool displayUSStates_ = true;   /* CE3TSK 2026-10-02: "USA, CA" (usstates.h) */
     bool displayNewCQZ_;
     bool displayNewCQZBand_;
     bool displayNewCQZBandMode_;
@@ -75,7 +76,16 @@ private:
     bool displayNewITUZBand_;
     bool displayNewITUZBandMode_;
     bool displayNewDXCC_;
+    bool displayNewState_;
     bool displayNewDXCCBand_;
+    bool displayNewStateBand_;
+    bool displayNewStateBandMode_ = false;   /* CE3TSK 2026-10-04 */
+    bool callTiers_ = false;    /* CE3TSK 2026-10-03: a new-one tier that judges every decode (zones, DXCC, prefix, call),
+                                   and any tier at all (setConfiguration) */
+    bool anyTier_ = false;
+    /* CE3TSK 2026-10-03 (review item 6): call@band -> the grid that call last sent on the band, from every line - a hidden
+       one too, which the history never sees. Only for the grid tier's "could it judge this decode" (displayDecodedText) */
+    QHash<QString, QString> gridsHeard_;
     bool displayNewDXCCBandMode_;
     bool displayNewGrid_;
     bool displayNewGridBand_;
@@ -95,6 +105,7 @@ private:
     bool beepOnNewCQZ_;
     bool beepOnNewITUZ_;
     bool beepOnNewDXCC_;
+    bool beepOnNewState_;
     bool beepOnNewGrid_;
     bool beepOnNewPx_;
     bool beepOnNewCall_;
@@ -130,7 +141,9 @@ private:
     QString color_NewITUZ_;
     QString color_NewITUZBand_;
     QString color_NewDXCC_;
+    QString color_NewState_;
     QString color_NewDXCCBand_;
+    QString color_NewStateBand_;
     QString color_NewGrid_;
     QString color_NewGridBand_;
     QString color_NewPx_;

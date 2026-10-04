@@ -289,11 +289,6 @@ Format:
         <translation>JTDX Schriftauswahl für dekodierten Text</translation>
     </message>
     <message>
-        <location filename="../Configuration.cpp" line="4902"/>
-        <source>Enter Grid error: 4/6/8/10 char grid will be accepted</source>
-        <translation>Fehler bei der Locator-Eingabe: akzeptiert werden 4/6/8/10 Zeichen</translation>
-    </message>
-    <message>
         <location filename="../Configuration.cpp" line="5438"/>
         <location filename="../Configuration.cpp" line="5469"/>
         <source>Cancel</source>
@@ -512,6 +507,46 @@ Format:
         <location filename="../Configuration.cpp"/>
         <source>&amp;Unmark default</source>
         <translation>Standardmarkierung &amp;entfernen</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>The downloaded file is not a list of US license states.</source>
+        <translation>Die heruntergeladene Datei ist keine Liste der Bundesstaaten von US-Lizenzen.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>No DXCC country in cty.dat has the prefix of %1.</source>
+        <translation>Kein DXCC-Land in cty.dat hat das Präfix von %1.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>A grid has 4, 6, 8, 10 or 12 characters, as IO91, IO91wm, IO91wm99, IO91wm99aa or IO91wm99aa00.</source>
+        <translation>Ein Locator hat 4, 6, 8, 10 oder 12 Zeichen, etwa IO91, IO91wm, IO91wm99, IO91wm99aa oder IO91wm99aa00.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Your grid %1 does not lie in %2, the DXCC country of %3.</source>
+        <translation>Ihr Locator %1 liegt nicht in %2, dem DXCC-Land von %3.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Check your call and grid</source>
+        <translation>Rufzeichen und Locator prüfen</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Distances, PSK Reporter spots and the WW Digi exchange are worked out from them.</source>
+        <translation>Entfernungen, PSK-Reporter-Spots und der WW-Digi-Austausch werden daraus berechnet.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>&amp;Keep it</source>
+        <translation>&amp;Beibehalten</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>&amp;Correct it</source>
+        <translation>&amp;Korrigieren</translation>
     </message>
 </context>
 <context>
@@ -1438,7 +1473,7 @@ Format:
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="219"/>
-        <source>U.S.A.</source>
+        <source>USA</source>
         <translation>USA</translation>
     </message>
     <message>
@@ -9696,8 +9731,8 @@ AA1AAA,BB1BB,CC1CC&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
         <location filename="../Configuration.ui" line="6858"/>
         <location filename="../Configuration.ui" line="6871"/>
         <location filename="../Configuration.ui" line="7029"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This DT window being used only for RX frequency CALL3 data based Hint decoders focused on CQ and &apos;mycall hiscall hisgrid&apos; messages. Higher values may increase number of the false decodes.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dieses DT-Fenster gilt nur für die auf CALL3-Daten gestützten Hint-Dekoder auf der RX-Frequenz, die auf CQ- und 'mycall hiscall hisgrid'-Nachrichten ausgerichtet sind. Höhere Werte können die Zahl der Falschdekodierungen erhöhen.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This DT window being used only for RX frequency CALL3 data based Hint decoders focused on CQ and 'mycall hiscall hisgrid' messages. Higher values may increase number of the phantom decodes.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dieses DT-Fenster gilt nur für die auf CALL3-Daten gestützten Hint-Dekoder auf der RX-Frequenz, die auf CQ- und 'mycall hiscall hisgrid'-Nachrichten ausgerichtet sind. Höhere Werte können die Zahl der Phantomdekodierungen erhöhen.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="6861"/>
@@ -9889,8 +9924,8 @@ Zurücksetzen der Funkgeräteschnittstelle und Übernahme etwaiger
     </message>
     <message>
         <location filename="../Configuration.ui"/>
-        <source>False decodes</source>
-        <translation>Fehldekodierungen</translation>
+        <source>Phantom decodes</source>
+        <translation>Phantomdekodierungen</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
@@ -9899,8 +9934,8 @@ Zurücksetzen der Funkgeräteschnittstelle und Übernahme etwaiger
     </message>
     <message>
         <location filename="../Configuration.ui"/>
-        <source>The automatic sequencer does not pick such a decode on its own; a double click still answers it. A station heard with the same doubtful grid in two different periods is most likely operating away from home, and is answered again - false decodes do not repeat.</source>
-        <translation>Die automatische Ablaufsteuerung (AutoSeq) wählt eine solche Dekodierung nicht von sich aus; ein Doppelklick beantwortet sie trotzdem. Eine Station, die in zwei verschiedenen Perioden mit demselben zweifelhaften Locator gehört wird, funkt höchstwahrscheinlich fern der Heimat und wird wieder beantwortet - Fehldekodierungen wiederholen sich nicht.</translation>
+        <source>The automatic sequencer does not pick such a decode on its own; a double click still answers it. A station heard with the same doubtful grid in two different periods is most likely operating away from home, and is answered again - phantom decodes do not repeat.</source>
+        <translation>Die automatische Ablaufsteuerung (AutoSeq) wählt eine solche Dekodierung nicht von sich aus; ein Doppelklick beantwortet sie trotzdem. Eine Station, die in zwei verschiedenen Perioden mit demselben zweifelhaften Locator gehört wird, funkt höchstwahrscheinlich fern der Heimat und wird wieder beantwortet - Phantomdekodierungen wiederholen sich nicht.</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
@@ -9909,8 +9944,8 @@ Zurücksetzen der Funkgeräteschnittstelle und Übernahme etwaiger
     </message>
     <message>
         <location filename="../Configuration.ui"/>
-        <source>Below 30 MHz a call signing /R (rover) is almost always a false decode: /R is a single bit of the message. The decode is kept, with the /R call underlined in red. Its ALL.TXT line ends with lc:rover, and it is sent to UDP clients as a low-confidence decode.</source>
-        <translation>Unterhalb von 30 MHz ist ein Rufzeichen mit /R (Rover) fast immer eine Fehldekodierung: /R ist ein einzelnes Bit der Nachricht. Die Dekodierung bleibt erhalten, das /R-Rufzeichen wird rot unterstrichen. Ihre Zeile in ALL.TXT endet mit lc:rover, und sie geht an UDP-Clients als Dekodierung mit geringer Zuverlässigkeit.</translation>
+        <source>Below 30 MHz a call signing /R (rover) is almost always a phantom decode: /R is a single bit of the message. The decode is kept, with the /R call underlined in red. Its ALL.TXT line ends with lc:rover, and it is sent to UDP clients as a low-confidence decode.</source>
+        <translation>Unterhalb von 30 MHz ist ein Rufzeichen mit /R (Rover) fast immer eine Phantomdekodierung: /R ist ein einzelnes Bit der Nachricht. Die Dekodierung bleibt erhalten, das /R-Rufzeichen wird rot unterstrichen. Ihre Zeile in ALL.TXT endet mit lc:rover, und sie geht an UDP-Clients als Dekodierung mit geringer Zuverlässigkeit.</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
@@ -9934,13 +9969,13 @@ Zurücksetzen der Funkgeräteschnittstelle und Übernahme etwaiger
     </message>
     <message>
         <location filename="../Configuration.ui"/>
-        <source>Below 30 MHz, a decode in which both calls sign /P (portable) is almost always a false decode when it is weak (-20 dB or below): /P is a single bit per call of the message type portable calls use, while genuine park-to-park contacts are stronger. The decode is kept, with the /P calls underlined in red, and is never answered automatically - a double click still answers it. Its ALL.TXT line ends with lc:portable, and it is sent to UDP clients as a low-confidence decode.</source>
-        <translation>Unterhalb von 30 MHz ist eine Dekodierung, in der beide Rufzeichen /P (portabel) tragen, fast immer eine Fehldekodierung, wenn sie schwach ist (-20 dB oder darunter): /P ist ein einzelnes Bit pro Rufzeichen in dem Nachrichtentyp, den portable Rufzeichen verwenden, während echte Park-zu-Park-Verbindungen stärker sind. Die Dekodierung bleibt erhalten, die /P-Rufzeichen werden rot unterstrichen, und sie wird nie automatisch beantwortet - ein Doppelklick beantwortet sie trotzdem. Ihre Zeile in ALL.TXT endet mit lc:portable, und sie geht an UDP-Clients als Dekodierung mit geringer Zuverlässigkeit.</translation>
+        <source>Below 30 MHz, a decode in which both calls sign /P (portable) is almost always a phantom decode when it is weak (-20 dB or below): /P is a single bit per call of the message type portable calls use, while genuine park-to-park contacts are stronger. The decode is kept, with the /P calls underlined in red, and is never answered automatically - a double click still answers it. Its ALL.TXT line ends with lc:portable, and it is sent to UDP clients as a low-confidence decode.</source>
+        <translation>Unterhalb von 30 MHz ist eine Dekodierung, in der beide Rufzeichen /P (portabel) tragen, fast immer eine Phantomdekodierung, wenn sie schwach ist (-20 dB oder darunter): /P ist ein einzelnes Bit pro Rufzeichen in dem Nachrichtentyp, den portable Rufzeichen verwenden, während echte Park-zu-Park-Verbindungen stärker sind. Die Dekodierung bleibt erhalten, die /P-Rufzeichen werden rot unterstrichen, und sie wird nie automatisch beantwortet - ein Doppelklick beantwortet sie trotzdem. Ihre Zeile in ALL.TXT endet mit lc:portable, und sie geht an UDP-Clients als Dekodierung mit geringer Zuverlässigkeit.</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
-        <source>A call whose prefix belongs to no country in cty.dat - shown as where? in the country column - is most likely a false decode, on any band. The decode is kept, with the call and where? underlined in red, and is never answered automatically - a double click still answers it. Its ALL.TXT line ends with lc:where, and it is sent to UDP clients as a low-confidence decode. Maritime and aeronautical mobile calls (/MM, /AM) have no country and are never marked.</source>
-        <translation>Ein Rufzeichen, dessen Präfix in cty.dat zu keinem Land gehört - in der Länderspalte als wo? angezeigt -, ist höchstwahrscheinlich eine Fehldekodierung, auf jedem Band. Die Dekodierung bleibt erhalten, das Rufzeichen und wo? werden rot unterstrichen, und sie wird nie automatisch beantwortet - ein Doppelklick beantwortet sie trotzdem. Ihre Zeile in ALL.TXT endet mit lc:where, und sie geht an UDP-Clients als Dekodierung mit geringer Zuverlässigkeit. Maritim und aeronautisch mobile Rufzeichen (/MM, /AM) haben kein Land und werden nie markiert.</translation>
+        <source>A call whose prefix belongs to no country in cty.dat - shown as where? in the country column - is most likely a phantom decode, on any band. The decode is kept, with the call and where? underlined in red, and is never answered automatically - a double click still answers it. Its ALL.TXT line ends with lc:where, and it is sent to UDP clients as a low-confidence decode. Maritime and aeronautical mobile calls (/MM, /AM) have no country and are never marked.</source>
+        <translation>Ein Rufzeichen, dessen Präfix in cty.dat zu keinem Land gehört - in der Länderspalte als wo? angezeigt -, ist höchstwahrscheinlich eine Phantomdekodierung, auf jedem Band. Die Dekodierung bleibt erhalten, das Rufzeichen und wo? werden rot unterstrichen, und sie wird nie automatisch beantwortet - ein Doppelklick beantwortet sie trotzdem. Ihre Zeile in ALL.TXT endet mit lc:where, und sie geht an UDP-Clients als Dekodierung mit geringer Zuverlässigkeit. Maritim und aeronautisch mobile Rufzeichen (/MM, /AM) haben kein Land und werden nie markiert.</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
@@ -9949,13 +9984,53 @@ Zurücksetzen der Funkgeräteschnittstelle und Übernahme etwaiger
     </message>
     <message>
         <location filename="../Configuration.ui"/>
-        <source>Append the US state of a US station's grid square to its DXCC name or prefix, as in U.S.A.-CA. A square shared by several states names them all, the one with the most people first: U.S.A.-NY/MA.</source>
-        <translation>Hängt den US-Bundesstaat, in dem der Locator einer US-Station liegt, an ihren DXCC-Namen oder ihr Präfix an, etwa U.S.A.-CA. Liegt der Locator in mehreren Bundesstaaten, werden alle genannt, der mit den meisten Einwohnern zuerst: U.S.A.-NY/MA.</translation>
+        <source>Append the US state of a US station's grid square to its DXCC name or prefix, as in USA, CA. A square shared by several states names them all, the one with the most people first: USA, NY/MA - or only the state of the station's US license, when that is one of them: USA, MA.</source>
+        <translation>Hängt den US-Bundesstaat, in dem der Locator einer US-Station liegt, an ihren DXCC-Namen oder ihr Präfix an, etwa USA, CA. Liegt der Locator in mehreren Bundesstaaten, werden alle genannt, der mit den meisten Einwohnern zuerst: USA, NY/MA - oder nur der Bundesstaat der US-Lizenz der Station, wenn er einer davon ist: USA, MA.</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
         <source>Sh&amp;ow US states</source>
         <translation>US-Bundes&amp;staaten anzeigen</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Highlight messages from US stations whose state is not in the wsjtx_log.adi log file yet. The state comes from the grid square, in the log and in the decoded message alike: a square that lies in a single state counts for it; a square several states share counts for the state of the station's US license when that is one of them, and otherwise for none.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Nachrichten von US-Stationen hervorheben, deren Bundesstaat noch nicht in der Logdatei wsjtx_log.adi steht. Der Bundesstaat ergibt sich aus dem Locator - im Log wie in der dekodierten Nachricht: Ein Locator, der in einem einzigen Bundesstaat liegt, zählt für diesen; ein Locator, den sich mehrere Bundesstaaten teilen, zählt für den Bundesstaat der US-Lizenz der Station, wenn er einer davon ist, sonst für keinen.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Check and highlight new US states</source>
+        <translation>Neue US-Bundesstaaten prüfen und hervorheben</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Highlight messages from US stations whose state is new on the band according to the wsjtx_log.adi log file. The state comes from the grid square and, in a square several states share, from the station's US license, as for new US states.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Nachrichten von US-Stationen hervorheben, deren Bundesstaat laut Logdatei wsjtx_log.adi auf dem Band neu ist. Der Bundesstaat ergibt sich aus dem Locator und, bei einem Locator, den sich mehrere Bundesstaaten teilen, aus der US-Lizenz der Station - wie bei neuen US-Bundesstaaten.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>New US State</source>
+        <translation>Neuer US-Bundesstaat</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>New US State on Band</source>
+        <translation>Neuer US-Bundesstaat auf Band</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>US licenses:</source>
+        <translation>US-Lizenzen:</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Download the latest list of US license states from ce3tsk.com, built from the FCC's amateur license file. In a grid square several states share, a US station counts for the state of its license when that state is one of the square's.</source>
+        <translation>Die neueste Liste der Bundesstaaten von US-Lizenzen von ce3tsk.com herunterladen, erstellt aus der Amateurfunk-Lizenzdatei der FCC. In einem Locator, den sich mehrere Bundesstaaten teilen, zählt eine US-Station für den Bundesstaat ihrer Lizenz, wenn dieser zu den Bundesstaaten des Locators gehört.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Highlight messages from US stations whose state is new in the mode according to the wsjtx_log.adi log file. The state comes from the grid square and, in a square several states share, from the station's US license, as for new US states.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Nachrichten von US-Stationen hervorheben, deren Bundesstaat laut Logdatei wsjtx_log.adi in der Betriebsart neu ist. Der Bundesstaat ergibt sich aus dem Locator und, bei einem Locator, den sich mehrere Bundesstaaten teilen, aus der US-Lizenz der Station - wie bei neuen US-Bundesstaaten.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>

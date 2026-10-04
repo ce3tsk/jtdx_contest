@@ -932,12 +932,12 @@ private:
   QString m_lastloggedcall;
   QStringList m_contestReportSeen;   /* CE3TSK: stations we have already explained on screen */
   ContestIgnore m_contestIgnore;   /* CE3TSK: contest - stations that answered with a report, skipped for 5 min */
-  /* CE3TSK 2026-09-30: likely false decodes (falsedecodes.h) - judged once per decode, and the memory
+  /* CE3TSK 2026-09-30: likely phantom decodes (phantomdecodes.h) - judged once per decode, and the memory
      of calls heard twice with the same doubtful grid */
-  false_decodes::Judge m_falseDecodes;
-  false_decodes::Settings falseDecodeSettings ();
+  phantom_decodes::Judge m_phantomDecodes;
+  phantom_decodes::Settings phantomDecodeSettings ();
   QString dxccOf (QString const& call);
-  false_decodes::Verdict windowVerdict (QString const& windowLine);   /* CE3TSK: a line read back from a window */
+  phantom_decodes::Verdict windowVerdict (QString const& windowLine);   /* CE3TSK: a line read back from a window */
   bool countryUnknown (QString const& call);                    /* CE3TSK: A3, for PSK Reporter */
   /* CE3TSK: the QSO that finished most recently, and when - the state sequencer_hooks.cpp owns */
   QString m_finishedCall;
@@ -1247,7 +1247,7 @@ private:
   void processMessage(QString const& messages, qint32 position, bool alt, bool ctrl);
   void replyToUDP (QTime, qint32 snr, float delta_time, quint32 delta_frequency, QString const& mode, QString const& message_text, bool low_confidence, quint8 modifiers);
   void replayDecodes ();
-  void postDecode (bool is_new, QString const& message, bool lowConfidence = false);   /* CE3TSK: lowConfidence - a likely false decode */
+  void postDecode (bool is_new, QString const& message, bool lowConfidence = false);   /* CE3TSK: lowConfidence - a likely phantom decode */
   void postWSPRDecode (bool is_new, QStringList message_parts);
   void enable_DXCC_entity ();
   void switch_mode (Mode);

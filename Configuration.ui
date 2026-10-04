@@ -426,7 +426,7 @@
             <item row="4" column="1">
              <widget class="QCheckBox" name="usStates_check_box">
               <property name="toolTip">
-               <string>Append the US state of a US station's grid square to its DXCC name or prefix, as in U.S.A.-CA. A square shared by several states names them all, the one with the most people first: U.S.A.-NY/MA.</string>
+               <string>Append the US state of a US station's grid square to its DXCC name or prefix, as in USA, CA. A square shared by several states names them all, the one with the most people first: USA, NY/MA - or only the state of the station's US license, when that is one of them: USA, MA.</string>
               </property>
               <property name="text">
                <string>Sh&amp;ow US states</string>
@@ -768,6 +768,36 @@ quiet period when decoding is done.</string>
            <widget class="QPushButton" name="lotw_download_push_button">
             <property name="toolTip">
              <string>Download the latest LoTW user activity file from ARRL. Stations that uploaded to LoTW during the last 365 days are treated as LoTW users.</string>
+            </property>
+            <property name="text">
+             <string>Download latest</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="license_file_label">
+            <property name="text">
+             <string>US licenses:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QLabel" name="license_file_status_label">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+              <horstretch>1</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="toolTip">
+             <string>The newer of the downloaded copy and the copy bundled with this release is used.</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="2">
+           <widget class="QPushButton" name="license_download_push_button">
+            <property name="toolTip">
+             <string>Download the latest list of US license states from ce3tsk.com, built from the FCC's amateur license file. In a grid square several states share, a US station counts for the state of its license when that state is one of the square's.</string>
             </property>
             <property name="text">
              <string>Download latest</string>
@@ -3540,19 +3570,19 @@ Right click for insert and delete options.</string>
                </widget>
               </item>
               <item row="3" column="0">
-               <widget class="QCheckBox" name="newGrid_check_box">
+               <widget class="QCheckBox" name="newState_check_box">
                 <property name="toolTip">
-                 <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Highlight messages with grid squares which do not exist in the wsjtx_log.adi log file.&lt;/p&gt;&lt;p&gt;With &lt;b&gt;WW Digi contest&lt;/b&gt; enabled in the Misc menu these settings match on the 2 character grid field instead of the 4 character square, because the field is the contest multiplier, and a new field then outranks a new DXCC or zone in the highlighting.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                 <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Highlight messages from US stations whose state is not in the wsjtx_log.adi log file yet. The state comes from the grid square, in the log and in the decoded message alike: a square that lies in a single state counts for it; a square several states share counts for the state of the station's US license when that is one of them, and otherwise for none.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                 </property>
                 <property name="text">
-                 <string>Check and highlight new grids</string>
+                 <string>Check and highlight new US states</string>
                 </property>
                </widget>
               </item>
               <item row="3" column="1">
-               <widget class="QCheckBox" name="newGridBand_check_box">
+               <widget class="QCheckBox" name="newStateBand_check_box">
                 <property name="toolTip">
-                 <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Highlight messages with grid squares which are new on the band according to the data from wsjtx_log.adi log file.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                 <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Highlight messages from US stations whose state is new on the band according to the wsjtx_log.adi log file. The state comes from the grid square and, in a square several states share, from the station's US license, as for new US states.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                 </property>
                 <property name="text">
                  <string>per band</string>
@@ -3560,9 +3590,9 @@ Right click for insert and delete options.</string>
                </widget>
               </item>
               <item row="3" column="2">
-               <widget class="QCheckBox" name="newGridBandMode_check_box">
+               <widget class="QCheckBox" name="newStateBandMode_check_box">
                 <property name="toolTip">
-                 <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Highlight messages with grid squares which are new in the mode according to the data from wsjtx_log.adi log file.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                 <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Highlight messages from US stations whose state is new in the mode according to the wsjtx_log.adi log file. The state comes from the grid square and, in a square several states share, from the station's US license, as for new US states.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                 </property>
                 <property name="text">
                  <string>per mode</string>
@@ -3570,7 +3600,7 @@ Right click for insert and delete options.</string>
                </widget>
               </item>
               <item row="3" column="3">
-               <widget class="QCheckBox" name="beep_on_newGrid_check_box">
+               <widget class="QCheckBox" name="beep_on_newState_check_box">
                 <property name="toolTip">
                  <string>Use also system sound for the notification.</string>
                 </property>
@@ -3580,19 +3610,19 @@ Right click for insert and delete options.</string>
                </widget>
               </item>
               <item row="4" column="0">
-               <widget class="QCheckBox" name="newPx_check_box">
+               <widget class="QCheckBox" name="newGrid_check_box">
                 <property name="toolTip">
-                 <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Highlight messages with prefixes which do not exist in the wsjtx_log.adi log file.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                 <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Highlight messages with grid squares which do not exist in the wsjtx_log.adi log file.&lt;/p&gt;&lt;p&gt;With &lt;b&gt;WW Digi contest&lt;/b&gt; enabled in the Misc menu these settings match on the 2 character grid field instead of the 4 character square, because the field is the contest multiplier, and a new field then outranks a new DXCC or zone in the highlighting.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                 </property>
                 <property name="text">
-                 <string>Check and highlight new prefixes</string>
+                 <string>Check and highlight new grids</string>
                 </property>
                </widget>
               </item>
               <item row="4" column="1">
-               <widget class="QCheckBox" name="newPxBand_check_box">
+               <widget class="QCheckBox" name="newGridBand_check_box">
                 <property name="toolTip">
-                 <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Highlight messages with prefixes which are new on the band according to the data from wsjtx_log.adi log file.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                 <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Highlight messages with grid squares which are new on the band according to the data from wsjtx_log.adi log file.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                 </property>
                 <property name="text">
                  <string>per band</string>
@@ -3600,9 +3630,9 @@ Right click for insert and delete options.</string>
                </widget>
               </item>
               <item row="4" column="2">
-               <widget class="QCheckBox" name="newPxBandMode_check_box">
+               <widget class="QCheckBox" name="newGridBandMode_check_box">
                 <property name="toolTip">
-                 <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Highlight messages with prefixes which are new in the mode according to the data from wsjtx_log.adi log file.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                 <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Highlight messages with grid squares which are new in the mode according to the data from wsjtx_log.adi log file.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                 </property>
                 <property name="text">
                  <string>per mode</string>
@@ -3610,7 +3640,7 @@ Right click for insert and delete options.</string>
                </widget>
               </item>
               <item row="4" column="3">
-               <widget class="QCheckBox" name="beep_on_newPx_check_box">
+               <widget class="QCheckBox" name="beep_on_newGrid_check_box">
                 <property name="toolTip">
                  <string>Use also system sound for the notification.</string>
                 </property>
@@ -3620,19 +3650,19 @@ Right click for insert and delete options.</string>
                </widget>
               </item>
               <item row="5" column="0">
-               <widget class="QCheckBox" name="newCall_check_box">
+               <widget class="QCheckBox" name="newPx_check_box">
                 <property name="toolTip">
-                 <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Highlight messages with callsigns which do not exist in the wsjtx_log.adi log file.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                 <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Highlight messages with prefixes which do not exist in the wsjtx_log.adi log file.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                 </property>
                 <property name="text">
-                 <string>Check and highlight new calls</string>
+                 <string>Check and highlight new prefixes</string>
                 </property>
                </widget>
               </item>
               <item row="5" column="1">
-               <widget class="QCheckBox" name="newCallBand_check_box">
+               <widget class="QCheckBox" name="newPxBand_check_box">
                 <property name="toolTip">
-                 <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Highlight messages with callsigns which are new on the band according to the data from wsjtx_log.adi log file.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                 <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Highlight messages with prefixes which are new on the band according to the data from wsjtx_log.adi log file.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                 </property>
                 <property name="text">
                  <string>per band</string>
@@ -3640,9 +3670,9 @@ Right click for insert and delete options.</string>
                </widget>
               </item>
               <item row="5" column="2">
-               <widget class="QCheckBox" name="newCallBandMode_check_box">
+               <widget class="QCheckBox" name="newPxBandMode_check_box">
                 <property name="toolTip">
-                 <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Highlight messages with callsigns which are new in the mode according to the data from wsjtx_log.adi log file.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                 <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Highlight messages with prefixes which are new in the mode according to the data from wsjtx_log.adi log file.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                 </property>
                 <property name="text">
                  <string>per mode</string>
@@ -3650,7 +3680,7 @@ Right click for insert and delete options.</string>
                </widget>
               </item>
               <item row="5" column="3">
-               <widget class="QCheckBox" name="beep_on_newCall_check_box">
+               <widget class="QCheckBox" name="beep_on_newPx_check_box">
                 <property name="toolTip">
                  <string>Use also system sound for the notification.</string>
                 </property>
@@ -3660,6 +3690,46 @@ Right click for insert and delete options.</string>
                </widget>
               </item>
               <item row="6" column="0">
+               <widget class="QCheckBox" name="newCall_check_box">
+                <property name="toolTip">
+                 <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Highlight messages with callsigns which do not exist in the wsjtx_log.adi log file.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                </property>
+                <property name="text">
+                 <string>Check and highlight new calls</string>
+                </property>
+               </widget>
+              </item>
+              <item row="6" column="1">
+               <widget class="QCheckBox" name="newCallBand_check_box">
+                <property name="toolTip">
+                 <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Highlight messages with callsigns which are new on the band according to the data from wsjtx_log.adi log file.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                </property>
+                <property name="text">
+                 <string>per band</string>
+                </property>
+               </widget>
+              </item>
+              <item row="6" column="2">
+               <widget class="QCheckBox" name="newCallBandMode_check_box">
+                <property name="toolTip">
+                 <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Highlight messages with callsigns which are new in the mode according to the data from wsjtx_log.adi log file.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                </property>
+                <property name="text">
+                 <string>per mode</string>
+                </property>
+               </widget>
+              </item>
+              <item row="6" column="3">
+               <widget class="QCheckBox" name="beep_on_newCall_check_box">
+                <property name="toolTip">
+                 <string>Use also system sound for the notification.</string>
+                </property>
+                <property name="text">
+                 <string>Beep as well</string>
+                </property>
+               </widget>
+              </item>
+              <item row="7" column="0">
                <widget class="QCheckBox" name="workedColor_check_box">
                 <property name="toolTip">
                  <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Use color notification for messages with the worked DXCC, Grid, Call.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
@@ -3669,7 +3739,7 @@ Right click for insert and delete options.</string>
                 </property>
                </widget>
               </item>
-              <item row="6" column="1">
+              <item row="7" column="1">
                <widget class="QCheckBox" name="workedStriked_check_box">
                 <property name="toolTip">
                  <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Messages with worked DXCC, Grid, Call will be striked.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
@@ -3682,7 +3752,7 @@ Right click for insert and delete options.</string>
                 </property>
                </widget>
               </item>
-              <item row="6" column="2">
+              <item row="7" column="2">
                <widget class="QCheckBox" name="workedUnderlined_check_box">
                 <property name="toolTip">
                  <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Messages with worked DXCC, Grid, Call will be underlined.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
@@ -3692,7 +3762,7 @@ Right click for insert and delete options.</string>
                 </property>
                </widget>
               </item>
-              <item row="6" column="3">
+              <item row="7" column="3">
                <widget class="QCheckBox" name="workedDontShow_check_box">
                 <property name="toolTip">
                  <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Messages with worked DXCC, Grid, Call where there is no MyCall will be skipped in the decoded text window&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
@@ -3702,7 +3772,7 @@ Right click for insert and delete options.</string>
                 </property>
                </widget>
               </item>
-              <item row="7" column="0">
+              <item row="8" column="0">
                <widget class="QCheckBox" name="txtColor_check_box">
                 <property name="toolTip">
                  <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Invert text&lt;-&gt;background color for received messages&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
@@ -3712,7 +3782,7 @@ Right click for insert and delete options.</string>
                 </property>
                </widget>
               </item>
-              <item row="8" column="0">
+              <item row="9" column="0">
                <widget class="QCheckBox" name="newPotential_check_box">
                 <property name="toolTip">
                  <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;By default 'CQ' and 'MyCall' messages being only checked, this setting allows to check also other received standard messages for new DXCC, Grid, Call. 'Other standard message' color being used for the notification&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
@@ -3722,7 +3792,7 @@ Right click for insert and delete options.</string>
                 </property>
                </widget>
               </item>
-              <item row="8" column="4">
+              <item row="9" column="4">
                <spacer name="horizontalSpacer_7">
                 <property name="orientation">
                  <enum>Qt::Horizontal</enum>
@@ -3735,7 +3805,7 @@ Right click for insert and delete options.</string>
                 </property>
                </spacer>
               </item>
-              <item row="9" column="3">
+              <item row="10" column="3">
                <widget class="QCheckBox" name="beep_on_firstMsg_check_box">
                 <property name="toolTip">
                  <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Use system sound for notification as soon as the first message is decoded in the RX interval.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
@@ -3745,7 +3815,7 @@ Right click for insert and delete options.</string>
                 </property>
                </widget>
               </item>
-              <item row="9" column="2">
+              <item row="10" column="2">
                <widget class="QCheckBox" name="beep_on_my_call_check_box">
                 <property name="toolTip">
                  <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Use system sound for notification if there is MyCall in the received message.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
@@ -4541,6 +4611,146 @@ Right click for insert and delete options.</string>
               </widget>
              </item>
              <item row="9" column="0">
+              <widget class="QPushButton" name="pbNewState">
+               <property name="minimumSize">
+                <size>
+                 <width>155</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="text">
+                <string>New US State</string>
+               </property>
+              </widget>
+             </item>
+             <item row="9" column="1">
+              <widget class="QLabel" name="labNewState">
+               <property name="minimumSize">
+                <size>
+                 <width>80</width>
+                 <height>18</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">QLabel{font-weight: bold;background-color: #c000c0}</string>
+               </property>
+               <property name="text">
+                <string>K1ABC</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item row="9" column="2">
+              <widget class="QLabel" name="labNewMcState">
+               <property name="minimumSize">
+                <size>
+                 <width>80</width>
+                 <height>18</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">QLabel{font-weight: bold;background-color: #c000c0;color: #ff0000}</string>
+               </property>
+               <property name="text">
+                <string>K1ABC</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item row="9" column="3">
+              <widget class="QLabel" name="labNewScState">
+               <property name="minimumSize">
+                <size>
+                 <width>80</width>
+                 <height>18</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">QLabel{font-weight: bold;background-color: #c000c0;color: #707070}</string>
+               </property>
+               <property name="text">
+                <string>K1ABC</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item row="10" column="0">
+              <widget class="QPushButton" name="pbNewStateBand">
+               <property name="minimumSize">
+                <size>
+                 <width>155</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="text">
+                <string>New US State on Band</string>
+               </property>
+              </widget>
+             </item>
+             <item row="10" column="1">
+              <widget class="QLabel" name="labNewStateBand">
+               <property name="minimumSize">
+                <size>
+                 <width>80</width>
+                 <height>18</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">QLabel{font-weight: bold;background-color: #d080d0}</string>
+               </property>
+               <property name="text">
+                <string>K1ABC</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item row="10" column="2">
+              <widget class="QLabel" name="labNewMcStateBand">
+               <property name="minimumSize">
+                <size>
+                 <width>80</width>
+                 <height>18</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">QLabel{font-weight: bold;background-color: #d080d0;color: #ff0000}</string>
+               </property>
+               <property name="text">
+                <string>K1ABC</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item row="10" column="3">
+              <widget class="QLabel" name="labNewScStateBand">
+               <property name="minimumSize">
+                <size>
+                 <width>80</width>
+                 <height>18</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">QLabel{font-weight: bold;background-color: #d080d0;color: #707070}</string>
+               </property>
+               <property name="text">
+                <string>K1ABC</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item row="11" column="0">
               <widget class="QPushButton" name="pbNewGrid">
                <property name="minimumSize">
                 <size>
@@ -4553,7 +4763,7 @@ Right click for insert and delete options.</string>
                </property>
               </widget>
              </item>
-             <item row="9" column="1">
+             <item row="11" column="1">
               <widget class="QLabel" name="labNewGrid">
                <property name="minimumSize">
                 <size>
@@ -4572,7 +4782,7 @@ Right click for insert and delete options.</string>
                </property>
               </widget>
              </item>
-             <item row="9" column="2">
+             <item row="11" column="2">
               <widget class="QLabel" name="labNewMcGrid">
                <property name="minimumSize">
                 <size>
@@ -4591,7 +4801,7 @@ Right click for insert and delete options.</string>
                </property>
               </widget>
              </item>
-             <item row="9" column="3">
+             <item row="11" column="3">
               <widget class="QLabel" name="labNewScGrid">
                <property name="minimumSize">
                 <size>
@@ -4610,7 +4820,7 @@ Right click for insert and delete options.</string>
                </property>
               </widget>
              </item>
-             <item row="10" column="0">
+             <item row="12" column="0">
               <widget class="QPushButton" name="pbNewGridBand">
                <property name="minimumSize">
                 <size>
@@ -4623,7 +4833,7 @@ Right click for insert and delete options.</string>
                </property>
               </widget>
              </item>
-             <item row="10" column="1">
+             <item row="12" column="1">
               <widget class="QLabel" name="labNewGridBand">
                <property name="minimumSize">
                 <size>
@@ -4642,7 +4852,7 @@ Right click for insert and delete options.</string>
                </property>
               </widget>
              </item>
-             <item row="10" column="2">
+             <item row="12" column="2">
               <widget class="QLabel" name="labNewMcGridBand">
                <property name="minimumSize">
                 <size>
@@ -4661,7 +4871,7 @@ Right click for insert and delete options.</string>
                </property>
               </widget>
              </item>
-             <item row="10" column="3">
+             <item row="12" column="3">
               <widget class="QLabel" name="labNewScGridBand">
                <property name="minimumSize">
                 <size>
@@ -4680,7 +4890,7 @@ Right click for insert and delete options.</string>
                </property>
               </widget>
              </item>
-             <item row="11" column="0">
+             <item row="13" column="0">
               <widget class="QPushButton" name="pbNewPx">
                <property name="minimumSize">
                 <size>
@@ -4693,7 +4903,7 @@ Right click for insert and delete options.</string>
                </property>
               </widget>
              </item>
-             <item row="11" column="1">
+             <item row="13" column="1">
               <widget class="QLabel" name="labNewPx">
                <property name="minimumSize">
                 <size>
@@ -4712,7 +4922,7 @@ Right click for insert and delete options.</string>
                </property>
               </widget>
              </item>
-             <item row="11" column="2">
+             <item row="13" column="2">
               <widget class="QLabel" name="labNewMcPx">
                <property name="minimumSize">
                 <size>
@@ -4731,7 +4941,7 @@ Right click for insert and delete options.</string>
                </property>
               </widget>
              </item>
-             <item row="11" column="3">
+             <item row="13" column="3">
               <widget class="QLabel" name="labNewScPx">
                <property name="minimumSize">
                 <size>
@@ -4750,7 +4960,7 @@ Right click for insert and delete options.</string>
                </property>
               </widget>
              </item>
-             <item row="12" column="0">
+             <item row="14" column="0">
               <widget class="QPushButton" name="pbNewPxBand">
                <property name="minimumSize">
                 <size>
@@ -4763,7 +4973,7 @@ Right click for insert and delete options.</string>
                </property>
               </widget>
              </item>
-             <item row="12" column="1">
+             <item row="14" column="1">
               <widget class="QLabel" name="labNewPxBand">
                <property name="minimumSize">
                 <size>
@@ -4782,7 +4992,7 @@ Right click for insert and delete options.</string>
                </property>
               </widget>
              </item>
-             <item row="12" column="2">
+             <item row="14" column="2">
               <widget class="QLabel" name="labNewMcPxBand">
                <property name="minimumSize">
                 <size>
@@ -4801,7 +5011,7 @@ Right click for insert and delete options.</string>
                </property>
               </widget>
              </item>
-             <item row="12" column="3">
+             <item row="14" column="3">
               <widget class="QLabel" name="labNewScPxBand">
                <property name="minimumSize">
                 <size>
@@ -4820,7 +5030,7 @@ Right click for insert and delete options.</string>
                </property>
               </widget>
              </item>
-             <item row="13" column="0">
+             <item row="15" column="0">
               <widget class="QPushButton" name="pbNewCall">
                <property name="minimumSize">
                 <size>
@@ -4833,7 +5043,7 @@ Right click for insert and delete options.</string>
                </property>
               </widget>
              </item>
-             <item row="13" column="1">
+             <item row="15" column="1">
               <widget class="QLabel" name="labNewCall">
                <property name="minimumSize">
                 <size>
@@ -4852,7 +5062,7 @@ Right click for insert and delete options.</string>
                </property>
               </widget>
              </item>
-             <item row="13" column="2">
+             <item row="15" column="2">
               <widget class="QLabel" name="labNewMcCall">
                <property name="minimumSize">
                 <size>
@@ -4871,7 +5081,7 @@ Right click for insert and delete options.</string>
                </property>
               </widget>
              </item>
-             <item row="13" column="3">
+             <item row="15" column="3">
               <widget class="QLabel" name="labNewScCall">
                <property name="minimumSize">
                 <size>
@@ -4890,7 +5100,7 @@ Right click for insert and delete options.</string>
                </property>
               </widget>
              </item>
-             <item row="14" column="0">
+             <item row="16" column="0">
               <widget class="QPushButton" name="pbNewCallBand">
                <property name="minimumSize">
                 <size>
@@ -4903,7 +5113,7 @@ Right click for insert and delete options.</string>
                </property>
               </widget>
              </item>
-             <item row="14" column="1">
+             <item row="16" column="1">
               <widget class="QLabel" name="labNewCallBand">
                <property name="minimumSize">
                 <size>
@@ -4922,7 +5132,7 @@ Right click for insert and delete options.</string>
                </property>
               </widget>
              </item>
-             <item row="14" column="2">
+             <item row="16" column="2">
               <widget class="QLabel" name="labNewMcCallBand">
                <property name="minimumSize">
                 <size>
@@ -4941,7 +5151,7 @@ Right click for insert and delete options.</string>
                </property>
               </widget>
              </item>
-             <item row="14" column="3">
+             <item row="16" column="3">
               <widget class="QLabel" name="labNewScCallBand">
                <property name="minimumSize">
                 <size>
@@ -4960,7 +5170,7 @@ Right click for insert and delete options.</string>
                </property>
               </widget>
              </item>
-             <item row="15" column="0">
+             <item row="17" column="0">
               <widget class="QPushButton" name="pbWorkedCall">
                <property name="minimumSize">
                 <size>
@@ -4976,7 +5186,7 @@ Right click for insert and delete options.</string>
                </property>
               </widget>
              </item>
-             <item row="15" column="1">
+             <item row="17" column="1">
               <widget class="QLabel" name="labWorkedCall">
                <property name="minimumSize">
                 <size>
@@ -4995,7 +5205,7 @@ Right click for insert and delete options.</string>
                </property>
               </widget>
              </item>
-             <item row="15" column="2">
+             <item row="17" column="2">
               <widget class="QLabel" name="labWorkedMcCall">
                <property name="minimumSize">
                 <size>
@@ -5014,7 +5224,7 @@ Right click for insert and delete options.</string>
                </property>
               </widget>
              </item>
-             <item row="15" column="3">
+             <item row="17" column="3">
               <widget class="QLabel" name="labWorkedScCall">
                <property name="minimumSize">
                 <size>
@@ -5417,11 +5627,11 @@ AA1AAA,BB1BB,CC1CC&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
           </widget>
          </item>
          <item>
-          <widget class="QGroupBox" name="falseDecodes_group_box">
+          <widget class="QGroupBox" name="phantomDecodes_group_box">
            <property name="title">
-            <string>False decodes</string>
+            <string>Phantom decodes</string>
            </property>
-           <layout class="QGridLayout" name="falseDecodes_grid_layout">
+           <layout class="QGridLayout" name="phantomDecodes_grid_layout">
             <property name="leftMargin">
              <number>3</number>
             </property>
@@ -5429,7 +5639,7 @@ AA1AAA,BB1BB,CC1CC&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
              <number>3</number>
             </property>
             <item row="0" column="0">
-             <widget class="QCheckBox" name="falseDecodeGridMark_check_box">
+             <widget class="QCheckBox" name="phantomDecodeGridMark_check_box">
               <property name="toolTip">
                <string>A decode whose grid square lies outside the DXCC entity of the station that sent it - outside Chile for CE3TSK, outside Germany for CE3TSK/DL or DL/CE3TSK - is kept, but the grid is underlined in red and the country is shown between question marks, as ?Chile? or ?Germany?. Its ALL.TXT line ends with lc:grid and the entity's prefix, and it is sent to UDP clients as a low-confidence decode.</string>
               </property>
@@ -5439,9 +5649,9 @@ AA1AAA,BB1BB,CC1CC&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
              </widget>
             </item>
             <item row="0" column="1">
-             <widget class="QCheckBox" name="falseDecodeGridNoAnswer_check_box">
+             <widget class="QCheckBox" name="phantomDecodeGridNoAnswer_check_box">
               <property name="toolTip">
-               <string>The automatic sequencer does not pick such a decode on its own; a double click still answers it. A station heard with the same doubtful grid in two different periods is most likely operating away from home, and is answered again - false decodes do not repeat.</string>
+               <string>The automatic sequencer does not pick such a decode on its own; a double click still answers it. A station heard with the same doubtful grid in two different periods is most likely operating away from home, and is answered again - phantom decodes do not repeat.</string>
               </property>
               <property name="text">
                <string>Do not answer automatically</string>
@@ -5449,9 +5659,9 @@ AA1AAA,BB1BB,CC1CC&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
              </widget>
             </item>
             <item row="1" column="0">
-             <widget class="QCheckBox" name="falseDecodeRoverMark_check_box">
+             <widget class="QCheckBox" name="phantomDecodeRoverMark_check_box">
               <property name="toolTip">
-               <string>Below 30 MHz a call signing /R (rover) is almost always a false decode: /R is a single bit of the message. The decode is kept, with the /R call underlined in red. Its ALL.TXT line ends with lc:rover, and it is sent to UDP clients as a low-confidence decode.</string>
+               <string>Below 30 MHz a call signing /R (rover) is almost always a phantom decode: /R is a single bit of the message. The decode is kept, with the /R call underlined in red. Its ALL.TXT line ends with lc:rover, and it is sent to UDP clients as a low-confidence decode.</string>
               </property>
               <property name="text">
                <string>Mark /R (rover) calls on HF</string>
@@ -5459,7 +5669,7 @@ AA1AAA,BB1BB,CC1CC&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
              </widget>
             </item>
             <item row="1" column="1">
-             <widget class="QCheckBox" name="falseDecodeRoverNoAnswer_check_box">
+             <widget class="QCheckBox" name="phantomDecodeRoverNoAnswer_check_box">
               <property name="toolTip">
                <string>The automatic sequencer does not pick such a decode on its own; a double click still answers it.</string>
               </property>
@@ -5469,9 +5679,9 @@ AA1AAA,BB1BB,CC1CC&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
              </widget>
             </item>
             <item row="2" column="0">
-             <widget class="QCheckBox" name="falseDecodePortableMark_check_box">
+             <widget class="QCheckBox" name="phantomDecodePortableMark_check_box">
               <property name="toolTip">
-               <string>Below 30 MHz, a decode in which both calls sign /P (portable) is almost always a false decode when it is weak (-20 dB or below): /P is a single bit per call of the message type portable calls use, while genuine park-to-park contacts are stronger. The decode is kept, with the /P calls underlined in red, and is never answered automatically - a double click still answers it. Its ALL.TXT line ends with lc:portable, and it is sent to UDP clients as a low-confidence decode.</string>
+               <string>Below 30 MHz, a decode in which both calls sign /P (portable) is almost always a phantom decode when it is weak (-20 dB or below): /P is a single bit per call of the message type portable calls use, while genuine park-to-park contacts are stronger. The decode is kept, with the /P calls underlined in red, and is never answered automatically - a double click still answers it. Its ALL.TXT line ends with lc:portable, and it is sent to UDP clients as a low-confidence decode.</string>
               </property>
               <property name="text">
                <string>Mark weak decodes where both calls sign /P</string>
@@ -5479,9 +5689,9 @@ AA1AAA,BB1BB,CC1CC&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
              </widget>
             </item>
             <item row="3" column="0">
-             <widget class="QCheckBox" name="falseDecodeWhereMark_check_box">
+             <widget class="QCheckBox" name="phantomDecodeWhereMark_check_box">
               <property name="toolTip">
-               <string>A call whose prefix belongs to no country in cty.dat - shown as where? in the country column - is most likely a false decode, on any band. The decode is kept, with the call and where? underlined in red, and is never answered automatically - a double click still answers it. Its ALL.TXT line ends with lc:where, and it is sent to UDP clients as a low-confidence decode. Maritime and aeronautical mobile calls (/MM, /AM) have no country and are never marked.</string>
+               <string>A call whose prefix belongs to no country in cty.dat - shown as where? in the country column - is most likely a phantom decode, on any band. The decode is kept, with the call and where? underlined in red, and is never answered automatically - a double click still answers it. Its ALL.TXT line ends with lc:where, and it is sent to UDP clients as a low-confidence decode. Maritime and aeronautical mobile calls (/MM, /AM) have no country and are never marked.</string>
               </property>
               <property name="text">
                <string>Mark calls with no known country (where?)</string>
@@ -5489,7 +5699,7 @@ AA1AAA,BB1BB,CC1CC&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
              </widget>
             </item>
             <item row="0" column="2" rowspan="4">
-             <spacer name="falseDecodes_horizontal_spacer">
+             <spacer name="phantomDecodes_horizontal_spacer">
               <property name="orientation">
                <enum>Qt::Horizontal</enum>
               </property>
@@ -7227,7 +7437,7 @@ AA1AAA,BB1BB,CC1CC&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                   <item>
                    <widget class="QLabel" name="label_4">
                     <property name="toolTip">
-                     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This DT window being used only for RX frequency CALL3 data based Hint decoders focused on CQ and 'mycall hiscall hisgrid' messages. Higher values may increase number of the false decodes.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This DT window being used only for RX frequency CALL3 data based Hint decoders focused on CQ and 'mycall hiscall hisgrid' messages. Higher values may increase number of the phantom decodes.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                     </property>
                     <property name="text">
                      <string>Hinted decoding DT range:</string>
@@ -7240,7 +7450,7 @@ AA1AAA,BB1BB,CC1CC&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                   <item>
                    <widget class="QSpinBox" name="sbAggressive">
                     <property name="toolTip">
-                     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This DT window being used only for RX frequency CALL3 data based Hint decoders focused on CQ and 'mycall hiscall hisgrid' messages. Higher values may increase number of the false decodes.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This DT window being used only for RX frequency CALL3 data based Hint decoders focused on CQ and 'mycall hiscall hisgrid' messages. Higher values may increase number of the phantom decodes.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                     </property>
                     <property name="suffix">
                      <string/>
@@ -7398,7 +7608,7 @@ AA1AAA,BB1BB,CC1CC&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                 </size>
                </property>
                <property name="toolTip">
-                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This DT window being used only for RX frequency CALL3 data based Hint decoders focused on CQ and 'mycall hiscall hisgrid' messages. Higher values may increase number of the false decodes.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This DT window being used only for RX frequency CALL3 data based Hint decoders focused on CQ and 'mycall hiscall hisgrid' messages. Higher values may increase number of the phantom decodes.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                </property>
                <property name="text">
                 <string/>

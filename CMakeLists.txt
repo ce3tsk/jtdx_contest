@@ -250,6 +250,7 @@ set (wsjtx_CXXSRCS
   logbook/adif.cpp
   logbook/countrydat.cpp
   logbook/logbook.cpp
+  logbook/licensestates.cpp   # CE3TSK 2026-10-03
   # CE3TSK: the geography tables compiled into the program - which grid squares a DXCC entity
   # occupies, and which US state(s) a square covers.  The two *_data.cpp are GENERATED from
   # geodata/*.json by geodata/make_geodata_headers.py; geodata/geodata_selftest.cpp and
@@ -690,6 +691,7 @@ set (message_aggregator_STYLESHEETS
 set (TOP_LEVEL_RESOURCES
   cty.dat
   lotw-user-activity.csv
+  us-license-states.txt   # CE3TSK 2026-10-03: tools/make_license_states.py, from the FCC's licence file
   icons/Darwin/jtdx.iconset/icon_128x128.png
   contrib/decpasses.png
   contrib/dtrange.png

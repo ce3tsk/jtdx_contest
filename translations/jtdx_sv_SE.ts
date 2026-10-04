@@ -290,11 +290,6 @@ Formatera:
         <translation>JTDX Decoded Text Font Choose</translation>
     </message>
     <message>
-        <location filename="../Configuration.cpp" line="4902"/>
-        <source>Enter Grid error: 4/6/8/10 char grid will be accepted</source>
-        <translation>Fel i rutan: 4/6/8/10 tecken accepteras</translation>
-    </message>
-    <message>
         <location filename="../Configuration.cpp" line="5438"/>
         <location filename="../Configuration.cpp" line="5469"/>
         <source>Cancel</source>
@@ -513,6 +508,46 @@ Formatera:
         <location filename="../Configuration.cpp"/>
         <source>&amp;Unmark default</source>
         <translation>&amp;Ta bort standardmarkering</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>The downloaded file is not a list of US license states.</source>
+        <translation>Den hämtade filen är inte en lista över delstaterna för amerikanska licenser.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>No DXCC country in cty.dat has the prefix of %1.</source>
+        <translation>Inget DXCC-land i cty.dat har prefixet för %1.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>A grid has 4, 6, 8, 10 or 12 characters, as IO91, IO91wm, IO91wm99, IO91wm99aa or IO91wm99aa00.</source>
+        <translation>En grid har 4, 6, 8, 10 eller 12 tecken, till exempel IO91, IO91wm, IO91wm99, IO91wm99aa eller IO91wm99aa00.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Your grid %1 does not lie in %2, the DXCC country of %3.</source>
+        <translation>Din grid %1 ligger inte i %2, DXCC-landet för %3.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Check your call and grid</source>
+        <translation>Kontrollera din anropssignal och grid</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Distances, PSK Reporter spots and the WW Digi exchange are worked out from them.</source>
+        <translation>Avstånd, PSK Reporter-spottar och WW Digi-utväxlingen beräknas utifrån dem.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>&amp;Keep it</source>
+        <translation>&amp;Behåll</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>&amp;Correct it</source>
+        <translation>&amp;Rätta</translation>
     </message>
 </context>
 <context>
@@ -1439,7 +1474,7 @@ Formatera:
     </message>
     <message>
         <location filename="../logbook/countrydat.cpp" line="219"/>
-        <source>U.S.A.</source>
+        <source>USA</source>
         <translation>USA</translation>
     </message>
     <message>
@@ -9699,8 +9734,8 @@ Dölj meddelanden med inte tillhörande hash för 2a signal</translation>
         <location filename="../Configuration.ui" line="6858"/>
         <location filename="../Configuration.ui" line="6871"/>
         <location filename="../Configuration.ui" line="7029"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This DT window being used only for RX frequency CALL3 data based Hint decoders focused on CQ and &apos;mycall hiscall hisgrid&apos; messages. Higher values may increase number of the false decodes.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Detta DT-fönster används endast för RX-frekvens CALL3 databaserade tipavkodare fokuserade på CQ och &apos;mycall hiscall hisgrid&apos; meddelanden. Högre värden kan öka antalet falska avkoder. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This DT window being used only for RX frequency CALL3 data based Hint decoders focused on CQ and 'mycall hiscall hisgrid' messages. Higher values may increase number of the phantom decodes.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Detta DT-fönster används endast för RX-frekvens CALL3 databaserade tipavkodare fokuserade på CQ och 'mycall hiscall hisgrid' meddelanden. Högre värden kan öka antalet fantomavkodningar. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="6861"/>
@@ -9892,8 +9927,8 @@ ljudkort ändras</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
-        <source>False decodes</source>
-        <translation>Falska avkodningar</translation>
+        <source>Phantom decodes</source>
+        <translation>Fantomavkodningar</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
@@ -9902,8 +9937,8 @@ ljudkort ändras</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
-        <source>The automatic sequencer does not pick such a decode on its own; a double click still answers it. A station heard with the same doubtful grid in two different periods is most likely operating away from home, and is answered again - false decodes do not repeat.</source>
-        <translation>Den automatiska sekvensen (AutoSeq) väljer inte själv en sådan avkodning; ett dubbelklick besvarar den ändå. En station som hörs med samma tvivelaktiga grid i två olika perioder sänder med stor sannolikhet långt från sitt hemland och besvaras igen - falska avkodningar upprepas inte.</translation>
+        <source>The automatic sequencer does not pick such a decode on its own; a double click still answers it. A station heard with the same doubtful grid in two different periods is most likely operating away from home, and is answered again - phantom decodes do not repeat.</source>
+        <translation>Den automatiska sekvensen (AutoSeq) väljer inte själv en sådan avkodning; ett dubbelklick besvarar den ändå. En station som hörs med samma tvivelaktiga grid i två olika perioder sänder med stor sannolikhet långt från sitt hemland och besvaras igen - fantomavkodningar upprepas inte.</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
@@ -9912,8 +9947,8 @@ ljudkort ändras</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
-        <source>Below 30 MHz a call signing /R (rover) is almost always a false decode: /R is a single bit of the message. The decode is kept, with the /R call underlined in red. Its ALL.TXT line ends with lc:rover, and it is sent to UDP clients as a low-confidence decode.</source>
-        <translation>Under 30 MHz är en anropssignal med /R (rover) nästan alltid en falsk avkodning: /R är en enda bit i meddelandet. Avkodningen behålls, med /R-anropssignalen understruken med rött. Dess rad i ALL.TXT slutar med lc:rover, och den skickas till UDP-klienter som en avkodning med låg tillförlitlighet.</translation>
+        <source>Below 30 MHz a call signing /R (rover) is almost always a phantom decode: /R is a single bit of the message. The decode is kept, with the /R call underlined in red. Its ALL.TXT line ends with lc:rover, and it is sent to UDP clients as a low-confidence decode.</source>
+        <translation>Under 30 MHz är en anropssignal med /R (rover) nästan alltid en fantomavkodning: /R är en enda bit i meddelandet. Avkodningen behålls, med /R-anropssignalen understruken med rött. Dess rad i ALL.TXT slutar med lc:rover, och den skickas till UDP-klienter som en avkodning med låg tillförlitlighet.</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
@@ -9937,13 +9972,13 @@ ljudkort ändras</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
-        <source>Below 30 MHz, a decode in which both calls sign /P (portable) is almost always a false decode when it is weak (-20 dB or below): /P is a single bit per call of the message type portable calls use, while genuine park-to-park contacts are stronger. The decode is kept, with the /P calls underlined in red, and is never answered automatically - a double click still answers it. Its ALL.TXT line ends with lc:portable, and it is sent to UDP clients as a low-confidence decode.</source>
-        <translation>Under 30 MHz är en avkodning där båda anropssignalerna har /P (portabel) nästan alltid en falsk avkodning när den är svag (-20 dB eller lägre): /P är en enda bit per anropssignal i den meddelandetyp som portabla anropssignaler använder, medan äkta park-till-park-förbindelser är starkare. Avkodningen behålls, med /P-anropssignalerna understrukna med rött, och den besvaras aldrig automatiskt - ett dubbelklick besvarar den ändå. Dess rad i ALL.TXT slutar med lc:portable, och den skickas till UDP-klienter som en avkodning med låg tillförlitlighet.</translation>
+        <source>Below 30 MHz, a decode in which both calls sign /P (portable) is almost always a phantom decode when it is weak (-20 dB or below): /P is a single bit per call of the message type portable calls use, while genuine park-to-park contacts are stronger. The decode is kept, with the /P calls underlined in red, and is never answered automatically - a double click still answers it. Its ALL.TXT line ends with lc:portable, and it is sent to UDP clients as a low-confidence decode.</source>
+        <translation>Under 30 MHz är en avkodning där båda anropssignalerna har /P (portabel) nästan alltid en fantomavkodning när den är svag (-20 dB eller lägre): /P är en enda bit per anropssignal i den meddelandetyp som portabla anropssignaler använder, medan äkta park-till-park-förbindelser är starkare. Avkodningen behålls, med /P-anropssignalerna understrukna med rött, och den besvaras aldrig automatiskt - ett dubbelklick besvarar den ändå. Dess rad i ALL.TXT slutar med lc:portable, och den skickas till UDP-klienter som en avkodning med låg tillförlitlighet.</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
-        <source>A call whose prefix belongs to no country in cty.dat - shown as where? in the country column - is most likely a false decode, on any band. The decode is kept, with the call and where? underlined in red, and is never answered automatically - a double click still answers it. Its ALL.TXT line ends with lc:where, and it is sent to UDP clients as a low-confidence decode. Maritime and aeronautical mobile calls (/MM, /AM) have no country and are never marked.</source>
-        <translation>En anropssignal vars prefix inte hör till något land i cty.dat - visas som Var? i landskolumnen - är med största sannolikhet en falsk avkodning, på alla band. Avkodningen behålls, med anropssignalen och Var? understrukna med rött, och den besvaras aldrig automatiskt - ett dubbelklick besvarar den ändå. Dess rad i ALL.TXT slutar med lc:where, och den skickas till UDP-klienter som en avkodning med låg tillförlitlighet. Maritima och aeronautiska mobila anropssignaler (/MM, /AM) har inget land och markeras aldrig.</translation>
+        <source>A call whose prefix belongs to no country in cty.dat - shown as where? in the country column - is most likely a phantom decode, on any band. The decode is kept, with the call and where? underlined in red, and is never answered automatically - a double click still answers it. Its ALL.TXT line ends with lc:where, and it is sent to UDP clients as a low-confidence decode. Maritime and aeronautical mobile calls (/MM, /AM) have no country and are never marked.</source>
+        <translation>En anropssignal vars prefix inte hör till något land i cty.dat - visas som Var? i landskolumnen - är med största sannolikhet en fantomavkodning, på alla band. Avkodningen behålls, med anropssignalen och Var? understrukna med rött, och den besvaras aldrig automatiskt - ett dubbelklick besvarar den ändå. Dess rad i ALL.TXT slutar med lc:where, och den skickas till UDP-klienter som en avkodning med låg tillförlitlighet. Maritima och aeronautiska mobila anropssignaler (/MM, /AM) har inget land och markeras aldrig.</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
@@ -9952,13 +9987,53 @@ ljudkort ändras</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
-        <source>Append the US state of a US station's grid square to its DXCC name or prefix, as in U.S.A.-CA. A square shared by several states names them all, the one with the most people first: U.S.A.-NY/MA.</source>
-        <translation>Lägger till delstaten där en amerikansk stations grid ligger efter dess DXCC-namn eller prefix, till exempel U.S.A.-CA. Ligger griden i flera delstater visas alla, den med flest invånare först: U.S.A.-NY/MA.</translation>
+        <source>Append the US state of a US station's grid square to its DXCC name or prefix, as in USA, CA. A square shared by several states names them all, the one with the most people first: USA, NY/MA - or only the state of the station's US license, when that is one of them: USA, MA.</source>
+        <translation>Lägger till delstaten där en amerikansk stations grid ligger efter dess DXCC-namn eller prefix, till exempel USA, CA. Ligger griden i flera delstater visas alla, den med flest invånare först: USA, NY/MA - eller bara delstaten för stationens amerikanska licens, när den är en av dem: USA, MA.</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
         <source>Sh&amp;ow US states</source>
         <translation>Visa &amp;USA-delstater</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Highlight messages from US stations whose state is not in the wsjtx_log.adi log file yet. The state comes from the grid square, in the log and in the decoded message alike: a square that lies in a single state counts for it; a square several states share counts for the state of the station's US license when that is one of them, and otherwise for none.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Markera meddelanden från amerikanska stationer vars delstat ännu inte finns i wsjtx_log.adi-loggfilen. Delstaten kommer från griden, både i loggen och i det avkodade meddelandet: en grid som ligger i en enda delstat räknas för den; en grid som flera delstater delar räknas för delstaten för stationens amerikanska licens när den är en av dem, och annars för ingen.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Check and highlight new US states</source>
+        <translation>Kontrollera och markera nya USA-delstater</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Highlight messages from US stations whose state is new on the band according to the wsjtx_log.adi log file. The state comes from the grid square and, in a square several states share, from the station's US license, as for new US states.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Markera meddelanden från amerikanska stationer vars delstat är ny på bandet enligt data från wsjtx_log.adi-loggfilen. Delstaten kommer från griden och, i en grid som flera delstater delar, från stationens amerikanska licens, som för nya amerikanska delstater.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>New US State</source>
+        <translation>Ny USA-delstat</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>New US State on Band</source>
+        <translation>Ny USA-delstat på Band</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>US licenses:</source>
+        <translation>Amerikanska licenser:</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Download the latest list of US license states from ce3tsk.com, built from the FCC's amateur license file. In a grid square several states share, a US station counts for the state of its license when that state is one of the square's.</source>
+        <translation>Hämta den senaste listan över delstaterna för amerikanska licenser från ce3tsk.com, sammanställd ur FCC:s amatörlicensfil. I en grid som flera delstater delar räknas en amerikansk station för delstaten för sin licens när den delstaten är en av gridens.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Highlight messages from US stations whose state is new in the mode according to the wsjtx_log.adi log file. The state comes from the grid square and, in a square several states share, from the station's US license, as for new US states.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Markera meddelanden från amerikanska stationer vars delstat är ny i läget enligt data från wsjtx_log.adi-loggfilen. Delstaten kommer från griden och, i en grid som flera delstater delar, från stationens amerikanska licens, som för nya amerikanska delstater.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
