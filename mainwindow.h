@@ -1013,6 +1013,7 @@ private:
   QString m_baseCall;
   QString m_hisCall;
   QString m_hisGrid;
+  bool m_hisGridFromCall3;   // CE3TSK 2026-10-05: the DX Grid box holds what lookup() read from CALL3.TXT - never logged
   QString m_wantedCall;
   QString m_wantedCountry;
   QString m_wantedPrefix;

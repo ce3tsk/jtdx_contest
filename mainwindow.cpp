@@ -393,6 +393,7 @@ MainWindow::MainWindow(bool multiple, QSettings * settings, QSharedMemory *shdme
   Eqsl {new EQSL {network_manager, this}},
   m_hisCall {""},
   m_hisGrid {""},
+  m_hisGridFromCall3 {false},
   m_wantedCall {""}, m_wantedCountry {""}, m_wantedPrefix {""}, m_wantedGrid {""},
   m_wantedCallList {}, m_wantedCountryList {}, m_wantedPrefixList {}, m_wantedGridList {},
   m_appDir {QApplication::applicationDirPath ()},
@@ -8643,6 +8644,14 @@ void MainWindow::processMessage(QString const& messages, int position, bool alt,
   if (gridOK(hisgrid)) {
     if(m_hisGrid.left(4) != hisgrid) ui->dxGridEntry->setText(hisgrid);
   }
+  /* CE3TSK 2026-10-05: a message without a grid ("9Z4NM KJ6LRN RR73" double-clicked) takes the grid this very call
+     sent earlier this session - QsoHistory::gridSentBy, which the decode windows read its US state from - before
+     CALL3.TXT. Without it the QSO was logged without a grid, and Worked All States, which places a QSO by its logged
+     grid, counted it for no state although its decodes read "USA, CA". */
+  if (m_hisGrid.isEmpty ()) {
+    QString const sent = m_qsoHistory.gridSentBy (hiscall);
+    if (gridOK (sent)) ui->dxGridEntry->setText (sent);
+  }
   if (m_hisGrid.isEmpty ())
     lookup();
 
@@ -9201,7 +9210,13 @@ void MainWindow::lookup()                                       //lookup()
           } else {
             hisgrid=hisgrid.left(4) + hisgrid.mid(4,2).toLower();
           }
-          ui->dxGridEntry->setText(hisgrid);
+          /* CE3TSK 2026-10-05: CALL3.TXT is 2016-2017 spot data, never updated - fine for distance and beam heading,
+             never for the log or a US state. Marked only when it changes the box, so a Lookup that finds the grid
+             already heard on air leaves that grid loggable. */
+          if (hisgrid != ui->dxGridEntry->text ()) {
+            ui->dxGridEntry->setText(hisgrid);
+            m_hisGridFromCall3 = true;
+          }
           break;
         }
       }
@@ -9534,6 +9549,7 @@ void MainWindow::on_dxCallEntry_textChanged(const QString &t) //dxCall changed
 
 void MainWindow::on_dxGridEntry_textChanged(const QString &t) //dxGrid changed
 {
+  m_hisGridFromCall3 = false;   // CE3TSK 2026-10-05: any change but lookup()'s own - lookup() sets it after its setText
   int n=t.length();
   if(n!=4 and n!=6 and n!=8 and n!=10) {
     if (n < 4 || n==5) {
@@ -9611,8 +9627,18 @@ void MainWindow::on_logQSOButton_clicked()
   /* CE3TSK: the grid the station actually sent is in the QSO history; m_hisGrid is only the DX
      box, which clearDX empties - so a QSO completed from a late re-selection logged without a
      gridsquare although the grid had been decoded (logfields.h, WW_DIGI_CONTEST_SUPPORT 6b) */
-  QString hisGridLogged = m_hisGrid;
-  { QString g; m_qsoHistory.status (m_hisCall, g); hisGridLogged = log_grid (m_hisGrid, g); }
+  /* CE3TSK 2026-10-05: never a grid from CALL3.TXT - the log feeds Worked All States, now and on every reload, and
+     CALL3.TXT's grids are years-old spots. The box counts only when it holds an on-air or typed grid. */
+  QString historyGrid;
+  m_qsoHistory.status (m_hisCall, historyGrid);
+  QString const hisGridLogged = log_grid (m_hisGridFromCall3 ? QString {} : m_hisGrid, historyGrid);
+  if (hisGridLogged != m_hisGrid) distance.clear ();   // the box's distance belongs to the box's grid only
+  if (m_config.write_decoded_debug ()) {
+    auto const shown = [] (QString const& s) { return s.isEmpty () ? QStringLiteral ("-") : s; };
+    writeToALLTXT ("Log grid " + m_hisCall + ": box " + shown (m_hisGrid) + (m_hisGridFromCall3 ? " (CALL3.TXT, not logged)" : "")
+                   + ", history " + shown (historyGrid) + ", sent by this call " + shown (m_qsoHistory.gridSentBy (m_hisCall))
+                   + ", logged " + shown (hisGridLogged) + ", distance " + shown (distance));
+  }
   if (m_qsoHistory.log_data(m_hisCall,time,rrep,srep) > QsoHistory::SREPORT) {
       if (log_time_known (time)) {
           currenttime.setTime(QTime::fromMSecsSinceStartOfDay(time*1000));
