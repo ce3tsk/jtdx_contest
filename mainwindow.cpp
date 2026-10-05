@@ -6689,7 +6689,11 @@ void MainWindow::process_Auto()
       m_status = QsoHistory::NONE;
     } else if ((m_status == QsoHistory::RCQ || m_status == QsoHistory::SCALL || (m_status == QsoHistory::SREPORT && m_skipTx1 && !m_houndMode)) && m_config.answerCQCount() &&
         (decode_priority::counterGivesUp (prio) || m_strictdirCQ) && (m_config.nAnswerCQCounter() <= count || replyOtherOverridesCounters ())) {
-      clearDX (" cleared, RCQ/SCALL/SREPORT count reached");
+      /* CE3TSK 2026-10-05: say which rule cleared it - "count reached" was written when he answered another station
+         after one call, which read as a miscount (W7JDB, count 1 of 4) */
+      clearDX (m_config.nAnswerCQCounter() <= count ? QString {" cleared, RCQ/SCALL/SREPORT count reached"}
+               : " cleared, answering another station (RCQ/SCALL/SREPORT count " + QString::number (count) + " of "
+                 + QString::number (m_config.nAnswerCQCounter()) + " not reached)");
       if (replyOtherOverridesCounters ())
           counters2 = false;
       else {
@@ -6704,7 +6708,9 @@ void MainWindow::process_Auto()
         counters = false;
     } else if ((m_status == QsoHistory::RCALL || (m_status == QsoHistory::SREPORT && !m_skipTx1)) && m_config.answerInCallCount() && 
         (m_config.nAnswerInCallCounter() <= count || replyOtherOverridesCounters ())) {
-      clearDX (" cleared, RCALL/SREPORT count reached");
+      clearDX (m_config.nAnswerInCallCounter() <= count ? QString {" cleared, RCALL/SREPORT count reached"}   // CE3TSK: see above
+               : " cleared, answering another station (RCALL/SREPORT count " + QString::number (count) + " of "
+                 + QString::number (m_config.nAnswerInCallCounter()) + " not reached)");
       m_qsoHistory.calllist(hisCall,rpt.toInt(),time);
       count = m_qsoHistory.reset_count(hisCall);
       hisCall = m_hisCall;
