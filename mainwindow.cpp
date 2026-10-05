@@ -9638,7 +9638,9 @@ void MainWindow::on_logQSOButton_clicked()
   QString historyGrid;
   m_qsoHistory.status (m_hisCall, historyGrid);
   QString const hisGridLogged = log_grid (m_hisGridFromCall3 ? QString {} : m_hisGrid, historyGrid);
-  if (hisGridLogged != m_hisGrid) distance.clear ();   // the box's distance belongs to the box's grid only
+  /* CE3TSK 2026-10-05 (review): the box's distance belongs to the box's grid - when another is logged (the box held
+     CALL3.TXT's, or was empty), the distance is worked out for the one logged, the DX panel's own way; it was dropped */
+  if (hisGridLogged != m_hisGrid) distance = grid_distance_text (m_config.my_grid (), hisGridLogged, m_wwDigi, m_config.miles ());
   if (m_config.write_decoded_debug ()) {
     auto const shown = [] (QString const& s) { return s.isEmpty () ? QStringLiteral ("-") : s; };
     writeToALLTXT ("Log grid " + m_hisCall + ": box " + shown (m_hisGrid) + (m_hisGridFromCall3 ? " (CALL3.TXT, not logged)" : "")

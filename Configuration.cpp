@@ -1600,19 +1600,38 @@ QString contest_log_filename (Configuration::SpecialOperatingActivity activity, 
   return QString {"wsjtx_%1-%2_log.adi"}.arg (slug, period);
 }
 
+namespace
+{
+  /* both distances azdist gives, km and miles; false when either grid is missing (CE3TSK 2026-10-05: shared by
+     grid_distance_km and grid_distance_text) */
+  bool grid_distances (QString const& myGrid, QString const& hisGrid, bool fourCharOnly, int& km, int& miles)
+  {
+    QString const mine = contest_grid (myGrid, fourCharOnly);
+    QString const his = contest_grid (hisGrid, fourCharOnly);
+    if (mine.isEmpty () || his.isEmpty ()) return false;
+    /* azdist writes the padding back into these buffers, so they must be mutable and must not
+       be reused afterwards - hence local copies rather than a const_cast on a temporary. */
+    QByteArray a = (mine + "        ").left (8).toLatin1 ();
+    QByteArray b = (his + "        ").left (8).toLatin1 ();
+    double utch = 0.0;
+    int nAz = 0, nEl = 0, nHotAz = 0, nHotABetter = 0;
+    km = miles = 0;
+    azdist_ (a.data (), b.data (), &utch, &nAz, &nEl, &miles, &km, &nHotAz, &nHotABetter, 8, 8);
+    return true;
+  }
+}
+
 int grid_distance_km (QString const& myGrid, QString const& hisGrid, bool fourCharOnly)
 {
-  QString const mine = contest_grid (myGrid, fourCharOnly);
-  QString const his = contest_grid (hisGrid, fourCharOnly);
-  if (mine.isEmpty () || his.isEmpty ()) return -1;
-  /* azdist writes the padding back into these buffers, so they must be mutable and must not
-     be reused afterwards - hence local copies rather than a const_cast on a temporary. */
-  QByteArray a = (mine + "        ").left (8).toLatin1 ();
-  QByteArray b = (his + "        ").left (8).toLatin1 ();
-  double utch = 0.0;
-  int nAz = 0, nEl = 0, nDmiles = 0, nDkm = 0, nHotAz = 0, nHotABetter = 0;
-  azdist_ (a.data (), b.data (), &utch, &nAz, &nEl, &nDmiles, &nDkm, &nHotAz, &nHotABetter, 8, 8);
-  return nDkm;
+  int km, miles;
+  return grid_distances (myGrid, hisGrid, fourCharOnly, km, miles) ? km : -1;
+}
+
+QString grid_distance_text (QString const& myGrid, QString const& hisGrid, bool fourCharOnly, bool miles)
+{
+  int km, mi;
+  if (!grid_distances (myGrid, hisGrid, fourCharOnly, km, mi)) return {};
+  return miles ? QString::asprintf ("%d mi", mi) : QString::asprintf ("%d km", km);   // as the DX panel writes it
 }
 bool Configuration::newPotential () const {return m_->newPotential_;}
 bool Configuration::clear_DX () const {return m_->clear_DX_;}

@@ -487,6 +487,10 @@ QString contest_points_tag (int points);
    fourCharOnly cuts both grids to the 4 characters a contest actually exchanges. */
 int grid_distance_km (QString const& myGrid, QString const& hisGrid, bool fourCharOnly);
 
+/* CE3TSK 2026-10-05: the same distance as the DX panel shows it - "1234 km", or "767 mi" with miles chosen - for the
+   log's comment when the grid logged is not the box's (MainWindow::on_logQSOButton_clicked); "" when unknown. */
+QString grid_distance_text (QString const& myGrid, QString const& hisGrid, bool fourCharOnly, bool miles);
+
 /* The grid as a contest sees it. One definition, so the DX panel and the per decode scoring
    cannot drift apart. */
 QString contest_grid (QString const& grid, bool fourCharOnly);
