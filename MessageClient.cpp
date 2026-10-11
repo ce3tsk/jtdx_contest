@@ -417,9 +417,13 @@ void MessageClient::status_update (Frequency f, QString const& mode, QString con
     {
       QByteArray message;
       NetworkMessage::Builder out {&message, NetworkMessage::Status, m_->id_, m_->schema_};
+      /* CE3TSK 2026-10-11: My Grid goes out in upper case, as WSJT-X sends it - its Settings box upper-cases the
+         subsquare, ours lower-cases it (JN53fq). GridTracker2 keeps the home grid in upper case and compares it
+         as it arrives, so every Status looked like a new home grid and its azimuthal map was rebuilt and
+         re-centred each time (found and fixed by Luigi IW5DNZ). The profile and the log keep the grid as typed. */
       out << f << mode.toUtf8 () << dx_call.toUtf8 () << report.toUtf8 () << tx_mode.toUtf8 ()
           << tx_enabled << transmitting << decoding << rx_df << tx_df << de_call.toUtf8 ()
-          << de_grid.toUtf8 () << dx_grid.toUtf8 () << watchdog_timeout << sub_mode.toUtf8 ()
+          << de_grid.toUpper ().toUtf8 () << dx_grid.toUtf8 () << watchdog_timeout << sub_mode.toUtf8 ()
           << fast_mode << tx_first;
       if(force) m_->force_=true;
       m_->send_message (out, message);
