@@ -72,5 +72,6 @@ changed.
 | US state boundaries (both tables) | US Census Bureau cartographic boundaries, 1:20m, 2023 | https://www2.census.gov/geo/tiger/GENZ2023/shp/cb_2023_us_state_20m.zip | US Government, public domain |
 | US population | US Census Bureau 2020 centres of population by tract | https://www2.census.gov/geo/docs/reference/cenpop2020/tract/CenPop2020_Mean_TR.txt | US Government, public domain |
 | US amateur licences | FCC Universal Licensing System, Amateur Radio Service, weekly complete file | https://data.fcc.gov/download/pub/uls/complete/l_amat.zip | US Government public record |
+| positions of the Antarctic stations | Wikidata, the item beside each station in `make_dxcc_grids.py` (`ANTARCTIC_BASES`) | https://www.wikidata.org/ | CC0 |
 
 Each generated table carries a note with its source.

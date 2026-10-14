@@ -3,7 +3,9 @@ program sfrx
 ! Command-line SuperFox decoder
 
 ! CE3TSK: from WSJT-X 3.0.2 lib/superfox/sfrx.f90 (SUPERFOX_PLAN.md): the reference the GUI
-! path is tested against, since it calls the same sfrx_sub. What differs from the donor:
+! path is tested against, since it reaches the same receiver - sfrx_sub takes the file's 16-bit
+! samples and calls sfrx_core, which the decoder process calls with the band as reals (since
+! 2026-10-12; the same numbers for a 16-bit file). What differs from the donor:
 ! - no git tag in the usage text, no debug line on unit 72 (it left a fort.72 in the working
 !   directory), no date: sfrx_sub does not take one;
 ! - a file name without a yymmdd_hhmmss stamp means nutc = 0 instead of ending the program with

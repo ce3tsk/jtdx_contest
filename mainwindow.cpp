@@ -63,6 +63,8 @@
 #include "dialtuning.h"    // CE3TSK: the dial's wheel and clicks, the step under the pointer
 #include "uilimits.h"      // CE3TSK: the .ui size limits against the current font
 #include "geometryrestore.h"  // CE3TSK 2026-09-26: one restore rule for the main window, Wide Graph, Log QSO
+#include "deletedlog.h"    // CE3TSK 2026-10-12: the decodes the prefix-to-grid table deleted, into a file
+#include "cqdirection.h"   // CE3TSK 2026-10-12: the word after CQ - a region or an activity - and the box it is typed into
 #include <QPainter>
 #include <functional>   // CE3TSK P13: the recursive menu hook
 #include <QThread>                  /* CE3TSK: 16 bit wav expansion */
@@ -122,6 +124,8 @@ extern "C" {
 
   void genwspr_(char* msg, char* msgsent, int itone[], fortran_charlen_t, fortran_charlen_t);
 
+  bool stdmsg_(char const * msg, fortran_charlen_t);   /* CE3TSK 2026-10-12: is it a structured 77 bit message - msgtype () */
+
   void azdist_(char* MyGrid, char* HisGrid, double* utch, int* nAz, int* nEl,
                int* nDmiles, int* nDkm, int* nHotAz, int* nHotABetter,
                fortran_charlen_t, fortran_charlen_t);
@@ -154,7 +158,7 @@ namespace
   QRegularExpression wcall_alphabet {"[A-Za-z0-9/,]*"};
   QRegularExpression wcountry_alphabet {"[A-Za-z0-9/,*]*"};
   QRegularExpression wgrid_alphabet {"([a-r]{2,2}[0-9]{2,2}[,]{1,1})*",QRegularExpression::CaseInsensitiveOption};
-  QRegularExpression cqdir_alphabet {"[a-z]{0,2}",QRegularExpression::CaseInsensitiveOption};
+  QRegularExpression cqdir_alphabet {cq_direction::typed ()};   /* CE3TSK 2026-10-12: four letters, it was two (cqdirection.h) */
   QRegularExpression dxCall_alphabet {"[A-Za-z0-9/]*"};
   QRegularExpression dxGrid_alphabet {"[A-Ra-r]{2,2}[0-9]{2,2}[A-Xa-x]{2,2}[0-9]{2,2}[A-Xa-x]{2,2}"};
   QRegularExpression words_re {R"(^(?:(?<word1>(?:CQ|DE|QRZ)(?:\s?DX|\s(?:[A-Z]{2}|\d{3}))|[A-Z0-9/]+)\s)(?:(?<word2>[A-Z0-9/]+)(?:\s(?<word3>[-+A-Z0-9]+)(?:\s(?<word4>(?:OOO|(?!RR73)[A-R]{2}[0-9]{2})))?)?)?)"};
@@ -370,6 +374,9 @@ MainWindow::MainWindow(bool multiple, QSettings * settings, QSharedMemory *shdme
   m_finishedCall {""},
   m_finishedTime {0},
   m_cqdir {""},
+  m_cqWordBox {nullptr},
+  m_cqWordBusy {false},
+  m_cqWordMode77 {false},
   m_lastMode {""},
   m_callsign {""},
   m_grid {""},
@@ -1103,6 +1110,10 @@ MainWindow::MainWindow(bool multiple, QSettings * settings, QSharedMemory *shdme
   ui->dxGridEntry->setValidator (new QRegularExpressionValidator {dxGrid_alphabet, this});
   ui->directionLineEdit->setValidator (new QRegularExpressionValidator {cqdir_alphabet, this});
   ui->direction1LineEdit->setValidator (new QRegularExpressionValidator {cqdir_alphabet, this});
+  /* CE3TSK 2026-10-12: a word typed there is taken when the typing stops (cqdirection.h) */
+  m_cqWordTimer.setSingleShot (true);
+  m_cqWordTimer.setInterval (cq_direction::typingPauseMs);
+  connect (&m_cqWordTimer, &QTimer::timeout, this, [this] {takeCqWord (true);});
 
   // Free text macros model to widget hook up.
   ui->tx5->setModel (m_config.macros ());
@@ -1266,6 +1277,12 @@ MainWindow::MainWindow(bool multiple, QSettings * settings, QSharedMemory *shdme
      params_layout.sh pins TLS separately, under 5 MB, which is a different budget: TLS shares the
      thread's mapping with the stack but does not size it. */
   new_env.insert  ("OMP_STACKSIZE", "24M");
+  /* CE3TSK 2026-10-12: the decoder says which decodes its prefix-to-grid table deleted - a <DecodeDeleted>
+     line each, read in readFromStdout and kept in <month>_DELETED.TXT (deletedlog.h). An environment
+     variable and not an argument or a field of the shared block: a decoder that does not know it ignores
+     it, and one that is started by a program that does not set it stays silent, so a jtdx and a jtdxjt9 of
+     either side of this change still run together. */
+  new_env.insert  (deleted_log::environmentVariable (), "1");
   proc_jtdxjt9.setProcessEnvironment (new_env);
   proc_jtdxjt9.start(QDir::toNativeSeparators (m_appDir) + QDir::separator () + "jtdxjt9",
                      jt9_args, QIODevice::ReadWrite | QIODevice::Unbuffered);
@@ -1448,7 +1465,7 @@ void MainWindow::writeSettings()
   m_settings->setValue("ConvertOutMRUdir",m_convertOutPath);   /* CE3TSK */
   m_settings->setValue("TxFirst",m_txFirstParkedValid ? m_txFirstParked : m_txFirst);   // CE3TSK: S-Hound forces the period, the operator's own choice is what is kept
   m_settings->setValue("RRR/RR73",m_rrr);
-  m_settings->setValue("CQdirection",m_cqdir);
+  m_settings->setValue("CQdirection",cq_direction::toKeep (m_cqdir, ui->directionLineEdit->text (), m_cqWordTimer.isActive ()));   /* CE3TSK 2026-10-14: a word still waiting too */
   m_settings->setValue("DXcall",ui->dxCallEntry->text());
   m_settings->setValue("DXgrid",ui->dxGridEntry->text());
   m_settings->setValue("WantedCallCommaList",ui->wantedCall->text());
@@ -1723,10 +1740,7 @@ void MainWindow::readSettings()
   else { ui->pbSendRRR->setText("RR73"); }
   
   m_cqdir = m_settings->value("CQdirection","").toString();
-  if(!m_cqdir.isEmpty()) {
-    QRegularExpression cqdir_re("^[A-Za-z]{2,2}$"); QRegularExpressionMatch match = cqdir_re.match(m_cqdir);
-    bool hasMatch = match.hasMatch(); if(!hasMatch) m_cqdir="";
-  }
+  if(!cq_direction::kept (m_cqdir)) m_cqdir="";   /* CE3TSK 2026-10-12: two to four letters, it was two */
   ui->directionLineEdit->setText(m_cqdir);
   if(!m_cqdir.isEmpty ()) { ui->pbCallCQ->setText("CQ " + m_cqdir); }
   else { ui->pbCallCQ->setText("CQ"); }
@@ -3972,8 +3986,10 @@ void MainWindow::styleChanged()
   ui->pbTxLock->setChecked(m_lockTxFreq);
   on_pbTxLock_clicked(m_lockTxFreq);
   ui->tx5->setStyleSheet(QString("QComboBox {selection-background-color: %1;background: %1}").arg(Radio::convert_dark("#ffffff",m_useDarkStyle)));
-  on_directionLineEdit_textChanged(m_cqdir);
-  on_direction1LineEdit_textChanged(m_cqdir);
+  /* CE3TSK 2026-10-12: the boxes' colours for the style - and the CQ selected again, as the boxes' slots,
+     called here for the colours, always did: the second tab first (selectCqAgain ()) */
+  showCqWord ();
+  if (1 != m_cqdir.length ()) selectCqAgain (true);
   if(!m_uploadSpots) ui->cbUploadWSPR_Spots->setStyleSheet(QString("QCheckBox{background: %1}").arg(Radio::convert_dark("#ffff00",m_useDarkStyle)));
   ui->label_4->setStyleSheet(QString("QLabel{background: %1}").arg(Radio::convert_dark("#aabec8",m_useDarkStyle)));
   ui->label_9->setStyleSheet(QString("QLabel{background: %1}").arg(Radio::convert_dark("#aabec8",m_useDarkStyle)));
@@ -6609,6 +6625,8 @@ void MainWindow::decode()                                       //decode()
      here, with the data already staged and the lock still in place, so the value and the audio
      reach the decoder together. */
   ++dec_data.params.ndecreq;
+  /* CE3TSK 2026-10-12: what the record of deleted decodes must know of this decode (deletedlog.h) */
+  m_deletedRecord.decodeBegins (1 == dec_data.params.newdat, m_diskData, static_cast<qint64> (m_freqNominal));
   memcpy(to, from, qMin(mem_jtdxjt9->size(), size));
   QFile {m_config.temp_dir ().absoluteFilePath (".bgabort")}.remove ();   // CE3TSK: a fresh decode clears any context-change abort
   QFile {m_config.temp_dir ().absoluteFilePath (".lock")}.remove (); // Allow jtdxjt9 to start
@@ -6932,6 +6950,16 @@ void MainWindow::readFromStdout()                             //readFromStdout
 {
   while(proc_jtdxjt9.canReadLine()) {
     QByteArray t=proc_jtdxjt9.readLine();
+    /* CE3TSK 2026-10-12: a decode the prefix-to-grid table deleted. It is not a decode line and nothing for
+       the windows, the sequencer or ALL.TXT: it goes to <month>_DELETED.TXT beside ALL.TXT (deletedlog.h),
+       and must be taken here, before anything below reads the line as a decode. The record knows from
+       decode () what this decode is of - a file played back writes nothing, the Decode button writes no
+       message twice - and the dial it began on: m_freqNominal is the dial of NOW, and the deletions of a
+       TX background cut short by a change of band arrive after the change. */
+    if(deleted_log::isDeletedLine (t)) {
+      m_deletedRecord.take (m_dataDir, m_jtdxtime->currentDateTimeUtc2 (), t);
+      continue;
+    }
     // CE3TSK: pipeline ensemble - the background phase's closing line: count, time, whether
     // the next decode cut it short. The decodes themselves arrived as ordinary lines.
     if(t.startsWith("<BackgroundFinished>")) {
@@ -8822,7 +8850,10 @@ void MainWindow::genCQMsg ()
       ui->tx6->setText(t);
     } */
 // code below shall be combined into m_CQtype or CQ CONTEST shall be combined into m_cqdir
-    if(!m_cqdir.isEmpty () && stdCall(m_config.my_callsign())) { QString t="CQ " + m_cqdir + " " + m_config.my_callsign() + " " + grid.left(4); /* CE3TSK: same local grid as the plain CQ above */
+    /* CE3TSK 2026-10-12: a word of three or four letters goes into the CQ only in the modes that carry it
+       (cqdirection.h); in JT65, JT9 and T10 the CQ stays plain and the box shows the word as not in effect */
+    QString const cqword {cq_direction::inMessage (m_cqdir, m_mode.startsWith ("FT"))};
+    if(!cqword.isEmpty () && stdCall(m_config.my_callsign())) { QString t="CQ " + cqword + " " + m_config.my_callsign() + " " + grid.left(4); /* CE3TSK: same local grid as the plain CQ above */
       msgtype(t, ui->tx6);
     }
 // end of the code area to be reworked
@@ -9334,6 +9365,16 @@ void MainWindow::msgtype(QString t, QLineEdit* tx)               //msgtype()
     QStringList w=t.toUpper().split(" ",SkipEmptyParts);
     if(w.size()==4 && w[2]=="R" && w[3].length()==4 && gridOK(w[3])) text=false;
   }
+  /* CE3TSK 2026-10-12: nor is a CQ with a word of three or four letters ("CQ TEST K1ABC FN42") free text in
+     FT8, FT4 and FT2 (cqdirection.h). gen9() knows two letters after CQ; the 77 bit packer that sends the
+     message in those modes carries four, and it is asked itself. The caller must be a standard call as well:
+     of any other the packer sends the base call alone ("CQ TEST K1ABC/QRP FN42" goes out without the /QRP)
+     or free text - such a message stays pink. */
+  if(text && m_mode.startsWith("FT")) {
+    QString const cqcaller {cq_direction::longWordCqCaller (t.toUpper())};
+    QByteArray const m77 (t.toUpper().toLatin1().leftJustified(37,' ',true));
+    if(!cqcaller.isEmpty () && stdCall(cqcaller) && stdmsg_(m77.constData(),37)) text=false;
+  }
   QPalette p(tx->palette());
   if(text) {
     p.setColor(QPalette::Base,Radio::convert_dark("#ffccff",m_useDarkStyle));
@@ -9436,42 +9477,100 @@ void MainWindow::on_wantedGrid_textChanged(const QString &wgrid)
   }
 }
 
-void MainWindow::on_directionLineEdit_textChanged(const QString &dir) //CQ direction changed
+/* CE3TSK 2026-10-12: the word after CQ, in its two boxes - one on each tab, both holding the one word
+   (cqdirection.h).
+
+   A word TYPED is taken when the typing stops (cq_direction::typingPauseMs), on Enter, or when the box is
+   left - not at each letter. Until then the box is yellow, m_cqdir is still the word before it, and nothing
+   is generated: with four letters to type TE and TES are words too, and taken as they came each put a CQ of
+   its own into Tx6 and restarted a CQ that was on the air. A word the program sets (setText (): the
+   settings, the contest's WW, a request over the network) is taken at once, as it always was.
+   isModified () tells the two apart: typing sets it, setText () clears it.
+
+   Taking a word makes the CQ selected carry it (selectCqAgain ()), each tab in its own way, as before: the
+   first selects Tx6 when no QSO's messages stand, the second presses the CQ button when a CQ is its message.
+   The tab the word came through acts last, so its message is the one left selected. Then the CQ is
+   generated - Tx6, and the second tab's message when that is a CQ. Selecting Tx6 and pressing the CQ button
+   clear a DX call that was typed and the QSO's messages and restart a transmission: that is what choosing
+   another CQ means, and it is why a change of MODE must not come through here: it shows the word
+   (showCqWord ()), regenerates the CQ and presses nothing (commonActions ()). */
+void MainWindow::on_directionLineEdit_textChanged(const QString &dir) { cqWordChanged (ui->directionLineEdit, dir); }
+void MainWindow::on_direction1LineEdit_textChanged(const QString &dir) { cqWordChanged (ui->direction1LineEdit, dir); }
+void MainWindow::on_directionLineEdit_editingFinished() { if (m_cqWordTimer.isActive ()) takeCqWord (true); }
+void MainWindow::on_direction1LineEdit_editingFinished() { if (m_cqWordTimer.isActive ()) takeCqWord (true); }
+
+void MainWindow::cqWordChanged (QLineEdit * box, QString const& dir)
 {
-  QString cqdirection = dir.toUpper();
-  if(cqdirection.isEmpty ()) { ui->directionLineEdit->setStyleSheet(QString("QLineEdit {background: %1}").arg(Radio::convert_dark("#ffffff",m_useDarkStyle))); }
-  else if(cqdirection.length() == 1 || cqdirection.length() > 2) { ui->directionLineEdit->setStyleSheet(QString("QLineEdit {background: %1}").arg(Radio::convert_dark("#fffa82",m_useDarkStyle))); }
-  else if(cqdirection.length() == 2) { ui->directionLineEdit->setStyleSheet(QString("QLineEdit {background: %1}").arg(Radio::convert_dark("#82ff8c",m_useDarkStyle))); }
-  m_cqdir = cqdirection;
-  if (cqdirection.isEmpty ()) { ui->pbCallCQ->setText("CQ"); }
-  else if (cqdirection.length() == 2) { ui->pbCallCQ->setText("CQ " + m_cqdir); }
-  auto curpos = ui->directionLineEdit->cursorPosition(); ui->directionLineEdit->setText(m_cqdir);
-  ui->direction1LineEdit->setText(m_cqdir); ui->directionLineEdit->setCursorPosition(curpos);
-  if (cqdirection.isEmpty () || cqdirection.length() == 2) {
-      if(ui->genMsg->text().startsWith ("CQ ") && ui->txrb6->isChecked()) {
-         ui->pbCallCQ->click ();
-      }
-  }
+  if (m_cqWordBusy) return;                                  // the two setText () below, coming round
+  bool const typed {box->isModified ()};
+  QString const word {dir.toUpper ()};
+  m_cqWordBusy = true;
+  auto const curpos = box->cursorPosition (); box->setText (word); box->setCursorPosition (curpos);
+  (ui->directionLineEdit == box ? ui->direction1LineEdit : ui->directionLineEdit)->setText (word);
+  m_cqWordBusy = false;
+  m_cqWordBox = box;
+  if (typed) { m_cqWordTimer.start (); showCqWord (); }
+  else takeCqWord (false);
 }
 
-void MainWindow::on_direction1LineEdit_textChanged(const QString &dir) //CQ direction changed
+/* The boxes' colour and the CQ button's text. White: no word. Green: the word is in the CQ sent. Yellow: it
+   is not - one letter, as before; three or four letters in a mode that carries two (JT65, JT9, T10), where
+   the CQ is generated plain; or a word still being typed. The button reads the word in effect. */
+void MainWindow::showCqWord ()
 {
-  QString cqdirection = dir.toUpper();
-  if(cqdirection.isEmpty ()) { ui->direction1LineEdit->setStyleSheet(QString("QLineEdit {background: %1}").arg(Radio::convert_dark("#ffffff",m_useDarkStyle))); }
-  else if(cqdirection.length() == 1 || cqdirection.length() > 2) { ui->direction1LineEdit->setStyleSheet(QString("QLineEdit {background: %1}").arg(Radio::convert_dark("#fffa82",m_useDarkStyle))); }
-  else if(cqdirection.length() == 2) { ui->direction1LineEdit->setStyleSheet(QString("QLineEdit {background: %1}").arg(Radio::convert_dark("#82ff8c",m_useDarkStyle))); }
-  m_cqdir = cqdirection;
-  if (cqdirection.isEmpty ()) { ui->pbCallCQ->setText("CQ"); }
-  else if (cqdirection.length() == 2) { ui->pbCallCQ->setText("CQ " + m_cqdir); }
-  auto curpos = ui->direction1LineEdit->cursorPosition(); ui->direction1LineEdit->setText(m_cqdir);
-  ui->directionLineEdit->setText(m_cqdir); ui->direction1LineEdit->setCursorPosition(curpos);
-  if (cqdirection.isEmpty () || cqdirection.length() == 2) {
-      if(ui->tx1->text().isEmpty()) { if(ui->txrb6->isChecked()) ui->txb6->click (); }
-      else { 
-        if(cqdirection.length() == 2) ui->tx6->setText("CQ " + m_cqdir + " " + m_config.my_callsign() + " " + m_config.my_grid().left(4));
-        else ui->tx6->setText("CQ " + m_config.my_callsign() + " " + m_config.my_grid().left(4));
-      }
-  }
+  QString const word {ui->directionLineEdit->text ()};       // both boxes hold it, upper case
+  m_cqWordMode77 = m_mode.startsWith ("FT");
+  bool const green {!m_cqWordTimer.isActive () && cq_direction::Box::InEffect == cq_direction::box (word, m_cqWordMode77)};
+  QString const sheet {QString ("QLineEdit {background: %1}")
+      .arg (Radio::convert_dark (word.isEmpty () ? "#ffffff" : green ? "#82ff8c" : "#fffa82", m_useDarkStyle))};
+  ui->directionLineEdit->setStyleSheet (sheet);
+  ui->direction1LineEdit->setStyleSheet (sheet);
+  if (cq_direction::Box::InEffect == cq_direction::box (m_cqdir, m_cqWordMode77)) { ui->pbCallCQ->setText ("CQ " + m_cqdir); }
+  else if (m_cqdir.length () != 1) { ui->pbCallCQ->setText ("CQ"); }
+}
+
+/* typed: by hand, the typing over - a word that came back to the one in effect changes nothing. Not typed:
+   set by the program, and taken whatever it is. */
+void MainWindow::takeCqWord (bool typed)
+{
+  m_cqWordTimer.stop ();
+  QString const word {ui->directionLineEdit->text ()};
+  bool const asItWas {typed && word == m_cqdir};
+  QString const before {m_cqdir};
+  m_cqdir = word;
+  showCqWord ();
+  if (asItWas) return;
+  if (typed && m_config.write_decoded_debug ()) writeToALLTXT ("CQ word typed: " + (m_cqdir.isEmpty () ? QString {"none"} : m_cqdir));
+  if (1 == m_cqdir.length ()) return;                        // one letter: no CQ is generated for it, as before
+  /* CE3TSK 2026-10-14: a word typed that leaves the CQ sent as it was selects nothing (cqdirection.h,
+     changesCq): TEST typed in JT65 restarted the plain CQ on the air and cleared a DX call that was typed */
+  if (typed && !cq_direction::changesCq (before, m_cqdir, m_cqWordMode77)) return;
+  selectCqAgain (ui->direction1LineEdit == m_cqWordBox);
+}
+
+/* The CQ selected is selected again, to carry the word in effect: see the boxes' slots above. firstTabLast:
+   the first tab acts after the second, and its Tx6 is what stays selected.
+   Besides a word being taken, a change of style comes here (styleChanged ()), as it always did - through
+   the boxes' slots, called for their colours. That call is what puts the CQ into the second tab's message
+   when the program starts, so it stays; with it stays that switching the style with a CQ selected clears a
+   DX call that was typed. */
+void MainWindow::selectCqAgain (bool firstTabLast)
+{
+  auto const firstTab = [this] {
+    if (ui->tx1->text ().isEmpty () && ui->txrb6->isChecked ()) ui->txb6->click ();
+  };
+  auto const secondTab = [this] {
+    if (ui->genMsg->text ().startsWith ("CQ ") && ui->txrb6->isChecked ()) ui->pbCallCQ->click ();
+  };
+  if (firstTabLast) { secondTab (); firstTab (); }
+  else { firstTab (); secondTab (); }
+  /* Tx6 with the word in effect, whatever the tabs did - and through the generator. Selecting Tx6 generates
+     nothing: letter by letter the word reached Tx6 with the SECOND letter's CQ button, and a word taken in
+     one piece would stand in its box, green, beside the CQ of the word before. And with a QSO's messages
+     standing Tx6 was written here directly, past the generator's test of the own call: with a compound call
+     "CQ DX EA8/DL1ABC IL18" stood in Tx6, "CQ DX DL1ABC IL18" was sent, and it was not painted as what it was. */
+  genCQMsg ();
+  if (ui->genMsg->text ().startsWith ("CQ ")) ui->genMsg->setText (ui->tx6->text ());
 }
 
 void MainWindow::on_spotLineEdit_textChanged(const QString &text)
@@ -9985,6 +10084,21 @@ void MainWindow::commonActions ()
   } else {
     ui->syncButton->setVisible(true);
   }
+  /* CE3TSK 2026-10-12: a CQ word of three or four letters is sent in FT8, FT4 and FT2 and in no other mode
+     (cqdirection.h). So when the mode goes from one of those three to another kind, or back, the word's two
+     boxes change their colour, the CQ button its text, and the CQ generated loses or regains the word - on
+     both tabs: a "CQ TEST" left standing would go out in JT65 as free text, the call cut short. That is all.
+     No button is pressed, and with the kind of mode as it was nothing is done: this function also runs when
+     the Settings are closed and when the rig comes back online. (It went through the boxes' slots, which
+     press the CQ button: a DX call that was typed and the QSO's messages were gone, AutoSeq was back on,
+     and a CQ on the air was restarted.) */
+  bool const mode77 {m_mode.startsWith ("FT")};
+  if(m_cqdir.size () > 2 && mode77 != m_cqWordMode77) {
+    showCqWord ();
+    genCQMsg ();
+    if(ui->genMsg->text ().startsWith ("CQ ")) ui->genMsg->setText (ui->tx6->text ());
+  }
+  m_cqWordMode77 = mode77;
   abortTxBackground("mode change");   // CE3TSK
   m_modeChanged=true;
 }

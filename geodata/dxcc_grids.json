@@ -1,15 +1,20 @@
 {
- "version": "20261001_212517",
- "content": "1bc774dfed5b",
- "built": "2026-10-01",
+ "version": "20261013_184212",
+ "content": "6156f0fed863",
+ "built": "2026-10-13",
  "tool": "tools/make_dxcc_grids.py",
  "project": "JTDX_CONTEST",
  "author": "Tihomir Sokcevic CE3TSK",
- "rights": "This table is derived from cty.dat (MIT licence) and Natural Earth (public domain), stating facts about geography; no rights of its own are claimed over it (review 2026-10-04: it called cty.dat public domain).",
+ "rights": "This table is derived from cty.dat (MIT licence), Natural Earth and the US Census state boundaries (public domain) and, for the positions of the Antarctic stations, Wikidata (CC0), stating facts about geography; no rights of its own are claimed over it (review 2026-10-04: it called cty.dat public domain).",
  "tool_licence": "GPL v3",
  "point_km": 120.0,
  "island_km": 200.0,
  "groups": {
+  "AQ": [
+   "CE9",
+   "VP8/h",
+   "VP8/o"
+  ],
   "DK": [
    "OX",
    "OY",
@@ -104,6 +109,12 @@
    "source": "admin1",
    "group": "",
    "grids": [
+    "FB45",
+    "FB58",
+    "FC52",
+    "FC85",
+    "GC79",
+    "HB74",
     "IO99",
     "IP80",
     "IP90"
@@ -160,6 +171,7 @@
    "source": "admin1",
    "group": "",
    "grids": [
+    "FC62",
     "KM29",
     "KM39",
     "KN20",
@@ -2111,6 +2123,10 @@
    "source": "poly",
    "group": "",
    "grids": [
+    "GC07",
+    "MA89",
+    "MB86",
+    "MC80",
     "MM68",
     "MM69",
     "MM75",
@@ -2688,7 +2704,8 @@
     "PO23",
     "PO30",
     "PO31",
-    "PO32"
+    "PO32",
+    "RB15"
    ]
   },
   "C2": {
@@ -2812,8 +2829,12 @@
    "grids": [
     "DG52",
     "DG73",
+    "EB80",
     "EF96",
     "EG93",
+    "FC52",
+    "FC85",
+    "FC97",
     "FD26",
     "FD27",
     "FD28",
@@ -2909,7 +2930,9 @@
     "FH41",
     "FH50",
     "FH51",
-    "FH52"
+    "FH52",
+    "GC07",
+    "GC16"
    ]
   },
   "CE0X": {
@@ -2957,7 +2980,7 @@
   "CE9": {
    "name": "Antarctica",
    "source": "poly",
-   "group": "",
+   "group": "AQ",
    "grids": [
     "AA00",
     "AA01",
@@ -6495,6 +6518,8 @@
    "source": "poly",
    "group": "",
    "grids": [
+    "GC07",
+    "GC16",
     "GF05",
     "GF06",
     "GF07",
@@ -6653,6 +6678,10 @@
    "source": "poly",
    "group": "",
    "grids": [
+    "GC07",
+    "GC16",
+    "IB59",
+    "JB04",
     "JN37",
     "JN38",
     "JN39",
@@ -6692,7 +6721,8 @@
     "JO71",
     "JO72",
     "JO73",
-    "JO74"
+    "JO74",
+    "RB25"
    ]
   },
   "DU": {
@@ -6855,6 +6885,7 @@
    "source": "poly",
    "group": "ES",
    "grids": [
+    "FC97",
     "IL07",
     "IL08",
     "IL17",
@@ -7253,7 +7284,8 @@
     "KO53",
     "KO54",
     "KO55",
-    "KO63"
+    "KO63",
+    "LC32"
    ]
   },
   "EX": {
@@ -7422,7 +7454,11 @@
     "JO01",
     "JO10",
     "JO11",
-    "JO20"
+    "JO20",
+    "PB14",
+    "PB79",
+    "PC93",
+    "QC03"
    ]
   },
   "FG": {
@@ -7700,6 +7736,12 @@
    "source": "poly",
    "group": "",
    "grids": [
+    "FB45",
+    "FB58",
+    "FC52",
+    "FC85",
+    "GC79",
+    "HB74",
     "IN69",
     "IN79",
     "IO70",
@@ -7727,6 +7769,12 @@
    "source": "poly",
    "group": "",
    "grids": [
+    "FB45",
+    "FB58",
+    "FC52",
+    "FC85",
+    "GC79",
+    "HB74",
     "IO74"
    ]
   },
@@ -7735,6 +7783,12 @@
    "source": "poly",
    "group": "",
    "grids": [
+    "FB45",
+    "FB58",
+    "FC52",
+    "FC85",
+    "GC79",
+    "HB74",
     "IO54",
     "IO64",
     "IO65",
@@ -7747,6 +7801,12 @@
    "source": "poly",
    "group": "",
    "grids": [
+    "FB45",
+    "FB58",
+    "FC52",
+    "FC85",
+    "GC79",
+    "HB74",
     "IN89"
    ]
   },
@@ -7755,6 +7815,12 @@
    "source": "poly",
    "group": "",
    "grids": [
+    "FB45",
+    "FB58",
+    "FC52",
+    "FC85",
+    "GC79",
+    "HB74",
     "IO37",
     "IO57",
     "IO65",
@@ -7783,6 +7849,12 @@
    "source": "poly",
    "group": "",
    "grids": [
+    "FB45",
+    "FB58",
+    "FC52",
+    "FC85",
+    "GC79",
+    "HB74",
     "IN89"
    ]
   },
@@ -7791,6 +7863,12 @@
    "source": "poly",
    "group": "",
    "grids": [
+    "FB45",
+    "FB58",
+    "FC52",
+    "FC85",
+    "GC79",
+    "HB74",
     "IO71",
     "IO72",
     "IO73",
@@ -7916,7 +7994,8 @@
     "FJ00",
     "FJ01",
     "FJ10",
-    "FJ20"
+    "FJ20",
+    "GC07"
    ]
   },
   "HC8": {
@@ -8075,6 +8154,7 @@
    "source": "poly",
    "group": "",
    "grids": [
+    "GC07",
     "PM24",
     "PM27",
     "PM33",
@@ -8088,7 +8168,8 @@
     "PM46",
     "PM47",
     "PM48",
-    "PM57"
+    "PM57",
+    "RB25"
    ]
   },
   "HP": {
@@ -8364,7 +8445,13 @@
     "JN72",
     "JN80",
     "JN81",
-    "JN90"
+    "JN90",
+    "PB14",
+    "PC93",
+    "QB24",
+    "QB97",
+    "RB15",
+    "RB25"
    ]
   },
   "IS": {
@@ -8443,6 +8530,11 @@
    "source": "poly",
    "group": "JA",
    "grids": [
+    "KB28",
+    "KB92",
+    "KC90",
+    "LB29",
+    "LC00",
     "PL14",
     "PL15",
     "PL24",
@@ -8757,6 +8849,7 @@
    "source": "split",
    "group": "US",
    "grids": [
+    "BA58",
     "CM79",
     "CM86",
     "CM87",
@@ -8798,6 +8891,8 @@
     "CN97",
     "CN98",
     "CN99",
+    "DA09",
+    "DB30",
     "DL79",
     "DL88",
     "DL89",
@@ -9197,6 +9292,8 @@
     "EN90",
     "EN91",
     "EN92",
+    "FC75",
+    "FC97",
     "FM02",
     "FM03",
     "FM04",
@@ -9255,15 +9352,21 @@
     "FN64",
     "FN65",
     "FN66",
-    "FN67"
+    "FN67",
+    "GC07",
+    "JA00",
+    "PA90",
+    "QB93",
+    "RB12",
+    "RB32"
    ]
   },
   "KG4": {
    "name": "Guantanamo Bay",
-   "source": "islands",
+   "source": "poly",
    "group": "US",
    "grids": [
-    "FL20"
+    "FK29"
    ]
   },
   "KH0": {
@@ -9691,6 +9794,9 @@
    "source": "poly",
    "group": "NO",
    "grids": [
+    "JB17",
+    "JB18",
+    "JB28",
     "JO28",
     "JO29",
     "JO37",
@@ -9767,6 +9873,10 @@
    "source": "poly",
    "group": "",
    "grids": [
+    "FC61",
+    "FC85",
+    "FC95",
+    "FC97",
     "FD38",
     "FD39",
     "FD47",
@@ -9932,6 +10042,10 @@
     "FG95",
     "FG96",
     "FG97",
+    "GC07",
+    "GC15",
+    "GC16",
+    "GC79",
     "GF01",
     "GF02",
     "GF03",
@@ -9965,7 +10079,8 @@
     "GG24",
     "GG32",
     "GG33",
-    "GG34"
+    "GG34",
+    "HB22"
    ]
   },
   "LX": {
@@ -10003,6 +10118,7 @@
    "source": "poly",
    "group": "",
    "grids": [
+    "FC97",
     "KN11",
     "KN12",
     "KN13",
@@ -10105,7 +10221,8 @@
     "FI45",
     "FI46",
     "FI47",
-    "FI55"
+    "FI55",
+    "GC07"
    ]
   },
   "OD": {
@@ -10145,6 +10262,7 @@
    "source": "poly",
    "group": "",
    "grids": [
+    "IB36",
     "KO19",
     "KO29",
     "KP00",
@@ -10234,6 +10352,8 @@
    "source": "poly",
    "group": "",
    "grids": [
+    "GC07",
+    "GC16",
     "JN68",
     "JN69",
     "JN78",
@@ -10275,7 +10395,8 @@
     "JO11",
     "JO20",
     "JO21",
-    "JO30"
+    "JO30",
+    "KB18"
    ]
   },
   "OX": {
@@ -10833,6 +10954,7 @@
    "source": "poly",
    "group": "NL",
    "grids": [
+    "FC52",
     "JO11",
     "JO20",
     "JO21",
@@ -10995,6 +11117,8 @@
     "FJ93",
     "FJ94",
     "FJ95",
+    "GC07",
+    "GC28",
     "GF18",
     "GF19",
     "GF28",
@@ -11504,6 +11628,8 @@
    "source": "poly",
    "group": "",
    "grids": [
+    "IB36",
+    "IB45",
     "JO57",
     "JO58",
     "JO59",
@@ -11575,6 +11701,7 @@
    "source": "poly",
    "group": "",
    "grids": [
+    "GC07",
     "JN89",
     "JN99",
     "JO70",
@@ -11605,7 +11732,8 @@
     "KO12",
     "KO13",
     "KO14",
-    "KO20"
+    "KO20",
+    "OC03"
    ]
   },
   "ST": {
@@ -12064,6 +12192,7 @@
    "source": "poly",
    "group": "",
    "grids": [
+    "FC62",
     "KM29",
     "KM36",
     "KM37",
@@ -12606,6 +12735,9 @@
    "source": "split",
    "group": "RU",
    "grids": [
+    "CB15",
+    "GC07",
+    "JB59",
     "JO94",
     "KN64",
     "KN65",
@@ -12743,6 +12875,7 @@
     "KP97",
     "KP98",
     "KR80",
+    "LC22",
     "LN03",
     "LN04",
     "LN05",
@@ -13009,6 +13142,9 @@
     "LR81",
     "LR90",
     "LR91",
+    "MB49",
+    "MC60",
+    "MC80",
     "MO00",
     "MO01",
     "MO02",
@@ -13033,7 +13169,11 @@
     "MQ04",
     "MQ05",
     "MR00",
-    "MR01"
+    "MR01",
+    "NC63",
+    "OB31",
+    "OC03",
+    "QC90"
    ]
   },
   "UA2": {
@@ -14789,6 +14929,7 @@
    "source": "poly",
    "group": "",
    "grids": [
+    "FC74",
     "KN17",
     "KN18",
     "KN19",
@@ -16186,6 +16327,11 @@
    "source": "poly",
    "group": "",
    "grids": [
+    "MC12",
+    "MC80",
+    "MC81",
+    "OC03",
+    "OC53",
     "OF75",
     "OF76",
     "OF77",
@@ -16242,6 +16388,7 @@
     "OG98",
     "OG99",
     "OH90",
+    "PB14",
     "PF06",
     "PF07",
     "PF08",
@@ -16787,11 +16934,17 @@
    "source": "poly",
    "group": "",
    "grids": [
+    "FB45",
+    "FB58",
+    "FC52",
+    "FC85",
     "FD97",
     "FD98",
+    "GC79",
     "GD07",
     "GD08",
-    "GD18"
+    "GD18",
+    "HB74"
    ]
   },
   "VP8/g": {
@@ -16808,7 +16961,7 @@
   "VP8/h": {
    "name": "South Shetland Islands",
    "source": "point",
-   "group": "",
+   "group": "AQ",
    "grids": [
     "FC97",
     "FC98",
@@ -16824,7 +16977,7 @@
   "VP8/o": {
    "name": "South Orkney Islands",
    "source": "point",
-   "group": "",
+   "group": "AQ",
    "grids": [
     "GC68",
     "GC69",
@@ -16888,6 +17041,8 @@
    "source": "poly",
    "group": "",
    "grids": [
+    "JB59",
+    "MC80",
     "MJ68",
     "MJ88",
     "MJ89",
@@ -17100,7 +17255,7 @@
   },
   "VU4": {
    "name": "Andaman & Nicobar Is.",
-   "source": "islands",
+   "source": "split",
    "group": "",
    "grids": [
     "NJ66",
@@ -17111,7 +17266,6 @@
     "NK61",
     "NK62",
     "NK63",
-    "NK64",
     "NK73"
    ]
   },
@@ -17915,7 +18069,8 @@
     "KN44",
     "KN45",
     "KN46",
-    "KN47"
+    "KN47",
+    "MC80"
    ]
   },
   "YS": {
@@ -18167,11 +18322,11 @@
   },
   "ZC4": {
    "name": "UK Base Areas on Cyprus",
-   "source": "islands",
+   "source": "poly",
    "group": "",
    "grids": [
-    "KM65",
-    "KM66"
+    "KM64",
+    "KM65"
    ]
   },
   "ZD7": {
@@ -18226,9 +18381,10 @@
   },
   "ZK3": {
    "name": "Tokelau Islands",
-   "source": "islands",
+   "source": "poly",
    "group": "",
    "grids": [
+    "AI31",
     "AI40"
    ]
   },
@@ -18240,6 +18396,7 @@
     "AE15",
     "AE16",
     "AG10",
+    "RB32",
     "RD29",
     "RD39",
     "RD47",
@@ -18373,6 +18530,7 @@
    "source": "poly",
    "group": "",
    "grids": [
+    "IB88",
     "JF86",
     "JF87",
     "JF88",

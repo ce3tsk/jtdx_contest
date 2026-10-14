@@ -51,13 +51,20 @@ DXLabSuiteCommanderTransceiver::DXLabSuiteCommanderTransceiver (std::unique_ptr<
   , commander_ {nullptr}
   , m_jtdxtime {nullptr}
 {
+  /* CE3TSK 2026-10-13: the PTT-only object's failures were heard by nobody (pttonly.h). This is the one
+     nobody called for - its poll of the port: the rig cannot be keyed, so it is not online. */
+  if (wrapped_) ptt_watch_.listen (wrapped_.get (), this, [this] (QString const& reason) {
+      if (state ().online () && !wrapped_->state ().online ()) offline (reason);
+    });
 }
 
 int DXLabSuiteCommanderTransceiver::do_start (JTDXDateTime * jtdxtime)
 {
   TRACE_CAT ("DXLabSuiteCommanderTransceiver", "starting");
   m_jtdxtime = jtdxtime;
-  if (wrapped_) wrapped_->start (0,m_jtdxtime);
+  /* CE3TSK 2026-10-13: a PTT port that cannot be opened is the rig not starting, with the port's own reason
+     (pttonly.h) - the rig came online without it, and transmitted with the transmitter never keyed */
+  if (wrapped_ && !ptt_watch_.start (wrapped_.get (), m_jtdxtime)) throw error {ptt_watch_.reason ()};
 
   auto server_details = network_server_lookup (server_, 52002u, QHostAddress::LocalHost, QAbstractSocket::IPv4Protocol);
 
@@ -193,9 +200,8 @@ void DXLabSuiteCommanderTransceiver::do_ptt (bool on)
   else
     {
       Q_ASSERT (wrapped_);
-      TransceiverState new_state {wrapped_->state ()};
-      new_state.ptt (on);
-      wrapped_->set (new_state, 0);
+      // CE3TSK 2026-10-13: a port that fails, or is not there, to key with is said - not reported as keyed
+      if (!ptt_watch_.key (wrapped_.get (), on)) throw error {ptt_watch_.reason ()};
       update_PTT (on);
     }
 }

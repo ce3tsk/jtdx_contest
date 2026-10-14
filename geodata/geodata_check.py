@@ -40,10 +40,11 @@ head = dict(l.split(' ', 1) for l in out[:2])
 check(head['dxcc'] == '%s %s' % (dx['version'], dx['content']), 'dxcc version/content stamp')
 check(head['states'] == '%s %s' % (gs['version'], gs['content']), 'states version/content stamp')
 
-ents, squares = {}, {}
+ents, squares, groups = {}, {}, {}
 for l in out[2:]:
     t = l.split()
     if t[0] == 'E': ents[t[1]] = (t[2], int(t[3]), t[4:])
+    elif t[0] == 'G': groups[t[1]] = t[2][1:-1]
     elif t[0] == 'S': squares[t[1]] = (int(t[2]), t[3:])
 
 check(len(ents) == len(dx['entities']), 'entity count %d vs %d' % (len(ents), len(dx['entities'])))
@@ -53,6 +54,9 @@ for p, v in dx['entities'].items():
     check(c[0] == v['source'], '%s source %s vs %s' % (p, c[0], v['source']))
     check(c[1] == len(v['grids']), '%s count %d vs %d' % (p, c[1], len(v['grids'])))
     check(c[2] == sorted(v['grids']), '%s squares differ' % p)
+    # CE3TSK 2026-10-13: the administration group too (US, RU ... and AQ): the compiled column could be zeroed
+    # for a whole group and this check still said that all matched (review of the fifth round)
+    check(groups.get(p) == v.get('group', ''), '%s group %r vs %r' % (p, groups.get(p), v.get('group', '')))
 
 check(len(squares) == len(gs['squares']), 'square count')
 for g, v in gs['squares'].items():

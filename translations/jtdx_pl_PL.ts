@@ -3696,12 +3696,6 @@ Kliknięcie prawym przyciskiem myszy przywraca wewnętrzny czas JTDX do czasu sy
         <translation>CQ</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3324"/>
-        <location filename="../mainwindow.ui" line="3946"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Directional CQ, range from AA to ZZ is being supported.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Kierunkowe CQ, wspierany jest zakres od AA do ZZ.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
         <location filename="../mainwindow.ui" line="3327"/>
         <location filename="../mainwindow.ui" line="3949"/>
         <source>DX</source>
@@ -6259,6 +6253,11 @@ To błąd samego dekodera. Usuń to, co uniemożliwia jego uruchomienie - brakuj
         <location filename="../mainwindow.ui"/>
         <source>Band and mode buttons in one row</source>
         <translation>Przyciski pasm i emisji w jednym rzędzie</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Directional CQ: the word sent after CQ, up to four letters.&lt;/p&gt;&lt;p&gt;DX, a continent (EU, NA, SA, AS, AF, OC), a prefix (JA), ASIA or USA is a region: autoselect answers callers from there. Unless &quot;Strict directional CQ operation&quot; is on, it also answers wanted stations and stations of a new DXCC, wherever they are. FD, RU, WW and the other words of three or four letters, such as TEST or POTA, name an activity: anybody may answer.&lt;/p&gt;&lt;p&gt;Three and four letters are sent in FT8, FT4 and FT2 only. No word is sent with a compound own call.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Kierunkowe CQ: słowo wysyłane po CQ, do czterech liter.&lt;/p&gt;&lt;p&gt;DX, kontynent (EU, NA, SA, AS, AF, OC), prefiks (JA), ASIA lub USA to region: autoselekcja odpowiada wołającym stamtąd. Jeśli &quot;Praca ze ścisłym kierunkowym CQ&quot; jest wyłączona, odpowiada też potrzebnym stacjom i stacjom z nowego DXCC, skądkolwiek wołają. FD, RU, WW oraz pozostałe słowa trzy- lub czteroliterowe, takie jak TEST czy POTA, oznaczają aktywność: odpowiedzieć może każdy.&lt;/p&gt;&lt;p&gt;Trzy i cztery litery są wysyłane tylko w FT8, FT4 i FT2. Przy złożonym własnym znaku żadne słowo nie jest wysyłane.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>

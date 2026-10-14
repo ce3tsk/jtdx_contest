@@ -3673,12 +3673,6 @@ ZD8,ZD9,ZF,ZK3,ZL,ZL7,ZL8,ZL9,ZP,ZS,ZS8&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</tra
         <translation>CQ</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3324"/>
-        <location filename="../mainwindow.ui" line="3946"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Directional CQ, range from AA to ZZ is being supported.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;支持CQ 指定范圍從 AA 到ZZ.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
         <location filename="../mainwindow.ui" line="3327"/>
         <location filename="../mainwindow.ui" line="3949"/>
         <source>DX</source>
@@ -6259,6 +6253,11 @@ That is the decoder's own error. Put right whatever stops it starting - a missin
         <source>Band and mode buttons in one row</source>
         <translation>波段和模式按鈕合為一行</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Directional CQ: the word sent after CQ, up to four letters.&lt;/p&gt;&lt;p&gt;DX, a continent (EU, NA, SA, AS, AF, OC), a prefix (JA), ASIA or USA is a region: autoselect answers callers from there. Unless &quot;Strict directional CQ operation&quot; is on, it also answers wanted stations and stations of a new DXCC, wherever they are. FD, RU, WW and the other words of three or four letters, such as TEST or POTA, name an activity: anybody may answer.&lt;/p&gt;&lt;p&gt;Three and four letters are sent in FT8, FT4 and FT2 only. No word is sent with a compound own call.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;定向 CQ：CQ 之後發送的詞，最多四個字母。&lt;/p&gt;&lt;p&gt;DX、大洲（EU、NA、SA、AS、AF、OC）、前綴（JA）、ASIA 或 USA 表示地區：自動選擇應答來自該地區的呼叫者。“嚴格定向CQ操作”未開啟時，它還會應答渴望的電台和新DXCC的電台，無論它們在哪裡。FD、RU、WW 以及 TEST、POTA 這類其他三或四個字母的詞表示活動：任何人都可以應答。&lt;/p&gt;&lt;p&gt;三個和四個字母的詞只在 FT8、FT4 和 FT2 中發送。自己的呼號為複合呼號時，不發送任何詞。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>
@@ -8126,7 +8125,7 @@ both here.</source>
     <message>
         <location filename="../Configuration.ui" line="2243"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;By default autoselection ignoring received/transmitted direction of CQ if there is a valid &apos;new DXCC&apos; message decoded, either incoming call or selection from decoded CQ/73 messages. This option eliminates &apos;new DXCC&apos; exception in autoselection for directional CQ processing.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;選用定向CQ指定區域如AS NA AF…或首碼, 軟件將忽略非指定區域或首碼的其他電臺，包括新DXCC的CQ呼叫.渴望的呼號首碼，不受此定向限制.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;預設情況下，如果解碼到有效的“新DXCC”訊息（無論是呼叫我的電台，還是從解碼的 CQ/73 訊息中選擇），自動選擇會忽略收到或發出的 CQ 的方向。此選項取消定向 CQ 處理中自動選擇的“新DXCC”例外。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="2246"/>

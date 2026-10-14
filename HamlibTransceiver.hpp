@@ -33,6 +33,9 @@ class HamlibTransceiver final
   explicit HamlibTransceiver (TransceiverFactory::PTTMethod ptt_type, QString const& ptt_port,
                               QObject * parent = nullptr);
 
+  // CE3TSK 2026-10-12: the text of each Hamlib error code, in the order of rig_errcode_e (hamliberror.h)
+  static QStringList error_texts ();
+
  private:
   void load_user_settings ();
   int do_start (JTDXDateTime*) override;

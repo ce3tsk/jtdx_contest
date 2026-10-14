@@ -59,7 +59,7 @@
     <message>
         <location filename="../about.cpp"/>
         <source>A rebuilt FT8 and FT4 decoder - alternate pass, ensemble, pipelined RX phase and TX&lt;br&gt;background, four-period hint memory, fixed data races, measured presets - and built-in&lt;br&gt;support for the WW Digi DX Contest: the grid exchange, points and multipliers, a separate&lt;br&gt;contest log, contest-aware autoselect. Every number behind it comes from recorded audio&lt;br&gt;and a script in the tree. The GUI has been repaired throughout and the dark style now works.</source>
-        <translation>Um descodificador FT8 e FT4 reconstruído: passagem alternativa, ensemble, fase RX em pipeline&lt;br&gt;e segundo plano de TX, memória de pistas de quatro períodos, corridas de dados corrigidas,&lt;br&gt;predefinições medidas - e suporte integrado ao WW Digi DX Contest: a troca de grid, pontos e&lt;br&gt;multiplicadores, um registo de concurso separado e autosselecção que conhece as regras. Cada&lt;br&gt;número vem de áudio gravado e de um script na árvore. A interface foi reparada por completo e o estilo escuro já funciona.</translation>
+        <translation>Um descodificador FT8 e FT4 reconstruído: passagem alternativa, ensemble, fase RX em pipeline&lt;br&gt;e segundo plano de TX, memória de pistas de quatro períodos, corridas de dados corrigidas,&lt;br&gt;predefinições medidas - e suporte integrado ao WW Digi DX Contest: a troca de grid, pontos e&lt;br&gt;multiplicadores, um registo de concurso separado e autosseleção que conhece as regras. Cada&lt;br&gt;número vem de áudio gravado e de um script na árvore. A interface foi reparada por completo e o estilo escuro já funciona.</translation>
     </message>
     <message>
         <location filename="../about.cpp"/>
@@ -131,26 +131,26 @@
     <message>
         <location filename="../Configuration.cpp" line="1388"/>
         <source>Create temporary directory error: </source>
-        <translation>Error ao criar directório temporário: </translation>
+        <translation>Error ao criar diretório temporário: </translation>
     </message>
     <message>
         <location filename="../Configuration.cpp" line="1394"/>
         <source>Create temporary directory error:
 %1
 Another application may be locking the directory</source>
-        <translation>Erro ao criar directório temporário: %1 Uma outra aplicação pode estar a bloquear o directório</translation>
+        <translation>Erro ao criar diretório temporário: %1 Uma outra aplicação pode estar a bloquear o diretório</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp" line="1411"/>
         <source>Create data directory error: </source>
-        <translation>Erro ao criar dados de directório: </translation>
+        <translation>Erro ao criar dados de diretório: </translation>
     </message>
     <message>
         <location filename="../Configuration.cpp" line="1420"/>
         <location filename="../Configuration.cpp" line="1431"/>
         <source>Create Directory</source>
         <comment>Cannot create directory &quot;</comment>
-        <translation>Criar directório</translation>
+        <translation>Criar diretório</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp" line="1591"/>
@@ -276,7 +276,7 @@ Format:
     <message>
         <location filename="../Configuration.cpp" line="4782"/>
         <source>JTDX Decoded Text Font Chooser</source>
-        <translation>Seleccionador de fonte do texto do descodificadorJTDX</translation>
+        <translation>Selecionador de fonte do texto do descodificadorJTDX</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp" line="5434"/>
@@ -304,7 +304,7 @@ Format:
     <message>
         <location filename="../Configuration.cpp" line="5453"/>
         <source>Are you sure you want to discard your current working frequencies and replace them with the loaded ones?</source>
-        <translation>Tem certeza de que deseja descartar as frequências de trabalho actuais e substituí-las pelas carregadas?</translation>
+        <translation>Tem certeza de que deseja descartar as frequências de trabalho atuais e substituí-las pelas carregadas?</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp" line="5465"/>
@@ -321,7 +321,7 @@ Format:
     <message>
         <location filename="../Configuration.cpp" line="5492"/>
         <source>Incorrect file magic</source>
-        <translation>Ficheiro mágico incorrecto</translation>
+        <translation>Ficheiro mágico incorreto</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp" line="5501"/>
@@ -346,7 +346,7 @@ Format:
     <message>
         <location filename="../Configuration.cpp" line="5533"/>
         <source>Are you sure you want to save only the working frequencies that are currently selected? Click No to save all.</source>
-        <translation>Tem certeza de que deseja salvar apenas as frequências de trabalho atualmente seleccionadas. Clique Não para salvar todos.</translation>
+        <translation>Tem certeza de que deseja salvar apenas as frequências de trabalho atualmente selecionadas. Clique Não para salvar todos.</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp" line="5560"/>
@@ -356,12 +356,12 @@ Format:
     <message>
         <location filename="../Configuration.cpp" line="5562"/>
         <source>Are you sure you want to discard your current working frequencies and replace them with default ones?</source>
-        <translation>Tem a certeza  que deseja descartar as actuais frequências e substitui-las pelos valores por defeito?</translation>
+        <translation>Tem a certeza  que deseja descartar as atuais frequências e substituí-las pelos valores por defeito?</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp" line="5622"/>
         <source>Save Directory</source>
-        <translation>Guardar directório</translation>
+        <translation>Guardar diretório</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp" line="5638"/>
@@ -381,12 +381,12 @@ Format:
     <message>
         <location filename="../Configuration.cpp"/>
         <source>No default frequencies are defined for the selected contest.</source>
-        <translation>Não estão definidas frequências predefinidas para o concurso seleccionado.</translation>
+        <translation>Não estão definidas frequências predefinidas para o concurso selecionado.</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp"/>
         <source>Are you sure you want to discard your current contest frequencies and replace them with the selected contest's defaults?</source>
-        <translation>Tem a certeza de que pretende descartar as frequências de concurso actuais e substituí-las pelas predefinidas do concurso seleccionado?</translation>
+        <translation>Tem a certeza de que pretende descartar as frequências de concurso atuais e substituí-las pelas predefinidas do concurso selecionado?</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp"/>
@@ -401,7 +401,7 @@ Format:
     <message>
         <location filename="../Configuration.cpp"/>
         <source>Are you sure you want to discard your current contest frequencies and replace them with the loaded ones?</source>
-        <translation>Tem a certeza de que pretende descartar as frequências de concurso actuais e substituí-las pelas carregadas?</translation>
+        <translation>Tem a certeza de que pretende descartar as frequências de concurso atuais e substituí-las pelas carregadas?</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp"/>
@@ -421,7 +421,7 @@ Format:
     <message>
         <location filename="../Configuration.cpp"/>
         <source>Are you sure you want to discard your current contest frequencies and replace them with the FT8 and FT4 entries from the working frequencies?</source>
-        <translation>Tem a certeza de que pretende descartar as frequências de concurso actuais e substituí-las pelas entradas FT8 e FT4 das frequências de trabalho?</translation>
+        <translation>Tem a certeza de que pretende descartar as frequências de concurso atuais e substituí-las pelas entradas FT8 e FT4 das frequências de trabalho?</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp"/>
@@ -2289,7 +2289,7 @@ Format:
     <message>
         <location filename="../DXLabSuiteCommanderTransceiver.cpp" line="129"/>
         <source>DX Lab Suite Commander didn&apos;t respond correctly reading frequency: </source>
-        <translation>O DX Lab Suite Commander não respondeu correctamente ao ler a frequência: </translation>
+        <translation>O DX Lab Suite Commander não respondeu corretamente ao ler a frequência: </translation>
     </message>
     <message>
         <location filename="../DXLabSuiteCommanderTransceiver.cpp" line="176"/>
@@ -2299,7 +2299,7 @@ Format:
     <message>
         <location filename="../DXLabSuiteCommanderTransceiver.cpp" line="182"/>
         <source>DX Lab Suite Commander didn&apos;t respond correctly polling TX status: </source>
-        <translation>O DX Lab Suite Commander não respondeu correctamente ao estado de condição do TX: </translation>
+        <translation>O DX Lab Suite Commander não respondeu corretamente ao estado de condição do TX: </translation>
     </message>
     <message>
         <location filename="../DXLabSuiteCommanderTransceiver.cpp" line="190"/>
@@ -2309,12 +2309,12 @@ Format:
     <message>
         <location filename="../DXLabSuiteCommanderTransceiver.cpp" line="276"/>
         <source>DX Lab Suite Commander didn&apos;t respond correctly polling frequency: </source>
-        <translation>O DX Lab Suite Commander não respondeu correctamente á frequência pedida: </translation>
+        <translation>O DX Lab Suite Commander não respondeu corretamente á frequência pedida: </translation>
     </message>
     <message>
         <location filename="../DXLabSuiteCommanderTransceiver.cpp" line="297"/>
         <source>DX Lab Suite Commander didn&apos;t respond correctly polling TX frequency: </source>
-        <translation>O DX Lab Suite Commander não respondeu correctamente ao pedido de frequência de TX: </translation>
+        <translation>O DX Lab Suite Commander não respondeu corretamente ao pedido de frequência de TX: </translation>
     </message>
     <message>
         <location filename="../DXLabSuiteCommanderTransceiver.cpp" line="316"/>
@@ -2324,7 +2324,7 @@ Format:
     <message>
         <location filename="../DXLabSuiteCommanderTransceiver.cpp" line="322"/>
         <source>DX Lab Suite Commander didn&apos;t respond correctly polling split status: </source>
-        <translation>O DX Lab Suite Commander não respondeu correctamente ao estado do split: </translation>
+        <translation>O DX Lab Suite Commander não respondeu corretamente ao estado do split: </translation>
     </message>
     <message>
         <location filename="../DXLabSuiteCommanderTransceiver.cpp" line="378"/>
@@ -2393,7 +2393,7 @@ Format:
     <message>
         <location filename="../decodedtext.cpp" line="31"/>
         <source>audio gap detected</source>
-        <translation>falha de áudio detectada</translation>
+        <translation>falha de áudio detetada</translation>
     </message>
     <message>
         <location filename="../decodedtext.cpp" line="32"/>
@@ -2730,12 +2730,12 @@ Format:
     <message>
         <location filename="../HamlibTransceiver.cpp" line="440"/>
         <source>Hamlib settings file error: top level must be a JSON object</source>
-        <translation>Erro de configuração do ficheiro Hamlib: nível superior deve ser um objecto JSON</translation>
+        <translation>Erro de configuração do ficheiro Hamlib: nível superior deve ser um objeto JSON</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="452"/>
         <source>Hamlib settings file error: config must be a JSON object</source>
-        <translation>Erro de configuração do ficheiro Hamlib:configuração deve ser um objecto JSON</translation>
+        <translation>Erro de configuração do ficheiro Hamlib:configuração deve ser um objeto JSON</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="360"/>
@@ -2750,17 +2750,17 @@ Format:
     <message>
         <location filename="../HamlibTransceiver.cpp" line="493"/>
         <source>opening connection to rig</source>
-        <translation>abrir conecção ao rádio</translation>
+        <translation>abrir ligação ao rádio</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="555"/>
         <source>getting current frequency</source>
-        <translation>obtendo a frequência actual</translation>
+        <translation>obtendo a frequência atual</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="564"/>
         <source>getting current mode</source>
-        <translation>obtendo o modo actual</translation>
+        <translation>obtendo o modo atual</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="613"/>
@@ -2782,7 +2782,7 @@ Format:
     <message>
         <location filename="../HamlibTransceiver.cpp" line="658"/>
         <source>setting current VFO</source>
-        <translation>obtendo o VFO actual</translation>
+        <translation>obtendo o VFO atual</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="667"/>
@@ -2798,7 +2798,7 @@ Format:
         <location filename="../HamlibTransceiver.cpp" line="698"/>
         <location filename="../HamlibTransceiver.cpp" line="1092"/>
         <source>getting current VFO</source>
-        <translation>obtendo VFO actual</translation>
+        <translation>obtendo VFO atual</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="757"/>
@@ -2806,7 +2806,7 @@ Format:
         <location filename="../HamlibTransceiver.cpp" line="779"/>
         <location filename="../HamlibTransceiver.cpp" line="1151"/>
         <source>getting current VFO frequency</source>
-        <translation>obtendo frequência do VFO actual</translation>
+        <translation>obtendo frequência do VFO atual</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="763"/>
@@ -2824,7 +2824,7 @@ Format:
         <location filename="../HamlibTransceiver.cpp" line="1032"/>
         <location filename="../HamlibTransceiver.cpp" line="1045"/>
         <source>getting current VFO mode</source>
-        <translation>obtendo modo do VFO actual</translation>
+        <translation>obtendo modo do VFO atual</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="888"/>
@@ -2833,7 +2833,7 @@ Format:
         <location filename="../HamlibTransceiver.cpp" line="1038"/>
         <location filename="../HamlibTransceiver.cpp" line="1051"/>
         <source>setting current VFO mode</source>
-        <translation>obtendo modo do VFO actual</translation>
+        <translation>obtendo modo do VFO atual</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="940"/>
@@ -3148,7 +3148,7 @@ Format:
     <message>
         <location filename="../mainwindow.ui" line="743"/>
         <source>Select operating band or frequency in MHz</source>
-        <translation>Seleccionar banda ou frequência em MHz</translation>
+        <translation>Selecionar banda ou frequência em MHz</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="788"/>
@@ -3220,7 +3220,7 @@ Format:
     <message>
         <location filename="../mainwindow.ui" line="1095"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Click by left mouse&apos;s button to spot DX call to dxsummit.fi (spotting shall be enabled in Reporting tab of the settings). Click by right mouse&apos;s button to add callsign to the &apos;Hide messages from callsigns&apos; filter.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Clique para anunciar uma estação DX no dxsummit.fi (a função terá que estar activa na aba Reportes das configurações).Clique com botão direito do rato para adicionar indicativos á função de filtros &apos;Ocultar mensagens dos indicativos&apos;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Clique para anunciar uma estação DX no dxsummit.fi (a função terá que estar ativa na aba Reportes das configurações).Clique com botão direito do rato para adicionar indicativos á função de filtros &apos;Ocultar mensagens dos indicativos&apos;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1098"/>
@@ -3333,7 +3333,7 @@ Format:
     <message>
         <location filename="../mainwindow.ui" line="1507"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enable semi-automatic message sequencing. In calling CQ operation autoselect by default searching for response with the highiest priority.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ligar sequência de mensagens semi-automáticas. Em modo chamada CQ a operação auto selecciona a pesquisa por resposta com a mais alta prioridade.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ligar sequência de mensagens semiautomáticas. Em modo chamada CQ a operação auto seleciona a pesquisa por resposta com a mais alta prioridade.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1521"/>
@@ -3344,7 +3344,7 @@ Format:
     <message>
         <location filename="../mainwindow.ui" line="1537"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Double-click on call sets TX enable&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Duplo clique no indicativo selecciona TX ligado &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Duplo clique no indicativo seleciona TX ligado &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1551"/>
@@ -3506,7 +3506,7 @@ ZD8,ZD9,ZF,ZK3,ZL,ZL7,ZL8,ZL9,ZP,ZS,ZS8&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</tra
     <message>
         <location filename="../mainwindow.ui" line="2512"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Bypass all text filters option, duplicates action in the Misc tab.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ignorar a opção de todos os filtros de texto, duplica a acção na aba Misc.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ignorar a opção de todos os filtros de texto, duplica a ação na aba Misc.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2526"/>
@@ -3536,7 +3536,7 @@ ZD8,ZD9,ZF,ZK3,ZL,ZL7,ZL8,ZL9,ZP,ZS,ZS8&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</tra
     <message>
         <location filename="../mainwindow.ui" line="2644"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Stop monitoring input signal, stop playing pack of the audio wav files&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Pára de monitorar o sinal de entrada, pára de reproduzir o pacote dos arquivos de áudio WAV&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Para de monitorar o sinal de entrada, para de reproduzir o pacote dos arquivos de áudio WAV&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2647"/>
@@ -3601,7 +3601,7 @@ ZD8,ZD9,ZF,ZK3,ZL,ZL7,ZL8,ZL9,ZP,ZS,ZS8&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</tra
     <message>
         <location filename="../mainwindow.ui" line="2980"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Activates group of decoders based on the matched filters, in FT8 mode activates FT8AP functionality&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Activa o grupo de descodificadores com base nos filtros correspondentes, no modo FT8 liga a função FT8AP&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ativa o grupo de descodificadores com base nos filtros correspondentes, no modo FT8 liga a função FT8AP&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2994"/>
@@ -3621,7 +3621,7 @@ ZD8,ZD9,ZF,ZK3,ZL,ZL7,ZL8,ZL9,ZP,ZS,ZS8&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</tra
     <message>
         <location filename="../mainwindow.ui" line="2734"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Activates AGC compensation functionality. Raising up decoding efficiency if AGC is turned ON in the receiver&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ativa a funcionalidade de compensação AGC. Aumenta a eficiência da descodificação se o AGC estiver ligado no receptor&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ativa a funcionalidade de compensação AGC. Aumenta a eficiência da descodificação se o AGC estiver ligado no recetor&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2748"/>
@@ -3661,12 +3661,6 @@ ZD8,ZD9,ZF,ZK3,ZL,ZL7,ZL8,ZL9,ZP,ZS,ZS8&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</tra
         <location filename="../mainwindow.ui" line="5785"/>
         <source>CQ</source>
         <translation>CQ</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="3324"/>
-        <location filename="../mainwindow.ui" line="3946"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Directional CQ, range from AA to ZZ is being supported.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;CQ direccional, faixa de AA a ZZ é  suportado.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3327"/>
@@ -3786,7 +3780,7 @@ Press ENTER to add the current text to the predefined
 list. The list can be maintained in Settings (F2).</source>
         <translation>Digite uma mensagem de texto livre (máximo 13 caracteres)
 ou selecione uma macro predefinida da lista.
-Pressione ENTER para adicionar o texto actual à lista de texto predefinido.
+Pressione ENTER para adicionar o texto atual à lista de texto predefinido.
 A lista pode ser alterada em Configurações (F2).</translation>
     </message>
     <message>
@@ -4001,7 +3995,7 @@ A lista pode ser alterada em Configurações (F2).</translation>
     <message>
         <location filename="../mainwindow.ui" line="1898"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;CAT shall be set up via Hamlib or TCI, TCI and Hamlib for some transceivers does support getting output power data.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt; &lt;head /&gt; &lt;body&gt; &lt;p&gt; O CAT deverá ser configurado via Hamlib ou TCI, TCI e Hamlib em alguns transceptores suporta a obtenção de dados de potência de saída. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
+        <translation>&lt;html&gt; &lt;head /&gt; &lt;body&gt; &lt;p&gt; O CAT deverá ser configurado via Hamlib ou TCI, TCI e Hamlib em alguns transcetores suporta a obtenção de dados de potência de saída. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3025"/>
@@ -4180,7 +4174,7 @@ Clicar com o botão direito do rato define a hora interna do JTDX de volta à ho
     <message>
         <location filename="../mainwindow.ui" line="4925"/>
         <source>Open next in directory</source>
-        <translation>Abrir o próximo no directório</translation>
+        <translation>Abrir o próximo no diretório</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4928"/>
@@ -4190,7 +4184,7 @@ Clicar com o botão direito do rato define a hora interna do JTDX de volta à ho
     <message>
         <location filename="../mainwindow.ui" line="4933"/>
         <source>Decode remaining files in directory</source>
-        <translation>Descodificar os restantes ficheiros no directório</translation>
+        <translation>Descodificar os restantes ficheiros no diretório</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4936"/>
@@ -4200,7 +4194,7 @@ Clicar com o botão direito do rato define a hora interna do JTDX de volta à ho
     <message>
         <location filename="../mainwindow.ui" line="4941"/>
         <source>Delete all *.wav &amp;&amp; *.c2 files in SaveDir</source>
-        <translation>Apagar todos *.wav &amp;&amp;*.c2 ficheiros salvos no directório</translation>
+        <translation>Apagar todos *.wav &amp;&amp;*.c2 ficheiros salvos no diretório</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4952"/>
@@ -4331,7 +4325,7 @@ Clicar com o botão direito do rato define a hora interna do JTDX de volta à ho
     <message>
         <location filename="../mainwindow.ui" line="5216"/>
         <source>Double-click on call sets Tx Enable</source>
-        <translation>Duplo clique nos indicativos activa o TX</translation>
+        <translation>Duplo clique nos indicativos ativa o TX</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5224"/>
@@ -4401,7 +4395,7 @@ Clicar com o botão direito do rato define a hora interna do JTDX de volta à ho
     <message>
         <location filename="../mainwindow.ui" line="5333"/>
         <source>Open log directory</source>
-        <translation>Abrir directório do log</translation>
+        <translation>Abrir diretório do log</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5341"/>
@@ -5185,7 +5179,7 @@ Clicar com o botão direito do rato define a hora interna do JTDX de volta à ho
         <location filename="../mainwindow.cpp" line="4208"/>
         <location filename="../mainwindow.cpp" line="4211"/>
         <source>FT8 F/H Tx Guard</source>
-        <translation>Protecção FT8 F/H</translation>
+        <translation>Proteção FT8 F/H</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="5665"/>
@@ -5331,7 +5325,7 @@ Servidor UDP %2:%3</translation>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>Lit while a contest is selected on the Contest tab of the settings</source>
-        <translation>Aceso enquanto estiver seleccionado um concurso no separador Concurso das definições</translation>
+        <translation>Aceso enquanto estiver selecionado um concurso no separador Concurso das definições</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
@@ -5406,7 +5400,7 @@ Servidor UDP %2:%3</translation>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>Read a wav file, detect whether it is 32 or 16 bit, and save a converted copy with a _16 or _32 suffix. All embedded metadata is carried over.</source>
-        <translation>Lê um ficheiro wav, detecta se é de 32 ou 16 bits e guarda uma cópia convertida com o sufixo _16 ou _32. Todos os metadados incorporados são mantidos.</translation>
+        <translation>Lê um ficheiro wav, deteta se é de 32 ou 16 bits e guarda uma cópia convertida com o sufixo _16 ou _32. Todos os metadados incorporados são mantidos.</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
@@ -5691,7 +5685,7 @@ Servidor UDP %2:%3</translation>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>residual unit: every known decode subtracted, the threshold lowered to 0.8, decoded once more  (+13/-0 on the night hour, ~0.12 s of idle time; runs only while the background runs, i.e. ensemble effort above the RX count)</source>
-        <translation>unidade residual: cada descodificação conhecida é subtraída, o limiar é baixado para 0.8 e descodifica-se mais uma vez  (+13/-0 na hora nocturna, ~0,12 s de tempo livre; só é executada enquanto o segundo plano corre, isto é, com esforço do conjunto acima da contagem RX)</translation>
+        <translation>unidade residual: cada descodificação conhecida é subtraída, o limiar é baixado para 0.8 e descodifica-se mais uma vez  (+13/-0 na hora noturna, ~0,12 s de tempo livre; só é executada enquanto o segundo plano corre, isto é, com esforço do conjunto acima da contagem RX)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
@@ -5761,7 +5755,7 @@ Servidor UDP %2:%3</translation>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>default: deep, 4 subtraction passes  (1748 messages on the night hour, 0.12 s at reply time)</source>
-        <translation>predefinido: profundo, 4 passagens de subtracção  (1748 mensagens na hora nocturna, 0,12 s no tempo de resposta)</translation>
+        <translation>predefinido: profundo, 4 passagens de subtração  (1748 mensagens na hora noturna, 0,12 s no tempo de resposta)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
@@ -5771,7 +5765,7 @@ Servidor UDP %2:%3</translation>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>background 6 with deep OSD, the alternate pass and the residual unit, all in the TX window, nothing at reply time  (+8.0 % on the night hour, +3.5 % on the day hour, 0.12 s; ~1 s of idle CPU a period)</source>
-        <translation>segundo plano 6 com OSD profundo, a passagem alternativa e a unidade residual, tudo na janela TX, nada no tempo de resposta  (+8,0 % na hora nocturna, +3,5 % na hora diurna, 0,12 s; ~1 s de CPU livre por período)</translation>
+        <translation>segundo plano 6 com OSD profundo, a passagem alternativa e a unidade residual, tudo na janela TX, nada no tempo de resposta  (+8,0 % na hora noturna, +3,5 % na hora diurna, 0,12 s; ~1 s de CPU livre por período)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
@@ -5947,7 +5941,7 @@ Servidor UDP %2:%3</translation>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>TX background: whether the decoding that keeps running through your own transmission finished, or was cut short by the next period. Green when it finished, red when it was cut - the X after the decode count in the line above. Grey while no TX background is enabled. Frequent red means the background is asking for more time than the period leaves: choose a preset one step lighter - the Presets list runs roughly lighter to heavier, so the entry above is usually the lighter one.</source>
-        <translation>Fundo TX: se a descodificação que continua a trabalhar durante a sua própria transmissão terminou ou foi cortada pelo período seguinte. Verde quando terminou, vermelho quando foi cortada: o X a seguir à contagem de descodificações na linha acima. Cinzento enquanto não houver fundo TX activado. Vermelho frequente significa que o fundo pede mais tempo do que o período deixa: escolha uma predefinição um passo mais leve; a lista vai aproximadamente das mais leves para as mais pesadas, por isso a entrada acima costuma ser a mais leve.</translation>
+        <translation>Fundo TX: se a descodificação que continua a trabalhar durante a sua própria transmissão terminou ou foi cortada pelo período seguinte. Verde quando terminou, vermelho quando foi cortada: o X a seguir à contagem de descodificações na linha acima. Cinzento enquanto não houver fundo TX ativado. Vermelho frequente significa que o fundo pede mais tempo do que o período deixa: escolha uma predefinição um passo mais leve; a lista vai aproximadamente das mais leves para as mais pesadas, por isso a entrada acima costuma ser a mais leve.</translation>
     </message>
     <message>
         <location filename="../../mainwindow.cpp"/>
@@ -6037,7 +6031,7 @@ Servidor UDP %2:%3</translation>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>FT2: FT4's frame at twice the rate, 3.75 s periods. Receive and transmit both work; its own decoding presets are in the Decode menu, under FT2 decoding.</source>
-        <translation>FT2: o quadro do FT4 ao dobro da velocidade, períodos de 3,75 s. Recepção e transmissão funcionam; as suas predefinições de descodificação estão no menu Descodificar, em Descodificação FT2.</translation>
+        <translation>FT2: o quadro do FT4 ao dobro da velocidade, períodos de 3,75 s. Receção e transmissão funcionam; as suas predefinições de descodificação estão no menu Descodificar, em Descodificação FT2.</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>
@@ -6250,6 +6244,11 @@ Esse é o erro do próprio descodificador. Corrija o que impede o arranque - uma
         <source>Band and mode buttons in one row</source>
         <translation>Botões de banda e de modo numa linha</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Directional CQ: the word sent after CQ, up to four letters.&lt;/p&gt;&lt;p&gt;DX, a continent (EU, NA, SA, AS, AF, OC), a prefix (JA), ASIA or USA is a region: autoselect answers callers from there. Unless &quot;Strict directional CQ operation&quot; is on, it also answers wanted stations and stations of a new DXCC, wherever they are. FD, RU, WW and the other words of three or four letters, such as TEST or POTA, name an activity: anybody may answer.&lt;/p&gt;&lt;p&gt;Three and four letters are sent in FT8, FT4 and FT2 only. No word is sent with a compound own call.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;CQ direcional: a palavra enviada depois de CQ, até quatro letras.&lt;/p&gt;&lt;p&gt;DX, um continente (EU, NA, SA, AS, AF, OC), um prefixo (JA), ASIA ou USA é uma região: a seleção automática responde a quem chama de lá. Se &quot;Operação CQ direcional estrita&quot; estiver desligada, responde também às estações procuradas e às de um DXCC novo, estejam onde estiverem. FD, RU, WW e as restantes palavras de três ou quatro letras, como TEST ou POTA, indicam uma atividade: qualquer estação pode responder.&lt;/p&gt;&lt;p&gt;Três e quatro letras só são enviadas em FT8, FT4 e FT2. Com um indicativo próprio composto, não é enviada nenhuma palavra.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>
@@ -6281,7 +6280,7 @@ Esse é o erro do próprio descodificador. Corrija o que impede o arranque - uma
     <message>
         <location filename="../Configuration.cpp" line="5389"/>
         <source>Directory:</source>
-        <translation>Directório:</translation>
+        <translation>Diretório:</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp" line="5390"/>
@@ -6368,14 +6367,14 @@ Mesmo assim quer apagar?</translation>
     <message>
         <location filename="../Configuration.cpp" line="5406"/>
         <source>Could not delete directory.</source>
-        <translation>Não foi possivel apagar o directório.</translation>
+        <translation>Não foi possivel apagar o diretório.</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp" line="5407"/>
         <source>%1
 Directory not found.
 Please verify the correct directory name was given.</source>
-        <translation>%1 Directório não encontrado. Por favor verificar o nome do directório correcto.</translation>
+        <translation>%1 Diretório não encontrado. Por favor verificar o nome do diretório correto.</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp" line="5409"/>
@@ -6415,12 +6414,12 @@ Please verify the correct directory name was given.</source>
     <message>
         <location filename="../Configuration.cpp" line="5416"/>
         <source>Parent Directory</source>
-        <translation>Directório superior</translation>
+        <translation>Diretório superior</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp" line="5417"/>
         <source>Go to the parent directory</source>
-        <translation>Ir para directório parental</translation>
+        <translation>Ir para diretório parental</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp" line="5418"/>
@@ -6475,7 +6474,7 @@ Please verify the correct directory name was given.</source>
     <message>
         <location filename="../Configuration.cpp"/>
         <source>Directories</source>
-        <translation>Directórios</translation>
+        <translation>Diretórios</translation>
     </message>
 </context>
 <context>
@@ -6997,7 +6996,7 @@ Please verify the correct directory name was given.</source>
     <message>
         <location filename="../TCITransceiver.cpp" line="1740"/>
         <source>TCI modulator not Idle</source>
-        <translation>Modulador TCI inactivo</translation>
+        <translation>Modulador TCI inativo</translation>
     </message>
 </context>
 <context>
@@ -7033,7 +7032,7 @@ Please verify the correct directory name was given.</source>
     <message>
         <location filename="../widegraph.ui" line="197"/>
         <source>Compression factor for frequency scale</source>
-        <translation>Factor de compressão para escala da frequência</translation>
+        <translation>Fator de compressão para escala da frequência</translation>
     </message>
     <message>
         <location filename="../widegraph.ui" line="203"/>
@@ -7154,7 +7153,7 @@ Please verify the correct directory name was given.</source>
     <message>
         <location filename="../widegraph.ui" line="508"/>
         <source>Current</source>
-        <translation>Actual</translation>
+        <translation>Atual</translation>
     </message>
     <message>
         <location filename="../widegraph.ui" line="513"/>
@@ -7220,7 +7219,7 @@ Please verify the correct directory name was given.</source>
     <message>
         <location filename="../Configuration.ui" line="35"/>
         <source>Select tab to change configuration parameters.</source>
-        <translation>Seleccione a aba para modificar os parâmetros da configuração.</translation>
+        <translation>Selecione a aba para modificar os parâmetros da configuração.</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="42"/>
@@ -7265,7 +7264,7 @@ Please verify the correct directory name was given.</source>
     <message>
         <location filename="../Configuration.ui" line="135"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Select your IARU region.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Seleccionar a sua região IARU region.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Selecionar a sua região IARU region.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="145"/>
@@ -7340,7 +7339,7 @@ Please verify the correct directory name was given.</source>
     <message>
         <location filename="../Configuration.ui" line="419"/>
         <source>Include a separator line between periods in the band activity window.</source>
-        <translation>Incluir linha  separadora entre periodos na janela de actividade da banda.</translation>
+        <translation>Incluir linha  separadora entre periodos na janela de atividade da banda.</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="422"/>
@@ -7350,7 +7349,7 @@ Please verify the correct directory name was given.</source>
     <message>
         <location filename="../Configuration.ui" line="409"/>
         <source>Append DXCC names to decoded messages.</source>
-        <translation>Juntar nomes DXCC ás mensagens descodificadas.</translation>
+        <translation>Juntar nomes DXCC às mensagens descodificadas.</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="412"/>
@@ -7411,7 +7410,7 @@ Please verify the correct directory name was given.</source>
         <location filename="../Configuration.ui" line="526"/>
         <location filename="../Configuration.ui" line="573"/>
         <source>Disabled</source>
-        <translation>Desactivado</translation>
+        <translation>Desativado</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="529"/>
@@ -7446,7 +7445,7 @@ Please verify the correct directory name was given.</source>
     <message>
         <location filename="../Configuration.ui" line="607"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Check this if you wish to automatically return to the last monitored frequency when monitor is enabled, leave it unchecked if you wish to have the current rig frequency maintained.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Marque isso se desejar retornar automáticamente à última frequência monitorada quando o monitor estiver ativado, deixe desmarcado se desejar manter a frequência actual do rádio.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Marque isso se desejar retornar automáticamente à última frequência monitorada quando o monitor estiver ativado, deixe desmarcado se desejar manter a frequência atual do rádio.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="619"/>
@@ -7497,7 +7496,7 @@ período de silêncio quando a descodificação é feita.</translation>
     <message>
         <location filename="../Configuration.ui" line="734"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Interval to poll rig for status. Longer intervals will mean that changes to the rig will take longer to be detected.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Intervalo para pesquisar o estado do equipamento. Intervalos mais longos significam que as alterações no rádio levarão mais tempo para a detectadas.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Intervalo para pesquisar o estado do equipamento. Intervalos mais longos significam que as alterações no rádio levarão mais tempo para a detetadas.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="740"/>
@@ -7513,7 +7512,7 @@ período de silêncio quando a descodificação é feita.</translation>
     <message>
         <location filename="../Configuration.ui" line="808"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Request S meter data from transceiver: CAT shall be set up via Hamlib, Hamlib does support getting S meter data for some transceivers.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Solicitar dados do medidor S do transceptor: O CAT deve ser configurado via Hamlib, o Hamlib suporta a obtenção de dados do medidor S para alguns transceptores.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Solicitar dados do medidor S do transcetor: O CAT deve ser configurado via Hamlib, o Hamlib suporta a obtenção de dados do medidor S para alguns transcetores.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="811"/>
@@ -7523,7 +7522,7 @@ período de silêncio quando a descodificação é feita.</translation>
     <message>
         <location filename="../Configuration.ui" line="840"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Request output power data from transceiver: CAT shall be set up via Hamlib, Hamlib does support getting output power data for some transceivers.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Solicitar dados de potência de saída do transceptor: O CAT deve ser configurado via Hamlib, o Hamlib suporta a obtenção de dados de potência de saída para alguns transceptores.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Solicitar dados de potência de saída do transcetor: O CAT deve ser configurado via Hamlib, o Hamlib suporta a obtenção de dados de potência de saída para alguns transcetores.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="843"/>
@@ -7727,7 +7726,7 @@ alguns, particularmente equipamentos Kenwood, exigem-no).</translation>
     <message>
         <location filename="../Configuration.ui" line="1299"/>
         <source>How this program activates the PTT on your radio</source>
-        <translation>Como este programa activa o PTT no seu rádio</translation>
+        <translation>Como este programa ativa o PTT no seu rádio</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1302"/>
@@ -7761,7 +7760,7 @@ outra interface de hardware para PTT.</translation>
     <message>
         <location filename="../Configuration.ui" line="1339"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;No PTT activation, instead the radio&apos;s automatic VOX is used to key the transmitter.&lt;/p&gt;&lt;p&gt;Use this if you have no radio interface hardware.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt; Sem activação PTT, em vez disso, o VOX automático do rádio é usado para ligar o transmissor. &lt;/p&gt;&lt;p&gt; Use isto se você não tiver hardware de interface de rádio. &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt; Sem ativação PTT, em vez disso, o VOX automático do rádio é usado para ligar o transmissor. &lt;/p&gt;&lt;p&gt; Use isto se você não tiver hardware de interface de rádio. &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1342"/>
@@ -7830,7 +7829,7 @@ essa configuração permite selecionar qual entrada de áudio será usada
     <message>
         <location filename="../Configuration.ui" line="1486"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;USB is usually the correct modulation mode,&lt;/p&gt;&lt;p&gt;unless the radio has a special data or packet mode setting&lt;/p&gt;&lt;p&gt;for AFSK operation.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; USB é normalmente o modo de modulação correcto,&lt;/p&gt;&lt;p&gt;a menos que o rádio tenha uma configuração especial de dados ou modo packet&lt;/p&gt;&lt;p&gt; para operação AFSK. &lt;/p&gt;&lt;/body&gt; &lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; USB é normalmente o modo de modulação correto,&lt;/p&gt;&lt;p&gt;a menos que o rádio tenha uma configuração especial de dados ou modo packet&lt;/p&gt;&lt;p&gt; para operação AFSK. &lt;/p&gt;&lt;/body&gt; &lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1489"/>
@@ -7844,7 +7843,7 @@ essa configuração permite selecionar qual entrada de áudio será usada
 or bandwidth is selected).</source>
         <translation>Não permita que o programa defina o modo do rádio
 (não recomendado, mas use se o modo ou largura de
- banda está seleccionado).</translation>
+ banda está selecionado).</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1507"/>
@@ -7880,7 +7879,7 @@ or bandwidth is selected).</source>
     <message>
         <location filename="../Configuration.ui" line="1599"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Attempt to connect to the radio with these settings.&lt;/p&gt;&lt;p&gt;The button will turn green if the connection is successful or red if there is a problem.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Tente conectar-se ao rádio com estas configurações. &lt;/p&gt;&lt;p&gt; O botão ficará verde se a conecção for bem-sucedida ou vermelho se houver algum problema. &lt;/ p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Tente conectar-se ao rádio com estas configurações. &lt;/p&gt;&lt;p&gt; O botão ficará verde se a ligação for bem-sucedida ou vermelho se houver algum problema. &lt;/ p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1602"/>
@@ -7894,8 +7893,8 @@ Click again to deactivate. Normally no power should be
 output since there is no audio being generated at this time.
 Check that any Tx indication on your radio and/or your
 radio interface behave as expected.</source>
-        <translation>Tentativa de activar o transmissor.
-Clique novamente para desactivar. Normalmente não é emitida potência
+        <translation>Tentativa de ativar o transmissor.
+Clique novamente para desativar. Normalmente não é emitida potência
  pois não há áudio sendo gerado no momento.
 Verifique se há indicação Tx no seu rádio e/ou o seu
 interface de rádio se comporta conforme esperado.</translation>
@@ -8027,7 +8026,7 @@ ambos .</translation>
     <message>
         <location filename="../Configuration.ui" line="1933"/>
         <source>Audio files save directory</source>
-        <translation>Directório de ficheiros de áudio guardados</translation>
+        <translation>Diretório de ficheiros de áudio guardados</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1939"/>
@@ -8047,7 +8046,7 @@ ambos .</translation>
     <message>
         <location filename="../Configuration.ui" line="1971"/>
         <source>Click to select a different save directory for .WAV files.</source>
-        <translation>Clique para escolher um directório diferente para os ficheiros .WAV.</translation>
+        <translation>Clique para escolher um diretório diferente para os ficheiros .WAV.</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1974"/>
@@ -8115,12 +8114,12 @@ ambos .</translation>
     <message>
         <location filename="../Configuration.ui" line="2243"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;By default autoselection ignoring received/transmitted direction of CQ if there is a valid &apos;new DXCC&apos; message decoded, either incoming call or selection from decoded CQ/73 messages. This option eliminates &apos;new DXCC&apos; exception in autoselection for directional CQ processing.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Por defeito, seleção automática ignorando a direção recebida / transmitida do CQ se houver uma mensagem válida &apos;novo DXCC&apos; descodificada, chamada de entrada ou selecção de mensagens CQ / 73 descodificadas. Essa opção elimina a exceção &apos;new DXCC&apos; na seleção automática para processamento direccional de CQ. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Por defeito, seleção automática ignorando a direção recebida / transmitida do CQ se houver uma mensagem válida &apos;novo DXCC&apos; descodificada, chamada de entrada ou seleção de mensagens CQ / 73 descodificadas. Essa opção elimina a exceção &apos;novo DXCC&apos; na seleção automática para processamento direcional de CQ. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="2246"/>
         <source>Strict directional CQ operation</source>
-        <translation>Operação CQ direccional estrita</translation>
+        <translation>Operação CQ direcional estrita</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="2304"/>
@@ -8140,7 +8139,7 @@ ambos .</translation>
     <message>
         <location filename="../Configuration.ui" line="2320"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Maximum 13 characters for free message&lt;br&gt;&lt;br&gt;Maximum 19 characters for directional CQ standard message.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Máximo de 13 caracteres para mensagem livre &lt;br&gt; &lt;br&gt; Máximo de 19 caracteres para mensagem padrão de CQ direccional. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Máximo de 13 caracteres para mensagem livre &lt;br&gt; &lt;br&gt; Máximo de 19 caracteres para mensagem padrão de CQ direcional. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="2330"/>
@@ -8150,7 +8149,7 @@ ambos .</translation>
     <message>
         <location filename="../Configuration.ui" line="2340"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Drag and drop items to rearrange order. Right click for item specific actions. Click, SHIFT+Click and, CRTL+Click to select items. @ symbol is being substituted with DX call, &amp; symbol with user&apos;s base callsign, # symbol with report to be transmitted, ^ symbol with correspondent&apos;s name retrieved from the log where name shall not exceed 7 chars.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Arraste e solte itens para reorganizar a ordem. Clique com o botão direito do rato para ações específicas do item. Clique, SHIFT + Clique e, CRTL + Clique para seleccionar itens. O símbolo @ está a ser substituído pela chamada DX, &amp; símbolo com o indicativo base do usuário, # símbolo com o relatório a ser transmitido, ^ símbolo com o nome do correspondente recuperado do log em que o nome não deve exceder 7 caracteres. &lt;/p&gt; &lt;/body&gt; &lt; / html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Arraste e solte itens para reorganizar a ordem. Clique com o botão direito do rato para ações específicas do item. Clique, SHIFT + Clique e, CRTL + Clique para selecionar itens. O símbolo @ está a ser substituído pela chamada DX, &amp; símbolo com o indicativo base do usuário, # símbolo com o relatório a ser transmitido, ^ símbolo com o nome do correspondente recuperado do log em que o nome não deve exceder 7 caracteres. &lt;/p&gt; &lt;/body&gt; &lt; / html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="2391"/>
@@ -8213,12 +8212,12 @@ e DX Grid quando uma mensagem de texto livre ou 73 é enviada.</translation>
     <message>
         <location filename="../Configuration.ui" line="220"/>
         <source>Use current &amp;callsign</source>
-        <translation>Usar indicativo &amp;actual</translation>
+        <translation>Usar indicativo &amp;atual</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="240"/>
         <source>Use curr&amp;ent grid</source>
-        <translation>Usar QTH Locato&amp;r actual</translation>
+        <translation>Usar QTH Locato&amp;r atual</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="353"/>
@@ -8268,7 +8267,7 @@ e DX Grid quando uma mensagem de texto livre ou 73 é enviada.</translation>
     <message>
         <location filename="../Configuration.ui" line="2487"/>
         <source>Enable automatic logging of QSO</source>
-        <translation>Activar registo automático de QSO</translation>
+        <translation>Ativar registo automático de QSO</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="2527"/>
@@ -8305,7 +8304,7 @@ e DX Grid quando uma mensagem de texto livre ou 73 é enviada.</translation>
     <message>
         <location filename="../Configuration.ui" line="2612"/>
         <source>Enable sending to TCP server</source>
-        <translation>Activa envio para servidor TCP</translation>
+        <translation>Ativa envio para servidor TCP</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="2637"/>
@@ -8361,7 +8360,7 @@ e DX Grid quando uma mensagem de texto livre ou 73 é enviada.</translation>
     <message>
         <location filename="../Configuration.ui" line="2801"/>
         <source>Enable &amp;eQSL sending</source>
-        <translation>Activa envio para &amp;eQSL</translation>
+        <translation>Ativa envio para &amp;eQSL</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="2821"/>
@@ -8527,7 +8526,7 @@ para avaliar a propagação e o desempenho do sistema.</translation>
     <message>
         <location filename="../Configuration.ui" line="3127"/>
         <source>See WSPR documentattion Appendix C for details of how to determine these factors for your radio.</source>
-        <translation>Consulte o Apêndice C da documentação do WSPR para obter detalhes de como determinar esses factores para o seu rádio.</translation>
+        <translation>Consulte o Apêndice C da documentação do WSPR para obter detalhes de como determinar esses fatores para o seu rádio.</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3130"/>
@@ -8537,7 +8536,7 @@ para avaliar a propagação e o desempenho do sistema.</translation>
     <message>
         <location filename="../Configuration.ui" line="3139"/>
         <source>Intercept:</source>
-        <translation>Intercepção:</translation>
+        <translation>Interceção:</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3152"/>
@@ -8670,12 +8669,12 @@ Clique com o botão direito do rato para inserir e excluir opções.</translatio
     <message>
         <location filename="../Configuration.ui" line="2967"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enter the service port number of the UDP server that JTDX should send updates to. If this is zero no updates will be broadcast.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Digite o número da porta de serviço do servidor UDP ao qual o JTDX deve enviar actualizações. Se for zero, nenhuma actualização será transmitida. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Digite o número da porta de serviço do servidor UDP ao qual o JTDX deve enviar atualizações. Se for zero, nenhuma atualização será transmitida. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="2984"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;With this enabled JTDX will accept certain requests back from a UDP server that receives decode messages.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Com isso activo, o JTDX aceitará certas solicitações de volta de um servidor UDP que recebe mensagens de descodificação. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Com isso ativo, o JTDX aceitará certas solicitações de volta de um servidor UDP que recebe mensagens de descodificação. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3321"/>
@@ -8835,7 +8834,7 @@ Clique com o botão direito do rato para inserir e excluir opções.</translatio
     <message>
         <location filename="../Configuration.ui" line="3597"/>
         <source>don&apos;t show it</source>
-        <translation>não visualiza-lo</translation>
+        <translation>não visualizá-lo</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3604"/>
@@ -9134,7 +9133,7 @@ Clique com o botão direito do rato para inserir e excluir opções.</translatio
         <location filename="../Configuration.ui" line="5043"/>
         <location filename="../Configuration.ui" line="5108"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enable option&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Active a opção &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Ative a opção &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="5046"/>
@@ -9798,7 +9797,7 @@ alterações na placa de som</translation>
     <message>
         <location filename="../Configuration.ui"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Highlight messages with grid squares which do not exist in the wsjtx_log.adi log file.&lt;/p&gt;&lt;p&gt;With &lt;b&gt;WW Digi contest&lt;/b&gt; enabled in the Misc menu these settings match on the 2 character grid field instead of the 4 character square, because the field is the contest multiplier, and a new field then outranks a new DXCC or zone in the highlighting.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Destacar as mensagens com locators que não existem no ficheiro de registo wsjtx_log.adi.&lt;/p&gt;&lt;p&gt;Com o &lt;b&gt;concurso WW Digi&lt;/b&gt; activado no menu Diversos, estas definições aplicam-se ao campo de locator de 2 caracteres em vez do quadrado de 4 caracteres, porque o campo é o multiplicador do concurso, e um campo novo passa então à frente de um DXCC ou zona novos no destaque.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Destacar as mensagens com locators que não existem no ficheiro de registo wsjtx_log.adi.&lt;/p&gt;&lt;p&gt;Com o &lt;b&gt;concurso WW Digi&lt;/b&gt; ativado no menu Diversos, estas definições aplicam-se ao campo de locator de 2 caracteres em vez do quadrado de 4 caracteres, porque o campo é o multiplicador do concurso, e um campo novo passa então à frente de um DXCC ou zona novos no destaque.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
@@ -9813,7 +9812,7 @@ alterações na placa de som</translation>
     <message>
         <location filename="../Configuration.ui"/>
         <source>Contest and event modes. Only one may be active at a time. Modes shown greyed out are declared but not implemented in this build.</source>
-        <translation>Modos de concurso e evento. Só um pode estar activo de cada vez. Os modos a cinzento estão declarados mas não implementados nesta compilação.</translation>
+        <translation>Modos de concurso e evento. Só um pode estar ativo de cada vez. Os modos a cinzento estão declarados mas não implementados nesta compilação.</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
@@ -9823,7 +9822,7 @@ alterações na placa de som</translation>
     <message>
         <location filename="../Configuration.ui"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;World Wide Digi DX Contest. The exchange is the 4 character grid instead of a signal report, and the multiplier is the 2 character grid field.&lt;/p&gt;&lt;p&gt;While this is selected the grid highlighting below is set to per band on the grid field, and cannot be changed by hand. Your own settings are restored when you switch back to None.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;World Wide Digi DX Contest. A troca é o locator de 4 caracteres em vez de um relatório de sinal, e o multiplicador é o campo de locator de 2 caracteres.&lt;/p&gt;&lt;p&gt;Enquanto isto estiver seleccionado, o destaque de locators abaixo fica definido por banda sobre o campo do locator e não pode ser alterado à mão. As suas definições são repostas quando voltar a Nenhum.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;World Wide Digi DX Contest. A troca é o locator de 4 caracteres em vez de um relatório de sinal, e o multiplicador é o campo de locator de 2 caracteres.&lt;/p&gt;&lt;p&gt;Enquanto isto estiver selecionado, o destaque de locators abaixo fica definido por banda sobre o campo do locator e não pode ser alterado à mão. As suas definições são repostas quando voltar a Nenhum.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
@@ -9858,7 +9857,7 @@ alterações na placa de som</translation>
     <message>
         <location filename="../Configuration.ui"/>
         <source>The frequencies offered by the band selector while a contest is running. Only FT8 and FT4 are accepted. Right click the table to insert, delete, load, save, merge or reset. The everyday list on the Frequencies tab is left alone.</source>
-        <translation>As frequências oferecidas pelo selector de banda enquanto decorre um concurso. Só são aceites FT8 e FT4. Clique com o botão direito na tabela para inserir, eliminar, carregar, guardar, juntar ou repor. A lista habitual do separador Frequências não é tocada.</translation>
+        <translation>As frequências oferecidas pelo seletor de banda enquanto decorre um concurso. Só são aceites FT8 e FT4. Clique com o botão direito na tabela para inserir, eliminar, carregar, guardar, juntar ou repor. A lista habitual do separador Frequências não é tocada.</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
@@ -9868,7 +9867,7 @@ alterações na placa de som</translation>
     <message>
         <location filename="../Configuration.ui"/>
         <source>Replace the table with the published default frequencies of the selected contest.</source>
-        <translation>Substituir a tabela pelas frequências predefinidas publicadas do concurso seleccionado.</translation>
+        <translation>Substituir a tabela pelas frequências predefinidas publicadas do concurso selecionado.</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>

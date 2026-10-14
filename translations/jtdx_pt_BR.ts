@@ -3663,12 +3663,6 @@ ZD8,ZD9,ZF,ZK3,ZL,ZL7,ZL8,ZL9,ZP,ZS,ZS8&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</tra
         <translation>CQ</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3324"/>
-        <location filename="../mainwindow.ui" line="3946"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Directional CQ, range from AA to ZZ is being supported.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;CQ direcional, faixa de AA a ZZ está sendo suportada.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
         <location filename="../mainwindow.ui" line="3327"/>
         <location filename="../mainwindow.ui" line="3949"/>
         <source>DX</source>
@@ -6250,6 +6244,11 @@ Esse é o erro do próprio decodificador. Corrija o que impede a inicialização
         <source>Band and mode buttons in one row</source>
         <translation>Botões de banda e de modo em uma linha</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Directional CQ: the word sent after CQ, up to four letters.&lt;/p&gt;&lt;p&gt;DX, a continent (EU, NA, SA, AS, AF, OC), a prefix (JA), ASIA or USA is a region: autoselect answers callers from there. Unless &quot;Strict directional CQ operation&quot; is on, it also answers wanted stations and stations of a new DXCC, wherever they are. FD, RU, WW and the other words of three or four letters, such as TEST or POTA, name an activity: anybody may answer.&lt;/p&gt;&lt;p&gt;Three and four letters are sent in FT8, FT4 and FT2 only. No word is sent with a compound own call.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;CQ direcional: a palavra enviada após CQ, de até quatro letras.&lt;/p&gt;&lt;p&gt;DX, um continente (EU, NA, SA, AS, AF, OC), um prefixo (JA), ASIA ou USA é uma região: a seleção automática responde a quem chama de lá. Se &quot;Operação direcional estrita do CQ&quot; estiver desativada, ela também responde às estações procuradas e às de um DXCC novo, estejam onde estiverem. FD, RU, WW e as demais palavras de três ou quatro letras, como TEST ou POTA, indicam uma atividade: qualquer um pode responder.&lt;/p&gt;&lt;p&gt;Três e quatro letras são enviadas apenas em FT8, FT4 e FT2. Com um indicativo próprio composto, nenhuma palavra é enviada.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>
@@ -8117,7 +8116,7 @@ ambos .</translation>
     <message>
         <location filename="../Configuration.ui" line="2243"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;By default autoselection ignoring received/transmitted direction of CQ if there is a valid &apos;new DXCC&apos; message decoded, either incoming call or selection from decoded CQ/73 messages. This option eliminates &apos;new DXCC&apos; exception in autoselection for directional CQ processing.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Por padrão, seleção automática ignorando a direção recebida/transmitida do CQ se houver uma mensagem válida &apos;novo DXCC&apos; decodificada, chamada de entrada ou seleção de mensagens CQ / 73 decodificadas. Essa opção elimina a exceção &apos;new DXCC&apos; na seleção automática para processamento direcional de CQ. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Por padrão, seleção automática ignorando a direção recebida/transmitida do CQ se houver uma mensagem válida &apos;novo DXCC&apos; decodificada, chamada de entrada ou seleção de mensagens CQ / 73 decodificadas. Essa opção elimina a exceção &apos;novo DXCC&apos; na seleção automática para processamento direcional de CQ. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="2246"/>

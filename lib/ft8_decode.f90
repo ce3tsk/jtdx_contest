@@ -60,7 +60,7 @@ contains
     logical(1) lft8sdec,lft8s,lft8sd,lrepliedother,lhashmsg,lqsothread,lhidemsg,lhighsens,lcqcand,lsubtracted,levenint,loddint, &
                lnohiscall,lnomycall,lnohisgrid
     character msg37*37,msg37_2*37,msg26*26,servis8*1,datetime*13,call2*12
-    character*37 msgsrcvd(130)
+    character*37 msgsrcvd(NDEC8MAX)   ! CE3TSK: was 130, and unchecked - see where ft8b fills it
 
     type oddtmp_struct
       real freq

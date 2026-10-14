@@ -3678,12 +3678,6 @@ ZD8,ZD9,ZF,ZK3,ZL,ZL7,ZL8,ZL9,ZP,ZS,ZS8&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</tra
         <translation>CQ</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3324"/>
-        <location filename="../mainwindow.ui" line="3946"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Directional CQ, range from AA to ZZ is being supported.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt; CQ direzionale, l&apos;intervallo da AA a ZZ è supportato. &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
         <location filename="../mainwindow.ui" line="3327"/>
         <location filename="../mainwindow.ui" line="3949"/>
         <source>DX</source>
@@ -6261,6 +6255,11 @@ Questo è l'errore del decoder stesso. Sistemare ciò che ne impedisce l'avvio -
         <source>Band and mode buttons in one row</source>
         <translation>Pulsanti banda e modo su una riga</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Directional CQ: the word sent after CQ, up to four letters.&lt;/p&gt;&lt;p&gt;DX, a continent (EU, NA, SA, AS, AF, OC), a prefix (JA), ASIA or USA is a region: autoselect answers callers from there. Unless &quot;Strict directional CQ operation&quot; is on, it also answers wanted stations and stations of a new DXCC, wherever they are. FD, RU, WW and the other words of three or four letters, such as TEST or POTA, name an activity: anybody may answer.&lt;/p&gt;&lt;p&gt;Three and four letters are sent in FT8, FT4 and FT2 only. No word is sent with a compound own call.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;CQ direzionale: la parola inviata dopo CQ, fino a quattro lettere.&lt;/p&gt;&lt;p&gt;DX, un continente (EU, NA, SA, AS, AF, OC), un prefisso (JA), ASIA o USA è una regione: la selezione automatica risponde a chi chiama da lì. Se &quot;Operazione CQ direzionale rigorosa&quot; non è attiva, risponde anche alle stazioni cercate e a quelle di un nuovo Paese DXCC, ovunque si trovino. FD, RU, WW e le altre parole di tre o quattro lettere, come TEST o POTA, indicano un&apos;attività: chiunque può rispondere.&lt;/p&gt;&lt;p&gt;Tre e quattro lettere vengono inviate solo in FT8, FT4 e FT2. Con un nominativo proprio composto non viene inviata alcuna parola.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>
@@ -8133,7 +8132,7 @@ differenti; di solito si seleziona mono o entrambi.</translation>
     <message>
         <location filename="../Configuration.ui" line="2246"/>
         <source>Strict directional CQ operation</source>
-        <translation>Operazione CQ rigorosa</translation>
+        <translation>Operazione CQ direzionale rigorosa</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="2304"/>

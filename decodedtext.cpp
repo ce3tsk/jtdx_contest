@@ -3,13 +3,19 @@
 #include <QDebug>
 #include "moc_decodedtext.cpp"
 #include "qt_helpers.hpp"
+#include "cqdirection.h"   /* CE3TSK 2026-10-12 */
 //#include <QRegularExpression>
 
 extern "C" {  bool stdmsg_(char const * msg, fortran_charlen_t); }
 
 namespace
 {
-  QRegularExpression words_re {R"(^(?:(?<word1>(?:CQ|DE|QRZ)(?:\s?DX|\s(?:[A-Z]{1,2}|\d{3}))|...|[A-Z0-9/]+)\s)(?:(?<word2>[A-Z0-9/]+)(?:\s(?<word3>[-+A-Z0-9]+)(?:\s(?<word4>(?:OOO|(?!RR73)[A-R]{2}[0-9]{2})))?)?)?)"};
+  /* CE3TSK 2026-10-13: the third word takes a '/' too. It is the CALL of a CQ with a word of three or four
+     letters - "CQ POTA K1ABC/P FN42", "CQ TEST K1ABC/R FN42" - and without the '/' the match stopped in the
+     middle of it: deCallAndGrid () gave "K1ABC" and no grid. A double click put the call into the DX Call
+     box without its /P and left the grid empty, and PSK Reporter got no spot (a spot needs a grid).
+     361 such lines in fifteen months of this station's ALL.TXT. */
+  QRegularExpression words_re {R"(^(?:(?<word1>(?:CQ|DE|QRZ)(?:\s?DX|\s(?:[A-Z]{1,2}|\d{3}))|...|[A-Z0-9/]+)\s)(?:(?<word2>[A-Z0-9/]+)(?:\s(?<word3>[-+A-Z0-9/]+)(?:\s(?<word4>(?:OOO|(?!RR73)[A-R]{2}[0-9]{2})))?)?)?)"};
 }
 
 DecodedText::DecodedText (QString const& the_string, QObject *parent)
@@ -39,12 +45,17 @@ DecodedText::DecodedText (QString const& the_string, QObject *parent)
         }
       if (message_.contains (QRegularExpression {"^(CQ|QRZ)\\s"}))
         {
-          // TODO this magic position 16 is guaranteed to be after the
+          // TODO this magic position is guaranteed to be after the
           // last space in a decoded CQ or QRZ message but before any
           // appended DXCC entity name or worked before information
-          auto eom_pos = message_.indexOf (' ', 16);
-          // we always want at least the characters to position 16
-          if (eom_pos < 16) eom_pos = message_.size () - 1;
+          /* CE3TSK 2026-10-13: 17, it was 16 - and 16 was NOT after the last space of the longest CQ:
+             "CQ POTA KA1ABC/P FN42" has it AT 16, so the message ended there and lost its grid (a word of
+             four letters, a call of six characters and /P or /R; 252 of the 361 lines above). A space at
+             17 or later is past every CQ's last word. */
+          int const eom_from {17};
+          auto eom_pos = message_.indexOf (' ', eom_from);
+          // we always want at least the characters to that position
+          if (eom_pos < eom_from) eom_pos = message_.size () - 1;
           // remove DXCC entity and worked B4 status. TODO need a better way to do this
           message_ = message_.left (eom_pos + 1);
         }
@@ -72,13 +83,20 @@ QString DecodedText::CQersCall(QString& grid,QString& tyyp)
   QRegularExpression callsign_re {R"(^(CQ|DE|QRZ)(\s?(?<tyyp>([A-Z]{1,4}|\d{3}))?)?\s(?<callsign>(([2-9]{0,1}[A-Z]{1,2}[0-9]{0,2}[/]{1}){0,1})[2-9]{0,1}[A-Z]{1,2}[0-9]{1,4}[A-Z]{0,6}([A-Z0-9/]{1,7}){0,1})(\s?(?<grid>[A-R]{2}[0-9]{2})?)?)"};
   auto const& match = callsign_re.match (message_);
   grid = match.captured ("grid");
-  tyyp = match.captured ("tyyp");
-  if (tyyp == "CQ" || tyyp == "LP" || tyyp == "POTA" || tyyp == "SOTA" || tyyp == "IOTA") tyyp = "";
-  else if (tyyp == "908") tyyp = "JA";
-  else if (tyyp == "ASIA") tyyp = "AS";
-  else if (tyyp == "USA") tyyp = "K";
-  if (tyyp.size() > 2) return "";
-  else return match.captured ("callsign");
+  /* CE3TSK 2026-10-12: what the word after CQ means is in cqdirection.h, for this line and for the CQ we send.
+     A word of three or four letters ("CQ TEST", "CQ WWFF") made the message no CQ at all unless it was POTA,
+     SOTA or IOTA, and FD, RU and WW were read as regions: now the sender is a CQ caller like any other, to
+     be answered by anybody. A region - DX, a continent, a prefix, ASIA, USA - steers as it did. */
+  QString const word {match.captured ("tyyp")};
+  auto const meaning = cq_direction::meaning (word);
+  tyyp = meaning.region;
+  if (!meaning.cq) return "";
+  /* CE3TSK 2026-10-14: and a word of three or four letters only as "CQ TEST K1ABC" - right after "CQ ", in FT8,
+     FT4 or FT2 (cqdirection.h, receivedWordStands). JT65 prints '#', JT9 '@', T10 '+' in the mode column. */
+  QString const modeChar {string_.mid (column_mode + padding_, 1)};
+  bool const mode77 {"#" != modeChar && "@" != modeChar && "+" != modeChar};
+  if (!cq_direction::receivedWordStands (message_, word, mode77)) { tyyp.clear (); return ""; }
+  return match.captured ("callsign");
 }
 
 

@@ -14,6 +14,7 @@ subroutine multimode_decoder(params)
   use ft8_mod1, only : lsync8share,avexdt   ! CE3TSK item 76: the shared pass-1 sync surface
   use ft8_mod1, only : lallcall7   ! CE3TSK: JTDX_ALLCALL7_FILTER (chkflscall.f90), off unless a test asks
   use ft8_mod1, only : lft8buffered,nft8res,ldectr2   ! CE3TSK: the emission merge (FT8_EMISSION_ORDER.md)
+  use deleted_decodes, only : ldelreport,ldelquiet,deleted_newperiod,deleted_shown,deleted_emit   ! CE3TSK: what the grid table deletes
   use thread_ladder, only : decoder_threads   ! CE3TSK item 63: the one thread ladder, both mode paths
   use ft8ensemble, only : NENSMAX,NENSBASE,ens_perturb,ensdtcorr,ensfreqcorr,ensswl,enscycles,ensalt   ! CE3TSK: ensemble members
   use ft8ensemble, only : ens_merge_tones,ens_residual_refined
@@ -125,6 +126,7 @@ subroutine multimode_decoder(params)
   real, allocatable, save :: sfres(:)      ! the same with every decoded FT8 signal taken out
   real, allocatable, save :: sfxd(:)       ! CE3TSK: the audio the last step works on (superfox_extra)
   real(8) :: tsffirst=0.d0                 ! CE3TSK: what the receiver's first pass of the slot took (superfox_extra's estimate)
+  logical :: lsfempty=.false.              ! CE3TSK: the Fox slot's band holds no signal (superfox_slot): the gate ends the slot at once
   data ndelay/0/
   data first/.true./
   data firstsd/.true./
@@ -322,6 +324,14 @@ subroutine multimode_decoder(params)
   lallcall7=.false.
   call get_environment_variable('JTDX_ALLCALL7_FILTER',dumpfile,ldump,idumpstat)
   if(idumpstat.eq.0 .and. ldump.gt.0) lallcall7=(dumpfile(1:1).eq.'1')
+! CE3TSK 2026-10-12: JTDX_REPORT_DELETED=1 - a <DecodeDeleted> line for every decode the prefix-to-grid table
+! deletes (deleted_decodes.f90 has the story; the program sets the variable and keeps the lines in a file).
+! Read here, single-threaded, before any slice runs; a new period's receive phase starts with nothing shown
+! and nothing pending. A TX background call returns above and goes on with the period's lists.
+  ldelreport=.false.
+  call get_environment_variable('JTDX_REPORT_DELETED',dumpfile,ldump,idumpstat)
+  if(idumpstat.eq.0 .and. ldump.gt.0) ldelreport=(dumpfile(1:1).eq.'1')
+  call deleted_newperiod()
   call get_environment_variable('JTDX_FT4_SYNCMIN',dumpfile,ldump,idumpstat)
   if(idumpstat.eq.0 .and. ldump.gt.0) then
      read(dumpfile(1:ldump),*,iostat=ios) xk4; if(ios.eq.0) ft4syncmin=max(0.5,min(3.0,xk4))
@@ -397,16 +407,27 @@ subroutine multimode_decoder(params)
 ! come through here again with the same slot, newdat false, and four clicks aged every Hound out).
 ! Outside S-Hound mode what the receiver remembers is forgotten: it was heard in another mode of
 ! operating, and the GUI reports no mode change for it.
-     if(lhound .and. params%nsftol.gt.0 .and. mod(mod(nutc,100),30).ge.15 .and. params%newdat) call sfox_odd_listened()
+     if(lhound .and. params%nsftol.gt.0 .and. mod(mod(nutc,100),30).ge.15 .and. params%newdat) call superfox_odd()
      if(.not.(lhound .and. params%nsftol.gt.0)) call sfox_forget()
      if(lhound .and. params%nsftol.gt.0 .and. mod(mod(nutc,100),30).lt.15) then
         call superfox_slot(lsfdecoded)
+! CE3TSK 2026-10-11: A BAND THAT HOLDS NO SIGNAL ENDS THE SLOT HERE (lsfempty; sfox_mod's sfox_nosignal says what
+! that is - digital silence, or one level and zeros). The receiver has turned it away at its door, and nothing is
+! left for the rest of the slot to work on: but B's two FT8 rounds and the last step ran all the same, on the
+! zeros - 0.2 s of a silent slot at one thread and 0.55 s at four, against 0.05 s with the remover off (measured).
+        if(lsfempty) then
+           call get_environment_variable('JTDX_MEMO_STATS',dumpfile,ldump,idumpstat)
+           if(idumpstat.eq.0) write(0,'(a)')  &
+                'SuperFox: no signal in the band - the slot ends here, no QRM remover round and no last step'
+           call superfox_done(); go to 800
+        endif
         call get_environment_variable('JTDX_SFQRM',dumpfile,ldump,idumpstat)
         if(lsfdecoded .or. (idumpstat.eq.0 .and. ldump.gt.0 .and. dumpfile(1:1).eq.'0')) then
            if(.not.lsfdecoded) call superfox_extra(lsfdecoded)   ! the remover off: the last step comes at once
            call superfox_done(); go to 800
         endif
         lsfqrm=.true.
+        ldelquiet=.true.   ! CE3TSK: the silent decode shows nothing, so it reports no deletion either
         sf_nswl=params%nswl; sf_swlcycles=params%nft8swlcycles; sf_altpass=params%lft8altpass
         sf_cycles=params%nft8cycles; sf_twopass=params%lft8twopass; sf_deeposd=params%lft8deeposd
         sf_ensemble=params%nft8ensemble; sf_bgeffort=params%nft8bgeffort; sf_filter=params%nfilter
@@ -1062,6 +1083,9 @@ endif
 
 800 continue
 
+! CE3TSK 2026-10-12: what the prefix-to-grid table deleted in this phase, after its decode lines and before
+! the line that ends it (deleted_decodes.f90); the mode's own character, as its decode lines carry it
+call deleted_emit(nutc,merge('~',merge(';',':',lft2),params%nmode.eq.8))
 write(*,1010) avexdt,ncandall,nrxmembers,omp_get_wtime()-tdecstart   ! CE3TSK: <rxs> the RX phase's seconds, for file-mode measurements
 call get_environment_variable('JTDX_MEMO_STATS',dumpfile,ldump,idumpstat)   ! CE3TSK timing
 if(idumpstat.eq.0) write(0,'(a,3f8.3)') 'sync8 wall total/spectra/lags:',tsync8,tsync8s,tsync8l
@@ -1675,6 +1699,7 @@ contains
     endif
 480 continue
     nft4ensfrom=1
+    call deleted_emit(nutc,merge(';',':',lft2))   ! CE3TSK: the background's deletions by the grid table, before its closing line
     write(*,1480) nbgu,nseen4-nmsg0,omp_get_wtime()-tbg0,merge(1,0,lbgabort)   ! item 73: <secs>, FT8's line
 1480 format('<BackgroundFinished><units>',i3,'<msgs>',i4,'<secs>',f6.2,'<abort>',i1)
     call flush(6)
@@ -1780,35 +1805,42 @@ contains
     enddo
     call ft8_restore()
     call fillhash(nslicesft8,.true.)
+    call deleted_emit(nutc,'~')   ! CE3TSK: the background's deletions by the grid table, before its closing line
     write(*,1020) nunits,ndecodes-nmsg0,omp_get_wtime()-t0,merge(1,0,lbgabort)
 1020 format('<BackgroundFinished><units>',i3,'<msgs>',i4,'<secs>',f6.2,'<abort>',i1)
     call flush(6)
   end subroutine ft8_background
 
   subroutine superfox_slot(ldecoded)
-! CE3TSK: the Fox's slot in SuperHound mode (the gate above). sfrx_sub is WSJT-X 3.0.2's
-! receiver and takes what it took there, 15 s of 16-bit samples: dd8 holds 65536 times the
-! sample (jt9a.f90, jt9.f90), so nint(dd8/65536) gives the recorded integers back exactly from
-! a file and to the nearest integer from the live float stream. Past the end of the captured
-! audio the live buffer still holds the previous period's tail, so that part is zeroed; file
+! CE3TSK: the Fox's slot in SuperHound mode (the gate above). The receiver (sfrx_core; WSJT-X 3.0.2's
+! sfrx_sub around it took 15 s of 16-bit samples) takes the band as REALS on the 16-bit scale: dd8 holds
+! 65536 times the sample (jt9a.f90, jt9.f90), so dd8/65536 gives the recorded integers back exactly from a
+! file and from a disk replay, and the live stream as the down-sampling filter left it. Past the end of the
+! captured audio the live buffer still holds the previous period's tail, so that part is zeroed; file
 ! mode and File > Open have done the same already.
-! It prints its own decode lines (sfox_unpack). Single threaded by construction: the polar
-! decoder's work arrays are file-static C (np_qpc.c).
+! CE3TSK 2026-10-12 (the second review of the silence fixes, SUPERFOX_PLAN.md A8am): until then THIS pass
+! alone was handed the band rounded to 16-bit integers, while the residual pass and the last step took the
+! reals. A band under half a 16-bit step (a 32-bit or float stream at a very low level) was zeros to this
+! pass and a signal to the others: its Fox was decoded late, by the last step, and the last step had no
+! first pass to cost its candidates at - a figure kept from an earlier slot stood in, with the faults of
+! any figure that is kept. One band for every pass now, and one answer to "does it hold a signal".
+! It prints its own decode lines (sfox_unpack). Its search runs on the FT8 decoder's thread count
+! (nsfdecthreads, set below; "THE SEARCH IN THREADS", sfox_mod.f90, 2026-09-21). Until then this said
+! "single threaded by construction" - the polar decoder's work arrays are file-static C (np_qpc.c), and the
+! threaded search decodes with the program's re-entrant list decoder instead (corrected 2026-10-14).
 ! Afterwards nothing of an FT8 decode may be left for the TX background phase, which would
 ! otherwise decode the PREVIOUS period's retained band again: with the arrays gone it prints
 ! its empty <BackgroundFinished> line (the dispatch at the top of this routine).
-    use sfox_mod, only : nsfdecthreads
-    integer*2, allocatable, save :: iwave(:)
+    use sfox_mod, only : nsfdecthreads,sfox_nosignal
     integer :: nlast,nsfprog1
     logical, intent(out) :: ldecoded
 
-    if(.not.allocated(iwave)) allocate(iwave(180000))
     if(.not.allocated(dd8sf)) allocate(dd8sf(180000))
-    nlast=min(180000,max(0,params%nzhsym)*3456)
-    if(nlast.eq.0) nlast=180000   ! no block count given: the whole buffer
-    iwave(1:nlast)=nint(max(-32768.0,min(32767.0,dd8(1:nlast)/65536.0)),2)
-    if(nlast.lt.180000) iwave(nlast+1:180000)=0
+    if(.not.allocated(sfxd)) allocate(sfxd(180000))
+    nlast=superfox_nlast()
     dd8sf(1:nlast)=dd8(1:nlast); if(nlast.lt.180000) dd8sf(nlast+1:180000)=0.   ! for stage C, should it come to that
+    sfxd=dd8sf/65536.0                     ! what the receiver takes
+    lsfempty=sfox_nosignal(sfxd,180000)    ! CE3TSK 2026-10-11: nothing in it - the gate ends the slot, and it does not count as a slot that was heard
     call fillhash(1,.false.)   ! mycall13 and its hashes, for a Fox addressing our own hashed call
     ! and at once the merge that normally follows a decode: fillhash(.false.) has just put a DX
     ! call the operator typed on thread 1's list, and only the merge makes it resolvable. A busy
@@ -1816,7 +1848,11 @@ contains
     ! the typed DX call is the ONLY way its hash is ever read - and it must be read in THIS
     ! period, not the next Fox period 30 s on (the blind-call rule waits for it). Idempotent.
     call fillhash(1,.true.)
-    if(params%newdat) call sfox_age()   ! the Fox the receiver REMEMBERS is forgotten after four Fox slots without a decode of it (a fresh period only: a re-decode is the same slot)
+    ! the Fox the receiver REMEMBERS is forgotten after four Fox slots without a decode of it (a fresh period
+    ! only: a re-decode is the same slot). CE3TSK 2026-10-12: four slots in which it COULD have been heard -
+    ! a slot whose band holds no signal (a muted or absent audio stream) says nothing about the Fox, and two
+    ! minutes of it forgot the Fox and its grid
+    if(params%newdat .and. .not.lsfempty) call sfox_age()
     call sfox_known(hiscall,1)   ! the DX call is a Fox the receiver may accept below its SNR floor (qpc_decode2)
     ! and what its a-priori pass may state beside that call: the DX grid, for the Fox's CQ, and my
     ! own call when the QSO expects an answer to ME - the two rows of FT8's Hound table that hold
@@ -1829,10 +1865,26 @@ contains
     call sfox_me(mycall,nsfprog1)
     nsfdecthreads=decoder_threads(params%nmt,omp_get_num_procs())   ! what JTDX_SFOX_THREADS=0 means (sfox_mod)
     tsffirst=omp_get_wtime()
-    call sfrx_sub(nutc,params%nfqso,params%nsftol,iwave,ldecoded)
+    call sfrx_core(nutc,params%nfqso,params%nsftol,sfxd,ldecoded)
     tsffirst=omp_get_wtime()-tsffirst   ! the receiver's first pass: what one more candidate will cost (superfox_extra)
     call fillhash(1,.true.)    ! a compound Fox call learnt from its CQ (sfox_unpack) becomes resolvable
   end subroutine superfox_slot
+
+  integer function superfox_nlast()
+! CE3TSK: the samples of dd8 that were captured in this period (49 blocks of 3456 as a rule, 14.1 s)
+    superfox_nlast=min(180000,max(0,params%nzhsym)*3456)
+    if(superfox_nlast.eq.0) superfox_nlast=180000   ! no block count given: the whole buffer
+  end function superfox_nlast
+
+  subroutine superfox_odd()
+! CE3TSK 2026-10-12: an odd slot of S-Hound mode, a fresh period (the call above the gate). The clock of the
+! receiver's pool of Hounds ticks for an odd slot that was LISTENED to (sfox_odd_listened) - and one whose
+! band holds no signal was not: nothing could be heard in it, no Hound either, and four of them emptied the
+! pool (the second review of the silence fixes; sfox_mod's sfox_nosignal says what "no signal" is).
+    use sfox_mod, only : sfox_nosignal
+    if(sfox_nosignal(dd8,superfox_nlast())) return
+    call sfox_odd_listened()
+  end subroutine superfox_odd
 
   subroutine superfox_done()
 ! CE3TSK: the end of a Fox slot, whichever way it went. Nothing of an FT8 decode may be left for
@@ -1968,6 +2020,7 @@ contains
     if(servis8.eq.'#') mark=char(226)//char(148)//char(188)
     write(*,1000) nutc,snr,dt+ensdtcorr,nint(freq+ensfreqcorr),decoded,trim(mark)
 1000 format(i6.6,i4,f5.1,i5,1x,'~',1x,a26,a)
+    call deleted_shown(decoded)   ! CE3TSK: on the screen - no deletion of this message is reported (deleted_decodes.f90)
 !    write(13,1002) nutc,snr,dt,freq,0,decoded
 !1002 format(i6.6,i5,f6.1,f8.0,i4,3x,a26,' FT8')
     call flush(6)
@@ -2011,6 +2064,7 @@ contains
     sep4=':'; if(lft2) sep4=';'
     write(*,1001) nutc,snr,dt,nint(freq),sep4,decoded,trim(mark4)
 1001 format(i6.6,i4,f5.1,i5,1x,a1,1x,a26,a)
+    call deleted_shown(decoded)   ! CE3TSK: on the screen - no deletion of this message is reported (deleted_decodes.f90)
     call flush(6)
     
     select type(this)

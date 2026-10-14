@@ -13,10 +13,12 @@ listing the squares it occupies.  The plausibility test a caller wants is then a
 the grid this station claims one of its entity's squares (or a neighbour of one)?" - with no
 geometry at run time.
 
-Two sources, both public domain (SESSION_RULES.md rule 6b):
+The sources, all open (SESSION_RULES.md rule 6b):
   - entity list and coordinates: geodata/cty.dat (MIT), the copy the tables were built from
-  - borders: Natural Earth 1:10m admin_0_map_units, kept in geodata/
+  - borders: Natural Earth 1:10m admin_0_map_units (public domain), kept in geodata/
     https://naciscdn.org/naturalearth/10m/cultural/ne_10m_admin_0_map_units.zip
+  - K, KL and KH6: the US Census state boundaries (public domain), kept in geodata/
+  - the positions of the Antarctic stations: Wikidata (CC0), in the list ANTARCTIC_BASES below
 
 WHERE IT IS APPROXIMATE, and it says so per entity:
   - 'poly'  the entity matched a Natural Earth map unit; its squares come from the polygon.
@@ -61,8 +63,9 @@ from cty import load_cty, cty_path, gridname, norm, squares_of   # the resolver,
 
 BUILT_BY = ('built by tools/make_dxcc_grids.py of JTDX_CONTEST, Tihomir Sokcevic CE3TSK '
             '(the script is GPL v3)')
-CLAIM = ('derived from cty.dat (MIT licence) and Natural Earth (public domain), stating facts about '
-         'geography; no rights of its own are claimed over it (review 2026-10-04: it called cty.dat public domain).')
+CLAIM = ('derived from cty.dat (MIT licence), Natural Earth and the US Census state boundaries (public domain) and, '
+         'for the positions of the Antarctic stations, Wikidata (CC0), stating facts about geography; no rights of its '
+         'own are claimed over it (review 2026-10-04: it called cty.dat public domain).')
 # cty.dat spells some entities differently from Natural Earth
 ALIAS = {
     'Fed. Rep. of Germany': 'Germany', 'Timor - Leste': 'East Timor', 'Bosnia-Herzegovina':
@@ -87,6 +90,10 @@ ALIAS = {
     # 2026-10-01: without it KH0 was a 120 km disk around Saipan, and the northern islands (Pagan, Agrihan,
     # Farallon de Pajaros - QK28 QK29 QL20) were outside the Marianas
     'Mariana Islands': 'Northern Mariana Islands',
+    # 2026-10-13: two more that Natural Earth has under another name. Each fell to the island layer, which has no
+    # names and matches by distance: Guantanamo Bay got FL20, an islet one square north of the base (which is FK29),
+    # and Tokelau got Nukunonu's and Fakaofo's square and not Atafu's (AI31)
+    'Guantanamo Bay': 'US Naval Base Guantanamo Bay', 'Tokelau Islands': 'Tokelau',
 }
 # Entities that share one ADMINISTRATION.  DXCC counts them apart - that is what DXCC is for - but a
 # station of one may legitimately transmit from another: a KL7 holder living in Ohio, an Asiatic-Russia
@@ -115,6 +122,10 @@ GROUPS = {
     'NO': ['Norway', 'Svalbard', 'Jan Mayen', 'Bear Island'],
     'FR': ['France', 'Corsica'],
     'NL': ['Netherlands', 'Curacao', 'Bonaire', 'Sint Maarten', 'Aruba'],
+    # 2026-10-13, not measured (nobody was heard): the Antarctic Treaty area.  cty.dat gives the plain prefixes of
+    # Antarctica to one of the three by guess - CE9 and XR9 to the South Shetland Islands, where Chile also has
+    # stations on the continent (O'Higgins, Yelcho, Carvajal, Union Glacier)
+    'AQ': ['Antarctica', 'South Shetland Islands', 'South Orkney Islands'],   # (not Peter I Island: its calls are its own)
 }
 
 # Entities that need more than one map unit.  Natural Earth keeps some regions apart from the state they
@@ -129,7 +140,11 @@ MULTI = {'Palestine': ['West Bank', 'Gaza'],
          'Iraq': ['Iraq', 'Iraqi Kurdistan'],
          'Serbia': ['Serbia', 'Vojvodina'],
          'Papua New Guinea': ['Papua New Guinea', 'Bougainville'],
-         'China': ['China', 'Paracel Is.']}
+         'China': ['China', 'Paracel Is.'],
+         # 2026-10-13: the two base areas are map units of their own. The island layer had given the entity KM65
+         # and KM66, islets off the north coast of Cyprus; the bases are KM64 (Akrotiri, Dhekelia) and KM65 (Dhekelia
+         # north of 35 degrees, Ayios Nikolaos)
+         'UK Base Areas on Cyprus': ['Akrotiri Sovereign Base Area', 'Dhekelia Sovereign Base Area']}
 # Land an entity owns that the steps below cannot find (2026-10-01) - the Franz Josef Land fault again: an
 # island or point row is built from what lies near the cty.dat coordinate, so part of an entity that sits
 # inside another map unit, or far from that coordinate, was "outside" it.  Added to the row, never instead
@@ -137,7 +152,6 @@ MULTI = {'Palestine': ['West Bank', 'Gaza'],
 #   ADD_LAND    prefix -> (the map unit the land sits inside, a box holding it and nothing else of that unit)
 #   ADD_POINTS  prefix -> further parts of the entity, (lon, lat): their square is added
 ADD_LAND = {
-    'VU4':  ('India', (91.5, 6.0, 94.5, 14.5)),          # the Nicobar Islands (NJ66-NJ69), with the Andamans
     'VU7':  ('India', (71.0, 8.0, 74.3, 12.7)),          # Minicoy (MJ68), with the rest of Lakshadweep
     'JD/o': ('Japan', (140.5, 24.0, 143.0, 28.0)),       # the Volcano Islands, Iwo Jima (QL04 QL05)
     'H40':  ('Solomon Is.', (165.0, -13.0, 171.0, -9.0)),   # the whole province, Tikopia (RH47) with it
@@ -172,6 +186,104 @@ ADD_POINTS = {
 #   the Census 'HI' shape that KH6 is cut from holds the main islands only; Midway and Kure are entities of
 #   their own.  Palmerston (E5/s) is in the first round's table below.
 
+# Antarctic stations, by the country that runs them (2026-10-13): (name, lon, lat, Wikidata item).  A station's square
+# joins the row of its country - not as land of that DXCC entity, but because this table is a plausibility check, and
+# a station there signs with its home call: the /Z, KC4/ or VP8/ of a visitor's call does not fit into an FT8 message
+# that carries a square (LU1DMZ was heard so from Orcadas, GC79, and marked as outside Argentina).  A call cty.dat
+# itself puts in Antarctica (KC4USV, RI1AN.., DP0GVN, VK0.., FT#Y, ZS7) never needed this.
+# What is listed: research stations, their refuges and field camps that are in use or kept - open all year, in summer,
+# or closed for the time being - each under the country that runs it, a joint one under each.  NOT covered: a visitor
+# from a country that runs no station there, and a ship.
+# Positions: Wikidata (CC0), the item beside each entry, as read on 2026-10-13.  Which stations there are and whose
+# they are is each national programme's own published information; the choice made here was compared with Wikipedia's
+# list of research stations in Antarctica and with the facilities list the national programmes keep together (COMNAP,
+# version 3.5.0 of March 2024) - the choice only: no datum of either is in this table.
+# The decoder's own table (lib/chkgrid.f90) accepts the same squares for the same countries, and the square across an
+# edge a station stands within 3 km of (this table needs none of those: the program accepts a neighbouring square
+# anyway); tools/chkgrid_audit.py bases asks it about every station here, and that it accepts no other.
+ANTARCTIC_BASES = {
+    'LU':  [('Belgrano II', -34.627, -77.874, 'Q2357907'), ('Brown', -62.870, -64.895, 'Q2484332'),
+            ('Carlini', -58.667, -62.238, 'Q1710747'), ('Camara', -59.919, -62.595, 'Q3635543'),
+            ('Decepcion', -60.683, -62.983, 'Q3635546'), ('Esperanza', -56.998, -63.397, 'Q1368174'),
+            ('Marambio', -56.623, -64.242, 'Q141493'), ('Matienzo', -60.071, -64.976, 'Q1134373'),
+            ('Melchior', -62.983, -64.333, 'Q1149597'), ('Orcadas', -44.742, -60.740, 'Q1440159'),
+            ('Petrel', -56.231, -63.478, 'Q48594'), ('Primavera', -60.954, -64.156, 'Q1149608'),
+            ('San Martin', -67.100, -68.133, 'Q923120')],   # Argentina
+    'VK':  [('Casey', 110.527, -66.282, 'Q1047169'), ('Davis', 77.969, -68.576, 'Q1315213'),
+            ('Mawson', 62.874, -67.603, 'Q1434388'), ('Edgeworth David', 100.600, -66.250, 'Q15218894'),
+            ('Law', 76.379, -69.388, 'Q846325'), ('Dome C ice-core camp', 123.350, -75.100, 'Q3045552')],   # Australia
+    'EU':  [('Vechernyaya', 46.153, -67.658, 'Q29838553')],   # Belarus
+    'ON':  [('Princess Elisabeth', 23.347, -71.950, 'Q588342')],   # Belgium
+    'PY':  [('Comandante Ferraz', -58.392, -62.085, 'Q683143'), ('Goeldi', -55.367, -61.222, 'Q3935486'),
+            ('Cruls', -58.585, -62.143, 'Q3935688')],   # Brazil
+    'LZ':  [('St. Kliment Ohridski', -60.365, -62.641, 'Q2071240')],   # Bulgaria
+    'CE':  [('Arturo Prat', -59.664, -62.479, 'Q715071'), ('Frei', -58.963, -62.200, 'Q1928160'),
+            ('Escudero', -58.975, -62.205, 'Q2714138'), ("O'Higgins", -57.900, -63.321, 'Q2318477'),
+            ('Carvajal', -68.915, -67.761, 'Q1450354'), ('Gonzalez Videla', -62.857, -64.824, 'Q1537450'),
+            ('Yelcho', -63.584, -64.876, 'Q9080188'), ('Guillermo Mann', -60.771, -62.470, 'Q14769589'),
+            ('Union Glacier', -82.907, -79.769, 'Q18644137'), ('Risopatron', -59.701, -62.378, 'Q5721594'),
+            ('Ripamonti', -58.935, -62.210, 'Q5721591')],   # Chile
+    'BY':  [('Great Wall', -58.962, -62.218, 'Q1548160'), ('Zhongshan', 76.372, -69.373, 'Q197899'),
+            ('Kunlun', 77.116, -80.417, 'Q3235369'), ('Taishan', 76.967, -73.850, 'Q15729517'),
+            ('Qinling', 163.715, -74.934, 'Q60793962')],   # China
+    'OK':  [('Mendel', -57.883, -63.801, 'Q743379'), ('Eco-Nelson', -58.983, -62.246, 'Q13382296')],   # the Czech Republic
+    'HC':  [('Maldonado', -59.741, -62.449, 'Q2317027')],   # Ecuador
+    'OH':  [('Aboa', -13.417, -73.050, 'Q2081935')],   # Finland
+    'F':   [("Dumont d'Urville", 140.001, -66.663, 'Q403901'), ("Cap Prud'homme", 139.907, -66.688, 'Q29838548'),
+            ('Concordia', 123.333, -75.100, 'Q403127'), ('D85', 134.146, -70.425, 'Q29838551')],   # France
+    'DL':  [('Neumayer III', -8.280, -70.670, 'Q7933'), ('Kohnen', 0.066, -75.002, 'Q688142'),
+            ('Gondwana', 164.221, -74.636, 'Q884888'), ("GARS O'Higgins", -57.901, -63.321, 'Q19134919'),
+            ('Dallmann', -58.667, -62.238, 'Q225923')],   # Germany
+    'VU':  [('Maitri', 11.731, -70.767, 'Q626852'), ('Bharati', 76.195, -69.407, 'Q627152')],   # India
+    'I':   [('Mario Zucchelli', 164.113, -74.695, 'Q1677142'), ('Concordia', 123.333, -75.100, 'Q403127'),
+            ('Browning Pass', 163.915, -74.623, 'Q22089892'), ('Talos Dome', 159.212, -72.835, 'Q29838560'),
+            ("Cap Prud'homme", 139.907, -66.688, 'Q29838548'), ('Mid Point', 145.820, -75.542, 'Q19545426')],   # Italy
+    'JA':  [('Syowa', 39.582, -69.004, 'Q1550784'), ('Asuka', 24.131, -71.525, 'Q2082272'),
+            ('Dome Fuji', 39.699, -77.317, 'Q7474939'), ('Mizuho', 44.278, -70.699, 'Q2350884'),
+            ('S17', 40.092, -69.028, 'Q29838557')],   # Japan
+    'HL':  [('King Sejong', -58.787, -62.223, 'Q246364'), ('Jang Bogo', 164.200, -74.617, 'Q245875')],   # Korea
+    'PA':  [('Dirck Gerritsz', -68.128, -67.571, 'Q105605495')],   # the Netherlands
+    'ZL':  [('Scott Base', 166.750, -77.850, 'Q1136714')],   # New Zealand
+    'LA':  [('Troll', 2.535, -72.011, 'Q1082371'), ('Tor', 5.160, -71.890, 'Q763215'),
+            ('Troll Airfield', 2.467, -71.957, 'Q3355017')],   # Norway
+    'OA':  [('Machu Picchu', -58.471, -62.092, 'Q2886434')],   # Peru
+    'SP':  [('Arctowski', -58.473, -62.160, 'Q638234'), ('Dobrowolski', 100.750, -66.275, 'Q1965470')],   # Poland
+    'YO':  [('Law-Racovita', 76.379, -69.388, 'Q846325')],   # Romania
+    'UA':  [('Bellingshausen', -58.961, -62.198, 'Q815995'), ('Mirny', 93.015, -66.552, 'Q646492'),
+            ('Vostok', 106.866, -78.464, 'Q211014'), ('Novolazarevskaya', 11.825, -70.776, 'Q1411423'),
+            ('Progress', 76.387, -69.379, 'Q1469332'), ('Molodyozhnaya', 45.841, -67.666, 'Q1422189'),
+            ('Leningradskaya', 159.389, -69.502, 'Q2374874'), ('Russkaya', -136.867, -74.767, 'Q2628033'),
+            ('Soyuz', 68.795, -70.577, 'Q4430443'), ('Druzhnaya-4', 73.709, -69.748, 'Q3635547'),
+            ('Oazis-2, beside Dobrowolski', 100.750, -66.275, 'Q1965470')],   # Russia
+    'ZS':  [('SANAE IV', -2.829, -71.674, 'Q1334024')],   # South Africa
+    'EA':  [('Juan Carlos I', -60.388, -62.663, 'Q403043'), ('Gabriel de Castilla', -60.676, -62.977, 'Q403020')],   # Spain
+    'SM':  [('Wasa', -13.417, -73.050, 'Q2280257'), ('Svea', -11.217, -74.583, 'Q3445731')],   # Sweden
+    'TA':  [('Horseshoe Island', -67.237, -67.830, 'Q118874897')],   # Turkey
+    'UR':  [('Vernadsky', -64.257, -65.246, 'Q1469808')],   # Ukraine
+    'G':   [('Rothera', -68.128, -67.567, 'Q1635867'), ('Halley', -25.467, -75.573, 'Q1571679'),
+            ('Signy', -45.600, -60.717, 'Q1751827'), ('Fossil Bluff', -68.283, -71.333, 'Q1412986'),
+            ('Sky Blu', -71.585, -74.856, 'Q626914'), ('Port Lockroy', -63.494, -64.825, 'Q2104764')],   # the United Kingdom
+    'K':   [('McMurdo', 166.668, -77.848, 'Q498627'), ('Palmer', -64.053, -64.774, 'Q1333903'),
+            ('Marble Point', 163.833, -77.433, 'Q2604787'), ('Siple Dome', -149.002, -81.654, 'Q120969566'),
+            ('WAIS Divide', -112.072, -79.471, 'Q5477552'), ('Byrd', -119.533, -80.017, 'Q2987067'),
+            ('South Pole', 139.273, -89.998, 'Q243307'), ('Copacabana (Lenie)', -58.446, -62.179, 'Q3432209'),
+            ('Cape Shirreff', -60.771, -62.470, 'Q7498973'), ('Allan Hills camp', 159.700, -76.700, 'Q370398')],   # the United States
+    'CX':  [('Artigas', -58.902, -62.185, 'Q809827'), ('Elichiribehety', -56.991, -63.402, 'Q58625')],   # Uruguay
+}
+ANTARCTIC_COUNTRIES = len(ANTARCTIC_BASES)
+for _p, _b in ANTARCTIC_BASES.items():
+    for _n, _lon, _lat, _q in _b:
+        if not (_lat < -60.0 and -180.0 <= _lon <= 180.0 and _q[:1] == 'Q'):
+            raise SystemExit('FAILED: ANTARCTIC_BASES %s %r: not a place south of 60 degrees south, or no item' % (_p, _n))
+# the United Kingdom is eight entities to cty.dat (a VP8 call that is not on its list of Antarctic calls is the
+# Falkland Islands' to it), Turkey two
+for _p in ('GM', 'GW', 'GI', 'GD', 'GJ', 'GU', '*GM/s', 'VP8'): ANTARCTIC_BASES[_p] = ANTARCTIC_BASES['G']
+ANTARCTIC_BASES['*TA1'] = ANTARCTIC_BASES['TA']
+for _p, _b in ANTARCTIC_BASES.items():
+    ADD_POINTS[_p] = ADD_POINTS.get(_p, []) + [(_lon, _lat) for _n, _lon, _lat, _q in _b]
+# The South Pole station's callbook entry gives JA00 (longitude 0), and that is the square the decoder's table had
+ADD_POINTS['K'] = ADD_POINTS.get('K', []) + [(1.0, -89.5)]
+
 # gridname, norm and squares_of come from cty.py: test/geodata_gap_check.py uses the same three.
 
 # Three splits the map units cannot give us, done from data already in the tree:
@@ -179,6 +291,8 @@ ADD_POINTS = {
 #   UA / UA9      - Russia cut at 60 deg E.  The DXCC line follows the Urals and the Caucasus, so
 #                   this is an APPROXIMATION, and squares near the cut belong to both halves here.
 #   R1FJ          - Franz Josef Land: Russia north of 79 deg N between 30 and 70 deg E (2026-10-01).
+#   VU4           - the Andaman and Nicobar Islands: India between 91.5 and 94.5 deg E, south of 14.5 deg N
+#                   (2026-10-13).
 US_SHP = os.path.join(DATA, 'cb_2023_us_state_20m')
 def us_parts():
     if not os.path.exists(US_SHP + '.shp'):
@@ -287,6 +401,16 @@ SPECIAL['R1FJ'] = unary_union([_ru.intersection(_fjl_box)]
 if SPECIAL['R1FJ'].is_empty or not (79.5 < SPECIAL['R1FJ'].bounds[1] and SPECIAL['R1FJ'].bounds[3] < 82.5):
     raise SystemExit('FAILED: the Franz Josef Land cut is empty or reaches outside the archipelago: %s'
                      % (SPECIAL['R1FJ'].bounds,))
+# The Andaman and Nicobar Islands (2026-10-13).  They are part of India's polygon and have no map unit of their own,
+# so the row came from the island layer - which took the Coco Islands of Myanmar with it (NK64, 60 km north of the
+# last Indian island) - and the land itself was added by hand (ADD_LAND).  India inside this box is the two
+# archipelagos and nothing else: Landfall Island ends at 13.7 deg N, Indira Point is 6.75 deg N.
+_in = units.get(norm('India'))
+if _in is None: raise SystemExit('FAILED: no India in %s - VU4 is cut from it' % NE)
+SPECIAL['VU4'] = _in.intersection(box(91.5, 6.0, 94.5, 14.5))
+if SPECIAL['VU4'].is_empty or not (6.5 < SPECIAL['VU4'].bounds[1] and SPECIAL['VU4'].bounds[3] < 14.0):
+    raise SystemExit('FAILED: the Andaman and Nicobar cut is empty or reaches outside the islands: %s'
+                     % (SPECIAL['VU4'].bounds,))
 print('Natural Earth: %d name keys' % len(units))
 
 rows, source, group = {}, {}, {}
@@ -367,6 +491,7 @@ for k, v in ALIAS.items():
         raise SystemExit('FAILED: ALIAS %r -> %r: no Natural Earth map unit is called that' % (k, v))
 for table, keys, space, what in (('MULTI', MULTI, _names, 'an entity name'), ('ALIAS', ALIAS, _names, 'an entity name'),
                                  ('ADD_LAND', ADD_LAND, rows, 'a prefix'),
+                                 ('ANTARCTIC_BASES', ANTARCTIC_BASES, rows, 'a prefix'),
                                  ('ADD_POINTS', ADD_POINTS, rows, 'a prefix')):
     for k in keys:
         if k not in space: raise SystemExit('FAILED: %s key %r is not %s' % (table, k, what))
@@ -381,6 +506,8 @@ HEAD = ('# DXCC entity -> the 4-character Maidenhead grid squares it occupies.\n
         '#   <primary prefix>  <source>  <group>  <squares>  <entity name>\n'
         '#   group: entities under one administration (US, RU, ES, ...) - DXCC counts them apart, but\n'
         '#   a station of one may transmit from another; "-" means the entity is in no group.\n'
+        '#   AQ is Antarctica with the South Shetland and the South Orkney Islands, whose calls cty.dat tells\n'
+        '#   apart by guess (Peter I Island, also south of 60 degrees, has calls of its own and is not in it).\n'
         '#   source: poly = a Natural Earth map unit; sovereign = only the sovereign name matched, so\n'
         '#   the row covers that state AND its dependencies; admin1 = a subdivision cut from the admin-1\n'
         '#   layer (dxcc_admin1_subset.json); islands = minor-island polygons within %d km of\n'
@@ -389,10 +516,14 @@ HEAD = ('# DXCC entity -> the 4-character Maidenhead grid squares it occupies.\n
         '#   split = cut from a finer source: K/KL/KH6 from the US Census state boundaries (exact - KH6 also carries\n'
         '#   the Northwestern Hawaiian Islands, added by hand),\n'
         '#   UA/UA9 by cutting Russia at 60 deg E (approximate - the DXCC line follows the Urals),\n'
-        '#   R1FJ = Russia north of 79 deg N between 30 and 70 deg E (Franz Josef Land).\n'
+        '#   R1FJ = Russia north of 79 deg N between 30 and 70 deg E (Franz Josef Land),\n'
+        '#   VU4 = India between 91.5 and 94.5 deg E south of 14.5 deg N (the Andaman and Nicobar Islands).\n'
         '#   %s\n'
         '#   also carry land added by hand (ADD_LAND, ADD_POINTS in the builder) - parts of the entity far from\n'
         '#   its coordinate or inside another map unit.\n'
+        '#   The rows of the %d countries that run stations in Antarctica also carry the squares of those stations\n'
+        '#   (ANTARCTIC_BASES in the builder; positions from Wikidata, CC0): not land of the entity - a station there\n'
+        '#   signs with its home call.\n'
         '#   A matched parent keeps its whole polygon, so Spain still lists the Canary squares of EA8:\n'
         '#   the table errs on the permissive side, which is the safe direction for a plausibility test.\n'
         '#\n'
@@ -403,7 +534,8 @@ HEAD = ('# DXCC entity -> the 4-character Maidenhead grid squares it occupies.\n
         '# version %s (built %s), %s.\n'
         '# This table is %s\n'
         '# See geodata/README.md.  A JSON twin of this table is dxcc_grids.json.\n'
-        % (ISLAND_KM, POINT_KM, ' '.join(sorted(set(ADD_LAND) | set(ADD_POINTS))), VERSION, BUILT, BUILT_BY, CLAIM))
+        % (ISLAND_KM, POINT_KM, ' '.join(sorted((set(ADD_LAND) | set(ADD_POINTS)) - set(ANTARCTIC_BASES))),
+           ANTARCTIC_COUNTRIES, VERSION, BUILT, BUILT_BY, CLAIM))
 body = ''.join('%-8s %-9s %-3s %4d  %-28s %s\n'
                % (pfx, source[pfx], group[pfx] or '-', len(rows[pfx][1]), rows[pfx][0],
                   ' '.join(rows[pfx][1])) for pfx in sorted(rows))

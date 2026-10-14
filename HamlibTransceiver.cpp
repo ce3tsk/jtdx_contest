@@ -17,6 +17,8 @@
 #include <QJsonValue>
 #include <QDebug>
 //#include <QThread>
+#include "hamliberror.h"
+
 #include "moc_HamlibTransceiver.cpp"
 
 // CE3TSK: hamlib renamed the enumerator CACHE_ALL to HAMLIB_CACHE_ALL. Same shim as
@@ -210,6 +212,7 @@ HamlibTransceiver::HamlibTransceiver (TransceiverFactory::PTTMethod ptt_type, QS
   : PollingTransceiver {0, parent}
   , model_ {RIG_MODEL_DUMMY}
   , rig_ {rig_init (model_)}
+  , errortable {error_texts ()}   // CE3TSK 2026-10-12: was never filled here, see hamliberror.h
   , back_ptt_port_ {false}
   , one_VFO_ {false}
   , is_dummy_ {true}
@@ -275,26 +278,7 @@ HamlibTransceiver::HamlibTransceiver (unsigned model_number, TransceiverFactory:
   : PollingTransceiver {params.poll_interval, parent}
   , model_ {model_number}
   , rig_ {rig_init (model_)}
-  , errortable {tr("Command completed successfully"),
-  tr("Invalid parameter"),
-  tr("Invalid configuration"),
-  tr("Memory shortage"),
-  tr("Feature not implemented"),
-  tr("Communication timed out"),
-  tr("IO error"),
-  tr("Internal Hamlib error"),
-  tr("Protocol error"),
-  tr("Command rejected by the rig"),
-  tr("Command performed, but arg truncated, result not guaranteed"),
-  tr("Feature not available"),
-  tr("Target VFO unaccessible"),
-  tr("Communication bus error"),
-  tr("Communication bus collision"),
-  tr("NULL RIG handle or invalid pointer parameter"),
-  tr("Invalid VFO"),
-  tr("Argument out of domain of func"),
-  "Added1",
-  "Added2" }
+  , errortable {error_texts ()}
   , back_ptt_port_ {TransceiverFactory::TX_audio_source_rear == params.audio_source}
   , one_VFO_ {false}
   , is_dummy_ {RIG_MODEL_DUMMY == model_}
@@ -481,6 +465,37 @@ void HamlibTransceiver::load_user_settings ()
         }
 }
 
+// CE3TSK 2026-10-12: the one table of error texts, for both constructors (hamliberror.h has the story). The
+// order is rig_errcode_e's and the wording Hamlib's own. The first eighteen were here and are translated; 18
+// and 19 were the placeholders "Added1" and "Added2", and 20 to 22 were missing. The five new ones are
+// English until they are given to the translators.
+QStringList HamlibTransceiver::error_texts ()
+{
+  return {tr("Command completed successfully"),
+          tr("Invalid parameter"),
+          tr("Invalid configuration"),
+          tr("Memory shortage"),
+          tr("Feature not implemented"),
+          tr("Communication timed out"),
+          tr("IO error"),
+          tr("Internal Hamlib error"),
+          tr("Protocol error"),
+          tr("Command rejected by the rig"),
+          tr("Command performed, but arg truncated, result not guaranteed"),
+          tr("Feature not available"),
+          tr("Target VFO unaccessible"),
+          tr("Communication bus error"),
+          tr("Communication bus collision"),
+          tr("NULL RIG handle or invalid pointer parameter"),
+          tr("Invalid VFO"),
+          tr("Argument out of domain of func"),
+          QString {"Function deprecated"},
+          QString {"Security error password not provided or crypto failure"},
+          QString {"Rig is not powered on"},
+          QString {"Limit exceeded"},
+          QString {"Access denied"}};
+}
+
 void HamlibTransceiver::error_check (int ret_code, QString const& doing) const
 {
   if (RIG_OK != ret_code)
@@ -492,7 +507,7 @@ void HamlibTransceiver::error_check (int ret_code, QString const& doing) const
       fclose (pFile);
 #endif
       
-      throw error {tr ("Hamlib error: %1 while %2").arg (errortable.at (abs(ret_code))).arg (doing)};
+      throw error {tr ("Hamlib error: %1 while %2").arg (hamlibErrorText (errortable, ret_code)).arg (doing)};
     }
 }
 

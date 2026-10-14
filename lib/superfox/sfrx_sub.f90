@@ -7,7 +7,7 @@ subroutine sfrx_sub(nutc,nfqso,ntol,iwave,ldecoded)
 ! - sfox_remove_ft8 is not called HERE. The donor decodes and subtracts ordinary FT8 signals
 !   with its own FT8 helpers before it looks for the Fox. This program does that with its OWN
 !   FT8 decoder, and only when the Fox was not found in the band as received (milestone 3,
-!   decoder.f90: superfox_slot, superfox_retry); the residual comes back through sfrx_core;
+!   decoder.f90: superfox_slot, superfox_residual); the residual comes back through sfrx_core;
 ! - c0 and dd are allocated once and kept instead of being automatic arrays. jtdxjt9 is built
 !   with OpenMP, which puts every local array on the stack, and these two alone are 2.2 MB of
 !   the main thread's 8 MB. Kept, not reallocated: four2a caches its FFTW plans by array address
@@ -52,6 +52,21 @@ subroutine sfrx_core(nutc,nfqso,ntol,dd,ldecoded)
   fsample=12000.0
   call sfox_init(7,127,50,'no',fspread,delay,fsample,24)
   npts=15*12000
+
+! CE3TSK 2026-10-11: A PERIOD WITHOUT A SIGNAL IS NOT SEARCHED. Every sample zero - a muted or absent audio
+! stream, an empty file - holds no Fox, and everything below divides by an energy somewhere: the sync
+! (qpc_sync, guarded now as WSJT-X guards it), the tone remover, sfox_demod's two medians. The spectra came
+! out as NaN, the search ran its whole depth on them (1.2 to 1.9 s of a silent slot in the decoder process,
+! measured), and the threaded search's buffer check read the NaN as a difference and gave up its threads for
+! the rest of the process (qpc_decode2.f90 sfox_search_mt, 2026-10-11). Nothing was decoded and nothing is.
+! The same day, after the review: not zeros alone but ANY ONE LEVEL (sfox_mod's sfox_nosignal has what that is
+! and why) - a muted input with a DC offset was still searched in full, by the last step's three sync windows.
+! (The decoder asks the same question of the band before it comes here, and ends the Fox's slot at once:
+! decoder.f90 superfox_slot and the gate.)
+  if(sfox_nosignal(dd,NMAX)) then
+     ldecoded=.false.
+     return
+  endif
 
   call sfox_ana(dd,npts,c0,npts)
 

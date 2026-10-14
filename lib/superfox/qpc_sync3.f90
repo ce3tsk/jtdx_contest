@@ -5,8 +5,10 @@ subroutine qpc_sync3(crcvd0,fsample,isync,fsync,f2,t2,snrsync)
 ! spectrum of the first 9.2 s (WSJT-X: 9.0), and three candidates - (1) the RX frequency +/- 60 Hz, the
 ! time lag measured over +/- 1 baud, snrsync + 0.55; (2) 700-800 Hz, +/- 2 baud; (3) 200-3200 Hz (MSHV's
 ! default decode range), +/- 1.5 baud, snrsync + 0.25. f2, t2, snrsync for each; the caller ranks them.
-! Used ONLY by the last step of a Fox slot (decoder.f90 superfox_extra, qpc_decode2's nsfextra), switched
-! on by JTDX_SFOX_SYNC3=1 - off by default: SUPERFOX_DECODER_IDEAS.md 4.14 has what it was measured on.
+! Used ONLY by the last step of a Fox slot (decoder.f90 superfox_extra, qpc_decode2's nsfextra). ON by
+! default since 2026-09-21 (the operator: "enable the 3 windows by default"); JTDX_SFOX_SYNC3=0 switches it
+! off (sfox_mod's nsfsync3). It was off at first - this said so until 2026-10-14. SUPERFOX_DECODER_IDEAS.md
+! 4.14 has what it was measured on.
 
   parameter(N9SEC=110400,NMAX=15*12000,NDOWN=16,NZ=N9SEC/NDOWN)
   complex crcvd0(NMAX)
@@ -103,6 +105,16 @@ subroutine qpc_sync3(crcvd0,fsample,isync,fsync,f2,t2,snrsync)
      ave=sp/nsum
      rms=sqrt(max(1.e-30,sq/nsum-ave*ave))
      snrsync(icand)=(pmax-ave)/rms
+! CE3TSK 2026-10-12: A WINDOW THAT CANNOT BE JUDGED HAS NO SYNC, as in qpc_sync (its guards of 2026-10-11): a
+! band that holds a sample that is not a number makes the spectrum, the lags and this SNR NaN - and the
+! frequency above the low edge of the window, another one in each. The caller's test for a candidate it has
+! searched already compares with .eq. and never matched: three candidates on a band that has none. Nominal
+! frequency, no offset, SNR 0 for such a window - the same in all three, so the second and the third are the
+! first again and are not searched. (Not shown to arrive from the audio; the second review of the silence fixes.)
+     if(.not.(abs(snrsync(icand)).le.huge(1.0))) then       !a NaN, or an infinity
+        f2(icand)=fsync-750.0; t2(icand)=0.0; snrsync(icand)=0.0
+        cycle
+     endif
      if(icand.eq.1) snrsync(icand)=snrsync(icand)+0.55
      if(icand.eq.3) snrsync(icand)=snrsync(icand)+0.25
   enddo

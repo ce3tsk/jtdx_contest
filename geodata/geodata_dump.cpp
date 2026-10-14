@@ -19,6 +19,8 @@ int main ()
       for (std::uint32_t k = geodata::dxcc::offset[i]; k < geodata::dxcc::offset[i + 1]; ++k)
         { geodata::unpackGrid (geodata::dxcc::grid[k], g); std::printf (" %s", g); }
       std::printf ("\n");
+      // CE3TSK 2026-10-13: and its administration group - nothing compared that column with the json
+      std::printf ("G %s [%s]\n", geodata::dxcc::prefix[i], geodata::entityGroup (int (i)));
     }
   for (std::size_t i = 0; i < geodata::states::squareCount; ++i)
     {

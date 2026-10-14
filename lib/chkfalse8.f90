@@ -1,4 +1,4 @@
-subroutine chkfalse8(msg37,i3,n3,nbadcrc,iaptype,lcall1hash)
+subroutine chkfalse8(msg37,i3,n3,nbadcrc,iaptype,lcall1hash,ngriddel)
 
   use ft8_mod1, only : mycall,hiscall,hisgrid4
   character msg37*37,decoded*22,callsign*12,calltmp*12,call_a*12,call_b*12,grid*12,callmask6*6
@@ -6,8 +6,14 @@ subroutine chkfalse8(msg37,i3,n3,nbadcrc,iaptype,lcall1hash)
   integer, intent(in) :: i3,n3
   logical(1) falsedec,lchkcall,lgvalid,lwrongcall
   logical(1), intent(in) :: lcall1hash
+! CE3TSK 2026-10-12: why the message was deleted, when it was the prefix-to-grid table (chkgrid) that deleted
+! it: the number of the place below, 1 to 7 in the order of this file - positive when the square is not in the
+! table for the prefix, negative when the prefix is not allocated - and 0 for every other outcome. The callers
+! (ft8b, ft4b) hand it to deleted_decodes.f90, which has the story.
+  integer, intent(out) :: ngriddel
   data mask6/'001000','101000','011000'/
 
+  ngriddel=0
   call_a=''; call_b=''
 ! iaptype=0 non-AP decoder
 ! iaptype=1 CQ message AP decoder
@@ -98,7 +104,9 @@ subroutine chkfalse8(msg37,i3,n3,nbadcrc,iaptype,lcall1hash)
          msg37(ispc2+3:ispc2+3).lt.':' .and. msg37(ispc2+4:ispc2+4).lt.':') grid=msg37(ispc2+1:ispc3-1)
       if(len_trim(grid).eq.4) then
         call chkgrid(callsign,grid,lchkcall,lgvalid,lwrongcall)
-        if(lwrongcall .or. .not.lgvalid) then; nbadcrc=1; msg37=''; return; endif
+        if(lwrongcall .or. .not.lgvalid) then
+          ngriddel=merge(-1,1,lwrongcall); nbadcrc=1; msg37=''; return
+        endif
       endif
     endif
 
@@ -136,7 +144,9 @@ subroutine chkfalse8(msg37,i3,n3,nbadcrc,iaptype,lcall1hash)
         callsign=''; grid=''; callsign=msg37(8:islash-1); grid=msg37(islash+3:islash+6); nlengrid=len_trim(grid)
         if(nlengrid.eq.4 .and. grid(1:1).gt.'@' .and. grid(4:4).lt.':') then
           call chkgrid(callsign,grid,lchkcall,lgvalid,lwrongcall)
-          if(lwrongcall .or. .not.lgvalid) then; nbadcrc=1; msg37=''; return; endif
+          if(lwrongcall .or. .not.lgvalid) then
+            ngriddel=merge(-2,2,lwrongcall); nbadcrc=1; msg37=''; return
+          endif
         endif
         falsedec=.false.
         call chkflscall('MYCALL      ',callsign,falsedec)
@@ -150,7 +160,19 @@ subroutine chkfalse8(msg37,i3,n3,nbadcrc,iaptype,lcall1hash)
       callsign=''; grid=''
       islash=index(msg37,'/R ')
       if(islash.gt.6) then
-        callsign=msg37(4:islash-1); grid=msg37(islash+3:islash+6)
+! CE3TSK 2026-10-13: the rover's call is the LAST word before "/R". Everything between "CQ " and "/R" was
+! taken for it, so "CQ TEST K1ABC/R FN42" - a rover's CQ in a VHF contest - was judged as a call
+! "TEST K1ABC": the table read TE as Costa Rica, found FN42 outside it, and a weak one was deleted
+! ("grid/3" in the record); "CQ DX K1ABC/R FN42" went the same way, as a Philippine call. The plain
+! "CQ K1ABC/R FN42" is judged as before. The square of a DIRECTED rover CQ is not judged here - no more
+! than the square of "CQ TEST K1ABC FN42", which this routine hands on a few lines below: whether the grid
+! fits the call is the window's question, and a prefix that is not allocated is check 8's (chkdircq, in
+! all three modes) when the word has three or four characters. A directed rover CQ with a word of one or
+! two ("CQ DX K1ABC/R FN42") is judged by nothing, as "CQ DX K1ABC FN42" never was (corrected 2026-10-14:
+! this said check 8 took them all; until 2026-10-13 such a CQ was deleted through the fault above).
+        icall=index(msg37(1:islash-1),' ',back=.true.)+1
+        callsign=msg37(icall:islash-1)
+        if(icall.eq.4) grid=msg37(islash+3:islash+6)
       else if(islash.lt.1) then
         ispc1=index(msg37,' '); ispc2=index(msg37((ispc1+1):),' ')+ispc1; ispc3=index(msg37((ispc2+1):),' ')+ispc2
         if(len_trim(msg37).eq.ispc3-1) then
@@ -162,7 +184,9 @@ subroutine chkfalse8(msg37,i3,n3,nbadcrc,iaptype,lcall1hash)
       nlengrid=len_trim(grid)
       if(nlengrid.eq.4 .and. grid(1:1).gt.'@' .and. grid(4:4).lt.':') then
         call chkgrid(callsign,grid,lchkcall,lgvalid,lwrongcall)
-        if(lwrongcall .or. .not.lgvalid) then; nbadcrc=1; msg37=''; return; endif
+        if(lwrongcall .or. .not.lgvalid) then
+          ngriddel=merge(-3,3,lwrongcall); nbadcrc=1; msg37=''; return
+        endif
       endif
       if(islash.gt.6) then
         falsedec=.false.
@@ -214,8 +238,28 @@ subroutine chkfalse8(msg37,i3,n3,nbadcrc,iaptype,lcall1hash)
       endif
     endif
     if(len_trim(grid).eq.4) then
-      call chkgrid(callsign,grid,lchkcall,lgvalid,lwrongcall)
-      if(lwrongcall .or. .not.lgvalid) then; nbadcrc=1; msg37=''; return; endif
+! CE3TSK 2026-10-13: "MYCALL CALL2 R GRID" - the roger of a WW Digi or ARRL Digi QSO, sent to this station.
+! Decoded without a-priori help it has reached the program whatever its grid since 2026-09-30 (ft8b.f90,
+! check 9); decoded WITH it - the weak one, the one that needs the help - it was still deleted here when the
+! table did not hold the square for the call's prefix: a station away from home, or one the table has
+! wrong. Now the square of the roger is not judged here or in place 5, where the second call is anybody's:
+! the window marks a grid that does not fit the call, and a marked caller is not answered on its own. A
+! prefix that is not allocated still deletes it - asked of the table about the prefix alone (chkprefix), so
+! that the answer does not depend on the square. "MYCALL CALL2 GRID", the first call of a station, is judged
+! as before - and so is the roger of the station being worked, in place 6, for the reason given there.
+! CE3TSK 2026-10-14: and so is a second call that arrived as an UNRESOLVED HASH ("MYCALL <...> R GRID", review
+! of 2026-10-14): it names no station and the window cannot mark it, while 1 in 64 phantoms of this a-priori
+! type reads its free bits as a 22-bit hash. A real station that answers me with a non-standard call sent me
+! that call in full first, and its hash then resolves ("<PJ4/K1ABC>", judged as any roger). chkgrid knows no
+! "<" and deletes it, as until 2026-10-13.
+      if(indxr.gt.7 .and. callsign(1:5).ne.'<...>') then
+        call chkprefix(callsign,lwrongcall); lgvalid=.true.
+      else
+        call chkgrid(callsign,grid,lchkcall,lgvalid,lwrongcall)
+      endif
+      if(lwrongcall .or. .not.lgvalid) then
+        ngriddel=merge(-4,4,lwrongcall); nbadcrc=1; msg37=''; return
+      endif
     endif
 !      call chkflscall('MYCALL      ',callsign,falsedec) ! too high risk to eliminate correct decode if callsign missed in ALLCALL7
 !      if(falsedec) then; nbadcrc=1; msg37=''; return; endif
@@ -242,8 +286,14 @@ subroutine chkfalse8(msg37,i3,n3,nbadcrc,iaptype,lcall1hash)
          msg37(ispc2+3:ispc2+3).lt.':' .and. msg37(ispc2+4:ispc2+4).lt.':') grid=msg37(ispc2+1:ispc3-1)
     endif
     if(len_trim(grid).eq.4) then
-      call chkgrid(callsign,grid,lchkcall,lgvalid,lwrongcall)
-      if(lwrongcall .or. .not.lgvalid) then; nbadcrc=1; msg37=''; return; endif
+      if(indxr.gt.7 .and. callsign(1:5).ne.'<...>') then   ! CE3TSK 2026-10-13: the roger's square is not judged, and 2026-10-14 an unresolved hash is - see place 4 above
+        call chkprefix(callsign,lwrongcall); lgvalid=.true.
+      else
+        call chkgrid(callsign,grid,lchkcall,lgvalid,lwrongcall)
+      endif
+      if(lwrongcall .or. .not.lgvalid) then
+        ngriddel=merge(-5,5,lwrongcall); nbadcrc=1; msg37=''; return
+      endif
     endif
     return ! no need in other checks for iaptype 40
   endif
@@ -279,8 +329,16 @@ subroutine chkfalse8(msg37,i3,n3,nbadcrc,iaptype,lcall1hash)
                 nbadcrc=1; msg37=''; return ! not valid message in Hound mode
               endif
             endif
+! CE3TSK 2026-10-13: here the roger IS judged on its square, as the grid message is - unlike places 4 and 5.
+! Both calls are given to the decoder for this type, so a phantom needs no call to come out right: sixteen
+! free bits, half of them "R" and a square. The program takes "MYCALL HISCALL R GRID" from the station being
+! worked as the roger of a WW Digi QSO - a QSO under way is not held back by the window's mark - and would
+! log a QSO that never was. The table is what stands between (the operator, 2026-09-30); a square the
+! operator has for the call (hisgrid4) is not asked about.
             call chkgrid(hiscall,grid,lchkcall,lgvalid,lwrongcall)
-            if(.not.lgvalid) then; nbadcrc=1; msg37=''; return; endif
+            if(.not.lgvalid) then   ! CE3TSK 2026-10-14: on record as prefix/6 when it is the prefix (it said grid/6)
+              ngriddel=merge(-6,6,lwrongcall); nbadcrc=1; msg37=''; return
+            endif
           endif
         endif
       endif
@@ -350,7 +408,9 @@ subroutine chkfalse8(msg37,i3,n3,nbadcrc,iaptype,lcall1hash)
              msg37(ispc2+3:ispc2+3).lt.':' .and. msg37(ispc2+4:ispc2+4).lt.':') then
             grid=msg37(ispc2+1:ispc3-1)
             call chkgrid(callsign,grid,lchkcall,lgvalid,lwrongcall)
-            if(lwrongcall .or. .not.lgvalid) then; nbadcrc=1; msg37=''; return; endif
+            if(lwrongcall .or. .not.lgvalid) then
+              ngriddel=merge(-7,7,lwrongcall); nbadcrc=1; msg37=''; return
+            endif
           endif
         endif
       endif

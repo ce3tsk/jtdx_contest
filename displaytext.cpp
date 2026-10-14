@@ -19,6 +19,7 @@
 #include "qt_helpers.hpp"
 #include "usstates.h"   /* CE3TSK 2026-10-02 */
 #include "priorities.h"   /* CE3TSK 2026-10-03 */
+#include "cqdirection.h"   /* CE3TSK 2026-10-12 */
 namespace dp = decode_priority;
 
 #include "moc_displaytext.cpp"
@@ -1370,8 +1371,10 @@ void DisplayText::displayTransmittedText(QString text, QString myCall, QString h
                   {
                     status = QsoHistory::SCQ;
                     if (parts.size () > 3) {
-                        tyyp = parts [1];
-                        if (tyyp == "908") tyyp = "JA";
+                        /* CE3TSK 2026-10-12: read as the line received is (cqdirection.h). The word went
+                           in as it was sent, and the autoselect holds every caller against it: after a
+                           "CQ TEST" of ours no caller was from "TEST", and it passed over all of them. */
+                        tyyp = cq_direction::meaning (parts [1]).region;
                         call=parts[2];
                         param=parts[3];
                     } else {

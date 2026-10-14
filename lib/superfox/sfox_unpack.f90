@@ -14,6 +14,9 @@ subroutine sfox_unpack(nutc,x,nsnr,f0,dt0,foxcall,notp)
 !   resolved, "<PJ4/K1ABC/P> VP8PJ RR73" is 24 and the donor's width would cut the RR73.
 ! - a compound Fox call decoded from its CQ (i3 = 3) is remembered for the hash lookup, see there.
 ! - a Hound message is assembled by sfox_fit below, which keeps it within what the GUI parses.
+! - CE3TSK 2026-10-14: two changes of WSJT-X 3.3.0-beta1 (its 5d52dc4b2 of 2026-09-28, which rewrote this
+!   routine), taken: a frame of type i3=1 prints nothing - not even the $VERIFY$ line -, and a CQ's free text
+!   is absent only when all seven of its 32-bit words are the filler, not when the first one is. See there.
 
   use packjt                      !CE3TSK: unpackgrid is a module procedure in jtdx
   use packjt77
@@ -29,6 +32,7 @@ subroutine sfox_unpack(nutc,x,nsnr,f0,dt0,foxcall,notp)
   character*26 freeTextMsg
   character*38 c
   logical use_otp
+  logical lnotext                 !CE3TSK 2026-10-14: a CQ without free text (i3=3)
   data c/' 0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ/'/
 
   ncq=0
@@ -44,11 +48,13 @@ subroutine sfox_unpack(nutc,x,nsnr,f0,dt0,foxcall,notp)
   call unpack28(n28,foxcall,success,1)
 
   if(i3.eq.1) then                            !Compound Fox callsign
-!     read(msgbits(87:101),'(b15)') n15
-!     call unpackgrid(n15,grid4)
-!     msg(1)='CQ '//trim(foxcall)//' '//grid4
-!     call sfox_emit(nutc,nsnr,dt0,nint(f0),trim(msg(1)))
-!     go to 100
+! CE3TSK 2026-10-14, as WSJT-X 3.3.0-beta1: "Type i3=1 is documented for a compound-Fox c58 layout, but the
+! current transmitter does not emit it and this decoder does not implement the c58 field offsets. Do not
+! render hound messages with a mis-decoded c28 Fox call." 3.0.2's branch was commented out and fell through
+! to the Hound calls below, printed with a Fox call read from bits that i3=1 does not give one. Neither
+! WSJT-X's transmitter nor MSHV's (gen_sfox.cpp of 2.76.6 writes i3 = 0, 2 and 3) sends the type: such a
+! frame is a chance CRC pass or a third transmitter, and nothing of it is shown.
+     go to 900
   else if(i3.eq.2) then                       !Up to 4 Hound calls and free text
      call unpacktext77(msgbits(161:231),freeTextMsg(1:13))
      call unpacktext77(msgbits(232:302),freeTextMsg(14:26))
@@ -76,8 +82,15 @@ subroutine sfox_unpack(nutc,x,nsnr,f0,dt0,foxcall,notp)
      call unpackgrid(n15,grid4)
      msg(1)='CQ '//trim(foxcall)//' '//grid4
      call sfox_emit(nutc,nsnr,dt0,nint(f0),trim(msg(1)))
-     read(msgbits(74:105),'(b32)') n32
-     if(n32.eq.NQU1RKS) go to 100
+! CE3TSK 2026-10-14, as WSJT-X 3.3.0-beta1: no free text is all seven 32-bit words of the filler (the Fox
+! side writes the seven when the text is empty - WSJT-X's sfox_assemble, MSHV's gen_sfox.cpp); 3.0.2 asked
+! the first word only, and dropped a text that began with the filler's bits.
+     lnotext=.true.
+     do i=0,6
+        read(msgbits(74+32*i:105+32*i),'(b32)') n32
+        if(n32.ne.NQU1RKS) lnotext=.false.
+     enddo
+     if(lnotext) go to 100
      call unpacktext77(msgbits(74:144),freeTextMsg(1:13))
      call unpacktext77(msgbits(145:215),freeTextMsg(14:26))
      do i=26,1,-1
@@ -140,7 +153,7 @@ subroutine sfox_unpack(nutc,x,nsnr,f0,dt0,foxcall,notp)
      write(ssignature,'(I6.6)') notp
      call sfox_emit(nutc,nsnr,dt0,nint(f0),'$VERIFY$ '//trim(foxcall)//' '//trim(ssignature))
   endif
-  return
+900 return
 end subroutine sfox_unpack
 
 subroutine sfox_emit(nutc,nsnr,dt,nfreq,text)

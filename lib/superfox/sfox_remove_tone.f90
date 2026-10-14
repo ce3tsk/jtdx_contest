@@ -68,6 +68,10 @@ subroutine sfox_remove_tone(c0,fsync)
          s0=s0+s(i)
          s1=s1+(i-i0)*s(i)
       enddo
+! CE3TSK 2026-10-11: WSJT-X's guard (its "fix(superfox): handle zero-energy sync estimates", 2026-05-05): no
+! energy in the band means no tone to take out - without it the next line is 0/0 and the frequency of the
+! "tone" is whatever the platform makes of nint(NaN)
+      if(.not. (s0 .gt. 0.0)) exit
       delta=s1/s0
       i0=nint(i0+delta)
       f2=i0*df

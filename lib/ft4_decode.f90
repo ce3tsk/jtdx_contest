@@ -64,7 +64,7 @@ contains
     character envv*8
     integer lenv,istatv
     character c77*77
-    character*37 decodes(100)
+    character*37 decodes(NDEC4MAX)   ! CE3TSK: was 100, and unchecked - see where ft4b fills it
     character*12 mycall0,hiscall0,call_a,call_b
     character*4 servis4
     complex cd2(0:NDMAX-1)                  !Complex waveform

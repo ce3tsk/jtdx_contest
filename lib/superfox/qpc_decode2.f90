@@ -159,7 +159,11 @@ subroutine qpc_decode2(c0,fsync,ftol,xdec,ndepth,dth,damp,crc_ok,   &
    maxd=1
    if(ndepth.gt.0) maxd=maxdither(ndepth)
    maxft=NZ
-   if(snrsync.lt.4.0 .or. ndepth.le.0) maxft=1
+! CE3TSK 2026-10-11: written so that a sync SNR that is NOT A NUMBER cuts the search to its first step as a weak
+! one does ("snrsync.lt.4.0" is false of a NaN, and all hundred steps were then searched). qpc_sync states 0 for
+! a band it can say nothing about, since the same day, and qpc_sync3 - the last step's three windows - since the
+! day after: neither hands a NaN on any more, and this form is what holds should one come all the same.
+   if(.not.(snrsync.ge.4.0) .or. ndepth.le.0) maxft=1
 ! CE3TSK 2026-09-21: the same search in threads (JTDX_SFOX_THREADS; sfox_search_mt below) - the same trials in
 ! the same order, the lowest passing one taken: the lines are these loops' at any thread count
    nthrs=nsfthreads
@@ -339,9 +343,18 @@ subroutine sfox_search_mt(nthr,ldone)
 ! serial demodulation of the same step, bit for bit (a plan never changes once four2a has it). A difference is
 ! said on stderr and the later steps' demodulation then runs serially for the rest of the process (lmtbad) - the
 ! lines stay the serial search's either way. JTDX_SFOX_FFTFAKE=1, a test hook, makes the check fail.
+! CE3TSK 2026-10-11: THE CHECK NEEDS A PERIOD THAT CAN BE JUDGED. It compares with .eq., and a NaN equals nothing,
+! itself included: 15 s of digital silence (every sample 0 - a muted or absent audio stream) made sfox_demod's
+! spectra 0/0 throughout, the check then read "differs", and lmtbad took the threads away from the demodulation
+! until the decoder process was started again - on a period that proves nothing about FFTW either way (zeros
+! transform to zeros under any plan). So a buffer set is checked only against serial spectra that are all finite
+! numbers (lfinite); until then it stays unchecked, and a period in which any of this call's sets is unchecked is
+! demodulated serially (lserial) - an unchecked set is never used, and the check is made in the first period that
+! can be judged. sfrx_core no longer hands on a period without energy at all (sfrx_sub.f90), so this is for
+! whatever else may make the spectra not numbers.
    logical, save :: lmtbad=.false.
    integer, save :: nfake=-1
-   logical lsame
+   logical lsame,lfinite,lserial
    character envf*8
    integer nenvf,istf
    real, allocatable, save :: pb(:,:,:)
@@ -399,8 +412,10 @@ subroutine sfox_search_mt(nthr,ldone)
          if(envf(1:1).eq.'1') nfake=1
       endif
    endif
+   lfinite=all(abs(s2).le.huge(1.0)) .and. all(abs(s3raw).le.huge(1.0))    !false for a NaN and for an infinity
+   if(lfinite .and. lnormed) lfinite=all(abs(s3plain).le.huge(1.0))
    do it=1,nthr
-      if(tb(it)%chk .or. lmtbad) cycle
+      if(tb(it)%chk .or. lmtbad .or. .not.lfinite) cycle
       call sfox_demod_w(c,1500.0,t,isync,tb(it)%s2,tb(it)%s3r,tb(it)%s3p,lnk,tb(it)%cs(tb(it)%k0:),nsfnorm)
       tb(it)%chk=.true.
       lsame=all(tb(it)%s2.eq.s2) .and. all(tb(it)%s3r.eq.s3raw) .and. (lnk.eqv.lnormed)
@@ -411,6 +426,10 @@ subroutine sfox_search_mt(nthr,ldone)
          write(0,'(a,i3,a)') 'SuperFox receiver: the FFT of thread buffer',it, &
               ' differs from the serial one - the search''s later steps are demodulated serially from now on'
       endif
+   enddo
+   lserial=lmtbad
+   do it=1,nthr
+      if(.not.tb(it)%chk) lserial=.true.          !a set that could not be checked in this period: not used in it
    enddo
    lnormed0=lnormed
    if(lnormed0) s3rawp=s3plain
@@ -491,7 +510,7 @@ subroutine sfox_search_mt(nthr,ldone)
       is2=min(maxft,is1+nstepb-1)
       nb=4*(is2-is1+1)
       okb(1:nb)=.false.
-!$omp parallel do num_threads(nthr) schedule(dynamic,1) default(shared) if(.not.lmtbad) &
+!$omp parallel do num_threads(nthr) schedule(dynamic,1) default(shared) if(.not.lserial) &
 !$omp& private(isb,it,dfk,dtk,fk,tk,fshk,lnk,kk2,bk,basek,j,ssk,k)
       do isb=is1,is2
          it=1
@@ -500,7 +519,7 @@ subroutine sfox_search_mt(nthr,ldone)
          fk=f00+dfk; tk=t00+dtk
          fshk=1500.0 - (fk+baud)
          call twkfreq2(c0,tb(it)%cw,NMAX,fsample,fshk)
-         if(lmtbad) then            !one thread (the if clause): the serial demodulation, its FFT array
+         if(lserial) then           !one thread (the if clause): the serial demodulation, its FFT array
             call sfox_demod(tb(it)%cw,1500.0,tk,isync,tb(it)%s2,tb(it)%s3r)
          else
             call sfox_demod_w(tb(it)%cw,1500.0,tk,isync,tb(it)%s2,tb(it)%s3r,tb(it)%s3p,lnk,tb(it)%cs(tb(it)%k0:),nsfnorm)

@@ -8,6 +8,7 @@
 #include "decodepreset.h"
 #include "ft2preset.h"   // CE3TSK step 5: FT2's own tiers, in FT4's fields
 #include "decodebudget.h"   // CE3TSK P7   // CE3TSK
+#include "deletedlog.h"   // CE3TSK 2026-10-12: the record of the decodes the prefix-to-grid table deleted
 #else
 #include <QtGui>
 #endif
@@ -136,6 +137,8 @@ private slots:
   void on_wantedGrid_textChanged(const QString &arg1);
   void on_directionLineEdit_textChanged(const QString &arg1);
   void on_direction1LineEdit_textChanged(const QString &arg1);
+  void on_directionLineEdit_editingFinished();    /* CE3TSK: a word being typed is taken on Enter or on leaving the box */
+  void on_direction1LineEdit_editingFinished();
   void on_spotLineEdit_textChanged(const QString &text);
   void on_propLineEdit_textChanged(const QString &text);
   void on_actionSettings_triggered();
@@ -942,7 +945,15 @@ private:
   /* CE3TSK: the QSO that finished most recently, and when - the state sequencer_hooks.cpp owns */
   QString m_finishedCall;
   qint64 m_finishedTime;
+  deleted_log::Record m_deletedRecord;  /* CE3TSK 2026-10-12: the decodes the table deleted, on their way to the file */
   QString m_cqdir;
+  /* CE3TSK 2026-10-12: the word after CQ while it is being typed (cqdirection.h). m_cqdir is the word in
+     effect - what the CQ generated carries -, the two boxes hold what is typed, and the two differ until the
+     typing stops. */
+  QTimer m_cqWordTimer;                 // runs while a typed word waits to be taken
+  QLineEdit * m_cqWordBox;              // the box the word last came through: its tab acts last
+  bool m_cqWordBusy;                    // one box is being brought into step with the other
+  bool m_cqWordMode77;                  // the boxes were last coloured for a mode that carries a longer word
   QString m_lastMode;
   QString m_callsign;
   QString m_grid;
@@ -1142,6 +1153,10 @@ private:
   void createStatusBar();
   void msgBox(QString t);
   void genCQMsg();
+  void cqWordChanged (QLineEdit * box, QString const& dir);   /* CE3TSK: the word after CQ - see the two boxes' slots */
+  void showCqWord ();
+  void takeCqWord (bool typed);
+  void selectCqAgain (bool firstTabLast);
   void genStdMsgs(QString rpt);
   bool wwDigiNoGrid (); /* CE3TSK: WW Digi contest selected but no usable station grid */
   /* CE3TSK: cache the special operating activity from Configuration */

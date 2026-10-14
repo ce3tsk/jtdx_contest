@@ -11,6 +11,7 @@
 
 #include "TransceiverFactory.hpp"
 #include "PollingTransceiver.hpp"
+#include "pttonly.h"   // CE3TSK 2026-10-13: the PTT-only object's failures are heard
 
 class QRegExp;
 class QTcpSocket;
@@ -80,6 +81,7 @@ private:
   // An alternate TransceiverBase instance that can be used to drive
   // PTT if required.
   std::unique_ptr<TransceiverBase> wrapped_; // may be null
+  ptt_only::Watch ptt_watch_;                  // CE3TSK: what the PTT-only object says went wrong (pttonly.h)
 
   bool use_for_ptt_;            // Use HRD for PTT.
   TransceiverFactory::TXAudioSource audio_source_; // Select rear/data

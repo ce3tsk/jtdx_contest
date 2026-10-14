@@ -3700,12 +3700,6 @@ Un clic par le bouton droit de la souris remet l&apos;heure interne de JTDX à l
         <translation>CQ</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3324"/>
-        <location filename="../mainwindow.ui" line="3946"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Directional CQ, range from AA to ZZ is being supported.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;CQ directionnel ; la plage AA à ZZ est prise en charge.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
         <location filename="../mainwindow.ui" line="3327"/>
         <location filename="../mainwindow.ui" line="3949"/>
         <source>DX</source>
@@ -6263,6 +6257,11 @@ C'est l'erreur du décodeur lui-même. Corrigez ce qui l'empêche de démarrer -
         <location filename="../mainwindow.ui"/>
         <source>Band and mode buttons in one row</source>
         <translation>Boutons de bande et de mode sur une ligne</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Directional CQ: the word sent after CQ, up to four letters.&lt;/p&gt;&lt;p&gt;DX, a continent (EU, NA, SA, AS, AF, OC), a prefix (JA), ASIA or USA is a region: autoselect answers callers from there. Unless &quot;Strict directional CQ operation&quot; is on, it also answers wanted stations and stations of a new DXCC, wherever they are. FD, RU, WW and the other words of three or four letters, such as TEST or POTA, name an activity: anybody may answer.&lt;/p&gt;&lt;p&gt;Three and four letters are sent in FT8, FT4 and FT2 only. No word is sent with a compound own call.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;CQ directionnel : le mot envoyé après CQ, jusqu&apos;à quatre lettres.&lt;/p&gt;&lt;p&gt;DX, un continent (EU, NA, SA, AS, AF, OC), un préfixe (JA), ASIA ou USA est une région : la sélection automatique répond aux stations qui appellent depuis cette région. Si &quot;Fonctionnement strict d&apos;un CQ directionnel&quot; n&apos;est pas activé, elle répond aussi aux stations recherchées et à celles d&apos;un nouveau DXCC, où qu&apos;elles soient. FD, RU, WW et les autres mots de trois ou quatre lettres, comme TEST ou POTA, désignent une activité : tout le monde peut répondre.&lt;/p&gt;&lt;p&gt;Trois et quatre lettres ne sont envoyées qu&apos;en FT8, FT4 et FT2. Si votre propre indicatif est composé, aucun mot n&apos;est envoyé.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>

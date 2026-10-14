@@ -3681,13 +3681,6 @@ ZD8,ZD9,ZF,ZK3,ZL,ZL7,ZL8,ZL9,ZP,ZS,ZS8&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</tra
         <translation>CQ</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3324"/>
-        <location filename="../mainwindow.ui" line="3946"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Directional CQ, range from AA to ZZ is being supported.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translatorcomment>Seda võiks täpsustada (mis on suunatud CQ)</translatorcomment>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Suunatud CQ, toetatud on vahemik AA kuni ZZ.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
         <location filename="../mainwindow.ui" line="3327"/>
         <location filename="../mainwindow.ui" line="3949"/>
         <source>DX</source>
@@ -6274,6 +6267,11 @@ See on dekoodri enda viga. Kõrvalda see, mis takistab käivitumist - puuduv tee
         <source>Band and mode buttons in one row</source>
         <translation>Sagedusala ja tööliigi nupud ühes reas</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Directional CQ: the word sent after CQ, up to four letters.&lt;/p&gt;&lt;p&gt;DX, a continent (EU, NA, SA, AS, AF, OC), a prefix (JA), ASIA or USA is a region: autoselect answers callers from there. Unless &quot;Strict directional CQ operation&quot; is on, it also answers wanted stations and stations of a new DXCC, wherever they are. FD, RU, WW and the other words of three or four letters, such as TEST or POTA, name an activity: anybody may answer.&lt;/p&gt;&lt;p&gt;Three and four letters are sent in FT8, FT4 and FT2 only. No word is sent with a compound own call.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Suunatud CQ: sõna, mis saadetakse pärast CQ-d, kuni neli tähte.&lt;/p&gt;&lt;p&gt;DX, kontinent (EU, NA, SA, AS, AF, OC), prefiks (JA), ASIA või USA on piirkond: automaatvalik vastab sealt kutsujatele. Kui &quot;Ranged suunatud CQ-toimingud&quot; ei ole sisse lülitatud, vastab see ka soovitud jaamadele ja uue DXCC jaamadele, kus iganes need asuvad. FD, RU, WW ning teised kolme- või neljatähelised sõnad, nagu TEST või POTA, tähistavad tegevust: vastata võib igaüks.&lt;/p&gt;&lt;p&gt;Kolm ja neli tähte saadetakse ainult režiimides FT8, FT4 ja FT2. Oma liitkutsungiga sõna ei saadeta.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>
@@ -8140,7 +8138,7 @@ both here.</source>
     <message>
         <location filename="../Configuration.ui" line="2246"/>
         <source>Strict directional CQ operation</source>
-        <translation>Ranged CQ-toimingud</translation>
+        <translation>Ranged suunatud CQ-toimingud</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="2304"/>

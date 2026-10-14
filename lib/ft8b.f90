@@ -9,6 +9,9 @@ subroutine ft8b(newdat1,nQSOProgress,nfqso,nftx,napwid,lsubtract,npos,freqsub,tm
   use ft8_mod1, only : lft8deeposd   ! CE3TSK
   use ft8ensemble, only : ift8stage,nretrydither,ens_dither_cd0,ens_store_tone,lbgtones   ! CE3TSK: pipeline ensemble
   use ft8_mod1, only : ft8res,nft8res,lft8buffered,ft8used,ihint8,khint8,ldectr2   ! CE3TSK: the emission merge buffer
+  use ft8_mod1, only : NDEC8MAX   ! CE3TSK: the length of msgsrcvd, see where it is filled
+  use deleted_decodes, only : deleted_note   ! CE3TSK: what the prefix-to-grid table deletes, for the record
+  use ft8ensemble, only : ensdtcorr,ensfreqcorr   ! CE3TSK: a member's DT and frequency, as ft8_decoded reports them
   use ft8_mod1, only : allmessages,ndecodes,apsym,mcq,m73,mrr73,mrrr,icos7,naptypes,nhaptypes,one,graymap,                     &
                        oddcopy,evencopy,lastrxmsg,lasthcall,nlasttx,calldteven,calldtodd,lqsomsgdcd,mycalllen1,                &
                        oddcopyk,evencopyk,nhintdepth,hint_consume,                                          &
@@ -21,7 +24,7 @@ subroutine ft8b(newdat1,nQSOProgress,nfqso,nftx,napwid,lsubtract,npos,freqsub,tm
 
   include 'ft8_params.f90'
   character c77*77,msg37*37,msg37_2*37,msgd*37,msgbase37*37,call_a*12,call_b*12,callsign*12,grid*12
-  character*37 msgsrcvd(130)
+  character*37 msgsrcvd(NDEC8MAX)   ! CE3TSK: was 130
   complex cd0(-800:4000),cd1(-800:4000),cd2(-800:4000),cd3(-800:4000),ctwk(32),csymb(32),cs(0:7,79),csymbr(32),csr(0:7,79), &
           csig(32),csig0(151680),z1,csymb256(256),cstmp2(0:7,79),csold(0:7,79),cscs(0:7,79)
   real a(5),s8(0:7,79),s82(0:7,79),s2(0:511),sp(0:7),s81(0:7),snrsync(21),syncw(7),sumkw(7),scoreratiow(7),freqsub(200), &
@@ -30,6 +33,10 @@ subroutine ft8b(newdat1,nQSOProgress,nfqso,nftx,napwid,lsubtract,npos,freqsub,tm
   real llra(174),llrb(174),llrc(174),llrd(174),llrz(174)
   integer*1 message77(77),apmask(174),cw(174),nsmax(8)
   integer isdk   ! CE3TSK: which hint copy the stored message came from
+  integer ngriddel,ndelsnr,ndelfreq   ! CE3TSK: a deletion by the table, see deleted_decodes.f90
+  integer nwhy   ! CE3TSK: chkrgrid's word on "CALL1 CALL2 R GRID" (chkprefix.f90)
+  real deldt
+  character msgdel*37
   integer itone(79),ip(1),ka(1),nqsoend(3)
   integer, intent(in) :: nQSOProgress,nfqso,nftx,napwid,nthr,ipass,nft8rxfsens
   logical newdat1,lsubtract,lFreeText,nagainfil,lspecial,unpk77_success
@@ -1746,32 +1753,40 @@ subroutine ft8b(newdat1,nQSOProgress,nfqso,nftx,napwid,lsubtract,npos,freqsub,tm
         if((mybcall.ne."            " .and. index(msg37,mybcall).gt.0) .or. &
            (hisbcall.ne."            " .and. index(msg37,hisbcall).gt.0)) go to 256
       endif
+      ngriddel=0; msgdel=msg37
       if(i3bit.eq.1) then; call chkspecial8(msg37,msg37_2,nbadcrc)
-      else; call chkfalse8(msg37,i3,n3,nbadcrc,iaptype,lcall1hash)
+      else; call chkfalse8(msg37,i3,n3,nbadcrc,iaptype,lcall1hash,ngriddel)
       endif
-      if(nbadcrc.eq.1) then; msg37=''; return; endif
+      if(nbadcrc.eq.1) then
+        if(ngriddel.ne.0) then   ! CE3TSK: the table deleted it - on record (deleted_decodes.f90)
+          ndelsnr=nint(xsnr); deldt=xdt-0.5+ensdtcorr; ndelfreq=nint(f1+ensfreqcorr)
+          call deleted_note(nthr,msgdel,ndelsnr,deldt,ndelfreq,ngriddel)
+        endif
+        msg37=''; return
+      endif
     endif
     if(iaptype.eq.2 .or. iaptype.eq.3 .or. iaptype.eq.11 .or. iaptype.eq.21 .or. iaptype.eq.40 .or. iaptype.eq.41) go to 4 ! already checked
 
 ! decoded without AP masks:
 ! CQ PLIB U40OKH FE61
 ! CQ 000 RO8JSV GJ38
-256 if(iaptype.eq.0 .and. i3.eq.1 .and. msg37(1:3).eq.'CQ ') then
-      ispc1=index(msg37,' '); ispc2=index(msg37((ispc1+1):),' ')+ispc1
-      if((ispc2-ispc1).eq.4 .or. (ispc2-ispc1).eq.5) then
-        ispc3=index(msg37((ispc2+1):),' ')+ispc2; ispc4=index(msg37((ispc3+1):),' ')+ispc3
-        if((ispc3-ispc2).gt.3 .and. (ispc4-ispc3).eq.5) then
-          grid=''
-          if(msg37(ispc3+1:ispc3+1).gt.'@' .and. msg37(ispc3+1:ispc3+1).lt.'S' .and. &
-             msg37(ispc3+2:ispc3+2).gt.'@' .and. msg37(ispc3+2:ispc3+2).lt.'S' .and. &
-             msg37(ispc3+3:ispc3+3).lt.':' .and. msg37(ispc3+4:ispc3+4).lt.':') grid=msg37(ispc3+1:ispc4-1)
-          if(grid.ne.'') then
-            callsign=''; callsign=msg37(ispc2+1:ispc3-1)
-            call chkgrid(callsign,grid,lchkcall,lgvalid,lwrongcall)
-            if(lwrongcall .or. .not.lgvalid) then; nbadcrc=1; msg37=''; return; endif
-          endif
-        endif
-      endif
+! CE3TSK 2026-10-12, the operator: "CQ TEST" is the contest CQ. This check deleted a directed CQ - CQ TEST,
+! CQ POTA, CQ WW... - whose square is not in the table for the call's prefix, and at ANY strength, where the
+! same plain CQ is looked at only when it is weak. A station the table had wrong - it accepted no square at all
+! for the Azores until this day - lost its strongest CQ TEST, and with it the QSO. Now the square is not judged
+! here, as it has not been for "CALL1 CALL2 R GRID" since 2026-09-30: whether the grid fits the call is the
+! window's question (phantomdecodes.h marks the line, and the sequencer does not answer it on its own). So
+! the two phantoms quoted above this label are shown now, and marked.
+! A prefix the table lists as not allocated is still deleted - that is the callsign, not geography - and it
+! goes on record, place 8 (deleted_decodes.f90). The table is asked about the prefix ALONE (chkprefix): asked
+! with the message's square, as it was here for a few hours, it says nothing about the call when the square
+! is one of open sea - "CQ TEST 1Z9ABC RR99" was shown. Its list of such prefixes is short (chkprefix.f90).
+! CE3TSK 2026-10-13: the check itself is chkdircq (chkprefix.f90) now, which FT4 and FT2 call too.
+256 call chkdircq(msg37,i3,iaptype,lwrongcall)
+    if(lwrongcall) then
+      ndelsnr=nint(xsnr); deldt=xdt-0.5+ensdtcorr; ndelfreq=nint(f1+ensfreqcorr)
+      call deleted_note(nthr,msg37,ndelsnr,deldt,ndelfreq,-8)
+      nbadcrc=1; msg37=''; return
     endif
 
 ! i3=1,2 false decodes with ' R '
@@ -1807,17 +1822,17 @@ subroutine ft8b(newdat1,nQSOProgress,nfqso,nftx,napwid,lsubtract,npos,freqsub,tm
 ! GUI's question (phantomdecodes.h): it marks the line, and the sequencer does not answer it on its own.
 ! A call whose prefix is not allocated at all (chkgrid's lwrongcall: C0, C1, C7, 1C..1Z ...) is still dropped -
 ! that is the callsign, not geography, and the GUI cannot judge a country it does not know (the operator, A1).
-            ispc4=index(msg37((ispc3+1):),' ')+ispc3
-            if(.not.(ispc4-ispc3.eq.5 .and. &
-                     msg37(ispc3+1:ispc3+1).ge.'A' .and. msg37(ispc3+1:ispc3+1).le.'R' .and. &
-                     msg37(ispc3+2:ispc3+2).ge.'A' .and. msg37(ispc3+2:ispc3+2).le.'R' .and. &
-                     msg37(ispc3+3:ispc3+3).ge.'0' .and. msg37(ispc3+3:ispc3+3).le.'9' .and. &
-                     msg37(ispc3+4:ispc3+4).ge.'0' .and. msg37(ispc3+4:ispc3+4).le.'9')) then
+! CE3TSK 2026-10-12: asked of the table about the prefix ALONE (chkprefix). chkgrid, asked with the message's
+! square, says nothing about the call when the square is one of open sea: "K1ABC 1Z9ABC R RR99" was shown.
+! CE3TSK 2026-10-13: the check itself is chkrgrid (chkprefix.f90) now, which FT4 and FT2 call too.
+            call chkrgrid(msg37,i3,nwhy)
+            if(nwhy.ne.0) then
+              if(nwhy.lt.0) then   ! CE3TSK: on record, place 9
+                ndelsnr=nint(xsnr); deldt=xdt-0.5+ensdtcorr; ndelfreq=nint(f1+ensfreqcorr)
+                call deleted_note(nthr,msg37,ndelsnr,deldt,ndelfreq,nwhy)
+              endif
               nbadcrc=1; msg37=''; return
             endif
-            grid=msg37(ispc3+1:ispc4-1)
-            call chkgrid(call_b,grid,lchkcall,lgvalid,lwrongcall)
-            if(lwrongcall) then; nbadcrc=1; msg37=''; return; endif
           endif
         endif
       endif
@@ -1913,7 +1928,11 @@ subroutine ft8b(newdat1,nQSOProgress,nfqso,nftx,napwid,lsubtract,npos,freqsub,tm
         callsign='            '; callsign=msg37(ispc1+1:ispc2-1); grid=msg37(ispc2+1:ispc3-1)
         include 'callsign_q.f90'
         call chkgrid(callsign,grid,lchkcall,lgvalid,lwrongcall)
-        if(lwrongcall) then; nbadcrc=1; msg37=''; return; endif
+        if(lwrongcall) then   ! CE3TSK: on record, place 10
+          ndelsnr=nint(xsnr); deldt=xdt-0.5+ensdtcorr; ndelfreq=nint(f1+ensfreqcorr)
+          call deleted_note(nthr,msg37,ndelsnr,deldt,ndelfreq,-10)
+          nbadcrc=1; msg37=''; return
+        endif
         if(lchkcall .or. .not.lgvalid) then
           falsedec=.false.
           call chkflscall('CQ          ',callsign,falsedec)
@@ -2030,10 +2049,20 @@ subroutine ft8b(newdat1,nQSOProgress,nfqso,nftx,napwid,lsubtract,npos,freqsub,tm
     endif
     if(ldupeft8sd) then; msg37=''; nbadcrc=1; return; endif
 
+! CE3TSK 2026-10-12: the table held 130 and nothing checked the count. The 131st standard two-call message
+! of ONE slice - one decoder thread and a very full band is enough - was written past its end: the
+! bounds-checked build stops there ("Index '131' of dimension 1 of array 'msgsrcvd'") and the program closes
+! with its decoder; a build without the check overwrites the other locals of ft8_decode's decode. The table
+! is now as long as a slice's decode list (NDEC8MAX), and a full table takes no more - such a pair is then
+! only missing from the FT8SD duplicate test above. More such messages can come than the list holds (the count
+! stops at its length): one the full list no longer remembers is not seen as a repeat, and counts again every
+! time it is decoded.
     if(.not.ldupemsg .and. i3.eq.1 .and. .not.lft8sd .and. .not.lft8s .and. msg37(1:3).ne.'CQ ') then
       ispc1=index(msg37,' '); ispc2=index(msg37((ispc1+1):),' ')+ispc1
-      ncount=ncount+1
-      msgsrcvd(ncount)=msg37(1:ispc2-1)
+      if(ncount.lt.size(msgsrcvd)) then
+        ncount=ncount+1
+        msgsrcvd(ncount)=msg37(1:ispc2-1)
+      endif
     endif
 
 ! -23  0.0 1606 ~ <...> 3U1TBM/R CC65 i3=4 n3=0
@@ -2050,7 +2079,11 @@ subroutine ft8b(newdat1,nQSOProgress,nfqso,nftx,napwid,lsubtract,npos,freqsub,tm
               if(i3.eq.4 .and. len_trim(grid).eq.4) then; nbadcrc=1; msg37=''; return; endif
               call_b=''; call_b=msg37((ispc1+1):(ispc2-3))
               call chkgrid(call_b,grid,lchkcall,lgvalid,lwrongcall)
-              if(lwrongcall .or. .not.lgvalid) then; nbadcrc=1; msg37=''; return; endif
+              if(lwrongcall .or. .not.lgvalid) then   ! CE3TSK: on record, place 11
+                ndelsnr=nint(xsnr); deldt=xdt-0.5+ensdtcorr; ndelfreq=nint(f1+ensfreqcorr)
+                call deleted_note(nthr,msg37,ndelsnr,deldt,ndelfreq,merge(-11,11,lwrongcall))
+                nbadcrc=1; msg37=''; return
+              endif
             endif
           endif
         endif

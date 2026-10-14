@@ -3694,12 +3694,6 @@ Højre museknap sætter JTDX' interne tid tilbage til systemtiden.&lt;/p&gt;&lt;
         <translation>CQ</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3324"/>
-        <location filename="../mainwindow.ui" line="3946"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Directional CQ, range from AA to ZZ is being supported.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Styret CQ. Interval fra AA til ZZ understøttes. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
-    </message>
-    <message>
         <location filename="../mainwindow.ui" line="3327"/>
         <location filename="../mainwindow.ui" line="3949"/>
         <source>DX</source>
@@ -6263,6 +6257,11 @@ Det er dekoderens egen fejl. Ret det, der forhindrer den i at starte - et mangle
         <location filename="../mainwindow.ui"/>
         <source>Band and mode buttons in one row</source>
         <translation>Bånd- og modeknapper på én række</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Directional CQ: the word sent after CQ, up to four letters.&lt;/p&gt;&lt;p&gt;DX, a continent (EU, NA, SA, AS, AF, OC), a prefix (JA), ASIA or USA is a region: autoselect answers callers from there. Unless &quot;Strict directional CQ operation&quot; is on, it also answers wanted stations and stations of a new DXCC, wherever they are. FD, RU, WW and the other words of three or four letters, such as TEST or POTA, name an activity: anybody may answer.&lt;/p&gt;&lt;p&gt;Three and four letters are sent in FT8, FT4 and FT2 only. No word is sent with a compound own call.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Styret CQ: ordet, der sendes efter CQ, op til fire bogstaver.&lt;/p&gt;&lt;p&gt;DX, et kontinent (EU, NA, SA, AS, AF, OC), et præfiks (JA), ASIA eller USA er et område: Autoselektion svarer stationer, der kalder derfra. Medmindre &quot;Strengt styret CQ operation&quot; er slået til, svarer den også ønskede stationer og stationer fra en ny DXCC, uanset hvor de er. FD, RU, WW og de andre ord på tre eller fire bogstaver, som TEST eller POTA, angiver en aktivitet: Alle må svare.&lt;/p&gt;&lt;p&gt;Tre og fire bogstaver sendes kun i FT8, FT4 og FT2. Med et sammensat eget kaldesignal sendes intet ord.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>

@@ -344,6 +344,7 @@ set (wsjt_FSRCS
   lib/chkflscall.f90
   lib/chkftrsd.f90
   lib/chkgrid.f90
+  lib/chkprefix.f90
   lib/chkhist.f90
   lib/chklong8.f90
   lib/chkmsg.f90
@@ -360,6 +361,7 @@ set (wsjt_FSRCS
   lib/decode65a.f90
   lib/decode65b.f90
   lib/decoder.f90
+  lib/deleted_decodes.f90
   lib/deg2grid.f90
   lib/delbraces.f90
   lib/demod64a.f90
@@ -559,8 +561,9 @@ set (wsjt_FSRCS
   lib/wspr_downsample.f90
   lib/zplot9.f90
 # CE3TSK: SuperFox receive (SuperHound), from WSJT-X 3.0.2 lib/superfox (SUPERFOX_PLAN.md).
-# The receiver: sfox_mod, qpc_mod, sfrx_sub (entry), sfox_ana, sfox_remove_tone, qpc_sync,
-# twkfreq2, sfox_demod, qpc_likelihoods2, qpc_decode2, qpc_snr, sfox_unpack. The rest only
+# The receiver: sfox_mod, qpc_mod, sfrx_sub (two entries: sfrx_core, which the decoder process
+# calls with the band as reals, and sfrx_sub, the sfrx tool's, with 16-bit samples), sfox_ana,
+# sfox_remove_tone, qpc_sync, twkfreq2, sfox_demod, qpc_likelihoods2, qpc_decode2, qpc_snr, sfox_unpack. The rest only
 # serves the test tool sfoxsim, which makes SuperFox audio: jtdx does not transmit it.
   lib/superfox/sfox_mod.f90
   lib/superfox/qpc/qpc_mod.f90
@@ -1329,7 +1332,8 @@ target_link_libraries (ft2sim wsjt_fort wsjt_cxx)
 target_include_directories (ft2sim PRIVATE ${CMAKE_BINARY_DIR}/fortran_modules)   # CE3TSK
 
 # CE3TSK: SuperFox test tools (SUPERFOX_PLAN.md). sfoxsim writes SuperFox audio, sfrx decodes
-# wav files through the same sfrx_sub the decoder process calls.
+# wav files through sfrx_sub, which hands them to the same sfrx_core the decoder process calls
+# (the process hands it the band as reals since 2026-10-12; for a 16-bit file the numbers are the same).
 add_executable (sfoxsim lib/superfox/sfoxsim.f90 jtdx.rc)
 target_link_libraries (sfoxsim wsjt_fort wsjt_cxx)
 target_include_directories (sfoxsim PRIVATE ${CMAKE_BINARY_DIR}/fortran_modules)

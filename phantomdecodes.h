@@ -218,8 +218,8 @@ namespace phantom_decodes
 
   // The message field of a decode line, as the decoder printed it: the 26 characters before the marker
   // column, padding dropped - brackets kept, nothing cut. What the checks read. DecodedText::message () is NOT
-  // this: it drops the < > of a hashed call, keeps 24 characters, and cuts a long CQ after position 16,
-  // which loses its grid ("CQ POTA XQ3SKX/P JO62" arrives there as "CQ POTA XQ3SKX/P ").
+  // this: it drops the < > of a hashed call and keeps 24 characters. (Until 2026-10-13 it also cut a long CQ
+  // after position 16, which lost its grid: "CQ POTA XQ3SKX/P JO62" arrived there as "CQ POTA XQ3SKX/P ".)
   inline QString messageField (QString const& line)
   {
     int const column = markerColumn (line);

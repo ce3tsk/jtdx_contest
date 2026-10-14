@@ -3696,12 +3696,6 @@ Click by right mouse&apos;s button sets JTDX internal time back to system time.&
         <translation>CQ</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3324"/>
-        <location filename="../mainwindow.ui" line="3946"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Directional CQ, range from AA to ZZ is being supported.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;지향 CQ입니다. AA부터 ZZ까지 지원합니다.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
         <location filename="../mainwindow.ui" line="3327"/>
         <location filename="../mainwindow.ui" line="3949"/>
         <source>DX</source>
@@ -6259,6 +6253,11 @@ That is the decoder's own error. Put right whatever stops it starting - a missin
         <location filename="../mainwindow.ui"/>
         <source>Band and mode buttons in one row</source>
         <translation>밴드 버튼과 모드 버튼을 한 줄로</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Directional CQ: the word sent after CQ, up to four letters.&lt;/p&gt;&lt;p&gt;DX, a continent (EU, NA, SA, AS, AF, OC), a prefix (JA), ASIA or USA is a region: autoselect answers callers from there. Unless &quot;Strict directional CQ operation&quot; is on, it also answers wanted stations and stations of a new DXCC, wherever they are. FD, RU, WW and the other words of three or four letters, such as TEST or POTA, name an activity: anybody may answer.&lt;/p&gt;&lt;p&gt;Three and four letters are sent in FT8, FT4 and FT2 only. No word is sent with a compound own call.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;지향 CQ: CQ 뒤에 보내는 단어이며 최대 4글자입니다.&lt;/p&gt;&lt;p&gt;DX, 대륙(EU, NA, SA, AS, AF, OC), 접두사(JA), ASIA 또는 USA는 지역을 뜻하며, 자동 선택은 그 지역에서 부르는 국에 응답합니다. &quot;지향 CQ 엄격 적용&quot;이 꺼져 있으면 찾는 국과 새 DXCC의 국에도 어디에 있든 응답합니다. FD, RU, WW와 TEST, POTA 같은 그 밖의 3~4글자 단어는 활동을 뜻하며, 누구나 응답할 수 있습니다.&lt;/p&gt;&lt;p&gt;3글자와 4글자 단어는 FT8, FT4, FT2에서만 송신됩니다. 자기 호출부호가 복합 호출부호이면 단어를 보내지 않습니다.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>

@@ -120,7 +120,9 @@ module sfox_mod
 ! there the CRC stands alone, as in stage A. At -17.2 it would cost 1 true decode in 124, at -17.1 four.
 ! The margin is thin and the figures are simulated ones - a SETTING, to be looked at with on-air material.
 ! CE3TSK 2026-09-21: MSHV'S THREE SYNC WINDOWS AS THE LAST STEP (SUPERFOX_DECODER_IDEAS.md 4.14; decoder.f90
-! superfox_extra, qpc_sync3.f90). OFF by default (the operator: an option until there is on-air material).
+! superfox_extra, qpc_sync3.f90). OFF by default at first (the operator: an option until there is on-air
+! material); ON by default since the same day (the operator: "enable the 3 windows by default" - nsfsync3
+! below; JTDX_SFOX_SYNC3=0 switches it off).
 ! When the receiver, its passes and the FT8 QRM remover have found nothing in a Fox slot, the search and the
 ! passes run once more on each distinct candidate of MSHV's three windows (RX +/- 60 Hz, 700-800 Hz,
 ! 200-3200 Hz), each only if it can end inside the RX budget - so everything decoded today keeps its time.
@@ -426,6 +428,39 @@ contains
 
     return
   end subroutine sfox_config
+
+  logical function sfox_nosignal(dd,n)
+
+! CE3TSK 2026-10-11: n samples that hold NO SIGNAL - ONE LEVEL from the first to the last: zero (a muted or
+! absent audio stream, an empty file) or any other (a muted input with a DC offset: every sample 5) - with zeros
+! after it, or before it, or both, which is what such a period looks like in the decoder process: the capture
+! stops 14.1 s into the slot and what lies past it is zeroed (jt9a.f90, jt9.f90, decoder.f90 superfox_slot), and
+! a band change zeroes the head of the period (decoder.f90, nsecbandchanged; the zeros BEFORE the level: the
+! second review, 2026-10-12 - a level behind them was a signal still, and was searched). There is energy at 0 Hz
+! and in the steps at most, and nothing a search could find: the sync of a period of zeros divided 0 by 0, and a
+! constant leaves the FFTs their round-off, in which the three sync windows of the last step (qpc_sync3) "found"
+! three candidates that were then searched in full - 1.1 to 2.1 s of the slot, measured. A sample that is not a
+! number is not "no signal": NaN equals nothing, so such a period is handed on, to the guards further in.
+
+    integer, intent(in) :: n
+    real, intent(in) :: dd(n)
+    integer m1,m2
+
+    sfox_nosignal=.true.
+    if(n.lt.1) return
+    m1=1
+    do while(m1.lt.n)                  !the zeros before the level
+       if(dd(m1).ne.0.0) exit
+       m1=m1+1
+    enddo
+    m2=n
+    do while(m2.gt.m1)                 !the zeros after it
+       if(dd(m2).ne.0.0) exit
+       m2=m2-1
+    enddo
+    sfox_nosignal=.not.any(dd(m1:m2).ne.dd(m1))
+
+  end function sfox_nosignal
 
   logical function sfox_isnum(t)
 

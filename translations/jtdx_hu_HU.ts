@@ -3696,12 +3696,6 @@ A jobb egérgomb visszaállítja a JTDX belső idejét a rendszeridőre.&lt;/p&g
         <translation>CQ</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3324"/>
-        <location filename="../mainwindow.ui" line="3946"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Directional CQ, range from AA to ZZ is being supported.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Írja be a betű kombinációt az irányított CQ-hoz, az AA-tól ZZ-ig terjedő karaktertartományból összeállított jelekkel. (Például AS, ázsiai országok hívásához.)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
         <location filename="../mainwindow.ui" line="3327"/>
         <location filename="../mainwindow.ui" line="3949"/>
         <source>DX</source>
@@ -6260,6 +6254,11 @@ Ez magának a dekódernek a hibája. Hárítsa el, ami az indulását akadályoz
         <source>Band and mode buttons in one row</source>
         <translation>Sáv- és üzemmódgombok egy sorban</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Directional CQ: the word sent after CQ, up to four letters.&lt;/p&gt;&lt;p&gt;DX, a continent (EU, NA, SA, AS, AF, OC), a prefix (JA), ASIA or USA is a region: autoselect answers callers from there. Unless &quot;Strict directional CQ operation&quot; is on, it also answers wanted stations and stations of a new DXCC, wherever they are. FD, RU, WW and the other words of three or four letters, such as TEST or POTA, name an activity: anybody may answer.&lt;/p&gt;&lt;p&gt;Three and four letters are sent in FT8, FT4 and FT2 only. No word is sent with a compound own call.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Irányított CQ: a CQ után küldött szó, legfeljebb négy betű.&lt;/p&gt;&lt;p&gt;A DX, egy kontinens (EU, NA, SA, AS, AF, OC), egy prefix (JA), az ASIA vagy az USA régiót jelöl: az automatikus választás az onnan hívóknak válaszol. Ha a &quot;Szigorú irányított CQ-üzem&quot; nincs bekapcsolva, a figyelt állomásoknak és egy új DXCC állomásainak is válaszol, bárhol legyenek. Az FD, RU, WW és a további három- vagy négybetűs szavak, például a TEST vagy a POTA, tevékenységet jelölnek: bárki válaszolhat.&lt;/p&gt;&lt;p&gt;Három és négy betű csak FT8, FT4 és FT2 módban kerül adásra. Összetett saját hívójellel nem kerül adásra szó.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>
@@ -8131,7 +8130,7 @@ a Stereo-t.</translation>
     <message>
         <location filename="../Configuration.ui" line="2246"/>
         <source>Strict directional CQ operation</source>
-        <translation>Célzott CQ hívás</translation>
+        <translation>Szigorú irányított CQ-üzem</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="2304"/>

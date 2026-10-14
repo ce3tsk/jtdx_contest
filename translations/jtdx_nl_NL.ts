@@ -3696,12 +3696,6 @@ Met de rechtermuisknop zet u de interne tijd van JTDX terug op de systeemtijd.&l
         <translation>CQ</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3324"/>
-        <location filename="../mainwindow.ui" line="3946"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Directional CQ, range from AA to ZZ is being supported.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Gericht CQ; het bereik AA tot ZZ wordt ondersteund.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
         <location filename="../mainwindow.ui" line="3327"/>
         <location filename="../mainwindow.ui" line="3949"/>
         <source>DX</source>
@@ -6259,6 +6253,11 @@ Dat is de fout van de decoder zelf. Verhelp wat het starten verhindert - een ont
         <location filename="../mainwindow.ui"/>
         <source>Band and mode buttons in one row</source>
         <translation>Band- en modeknoppen op één rij</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Directional CQ: the word sent after CQ, up to four letters.&lt;/p&gt;&lt;p&gt;DX, a continent (EU, NA, SA, AS, AF, OC), a prefix (JA), ASIA or USA is a region: autoselect answers callers from there. Unless &quot;Strict directional CQ operation&quot; is on, it also answers wanted stations and stations of a new DXCC, wherever they are. FD, RU, WW and the other words of three or four letters, such as TEST or POTA, name an activity: anybody may answer.&lt;/p&gt;&lt;p&gt;Three and four letters are sent in FT8, FT4 and FT2 only. No word is sent with a compound own call.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Gericht CQ: het woord dat na CQ wordt verzonden, maximaal vier letters.&lt;/p&gt;&lt;p&gt;DX, een continent (EU, NA, SA, AS, AF, OC), een prefix (JA), ASIA of USA is een regio: de automatische keuze beantwoordt oproepen uit die regio. Staat &quot;Strikt gericht CQ&quot; uit, dan beantwoordt ze ook oproepen van gezochte stations en van stations uit een nieuw DXCC, waar die zich ook bevinden. FD, RU, WW en de andere woorden van drie of vier letters, zoals TEST of POTA, duiden een activiteit aan: iedereen mag antwoorden.&lt;/p&gt;&lt;p&gt;Drie en vier letters worden alleen in FT8, FT4 en FT2 verzonden. Met een samengestelde eigen roepnaam wordt geen woord verzonden.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>

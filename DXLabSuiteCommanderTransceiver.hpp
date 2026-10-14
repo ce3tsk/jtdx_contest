@@ -5,6 +5,7 @@
 
 #include "TransceiverFactory.hpp"
 #include "PollingTransceiver.hpp"
+#include "pttonly.h"   // CE3TSK 2026-10-13: the PTT-only object's failures are heard
 
 class QTcpSocket;
 class QByteArray;
@@ -50,6 +51,7 @@ private:
   Frequency string_to_frequency (QString) const;
 
   std::unique_ptr<TransceiverBase> wrapped_; // may be null
+  ptt_only::Watch ptt_watch_;                  // CE3TSK: what the PTT-only object says went wrong (pttonly.h)
   bool use_for_ptt_;
   QString server_;
   QTcpSocket * commander_;

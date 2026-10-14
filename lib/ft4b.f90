@@ -18,6 +18,7 @@ subroutine ft4b(f0,snrc,nQSOProgress,nfqso,ndepth,stophint,swl,lswl,nthr,isp,dob
   use ft4_mod1, only : nft4hintdepth,ft4hint_find,ft4hint_near
   use ft4_mod1, only : nft4osddeep,nft4syncqual,nft4idfstp,nft4alt,nft4ens,ft4falsegate,ft4ensfreq,nft4dt2
   use ft4_mod1, only : lft2,ft2snroff   ! CE3TSK: FT2 - stretched units, real-second DT, and the SNR offset
+  use deleted_decodes, only : deleted_note   ! CE3TSK: what the prefix-to-grid table deletes, for the record
   use ft4_mod1, only : nbg4run,nft4ensfrom   ! CE3TSK: the TX background (item 59)
   use ft4_mod1, only : xdtvirt,nft4rxfsens   ! CE3TSK item 75: the virtual candidate
   use omp_lib, only : omp_get_wtime
@@ -30,8 +31,9 @@ subroutine ft4b(f0,snrc,nQSOProgress,nfqso,ndepth,stophint,swl,lswl,nthr,isp,dob
   logical, intent(in) :: lvirt   ! CE3TSK item 75: the virtual candidate at the QSO frequency - sync around xdtvirt
   integer ibvirt,nwvirt
   logical, intent(inout) :: dobigfft
-  character*37 decodes(100)
+  character*37 decodes(NDEC4MAX)   ! CE3TSK: was 100
   integer, intent(inout) :: ndecodes
+  integer ngriddel,ndelfreq   ! CE3TSK: chkfalse8's word on a deletion by the table
   parameter (NSS=NSPS/NDOWN,NDMAX=NMAX/NDOWN)
   character message*37,msgsent*37,msg37_2*37
   character msgd*37
@@ -42,6 +44,8 @@ subroutine ft4b(f0,snrc,nQSOProgress,nfqso,ndepth,stophint,swl,lswl,nthr,isp,dob
   real(8) tw0
   logical lviaosd,lmine
   logical(1) lhash1
+  logical(1) lhash2,lwrongcall   ! CE3TSK 2026-10-13: for FT8's checks 8 and 9 (chkdircq, chkrgrid)
+  integer nwhy
   integer nsweeps
   integer(8) :: sdit
   real udit,vdit,gdit
@@ -450,6 +454,8 @@ subroutine ft4b(f0,snrc,nQSOProgress,nfqso,ndepth,stophint,swl,lswl,nthr,isp,dob
 
           lFreeText=.false.; if(i3.eq.0 .and. n3.eq.0) lFreeText=.true.
 ! delete braces
+          lhash2=.false.   ! CE3TSK 2026-10-13: the second call came out of the hash table (ft8b's lcall2hash)
+          if(.not.lFreeText .and. index(message,'<').gt.4) lhash2=.true.
           if(.not.lFreeText .and. index(message,'<').gt.0) then ! DXpedition being not supported in FT4
             ispc1=index(message,' '); ispc2=index(message((ispc1+1):),' ')+ispc1
             ispc3=index(message((ispc2+1):),' ')+ispc2
@@ -469,7 +475,19 @@ subroutine ft4b(f0,snrc,nQSOProgress,nfqso,ndepth,stophint,swl,lswl,nthr,isp,dob
           idupe=0
           do i=1,ndecodes; if(decodes(i).eq.message) idupe=1; enddo
           if(idupe.eq.1) exit
-          ndecodes=ndecodes+1; decodes(ndecodes)=message
+! CE3TSK 2026-10-12: the same fault as ft8b's msgsrcvd, in the FT4 and FT2 decoder. The slice's list for the
+! duplicate test held 100 and nothing checked the count: the 101st message of ONE slice was written past its
+! end - "Index '101' of dimension 1 of array 'decodes'" in the bounds-checked build, and not a line of the
+! period is printed, because this decoder emits after the slice loop. Stock took 100 candidates a pass at
+! most; this fork takes up to 400 (nft4maxcand), and 104 signals on one decoder thread are enough. The list
+! is now as long as the slice's result buffer (NDEC4MAX), and a full list takes no more. The two do not fill
+! alike: a message enters this list BEFORE the checks below, whose rejects never reach the buffer, so the list
+! can be full while the buffer is not. Then a message decoded again is not seen as a repeat - it is kept and
+! counted a second time - and the third pass, which ft4_decode.f90 runs only when the second one added to
+! this list, is skipped. That takes more than NDEC4MAX (200) messages in one slice.
+          if(ndecodes.lt.size(decodes)) then
+            ndecodes=ndecodes+1; decodes(ndecodes)=message
+          endif
           if(snr.gt.0.0) then; xsnr=10*log10(snr)-14.8; else; xsnr=-21.0; endif
           if(lft2 .and. snr.gt.0.0) xsnr=xsnr+ft2snroff   ! CE3TSK: FT2's own scale, see ft4_mod1
           nsnr=nint(max(-21.0,xsnr))
@@ -500,12 +518,39 @@ subroutine ft4b(f0,snrc,nQSOProgress,nfqso,ndepth,stophint,swl,lswl,nthr,isp,dob
             endif
             if(.not.lmine) then
               nbadcrc=0; msg37_2=message; lhash1=message(1:1).eq.'<'
-              call chkfalse8(message,i3,n3,nbadcrc,iaptype,lhash1)
+              call chkfalse8(message,i3,n3,nbadcrc,iaptype,lhash1,ngriddel)
+! CE3TSK 2026-10-12: the table's deletions go on record as FT8's do (deleted_decodes.f90); FT2's frequency
+! is the one received, as emit() reports it
+              if(nbadcrc.eq.1 .and. ngriddel.ne.0) then
+                ndelfreq=nint(f1); if(lft2) ndelfreq=nint(2.0*f1)
+                call deleted_note(nthr,msg37_2,nsnr,xdt,ndelfreq,ngriddel)
+              endif
               if(nbadcrc.eq.1) then
                 if(lft4timing) write(0,9020) i3,n3,iaptype,nsnr,msg37_2(1:26)
 9020                format('ft4 reject i3 ',i2,' n3 ',i2,' iaptype ',i2,' snr ',i4,' ',a)
                 message=''; cycle
               endif
+            endif
+          endif
+! CE3TSK 2026-10-13: FT8's checks 8 and 9 (ft8b.f90, label 256 and the ' R ' block after it), which FT4
+! and FT2 did not have: a directed CQ and "CALL1 CALL2 R GRID" whose call has a prefix the table lists as
+! not allocated are deleted, at any strength, and go on record under the same numbers. The routines are the
+! ones ft8b calls (chkprefix.f90); the square is not judged by either. As there, an a-priori decode about my
+! own call (types 2 and 3) has been through chkfalse8 and is not looked at again, and a second call that
+! came out of the hash table is not asked about.
+          if(iaptype.lt.2) then
+            nwhy=0
+            call chkdircq(message,i3,iaptype,lwrongcall)
+            if(lwrongcall) nwhy=-8
+            if(nwhy.eq.0 .and. .not.lhash2) call chkrgrid(message,i3,nwhy)
+            if(nwhy.ne.0) then
+              if(nwhy.lt.0) then
+                ndelfreq=nint(f1); if(lft2) ndelfreq=nint(2.0*f1)
+                call deleted_note(nthr,message,nsnr,xdt,ndelfreq,nwhy)
+              endif
+              if(lft4timing) write(0,9022) i3,n3,iaptype,nsnr,nwhy,message(1:26)
+9022          format('ft4 reject prefix i3 ',i2,' n3 ',i2,' iaptype ',i2,' snr ',i4,' why ',i2,' ',a)
+              message=''; cycle
             endif
           endif
 ! EA1AHY M83WN/R R QA79   *
