@@ -1301,9 +1301,18 @@ bool Configuration::restart_tci () const {return m_->restart_tci_device_;}
 auto Configuration::type_2_msg_gen () const -> Type2MsgGen {return m_->type_2_msg_gen_;}
 QString Configuration::my_callsign () const {return m_->my_callsign_;}
 /* CE3TSK 2026-10-04: the first 8 characters at most (the operator) - the box takes a locator of 12 (IO91wm99aa00),
-   but everything the program does with it - FT8, distances, the log, PSK Reporter, UDP - uses 8 at most: a 12
-   character grid ran past a fixed array in QsoHistory::fromQth and aborted production. */
-QString Configuration::my_grid () const {return m_->my_grid_.left (8);}
+   but everything the program does with it - FT8, distances, the log, UDP - uses 8 at most: a 12 character grid ran
+   past a fixed array in QsoHistory::fromQth and aborted production. (PSK Reporter gets 10 since 2026-10-14, and the box
+   takes 10 again: my_grid_full below.) */
+/* CE3TSK 2026-10-14 (the operator): in upper case - what the program sends and logs (ADIF MY_GRIDSQUARE, Logged
+   ADIF, QSO Logged, the cluster spot's #G, WSPR, the wav files; PSK Reporter's 10 are my_grid_full's) was in the box's mixed case,
+   FF46ab12, where WSJT-X sends FF46AB. The box and the profile keep what was typed, up to 10; every reader of the
+   grid inside the program (azdist's grid2deg, QsoHistory::fromQth) takes either case. */
+QString Configuration::my_grid () const {return m_->my_grid_.left (8).toUpper ();}
+/* CE3TSK 2026-10-14 (the operator): the whole grid, 10 characters at most, in upper case - what PSK Reporter gets, as
+   stock JTDX sends it (its box takes 10 and its my_grid () hands them on). The box takes 10 again: the 11th and 12th
+   of 2026-10-04 were used nowhere. */
+QString Configuration::my_grid_full () const {return m_->my_grid_.left (10).toUpper ();}
 QString Configuration::timeFrom () const {return m_->timeFrom_;}
 QString Configuration::content () const {return m_->content_;}
 QString Configuration::countries () const {return m_->countries_;}
@@ -2078,7 +2087,7 @@ Configuration::impl::impl (Configuration * self, QNetworkAccessManager * network
   // validation
   //
   ui_->callsign_line_edit->setValidator (new QRegExpValidator {QRegExp {"[A-Za-z0-9/-]+"}, this});
-  ui_->grid_line_edit->setValidator (new QRegExpValidator {QRegExp {"[A-Ra-r]{1,1}|[A-Ra-r]{2,2}|[A-Ra-r]{2,2}[0-9]{1,1}|[A-Ra-r]{2,2}[0-9]{2,2}|[A-Ra-r]{2,2}[0-9]{2,2}[A-Xa-x]{1,1}|[A-Ra-r]{2,2}[0-9]{2,2}[A-Xa-x]{2,2}|[A-Ra-r]{2,2}[0-9]{2,2}[A-Xa-x]{2,2}[0-9]{1,1}|[A-Ra-r]{2,2}[0-9]{2,2}[A-Xa-x]{2,2}[0-9]{2,2}|[A-Ra-r]{2,2}[0-9]{2,2}[A-Xa-x]{2,2}[0-9]{2,2}[A-Xa-x]{1,1}|[A-Ra-r]{2,2}[0-9]{2,2}[A-Xa-x]{2,2}[0-9]{2,2}[A-Xa-x]{2,2}|[A-Ra-r]{2,2}[0-9]{2,2}[A-Xa-x]{2,2}[0-9]{2,2}[A-Xa-x]{2,2}[0-9]{1,1}|[A-Ra-r]{2,2}[0-9]{2,2}[A-Xa-x]{2,2}[0-9]{2,2}[A-Xa-x]{2,2}[0-9]{2,2}"}, this});   // CE3TSK 2026-10-04: to 12 characters (IO91wm99aa00)
+  ui_->grid_line_edit->setValidator (new QRegExpValidator {QRegExp {"[A-Ra-r]{1,1}|[A-Ra-r]{2,2}|[A-Ra-r]{2,2}[0-9]{1,1}|[A-Ra-r]{2,2}[0-9]{2,2}|[A-Ra-r]{2,2}[0-9]{2,2}[A-Xa-x]{1,1}|[A-Ra-r]{2,2}[0-9]{2,2}[A-Xa-x]{2,2}|[A-Ra-r]{2,2}[0-9]{2,2}[A-Xa-x]{2,2}[0-9]{1,1}|[A-Ra-r]{2,2}[0-9]{2,2}[A-Xa-x]{2,2}[0-9]{2,2}|[A-Ra-r]{2,2}[0-9]{2,2}[A-Xa-x]{2,2}[0-9]{2,2}[A-Xa-x]{1,1}|[A-Ra-r]{2,2}[0-9]{2,2}[A-Xa-x]{2,2}[0-9]{2,2}[A-Xa-x]{2,2}"}, this});   // CE3TSK: 12 characters from 2026-10-04 (IO91wm99aa00), 10 again since 2026-10-14 - stock's, and what PSK Reporter gets (my_grid_full)
   ui_->logTime_line_edit->setValidator (new QRegExpValidator {QRegExp {"[0-9]+"}, this});
   ui_->content_line_edit->setValidator (new QRegExpValidator {QRegExp {"[A-Za-z0-9,]+"}, this});
   ui_->countries_line_edit->setValidator (new QRegExpValidator {QRegExp {"[A-Za-z0-9,/*]+"}, this});
@@ -2795,7 +2804,7 @@ void Configuration::impl::read_settings ()
   restoreGeometry (settings_->value ("window/geometry").toByteArray ());
 
   my_callsign_ = settings_->value ("MyCall", "").toString ();
-  my_grid_ = settings_->value ("MyGrid", "").toString ();
+  my_grid_ = settings_->value ("MyGrid", "").toString ().left (10);   // CE3TSK 2026-10-14: an 11th and 12th of 2026-10-04 dropped
 
   timeFrom_ = settings_->value ("timeFromLogFiltering", "").toString ();
   if(!timeFrom_.isEmpty()) {
@@ -3375,7 +3384,7 @@ QString Configuration::impl::own_grid_doubt (own_station::Verdict const& v) cons
   switch (v.grid)
     {
     case own_station::Grid::Malformed:
-      return tr ("A grid has 4, 6, 8, 10 or 12 characters, as IO91, IO91wm, IO91wm99, IO91wm99aa or IO91wm99aa00.");
+      return tr ("A grid has 4, 6, 8 or 10 characters, as IO91, IO91wm, IO91wm99 or IO91wm99aa.");
     case own_station::Grid::Outside:
       return tr ("Your grid %1 does not lie in %2, the DXCC country of %3.")
         .arg (v.square, v.country, ui_->callsign_line_edit->text ().trimmed ().toUpper ());
@@ -5905,9 +5914,9 @@ void Configuration::impl::on_grid_line_edit_editingFinished ()
 {
   /* CE3TSK 2026-10-04: a grid of one to three characters no longer pops a box and empties the field on leaving it - the
      box stays red while it is not a whole locator, and OK will not save it (own_station_confirmed). A stray odd
-     character is still dropped, as before, now up to 12 characters. */
+     character is still dropped, as before (up to 10 characters again since 2026-10-14). */
   auto text = ui_->grid_line_edit->text (); auto grid_size = text.length();
-  if (grid_size == 11 || grid_size == 9 ||  grid_size == 7 ||  grid_size == 5) ui_->grid_line_edit->setText (text.left(grid_size - 1));
+  if (grid_size == 9 ||  grid_size == 7 ||  grid_size == 5) ui_->grid_line_edit->setText (text.left(grid_size - 1));
   refresh_own_marks ();   // CE3TSK 2026-10-04
 }
 void Configuration::impl::on_content_line_edit_textChanged (QString const& text)

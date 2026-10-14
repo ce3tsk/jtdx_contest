@@ -102,6 +102,7 @@ public:
   bool restart_tci () const;
   QString my_callsign () const;
   QString my_grid () const;
+  QString my_grid_full () const;   // CE3TSK 2026-10-14: up to 10, upper case - PSK Reporter's
   QString timeFrom () const;
   QString content () const;
   QString countries () const;

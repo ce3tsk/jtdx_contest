@@ -52,6 +52,7 @@
 #include "decoderange.h"
 #include "contestreport.h"
 #include "contestreply.h"
+#include "wsprmessage.h"   // CE3TSK 2026-10-14: the WSPR message of a transmission
 #include "logfields.h"   // CE3TSK: what a log entry takes when the QSO skipped a step   /* CE3TSK: contest-mode rejection of signal-report messages */
 #include "decodelabel.h"   // CE3TSK
 #include "modetiming.h"   // CE3TSK: the per-mode timing constants
@@ -7706,22 +7707,11 @@ void MainWindow::guiUpdate()
     QByteArray ba0;
 
     if(m_mode.left(4)=="WSPR") {
-      QString sdBm,msg0,msg1,msg2;
-      sdBm = QString::asprintf(" %d",m_dBm);
       m_tx=1-m_tx;
-      int i2=m_config.my_callsign().indexOf("/");
-      if(i2>0 or m_grid6) {
-        if(i2<0) {                                                 // "Type 2" WSPR message
-          msg1=m_config.my_callsign() + " " + m_config.my_grid().left(4) + sdBm;
-        } else {
-          msg1=m_config.my_callsign() + sdBm;
-        }
-        msg0="<" + m_config.my_callsign() + "> " + m_config.my_grid()+ sdBm;
-        if(m_tx==0) msg2=msg0;
-        if(m_tx==1) msg2=msg1;
-      } else {
-        msg2=m_config.my_callsign() + " " + m_config.my_grid().left(4) + sdBm; // Normal WSPR message
-      }
+      /* CE3TSK 2026-10-14: the message is wsprmessage.h's - type 3 with the grid's first six characters, and none
+         without six: the whole grid went in - an 8 character one sent 3 dBm for 37, a 4 character one ended the
+         program */
+      QString const msg2 {wspr_message::of (m_config.my_callsign (), m_config.my_grid (), m_dBm, 1 == m_tx, m_grid6)};
       ba=msg2.toLatin1();
     } else {
       QString txMsg{""};
@@ -11389,7 +11379,7 @@ void MainWindow::pskSetLocal ()
   /* CE3TSK: the fork identifies itself to PSK Reporter as "JTDX v<version> <revision> contest",
      so a spot from this build is distinguishable from stock JTDX in the reporter's statistics.
      The program name stays JTDX - the reporter groups by it and the fork is a JTDX derivative. */
-  psk_Reporter->setLocalStation(m_config.my_callsign (), m_config.my_grid (), antenna_description, QString {"JTDX v" + version() + (m_tci ? " tci " : " ") + revision() + " contest"}.simplified ());
+  psk_Reporter->setLocalStation(m_config.my_callsign (), m_config.my_grid_full (), antenna_description, QString {"JTDX v" + version() + (m_tci ? " tci " : " ") + revision() + " contest"}.simplified ());
 }
 
 void MainWindow::transmitDisplay (bool transmitting)

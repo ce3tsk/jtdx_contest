@@ -563,8 +563,9 @@ set (wsjt_FSRCS
 # CE3TSK: SuperFox receive (SuperHound), from WSJT-X 3.0.2 lib/superfox (SUPERFOX_PLAN.md).
 # The receiver: sfox_mod, qpc_mod, sfrx_sub (two entries: sfrx_core, which the decoder process
 # calls with the band as reals, and sfrx_sub, the sfrx tool's, with 16-bit samples), sfox_ana,
-# sfox_remove_tone, qpc_sync, twkfreq2, sfox_demod, qpc_likelihoods2, qpc_decode2, qpc_snr, sfox_unpack. The rest only
-# serves the test tool sfoxsim, which makes SuperFox audio: jtdx does not transmit it.
+# sfox_remove_tone, qpc_sync, qpc_sync3 (the last step's three windows), twkfreq2, sfox_demod, sfox_pctile (its medians),
+# qpc_likelihoods2, qpc_decode2, qpc_snr, sfox_unpack. The rest only serves the test tool sfoxsim, which makes SuperFox
+# audio: jtdx does not transmit it.
   lib/superfox/sfox_mod.f90
   lib/superfox/qpc/qpc_mod.f90
   lib/superfox/julian.f90

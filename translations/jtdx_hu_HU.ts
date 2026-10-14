@@ -520,8 +520,8 @@ Formátum:
     </message>
     <message>
         <location filename="../Configuration.cpp"/>
-        <source>A grid has 4, 6, 8, 10 or 12 characters, as IO91, IO91wm, IO91wm99, IO91wm99aa or IO91wm99aa00.</source>
-        <translation>Egy QRA lokátor 4, 6, 8, 10 vagy 12 karakteres, például IO91, IO91wm, IO91wm99, IO91wm99aa vagy IO91wm99aa00.</translation>
+        <source>A grid has 4, 6, 8 or 10 characters, as IO91, IO91wm, IO91wm99 or IO91wm99aa.</source>
+        <translation>Egy QRA lokátor 4, 6, 8 vagy 10 karakteres, például IO91, IO91wm, IO91wm99 vagy IO91wm99aa.</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp"/>
@@ -2901,6 +2901,31 @@ Formátum:
         <location filename="../HamlibTransceiver.cpp" line="1409"/>
         <source>getting a configuration item</source>
         <translation>egy konfigurációs elem lekérése</translation>
+    </message>
+    <message>
+        <location filename="../HamlibTransceiver.cpp"/>
+        <source>Function deprecated</source>
+        <translation>Elavult funkció</translation>
+    </message>
+    <message>
+        <location filename="../HamlibTransceiver.cpp"/>
+        <source>Security error password not provided or crypto failure</source>
+        <translation>Biztonsági hiba: nincs megadva jelszó, vagy titkosítási hiba</translation>
+    </message>
+    <message>
+        <location filename="../HamlibTransceiver.cpp"/>
+        <source>Rig is not powered on</source>
+        <translation>A rig nincs bekapcsolva</translation>
+    </message>
+    <message>
+        <location filename="../HamlibTransceiver.cpp"/>
+        <source>Limit exceeded</source>
+        <translation>Határérték túllépve</translation>
+    </message>
+    <message>
+        <location filename="../HamlibTransceiver.cpp"/>
+        <source>Access denied</source>
+        <translation>Hozzáférés megtagadva</translation>
     </message>
 </context>
 <context>

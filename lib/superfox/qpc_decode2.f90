@@ -255,6 +255,16 @@ subroutine sfox_crcpass
 ! known-Fox exemption - moved here unchanged from the search's loop, so that the threaded search
 ! (sfox_search_mt) takes exactly the same decision. The caller returns afterwards, whatever crc_ok is.
 
+! CE3TSK 2026-10-14 (review 3.-67): a frame of type i3=1 - the compound Fox's own layout, which no transmitter sends
+! (WSJT-X's and MSHV's packers write 0, 2 and 3) - is no decode. Since 3.-61 sfox_unpack prints nothing of it, as
+! WSJT-X does, and the slot still counted as decoded: the residual pass, round B2 and the last step were skipped,
+! and sfox_remember kept bits that are no call as the Fox. The list pass refuses the type already (and 4 to 7,
+! which sfox_unpack prints as WSJT-X does - not changed here).
+   write(msgbits,'(47b7.7)') xdec(0:46)
+   if(msgbits(327:329).eq.'001') then
+      crc_ok=.false.
+      return
+   endif
    call sfox_estimate       !the SNR: an internal routine below, the a-priori pass needs it too
 ! CE3TSK 2026-09-20: THE FLOOR AND A FOX THAT IS KNOWN (SUPERFOX_DECODER_IDEAS.md idea 2;
 ! test/experiments/sfox_floor/). The floor is there because a slot without a Fox makes 400 decoder

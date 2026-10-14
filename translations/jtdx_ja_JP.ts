@@ -520,8 +520,8 @@ Format:
     </message>
     <message>
         <location filename="../Configuration.cpp"/>
-        <source>A grid has 4, 6, 8, 10 or 12 characters, as IO91, IO91wm, IO91wm99, IO91wm99aa or IO91wm99aa00.</source>
-        <translation>グリッドは 4、6、8、10、12 文字です（例: IO91、IO91wm、IO91wm99、IO91wm99aa、IO91wm99aa00）。</translation>
+        <source>A grid has 4, 6, 8 or 10 characters, as IO91, IO91wm, IO91wm99 or IO91wm99aa.</source>
+        <translation>グリッドは 4、6、8、10 文字です（例: IO91、IO91wm、IO91wm99、IO91wm99aa）。</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp"/>
@@ -2901,6 +2901,31 @@ Format:
         <location filename="../HamlibTransceiver.cpp" line="1409"/>
         <source>getting a configuration item</source>
         <translation>設定項目を取得する</translation>
+    </message>
+    <message>
+        <location filename="../HamlibTransceiver.cpp"/>
+        <source>Function deprecated</source>
+        <translation>非推奨の機能です</translation>
+    </message>
+    <message>
+        <location filename="../HamlibTransceiver.cpp"/>
+        <source>Security error password not provided or crypto failure</source>
+        <translation>セキュリティエラー：パスワードが指定されていないか、暗号化に失敗しました</translation>
+    </message>
+    <message>
+        <location filename="../HamlibTransceiver.cpp"/>
+        <source>Rig is not powered on</source>
+        <translation>リグの電源が入っていません</translation>
+    </message>
+    <message>
+        <location filename="../HamlibTransceiver.cpp"/>
+        <source>Limit exceeded</source>
+        <translation>制限を超えました</translation>
+    </message>
+    <message>
+        <location filename="../HamlibTransceiver.cpp"/>
+        <source>Access denied</source>
+        <translation>アクセスが拒否されました</translation>
     </message>
 </context>
 <context>

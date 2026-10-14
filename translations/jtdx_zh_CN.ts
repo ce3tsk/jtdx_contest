@@ -520,8 +520,8 @@ Format:
     </message>
     <message>
         <location filename="../Configuration.cpp"/>
-        <source>A grid has 4, 6, 8, 10 or 12 characters, as IO91, IO91wm, IO91wm99, IO91wm99aa or IO91wm99aa00.</source>
-        <translation>网格为 4、6、8、10 或 12 个字符，例如 IO91、IO91wm、IO91wm99、IO91wm99aa 或 IO91wm99aa00。</translation>
+        <source>A grid has 4, 6, 8 or 10 characters, as IO91, IO91wm, IO91wm99 or IO91wm99aa.</source>
+        <translation>网格为 4、6、8 或 10 个字符，例如 IO91、IO91wm、IO91wm99 或 IO91wm99aa。</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp"/>
@@ -2901,6 +2901,31 @@ Format:
         <location filename="../HamlibTransceiver.cpp" line="1409"/>
         <source>getting a configuration item</source>
         <translation>获取配置项目</translation>
+    </message>
+    <message>
+        <location filename="../HamlibTransceiver.cpp"/>
+        <source>Function deprecated</source>
+        <translation>功能已弃用</translation>
+    </message>
+    <message>
+        <location filename="../HamlibTransceiver.cpp"/>
+        <source>Security error password not provided or crypto failure</source>
+        <translation>安全错误：未提供密码或加密失败</translation>
+    </message>
+    <message>
+        <location filename="../HamlibTransceiver.cpp"/>
+        <source>Rig is not powered on</source>
+        <translation>无线电设备未开机</translation>
+    </message>
+    <message>
+        <location filename="../HamlibTransceiver.cpp"/>
+        <source>Limit exceeded</source>
+        <translation>超出限制</translation>
+    </message>
+    <message>
+        <location filename="../HamlibTransceiver.cpp"/>
+        <source>Access denied</source>
+        <translation>拒绝访问</translation>
     </message>
 </context>
 <context>

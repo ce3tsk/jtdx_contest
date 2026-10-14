@@ -520,8 +520,8 @@ Format:
     </message>
     <message>
         <location filename="../Configuration.cpp"/>
-        <source>A grid has 4, 6, 8, 10 or 12 characters, as IO91, IO91wm, IO91wm99, IO91wm99aa or IO91wm99aa00.</source>
-        <translation>Ein Locator hat 4, 6, 8, 10 oder 12 Zeichen, etwa IO91, IO91wm, IO91wm99, IO91wm99aa oder IO91wm99aa00.</translation>
+        <source>A grid has 4, 6, 8 or 10 characters, as IO91, IO91wm, IO91wm99 or IO91wm99aa.</source>
+        <translation>Ein Locator hat 4, 6, 8 oder 10 Zeichen, etwa IO91, IO91wm, IO91wm99 oder IO91wm99aa.</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp"/>
@@ -2901,6 +2901,31 @@ Format:
         <location filename="../HamlibTransceiver.cpp" line="1409"/>
         <source>getting a configuration item</source>
         <translation>Abfragen einer Konfigurationsoption</translation>
+    </message>
+    <message>
+        <location filename="../HamlibTransceiver.cpp"/>
+        <source>Function deprecated</source>
+        <translation>Funktion veraltet</translation>
+    </message>
+    <message>
+        <location filename="../HamlibTransceiver.cpp"/>
+        <source>Security error password not provided or crypto failure</source>
+        <translation>Sicherheitsfehler: Passwort nicht angegeben oder Verschlüsselungsfehler</translation>
+    </message>
+    <message>
+        <location filename="../HamlibTransceiver.cpp"/>
+        <source>Rig is not powered on</source>
+        <translation>Funkgerät ist nicht eingeschaltet</translation>
+    </message>
+    <message>
+        <location filename="../HamlibTransceiver.cpp"/>
+        <source>Limit exceeded</source>
+        <translation>Grenze überschritten</translation>
+    </message>
+    <message>
+        <location filename="../HamlibTransceiver.cpp"/>
+        <source>Access denied</source>
+        <translation>Zugriff verweigert</translation>
     </message>
 </context>
 <context>

@@ -2,8 +2,9 @@ subroutine sfox_unpack(nutc,x,nsnr,f0,dt0,foxcall,notp)
 
 ! CE3TSK: adapted from WSJT-X 3.0.2 lib/superfox/sfox_unpack.f90 (SUPERFOX_PLAN.md). The
 ! unpacking is the donor's. What differs:
-! - jtdx's unpack28 takes a fourth argument, the slice whose hash list it belongs to; 1 here,
-!   the receiver is single threaded. The 22-bit hash lookup itself is band wide;
+! - jtdx's unpack28 takes a fourth argument, the slice whose hash list it belongs to; 1 here:
+!   this runs once a slot, after the search (whose threads have ended), on the thread that called
+!   the receiver. The 22-bit hash lookup itself is band wide;
 ! - jtdx resolves the operator's OWN hashed callsign in unpack77, not in unpack28, so a Hound
 !   with a non-standard call would see "<...>" where the Fox addresses it. Resolved here the
 !   same way unpack77 does, from hashmy22;
@@ -14,8 +15,9 @@ subroutine sfox_unpack(nutc,x,nsnr,f0,dt0,foxcall,notp)
 !   resolved, "<PJ4/K1ABC/P> VP8PJ RR73" is 24 and the donor's width would cut the RR73.
 ! - a compound Fox call decoded from its CQ (i3 = 3) is remembered for the hash lookup, see there.
 ! - a Hound message is assembled by sfox_fit below, which keeps it within what the GUI parses.
-! - CE3TSK 2026-10-14: two changes of WSJT-X 3.3.0-beta1 (its 5d52dc4b2 of 2026-09-28, which rewrote this
-!   routine), taken: a frame of type i3=1 prints nothing - not even the $VERIFY$ line -, and a CQ's free text
+! - CE3TSK 2026-10-14: two changes of WSJT-X (its 2213457ee of 2026-07-05, "fix(superfox): validate Tx input ...",
+!   in 3.2.0-rc1 and 3.3.0-beta1; corrected after the review 3.-67, which found that 5d52dc4b2 only moved the
+!   routine into a module), taken: a frame of type i3=1 prints nothing - not even the $VERIFY$ line -, and a CQ's free text
 !   is absent only when all seven of its 32-bit words are the filler, not when the first one is. See there.
 
   use packjt                      !CE3TSK: unpackgrid is a module procedure in jtdx
@@ -48,7 +50,7 @@ subroutine sfox_unpack(nutc,x,nsnr,f0,dt0,foxcall,notp)
   call unpack28(n28,foxcall,success,1)
 
   if(i3.eq.1) then                            !Compound Fox callsign
-! CE3TSK 2026-10-14, as WSJT-X 3.3.0-beta1: "Type i3=1 is documented for a compound-Fox c58 layout, but the
+! CE3TSK 2026-10-14, as WSJT-X does since 2213457ee (2026-07-05): "Type i3=1 is documented for a compound-Fox c58 layout, but the
 ! current transmitter does not emit it and this decoder does not implement the c58 field offsets. Do not
 ! render hound messages with a mis-decoded c28 Fox call." 3.0.2's branch was commented out and fell through
 ! to the Hound calls below, printed with a Fox call read from bits that i3=1 does not give one. Neither
@@ -82,7 +84,7 @@ subroutine sfox_unpack(nutc,x,nsnr,f0,dt0,foxcall,notp)
      call unpackgrid(n15,grid4)
      msg(1)='CQ '//trim(foxcall)//' '//grid4
      call sfox_emit(nutc,nsnr,dt0,nint(f0),trim(msg(1)))
-! CE3TSK 2026-10-14, as WSJT-X 3.3.0-beta1: no free text is all seven 32-bit words of the filler (the Fox
+! CE3TSK 2026-10-14, as WSJT-X does since 2213457ee (2026-07-05): no free text is all seven 32-bit words of the filler (the Fox
 ! side writes the seven when the text is empty - WSJT-X's sfox_assemble, MSHV's gen_sfox.cpp); 3.0.2 asked
 ! the first word only, and dropped a text that began with the filler's bits.
      lnotext=.true.

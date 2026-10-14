@@ -250,8 +250,9 @@ subroutine chkfalse8(msg37,i3,n3,nbadcrc,iaptype,lcall1hash,ngriddel)
 ! CE3TSK 2026-10-14: and so is a second call that arrived as an UNRESOLVED HASH ("MYCALL <...> R GRID", review
 ! of 2026-10-14): it names no station and the window cannot mark it, while 1 in 64 phantoms of this a-priori
 ! type reads its free bits as a 22-bit hash. A real station that answers me with a non-standard call sent me
-! that call in full first, and its hash then resolves ("<PJ4/K1ABC>", judged as any roger). chkgrid knows no
-! "<" and deletes it, as until 2026-10-13.
+! that call in full first, and its hash then resolves ("<PJ4/K1ABC>": not judged - its brackets reach the table,
+! which knows no "<" and answers nothing; the call was heard in full). chkgrid knows no "<" and deletes the unresolved
+! one, as until 2026-10-13.
       if(indxr.gt.7 .and. callsign(1:5).ne.'<...>') then
         call chkprefix(callsign,lwrongcall); lgvalid=.true.
       else

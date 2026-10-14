@@ -521,8 +521,8 @@ Formatera:
     </message>
     <message>
         <location filename="../Configuration.cpp"/>
-        <source>A grid has 4, 6, 8, 10 or 12 characters, as IO91, IO91wm, IO91wm99, IO91wm99aa or IO91wm99aa00.</source>
-        <translation>En grid har 4, 6, 8, 10 eller 12 tecken, till exempel IO91, IO91wm, IO91wm99, IO91wm99aa eller IO91wm99aa00.</translation>
+        <source>A grid has 4, 6, 8 or 10 characters, as IO91, IO91wm, IO91wm99 or IO91wm99aa.</source>
+        <translation>En grid har 4, 6, 8 eller 10 tecken, till exempel IO91, IO91wm, IO91wm99 eller IO91wm99aa.</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp"/>
@@ -2902,6 +2902,31 @@ Formatera:
         <location filename="../HamlibTransceiver.cpp" line="1409"/>
         <source>getting a configuration item</source>
         <translation>få ett konfigurationsobjekt</translation>
+    </message>
+    <message>
+        <location filename="../HamlibTransceiver.cpp"/>
+        <source>Function deprecated</source>
+        <translation>Funktionen är föråldrad</translation>
+    </message>
+    <message>
+        <location filename="../HamlibTransceiver.cpp"/>
+        <source>Security error password not provided or crypto failure</source>
+        <translation>Säkerhetsfel: lösenord saknas eller krypteringsfel</translation>
+    </message>
+    <message>
+        <location filename="../HamlibTransceiver.cpp"/>
+        <source>Rig is not powered on</source>
+        <translation>Riggen är inte påslagen</translation>
+    </message>
+    <message>
+        <location filename="../HamlibTransceiver.cpp"/>
+        <source>Limit exceeded</source>
+        <translation>Gränsen har överskridits</translation>
+    </message>
+    <message>
+        <location filename="../HamlibTransceiver.cpp"/>
+        <source>Access denied</source>
+        <translation>Åtkomst nekad</translation>
     </message>
 </context>
 <context>

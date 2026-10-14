@@ -4,6 +4,7 @@ subroutine azdist(MyGrid,HisGrid,utch,nAz,nEl,nDmiles,nDkm,nHotAz,nHotABetter)
   character*8 mygrid0,hisgrid0
   real*8 utch,utch0
   logical HotABetter,IamEast
+  logical l8my,l8his      !CE3TSK 2026-10-14: the grid was given with its 7th and 8th characters
   real eltab(22),daztab(22)
   data eltab/18.,15.,13.,11.,9.,8.,7.,6.,5.3,4.7,4.,3.3,2.7,    &
        2.,1.5,1.,0.8,0.6,0.4,0.2,0.0,0.0/
@@ -29,6 +30,14 @@ subroutine azdist(MyGrid,HisGrid,utch,nAz,nEl,nDmiles,nDkm,nHotAz,nHotABetter)
   hisgrid0=hisgrid
   utchours=utch
 
+! CE3TSK 2026-10-14: an 8 character grid's digits split its subsquare into tenths, and grid2deg puts the point at
+! the SOUTH-WEST corner of that small cell (digit/10), where a 4 or 6 character grid lands on its centre (the
+! padding below: "55" is half a subsquare; and "ll55" for a 4 character grid, the accepted divergence of
+! CONTEST_POINTS_PLAN.md 2). The grid is moved to its cell's centre below - half a cell, 0.25' east and 0.125'
+! north (about 0.46 km x cos(latitude) and 0.23 km) - only when it was GIVEN with 8 characters: grid2deg cannot
+! tell, it sees this padding and packjt's as digits too, and a 4 or 6 character grid keeps its point to the bit.
+  l8my=MyGrid(7:7).ge.'0' .and. MyGrid(7:7).le.'9' .and. MyGrid(8:8).ge.'0' .and. MyGrid(8:8).le.'9'
+  l8his=HisGrid(7:7).ge.'0' .and. HisGrid(7:7).le.'9' .and. HisGrid(8:8).ge.'0' .and. HisGrid(8:8).le.'9'
   if(MyGrid(5:5).eq.' ') MyGrid(5:5)='l'
   if(MyGrid(6:6).eq.' ') MyGrid(6:6)='l'
   if(HisGrid(5:5).eq.' ') HisGrid(5:5)='l'
@@ -50,6 +59,8 @@ subroutine azdist(MyGrid,HisGrid,utch,nAz,nEl,nDmiles,nDkm,nHotAz,nHotABetter)
   endif
   call grid2deg(MyGrid,dlong1,dlat1)
   call grid2deg(HisGrid,dlong2,dlat2)
+  if(l8my) then; dlong1=dlong1-0.25/60.0; dlat1=dlat1+0.125/60.0; endif     !CE3TSK: west longitude - east is less
+  if(l8his) then; dlong2=dlong2-0.25/60.0; dlat2=dlat2+0.125/60.0; endif
   eps=1.e-6
   Az=0.
   Dmiles=0.

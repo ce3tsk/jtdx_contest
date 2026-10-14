@@ -6,7 +6,7 @@
 
    Settings > General turns the box in doubt red while it is (as the value is typed) and, on OK, asks once - a warning,
    never a hard error: a special-event call, a prefix cty.dat does not know yet, an operator abroad who has not changed
-   My Call yet are all real (the operator). A grid must also be a whole locator of 4 to 12 characters.
+   My Call yet are all real (the operator). A grid must also be a whole locator of 4 to 10 characters.
 
    Never judged against cty.dat: an empty call, /MM and /AM (they have no country), and anything while cty.dat is not
    read - the lookup then answers "".
@@ -24,12 +24,12 @@
 
 namespace own_station
 {
-  /* a whole Maidenhead locator: 4, 6, 8, 10 or 12 characters - field, square, subsquare, extended square and on, letters
-     and digits in turn (IO91, IO91wm, IO91wm99, IO91wm99aa, IO91wm99aa00); FT8 sends the first four, and the program
-     uses the first eight at most (Configuration::my_grid) */
+  /* a whole Maidenhead locator: 4, 6, 8 or 10 characters - field, square, subsquare, extended square, letters and digits
+     in turn (IO91, IO91wm, IO91wm99, IO91wm99aa); FT8 sends the first four, the program uses the first eight at most
+     (Configuration::my_grid) and PSK Reporter gets all ten (my_grid_full). 12 were taken from 2026-10-04 to 10-14. */
   inline bool wellFormedGrid (QString const& grid)
   {
-    static QRegularExpression const re {"^[A-R]{2}[0-9]{2}(?:[A-X]{2}(?:[0-9]{2}(?:[A-X]{2}(?:[0-9]{2})?)?)?)?$",
+    static QRegularExpression const re {"^[A-R]{2}[0-9]{2}(?:[A-X]{2}(?:[0-9]{2}(?:[A-X]{2})?)?)?$",
                                         QRegularExpression::CaseInsensitiveOption};
     return re.match (grid.trimmed ()).hasMatch ();
   }

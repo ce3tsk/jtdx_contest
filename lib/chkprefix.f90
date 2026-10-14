@@ -65,7 +65,7 @@ subroutine chkdircq(msg37,i3,iaptype,lwrongcall)
 ! with the call in full ("CQ PJ4/K1ABC"). Random bits read as a 22-bit hash 1 time in 64. FT8's label 256
 ! deleted it until 2026-10-12 (it asked chkgrid, which knows no "<"); deleted again, in all three modes, and
 ! put on record with the prefixes that are not allocated (prefix/8).
-  if(callsign(1:5).eq.'<...>') then   ! a resolved hash, "<PJ4/K1ABC>", is a call the decoder knows
+  if(callsign(1:5).eq.'<...>') then   ! a resolved hash, "<PJ4/K1ABC>", is a call the decoder heard in full - not judged
     lwrongcall=.true.; return
   endif
   call chkprefix(callsign,lwrongcall)

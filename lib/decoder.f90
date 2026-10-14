@@ -1902,8 +1902,9 @@ contains
 ! CE3TSK: milestone 3, stage C (the gate has the whole story). A silent FT8 round is over and
 ! ft8b has stored the tones of everything it accepted: take them all out of the band AS RECEIVED
 ! and run the SuperFox receiver on what is left - unless the round decoded nothing new, for then
-! what is left is what the receiver has seen already. Serial code: the residual borrows the
-! master thread's dd8, and the polar decoder's work arrays are file-static C.
+! what is left is what the receiver has seen already. Called on the master thread: the residual borrows the
+! master thread's dd8. (The receiver it calls searches in threads of its own since 2026-09-21, with the program's
+! re-entrant list decoder; np_qpc.c's file-static work arrays are not used there - corrected 2026-10-14.)
     logical, intent(out) :: ldecoded
     integer :: nleft
     logical :: lrebuilt

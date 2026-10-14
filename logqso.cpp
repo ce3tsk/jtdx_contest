@@ -4,6 +4,7 @@
 #include <QString>
 #include <QSettings>
 #include <QTimer>   /* CE3TSK: the queued geometry restore */
+#include "logfields.h"   /* CE3TSK 2026-10-14: adif_gridsquare */
 #include "geometryrestore.h"   /* CE3TSK 2026-09-26: the restore rule, shared */
 #include <QStandardPaths>
 #include <QDir>
@@ -267,7 +268,8 @@ void LogQSO::accept()
        myadif+=" <TX_PWR:" + QString::number(m_txPower.length()) + ">" + m_txPower;
     }
     if (hisGrid.length() > 3) {
-      myadif+=" <GRIDSQUARE:" + QString::number(hisGrid.length()) + ">" + hisGrid;
+      QString const gridsquare {adif_gridsquare (hisGrid)};   /* CE3TSK 2026-10-14: 8 at most (logfields.h) */
+      myadif+=" <GRIDSQUARE:" + QString::number(gridsquare.length()) + ">" + gridsquare;
     }
     if (name.length() > 0) {
       myadif+=" <NAME:" + QString::number(name.length()) + ">" + name;

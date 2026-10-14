@@ -48,7 +48,8 @@
 // symbol kap[i] (encoder order) has the value vap[i].
 //
 // Every buffer is per THREAD; the candidate sets are one per process and must be laid from a
-// serial point (the SuperFox slot is decoded single-threaded today).
+// serial point - the pool and list passes, which run on one thread. (The search decodes in threads
+// since 2026-09-21, with the sets switched off; this said "single-threaded today" until 2026-10-14.)
 
 #include <stdlib.h>
 #include <string.h>

@@ -510,8 +510,8 @@ Format:
     </message>
     <message>
         <location filename="../Configuration.cpp"/>
-        <source>A grid has 4, 6, 8, 10 or 12 characters, as IO91, IO91wm, IO91wm99, IO91wm99aa or IO91wm99aa00.</source>
-        <translation>Um grid tem 4, 6, 8, 10 ou 12 caracteres, como IO91, IO91wm, IO91wm99, IO91wm99aa ou IO91wm99aa00.</translation>
+        <source>A grid has 4, 6, 8 or 10 characters, as IO91, IO91wm, IO91wm99 or IO91wm99aa.</source>
+        <translation>Um grid tem 4, 6, 8 ou 10 caracteres, como IO91, IO91wm, IO91wm99 ou IO91wm99aa.</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp"/>
@@ -2309,7 +2309,7 @@ Format:
     <message>
         <location filename="../DXLabSuiteCommanderTransceiver.cpp" line="276"/>
         <source>DX Lab Suite Commander didn&apos;t respond correctly polling frequency: </source>
-        <translation>O DX Lab Suite Commander não respondeu corretamente á frequência pedida: </translation>
+        <translation>O DX Lab Suite Commander não respondeu corretamente à frequência pedida: </translation>
     </message>
     <message>
         <location filename="../DXLabSuiteCommanderTransceiver.cpp" line="297"/>
@@ -2892,6 +2892,31 @@ Format:
         <source>getting a configuration item</source>
         <translation>obtendo a configuração do item</translation>
     </message>
+    <message>
+        <location filename="../HamlibTransceiver.cpp"/>
+        <source>Function deprecated</source>
+        <translation>Função obsoleta</translation>
+    </message>
+    <message>
+        <location filename="../HamlibTransceiver.cpp"/>
+        <source>Security error password not provided or crypto failure</source>
+        <translation>Erro de segurança: palavra-passe não indicada ou falha de cifragem</translation>
+    </message>
+    <message>
+        <location filename="../HamlibTransceiver.cpp"/>
+        <source>Rig is not powered on</source>
+        <translation>O rádio não está ligado</translation>
+    </message>
+    <message>
+        <location filename="../HamlibTransceiver.cpp"/>
+        <source>Limit exceeded</source>
+        <translation>Limite excedido</translation>
+    </message>
+    <message>
+        <location filename="../HamlibTransceiver.cpp"/>
+        <source>Access denied</source>
+        <translation>Acesso negado</translation>
+    </message>
 </context>
 <context>
     <name>IARURegions</name>
@@ -3220,7 +3245,7 @@ Format:
     <message>
         <location filename="../mainwindow.ui" line="1095"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Click by left mouse&apos;s button to spot DX call to dxsummit.fi (spotting shall be enabled in Reporting tab of the settings). Click by right mouse&apos;s button to add callsign to the &apos;Hide messages from callsigns&apos; filter.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Clique para anunciar uma estação DX no dxsummit.fi (a função terá que estar ativa na aba Reportes das configurações).Clique com botão direito do rato para adicionar indicativos á função de filtros &apos;Ocultar mensagens dos indicativos&apos;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Clique para anunciar uma estação DX no dxsummit.fi (a função terá que estar ativa na aba Reportes das configurações).Clique com botão direito do rato para adicionar indicativos à função de filtros &apos;Ocultar mensagens dos indicativos&apos;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1098"/>
@@ -7083,7 +7108,7 @@ Please verify the correct directory name was given.</source>
     <message>
         <location filename="../widegraph.ui" line="326"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Frequency at left edge of waterfall&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Frequência á esquerda da cascata&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Frequência à esquerda da cascata&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../widegraph.ui" line="329"/>

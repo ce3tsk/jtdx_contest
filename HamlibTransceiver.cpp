@@ -468,7 +468,7 @@ void HamlibTransceiver::load_user_settings ()
 // CE3TSK 2026-10-12: the one table of error texts, for both constructors (hamliberror.h has the story). The
 // order is rig_errcode_e's and the wording Hamlib's own. The first eighteen were here and are translated; 18
 // and 19 were the placeholders "Added1" and "Added2", and 20 to 22 were missing. The five new ones are
-// English until they are given to the translators.
+// translated since 2026-10-14 (they were English until then).
 QStringList HamlibTransceiver::error_texts ()
 {
   return {tr("Command completed successfully"),
@@ -489,11 +489,11 @@ QStringList HamlibTransceiver::error_texts ()
           tr("NULL RIG handle or invalid pointer parameter"),
           tr("Invalid VFO"),
           tr("Argument out of domain of func"),
-          QString {"Function deprecated"},
-          QString {"Security error password not provided or crypto failure"},
-          QString {"Rig is not powered on"},
-          QString {"Limit exceeded"},
-          QString {"Access denied"}};
+          tr("Function deprecated"),
+          tr("Security error password not provided or crypto failure"),
+          tr("Rig is not powered on"),
+          tr("Limit exceeded"),
+          tr("Access denied")};
 }
 
 void HamlibTransceiver::error_check (int ret_code, QString const& doing) const

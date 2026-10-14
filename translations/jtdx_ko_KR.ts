@@ -520,8 +520,8 @@ Format:
     </message>
     <message>
         <location filename="../Configuration.cpp"/>
-        <source>A grid has 4, 6, 8, 10 or 12 characters, as IO91, IO91wm, IO91wm99, IO91wm99aa or IO91wm99aa00.</source>
-        <translation>그리드는 4, 6, 8, 10 또는 12자입니다(예: IO91, IO91wm, IO91wm99, IO91wm99aa, IO91wm99aa00).</translation>
+        <source>A grid has 4, 6, 8 or 10 characters, as IO91, IO91wm, IO91wm99 or IO91wm99aa.</source>
+        <translation>그리드는 4, 6, 8 또는 10자입니다(예: IO91, IO91wm, IO91wm99, IO91wm99aa).</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp"/>
@@ -2901,6 +2901,31 @@ Format:
         <location filename="../HamlibTransceiver.cpp" line="1409"/>
         <source>getting a configuration item</source>
         <translation>설정 항목 읽기</translation>
+    </message>
+    <message>
+        <location filename="../HamlibTransceiver.cpp"/>
+        <source>Function deprecated</source>
+        <translation>더 이상 사용되지 않는 기능</translation>
+    </message>
+    <message>
+        <location filename="../HamlibTransceiver.cpp"/>
+        <source>Security error password not provided or crypto failure</source>
+        <translation>보안 오류: 비밀번호가 제공되지 않았거나 암호화에 실패했습니다</translation>
+    </message>
+    <message>
+        <location filename="../HamlibTransceiver.cpp"/>
+        <source>Rig is not powered on</source>
+        <translation>무전기 전원이 켜져 있지 않습니다</translation>
+    </message>
+    <message>
+        <location filename="../HamlibTransceiver.cpp"/>
+        <source>Limit exceeded</source>
+        <translation>한도를 초과했습니다</translation>
+    </message>
+    <message>
+        <location filename="../HamlibTransceiver.cpp"/>
+        <source>Access denied</source>
+        <translation>접근이 거부되었습니다</translation>
     </message>
 </context>
 <context>

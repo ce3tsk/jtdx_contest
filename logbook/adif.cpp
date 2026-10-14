@@ -5,6 +5,7 @@
 #include "adif.h"
 #include "../Radio.hpp"
 #include "../usstates.h"   /* CE3TSK */
+#include "../logfields.h"   /* CE3TSK 2026-10-14: adif_gridsquare */
 #include <QFile>
 #include <QTextStream>
 //#include <QDateTime>
@@ -402,7 +403,8 @@ bool ADIF::addQSOToFile(const QString hisCall, const QString hisGrid, const QStr
 
         QString t;
         t="<call:" + QString::number(hisCall.length()) + ">" + hisCall;
-        t+=" <gridsquare:" + QString::number(hisGrid.length()) + ">" + hisGrid;
+        QString const gridsquare {adif_gridsquare (hisGrid)};   /* CE3TSK 2026-10-14: 8 at most (logfields.h) */
+        t+=" <gridsquare:" + QString::number(gridsquare.length()) + ">" + gridsquare;
         if (mode == "FT4" || mode == "FT2") t+=" <mode:4>MFSK <submode:" + QString::number(mode.length()) + ">" + mode;   // CE3TSK: FT2 too
         else t+=" <mode:" + QString::number(mode.length()) + ">" + mode;
         t+=" <rst_sent:" + QString::number(rptSent.length()) + ">" + rptSent;

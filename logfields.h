@@ -28,6 +28,14 @@ inline QString log_grid (QString const& box, QString const& history)
   return box.isEmpty () ? history : box;
 }
 
+/* CE3TSK 2026-10-14 (the operator): the DX station's grid as ADIF's GRIDSQUARE takes it - 8 characters at most.
+   The DX grid box takes 10, and a 10 character grid went into the log file and Logged ADIF whole; GRIDSQUARE holds
+   up to 8, and what lies beyond belongs in GRIDSQUARE_EXT (ADIF 3.1.4), which this program does not write. */
+inline QString adif_gridsquare (QString const& grid)
+{
+  return grid.left (8);
+}
+
 /* The received exchange. `stored` is this station's own r_rep; `global` is m_rptRcvd, one
    variable holding the last report parsed from *any* message - and in the contest a "report"
    is a grid, which is how KD6WW's CM98 reached JR5JEU's entry. In a contest an empty exchange
