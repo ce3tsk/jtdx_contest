@@ -714,6 +714,35 @@ private:
   bool m_bgCut;                // item 81: the last background was cut short by the next period's decode - the label shows " X" until one completes
   bool m_bgAbortAsked;         // item 81: the GUI itself aborted it (band or mode change) - not a load problem, no X
   int m_txPeriod;              // CE3TSK P7: the index of the period our last transmission started in (-1: none)
+    /* BA4RF: chase mode - hold TX while waiting for a DXpedition station, call it the moment a
+       message FROM it is decoded, and go back to waiting when it has not been heard for
+       m_chasePeriods of our own periods. The target is the DX Call box, so the operator's Gen
+       msg is sent as it stands. Fixed with the operator: only a message the target itself
+       transmits counts as heard (a call directed at it does not), the counter counts our
+       periods in a row without a decode from it and resets on each such decode, and a timeout
+       returns straight to waiting for the next appearance. Mode-independent: Hound and SuperFox
+       work with it as long as the operator has set the mode. */
+    enum ChaseState { ChaseOff = 0, ChaseWait, ChaseCalling };
+    ChaseState m_chaseState {ChaseOff};
+    QString    m_chaseCall;
+    int        m_chasePeriods {6};
+    int        m_chaseMiss {0};
+  int        m_chaseLastTxPeriod {-1};      // period index of the last of OUR transmissions counted
+  QString    m_chaseButtonText, m_chaseButtonStyle, m_chaseButtonTip;   // Halt Tx, as the .ui made it
+    bool       m_chaseHeard {false};
+    QAction*   m_chaseAction {nullptr};
+    QAction*   m_chasePeriodsAction {nullptr};
+    QLabel*    m_chaseLabel {nullptr};
+    void chaseSetEnabled (bool on);
+    void chaseHeard ();
+    void chasePeriodEnd ();
+    void chaseTimeout ();
+    void chaseSetTx (bool on, QString const& why);
+    void chaseQsoComplete ();
+  void chaseButtonState (bool on);
+  void chaseUpdateLabel ();
+    void chaseLog (QString const& what);
+  void chaseLogv (QString const& what);   // per-period detail, JTDX_CHASE_TRACE
   int m_ft8RXBudget;           // CE3TSK P8: the RX budget for ensemble effort "budget auto", tenths of a second
   int m_ft4RXBudget;           // CE3TSK item 80: FT4's (13 = 1.3 s against the 1.36 s reply deadline)
   int m_ft4BgMargin;           // CE3TSK item 80: FT4's background margin, tenths (the max effort preset sets 5)

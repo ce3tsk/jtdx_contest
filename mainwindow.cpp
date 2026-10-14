@@ -1,5 +1,6 @@
 //-------------------------------------------------------- MainWindow
 
+#include <QSignalBlocker>
 #include "mainwindow.h"
 #include "priorities.h"   /* CE3TSK 2026-10-03 */
 #include <cinttypes>
@@ -503,6 +504,31 @@ MainWindow::MainWindow(bool multiple, QSettings * settings, QSharedMemory *shdme
   ui->menuView->setToolTipsVisible (true);
   ui->menuMode->setToolTipsVisible (true);
   ui->menuDXpedition->setToolTipsVisible (true);   // CE3TSK: two tooltips, SuperFox mode's and the Fox verifier's
+    /* BA4RF: chase mode sits in the DXpedition menu next to the SuperFox entries - it is a
+       DXpedition tool. The target is the DX Call box and no .ui edit is needed: the period
+       budget is asked for in a dialog. */
+    m_chaseAction = new QAction (tr ("Chase DX (wait for TX)"), this);
+    m_chaseAction->setCheckable (true);
+    m_chaseAction->setStatusTip (tr ("Hold TX until the DX Call is heard, call it, and wait again after N periods without it"));
+    connect (m_chaseAction, &QAction::toggled, this, [this] (bool on) { chaseSetEnabled (on); });
+    ui->menuDXpedition->addAction (m_chaseAction);
+    m_chasePeriodsAction = new QAction (tr ("Chase: periods without the DX..."), this);
+    connect (m_chasePeriodsAction, &QAction::triggered, this, [this] {
+        bool ok = false;
+        int n = QInputDialog::getInt (this, tr ("Chase DX")
+                                      , tr ("Periods without a signal from the DX before going back to waiting:")
+                                      , m_chasePeriods, 1, 99, 1, &ok);
+        if (ok) { m_chasePeriods = n; m_settings->setValue ("ChasePeriods", n); chaseUpdateLabel (); }
+      });
+    ui->menuDXpedition->addAction (m_chasePeriodsAction);
+    /* BA4RF chase: the operator's way in is a RIGHT CLICK on Halt Tx - the same idiom the
+       SuperFox toggle uses on the Hound button. The button then reads "chaseDX" in a colour of
+       its own until it is switched off again. The menu entries above stay, and the two are kept
+       in step because chaseSetEnabled() is the only place that arms or disarms. */
+    ui->stopTxButton->setContextMenuPolicy (Qt::CustomContextMenu);
+    connect (ui->stopTxButton, &QWidget::customContextMenuRequested, this, [this] (QPoint const&) {
+        if (m_chaseAction) m_chaseAction->toggle ();
+      });
   m_config.set_jtdxtime (m_jtdxtime);
   /* CE3TSK 2026-10-04: Settings checks the operator's own call and grid against cty.dat (ownstation.h) - the
      logbook the windows use, and nothing while cty.dat is not read */
@@ -1173,6 +1199,19 @@ MainWindow::MainWindow(bool multiple, QSettings * settings, QSharedMemory *shdme
   m_useDarkStyle = m_config.useDarkStyle(); setDecodeMenuColours();
   ui->actionUse_dark_style->setChecked (m_useDarkStyle);   // CE3TSK
   readSettings();		         //Restore user's setup params
+
+  /* BA4RF chase, diagnostic: JTDX_CHASE_ARM=<call> arms the chase at start-up with that call.
+     Nothing reads it in normal use - the menu is the operator's way in - but it lets an
+     unattended test instance (D:\jtdx-chase-test) exercise the state machine. */
+  if (m_chaseAction) {
+    QByteArray const arm = qgetenv ("JTDX_CHASE_ARM");
+    if (!arm.isEmpty ()) {
+      ui->dxCallEntry->setText (QString::fromLatin1 (arm).toUpper ().trimmed ());
+      ui->genStdMsgsPushButton->click ();       /* what the operator presses before arming */
+      m_chaseAction->setChecked (true);
+    }
+  }
+
   refreshDecodePreset();   // P13: the preset lamp from the restored controls
 
   QString t;
@@ -1450,6 +1489,7 @@ void MainWindow::writeSettings()
   m_settings->setValue("RRR/RR73",m_rrr);
   m_settings->setValue("CQdirection",m_cqdir);
   m_settings->setValue("DXcall",ui->dxCallEntry->text());
+    m_settings->setValue("ChasePeriods", m_chasePeriods);
   m_settings->setValue("DXgrid",ui->dxGridEntry->text());
   m_settings->setValue("WantedCallCommaList",ui->wantedCall->text());
   m_settings->setValue("WantedCountryCommaList",ui->wantedCountry->text());
@@ -1732,6 +1772,10 @@ void MainWindow::readSettings()
   else { ui->pbCallCQ->setText("CQ"); }
 
   ui->dxCallEntry->setText(m_settings->value("DXcall","").toString());
+
+  /* BA4RF chase: only the period budget is a preference and survives a restart. The armed
+     state deliberately does not: chase must always start unchecked, the operator arms it. */
+  m_chasePeriods = qBound (1, m_settings->value ("ChasePeriods", 6).toInt (), 99);
   ui->dxGridEntry->setText(m_settings->value("DXgrid","").toString());
   ui->wantedCall->setText(m_settings->value("WantedCallCommaList","").toString());
   ui->wantedCountry->setText(m_settings->value("WantedCountryCommaList","").toString());
@@ -2787,6 +2831,16 @@ void MainWindow::on_actionSettings_triggered()               //Setup Dialog
 	  m_wideGraph->setTopJT65(m_config.ntopfreq65());
 	  setXIT (ui->TxFreqSpinBox->value ());
       update_watchdog_label ();
+        /* BA4RF: chase state beside the TX watchdog label */
+        m_chaseLabel = new QLabel {""};
+        m_chaseLabel->setAlignment (Qt::AlignHCenter);
+        m_chaseLabel->setAlignment (Qt::AlignVCenter);
+        m_chaseLabel->setContentsMargins (1,1,1,1);
+        m_chaseLabel->setMinimumSize (QSize (112,20));
+        m_chaseLabel->setFrameStyle (QFrame::Panel | QFrame::Sunken);
+        m_chaseLabel->setToolTip (tr ("Chase: waiting for the DX Call, or the periods counted without it"));
+        statusBar()->addWidget (m_chaseLabel);
+        chaseUpdateLabel ();
       if(m_mode != "WSPR-2" && spot_to_dxsummit != m_config.spot_to_dxsummit()) {
          m_dxCallHidden=false;   // CE3TSK
          if(m_config.spot_to_dxsummit() ) { ui->pbSpotDXCall->setStyleSheet(QString("QPushButton {color: %1;background: %2;border-style: outset;border-width: 1px;border-color: %3;padding: 3px}").arg(Radio::convert_dark("#000000",m_useDarkStyle),Radio::convert_dark("#c4c4ff",m_useDarkStyle),Radio::convert_dark("#808080",m_useDarkStyle))); }
@@ -3024,6 +3078,184 @@ void MainWindow::showUpdateNewer (QString const& latest, QString const& changelo
 
 void MainWindow::enableTx_mode (bool state) { ui->enableTxButton->setChecked (state); on_enableTxButton_clicked (state); }
 void MainWindow::enableTxButton_off () { enableTx_mode (false); }
+/* BA4RF: chase mode. Three states, one counter, two hooks - a decode from the target and the
+   end of a period. Nothing here keys the rig on its own: while waiting the TX stays off and
+   arming goes through enableTx_mode(), the same call the Enable Tx button makes, so every
+   guard the button has (frequency ownership, mode rules) applies unchanged. */
+static bool chase_dry_run ()
+{
+  QByteArray const v = qgetenv ("JTDX_CHASE_DRYRUN");
+  return !v.isEmpty () && v != "0";
+}
+
+static bool chase_trace_on ()
+{
+  QByteArray const v = qgetenv ("JTDX_CHASE_TRACE");
+  return !v.isEmpty () && v != "0";
+}
+
+void MainWindow::chaseLog (QString const& what)
+{
+  writeToALLTXT (QString ("Chase: %1").arg (what));       /* state changes always go to ALL.TXT */
+}
+
+void MainWindow::chaseLogv (QString const& what)
+{
+  if (chase_trace_on ()) writeToALLTXT (QString ("Chase: %1").arg (what));
+}
+
+void MainWindow::chaseSetTx (bool on, QString const& why)
+{
+  if (chase_dry_run ()) { chaseLog (QString ("DRYRUN %1 (%2)").arg (on ? "arm TX" : "drop TX").arg (why)); return; }
+  if (on) { if (!m_enableTx) enableTx_mode (true); }
+  else if (m_enableTx) haltTx (why + " ");
+}
+
+void MainWindow::chaseQsoComplete ()
+{
+  if (ChaseOff == m_chaseState) return;
+  chaseLog (QString ("QSO complete - chase off (was %1)").arg (m_chaseCall));
+  if (m_chaseAction) m_chaseAction->setChecked (false);   /* toggled() -> chaseSetEnabled(false) */
+}
+
+void MainWindow::chaseUpdateLabel ()
+{
+  if (!m_chaseLabel) return;
+  QString t;
+  switch (m_chaseState) {
+  case ChaseWait:    t = tr ("Chase: wait %1").arg (m_chaseCall); break;
+  case ChaseCalling: t = tr ("Chase: TX %1/%2").arg (m_chaseMiss).arg (m_chasePeriods); break;
+  default: break;
+  }
+  if (m_chaseLabel->text () != t) m_chaseLabel->setText (t);
+}
+
+void MainWindow::chaseSetEnabled (bool on)
+{
+  if (!on) {
+    if (ChaseCalling == m_chaseState) chaseSetTx (false, "chase: switched off");
+    m_chaseState = ChaseOff; m_chaseMiss = 0; m_chaseHeard = false;
+    chaseLog ("off");
+    if (m_chaseAction && m_chaseAction->isChecked ()) {
+      QSignalBlocker block (m_chaseAction);
+      m_chaseAction->setChecked (false);
+    }
+    chaseButtonState (false);
+    chaseUpdateLabel ();
+    return;
+  }
+  m_chaseCall = ui->dxCallEntry->text ().trimmed ().toUpper ();
+  /* Arming (right click on Halt Tx, or the menu entry) needs what the operator's rule asks for:
+     a target in the DX Call box AND TX1-TX5 already built for that very call with Gen Msgs.
+     tx1..tx4 are line edits, tx5 is the combo holding the 73/report alternatives. */
+  bool ready = !m_chaseCall.isEmpty ();
+  if (!ready) chaseLog ("no DX Call set - chase not armed");
+  else {
+    QString const msgs[] {ui->tx1->text (), ui->tx2->text (), ui->tx3->text (), ui->tx4->text (),
+                          ui->tx5->currentText ()};
+    ready = false;
+    for (QString const& m : msgs) if (m.contains (m_chaseCall, Qt::CaseInsensitive)) { ready = true; break; }
+    if (!ready) chaseLog (QString ("no TX message for %1 yet - Gen Msgs not pressed, chase not armed").arg (m_chaseCall));
+  }
+  if (!ready) {
+    statusBar ()->showMessage (m_chaseCall.isEmpty ()
+        ? tr ("Chase DX needs a call in the DX Call box")
+        : tr ("Chase DX: press Gen Msgs to build TX1-TX5 for %1 first").arg (m_chaseCall), 8000);
+    if (m_chaseAction && m_chaseAction->isChecked ()) {
+      QSignalBlocker block (m_chaseAction);
+      m_chaseAction->setChecked (false);
+    }
+    chaseButtonState (false);
+    return;
+  }
+  m_chaseState = ChaseWait; m_chaseMiss = 0; m_chaseHeard = false;
+  chaseSetTx (false, "chase: waiting for " + m_chaseCall);
+  if (m_chaseAction && !m_chaseAction->isChecked ()) {
+    QSignalBlocker block (m_chaseAction);
+    m_chaseAction->setChecked (true);
+  }
+  chaseButtonState (true);
+  chaseLog (QString ("armed, waiting for %1, %2 periods").arg (m_chaseCall).arg (m_chasePeriods));
+  chaseUpdateLabel ();
+}
+
+/* The Halt Tx button doubles as the chase indicator: it reads "chaseDX" in a colour of its own
+   while a chase is armed, and afterwards it is put back to exactly what the .ui made of it (no
+   other code writes this button's text, style sheet or tooltip). */
+void MainWindow::chaseButtonState (bool on)
+{
+  if (!ui || !ui->stopTxButton) return;
+  if (m_chaseButtonText.isEmpty ()) {          // remember the operator's button, once
+    m_chaseButtonText = ui->stopTxButton->text ();
+    m_chaseButtonStyle = ui->stopTxButton->styleSheet ();
+    m_chaseButtonTip = ui->stopTxButton->toolTip ();
+  }
+  if (on) {
+    ui->stopTxButton->setText ("chaseDX");
+    ui->stopTxButton->setStyleSheet (QString ("QPushButton {color: %1; background: %2; border-style: solid;"
+                                              "border-width: 1px; border-radius: 5px; border-color: %3; padding: 0px}")
+                                     .arg (Radio::convert_dark ("#000000", m_useDarkStyle),
+                                           Radio::convert_dark ("#8fc7ff", m_useDarkStyle),
+                                           Radio::convert_dark ("#000000", m_useDarkStyle)));
+    ui->stopTxButton->setToolTip (tr ("Chase DX is armed - right click to switch it off"));
+  } else {
+    ui->stopTxButton->setText (m_chaseButtonText);
+    ui->stopTxButton->setStyleSheet (m_chaseButtonStyle);
+    ui->stopTxButton->setToolTip (m_chaseButtonTip);
+  }
+  chaseLogv (QString ("Halt Tx button -> %1").arg (on ? QString ("chaseDX") : m_chaseButtonText));
+}
+
+void MainWindow::chaseHeard ()
+{
+  m_chaseHeard = true;
+  if (m_chaseMiss) { m_chaseMiss = 0; chaseLogv (QString ("%1 heard again - counter reset").arg (m_chaseCall)); }
+  if (ChaseWait == m_chaseState) {
+    if (m_hisCall.isEmpty ()) m_hisCall = m_chaseCall;   /* auto seq needs it; the operator's Gen msg is left alone */
+    m_chaseState = ChaseCalling;
+    chaseSetTx (true, "chase: TX on");
+    chaseLog (QString ("%1 heard - calling").arg (m_chaseCall));
+  }
+  chaseUpdateLabel ();
+}
+
+void MainWindow::chasePeriodEnd ()
+{
+  if (ChaseOff == m_chaseState) { m_chaseHeard = false; return; }
+  if (ChaseCalling == m_chaseState) {
+    /* BA4RF chase: while it is calling, the chase owns the transmitter - the app's own stops
+       must not end something the operator wants to keep running. The minutes-long TX watchdog
+       is reset every period, and Enable Tx is armed again if anything dropped it (watchdog,
+       singleshot, a Clear). To stop a chase, uncheck Chase DX. */
+    if (!chase_dry_run ()) {                    /* in dry-run nothing is ever transmitted */
+      txwatchdog (false);
+      if (!m_enableTx) {
+        chaseLog ("TX was off while calling - re-armed");
+        chaseSetTx (true, "chase: keep calling");
+      }
+    }
+    /* The operator's rule counts CALLS: one increment per period we transmitted, not per decode
+       slot. A period has our TX slot and the DX's, and <DecodeFinished> fires in both, so the
+       budget used to run out in half the intended time. */
+    if (m_txPeriod >= 0 && m_txPeriod != m_chaseLastTxPeriod) {
+      m_chaseLastTxPeriod = m_txPeriod;
+      if (!m_chaseHeard) {
+        ++m_chaseMiss;
+        chaseLog (QString ("%1/%2 calls without %3").arg (m_chaseMiss).arg (m_chasePeriods).arg (m_chaseCall));
+        if (m_chaseMiss >= m_chasePeriods) chaseTimeout ();
+      }
+    }
+  }
+  m_chaseHeard = false;
+  chaseUpdateLabel ();
+}
+
+void MainWindow::chaseTimeout ()
+{
+  chaseSetTx (false, QString ("chase: %1 periods without %2").arg (m_chasePeriods).arg (m_chaseCall));
+  m_chaseState = ChaseWait; m_chaseMiss = 0; m_chaseLastTxPeriod = -1;
+  chaseLog (QString ("back to waiting for %1").arg (m_chaseCall));
+}
 
 void MainWindow::keyPressEvent( QKeyEvent *e )                //keyPressEvent
 {
@@ -6921,7 +7153,10 @@ void MainWindow::process_Auto()
     }
   } else {
     if (m_enableTx && m_hisCall.isEmpty()) ui->RxFreqSpinBox->setValue (ui->TxFreqSpinBox->value ());
-    if (!counters) {
+    /* BA4RF chase: a running chase keeps calling until ITS budget runs out (m_chasePeriods
+       calls without hearing the DX) or the QSO is logged - the singleshot / hound answer
+       counters must not cut the transmission short while the operator is chasing. */
+    if (!counters && ChaseOff == m_chaseState) {
        if(m_singleshot) { endOfQsoStopTx("m_singleshot, counter triggered "); }
        else if(m_houndMode) { endOfQsoStopTx("m_houndMode, counter triggered "); }
     }
@@ -6949,6 +7184,7 @@ void MainWindow::readFromStdout()                             //readFromStdout
     if(t.startsWith("<DecodeFinished>")) {
       dec_data.params.nstophint=1;
       m_bDecoded = t.mid (20).trimmed ().toInt () > 0;
+      chasePeriodEnd ();   /* BA4RF chase: one period's decodes are in */
       int mswait=750.0*m_TRperiod;
       if(!m_diskData) killFileTimer.start (mswait); //Kill in 3/4 of period
     // autoseq guard frequency band
@@ -7352,6 +7588,16 @@ void MainWindow::readFromStdout()                             //readFromStdout
            haltTx("readFromStdout, not owner of the frequency or reply to other ");/* if(m_skipTx1) m_qsoHistory.remove(m_hisCall); */
          }
       }
+
+      /* BA4RF chase: deCall is the station that TRANSMITTED this message.
+         DecodedText::deCallAndGrid() takes the SECOND callsign, and that is the sender in every
+         FT8 form - "CQ <me> <grid>", and for a QSO message the sender puts itself second
+         ("<them> <me> <grid|report>", which is also why word 3 is the sender's own grid: a
+         Swedish SA0LEK sends JO89). So CQ <target>, <target> <anyone>, <target> <me> trigger,
+         and somebody else calling the target does not. Checking the first word instead is
+         wrong for every message that is not a CQ - it names the station being called. */
+      if (ChaseOff != m_chaseState && !m_manualDecode && !deCall.isEmpty ()
+          && Radio::base_callsign (deCall) == Radio::base_callsign (m_chaseCall)) chaseHeard ();
 
       if((!m_config.prevent_spotting_false () || (m_config.prevent_spotting_false () && !decodedtext.isWrong ()))
          && (!m_config.filterUDP () || (m_config.filterUDP () && notified & 2))) {
@@ -9612,6 +9858,11 @@ void MainWindow::on_genStdMsgsPushButton_clicked() { genStdMsgs(m_rpt); }
 
 void MainWindow::on_logQSOButton_clicked()
 {
+  /* BA4RF chase: the QSO is done - the operator asked for one QSO per arming, so drop the
+     chase. Unchecking the menu item runs the same chaseSetEnabled(false) path the operator
+     would, which stops a transmission that is still running and resets the counter. */
+  chaseQsoComplete ();
+
   if (m_hisCall.isEmpty()) return;
   auto currenttime = m_jtdxtime->currentDateTimeUtc2();
   auto dateTimeQSOOff = currenttime;

@@ -26,7 +26,13 @@
 
    haltTxWhenFrequencyTaken - whether another station appearing on our transmit frequency should
    stop the transmission. */
-void MainWindow::endOfQsoStopTx(QString const& reason) { autoStopTx (reason); }
+void MainWindow::endOfQsoStopTx(QString const& reason) {
+  /* BA4RF chase note: this is the fork's single "the QSO attempt is over" exit and it covers
+     GIVING UP too (RR73/73 never received, the singleshot/hound counters, not owning the
+     frequency). A chase must not end on those - the operator asked for it to keep calling -
+     so chaseQsoComplete() is called from the Log QSO path only (and from the FIN case). */
+  autoStopTx (reason);
+}
 
 bool MainWindow::replyOtherOverridesCounters() const { return m_reply_other; }
 
