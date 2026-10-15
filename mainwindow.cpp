@@ -52,6 +52,7 @@
 #include "decoderange.h"
 #include "contestreport.h"
 #include "contestreply.h"
+#include "gridchange.h"
 #include "wsprmessage.h"   // CE3TSK 2026-10-14: the WSPR message of a transmission
 #include "logfields.h"   // CE3TSK: what a log entry takes when the QSO skipped a step   /* CE3TSK: contest-mode rejection of signal-report messages */
 #include "decodelabel.h"   // CE3TSK
@@ -10742,10 +10743,8 @@ void MainWindow::regenerateForGrid ()
   if (wwDigiNoGrid ()) { statusChanged (); return; }     // (review 3.-82) no exchange: every message stays cleared
   if (!m_hisCall.isEmpty ()) {
     // (review 3.-82) Tx2-Tx5 as they were - a text typed by hand, a free Tx5 - unless empty (nothing generated yet, or
-    // cleared by a CQ) or carrying the old grid (WW Digi's exchange): those take the text generated now
-    QString const grid0 {m_grid.left (4)};
-    QRegularExpression const word0 {"\\b" + QRegularExpression::escape (grid0) + "\\b", QRegularExpression::CaseInsensitiveOption};
-    auto const keep = [&] (int i) { return !before.at (i).isEmpty () && (grid0.isEmpty () || !word0.match (before.at (i)).hasMatch ()); };
+    // cleared by a CQ) or carrying the old grid (WW Digi's exchange): the rule is gridchange.h's (unit test test_gridchange)
+    auto const keep = [&] (int i) { return grid_change::keep_text (before.at (i), m_grid); };
     if (keep (1)) ui->tx2->setText (before.at (1));
     if (keep (2)) ui->tx3->setText (before.at (2));
     if (keep (3)) ui->tx4->setText (before.at (3));
