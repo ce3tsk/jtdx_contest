@@ -10508,14 +10508,14 @@ void MainWindow::on_pbCallCQ_clicked()
 void MainWindow::on_pbAnswerCaller_clicked()
 {
   genStdMsgs(m_rpt);
-  QString t=ui->tx3->text();
-  int i0=t.indexOf(" R-");
-  if(i0<0) i0=t.indexOf(" R+");
-  t=t.left(i0+1)+t.mid(i0+2,3);
-  ui->genMsg->setText(t);
+  /* CE3TSK 2026-10-14 (review 3.-82 item 16): the answer is chosen in contestreply.h (unit test test_reply) - in WW Digi
+     Tx3 at the roger-report stage, as a double click on his call sends; else Tx3 without its R, or Tx2 when Tx3 holds no
+     signed report (stock cut at -1 and sent "1AB" in WW Digi) */
+  CallerAnswer const answer {answer_caller (m_wwDigi, ui->tx2->text (), ui->tx3->text ())};
+  ui->genMsg->setText(answer.text);
   m_ntx=7;
-  m_QSOProgress = REPORT;
-  m_nlasttx=2;
+  m_QSOProgress = 3 == answer.tx ? ROGER_REPORT : REPORT;
+  m_nlasttx=answer.tx;
   ui->rbGenMsg->setChecked(true);
   if(m_transmitting) m_restart=true;
 }

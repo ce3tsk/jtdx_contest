@@ -5297,7 +5297,7 @@ már a CALL3.TXT-ben van, szeretné cserélni?</translation>
     <message>
         <location filename="../mainwindow.cpp" line="7222"/>
         <source>Rig Control Error</source>
-        <translation>Adó  frekvenciavezérlés hiba</translation>
+        <translation>Rigvezérlési hiba</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="7302"/>

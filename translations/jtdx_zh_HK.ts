@@ -7786,7 +7786,7 @@ PTT的其它硬件界面.</translation>
     <message>
         <location filename="../Configuration.ui" line="1323"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Use the RS-232 DTR control line to toggle your radio&apos;s PTT, requires hardware to inteface the line.&lt;/p&gt;&lt;p&gt;Some commercial interface units also use this method.&lt;/p&gt;&lt;p&gt;The DTR control line of the CAT serial port may be used for this or a DTR control line on a different serial port may be used.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;使用RS-232 DTR 控制線切換無線電設備的PTT.一些商用界面單元也使用此方法.CAT序列埠的DTR控制線可用於此控制線,也可用於不同序列埠上的DTR控制線.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;使用 RS-232 DTR 控制線切換無線電設備的 PTT, 需要硬件介面連接該線路.&lt;/p&gt;&lt;p&gt;一些商業界面單元也使用此方法.&lt;/p&gt;&lt;p&gt;CAT 序列埠的 DTR 控制線可用於此, 也可以使用其他序列埠上的 DTR 控制線.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1326"/>

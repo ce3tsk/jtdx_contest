@@ -22,4 +22,20 @@ inline int reply_tx_to_me (bool wwDigi, bool hasLast, QString const& last, bool 
   if (last.left (1) == "R") return 4;
   return 3;   // a report; toInt() of anything else is 0, which JTDX has always treated as a report
 }
+
+// CE3TSK 2026-10-14 (TODO 3.-85, review 3.-82 item 16): the second tab's "Answer caller" - the answer to a station that
+// answered my CQ, chosen by the same rule as above. Stock cut the "R" out of Tx3 ("K1ABC CE3TSK R-10" -> "K1ABC CE3TSK
+// -10", Tx2's text) and cut at -1 when there was none: "1AB" in the WW Digi contest, "O" for the JT65 VHF "RO". In WW
+// Digi his call carried his exchange (the grid), so the answer is Tx3 itself, "K1ABC CE3TSK R FF46" - Tx2 there is Tx1's
+// text, as if I had called him (on the air 2026-08-29). Elsewhere a Tx3 with no signed report has no "R" to cut, and the
+// report message is Tx2. tx: the Tx whose stage it is - 3 (a roger report) in WW Digi, else 2.
+struct CallerAnswer { QString text; int tx; };
+inline CallerAnswer answer_caller (bool wwDigi, QString const& tx2, QString const& tx3)
+{
+  if (wwDigi) return {tx3, 3};
+  int i0 = tx3.indexOf (" R-");
+  if (i0 < 0) i0 = tx3.indexOf (" R+");
+  if (i0 < 0) return {tx2, 2};
+  return {tx3.left (i0 + 1) + tx3.mid (i0 + 2, 3), 2};
+}
 #endif

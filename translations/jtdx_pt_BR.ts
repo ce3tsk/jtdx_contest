@@ -5630,7 +5630,7 @@ Servidor UDP %2:%3</translation>
     <message>
         <location filename="../mainwindow.ui"/>
         <source>Waterfall width (default)</source>
-        <translation>Largura da cascata (padrãa)</translation>
+        <translation>Largura da cascata (padrão)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui"/>

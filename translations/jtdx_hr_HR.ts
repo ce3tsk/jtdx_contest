@@ -8880,7 +8880,7 @@ Kliknite desnom tipkom miša za umetanje i brisanje opcija.</translation>
     <message>
         <location filename="../Configuration.ui" line="3604"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Invert text&amp;lt;-&amp;gt;background color for received messages&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Invert text&amp;lt;-&amp;gt;boja pozadine za primljene poruke&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Zamijeni boju teksta i pozadine za primljene poruke&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3607"/>
