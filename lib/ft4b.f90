@@ -553,6 +553,18 @@ subroutine ft4b(f0,snrc,nQSOProgress,nfqso,ndepth,stophint,swl,lswl,nthr,isp,dob
               message=''; cycle
             endif
           endif
+! CE3TSK 2026-10-14 (review 3.-72): FT8's protocol check (ft8b.f90, "protocol violations"), which FT4 and FT2 did
+! not have: a message of type i3=2 is a standard message with /P, and one without /P is a phantom no
+! transmitter sends - pack77 makes it i3=1. FT8 deleted it, FT4 and FT2 showed it: "CQ DX <...> FN42" of type 2,
+! about half of the hash phantoms chkdircq is for (that one chkdircq now deletes first, on record), and every
+! other i3=2 text without /P. Off the record, as in FT8 - the record is the table's verdicts, grid and prefix.
+! (Unlike FT8, which checks before it subtracts, FT4 has subtracted the message and put it in the slice's list of
+! decodes before any of its checks - as for every other reject here; review 3.-79.)
+          if(i3.eq.2 .and. index(message,'/P ').lt.1) then   ! the candidate is rejected, the slice goes on (as ft8b)
+            if(lft4timing) write(0,9023) i3,n3,iaptype,nsnr,message(1:26)
+9023        format('ft4 reject i3=2 without /P i3 ',i2,' n3 ',i2,' iaptype ',i2,' snr ',i4,' ',a)
+            nbadcrc=1; message=''; return
+          endif
 ! EA1AHY M83WN/R R QA79   *
 ! MS8QQS UX3QBS/P R NG63  i3=2 n3=7
 ! 3B4NDC/R C40AUZ/R R IR83  i3=1 n3=7

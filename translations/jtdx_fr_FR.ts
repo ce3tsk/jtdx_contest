@@ -2332,7 +2332,7 @@ Format:
     <message>
         <location filename="../DXLabSuiteCommanderTransceiver.cpp" line="316"/>
         <source>DX Lab Suite Commander sent an unrecognised split state: </source>
-        <translation>DX Lab Suite Commander a envoyé un état fractionné non reconnu: </translation>
+        <translation>DX Lab Suite Commander a envoyé un état de split non reconnu: </translation>
     </message>
     <message>
         <location filename="../DXLabSuiteCommanderTransceiver.cpp" line="322"/>
@@ -2674,12 +2674,12 @@ Format:
     <message>
         <location filename="../HamlibTransceiver.cpp" line="264"/>
         <source>Communication timed out</source>
-        <translation>La communication a pris du retard</translation>
+        <translation>Délai de communication dépassé</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="265"/>
         <source>IO error</source>
-        <translation>Erreur d&apos;OI</translation>
+        <translation>Erreur d&apos;E/S</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="266"/>
@@ -2699,7 +2699,7 @@ Format:
     <message>
         <location filename="../HamlibTransceiver.cpp" line="269"/>
         <source>Command performed, but arg truncated, result not guaranteed</source>
-        <translation>Commandement effectué, mais arg tronqué, résultat non garanti</translation>
+        <translation>Commande effectuée, mais arg tronqué, résultat non garanti</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="270"/>
@@ -2709,7 +2709,7 @@ Format:
     <message>
         <location filename="../HamlibTransceiver.cpp" line="271"/>
         <source>Target VFO unaccessible</source>
-        <translation>Ciblez le VFO inaccessible</translation>
+        <translation>VFO cible inaccessible</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="272"/>
@@ -2724,7 +2724,7 @@ Format:
     <message>
         <location filename="../HamlibTransceiver.cpp" line="274"/>
         <source>NULL RIG handle or invalid pointer parameter</source>
-        <translation>Manipulateur NULL Trx ou paramètre de pointeur invalide</translation>
+        <translation>Descripteur NULL du Trx ou paramètre de pointeur invalide</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="275"/>
@@ -2739,17 +2739,17 @@ Format:
     <message>
         <location filename="../HamlibTransceiver.cpp" line="434"/>
         <source>Hamlib settings file error: %1 at character offset %2</source>
-        <translation>Erreur dans le fichier des paramètres Hamlib : %1 au décalage de caractères %2</translation>
+        <translation>Erreur dans le fichier de configuration de Hamlib : %1 à la position du caractère %2</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="440"/>
         <source>Hamlib settings file error: top level must be a JSON object</source>
-        <translation>Erreur dans le fichier de paramétrage Hamlib : le niveau supérieur doit être un objet JSON</translation>
+        <translation>Erreur dans le fichier de configuration de Hamlib : le niveau supérieur doit être un objet JSON</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="452"/>
         <source>Hamlib settings file error: config must be a JSON object</source>
-        <translation>Erreur dans le fichier de configuration Hamlib : config doit être un objet JSON</translation>
+        <translation>Erreur dans le fichier de configuration de Hamlib : config doit être un objet JSON</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="360"/>
@@ -2759,22 +2759,22 @@ Format:
     <message>
         <location filename="../HamlibTransceiver.cpp" line="476"/>
         <source>Hamlib error: %1 while %2</source>
-        <translation>Erreur de Hamlib : %1 et %2</translation>
+        <translation>Erreur de Hamlib : %1 (%2)</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="493"/>
         <source>opening connection to rig</source>
-        <translation>l&apos;ouverture de la connexion au Trx</translation>
+        <translation>ouverture de la connexion au Trx</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="555"/>
         <source>getting current frequency</source>
-        <translation>obtenir la fréquence actuelle</translation>
+        <translation>lecture de la fréquence actuelle</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="564"/>
         <source>getting current mode</source>
-        <translation>obtenir le mode actuel</translation>
+        <translation>lecture du mode actuel</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="613"/>
@@ -2786,33 +2786,33 @@ Format:
         <location filename="../HamlibTransceiver.cpp" line="621"/>
         <location filename="../HamlibTransceiver.cpp" line="1177"/>
         <source>getting other VFO frequency</source>
-        <translation>obtenir une autre fréquence VFO</translation>
+        <translation>lecture de la fréquence de l&apos;autre VFO</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="630"/>
         <source>getting other VFO mode</source>
-        <translation>obtenir un autre mode VFO</translation>
+        <translation>lecture du mode de l&apos;autre VFO</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="658"/>
         <source>setting current VFO</source>
-        <translation>réglage du VFO actuel</translation>
+        <translation>sélection du VFO actuel</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="667"/>
         <source>getting frequency</source>
-        <translation>obtenir la fréquence</translation>
+        <translation>lecture de la fréquence</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="676"/>
         <source>getting mode</source>
-        <translation>mode d&apos;obtention</translation>
+        <translation>lecture du mode</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="698"/>
         <location filename="../HamlibTransceiver.cpp" line="1092"/>
         <source>getting current VFO</source>
-        <translation>obtenir le VFO actuel</translation>
+        <translation>lecture du VFO actuel</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="757"/>
@@ -2820,7 +2820,7 @@ Format:
         <location filename="../HamlibTransceiver.cpp" line="779"/>
         <location filename="../HamlibTransceiver.cpp" line="1151"/>
         <source>getting current VFO frequency</source>
-        <translation>obtenir la fréquence actuelle du VFO</translation>
+        <translation>lecture de la fréquence du VFO actuel</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="763"/>
@@ -2838,7 +2838,7 @@ Format:
         <location filename="../HamlibTransceiver.cpp" line="1032"/>
         <location filename="../HamlibTransceiver.cpp" line="1045"/>
         <source>getting current VFO mode</source>
-        <translation>obtenir le mode VFO actuel</translation>
+        <translation>lecture du mode du VFO actuel</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="888"/>
@@ -2847,54 +2847,54 @@ Format:
         <location filename="../HamlibTransceiver.cpp" line="1038"/>
         <location filename="../HamlibTransceiver.cpp" line="1051"/>
         <source>setting current VFO mode</source>
-        <translation>réglage du mode VFO actuel</translation>
+        <translation>réglage du mode du VFO actuel</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="940"/>
         <location filename="../HamlibTransceiver.cpp" line="1009"/>
         <source>setting/unsetting split mode</source>
-        <translation>mise en place/désactivation du mode Split</translation>
+        <translation>activation/désactivation du mode split</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="951"/>
         <location filename="../HamlibTransceiver.cpp" line="991"/>
         <source>setting split mode</source>
-        <translation>réglage du mode Split</translation>
+        <translation>réglage du mode split</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="979"/>
         <source>setting split TX frequency and mode</source>
-        <translation>réglage de la fréquence et du mode d&apos;émission fractionnée</translation>
+        <translation>réglage de la fréquence et du mode TX en split</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="984"/>
         <source>setting split TX frequency</source>
-        <translation>réglage de la fréquence d&apos;émission fractionnée</translation>
+        <translation>réglage de la fréquence TX en split</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="1056"/>
         <source>getting split TX VFO mode</source>
-        <translation>obtenir le mode VFO TX partagé</translation>
+        <translation>lecture du mode du VFO TX en split</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="1063"/>
         <source>setting split TX VFO mode</source>
-        <translation>réglage du mode VFO split TX</translation>
+        <translation>réglage du mode du VFO TX en split</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="1343"/>
         <source>getting PTT state</source>
-        <translation>obtenir l&apos;état PTT</translation>
+        <translation>lecture de l&apos;état du PTT</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="1379"/>
         <source>setting PTT on</source>
-        <translation>mettre les PTT sur</translation>
+        <translation>activation du PTT</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="1387"/>
         <source>setting PTT off</source>
-        <translation>déclenchement des PTT</translation>
+        <translation>désactivation du PTT</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="1399"/>
@@ -2904,7 +2904,7 @@ Format:
     <message>
         <location filename="../HamlibTransceiver.cpp" line="1409"/>
         <source>getting a configuration item</source>
-        <translation>obtenir un élément de configuration</translation>
+        <translation>lecture d'un élément de configuration</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp"/>
@@ -3202,8 +3202,8 @@ Format:
     <message>
         <location filename="../mainwindow.ui" line="803"/>
         <location filename="../mainwindow.ui" line="813"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;DXSummit spot line edit: mode in the information field being spotted automatically, user can add own text message in the information field. Available macros: #D is for distance, #G is for &quot;Grid1&lt;&gt;Grid2&quot;, #R is for report value. Information field preview is available.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;DXSummit spot line edit : mode dans le champ d&apos;information étant repéré automatiquement, l&apos;utilisateur peut ajouter son propre message texte dans le champ d&apos;information. Macros disponibles : #D est pour la distance, #G est pour &quot;Grid1&lt;&gt;Grid2&quot;, #R est pour la valeur du rapport. L&apos;aperçu du champ d&apos;information est disponible.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;DXSummit spot line edit: mode in the information field being spotted automatically, user can add own text message in the information field. Available macros: #D is for distance, #G is for &quot;Grid1&amp;lt;&amp;gt;Grid2&quot;, #R is for report value. Information field preview is available.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;DXSummit spot line edit : mode dans le champ d&apos;information étant repéré automatiquement, l&apos;utilisateur peut ajouter son propre message texte dans le champ d&apos;information. Macros disponibles : #D est pour la distance, #G est pour &quot;Grid1&amp;lt;&amp;gt;Grid2&quot;, #R est pour la valeur du rapport. L&apos;aperçu du champ d&apos;information est disponible.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="806"/>
@@ -3545,7 +3545,7 @@ ZD8,ZD9,ZF,ZK3,ZL,ZL7,ZL8,ZL9,ZP,ZS,ZS8&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</tra
     <message>
         <location filename="../mainwindow.ui" line="2512"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Bypass all text filters option, duplicates action in the Misc tab.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Voir les stations déja contactées, action en double dans l&apos;onglet Divers.&lt;/p&gt;&lt;/body&gt;&lt;/html</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Voir les stations déja contactées, action en double dans l&apos;onglet Divers.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2526"/>
@@ -7478,7 +7478,7 @@ jjhhmmssAAAA)</translation>
     <message>
         <location filename="../Configuration.ui" line="597"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Some rigs are not able to process CAT commands while transmitting. This means that if you are operating in split mode you may have to uncheck this option.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Certaines plates-formes ne sont pas capables de traiter les commandes TAO pendant la transmission. Cela signifie que si vous travaillez en mode fractionné, vous devrez peut-être décocher cette option.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Certaines plates-formes ne sont pas capables de traiter les commandes TAO pendant la transmission. Cela signifie que si vous travaillez en mode split, vous devrez peut-être décocher cette option.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="607"/>
@@ -7917,7 +7917,7 @@ ou la largeur de bande est sélectionnée).</translation>
     <message>
         <location filename="../Configuration.ui" line="1599"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Attempt to connect to the radio with these settings.&lt;/p&gt;&lt;p&gt;The button will turn green if the connection is successful or red if there is a problem.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Tentative de connexion à la radio avec ces paramètres.&lt;/p&gt;&lt;p&gt;Le bouton deviendra vert si la connexion est réussie ou rouge s&apos;il y a un problème.&lt;/p&gt;&lt;/body&gt;&lt;/html</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Tentative de connexion à la radio avec ces paramètres.&lt;/p&gt;&lt;p&gt;Le bouton deviendra vert si la connexion est réussie ou rouge s&apos;il y a un problème.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1602"/>
@@ -8882,8 +8882,8 @@ Cliquez avec le bouton droit de la souris pour les options d&apos;insertion et d
     </message>
     <message>
         <location filename="../Configuration.ui" line="3604"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Invert text&lt;-&gt;background color for received messages&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Inverser le texte&lt;-&gt;couleur de fond pour les messages reçus&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Invert text&amp;lt;-&amp;gt;background color for received messages&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Inverser le texte&amp;lt;-&amp;gt;couleur de fond pour les messages reçus&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3607"/>
@@ -8928,7 +8928,7 @@ Cliquez avec le bouton droit de la souris pour les options d&apos;insertion et d
     <message>
         <location filename="../Configuration.ui" line="3687"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Use blue marker to notify if there is my callsign in the decoded message related to the ongoing QSO (QSO party&apos;s callsign is in the DX Call window), other incoming calls with my callsign will be followed with the red marker.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Utilisez le marqueur bleu pour signaler la présence de mon indicatif dans le message décodé relatif au QSO en cours (l&apos;indicatif de la partie QSO se trouve dans la fenêtre DX Call), les autres appels entrants avec mon indicatif seront suivis du marqueur rouge.&lt;/p&gt;&lt;/body&gt;&lt;/html</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Utilisez le marqueur bleu pour signaler la présence de mon indicatif dans le message décodé relatif au QSO en cours (l&apos;indicatif de la partie QSO se trouve dans la fenêtre DX Call), les autres appels entrants avec mon indicatif seront suivis du marqueur rouge.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3690"/>

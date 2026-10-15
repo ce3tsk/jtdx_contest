@@ -2643,7 +2643,7 @@ Format:
         <location filename="../HamlibTransceiver.cpp" line="214"/>
         <location filename="../HamlibTransceiver.cpp" line="299"/>
         <source>Hamlib initialisation error</source>
-        <translation>Hamlib initialiseringsfejl</translation>
+        <translation>Hamlib-initialiseringsfejl</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="259"/>
@@ -2658,7 +2658,7 @@ Format:
     <message>
         <location filename="../HamlibTransceiver.cpp" line="261"/>
         <source>Invalid configuration</source>
-        <translation>Uglyldig konfiguration</translation>
+        <translation>Ugyldig konfiguration</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="262"/>
@@ -2673,27 +2673,27 @@ Format:
     <message>
         <location filename="../HamlibTransceiver.cpp" line="264"/>
         <source>Communication timed out</source>
-        <translation>Kommunikation afbrudt</translation>
+        <translation>Timeout i kommunikationen</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="265"/>
         <source>IO error</source>
-        <translation>IO fejl</translation>
+        <translation>IO-fejl</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="266"/>
         <source>Internal Hamlib error</source>
-        <translation>Intern Hamlib fejl</translation>
+        <translation>Intern Hamlib-fejl</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="267"/>
         <source>Protocol error</source>
-        <translation>Protocol fejl</translation>
+        <translation>Protokolfejl</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="268"/>
         <source>Command rejected by the rig</source>
-        <translation>Kommando afvist af Radioen</translation>
+        <translation>Kommando afvist af radioen</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="269"/>
@@ -2703,7 +2703,7 @@ Format:
     <message>
         <location filename="../HamlibTransceiver.cpp" line="270"/>
         <source>Feature not available</source>
-        <translation>Funktion ikke mulig</translation>
+        <translation>Funktion ikke tilgængelig</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="271"/>
@@ -2713,17 +2713,17 @@ Format:
     <message>
         <location filename="../HamlibTransceiver.cpp" line="272"/>
         <source>Communication bus error</source>
-        <translation>Kommunikation Bus fejl</translation>
+        <translation>Fejl på kommunikationsbussen</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="273"/>
         <source>Communication bus collision</source>
-        <translation>Kommunikation Bus kollision</translation>
+        <translation>Kollision på kommunikationsbussen</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="274"/>
         <source>NULL RIG handle or invalid pointer parameter</source>
-        <translation>NULL Radio-håndtering eller ugyldig pointerparameter</translation>
+        <translation>NULL-radiohåndtag eller ugyldig pointerparameter</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="275"/>
@@ -2733,12 +2733,12 @@ Format:
     <message>
         <location filename="../HamlibTransceiver.cpp" line="276"/>
         <source>Argument out of domain of func</source>
-        <translation>Argumentation uden for funktions domæne</translation>
+        <translation>Argument uden for funktionens domæne</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="434"/>
         <source>Hamlib settings file error: %1 at character offset %2</source>
-        <translation>Fejl ved Hamlib-indstillingsfil:%1 ved karakter offset%2</translation>
+        <translation>Hamlib-indstillingsfilfejl: %1 ved tegnposition %2</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="440"/>
@@ -2758,60 +2758,60 @@ Format:
     <message>
         <location filename="../HamlibTransceiver.cpp" line="476"/>
         <source>Hamlib error: %1 while %2</source>
-        <translation>Hamlib-fejl:%1 mens%2</translation>
+        <translation>Hamlib-fejl: %1 mens %2</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="493"/>
         <source>opening connection to rig</source>
-        <translation>Åbner forbindelse til Radio</translation>
+        <translation>der åbnes forbindelse til radioen</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="555"/>
         <source>getting current frequency</source>
-        <translation>Henter aktuelle frekvens</translation>
+        <translation>der hentes aktuel frekvens</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="564"/>
         <source>getting current mode</source>
-        <translation>Henter aktuelle mode</translation>
+        <translation>der hentes aktuel mode</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="613"/>
         <location filename="../HamlibTransceiver.cpp" line="648"/>
         <source>exchanging VFOs</source>
-        <translation>Skifter VFO</translation>
+        <translation>der byttes VFO</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="621"/>
         <location filename="../HamlibTransceiver.cpp" line="1177"/>
         <source>getting other VFO frequency</source>
-        <translation>Henter den anden VFO frekvens</translation>
+        <translation>der hentes frekvens fra den anden VFO</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="630"/>
         <source>getting other VFO mode</source>
-        <translation>Henter mode på den anden VFO</translation>
+        <translation>der hentes mode fra den anden VFO</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="658"/>
         <source>setting current VFO</source>
-        <translation>indstilling af nuværende VFO</translation>
+        <translation>der vælges aktuel VFO</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="667"/>
         <source>getting frequency</source>
-        <translation>Henter frekvens</translation>
+        <translation>der hentes frekvens</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="676"/>
         <source>getting mode</source>
-        <translation>Henter mode</translation>
+        <translation>der hentes mode</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="698"/>
         <location filename="../HamlibTransceiver.cpp" line="1092"/>
         <source>getting current VFO</source>
-        <translation>Henter aktuelle VFO</translation>
+        <translation>der hentes aktuel VFO</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="757"/>
@@ -2819,7 +2819,7 @@ Format:
         <location filename="../HamlibTransceiver.cpp" line="779"/>
         <location filename="../HamlibTransceiver.cpp" line="1151"/>
         <source>getting current VFO frequency</source>
-        <translation>Henter aktuelle VFO frekvens</translation>
+        <translation>der hentes frekvens fra aktuel VFO</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="763"/>
@@ -2829,7 +2829,7 @@ Format:
         <location filename="../HamlibTransceiver.cpp" line="892"/>
         <location filename="../HamlibTransceiver.cpp" line="953"/>
         <source>setting frequency</source>
-        <translation>indstiller frekvens</translation>
+        <translation>der indstilles frekvens</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="882"/>
@@ -2837,7 +2837,7 @@ Format:
         <location filename="../HamlibTransceiver.cpp" line="1032"/>
         <location filename="../HamlibTransceiver.cpp" line="1045"/>
         <source>getting current VFO mode</source>
-        <translation>Henter aktuelle VFO mode</translation>
+        <translation>der hentes mode fra aktuel VFO</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="888"/>
@@ -2846,64 +2846,64 @@ Format:
         <location filename="../HamlibTransceiver.cpp" line="1038"/>
         <location filename="../HamlibTransceiver.cpp" line="1051"/>
         <source>setting current VFO mode</source>
-        <translation>Indstiller aktuel VFO mode</translation>
+        <translation>der indstilles mode på aktuel VFO</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="940"/>
         <location filename="../HamlibTransceiver.cpp" line="1009"/>
         <source>setting/unsetting split mode</source>
-        <translation>Vælger/Fravælger split mode</translation>
+        <translation>der slås split til eller fra</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="951"/>
         <location filename="../HamlibTransceiver.cpp" line="991"/>
         <source>setting split mode</source>
-        <translation>Indstiller split mode</translation>
+        <translation>der indstilles split</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="979"/>
         <source>setting split TX frequency and mode</source>
-        <translation>indstilling af split TX-frekvens og mode</translation>
+        <translation>der indstilles split-TX-frekvens og mode</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="984"/>
         <source>setting split TX frequency</source>
-        <translation>Indstiller split TX frekvens</translation>
+        <translation>der indstilles split-TX-frekvens</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="1056"/>
         <source>getting split TX VFO mode</source>
-        <translation>Henter split TX VFO mode</translation>
+        <translation>der hentes mode for split-TX-VFO</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="1063"/>
         <source>setting split TX VFO mode</source>
-        <translation>Indstiller split TX VFO mode</translation>
+        <translation>der indstilles mode for split-TX-VFO</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="1343"/>
         <source>getting PTT state</source>
-        <translation>Henter PTT status</translation>
+        <translation>der hentes PTT-status</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="1379"/>
         <source>setting PTT on</source>
-        <translation>Indstiller PTT status til ON</translation>
+        <translation>der slås PTT til</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="1387"/>
         <source>setting PTT off</source>
-        <translation>Indstiller PTT til OFF</translation>
+        <translation>der slås PTT fra</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="1399"/>
         <source>setting a configuration item</source>
-        <translation>indstilling af et konfigurationselement</translation>
+        <translation>der indstilles et konfigurationselement</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="1409"/>
         <source>getting a configuration item</source>
-        <translation>Henter konfigurationselement</translation>
+        <translation>der hentes et konfigurationselement</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp"/>
@@ -3146,7 +3146,7 @@ Format:
     <message>
         <location filename="../mainwindow.ui" line="282"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Lost audio blocks. FT8 15sec interval has 52 blocks of audio data, where decoder being triggered if audio data reached 51 blocks in &apos;SWL/late start of decoder&apos; modes or 50 blocks otherwise. Under Windows OS there were multiple reports audio data being lost, for Windows OS there is workaround implemented to start FT8 decoder if there at least 46 out of 52 audio blocks received. Lost audio blocks notification lets user know there is something wrong in the setup.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;body&gt; &lt;p&gt; Mistede lydblokke. FT8 15sec-interval har 52 blokke lyddata, hvor dekoder udløses, hvis lyddata nåede 51 blokke i &apos;SWL / sent strat af dekoder&apos; -mode eller 50 blokke. Under Windows OS var der flere rapporter om mistet lyddata. For Windows OS er der implementeret en løsning, der starter FT8-dekoder, hvis der mindst modtages 46 ud af 52 lydblokke. Melding om mistet lyd blokke fortæller brugeren, at der er noget galt i opsætningen. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Mistede lydblokke. FT8 15sec-interval har 52 blokke lyddata, hvor dekoder udløses, hvis lyddata nåede 51 blokke i &apos;SWL / sen start af dekoderen&apos; -mode, ellers 50 blokke. Under Windows OS var der flere rapporter om mistet lyddata. For Windows OS er der implementeret en løsning, der starter FT8-dekoder, hvis der mindst modtages 46 ud af 52 lydblokke. Melding om mistede lydblokke fortæller brugeren, at der er noget galt i opsætningen. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="397"/>
@@ -3201,8 +3201,8 @@ Format:
     <message>
         <location filename="../mainwindow.ui" line="803"/>
         <location filename="../mainwindow.ui" line="813"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;DXSummit spot line edit: mode in the information field being spotted automatically, user can add own text message in the information field. Available macros: #D is for distance, #G is for &quot;Grid1&lt;&gt;Grid2&quot;, #R is for report value. Information field preview is available.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Redigering af DXSummit-spotlinje: mode i informationsfeltet opdateres automatisk. Brugeren kan tilføje sin egen tekstmeddelelse i informationsfeltet. Tilgængelige makroer: #D er for afstand, #G er for &quot;Grid1 &lt;&gt; Grid2&quot;, #R er for rapportværdien. Forhåndsvisning af informationsfelt er tilgængelig. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;DXSummit spot line edit: mode in the information field being spotted automatically, user can add own text message in the information field. Available macros: #D is for distance, #G is for &quot;Grid1&amp;lt;&amp;gt;Grid2&quot;, #R is for report value. Information field preview is available.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Redigering af DXSummit-spotlinje: mode i informationsfeltet opdateres automatisk. Brugeren kan tilføje sin egen tekstmeddelelse i informationsfeltet. Tilgængelige makroer: #D er for afstand, #G er for &quot;Grid1 &amp;lt;&amp;gt; Grid2&quot;, #R er for rapportværdien. Forhåndsvisning af informationsfelt er tilgængelig. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="806"/>
@@ -6622,12 +6622,12 @@ Kontroller, at det korrekte navn blev angivet.</translation>
     <message>
         <location filename="../WFPalette.cpp" line="104"/>
         <source>Error opening waterfall palette file &quot;%1&quot;: %2.</source>
-        <translation>Fejl ved åbning af vandfaldspalettefil &quot;%1&quot;:%2.</translation>
+        <translation>Fejl ved åbning af vandfaldspalettefil &quot;%1&quot;: %2.</translation>
     </message>
     <message>
         <location filename="../WFPalette.cpp" line="258"/>
         <source>Error writing waterfall palette file &quot;%1&quot;: %2.</source>
-        <translation>Fejl ved skrivning af vandfaldspalettefil &quot;%1&quot;:%2.</translation>
+        <translation>Fejl ved skrivning af vandfaldspalettefil &quot;%1&quot;: %2.</translation>
     </message>
 </context>
 <context>
@@ -7553,7 +7553,7 @@ stille periode, når dekodningen er udført.</translation>
     <message>
         <location filename="../Configuration.ui" line="808"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Request S meter data from transceiver: CAT shall be set up via Hamlib, Hamlib does support getting S meter data for some transceivers.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Anmod om S-meter data fra transceiver: CAT skal oprettes via Hamlib, Hamlib understøtter ikke at få S-meterdata for nogle transceivere. &lt;/p&gt; &lt;/body&gt; &lt;/ html &gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Anmod om S-meter data fra transceiver: CAT skal oprettes via Hamlib, Hamlib understøtter ikke at få S-meterdata for nogle transceivere. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="811"/>
@@ -7563,7 +7563,7 @@ stille periode, når dekodningen er udført.</translation>
     <message>
         <location filename="../Configuration.ui" line="840"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Request output power data from transceiver: CAT shall be set up via Hamlib, Hamlib does support getting output power data for some transceivers.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Anmod om udgangseffektdata fra transceiver: CAT skal indstilles via Hamlib, Hamlib understøtter ikke output-effektdata for nogle transceivere. &lt;/p&gt; &lt;/body&gt; &lt;/ html &gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Anmod om udgangseffektdata fra transceiver: CAT skal indstilles via Hamlib, Hamlib understøtter ikke output-effektdata for nogle transceivere. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="843"/>
@@ -7676,7 +7676,7 @@ stille periode, når dekodningen er udført.</translation>
     <message>
         <location filename="../Configuration.ui" line="1067"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Number of stop bits used when communicating with your radio&apos;s CAT interface&lt;/p&gt;&lt;p&gt;(consult you radio&apos;s manual for details).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Antal stop, der bruges, når du kommunikerer med din radio&apos;s CAT-interface &lt;/p&gt; &lt;p&gt; (se i radioens manual for detaljer). &lt;/p&gt; &lt;/body&gt; &lt; / html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Antal stop, der bruges, når du kommunikerer med din radio&apos;s CAT-interface &lt;/p&gt; &lt;p&gt; (se i radioens manual for detaljer). &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1070"/>
@@ -7801,7 +7801,7 @@ anden hardware interface til PTT.</translation>
     <message>
         <location filename="../Configuration.ui" line="1339"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;No PTT activation, instead the radio&apos;s automatic VOX is used to key the transmitter.&lt;/p&gt;&lt;p&gt;Use this if you have no radio interface hardware.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Ingen PTT-aktivering. I stedet bruges radioens automatiske VOX til at taste senderen. &lt;/p&gt; &lt;p&gt; Brug dette, hvis du ikke har hardware til radiointerface. &lt;/p&gt; &lt;/ body&gt; &lt;/ html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Ingen PTT-aktivering. I stedet bruges radioens automatiske VOX til at taste senderen. &lt;/p&gt; &lt;p&gt; Brug dette, hvis du ikke har hardware til radiointerface. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1342"/>
@@ -7870,7 +7870,7 @@ denne indstilling giver dig mulighed for at vælge, hvilken lydindgang der skal 
     <message>
         <location filename="../Configuration.ui" line="1486"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;USB is usually the correct modulation mode,&lt;/p&gt;&lt;p&gt;unless the radio has a special data or packet mode setting&lt;/p&gt;&lt;p&gt;for AFSK operation.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; USB er normalt den korrekte moduleringstilstand, &lt;/p&gt; &lt;p&gt;, medmindre radioen har en speciel data- eller packet indstilling &lt;/p&gt; &lt;p&gt; til AFSK-operation. &lt;/ p&gt; &lt;/ body&gt; &lt;/ html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; USB er normalt den korrekte moduleringstilstand, &lt;/p&gt; &lt;p&gt;, medmindre radioen har en speciel data- eller packet indstilling &lt;/p&gt; &lt;p&gt; til AFSK-operation. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1489"/>
@@ -7920,7 +7920,7 @@ eller båndbredde bliver valgt).</translation>
     <message>
         <location filename="../Configuration.ui" line="1599"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Attempt to connect to the radio with these settings.&lt;/p&gt;&lt;p&gt;The button will turn green if the connection is successful or red if there is a problem.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Forsøg på at oprette forbindelse til radioen med disse indstillinger. &lt;/p&gt; &lt;p&gt; Knappen bliver grøn, hvis forbindelsen er vellykket eller rød, hvis der er et problem. &lt;/ p&gt; &lt;/ body&gt; &lt;/ html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Forsøg på at oprette forbindelse til radioen med disse indstillinger. &lt;/p&gt; &lt;p&gt; Knappen bliver grøn, hvis forbindelsen er vellykket eller rød, hvis der er et problem. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1602"/>
@@ -8190,7 +8190,7 @@ begge her.</translation>
     <message>
         <location filename="../Configuration.ui" line="2340"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Drag and drop items to rearrange order. Right click for item specific actions. Click, SHIFT+Click and, CRTL+Click to select items. @ symbol is being substituted with DX call, &amp; symbol with user&apos;s base callsign, # symbol with report to be transmitted, ^ symbol with correspondent&apos;s name retrieved from the log where name shall not exceed 7 chars.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Træk og slip emner for at omarrangere rækkefølge. Højreklik for elementspecifikke handlinger. Klik, SKIFT + Klik og, CRTL + Klik for at vælge emner. @ symbol erstattes med DX-opkald, &amp; symbol med modpartens base-kaldesignal, # symbol med rapport, der skal transmitteres, ^ symbol med modpartens navn hentet fra loggen, hvor navnet ikke må overstige 7 tegn. &lt;/p&gt; &lt;/body&gt; &lt; / html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Træk og slip emner for at omarrangere rækkefølge. Højreklik for elementspecifikke handlinger. Klik, SKIFT + Klik og, CRTL + Klik for at vælge emner. @ symbol erstattes med DX-opkald, &amp; symbol med modpartens base-kaldesignal, # symbol med rapport, der skal transmitteres, ^ symbol med modpartens navn hentet fra loggen, hvor navnet ikke må overstige 7 tegn. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="2391"/>
@@ -8522,7 +8522,7 @@ til vurdering af udbredelsesforhold og systemydelse.</translation>
     <message>
         <location filename="../Configuration.ui" line="3038"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Selected text filters will be applied to limit transmission of the UDP messages from JTDX, for instance messages from some continents can be blocked.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Valgte tekstfiltre anvendes til at begrænse transmission af UDP-meddelelser fra JTDX, for eksempel kan meddelser fra nogle kontinenter blokeres. &lt;/p&gt; &lt;/body&gt; &lt;/ html &gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Valgte tekstfiltre anvendes til at begrænse transmission af UDP-meddelelser fra JTDX, for eksempel kan meddelser fra nogle kontinenter blokeres. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3041"/>
@@ -8879,8 +8879,8 @@ Højreklik for at indsætte eller slette indstillinger.</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3604"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Invert text&lt;-&gt;background color for received messages&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Inverter tekst&lt;-&gt;baggrunds farve for modtaget meddelse&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Invert text&amp;lt;-&amp;gt;background color for received messages&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Inverter tekst&amp;lt;-&amp;gt;baggrunds farve for modtaget meddelse&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3607"/>
@@ -9163,7 +9163,7 @@ Højreklik for at indsætte eller slette indstillinger.</translation>
     <message>
         <location filename="../Configuration.ui" line="5020"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&apos;Show DXCC name/prefix&apos; shall be activated in General tab of the settings or any &apos;New one&apos; notification to get this functionality working.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; &apos;Vis DXCC-navn / præfiks&apos; skal aktiveres under fanen Generelt i indstillingerne eller &apos;New One&apos; notifikation for at få denne funktionalitet til at fungere. &lt;/p&gt; &lt;/body&gt; &lt;/ html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; &apos;Vis DXCC-navn / præfiks&apos; skal aktiveres under fanen Generelt i indstillingerne eller &apos;New One&apos; notifikation for at få denne funktionalitet til at fungere. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="5023"/>
@@ -9244,7 +9244,7 @@ AA1AAA,BB1BB,CC1CC&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Kommasepareret liste over kaldesignaler,
 mellemrum er ikke tilladt, basis kaldesignal skal 
 bruges til sammensatte kaldesignaler, for eksempel:
-AA1AAA, BB1BB, CC1CC &lt;/ p&gt; &lt;/ body&gt; &lt;/ html&gt;</translation>
+AA1AAA, BB1BB, CC1CC &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="5131"/>
@@ -9802,7 +9802,7 @@ AA1AAA, BB1BB, CC1CC &lt;/ p&gt; &lt;/ body&gt; &lt;/ html&gt;</translation>
     <message>
         <location filename="../Configuration.ui" line="6985"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Settings depend on the CPU power, try to use maximum number of decoding passes for overcrowded HF bands.&lt;br&gt;&lt;br&gt;Number of decoding passes may be decreased for low populated HF/VHF bands while an increase of the number of decoding attempts might bring better decoding efficiency for the weak signals there.&lt;br&gt;&lt;br&gt;Number of decoding attempts affecting decoding efficiency of the low SNR signals: wideband or RX frequency one.&lt;br&gt;&lt;br&gt;Number of decoding passes affecting maximum number of the signals that can be decoded on the same frequency or located close to each other with largely overlapped spectra, it is possible to decode up to 4 signals on the same frequency and up to 7 signals on the RX frequency if number of decoding passes is set to 4.&lt;br&gt;&lt;br&gt;Increase number of decoding attempts to the value allowing to get decoding finished until end of the RX minute interval.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Indstillinger afhænger af CPU-kræfter, prøv at bruge det maksimale antal afkodningskort til overfyldte HF-bånd. &lt;br&gt; &lt;br&gt; Antal dekodnings forløb kan reduceres for lav aktivitets HF / VHF-bånd, mens en stigning i antallet af afkodningsforsøg muligvis giver bedre afkodningseffektivitet for de svage signaler der. &lt;br&gt; &lt;br&gt; Antal afkodningsforsøg, der påvirker afkodningseffektiviteten for de lave SNR-signaler: bredbånd eller RX-frekvens en. &lt;Br &gt; &lt;br&gt; Antal afkodnings forløb, der påvirker det maksimale antal af de signaler, der kan dekodes på samme frekvens eller placeret tæt på hinanden med stort set overlappede spektrum, det er muligt at afkode op til 4 signaler på samme frekvens og op til 7 signaler på RX-frekvensen, hvis antallet af afkodningskort er indstillet til 4. &lt;br&gt; &lt;br&gt; Forøg antallet af afkodningsforsøg til den værdi, der giver mulighed for at få afkodningen færdig, inden slutningen af RX-minutsintervallet. &lt;/p&gt; &lt;/body&gt; &lt;/ html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Indstillinger afhænger af CPU-kræfter, prøv at bruge det maksimale antal afkodningskort til overfyldte HF-bånd. &lt;br&gt; &lt;br&gt; Antal dekodnings forløb kan reduceres for lav aktivitets HF / VHF-bånd, mens en stigning i antallet af afkodningsforsøg muligvis giver bedre afkodningseffektivitet for de svage signaler der. &lt;br&gt; &lt;br&gt; Antal afkodningsforsøg, der påvirker afkodningseffektiviteten for de lave SNR-signaler: bredbånd eller RX-frekvens en. &lt;br&gt; &lt;br&gt; Antal afkodnings forløb, der påvirker det maksimale antal af de signaler, der kan dekodes på samme frekvens eller placeret tæt på hinanden med stort set overlappede spektrum, det er muligt at afkode op til 4 signaler på samme frekvens og op til 7 signaler på RX-frekvensen, hvis antallet af afkodningskort er indstillet til 4. &lt;br&gt; &lt;br&gt; Forøg antallet af afkodningsforsøg til den værdi, der giver mulighed for at få afkodningen færdig, inden slutningen af RX-minutsintervallet. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="7073"/>

@@ -948,12 +948,18 @@ private:
   deleted_log::Record m_deletedRecord;  /* CE3TSK 2026-10-12: the decodes the table deleted, on their way to the file */
   QString m_cqdir;
   /* CE3TSK 2026-10-12: the word after CQ while it is being typed (cqdirection.h). m_cqdir is the word in
-     effect - what the CQ generated carries -, the two boxes hold what is typed, and the two differ until the
-     typing stops. */
+     effect - the one taken from the boxes -, the two boxes hold what is typed, and the two differ until the
+     typing stops. What the CQ generated last carries is m_cqWordSent (2026-10-14), and whether one was generated
+     at all m_cqGenerated: the two words differ when no CQ was generated (no own call or grid yet), for a word of
+     three or four letters in JT65, JT9 and T10, with a nonstandard own call - and for a word of one letter while
+     it is typed: takeCqWord generates nothing for it, though the next regeneration of the messages (the CQ
+     button, clearDX, the report box) puts it into the CQ (review 3.-79). */
   QTimer m_cqWordTimer;                 // runs while a typed word waits to be taken
   QLineEdit * m_cqWordBox;              // the box the word last came through: its tab acts last
   bool m_cqWordBusy;                    // one box is being brought into step with the other
   bool m_cqWordMode77;                  // the boxes were last coloured for a mode that carries a longer word
+  QString m_cqWordSent;                 // CE3TSK 2026-10-14: the word in the CQ generated last (genCQMsg; cqdirection.h changesCq)
+  bool m_cqGenerated;                   // CE3TSK 2026-10-14: and whether a CQ was generated at all (review 3.-72)
   QString m_lastMode;
   QString m_callsign;
   QString m_grid;
@@ -1158,6 +1164,7 @@ private:
   void takeCqWord (bool typed);
   void selectCqAgain (bool firstTabLast);
   void genStdMsgs(QString rpt);
+  void regenerateForGrid ();             // CE3TSK 2026-10-14: the messages again after the own grid changed, the rest kept
   bool wwDigiNoGrid (); /* CE3TSK: WW Digi contest selected but no usable station grid */
   /* CE3TSK: cache the special operating activity from Configuration */
   void refreshSpecialOp (bool initial = false);

@@ -612,7 +612,7 @@ m_jtdxtime = jtdxtime;
     }
   else
     {
-      error_check (rc, "testing getting current VFO");
+      error_check (rc, tr ("getting current VFO"));   // CE3TSK 2026-10-14 (review 3.-79): it was "testing getting current VFO" untranslated - English inside every language's message
     }
 
 #if JTDX_DEBUG_TO_FILE

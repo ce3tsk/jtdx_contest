@@ -188,12 +188,12 @@ Another application may be locking the directory</source>
     <message>
         <location filename="../Configuration.cpp" line="2956"/>
         <source>Serial Port:</source>
-        <translation>Porta Serie:</translation>
+        <translation>Porta série:</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp" line="2957"/>
         <source>Serial port used for CAT control</source>
-        <translation>Porta serie usada para o controlo CAT</translation>
+        <translation>Porta série usada para o controlo CAT</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp" line="2964"/>
@@ -251,12 +251,12 @@ Format:
     <message>
         <location filename="../Configuration.cpp" line="3033"/>
         <source>Invalid audio output device</source>
-        <translation>Dispositivo de saida de áudio inválido</translation>
+        <translation>Dispositivo de saída de áudio inválido</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp" line="3039"/>
         <source>Invalid PTT method</source>
-        <translation>Metodo PTT inválido</translation>
+        <translation>Método PTT inválido</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp" line="3049"/>
@@ -304,7 +304,7 @@ Format:
     <message>
         <location filename="../Configuration.cpp" line="5453"/>
         <source>Are you sure you want to discard your current working frequencies and replace them with the loaded ones?</source>
-        <translation>Tem certeza de que deseja descartar as frequências de trabalho atuais e substituí-las pelas carregadas?</translation>
+        <translation>Tem a certeza de que deseja descartar as frequências de trabalho atuais e substituí-las pelas carregadas?</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp" line="5465"/>
@@ -331,7 +331,7 @@ Format:
     <message>
         <location filename="../Configuration.cpp" line="5511"/>
         <source>Contents corrupt</source>
-        <translation>Conteudo corrupto</translation>
+        <translation>Conteúdo corrupto</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp" line="5521"/>
@@ -346,7 +346,7 @@ Format:
     <message>
         <location filename="../Configuration.cpp" line="5533"/>
         <source>Are you sure you want to save only the working frequencies that are currently selected? Click No to save all.</source>
-        <translation>Tem certeza de que deseja salvar apenas as frequências de trabalho atualmente selecionadas. Clique Não para salvar todos.</translation>
+        <translation>Tem a certeza de que deseja salvar apenas as frequências de trabalho atualmente selecionadas? Clique em Não para salvar todas.</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp" line="5560"/>
@@ -356,7 +356,7 @@ Format:
     <message>
         <location filename="../Configuration.cpp" line="5562"/>
         <source>Are you sure you want to discard your current working frequencies and replace them with default ones?</source>
-        <translation>Tem a certeza  que deseja descartar as atuais frequências e substituí-las pelos valores por defeito?</translation>
+        <translation>Tem a certeza de que deseja descartar as atuais frequências e substituí-las pelos valores por defeito?</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp" line="5622"/>
@@ -2665,7 +2665,7 @@ Format:
     <message>
         <location filename="../HamlibTransceiver.cpp" line="265"/>
         <source>IO error</source>
-        <translation>Erro de IO</translation>
+        <translation>Erro de E/S</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="266"/>
@@ -2685,7 +2685,7 @@ Format:
     <message>
         <location filename="../HamlibTransceiver.cpp" line="269"/>
         <source>Command performed, but arg truncated, result not guaranteed</source>
-        <translation>Comando executado, mas argum. truncado, resultado não garantido</translation>
+        <translation>Comando executado, mas argumento truncado, resultado não garantido</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="270"/>
@@ -2720,22 +2720,22 @@ Format:
     <message>
         <location filename="../HamlibTransceiver.cpp" line="276"/>
         <source>Argument out of domain of func</source>
-        <translation>Argumento fora do domínio de func</translation>
+        <translation>Argumento fora do domínio da função</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="434"/>
         <source>Hamlib settings file error: %1 at character offset %2</source>
-        <translation>Erro de configuração do ficheiro Hamlib: %1 no desvio do caractere %2</translation>
+        <translation>Erro no ficheiro de configuração do Hamlib: %1 na posição do carácter %2</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="440"/>
         <source>Hamlib settings file error: top level must be a JSON object</source>
-        <translation>Erro de configuração do ficheiro Hamlib: nível superior deve ser um objeto JSON</translation>
+        <translation>Erro no ficheiro de configuração do Hamlib: nível superior deve ser um objeto JSON</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="452"/>
         <source>Hamlib settings file error: config must be a JSON object</source>
-        <translation>Erro de configuração do ficheiro Hamlib:configuração deve ser um objeto JSON</translation>
+        <translation>Erro no ficheiro de configuração do Hamlib: config deve ser um objeto JSON</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="360"/>
@@ -2750,55 +2750,55 @@ Format:
     <message>
         <location filename="../HamlibTransceiver.cpp" line="493"/>
         <source>opening connection to rig</source>
-        <translation>abrir ligação ao rádio</translation>
+        <translation>se abre a ligação ao rádio</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="555"/>
         <source>getting current frequency</source>
-        <translation>obtendo a frequência atual</translation>
+        <translation>se obtém a frequência atual</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="564"/>
         <source>getting current mode</source>
-        <translation>obtendo o modo atual</translation>
+        <translation>se obtém o modo atual</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="613"/>
         <location filename="../HamlibTransceiver.cpp" line="648"/>
         <source>exchanging VFOs</source>
-        <translation>mudando VFOs</translation>
+        <translation>se trocam os VFO</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="621"/>
         <location filename="../HamlibTransceiver.cpp" line="1177"/>
         <source>getting other VFO frequency</source>
-        <translation>obtendo outra frequência do VFO</translation>
+        <translation>se obtém a frequência do outro VFO</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="630"/>
         <source>getting other VFO mode</source>
-        <translation>obtendo outro modo do VFO</translation>
+        <translation>se obtém o modo do outro VFO</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="658"/>
         <source>setting current VFO</source>
-        <translation>obtendo o VFO atual</translation>
+        <translation>se seleciona o VFO atual</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="667"/>
         <source>getting frequency</source>
-        <translation>obtendo frequência</translation>
+        <translation>se obtém a frequência</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="676"/>
         <source>getting mode</source>
-        <translation>obtendo modo</translation>
+        <translation>se obtém o modo</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="698"/>
         <location filename="../HamlibTransceiver.cpp" line="1092"/>
         <source>getting current VFO</source>
-        <translation>obtendo VFO atual</translation>
+        <translation>se obtém o VFO atual</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="757"/>
@@ -2806,7 +2806,7 @@ Format:
         <location filename="../HamlibTransceiver.cpp" line="779"/>
         <location filename="../HamlibTransceiver.cpp" line="1151"/>
         <source>getting current VFO frequency</source>
-        <translation>obtendo frequência do VFO atual</translation>
+        <translation>se obtém a frequência do VFO atual</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="763"/>
@@ -2816,7 +2816,7 @@ Format:
         <location filename="../HamlibTransceiver.cpp" line="892"/>
         <location filename="../HamlibTransceiver.cpp" line="953"/>
         <source>setting frequency</source>
-        <translation>obtendo frequência</translation>
+        <translation>se configura a frequência</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="882"/>
@@ -2824,7 +2824,7 @@ Format:
         <location filename="../HamlibTransceiver.cpp" line="1032"/>
         <location filename="../HamlibTransceiver.cpp" line="1045"/>
         <source>getting current VFO mode</source>
-        <translation>obtendo modo do VFO atual</translation>
+        <translation>se obtém o modo do VFO atual</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="888"/>
@@ -2833,64 +2833,64 @@ Format:
         <location filename="../HamlibTransceiver.cpp" line="1038"/>
         <location filename="../HamlibTransceiver.cpp" line="1051"/>
         <source>setting current VFO mode</source>
-        <translation>obtendo modo do VFO atual</translation>
+        <translation>se configura o modo do VFO atual</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="940"/>
         <location filename="../HamlibTransceiver.cpp" line="1009"/>
         <source>setting/unsetting split mode</source>
-        <translation>configurando/desconfigurando o modo split</translation>
+        <translation>se ativa/desativa o modo split</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="951"/>
         <location filename="../HamlibTransceiver.cpp" line="991"/>
         <source>setting split mode</source>
-        <translation>configurando o modo split</translation>
+        <translation>se configura o modo split</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="979"/>
         <source>setting split TX frequency and mode</source>
-        <translation>configurando a frequência de split e modo do TX</translation>
+        <translation>se configuram a frequência e o modo de TX em split</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="984"/>
         <source>setting split TX frequency</source>
-        <translation>configurando frequência de TX do split</translation>
+        <translation>se configura a frequência de TX em split</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="1056"/>
         <source>getting split TX VFO mode</source>
-        <translation>obtendo o modo do VFO e TX</translation>
+        <translation>se obtém o modo do VFO de TX em split</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="1063"/>
         <source>setting split TX VFO mode</source>
-        <translation>configurando o modo e TX VFO</translation>
+        <translation>se configura o modo do VFO de TX em split</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="1343"/>
         <source>getting PTT state</source>
-        <translation>obtendo estado do PTT</translation>
+        <translation>se obtém o estado do PTT</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="1379"/>
         <source>setting PTT on</source>
-        <translation>configurando PTT ligado</translation>
+        <translation>se liga o PTT</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="1387"/>
         <source>setting PTT off</source>
-        <translation>configurando PTT desligado</translation>
+        <translation>se desliga o PTT</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="1399"/>
         <source>setting a configuration item</source>
-        <translation>enviando a configuração do item</translation>
+        <translation>se define um item de configuração</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="1409"/>
         <source>getting a configuration item</source>
-        <translation>obtendo a configuração do item</translation>
+        <translation>se obtém um item de configuração</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp"/>
@@ -3109,7 +3109,7 @@ Format:
     <message>
         <location filename="../logqso.cpp" line="222"/>
         <source>Cannot open &quot;%1&quot; for append: %2</source>
-        <translation>Não foi possivel abrir &quot;%1&quot; para adicionar: %2</translation>
+        <translation>Não foi possível abrir &quot;%1&quot; para adicionar: %2</translation>
     </message>
 </context>
 <context>
@@ -3122,7 +3122,7 @@ Format:
     <message>
         <location filename="../mainwindow.ui" line="175"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Avg: accumulated average DT of decoded signals on current band.&lt;/p&gt;&lt;p&gt;Lag: it is decoder lag calculated relatively to beginning of next interval, negative values mean there is spare time available to increase decoding depth, positive values is decoder&apos;s lag into TX or next interval meaning there may be no enough CPU resources for selected decoding depth to provide reliable signal transmission.&lt;/p&gt;&lt;p&gt;&lt;/p&gt;&lt;p&gt;Lag depends on CPU performance, noise conditions, band fullness and other programs using computer, it can be decreased by reducing waterfall bandwidth. If Lag is constantly negative then CPU handling well interval decoding and you can try to make decoding more aggressive to get more decodes.&lt;/p&gt;&lt;p&gt;FT8: if Lag is 0 .. 0.4 then you can still use Autoseq 3/7 (autoselect will trigger change of TX message early enough to transmit full message). If Lag &gt; 0.4 then you should try to decrease decoding aggressivity. If still Lag &gt; 0.4 then Autoseq 2/6 should be used as responding to incoming call will be partially damaged at transmission in AutoSeq 3/7. If constantly Lag  &gt; 2 then your CPU is unsuitable to operate in FT8 with current decoder settings. Sure You can monitor as SWL.&lt;/p&gt;&lt;p&gt;/xx: number of decoded messages in last interval.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Média: DT médio acumulado de sinais descodificados na banda atual. &lt;/p&gt; &lt;p&gt; Lag: é o atraso do descodificador calculado relativamente ao início do próximo intervalo, valores negativos significam há tempo livre disponível para aumentar a profundidade da descodificação, valores positivos são o atraso do descodificador em TX ou no próximo intervalo, o que significa que pode não haver recursos suficientes da CPU para a profundidade de descodificação selecionada para fornecer transmissão de sinal confiável. &lt;/p&gt; &lt;p&gt; &lt;/p&gt; &lt;p &gt; O atraso depende do desempenho da CPU, das condições de ruído, da largura de banda e de outros programas usando no computador; pode ser diminuído pela redução da largura de banda da cascata. Se o Lag for constantemente negativo, a CPU manipulará a descodificação dos intervalo de tempo e você poderá tentar tornar a descodificação mais agressiva para obter mais descodificações. &lt;/p&gt; &lt;p&gt; FT8: se o Lag for 0 .. 0.4, você ainda poderá usar o Autoseq 3/7 (a seleção automática acionará a alteração da mensagem TX com antecedência suficiente para transmitir a mensagem completa). Se Lag&gt; 0,4, você deve tentar diminuir a agressividade da descodificação. Se ainda houver Lag&gt; 0,4, o Autoseq 2/6 deve ser usado, pois a resposta à chamada recebida será parcialmente danificada na transmissão no AutoSeq 3/7. Se o Lag for constantemente  &gt; 2, o seu CPU não é adequado para operar em FT8 com as configurações atuais do descodificador. Ainda assim você pode monitorar como SWL. &lt;/p&gt; &lt;p&gt; / xx: número de mensagens descodificadas no último intervalo. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Média: DT médio acumulado de sinais descodificados na banda atual. &lt;/p&gt; &lt;p&gt; Lag: é o atraso do descodificador calculado relativamente ao início do próximo intervalo, valores negativos significam há tempo livre disponível para aumentar a profundidade da descodificação, valores positivos são o atraso do descodificador em TX ou no próximo intervalo, o que significa que pode não haver recursos suficientes da CPU para a profundidade de descodificação selecionada para fornecer transmissão de sinal confiável. &lt;/p&gt; &lt;p&gt; &lt;/p&gt; &lt;p&gt; O atraso depende do desempenho da CPU, das condições de ruído, da largura de banda e de outros programas usando no computador; pode ser diminuído pela redução da largura de banda da cascata. Se o Lag for constantemente negativo, a CPU manipulará a descodificação dos intervalo de tempo e você poderá tentar tornar a descodificação mais agressiva para obter mais descodificações. &lt;/p&gt; &lt;p&gt; FT8: se o Lag for 0 .. 0.4, você ainda poderá usar o Autoseq 3/7 (a seleção automática acionará a alteração da mensagem TX com antecedência suficiente para transmitir a mensagem completa). Se Lag&gt; 0,4, você deve tentar diminuir a agressividade da descodificação. Se ainda houver Lag&gt; 0,4, o Autoseq 2/6 deve ser usado, pois a resposta à chamada recebida será parcialmente danificada na transmissão no AutoSeq 3/7. Se o Lag for constantemente  &gt; 2, o seu CPU não é adequado para operar em FT8 com as configurações atuais do descodificador. Ainda assim você pode monitorizar como SWL. &lt;/p&gt; &lt;p&gt; / xx: número de mensagens descodificadas no último intervalo. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="181"/>
@@ -3138,7 +3138,7 @@ Format:
     <message>
         <location filename="../mainwindow.ui" line="397"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If orange or red there has been a rig control failure, click to reset and read the dial frequency.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt; Se laranja ou vermelho houve uma falha no controlo do rádio. Clique para reiniciar e lêr a frequência do dial.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;flinha local</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt; Se laranja ou vermelho houve uma falha no controlo do rádio. Clique para reiniciar e ler a frequência do dial.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="417"/>
@@ -3188,8 +3188,8 @@ Format:
     <message>
         <location filename="../mainwindow.ui" line="803"/>
         <location filename="../mainwindow.ui" line="813"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;DXSummit spot line edit: mode in the information field being spotted automatically, user can add own text message in the information field. Available macros: #D is for distance, #G is for &quot;Grid1&lt;&gt;Grid2&quot;, #R is for report value. Information field preview is available.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;DXSummit modo de edição da linha do spot: modo no campo de informação a ser anunciado automáticamente, o utilizador pode juntaro seu texto no campo informação. Macros disponíveis: #D para distância, #G para &quot;Grid1&lt;&gt;Grid2&quot;, #R é para valor de reporte. Informação de previsualização disponivel.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;DXSummit spot line edit: mode in the information field being spotted automatically, user can add own text message in the information field. Available macros: #D is for distance, #G is for &quot;Grid1&amp;lt;&amp;gt;Grid2&quot;, #R is for report value. Information field preview is available.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Linha de edição do spot DXSummit: modo no campo de informação a ser anunciado automaticamente, o utilizador pode juntar o seu texto ao campo de informação. Macros disponíveis: #D para distância, #G para &quot;Grid1&amp;lt;&amp;gt;Grid2&quot;, #R é para valor de reporte. Pré-visualização do campo de informação disponível.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="806"/>
@@ -3245,7 +3245,7 @@ Format:
     <message>
         <location filename="../mainwindow.ui" line="1095"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Click by left mouse&apos;s button to spot DX call to dxsummit.fi (spotting shall be enabled in Reporting tab of the settings). Click by right mouse&apos;s button to add callsign to the &apos;Hide messages from callsigns&apos; filter.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Clique para anunciar uma estação DX no dxsummit.fi (a função terá que estar ativa na aba Reportes das configurações).Clique com botão direito do rato para adicionar indicativos à função de filtros &apos;Ocultar mensagens dos indicativos&apos;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Clique para anunciar uma estação DX no dxsummit.fi (a função terá que estar ativa na aba Reportes das configurações). Clique com botão direito do rato para adicionar indicativos à função de filtros &apos;Ocultar mensagens dos indicativos&apos;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1098"/>
@@ -3273,7 +3273,7 @@ Format:
     <message>
         <location filename="../mainwindow.ui" line="1738"/>
         <source>Audio Rx frequency</source>
-        <translation>Frequência de audio RX</translation>
+        <translation>Frequência de áudio RX</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1638"/>
@@ -3315,7 +3315,7 @@ Format:
     <message>
         <location filename="../mainwindow.ui" line="1632"/>
         <source>Audio Tx frequency</source>
-        <translation>Frequência de audio de Tx</translation>
+        <translation>Frequência de áudio de Tx</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1641"/>
@@ -3409,7 +3409,7 @@ Format:
     <message>
         <location filename="../mainwindow.ui" line="1923"/>
         <source>Adjust Tx audio level</source>
-        <translation>Ajuste de nível de audio Tx</translation>
+        <translation>Ajuste de nível de áudio Tx</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1992"/>
@@ -3521,7 +3521,7 @@ ZD8,ZD9,ZF,ZK3,ZL,ZL7,ZL8,ZL9,ZP,ZS,ZS8&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</tra
     <message>
         <location filename="../mainwindow.ui" line="2467"/>
         <source>Start monitoring</source>
-        <translation>Começar a monitorar</translation>
+        <translation>Começar a monitorizar</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2481"/>
@@ -3561,7 +3561,7 @@ ZD8,ZD9,ZF,ZK3,ZL,ZL7,ZL8,ZL9,ZP,ZS,ZS8&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</tra
     <message>
         <location filename="../mainwindow.ui" line="2644"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Stop monitoring input signal, stop playing pack of the audio wav files&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Para de monitorar o sinal de entrada, para de reproduzir o pacote dos arquivos de áudio WAV&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Para de monitorizar o sinal de entrada, para de reproduzir o pacote dos ficheiros de áudio WAV&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2647"/>
@@ -3571,7 +3571,7 @@ ZD8,ZD9,ZF,ZK3,ZL,ZL7,ZL8,ZL9,ZP,ZS,ZS8&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</tra
     <message>
         <location filename="../mainwindow.ui" line="2905"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Decode again most recent Rx period or last played wav audio file for any Hint/Filter/SWL mode buttons combination&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Descodifica novamente o período Rx mais recente ou o último arquivo de áudio WAV reproduzido para qualquer combinação de botões do modo Hint/Filtro/SWL&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Descodifica novamente o período Rx mais recente ou o último ficheiro de áudio WAV reproduzido para qualquer combinação de botões do modo Hint/Filtro/SWL&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2919"/>
@@ -3724,7 +3724,7 @@ ZD8,ZD9,ZF,ZK3,ZL,ZL7,ZL8,ZL9,ZP,ZS,ZS8&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</tra
         <location filename="../mainwindow.ui" line="3720"/>
         <location filename="../mainwindow.ui" line="3793"/>
         <source>Send this message in next Tx interval</source>
-        <translation>Enviar esta mensagem no proximo intervalo de Tx</translation>
+        <translation>Enviar esta mensagem no próximo intervalo de Tx</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3416"/>
@@ -4335,7 +4335,7 @@ Clicar com o botão direito do rato define a hora interna do JTDX de volta à ho
     <message>
         <location filename="../mainwindow.ui" line="5192"/>
         <source>Blank line between decoding periods</source>
-        <translation>Linha em branco entre periodos descodificados</translation>
+        <translation>Linha em branco entre períodos descodificados</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5200"/>
@@ -4400,7 +4400,7 @@ Clicar com o botão direito do rato define a hora interna do JTDX de volta à ho
     <message>
         <location filename="../mainwindow.ui" line="5299"/>
         <source>Show DXCC entity and worked B4 status</source>
-        <translation>Mostrar entidade DXCC e estado trabalhao B4</translation>
+        <translation>Mostrar entidade DXCC e estado trabalhado B4</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5307"/>
@@ -4470,7 +4470,7 @@ Clicar com o botão direito do rato define a hora interna do JTDX de volta à ho
     <message>
         <location filename="../mainwindow.ui" line="5437"/>
         <source>Show messages decoded from JT65 harmonics</source>
-        <translation>Mostrar mensagens descodificadas dos harmônicos JT65</translation>
+        <translation>Mostrar mensagens descodificadas dos harmónicos JT65</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5448"/>
@@ -4907,7 +4907,7 @@ Clicar com o botão direito do rato define a hora interna do JTDX de volta à ho
     <message>
         <location filename="../mainwindow.cpp" line="1918"/>
         <source>Error saving c2 file</source>
-        <translation>Erro ao salvar o arquivo c2</translation>
+        <translation>Erro ao salvar o ficheiro c2</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="1994"/>
@@ -4972,7 +4972,7 @@ Clicar com o botão direito do rato define a hora interna do JTDX de volta à ho
     <message>
         <location filename="../mainwindow.cpp" line="2946"/>
         <source>No data read from disk. Wrong file format?</source>
-        <translation>Nenhum dado lido do disco. Formato de arquivo errado?</translation>
+        <translation>Nenhum dado lido do disco. Formato de ficheiro errado?</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="2953"/>
@@ -5325,7 +5325,7 @@ Servidor UDP %2:%3</translation>
     <message>
         <location filename="../mainwindow.cpp" line="7792"/>
         <source>File Error</source>
-        <translation>Erro de arquivo</translation>
+        <translation>Erro de ficheiro</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="8007"/>
@@ -5924,26 +5924,26 @@ Servidor UDP %2:%3</translation>
   &lt;tr&gt;&lt;td&gt; &lt;b&gt; F3 &lt;/b&gt;&lt;/td&gt; &lt;td&gt; Exibir atalhos do teclado &lt;/td&gt; &lt;/tr&gt;
   &lt;tr&gt;&lt;td&gt; &lt;b&gt; F4 &lt;/b&gt;&lt;/td&gt; &lt;td&gt; Limpar mensagens DX / Grid e Tx &lt;/td&gt; &lt;td&gt; &lt;b&gt; Alt + F4 &lt;/b&gt; &lt;/td&gt; &lt;td&gt; Sair do programa &lt;/td&gt; &lt;/tr&gt;
   &lt;tr&gt;&lt;td&gt; &lt;b&gt; F5 &lt;/b&gt;&lt;/td&gt; &lt;td&gt; Exibir comandos especiais do mouse &lt;/td&gt; &lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt; &lt;b&gt; F6 &lt;/b&gt;&lt;/td&gt; &lt;td&gt; Abre o próximo arquivo no diretório &lt;/td&gt; &lt;td&gt; &lt;b&gt; Shift + F6 &lt;/b&gt;&lt;/td&gt; &lt;td&gt; Decodifique todos os arquivos restantes no diretório &lt;/td&gt; &lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt; &lt;b&gt; F6 &lt;/b&gt;&lt;/td&gt; &lt;td&gt; Abre o próximo ficheiro no diretório &lt;/td&gt; &lt;td&gt; &lt;b&gt; Shift + F6 &lt;/b&gt;&lt;/td&gt; &lt;td&gt; Decodifique todos os ficheiros restantes no diretório &lt;/td&gt; &lt;/tr&gt;
   &lt;tr&gt;&lt;td&gt; &lt;b&gt; F7 &lt;/b&gt;&lt;/td&gt; &lt;td&gt; Abrir registro atribuído no visualizador do sistema operacional &lt;/td&gt; &lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt; &lt;b&gt; F11 &lt;/b&gt;&lt;/td&gt; &lt;td&gt; Mova a frequência Rx 1 Hz para baixo &lt;/td&gt; &lt;td&gt; &lt;b&gt; Ctrl + F11 &lt;/b&gt; &lt;/td&gt; &lt;td &gt; Mova as frequências Rx e Tx para baixo 1 Hz &lt;/td&gt; &lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt; &lt;b&gt; F12 &lt;/b&gt;&lt;/td&gt; &lt;td&gt; Mova a frequência Rx para cima 1 Hz &lt;/td&gt; &lt;td&gt; &lt;b&gt; Ctrl + F12 &lt;/b&gt; &lt;/td&gt; &lt;td &gt; Mova as frequências Rx e Tx até 1 Hz &lt;/td&gt; &lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt; &lt;b&gt; F11 &lt;/b&gt;&lt;/td&gt; &lt;td&gt; Mova a frequência Rx 1 Hz para baixo &lt;/td&gt; &lt;td&gt; &lt;b&gt; Ctrl + F11 &lt;/b&gt; &lt;/td&gt; &lt;td&gt; Mova as frequências Rx e Tx para baixo 1 Hz &lt;/td&gt; &lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt; &lt;b&gt; F12 &lt;/b&gt;&lt;/td&gt; &lt;td&gt; Mova a frequência Rx para cima 1 Hz &lt;/td&gt; &lt;td&gt; &lt;b&gt; Ctrl + F12 &lt;/b&gt; &lt;/td&gt; &lt;td&gt; Mova as frequências Rx e Tx até 1 Hz &lt;/td&gt; &lt;/tr&gt;
   &lt;tr&gt;&lt;td&gt; &lt;b&gt; Alt + 1-6 &lt;/b&gt;&lt;/td&gt; &lt;td&gt; Defina agora a transmissão para este número na guia 1 &lt;/td&gt; &lt;/tr&gt;
   &lt;tr&gt;&lt;td&gt; &lt;b&gt; Ctl + 1-6 &lt;/b&gt;&lt;/td&gt; &lt;td&gt; Defina a próxima transmissão para este número na guia 1 &lt;/td&gt; &lt;/tr&gt;
   &lt;tr&gt;&lt;td&gt; &lt;b&gt; Alt + Ctrl + A &lt;/b&gt;&lt;/td&gt; &lt;td&gt; Limpar lista de indicativos procurados &lt;/td&gt; &lt;/tr&gt;
   &lt;tr&gt;&lt;td&gt; &lt;b&gt; Alt + B / C &lt;/b&gt;&lt;/td&gt; &lt;td&gt; Mudar para o modo FT8 / FT4 &lt;/td&gt; &lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt; &lt;b&gt; Alt + D &lt;/b&gt;&lt;/td&gt; &lt;td&gt; Decodifique novamente na frequência QSO &lt;/td&gt; &lt;td&gt; &lt;b&gt; Shift + D &lt;/b&gt; &lt;/td&gt; &lt; td&gt; Descodificação completa (ambas as janelas) &lt;/td&gt; &lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt; &lt;b&gt; Alt + D &lt;/b&gt;&lt;/td&gt; &lt;td&gt; Decodifique novamente na frequência QSO &lt;/td&gt; &lt;td&gt; &lt;b&gt; Shift + D &lt;/b&gt; &lt;/td&gt; &lt;td&gt; Descodificação completa (ambas as janelas) &lt;/td&gt; &lt;/tr&gt;
   &lt;tr&gt;&lt;td&gt; &lt;b&gt; Alt + E &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Erase&lt;/td&gt; &lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt; &lt;b&gt; Alt + F &lt;/b&gt;&lt;/td&gt; &lt;td&gt; Alternar para ignorar todos os filtros de texto &lt;/td&gt; &lt;td&gt; &lt;b&gt; Ctrl + F &lt;/b&gt; &lt;/td&gt; &lt; td&gt; Edite a caixa de mensagem de texto livre &lt;/td&gt; &lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt; &lt;b&gt; Alt + F &lt;/b&gt;&lt;/td&gt; &lt;td&gt; Alternar para ignorar todos os filtros de texto &lt;/td&gt; &lt;td&gt; &lt;b&gt; Ctrl + F &lt;/b&gt; &lt;/td&gt; &lt;td&gt; Edite a caixa de mensagem de texto livre &lt;/td&gt; &lt;/tr&gt;
   &lt;tr&gt;&lt;td&gt; &lt;b&gt; Alt + G &lt;/b&gt;&lt;/td&gt; &lt;td&gt; Gerar mensagens padrão &lt;/td&gt; &lt;/tr&gt;
   &lt;tr&gt;&lt;td&gt; &lt;b&gt; Alt + H &lt;/b&gt;&lt;/td&gt; &lt;td&gt; Halt Tx &lt;/td&gt; &lt;/tr&gt;
   &lt;tr&gt;&lt;td&gt; &lt;b&gt; Ctrl + L &lt;/b&gt;&lt;/td&gt; &lt;td&gt; Consultar o indicativo no banco de dados, gerar mensagens padrão &lt;/td&gt; &lt;/tr&gt;
   &lt;tr&gt;&lt;td&gt; &lt;b&gt; Alt + M &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Monitor&lt;/td&gt; &lt;/tr&gt;
   &lt;tr&gt;&lt;td&gt; &lt;b&gt; Alt + N &lt;/b&gt;&lt;/td&gt; &lt;td&gt; Habilitar Tx &lt;/td&gt; &lt;/tr&gt;
   &lt;tr&gt;&lt;td&gt; &lt;b&gt; Alt + Q &lt;/b&gt;&lt;/td&gt; &lt;td&gt; Registrar QSO &lt;/td&gt; &lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt; &lt;b&gt; Alt + S &lt;/b&gt;&lt;/td&gt; &lt;td&gt; Pare o monitoramento &lt;/td&gt; &lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt; &lt;b&gt; Alt + S &lt;/b&gt;&lt;/td&gt; &lt;td&gt; Pare a monitorização &lt;/td&gt; &lt;/tr&gt;
   &lt;tr&gt;&lt;td&gt; &lt;b&gt; Alt + T &lt;/b&gt;&lt;/td&gt;&lt;td&gt;Tune&lt;/td&gt; &lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt; &lt;b&gt; Alt + V &lt;/b&gt;&lt;/td&gt; &lt;td&gt; Salvar o arquivo *.wav concluído mais recentemente &lt;/td&gt; &lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt; &lt;b&gt; Alt + V &lt;/b&gt;&lt;/td&gt; &lt;td&gt; Salvar o ficheiro *.wav concluído mais recentemente &lt;/td&gt; &lt;/tr&gt;
   &lt;tr&gt;&lt;td&gt; &lt;b&gt; Alt + Z &lt;/b&gt;&lt;/td&gt; &lt;td&gt; Filtro, este atalho é compatível com a IU principal e a IU widegraph &lt;/td&gt; &lt;/tr&gt;
   &lt;tr&gt;&lt;td&gt; &lt;b&gt; Esc &lt;/b&gt;&lt;/td&gt; &lt;td&gt; Halt Tx &lt;/td&gt; &lt;/tr&gt;
 &lt;/table&gt;</translation>
@@ -6392,7 +6392,7 @@ Mesmo assim quer apagar?</translation>
     <message>
         <location filename="../Configuration.cpp" line="5406"/>
         <source>Could not delete directory.</source>
-        <translation>Não foi possivel apagar o diretório.</translation>
+        <translation>Não foi possível apagar o diretório.</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp" line="5407"/>
@@ -6489,7 +6489,7 @@ Please verify the correct directory name was given.</source>
     <message>
         <location filename="../Configuration.cpp" line="5426"/>
         <source>List of places and bookmarks</source>
-        <translation>Lista de sitios e favoritos</translation>
+        <translation>Lista de sítios e favoritos</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp"/>
@@ -6566,7 +6566,7 @@ Please verify the correct directory name was given.</source>
     <message>
         <location filename="../main.cpp" line="210"/>
         <source>Another instance may be running, try to remove stale lock file?</source>
-        <translation>Outra instância pode estar em execução. Tente remover o arquivo de bloqueio obsoleto?</translation>
+        <translation>Outra instância pode estar em execução. Tente remover o ficheiro de bloqueio obsoleto?</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="356"/>
@@ -6591,27 +6591,27 @@ Please verify the correct directory name was given.</source>
     <message>
         <location filename="../WFPalette.cpp" line="78"/>
         <source>Error reading waterfall palette file &quot;%1:%2&quot; too many colors.</source>
-        <translation>Erro ao ler o arquivo da paleta em cascata &quot;%1:%2&quot; demasiadas cores.</translation>
+        <translation>Erro ao ler o ficheiro da paleta da cascata &quot;%1:%2&quot; demasiadas cores.</translation>
     </message>
     <message>
         <location filename="../WFPalette.cpp" line="84"/>
         <source>Error reading waterfall palette file &quot;%1:%2&quot; invalid triplet.</source>
-        <translation>Erro ao ler o arquivo da paleta em cascata &quot;%1:%2&quot; trigêmeo inválido.</translation>
+        <translation>Erro ao ler o ficheiro da paleta da cascata &quot;%1:%2&quot; trio inválido.</translation>
     </message>
     <message>
         <location filename="../WFPalette.cpp" line="96"/>
         <source>Error reading waterfall palette file &quot;%1:%2&quot; invalid color.</source>
-        <translation>Erro ao ler o arquivo da paleta em cascata &quot;%1:%2&quot; cor inválida.</translation>
+        <translation>Erro ao ler o ficheiro da paleta da cascata &quot;%1:%2&quot; cor inválida.</translation>
     </message>
     <message>
         <location filename="../WFPalette.cpp" line="104"/>
         <source>Error opening waterfall palette file &quot;%1&quot;: %2.</source>
-        <translation>Erro ao abrir o arquivo da paleta em cascata &quot;%1&quot;:%2.</translation>
+        <translation>Erro ao abrir o ficheiro da paleta da cascata &quot;%1&quot;: %2.</translation>
     </message>
     <message>
         <location filename="../WFPalette.cpp" line="258"/>
         <source>Error writing waterfall palette file &quot;%1&quot;: %2.</source>
-        <translation>Erro ao gravar o arquivo da paleta em cascata &quot;%1&quot;:%2.</translation>
+        <translation>Erro ao gravar o ficheiro da paleta da cascata &quot;%1&quot;: %2.</translation>
     </message>
 </context>
 <context>
@@ -6974,7 +6974,7 @@ Please verify the correct directory name was given.</source>
     <message>
         <location filename="../TCITransceiver.cpp" line="435"/>
         <source>TCI Audio could not be switched on</source>
-        <translation>Audio TCI não pôde ser ligado</translation>
+        <translation>Áudio TCI não pôde ser ligado</translation>
     </message>
     <message>
         <location filename="../TCITransceiver.cpp" line="481"/>
@@ -7123,7 +7123,7 @@ Please verify the correct directory name was given.</source>
     <message>
         <location filename="../widegraph.ui" line="357"/>
         <source>Number of FFTs averaged (controls waterfall scrolling rate)</source>
-        <translation>Número médio de FFTs (controla a taxa de rolagem em cascata)</translation>
+        <translation>Número médio de FFTs (controla a velocidade de deslocamento da cascata)</translation>
     </message>
     <message>
         <location filename="../widegraph.ui" line="360"/>
@@ -7148,7 +7148,7 @@ Please verify the correct directory name was given.</source>
     <message>
         <location filename="../widegraph.ui" line="438"/>
         <source>Select waterfall palette</source>
-        <translation>Selecionar paleta cascata</translation>
+        <translation>Selecionar paleta da cascata</translation>
     </message>
     <message>
         <location filename="../widegraph.ui" line="468"/>
@@ -7364,12 +7364,12 @@ Please verify the correct directory name was given.</source>
     <message>
         <location filename="../Configuration.ui" line="419"/>
         <source>Include a separator line between periods in the band activity window.</source>
-        <translation>Incluir linha  separadora entre periodos na janela de atividade da banda.</translation>
+        <translation>Incluir linha  separadora entre períodos na janela de atividade da banda.</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="422"/>
         <source>&amp;Blank line between decoding periods</source>
-        <translation>Linha em &amp;branco entre periodos descodificados</translation>
+        <translation>Linha em &amp;branco entre períodos descodificados</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="409"/>
@@ -7429,7 +7429,7 @@ Please verify the correct directory name was given.</source>
     <message>
         <location filename="../Configuration.ui" line="523"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Number of minutes before unattended transmissions are aborted&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Número de minutos antes que as transmissões autônomas sejam abortadas&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Número de minutos antes que as transmissões autónomas sejam abortadas&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="526"/>
@@ -7470,7 +7470,7 @@ Please verify the correct directory name was given.</source>
     <message>
         <location filename="../Configuration.ui" line="607"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Check this if you wish to automatically return to the last monitored frequency when monitor is enabled, leave it unchecked if you wish to have the current rig frequency maintained.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Marque isso se desejar retornar automáticamente à última frequência monitorada quando o monitor estiver ativado, deixe desmarcado se desejar manter a frequência atual do rádio.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Marque isso se desejar retornar automaticamente à última frequência monitorizada quando o monitor estiver ativado, deixe desmarcado se desejar manter a frequência atual do rádio.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="619"/>
@@ -7578,7 +7578,7 @@ período de silêncio quando a descodificação é feita.</translation>
     <message>
         <location filename="../Configuration.ui" line="925"/>
         <source>Serial Port Parameters</source>
-        <translation>Parâmetros da porta Serie</translation>
+        <translation>Parâmetros da porta série</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="942"/>
@@ -7588,7 +7588,7 @@ período de silêncio quando a descodificação é feita.</translation>
     <message>
         <location filename="../Configuration.ui" line="958"/>
         <source>Serial port data rate which must match the setting of your radio.</source>
-        <translation>Taxa de dados da porta serie que deve corresponder à configuração do seu rádio.</translation>
+        <translation>Taxa de dados da porta série que deve corresponder à configuração do seu rádio.</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="965"/>
@@ -7756,7 +7756,7 @@ alguns, particularmente equipamentos Kenwood, exigem-no).</translation>
     <message>
         <location filename="../Configuration.ui" line="1302"/>
         <source>PTT Method</source>
-        <translation>Metodo PTT</translation>
+        <translation>Método PTT</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1308"/>
@@ -7775,7 +7775,7 @@ outra interface de hardware para PTT.</translation>
     <message>
         <location filename="../Configuration.ui" line="1323"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Use the RS-232 DTR control line to toggle your radio&apos;s PTT, requires hardware to inteface the line.&lt;/p&gt;&lt;p&gt;Some commercial interface units also use this method.&lt;/p&gt;&lt;p&gt;The DTR control line of the CAT serial port may be used for this or a DTR control line on a different serial port may be used.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Use a linha de controle RS-232 DTR para alternar o PTT do seu rádio, requer hardware para interface da linha. &lt;/p&gt; &lt;p&gt; Algumas unidades de interface comercial também usam esse método. &lt;/p&gt; &lt;p&gt; A linha de controle DTR da porta serie CAT pode ser usada para isso ou pode ser usada uma linha de controle DTR numa porta serie diferente. &lt;/p&gt; &lt;/body&gt; &lt;/</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Use a linha de controle RS-232 DTR para alternar o PTT do seu rádio, requer hardware para interface da linha. &lt;/p&gt; &lt;p&gt; Algumas unidades de interface comercial também usam esse método. &lt;/p&gt; &lt;p&gt; A linha de controle DTR da porta série CAT pode ser usada para isso ou pode ser usada uma linha de controle DTR numa porta série diferente. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1326"/>
@@ -7795,7 +7795,7 @@ outra interface de hardware para PTT.</translation>
     <message>
         <location filename="../Configuration.ui" line="1352"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Use the RS-232 RTS control line to toggle your radio&apos;s PTT, requires hardware to inteface the line.&lt;/p&gt;&lt;p&gt;Some commercial interface units also use this method.&lt;/p&gt;&lt;p&gt;The RTS control line of the CAT serial port may be used for this or a RTS control line on a different serial port may be used. Note that this option is not available on the CAT serial port when hardware flow control is used.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Use a linha de controle RS-232 RTS para alternar o PTT do seu rádio, requer hardware para interface da linha. &lt;/p&gt; &lt;p&gt; Algumas unidades de interface comercial também usam esse método. &lt;/p&gt; &lt;p&gt; A linha de controle RTS da porta serie CAT pode ser usada para isso ou uma linha de controle RTS numa porta serie diferente. Esta opção não está disponível na porta serie CAT quando o controle de fluxo de hardware é usado. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Use a linha de controle RS-232 RTS para alternar o PTT do seu rádio, requer hardware para interface da linha. &lt;/p&gt; &lt;p&gt; Algumas unidades de interface comercial também usam esse método. &lt;/p&gt; &lt;p&gt; A linha de controle RTS da porta série CAT pode ser usada para isso ou uma linha de controle RTS numa porta série diferente. Esta opção não está disponível na porta série CAT quando o controle de fluxo de hardware é usado. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1355"/>
@@ -7805,7 +7805,7 @@ outra interface de hardware para PTT.</translation>
     <message>
         <location filename="../Configuration.ui" line="1386"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Select the RS-232 serial port utilised for PTT control, this option is available when DTR or RTS is selected above as a transmit method.&lt;/p&gt;&lt;p&gt;This port can be the same one as the one used for CAT control.&lt;/p&gt;&lt;p&gt;For some interface types the special value CAT may be chosen, this is used for non-serial CAT interfaces that can control serial port control lines remotely (OmniRig for example).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Selecione a porta serie RS-232 utilizada para o controle PTT, esta opção estará disponível quando DTR ou RTS for selecionado acima como método de transmissão. &lt;/p&gt; &lt;p&gt; Esta porta pode ser a mesma usada para o controle CAT. &lt;/p&gt; &lt;p&gt; Para alguns tipos de interface, o valor especial CAT pode ser escolhido, usado para interfaces CAT não serial que podem controlar remotamente as linhas de controle de porta serial (OmniRig, por exemplo). &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Selecione a porta série RS-232 utilizada para o controle PTT, esta opção estará disponível quando DTR ou RTS for selecionado acima como método de transmissão. &lt;/p&gt; &lt;p&gt; Esta porta pode ser a mesma usada para o controle CAT. &lt;/p&gt; &lt;p&gt; Para alguns tipos de interface, o valor especial CAT pode ser escolhido, usado para interfaces CAT não série que podem controlar remotamente as linhas de controle da porta série (OmniRig, por exemplo). &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1411"/>
@@ -7904,7 +7904,7 @@ or bandwidth is selected).</source>
     <message>
         <location filename="../Configuration.ui" line="1599"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Attempt to connect to the radio with these settings.&lt;/p&gt;&lt;p&gt;The button will turn green if the connection is successful or red if there is a problem.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Tente conectar-se ao rádio com estas configurações. &lt;/p&gt;&lt;p&gt; O botão ficará verde se a ligação for bem-sucedida ou vermelho se houver algum problema. &lt;/ p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Tente conectar-se ao rádio com estas configurações. &lt;/p&gt;&lt;p&gt; O botão ficará verde se a ligação for bem-sucedida ou vermelho se houver algum problema. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1602"/>
@@ -8021,7 +8021,7 @@ ambos .</translation>
     <message>
         <location filename="../Configuration.ui" line="1842"/>
         <source>Ou&amp;tput:</source>
-        <translation>Sa&amp;ida:</translation>
+        <translation>Saí&amp;da:</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1887"/>
@@ -8174,7 +8174,7 @@ ambos .</translation>
     <message>
         <location filename="../Configuration.ui" line="2340"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Drag and drop items to rearrange order. Right click for item specific actions. Click, SHIFT+Click and, CRTL+Click to select items. @ symbol is being substituted with DX call, &amp; symbol with user&apos;s base callsign, # symbol with report to be transmitted, ^ symbol with correspondent&apos;s name retrieved from the log where name shall not exceed 7 chars.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Arraste e solte itens para reorganizar a ordem. Clique com o botão direito do rato para ações específicas do item. Clique, SHIFT + Clique e, CRTL + Clique para selecionar itens. O símbolo @ está a ser substituído pela chamada DX, &amp; símbolo com o indicativo base do usuário, # símbolo com o relatório a ser transmitido, ^ símbolo com o nome do correspondente recuperado do log em que o nome não deve exceder 7 caracteres. &lt;/p&gt; &lt;/body&gt; &lt; / html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Arraste e solte itens para reorganizar a ordem. Clique com o botão direito do rato para ações específicas do item. Clique, SHIFT + Clique e, CRTL + Clique para selecionar itens. O símbolo @ está a ser substituído pela chamada DX, &amp; símbolo com o indicativo base do usuário, # símbolo com o relatório a ser transmitido, ^ símbolo com o nome do correspondente recuperado do log em que o nome não deve exceder 7 caracteres. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="2391"/>
@@ -8355,7 +8355,7 @@ e DX Grid quando uma mensagem de texto livre ou 73 é enviada.</translation>
     <message>
         <location filename="../Configuration.ui" line="2703"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Allows to configure data for recording into the ALL.TXT file. Recording of TX messages can not be switched off.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Permite configurar dados para gravação no arquivo ALL.TXT. A gravação de mensagens TX não pode ser desativada. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Permite configurar dados para gravação no ficheiro ALL.TXT. A gravação de mensagens TX não pode ser desativada. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="2706"/>
@@ -8506,7 +8506,7 @@ para avaliar a propagação e o desempenho do sistema.</translation>
     <message>
         <location filename="../Configuration.ui" line="3038"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Selected text filters will be applied to limit transmission of the UDP messages from JTDX, for instance messages from some continents can be blocked.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Os filtros de texto selecionados serão aplicados para limitar a transmissão das mensagens UDP do JTDX; por exemplo, as mensagens de alguns continentes podem ser bloqueadas. &lt;/p&gt; &lt;/body&gt; &lt;/ html &gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Os filtros de texto selecionados serão aplicados para limitar a transmissão das mensagens UDP do JTDX; por exemplo, as mensagens de alguns continentes podem ser bloqueadas. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3041"/>
@@ -8521,7 +8521,7 @@ para avaliar a propagação e o desempenho do sistema.</translation>
     <message>
         <location filename="../Configuration.ui" line="3079"/>
         <source>Default frequencies and band specific station details setup</source>
-        <translation>Frequências e bandas por defeito e detalhes especificos da estação</translation>
+        <translation>Frequências e bandas por defeito e detalhes específicos da estação</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3085"/>
@@ -8536,7 +8536,7 @@ para avaliar a propagação e o desempenho do sistema.</translation>
     <message>
         <location filename="../Configuration.ui" line="3697"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Hide hint character in marker field.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Oculta o caractere de dica no campo do marcado.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Oculta o carácter de dica no campo do marcador.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3700"/>
@@ -8604,7 +8604,7 @@ Clique com o botão direito do rato para inserir e excluir opções.</translatio
     <message>
         <location filename="../Configuration.ui" line="3401"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Highlight messages with DXCC countries which do not exist in the wsjtx_log.adi log file.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Destacar mensagens com países DXCC que não existem no arquivo de log wsjtx_log.adi. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Destacar mensagens com países DXCC que não existem no ficheiro de log wsjtx_log.adi. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3404"/>
@@ -8614,7 +8614,7 @@ Clique com o botão direito do rato para inserir e excluir opções.</translatio
     <message>
         <location filename="../Configuration.ui" line="3411"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Highlight messages with DXCC countries which are new on the band according to the data from wsjtx_log.adi log file.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Realça mensagens com os países DXCC que são novos na banda de acordo com os dados do arquivo de log wsjtx_log.adi. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Realça mensagens com os países DXCC que são novos na banda de acordo com os dados do ficheiro de log wsjtx_log.adi. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3334"/>
@@ -8629,7 +8629,7 @@ Clique com o botão direito do rato para inserir e excluir opções.</translatio
     <message>
         <location filename="../Configuration.ui" line="3421"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Highlight messages with DXCC countries which are new in the mode according to the data from wsjtx_log.adi log file.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Destacar mensagens com os países DXCC que são novos no modo de acordo com os dados do arquivo de log wsjtx_log.adi. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Destacar mensagens com os países DXCC que são novos no modo de acordo com os dados do ficheiro de log wsjtx_log.adi. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3344"/>
@@ -8674,12 +8674,12 @@ Clique com o botão direito do rato para inserir e excluir opções.</translatio
     <message>
         <location filename="../Configuration.ui" line="1868"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Use TCI Audio when available.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Usar Audio TCI quando disponivel.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Usar Áudio TCI quando disponível.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1871"/>
         <source>Use TCI Audio</source>
-        <translation>Usar Audio TCI</translation>
+        <translation>Usar Áudio TCI</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="2494"/>
@@ -8714,12 +8714,12 @@ Clique com o botão direito do rato para inserir e excluir opções.</translatio
     <message>
         <location filename="../Configuration.ui" line="3331"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Highlight messages with CQ Zones which are new on the band according to the data from wsjtx_log.adi log file.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Destacar mensagens com CQ Zones que são novas na banda de acordo com os dados do arquivo de log wsjtx_log.adi.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Destacar mensagens com CQ Zones que são novas na banda de acordo com os dados do ficheiro de log wsjtx_log.adi.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3341"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Highlight messages with CQ Zones which are new in the mode according to the data from wsjtx_log.adi log file.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Destacar mensagens com zonas CQ que são novas no modo de acordo com os dados do arquivo de log wsjtx_log.adi.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Destacar mensagens com zonas CQ que são novas no modo de acordo com os dados do ficheiro de log wsjtx_log.adi.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3351"/>
@@ -8744,7 +8744,7 @@ Clique com o botão direito do rato para inserir e excluir opções.</translatio
     <message>
         <location filename="../Configuration.ui" line="3361"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Highlight messages with ITU Zones which do not exist in the wsjtx_log.adi log file.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Destacar mensagens com zonas ITU que não existem no arquivo de log wsjtx_log.adi.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Destacar mensagens com zonas ITU que não existem no ficheiro de log wsjtx_log.adi.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3364"/>
@@ -8754,12 +8754,12 @@ Clique com o botão direito do rato para inserir e excluir opções.</translatio
     <message>
         <location filename="../Configuration.ui" line="3371"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Highlight messages with ITU Zones which are new on the band according to the data from wsjtx_log.adi log file.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Destacar mensagens com zonas ITU que são novas na banda de acordo com os dados do arquivo de log wsjtx_log.adi.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Destacar mensagens com zonas ITU que são novas na banda de acordo com os dados do ficheiro de log wsjtx_log.adi.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3381"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Highlight messages with ITU Zones which are new in the mode according to the data from wsjtx_log.adi log file.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Destacar mensagens com zonas ITU que são novas no modo de acordo com os dados do arquivo de log wsjtx_log.adi.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Destacar mensagens com zonas ITU que são novas no modo de acordo com os dados do ficheiro de log wsjtx_log.adi.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3444"/>
@@ -8769,17 +8769,17 @@ Clique com o botão direito do rato para inserir e excluir opções.</translatio
     <message>
         <location filename="../Configuration.ui" line="3451"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Highlight messages with grid squares which are new on the band according to the data from wsjtx_log.adi log file.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Realçar mensagens com quadrículas de Grid que são novos na banda de acordo com os dados do arquivo de log wsjtx_log.adi. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Realçar mensagens com quadrículas de Grid que são novas na banda de acordo com os dados do ficheiro de log wsjtx_log.adi. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3461"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Highlight messages with grid squares which are new in the mode according to the data from wsjtx_log.adi log file.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Realçar mensagens com quadrículas da Grid que são novos no modo de acordo com os dados do arquivo de log wsjtx_log.adi. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Realçar mensagens com quadrículas da Grid que são novas no modo de acordo com os dados do ficheiro de log wsjtx_log.adi. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3481"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Highlight messages with prefixes which do not exist in the wsjtx_log.adi log file.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Realçar mensagens com prefixos que não existem no arquivo de log wsjtx_log.adi. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Realçar mensagens com prefixos que não existem no ficheiro de log wsjtx_log.adi. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3484"/>
@@ -8789,17 +8789,17 @@ Clique com o botão direito do rato para inserir e excluir opções.</translatio
     <message>
         <location filename="../Configuration.ui" line="3491"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Highlight messages with prefixes which are new on the band according to the data from wsjtx_log.adi log file.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Realçar mensagens com prefixos novos na banda, de acordo com os dados do arquivo de log wsjtx_log.adi. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Realçar mensagens com prefixos novos na banda, de acordo com os dados do ficheiro de log wsjtx_log.adi. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3501"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Highlight messages with prefixes which are new in the mode according to the data from wsjtx_log.adi log file.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Realçar mensagens com prefixos novos no modo, de acordo com os dados do arquivo de log wsjtx_log.adi. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Realçar mensagens com prefixos novos no modo, de acordo com os dados do ficheiro de log wsjtx_log.adi. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3521"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Highlight messages with callsigns which do not exist in the wsjtx_log.adi log file.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Realçar mensagens com indicativos que não existem no arquivo de log wsjtx_log.adi. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Realçar mensagens com indicativos que não existem no ficheiro de log wsjtx_log.adi. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3524"/>
@@ -8809,12 +8809,12 @@ Clique com o botão direito do rato para inserir e excluir opções.</translatio
     <message>
         <location filename="../Configuration.ui" line="3531"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Highlight messages with callsigns which are new on the band according to the data from wsjtx_log.adi log file.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Realçar mensagens com indicativos novos na banda de acordo com os dados do arquivo de log wsjtx_log.adi. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Realçar mensagens com indicativos novos na banda de acordo com os dados do ficheiro de log wsjtx_log.adi. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3541"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Highlight messages with callsigns which are new in the mode according to the data from wsjtx_log.adi log file.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Realçar mensagens com indicativos novos no modo, de acordo com os dados do arquivo de log wsjtx_log.adi. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Realçar mensagens com indicativos novos no modo, de acordo com os dados do ficheiro de log wsjtx_log.adi. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3561"/>
@@ -8863,8 +8863,8 @@ Clique com o botão direito do rato para inserir e excluir opções.</translatio
     </message>
     <message>
         <location filename="../Configuration.ui" line="3604"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Invert text&lt;-&gt;background color for received messages&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Inverta o texto &lt;-&gt; cor de fundo das mensagens recebidas &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Invert text&amp;lt;-&amp;gt;background color for received messages&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Inverta o texto &amp;lt;-&amp;gt; cor de fundo das mensagens recebidas &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3607"/>
@@ -8909,7 +8909,7 @@ Clique com o botão direito do rato para inserir e excluir opções.</translatio
     <message>
         <location filename="../Configuration.ui" line="3687"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Use blue marker to notify if there is my callsign in the decoded message related to the ongoing QSO (QSO party&apos;s callsign is in the DX Call window), other incoming calls with my callsign will be followed with the red marker.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Use o marcador azul para notificar se há meu indicativo na mensagem descodificada relativa ao QSO em andamento (o indicativo da parte do QSO está na janela DX Call), outras chamadas recebidas com meu indicativo será seguido com o marcador vermelho. &lt;/p&gt; &lt;/body&gt; &lt;/ html</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Use o marcador azul para notificar se há meu indicativo na mensagem descodificada relativa ao QSO em andamento (o indicativo da parte do QSO está na janela DX Call), outras chamadas recebidas com meu indicativo será seguido com o marcador vermelho. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3690"/>
@@ -9185,7 +9185,7 @@ UA2,UA9,UK,UN,UR,V2,V3,V4,V5,V6,V7,V8,VE,VK,VK0H,VK0M,VK9C,VK9L,VK9M,VK9N,VK9W,V
 VP2E,VP2M,VP2V,VP5,VP6,VP6/D,VP8,VP8/G,VP8/H,VP8/O,VP8/S,VP9,VQ9,VR,VU,VU4,VU7,XE,&lt;br&gt;
 XF4,XT,XU,XW,XX9,XZ,YA,YB,YI,YJ,YK,YL,YN,YO,YS,YU,YV,YV0,Z2,Z3,Z6,Z8,ZA,ZB,ZC4,ZD7,&lt;br&gt;
 ZD8,ZD9,ZF,ZK3,ZL,ZL7,ZL8,ZL9,ZP,ZS,ZS8&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Lista separada por vírgula de prefixos de países com base no arquivo cty.dat. &lt;br&gt;
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Lista separada por vírgula de prefixos de países com base no ficheiro cty.dat. &lt;br&gt;
 Lacunas não são permitidas. Os valores aceitáveis são: 1A,1S,3A,3B6,3B8,3B9,3C,3C0,3D2,3D2/C,&lt;br&gt;
 3D2/R,3DA,3V,3W,3X,3Y/B,3Y/P,4J,4L,4O,4S,4U1I,4U1U,*4U1V,4W,4X,5A,5B,5H,5N,5R,5T,&lt;br&gt;
 5U,5V,5W,5X,5Z,6W,6Y,7O,7P,7Q,7X,8P,8Q,8R,9A,9G,9H,9J,9K,9L,9M2,9M6,9N,9Q,9U,9V,9X,&lt;br&gt;
@@ -9228,7 +9228,7 @@ AA1AAA,BB1BB,CC1CC&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Lista separada por vírgula de indicativos,
 lacunas não são permitidas, o indicativo de base será
 usado para indicativos compostos, por exemplo:
-AA1AAA, BB1BB, CC1CC &lt;/p&gt; &lt;/body&gt; &lt;/ html</translation>
+AA1AAA, BB1BB, CC1CC &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="5131"/>
@@ -9300,7 +9300,7 @@ AA1AAA, BB1BB, CC1CC &lt;/p&gt; &lt;/body&gt; &lt;/ html</translation>
     <message>
         <location filename="../Configuration.ui" line="5285"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Hide message exchange between operators of own continent. This option allows user to ease monitoring of communication across intercontinental distances.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt; &lt;head /&gt; &lt;body&gt; &lt;p&gt; Esconder troca de mensagens entre operadores do próprio continente. Esta opção permite ao usuário facilitar o monitoramento da comunicação em distâncias intercontinentais. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
+        <translation>&lt;html&gt; &lt;head /&gt; &lt;body&gt; &lt;p&gt; Esconder troca de mensagens entre operadores do próprio continente. Esta opção permite ao usuário facilitar a monitorização da comunicação em distâncias intercontinentais. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="5288"/>
@@ -9754,7 +9754,7 @@ AA1AAA, BB1BB, CC1CC &lt;/p&gt; &lt;/body&gt; &lt;/ html</translation>
     <message>
         <location filename="../Configuration.ui" line="6892"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Activate two additional frequency mask JT65 decoding passes for overcrowded band conditions. This decoding passes being activated automatically if there are few signals on the band. Use this setting only for fast CPU.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Ative duas passagens adicionais de descodificação da máscara de frequência JT65 para condições de banda superlotadas. Essa descodificação passa a ser ativada automáticamente se houver poucos sinais na banda. Use essa configuração apenas para CPU rápidos. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Ative duas passagens adicionais de descodificação da máscara de frequência JT65 para condições de banda superlotadas. Essa descodificação passa a ser ativada automaticamente se houver poucos sinais na banda. Use essa configuração apenas para CPU rápidos. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="6898"/>
@@ -9776,17 +9776,17 @@ AA1AAA, BB1BB, CC1CC &lt;/p&gt; &lt;/body&gt; &lt;/ html</translation>
         <location filename="../Configuration.ui" line="6946"/>
         <location filename="../Configuration.ui" line="6959"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Signal distortion in RX or TX path can produce harmonics of the JT65A signal (JT65B, JT65C etc.) Decoding harmonics of JT65A signal can improve overall decoding efficiency via subtraction of the decoded signals. Decoding depth is proportional to the required CPU resources, set it to 1 for slow CPU. Greater value of depth will allow to decode more harmonics. JT65B and JT65C decoding is being supported.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; A distorção do sinal no caminho RX ou TX pode produzir harmônicos do sinal JT65A (JT65B, JT65C etc.) A descodificação de harmônicos do sinal JT65A pode melhorar a eficiência geral da descodificação por subtração dos sinais descodificados . A profundidade da descodificação é proporcional aos recursos do CPU necessários, configure-o como 1 para CPU lento. Maior valor de profundidade permitirá descodificar mais harmônicos. A descodificação JT65B e JT65C é suportada. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; A distorção do sinal no caminho RX ou TX pode produzir harmónicos do sinal JT65A (JT65B, JT65C etc.) A descodificação de harmónicos do sinal JT65A pode melhorar a eficiência geral da descodificação por subtração dos sinais descodificados . A profundidade da descodificação é proporcional aos recursos do CPU necessários, configure-o como 1 para CPU lento. Maior valor de profundidade permitirá descodificar mais harmónicos. A descodificação JT65B e JT65C é suportada. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="6949"/>
         <source>Harmonics decoding depth:</source>
-        <translation>Profundidade de descodificação de harmônicos:</translation>
+        <translation>Profundidade de descodificação de harmónicos:</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="6985"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Settings depend on the CPU power, try to use maximum number of decoding passes for overcrowded HF bands.&lt;br&gt;&lt;br&gt;Number of decoding passes may be decreased for low populated HF/VHF bands while an increase of the number of decoding attempts might bring better decoding efficiency for the weak signals there.&lt;br&gt;&lt;br&gt;Number of decoding attempts affecting decoding efficiency of the low SNR signals: wideband or RX frequency one.&lt;br&gt;&lt;br&gt;Number of decoding passes affecting maximum number of the signals that can be decoded on the same frequency or located close to each other with largely overlapped spectra, it is possible to decode up to 4 signals on the same frequency and up to 7 signals on the RX frequency if number of decoding passes is set to 4.&lt;br&gt;&lt;br&gt;Increase number of decoding attempts to the value allowing to get decoding finished until end of the RX minute interval.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; As configurações dependem da potência do CPU. Tente usar o número máximo de passes de descodificação para bandas de HF superlotadas. &lt;br&gt; &lt;br&gt; O número de passes de descodificação pode ser diminuído para HF/VHF pouco populada enquanto um aumento no número de tentativas de descodificação pode trazer uma melhor eficiência de descodificação para os sinais fracos. &lt;br&gt; &lt;br&gt; Número de tentativas de descodificação que afetam a eficiência de descodificação dos sinais SNR baixos: banda larga ou frequência RX um. &lt;Br &gt; &lt;br&gt; Número de passagens de descodificação que afetam o número máximo de sinais que podem ser descodificados na mesma frequência ou localizados próximos uns dos outros com espectros amplamente sobrepostos, é possível descodificar até 4 sinais na mesma frequência e até 7 sinais na frequência do RX se o número de passagens de descodificação estiver definido como 4. &lt;br&gt; &lt;br&gt; Aumente o número de tentativas de descodificação para o valor, permitindo concluir a descodificação até o final do intervalo de minutos do RX. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; As configurações dependem da potência do CPU. Tente usar o número máximo de passes de descodificação para bandas de HF superlotadas. &lt;br&gt; &lt;br&gt; O número de passes de descodificação pode ser diminuído para HF/VHF pouco populada enquanto um aumento no número de tentativas de descodificação pode trazer uma melhor eficiência de descodificação para os sinais fracos. &lt;br&gt; &lt;br&gt; Número de tentativas de descodificação que afetam a eficiência de descodificação dos sinais SNR baixos: banda larga ou frequência RX um. &lt;br&gt; &lt;br&gt; Número de passagens de descodificação que afetam o número máximo de sinais que podem ser descodificados na mesma frequência ou localizados próximos uns dos outros com espectros amplamente sobrepostos, é possível descodificar até 4 sinais na mesma frequência e até 7 sinais na frequência do RX se o número de passagens de descodificação estiver definido como 4. &lt;br&gt; &lt;br&gt; Aumente o número de tentativas de descodificação para o valor, permitindo concluir a descodificação até o final do intervalo de minutos do RX. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="7073"/>
@@ -10007,7 +10007,7 @@ alterações na placa de som</translation>
     <message>
         <location filename="../Configuration.ui"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Highlight messages from US stations whose state is not in the wsjtx_log.adi log file yet. The state comes from the grid square, in the log and in the decoded message alike: a square that lies in a single state counts for it; a square several states share counts for the state of the station's US license when that is one of them, and otherwise for none.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Realça mensagens de estações dos EUA cujo estado ainda não está no arquivo de log wsjtx_log.adi. O estado vem do grid, no log e na mensagem descodificada: um grid que fica num único estado conta para esse estado; um grid partilhado por vários estados conta para o estado da licença americana da estação quando é um deles, e caso contrário para nenhum.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Realça mensagens de estações dos EUA cujo estado ainda não está no ficheiro de log wsjtx_log.adi. O estado vem do grid, no log e na mensagem descodificada: um grid que fica num único estado conta para esse estado; um grid partilhado por vários estados conta para o estado da licença americana da estação quando é um deles, e caso contrário para nenhum.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
@@ -10017,7 +10017,7 @@ alterações na placa de som</translation>
     <message>
         <location filename="../Configuration.ui"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Highlight messages from US stations whose state is new on the band according to the wsjtx_log.adi log file. The state comes from the grid square and, in a square several states share, from the station's US license, as for new US states.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Realça mensagens de estações dos EUA cujo estado é novo na banda de acordo com o arquivo de log wsjtx_log.adi. O estado vem do grid e, num grid partilhado por vários estados, da licença americana da estação, como para os novos estados dos EUA.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Realça mensagens de estações dos EUA cujo estado é novo na banda de acordo com o ficheiro de log wsjtx_log.adi. O estado vem do grid e, num grid partilhado por vários estados, da licença americana da estação, como para os novos estados dos EUA.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
@@ -10042,7 +10042,7 @@ alterações na placa de som</translation>
     <message>
         <location filename="../Configuration.ui"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Highlight messages from US stations whose state is new in the mode according to the wsjtx_log.adi log file. The state comes from the grid square and, in a square several states share, from the station's US license, as for new US states.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Realça mensagens de estações dos EUA cujo estado é novo no modo de acordo com o arquivo de log wsjtx_log.adi. O estado vem do grid e, num grid partilhado por vários estados, da licença americana da estação, como para os novos estados dos EUA.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Realça mensagens de estações dos EUA cujo estado é novo no modo de acordo com o ficheiro de log wsjtx_log.adi. O estado vem do grid e, num grid partilhado por vários estados, da licença americana da estação, como para os novos estados dos EUA.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -10070,7 +10070,7 @@ alterações na placa de som</translation>
     <message>
         <location filename="../main.cpp" line="149"/>
         <source>Where &lt;rig-name&gt; is for multi-instance support.</source>
-        <translation>Onde &lt;nome-rádio&gt; é para suporte de multiplas instâncias.</translation>
+        <translation>Onde &lt;nome-rádio&gt; é para suporte de múltiplas instâncias.</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="150"/>
@@ -10080,7 +10080,7 @@ alterações na placa de som</translation>
     <message>
         <location filename="../main.cpp" line="154"/>
         <source>Writable files in test location.  Use with caution, for testing only.</source>
-        <translation>Arquivos graváveis no local do teste. Use com cuidado, apenas para teste.</translation>
+        <translation>Ficheiros graváveis no local do teste. Use com cuidado, apenas para teste.</translation>
     </message>
     <message>
         <source>Shared memory</source>

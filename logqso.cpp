@@ -229,7 +229,7 @@ void LogQSO::accept()
       m_dateTimeOn.time().toString("hh:mm:ss,") + 
       m_dateTimeOff.date().toString("yyyy-MM-dd,") +
       m_dateTimeOff.time().toString("hh:mm:ss,") + hisCall + "," +
-      hisGrid + "," + strDialFreq + "," + mode +
+      adif_gridsquare (hisGrid) + "," + strDialFreq + "," + mode +   /* CE3TSK 2026-10-14: 8 at most, as the ADIF */
       "," + rptSent + "," + rptRcvd + "," + m_txPower +
       "," + comments + "," + name;
     QTextStream out(&f);

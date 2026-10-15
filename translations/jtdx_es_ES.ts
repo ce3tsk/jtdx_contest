@@ -2672,12 +2672,12 @@ Formato:
     <message>
         <location filename="../HamlibTransceiver.cpp" line="264"/>
         <source>Communication timed out</source>
-        <translation>La comunicación se interrumpió</translation>
+        <translation>Se agotó el tiempo de espera de la comunicación</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="265"/>
         <source>IO error</source>
-        <translation>Error IO</translation>
+        <translation>Error de E/S</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="266"/>
@@ -2722,7 +2722,7 @@ Formato:
     <message>
         <location filename="../HamlibTransceiver.cpp" line="274"/>
         <source>NULL RIG handle or invalid pointer parameter</source>
-        <translation>Manejo NULL RIG o parámetro de puntero inválido</translation>
+        <translation>Manejador NULL del equipo o parámetro de puntero inválido</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="275"/>
@@ -2747,7 +2747,7 @@ Formato:
     <message>
         <location filename="../HamlibTransceiver.cpp" line="452"/>
         <source>Hamlib settings file error: config must be a JSON object</source>
-        <translation>Error del archivo de configuración de Hamlib: la configuración debe ser un objeto JSON</translation>
+        <translation>Error del archivo de configuración de Hamlib: config debe ser un objeto JSON</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="360"/>
@@ -2778,39 +2778,39 @@ Formato:
         <location filename="../HamlibTransceiver.cpp" line="613"/>
         <location filename="../HamlibTransceiver.cpp" line="648"/>
         <source>exchanging VFOs</source>
-        <translation>se intercambian VFOs</translation>
+        <translation>se intercambian los VFO</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="621"/>
         <location filename="../HamlibTransceiver.cpp" line="1177"/>
         <source>getting other VFO frequency</source>
-        <translation>obteniendo otra frecuencia de VFO</translation>
+        <translation>se obtiene la frecuencia del otro VFO</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="630"/>
         <source>getting other VFO mode</source>
-        <translation>obtener otro modo VFO</translation>
+        <translation>se obtiene el modo del otro VFO</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="658"/>
         <source>setting current VFO</source>
-        <translation>se ajusta el VFO actual</translation>
+        <translation>se selecciona el VFO actual</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="667"/>
         <source>getting frequency</source>
-        <translation>obteniendo frecuencia</translation>
+        <translation>se obtiene la frecuencia</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="676"/>
         <source>getting mode</source>
-        <translation>obteniendo modo</translation>
+        <translation>se obtiene el modo</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="698"/>
         <location filename="../HamlibTransceiver.cpp" line="1092"/>
         <source>getting current VFO</source>
-        <translation>obtener VFO actual</translation>
+        <translation>se obtiene el VFO actual</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="757"/>
@@ -2818,7 +2818,7 @@ Formato:
         <location filename="../HamlibTransceiver.cpp" line="779"/>
         <location filename="../HamlibTransceiver.cpp" line="1151"/>
         <source>getting current VFO frequency</source>
-        <translation>obtener la frecuencia actual de VFO</translation>
+        <translation>se obtiene la frecuencia del VFO actual</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="763"/>
@@ -2828,7 +2828,7 @@ Formato:
         <location filename="../HamlibTransceiver.cpp" line="892"/>
         <location filename="../HamlibTransceiver.cpp" line="953"/>
         <source>setting frequency</source>
-        <translation>ajuste de fecuencia</translation>
+        <translation>se ajusta la frecuencia</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="882"/>
@@ -2836,7 +2836,7 @@ Formato:
         <location filename="../HamlibTransceiver.cpp" line="1032"/>
         <location filename="../HamlibTransceiver.cpp" line="1045"/>
         <source>getting current VFO mode</source>
-        <translation>obtener el modo VFO actual</translation>
+        <translation>se obtiene el modo del VFO actual</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="888"/>
@@ -2845,44 +2845,44 @@ Formato:
         <location filename="../HamlibTransceiver.cpp" line="1038"/>
         <location filename="../HamlibTransceiver.cpp" line="1051"/>
         <source>setting current VFO mode</source>
-        <translation>se establece el  modo VFO actual</translation>
+        <translation>se ajusta el modo del VFO actual</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="940"/>
         <location filename="../HamlibTransceiver.cpp" line="1009"/>
         <source>setting/unsetting split mode</source>
-        <translation>se activa/desactiva modo dividido (split)</translation>
+        <translation>se activa/desactiva el modo dividido (split)</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="951"/>
         <location filename="../HamlibTransceiver.cpp" line="991"/>
         <source>setting split mode</source>
-        <translation>se activa modo dividido (Split)</translation>
+        <translation>se ajusta el modo dividido (split)</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="979"/>
         <source>setting split TX frequency and mode</source>
-        <translation>se ajusta la frecuencia y modo de TX dividido (Split)</translation>
+        <translation>se ajustan la frecuencia y el modo de TX dividido (split)</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="984"/>
         <source>setting split TX frequency</source>
-        <translation>se ajusta la frecuencia de TX dividida (Split)</translation>
+        <translation>se ajusta la frecuencia de TX dividido (split)</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="1056"/>
         <source>getting split TX VFO mode</source>
-        <translation>se obtiene el modo dividido (Split) TX VFO</translation>
+        <translation>se obtiene el modo del VFO de TX dividido (split)</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="1063"/>
         <source>setting split TX VFO mode</source>
-        <translation>se ajusta el modo split TX VFO</translation>
+        <translation>se ajusta el modo del VFO de TX dividido (split)</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="1343"/>
         <source>getting PTT state</source>
-        <translation>se obtiene el estado PTT</translation>
+        <translation>se obtiene el estado del PTT</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="1379"/>
@@ -3200,8 +3200,8 @@ Formato:
     <message>
         <location filename="../mainwindow.ui" line="803"/>
         <location filename="../mainwindow.ui" line="813"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;DXSummit spot line edit: mode in the information field being spotted automatically, user can add own text message in the information field. Available macros: #D is for distance, #G is for &quot;Grid1&lt;&gt;Grid2&quot;, #R is for report value. Information field preview is available.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Editar la línea de anuncio a DXSummit: el modo se detecta automáticamente, el usuario puede agregar su propio mensaje de texto en el campo de información. Macros disponibles: #D es para la distancia, #G es para &quot;Locator1 &lt;&gt; Locator2&quot;, #H para indicar F/H cuando Hound está activado, #R es para el valor de la señal recibida. La vista previa del campo de información está disponible. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;DXSummit spot line edit: mode in the information field being spotted automatically, user can add own text message in the information field. Available macros: #D is for distance, #G is for &quot;Grid1&amp;lt;&amp;gt;Grid2&quot;, #R is for report value. Information field preview is available.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Editar la línea de anuncio a DXSummit: el modo se detecta automáticamente, el usuario puede agregar su propio mensaje de texto en el campo de información. Macros disponibles: #D es para la distancia, #G es para &quot;Locator1 &amp;lt;&amp;gt; Locator2&quot;, #H para indicar F/H cuando Hound está activado, #R es para el valor de la señal recibida. La vista previa del campo de información está disponible. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="806"/>
@@ -3428,7 +3428,7 @@ Formato:
         <location filename="../mainwindow.ui" line="2008"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Comma separated list of the wanted callsigns. Autoselection under AutoSeq 1..7 will process wanted callsign according to the choosen notifications/priorities, this functionality is not supported under AutoSeq0. Non FT8 modes only: for compound callsigns the base callsign shall be used in the list, sometimes base callsign will be copied from the decoded message: when logging such QSO user will have to change correspondent&apos;s callsign to compound one if needed.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Lista separada por comas de los indicativos deseados. La selección automática en AutoSeq 1..7 procesará el indicativo deseado de acuerdo con las notificaciones / prioridades elegidas, esta funcionalidad no es compatible con AutoSeq0.
- Solo modos no FT8: para los indicativos compuestos, se utilizará el indicativo base  en la lista, a veces el indicativo básico se copiará del mensaje decodificado:  cuando se registra tal QSO el usuario tendrá que cambiar el indicativo del corresponsal a uno compuesto si es necesario.&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;</translation>
+ Solo modos no FT8: para los indicativos compuestos, se utilizará el indicativo base  en la lista, a veces el indicativo básico se copiará del mensaje decodificado:  cuando se registra tal QSO el usuario tendrá que cambiar el indicativo del corresponsal a uno compuesto si es necesario.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1995"/>
@@ -7494,7 +7494,7 @@ Verifique que se haya proporcionado el nombre de directorio correcto.</translati
     <message>
         <location filename="../Configuration.ui" line="607"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Check this if you wish to automatically return to the last monitored frequency when monitor is enabled, leave it unchecked if you wish to have the current rig frequency maintained.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Marque esto si desea volver automáticamente a la última frecuencia monitoreada cuando el monitor está habilitado, déjelo sin marcar si desea mantener la frecuencia actual del equipo. &lt;/p&gt; &lt; / body&gt; &lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Marque esto si desea volver automáticamente a la última frecuencia monitoreada cuando el monitor está habilitado, déjelo sin marcar si desea mantener la frecuencia actual del equipo. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="619"/>
@@ -7561,7 +7561,7 @@ período tranquilo cuando se realiza la decodificación.</translation>
     <message>
         <location filename="../Configuration.ui" line="808"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Request S meter data from transceiver: CAT shall be set up via Hamlib, Hamlib does support getting S meter data for some transceivers.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Solicitar datos del medidor S del transceptor: CAT se configurará a través de Hamlib, Hamlib admite la obtención de datos del medidor S para algunos transceptores. &lt;/p&gt; &lt;/body&gt; &lt;/ html &gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Solicitar datos del medidor S del transceptor: CAT se configurará a través de Hamlib, Hamlib admite la obtención de datos del medidor S para algunos transceptores. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="811"/>
@@ -7571,7 +7571,7 @@ período tranquilo cuando se realiza la decodificación.</translation>
     <message>
         <location filename="../Configuration.ui" line="840"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Request output power data from transceiver: CAT shall be set up via Hamlib, Hamlib does support getting output power data for some transceivers.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Solicitar datos de potencia de salida del transceptor: CAT se configurará a través de Hamlib, Hamlib admite la obtención de datos de potencia de salida para algunos transceptores. &lt;/p&gt; &lt;/body&gt; &lt;/ html &gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Solicitar datos de potencia de salida del transceptor: CAT se configurará a través de Hamlib, Hamlib admite la obtención de datos de potencia de salida para algunos transceptores. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="843"/>
@@ -7684,7 +7684,7 @@ período tranquilo cuando se realiza la decodificación.</translation>
     <message>
         <location filename="../Configuration.ui" line="1067"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Number of stop bits used when communicating with your radio&apos;s CAT interface&lt;/p&gt;&lt;p&gt;(consult you radio&apos;s manual for details).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Número de bits de parada utilizados al comunicarse con la interfaz CAT de su radio &lt;/p&gt; &lt;p&gt; (consulte el manual de su radio para más detalles). &lt;/p&gt; &lt;/body&gt; &lt; / html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Número de bits de parada utilizados al comunicarse con la interfaz CAT de su radio &lt;/p&gt; &lt;p&gt; (consulte el manual de su radio para más detalles). &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1070"/>
@@ -7928,7 +7928,7 @@ o se selecciona el ancho de banda).</translation>
     <message>
         <location filename="../Configuration.ui" line="1599"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Attempt to connect to the radio with these settings.&lt;/p&gt;&lt;p&gt;The button will turn green if the connection is successful or red if there is a problem.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Intente conectarse a la radio con esta configuración. &lt;/p&gt; &lt;p&gt; El botón se volverá verde si la conexión es exitosa o roja si hay un problema. &lt;/ p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Intente conectarse a la radio con esta configuración. &lt;/p&gt; &lt;p&gt; El botón se volverá verde si la conexión es exitosa o roja si hay un problema. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1602"/>
@@ -8198,7 +8198,7 @@ Ambos aquí.</translation>
     <message>
         <location filename="../Configuration.ui" line="2340"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Drag and drop items to rearrange order. Right click for item specific actions. Click, SHIFT+Click and, CRTL+Click to select items. @ symbol is being substituted with DX call, &amp; symbol with user&apos;s base callsign, # symbol with report to be transmitted, ^ symbol with correspondent&apos;s name retrieved from the log where name shall not exceed 7 chars.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Arrastre y suelte elementos para reorganizar el orden. Haga clic derecho para acciones específicas del artículo. Haga clic, MAYÚS + clic y CRTL + clic para seleccionar elementos. El símbolo @ se sustituye con la llamada DX, e lsímbolo &amp; con el indicativo base del usuario, el símbolo # con el informe a transmitir, el símbolo ^ con el nombre del corresponsal recuperado del registro donde el nombre no debe exceder los 7 caracteres. &lt;/p&gt; &lt;/body&gt; &lt; / html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Arrastre y suelte elementos para reorganizar el orden. Haga clic derecho para acciones específicas del artículo. Haga clic, MAYÚS + clic y CRTL + clic para seleccionar elementos. El símbolo @ se sustituye con la llamada DX, e lsímbolo &amp; con el indicativo base del usuario, el símbolo # con el informe a transmitir, el símbolo ^ con el nombre del corresponsal recuperado del registro donde el nombre no debe exceder los 7 caracteres. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="2391"/>
@@ -8531,7 +8531,7 @@ para evaluar la propagación y el rendimiento del sistema.</translation>
     <message>
         <location filename="../Configuration.ui" line="3038"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Selected text filters will be applied to limit transmission of the UDP messages from JTDX, for instance messages from some continents can be blocked.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Los filtros de texto seleccionados se aplicarán para limitar la transmisión de los mensajes UDP desde JTDX, por ejemplo, los mensajes de algunos continentes se pueden bloquear. &lt;/p&gt; &lt;/body&gt; &lt;/ html &gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Los filtros de texto seleccionados se aplicarán para limitar la transmisión de los mensajes UDP desde JTDX, por ejemplo, los mensajes de algunos continentes se pueden bloquear. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3041"/>
@@ -8639,12 +8639,12 @@ Haga clic derecho para insertar y eliminar opciones.</translation>
     <message>
         <location filename="../Configuration.ui" line="3331"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Highlight messages with CQ Zones which are new on the band according to the data from wsjtx_log.adi log file.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Resalte mensajes con zonas CQ que son nuevos  en la banda de acuerdo con los datos del archivo de registro wsjtx_log.adi.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;&lt;head/&gt;&lt;body&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Resalte mensajes con zonas CQ que son nuevos  en la banda de acuerdo con los datos del archivo de registro wsjtx_log.adi.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3341"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Highlight messages with CQ Zones which are new in the mode according to the data from wsjtx_log.adi log file.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Resalte mensajes con zonas CQ que son nuevas en el modo de acuerdo con los datos del archivo de registro wsjtx_log.adi.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;&lt;head/&gt;&lt;body&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Resalte mensajes con zonas CQ que son nuevas en el modo de acuerdo con los datos del archivo de registro wsjtx_log.adi.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3361"/>
@@ -8659,12 +8659,12 @@ Haga clic derecho para insertar y eliminar opciones.</translation>
     <message>
         <location filename="../Configuration.ui" line="3371"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Highlight messages with ITU Zones which are new on the band according to the data from wsjtx_log.adi log file.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Resalte mensajes con zonas ITU que son nuevos en la banda de acuerdo con los datos del archivo de registro wsjtx_log.adi.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;&lt;head/&gt;&lt;body&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Resalte mensajes con zonas ITU que son nuevos en la banda de acuerdo con los datos del archivo de registro wsjtx_log.adi.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3381"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Highlight messages with ITU Zones which are new in the mode according to the data from wsjtx_log.adi log file.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Resalte mensajes con zonas ITU que son nuevas en el modo de acuerdo con los datos del archivo de registro wsjtx_log.adi.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;&lt;head/&gt;&lt;body&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Resalte mensajes con zonas ITU que son nuevas en el modo de acuerdo con los datos del archivo de registro wsjtx_log.adi.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3401"/>
@@ -8804,7 +8804,7 @@ Haga clic derecho para insertar y eliminar opciones.</translation>
     <message>
         <location filename="../Configuration.ui" line="3481"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Highlight messages with prefixes which do not exist in the wsjtx_log.adi log file.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Resalte los mensajes con prefijos que no existen en el archivo de registro wsjtx_log.adi. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt; &lt;html&gt; &lt;head /&gt; &lt;body &gt; &lt;p&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Resalte los mensajes con prefijos que no existen en el archivo de registro wsjtx_log.adi. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3484"/>
@@ -8888,8 +8888,8 @@ Haga clic derecho para insertar y eliminar opciones.</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3604"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Invert text&lt;-&gt;background color for received messages&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt; Invertir texto &lt;-&gt; color de fondo para los mensajes recibidos &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Invert text&amp;lt;-&amp;gt;background color for received messages&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt; Invertir texto &amp;lt;-&amp;gt; color de fondo para los mensajes recibidos &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3607"/>
@@ -9811,7 +9811,7 @@ AA1AAA, BB1BB, CC1CC &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
     <message>
         <location filename="../Configuration.ui" line="6985"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Settings depend on the CPU power, try to use maximum number of decoding passes for overcrowded HF bands.&lt;br&gt;&lt;br&gt;Number of decoding passes may be decreased for low populated HF/VHF bands while an increase of the number of decoding attempts might bring better decoding efficiency for the weak signals there.&lt;br&gt;&lt;br&gt;Number of decoding attempts affecting decoding efficiency of the low SNR signals: wideband or RX frequency one.&lt;br&gt;&lt;br&gt;Number of decoding passes affecting maximum number of the signals that can be decoded on the same frequency or located close to each other with largely overlapped spectra, it is possible to decode up to 4 signals on the same frequency and up to 7 signals on the RX frequency if number of decoding passes is set to 4.&lt;br&gt;&lt;br&gt;Increase number of decoding attempts to the value allowing to get decoding finished until end of the RX minute interval.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; La configuración depende de la potencia de la CPU, intente utilizar el número máximo de pases de decodificación para bandas de HF superpobladas. &lt;br&gt; &lt;br&gt; El número de pases de decodificación puede disminuir para HF con poca población / VHF mientras que un aumento en el número de intentos de decodificación podría traer una mejor eficiencia de decodificación para las señales débiles allí. &lt;br&gt; &lt;br&gt; Número de intentos de decodificación que afectan la eficiencia de decodificación de las señales SNR bajas: banda ancha o frecuencia RX uno. &lt;Br &gt; &lt;br&gt; Número de pasadas de decodificación que afectan el número máximo de señales que pueden decodificarse en la misma frecuencia o ubicadas cerca una de la otra con espectros superpuestos, es posible decodificar hasta 4 señales en la misma frecuencia y hasta 7 señales en la frecuencia RX si el número de pasadas de decodificación se establece en 4. &lt;br&gt; &lt;br&gt; Aumente el número de intentos de decodificación al valor que permita terminar la decodificación hasta el final del intervalo de minutos RX. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; La configuración depende de la potencia de la CPU, intente utilizar el número máximo de pases de decodificación para bandas de HF superpobladas. &lt;br&gt; &lt;br&gt; El número de pases de decodificación puede disminuir para HF con poca población / VHF mientras que un aumento en el número de intentos de decodificación podría traer una mejor eficiencia de decodificación para las señales débiles allí. &lt;br&gt; &lt;br&gt; Número de intentos de decodificación que afectan la eficiencia de decodificación de las señales SNR bajas: banda ancha o frecuencia RX uno. &lt;br&gt; &lt;br&gt; Número de pasadas de decodificación que afectan el número máximo de señales que pueden decodificarse en la misma frecuencia o ubicadas cerca una de la otra con espectros superpuestos, es posible decodificar hasta 4 señales en la misma frecuencia y hasta 7 señales en la frecuencia RX si el número de pasadas de decodificación se establece en 4. &lt;br&gt; &lt;br&gt; Aumente el número de intentos de decodificación al valor que permita terminar la decodificación hasta el final del intervalo de minutos RX. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="7073"/>

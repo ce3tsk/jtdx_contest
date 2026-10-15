@@ -5,6 +5,7 @@ subroutine azdist(MyGrid,HisGrid,utch,nAz,nEl,nDmiles,nDkm,nHotAz,nHotABetter)
   real*8 utch,utch0
   logical HotABetter,IamEast
   logical l8my,l8his      !CE3TSK 2026-10-14: the grid was given with its 7th and 8th characters
+  character*8 mg,hg       !CE3TSK 2026-10-14: local copies - the padding no longer goes back to the caller
   real eltab(22),daztab(22)
   data eltab/18.,15.,13.,11.,9.,8.,7.,6.,5.3,4.7,4.,3.3,2.7,    &
        2.,1.5,1.,0.8,0.6,0.4,0.2,0.0,0.0/
@@ -36,18 +37,22 @@ subroutine azdist(MyGrid,HisGrid,utch,nAz,nEl,nDmiles,nDkm,nHotAz,nHotABetter)
 ! CONTEST_POINTS_PLAN.md 2). The grid is moved to its cell's centre below - half a cell, 0.25' east and 0.125'
 ! north (about 0.46 km x cos(latitude) and 0.23 km) - only when it was GIVEN with 8 characters: grid2deg cannot
 ! tell, it sees this padding and packjt's as digits too, and a 4 or 6 character grid keeps its point to the bit.
-  l8my=MyGrid(7:7).ge.'0' .and. MyGrid(7:7).le.'9' .and. MyGrid(8:8).ge.'0' .and. MyGrid(8:8).le.'9'
-  l8his=HisGrid(7:7).ge.'0' .and. HisGrid(7:7).le.'9' .and. HisGrid(8:8).ge.'0' .and. HisGrid(8:8).le.'9'
-  if(MyGrid(5:5).eq.' ') MyGrid(5:5)='l'
-  if(MyGrid(6:6).eq.' ') MyGrid(6:6)='l'
-  if(HisGrid(5:5).eq.' ') HisGrid(5:5)='l'
-  if(HisGrid(6:6).eq.' ') HisGrid(6:6)='l'
-  if(MyGrid(7:7).eq.' ') MyGrid(7:7)='5'
-  if(MyGrid(8:8).eq.' ') MyGrid(8:8)='5'
-  if(HisGrid(7:7).eq.' ') HisGrid(7:7)='5'
-  if(HisGrid(8:8).eq.' ') HisGrid(8:8)='5'
+! CE3TSK 2026-10-14 (review 3.-67): the padding goes into LOCAL copies. It went into the caller's own buffers, so a
+! caller handing the same buffer again had a padded 6 character grid read as one of 8 (its digits) and moved by half
+! a cell - none does today; and a caller's grid shorter than 8 (fix_contest_msg's character*6) was written past.
+  mg=MyGrid; hg=HisGrid
+  l8my=mg(7:7).ge.'0' .and. mg(7:7).le.'9' .and. mg(8:8).ge.'0' .and. mg(8:8).le.'9'
+  l8his=hg(7:7).ge.'0' .and. hg(7:7).le.'9' .and. hg(8:8).ge.'0' .and. hg(8:8).le.'9'
+  if(mg(5:5).eq.' ') mg(5:5)='l'
+  if(mg(6:6).eq.' ') mg(6:6)='l'
+  if(hg(5:5).eq.' ') hg(5:5)='l'
+  if(hg(6:6).eq.' ') hg(6:6)='l'
+  if(mg(7:7).eq.' ') mg(7:7)='5'
+  if(mg(8:8).eq.' ') mg(8:8)='5'
+  if(hg(7:7).eq.' ') hg(7:7)='5'
+  if(hg(8:8).eq.' ') hg(8:8)='5'
 
-  if(MyGrid.eq.HisGrid) then
+  if(mg.eq.hg) then        !CE3TSK 2026-10-14: the padded copies, as the padded buffers were
      Az=0.
      Dmiles=0.
      Dkm=0.0
@@ -57,8 +62,8 @@ subroutine azdist(MyGrid,HisGrid,utch,nAz,nEl,nDmiles,nDkm,nHotAz,nHotABetter)
      HotABetter=.true.
      go to 900
   endif
-  call grid2deg(MyGrid,dlong1,dlat1)
-  call grid2deg(HisGrid,dlong2,dlat2)
+  call grid2deg(mg,dlong1,dlat1)
+  call grid2deg(hg,dlong2,dlat2)
   if(l8my) then; dlong1=dlong1-0.25/60.0; dlat1=dlat1+0.125/60.0; endif     !CE3TSK: west longitude - east is less
   if(l8his) then; dlong2=dlong2-0.25/60.0; dlat2=dlat2+0.125/60.0; endif
   eps=1.e-6

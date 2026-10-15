@@ -2675,7 +2675,7 @@ Format:
     <message>
         <location filename="../HamlibTransceiver.cpp" line="265"/>
         <source>IO error</source>
-        <translation>Błąd wejścia/wyjścia (IO)</translation>
+        <translation>Błąd wejścia/wyjścia</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="266"/>
@@ -2695,7 +2695,7 @@ Format:
     <message>
         <location filename="../HamlibTransceiver.cpp" line="269"/>
         <source>Command performed, but arg truncated, result not guaranteed</source>
-        <translation>Polecenie wykonane, ale skrócone, rezultat niepewny</translation>
+        <translation>Polecenie wykonane, ale argument skrócony, rezultat niepewny</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="270"/>
@@ -2745,7 +2745,7 @@ Format:
     <message>
         <location filename="../HamlibTransceiver.cpp" line="452"/>
         <source>Hamlib settings file error: config must be a JSON object</source>
-        <translation>Błąd pliku ustawień Hamlib: konfiguracja musi być obiektem JSON</translation>
+        <translation>Błąd pliku ustawień Hamlib: config musi być obiektem JSON</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="360"/>
@@ -2755,7 +2755,7 @@ Format:
     <message>
         <location filename="../HamlibTransceiver.cpp" line="476"/>
         <source>Hamlib error: %1 while %2</source>
-        <translation>Błąd Hamlib: %1 podczas %2</translation>
+        <translation>Błąd Hamlib: %1 (%2)</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="493"/>
@@ -2776,7 +2776,7 @@ Format:
         <location filename="../HamlibTransceiver.cpp" line="613"/>
         <location filename="../HamlibTransceiver.cpp" line="648"/>
         <source>exchanging VFOs</source>
-        <translation>zamiana VFOs</translation>
+        <translation>zamiana VFO</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="621"/>
@@ -2792,7 +2792,7 @@ Format:
     <message>
         <location filename="../HamlibTransceiver.cpp" line="658"/>
         <source>setting current VFO</source>
-        <translation>ustawianie aktuanego VFO</translation>
+        <translation>ustawianie aktualnego VFO</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="667"/>
@@ -2865,17 +2865,17 @@ Format:
     <message>
         <location filename="../HamlibTransceiver.cpp" line="984"/>
         <source>setting split TX frequency</source>
-        <translation>ustawianie częstotliwość TX dla trybu split</translation>
+        <translation>ustawianie częstotliwości TX dla trybu split</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="1056"/>
         <source>getting split TX VFO mode</source>
-        <translation>pobieranie TX VFO mode dla trybu split</translation>
+        <translation>pobieranie modulacji VFO TX dla trybu split</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="1063"/>
         <source>setting split TX VFO mode</source>
-        <translation>ustawianie TX VFO mode dla trybu split</translation>
+        <translation>ustawianie modulacji VFO TX dla trybu split</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="1343"/>
@@ -3198,8 +3198,8 @@ Format:
     <message>
         <location filename="../mainwindow.ui" line="803"/>
         <location filename="../mainwindow.ui" line="813"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;DXSummit spot line edit: mode in the information field being spotted automatically, user can add own text message in the information field. Available macros: #D is for distance, #G is for &quot;Grid1&lt;&gt;Grid2&quot;, #R is for report value. Information field preview is available.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Edycja linii spotów DXSummit: modulacja w polu informacyjnym jest wstawiana automatycznie, użytkownik może dodać własny tekst wiadomości w polu informacyjnym. Dostępne makra: #D jest dla odległości, #G jest dla &quot;Lokator1&lt;&gt;Lokator2&quot;, #R jest dla wartości raportu. Dostępny jest podgląd pola informacyjnego.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;DXSummit spot line edit: mode in the information field being spotted automatically, user can add own text message in the information field. Available macros: #D is for distance, #G is for &quot;Grid1&amp;lt;&amp;gt;Grid2&quot;, #R is for report value. Information field preview is available.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Edycja linii spotów DXSummit: modulacja w polu informacyjnym jest wstawiana automatycznie, użytkownik może dodać własny tekst wiadomości w polu informacyjnym. Dostępne makra: #D jest dla odległości, #G jest dla &quot;Lokator1&amp;lt;&amp;gt;Lokator2&quot;, #R jest dla wartości raportu. Dostępny jest podgląd pola informacyjnego.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="806"/>
@@ -8876,8 +8876,8 @@ Prawoklik aby wstawić lub usunąć opcje.</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3604"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Invert text&lt;-&gt;background color for received messages&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Odwróć kolor tekstu&lt;-&gt;kolor tła dla wiadomości odebranych&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Invert text&amp;lt;-&amp;gt;background color for received messages&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Odwróć kolor tekstu&amp;lt;-&amp;gt;kolor tła dla wiadomości odebranych&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3607"/>

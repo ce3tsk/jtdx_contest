@@ -2730,7 +2730,7 @@ Format:
     <message>
         <location filename="../HamlibTransceiver.cpp" line="276"/>
         <source>Argument out of domain of func</source>
-        <translation>Argument außerhalb des Wertebereichs der Funktion</translation>
+        <translation>Argument außerhalb des Definitionsbereichs der Funktion</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="434"/>
@@ -2792,7 +2792,7 @@ Format:
     <message>
         <location filename="../HamlibTransceiver.cpp" line="658"/>
         <source>setting current VFO</source>
-        <translation>Setzen des aktuellen VFO</translation>
+        <translation>Auswählen des aktuellen VFO</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="667"/>
@@ -2915,7 +2915,7 @@ Format:
     <message>
         <location filename="../HamlibTransceiver.cpp"/>
         <source>Rig is not powered on</source>
-        <translation>Funkgerät ist nicht eingeschaltet</translation>
+        <translation>Funkgerät nicht eingeschaltet</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp"/>
@@ -3198,8 +3198,8 @@ Format:
     <message>
         <location filename="../mainwindow.ui" line="803"/>
         <location filename="../mainwindow.ui" line="813"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;DXSummit spot line edit: mode in the information field being spotted automatically, user can add own text message in the information field. Available macros: #D is for distance, #G is for &quot;Grid1&lt;&gt;Grid2&quot;, #R is for report value. Information field preview is available.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;DXSummit-Spot-Eingabe: die Betriebsart wird im Infofeld automatisch gespottet, eigener Text kann ergänzt werden. Verfügbare Makros: #D für die Entfernung, #G für "Locator1&lt;&gt;Locator2", #R für den Rapport. Eine Vorschau des Infofeldes ist verfügbar.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;DXSummit spot line edit: mode in the information field being spotted automatically, user can add own text message in the information field. Available macros: #D is for distance, #G is for &quot;Grid1&amp;lt;&amp;gt;Grid2&quot;, #R is for report value. Information field preview is available.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;DXSummit-Spot-Eingabe: die Betriebsart wird im Infofeld automatisch gespottet, eigener Text kann ergänzt werden. Verfügbare Makros: #D für die Entfernung, #G für "Locator1&amp;lt;&amp;gt;Locator2", #R für den Rapport. Eine Vorschau des Infofeldes ist verfügbar.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="806"/>
@@ -8875,7 +8875,7 @@ Rechtsklick für Einfügen und Löschen.</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3604"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Invert text&lt;-&gt;background color for received messages&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Invert text&amp;lt;-&amp;gt;background color for received messages&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Text- und Hintergrundfarbe empfangener Nachrichten vertauschen&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>

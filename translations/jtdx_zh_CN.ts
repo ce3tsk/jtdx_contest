@@ -2680,7 +2680,7 @@ Format:
     <message>
         <location filename="../HamlibTransceiver.cpp" line="266"/>
         <source>Internal Hamlib error</source>
-        <translation>Hamlib 內部错误</translation>
+        <translation>Hamlib 内部错误</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="267"/>
@@ -2695,7 +2695,7 @@ Format:
     <message>
         <location filename="../HamlibTransceiver.cpp" line="269"/>
         <source>Command performed, but arg truncated, result not guaranteed</source>
-        <translation>命令已执行, 但 arg 截断, 结果不能保证</translation>
+        <translation>命令已执行，但 arg 截断，结果不能保证</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="270"/>
@@ -2730,37 +2730,37 @@ Format:
     <message>
         <location filename="../HamlibTransceiver.cpp" line="276"/>
         <source>Argument out of domain of func</source>
-        <translation>参数功能范围外</translation>
+        <translation>参数超出函数定义域</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="434"/>
         <source>Hamlib settings file error: %1 at character offset %2</source>
-        <translation>Hamlib 设置文件错误: %1 字符偏移量 %2</translation>
+        <translation>Hamlib 设置文件错误：%1 字符偏移量 %2</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="440"/>
         <source>Hamlib settings file error: top level must be a JSON object</source>
-        <translation>Hamlib 设置文件错误: 顶层必须是 JSON 对象</translation>
+        <translation>Hamlib 设置文件错误：顶层必须是 JSON 对象</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="452"/>
         <source>Hamlib settings file error: config must be a JSON object</source>
-        <translation>Hamlib 设置文件错误: 配置必须是JSON对象</translation>
+        <translation>Hamlib 设置文件错误：config 必须是 JSON 对象</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="360"/>
         <source>Unsupported CAT type</source>
-        <translation>不支持 CAT 类型</translation>
+        <translation>不支持的 CAT 类型</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="476"/>
         <source>Hamlib error: %1 while %2</source>
-        <translation>Hamlib 错误: %1 当 %2</translation>
+        <translation>Hamlib 错误：%1（%2时）</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="493"/>
         <source>opening connection to rig</source>
-        <translation>打开连接无线电设备</translation>
+        <translation>连接无线电设备</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="555"/>
@@ -2776,18 +2776,18 @@ Format:
         <location filename="../HamlibTransceiver.cpp" line="613"/>
         <location filename="../HamlibTransceiver.cpp" line="648"/>
         <source>exchanging VFOs</source>
-        <translation>在 VFOs 之间切换</translation>
+        <translation>在 VFO 之间切换</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="621"/>
         <location filename="../HamlibTransceiver.cpp" line="1177"/>
         <source>getting other VFO frequency</source>
-        <translation>获取其他 VFO 频率</translation>
+        <translation>获取另一个 VFO 的频率</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="630"/>
         <source>getting other VFO mode</source>
-        <translation>获取其他 VFO 模式</translation>
+        <translation>获取另一个 VFO 的模式</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="658"/>
@@ -2849,7 +2849,7 @@ Format:
         <location filename="../HamlibTransceiver.cpp" line="940"/>
         <location filename="../HamlibTransceiver.cpp" line="1009"/>
         <source>setting/unsetting split mode</source>
-        <translation>设置/取消 设置异频模式</translation>
+        <translation>设置/取消异频模式</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="951"/>
@@ -2880,17 +2880,17 @@ Format:
     <message>
         <location filename="../HamlibTransceiver.cpp" line="1343"/>
         <source>getting PTT state</source>
-        <translation>获取PTT 状态</translation>
+        <translation>获取 PTT 状态</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="1379"/>
         <source>setting PTT on</source>
-        <translation>设置PTT 开启</translation>
+        <translation>设置 PTT 开启</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="1387"/>
         <source>setting PTT off</source>
-        <translation>设置PTT 关闭</translation>
+        <translation>设置 PTT 关闭</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="1399"/>
@@ -3198,8 +3198,8 @@ Format:
     <message>
         <location filename="../mainwindow.ui" line="803"/>
         <location filename="../mainwindow.ui" line="813"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;DXSummit spot line edit: mode in the information field being spotted automatically, user can add own text message in the information field. Available macros: #D is for distance, #G is for &quot;Grid1&lt;&gt;Grid2&quot;, #R is for report value. Information field preview is available.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;DXSummit spot 编辑: 模式在信息字段中自动被发现,用户可以在信息字段中添加自己的文本信息.可用宏:#D表示距离,#G表示网格1 网格2,#R表示报表值.信息字段预览可用.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;DXSummit spot line edit: mode in the information field being spotted automatically, user can add own text message in the information field. Available macros: #D is for distance, #G is for &quot;Grid1&amp;lt;&amp;gt;Grid2&quot;, #R is for report value. Information field preview is available.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;DXSummit spot 编辑: 模式在信息字段中自动被发现,用户可以在信息字段中添加自己的文本信息.可用宏:#D表示距离,#G表示网格1&amp;lt;&amp;gt;网格2,#R表示报表值.信息字段预览可用.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="806"/>
@@ -7806,7 +7806,7 @@ PTT的其它硬件接口.</translation>
     <message>
         <location filename="../Configuration.ui" line="1352"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Use the RS-232 RTS control line to toggle your radio&apos;s PTT, requires hardware to inteface the line.&lt;/p&gt;&lt;p&gt;Some commercial interface units also use this method.&lt;/p&gt;&lt;p&gt;The RTS control line of the CAT serial port may be used for this or a RTS control line on a different serial port may be used. Note that this option is not available on the CAT serial port when hardware flow control is used.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;使用 RS-232 RTS 控制线切换无线电设备的 PTT, 需要硬件将线路整数.&lt;/p&gt;&lt;p&gt;一些商业接口单元也使用此方法.&lt;/p&gt;&lt;p&gt;CAT 串行端口的 RTS 控制线可用于此, 也可以使用其他串行端口上的 RTS 控制线.请注意, 使用硬件流控制时, 此选项在 CAT 串行端口上不可用.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;使用 RS-232 RTS 控制线切换无线电设备的 PTT, 需要硬件接口连接该线路.&lt;/p&gt;&lt;p&gt;一些商业接口单元也使用此方法.&lt;/p&gt;&lt;p&gt;CAT 串行端口的 RTS 控制线可用于此, 也可以使用其他串行端口上的 RTS 控制线.请注意, 使用硬件流控制时, 此选项在 CAT 串行端口上不可用.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1355"/>
@@ -8874,8 +8874,8 @@ Right click for insert and delete options.</source>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3604"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Invert text&lt;-&gt;background color for received messages&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;将文本 &lt;-&gt; 接收到的信息背景色反转&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Invert text&amp;lt;-&amp;gt;background color for received messages&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;将文本 &amp;lt;-&amp;gt; 接收到的信息背景色反转&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3607"/>

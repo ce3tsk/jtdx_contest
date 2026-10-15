@@ -2670,12 +2670,12 @@ Formátum:
     <message>
         <location filename="../HamlibTransceiver.cpp" line="264"/>
         <source>Communication timed out</source>
-        <translation>A kommunikáció idő lejárt</translation>
+        <translation>A kommunikáció ideje lejárt</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="265"/>
         <source>IO error</source>
-        <translation>IO hiba</translation>
+        <translation>I/O-hiba</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="266"/>
@@ -2710,7 +2710,7 @@ Formátum:
     <message>
         <location filename="../HamlibTransceiver.cpp" line="272"/>
         <source>Communication bus error</source>
-        <translation>Kommunikációs busz hiba</translation>
+        <translation>Kommunikációs buszhiba</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="273"/>
@@ -2730,7 +2730,7 @@ Formátum:
     <message>
         <location filename="../HamlibTransceiver.cpp" line="276"/>
         <source>Argument out of domain of func</source>
-        <translation>Argumentumon kívüli funkció</translation>
+        <translation>Az argumentum kívül esik a függvény értelmezési tartományán</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="434"/>
@@ -2745,22 +2745,22 @@ Formátum:
     <message>
         <location filename="../HamlibTransceiver.cpp" line="452"/>
         <source>Hamlib settings file error: config must be a JSON object</source>
-        <translation>Hamlib beállítási fájlhiba: a konfigurációnak egy JSON-objektumnak kell lennie</translation>
+        <translation>Hamlib beállítási fájlhiba: a config értékének egy JSON-objektumnak kell lennie</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="360"/>
         <source>Unsupported CAT type</source>
-        <translation>Nem támogatott CAT típus</translation>
+        <translation>Nem támogatott CAT-típus</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="476"/>
         <source>Hamlib error: %1 while %2</source>
-        <translation>Hamlib hiba: %1, miközben %2</translation>
+        <translation>Hamlib hiba: %1 (%2)</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="493"/>
         <source>opening connection to rig</source>
-        <translation>kapcsolat megnyitása a rig-hez</translation>
+        <translation>kapcsolat megnyitása a righez</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="555"/>
@@ -2782,17 +2782,17 @@ Formátum:
         <location filename="../HamlibTransceiver.cpp" line="621"/>
         <location filename="../HamlibTransceiver.cpp" line="1177"/>
         <source>getting other VFO frequency</source>
-        <translation>másik VFO frekvencia lekérése</translation>
+        <translation>a másik VFO frekvenciájának lekérése</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="630"/>
         <source>getting other VFO mode</source>
-        <translation>másik VFO üzemmód lekérése</translation>
+        <translation>a másik VFO üzemmódjának lekérése</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="658"/>
         <source>setting current VFO</source>
-        <translation>aktuális VFO beállítása</translation>
+        <translation>aktuális VFO kiválasztása</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="667"/>
@@ -2816,7 +2816,7 @@ Formátum:
         <location filename="../HamlibTransceiver.cpp" line="779"/>
         <location filename="../HamlibTransceiver.cpp" line="1151"/>
         <source>getting current VFO frequency</source>
-        <translation>aktuális VFO frekvencia lekérése</translation>
+        <translation>az aktuális VFO frekvenciájának lekérése</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="763"/>
@@ -2826,7 +2826,7 @@ Formátum:
         <location filename="../HamlibTransceiver.cpp" line="892"/>
         <location filename="../HamlibTransceiver.cpp" line="953"/>
         <source>setting frequency</source>
-        <translation>beállítási frekvencia</translation>
+        <translation>frekvencia beállítása</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="882"/>
@@ -2834,7 +2834,7 @@ Formátum:
         <location filename="../HamlibTransceiver.cpp" line="1032"/>
         <location filename="../HamlibTransceiver.cpp" line="1045"/>
         <source>getting current VFO mode</source>
-        <translation>aktuális VFO üzemmód lekérése</translation>
+        <translation>az aktuális VFO üzemmódjának lekérése</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="888"/>
@@ -2843,7 +2843,7 @@ Formátum:
         <location filename="../HamlibTransceiver.cpp" line="1038"/>
         <location filename="../HamlibTransceiver.cpp" line="1051"/>
         <source>setting current VFO mode</source>
-        <translation>aktuális VFO üzemmód beállítása</translation>
+        <translation>az aktuális VFO üzemmódjának beállítása</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="940"/>
@@ -2855,27 +2855,27 @@ Formátum:
         <location filename="../HamlibTransceiver.cpp" line="951"/>
         <location filename="../HamlibTransceiver.cpp" line="991"/>
         <source>setting split mode</source>
-        <translation>split (osztott) mód beállítása</translation>
+        <translation>split mód beállítása</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="979"/>
         <source>setting split TX frequency and mode</source>
-        <translation>osztott TX frekvencia és üzemmód beállítása</translation>
+        <translation>split TX frekvencia és üzemmód beállítása</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="984"/>
         <source>setting split TX frequency</source>
-        <translation>osztott TX frekvencia beállítása</translation>
+        <translation>split TX frekvencia beállítása</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="1056"/>
         <source>getting split TX VFO mode</source>
-        <translation>osztott TX VFO üzemmód lekérése</translation>
+        <translation>a split TX VFO üzemmódjának lekérése</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="1063"/>
         <source>setting split TX VFO mode</source>
-        <translation>osztott TX VFO üzemmód beállítása</translation>
+        <translation>a split TX VFO üzemmódjának beállítása</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="1343"/>
@@ -3198,8 +3198,8 @@ Formátum:
     <message>
         <location filename="../mainwindow.ui" line="803"/>
         <location filename="../mainwindow.ui" line="813"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;DXSummit spot line edit: mode in the information field being spotted automatically, user can add own text message in the information field. Available macros: #D is for distance, #G is for &quot;Grid1&lt;&gt;Grid2&quot;, #R is for report value. Information field preview is available.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;A DXSummit, Dx_jelentés szerkesztősora: a kapcsolat üzemmódja automatikusan behelyettesítésre kerül, a felhasználó saját szöveges üzenetet adhat meg az információs mezőben. Elérhető makrók: #D van a távolság számárai, #G van a &quot;QRA1&lt;&gt;QRA2&quot; számára, #R van a riport értéke számára. Az információs mező előnézete elérhető.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;DXSummit spot line edit: mode in the information field being spotted automatically, user can add own text message in the information field. Available macros: #D is for distance, #G is for &quot;Grid1&amp;lt;&amp;gt;Grid2&quot;, #R is for report value. Information field preview is available.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;A DXSummit, Dx_jelentés szerkesztősora: a kapcsolat üzemmódja automatikusan behelyettesítésre kerül, a felhasználó saját szöveges üzenetet adhat meg az információs mezőben. Elérhető makrók: #D van a távolság számárai, #G van a &quot;QRA1&amp;lt;&amp;gt;QRA2&quot; számára, #R van a riport értéke számára. Az információs mező előnézete elérhető.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="806"/>
@@ -8871,8 +8871,8 @@ A jobb gombbal kattintva, a beillesztési és törlési lehetőségek elérhető
     </message>
     <message>
         <location filename="../Configuration.ui" line="3604"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Invert text&lt;-&gt;background color for received messages&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Invertálja a vett üzenetek szövegszínét &lt;-&gt; háttérszínét&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Invert text&amp;lt;-&amp;gt;background color for received messages&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Invertálja a vett üzenetek szövegszínét &amp;lt;-&amp;gt; háttérszínét&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3607"/>

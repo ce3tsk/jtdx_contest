@@ -250,9 +250,9 @@ subroutine chkfalse8(msg37,i3,n3,nbadcrc,iaptype,lcall1hash,ngriddel)
 ! CE3TSK 2026-10-14: and so is a second call that arrived as an UNRESOLVED HASH ("MYCALL <...> R GRID", review
 ! of 2026-10-14): it names no station and the window cannot mark it, while 1 in 64 phantoms of this a-priori
 ! type reads its free bits as a 22-bit hash. A real station that answers me with a non-standard call sent me
-! that call in full first, and its hash then resolves ("<PJ4/K1ABC>": not judged - its brackets reach the table,
-! which knows no "<" and answers nothing; the call was heard in full). chkgrid knows no "<" and deletes the unresolved
-! one, as until 2026-10-13.
+! that call in full first, and its hash then resolves - and a resolved hash arrives here without its brackets
+! (delbraces in ft8b.f90, the same lines in ft4b.f90): judged as any call, its prefix alone (review 3.-72). chkgrid
+! knows no "<" and deletes the unresolved one, as until 2026-10-13.
       if(indxr.gt.7 .and. callsign(1:5).ne.'<...>') then
         call chkprefix(callsign,lwrongcall); lgvalid=.true.
       else
@@ -338,6 +338,10 @@ subroutine chkfalse8(msg37,i3,n3,nbadcrc,iaptype,lcall1hash,ngriddel)
 ! operator has for the call (hisgrid4) is not asked about.
             call chkgrid(hiscall,grid,lchkcall,lgvalid,lwrongcall)
             if(.not.lgvalid) then   ! CE3TSK 2026-10-14: on record as prefix/6 when it is the prefix (it said grid/6)
+! CE3TSK 2026-10-14 (review 3.-72 item 9): for a square of open sea or the far south or north, chkgrid returns before
+! it looks at the call (lchkcall) - the record said grid/6 there even for a prefix that is
+! not allocated. The label is asked of the prefix alone then, as places 4 and 5 ask it; what is deleted is the same.
+              if(.not.lwrongcall) call chkprefix(hiscall,lwrongcall)
               ngriddel=merge(-6,6,lwrongcall); nbadcrc=1; msg37=''; return
             endif
           endif

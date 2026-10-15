@@ -2678,12 +2678,12 @@ Vorming:
     <message>
         <location filename="../HamlibTransceiver.cpp" line="265"/>
         <source>IO error</source>
-        <translation>Sisendi/Väljundi viga</translation>
+        <translation>Sisendi/väljundi viga</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="266"/>
         <source>Internal Hamlib error</source>
-        <translation>Hamlib-i sisemine viga</translation>
+        <translation>Hamlibi sisemine viga</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="267"/>
@@ -2698,7 +2698,7 @@ Vorming:
     <message>
         <location filename="../HamlibTransceiver.cpp" line="269"/>
         <source>Command performed, but arg truncated, result not guaranteed</source>
-        <translation>Käsk saadeti aga argument tühistati, tulemus võib olla miite oodatav</translation>
+        <translation>Käsk täideti, kuid argument kärbiti, tulemus pole tagatud</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="270"/>
@@ -2723,7 +2723,7 @@ Vorming:
     <message>
         <location filename="../HamlibTransceiver.cpp" line="274"/>
         <source>NULL RIG handle or invalid pointer parameter</source>
-        <translation>NULL Rigi driver või parameeter</translation>
+        <translation>Raadio NULL-pide või vigane viidaparameeter</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="275"/>
@@ -2733,33 +2733,33 @@ Vorming:
     <message>
         <location filename="../HamlibTransceiver.cpp" line="276"/>
         <source>Argument out of domain of func</source>
-        <translation>Argumenti pole selle funktsiooni parameetrites</translation>
+        <translation>Argument on väljaspool funktsiooni määramispiirkonda</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="434"/>
         <source>Hamlib settings file error: %1 at character offset %2</source>
-        <translation>Hamlib seadete faili viga: %1 seade nihkes %2</translation>
+        <translation>Hamlibi seadete faili viga: %1 märgi nihkel %2</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="440"/>
         <source>Hamlib settings file error: top level must be a JSON object</source>
-        <translation>Hamlib seadete faili viga: ülemine tase peab olema JSON-objekt</translation>
+        <translation>Hamlibi seadete faili viga: ülemine tase peab olema JSON-objekt</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="452"/>
         <source>Hamlib settings file error: config must be a JSON object</source>
-        <translation>Hamlib seadete faili viga: config peab olema JSON-objekt</translation>
+        <translation>Hamlibi seadete faili viga: config peab olema JSON-objekt</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="360"/>
         <source>Unsupported CAT type</source>
-        <translation>Toetamata CAT tüüpi</translation>
+        <translation>Toetamata CAT-tüüp</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="476"/>
         <source>Hamlib error: %1 while %2</source>
         <translatorcomment>Vajab analüüsi</translatorcomment>
-        <translation>Hamlibi viga: %1 kui %2</translation>
+        <translation>Hamlibi viga: %1, kui %2</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="493"/>
@@ -2797,7 +2797,7 @@ Vorming:
         <location filename="../HamlibTransceiver.cpp" line="658"/>
         <source>setting current VFO</source>
         <translatorcomment>või aktiivse VFO?</translatorcomment>
-        <translation>seati praegust VFO-d</translation>
+        <translation>valiti praegust VFO-d</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="667"/>
@@ -2861,12 +2861,12 @@ Vorming:
         <location filename="../HamlibTransceiver.cpp" line="951"/>
         <location filename="../HamlibTransceiver.cpp" line="991"/>
         <source>setting split mode</source>
-        <translation>seati split režiimi</translation>
+        <translation>seati split-režiimi</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="979"/>
         <source>setting split TX frequency and mode</source>
-        <translation>seatati split TX sagedust ja töörežiimi</translation>
+        <translation>seati split TX sagedust ja töörežiimi</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="984"/>
@@ -2891,22 +2891,22 @@ Vorming:
     <message>
         <location filename="../HamlibTransceiver.cpp" line="1379"/>
         <source>setting PTT on</source>
-        <translation>lülitatati PTT sisse</translation>
+        <translation>lülitati PTT sisse</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="1387"/>
         <source>setting PTT off</source>
-        <translation>lülitatai PTT välja</translation>
+        <translation>lülitati PTT välja</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="1399"/>
         <source>setting a configuration item</source>
-        <translation>seati konfiguratsiooni elementi</translation>
+        <translation>seati konfiguratsioonielementi</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="1409"/>
         <source>getting a configuration item</source>
-        <translation>küsiti konfiguratsiooni elementi</translation>
+        <translation>küsiti konfiguratsioonielementi</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp"/>
@@ -3204,8 +3204,8 @@ Vorming:
     <message>
         <location filename="../mainwindow.ui" line="803"/>
         <location filename="../mainwindow.ui" line="813"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;DXSummit spot line edit: mode in the information field being spotted automatically, user can add own text message in the information field. Available macros: #D is for distance, #G is for &quot;Grid1&lt;&gt;Grid2&quot;, #R is for report value. Information field preview is available.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;DXSummit spoti muutmine: töörežiimi info spotitakse automaatselt, kasutaja saab teabeväljale lisada oma tekstisõnumi. Saadaolevad makrod: #D on vahemaa jaoks, #G on &quot;Ruut 1&lt;&gt; Ruut 2&quot;, # R on raporti väärtuse jaoks. Teabevälja eelvaade on saadaval.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;DXSummit spot line edit: mode in the information field being spotted automatically, user can add own text message in the information field. Available macros: #D is for distance, #G is for &quot;Grid1&amp;lt;&amp;gt;Grid2&quot;, #R is for report value. Information field preview is available.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;DXSummit spoti muutmine: töörežiimi info spotitakse automaatselt, kasutaja saab teabeväljale lisada oma tekstisõnumi. Saadaolevad makrod: #D on vahemaa jaoks, #G on &quot;Ruut 1&amp;lt;&amp;gt; Ruut 2&quot;, # R on raporti väärtuse jaoks. Teabevälja eelvaade on saadaval.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="806"/>
@@ -3569,7 +3569,7 @@ ZD8,ZD9,ZF,ZK3,ZL,ZL7,ZL8,ZL9,ZP,ZS,ZS8&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</tra
     <message>
         <location filename="../mainwindow.ui" line="2602"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Answer worked B4 AutoSeq option&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Vasta ennem töötatud AutoSeq valik&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Vasta ennem töötatud AutoSeq valik&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2616"/>
@@ -7824,7 +7824,7 @@ pole riistvaralist ühendust PTT-le.</translation>
     <message>
         <location filename="../Configuration.ui" line="1352"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Use the RS-232 RTS control line to toggle your radio&apos;s PTT, requires hardware to inteface the line.&lt;/p&gt;&lt;p&gt;Some commercial interface units also use this method.&lt;/p&gt;&lt;p&gt;The RTS control line of the CAT serial port may be used for this or a RTS control line on a different serial port may be used. Note that this option is not available on the CAT serial port when hardware flow control is used.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Kasuta RS-232 RTS signaali raadio PTT juhtimiseks, vajab selle signaali riistvaralist ühendamist.&lt;/p&gt;&lt;p&gt;Mõned turustatavad seadmed kasutavad seda meetodit.&lt;/p&gt;&lt;p&gt;CAT serial pordi või mõne teise serial pordi RTS signaali saab kasutada.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Kasuta RS-232 RTS signaali raadio PTT juhtimiseks, vajab selle signaali riistvaralist ühendamist.&lt;/p&gt;&lt;p&gt;Mõned turustatavad seadmed kasutavad seda meetodit.&lt;/p&gt;&lt;p&gt;CAT serial pordi või mõne teise serial pordi RTS signaali saab kasutada. Pane tähele, et see valik ei ole CAT serial pordil saadaval, kui kasutatakse riistvaralist voojuhtimist.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1355"/>
@@ -7834,7 +7834,7 @@ pole riistvaralist ühendust PTT-le.</translation>
     <message>
         <location filename="../Configuration.ui" line="1386"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Select the RS-232 serial port utilised for PTT control, this option is available when DTR or RTS is selected above as a transmit method.&lt;/p&gt;&lt;p&gt;This port can be the same one as the one used for CAT control.&lt;/p&gt;&lt;p&gt;For some interface types the special value CAT may be chosen, this is used for non-serial CAT interfaces that can control serial port control lines remotely (OmniRig for example).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Vali serial port mida kasutatakse PTT juhtimiseks, vee valik on saadaval, kui DTR või RTS on valitud eelnevalt PTT meetodiks.&lt;/p&gt;&lt;p&gt;See võib olla sama port mida kasutatakse CAT juhtimiseksl.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Vali serial port, mida kasutatakse PTT-juhtimiseks, see valik on saadaval, kui DTR või RTS on valitud eespool PTT-meetodiks.&lt;/p&gt;&lt;p&gt;See võib olla sama port, mida kasutatakse CAT-juhtimiseks.&lt;/p&gt;&lt;p&gt;Mõne liidesetüübi puhul saab valida erilise väärtuse CAT; seda kasutatakse CAT-liideste puhul, mis ei ole serial pordid, kuid saavad serial pordi juhtliine kaugelt juhtida (näiteks OmniRig).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1411"/>
@@ -8875,8 +8875,8 @@ Right click for insert and delete options.</source>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3604"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Invert text&lt;-&gt;background color for received messages&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Inverteeri tekst&lt;-&gt;vastuvõetud sõnumite taustvärvi&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Invert text&amp;lt;-&amp;gt;background color for received messages&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Inverteeri tekst&amp;lt;-&amp;gt;vastuvõetud sõnumite taustvärvi&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3607"/>

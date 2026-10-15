@@ -553,6 +553,12 @@ subroutine unpack77(c77,nrx,msg,unpk77_success,nthr)
         if(i.ge.4 .and. ipb.eq.1 .and. i3.eq.2) call_2(i:i+1)='/P'
         if(i.ge.4) call add_call_to_recent_calls(call_2,nthr)
      endif
+! CE3TSK 2026-10-14 (review 3.-81): pack77 makes no type 1 or 2 of a hashed call beside a call that has a "/" - pack77_1
+! returns ("if(w(1)(1:1).eq.'<' .and. index(w(2),'/').gt.0) return", and the other way round) and the message goes out
+! as type 4. Such a decode is random bits: "<...> W9XYZ/P RR73" of type 2 passed the "/P" check of FT8 and FT4/FT2. The
+! rule below for "<...> CALL/R GRID" is one case of it.
+     if((call_1(1:1).eq.'<' .and. index(call_2,'/').gt.0) .or. (call_2(1:1).eq.'<' .and. index(call_1,'/').gt.0)) &
+        unpk77_success=.false.
      if(igrid4.le.MAXGRID4) then
         call to_grid4(igrid4,grid4,unpkg4_success)
         if(.not.unpkg4_success) unpk77_success=.false.

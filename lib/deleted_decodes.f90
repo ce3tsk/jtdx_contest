@@ -17,7 +17,9 @@ module deleted_decodes
 !     8     chkdircq, all three modes: a directed CQ ("CQ TEST K1ABC FN42") at any strength (the prefix
 !           only: the square of a directed CQ is not judged by the decoder, the window marks it - but for
 !           place 2, which judges a weak one whose word is a number and whose call ends in /R or /P); a
-!           call that is an unresolved hash ("CQ TEST <...> FN42") is deleted too, as prefix/8
+!           call that is an unresolved hash with a grid is deleted too, as prefix/8, after a CQ word of any
+!           length and of types i3=1 and i3=2 ("CQ DX <...> FN42", "CQ WW <...> FN42", "CQ TEST <...> FN42";
+!           a plain "CQ <...>" never arrives - unpack77 refuses it)
 !     9     chkrgrid, all three modes: "CALL1 CALL2 R GRID" (the prefix only; so are places 4 and 5 for
 !           this form since 2026-10-13, but for a second call that is an unresolved hash, judged on its
 !           square as before - place 6, the station being worked, judges its square as before too)

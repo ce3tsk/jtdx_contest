@@ -37,9 +37,10 @@ subroutine chkdircq(msg37,i3,iaptype,lwrongcall)
 ! shown in the other two. All three decoders call this routine now, so that the next change to it cannot be
 ! made in one of them only.
 !
-! What it looks at is what ft8b.f90 looked at: a message decoded without a-priori help, of the standard
-! type, that reads "CQ", a word of three or four characters, a call and a 4-character grid. A word of one
-! or two characters ("CQ DX", "CQ EU") is not looked at. The SQUARE is not judged (the operator,
+! The prefix is asked of what ft8b.f90 looked at: a message decoded without a-priori help, of the standard
+! type (i3=1), that reads "CQ", a word of three or four characters, a call and a 4-character grid; for a word
+! of one or two characters ("CQ DX", "CQ EU") it is not asked. An unresolved hash as the call is deleted after
+! a word of any length, of types i3=1 and i3=2 (2026-10-14, below). The SQUARE is not judged (the operator,
 ! 2026-10-12: "CQ TEST" is the contest CQ, and a station the table has wrong must not lose it) - whether
 ! the grid fits the call is the window's question: phantomdecodes.h marks the line and the sequencer does
 ! not answer it on its own.
@@ -48,10 +49,30 @@ subroutine chkdircq(msg37,i3,iaptype,lwrongcall)
   integer, intent(in) :: i3,iaptype
   logical(1), intent(out) :: lwrongcall
   character callsign*12
-  integer ispc1,ispc2,ispc3,ispc4
+  integer ispc1,ispc2,ispc3,ispc4,ih
 
   lwrongcall=.false.
-  if(iaptype.ne.0 .or. i3.ne.1 .or. msg37(1:3).ne.'CQ ') return
+  if(iaptype.ne.0 .or. (i3.ne.1 .and. i3.ne.2) .or. msg37(1:3).ne.'CQ ') return
+! CE3TSK 2026-10-14 (reviews 3.-67 and 3.-72): a call that arrived as an UNRESOLVED HASH, with a grid, after a CQ word
+! of one or two characters too - "CQ DX <...> FN42", "CQ WW <...> FN42", "CQ A <...> FN42" - where until then only a
+! word of three or four was looked at ("CQ TEST <...> FN42", "CQ 290 <...> FN42", the prefix rule below). It names no
+! station, and no station sends it: a CQ from a call that does not fit the standard field goes out with the call in
+! full and no grid ("CQ PJ4/K1ABC"). Random bits read as a 22-bit hash 1 time in 64, and the window cannot mark it. On
+! record with the prefixes that are not allocated (prefix/8). Of type i3=2 too - the same text, as unpack77 adds no /P
+! to a hash: FT8 deleted it later and off the record (ft8b.f90, "protocol violations": i3=2 must carry /P), FT4 and
+! FT2 showed it until 2026-10-14. A plain "CQ <...> GRID" never arrives: unpack77 refuses a message that begins
+! "CQ <" (packjt77.f90) - ih=3 would do no harm. A RESOLVED hash arrives without its brackets - ft8b.f90 calls
+! delbraces, ft4b.f90 does the same in its own lines - and is a call like any other: judged below, as one.
+  ih=index(msg37,' <...> ')
+  if(ih.ge.3) then
+     if(index(msg37(4:ih-1),' ').eq.0 .and. msg37(ih+11:ih+11).eq.' ' .and.                                   &
+        msg37(ih+7:ih+7).gt.'@' .and. msg37(ih+7:ih+7).lt.'S' .and. msg37(ih+8:ih+8).gt.'@' .and.             &
+        msg37(ih+8:ih+8).lt.'S' .and. msg37(ih+9:ih+9).ge.'0' .and. msg37(ih+9:ih+9).le.'9' .and.             &
+        msg37(ih+10:ih+10).ge.'0' .and. msg37(ih+10:ih+10).le.'9') then
+        lwrongcall=.true.; return
+     endif
+  endif
+  if(i3.ne.1) return                       ! the prefix: the standard message alone, as before
   ispc1=index(msg37,' '); ispc2=index(msg37((ispc1+1):),' ')+ispc1
   if((ispc2-ispc1).ne.4 .and. (ispc2-ispc1).ne.5) return
   ispc3=index(msg37((ispc2+1):),' ')+ispc2; ispc4=index(msg37((ispc3+1):),' ')+ispc3
@@ -60,14 +81,8 @@ subroutine chkdircq(msg37,i3,iaptype,lwrongcall)
            msg37(ispc3+2:ispc3+2).gt.'@' .and. msg37(ispc3+2:ispc3+2).lt.'S' .and. &
            msg37(ispc3+3:ispc3+3).lt.':' .and. msg37(ispc3+4:ispc3+4).lt.':')) return
   callsign=''; callsign=msg37(ispc2+1:ispc3-1)
-! CE3TSK 2026-10-14 (review of 2026-10-14): a call that arrived as an UNRESOLVED HASH - "CQ TEST <...> FN42" -
-! names no station, and no station sends it: a CQ from a call that does not fit the standard field goes out
-! with the call in full ("CQ PJ4/K1ABC"). Random bits read as a 22-bit hash 1 time in 64. FT8's label 256
-! deleted it until 2026-10-12 (it asked chkgrid, which knows no "<"); deleted again, in all three modes, and
-! put on record with the prefixes that are not allocated (prefix/8).
-  if(callsign(1:5).eq.'<...>') then   ! a resolved hash, "<PJ4/K1ABC>", is a call the decoder heard in full - not judged
-    lwrongcall=.true.; return
-  endif
+! (an unresolved hash as the call is deleted above; a resolved one arrives without its brackets and is judged
+!  here as any call - "CQ TEST 1Z9ABC FN42" is deleted as prefix/8 whether 1Z9ABC came in full or from the hash table)
   call chkprefix(callsign,lwrongcall)
 end subroutine chkdircq
 

@@ -154,13 +154,26 @@ namespace cq_direction
     return Box::InEffect == box (word, mode77) ? word : QString {};
   }
 
-  // CE3TSK 2026-10-14 (review of 2026-10-14): does a word typed in place of another change the CQ that is
-  // sent? Selecting the CQ again restarts a transmission, clears a DX call that was typed, the QSO's messages
-  // and turns AutoSeq back on - which is what choosing ANOTHER CQ means. A word that leaves the CQ as it was -
-  // TEST typed in JT65, where the CQ goes out plain, or WWFF for TEST there - chose none.
-  inline bool changesCq (QString const& before, QString const& after, bool mode77)
+  // the word a CQ generated now carries (MainWindow::genCQMsg): inMessage's - and none with a nonstandard own call
+  // (standardCall false: MainWindow::stdCall, which takes K1ABC/P and K1ABC/R as standard - their CQ carries the
+  // word -, and not EA8/DL1ABC or K1ABCD), whose CQ carries no word at all
+  inline QString wordInCq (QString const& word, bool mode77, bool standardCall)
   {
-    return inMessage (before, mode77) != inMessage (after, mode77);
+    return standardCall ? inMessage (word, mode77) : QString {};
+  }
+
+  // CE3TSK 2026-10-14 (review of 2026-10-14): does a word typed change the CQ that is sent? Selecting the CQ again
+  // restarts a transmission, clears a DX call that was typed, the QSO's messages and turns AutoSeq back on - which
+  // is what choosing ANOTHER CQ means. A word that leaves the CQ as it was - TEST typed in JT65, where the CQ goes
+  // out plain, or WWFF for TEST there - chose none. sent: the word in the CQ generated last (MainWindow keeps it).
+  // Asked of that, not of the word taken before (3.-61 did, review 3.-67): a one-letter word on the way generates
+  // nothing, so "DX" -> "D" -> "DX" restarted a CQ that had stayed "CQ DX" all along.
+  // generated: a CQ was generated at all (review 3.-72). Without one - Tx6 empty, no own grid yet - every word
+  // typed selects the CQ again, as it always did: "no CQ" and "a CQ without a word" are both an empty sent, and a
+  // word cleared or one that is not carried (TEST in JT65) left Tx6 empty after a grid was given in the Settings.
+  inline bool changesCq (bool generated, QString const& sent, QString const& word, bool mode77, bool standardCall)
+  {
+    return !generated || sent != wordInCq (word, mode77, standardCall);
   }
 
   // CE3TSK 2026-10-14 (review of 2026-10-14): the word the settings keep - the one in effect, or the one typed

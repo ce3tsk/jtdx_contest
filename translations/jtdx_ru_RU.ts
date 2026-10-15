@@ -2671,7 +2671,7 @@ Format:
     <message>
         <location filename="../HamlibTransceiver.cpp" line="264"/>
         <source>Communication timed out</source>
-        <translation>Время коннекта истекло</translation>
+        <translation>Время соединения истекло</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="265"/>
@@ -2681,7 +2681,7 @@ Format:
     <message>
         <location filename="../HamlibTransceiver.cpp" line="266"/>
         <source>Internal Hamlib error</source>
-        <translation>Внутрення ошибка библиотеки Hamlib</translation>
+        <translation>Внутренняя ошибка библиотеки Hamlib</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="267"/>
@@ -2716,12 +2716,12 @@ Format:
     <message>
         <location filename="../HamlibTransceiver.cpp" line="273"/>
         <source>Communication bus collision</source>
-        <translation>Коллизии при работ шины свсязи</translation>
+        <translation>Коллизии при работе шины связи</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="274"/>
         <source>NULL RIG handle or invalid pointer parameter</source>
-        <translation>Нулевой дискриптор трансивера или неверный параметр указателя</translation>
+        <translation>Нулевой дескриптор трансивера или неверный параметр указателя</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="275"/>
@@ -2736,7 +2736,7 @@ Format:
     <message>
         <location filename="../HamlibTransceiver.cpp" line="434"/>
         <source>Hamlib settings file error: %1 at character offset %2</source>
-        <translation>Ошибка файла настроек Hamlib : %1 со смещением символа %2</translation>
+        <translation>Ошибка файла настроек Hamlib: %1 в позиции символа %2</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="440"/>
@@ -2751,17 +2751,17 @@ Format:
     <message>
         <location filename="../HamlibTransceiver.cpp" line="360"/>
         <source>Unsupported CAT type</source>
-        <translation>Не поддердерживаемый тип CAT</translation>
+        <translation>Неподдерживаемый тип CAT</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="476"/>
         <source>Hamlib error: %1 while %2</source>
-        <translation>Ошибка Hamlib %1 while %2</translation>
+        <translation>Ошибка Hamlib: %1 (%2)</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="493"/>
         <source>opening connection to rig</source>
-        <translation>текущее соединение с трансивером</translation>
+        <translation>открытие соединения с трансивером</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="555"/>
@@ -2777,7 +2777,7 @@ Format:
         <location filename="../HamlibTransceiver.cpp" line="613"/>
         <location filename="../HamlibTransceiver.cpp" line="648"/>
         <source>exchanging VFOs</source>
-        <translation>обмен VFOs</translation>
+        <translation>обмен VFO</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="621"/>
@@ -2788,12 +2788,12 @@ Format:
     <message>
         <location filename="../HamlibTransceiver.cpp" line="630"/>
         <source>getting other VFO mode</source>
-        <translation>Получение режима другого VFO</translation>
+        <translation>получение режима другого VFO</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="658"/>
         <source>setting current VFO</source>
-        <translation>установка текущего VFO</translation>
+        <translation>выбор текущего VFO</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="667"/>
@@ -2803,13 +2803,13 @@ Format:
     <message>
         <location filename="../HamlibTransceiver.cpp" line="676"/>
         <source>getting mode</source>
-        <translation>чтение режима</translation>
+        <translation>получение режима</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="698"/>
         <location filename="../HamlibTransceiver.cpp" line="1092"/>
         <source>getting current VFO</source>
-        <translation>выбор текущего VFO</translation>
+        <translation>получение текущего VFO</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="757"/>
@@ -2844,29 +2844,29 @@ Format:
         <location filename="../HamlibTransceiver.cpp" line="1038"/>
         <location filename="../HamlibTransceiver.cpp" line="1051"/>
         <source>setting current VFO mode</source>
-        <translation>установка тежима текущего VFO</translation>
+        <translation>установка режима текущего VFO</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="940"/>
         <location filename="../HamlibTransceiver.cpp" line="1009"/>
         <source>setting/unsetting split mode</source>
-        <translation>установить/снять режим split</translation>
+        <translation>установка/снятие режима split</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="951"/>
         <location filename="../HamlibTransceiver.cpp" line="991"/>
         <source>setting split mode</source>
-        <translation>установить режим split</translation>
+        <translation>установка режима split</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="979"/>
         <source>setting split TX frequency and mode</source>
-        <translation>установка split для частоты и режима TX</translation>
+        <translation>установка частоты и режима split TX</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="984"/>
         <source>setting split TX frequency</source>
-        <translation>установка split для частоты TX</translation>
+        <translation>установка частоты split TX</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="1056"/>
@@ -2876,7 +2876,7 @@ Format:
     <message>
         <location filename="../HamlibTransceiver.cpp" line="1063"/>
         <source>setting split TX VFO mode</source>
-        <translation>установка split режима TX VFO</translation>
+        <translation>установка режима split TX VFO</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="1343"/>
@@ -2886,7 +2886,7 @@ Format:
     <message>
         <location filename="../HamlibTransceiver.cpp" line="1379"/>
         <source>setting PTT on</source>
-        <translation>активирование PTT</translation>
+        <translation>активация PTT</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="1387"/>
@@ -2896,12 +2896,12 @@ Format:
     <message>
         <location filename="../HamlibTransceiver.cpp" line="1399"/>
         <source>setting a configuration item</source>
-        <translation>настройка элементов конфигурации</translation>
+        <translation>настройка элемента конфигурации</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="1409"/>
         <source>getting a configuration item</source>
-        <translation>считывание элементов конфигурации</translation>
+        <translation>получение элемента конфигурации</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp"/>
@@ -3201,8 +3201,8 @@ Format:
     <message>
         <location filename="../mainwindow.ui" line="803"/>
         <location filename="../mainwindow.ui" line="813"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;DXSummit spot line edit: mode in the information field being spotted automatically, user can add own text message in the information field. Available macros: #D is for distance, #G is for &quot;Grid1&lt;&gt;Grid2&quot;, #R is for report value. Information field preview is available.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;редактирование спота для DXSummit: вид связи подставляется автоматически,  вы можете добавить текст сообщения в информационное поле , при этом возможно использование макросов : #D для расстояния, #G для &quot;Grid1&lt;&gt;Grid2&quot; , #R для значения рапорта.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;DXSummit spot line edit: mode in the information field being spotted automatically, user can add own text message in the information field. Available macros: #D is for distance, #G is for &quot;Grid1&amp;lt;&amp;gt;Grid2&quot;, #R is for report value. Information field preview is available.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;редактирование спота для DXSummit: вид связи подставляется автоматически,  вы можете добавить текст сообщения в информационное поле , при этом возможно использование макросов : #D для расстояния, #G для &quot;Grid1&amp;lt;&amp;gt;Grid2&quot; , #R для значения рапорта.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="806"/>
@@ -3649,7 +3649,7 @@ ZD8,ZD9,ZF,ZK3,ZL,ZL7,ZL8,ZL9,ZP,ZS,ZS8&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</tra
     <message>
         <location filename="../mainwindow.ui" line="2686"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Bandwidth, FT8 170Hz, FT8 hound mode 580Hz, FT4 274Hz, JT9 115Hz, T10 225Hz. JT65 signals: 580Hz decoding, 300 Hz for displaying messages. Filter is centered to the RX signal spectrum. Filter functionality can not improve signal decoding, it is dedicated for use with slow CPUs to let decoder finish processing before signal transmission and avoid message change at transmission. All incoming calls out of Filter bandwidth will be lost, use Filter functionaly only if it is really needed for your CPU.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ограничение полосы частот при построении списка сигналов-кандидатов на декодирование, FT8: 170Гц, FT8 режим гончей 580Гц, FT4 274Гц, JT9 115Гц, T10 225Гц. Для JT65: ширина полосы пропускания 580Гц, для отображения сообщения на экране - 300 Гц.Фильтрация происходит относительно центра спектра принимаемого сигнала.Функция &quot;Фильтр&quot; не может улучшить декодирование сигнала, она предназначена для использования с медленными процессорами, чтобы позволить декодеру завершить обработку перед передачей сигнала и избежать изменения сообщения при передаче. Все входящие вызовы вне полосы пропускания фильтра будут потеряны, используйте функцию «Фильтр» только в том случае, если это действительно необходимо для Вашего процессора. В закладке &quot;АвтоВыбор&quot; доступно автоматическое управление кнопкой &apos;Фильтр&apos;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ограничение полосы частот при построении списка сигналов-кандидатов на декодирование, FT8: 170Гц, FT8 режим гончей 580Гц, FT4 274Гц, JT9 115Гц, T10 225Гц. Для JT65: ширина полосы пропускания 580Гц, для отображения сообщения на экране - 300 Гц.Фильтрация происходит относительно центра спектра принимаемого сигнала.Функция &quot;Фильтр&quot; не может улучшить декодирование сигнала, она предназначена для использования с медленными процессорами, чтобы позволить декодеру завершить обработку перед передачей сигнала и избежать изменения сообщения при передаче. Все входящие вызовы вне полосы пропускания фильтра будут потеряны, используйте функцию «Фильтр» только в том случае, если это действительно необходимо для Вашего процессора. В закладке &quot;АвтоВыбор&quot; доступно автоматическое управление кнопкой &apos;Фильтр&apos;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2700"/>
@@ -6632,7 +6632,7 @@ Please verify the correct directory name was given.</source>
     <message>
         <location filename="../WFPalette.cpp" line="104"/>
         <source>Error opening waterfall palette file &quot;%1&quot;: %2.</source>
-        <translation>Ошибка чтения файла палитры водопада &quot;%1&quot;:%2.</translation>
+        <translation>Ошибка открытия файла палитры водопада &quot;%1&quot;: %2.</translation>
     </message>
     <message>
         <location filename="../WFPalette.cpp" line="258"/>
@@ -8753,7 +8753,7 @@ Right click for insert and delete options.</source>
     <message>
         <location filename="../Configuration.ui" line="763"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Request switch on rig power when supported in Hamlib.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Включение питания трансивера при запуске программы JTDX. Поддерживается в TCI и для части моделей трансиверов поддерживается в Hamlib.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Включение питания трансивера при запуске программы JTDX. Поддерживается в TCI и для части моделей трансиверов поддерживается в Hamlib.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="766"/>
@@ -8941,7 +8941,7 @@ Right click for insert and delete options.</source>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3604"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Invert text&lt;-&gt;background color for received messages&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Invert text&amp;lt;-&amp;gt;background color for received messages&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Инверсия цвета текста/фона в уведомлениях по декодированным сообщениям&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>

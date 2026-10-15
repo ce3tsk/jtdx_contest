@@ -2358,7 +2358,7 @@ Formatera:
         <location filename="../DXLabSuiteCommanderTransceiver.cpp" line="414"/>
         <source>DX Lab Suite Commander failed to send command &quot;%1&quot;: %2
 </source>
-        <translation>DX Lab Suite Commander kunde inte skicka kommandot &quot;%1&quot;:%2
+        <translation>DX Lab Suite Commander kunde inte skicka kommandot &quot;%1&quot;: %2
 </translation>
     </message>
     <message>
@@ -2561,7 +2561,7 @@ Formatera:
     <message>
         <location filename="../HRDTransceiver.cpp" line="162"/>
         <source>Failed to open file &quot;%1&quot;: %2.</source>
-        <translation>Det gick inte att öppna filen &quot;%1&quot;:%2.</translation>
+        <translation>Det gick inte att öppna filen &quot;%1&quot;: %2.</translation>
     </message>
     <message>
         <location filename="../HRDTransceiver.cpp" line="177"/>
@@ -2641,7 +2641,7 @@ Formatera:
         <location filename="../HamlibTransceiver.cpp" line="214"/>
         <location filename="../HamlibTransceiver.cpp" line="299"/>
         <source>Hamlib initialisation error</source>
-        <translation>Hamlib initialiseringsfel</translation>
+        <translation>Hamlib-initialiseringsfel</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="259"/>
@@ -2671,12 +2671,12 @@ Formatera:
     <message>
         <location filename="../HamlibTransceiver.cpp" line="264"/>
         <source>Communication timed out</source>
-        <translation>Kommunikationen avbröts</translation>
+        <translation>Tidsgränsen för kommunikationen överskreds</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="265"/>
         <source>IO error</source>
-        <translation>IO fel</translation>
+        <translation>IO-fel</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="266"/>
@@ -2691,12 +2691,12 @@ Formatera:
     <message>
         <location filename="../HamlibTransceiver.cpp" line="268"/>
         <source>Command rejected by the rig</source>
-        <translation>Kommando avvisad av riggen</translation>
+        <translation>Kommando avvisat av riggen</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="269"/>
         <source>Command performed, but arg truncated, result not guaranteed</source>
-        <translation>Kommando utförd, men arg trunkerad, resultat inte garanterat</translation>
+        <translation>Kommando utfört, men arg trunkerat, resultat inte garanterat</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="270"/>
@@ -2706,17 +2706,17 @@ Formatera:
     <message>
         <location filename="../HamlibTransceiver.cpp" line="271"/>
         <source>Target VFO unaccessible</source>
-        <translation>Vald  VFO unaccessible</translation>
+        <translation>Vald VFO är inte tillgänglig</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="272"/>
         <source>Communication bus error</source>
-        <translation>Fel i kommunikationsbus</translation>
+        <translation>Fel på kommunikationsbussen</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="273"/>
         <source>Communication bus collision</source>
-        <translation>Kollision i komunikationsbus</translation>
+        <translation>Kollision på kommunikationsbussen</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="274"/>
@@ -2731,12 +2731,12 @@ Formatera:
     <message>
         <location filename="../HamlibTransceiver.cpp" line="276"/>
         <source>Argument out of domain of func</source>
-        <translation>Argument utanför domänens funktion</translation>
+        <translation>Argumentet ligger utanför funktionens domän</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="434"/>
         <source>Hamlib settings file error: %1 at character offset %2</source>
-        <translation>Hamlib-inställningsfilfel:%1 vid teckenförskjutning%2</translation>
+        <translation>Hamlib-inställningsfilfel: %1 vid teckenförskjutning %2</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="440"/>
@@ -2756,60 +2756,60 @@ Formatera:
     <message>
         <location filename="../HamlibTransceiver.cpp" line="476"/>
         <source>Hamlib error: %1 while %2</source>
-        <translation>Hamlib-fel:%1 medan%2</translation>
+        <translation>Hamlib-fel: %1 medan %2</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="493"/>
         <source>opening connection to rig</source>
-        <translation>öppningsanslutning till rigg</translation>
+        <translation>anslutningen till riggen öppnas</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="555"/>
         <source>getting current frequency</source>
-        <translation>få aktuell frekvens</translation>
+        <translation>aktuell frekvens hämtas</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="564"/>
         <source>getting current mode</source>
-        <translation>får nuvarande mod</translation>
+        <translation>aktuellt läge hämtas</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="613"/>
         <location filename="../HamlibTransceiver.cpp" line="648"/>
         <source>exchanging VFOs</source>
-        <translation>utbyta VFO: er</translation>
+        <translation>VFO:erna byts</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="621"/>
         <location filename="../HamlibTransceiver.cpp" line="1177"/>
         <source>getting other VFO frequency</source>
-        <translation>få annan VFO-frekvens</translation>
+        <translation>den andra VFO:ns frekvens hämtas</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="630"/>
         <source>getting other VFO mode</source>
-        <translation>få andra VFO-mod</translation>
+        <translation>den andra VFO:ns läge hämtas</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="658"/>
         <source>setting current VFO</source>
-        <translation>inställning av aktuell VFO</translation>
+        <translation>aktuell VFO väljs</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="667"/>
         <source>getting frequency</source>
-        <translation>få frekvens</translation>
+        <translation>frekvensen hämtas</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="676"/>
         <source>getting mode</source>
-        <translation>få mod</translation>
+        <translation>läget hämtas</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="698"/>
         <location filename="../HamlibTransceiver.cpp" line="1092"/>
         <source>getting current VFO</source>
-        <translation>få aktuell VFO</translation>
+        <translation>aktuell VFO hämtas</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="757"/>
@@ -2817,7 +2817,7 @@ Formatera:
         <location filename="../HamlibTransceiver.cpp" line="779"/>
         <location filename="../HamlibTransceiver.cpp" line="1151"/>
         <source>getting current VFO frequency</source>
-        <translation>att få aktuell VFO frekvens</translation>
+        <translation>aktuell VFO:s frekvens hämtas</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="763"/>
@@ -2827,7 +2827,7 @@ Formatera:
         <location filename="../HamlibTransceiver.cpp" line="892"/>
         <location filename="../HamlibTransceiver.cpp" line="953"/>
         <source>setting frequency</source>
-        <translation>Frekvensinställning</translation>
+        <translation>frekvensen ställs in</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="882"/>
@@ -2835,7 +2835,7 @@ Formatera:
         <location filename="../HamlibTransceiver.cpp" line="1032"/>
         <location filename="../HamlibTransceiver.cpp" line="1045"/>
         <source>getting current VFO mode</source>
-        <translation>få aktuellt VFO-mod</translation>
+        <translation>aktuell VFO:s läge hämtas</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="888"/>
@@ -2844,64 +2844,64 @@ Formatera:
         <location filename="../HamlibTransceiver.cpp" line="1038"/>
         <location filename="../HamlibTransceiver.cpp" line="1051"/>
         <source>setting current VFO mode</source>
-        <translation>inställning av aktuellt VFO-mod</translation>
+        <translation>aktuell VFO:s läge ställs in</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="940"/>
         <location filename="../HamlibTransceiver.cpp" line="1009"/>
         <source>setting/unsetting split mode</source>
-        <translation>inställning / återställning av splitmod</translation>
+        <translation>splitläget slås på eller av</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="951"/>
         <location filename="../HamlibTransceiver.cpp" line="991"/>
         <source>setting split mode</source>
-        <translation>inställning splitmod</translation>
+        <translation>splitläget ställs in</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="979"/>
         <source>setting split TX frequency and mode</source>
-        <translation>inställning av split TX-frekvens och -mod</translation>
+        <translation>split-TX-frekvens och läge ställs in</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="984"/>
         <source>setting split TX frequency</source>
-        <translation>inställning av split TX-frekvens</translation>
+        <translation>split-TX-frekvensen ställs in</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="1056"/>
         <source>getting split TX VFO mode</source>
-        <translation>få split TX VFO-lmod</translation>
+        <translation>split-TX-VFO:ns läge hämtas</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="1063"/>
         <source>setting split TX VFO mode</source>
-        <translation>inställninjg av  split TX VFO-lmod</translation>
+        <translation>split-TX-VFO:ns läge ställs in</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="1343"/>
         <source>getting PTT state</source>
-        <translation>får PTT-tillstånd</translation>
+        <translation>PTT-status hämtas</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="1379"/>
         <source>setting PTT on</source>
-        <translation>ställa in PTT</translation>
+        <translation>PTT slås på</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="1387"/>
         <source>setting PTT off</source>
-        <translation>ställa in PTT</translation>
+        <translation>PTT slås av</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="1399"/>
         <source>setting a configuration item</source>
-        <translation>ställa in ett konfigurationsobjekt</translation>
+        <translation>ett konfigurationsobjekt ställs in</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="1409"/>
         <source>getting a configuration item</source>
-        <translation>få ett konfigurationsobjekt</translation>
+        <translation>ett konfigurationsobjekt hämtas</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp"/>
@@ -3133,7 +3133,7 @@ Formatera:
     <message>
         <location filename="../mainwindow.ui" line="175"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Avg: accumulated average DT of decoded signals on current band.&lt;/p&gt;&lt;p&gt;Lag: it is decoder lag calculated relatively to beginning of next interval, negative values mean there is spare time available to increase decoding depth, positive values is decoder&apos;s lag into TX or next interval meaning there may be no enough CPU resources for selected decoding depth to provide reliable signal transmission.&lt;/p&gt;&lt;p&gt;&lt;/p&gt;&lt;p&gt;Lag depends on CPU performance, noise conditions, band fullness and other programs using computer, it can be decreased by reducing waterfall bandwidth. If Lag is constantly negative then CPU handling well interval decoding and you can try to make decoding more aggressive to get more decodes.&lt;/p&gt;&lt;p&gt;FT8: if Lag is 0 .. 0.4 then you can still use Autoseq 3/7 (autoselect will trigger change of TX message early enough to transmit full message). If Lag &gt; 0.4 then you should try to decrease decoding aggressivity. If still Lag &gt; 0.4 then Autoseq 2/6 should be used as responding to incoming call will be partially damaged at transmission in AutoSeq 3/7. If constantly Lag  &gt; 2 then your CPU is unsuitable to operate in FT8 with current decoder settings. Sure You can monitor as SWL.&lt;/p&gt;&lt;p&gt;/xx: number of decoded messages in last interval.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Genomsnitt: ackumulerad genomsnittlig DT av avkodade signaler på nuvarande band. &lt;/p&gt; &lt;p&gt; Lag: det är avkodarfördröjning beräknat relativt till början av nästa intervall, negativa värden betyder där är ledig tid tillgänglig för att öka avkodningsdjupet, positiva värden är avkodarens fördröjning till TX eller nästa intervall vilket innebär att det inte finns tillräckligt med CPU-resurser för valt avkodningsdjup för att tillhandahålla tillförlitlig signalöverföring. &lt;/p&gt; &lt;p&gt; &lt;/p&gt; &lt;p &gt; Fördröjning beror på CPU-prestanda, brusförhållanden, bandets fullhet och andra program som använder dator, det kan minskas genom att minska bandbredd för vattenfallet. Om Lag är ständigt negativt så hanterar CPU-avkodning av brunnsintervall och du kan försöka göra avkodningen mer aggressiv för att få fler avkodningar. &lt;/p&gt; &lt;p&gt; FT8: om Lag är 0 .. 0,4 kan du fortfarande använda Autoseq 3/7 (Autoselekt utlöser ändring av TX-meddelande tillräckligt tidigt för att överföra hela meddelandet). Om Lag&gt; 0,4 bör du försöka minska avkodnings aggressiviteten. Om fortfarande Lag&gt; 0.4 ska Autoseq 2/6 användas som svar på inkommande samtal kommer delvis att skadas vid överföringen i AutoSeq 3/7. Om ständigt Lag&gt; 2 är din CPU olämplig att använda i FT8 med aktuella avkodarinställningar. Visst Du kan övervaka som SWL. &lt;/p&gt; &lt;p&gt; / xx: antal avkodade meddelanden i sista intervallet. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Genomsnitt: ackumulerad genomsnittlig DT av avkodade signaler på nuvarande band. &lt;/p&gt; &lt;p&gt; Lag: det är avkodarfördröjning beräknat relativt till början av nästa intervall, negativa värden betyder där är ledig tid tillgänglig för att öka avkodningsdjupet, positiva värden är avkodarens fördröjning till TX eller nästa intervall vilket innebär att det inte finns tillräckligt med CPU-resurser för valt avkodningsdjup för att tillhandahålla tillförlitlig signalöverföring. &lt;/p&gt; &lt;p&gt; &lt;/p&gt; &lt;p&gt; Fördröjning beror på CPU-prestanda, brusförhållanden, bandets fullhet och andra program som använder dator, det kan minskas genom att minska bandbredd för vattenfallet. Om Lag är ständigt negativt så hanterar CPU-avkodning av brunnsintervall och du kan försöka göra avkodningen mer aggressiv för att få fler avkodningar. &lt;/p&gt; &lt;p&gt; FT8: om Lag är 0 .. 0,4 kan du fortfarande använda Autoseq 3/7 (Autoselekt utlöser ändring av TX-meddelande tillräckligt tidigt för att överföra hela meddelandet). Om Lag&gt; 0,4 bör du försöka minska avkodnings aggressiviteten. Om fortfarande Lag&gt; 0.4 ska Autoseq 2/6 användas som svar på inkommande samtal kommer delvis att skadas vid överföringen i AutoSeq 3/7. Om ständigt Lag&gt; 2 är din CPU olämplig att använda i FT8 med aktuella avkodarinställningar. Visst Du kan övervaka som SWL. &lt;/p&gt; &lt;p&gt; / xx: antal avkodade meddelanden i sista intervallet. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="181"/>
@@ -3144,7 +3144,7 @@ Formatera:
     <message>
         <location filename="../mainwindow.ui" line="282"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Lost audio blocks. FT8 15sec interval has 52 blocks of audio data, where decoder being triggered if audio data reached 51 blocks in &apos;SWL/late start of decoder&apos; modes or 50 blocks otherwise. Under Windows OS there were multiple reports audio data being lost, for Windows OS there is workaround implemented to start FT8 decoder if there at least 46 out of 52 audio blocks received. Lost audio blocks notification lets user know there is something wrong in the setup.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Borttappade ljudblock. FT8 15sec-intervall har 52 block av ljuddata, där avkodaren utlöses om ljuddata nådde 51 block i &quot;SWL / sen strat av dekoder&quot; -lägen eller 50 block på annat sätt. Under Windows OS försvann flera rapporter ljuddata, för Windows OS finns det lösning implementerad för att starta FT8-avkodare om det åtminstone 46 av 52 ljudblock mottogs. Meddelanden om borttappade ljud blockerar låter användaren veta att det är något fel i installationen.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;v</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Borttappade ljudblock. FT8 15sec-intervall har 52 block av ljuddata, där avkodaren utlöses om ljuddata nådde 51 block i &quot;SWL/sen start av avkodaren&quot;-lägen, annars 50 block. Under Windows har det flera gånger rapporterats att ljuddata gått förlorad; för Windows finns det en lösning implementerad för att starta FT8-avkodare om det åtminstone 46 av 52 ljudblock mottogs. Meddelanden om förlorade ljudblock låter användaren veta att det är något fel i installationen.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="397"/>
@@ -3200,8 +3200,8 @@ Formatera:
     <message>
         <location filename="../mainwindow.ui" line="803"/>
         <location filename="../mainwindow.ui" line="813"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;DXSummit spot line edit: mode in the information field being spotted automatically, user can add own text message in the information field. Available macros: #D is for distance, #G is for &quot;Grid1&lt;&gt;Grid2&quot;, #R is for report value. Information field preview is available.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; DXSummit-punktradredigering: läge i informationsfältet som automatiskt upptäcks, användaren kan lägga till eget textmeddelande i informationsfältet. Tillgängliga makron: #D är för distans, #G är för &quot;Grid1 &lt;&gt; Grid2&quot;, #R är för rapportvärde. Förhandsgranskning av informationsfält är tillgängligt. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;DXSummit spot line edit: mode in the information field being spotted automatically, user can add own text message in the information field. Available macros: #D is for distance, #G is for &quot;Grid1&amp;lt;&amp;gt;Grid2&quot;, #R is for report value. Information field preview is available.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; DXSummit-punktradredigering: läge i informationsfältet som automatiskt upptäcks, användaren kan lägga till eget textmeddelande i informationsfältet. Tillgängliga makron: #D är för distans, #G är för &quot;Grid1 &amp;lt;&amp;gt; Grid2&quot;, #R är för rapportvärde. Förhandsgranskning av informationsfält är tillgängligt. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="806"/>
@@ -6620,12 +6620,12 @@ Kontrollera att rätt katalognamn anges.</translation>
     <message>
         <location filename="../WFPalette.cpp" line="104"/>
         <source>Error opening waterfall palette file &quot;%1&quot;: %2.</source>
-        <translation>Fel vid öppningen av vattenfallspalettfilen &quot;%1&quot;:%2.</translation>
+        <translation>Fel vid öppningen av vattenfallspalettfilen &quot;%1&quot;: %2.</translation>
     </message>
     <message>
         <location filename="../WFPalette.cpp" line="258"/>
         <source>Error writing waterfall palette file &quot;%1&quot;: %2.</source>
-        <translation>Fel vid skrivning av vattenfallspalettfilen &quot;%1&quot;:%2.</translation>
+        <translation>Fel vid skrivning av vattenfallspalettfilen &quot;%1&quot;: %2.</translation>
     </message>
 </context>
 <context>
@@ -7484,7 +7484,7 @@ Kontrollera att rätt katalognamn anges.</translation>
     <message>
         <location filename="../Configuration.ui" line="607"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Check this if you wish to automatically return to the last monitored frequency when monitor is enabled, leave it unchecked if you wish to have the current rig frequency maintained.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Kontrollera detta om du automatiskt vill återgå till den senaste övervakade frekvensen när monitorn är aktiverad, låt den vara avmarkerad om du vill ha den aktuella riggfrekvensen. &lt;/p&gt; &lt; / body&gt; &lt;/ html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Kontrollera detta om du automatiskt vill återgå till den senaste övervakade frekvensen när monitorn är aktiverad, låt den vara avmarkerad om du vill ha den aktuella riggfrekvensen. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="619"/>
@@ -7799,7 +7799,7 @@ andra hårdvarugränssnitt för PTT.</translation>
     <message>
         <location filename="../Configuration.ui" line="1339"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;No PTT activation, instead the radio&apos;s automatic VOX is used to key the transmitter.&lt;/p&gt;&lt;p&gt;Use this if you have no radio interface hardware.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Ingen PTT-aktivering, istället används radioens automatiska VOX för att ställa in sändaren. &lt;/p&gt; &lt;p&gt; Använd det här om du inte har någon hårdvara för radiogränssnitt. &lt;/p&gt; &lt;/ body&gt; &lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Ingen PTT-aktivering, istället används radioens automatiska VOX för att ställa in sändaren. &lt;/p&gt; &lt;p&gt; Använd det här om du inte har någon hårdvara för radiogränssnitt. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1342"/>
@@ -8495,7 +8495,7 @@ för bedömning av förökning och systemprestanda.</translation>
     <message>
         <location filename="../Configuration.ui" line="3004"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Restore the window from minimized if an UDP request is accepted.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>h&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Återställ fönstret från minimerat om en UDP-begäran accepteras. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Återställ fönstret från minimerat om en UDP-begäran accepteras. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3007"/>
@@ -8520,7 +8520,7 @@ för bedömning av förökning och systemprestanda.</translation>
     <message>
         <location filename="../Configuration.ui" line="3038"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Selected text filters will be applied to limit transmission of the UDP messages from JTDX, for instance messages from some continents can be blocked.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Valda textfilter kommer att tillämpas för att begränsa överföringen av UDP-meddelanden från JTDX, till exempel kan meddelanden från vissa kontinenter blockeras. &lt;/p&gt; &lt;/body&gt; &lt;/ html &gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Valda textfilter kommer att tillämpas för att begränsa överföringen av UDP-meddelanden från JTDX, till exempel kan meddelanden från vissa kontinenter blockeras. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3041"/>
@@ -8877,8 +8877,8 @@ Högerklicka för att infoga och ta bort alternativ.</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3604"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Invert text&lt;-&gt;background color for received messages&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Invertera text &lt;-&gt; bakgrundsfärg för mottagna meddelanden &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Invert text&amp;lt;-&amp;gt;background color for received messages&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Invertera text &amp;lt;-&amp;gt; bakgrundsfärg för mottagna meddelanden &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3607"/>
@@ -9161,7 +9161,7 @@ Högerklicka för att infoga och ta bort alternativ.</translation>
     <message>
         <location filename="../Configuration.ui" line="5020"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&apos;Show DXCC name/prefix&apos; shall be activated in General tab of the settings or any &apos;New one&apos; notification to get this functionality working.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; &apos;Visa DXCC-namn / prefix&apos; ska aktiveras på fliken Allmänt i inställningarna eller i ett &quot;Nytt&quot; -meddelande för att denna funktion ska fungera. &lt;/p&gt; &lt;/body&gt; &lt;/ html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; &apos;Visa DXCC-namn / prefix&apos; ska aktiveras på fliken Allmänt i inställningarna eller i ett &quot;Nytt&quot; -meddelande för att denna funktion ska fungera. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="5023"/>
@@ -9801,7 +9801,7 @@ Dölj meddelanden med inte tillhörande hash för 2a signal</translation>
     <message>
         <location filename="../Configuration.ui" line="6985"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Settings depend on the CPU power, try to use maximum number of decoding passes for overcrowded HF bands.&lt;br&gt;&lt;br&gt;Number of decoding passes may be decreased for low populated HF/VHF bands while an increase of the number of decoding attempts might bring better decoding efficiency for the weak signals there.&lt;br&gt;&lt;br&gt;Number of decoding attempts affecting decoding efficiency of the low SNR signals: wideband or RX frequency one.&lt;br&gt;&lt;br&gt;Number of decoding passes affecting maximum number of the signals that can be decoded on the same frequency or located close to each other with largely overlapped spectra, it is possible to decode up to 4 signals on the same frequency and up to 7 signals on the RX frequency if number of decoding passes is set to 4.&lt;br&gt;&lt;br&gt;Increase number of decoding attempts to the value allowing to get decoding finished until end of the RX minute interval.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Inställningarna beror på CPU-effekten, försök att använda maximalt antal avkodningskort för överfulla HF-band. &lt;br&gt; &lt;br&gt; Antal avkodningskort kan minskas för lågbefolkade HF-band / VHF-band medan en ökning av antalet avkodningsförsök kan ge bättre avkodningseffektivitet för de svaga signalerna där. &lt;br&gt; &lt;br&gt; Antal avkodningsförsök som påverkar avkodningseffektiviteten för de låga SNR-signalerna: bredband eller RX-frekvens en. &lt;Br &gt; &lt;br&gt; Antal avkodningskort som påverkar maximalt antal signaler som kan avkodas på samma frekvens eller som ligger nära varandra med i stort sett överlappade spektra, det är möjligt att avkoda upp till 4 signaler på samma frekvens och upp till 7 signaler på RX-frekvensen om antalet avkodningskort är inställt på 4. &lt;br&gt; &lt;br&gt; Öka antalet avkodningsförsök till värdet som gör att avkodningen är klar tills slutet av RX-minutintervallet. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Inställningarna beror på CPU-effekten, försök att använda maximalt antal avkodningskort för överfulla HF-band. &lt;br&gt; &lt;br&gt; Antal avkodningskort kan minskas för lågbefolkade HF-band / VHF-band medan en ökning av antalet avkodningsförsök kan ge bättre avkodningseffektivitet för de svaga signalerna där. &lt;br&gt; &lt;br&gt; Antal avkodningsförsök som påverkar avkodningseffektiviteten för de låga SNR-signalerna: bredband eller RX-frekvens en. &lt;br&gt; &lt;br&gt; Antal avkodningskort som påverkar maximalt antal signaler som kan avkodas på samma frekvens eller som ligger nära varandra med i stort sett överlappade spektra, det är möjligt att avkoda upp till 4 signaler på samma frekvens och upp till 7 signaler på RX-frekvensen om antalet avkodningskort är inställt på 4. &lt;br&gt; &lt;br&gt; Öka antalet avkodningsförsök till värdet som gör att avkodningen är klar tills slutet av RX-minutintervallet. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="7073"/>

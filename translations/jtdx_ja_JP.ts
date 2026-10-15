@@ -2695,7 +2695,7 @@ Format:
     <message>
         <location filename="../HamlibTransceiver.cpp" line="269"/>
         <source>Command performed, but arg truncated, result not guaranteed</source>
-        <translation>コマンドは実行しましたが値が切り捨てれたため結果は保証しません</translation>
+        <translation>コマンドは実行しましたが値が切り捨てられたため結果は保証しません</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="270"/>
@@ -2730,7 +2730,7 @@ Format:
     <message>
         <location filename="../HamlibTransceiver.cpp" line="276"/>
         <source>Argument out of domain of func</source>
-        <translation>引数が機能の領域外です</translation>
+        <translation>引数が関数の定義域外です</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="434"/>
@@ -2755,44 +2755,44 @@ Format:
     <message>
         <location filename="../HamlibTransceiver.cpp" line="476"/>
         <source>Hamlib error: %1 while %2</source>
-        <translation>Hamlibエラー: %2中に%1</translation>
+        <translation>Hamlibエラー：%2中に%1</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="493"/>
         <source>opening connection to rig</source>
-        <translation>リグへの接続を開く</translation>
+        <translation>リグに接続</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="555"/>
         <source>getting current frequency</source>
-        <translation>現在の 周波数を得る</translation>
+        <translation>現在の周波数を取得</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="564"/>
         <source>getting current mode</source>
-        <translation>現在のモードを得る</translation>
+        <translation>現在のモードを取得</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="613"/>
         <location filename="../HamlibTransceiver.cpp" line="648"/>
         <source>exchanging VFOs</source>
-        <translation>VFOの変更</translation>
+        <translation>VFOの入れ替え</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="621"/>
         <location filename="../HamlibTransceiver.cpp" line="1177"/>
         <source>getting other VFO frequency</source>
-        <translation>他のVFOの周波数を取得</translation>
+        <translation>もう一方のVFOの周波数を取得</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="630"/>
         <source>getting other VFO mode</source>
-        <translation>他のVFOのモードを取得</translation>
+        <translation>もう一方のVFOのモードを取得</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="658"/>
         <source>setting current VFO</source>
-        <translation>現在のVFOを設定している</translation>
+        <translation>現在のVFOを選択</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="667"/>
@@ -2849,7 +2849,7 @@ Format:
         <location filename="../HamlibTransceiver.cpp" line="940"/>
         <location filename="../HamlibTransceiver.cpp" line="1009"/>
         <source>setting/unsetting split mode</source>
-        <translation>設定／未設定&#x3000;スプリットモード</translation>
+        <translation>スプリットモードを設定／解除</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="951"/>
@@ -2860,12 +2860,12 @@ Format:
     <message>
         <location filename="../HamlibTransceiver.cpp" line="979"/>
         <source>setting split TX frequency and mode</source>
-        <translation>スプリットTX 周波数とモードの設定</translation>
+        <translation>スプリットTX周波数とモードの設定</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="984"/>
         <source>setting split TX frequency</source>
-        <translation>スプリットTX 周波数を設定</translation>
+        <translation>スプリットTX周波数を設定</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="1056"/>
@@ -2895,12 +2895,12 @@ Format:
     <message>
         <location filename="../HamlibTransceiver.cpp" line="1399"/>
         <source>setting a configuration item</source>
-        <translation>設定項目を設定する</translation>
+        <translation>設定項目を設定</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="1409"/>
         <source>getting a configuration item</source>
-        <translation>設定項目を取得する</translation>
+        <translation>設定項目を取得</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp"/>
@@ -3177,8 +3177,8 @@ Format:
     <message>
         <location filename="../mainwindow.ui" line="803"/>
         <location filename="../mainwindow.ui" line="813"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;DXSummit spot line edit: mode in the information field being spotted automatically, user can add own text message in the information field. Available macros: #D is for distance, #G is for &quot;Grid1&lt;&gt;Grid2&quot;, #R is for report value. Information field preview is available.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt; &lt;head /&gt; &lt;body&gt; &lt;p&gt; DXSummit spot line edit：情報欄のモードは自動的に選択されます。ユーザーは情報欄に独自のテキストメッセージを追加できます。 使用可能なマクロ：#Dは距離用、＃Gは「Grid1 &lt;&gt; Grid2」用、＃Rはレポート値用です。 情報フィールドのプレビューが利用可能です。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;DXSummit spot line edit: mode in the information field being spotted automatically, user can add own text message in the information field. Available macros: #D is for distance, #G is for &quot;Grid1&amp;lt;&amp;gt;Grid2&quot;, #R is for report value. Information field preview is available.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt; &lt;head /&gt; &lt;body&gt; &lt;p&gt; DXSummit spot line edit：情報欄のモードは自動的に選択されます。ユーザーは情報欄に独自のテキストメッセージを追加できます。 使用可能なマクロ：#Dは距離用、＃Gは「Grid1 &amp;lt;&amp;gt; Grid2」用、＃Rはレポート値用です。 情報フィールドのプレビューが利用可能です。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="806"/>
@@ -8464,7 +8464,7 @@ Please verify the correct directory name was given.</source>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3604"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Invert text&lt;-&gt;background color for received messages&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Invert text&amp;lt;-&amp;gt;background color for received messages&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;受信したメッセージのテキストと背景色を反転する&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>

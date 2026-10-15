@@ -2680,7 +2680,7 @@ Format:
     <message>
         <location filename="../HamlibTransceiver.cpp" line="265"/>
         <source>IO error</source>
-        <translation>Error IO</translation>
+        <translation>Error d'E/S</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="266"/>
@@ -2725,7 +2725,7 @@ Format:
     <message>
         <location filename="../HamlibTransceiver.cpp" line="274"/>
         <source>NULL RIG handle or invalid pointer parameter</source>
-        <translation>Maneig NULL RIG o paràmetre de punter invàlid</translation>
+        <translation>Descriptor NULL de l'equip o paràmetre de punter invàlid</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="275"/>
@@ -2735,7 +2735,7 @@ Format:
     <message>
         <location filename="../HamlibTransceiver.cpp" line="276"/>
         <source>Argument out of domain of func</source>
-        <translation>Argument fora de el domini de la funció</translation>
+        <translation>Argument fora del domini de la funció</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="434"/>
@@ -2760,60 +2760,60 @@ Format:
     <message>
         <location filename="../HamlibTransceiver.cpp" line="476"/>
         <source>Hamlib error: %1 while %2</source>
-        <translation>Error de Hamlib: %1 amb la %2</translation>
+        <translation>Error de Hamlib: %1 (%2)</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="493"/>
         <source>opening connection to rig</source>
-        <translation>connexió d&apos;obertura a l&apos;equip</translation>
+        <translation>obertura de la connexió amb l&apos;equip</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="555"/>
         <source>getting current frequency</source>
-        <translation>mentre obté la freqüència actual</translation>
+        <translation>obtenció de la freqüència actual</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="564"/>
         <source>getting current mode</source>
-        <translation>mentre obté el mode actual</translation>
+        <translation>obtenció del mode actual</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="613"/>
         <location filename="../HamlibTransceiver.cpp" line="648"/>
         <source>exchanging VFOs</source>
-        <translation>intercanviant VFOs</translation>
+        <translation>intercanvi dels VFO</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="621"/>
         <location filename="../HamlibTransceiver.cpp" line="1177"/>
         <source>getting other VFO frequency</source>
-        <translation>obté una altra freqüència de VFO</translation>
+        <translation>obtenció de la freqüència de l&apos;altre VFO</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="630"/>
         <source>getting other VFO mode</source>
-        <translation>obté un altre mode VFO</translation>
+        <translation>obtenció del mode de l&apos;altre VFO</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="658"/>
         <source>setting current VFO</source>
-        <translation>configuració del VFO actual</translation>
+        <translation>selecció del VFO actual</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="667"/>
         <source>getting frequency</source>
-        <translation>obtenint freqüència</translation>
+        <translation>obtenció de la freqüència</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="676"/>
         <source>getting mode</source>
-        <translation>obtenint mode</translation>
+        <translation>obtenció del mode</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="698"/>
         <location filename="../HamlibTransceiver.cpp" line="1092"/>
         <source>getting current VFO</source>
-        <translation>obtenir VFO actual</translation>
+        <translation>obtenció del VFO actual</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="757"/>
@@ -2821,7 +2821,7 @@ Format:
         <location filename="../HamlibTransceiver.cpp" line="779"/>
         <location filename="../HamlibTransceiver.cpp" line="1151"/>
         <source>getting current VFO frequency</source>
-        <translation>obtenir la freqüència actual del VFO</translation>
+        <translation>obtenció de la freqüència del VFO actual</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="763"/>
@@ -2831,7 +2831,7 @@ Format:
         <location filename="../HamlibTransceiver.cpp" line="892"/>
         <location filename="../HamlibTransceiver.cpp" line="953"/>
         <source>setting frequency</source>
-        <translation>ajust de freqüència</translation>
+        <translation>ajust de la freqüència</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="882"/>
@@ -2839,7 +2839,7 @@ Format:
         <location filename="../HamlibTransceiver.cpp" line="1032"/>
         <location filename="../HamlibTransceiver.cpp" line="1045"/>
         <source>getting current VFO mode</source>
-        <translation>obtenir el mode VFO actual</translation>
+        <translation>obtenció del mode del VFO actual</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="888"/>
@@ -2848,49 +2848,49 @@ Format:
         <location filename="../HamlibTransceiver.cpp" line="1038"/>
         <location filename="../HamlibTransceiver.cpp" line="1051"/>
         <source>setting current VFO mode</source>
-        <translation>ajust del mode VFO actual</translation>
+        <translation>ajust del mode del VFO actual</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="940"/>
         <location filename="../HamlibTransceiver.cpp" line="1009"/>
         <source>setting/unsetting split mode</source>
-        <translation>activar/desactivar mode dividid (split)</translation>
+        <translation>activació/desactivació del mode split</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="951"/>
         <location filename="../HamlibTransceiver.cpp" line="991"/>
         <source>setting split mode</source>
-        <translation>activar mode dividid (Split)</translation>
+        <translation>ajust del mode split</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="979"/>
         <source>setting split TX frequency and mode</source>
-        <translation>ajust de freqüència i mode de transmissió dividida (Split)</translation>
+        <translation>ajust de la freqüència i el mode de TX en split</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="984"/>
         <source>setting split TX frequency</source>
-        <translation>ajust de freqüència dividida (Split) TX</translation>
+        <translation>ajust de la freqüència de TX en split</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="1056"/>
         <source>getting split TX VFO mode</source>
-        <translation>obtenir el mode dividit (Split) TX VFO</translation>
+        <translation>obtenció del mode del VFO de TX en split</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="1063"/>
         <source>setting split TX VFO mode</source>
-        <translation>configuració del mode dividid (Split) TX VFO</translation>
+        <translation>ajust del mode del VFO de TX en split</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="1343"/>
         <source>getting PTT state</source>
-        <translation>obtenir estat del PTT</translation>
+        <translation>obtenció de l&apos;estat del PTT</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="1379"/>
         <source>setting PTT on</source>
-        <translation>activant PTT</translation>
+        <translation>activació del PTT</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="1387"/>
@@ -2900,12 +2900,12 @@ Format:
     <message>
         <location filename="../HamlibTransceiver.cpp" line="1399"/>
         <source>setting a configuration item</source>
-        <translation>establir un element de configuració</translation>
+        <translation>establiment d&apos;un element de configuració</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="1409"/>
         <source>getting a configuration item</source>
-        <translation>obtenir un element de configuració</translation>
+        <translation>obtenció d&apos;un element de configuració</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp"/>
@@ -3203,8 +3203,8 @@ Format:
     <message>
         <location filename="../mainwindow.ui" line="803"/>
         <location filename="../mainwindow.ui" line="813"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;DXSummit spot line edit: mode in the information field being spotted automatically, user can add own text message in the information field. Available macros: #D is for distance, #G is for &quot;Grid1&lt;&gt;Grid2&quot;, #R is for report value. Information field preview is available.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Edita la línia d&apos;anunci a DXSummit: la manera es detecta automàticament, l&apos;usuari pot afegir el seu propi missatge de text en el camp d&apos;informació. Macros disponibles: #D és per la distància, #G és per &quot;Locator1 &lt;&gt;Locator2 &quot;, #R és per al valor del senyal rebut. La vista prèvia de el camp d&apos;informació està disponible. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;DXSummit spot line edit: mode in the information field being spotted automatically, user can add own text message in the information field. Available macros: #D is for distance, #G is for &quot;Grid1&amp;lt;&amp;gt;Grid2&quot;, #R is for report value. Information field preview is available.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Edita la línia d&apos;anunci a DXSummit: la manera es detecta automàticament, l&apos;usuari pot afegir el seu propi missatge de text en el camp d&apos;informació. Macros disponibles: #D és per la distància, #G és per &quot;Locator1 &amp;lt;&amp;gt;Locator2 &quot;, #R és per al valor del senyal rebut. La vista prèvia de el camp d&apos;informació està disponible. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="806"/>
@@ -3431,7 +3431,7 @@ Format:
         <location filename="../mainwindow.ui" line="2008"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Comma separated list of the wanted callsigns. Autoselection under AutoSeq 1..7 will process wanted callsign according to the choosen notifications/priorities, this functionality is not supported under AutoSeq0. Non FT8 modes only: for compound callsigns the base callsign shall be used in the list, sometimes base callsign will be copied from the decoded message: when logging such QSO user will have to change correspondent&apos;s callsign to compound one if needed.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Llista separada per comes dels indicatius desitjats. La selecció automàtica en AutoSeq 1..7 processarà l&apos;indicatiu desitjat d&apos;acord amb les notificacions / prioritats elegides, aquesta funcionalitat no és compatible amb AutoSeq0.
- Només els modes no FT8: per als indicatius compostos, s&apos;utilitzarà l&apos;indicatiu base a la llista, de vegades l&apos;indicatiu bàsic es copiarà del missatge descodificat: quan es registra tal QSO l&apos;usuari haurà de canviar l&apos;indicatiu del corresponsal a un de compost si cal .&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;</translation>
+ Només els modes no FT8: per als indicatius compostos, s&apos;utilitzarà l&apos;indicatiu base a la llista, de vegades l&apos;indicatiu bàsic es copiarà del missatge descodificat: quan es registra tal QSO l&apos;usuari haurà de canviar l&apos;indicatiu del corresponsal a un de compost si cal.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1995"/>
@@ -7495,7 +7495,7 @@ Verifica el nom del directori correcte.</translation>
     <message>
         <location filename="../Configuration.ui" line="607"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Check this if you wish to automatically return to the last monitored frequency when monitor is enabled, leave it unchecked if you wish to have the current rig frequency maintained.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Marca això si vols tornar automàticament a l&apos;última freqüència monitoritzada quan el monitor està habilitat, deixa sense marcar si vols mantenir la freqüència actual de l&apos;equip. &lt;/p&gt; &lt; / body&gt; &lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Marca això si vols tornar automàticament a l&apos;última freqüència monitoritzada quan el monitor està habilitat, deixa sense marcar si vols mantenir la freqüència actual de l&apos;equip. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="619"/>
@@ -7562,7 +7562,7 @@ període tranquil quan es realitza la descodificació.</translation>
     <message>
         <location filename="../Configuration.ui" line="808"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Request S meter data from transceiver: CAT shall be set up via Hamlib, Hamlib does support getting S meter data for some transceivers.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Sol·licitar dades del &apos;mesurador S &apos; del transceptor, CAT es configurarà a través d&apos;Hamlib, Hamlib admet l&apos;obtenció de dades del &apos;mesurador S &apos; per a alguns transceptors. &lt;/p&gt; &lt;/body&gt; &lt;/ html &gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Sol·licitar dades del &apos;mesurador S &apos; del transceptor, CAT es configurarà a través d&apos;Hamlib, Hamlib admet l&apos;obtenció de dades del &apos;mesurador S &apos; per a alguns transceptors. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="811"/>
@@ -7572,7 +7572,7 @@ període tranquil quan es realitza la descodificació.</translation>
     <message>
         <location filename="../Configuration.ui" line="840"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Request output power data from transceiver: CAT shall be set up via Hamlib, Hamlib does support getting output power data for some transceivers.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Sol·licitar dades de potència de sortida de l&apos;equip, CAT es configurarà a través d&apos;Hamlib, Hamlib admet l&apos;obtenció de dades de potència de sortida per a alguns equips. &lt;/p&gt; &lt;/body&gt; &lt;/ html &gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Sol·licitar dades de potència de sortida de l&apos;equip, CAT es configurarà a través d&apos;Hamlib, Hamlib admet l&apos;obtenció de dades de potència de sortida per a alguns equips. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="843"/>
@@ -7685,7 +7685,7 @@ període tranquil quan es realitza la descodificació.</translation>
     <message>
         <location filename="../Configuration.ui" line="1067"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Number of stop bits used when communicating with your radio&apos;s CAT interface&lt;/p&gt;&lt;p&gt;(consult you radio&apos;s manual for details).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt;Nombre de bits de parada utilitzats al comunicar-se amb la interfície CAT del teu equip &lt;/p&gt; &lt;p&gt; (consulta el manual del teu equip per a més detalls). &lt;/p&gt; &lt;/body&gt; &lt; / html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt;Nombre de bits de parada utilitzats al comunicar-se amb la interfície CAT del teu equip &lt;/p&gt; &lt;p&gt; (consulta el manual del teu equip per a més detalls). &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1070"/>
@@ -7929,7 +7929,7 @@ o es selecciona l&apos;ample de banda).</translation>
     <message>
         <location filename="../Configuration.ui" line="1599"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Attempt to connect to the radio with these settings.&lt;/p&gt;&lt;p&gt;The button will turn green if the connection is successful or red if there is a problem.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Intenta connectar-se a l&apos;equip amb aquesta configuració. &lt;/p&gt; &lt;p&gt; El botó es posarà verd si la connexió és bona o vermella si hi ha un problema. &lt;/ p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Intenta connectar-se a l&apos;equip amb aquesta configuració. &lt;/p&gt; &lt;p&gt; El botó es posarà verd si la connexió és bona o vermella si hi ha un problema. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1602"/>
@@ -8199,7 +8199,7 @@ tots dos aquí.</translation>
     <message>
         <location filename="../Configuration.ui" line="2340"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Drag and drop items to rearrange order. Right click for item specific actions. Click, SHIFT+Click and, CRTL+Click to select items. @ symbol is being substituted with DX call, &amp; symbol with user&apos;s base callsign, # symbol with report to be transmitted, ^ symbol with correspondent&apos;s name retrieved from the log where name shall not exceed 7 chars.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Arrossega i deixa anar elements per reorganitzar l&apos;ordre. Fes clic dret per a accions específiques de l&apos;article. Fes clic, MAJÚS + clic i CRTL + clic per seleccionar elements. El símbol @ es substitueix amb l&apos;indicatiu DX, i el símbol &amp; amb l&apos;indicatiu base de l&apos;usuari, el símbol # amb l&apos;informe a transmetre, el símbol ^ amb el nom del corresponsal recuperat del log on el nom no pot superar els 7 caràcters. &lt;/p&gt; &lt;/body&gt; &lt; / html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Arrossega i deixa anar elements per reorganitzar l&apos;ordre. Fes clic dret per a accions específiques de l&apos;article. Fes clic, MAJÚS + clic i CRTL + clic per seleccionar elements. El símbol @ es substitueix amb l&apos;indicatiu DX, i el símbol &amp; amb l&apos;indicatiu base de l&apos;usuari, el símbol # amb l&apos;informe a transmetre, el símbol ^ amb el nom del corresponsal recuperat del log on el nom no pot superar els 7 caràcters. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="2391"/>
@@ -8531,7 +8531,7 @@ per avaluar la propagació i el rendiment del sistema MOLT RECOMANAT.</translati
     <message>
         <location filename="../Configuration.ui" line="3038"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Selected text filters will be applied to limit transmission of the UDP messages from JTDX, for instance messages from some continents can be blocked.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Els filtres de text seleccionats s&apos;aplicaran per limitar la transmissió dels missatges UDP des de JTDX, per exemple, els missatges d&apos;alguns continents es poden bloquejar. &lt;/p&gt; &lt;/body&gt; &lt;/ html &gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Els filtres de text seleccionats s&apos;aplicaran per limitar la transmissió dels missatges UDP des de JTDX, per exemple, els missatges d&apos;alguns continents es poden bloquejar. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3041"/>
@@ -8639,12 +8639,12 @@ Fes clic dret per inserir i eliminar opcions.</translation>
     <message>
         <location filename="../Configuration.ui" line="3331"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Highlight messages with CQ Zones which are new on the band according to the data from wsjtx_log.adi log file.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ressalta missatges amb zones CQ que són nous a la banda d&apos;acord amb les dades de l&apos;arxiu de log wsjtx_log.adi.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;&lt;head/&gt;&lt;body&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ressalta missatges amb zones CQ que són nous a la banda d&apos;acord amb les dades de l&apos;arxiu de log wsjtx_log.adi.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3341"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Highlight messages with CQ Zones which are new in the mode according to the data from wsjtx_log.adi log file.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ressalta missatges amb zones CQ que són noves en els modes d&apos;acord amb les dades de l&apos;arxiu de log wsjtx_log.adi.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;&lt;head/&gt;&lt;body&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ressalta missatges amb zones CQ que són noves en els modes d&apos;acord amb les dades de l&apos;arxiu de log wsjtx_log.adi.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3361"/>
@@ -8659,12 +8659,12 @@ Fes clic dret per inserir i eliminar opcions.</translation>
     <message>
         <location filename="../Configuration.ui" line="3371"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Highlight messages with ITU Zones which are new on the band according to the data from wsjtx_log.adi log file.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ressalta missatges amb zones ITU que són nous a la banda d&apos;acord amb les dades de l&apos;arxiu de log wsjtx_log.adi.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;&lt;head/&gt;&lt;body&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ressalta missatges amb zones ITU que són nous a la banda d&apos;acord amb les dades de l&apos;arxiu de log wsjtx_log.adi.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3381"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Highlight messages with ITU Zones which are new in the mode according to the data from wsjtx_log.adi log file.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ressalta missatges amb zones ITU que són noves en els modes d&apos;acord amb les dades de l&apos;arxiu de log wsjtx_log.adi.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;&lt;head/&gt;&lt;body&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ressalta missatges amb zones ITU que són noves en els modes d&apos;acord amb les dades de l&apos;arxiu de log wsjtx_log.adi.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3401"/>
@@ -8804,7 +8804,7 @@ Fes clic dret per inserir i eliminar opcions.</translation>
     <message>
         <location filename="../Configuration.ui" line="3481"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Highlight messages with prefixes which do not exist in the wsjtx_log.adi log file.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ressalta els missatges amb prefixos que no existeixen en l&apos;arxiu de log wsjtx_log.adi. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt; &lt;html&gt; &lt;head /&gt; &lt;body &gt; &lt;p&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ressalta els missatges amb prefixos que no existeixen en l&apos;arxiu de log wsjtx_log.adi. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3484"/>
@@ -8888,8 +8888,8 @@ Fes clic dret per inserir i eliminar opcions.</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3604"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Invert text&lt;-&gt;background color for received messages&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt; invertir text &lt;-&gt; color de fons per als missatges rebuts &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Invert text&amp;lt;-&amp;gt;background color for received messages&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt; invertir text &amp;lt;-&amp;gt; color de fons per als missatges rebuts &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3607"/>
@@ -9811,7 +9811,7 @@ EA3RDG,EA3URO,1C0CAT &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
     <message>
         <location filename="../Configuration.ui" line="6985"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Settings depend on the CPU power, try to use maximum number of decoding passes for overcrowded HF bands.&lt;br&gt;&lt;br&gt;Number of decoding passes may be decreased for low populated HF/VHF bands while an increase of the number of decoding attempts might bring better decoding efficiency for the weak signals there.&lt;br&gt;&lt;br&gt;Number of decoding attempts affecting decoding efficiency of the low SNR signals: wideband or RX frequency one.&lt;br&gt;&lt;br&gt;Number of decoding passes affecting maximum number of the signals that can be decoded on the same frequency or located close to each other with largely overlapped spectra, it is possible to decode up to 4 signals on the same frequency and up to 7 signals on the RX frequency if number of decoding passes is set to 4.&lt;br&gt;&lt;br&gt;Increase number of decoding attempts to the value allowing to get decoding finished until end of the RX minute interval.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; La configuració depèn de la potència de la CPU, proveu el nombre màxim de passades de descodificació per a bandes de HF superpoblades. &lt;br&gt; &lt;br&gt; El número de passis de descodificació pot disminuir per HF amb poca població o a VHF mentre que un augment en el número d&apos;intents de descodificació podria portar una millor eficiència de descodificació per als senyals febles. &lt;br&gt; &lt;br&gt; Número d&apos;intents de descodificació que afecten l&apos;eficiència de descodificació dels senyals SNR baixes: banda ampla o freqüència RX un. &lt;Br &gt; &lt;br&gt; Número de passades de descodificació que afecten el número màxim de senyals que poden descodificar en la mateixa freqüència o ubicades prop una de l&apos;altra amb espectres superposats, és possible descodificar fins a 4 senyals a la mateixa freqüència i fins a 7 senyals en la freqüència RX si el nombre de passades de descodificació s&apos;estableix en 4. &lt;br&gt; &lt;br&gt; Augmenta el nombre d&apos;intents de descodificació al valor que permeti acabar la descodificació fins al final de l&apos;interval de minuts RX. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; La configuració depèn de la potència de la CPU, proveu el nombre màxim de passades de descodificació per a bandes de HF superpoblades. &lt;br&gt; &lt;br&gt; El número de passis de descodificació pot disminuir per HF amb poca població o a VHF mentre que un augment en el número d&apos;intents de descodificació podria portar una millor eficiència de descodificació per als senyals febles. &lt;br&gt; &lt;br&gt; Número d&apos;intents de descodificació que afecten l&apos;eficiència de descodificació dels senyals SNR baixes: banda ampla o freqüència RX un. &lt;br&gt; &lt;br&gt; Número de passades de descodificació que afecten el número màxim de senyals que poden descodificar en la mateixa freqüència o ubicades prop una de l&apos;altra amb espectres superposats, és possible descodificar fins a 4 senyals a la mateixa freqüència i fins a 7 senyals en la freqüència RX si el nombre de passades de descodificació s&apos;estableix en 4. &lt;br&gt; &lt;br&gt; Augmenta el nombre d&apos;intents de descodificació al valor que permeti acabar la descodificació fins al final de l&apos;interval de minuts RX. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="7073"/>

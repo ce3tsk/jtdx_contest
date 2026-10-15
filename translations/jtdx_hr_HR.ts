@@ -145,7 +145,7 @@ Drugi program možda koristi direktorij</translation>
     <message>
         <location filename="../Configuration.cpp" line="1411"/>
         <source>Create data directory error: </source>
-        <translation>Pogreška u direktoriju podataka: </translation>
+        <translation>Greška u direktoriju podataka: </translation>
     </message>
     <message>
         <location filename="../Configuration.cpp" line="1420"/>
@@ -466,7 +466,7 @@ Format:
     <message>
         <location filename="../Configuration.cpp"/>
         <source>Network error: %1</source>
-        <translation>Mrežna pogreška: %1</translation>
+        <translation>Mrežna greška: %1</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp"/>
@@ -2640,12 +2640,12 @@ Format:
         <location filename="../HamlibTransceiver.cpp" line="214"/>
         <location filename="../HamlibTransceiver.cpp" line="299"/>
         <source>Hamlib initialisation error</source>
-        <translation>Pogreška inicijalizacije Hamliba</translation>
+        <translation>Greška inicijalizacije Hamliba</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="259"/>
         <source>Command completed successfully</source>
-        <translation>Komanda je uspješno završena</translation>
+        <translation>Naredba je uspješno završena</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="260"/>
@@ -2675,12 +2675,12 @@ Format:
     <message>
         <location filename="../HamlibTransceiver.cpp" line="265"/>
         <source>IO error</source>
-        <translation>IO greška</translation>
+        <translation>U/I greška</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="266"/>
         <source>Internal Hamlib error</source>
-        <translation>Interna Hamlib pogreška</translation>
+        <translation>Unutarnja greška Hamliba</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="267"/>
@@ -2690,12 +2690,12 @@ Format:
     <message>
         <location filename="../HamlibTransceiver.cpp" line="268"/>
         <source>Command rejected by the rig</source>
-        <translation>Naredba odbačena od strane RIGa</translation>
+        <translation>Uređaj je odbio naredbu</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="269"/>
         <source>Command performed, but arg truncated, result not guaranteed</source>
-        <translation>Naredba izvršena, ali argumentirana, rezultat nije zagarantovan</translation>
+        <translation>Naredba izvršena, ali argument je skraćen, rezultat nije zajamčen</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="270"/>
@@ -2710,7 +2710,7 @@ Format:
     <message>
         <location filename="../HamlibTransceiver.cpp" line="272"/>
         <source>Communication bus error</source>
-        <translation>Komunikacijska greška sabirnice</translation>
+        <translation>Greška komunikacijske sabirnice</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="273"/>
@@ -2720,7 +2720,7 @@ Format:
     <message>
         <location filename="../HamlibTransceiver.cpp" line="274"/>
         <source>NULL RIG handle or invalid pointer parameter</source>
-        <translation>NULL RIG nevažeći parametar ili rokovanje pointerom</translation>
+        <translation>NULL ručka uređaja ili nevažeći parametar pokazivača</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="275"/>
@@ -2735,17 +2735,17 @@ Format:
     <message>
         <location filename="../HamlibTransceiver.cpp" line="434"/>
         <source>Hamlib settings file error: %1 at character offset %2</source>
-        <translation>Pogreška datoteke postavke Hamliba: %1 kod odstupanja od znakova %2</translation>
+        <translation>Greška datoteke postavki Hamliba: %1 na položaju znaka %2</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="440"/>
         <source>Hamlib settings file error: top level must be a JSON object</source>
-        <translation>Pogreška datoteke postavke Hamliba: gornja razina mora biti JSON objekt</translation>
+        <translation>Greška datoteke postavki Hamliba: najviša razina mora biti JSON objekt</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="452"/>
         <source>Hamlib settings file error: config must be a JSON object</source>
-        <translation>Pogreška datoteke postavke Hamliba: config mora biti JSON objekt</translation>
+        <translation>Greška datoteke postavki Hamliba: config mora biti JSON objekt</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="360"/>
@@ -2755,12 +2755,12 @@ Format:
     <message>
         <location filename="../HamlibTransceiver.cpp" line="476"/>
         <source>Hamlib error: %1 while %2</source>
-        <translation>Hamlib greška: %1 dok %2</translation>
+        <translation>Greška Hamliba: %1 (%2)</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="493"/>
         <source>opening connection to rig</source>
-        <translation>otvaranje priključka prema uređaju</translation>
+        <translation>otvaranje veze s uređajem</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="555"/>
@@ -2770,29 +2770,29 @@ Format:
     <message>
         <location filename="../HamlibTransceiver.cpp" line="564"/>
         <source>getting current mode</source>
-        <translation>dobivanje trenutnog načina</translation>
+        <translation>dobivanje trenutnog načina rada</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="613"/>
         <location filename="../HamlibTransceiver.cpp" line="648"/>
         <source>exchanging VFOs</source>
-        <translation>zamjena VFOa</translation>
+        <translation>zamjena VFO-ova</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="621"/>
         <location filename="../HamlibTransceiver.cpp" line="1177"/>
         <source>getting other VFO frequency</source>
-        <translation>dobivanje frekvencije drugog VFOa</translation>
+        <translation>dobivanje frekvencije drugog VFO-a</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="630"/>
         <source>getting other VFO mode</source>
-        <translation>dobivanje vrste rada drugog VFOa</translation>
+        <translation>dobivanje načina rada drugog VFO-a</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="658"/>
         <source>setting current VFO</source>
-        <translation>postavljanje trenutnog VFO-a</translation>
+        <translation>odabir trenutnog VFO-a</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="667"/>
@@ -2802,13 +2802,13 @@ Format:
     <message>
         <location filename="../HamlibTransceiver.cpp" line="676"/>
         <source>getting mode</source>
-        <translation>dobivanje vrste rada</translation>
+        <translation>dobivanje načina rada</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="698"/>
         <location filename="../HamlibTransceiver.cpp" line="1092"/>
         <source>getting current VFO</source>
-        <translation>dobivanje trenutnog VFO</translation>
+        <translation>dobivanje trenutnog VFO-a</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="757"/>
@@ -2816,7 +2816,7 @@ Format:
         <location filename="../HamlibTransceiver.cpp" line="779"/>
         <location filename="../HamlibTransceiver.cpp" line="1151"/>
         <source>getting current VFO frequency</source>
-        <translation>dobivanje trenutne VFO frekvencije</translation>
+        <translation>dobivanje frekvencije trenutnog VFO-a</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="763"/>
@@ -2826,7 +2826,7 @@ Format:
         <location filename="../HamlibTransceiver.cpp" line="892"/>
         <location filename="../HamlibTransceiver.cpp" line="953"/>
         <source>setting frequency</source>
-        <translation>podešavanje frekvencije</translation>
+        <translation>postavljanje frekvencije</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="882"/>
@@ -2834,7 +2834,7 @@ Format:
         <location filename="../HamlibTransceiver.cpp" line="1032"/>
         <location filename="../HamlibTransceiver.cpp" line="1045"/>
         <source>getting current VFO mode</source>
-        <translation>dobivanje trenutnog načina VFO</translation>
+        <translation>dobivanje načina rada trenutnog VFO-a</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="888"/>
@@ -2843,39 +2843,39 @@ Format:
         <location filename="../HamlibTransceiver.cpp" line="1038"/>
         <location filename="../HamlibTransceiver.cpp" line="1051"/>
         <source>setting current VFO mode</source>
-        <translation>postavljanje trenutnog načina VFOa</translation>
+        <translation>postavljanje načina rada trenutnog VFO-a</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="940"/>
         <location filename="../HamlibTransceiver.cpp" line="1009"/>
         <source>setting/unsetting split mode</source>
-        <translation>podešavanje / isključivanje Split načina rada</translation>
+        <translation>uključivanje/isključivanje split načina rada</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="951"/>
         <location filename="../HamlibTransceiver.cpp" line="991"/>
         <source>setting split mode</source>
-        <translation>postavljam Split mod</translation>
+        <translation>postavljanje split načina rada</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="979"/>
         <source>setting split TX frequency and mode</source>
-        <translation>postavljanje split podijeljene TX frekvencije i načina</translation>
+        <translation>postavljanje split TX frekvencije i načina rada</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="984"/>
         <source>setting split TX frequency</source>
-        <translation>postavljanje podijeljene Split TX frekvencije</translation>
+        <translation>postavljanje split TX frekvencije</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="1056"/>
         <source>getting split TX VFO mode</source>
-        <translation>dobivanje split TX VFO moda</translation>
+        <translation>dobivanje načina rada split TX VFO-a</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="1063"/>
         <source>setting split TX VFO mode</source>
-        <translation>postavljanje podijeljenog SPLIT TX VFO načina</translation>
+        <translation>postavljanje načina rada split TX VFO-a</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="1343"/>
@@ -2885,12 +2885,12 @@ Format:
     <message>
         <location filename="../HamlibTransceiver.cpp" line="1379"/>
         <source>setting PTT on</source>
-        <translation>uključen PTT</translation>
+        <translation>uključivanje PTT-a</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="1387"/>
         <source>setting PTT off</source>
-        <translation>PTT isključen</translation>
+        <translation>isključivanje PTT-a</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="1399"/>
@@ -2900,7 +2900,7 @@ Format:
     <message>
         <location filename="../HamlibTransceiver.cpp" line="1409"/>
         <source>getting a configuration item</source>
-        <translation>dobivanje postavke konfiguracije</translation>
+        <translation>dobivanje konfiguracijske stavke</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp"/>
@@ -2910,12 +2910,12 @@ Format:
     <message>
         <location filename="../HamlibTransceiver.cpp"/>
         <source>Security error password not provided or crypto failure</source>
-        <translation>Sigurnosna greška: lozinka nije zadana ili šifriranje nije uspjelo</translation>
+        <translation>Sigurnosna greška: lozinka nije navedena ili šifriranje nije uspjelo</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp"/>
         <source>Rig is not powered on</source>
-        <translation>RIG nije uključen</translation>
+        <translation>Uređaj nije uključen</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp"/>
@@ -3198,8 +3198,8 @@ Format:
     <message>
         <location filename="../mainwindow.ui" line="803"/>
         <location filename="../mainwindow.ui" line="813"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;DXSummit spot line edit: mode in the information field being spotted automatically, user can add own text message in the information field. Available macros: #D is for distance, #G is for &quot;Grid1&lt;&gt;Grid2&quot;, #R is for report value. Information field preview is available.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;DXSummit uređivanje spotanja: vrsta rada se u informacijskom polju automatski upisuje, korisnik u informacijsko polje može dodati vlastitu tekstualnu poruku. Dostupne makronaredbe: #D je za udaljenost, #G je za &quot;Grid1 &lt;&gt; Grid2&quot;, #R je jačina signala. Dostupan je pregled informacijskog polja.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;DXSummit spot line edit: mode in the information field being spotted automatically, user can add own text message in the information field. Available macros: #D is for distance, #G is for &quot;Grid1&amp;lt;&amp;gt;Grid2&quot;, #R is for report value. Information field preview is available.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;DXSummit uređivanje spotanja: vrsta rada se u informacijskom polju automatski upisuje, korisnik u informacijsko polje može dodati vlastitu tekstualnu poruku. Dostupne makronaredbe: #D je za udaljenost, #G je za &quot;Grid1 &amp;lt;&amp;gt; Grid2&quot;, #R je jačina signala. Dostupan je pregled informacijskog polja.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="806"/>
@@ -4871,7 +4871,7 @@ popis. Popis se može održavati u Postavkama (F2).</translation>
     <message>
         <location filename="../mainwindow.cpp" line="987"/>
         <source>Error removing &quot;%1&quot;</source>
-        <translation>Pogreška prilikom uklanjanja &quot;%1&quot;</translation>
+        <translation>Greška prilikom uklanjanja &quot;%1&quot;</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="988"/>
@@ -4966,7 +4966,7 @@ popis. Popis se može održavati u Postavkama (F2).</translation>
     <message>
         <location filename="../mainwindow.cpp" line="2726"/>
         <source>Subprocess error</source>
-        <translation>Pogreška podprocesa</translation>
+        <translation>Greška podprocesa</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="2797"/>
@@ -5301,7 +5301,7 @@ već je u CALL3.TXT, da li ga želiš zamijeniti?</translation>
     <message>
         <location filename="../mainwindow.cpp" line="7222"/>
         <source>Rig Control Error</source>
-        <translation>Greška kontrole RIG</translation>
+        <translation>Greška upravljanja uređajem</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="7302"/>
@@ -6607,27 +6607,27 @@ Provjerite je li dato točno ime imenika.</translation>
     <message>
         <location filename="../WFPalette.cpp" line="78"/>
         <source>Error reading waterfall palette file &quot;%1:%2&quot; too many colors.</source>
-        <translation>Pogreška pri čitanju datoteke palete vodopada &quot;%1:%2&quot; previše boja.</translation>
+        <translation>Greška pri čitanju datoteke palete vodopada &quot;%1:%2&quot; previše boja.</translation>
     </message>
     <message>
         <location filename="../WFPalette.cpp" line="84"/>
         <source>Error reading waterfall palette file &quot;%1:%2&quot; invalid triplet.</source>
-        <translation>Pogreška pri čitanju datoteke palete vodopada &quot;%1:%2&quot; nevažeća trojka.</translation>
+        <translation>Greška pri čitanju datoteke palete vodopada &quot;%1:%2&quot; nevažeća trojka.</translation>
     </message>
     <message>
         <location filename="../WFPalette.cpp" line="96"/>
         <source>Error reading waterfall palette file &quot;%1:%2&quot; invalid color.</source>
-        <translation>Pogreška pri čitanju datoteke palete vodopada &quot;%1:%2&quot; nevaljana boja.</translation>
+        <translation>Greška pri čitanju datoteke palete vodopada &quot;%1:%2&quot; nevaljana boja.</translation>
     </message>
     <message>
         <location filename="../WFPalette.cpp" line="104"/>
         <source>Error opening waterfall palette file &quot;%1&quot;: %2.</source>
-        <translation>Pogreška prilikom otvaranja datoteke palete vodopada &quot;%1&quot;: %2.</translation>
+        <translation>Greška prilikom otvaranja datoteke palete vodopada &quot;%1&quot;: %2.</translation>
     </message>
     <message>
         <location filename="../WFPalette.cpp" line="258"/>
         <source>Error writing waterfall palette file &quot;%1&quot;: %2.</source>
-        <translation>Pogreška pri pisanju datoteke palete vodopada &quot;%1&quot;: %2.</translation>
+        <translation>Greška pri pisanju datoteke palete vodopada &quot;%1&quot;: %2.</translation>
     </message>
 </context>
 <context>
@@ -6653,12 +6653,12 @@ Provjerite je li dato točno ime imenika.</translation>
     <message>
         <location filename="../soundin.cpp" line="21"/>
         <source>An error opening the audio input device has occurred.</source>
-        <translation>Došlo je do pogreške prilikom otvaranja audio ulaznog uređaja.</translation>
+        <translation>Došlo je do greške prilikom otvaranja audio ulaznog uređaja.</translation>
     </message>
     <message>
         <location filename="../soundin.cpp" line="25"/>
         <source>An error occurred during read from the audio input device.</source>
-        <translation>Došlo je do pogreške tijekom čitanja s audio ulaznog uređaja.</translation>
+        <translation>Došlo je do greške tijekom čitanja s audio ulaznog uređaja.</translation>
     </message>
     <message>
         <location filename="../soundin.cpp" line="29"/>
@@ -6668,7 +6668,7 @@ Provjerite je li dato točno ime imenika.</translation>
     <message>
         <location filename="../soundin.cpp" line="33"/>
         <source>Non-recoverable error, audio input device not usable at this time.</source>
-        <translation>Pogreška koja se ne može povratiti, uređaj za unos zvuka trenutno nije upotrebljiv.</translation>
+        <translation>Greška koja se ne može povratiti, uređaj za unos zvuka trenutno nije upotrebljiv.</translation>
     </message>
     <message>
         <location filename="../soundin.cpp" line="62"/>
@@ -6721,12 +6721,12 @@ Provjerite je li dato točno ime imenika.</translation>
     <message>
         <location filename="../soundout.cpp" line="24"/>
         <source>An error opening the audio output device has occurred.</source>
-        <translation>Došlo je do pogreške prilikom otvaranja audio izlaznog uređaja.</translation>
+        <translation>Došlo je do greške prilikom otvaranja audio izlaznog uređaja.</translation>
     </message>
     <message>
         <location filename="../soundout.cpp" line="25"/>
         <source>An error occurred during write to the audio output device.</source>
-        <translation>Došlo je do pogreške tijekom pisanja na izlazni audio uređaj.</translation>
+        <translation>Došlo je do greške tijekom pisanja na izlazni audio uređaj.</translation>
     </message>
     <message>
         <location filename="../soundout.cpp" line="26"/>
@@ -6736,7 +6736,7 @@ Provjerite je li dato točno ime imenika.</translation>
     <message>
         <location filename="../soundout.cpp" line="27"/>
         <source>Non-recoverable error, audio output device not usable at this time.</source>
-        <translation>Pogreška koja se ne može popraviti, uređaj za izlaz zvuka trenutačno nije upotrebljiv.</translation>
+        <translation>Greška koja se ne može popraviti, uređaj za izlaz zvuka trenutačno nije upotrebljiv.</translation>
     </message>
     <message>
         <location filename="../soundout.cpp" line="45"/>
@@ -6970,7 +6970,7 @@ Provjerite je li dato točno ime imenika.</translation>
     <message>
         <location filename="../TCITransceiver.cpp" line="292"/>
         <source>TCI websocket error: %1</source>
-        <translation>TCI websocket greška: %1</translation>
+        <translation>Greška TCI websocketa: %1</translation>
     </message>
     <message>
         <location filename="../TCITransceiver.cpp" line="417"/>
@@ -7045,7 +7045,7 @@ Provjerite je li dato točno ime imenika.</translation>
     <message>
         <location filename="../TransceiverBase.cpp" line="14"/>
         <source>Unexpected rig error</source>
-        <translation>Neočekivana pogreška uređaja</translation>
+        <translation>Neočekivana greška uređaja</translation>
     </message>
 </context>
 <context>
@@ -8879,8 +8879,8 @@ Kliknite desnom tipkom miša za umetanje i brisanje opcija.</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3604"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Invert text&lt;-&gt;background color for received messages&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Invert text&lt;-&gt;boja pozadine za primljene poruke&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Invert text&amp;lt;-&amp;gt;background color for received messages&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Invert text&amp;lt;-&amp;gt;boja pozadine za primljene poruke&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3607"/>
@@ -10067,12 +10067,12 @@ promjena zvučne kartice</translation>
     <message>
         <location filename="../main.cpp" line="77"/>
         <source>Fatal error</source>
-        <translation>Neočekivana greška</translation>
+        <translation>Fatalna greška</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="82"/>
         <source>Unexpected fatal error</source>
-        <translation>Neočekivana greška uređaja</translation>
+        <translation>Neočekivana fatalna greška</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="144"/>

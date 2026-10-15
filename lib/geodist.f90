@@ -25,6 +25,7 @@ subroutine geodist(Eplat,Eplon,Stlat,Stlon,Az,Baz,Dist)
        HAPBR, HAMBR, A1M2, A2M1
 
   real AL,BL,D2R,Pi2
+  real AzS,BazS,DistS                 ! CE3TSK 2026-10-14: the spherical answer, compared and used near the antipode
 
   data AL/6378206.4/              ! Clarke 1866 ellipsoid
   data BL/6356583.8/
@@ -87,6 +88,27 @@ subroutine geodist(Eplat,Eplon,Stlat,Stlon,Az,Baz,Dist)
   A1M2 = Pi2 + HAMBR - HAPBR
   A2M1 = Pi2 - HAMBR - HAPBR
 
+! CE3TSK 2026-10-14 (review TODO 3.-72): near the antipode and near a pole the formula above breaks down -
+! ACos of a cosine rounded past -1, DL/SD with SD = 0, KK*KK/L with L = 0 - and gives NaN. A NaN azimuth never
+! satisfies the two tests below, and the loops at 1 and 5 then ran FOR EVER: the program hung, in the GUI
+! thread, scoring a decode with such a grid in a contest or showing the DX grid's distance (PL05-GG04,
+! FG04-OL05, JA00-JA00KL, MR39qx-AA40ba). A result that is not finite, or a distance beyond half the globe,
+! is now taken from a spherical great circle instead (geodist_sphere below); every other pair keeps its
+! result to the bit.
+! CE3TSK 2026-10-14 (reviews 3.-79, 3.-81): near the antipode the formula also gives FINITE results that are wrong -
+! measured against the exact geodesic (Karney, Clarke 1866) on a million near-antipodal pairs: by up to 2588 km, and
+! 180 degrees in azimuth (AE08-JN01 20609 km and JC98xq-AP91xg 20100 km are 19999 km, NI09-EJ00 19924 km is 19999).
+! No two points of the ellipsoid are farther apart than its half meridian, 20003.8 km. So the sphere answers also
+! when the formula says 20004 km or more, or the sphere itself says 19990 km or more - the antipode's neighbourhood:
+! the worst distance error of the probe fell to 13.3 km (169 km with a cut on the formula alone at 19990 km). The
+! sphere is not better everywhere there - near opposite poles the formula was within 3 km and the sphere is up to
+! 11 km off (review 3.-82) - but its worst is far smaller. Every other pair keeps the formula's result to the bit.
+  call geodist_sphere(Eplat,Eplon,Stlat,Stlon,AzS,BazS,DistS)
+  if(.not.(abs(A1M2).lt.20.0 .and. abs(A2M1).lt.20.0 .and. Dist.ge.0.0 .and. Dist.lt.20004.0 .and. DistS.lt.19990.0)) then
+     Az=AzS; Baz=BazS; Dist=DistS
+     go to 999
+  endif
+
 1 If ((A1M2 .ge. 0.0) .AND. (A1M2 .lt. Pi2)) GOTO 5
   If (A1M2 .lt. Pi2) GOTO 4
   A1M2 = A1M2 - Pi2
@@ -112,4 +134,26 @@ subroutine geodist(Eplat,Eplon,Stlat,Stlon,Az,Baz,Dist)
   baz = 360.0 - baz
 
 999 return
+
+contains
+
+! CE3TSK 2026-10-14: the great circle on a sphere of the mean radius, in the conventions of the formula above
+! (west longitude positive; Az from the first point to the second, Baz back). Finite for every input: the
+! haversine's argument is held in [0,1], and ATan2 (0,0) is 0 - at the antipode itself every azimuth is right.
+  subroutine geodist_sphere(Eplat,Eplon,Stlat,Stlon,Az,Baz,Dist)
+    real, intent(in) :: Eplat,Eplon,Stlat,Stlon
+    real, intent(out) :: Az,Baz,Dist
+    real*8 p1,p2,l1,l2,dl,h,c
+    real*8, parameter :: rad=0.017453292519943295d0, R=6371.0d0
+    p1=Eplat*rad; p2=Stlat*rad
+    l1=-Eplon*rad; l2=-Stlon*rad                  ! east longitude
+    dl=l2-l1
+    h=sin((p2-p1)/2)**2 + cos(p1)*cos(p2)*sin(dl/2)**2
+    h=min(1.d0,max(0.d0,h))
+    c=2*atan2(sqrt(h),sqrt(1-h))
+    Dist=real(R*c)
+    Az=real(modulo(atan2(sin(dl)*cos(p2),cos(p1)*sin(p2)-sin(p1)*cos(p2)*cos(dl))/rad,360.d0))
+    Baz=real(modulo(atan2(-sin(dl)*cos(p1),cos(p2)*sin(p1)-sin(p2)*cos(p1)*cos(dl))/rad,360.d0))
+  end subroutine geodist_sphere
+
 end subroutine geodist

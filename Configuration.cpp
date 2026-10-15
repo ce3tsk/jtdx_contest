@@ -1548,7 +1548,11 @@ int Configuration::special_op_points (int distanceKm) const
 
 /* CE3TSK: the one distance implementation. azdist is a spheroidal geodesic on the Clarke
    1866 ellipsoid; a spherical approximation differs by up to half a percent, tens of km at
-   DX distances, which would move QSOs across the 3000 km point boundaries.
+   DX distances, which would move QSOs across the 3000 km point boundaries. (Since 2026-10-14
+   geodist answers from a sphere where the ellipsoid formula is not finite, says 20004 km or more, or
+   the sphere says 19990 km or more: near the antipode, where the formula was wrong by up to 2588 km and
+   the sphere is within about 13 km - far beyond any 3000 km boundary -, and for some pairs of nearly
+   the same point, near a pole or written across 180 degrees.)
 
    fourCharOnly is what a contest needs: the exchange carries 4 characters, so scoring from
    a 6 character home grid would compute a distance the other station cannot reproduce from
@@ -1618,8 +1622,8 @@ namespace
     QString const mine = contest_grid (myGrid, fourCharOnly);
     QString const his = contest_grid (hisGrid, fourCharOnly);
     if (mine.isEmpty () || his.isEmpty ()) return false;
-    /* azdist writes the padding back into these buffers, so they must be mutable and must not
-       be reused afterwards - hence local copies rather than a const_cast on a temporary. */
+    /* buffers of the 8 characters azdist reads (it pads copies of its own since 2026-10-14, TODO 3.-69,
+       and no longer writes into these) */
     QByteArray a = (mine + "        ").left (8).toLatin1 ();
     QByteArray b = (his + "        ").left (8).toLatin1 ();
     double utch = 0.0;

@@ -2640,7 +2640,7 @@ Formato:
         <location filename="../HamlibTransceiver.cpp" line="214"/>
         <location filename="../HamlibTransceiver.cpp" line="299"/>
         <source>Hamlib initialisation error</source>
-        <translation>Errore nella inizializzazione di Hamlib</translation>
+        <translation>Errore nell'inizializzazione di Hamlib</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="259"/>
@@ -2650,7 +2650,7 @@ Formato:
     <message>
         <location filename="../HamlibTransceiver.cpp" line="260"/>
         <source>Invalid parameter</source>
-        <translation>Paramentro non valido</translation>
+        <translation>Parametro non valido</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="261"/>
@@ -2675,12 +2675,12 @@ Formato:
     <message>
         <location filename="../HamlibTransceiver.cpp" line="265"/>
         <source>IO error</source>
-        <translation>Errore IO</translation>
+        <translation>Errore di I/O</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="266"/>
         <source>Internal Hamlib error</source>
-        <translation>Errore Interno di Hamlib</translation>
+        <translation>Errore interno di Hamlib</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="267"/>
@@ -2705,7 +2705,7 @@ Formato:
     <message>
         <location filename="../HamlibTransceiver.cpp" line="271"/>
         <source>Target VFO unaccessible</source>
-        <translation>Target VFO inaccessibile</translation>
+        <translation>VFO di destinazione inaccessibile</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="272"/>
@@ -2720,7 +2720,7 @@ Formato:
     <message>
         <location filename="../HamlibTransceiver.cpp" line="274"/>
         <source>NULL RIG handle or invalid pointer parameter</source>
-        <translation>NULL RIG manovra o parametro puntatore non valido</translation>
+        <translation>Descrittore NULL dell'RTX o parametro puntatore non valido</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="275"/>
@@ -2730,7 +2730,7 @@ Formato:
     <message>
         <location filename="../HamlibTransceiver.cpp" line="276"/>
         <source>Argument out of domain of func</source>
-        <translation>Argomento fuori dalla funzione</translation>
+        <translation>Argomento fuori dal dominio della funzione</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="434"/>
@@ -2745,7 +2745,7 @@ Formato:
     <message>
         <location filename="../HamlibTransceiver.cpp" line="452"/>
         <source>Hamlib settings file error: config must be a JSON object</source>
-        <translation>Errore del file di configurazione di Hamlib: la sonfigurazione deve essere un oggetto JSON</translation>
+        <translation>Errore del file di configurazione di Hamlib: config deve essere un oggetto JSON</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="360"/>
@@ -2765,50 +2765,50 @@ Formato:
     <message>
         <location filename="../HamlibTransceiver.cpp" line="555"/>
         <source>getting current frequency</source>
-        <translation>sto ricevendo la frequenza</translation>
+        <translation>sto leggendo la frequenza corrente</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="564"/>
         <source>getting current mode</source>
-        <translation>sto ricevendo il modo</translation>
+        <translation>sto leggendo il modo corrente</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="613"/>
         <location filename="../HamlibTransceiver.cpp" line="648"/>
         <source>exchanging VFOs</source>
-        <translation>sto cambiando i VFOs</translation>
+        <translation>sto cambiando i VFO</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="621"/>
         <location filename="../HamlibTransceiver.cpp" line="1177"/>
         <source>getting other VFO frequency</source>
-        <translation>sto ricevendo la frequenza dell&apos;altro VFO</translation>
+        <translation>sto leggendo la frequenza dell&apos;altro VFO</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="630"/>
         <source>getting other VFO mode</source>
-        <translation>sto ricevendo la il modo dell&apos;altro VFO</translation>
+        <translation>sto leggendo il modo dell&apos;altro VFO</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="658"/>
         <source>setting current VFO</source>
-        <translation>sto settando l&apos;attuale VFO</translation>
+        <translation>sto selezionando il VFO corrente</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="667"/>
         <source>getting frequency</source>
-        <translation>sto ricevendo la frequenza</translation>
+        <translation>sto leggendo la frequenza</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="676"/>
         <source>getting mode</source>
-        <translation>sto onnenedo il modo</translation>
+        <translation>sto leggendo il modo</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="698"/>
         <location filename="../HamlibTransceiver.cpp" line="1092"/>
         <source>getting current VFO</source>
-        <translation>sto ricevendo il VFO corrente</translation>
+        <translation>sto leggendo il VFO corrente</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="757"/>
@@ -2816,7 +2816,7 @@ Formato:
         <location filename="../HamlibTransceiver.cpp" line="779"/>
         <location filename="../HamlibTransceiver.cpp" line="1151"/>
         <source>getting current VFO frequency</source>
-        <translation>sto ricevendo la frequenza del VFO</translation>
+        <translation>sto leggendo la frequenza del VFO corrente</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="763"/>
@@ -2826,7 +2826,7 @@ Formato:
         <location filename="../HamlibTransceiver.cpp" line="892"/>
         <location filename="../HamlibTransceiver.cpp" line="953"/>
         <source>setting frequency</source>
-        <translation>sto settando la frequenza</translation>
+        <translation>sto impostando la frequenza</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="882"/>
@@ -2834,7 +2834,7 @@ Formato:
         <location filename="../HamlibTransceiver.cpp" line="1032"/>
         <location filename="../HamlibTransceiver.cpp" line="1045"/>
         <source>getting current VFO mode</source>
-        <translation>sto ricevendo il modo del VFO</translation>
+        <translation>sto leggendo il modo del VFO corrente</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="888"/>
@@ -2843,64 +2843,64 @@ Formato:
         <location filename="../HamlibTransceiver.cpp" line="1038"/>
         <location filename="../HamlibTransceiver.cpp" line="1051"/>
         <source>setting current VFO mode</source>
-        <translation>sto settado il  modo del VFO</translation>
+        <translation>sto impostando il modo del VFO corrente</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="940"/>
         <location filename="../HamlibTransceiver.cpp" line="1009"/>
         <source>setting/unsetting split mode</source>
-        <translation>settare/non settare lo split</translation>
+        <translation>sto attivando/disattivando lo split</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="951"/>
         <location filename="../HamlibTransceiver.cpp" line="991"/>
         <source>setting split mode</source>
-        <translation>sto settando il  modo split</translation>
+        <translation>sto impostando il modo split</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="979"/>
         <source>setting split TX frequency and mode</source>
-        <translation>sto settando lo split TX per modo e frequenza</translation>
+        <translation>sto impostando frequenza e modo TX in split</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="984"/>
         <source>setting split TX frequency</source>
-        <translation>sto settando lo split della frequenza in TX</translation>
+        <translation>sto impostando la frequenza TX in split</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="1056"/>
         <source>getting split TX VFO mode</source>
-        <translation>sto ricevendo la frequenza split TX VFO</translation>
+        <translation>sto leggendo il modo del VFO TX in split</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="1063"/>
         <source>setting split TX VFO mode</source>
-        <translation>sto settando il modo split del VFO TX</translation>
+        <translation>sto impostando il modo del VFO TX in split</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="1343"/>
         <source>getting PTT state</source>
-        <translation>sto ricevendo lo stato del PTT</translation>
+        <translation>sto leggendo lo stato del PTT</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="1379"/>
         <source>setting PTT on</source>
-        <translation>impostazione acceso del PTT</translation>
+        <translation>sto attivando il PTT</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="1387"/>
         <source>setting PTT off</source>
-        <translation>impostazione spento del PTT</translation>
+        <translation>sto disattivando il PTT</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="1399"/>
         <source>setting a configuration item</source>
-        <translation>impostazione configurazione dell&apos;elemento</translation>
+        <translation>sto impostando un parametro di configurazione</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp" line="1409"/>
         <source>getting a configuration item</source>
-        <translation>sto ricevendo la configurazione dell&apos;elemento</translation>
+        <translation>sto leggendo un parametro di configurazione</translation>
     </message>
     <message>
         <location filename="../HamlibTransceiver.cpp"/>
@@ -3188,8 +3188,8 @@ Formato:
     <message>
         <location filename="../mainwindow.ui" line="803"/>
         <location filename="../mainwindow.ui" line="813"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;DXSummit spot line edit: mode in the information field being spotted automatically, user can add own text message in the information field. Available macros: #D is for distance, #G is for &quot;Grid1&lt;&gt;Grid2&quot;, #R is for report value. Information field preview is available.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;DXSummit modifica linea spot: modalità nel campo informazioni che viene individuata automaticamente, l&apos;utente può aggiungere il proprio messaggio di testo nel campo informazioni. Macro disponibili: #D è per la distanza, #G è per &quot;Grid1 &lt;&gt; Grid2&quot;, #R è per il valore del rapporto. È disponibile l&apos;anteprima del campo informazioni.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;DXSummit spot line edit: mode in the information field being spotted automatically, user can add own text message in the information field. Available macros: #D is for distance, #G is for &quot;Grid1&amp;lt;&amp;gt;Grid2&quot;, #R is for report value. Information field preview is available.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;DXSummit modifica linea spot: modalità nel campo informazioni che viene individuata automaticamente, l&apos;utente può aggiungere il proprio messaggio di testo nel campo informazioni. Macro disponibili: #D è per la distanza, #G è per &quot;Grid1 &amp;lt;&amp;gt; Grid2&quot;, #R è per il valore del rapporto. È disponibile l&apos;anteprima del campo informazioni.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="806"/>
@@ -7550,7 +7550,7 @@ periodo di quiete al termine della decodifica.</translation>
     <message>
         <location filename="../Configuration.ui" line="808"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Request S meter data from transceiver: CAT shall be set up via Hamlib, Hamlib does support getting S meter data for some transceivers.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt; Richiedi i dati dello Smiter dal ricetrasmettitore: il CAT deve essere impostato tramite Hamlib, Hamlib supporta il recupero dei dati dello Smiter per alcuni ricetrasmettitori. &lt;/p&gt;&lt;/body&gt;&lt;/ html &gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt; Richiedi i dati dello Smiter dal ricetrasmettitore: il CAT deve essere impostato tramite Hamlib, Hamlib supporta il recupero dei dati dello Smiter per alcuni ricetrasmettitori. &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="811"/>
@@ -7560,7 +7560,7 @@ periodo di quiete al termine della decodifica.</translation>
     <message>
         <location filename="../Configuration.ui" line="840"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Request output power data from transceiver: CAT shall be set up via Hamlib, Hamlib does support getting output power data for some transceivers.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt; Richiedi dati di potenza in uscita dal ricetrasmettitore: il CAT deve essere impostato tramite Hamlib, Hamlib supporta il ricevimento dei dati di potenza in uscita per alcuni ricetrasmettitori. &lt;/p&gt;&lt;/body&gt;&lt;/ html &gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt; Richiedi dati di potenza in uscita dal ricetrasmettitore: il CAT deve essere impostato tramite Hamlib, Hamlib supporta il ricevimento dei dati di potenza in uscita per alcuni ricetrasmettitori. &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="843"/>
@@ -7799,7 +7799,7 @@ altra interfaccia hardware per PTT.</translation>
     <message>
         <location filename="../Configuration.ui" line="1339"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;No PTT activation, instead the radio&apos;s automatic VOX is used to key the transmitter.&lt;/p&gt;&lt;p&gt;Use this if you have no radio interface hardware.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt; Nessuna attivazione PTT,  il VOX  della radio viene usato per andare in trasmissione. &lt;/p&gt;&lt;p&gt; Usalo se non hai una  interfaccia hardware con la radio. &lt;/p&gt;&lt;/ body&gt;&lt;/ html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt; Nessuna attivazione PTT,  il VOX  della radio viene usato per andare in trasmissione. &lt;/p&gt;&lt;p&gt; Usalo se non hai una  interfaccia hardware con la radio. &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1342"/>
@@ -7918,7 +7918,7 @@ radio (uso sconsigliato da utilizzare solo se la modalità
     <message>
         <location filename="../Configuration.ui" line="1599"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Attempt to connect to the radio with these settings.&lt;/p&gt;&lt;p&gt;The button will turn green if the connection is successful or red if there is a problem.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt; Tenta di connettersi alla radio con queste impostazioni. &lt;/p&gt;&lt;p&gt; Il pulsante diventerà verde se la connessione ha esito positivo o rosso in caso di problemi. &lt;/ p&gt;&lt;/ body&gt;&lt;/ html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt; Tenta di connettersi alla radio con queste impostazioni. &lt;/p&gt;&lt;p&gt; Il pulsante diventerà verde se la connessione ha esito positivo o rosso in caso di problemi. &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="1602"/>
@@ -8519,7 +8519,7 @@ le prestazioni del sistema.</translation>
     <message>
         <location filename="../Configuration.ui" line="3038"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Selected text filters will be applied to limit transmission of the UDP messages from JTDX, for instance messages from some continents can be blocked.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt; I filtri di testo selezionati verranno applicati per limitare la trasmissione dei messaggi UDP da JTDX, ad esempio i messaggi da alcuni continenti possono essere bloccati. &lt;/p&gt;&lt;/body&gt;&lt;/html</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt; I filtri di testo selezionati verranno applicati per limitare la trasmissione dei messaggi UDP da JTDX, ad esempio i messaggi da alcuni continenti possono essere bloccati. &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3041"/>
@@ -8876,7 +8876,7 @@ Fare clic con il tasto destro per inserire ed eliminare le opzioni.</translation
     </message>
     <message>
         <location filename="../Configuration.ui" line="3604"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Invert text&lt;-&gt;background color for received messages&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Invert text&amp;lt;-&amp;gt;background color for received messages&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Inverti il colore di sfondo con il colore del testo nei messaggi ricevuti&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
@@ -9160,7 +9160,7 @@ Fare clic con il tasto destro per inserire ed eliminare le opzioni.</translation
     <message>
         <location filename="../Configuration.ui" line="5020"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&apos;Show DXCC name/prefix&apos; shall be activated in General tab of the settings or any &apos;New one&apos; notification to get this functionality working.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&apos;Mostra nome/prefisso Paese&apos; deve essere attivato nella scheda Generale di Impostazioni o in qualsiasi notifica &apos;Nuovo&apos; per far funzionare questa funzionalità. &lt;/p&gt;&lt;/body&gt;&lt;/ html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&apos;Mostra nome/prefisso Paese&apos; deve essere attivato nella scheda Generale di Impostazioni o in qualsiasi notifica &apos;Nuovo&apos; per far funzionare questa funzionalità. &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="5023"/>
@@ -9799,7 +9799,7 @@ AA1AAA, BB1BB, CC1CC &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     <message>
         <location filename="../Configuration.ui" line="6985"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Settings depend on the CPU power, try to use maximum number of decoding passes for overcrowded HF bands.&lt;br&gt;&lt;br&gt;Number of decoding passes may be decreased for low populated HF/VHF bands while an increase of the number of decoding attempts might bring better decoding efficiency for the weak signals there.&lt;br&gt;&lt;br&gt;Number of decoding attempts affecting decoding efficiency of the low SNR signals: wideband or RX frequency one.&lt;br&gt;&lt;br&gt;Number of decoding passes affecting maximum number of the signals that can be decoded on the same frequency or located close to each other with largely overlapped spectra, it is possible to decode up to 4 signals on the same frequency and up to 7 signals on the RX frequency if number of decoding passes is set to 4.&lt;br&gt;&lt;br&gt;Increase number of decoding attempts to the value allowing to get decoding finished until end of the RX minute interval.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>ur&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt; Le impostazioni dipendono dalla potenza della CPU, prova a utilizzare il numero massimo di passaggi di decodifica per bande HF sovraffollate. &lt;br&gt;&lt;br&gt; Il numero di passaggi di decodifica può essere ridotto per HF a bassa popolazione HF/ VHF mentre un aumento del numero di tentativi di decodifica potrebbe portare una migliore efficienza di decodifica per i segnali deboli. &lt;br&gt;&lt;br&gt; Numero di tentativi di decodifica che incidono sull&apos;efficienza di decodifica dei segnali SNR bassi: banda larga o frequenza RX. &lt;Br &gt;&lt;br&gt; Numero di passaggi di decodifica che incidono sul numero massimo di segnali che possono essere decodificati sulla stessa frequenza o posizionati l&apos;uno vicino all&apos;altro con spettri ampiamente sovrapposti, è possibile decodificare fino a 4 segnali sulla stessa frequenza e fino a 7 segnali sulla frequenza RX se il numero di passaggi di decodifica è impostato su 4. &lt;br&gt;&lt;br&gt; Aumenta il numero di tentativi di decodifica sul valore consentendo di terminare la decodifica fino alla fine dell&apos;intervallo di minuti RX. &lt;/p&gt;&lt;/body&gt;&lt;/ html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt; Le impostazioni dipendono dalla potenza della CPU, prova a utilizzare il numero massimo di passaggi di decodifica per bande HF sovraffollate. &lt;br&gt;&lt;br&gt; Il numero di passaggi di decodifica può essere ridotto per le bande HF/VHF poco affollate mentre un aumento del numero di tentativi di decodifica potrebbe portare una migliore efficienza di decodifica per i segnali deboli. &lt;br&gt;&lt;br&gt; Numero di tentativi di decodifica che incidono sull&apos;efficienza di decodifica dei segnali SNR bassi: banda larga o frequenza RX. &lt;br&gt;&lt;br&gt; Numero di passaggi di decodifica che incidono sul numero massimo di segnali che possono essere decodificati sulla stessa frequenza o posizionati l&apos;uno vicino all&apos;altro con spettri ampiamente sovrapposti, è possibile decodificare fino a 4 segnali sulla stessa frequenza e fino a 7 segnali sulla frequenza RX se il numero di passaggi di decodifica è impostato su 4. &lt;br&gt;&lt;br&gt; Aumenta il numero di tentativi di decodifica sul valore consentendo di terminare la decodifica fino alla fine dell&apos;intervallo di minuti RX. &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="7073"/>

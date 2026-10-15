@@ -378,6 +378,8 @@ MainWindow::MainWindow(bool multiple, QSettings * settings, QSharedMemory *shdme
   m_cqWordBox {nullptr},
   m_cqWordBusy {false},
   m_cqWordMode77 {false},
+  m_cqWordSent {},
+  m_cqGenerated {false},
   m_lastMode {""},
   m_callsign {""},
   m_grid {""},
@@ -2741,8 +2743,12 @@ void MainWindow::on_actionSettings_triggered()               //Setup Dialog
       /* CE3TSK: WW Digi contest - the station grid is the exchange, so a grid change must
          rebuild the messages. The callsign branch above is the only other place that does
          it, so without this, blanking the grid would leave valid looking messages in place
-         until something else happened to regenerate them. */
-      if(m_wwDigi && m_config.my_grid () != m_grid) ui->genStdMsgsPushButton->click ();
+         until something else happened to regenerate them.
+         CE3TSK 2026-10-14 (review 3.-79): in every activity - outside WW Digi a grid changed here regenerated nothing
+         either (stock): "CQ K1ABC FN42" stayed in Tx6 after FN43 was given, and a grid given at last left Tx6 empty
+         until the CQ button or the like. (Review 3.-81: through regenerateForGrid (), which keeps the rest as it was,
+         and only when the four characters the messages carry changed.) */
+      if(m_config.my_grid ().left (4) != m_grid.left (4)) regenerateForGrid ();
 
       on_dxGridEntry_textChanged (m_hisGrid); // recalculate distances in case of units change
       enable_DXCC_entity ();  // sets text window proportions and (re)inits the logbook
@@ -8816,7 +8822,7 @@ bool MainWindow::wwDigiNoGrid ()
 
 void MainWindow::genCQMsg ()
 {
-  if(wwDigiNoGrid ()) { ui->tx6->clear (); return; } /* CE3TSK: no exchange, no CQ */
+  if(wwDigiNoGrid ()) { ui->tx6->clear (); m_cqWordSent.clear (); m_cqGenerated = false; return; } /* CE3TSK: no exchange, no CQ */
   QString grid{m_config.my_grid()};
   if(m_config.my_callsign().size () && grid.size ()) {
     if(stdCall(m_config.my_callsign())) {
@@ -8843,12 +8849,15 @@ void MainWindow::genCQMsg ()
     /* CE3TSK 2026-10-12: a word of three or four letters goes into the CQ only in the modes that carry it
        (cqdirection.h); in JT65, JT9 and T10 the CQ stays plain and the box shows the word as not in effect */
     QString const cqword {cq_direction::inMessage (m_cqdir, m_mode.startsWith ("FT"))};
+    m_cqWordSent = cq_direction::wordInCq (m_cqdir, m_mode.startsWith ("FT"), stdCall (m_config.my_callsign ()));   /* CE3TSK 2026-10-14: what takeCqWord compares with */
+    m_cqGenerated = true;
     if(!cqword.isEmpty () && stdCall(m_config.my_callsign())) { QString t="CQ " + cqword + " " + m_config.my_callsign() + " " + grid.left(4); /* CE3TSK: same local grid as the plain CQ above */
       msgtype(t, ui->tx6);
     }
 // end of the code area to be reworked
   } else {
     ui->tx6->clear ();
+    m_cqWordSent.clear (); m_cqGenerated = false;   // CE3TSK 2026-10-14
   }
 }
 
@@ -9477,7 +9486,8 @@ void MainWindow::on_wantedGrid_textChanged(const QString &wgrid)
    settings, the contest's WW, a request over the network) is taken at once, as it always was.
    isModified () tells the two apart: typing sets it, setText () clears it.
 
-   Taking a word makes the CQ selected carry it (selectCqAgain ()), each tab in its own way, as before: the
+   Taking a word makes the CQ selected carry it (selectCqAgain ()) - since 2026-10-14 a word typed only when it
+   changes the CQ that is sent, or no CQ was generated (cqdirection.h changesCq) -, each tab in its own way: the
    first selects Tx6 when no QSO's messages stand, the second presses the CQ button when a CQ is its message.
    The tab the word came through acts last, so its message is the one left selected. Then the CQ is
    generated - Tx6, and the second tab's message when that is a CQ. Selecting Tx6 and pressing the CQ button
@@ -9525,16 +9535,16 @@ void MainWindow::takeCqWord (bool typed)
 {
   m_cqWordTimer.stop ();
   QString const word {ui->directionLineEdit->text ()};
-  bool const asItWas {typed && word == m_cqdir};
-  QString const before {m_cqdir};
+  bool const asItWas {typed && word == m_cqdir && m_cqGenerated};   // CE3TSK 2026-10-14 (review 3.-79): with no CQ generated, not as it was
   m_cqdir = word;
   showCqWord ();
   if (asItWas) return;
   if (typed && m_config.write_decoded_debug ()) writeToALLTXT ("CQ word typed: " + (m_cqdir.isEmpty () ? QString {"none"} : m_cqdir));
   if (1 == m_cqdir.length ()) return;                        // one letter: no CQ is generated for it, as before
   /* CE3TSK 2026-10-14: a word typed that leaves the CQ sent as it was selects nothing (cqdirection.h,
-     changesCq): TEST typed in JT65 restarted the plain CQ on the air and cleared a DX call that was typed */
-  if (typed && !cq_direction::changesCq (before, m_cqdir, m_cqWordMode77)) return;
+     changesCq): TEST typed in JT65 restarted the plain CQ on the air and cleared a DX call that was typed. Asked
+     of the word in the CQ generated last, not of the word taken before - a one-letter word generates nothing */
+  if (typed && !cq_direction::changesCq (m_cqGenerated, m_cqWordSent, m_cqdir, m_cqWordMode77, stdCall (m_config.my_callsign ()))) return;
   selectCqAgain (ui->direction1LineEdit == m_cqWordBox);
 }
 
@@ -9679,7 +9689,7 @@ void MainWindow::on_dxGridEntry_textChanged(const QString &t) //dxGrid changed
           QString const hisG = contest_grid (m_hisGrid, m_wwDigi);
           bool const distanceKnown = !hisG.isEmpty() && !myG.isEmpty();
           if (distanceKnown) {
-            /* azdist pads these buffers in place, so they must be mutable locals */
+            /* buffers of the 8 characters azdist reads; it pads copies of its own since 2026-10-14 (TODO 3.-69) */
             QByteArray a = (myG + "        ").left (8).toLatin1();
             QByteArray b = (hisG + "        ").left (8).toLatin1();
             azdist_(a.data(), b.data(), &utch,
@@ -9773,7 +9783,8 @@ void MainWindow::acceptQSO2(QDateTime const& QSO_date_off, QString const& call, 
   if (m_wwDigi) m_contestLog.addAsWorked (call, m_config.bands ()->find (dial_freq), mode, date, grid, name);
   if (m_wwDigi) updateContestScore ();   /* CE3TSK */
   QString operator_call = m_config.my_callsign(); QString my_call = m_config.my_callsign(); QString my_grid = m_config.my_grid();
-  m_messageClient->qso_logged (QSO_date_off, call, grid, dial_freq, mode, rpt_sent, rpt_received, tx_power, comments, name, QSO_date_on, operator_call, my_call, my_grid);
+  /* CE3TSK 2026-10-14 (review 3.-67): the DX grid as ADIF's GRIDSQUARE takes it, 8 at most - loggers put this field there */
+  m_messageClient->qso_logged (QSO_date_off, call, adif_gridsquare (grid), dial_freq, mode, rpt_sent, rpt_received, tx_power, comments, name, QSO_date_on, operator_call, my_call, my_grid);
   if(m_config.enable_udp1_adif_sending()) m_messageClient->logged_ADIF(myadif2);
   if(m_config.enable_udp2_broadcast() && m_config.valid_udp2()) {
     QUdpSocket sock;
@@ -10697,6 +10708,52 @@ void MainWindow::on_freeTextMsg_currentIndexChanged(int index)
 //it is dedicated to change free message during Tx if new message is selected from the list
   if(m_transmitting && ui->rbFreeText->isChecked() && index != m_oldFreeMsgIndex) m_restart=true;	
   m_oldFreeMsgIndex=index;
+}
+
+/* CE3TSK 2026-10-14 (review 3.-81): the messages again after the own grid changed in the Settings - and nothing else.
+   genStdMsgs alone also resets the Tx selection and the QSO's progress, puts the generated Tx5 back, turns AutoSeq on
+   again and, with no DX call, clears the second tab's message: a CQ running from that tab halted at the next period
+   ("Transmission of the empty message is not allowed") and a QSO under way fell back to Tx1. Kept here: m_ntx and its
+   button, the QSO's progress, Tx5, AutoSeq - and the second tab's message becomes the new form of the message it held
+   (Tx1 to Tx6), or stays as it was when it held none of them. */
+void MainWindow::regenerateForGrid ()
+{
+  QStringList const before {ui->tx1->text (), ui->tx2->text (), ui->tx3->text (), ui->tx4->text (), ui->tx5->currentText (), ui->tx6->text ()};
+  QString const gen0 {ui->genMsg->text ()};
+  int const held = gen0.isEmpty () ? -1 : before.indexOf (gen0);
+  QList<QRadioButton*> const txrb {ui->txrb1, ui->txrb2, ui->txrb3, ui->txrb4, ui->txrb5, ui->txrb6};
+  int checked0 {-1};                                        // (review 3.-82) the Tx button as it was - also while tab 2 sends
+  for (int i = 0; i < txrb.size (); ++i) if (txrb.at (i)->isChecked ()) checked0 = i;
+  int const ntx0 {m_ntx};
+  int const nlasttx0 {m_nlasttx};                           // (review 3.-82) the QSO stage the decoder is told
+  auto const progress0 = m_QSOProgress;
+  bool const wasAutoSeq0 {m_wasAutoSeq};
+  bool const txGenerated0 {m_txGenerated};
+  QString const colour0 {m_dxCallEntryColour};              // (review 3.-82) a DX call shown as logged stays so
+  m_wasAutoSeq = false;                                     // genStdMsgs would turn AutoSeq on again
+  genStdMsgs (m_rpt);
+  m_wasAutoSeq = wasAutoSeq0;
+  m_txGenerated = txGenerated0;
+  if (!colour0.isEmpty ()) setDxCallEntryColour (colour0);
+  m_QSOProgress = progress0;
+  m_ntx = ntx0;
+  m_nlasttx = nlasttx0;
+  if (checked0 >= 0) txrb.at (checked0)->setChecked (true);
+  if (wwDigiNoGrid ()) { statusChanged (); return; }     // (review 3.-82) no exchange: every message stays cleared
+  if (!m_hisCall.isEmpty ()) {
+    // (review 3.-82) Tx2-Tx5 as they were - a text typed by hand, a free Tx5 - unless empty (nothing generated yet, or
+    // cleared by a CQ) or carrying the old grid (WW Digi's exchange): those take the text generated now
+    QString const grid0 {m_grid.left (4)};
+    QRegularExpression const word0 {"\\b" + QRegularExpression::escape (grid0) + "\\b", QRegularExpression::CaseInsensitiveOption};
+    auto const keep = [&] (int i) { return !before.at (i).isEmpty () && (grid0.isEmpty () || !word0.match (before.at (i)).hasMatch ()); };
+    if (keep (1)) ui->tx2->setText (before.at (1));
+    if (keep (2)) ui->tx3->setText (before.at (2));
+    if (keep (3)) ui->tx4->setText (before.at (3));
+    if (keep (4)) ui->tx5->setCurrentText (before.at (4));
+  }
+  QStringList const after {ui->tx1->text (), ui->tx2->text (), ui->tx3->text (), ui->tx4->text (), ui->tx5->currentText (), ui->tx6->text ()};
+  ui->genMsg->setText (held >= 0 ? after.at (held) : gen0);
+  statusChanged ();
 }
 
 void MainWindow::on_rptSpinBox_valueChanged(int n)
