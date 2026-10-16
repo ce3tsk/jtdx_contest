@@ -8,6 +8,7 @@ program jt9
   use options
   use prog_args
   use jtdx_iface     ! CE3TSK: who this decoder is - the GUI checks it, see -v below
+  use packjt77, only : lremember,lremtrace,remsnrdrop   ! CE3TSK 2026-10-15: the remembered compound calls
   use, intrinsic :: iso_c_binding
   use FFTW3
 !  use timer_module, only: timer
@@ -21,6 +22,8 @@ program jt9
 !  type(wav_header) wav
   character c
   character(len=500) optarg
+  character(len=8) :: cremember   ! CE3TSK 2026-10-15: JTDX_REMEMBER_CALLS
+  integer :: lremenv,iremenv
   character wisfile*520   ! CE3TSK: was *80 - a data directory over 65 characters cut the name AND its closing NUL off,
                           ! and FFTW read an unterminated string (data_dir is len=500, prog_args.f90)
   ! CE3TSK: band edges default to the full 0-5000 Hz the GUI can pass (the waterfall's
@@ -314,7 +317,20 @@ program jt9
   if (.not. read_files) then
      call jt9a()          !We're running under control of WSJT-X
   else
-     ! CE3TSK: decode the files named on the command line
+     ! CE3TSK: decode the files named on the command line. CE3TSK 2026-10-15: without the remembered compound calls
+     ! (compound_calls.txt) unless JTDX_REMEMBER_CALLS=1 - a test run must not change the next one. 1 takes the files for
+     ! periods on the air; 2 (TODO 3.-105) for wav files opened in the program: the list is read, nothing is added to it
+     ! (jt9files sets params%ndiskdat for it, 3.-113)
+     call get_environment_variable('JTDX_REMEMBER_CALLS',cremember,lremenv,iremenv)
+     lremember=(iremenv.eq.0 .and. lremenv.gt.0 .and. (cremember(1:1).eq.'1' .or. cremember(1:1).eq.'2'))
+     ! JTDX_REMEMBER_TRACE=1: each decision on stderr; JTDX_REMEMBER_SNRDROP=n: the SNR gates n dB lower (tests only)
+     call get_environment_variable('JTDX_REMEMBER_TRACE',cremember,lremenv,iremenv)
+     lremtrace=(iremenv.eq.0 .and. lremenv.gt.0 .and. cremember(1:1).eq.'1')
+     call get_environment_variable('JTDX_REMEMBER_SNRDROP',cremember,lremenv,iremenv)
+     if(iremenv.eq.0 .and. lremenv.gt.0) then
+        read(cremember(1:lremenv),*,iostat=iremenv) remsnrdrop
+        if(iremenv.ne.0) remsnrdrop=0.0
+     endif
      call jt9files(offset,remain,mode,ndepth,flow,fsplit,fhigh,nrxfreq,ncycles,   &
           nswlcycles,nsens,nrxfsens,naggr,lswl,ncandthin,nthreads,ldeeposd,learly,lhidedupes,ltwo,lalt,lagcccomp,   &
           nensemble,nbgeffort,nbgswl,nbgcycles,nbgswlcycles,nbgosd,nbgtwo,nbgalt,nbgens,nbgsens,nbgrxf,nbgbudget,nrxbudget,   &
@@ -352,6 +368,7 @@ subroutine jt9files(offset,nfiles,mode,ndepth,flow,fsplit,fhigh,nrxfreq,ncycles,
   use ft4_mod1, only : nbg4run   ! CE3TSK: the FT4 TX background (item 59)
   use thread_ladder, only : decoder_threads,ft4_members_auto,ft4_bg_auto   ! CE3TSK item 73: -M auto / -V auto in FT4
   use omp_lib, only : omp_get_num_procs
+  use packjt77, only : nwallskip   ! CE3TSK 2026-10-15 (3.-108): JTDX_WALLCLOCK_SKIP (without this, an implicit local)
   use readwav
   use jt65_mod6                    ! dd(NPTS)
   use ft8_mod1, only : dd8
@@ -585,7 +602,17 @@ subroutine jt9files(offset,nfiles,mode,ndepth,flow,fsplit,fhigh,nrxfreq,ncycles,
      call get_environment_variable('JTDX_FT4_BGSENS',envval,lenv,ienv)
      if(ienv.eq.0 .and. lenv.gt.0) params%nft4bgsens=merge(1,0,envval(1:1).eq.'1')
      params%nsecbandchanged=0
-     params%ndiskdat=.true.
+     ! CE3TSK 2026-10-16 (TODO 3.-113, the review 3.-111 D3): the files are periods on the air (ndiskdat false) - they give
+     ! option C its senders and move the decoder's clock, and with JTDX_REMEMBER_CALLS=1 feed the remembered list; decoded
+     ! as wav files opened in the program (File > Open: ndiskdat true, decoder.f90 lonair) with JTDX_REMEMBER_CALLS=2 every
+     ! file, with JTDX_OPENED=n the n-th. The decoder reads ndiskdat for nothing else
+     params%ndiskdat=.false.
+     call get_environment_variable('JTDX_REMEMBER_CALLS',envval,lenv,ienv)
+     if(ienv.eq.0 .and. lenv.gt.0) params%ndiskdat=(envval(1:1).eq.'2')
+     call get_environment_variable('JTDX_OPENED',envval,lenv,ienv)
+     if(ienv.eq.0 .and. lenv.gt.0) then
+        read(envval(1:lenv),*,iostat=ienv) nbandfile; if(ienv.eq.0 .and. iarg-offset.eq.nbandfile) params%ndiskdat=.true.
+     endif
      params%newdat=.true.
      params%nagain=.false.
      params%nagainfil=.false.
@@ -661,6 +688,25 @@ subroutine jt9files(offset,nfiles,mode,ndepth,flow,fsplit,fhigh,nrxfreq,ncycles,
      call get_environment_variable('JTDX_BANDCHANGE',envval,lenv,ienv)
      if(ienv.eq.0 .and. lenv.gt.0) then
         read(envval(1:lenv),*,iostat=ienv) nbandfile; if(ienv.eq.0 .and. iarg-offset.eq.nbandfile) params%lbandchanged=.true.
+     endif
+     ! CE3TSK 2026-10-15 test hook: JTDX_MODECHANGED=n raises lmodechanged on the n-th file WITHOUT changing the mode - as
+     ! the program does when its Settings are closed or the rig comes back online (the hash tables must stay)
+     call get_environment_variable('JTDX_MODECHANGED',envval,lenv,ienv)
+     if(ienv.eq.0 .and. lenv.gt.0) then
+        read(envval(1:lenv),*,iostat=ienv) nbandfile
+        if(ienv.eq.0 .and. iarg-offset.eq.nbandfile) then   ! said on stderr, so a test can tell the hook acted (3.-105)
+           params%lmodechanged=.true.; write(0,'(a,i0)') 'JTDX_MODECHANGED: the mode-changed flag raised on file ',nbandfile
+        endif
+     endif
+     ! CE3TSK 2026-10-15 (3.-108) test hook: JTDX_WALLCLOCK_SKIP=n:s - from the n-th file on the decoder's wall clock reads
+     ! s seconds later (hash_clock: a day between two periods of the same hour; file mode's wall clock never moves so far)
+     call get_environment_variable('JTDX_WALLCLOCK_SKIP',envval,lenv,ienv)
+     if(ienv.eq.0 .and. lenv.gt.2) then
+        nbandfile=index(envval(1:lenv),':')
+        if(nbandfile.gt.1 .and. nbandfile.lt.lenv) then
+           read(envval(1:nbandfile-1),*,iostat=ienv) ndxfile
+           if(ienv.eq.0 .and. iarg-offset.ge.ndxfile) read(envval(nbandfile+1:lenv),*,iostat=ienv) nwallskip
+        endif
      endif
      params%lenabledxcsearch=.true.
      ! CE3TSK diagnostic hook: JTDX_DXCSEARCH=0 disables the DX-call search as the GUI does with an empty DX Call box

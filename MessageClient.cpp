@@ -1,4 +1,5 @@
 #include "MessageClient.hpp"
+#include "triggercq.h"   // CE3TSK 2026-10-15
 
 #include <stdexcept>
 #include <vector>
@@ -220,13 +221,11 @@ void MessageClient::impl::parse_message (QByteArray const& msg)
 
             case NetworkMessage::TriggerCQ:
               {
-                QByteArray direction;
-                bool tx_period {false};
-                bool send {true};
-                in >> direction >> send;
-                if (check_status (in) != Fail)
+                // CE3TSK 2026-10-15: the TX period read too, as documented; a two-field sender still understood (triggercq.h)
+                trigger_cq::Request request;
+                if (trigger_cq::read (in, request) && check_status (in) != Fail)
                   {
-                    Q_EMIT self_->trigger_CQ (QString::fromUtf8 (direction),tx_period,send);
+                    Q_EMIT self_->trigger_CQ (request.direction, request.periodGiven, request.txPeriod, request.send);
                   }
               }
               break;

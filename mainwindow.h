@@ -47,6 +47,7 @@
 #include "qsohistory.h"
 #include "JTDXDateTime.h"
 #include "thread_shutdown.hpp"   // CE3TSK: m_audioThread's deleter
+#include "rigreport.h"   // CE3TSK 2026-10-15 (3.-107): the rig's band reports and a QSY the PTT held back
 
 
 //--------------------------------------------------------------- MainWindow
@@ -925,6 +926,8 @@ private:
   QTimer m_bandButtonsTimer;                       // one rebuild per burst of list changes
   QTimer m_dialWheelTimer;                         // CE3TSK: tuning from the dial (wheel, clicks), one QSY per burst of steps
   QElapsedTimer m_dialWheelClock;                  // since the last step or dial QSY, see dialWheelHolding ()
+  QElapsedTimer m_ownBandClock;                    // CE3TSK 2026-10-15 (3.-107): since band_changed () - rigreport.h (a)
+  rig_report::PendingQsy m_pendingQsy;             // CE3TSK 2026-10-15 (3.-107): a QSY the PTT held back - rigreport.h (c)
   Radio::Frequency m_dialWheelTarget {0};          // where the wheel and the clicks have taken the dial
   int m_dialWheelDelta {0};                        // wheel angle short of a whole notch (touchpads)
   bool m_lostaudio;

@@ -47,6 +47,10 @@ private:
   Frequency rx_frequency_;        // requested Rx frequency
   Frequency tx_frequency_;        // requested Tx frequency
   bool split_; // requested split state
+  // CE3TSK 2026-10-16 (TODO 3.-115): keyed in split, the rig moved off the Tx dial (by hand): where it went - not driven
+  // back while the PTT is up
+  bool moved_ {false};
+  Frequency moved_to_ {0};
 };
 
 #endif

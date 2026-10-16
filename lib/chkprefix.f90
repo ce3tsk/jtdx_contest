@@ -29,7 +29,7 @@ subroutine chkprefix(callsign,lwrongcall)
   call chkgrid(callsign,grid,lchkcall,lgvalid,lwrongcall)
 end subroutine chkprefix
 
-subroutine chkdircq(msg37,i3,iaptype,lwrongcall)
+subroutine chkdircq(msg37,i3,iaptype,lhash,lwrongcall)
 ! CE3TSK 2026-10-13: check 8 of the record (deleted_decodes.f90), in one place for FT8, FT4 and FT2: a
 ! directed CQ - "CQ TEST K1ABC FN42" - whose call has a prefix the table lists as not allocated.
 !
@@ -39,17 +39,18 @@ subroutine chkdircq(msg37,i3,iaptype,lwrongcall)
 !
 ! The prefix is asked of what ft8b.f90 looked at: a message decoded without a-priori help, of the standard
 ! type (i3=1), that reads "CQ", a word of three or four characters, a call and a 4-character grid; for a word
-! of one or two characters ("CQ DX", "CQ EU") it is not asked. An unresolved hash as the call is deleted after
-! a word of any length, of types i3=1 and i3=2 (2026-10-14, below). The SQUARE is not judged (the operator,
+! of one or two characters ("CQ DX", "CQ EU") it is not asked. A call out of the hash table with a grid - unresolved
+! (2026-10-14) or resolved (2026-10-15) - is deleted after a word of any length, of types i3=1 and i3=2 (below). The SQUARE is not judged (the operator,
 ! 2026-10-12: "CQ TEST" is the contest CQ, and a station the table has wrong must not lose it) - whether
 ! the grid fits the call is the window's question: phantomdecodes.h marks the line and the sequencer does
 ! not answer it on its own.
   implicit none
   character(len=37), intent(in) :: msg37
   integer, intent(in) :: i3,iaptype
+  logical(1), intent(in) :: lhash        ! the call came out of the hash table, resolved or not (the decoder knows it)
   logical(1), intent(out) :: lwrongcall
   character callsign*12
-  integer ispc1,ispc2,ispc3,ispc4,ih
+  integer ispc1,ispc2,ispc3,ispc4,jg
 
   lwrongcall=.false.
   if(iaptype.ne.0 .or. (i3.ne.1 .and. i3.ne.2) .or. msg37(1:3).ne.'CQ ') return
@@ -61,15 +62,24 @@ subroutine chkdircq(msg37,i3,iaptype,lwrongcall)
 ! record with the prefixes that are not allocated (prefix/8). Of type i3=2 too - the same text, as unpack77 adds no /P
 ! to a hash: FT8 deleted it later and off the record (ft8b.f90, "protocol violations": i3=2 must carry /P), FT4 and
 ! FT2 showed it until 2026-10-14. A plain "CQ <...> GRID" never arrives: unpack77 refuses a message that begins
-! "CQ <" (packjt77.f90) - ih=3 would do no harm. A RESOLVED hash arrives without its brackets - ft8b.f90 calls
-! delbraces, ft4b.f90 does the same in its own lines - and is a call like any other: judged below, as one.
-  ih=index(msg37,' <...> ')
-  if(ih.ge.3) then
-     if(index(msg37(4:ih-1),' ').eq.0 .and. msg37(ih+11:ih+11).eq.' ' .and.                                   &
-        msg37(ih+7:ih+7).gt.'@' .and. msg37(ih+7:ih+7).lt.'S' .and. msg37(ih+8:ih+8).gt.'@' .and.             &
-        msg37(ih+8:ih+8).lt.'S' .and. msg37(ih+9:ih+9).ge.'0' .and. msg37(ih+9:ih+9).le.'9' .and.             &
-        msg37(ih+10:ih+10).ge.'0' .and. msg37(ih+10:ih+10).le.'9') then
-        lwrongcall=.true.; return
+! "CQ <" (packjt77.f90) - the three words would do no harm.
+! CE3TSK 2026-10-15 (TODO 3.-106, item 4 of the review 3.-104): RESOLVED as well. A resolved hash arrives without its
+! brackets - ft8b.f90 calls delbraces, ft4b.f90 does the same in its own lines - and passed here as a call like any
+! other; but a phantom's random hash resolves whenever a call the decoder knows has it (the live table, and since
+! 3.-101 the remembered compound calls), and no station sends a CQ with a hashed call and a grid, resolved or not:
+! none in 8.3 million decodes of this station's 2026 ALL.TXT. The decoder says whether the call came out of the hash
+! table (lhash: ft8b's lcall2hash, ft4b's lhash2); an unresolved one is known by its text as well.
+  if(lhash .or. index(msg37,' <...> ').gt.0) then
+     ispc2=index(msg37(4:),' ')+3; ispc3=index(msg37(ispc2+1:),' ')+ispc2; ispc4=index(msg37(ispc3+1:),' ')+ispc3
+     jg=0
+     if(ispc4-ispc3.eq.5 .and. msg37(ispc4:).eq.' ') jg=ispc3+1          ! "CQ WORD CALL GRID"
+     if(ispc3-ispc2.eq.5 .and. msg37(ispc3:).eq.' ') jg=ispc2+1          ! "CQ CALL GRID"
+     if(jg.gt.0) then
+        if(msg37(jg:jg).gt.'@' .and. msg37(jg:jg).lt.'S' .and. msg37(jg+1:jg+1).gt.'@' .and.                 &
+           msg37(jg+1:jg+1).lt.'S' .and. msg37(jg+2:jg+2).ge.'0' .and. msg37(jg+2:jg+2).le.'9' .and.          &
+           msg37(jg+3:jg+3).ge.'0' .and. msg37(jg+3:jg+3).le.'9') then
+           lwrongcall=.true.; return
+        endif
      endif
   endif
   if(i3.ne.1) return                       ! the prefix: the standard message alone, as before
@@ -81,8 +91,8 @@ subroutine chkdircq(msg37,i3,iaptype,lwrongcall)
            msg37(ispc3+2:ispc3+2).gt.'@' .and. msg37(ispc3+2:ispc3+2).lt.'S' .and. &
            msg37(ispc3+3:ispc3+3).lt.':' .and. msg37(ispc3+4:ispc3+4).lt.':')) return
   callsign=''; callsign=msg37(ispc2+1:ispc3-1)
-! (an unresolved hash as the call is deleted above; a resolved one arrives without its brackets and is judged
-!  here as any call - "CQ TEST 1Z9ABC FN42" is deleted as prefix/8 whether 1Z9ABC came in full or from the hash table)
+! (a call out of the hash table, resolved or not, is deleted above with its grid - only a call sent in full reaches
+!  this)
   call chkprefix(callsign,lwrongcall)
 end subroutine chkdircq
 

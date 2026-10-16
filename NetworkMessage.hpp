@@ -356,6 +356,11 @@
  *
  *      If the "Send" flag is set  then  CQ message  will be generated 
  *      and Enable Tx button will be switched on.
+ *
+ *      (CE3TSK 2026-10-15: the TX period  is read since then - before,
+ *      a sender's TX period was taken for "Send". A sender that writes
+ *      the direction  and  "Send"  alone  is still understood,  and its
+ *      TX period left as it is.)
  */
 
 #include <QDataStream>

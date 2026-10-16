@@ -10,6 +10,7 @@
 #include "mainwindow.h"
 #include "soundout.h"
 #include "commons.h"
+#include "txstart.h"   // CE3TSK 2026-10-15: where a transmission starts
 
 #include "moc_Modulator.cpp"
 
@@ -72,15 +73,9 @@ void Modulator::start (unsigned symbolsLength, double framesPerSymbol,
   m_amp = std::numeric_limits<qint16>::max ();
   m_toneSpacing = toneSpacing;
   m_TRperiod=TRperiod;
-  unsigned delay_ms=1000;
-  if(m_nsps==1920) delay_ms=500;   //FT8
-  else if(m_nsps==576) {
-    delay_ms=500;   //FT4
-  }
-  /* CE3TSK step 6: FT2 transmits 150 ms into its 3.75 s period. That is not a choice - it is where
-     WSJT-X improved's own FT2 transmitter starts (`if(mode=="FT2") delay_ms=150;`), read from its
-     source, and where our simulator and decoder have placed the frame all along. */
-  else if(m_nsps==288) delay_ms=150;   //FT2
+  /* CE3TSK: FT8 and FT4 at 500 ms, FT2 at 150 ms (where WSJT-X improved's own FT2 transmitter starts it, and where our
+     simulator and decoder place the frame), the others at 1000 ms - txstart.h, shared with the TCI modulator */
+  unsigned delay_ms=tx_start::delay_ms (m_nsps);
   // noise generator parameters
   if (m_addNoise) {
     m_snr = qPow (10.0, 0.05 * (dBSNR - 6.0));
@@ -99,7 +94,7 @@ void Modulator::start (unsigned symbolsLength, double framesPerSymbol,
   m_silentFrames = 0;
   // calculate number of silent frames to send
   if (m_ic == 0 && synchronize && !m_tuning)	{
-    m_silentFrames = m_frameRate / (1000 / delay_ms) - (mstr * (m_frameRate / 1000));
+    m_silentFrames = tx_start::silent_frames (m_frameRate, delay_ms, mstr);   // CE3TSK 2026-10-15: exact (txstart.h)
   }
 //  printf ("%s(%0.1f) Modulator startdelay_ms=%d m_frameRate=%d mstr=%d mstr2 = %d m_ic=%d m_silentFrames=%lld \n",m_jtdxtime->currentDateTimeUtc2().toString("hh:mm:ss.zzz").toStdString().c_str(),m_jtdxtime->GetOffset(),delay_ms,m_frameRate,mstr,mstr2,m_ic,m_silentFrames);
 #if JTDX_DEBUG_TO_FILE

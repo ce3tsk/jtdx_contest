@@ -253,6 +253,7 @@ public:
   bool TX_messages () const;
   bool hide_TX_messages () const;
   bool split_mode () const;
+  bool split_emulated () const;   // CE3TSK 2026-10-16 (TODO 3.-117): split by "Fake It" (EmulateSplitTransceiver)
   bool decode_at_52s () const;
   bool beepOnMyCall () const;
   bool beepOnNewCQZ () const;

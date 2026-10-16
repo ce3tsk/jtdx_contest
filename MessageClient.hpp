@@ -101,7 +101,7 @@ public:
   // this signal is emitted if the server has requested to set CQ message for transmission,
   // CQ direction and TX period
   // and optionally trigger CQ or directional CQ message transmission
-  Q_SIGNAL void trigger_CQ (QString const& direction, bool tx_period, bool send);
+  Q_SIGNAL void trigger_CQ (QString const& direction, bool tx_period_given, bool tx_period, bool send);   // CE3TSK 2026-10-15: _given (triggercq.h)
 
   // this signal is emitted when network errors occur or if a host
   // lookup fails

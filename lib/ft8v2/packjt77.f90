@@ -39,6 +39,73 @@ module packjt77
   ! ONLY, and this module's own procedures, shared one global i as their loop counter across the
   ! decoder threads: ft4b's dither loop ran to cd(3296) and genft4's to itmp(1343) under
   ! -fbounds-check, and without it the loops silently skipped or repeated elements.
+! CE3TSK 2026-10-15 (TODO 3.-97): the calls heard SENDING, by their 12-bit hash, and when - a type 4 message to a hash
+! that is mine reads as my call unless a station of that hash was on the air in the last NSENT12AGE seconds (unpack77).
+! Noted per slice as last_calls are (note_sender), merged by fillhash; the time is the decoder's own (hash_clock);
+! emptied with calls12 on a band change or a real mode change (decoder.f90).
+  character (len=13), dimension(0:4095) :: sent12call=''
+  integer, dimension(0:4095) :: sent12time=0
+  character (len=13), dimension(1:4800) :: last_senders=''
+  integer, dimension(1:48) :: nlast_senders=0
+  integer, parameter :: NSENT12AGE=600
+  integer :: nsecrun=0
+  integer :: nsecday=-1
+! CE3TSK 2026-10-15 (TODO 3.-108): the wall clock beside the periods' UTC (hash_clock) - the UTC alone read a gap of a day
+! or more as minutes. nwallskip: file mode's JTDX_WALLCLOCK_SKIP, seconds added to it (the tests)
+  integer(8) :: nwalllast=-1
+  integer :: nwallskip=0
+! CE3TSK 2026-10-15 (TODO 3.-108): the sender of each slice's last unpacked message (note_sender), committed to
+! last_senders only when the decoder accepts the decode (note_decode) - a phantom the decoder rejected after unpacking it
+! was taken for a station heard sending
+  character (len=13), dimension(1:24) :: lastsender=''
+! CE3TSK 2026-10-15 (TODO 3.-101): the REMEMBERED compound calls - every nonstandard call (one a transmitter sends as
+! a 22-bit hash) decoded in full in two periods or more, kept NREMAGE days in the data directory's compound_calls.txt,
+! across band and mode changes and restarts. hash22 reads it when the live table (calls22, emptied on a band or mode
+! change) has nothing; two remembered calls of one hash read <...>. With ~1650 such calls in 4.2 million hash values a
+! wrong reading is about 0.04 % likely. fillhash loads, fills (remember_call) and saves it; file mode leaves it alone
+! unless JTDX_REMEMBER_CALLS=1 (lremember, jt9.f90), so tests and benchmarks are not changed by an earlier run.
+  integer, parameter :: MAXREM=10000, NREMAGE=365
+  character (len=13), dimension(1:MAXREM) :: remcall=''
+  integer, dimension(1:MAXREM) :: remhash=-1
+  integer, dimension(1:MAXREM) :: remday=0
+  integer, dimension(1:MAXREM) :: remseen=0
+  integer, dimension(1:MAXREM) :: remlast=-1
+  integer :: nrem=0
+  integer :: nremwrite=-1
+  integer :: ntoday=0
+  logical :: lremember=.true.
+  logical :: lremloaded=.false.
+  logical :: lremdirty=.false.
+  logical :: lremnew=.false.
+! CE3TSK 2026-10-15 (TODO 3.-105, the review): a list on disk that could not be read whole is never written over in this
+! run (lremnosave); a save that fails leaves the file on disk as it was. Wav files opened in the program (File > Open,
+! params%ndiskdat) are read with the list but feed nothing to it (lonair, decoder.f90) - their calls are of another
+! day, and a file opened again would count as a second period. CE3TSK 2026-10-16 (TODO 3.-113, the review 3.-111 D3): nor
+! do they give option C its senders (sent12call, fillhash) or move the decoder's clock (hash_clock, decoder.f90) - a
+! recording of 09:57 opened after the period of 10:00 made its stations "heard sending" a moment ago, and put the clock
+! a day on. File mode takes its files for periods on the air; JTDX_REMEMBER_CALLS=2 for files opened in the program,
+! JTDX_OPENED=n the n-th file alone (jt9.f90).
+  logical :: lremnosave=.false.
+  logical :: lonair=.true.
+! only TRUSTED decodes feed it (the operator): unpack77 keeps the full nonstandard call of each slice's last type 4
+! message (lastfull); the decoder that accepts the decode hands it on with note_decode when the decode is a plain one
+! (no a-priori, no hint), by belief propagation (not OSD - losdslice, FT8's flag; FT4 has its own) and above the phantom
+! gate. A call filled in from a hash never counts: it is not a type 4 message's full call.
+  character (len=13), dimension(1:48) :: lastfull=''
+! CE3TSK 2026-10-15 (TODO 3.-107, item 11 of the review 3.-104): written and read for slices 1 to 24 only, as note_sender's
+! and remhit are - FT4's round-trip unpacks (nthr 25) ran in several slices at once and all wrote lastfull(25), which
+! nothing reads: a race on paper
+  logical, dimension(1:48) :: losdslice=.false.
+  character (len=13), dimension(1:4800) :: last_trusted=''
+  integer, dimension(1:48) :: nlast_trusted=0
+  logical :: lremtrace=.false.   ! file mode's JTDX_REMEMBER_TRACE=1: every decision on stderr, with its reasons
+! CE3TSK 2026-10-15 (TODO 3.-106, item 4 of the review 3.-104): the call hash22 took from the REMEMBERED list in each
+! decoding slice's last unpack77 ('' when none) - a station not heard since the band or mode change. A phantom's random
+! 22-bit hash resolves when any call the decoder knows has it; the phantom checks of an a-priori decode judge such a
+! call as <...> (remember_hide), as before the list existed, and the message shown keeps it. Slices 1 to 24 only (25 is
+! FT4's round trip, above 25 transmitted messages - neither reads the list).
+  character (len=13), dimension(1:24) :: remhit=''
+  real :: remsnrdrop=0.0          ! file mode's JTDX_REMEMBER_SNRDROP=n: the SNR gates n dB lower, for the tests only
   integer :: nzhash=0
   integer :: nztxhash=0
   integer n28a,n28b
@@ -97,6 +164,7 @@ subroutine hash22(n22,c13,nthr)
 
   character*13 c13
   integer, intent(in) :: nthr
+  integer k
   
   c13='<...>'
   if(nthr.gt.25) then ! TX message
@@ -115,6 +183,18 @@ subroutine hash22(n22,c13,nthr)
         go to 900
       endif
     enddo
+! CE3TSK 2026-10-15 (TODO 3.-101): not in the live table - a remembered compound call, when exactly one has the hash
+    k=0
+    do i=1,nrem
+      if(remhash(i).eq.n22 .and. remseen(i).ge.2) then
+        if(k.ne.0) then; k=-1; exit; endif
+        k=i
+      endif
+    enddo
+    if(k.gt.0) then
+      c13='<'//trim(remcall(k))//'>'
+      if(nthr.ge.1 .and. nthr.le.24) remhit(nthr)=remcall(k)   ! CE3TSK 2026-10-15 (3.-106): from the list
+    endif
   endif
 
 900 return
@@ -238,6 +318,341 @@ subroutine save_hash_call(c13,nthr)
 
   return 
 end subroutine save_hash_call
+
+subroutine note_sender(c13,nthr)
+! CE3TSK 2026-10-15: a call decoded in full as the SENDER of a message, for sent12call (fillhash merges it). (3.-108) Kept
+! for the slice's message only: note_decode commits it when the decoder accepts the decode - the decoder deletes phantoms
+! after unpacking them (a type 2 message without /P, the table's checks), and such a "sender" made option C read my hash
+! as a station that never was on the air
+  character*13 c13,cw
+  integer, intent(in) :: nthr
+
+  if(nthr.lt.1 .or. nthr.gt.24) return
+  cw=c13
+  if(cw(1:1).eq.' ' .or. cw(1:1).eq.'<') return   ! a hash is no call heard
+  if(len(trim(cw)) .lt. 3) return
+  lastsender(nthr)=cw
+  return
+end subroutine note_sender
+
+subroutine note_decode(msg,nthr,iap,lhint,losd,lweak)
+! CE3TSK 2026-10-15: the decoder accepted a decode in slice nthr. When its type 4 message carried a nonstandard call in
+! full, and the decode is TRUSTED - no a-priori (iap 0), no hint, by belief propagation (not OSD), not under the
+! decoder's phantom gate (lweak) - the call goes to the slice's list for the remembered compound calls (fillhash merges
+! it). The call must be a word of the accepted message - a later unpack in the slice cannot slip another one in.
+  character(len=*), intent(in) :: msg
+  integer, intent(in) :: nthr,iap
+  logical, intent(in) :: lhint,losd,lweak
+  character*13 cw
+  integer np
+
+  if(nthr.lt.1 .or. nthr.gt.24) return
+! (3.-108) the sender of the accepted message, for option C (note_sender); a word of the message, as the full call below
+  cw=lastsender(nthr); lastsender(nthr)=''
+  if(len_trim(cw).gt.0 .and. index(' '//trim(msg)//' ',' '//trim(cw)//' ').gt.0) then
+    np=(nthr-1)*NSLICECALLS+nlast_senders(nthr)
+    if(np.lt.nthr*NSLICECALLS) then
+      nlast_senders(nthr)=nlast_senders(nthr)+1
+      last_senders(np+1)=cw
+    endif
+  endif
+  cw=lastfull(nthr); lastfull(nthr)=''
+  if(len_trim(cw).eq.0) return
+  if(.not.hashed_call(cw)) return
+  if(index(' '//trim(msg)//' ',' '//trim(cw)//' ').eq.0) return
+  if(lremtrace) write(0,'(a,a,a,4(1x,a))') 'remember ',merge('TRUSTED  ','untrusted',iap.eq.0 .and. .not.lhint .and. &
+       .not.losd .and. .not.lweak),' '//trim(cw),merge('ap  ','    ',iap.ne.0),merge('hint','    ',lhint),          &
+       merge('osd ','    ',losd),merge('weak','    ',lweak)
+  if(iap.ne.0 .or. lhint .or. losd .or. lweak) return
+  np=(nthr-1)*NSLICECALLS+nlast_trusted(nthr)
+  if(np.lt.nthr*NSLICECALLS) then
+    nlast_trusted(nthr)=nlast_trusted(nthr)+1
+    last_trusted(np+1)=cw
+  endif
+  return
+end subroutine note_decode
+
+logical function hashed_call(c13)
+! CE3TSK 2026-10-15: is this a call a transmitter sends as a 22-bit hash in a standard message - pack28's test for a
+! standard call, without its side effects (a standard call with /P or /R is no such call: the suffix is a flag bit)
+  character*13, intent(in) :: c13
+  character*13 cw
+  character*1 c
+  logical is_digit,is_letter
+  integer n,i,iarea,npdig,nplet,nslet
+  is_digit(c)=c.ge.'0' .and. c.le.'9'
+  is_letter(c)=c.ge.'A' .and. c.le.'Z'
+
+  hashed_call=.false.
+  cw=c13
+  n=len_trim(cw)
+  if(n.lt.3 .or. n.gt.11) return
+  do i=1,n
+     if(.not.(is_digit(cw(i:i)) .or. is_letter(cw(i:i)) .or. cw(i:i).eq.'/')) return
+  enddo
+  if(cw(n-1:n).eq.'/P' .or. cw(n-1:n).eq.'/R') then
+     cw(n-1:n)='  '; n=n-2
+  endif
+  do i=n,2,-1
+     if(is_digit(cw(i:i))) exit
+  enddo
+  iarea=i
+  npdig=0; nplet=0; nslet=0
+  do i=1,iarea-1
+     if(is_digit(cw(i:i))) npdig=npdig+1
+     if(is_letter(cw(i:i))) nplet=nplet+1
+  enddo
+  do i=iarea+1,n
+     if(is_letter(cw(i:i))) nslet=nslet+1
+  enddo
+  hashed_call=(iarea.lt.2 .or. iarea.gt.3 .or. nplet.eq.0 .or. npdig.ge.iarea-1 .or. nslet.gt.3 .or. index(cw,'/').gt.0)
+  return
+end function hashed_call
+
+integer function remjday(ymd)
+! CE3TSK 2026-10-15: the day number of a date yyyymmdd, for the age of a remembered call
+  integer, intent(in) :: ymd
+  integer y,m,d,a,yy,mm
+  y=ymd/10000; m=mod(ymd/100,100); d=mod(ymd,100)
+  a=(14-m)/12; yy=y+4800-a; mm=m+12*a-3
+  remjday=d+(153*mm+2)/5+365*yy+yy/4-yy/100+yy/400-32045
+  return
+end function remjday
+
+subroutine remember_today()
+  character(len=8) :: cd
+  integer ios
+  call date_and_time(date=cd)
+  read(cd,'(i8)',iostat=ios) ntoday
+  if(ios.ne.0) ntoday=0
+  return
+end subroutine remember_today
+
+subroutine remember_add(c13,nday,nseen)
+! a call to the list, or the one already there: nseen 2 is a confirmed call, 1 a call heard in one period so far
+  character*13, intent(in) :: c13
+  integer, intent(in) :: nday,nseen
+  integer n22,i,k
+  integer(8) :: key,kmin
+
+  n22=ihashcall(c13,22); k=0
+  do i=1,nrem
+     if(remhash(i).eq.n22) then
+        if(remcall(i).eq.c13) then; k=i; exit; endif
+     endif
+  enddo
+  if(k.gt.0) then
+     remseen(k)=max(remseen(k),nseen); remday(k)=max(remday(k),nday)
+     return
+  endif
+  if(nrem.lt.MAXREM) then
+     nrem=nrem+1; k=nrem
+  else   ! full: the oldest unconfirmed call goes first, then the oldest confirmed one
+     kmin=huge(kmin)
+     do i=1,nrem
+        key=int(remseen(i),8)*100000000_8+int(remday(i),8)
+        if(key.lt.kmin) then; kmin=key; k=i; endif
+     enddo
+  endif
+  remcall(k)=c13; remhash(k)=n22; remseen(k)=nseen; remday(k)=nday; remlast(k)=-1
+  return
+end subroutine remember_add
+
+subroutine remember_call(c13)
+! CE3TSK 2026-10-15: a nonstandard call from a trusted decode (note_decode, merged by fillhash) is remembered once it
+! was heard in a second period (a re-decode of the same period does not count); never my own call
+  character*13, intent(in) :: c13
+  integer n22,i,k
+
+  if(.not.lremember .or. .not.hashed_call(c13)) return
+  if(c13.eq.mycall13) return
+  n22=ihashcall(c13,22); k=0
+  do i=1,nrem
+     if(remhash(i).eq.n22) then
+        if(remcall(i).eq.c13) then; k=i; exit; endif
+     endif
+  enddo
+  if(k.eq.0) then
+     call remember_add(c13,ntoday,1)
+     do i=1,nrem
+        if(remhash(i).eq.n22 .and. remcall(i).eq.c13) then; remlast(i)=nsecrun; exit; endif
+     enddo
+     return
+  endif
+  if(nsecrun.ne.remlast(k)) then
+     if(remseen(k).lt.2) then; remseen(k)=2; lremnew=.true.; lremdirty=.true.; endif
+     remlast(k)=nsecrun
+  endif
+  if(remseen(k).ge.2 .and. remday(k).lt.ntoday) then; remday(k)=ntoday; lremdirty=.true.; endif
+  return
+end subroutine remember_call
+
+subroutine remember_load(dir)
+! CE3TSK 2026-10-15: dir/compound_calls.txt, once - a line is a call and the day it was last heard (yyyymmdd); a line
+! that is no such call, a date that is none, or a call not heard for NREMAGE days is passed over
+  character(len=*), intent(in) :: dir
+  character(len=80) :: line
+  character*13 cw
+  integer iu,ios,nd,i
+  logical lthere
+
+  lremloaded=.true.
+  call remember_today()
+  if(.not.lremember) return
+  open(newunit=iu,file=trim(dir)//'/compound_calls.txt',status='old',action='read',iostat=ios)
+  if(ios.ne.0) then   ! no file is a first start; a file that is there and cannot be opened is kept as it is (3.-105)
+     inquire(file=trim(dir)//'/compound_calls.txt',exist=lthere)
+     if(lthere) call remember_unreadable()
+     return
+  endif
+  do
+     read(iu,'(a)',iostat=ios) line
+     if(ios.gt.0) call remember_unreadable()   ! a read error part-way: what was read is used, the file kept (3.-105)
+     if(ios.ne.0) exit
+     line=adjustl(line)
+     if(line(1:1).eq.'#' .or. len_trim(line).eq.0) cycle
+     i=index(line,' ')
+     if(i.lt.4 .or. i.gt.12) cycle
+     cw=line(1:i-1)
+     read(line(i:),*,iostat=ios) nd
+     if(ios.ne.0) cycle
+     if(nd.lt.19000101 .or. nd.gt.99991231 .or. mod(nd/100,100).lt.1 .or. mod(nd/100,100).gt.12 .or. mod(nd,100).lt.1) cycle
+     if(ntoday.gt.0 .and. remjday(ntoday)-remjday(nd).gt.NREMAGE) cycle
+     if(.not.hashed_call(cw)) cycle
+     call remember_add(cw,nd,2)
+  enddo
+  close(iu,iostat=ios)
+  return
+end subroutine remember_load
+
+subroutine remember_hide(msg37,crem)
+! CE3TSK 2026-10-15 (TODO 3.-106): the message as the phantom checks judge an a-priori decode - crem, the call hash22
+! took from the remembered list (remhit), written <...> as if no table had held it. The decoders hand over a copy;
+! what they show keeps the call. The message has lost its brackets (delbraces), so the call is found as a word.
+  character*37, intent(inout) :: msg37
+  character*13, intent(in) :: crem
+  integer i,n
+
+  n=len_trim(crem)
+  if(n.lt.3) return
+  if(msg37(1:n+1).eq.crem(1:n)//' ') then
+     msg37='<...>'//msg37(n+1:)
+  else
+     i=index(msg37,' '//crem(1:n)//' ')
+     if(i.gt.0) msg37=msg37(1:i)//'<...>'//msg37(i+n+1:)
+  endif
+  return
+end subroutine remember_hide
+
+subroutine remember_unreadable()
+! CE3TSK 2026-10-15 (TODO 3.-105): the list on disk is there but could not be read whole - this run never writes over it
+  lremnosave=.true.
+  if(lremtrace) write(0,'(a)') 'remember the list on disk could not be read whole - it is not written in this run'
+  return
+end subroutine remember_unreadable
+
+subroutine remember_save(dir)
+! CE3TSK 2026-10-15: the confirmed calls to dir/compound_calls.txt, through a new file renamed over the old one.
+! (3.-105, the review) A full disk wrote an empty or cut .new and renamed it over the list. gfortran (13) does not
+! report a failed write - write(2) gives ENOSPC and the statement's iostat stays 0 -, so the .new is measured once it
+! is closed: its size must be the bytes written (with LF or CRLF line ends). A failure removes the .new, leaves the list
+! on disk as it was, and the calls are written again ten minutes on (the list stays dirty). A list that could not be
+! read whole at the start (remember_unreadable) is never written over.
+  character(len=*), intent(in) :: dir
+  character(len=*), parameter :: chead1= &
+       '# JTDX_contest: nonstandard calls decoded in full in two periods or more, kept 365 days - a 22-bit'
+  character(len=*), parameter :: chead2= &
+       '# hash the decoder has not seen since the band or mode changed is read from here. Call, day last heard.'
+  integer iu,ios,ios2,i,n,nbytes,nsize
+
+  if(.not.lremember .or. lremnosave) return
+  lremnew=.false.; nremwrite=nsecrun   ! the next try: a newly confirmed call, or ten minutes on
+  open(newunit=iu,file=trim(dir)//'/compound_calls.txt.new',status='replace',action='write',iostat=ios)
+  if(ios.ne.0) go to 90
+  write(iu,'(a)',iostat=ios) chead1
+  if(ios.eq.0) write(iu,'(a)',iostat=ios) chead2
+  n=0; nbytes=len(chead1)+len(chead2)+2
+  do i=1,nrem
+     if(ios.ne.0) exit
+     if(remseen(i).ge.2) then
+        write(iu,'(a,1x,i8.8)',iostat=ios) trim(remcall(i)),remday(i)
+        n=n+1; nbytes=nbytes+len_trim(remcall(i))+10
+     endif
+  enddo
+  if(ios.eq.0) flush(iu,iostat=ios)
+  if(ios.ne.0) then
+     close(iu,status='delete',iostat=ios2); go to 90
+  endif
+  close(iu,iostat=ios)
+  if(ios.eq.0) then   ! what reached the disk: every byte, or it failed
+     inquire(file=trim(dir)//'/compound_calls.txt.new',size=nsize,iostat=ios)
+     if(ios.eq.0 .and. nsize.ne.nbytes .and. nsize.ne.nbytes+n+2) ios=1
+  endif
+  if(ios.ne.0) then
+     open(newunit=iu,file=trim(dir)//'/compound_calls.txt.new',status='old',iostat=ios2)
+     if(ios2.eq.0) close(iu,status='delete',iostat=ios2)
+     go to 90
+  endif
+  call rename(trim(dir)//'/compound_calls.txt.new',trim(dir)//'/compound_calls.txt',ios)
+  if(ios.ne.0) then   ! where a rename does not replace a file (Windows): the old one goes first
+     open(newunit=iu,file=trim(dir)//'/compound_calls.txt',status='old',iostat=ios2)
+     if(ios2.eq.0) close(iu,status='delete',iostat=ios2)
+     call rename(trim(dir)//'/compound_calls.txt.new',trim(dir)//'/compound_calls.txt',ios)
+     if(ios.ne.0) go to 90   ! the complete .new stays on disk
+  endif
+  lremdirty=.false.
+  if(lremtrace) write(0,'(a,i0,a)') 'remember saved ',n,' calls'
+  return
+90 if(lremtrace) write(0,'(a)') 'remember save FAILED - the list on disk kept, written again ten minutes on'
+  return
+end subroutine remember_save
+
+subroutine hash_clock(nutc)
+! CE3TSK 2026-10-15: the decoder's own clock for sent12time, in seconds, from each FT period's UTC (hhmmss) - the program
+! sends nothing new for it. Across midnight it runs on; a period earlier in the day than the last one counts as the next
+! day's, so all that was heard is old then; a re-decode of the same period moves nothing (test/decode/myhash.sh).
+! (3.-108) The UTC has no date: 10:00 one day and 10:05 the next made five minutes, and what was heard a day ago counted
+! as heard just now. The decoder's wall clock (date_and_time: it runs on while the computer sleeps) decides when it has
+! moved on by more than 12 hours since the last period - file mode's wall clock does not, its files say the time.
+! (3.-113, the review 3.-111 D2, D3) Called for a fresh period on the air only (decoder.f90): Decode pressed again 13
+! hours later moved it on by 13 hours, and a compound call heard in one period was taken for one heard in two.
+  integer, intent(in) :: nutc
+  integer nsec,ndelta
+  integer(8) nwall
+
+  nsec=3600*(nutc/10000)+60*mod(nutc/100,100)+mod(nutc,100)
+  ndelta=0
+  if(nsecday.ge.0) ndelta=mod(nsec-nsecday+86400,86400)
+  nwall=wall_seconds()+nwallskip
+  if(nwalllast.ge.0) then
+     if(nwall-nwalllast.gt.43200_8 .and. nwall-nwalllast.gt.int(ndelta,8)) ndelta=int(min(nwall-nwalllast,864000_8))   ! 10 days at most: as old as any
+  endif
+  nwalllast=nwall
+  nsecrun=nsecrun+ndelta; nsecday=nsec
+  return
+end subroutine hash_clock
+
+integer(8) function wall_seconds()
+! CE3TSK 2026-10-15 (3.-108): the wall clock in seconds - days since a fixed day (the civil calendar) and the time of day
+  integer v(8)
+
+  call date_and_time(values=v)
+  wall_seconds=days_from_civil(v(1),v(2),v(3))*86400_8+3600_8*v(5)+60_8*v(6)+v(7)-60_8*v(4)   ! v(4): minutes from UTC
+  return
+end function wall_seconds
+
+integer(8) function days_from_civil(y0,m0,d)
+! CE3TSK 2026-10-16 (TODO 3.-110): the day number of the civil (Gregorian) date y0-m0-d, counted from a fixed day - only
+! differences mean anything. March is the year's first month here, so February's last day, 28 or 29, ends it
+! (test/fortran/hashclock_unit: every day from 1899 to 2101 one more than the day before, and known spans)
+  integer, intent(in) :: y0,m0,d
+  integer(8) y,m
+
+  y=y0; m=m0
+  if(m.le.2) then; y=y-1; m=m+12; endif
+  days_from_civil=365_8*y+y/4-y/100+y/400+(153_8*(m-3)+2)/5+d
+  return
+end function days_from_civil
 
 subroutine pack77(msg0,i3,n3,c77,ntxhash)
 
@@ -376,6 +791,9 @@ subroutine unpack77(c77,nrx,msg,unpk77_success,nthr)
      endif
   enddo
 
+  if(nrx.eq.1 .and. nthr.ge.1 .and. nthr.le.24) lastfull(nthr)=''   ! CE3TSK 2026-10-15: note_decode (slices 1-24: 3.-107)
+  if(nrx.eq.1 .and. nthr.ge.1 .and. nthr.le.24) lastsender(nthr)=''   ! CE3TSK 2026-10-15 (3.-108): note_sender, note_decode
+  if(nrx.eq.1 .and. nthr.ge.1 .and. nthr.le.24) remhit(nthr)=''   ! CE3TSK 2026-10-15 (3.-106): hash22 sets it again
   read(c77(72:77),'(2b3)') n3,i3
   msg=repeat(' ',37)
   if(i3.eq.0 .and. n3.eq.0) then
@@ -551,7 +969,10 @@ subroutine unpack77(c77,nrx,msg,unpk77_success,nthr)
         i=index(call_2,' ')
         if(i.ge.4 .and. ipb.eq.1 .and. i3.eq.1) call_2(i:i+1)='/R'
         if(i.ge.4 .and. ipb.eq.1 .and. i3.eq.2) call_2(i:i+1)='/P'
-        if(i.ge.4) call add_call_to_recent_calls(call_2,nthr)
+        if(i.ge.4) then
+           call add_call_to_recent_calls(call_2,nthr)
+           call note_sender(call_2,nthr)   ! CE3TSK 2026-10-15: the second call is the one sending
+        endif
      endif
 ! CE3TSK 2026-10-14 (review 3.-81): pack77 makes no type 1 or 2 of a hashed call beside a call that has a "/" - pack77_1
 ! returns ("if(w(1)(1:1).eq.'<' .and. index(w(2),'/').gt.0) return", and the other way round) and the message goes out
@@ -655,18 +1076,29 @@ subroutine unpack77(c77,nrx,msg,unpk77_success,nthr)
         call_1=call_3          
         call_2=adjustl(c11)//'  '
         call add_call_to_recent_calls(call_2,nthr)
-        if(nrx.eq.1 .and.                        &  
-           dxcall13_set .and. mycall13_set .and. & 
-           call_2.eq.dxcall13 .and.              &
-           n12.eq.hashmy12 ) call_1='<'//trim(mycall13)//'>'
-        if(nrx.eq.1 .and.                        &
-           mycall13_set .and.                    & 
-           index(call_1,'<...>').gt.0 .and.      &
-           n12.eq.hashmy12 ) call_1='<'//trim(mycall13)//'>'
+        call note_sender(call_2,nthr)
+        if(nrx.eq.1 .and. nthr.ge.1 .and. nthr.le.24) lastfull(nthr)=call_2   ! CE3TSK 2026-10-15: the full call (note_decode)
+! CE3TSK 2026-10-15 (TODO 3.-97): a hash that is mine is my call - when the sender is my DX call, as before, and now
+! also unless a station of that hash was heard SENDING in the last NSENT12AGE seconds (then it is that station's). It
+! was my call only when no call at all sat under the hash in calls12, which every call decoded since the band change
+! fills, called or calling: a compound call answering my CQ read as answering a station that was not on the air.
+! (3.-105, the review) Never the sender itself: a caller whose own hash is mine (PJ4/K5EF's is 692, as CE3TSK's) is
+! noted as sending when it calls, and its next call read "PJ4/K5EF PJ4/K5EF" - no station calls itself.
+        if(nrx.eq.1 .and. mycall13_set .and. n12.eq.hashmy12) then
+           if(dxcall13_set .and. call_2.eq.dxcall13) then
+              call_1='<'//trim(mycall13)//'>'
+           else if(len_trim(sent12call(n12)).gt.0 .and. sent12call(n12).ne.call_2 .and. &
+                   nsecrun-sent12time(n12).le.NSENT12AGE) then
+              call_1='<'//trim(sent12call(n12))//'>'
+           else
+              call_1='<'//trim(mycall13)//'>'
+           endif
+        endif
      else                      ! 12 bit hash for DE call
         call_1=adjustl(c11)
         call_2=call_3          
         call add_call_to_recent_calls(call_1,nthr)
+        if(nrx.eq.1 .and. nthr.ge.1 .and. nthr.le.24) lastfull(nthr)=call_1   ! CE3TSK 2026-10-15: the full call (note_decode)
         if(nrx.eq.0 .and.                        & 
            mycall13_set .and. & 
            n12.eq.hashmy12) call_2='<'//trim(mycall13)//'>'

@@ -5,7 +5,7 @@ subroutine ft8b(newdat1,nQSOProgress,nfqso,nftx,napwid,lsubtract,npos,freqsub,tm
                 ncount,msgsrcvd,lrepliedother,lhashmsg,lqsothread,lft8lowth,lhighsens,lsubtracted,      &
                 tmpcqsig,tmpmycsig,tmpqsosig,lnohiscall,lnomycall,lnohisgrid)
 !  use timer_module, only: timer
-  use packjt77, only : unpack77
+  use packjt77, only : unpack77,losdslice,remhit,remember_hide   ! CE3TSK 2026-10-15: the remembered compound calls
   use ft8_mod1, only : lft8deeposd   ! CE3TSK
   use ft8ensemble, only : ift8stage,nretrydither,ens_dither_cd0,ens_store_tone,lbgtones   ! CE3TSK: pipeline ensemble
   use ft8_mod1, only : ft8res,nft8res,lft8buffered,ft8used,ihint8,khint8,ldectr2   ! CE3TSK: the emission merge buffer
@@ -37,6 +37,7 @@ subroutine ft8b(newdat1,nQSOProgress,nfqso,nftx,napwid,lsubtract,npos,freqsub,tm
   integer nwhy   ! CE3TSK: chkrgrid's word on "CALL1 CALL2 R GRID" (chkprefix.f90)
   real deldt
   character msgdel*37
+  character msgchk*37,cremhit*13   ! CE3TSK 2026-10-15 (3.-106): what the phantom checks judge; the call from the list
   integer itone(79),ip(1),ka(1),nqsoend(3)
   integer, intent(in) :: nQSOProgress,nfqso,nftx,napwid,nthr,ipass,nft8rxfsens
   logical newdat1,lsubtract,lFreeText,nagainfil,lspecial,unpk77_success
@@ -84,7 +85,7 @@ subroutine ft8b(newdat1,nQSOProgress,nfqso,nftx,napwid,lsubtract,npos,freqsub,tm
   max_iterations=30; nharderrors=-1; nbadcrc=1; delfbest=0.; ibest=0; dfqso=500.; rrxdt=0.5
   ift8stage=1   ! CE3TSK: rejected before any LDPC/OSD attempt, unless set to 2 below
   fs2=200.; dt2=0.005 ! fs2=12000.0/NDOWN; dt2=1.0/fs2
-  lcall1hash=.false.; lcall2hash=.false.; lskipnotap=.false.
+  lcall1hash=.false.; lcall2hash=.false.; lskipnotap=.false.; cremhit=''
   ldeepsync=.false.; if(lft8lowth .or. lft8subpass .or. swl) ldeepsync=.true.
   lcallsstd=.true.; if(.not.lmycallstd .or. .not.lhiscallstd) lcallsstd=.false.
 
@@ -1516,6 +1517,7 @@ subroutine ft8b(newdat1,nQSOProgress,nfqso,nftx,napwid,lsubtract,npos,freqsub,tm
              niterations)
 !        call timer('bpd174_91 ',1)
         dmin=0.0
+        if(nthr.ge.1 .and. nthr.le.48) losdslice(nthr)=(nharderrors.lt.0)   ! CE3TSK 2026-10-15: OSD's, if it decodes
         if(nharderrors.lt.0) then
           ndeep=3
           if(lft8deeposd) ndeep=4   ! CE3TSK: OSD order 2 for every candidate (weak-signal mode)
@@ -1674,6 +1676,7 @@ subroutine ft8b(newdat1,nQSOProgress,nfqso,nftx,napwid,lsubtract,npos,freqsub,tm
         endif
         if(iaptype.eq.1 .and. msg37(1:10).eq.'CQ DE AA00') then; nbadcrc=1; cycle; endif
         lcall1hash=.false.; if(msg37(1:1).eq.'<') lcall1hash=.true.
+        cremhit=remhit(nthr)   ! CE3TSK 2026-10-15 (3.-106): a call of this message from the remembered list, or ''
         nbadcrc=0  ! If we get this far: valid codeword, valid (i3,n3), nonquirky message.
         call get_tones_from_77bits(message77,itone)
 
@@ -1753,9 +1756,14 @@ subroutine ft8b(newdat1,nQSOProgress,nfqso,nftx,napwid,lsubtract,npos,freqsub,tm
         if((mybcall.ne."            " .and. index(msg37,mybcall).gt.0) .or. &
            (hisbcall.ne."            " .and. index(msg37,hisbcall).gt.0)) go to 256
       endif
-      ngriddel=0; msgdel=msg37
+! CE3TSK 2026-10-15 (TODO 3.-106, item 4 of the review 3.-104): an a-priori decode whose call came from the REMEMBERED
+! list only - no station of that hash heard since the band or mode change - is judged as <...>, as it was before the
+! list: places 4 and 5 delete "MYCALL <...> R GRID" (chkfalse8.f90). 1 in 64 phantoms reads its free bits as a 22-bit
+! hash, and the list resolves that hash too. What is shown, if it passes, keeps the call; the record has what was judged.
+      msgchk=msg37; if(iaptype.gt.0 .and. len_trim(cremhit).gt.0) call remember_hide(msgchk,cremhit)
+      ngriddel=0; msgdel=msgchk
       if(i3bit.eq.1) then; call chkspecial8(msg37,msg37_2,nbadcrc)
-      else; call chkfalse8(msg37,i3,n3,nbadcrc,iaptype,lcall1hash,ngriddel)
+      else; call chkfalse8(msgchk,i3,n3,nbadcrc,iaptype,lcall1hash,ngriddel)
       endif
       if(nbadcrc.eq.1) then
         if(ngriddel.ne.0) then   ! CE3TSK: the table deleted it - on record (deleted_decodes.f90)
@@ -1782,7 +1790,7 @@ subroutine ft8b(newdat1,nQSOProgress,nfqso,nftx,napwid,lsubtract,npos,freqsub,tm
 ! with the message's square, as it was here for a few hours, it says nothing about the call when the square
 ! is one of open sea - "CQ TEST 1Z9ABC RR99" was shown. Its list of such prefixes is short (chkprefix.f90).
 ! CE3TSK 2026-10-13: the check itself is chkdircq (chkprefix.f90) now, which FT4 and FT2 call too.
-256 call chkdircq(msg37,i3,iaptype,lwrongcall)
+256 call chkdircq(msg37,i3,iaptype,lcall2hash,lwrongcall)   ! CE3TSK 2026-10-15 (3.-106): a hashed call, resolved or not
     if(lwrongcall) then
       ndelsnr=nint(xsnr); deldt=xdt-0.5+ensdtcorr; ndelfreq=nint(f1+ensfreqcorr)
       call deleted_note(nthr,msg37,ndelsnr,deldt,ndelfreq,-8)
@@ -2098,8 +2106,9 @@ subroutine ft8b(newdat1,nQSOProgress,nfqso,nftx,napwid,lsubtract,npos,freqsub,tm
     if(i3.eq.2 .and. index(msg37,'/P ').lt.1) then; msg37=''; nbadcrc=1; return; endif
 ! -18  0.5  584 ~ UA3ALE <...> PR07         *  AP decode with grid
     if(iaptype.eq.2) then
-      nhash=index(msg37,"<...>")
-      if(nhash.gt.4 .and. nhash.lt.13 .and. msg37(nhash+6:nhash+6).gt.'@' .and. msg37(nhash+7:nhash+7).gt.'@') then
+      msgchk=msg37; if(len_trim(cremhit).gt.0) call remember_hide(msgchk,cremhit)   ! CE3TSK 2026-10-15 (3.-106), above
+      nhash=index(msgchk,"<...>")
+      if(nhash.gt.4 .and. nhash.lt.13 .and. msgchk(nhash+6:nhash+6).gt.'@' .and. msgchk(nhash+7:nhash+7).gt.'@') then
         msg37=''; nbadcrc=1; return
       endif
     endif

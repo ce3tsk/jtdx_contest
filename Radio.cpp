@@ -86,7 +86,9 @@ namespace Radio
 
   bool is_callsign (QString const& callsign)
   {
-    if ((!callsign.at(1).isDigit() && callsign.size () == 2) || callsign == "F" || callsign == "G" || callsign == "I" || callsign == "K" || callsign == "W") {
+    // CE3TSK 2026-10-15 (TODO 3.-108): the length asked first - a part of one character ("W1AW/7"), an empty one ("K1ABC/")
+    // or an empty DX call (mainwindow.cpp) had at(1) read past its end; Qt asserts on it only in a debug build
+    if ((callsign.size () == 2 && !callsign.at(1).isDigit()) || callsign == "F" || callsign == "G" || callsign == "I" || callsign == "K" || callsign == "W") {
         auto call = callsign + "0";
         return call.contains (valid_callsign_regexp);
     }

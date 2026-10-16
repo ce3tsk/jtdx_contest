@@ -37,6 +37,7 @@ subroutine ft4b(f0,snrc,nQSOProgress,nfqso,ndepth,stophint,swl,lswl,nthr,isp,dob
   parameter (NSS=NSPS/NDOWN,NDMAX=NMAX/NDOWN)
   character message*37,msgsent*37,msg37_2*37
   character msgd*37
+  character msgchk*37,cremhit*13   ! CE3TSK 2026-10-15 (3.-106): what the phantom checks judge; the call from the list
   integer hintbits(2*ND),ih,kh,npasst,isweep,ipass0
   integer*1 hint77(77)
   logical lhint,lhintok
@@ -434,6 +435,7 @@ subroutine ft4b(f0,snrc,nQSOProgress,nfqso,ndepth,stophint,swl,lswl,nthr,isp,dob
 ! and the RTTY-Roundup / telemetry switches live (packjt77.f90); FT4 accepted any non-empty
 ! text, so "TU; F09NJF WZ8DWC 559 7995" at -20 dB slipped through on the WSJT-X FT4 sample
           if(.not.unpk77_success) cycle
+          cremhit=remhit(nthr)   ! CE3TSK 2026-10-15 (3.-106): a call of this message from the remembered list, or ''
           if(unpk77_success.and.dosubtract) then
             call get_ft4_tones_from_77bits(message77,i4tone)
             dt=real(ibest)/666.67
@@ -517,8 +519,11 @@ subroutine ft4b(f0,snrc,nQSOProgress,nfqso,ndepth,stophint,swl,lswl,nthr,isp,dob
               if(len_trim(hiscall).gt.2) then; if(index(message,trim(hiscall)).gt.0) lmine=.true.; endif
             endif
             if(.not.lmine) then
-              nbadcrc=0; msg37_2=message; lhash1=message(1:1).eq.'<'
-              call chkfalse8(message,i3,n3,nbadcrc,iaptype,lhash1,ngriddel)
+! CE3TSK 2026-10-15 (TODO 3.-106, item 4 of the review 3.-104): as in ft8b.f90 - an a-priori decode whose call came from
+! the REMEMBERED list only is judged as <...>; what is shown, if it passes, keeps the call
+              msgchk=message; if(iaptype.gt.0 .and. len_trim(cremhit).gt.0) call remember_hide(msgchk,cremhit)
+              nbadcrc=0; msg37_2=msgchk; lhash1=message(1:1).eq.'<'
+              call chkfalse8(msgchk,i3,n3,nbadcrc,iaptype,lhash1,ngriddel)
 ! CE3TSK 2026-10-12: the table's deletions go on record as FT8's do (deleted_decodes.f90); FT2's frequency
 ! is the one received, as emit() reports it
               if(nbadcrc.eq.1 .and. ngriddel.ne.0) then
@@ -540,7 +545,7 @@ subroutine ft4b(f0,snrc,nQSOProgress,nfqso,ndepth,stophint,swl,lswl,nthr,isp,dob
 ! came out of the hash table is not asked about.
           if(iaptype.lt.2) then
             nwhy=0
-            call chkdircq(message,i3,iaptype,lwrongcall)
+            call chkdircq(message,i3,iaptype,lhash2,lwrongcall)   ! CE3TSK 2026-10-15 (3.-106): a hashed call, resolved or not
             if(lwrongcall) nwhy=-8
             if(nwhy.eq.0 .and. .not.lhash2) call chkrgrid(message,i3,nwhy)
             if(nwhy.ne.0) then
@@ -629,6 +634,10 @@ subroutine ft4b(f0,snrc,nQSOProgress,nfqso,ndepth,stophint,swl,lswl,nthr,isp,dob
                 if(servis4.eq.'^') then; servis4='#'; else; servis4='|'; endif
               endif
               ft4res(ir,nthr)%srv=servis4; ft4res(ir,nthr)%ltwo=.false.
+              ! CE3TSK 2026-10-15: the remembered compound calls take trusted decodes only (packjt77 note_decode);
+              ! the phantom gate is ft4falsegate, on FT2's scale for FT2 (chkfalse8 below it, as above)
+              call note_decode(message,nthr,iaptype,iaptype.eq.7,lviaosd, &
+                               xsnr.lt.ft4falsegate+merge(ft2snroff,0.0,lft2)-remsnrdrop)
               ft4res(ir,nthr)%m26a=message(1:26); ft4res(ir,nthr)%lemit=.not.lhidemsg
             endif
           endif

@@ -9,6 +9,7 @@
 #endif
 #include "commons.h"
 #include "blockgather.h"
+#include "txstart.h"   // CE3TSK 2026-10-15: where a transmission starts, as the Modulator
 
 #include "NetworkServerLookup.hpp"
 
@@ -1773,11 +1774,7 @@ void TCITransceiver::do_modulator_start (unsigned symbolsLength, double framesPe
   m_amp = std::numeric_limits<qint16>::max ();
   m_toneSpacing = toneSpacing;
   m_TRperiod=TRperiod;
-  unsigned delay_ms=1000;
-  if(m_nsps==1920) delay_ms=500;   //FT8
-  else if(m_nsps==576) {
-    delay_ms=500;   //FT4
-  }
+  unsigned delay_ms=tx_start::delay_ms (m_nsps);   // CE3TSK 2026-10-15: FT2 too (it fell through to 1000 ms) - txstart.h
   // noise generator parameters
   if (m_addNoise) {
     m_snr = qPow (10.0, 0.05 * (dBSNR - 6.0));
@@ -1796,7 +1793,7 @@ void TCITransceiver::do_modulator_start (unsigned symbolsLength, double framesPe
   m_silentFrames = 0;
   // calculate number of silent frames to send
   if (m_ic == 0 && synchronize && !m_tuning)	{
-    m_silentFrames = audioSampleRate / (1000 / delay_ms) - (mstr * (audioSampleRate / 1000));
+    m_silentFrames = tx_start::silent_frames (audioSampleRate, delay_ms, mstr);   // CE3TSK 2026-10-15: exact (txstart.h)
   }
   m_state = (synchronize && m_silentFrames) ?
                         Synchronizing : Active;

@@ -12,13 +12,9 @@
 #endif
 
 #include "MessageClient.hpp"
+#include "pskreport.h"   // CE3TSK 2026-10-15: the spots of one datagram, within 1200 bytes
 
 #include "moc_psk_reporter.cpp"
-
-namespace
-{
-  int constexpr MAX_PAYLOAD_LENGTH {1400};
-}
 
 PSK_Reporter::PSK_Reporter(MessageClient * message_client, QObject *parent) :
     QObject {parent},
@@ -38,7 +34,7 @@ PSK_Reporter::PSK_Reporter(MessageClient * message_client, QObject *parent) :
 
     m_txInfoDescriptor_h = "0002003C50E30007"
                            "8001FFFF0000768F" // 1. Tx Call
-                           "800500040000768F" // 5. Tx Freq
+                           "800500050000768F" // 5. Tx Freq - 5 bytes, as WSJT-X (CE3TSK 2026-10-15, pskreport.h)
                            "800600010000768F" // 6. Tx snr
                            "800AFFFF0000768F" // 10. Tx Mode
                            "8003FFFF0000768F" // 3. Tx Grid
@@ -102,17 +98,10 @@ void PSK_Reporter::sendReport()
 
     // Sender information
     QString txInfoData_h = "50E3llll";
-    while (!m_spotQueue.isEmpty()
-           && (header_h.size () + m_rxInfoDescriptor_h.size () + m_txInfoDescriptor_h.size () + rxInfoData_h.size () + txInfoData_h.size ()) / 2 < MAX_PAYLOAD_LENGTH) {
-      QHash<QString,QString> spot = m_spotQueue.dequeue();
-      txInfoData_h += QString("%1").arg(spot["call"].length(),2,16,QChar('0')) + spot["call"].toUtf8().toHex();
-      txInfoData_h += QString("%1").arg(spot["freq"].toLongLong(),8,16,QChar('0'));
-      txInfoData_h += QString("%1").arg(spot["snr"].toInt(),8,16,QChar('0')).right(2);
-      txInfoData_h += QString("%1").arg(spot["mode"].length(),2,16,QChar('0')) + spot["mode"].toUtf8().toHex();
-      txInfoData_h += QString("%1").arg(spot["grid"].length(),2,16,QChar('0')) + spot["grid"].toUtf8().toHex();
-      txInfoData_h += QString("%1").arg(1,2,16,QChar('0')); // REPORTER_SOURCE_AUTOMATIC
-      txInfoData_h += QString("%1").arg(spot["time"].toInt(),8,16,QChar('0'));
-    }
+    /* CE3TSK 2026-10-15: the spots that fit within 1200 bytes, the closing "0000" counted (pskreport.h; stock checked
+       before adding a spot and could end one spot past its 1400) */
+    txInfoData_h += psk_report::take_spots (m_spotQueue, (header_h.size () + m_rxInfoDescriptor_h.size () + m_txInfoDescriptor_h.size ()
+                                                          + rxInfoData_h.size () + txInfoData_h.size ()) / 2);
     txInfoData_h += "0000";
     txInfoData_h.replace("50E3llll", "50E3" + QString("%1").arg(txInfoData_h.length()/2,4,16,QChar('0')));
     report_h = header_h + m_rxInfoDescriptor_h + m_txInfoDescriptor_h + rxInfoData_h + txInfoData_h;

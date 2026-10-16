@@ -648,19 +648,20 @@ MainWindow::MainWindow(bool multiple, QSettings * settings, QSharedMemory *shdme
     }
   });
 
-  connect (m_messageClient, &MessageClient::trigger_CQ, [this] (QString const& direction, bool tx_period, bool send) {
+  // CE3TSK 2026-10-15: the TX period as the message gives it - a sender of direction and Send alone leaves it (triggercq.h)
+  connect (m_messageClient, &MessageClient::trigger_CQ, [this] (QString const& direction, bool tx_period_given, bool tx_period, bool send) {
     if (m_config.accept_udp_requests ()) {
         txwatchdog (false);
         if (0 == ui->tabWidget->currentIndex ()) {
           if (direction != ui->direction1LineEdit->text()) ui->direction1LineEdit->setText(direction);
           if (send) ui->txb6->click ();
-          if (tx_period != m_txFirst) ui->TxMinuteButton->click ();
+          if (tx_period_given && tx_period != m_txFirst) ui->TxMinuteButton->click ();
           if (send && !m_enableTx) ui->enableTxButton->click ();
         }
         if (1 == ui->tabWidget->currentIndex ()) {
           if (direction != ui->directionLineEdit->text()) ui->directionLineEdit->setText(direction);
           if (send) ui->pbCallCQ->click ();
-          if (tx_period != m_txFirst) ui->TxMinuteButton->click ();
+          if (tx_period_given && tx_period != m_txFirst) ui->TxMinuteButton->click ();
           if (send && !m_enableTx) ui->enableTxButton->click ();
         }
     }
@@ -3237,18 +3238,62 @@ void MainWindow::displayDialFrequency ()
       m_rigState.tx_frequency () : m_rigState.frequency ()};
   if(m_monitoroff && m_config.rig_name()=="None") dial_frequency=m_freqNominal;
   if (dialWheelHolding ()) dial_frequency = m_dialWheelTarget;   // CE3TSK: the wheel's target, not the rig's older report
+  /* CE3TSK 2026-10-16 (TODO 3.-115): during a split transmission a band changed at the rig shows on one dial - "Fake It"'s
+     one VFO, reported as the Tx dial, or "Rig" split's receive VFO - while the other stays on the old band; the dial that
+     left the last band is judged (rigreport.h (d)) */
+  bool const splitTx {m_rigState.ptt () && m_rigState.split () && !dialWheelHolding ()};
+  auto const rxBand = m_config.bands ()->find (m_rigState.frequency ());
+  if (rig_report::receiveDialJudged (splitTx, m_config.bands ()->find (dial_frequency), rxBand, m_lastBand))
+    dial_frequency = m_rigState.frequency ();
   // lookup band
   auto const& band_name = m_config.bands ()->find (dial_frequency);
 //  printf("last band %s curband %s band %s freq %lld\n",m_lastBand.toStdString().c_str(),ui->bandComboBox->currentText().toStdString().c_str(),band_name.toStdString().c_str(),dial_frequency);
-  if(m_lastBand != band_name && ui->bandComboBox->currentText() != band_name) {
+  /* CE3TSK 2026-10-15 (TODO 3.-107, item 9 (a) of the review 3.-104): what the report means is rigreport.h's decision - a
+     report of another band within 3 s of the program's own band change is that change's echo (two quick band clicks
+     made two band changes "at the rig" of the late reports), and nothing at all is done with it, the last band
+     included: a rig that stays on another band is taken as changed once the 3 s are over. */
+  auto const report = rig_report::decide (band_name, m_lastBand, ui->bandComboBox->currentText (),
+                                          m_ownBandClock.isValid () ? m_ownBandClock.elapsed () : -1);
+  if(report == rig_report::Action::Show || report == rig_report::Action::Changed) {
     // only change this when necessary as we get called a lot and it
     // would trash any user input to the band combo box line edit
-    if(!m_lastBand.isEmpty() && !band_name.isEmpty()) { // handle loss of the poll response from transceiver where dial_frequency==0
+    if(report == rig_report::Action::Changed) { // handle loss of the poll response from transceiver where dial_frequency==0
       if(m_autoEraseBC && !startup) { // option: erase both windows if band is changed
         ui->decodedTextBrowser->clear(); ui->decodedTextBrowser2->clear();
         clearDX (" cleared, triggered by erase both windows option upon band change from transceiver");
       }
       m_qsoHistory.init();
+      /* CE3TSK 2026-10-15 (TODO 3.-93): a band changed AT THE RIG is taken as one changed here (band_changed ()): Enable
+         Tx off and a transmission halted - the QSO under way was on the other band, and stock JTDX 2.2.160 switches it
+         off too; the spots queued sent now, and the decodes of the period the change fell into not spotted - their
+         audio is partly the old band's, and they would go out under the new band's frequency; and the decoder told,
+         as it is for a band chosen here: it empties its hash and hint memories (the old band's messages would be
+         offered as hints for minutes) and blanks the audio from before the change. (Not tied to `startup` below: that
+         stays true until the first band change of the session, whenever it comes - the rig's first report never gets
+         here, m_lastBand is still empty then - and at a real start each step is idle anyway.) */
+      /* CE3TSK 2026-10-16 (TODO 3.-113, the review 3.-111 G4): the band changed at the rig is the latest word - a QSY held
+         back for the PTT (rigreport.h (c)) is dropped, or stopTx2 () sent it once the halt below lowered the PTT and
+         undid the change at the rig (a hold outlives the 3 s echo window in WSPR, which a band click does not halt) */
+      m_pendingQsy.drop ();
+      /* CE3TSK 2026-10-16 (TODO 3.-115): seen on the Tx dial of a "Fake It" transmission, the receive dial the program
+         holds is still the old band's - the moved dial is taken now, before the halt, or the PTT's drop and the return
+         to receive put the rig back there; nothing goes to the rig while keyed (rigreport.h (d)). "Fake It" alone
+         (3.-117): under "Rig" split it is the Tx VFO moved, and taking it retuned the receive VFO while keyed */
+      if (rig_report::adoptMovedDial (splitTx, m_config.split_emulated (), rxBand, band_name)) {
+        m_freqNominal = dial_frequency;
+        Q_EMIT m_config.transceiver_frequency (m_freqNominal);
+      }
+      if(m_transmitting || g_iptt==1) haltTx("band changed at the rig ");
+      enableTx_mode (false);
+      psk_Reporter->sendReport ();
+      m_okToPost = false;
+      // CE3TSK 2026-10-15 (3.-107, item 9 (b)): not on m_rigOk - the first report after a reconnect comes before the rig
+      // is marked online (handle_transceiver_update ()), and that one is the band change
+      if(rig_report::tellDecoder (m_transmitting, m_config.rig_name ())) {
+        m_bandChanged=true;
+        int const nsec=(m_jtdxtime->currentMSecsSinceEpoch2() % 86400000)/1000;
+        m_nsecBandChanged=fmod(double(nsec),tr_period_of(m_mode));
+      }
       if(m_config.write_decoded_debug()) {
         QString text = startup ? "program startup, m_lastBand: " : "QSO history initialized by band change from transceiver, m_lastBand: ";
         writeToALLTXT(text + m_lastBand + ", current band: " + band_name + ", dial_frequency: " + QString::number(dial_frequency) + ", TX VFO frequency: " + 
@@ -3267,7 +3312,7 @@ void MainWindow::displayDialFrequency ()
     ui->bandComboBox->setCurrentText (band_name);
     m_wideGraph->setRxBand (band_name);
   }
-  m_lastBand = band_name;
+  if(report != rig_report::Action::Echo) m_lastBand = band_name;
   // search working frequencies for one we are within 10kHz of (1 Mhz of on VHF and up)
   bool valid {false};
   quint64 min_offset {99999999};
@@ -4385,6 +4430,9 @@ void MainWindow::subProcessError (QProcess * process, QProcess::ProcessError)
 void MainWindow::closeEvent(QCloseEvent * e)
 {
   m_valid = false;              // suppresses subprocess errors
+  /* CE3TSK 2026-10-16 (TODO 3.-113, the review 3.-111 G9): a QSY held back for the PTT (rigreport.h (c)) is not sent after
+     the rig is closed below - setRig () opens a closed rig again (Configuration::transceiver_online ()) */
+  m_pendingQsy.drop ();
   if(m_config.clear_DX_exit())
     {
       clearDX ("");
@@ -8280,6 +8328,17 @@ void MainWindow::stopTx()
 void MainWindow::stopTx2()
 {
   Q_EMIT m_config.transceiver_ptt (false);      //Lower PTT
+  /* CE3TSK 2026-10-15 (TODO 3.-107, item 9 (c)): a QSY the PTT held back goes now, after the PTT command and once this
+     has run (monitoring back for TCI too), as a band click outside a transmission - band_changed () tells the decoder
+     and the rig (rigreport.h). 2026-10-16 (TODO 3.-113, the review 3.-111 G3): taken when that call runs, not here -
+     WSPR's band hop below sends its own band first, and a QSY taken here then moved the rig back to the band clicked
+     during the transmission; a band change since (band_changed (), or one at the rig) has dropped it */
+  if (m_pendingQsy.pending ()) QTimer::singleShot (0, this, [this] {
+      Radio::Frequency pendingQsy {0};
+      if (!m_pendingQsy.take (&pendingQsy)) return;
+      m_bandEdited = true; band_changed (pendingQsy);
+      if(m_config.write_decoded_debug()) writeToALLTXT("Band changed after the transmission (a QSY the PTT held back), frequency: " + QString::number(pendingQsy));
+    });
   if (m_tci) {
     if(!m_monitoroff) monitor (true);
     statusUpdate ();
@@ -10357,6 +10416,8 @@ void MainWindow::on_bandComboBox_activated (int index)
 
 void MainWindow::band_changed (Frequency f)
 {
+  m_ownBandClock.start ();   // CE3TSK 2026-10-15 (3.-107): the program's own band change - its echoes (rigreport.h (a)); start (),
+                             // not restart (): restart () on a timer never started is undefined in Qt (3.-113, the review 3.-111 G9)
   m_dialWheelTimer.stop (); m_dialWheelClock.invalidate ();   // CE3TSK: any QSY ends a wheel burst, applyDialWheel () restarts the hold
   abortTxBackground("band change");   // CE3TSK
   if (m_bandEdited) {
@@ -10401,8 +10462,21 @@ void MainWindow::band_changed (Frequency f)
     m_freqNominal = f;
     m_freqTxNominal = m_freqNominal;
     highlightBandButton ();   // CE3TSK
-    setRig ();
-    setXIT (ui->TxFreqSpinBox->value ());
+    /* CE3TSK 2026-10-15 (TODO 3.-107, item 9 (c) of the review 3.-104): with "Allow Tx frequency changes while
+       transmitting" off, no QSY while the PTT is up. A band click during a transmission halts it - m_transmitting ends at
+       once, the PTT drops some 0.3 s later (stopTx ()/stopTx2 ()) - and the rig was retuned in between, keyed: seen on the
+       dummy rig and on the operator's IC-7300 through flrig. The QSY - the receive dial (setRig ()) and in split the
+       transmit dial (setXIT ()) - is kept now and sent once the PTT is lowered (stopTx2 () runs band_changed () again).
+       rigreport.h has the story. 2026-10-16 (TODO 3.-113, the review 3.-111 G1, G2): also in the 200 ms before stopTx2 ()
+       lowers the PTT (ptt0Timer), and with Tx frequency changes allowed once the transmission is halted. */
+    if (rig_report::holdQsy (m_transmitting, g_iptt == 1, ptt0Timer.isActive (), m_config.tx_QSY_allowed ()))
+      m_pendingQsy.refused (m_freqNominal, m_rigState.frequency ());
+    else
+      {
+        setRig ();
+        m_pendingQsy.drop ();
+        setXIT (ui->TxFreqSpinBox->value ());
+      }
     qint64 fDelta = m_lastDisplayFreq - m_freqNominal;
     /* CE3TSK: was `... && m_outAttenuation != 1) {setValue (m_outAttenuation); m_outAttenuation = 1;}`,
        which used m_outAttenuation itself as the "already done" sentinel and so could not tell
@@ -11129,7 +11203,13 @@ void MainWindow::handle_transceiver_update (Transceiver::TransceiverState const&
       } else {
           m_freqTxNominal = s.split () ? s.tx_frequency (): s.frequency ();
       }
-      if (s.split ()) {
+      /* CE3TSK 2026-10-16 (TODO 3.-115): a receive dial reported while the PTT is up moves the Tx dial only where a QSY may
+         go then - not while one is held (the halt's PTT still up), nor for a band changed at the rig, which halts the
+         transmission (rigreport.h (d)); the next transmission sets the Tx dial again (setXIT () before its PTT) */
+      if (s.split () && rig_report::txDialFollows (s.ptt (),
+            rig_report::holdQsy (m_transmitting, g_iptt == 1, ptt0Timer.isActive (), m_config.tx_QSY_allowed ()),
+            rig_report::decide (m_config.bands ()->find (s.frequency ()), m_lastBand, ui->bandComboBox->currentText (),
+                                m_ownBandClock.isValid () ? m_ownBandClock.elapsed () : -1))) {
         setXIT (ui->TxFreqSpinBox->value ());
       }
   }

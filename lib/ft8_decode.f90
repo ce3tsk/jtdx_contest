@@ -36,6 +36,7 @@ contains
                          oddcopy,evencopy,avexdt,mycall,hiscall,dd8,nft8cycles,nft8swlcycles,ncandallthr,nincallthr,evencq,  &
                          oddcq,numcqsig,numdeccq,evenmyc,oddmyc,nummycsig,numdecmyc,lapmyc,evenqso,oddqso,lqsomsgdcd,hisgrid4
     use ft4_mod1, only : lhidetest,lhidetelemetry
+    use packjt77, only : note_decode,losdslice,remsnrdrop   ! CE3TSK 2026-10-15: the remembered compound calls
     include 'ft8_params.f90'
 !type(hdr) h
 
@@ -378,6 +379,9 @@ contains
                 if(nbgrun.gt.0) then
                   if(lft8sd .or. lft8s) then; servis8='#'; else; servis8='|'; endif
                 endif
+                ! CE3TSK 2026-10-15: the remembered compound calls take trusted decodes only (packjt77 note_decode);
+                ! FT8's phantom gate is -20.5 dB (chkfalse8 below it)
+                call note_decode(msg37,nthr,iaptype,logical(lft8sd .or. lft8s),losdslice(nthr),real(nsnr).lt.-20.5-remsnrdrop)
                 nloc8=0
                 if(i3.eq.4 .and. msg37(1:3).eq.'CQ ' .and. mod(nsec,15).eq.0) then
                   nloc8=1
@@ -431,6 +435,7 @@ contains
                 endif
               endif
 !$omp end critical(update_arrays)
+              call note_decode(msg37,nthr,iaptype,logical(lft8sd .or. lft8s),losdslice(nthr),real(nsnr).lt.-20.5-remsnrdrop)   ! CE3TSK
               if(.not.lhidemsg) then
                 if(iaptype.eq.0) then
                   if(.not.lFreeText .or. lspecial) servis8=' '

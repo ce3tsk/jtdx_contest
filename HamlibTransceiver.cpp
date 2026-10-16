@@ -918,7 +918,8 @@ auto HamlibTransceiver::get_vfos (bool for_split) const -> std::tuple<vfo_t, vfo
       error_check (rig_get_vfo (rig_.data (), &v), tr ("getting current VFO")); // has side effect of establishing current VFO inside hamlib
       TRACE_CAT ("HamlibTransceiver", "rig_get_vfo VFO = " << rig_strvfo (v));
 
-      reversed_ = RIG_VFO_B == v;
+      // CE3TSK 2026-10-16 (TODO 3.-117): not from a report made while transmitting split - as in do_poll ()
+      if (!(state ().ptt () && state ().split ())) reversed_ = RIG_VFO_B == v;
     }
   else if (!for_split && set_vfo_works_ && rig_get_function_ptr (model_, RIG_FUNCTION_SET_VFO) && rig_get_function_ptr (model_, RIG_FUNCTION_SET_SPLIT_VFO))
     {
@@ -1180,7 +1181,11 @@ void HamlibTransceiver::do_poll ()
       fprintf(pFile,"%s poll current VFO=%s\n",m_jtdxtime->currentDateTimeUtc2().toString("hh:mm:ss.zzz").toStdString().c_str(),rig_strvfo (v));
       fclose (pFile);
 #endif
-      reversed_ = RIG_VFO_B == v;
+      /* CE3TSK 2026-10-16 (TODO 3.-117, the review 3.-116 1): which VFO receives is not taken from a report made while
+         transmitting split - Hamlib's Kenwood back end (TS-590, TS-890S, TS-2000, TS-480, Flex 6000) reports VFO B, the
+         Tx VFO, as the current one then, and the VFOs read below by name were swapped for the transmission: the
+         receive VFO's read took the Tx VFO (3.-115), the other VFO's read the receive VFO (inherited) */
+      if (!(state ().ptt () && state ().split ())) reversed_ = RIG_VFO_B == v;
     }
 
   if ((WSJT_RIG_NONE_CAN_SPLIT || !is_dummy_)
@@ -1241,6 +1246,34 @@ void HamlibTransceiver::do_poll ()
           fclose (pFile);
 #endif
           update_rx_frequency (f);
+        }
+      /* CE3TSK 2026-10-16 (TODO 3.-115): keyed in split, the receive VFO by its name where the rig addresses its VFOs, as
+         the other one is read below - a band changed at the rig during a "Rig" split transmission was seen only after
+         it. The current VFO is still not read then: some rigs show the Tx VFO as the current one while transmitting.
+         (3.-117, the review 3.-116 4) A failed read is skipped: a rig that will not have it read while keyed went
+         offline, the transmission halted - the program did without it before. (3.-119, the review 3.-118 1) Not through
+         rigctld out of its VFO mode (-o): Hamlib's NET rigctl back end sends the read without the VFO's name then, and
+         rigctld reads its current VFO - VFO B, the Tx VFO, on a Kenwood transmitting split */
+      else if ((WSJT_RIG_NONE_CAN_SPLIT || !is_dummy_)
+               && (rig_get_caps_int (model_, RIG_CAPS_TARGETABLE_VFO) & (RIG_TARGETABLE_FREQ))
+               && !one_VFO_
+               && !(RIG_MODEL_NETRIGCTL == model_ && !rig_->state.vfo_opt))
+        {
+          auto rc = rig_get_freq (rig_.data ()
+                                  , reversed_
+                                  ? (rig_->state.vfo_list & RIG_VFO_B ? RIG_VFO_B : RIG_VFO_SUB)
+                                  : (rig_->state.vfo_list & RIG_VFO_A ? RIG_VFO_A : RIG_VFO_MAIN)
+                                  , &f);
+          if (RIG_OK == rc)
+            {
+              f = std::round (f);
+              TRACE_CAT_POLL ("HamlibTransceiver", "rig_get_freq receive VFO while transmitting split =" << f);
+              update_rx_frequency (f);
+            }
+          else
+            {
+              TRACE_CAT_POLL ("HamlibTransceiver", "rig_get_freq receive VFO while transmitting split failed, skipped:" << rc);
+            }
         }
 
       if ((WSJT_RIG_NONE_CAN_SPLIT || !is_dummy_)
@@ -1469,6 +1502,19 @@ void HamlibTransceiver::do_ptt (bool on)
         {
           TRACE_CAT ("HamlibTransceiver", "rig_set_ptt PTT = false");
           error_check (rig_set_ptt (rig_.data (), RIG_VFO_CURR, RIG_PTT_OFF), tr ("setting PTT off"));
+        }
+      /* CE3TSK 2026-10-16 (TODO 3.-119, the review 3.-118 2): after a split transmission Hamlib still took VFO B, the Tx
+         VFO, for the current one - its Kenwood back end reports it while the rig transmits split, and the NET rigctl
+         client keeps the last answer too - so a QSY right after the PTT's drop (a band click held for it: stopTx2 ())
+         went to VFO B by RIG_VFO_CURR and the receive VFO stayed on the old band (the simulator: every time; a later
+         re-send repaired it, or the program followed the rig back). Asked once more now, unkeyed, it is VFO A again.
+         A failed query is let be: the next poll asks too */
+      if (state ().split () && get_vfo_works_ && rig_get_function_ptr (model_, RIG_FUNCTION_GET_VFO))
+        {
+          vfo_t v {RIG_VFO_NONE};
+          auto rc = rig_get_vfo (rig_.data (), &v);
+          TRACE_CAT ("HamlibTransceiver", "after a split transmission: rig_get_vfo rc =" << rc << "VFO =" << rig_strvfo (v));
+          Q_UNUSED (rc);
         }
     }
 

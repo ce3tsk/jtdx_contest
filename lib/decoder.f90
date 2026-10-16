@@ -43,7 +43,7 @@ subroutine multimode_decoder(params)
   use ft4_mod1, only : nft4dt2   ! CE3TSK: item 57
   use ft4_mod1, only : nbg4run,nft4ensfrom,dd4prist   ! CE3TSK: the FT4 TX background (item 59)
   use ft4_mod1, only : ft4rxcost,nft4rxrun   ! CE3TSK item 80: FT4's RX budget auto
-  use packjt77, only : lcommonft8b,ihash22,calls12,calls22
+  use packjt77, only : lcommonft8b,ihash22,calls10,calls12,calls22,sent12call,hash_clock,lonair
 
   include 'jt9com.f90'
 !  include 'timer_common.inc'
@@ -78,6 +78,8 @@ subroutine multimode_decoder(params)
   logical(1) :: lswlfilt
   logical :: lswlfiltforce=.false.   ! CE3TSK
   integer nutc,ndelay
+  integer, save :: nmodehash=-1   ! CE3TSK 2026-10-15: the mode of the last decode, for the hash tables below
+  logical :: lnewmode
   type(params_block) :: params
   character(len=300) :: dumpfile   ! CE3TSK debug dump
   character(len=32) :: modemsg   ! CE3TSK: the unknown-mode diagnostic below - 20 characters of
@@ -185,17 +187,38 @@ subroutine multimode_decoder(params)
   my_jt65%decoded=0; my_jt9%decoded=0; my_jt9s%decoded=0; my_jt10%decoded=0; my_ft4%decoded=0
   nagainjt9=.false.;  nagainjt9s=.false.;  nagainjt10=.false.; ncandall=0; ncandallthr=0
 
+! CE3TSK 2026-10-15: a REAL mode change - this decode's mode against the last decode's (any mode, so FT8 -> JT65 -> FT8
+! counts on the way back too). params%lmodechanged is raised by the program in commonActions (), which also runs at its
+! start, when the Settings are closed with OK and when the rig comes back online; the operator: the hash tables, the
+! hint lists and the SuperFox memory are for a real mode change and a band change only, the FT4 RX cost model (the
+! mode's, not the band's) for a real mode change only. The FT8 DT average below stays on the flag: the Settings can
+! change the sound card, and with it the timing.
+  lnewmode=(nmodehash.ge.0 .and. params%nmode.ne.nmodehash); nmodehash=params%nmode
+  ! CE3TSK 2026-10-15 (TODO 3.-105): wav files opened in the program feed nothing to the remembered compound calls
+  ! (packjt77 lonair); 2026-10-16 (3.-113): nor to option C's senders, nor do they move the clock (below). File mode
+  ! sets ndiskdat for the files it decodes as opened in the program (jt9.f90)
+  lonair=.not.logical(params%ndiskdat)
   if(params%lmodechanged) then; avexdt=0.; if(params%nmode.eq.8) nintcount=3; endif ! avexdt fast track in FT8 after mode change
 ! CE3TSK: the FT4 RX cost model is learned wall time for a member count, and FT2 does about half the
 ! work in half the period - keeping FT4's learned costs would size FT2's ensemble from the wrong
 ! measurements (and the other way round), so a mode change forgets them.
-  if(params%lmodechanged) then; ft4rxcost=0.; nft4rxrun=0; endif
-  if(params%lbandchanged .and. (params%nmode.eq.8 .or. params%nmode.eq.4)) then; ihash22=-1; calls22=''; calls12=''; endif
+  if(lnewmode) then; ft4rxcost=0.; nft4rxrun=0; endif   ! CE3TSK 2026-10-15: a real mode change (above)
+! CE3TSK 2026-10-15: the hash tables are emptied on a band change - FT2 (52) too, it was left out - and on a real mode
+! change (above); the 10-bit one (DXpedition messages) as well, it never was (test/decode/bandhash.sh)
+  if((params%lbandchanged .or. lnewmode) .and. (params%nmode.eq.8 .or. params%nmode.eq.4 .or. params%nmode.eq.52)) then
+    ihash22=-1; calls22=''; calls12=''; calls10=''; sent12call=''
+  endif
+! CE3TSK 2026-10-15: the decoder's clock (packjt77). 2026-10-16 (TODO 3.-113, the review 3.-111 D2, D3): a fresh period on
+! the air only - a re-decode is the same period, however much later (test/decode/remembered.sh), and a wav file opened in
+! the program is of another time (test/decode/myhash.sh)
+  if((params%nmode.eq.8 .or. params%nmode.eq.4 .or. params%nmode.eq.52) .and. params%newdat .and. lonair) &
+    call hash_clock(params%nutc)
 ! CE3TSK P11: a band or mode change also empties the hint decoder's message lists (the period's,
 ! the previous same-parity one and the deeper ones) and the call/DT lists - they are keyed by
 ! audio frequency and DT, meaningless under another dial, and with a four-period memory they
-! would otherwise offer the old band's messages for two minutes
-  if(params%lbandchanged .or. params%lmodechanged) then
+! would otherwise offer the old band's messages for two minutes. CE3TSK 2026-10-15: a REAL mode change (above), not the
+! program's flag (test/decode/modereset.sh)
+  if(params%lbandchanged .or. lnewmode) then
      even%lstate=.false.; odd%lstate=.false.; evencopy%lstate=.false.; oddcopy%lstate=.false.
      evencopyk%lstate=.false.; oddcopyk%lstate=.false.
      calldteven%call2=''; calldtodd%call2=''; lastrxmsg(1)%lstate=.false.
@@ -796,6 +819,8 @@ endif
     ! the RX budget (FT4RXBudget / -l, tenths; 1.3 s by default against the 1.36 s reply deadline),
     ! decided here from the previous periods' costs since FT4's members are not separable units;
     ! the first count that does not fit has its estimate decayed so it is tried again later
+    call get_environment_variable('JTDX_FT4_TIMING',dumpfile,ldump,idumpstat)   ! CE3TSK 2026-10-15: how many RX costs are
+    if(idumpstat.eq.0 .and. ldump.gt.0) write(0,'(a,i6.6,a,i2)') 'ft4 costs ',params%nutc,' learned ',count(ft4rxcost.gt.0.)   ! learned now (0 after a mode change)
     lft4rxbudget=(params%nft4ensemble.eq.-2)
     if(lft4rxbudget) then
        budget4=dble(max(1,merge(params%nrxbudget,merge(5,13,lft2),params%nrxbudget.gt.0)))/10.d0

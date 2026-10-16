@@ -126,7 +126,10 @@ subroutine sfox_unpack(nutc,x,nsnr,f0,dt0,foxcall,notp)
      j=28*i + 1
      read(msgbits(j:j+27),'(b28)') n28
      call unpack28(n28,c13,success,1)
-     if(c13(1:5).eq.'<...>' .and. mycall13_set .and. (n28-2063592).eq.hashmy22)     &
+! CE3TSK 2026-10-15 (TODO 3.-105, the review): my hash is my call FIRST, as unpack77 has it - it was replaced only where
+! unpack28 gave <...>, so a call of the same 22-bit hash in the live table or the remembered compound calls took the
+! Fox's message to me
+     if(mycall13_set .and. (n28-2063592).eq.hashmy22)     &
           c13='<'//trim(mycall13)//'>'
      if(n28.eq.0 .or. n28.eq.NQU1RKS) cycle 
      ctail=' '

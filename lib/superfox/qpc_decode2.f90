@@ -133,7 +133,7 @@ subroutine qpc_decode2(c0,fsync,ftol,xdec,ndepth,dth,damp,crc_ok,   &
 
    call sfox_config                   !CE3TSK: the settings, once for the process - the search's floor is one
    if(nsfextra.ge.1 .and. nsfextra.le.3) then
-! CE3TSK 2026-09-21: THE LAST STEP of a Fox slot (JTDX_SFOX_SYNC3=1; decoder.f90 superfox_extra): MSHV's three
+! CE3TSK 2026-09-21: THE LAST STEP of a Fox slot (ON by default, JTDX_SFOX_SYNC3=0 switches it off; decoder.f90 superfox_extra): MSHV's three
 ! sync windows (qpc_sync3.f90), ranked as MSHV ranks them - the RX window first unless another is 0.05
 ! stronger - and the search and the passes below on candidate nsfextra; a candidate equal to one before it
 ! (same frequency and time) is not searched twice.

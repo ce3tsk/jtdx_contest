@@ -155,13 +155,21 @@ void CPlotter::draw(float swide[], bool bScroll)                            //dr
   j=0;
   j0=int(m_startFreq/m_fftBinWidth + 0.5);
   int iz=XfromFreq(5000.0);
+  /* CE3TSK 2026-10-15 (TODO 3.-92): no more columns than the buffers hold. iz follows the widget's width, and LineBuf
+     above, m_sum and the caller's swide (widegraph.cpp, and flat4/scale_by_median write back into it) hold 2048. The
+     Wide Graph caps its own width at 2048 (setMaximumWidth), but a window manager need not honour that - a window
+     maximised or spread across two screens wider than 2048 pixels wrote past all four. The columns past 2048 stay as
+     they are. The plot's own top frequency (Fmax: the decode range when it follows the waterfall, UDP's limit) keeps
+     the whole width - it had followed the clamp (TODO 3.-105, the review). */
+  int const izplot=iz;
+  if(iz>MAX_SCREENSIZE) iz=MAX_SCREENSIZE;
   int jz=iz*m_binsPerPixel;
   /* CE3TSK: savg holds NSMAX bins. j0 is the first bin of the waterfall's start frequency, so
      with a non-zero Start the last column reaches past the end - at Start 50 Hz with 5 bins per
      pixel j0+jz is 6828 against 0..6826 - and the read lands in the next member of dec_data. */
   if(j0+jz>NSMAX) jz=NSMAX-j0;
   if(jz<0) jz=0;
-  m_fMax=FreqfromX(iz);
+  m_fMax=FreqfromX(izplot);
 
   if(bScroll) {
     if(m_Scale) scale_by_median(swide,&iz);

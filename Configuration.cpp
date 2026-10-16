@@ -1666,6 +1666,10 @@ bool Configuration::beepOnNewCall () const {return m_->beepOnNewCall_;}
 bool Configuration::beepOnNewPx () const {return m_->beepOnNewPx_;}
 bool Configuration::beepOnFirstMsg () const {return m_->beepOnFirstMsg_;}
 bool Configuration::split_mode () const {return m_->split_mode ();}
+bool Configuration::split_emulated () const
+{
+  return m_->split_mode () && TransceiverFactory::split_mode_emulate == m_->rig_params_.split_mode;
+}
 QString Configuration::udp_server_name () const {return m_->udp_server_name_;}
 auto Configuration::udp_server_port () const -> port_type {return m_->udp_server_port_;}
 QString Configuration::udp2_server_name () const {return m_->udp2_server_name_;}

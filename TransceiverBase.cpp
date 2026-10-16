@@ -296,10 +296,15 @@ void TransceiverBase::set (TransceiverState const& s,
                                        // commands while switching from
                                        // Tx to Rx
               }
+            // CE3TSK 2026-10-15: the frequency is no longer sent again on every return to receive ("|| ptt_off"), as
+            // WSJT-X - a needless CAT command a transmission, which some rigs refuse while their tuner works. A "Fake
+            // It" split still gets its receive dial back (it differs). A QSY the rig did not take while transmitting
+            // still goes after it where the back end knows it was not taken (Hamlib with one VFO in split skips it,
+            // TCI times out) - requested_ then keeps what the rig took; a back end that sends without reading back
+            // (OmniRig, HRD, DXLab) records the frequency as taken. test_rigreturn
             if (s.frequency ()    // ignore bogus zero frequencies
-                && ((s.frequency () != requested_.frequency () // and QSY
-                     || (s.mode () != UNK && s.mode () != requested_.mode ())) // or mode change
-                    || ptt_off))       // or just returned to rx
+                && (s.frequency () != requested_.frequency () // and QSY
+                    || (s.mode () != UNK && s.mode () != requested_.mode ()))) // or mode change
               {
   #if JTDX_DEBUG_TO_FILE
                 pFile = fopen (debug_file_.c_str(),"a");

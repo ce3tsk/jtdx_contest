@@ -20,6 +20,7 @@
 #include "usstates.h"   /* CE3TSK 2026-10-02 */
 #include "priorities.h"   /* CE3TSK 2026-10-03 */
 #include "cqdirection.h"   /* CE3TSK 2026-10-12 */
+#include "wantedprefix.h"   /* CE3TSK 2026-10-15 */
 namespace dp = decode_priority;
 
 #include "moc_displaytext.cpp"
@@ -1087,7 +1088,7 @@ int DisplayText::displayDecodedText(DecodedText* decodedText, QString myCall, QS
             bwantedCall = true; show_line = true;
         }
         for (int i=0; i<wantedPrefixList.size(); i++) {
-            if (wantedPrefixList.at(i).size() > 1 && checkCall.startsWith(wantedPrefixList.at(i))) {
+            if (wanted_prefix::matches (checkCall, wantedPrefixList.at(i))) {   // CE3TSK 2026-10-15: AA1AAA/VP9 is one of VP9 (wantedprefix.h)
                 bwantedPrefix = true;
                 break;
             }
