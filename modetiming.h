@@ -73,4 +73,58 @@ inline bool clock_refresh_due (QString const& mode, int isecond)
   return isecond == 0;   // the 60 s modes
 }
 
+/* CE3TSK 2026-10-17 (TODO.md section 7, step 1d): four more per-mode numbers, out of the GUI functions that used them -
+ * readFromStdout (), guiUpdate () and process_Auto () - so that a mode missing from one of them fails a test row.
+ * The values are the old ones, to the digit.
+ */
+
+/* The guard band around our Tx frequency, in Hz: a station within it is on our frequency (the sequencer's "not
+ * owner of the frequency" and the QSO-finished release). A mode not listed keeps the width it had (current) - WSPR
+ * has none of its own. */
+inline int guard_freq_hz (QString const& modeTx, int current)
+{
+  if (modeTx == "FT8") return 51;
+  if (modeTx == "FT4") return 84;
+  if (modeTx == "FT2") return 168;   // 4 tones at 41.667 Hz, twice FT4's width
+  if (modeTx == "JT65") return 176;
+  if (modeTx == "JT9") return 16;
+  if (modeTx == "T10") return 67;
+  return current;
+}
+
+/* How long a transmission lasts, in seconds from the period's start, before any CW ID: by the Tx mode, WSPR-2 by the
+ * mode; 0 for anything else. */
+inline double tx_duration_s (QString const& modeTx, QString const& mode)
+{
+  if (modeTx == "FT8") return 13.64;               // 1.0 + 79*1920/12000.0
+  if (modeTx == "FT4") return 6.04;                // 1.0 + 105*576/12000.0
+  if (modeTx == "FT2") return 3.02;                // 0.5 + 105*288/12000.0: 2.52 s of signal in a 3.75 s period, so the margin is half a second, not FT4's whole one
+  if (modeTx == "JT65") return 47.81142857142857;  // 1.0 + 126*4096/11025.0
+  if (modeTx == "JT9") return 49.96;               // 1.0 + 85.0*m_nsps/12000.0
+  if (modeTx == "T10") return 49.96;
+  if (mode == "WSPR-2") return 112.592;            // 2.0 + 162*8192/12000.0
+  return 0.0;
+}
+
+/* The blank line between periods carries the band's name only when more than this many seconds have passed since
+ * the band changed - about one period. */
+inline int band_label_after_s (QString const& mode)
+{
+  if (mode == "FT8") return 14;
+  if (mode == "FT4") return 6;
+  if (mode == "FT2") return 3;
+  return 50;
+}
+
+/* The guards against logging the same QSO twice, in ms, as a number of periods: guiUpdate ()'s after our 73 (2 - its
+ * comment there said 4) and process_Auto ()'s for a Hound at RRR73 (7). int () cuts FT4's 7.5 s to 7 and FT2's
+ * 3.75 s to 3, as the original arithmetic always did (found on the way, TODO.md section 7: kept, not changed).
+ * Neither cut ever shows: guiUpdate ()'s guard never decides - it is asked inside "if (m_sentFirst73)", which already
+ * requires the last call logged to be another one - and Hound is FT8 only, whose 15 s int () leaves whole
+ * (TODO.md 3.-124 item 9, 3.-126 E). */
+inline int relog_guard_ms (double period, int periods)
+{
+  return int (period) * periods * 1000;
+}
+
 #endif

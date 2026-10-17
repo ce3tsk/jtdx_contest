@@ -57,6 +57,7 @@
 #include "logfields.h"   // CE3TSK: what a log entry takes when the QSO skipped a step   /* CE3TSK: contest-mode rejection of signal-report messages */
 #include "decodelabel.h"   // CE3TSK
 #include "modetiming.h"   // CE3TSK: the per-mode timing constants
+#include "autoseqstep.h"  // CE3TSK 2026-10-17: the auto sequencer's decisions
 #include "contestmode.h"   // CE3TSK 2026-09-26: the modes a contest allows
 #include "savedmode.h"     // CE3TSK 2026-09-26: the saved Mode/ModeTx made safe
 #include "bandschedule.h"  // CE3TSK 2026-09-26: which scheduler entry fires
@@ -6735,102 +6736,80 @@ void MainWindow::process_Auto()
       else if(m_status == QsoHistory::NONE) StrDirection = " auto sequence is not started;";
       writeToALLTXT("hisCall:" + hisCall + " time:" + QString::number(time) + " autoseq: " + StrDirection + " status: " + StrStatus[m_status] + " count: " + QString::number(count)+ " prio: " + QString::number(prio));
     }
+    /* CE3TSK 2026-10-17: the decisions of this chain are autoseq_step::hound () and autoseq_step::release ()
+       (autoseqstep.h, test_autoseqstep); what is left here carries them out. */
     if (m_houndMode ) { //WSJT-X Fox will drop QSO if R+Report from Hound is not decoded after three attempts 
-      if (m_status == QsoHistory::SRREPORT || m_status == QsoHistory::RREPORT) {
-        if(count > 3) {
+      auto const step = autoseq_step::hound (m_status, count, m_houndTXfreqJumps, rx);
+      if (step.drop) {
           haltTx("DX QSO failed after three TX of R+REPORT message ");
           count = m_qsoHistory.reset_count(hisCall,QsoHistory::RCQ);
           ui->TxFreqSpinBox->setValue (m_lastCallingFreq);
           m_status = QsoHistory::RCQ;
-         } else if (m_houndTXfreqJumps && rx > 199 && rx < 1000) {
-          if (count == 1) {
-             ui->TxFreqSpinBox->setValue (rx);
-           } else if (rx < 600) {
-             ui->TxFreqSpinBox->setValue (rx+300);
-           } else {
-             ui->TxFreqSpinBox->setValue (rx-300);
-           }
-         }
-      }
+      } else if (step.txFreq >= 0) ui->TxFreqSpinBox->setValue (step.txFreq);
     } else if ((qsoJustFinished = afterQsoFinished (hisCall, grid, rpt, prio, count, counters, StrStatus))) {
       /* CE3TSK: the post-QSO hook dealt with this pass. A policy that does nothing returns
          false here and the chain below continues exactly as it would have. */
-    } else if ((m_status == QsoHistory::SRR73 || m_status >= QsoHistory::S73) && !m_singleshot && !m_config.autolog() && m_lastloggedcall == m_hisCall && !m_lockTxFreq &&
-        (tx == 1 || abs(rx - ui->TxFreqSpinBox->value ()) > m_nguardfreq)) {
-      clearDX (" cleared, AutoSeq QSO finished");
-      hisCall = m_hisCall;
-      grid = m_hisGrid;
-      m_status = QsoHistory::NONE;
-    } else if ((m_status == QsoHistory::RCQ || m_status == QsoHistory::SCALL || (m_status == QsoHistory::SREPORT && m_skipTx1 && !m_houndMode)) && m_config.answerCQCount() &&
-        (decode_priority::counterGivesUp (prio) || m_strictdirCQ) && (m_config.nAnswerCQCounter() <= count || replyOtherOverridesCounters ())) {
-      /* CE3TSK 2026-10-05: say which rule cleared it - "count reached" was written when he answered another station
-         after one call, which read as a miscount (W7JDB, count 1 of 4) */
-      clearDX (m_config.nAnswerCQCounter() <= count ? QString {" cleared, RCQ/SCALL/SREPORT count reached"}
-               : " cleared, answering another station (RCQ/SCALL/SREPORT count " + QString::number (count) + " of "
-                 + QString::number (m_config.nAnswerCQCounter()) + " not reached)");
-      if (replyOtherOverridesCounters ())
-          counters2 = false;
-      else {
-          m_counter = m_config.nAnswerCQCounter(); 
-          m_qsoHistory.calllist(hisCall,rpt.toInt(),time);
+    } else {
+      autoseq_step::Worked w;
+      w.status = m_status;
+      w.count = count;
+      w.prio = prio;
+      w.hound = m_houndMode;
+      w.singleshot = m_singleshot;
+      w.autolog = m_config.autolog();
+      w.loggedHim = m_lastloggedcall == m_hisCall;
+      w.lockTxFreq = m_lockTxFreq;
+      w.rx = rx;
+      w.tx = tx;
+      w.txFreq = ui->TxFreqSpinBox->value ();
+      w.guardFreq = m_nguardfreq;
+      w.skipTx1 = m_skipTx1;
+      w.strictdirCQ = m_strictdirCQ;
+      w.replyOther = replyOtherOverridesCounters ();
+      w.answerCQCount = m_config.answerCQCount();          w.answerCQCounter = m_config.nAnswerCQCounter();
+      w.answerInCallCount = m_config.answerInCallCount();  w.answerInCallCounter = m_config.nAnswerInCallCounter();
+      w.sentRReportCount = m_config.sentRReportCount();    w.sentRReportCounter = m_config.nSentRReportCounter();
+      w.sentRR7373Count = m_config.sentRR7373Count();      w.sentRR7373Counter = m_config.nSentRR7373Counter();
+      auto const r = autoseq_step::release (w);
+      if (r.rule != autoseq_step::Rule::None) {
+        clearDX (r.reason);
+        if (r.armCounter) m_counter = m_config.nAnswerCQCounter();
+        if (r.callList) m_qsoHistory.calllist(hisCall,rpt.toInt(),time);
+        if (r.resetCount) count = m_qsoHistory.reset_count(hisCall);
+        hisCall = m_hisCall;
+        grid = m_hisGrid;
+        m_status = QsoHistory::NONE;
+        if (r.counters2Off) counters2 = false;
+        if (r.countersOff) counters = false;
       }
-      count = m_qsoHistory.reset_count(hisCall);
-      hisCall = m_hisCall;
-      grid = m_hisGrid;
-      m_status = QsoHistory::NONE;
-      if (m_singleshot)
-        counters = false;
-    } else if ((m_status == QsoHistory::RCALL || (m_status == QsoHistory::SREPORT && !m_skipTx1)) && m_config.answerInCallCount() && 
-        (m_config.nAnswerInCallCounter() <= count || replyOtherOverridesCounters ())) {
-      clearDX (m_config.nAnswerInCallCounter() <= count ? QString {" cleared, RCALL/SREPORT count reached"}   // CE3TSK: see above
-               : " cleared, answering another station (RCALL/SREPORT count " + QString::number (count) + " of "
-                 + QString::number (m_config.nAnswerInCallCounter()) + " not reached)");
-      m_qsoHistory.calllist(hisCall,rpt.toInt(),time);
-      count = m_qsoHistory.reset_count(hisCall);
-      hisCall = m_hisCall;
-      grid = m_hisGrid;
-      m_status = QsoHistory::NONE;
-      counters2 = false;
-      if (m_singleshot)
-        counters = false;
-    } else if ((m_status == QsoHistory::RREPORT || m_status == QsoHistory::SRREPORT) && m_config.sentRReportCount() && 
-        m_config.nSentRReportCounter() <= count) {
-      clearDX (" cleared, RREPORT/SRREPORT count reached");
-      count = m_qsoHistory.reset_count(hisCall);
-      hisCall = m_hisCall;
-      grid = m_hisGrid;
-      m_status = QsoHistory::NONE;
-      counters2 = false;
-      if (m_singleshot)
-        counters = false;
-    } else if ((m_status == QsoHistory::RRR || m_status == QsoHistory::RRR73 || m_status == QsoHistory::R73 || m_status == QsoHistory::SRR73 || m_status == QsoHistory::S73) && 
-        m_config.sentRR7373Count() && m_config.nSentRR7373Counter() <= count) {
-      clearDX (" cleared, RRR|RR73|R73 count reached");
-      count = m_qsoHistory.reset_count(hisCall);
-      hisCall = m_hisCall;
-      grid = m_hisGrid;
-      m_status = QsoHistory::NONE;
-      counters2 = false;
-      if (m_singleshot)
-        counters = false;
     }
   }
   if (hisCall.isEmpty () && counters && !m_houndMode && m_callMode!=0) {
-    auto ms = m_msDecStarted % 86400000;
-    auto secs = round(ms / 1000.0) +1;
-    int nmod = fmod(double(secs),2.0*m_TRperiod);
-    if(m_callPrioCQ && !m_lockTxFreq && counters2 && m_counter == 0 && m_txFirst != (nmod!=0)) { time=1; }    //highiest priority, evaluating response to CQ first, then searching CQ decoded messages 
-    else { if (m_counter > 0) m_counter -= 1; time=0; } //highiest priority, evaluating response to CQ only
+    /* CE3TSK 2026-10-17: the flag word is autoseq_step::pick_flags () (autoseqstep.h, test_autoseqstep):
+       time 1, the highest priority, evaluates the responses to our CQ first, then searches the decoded CQs;
+       time 0 evaluates the responses to CQ only. */
     /* CE3TSK: newGridUserChoice() not newGrid(): a contest forces grid highlighting on, and
        reading the forced value here would make autoselect behave as if wanted-criteria had
        been set when the operator set none, quietly refusing worked-before stations. */
     /* CE3TSK 2026-10-03: one answer to "is any new-one tier chosen" (Configuration::anyNewTierChosen) - the new US state
        counts, and so do the zones, which this copy had left out: a zone-only profile answered worked-before stations */
-    if (!m_config.anyNewTierChosen () || m_answerWorkedB4) time |= 128;
-    if (!m_config.anyNewTierChosen () || m_callWorkedB4) time |= 64;
-    else if (m_callHigherNewCall) time |= 256;
-    if (m_rprtPriority) time |= 16;
-    if (m_maxDistance) time |= 32;
+    autoseq_step::PickInputs in;
+    in.msDecStarted = m_msDecStarted;
+    in.trPeriod = m_TRperiod;
+    in.callPrioCQ = m_callPrioCQ;
+    in.lockTxFreq = m_lockTxFreq;
+    in.counters2 = counters2;
+    in.counter = m_counter;
+    in.txFirst = m_txFirst;
+    in.anyNewTierChosen = m_config.anyNewTierChosen ();
+    in.answerWorkedB4 = m_answerWorkedB4;
+    in.callWorkedB4 = m_callWorkedB4;
+    in.callHigherNewCall = m_callHigherNewCall;
+    in.rprtPriority = m_rprtPriority;
+    in.maxDistance = m_maxDistance;
+    auto const flags = autoseq_step::pick_flags (in);
+    time = flags.time;
+    m_counter = flags.counter;
     m_status = m_qsoHistory.autoseq(hisCall,grid,rpt,rx,tx,time,count,prio,mode);
     if(m_config.write_decoded_debug()) {
       QString StrDirection = "";
@@ -6893,112 +6872,65 @@ void MainWindow::process_Auto()
       if (m_jtdxtime->currentDateTimeUtc2() < m_dateTimeQSOOn) m_dateTimeQSOOn = m_dateTimeQSOOn.addSecs(-86400);
     }
     /* CE3TSK: WW Digi contest - rpt carries the 4 character grid exchange. Pushing it into
-       the report spin box would set the report to 0, toInt() of a grid is 0. */
-    bool rptIsExchange = false;
-    if (m_wwDigi && !rpt.isEmpty ()) { bool numeric=false; rpt.toInt(&numeric); rptIsExchange = !numeric; }
-    if (!rpt.isEmpty () && rpt != m_rpt && !rptIsExchange) {
+       the report spin box would set the report to 0, toInt() of a grid is 0 (autoseq_step::new_report). */
+    if (autoseq_step::new_report (rpt, m_rpt, m_wwDigi)) {
       ui->rptSpinBox->setValue(rpt.toInt());
-      if (m_status == QsoHistory::SREPORT) {
-        if (m_skipTx1 && !m_houndMode) { m_status=QsoHistory::RCQ; }
-        else { m_status=QsoHistory::RREPORT; }
-      }
+      m_status = autoseq_step::after_new_report (m_status, m_skipTx1, m_houndMode);
       genStdMsgs(rpt);
     }
-    switch (m_status) {
-      case QsoHistory::RFIN:
-      case QsoHistory::RCQ: {
-        if (m_skipTx1 && !m_houndMode) {
-          on_txb2_clicked();
-          if(ui->tabWidget->currentIndex()==1) { ui->genMsg->setText(ui->tx2->text()); m_ntx=7; } }
-        else {
-          on_txb1_clicked();
-          if(ui->tabWidget->currentIndex()==1) { ui->genMsg->setText(ui->tx1->text()); m_ntx=7; } }
-        break;
-      }
-      case QsoHistory::RCALL: {
-        if(m_enableTx && m_autoseq && m_callMode>0) txwatchdog (false);
-        /* CE3TSK: WW Digi contest - his call carries his exchange already, so acknowledge it
-           with Tx3 "HISCALL MYCALL R MYGRID" instead of repeating a bare exchange with Tx2.
-           That produces the published 4 message contest sequence. Only when his grid is
-           known, otherwise there is nothing to roger yet. */
-        if(m_wwDigi && !m_hisGrid.isEmpty()) {
-          on_txb3_clicked();
-          if(ui->tabWidget->currentIndex()==1) ui->genMsg->setText(ui->tx3->text());
-        } else {
-        on_txb2_clicked();
-        if(ui->tabWidget->currentIndex()==1) ui->genMsg->setText(ui->tx2->text());
-        }
-        if(m_autofilter && m_enableTx && !m_filter) autoFilter (true);
-        break;
-      }
-      case QsoHistory::RREPORT: {
-        if(m_enableTx && m_autoseq && m_callMode>0) txwatchdog (false);
-        if(m_autofilter && m_enableTx && !m_filter) autoFilter (true);
-        on_txb3_clicked();
-        if(ui->tabWidget->currentIndex()==1) ui->genMsg->setText(ui->tx3->text());
-        break;
-      }
-      case QsoHistory::RRREPORT: {
-        on_txb4_clicked();
-        if(ui->tabWidget->currentIndex()==1) ui->genMsg->setText(ui->tx4->text());
-        break;
-      }
-      case QsoHistory::RRR: {
-        on_txb5_clicked();
-        if(ui->tabWidget->currentIndex()==1) ui->genMsg->setText(ui->tx5->currentText());
-        break;
-      }
-      case QsoHistory::RRR73: {
-        if(!m_houndMode) { on_txb5_clicked(); if(ui->tabWidget->currentIndex()==1) ui->genMsg->setText(ui->tx5->currentText()); }
-        else { 
-          auto curtime=m_jtdxtime->currentDateTimeUtc2();
-          if(m_lastloggedcall!=m_hisCall || qAbs(curtime.toMSecsSinceEpoch()-m_lastloggedtime.toMSecsSinceEpoch()) > int(m_TRperiod) * 7000) {
-            m_logqso73=true;
-            logQSOTimer.start (0);
-          }
-          if(m_enableTx || m_transmitting || m_btxok || g_iptt==1) haltTx("end of DXpedition QSO ");
-        }
-        break;
-      }
-      /* CE3TSK: the SRR73/S73/FIN cases below are the fallback to CQ. They are reached only
-         when the post-QSO hook above did not deal with the pass (sequencer_hooks.cpp);
-         otherwise the QSO was cleared there and m_status is NONE by now. */
-      case QsoHistory::SRR73: {
-        if (!m_singleshot && !m_config.autolog() && m_lastloggedcall == m_hisCall)
-          endOfQsoStopTx("SRR73, none received ");
-        break;
-      }
-      case QsoHistory::R73: {
-        on_txb5_clicked();
-        if(ui->tabWidget->currentIndex()==1) ui->genMsg->setText(ui->tx5->currentText());
-        break;
-      }
-      case QsoHistory::S73: {
-//        if (!m_singleshot && !m_config.autolog() && m_lastloggedcall == m_hisCall)
-          endOfQsoStopTx("S73, none received ");
-        break;
-      }
-      case QsoHistory::FIN: {
-        if (m_singleshot)
-          endOfQsoStopTx("FIN, end of QSO, Singleshot ");
-        else if (m_config.autolog())
-          endOfQsoStopTx("FIN, end of QSO, Autolog ");
-        else if (m_lastloggedcall != m_hisCall)
-          endOfQsoStopTx("FIN, end of QSO, Call not logged ");
-        else
-          endOfQsoStopTx("FIN, end of QSO, not owner of the frequency ");
-        break;
-      }
-      default: {
-        break;
-      }
+    /* CE3TSK 2026-10-17: which message answers the step and when the transmitter stops is autoseq_step::reply ()
+       (autoseqstep.h, test_autoseqstep); this carries it out, in the order the cases had. */
+    autoseq_step::ReplyInputs in;
+    in.status = m_status;
+    in.skipTx1 = m_skipTx1;
+    in.hound = m_houndMode;
+    in.wwDigi = m_wwDigi;
+    in.hisGridKnown = !m_hisGrid.isEmpty();
+    in.enableTx = m_enableTx;
+    in.autoseq = m_autoseq;
+    in.callMode = m_callMode;
+    in.autofilter = m_autofilter;
+    in.filterOn = m_filter;
+    in.singleshot = m_singleshot;
+    in.autolog = m_config.autolog();
+    in.loggedHim = m_lastloggedcall == m_hisCall;
+    if (m_status == QsoHistory::RRR73 && m_houndMode) {
+      auto curtime=m_jtdxtime->currentDateTimeUtc2();
+      in.houndLogDue = autoseq_step::hound_log_due (in.loggedHim, curtime.toMSecsSinceEpoch()-m_lastloggedtime.toMSecsSinceEpoch(), m_TRperiod);
     }
+    in.txActive = m_enableTx || m_transmitting || m_btxok || g_iptt==1;
+    auto const step = autoseq_step::reply (in);
+    if (step.watchdogReset) txwatchdog (false);
+    if (step.autoFilter && step.filterFirst) autoFilter (true);
+    switch (step.tx) {
+      case 1: on_txb1_clicked(); break;
+      case 2: on_txb2_clicked(); break;
+      case 3: on_txb3_clicked(); break;
+      case 4: on_txb4_clicked(); break;
+      case 5: on_txb5_clicked(); break;
+      default: break;
+    }
+    if (step.tx > 0 && ui->tabWidget->currentIndex()==1) {
+      switch (step.tx) {
+        case 1: ui->genMsg->setText(ui->tx1->text()); break;
+        case 2: ui->genMsg->setText(ui->tx2->text()); break;
+        case 3: ui->genMsg->setText(ui->tx3->text()); break;
+        case 4: ui->genMsg->setText(ui->tx4->text()); break;
+        default: ui->genMsg->setText(ui->tx5->currentText()); break;
+      }
+      if (step.tab2Ntx7) m_ntx=7;
+    }
+    if (step.autoFilter && !step.filterFirst) autoFilter (true);
+    if (step.houndLog) {
+      m_logqso73=true;
+      logQSOTimer.start (0);
+    }
+    if (step.houndHalt) haltTx("end of DXpedition QSO ");
+    if (!step.stopReason.isEmpty ()) endOfQsoStopTx(step.stopReason);
   } else {
     if (m_enableTx && m_hisCall.isEmpty()) ui->RxFreqSpinBox->setValue (ui->TxFreqSpinBox->value ());
-    if (!counters) {
-       if(m_singleshot) { endOfQsoStopTx("m_singleshot, counter triggered "); }
-       else if(m_houndMode) { endOfQsoStopTx("m_houndMode, counter triggered "); }
-    }
+    QString const stop = autoseq_step::counters_stop_reason (counters, m_singleshot, m_houndMode);
+    if (!stop.isEmpty ()) endOfQsoStopTx(stop);
   }
 }
 
@@ -7036,12 +6968,7 @@ void MainWindow::readFromStdout()                             //readFromStdout
       int mswait=750.0*m_TRperiod;
       if(!m_diskData) killFileTimer.start (mswait); //Kill in 3/4 of period
     // autoseq guard frequency band
-      if(m_modeTx == "FT8") m_nguardfreq = 51;
-      else if(m_modeTx == "FT4") m_nguardfreq = 84;
-      else if(m_modeTx == "FT2") m_nguardfreq = 168;   // CE3TSK: 4 tones at 41.667 Hz, twice FT4's width
-      else if(m_modeTx == "JT65") m_nguardfreq = 176;
-      else if(m_modeTx == "JT9") m_nguardfreq = 16;
-      else if(m_modeTx == "T10") m_nguardfreq = 67;
+      m_nguardfreq = guard_freq_hz (m_modeTx, m_nguardfreq);   // CE3TSK 2026-10-17: modetiming.h
       int indxncand=t.indexOf("<ncand>")+7; m_ncand=t.mid(indxncand,5).toInt();
       int indxdt=t.indexOf("<avexdt>")+8; QString avexdt = t.mid(indxdt,6).trimmed();
 //  printf("%s(%0.1f) Timing decode stop, %d candidates\n",m_jtdxtime->currentDateTimeUtc2().toString("hh:mm:ss.zzz").toStdString().c_str(),m_jtdxtime->GetOffset(),m_ncand);
@@ -7277,10 +7204,7 @@ void MainWindow::readFromStdout()                             //readFromStdout
         if (m_config.insert_blank () && m_blankLine && !m_bgPhase)   // CE3TSK: no new spacer for background decodes
           {
             QString band;
-            if (m_jtdxtime->currentMSecsSinceEpoch2() / 1000 - m_secBandChanged > 50 
-			|| (m_jtdxtime->currentMSecsSinceEpoch2() / 1000 - m_secBandChanged > 14 && m_mode == "FT8")
-			|| (m_jtdxtime->currentMSecsSinceEpoch2() / 1000 - m_secBandChanged > 6 && m_mode == "FT4")
-			|| (m_jtdxtime->currentMSecsSinceEpoch2() / 1000 - m_secBandChanged > 3 && m_mode == "FT2"))   // CE3TSK
+            if (m_jtdxtime->currentMSecsSinceEpoch2() / 1000 - m_secBandChanged > band_label_after_s (m_mode))   // CE3TSK 2026-10-17: modetiming.h
               {
                 band = ' ' + m_config.bands ()->find (m_freqNominal) + ' ';
               }
@@ -7608,14 +7532,7 @@ void MainWindow::guiUpdate()
   double txDuration;
 
   if(m_TRperiod==0.0) m_TRperiod=60.0;
-  txDuration=0.0;
-  if(m_modeTx=="FT8") txDuration=13.64; //1.0 + 79*1920/12000.0;
-  else if(m_modeTx=="FT4")  txDuration=6.04; //1.0 + 105*576/12000.0;
-  else if(m_modeTx=="FT2")  txDuration=3.02; //0.5 + 105*288/12000.0 - CE3TSK step 6: 2.52 s of signal in a 3.75 s period, so the margin is half a second, not FT4's whole one
-  else if(m_modeTx=="JT65") txDuration=47.81142857142857; //1.0 + 126*4096/11025.0;
-  else if(m_modeTx=="JT9") txDuration=49.96; //1.0 + 85.0*m_nsps/12000.0;
-  else if(m_modeTx=="T10") txDuration=49.96; //1.0 + 85.0*m_nsps/12000.0;
-  else if(m_mode=="WSPR-2") txDuration=112.592; // 2.0 + 162*8192/12000.0;
+  txDuration=tx_duration_s (m_modeTx, m_mode);   // CE3TSK 2026-10-17: modetiming.h
 
   double tx1=0.0;
   double tx2=txDuration;
@@ -7921,8 +7838,8 @@ void MainWindow::guiUpdate()
       if (!m_mode.startsWith("FT") && m_config.id_after_73 ()) icw[0] = m_ncw;
       if ((m_config.prompt_to_log() || m_config.autolog ()) && !m_tune) {
 		auto curtime=m_jtdxtime->currentDateTimeUtc2();
-		// 4*m_TRperiod guard against duplicate logging the same callsign
-		if (m_lastloggedcall!=m_hisCall || qAbs(curtime.toMSecsSinceEpoch()-m_lastloggedtime.toMSecsSinceEpoch()) > int(m_TRperiod) * 2000) {
+		// guard against duplicate logging the same callsign - CE3TSK 2026-10-17: two periods (the comment said 4), modetiming.h; never decides here, m_sentFirst73 already requires another call
+		if (m_lastloggedcall!=m_hisCall || qAbs(curtime.toMSecsSinceEpoch()-m_lastloggedtime.toMSecsSinceEpoch()) > relog_guard_ms (m_TRperiod, 2)) {
 		  m_logqso73=true;
           logQSOTimer.start (0);
 		}
