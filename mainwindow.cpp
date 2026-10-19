@@ -58,6 +58,9 @@
 #include "decodelabel.h"   // CE3TSK
 #include "modetiming.h"   // CE3TSK: the per-mode timing constants
 #include "autoseqstep.h"  // CE3TSK 2026-10-17: the auto sequencer's decisions
+#include "txstep.h"    // CE3TSK 2026-10-19: guiUpdate ()'s Tx decisions
+#include "rxstep.h"    // CE3TSK 2026-10-19: readFromStdout ()'s sequencer decisions
+#include "pickstep.h"  // CE3TSK 2026-10-19: processMessage ()'s - what a double click sets up
 #include "txcheck.h"      // CE3TSK 2026-10-18: does a Tx message go out as it is written
 #include "contestmode.h"   // CE3TSK 2026-09-26: the modes a contest allows
 #include "savedmode.h"     // CE3TSK 2026-09-26: the saved Mode/ModeTx made safe
@@ -167,14 +170,6 @@ namespace
   QRegularExpression words_re {R"(^(?:(?<word1>(?:CQ|DE|QRZ)(?:\s?DX|\s(?:[A-Z]{2}|\d{3}))|[A-Z0-9/]+)\s)(?:(?<word2>[A-Z0-9/]+)(?:\s(?<word3>[-+A-Z0-9]+)(?:\s(?<word4>(?:OOO|(?!RR73)[A-R]{2}[0-9]{2})))?)?)?)"};
   constexpr int default_rx_audio_buffer_frames {-1}; // lets Qt decide
   constexpr int default_tx_audio_buffer_frames {-1}; // lets Qt decide
-
-  bool message_is_73 (int type, QStringList const& msg_parts)
-  {
-    return type >= 0
-      && (((type < 6 || 7 == type)
-           && (msg_parts.contains ("73") || msg_parts.contains ("RR73")))
-          || (type == 6 && !msg_parts.filter ("73").isEmpty ()));
-  }
 
   int ms_minute_error (JTDXDateTime * jtdxtime)
   {
@@ -6965,7 +6960,7 @@ void MainWindow::readFromStdout()                             //readFromStdout
       int indxncand=t.indexOf("<ncand>")+7; m_ncand=t.mid(indxncand,5).toInt();
       int indxdt=t.indexOf("<avexdt>")+8; QString avexdt = t.mid(indxdt,6).trimmed();
 //  printf("%s(%0.1f) Timing decode stop, %d candidates\n",m_jtdxtime->currentDateTimeUtc2().toString("hh:mm:ss.zzz").toStdString().c_str(),m_jtdxtime->GetOffset(),m_ncand);
-      if (m_autoseq && !m_processAuto_done && !m_manualDecode) { m_processAuto_done = true; process_Auto(); }
+      if (rx_step::auto_at_decode_end (m_autoseq, m_processAuto_done, m_manualDecode)) { m_processAuto_done = true; process_Auto(); }
       m_okToPost=true;
       m_RxLog=0;
       m_startAnother=m_loopall;
@@ -7246,16 +7241,12 @@ void MainWindow::readFromStdout()                             //readFromStdout
       QString deCall="";
       QString grid="";
       decodedtext.deCallAndGrid(/*out*/deCall,grid);
-      if (!m_hisCall.isEmpty() && !deCall.isEmpty() && Radio::base_callsign (m_hisCall) == Radio::base_callsign (deCall)) ui->RxFreqSpinBox->setValue (decodedtext.frequencyOffset());
-      if (!deCall.isEmpty() && !m_reply_me && Radio::base_callsign (deCall) == Radio::base_callsign (m_hisCall)) {
-          if (mycallinmsg) {
-             m_reply_me = true;
-             m_reply_other = false;
-          } else if (decodedtextmsg.contains ("73") || decodedtextmsg.left(2) == "CQ") {
-             m_reply_other = false;
-             m_reply_CQ73 = true;
-          } else if (!m_reply_CQ73) m_reply_other = true;
-      }      
+      /* CE3TSK 2026-10-19 (TODO.md section 7, 1f; 3.-141): the sequencer's decisions on a line are rxstep.h's - his line's
+         sender, whom he answers, the Rx frequency window, what the line asks of the sequencer */
+      bool const fromHim = !deCall.isEmpty() && Radio::base_callsign (deCall) == Radio::base_callsign (m_hisCall);
+      if (rx_step::rx_follows (!m_hisCall.isEmpty(), fromHim)) ui->RxFreqSpinBox->setValue (decodedtext.frequencyOffset());
+      { auto const f = rx_step::reply_flags ({m_reply_me, m_reply_other, m_reply_CQ73}, fromHim, mycallinmsg, decodedtextmsg);
+        m_reply_me = f.me; m_reply_other = f.other; m_reply_CQ73 = f.cq73; }
       //Left (Band activity) window
       bool bypassRxfFilters = false;
       int notified = 2;
@@ -7285,32 +7276,15 @@ void MainWindow::readFromStdout()                             //readFromStdout
       //Right (Rx Frequency) window
 	  
 	  // content free messages to (Rx Frequency) window functionality
-	  bool bcontent = false;
-	  if (m_config.enableContent ()) {
-		if (tcut.contains ("/")) {
-			QStringList slcontent = m_config.content ().split(",");
-			foreach (QString item, slcontent) {
-				if (item.length() > 2 && item.length() < 7) {
-					if (tcut.contains ("/" + item)) {
-						bcontent = true;
-						break;
-					}
-				}
-			}
-		}
-	  }
+	  bool const bcontent = rx_step::content_line (m_config.enableContent (), tcut, m_config.content ());
 	  
 	  // DXCall 73/RR73 message to RX frequency window in scenario where Enable TX is turned off
-	  bool bdxcall73 = false;
-	  QStringList message_words = words_re.match (tcut).capturedTexts ();
-	  if(message_words.length () == 4 && !m_enableTx) {
-	    QString dxbasecall = Radio::base_callsign (m_hisCall);
-	    if (!dxbasecall.isEmpty () && message_words.at (2).contains (dxbasecall) && message_words.at (3).contains ("73")) bdxcall73 = true;
-	  }
+	  bool const bdxcall73 = rx_step::dx_call_73 (words_re.match (tcut).capturedTexts (), m_enableTx, Radio::base_callsign (m_hisCall));
 	  
-      if (qAbs(decodedtext.frequencyOffset() - m_wideGraph->rxFreq()) <= 10 || (m_showMyCallMsgRxWindow && mycallinmsg) || bcontent || bdxcall73 || (m_showWantedCallRxWindow && notified & 8)) {
+      if (rx_step::to_rx_window (decodedtext.frequencyOffset(), m_wideGraph->rxFreq(), m_showMyCallMsgRxWindow, mycallinmsg,
+                                 bcontent, bdxcall73, m_showWantedCallRxWindow, notified)) {
 
-        if(m_bypassRxfFilters || dec_data.params.nagain==1 || dec_data.params.nagainfil==1) 
+        if(rx_step::bypass_rx_filters (m_bypassRxfFilters, dec_data.params.nagain, dec_data.params.nagainfil))
 			bypassRxfFilters = true;
 
         // This msg is within 10 hertz of our tuned frequency
@@ -7333,26 +7307,30 @@ void MainWindow::readFromStdout()                             //readFromStdout
 
 
         m_QSOText=decodedtext.string();
-		bcontent = false;
       }
 
-      if (mycallinmsg && !m_manualDecode) {
-         if (!deCall.isEmpty() && Radio::base_callsign (deCall) == Radio::base_callsign (m_hisCall)) {
-           if (!m_processAuto_done && m_autoseq && ((!decodedtextmsg.contains(" 73") && !decodedtextmsg.contains("RR73")) 
-           || (decodedtextmsg.contains(" 73") && m_status==QsoHistory::RRREPORT && m_rrr) || (decodedtextmsg.contains("RR73") && m_status==QsoHistory::RREPORT) || m_callMode==0 || m_singleshot || m_houndMode)) {
-             m_processAuto_done = true;
-             process_Auto();
-           } else if ((decodedtextmsg.contains(" 73") || decodedtextmsg.contains("RR73")) && m_callMode<=1) m_callFirst73 = true;
-         } else if (m_callMode==1 && !m_processAuto_done && m_autoseq && m_hisCall.isEmpty()) {
-           m_processAuto_done = true;
-           process_Auto();
-         }
-      } else if (!deCall.isEmpty() && Radio::base_callsign (deCall) == Radio::base_callsign (m_hisCall) && decodedtextmsg.left(3) != "CQ " && decodedtextmsg.left(3) != "DE " && decodedtextmsg.left(4) != "QRZ " && !decodedtextmsg.contains(" 73") && !decodedtextmsg.contains(" RR73") && !decodedtextmsg.contains(" RRR")) {
-        m_used_freq = decodedtext.frequencyOffset();
-         if (haltTxWhenFrequencyTaken ()) {
-           haltTx("readFromStdout, not owner of the frequency or reply to other ");/* if(m_skipTx1) m_qsoHistory.remove(m_hisCall); */
-         }
-      }
+      rx_step::DecodeInputs on;
+      on.myCallInMsg = mycallinmsg; on.manualDecode = m_manualDecode; on.fromHim = fromHim; on.hisCallEmpty = m_hisCall.isEmpty();
+      on.processAutoDone = m_processAuto_done; on.autoseq = m_autoseq; on.rrr = m_rrr; on.singleshot = m_singleshot;
+      on.hound = m_houndMode; on.callMode = m_callMode; on.status = m_status; on.msg = decodedtextmsg;
+      switch (rx_step::on_decode (on))
+        {
+        case rx_step::OnDecode::ProcessAuto:
+          m_processAuto_done = true;
+          process_Auto();
+          break;
+        case rx_step::OnDecode::CallFirst73:
+          m_callFirst73 = true;
+          break;
+        case rx_step::OnDecode::HisOtherQso:   // the seam decides (sequencer_hooks.cpp)
+          m_used_freq = decodedtext.frequencyOffset();
+          if (haltTxWhenFrequencyTaken ()) {
+            haltTx("readFromStdout, not owner of the frequency or reply to other ");/* if(m_skipTx1) m_qsoHistory.remove(m_hisCall); */
+          }
+          break;
+        case rx_step::OnDecode::None:
+          break;
+        }
 
       if((!m_config.prevent_spotting_false () || (m_config.prevent_spotting_false () && !decodedtext.isWrong ()))
          && (!m_config.filterUDP () || (m_config.filterUDP () && notified & 2))) {
@@ -7527,16 +7505,12 @@ void MainWindow::guiUpdate()
   if(m_TRperiod==0.0) m_TRperiod=60.0;
   txDuration=tx_duration_s (m_modeTx, m_mode);   // CE3TSK 2026-10-17: modetiming.h
 
-  double tx1=0.0;
-  double tx2=txDuration;
   if(m_mode.startsWith("FT")) icw[0]=0;                                   //No CW ID in FT8 mode
-  if(icw[0]>0) tx2 += icw[0]*2560.0/48000.0;  //Full length including CW ID
-  if(tx2>m_TRperiod) tx2=m_TRperiod;
-  
-  if(!m_txFirst and m_mode.left(4)!="WSPR") {
-    tx1 += m_TRperiod;
-    tx2 += m_TRperiod;
-  }
+  /* CE3TSK 2026-10-19 (TODO.md section 7, 1f; 3.-140): the Tx decisions below are txstep.h's - when our transmission is
+     due and where it may not go, the sequencer and the PTT at its start, the text sent and the halts, a 73 sent, the
+     report recorded, what the start sets; the files, the rig, the widgets and the timers stay here */
+  auto const txw = tx_step::tx_window (txDuration, icw[0], m_TRperiod, m_txFirst, m_mode);
+  double const tx2 = txw.tx2;
 
   qint64 ms = m_jtdxtime->currentMSecsSinceEpoch2() % 86400000;
   int nsec=ms/1000;
@@ -7567,7 +7541,7 @@ void MainWindow::guiUpdate()
 
   } else {
  // For all modes other than WSPR
-    m_bTxTime = (t2p >= tx1) and (t2p < tx2);
+    m_bTxTime = tx_step::in_tx_window (t2p, txw);
   }
   if(m_tune) m_bTxTime=true;                 //"Tune" takes precedence
 
@@ -7578,35 +7552,15 @@ void MainWindow::guiUpdate()
 
 // Don't transmit another mode in the WSPR sub-band
     Frequency onAirFreq = m_freqNominal + ui->TxFreqSpinBox->value();
-    auto mhz = onAirFreq / 1000000;
-    Frequency f_from = 0;
-    Frequency f_to = 0;
-    switch (mhz)
-    {
-        case 1: {f_from = 1837930; f_to = 1838220; break;}
-        case 3: {f_from = 3569930; f_to = 3570220; break;}
-        case 5: {f_from = 5288530; f_to = 5288820; break;}
-        case 7: {f_from = 7039930; f_to = 7040220; break;}
-        case 10: {
-            if (m_mode.contains("JT65")) f_from = 10139900; else f_from = 10140030;
-            f_to = 10140320;
-            break;}
-        case 14: {f_from = 14096930; f_to = 14097220; break;}
-        case 18: {f_from = 18105930; f_to = 18106220; break;}
-        case 21: {f_from = 21095930; f_to = 21096220; break;}
-        case 24: {f_from = 24925930; f_to = 24926220; break;}
-        case 28: {f_from = 28125930; f_to = 28126220; break;}
-        case 50: {f_from = 50294370; f_to = 50294620; break;}
-        case 70: {f_from = 70092370; f_to = 70092620; break;}
-        default: {f_from = 0;  f_to = 0; break;}
-    }
-    if ((f_from >0 and (onAirFreq > f_from and onAirFreq < f_to) and m_mode.left(4)!="WSPR") || (m_houndTXfreqJumps &&  ui->TxFreqSpinBox->value() < 1000 && ui->txrb1->isChecked())) {
+    auto const guard = tx_step::tx_guard (onAirFreq, tx_step::wspr_sub_band (onAirFreq, m_mode), m_mode, m_houndTXfreqJumps,
+                                          ui->TxFreqSpinBox->value(), ui->txrb1->isChecked());
+    if (guard.block) {
       m_bTxTime=false;
 //      if (m_tune) stop_tuning ();
       if (m_enableTx) enableTx_mode (false);
       if(onAirFreq!=onAirFreq0) {
         onAirFreq0=onAirFreq;
-        if (onAirFreq > f_from and onAirFreq < f_to) {
+        if (guard.inSubBand) {
           auto const& message1 = tr ("Please choose another Tx frequency."
                                   " JTDX will not knowingly transmit another"
                                   " mode in the WSPR sub-band.");
@@ -7634,11 +7588,11 @@ void MainWindow::guiUpdate()
 
     float fTR=float((ms%int(1000.0*m_TRperiod)))/(1000.0*m_TRperiod);
 
-    if (m_bTxTime && iptt0==0 && fTR<99.0 && m_autoseq && !m_processAuto_done && (m_callMode==2 || (m_callMode<=1 && (m_callFirst73 || m_status >= QsoHistory::RRR73)))) {
+    if (tx_step::auto_at_tx_start (m_bTxTime, iptt0, fTR, m_autoseq, m_processAuto_done, m_callMode, m_callFirst73, m_status)) {
       m_processAuto_done = true;
       process_Auto();
     }
-    if(g_iptt==0 and ((m_bTxTime and fTR<99.0) or m_tune )) {   //### Allow late starts
+    if(tx_step::assert_ptt (g_iptt, m_bTxTime, fTR, m_tune)) {   //### Allow late starts
       icw[0]=m_ncw;
       g_iptt = 1;
       setRig ();
@@ -7646,7 +7600,7 @@ void MainWindow::guiUpdate()
       Q_EMIT m_config.transceiver_ptt (true);       //Assert the PTT
       m_tx_when_ready = true;
     }
-    if(!m_bTxTime and !m_tune) m_btxok=false;       //Time to stop transmitting
+    if(tx_step::period_over (m_bTxTime, m_tune)) m_btxok=false;       //Time to stop transmitting
   }
 
   if(m_mode.left(4)=="WSPR" and
@@ -7679,15 +7633,9 @@ void MainWindow::guiUpdate()
       QString const msg2 {wspr_message::of (m_config.my_callsign (), m_config.my_grid (), m_dBm, 1 == m_tx, m_grid6)};
       ba=msg2.toLatin1();
     } else {
-      QString txMsg{""};
-      if(m_ntx == 1) { txMsg=ui->tx1->text(); }
-      else if(m_ntx == 2) { txMsg=ui->tx2->text(); }
-      else if(m_ntx == 3) { txMsg=ui->tx3->text(); }
-      else if(m_ntx == 4) { txMsg=ui->tx4->text(); }
-      else if(m_ntx == 5) { txMsg=ui->tx5->currentText(); txMsg.remove(" ^"); }
-      else if(m_ntx == 6) { txMsg=ui->tx6->text(); }
-      else if(m_ntx == 7) { txMsg=ui->genMsg->text(); }
-      else if(m_ntx == 8) { txMsg=ui->freeTextMsg->currentText(); txMsg.remove(" ^"); }
+      QString const txMsg {tx_step::tx_message (m_ntx, {ui->tx1->text (), ui->tx2->text (), ui->tx3->text (), ui->tx4->text (),
+                                                        ui->tx5->currentText (), ui->tx6->text (), ui->genMsg->text (),
+                                                        ui->freeTextMsg->currentText ()})};
       int msgLength=txMsg.trimmed().length();
       /* CE3TSK: SuperFox - "Hounds can call SuperFox only after they have decoded a signal from
          SuperFox" (SuperFox User Guide): a Hound that has not decoded it has no chance of a QSO and
@@ -7697,20 +7645,19 @@ void MainWindow::guiUpdate()
          the rules below (no CQ in Hound mode), which say what is actually wrong. */
       bool const superFoxBlind = superFoxActive () && !m_tune && msgLength > 0 && !m_hisCall.isEmpty ()
                                  && !superFoxHeardRecently (m_hisCall, !m_transmitting);
-      if(!m_tune && (msgLength==0 || m_config.my_callsign().isEmpty() || superFoxBlind || (m_houndMode && (m_QSOProgress == CALLING || m_ntx == 6)))) { 
+      auto const halt = tx_step::start_halt (m_tune, msgLength, m_config.my_callsign().isEmpty(), superFoxBlind, m_houndMode,
+                                             m_QSOProgress == CALLING, m_ntx);
+      if(tx_step::Halt::None != halt) {
         haltedEmpty=true;
         if(m_houndMode) m_currentMessage=txMsg; else m_currentMessage.clear();
-        if(msgLength==0) haltTx("Transmission of the empty message is not allowed ");
-        else if(m_config.my_callsign().isEmpty()) haltTx("Transmission halted: user callsign is not configured ");
-        else if(superFoxBlind) {
-          haltTx("Transmission halted: SuperFox " + m_hisCall + " has not been decoded yet ");
+        haltTx(tx_step::halt_reason (halt, m_hisCall));
+        if(tx_step::Halt::SuperFoxNotDecoded == halt) {
           // the other halts here explain themselves (an empty message, no callsign); this one needs
           // saying. A moment later, because the halt sequence re-shows the watchdog label
           // (update_watchdog_label), which would otherwise sit on top of the first word.
           QString const why {tr ("SuperFox %1 has not been decoded yet: transmission halted").arg (m_hisCall)};
           QTimer::singleShot (300, this, [this, why] {statusBar ()->showMessage (why, 10000);});
         }
-        else haltTx("Transmission of CQ message is not allowed in the Hound mode ");
       }
 	  else { ba=txMsg.toLocal8Bit(); }
     }
@@ -7814,12 +7761,8 @@ void MainWindow::guiUpdate()
         }
       if (m_config.TX_messages () || m_autoseq)
         {
-        if (0 == ui->tabWidget->currentIndex ()) {
-          if (ui->txrb5->isChecked() && m_autoseq && m_Tx5setAutoSeqOff) { m_wasAutoSeq=true; on_AutoSeqButton_clicked(false); }
-        }
-        else if (1 == ui->tabWidget->currentIndex ()) {
-          if (ui->rbFreeText->isChecked() && m_autoseq && m_FTsetAutoSeqOff) { m_wasAutoSeq=true; on_AutoSeqButton_clicked(false); }
-        }
+          if (tx_step::autoseq_off_at_tx (ui->tabWidget->currentIndex (), ui->txrb5->isChecked (), ui->rbFreeText->isChecked (),
+                                          m_autoseq, m_Tx5setAutoSeqOff, m_FTsetAutoSeqOff)) { m_wasAutoSeq=true; on_AutoSeqButton_clicked(false); }
           ui->decodedTextBrowser2->displayTransmittedText(m_currentMessage,m_baseCall,Radio::base_callsign (m_hisCall),(m_skipTx1 && !m_houndMode ? "S" : ""),m_modeTx,
                      ui->TxFreqSpinBox->value(),m_config.color_TxMsg(),m_qsoHistory);
         }
@@ -7834,28 +7777,25 @@ void MainWindow::guiUpdate()
     } */
 
 // m_currentMessageType m_lastMessageType are always 0 in FT8 mode
-    auto is_73 = (m_QSOProgress >= ROGER_REPORT || m_ntx==4 || m_ntx==5) && message_is_73 (m_currentMessageType, msg_parts);
-	auto lastmsg_is73 = message_is_73 (m_lastMessageType, m_lastMessageSent.split (' ', SkipEmptyParts));
-    m_sentFirst73 = is_73 && m_lastloggedcall!=m_hisCall
-      && (!lastmsg_is73 || (lastmsg_is73 && !m_lastMessageSent.contains(m_hisCall)));
+    auto const is_73 = tx_step::is_73 (m_QSOProgress >= ROGER_REPORT, m_ntx, m_currentMessageType, msg_parts);
+    m_sentFirst73 = tx_step::sent_first_73 (is_73, m_lastloggedcall, m_hisCall,
+                                            tx_step::message_is_73 (m_lastMessageType, m_lastMessageSent.split (' ', SkipEmptyParts)),
+                                            m_lastMessageSent);
 
     if (m_sentFirst73) {
       if (!m_mode.startsWith("FT") && m_config.id_after_73 ()) icw[0] = m_ncw;
-      if ((m_config.prompt_to_log() || m_config.autolog ()) && !m_tune) {
-		auto curtime=m_jtdxtime->currentDateTimeUtc2();
-		// guard against duplicate logging the same callsign - CE3TSK 2026-10-17: two periods (the comment said 4), modetiming.h; never decides here, m_sentFirst73 already requires another call
-		if (m_lastloggedcall!=m_hisCall || qAbs(curtime.toMSecsSinceEpoch()-m_lastloggedtime.toMSecsSinceEpoch()) > relog_guard_ms (m_TRperiod, 2)) {
-		  m_logqso73=true;
-          logQSOTimer.start (0);
-		}
+      // with the guard against logging the same call twice in two periods (modetiming.h), which never decides here
+      if (tx_step::log_after_73 (m_config.prompt_to_log (), m_config.autolog (), m_tune, m_lastloggedcall, m_hisCall,
+                                 m_jtdxtime->currentDateTimeUtc2 ().toMSecsSinceEpoch () - m_lastloggedtime.toMSecsSinceEpoch (),
+                                 m_TRperiod)) {
+        m_logqso73=true;
+        logQSOTimer.start (0);
       }
     }
 
-    if (is_73) {
-		if (m_disable_TX_on_73 && !m_autoseq) {
-			if (!enableTxButtonTimer.isActive())
-				enableTxButtonTimer.start (100);
-		}
+    if (tx_step::tx_off_after_73 (is_73, m_disable_TX_on_73, m_autoseq)) {
+      if (!enableTxButtonTimer.isActive())
+        enableTxButtonTimer.start (100);
     }
 
     if(!m_mode.startsWith("FT") && m_config.id_interval () >0) {
@@ -7866,27 +7806,7 @@ void MainWindow::guiUpdate()
       }
     }
 
-    if (m_currentMessageType < 6 && msg_parts.length() >= 3
-        && (msg_parts[1] == m_config.my_callsign () ||
-            msg_parts[1] == m_baseCall))
-    {
-      int i1;
-      bool ok;
-      i1 = msg_parts[2].toInt(&ok);
-      if(ok and i1>=-50 and i1<50)
-      {
-        m_rptSent = msg_parts[2];
-      } else {
-        if (msg_parts[2].mid (0, 1) == "R")
-        {
-          i1 = msg_parts[2].mid (1).toInt (&ok);
-          if (ok and i1 >= -50 and i1 < 50)
-          {
-            m_rptSent = msg_parts[2].mid (1);
-          }
-        }
-      }
-    }
+    m_rptSent = tx_step::report_sent (m_currentMessageType, msg_parts, m_config.my_callsign (), m_baseCall, m_rptSent);
     m_restart=false;
 //----------------------------------------------------------------------
   } else {
@@ -7903,14 +7823,13 @@ void MainWindow::guiUpdate()
   }
 
   if (g_iptt == 1 && iptt0 == 0) {
-    if(m_config.watchdog () && !m_mode.startsWith ("WSPR")
-      && m_curMsgTx != m_msgSent0) {
+    if(tx_step::watchdog_reset_at_tx (m_config.watchdog (), m_mode.startsWith ("WSPR"), m_curMsgTx, m_msgSent0)) {
       txwatchdog (false);  // in case we are auto sequencing
       m_msgSent0 = m_curMsgTx;
     }
 // DX Call window must be empty if CQ msg being transmitted under AutoSeq
-    if (m_autoseq && (m_QSOProgress == CALLING || m_ntx == 6) && !m_hisCall.isEmpty()) clearDXfields(" field cleared, CQ message triggered by AutoSeq");
-    if (m_houndMode && (m_QSOProgress == REPLYING || m_ntx == 1)) m_lastCallingFreq = ui->TxFreqSpinBox->value ();
+    if (tx_step::clear_dx_for_cq (m_autoseq, m_QSOProgress == CALLING, m_ntx, m_hisCall.isEmpty())) clearDXfields(" field cleared, CQ message triggered by AutoSeq");
+    if (tx_step::hound_calling_freq (m_houndMode, m_QSOProgress == REPLYING, m_ntx)) m_lastCallingFreq = ui->TxFreqSpinBox->value ();
     if(m_curMsgTx!=m_msgSent0) m_msgSent0=m_curMsgTx;
     if(!m_tune && !haltedEmpty) {
       QFile f {m_dataDir.absoluteFilePath (m_jtdxtime->currentDateTimeUtc2().toString("yyyyMM_")+"ALL.TXT")};
@@ -7963,39 +7882,26 @@ void MainWindow::guiUpdate()
     }
 
     if ((m_config.TX_messages () || m_autoseq) && !m_tune) {
-      if (0 == ui->tabWidget->currentIndex ()) {
-        if (ui->txrb5->isChecked() && m_autoseq && m_Tx5setAutoSeqOff) { m_wasAutoSeq=true; on_AutoSeqButton_clicked(false); }
-      }
-      else if (1 == ui->tabWidget->currentIndex ()) {
-        if (ui->rbFreeText->isChecked() && m_autoseq && m_FTsetAutoSeqOff) { m_wasAutoSeq=true; on_AutoSeqButton_clicked(false); }
-      }
+      if (tx_step::autoseq_off_at_tx (ui->tabWidget->currentIndex (), ui->txrb5->isChecked (), ui->rbFreeText->isChecked (),
+                                      m_autoseq, m_Tx5setAutoSeqOff, m_FTsetAutoSeqOff)) { m_wasAutoSeq=true; on_AutoSeqButton_clicked(false); }
       if(!haltedEmpty) ui->decodedTextBrowser2->displayTransmittedText(m_curMsgTx,m_baseCall,Radio::base_callsign (m_hisCall),(m_skipTx1 && !m_houndMode ? "S" : ""),m_modeTx,
             ui->TxFreqSpinBox->value(),m_config.color_TxMsg(),m_qsoHistory);
     }
-    switch (m_ntx)
-      {
-      case 1: m_QSOProgress = REPLYING; break;
-      case 2: m_QSOProgress = REPORT; break;
-      case 3: m_QSOProgress = ROGER_REPORT; break;
-      case 4: m_QSOProgress = ROGERS; break;
-      case 5: m_QSOProgress = SIGNOFF; break;
-      case 6: m_QSOProgress = CALLING; break;
-      default: break;             // determined elsewhere
-      } 
+    static_assert (int (CALLING) == tx_step::CALLING && int (REPLYING) == tx_step::REPLYING && int (REPORT) == tx_step::REPORT
+                   && int (ROGER_REPORT) == tx_step::ROGER_REPORT && int (ROGERS) == tx_step::ROGERS
+                   && int (SIGNOFF) == tx_step::SIGNOFF, "txstep.h's order of QSOProgress");
+    m_QSOProgress = static_cast<QSOProgress> (tx_step::progress_of_tx (m_ntx, m_QSOProgress));
 
     m_transmitting = true;
     m_txPeriod = period_index (0.001 * (m_jtdxtime->currentMSecsSinceEpoch2 () % 86400000), m_TRperiod);   // CE3TSK P7
     if (!m_config.tx_QSY_allowed ()) ui->TxFreqSpinBox->setDisabled(true);
     m_transmittedQSOProgress = m_QSOProgress;
     transmitDisplay (true);
-    if(m_filter) {
-      if(m_FilterState==2) { if(m_QSOProgress == CALLING) autoFilter (false); } // switch filter off at getting 73
-      else if(m_FilterState==1) { if (m_QSOProgress == SIGNOFF || (!m_rrr && m_QSOProgress == ROGERS)) autoFilter (false); } // switch filter off at sending 73
-    }
+    if(tx_step::filter_off_at_tx (m_filter, m_FilterState, m_QSOProgress, m_rrr)) autoFilter (false);
     statusUpdate ();
   }
 
-  if((!m_btxok && btxok0 && g_iptt==1) || m_haltTrans) { stopTx(); if(m_haltTrans) m_haltTrans=false; }
+  if(tx_step::stop_tx (m_btxok, btxok0, g_iptt, m_haltTrans)) { stopTx(); if(m_haltTrans) m_haltTrans=false; }
 
   if(m_startAnother) {
     m_startAnother=false;
@@ -8004,8 +7910,7 @@ void MainWindow::guiUpdate()
 
 //Once per second:
   if(nsec != m_sec0) {
-    if (m_config.watchdog() && !m_transmitting && !m_mode.startsWith ("WSPR")
-        && m_idleMinutes >= m_config.watchdog ()) {
+    if (tx_step::watchdog_fires (m_config.watchdog (), m_transmitting, m_mode.startsWith ("WSPR"), m_idleMinutes)) {
       txwatchdog (true);       // switch off Enable Tx button
     }
     if(m_tune && m_config.tunetimer() && !m_tuneup) { //shall not count at WSPR band hopping
@@ -8486,9 +8391,11 @@ void MainWindow::processMessage(QString const& messages, int position, bool alt,
   bool addWanted = (alt && ctrl);
   if(!addWanted) {
 //    int nmod=decodedtext.timeInSeconds () % (2*int(m_TRperiod));
-    int nmod = fmod(double(decodedtext.timeInSeconds()),2.0*m_TRperiod);
+    /* CE3TSK 2026-10-19 (TODO.md section 7, 1f; 3.-142): the sequencer's decisions on a clicked line are pickstep.h's -
+       our period, the line taken, the Tx frequency, the DX call, the answer, the filter and the restart */
+    bool const lineTxFirst = pick_step::tx_first_for_line (decodedtext.timeInSeconds(), m_TRperiod);
 //    printf ("periods %d,%f,%d,%s,%d\n",decodedtext.timeInSeconds (),m_TRperiod,nmod,t2.mid(6,4).toStdString().c_str(),tx_message);
-    if (m_txFirst != (nmod!=0) && !tx_message && setTxFirst (nmod!=0, false)) {   // CE3TSK: refused in S-Hound - the period is the Fox's to decide, not the clicked line's
+    if (pick_step::period_change (m_txFirst, lineTxFirst, tx_message) && setTxFirst (lineTxFirst, false)) {   // CE3TSK: refused in S-Hound - the period is the Fox's to decide, not the clicked line's
 //      ui->TxMinuteButton->setChecked(m_txFirst);
 //      an attempt to provide stable UDP Reply operation:
       if(m_txFirst && !ui->TxMinuteButton->isChecked()) ui->TxMinuteButton->click();
@@ -8519,12 +8426,7 @@ void MainWindow::processMessage(QString const& messages, int position, bool alt,
     return;
   }
 
-  if (!Radio::is_callsign (hiscall) // not interested if not from QSO partner
-      && !(t4.size () == 7          // unless it is of the form
-           && (t4.at (5) == m_baseCall // "<our-call> 73"
-               || t4.at (5).startsWith (m_baseCall + '/')
-               || t4.at (5).endsWith ('/' + m_baseCall))
-           && t4.at (6) == "73"))
+  if (!pick_step::takes_line (Radio::is_callsign (hiscall), t4, m_baseCall))   // not from a QSO partner, nor "<our-call> 73"
     {
       qDebug () << "Not processing message - hiscall:" << hiscall << "hisgrid:" << hisgrid;
 //SNR from free messages to report for operation with special callsigns in the manual mode
@@ -8593,7 +8495,7 @@ void MainWindow::processMessage(QString const& messages, int position, bool alt,
 
   // Don't change Tx freq if in a fast mode;
   // unless m_lockTxFreq is true or CTRL is held down
-  if (txLockInEffect () or ctrl or TxModeChanged) {   // CE3TSK
+  if (pick_step::tx_freq_follows (txLockInEffect (), ctrl, TxModeChanged)) {   // CE3TSK
      if (ui->TxFreqSpinBox->isEnabled ()) {
         ui->TxFreqSpinBox->setValue(frequency);
      } else {
@@ -8641,7 +8543,7 @@ void MainWindow::processMessage(QString const& messages, int position, bool alt,
   auto qso_partner_base_call = Radio::base_callsign (m_hisCall);
   bool call_changed = false;
   auto base_call = Radio::base_callsign (hiscall);
-  if (base_call != Radio::base_callsign (m_hisCall) || base_call != hiscall)
+  if (pick_step::call_changes (base_call, Radio::base_callsign (m_hisCall), hiscall))
     {
   // his base call different or his call more qualified
   // i.e. compound version of same base call
@@ -8673,26 +8575,19 @@ void MainWindow::processMessage(QString const& messages, int position, bool alt,
 
 // Determine appropriate response to received message
   auto dtext = " " + decodedtext.string () + " ";
-  if(dtext.contains (" " + m_baseCall + " ")
-     || dtext.contains ("/" + m_baseCall + " ")
-     || dtext.contains (" " + m_baseCall + "/")
-     || (firstcall == "DE" && ((t4.size () > 7 && t4.at(7) != "73") || t4.size () <= 7)))
+  auto const kind = pick_step::kind_of (dtext, m_baseCall, firstcall, t4);
+  if (pick_step::Kind::ToMe == kind)
     {
-
-
-
       /* CE3TSK: the choice of the answer lives in contestreply.h (unit test test_reply): the
          WW Digi contest answers a caller's grid with Tx3 "R GRID", everything else as JTDX did */
-      int tx = 2;
-      if (t4.size () == 7 && t4.at (6) == "73") tx = 5;   // 73 back to compound call holder
-      else tx = reply_tx_to_me (m_wwDigi, t4.size () > 7, t4.size () > 7 ? t4.at (7) : QString {},
-                                t4.size () > 7 && gridOK (t4.at (7)));
+      int const tx = pick_step::tx_to_me (t4, m_wwDigi, t4.size () > 7 && gridOK (t4.at (7)));
       m_ntx = tx; m_nlasttx = tx;
+      m_QSOProgress = static_cast<QSOProgress> (pick_step::progress_to_me (tx));
       switch (tx) {
-        case 5: m_QSOProgress = SIGNOFF;      ui->txrb5->setChecked(true); break;
-        case 4: m_QSOProgress = ROGERS;       ui->txrb4->setChecked(true); break;
-        case 3: m_QSOProgress = ROGER_REPORT; ui->txrb3->setChecked(true); break;
-        default: m_QSOProgress = REPORT;      ui->txrb2->setChecked(true); break;
+        case 5: ui->txrb5->setChecked(true); break;
+        case 4: ui->txrb4->setChecked(true); break;
+        case 3: ui->txrb3->setChecked(true); break;
+        default: ui->txrb2->setChecked(true); break;
       }
       if(ui->tabWidget->currentIndex()==1) {
         if (tx == 5) ui->genMsg->setText(ui->tx5->currentText());
@@ -8706,8 +8601,7 @@ void MainWindow::processMessage(QString const& messages, int position, bool alt,
     decodedtext.report(m_baseCall,
       Radio::base_callsign(m_hisCall), m_rptRcvd, rpt_type,m_wwDigi);
     }
-  else if (firstcall == "DE" && t4.size () == 8 && t4.at (7) == "73") {
-    if (base_call == qso_partner_base_call) {
+  else if (pick_step::Kind::De73 == kind && base_call == qso_partner_base_call) {
       // 73 back to compound call holder
       m_ntx=5;
       m_QSOProgress = SIGNOFF;
@@ -8718,50 +8612,24 @@ void MainWindow::processMessage(QString const& messages, int position, bool alt,
         m_ntx=7;
         ui->rbGenMsg->setChecked(true);
       }
-    }
-    else {
-      // treat like a CQ/QRZ
-      if (m_skipTx1 && !m_houndMode) {
-         if (0 == ui->tabWidget->currentIndex()) m_ntx = 2;
-            m_QSOProgress = REPORT;
-            m_nlasttx = 2;
-            ui->txrb2->setChecked(true); }
-      else {
-        if(0 == ui->tabWidget->currentIndex()) m_ntx = 1;
-        m_QSOProgress = REPLYING;
-        m_nlasttx = 1;
-        ui->txrb1->setChecked(true); }
-      if(1 == ui->tabWidget->currentIndex()) {
-        if (m_skipTx1 && !m_houndMode) { ui->genMsg->setText(ui->tx2->text()); }
-        else { ui->genMsg->setText(ui->tx1->text()); }
-        m_ntx=7;
-        ui->rbGenMsg->setChecked(true);
-      }
-    }
   }
-  else // myCall not in msg
+  else // a DE ... 73 of another station, treated like a CQ/QRZ, or myCall not in msg
     {
-      if (m_skipTx1 && !m_houndMode) {
-        if(0 == ui->tabWidget->currentIndex()) m_ntx=2;
-        if (call_changed) m_qsoHistory.remove(hiscall); //prevent braking Auto Sequence by QSO history values 
-        m_QSOProgress = REPORT;
-        m_nlasttx=2;
-        ui->txrb2->setChecked(true); }
-      else {
-        if(0 == ui->tabWidget->currentIndex()) m_ntx=1;
-        m_QSOProgress = REPLYING;
-        m_nlasttx=1;
-        ui->txrb1->setChecked(true); }
+      int const tx = pick_step::first_tx (m_skipTx1, m_houndMode);
+      if(0 == ui->tabWidget->currentIndex()) m_ntx=tx;
+      if (pick_step::Kind::Other == kind && 2 == tx && call_changed) m_qsoHistory.remove(hiscall); //prevent braking Auto Sequence by QSO history values 
+      m_QSOProgress = static_cast<QSOProgress> (pick_step::progress_of_first (tx));
+      m_nlasttx=tx;
+      (2 == tx ? ui->txrb2 : ui->txrb1)->setChecked(true);
       if(1 == ui->tabWidget->currentIndex()) {
-        if (m_skipTx1 && !m_houndMode) { ui->genMsg->setText(ui->tx2->text()); }
-        else { ui->genMsg->setText(ui->tx1->text()); }
+        ui->genMsg->setText((2 == tx ? ui->tx2 : ui->tx1)->text());
         m_ntx=7;
         ui->rbGenMsg->setChecked(true);
       }
     }
   //RX3ASP request for manually toggling Enable Tx under AutoSeq while AutoTx is switched off
-  if(m_autofilter && m_autoseq && !m_filter && (m_QSOProgress == REPORT || m_QSOProgress == REPLYING)) autoFilter (true);
-  if(m_transmitting && !period_changed) m_restart=true;
+  if(pick_step::auto_filter_on_pick (m_autofilter, m_autoseq, m_filter, m_QSOProgress)) autoFilter (true);
+  if(pick_step::restart_on_pick (m_transmitting, period_changed)) m_restart=true;
 //  if(m_autoTx && !alt) enableTx_mode(true);
 // an attempt to provide stable UDP Reply operation:
   if(m_autoTx && !alt) { if(!ui->enableTxButton->isChecked()) ui->enableTxButton->click(); }
@@ -9373,7 +9241,11 @@ void MainWindow::msgtype(QString t, QLineEdit* tx)               //msgtype()
     QByteArray s=t.toUpper().toLocal8Bit();
     ba2msg(s,message);
     int ichk=1,itype=0;
-    gen9_(message,&ichk,msgsent,const_cast<int *>(itone),&itype,len1,len1);
+    /* CE3TSK 2026-10-19 (TODO.md 3.-139): tones of its own, never itone - JT65, JT9 and T10 send itone as they go, and
+       gen9 asked only to check still writes the test-tone form's frequency ("@1000") into the first tone: from that
+       symbol on the transmission was one steady tone. WSJT-X hands its check a dummy array (itone0) */
+    int tones[NUM_JT9_SYMBOLS];
+    gen9_(message,&ichk,msgsent,tones,&itype,len1,len1);
     msgsent[22]=0;
     if(itype==6) text=true;
     showTxCheck (tx, {tx_check::Kind::AsWritten, {}});   // no note from an FT mode left behind

@@ -474,7 +474,10 @@ void QsoHistory::message(QString const& callsign, Status status, int priority, Q
           QString const known_grid = t.grid;        /* CE3TSK: see Doubt - a doubtful grid never replaces it */
           QString const known_gridCall = t.gridCall;
           int const known_distance = t.distance;
-          if (time >= t.time || time == 0 || status >= t.status || status == RREPORT) {
+          /* CE3TSK 2026-10-19 (TODO.md 3.-139): his RR73 answering our RR73 is taken whenever it is decoded, as his 73
+             is (R73 ranks above SRR73, RRR73 below it). Decoded after our next Tx began - a late decode or a background
+             pass - it is older than that Tx's stamp, and the QSO stayed at SRR73: RR73 repeated to the count */
+          if (time >= t.time || time == 0 || status >= t.status || status == RREPORT || (status == RRR73 && t.status == SRR73)) {
             if (status > NONE) {
               t.time = time;
               if(_CQ.time == 0) _CQ.time = time;

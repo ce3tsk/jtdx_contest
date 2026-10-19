@@ -546,8 +546,12 @@ QAbstractScrollArea:disabled {
 /* QScrollArea ------------------------------------------------------------
 
 --------------------------------------------------------------------------- */
-QScrollArea QWidget QWidget:disabled {
-  background-color: #19232D;
+/* JTDX 2026-10-19 (TODO.md 3.-147): upstream's "QScrollArea QWidget QWidget:disabled { background-color: #19232D; }"
+   left out - it outranks every control's own :disabled rule, and the Settings pages sit in scroll areas (settingsfit.h):
+   a disabled button there was bare text. Nothing else in JTDX is a QScrollArea. And those pages draw no frame of their
+   own: the tab pane is theirs */
+QScrollArea[settingsPage="true"] {
+  border: none;
 }
 
 /* QScrollBar -------------------------------------------------------------

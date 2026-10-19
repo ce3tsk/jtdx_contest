@@ -201,6 +201,7 @@ extern "C" {
 #include "pimpl_impl.hpp"
 #include "uilimits.h"   // CE3TSK: the .ui size limits against the current font
 #include "contestprofile.h"   // CE3TSK: JTDX_contest's own notification colours
+#include "settingsfit.h"   // CE3TSK 2026-10-19: the dialog on a small screen
 
 #include "ui_Configuration.h"
 #include "moc_Configuration.cpp"
@@ -768,6 +769,7 @@ private:
   bool rig_active_;
   bool have_rig_;
   bool rig_changed_;
+  bool geometry_placed_ {false};   // CE3TSK 2026-10-19 (settingsfit.h): a size and place restored or shown before
   TransceiverState cached_rig_state_;
   int rig_resolution_;          // see Transceiver::resolution signal
   double frequency_calibration_intercept_;
@@ -1986,6 +1988,12 @@ Configuration::impl::impl (Configuration * self, QNetworkAccessManager * network
   , default_audio_output_device_selected_ {false}
 {
   ui_->setupUi (this);
+  /* CE3TSK 2026-10-19 (TODO.md 3.-144): every page in a scroll area, so the dialog fits a small screen (settingsfit.h);
+     a page is found by settings_fit::page_index () now - QTabWidget::indexOf () knows only the scroll areas */
+  settings_fit::scroll_pages (ui_->configuration_tabs);
+  /* the rig list no narrower than 16 characters - not its longest rig name, some 330 px at 11 pt, which would set the
+     dialog's width (settings_fit measures every page as it is now); its list opens as wide as its names */
+  ui_->rig_combo_box->setMinimumContentsLength (16);
   wrap_tooltips (this);   /* CE3TSK: Qt does not word-wrap a plain tooltip, see tooltip_wrap.hpp */
   call_tooltip_ = ui_->callsign_line_edit->toolTip ();   // CE3TSK 2026-10-04: refresh_own_marks adds to them
   /* CE3TSK 2026-10-04 (review item 9): the tier boxes, one table - a tier cascades to the three under it, a child
@@ -2809,7 +2817,7 @@ void Configuration::impl::read_settings ()
 {
   auto const colors_from = contest_profile::origin (*settings_);   // CE3TSK: outside the group, it reads [Common] too
   SettingsGroup g {settings_, "Configuration"};
-  restoreGeometry (settings_->value ("window/geometry").toByteArray ());
+  if (restoreGeometry (settings_->value ("window/geometry").toByteArray ())) geometry_placed_ = true;
 
   my_callsign_ = settings_->value ("MyCall", "").toString ();
   my_grid_ = settings_->value ("MyGrid", "").toString ().left (10);   // CE3TSK 2026-10-14: an 11th and 12th of 2026-10-04 dropped
@@ -3440,8 +3448,7 @@ bool Configuration::impl::own_station_confirmed ()
   q.exec ();
   if (keep && q.clickedButton () == keep) return true;
   QLineEdit * const box = own_station::Call::Fine != v.call ? ui_->callsign_line_edit : ui_->grid_line_edit;
-  for (int i = 0; i < ui_->configuration_tabs->count (); ++i)
-    if (ui_->configuration_tabs->widget (i)->isAncestorOf (box)) ui_->configuration_tabs->setCurrentIndex (i);
+  settings_fit::show_on_page (ui_->configuration_tabs, box);   // its tab, its page scrolled to it (2026-10-19)
   box->setFocus ();
   box->selectAll ();
   return false;
@@ -3867,6 +3874,10 @@ int Configuration::impl::exec ()
   rig_changed_ = false;
 
   initialize_models ();
+  /* CE3TSK 2026-10-19 (TODO.md 3.-144): no taller than the screen - its pages held at the height they need (they
+     scroll, never squeeze), its size cut to the work area, OK and Cancel on the screen (settingsfit.h) */
+  settings_fit::fit_dialog (this, ui_->configuration_tabs, geometry_placed_);
+  geometry_placed_ = true;
   return QDialog::exec();
 }
 
@@ -5062,7 +5073,7 @@ void Configuration::impl::apply_special_op_lock (bool locked)
      but text color and icon are stock per-tab properties, so both are used: the title in
      green plus a green dot. An invalid QColor and an empty QIcon reset to normal. */
   {
-    int const tab = ui_->configuration_tabs->indexOf (ui_->special_op_tab);
+    int const tab = settings_fit::page_index (ui_->configuration_tabs, ui_->special_op_tab);
     auto * bar = ui_->configuration_tabs->tabBar ();
     /* darker green for the text than the dot, for contrast against a light tab bar */
     bar->setTabTextColor (tab, locked ? QColor {0, 64, 0} : QColor {});
