@@ -9,10 +9,12 @@
  * reading ever checked them: which counter gives up on a station and with what reason, Hound's drop after three
  * R+report, the flag word autoselect is handed, which message answers which QSO step, and when the transmitter
  * stops. process_Auto () now asks these functions and carries out what they return; test/harness/test_autoseqstep
- * pins them, and compares process_Auto () with the chain as it was written before over a million random states.
+ * pins them, and compares process_Auto () with the chain as it was written before (commit 47620cc; its period rule
+ * refreshed in 3.-150) over a million random states.
  *
- * Nothing here changes what the sequencer does - the conditions, their order and the reason texts are the old
- * ones, character for character. The seams of sequencer_hooks.cpp stay where they were, in process_Auto ().
+ * Nothing here changed what the sequencer does - the conditions, their order and the reason texts were the old
+ * ones, character for character - until 2026-10-19 (TODO.md 3.-150): the CQ priority's period (decoded_first_period)
+ * is decodebudget.h's period rule now. The seams of sequencer_hooks.cpp stay where they were, in process_Auto ().
  */
 
 #include <cmath>
@@ -21,6 +23,7 @@
 #include "qsohistory.h"
 #include "priorities.h"
 #include "modetiming.h"
+#include "decodebudget.h"
 
 namespace autoseq_step
 {
@@ -158,16 +161,16 @@ namespace autoseq_step
    * time 1 asks it to look at the answers to our CQ first; that is done when "CQ priority" is on, the Tx frequency
    * is not locked, the pass has not just let a station go by a counter, no "answer CQ" count-down runs (m_counter),
    * and the period decoded is the one the other side transmits in. Otherwise time is 0 and the count-down steps.
-   * The period is told from the decode's start: whole seconds plus one, modulo two periods - 0 for the second
-   * period of the pair. 128 answer worked-before, 64 call worked-before (256 a higher new call instead), 16 the
-   * report decides, 32 the distance decides. With no new-one tier chosen at all, worked-before is answered and
-   * called. */
-  inline int decoded_period_mod (qint64 msDecStarted, double trPeriod)
+   * The period is told from the decode's start as the TX background tells it, decodebudget.h's
+   * period_index_of_trigger (): an even one is the first of the pair. (Until 2026-10-19, TODO 3.-150, whole seconds
+   * plus one modulo two periods: every decode of FT2's fourth period of a quarter minute, which starts 96-198 ms after
+   * its trigger block against 82 ms of margin, every second-period decode of FT8 with SWL on and every odd-minute one
+   * of JT65/JT9 was judged in the first period.) 128 answer worked-before, 64 call worked-before (256 a higher new
+   * call instead), 16 the report decides, 32 the distance decides. With no new-one tier chosen at all, worked-before
+   * is answered and called. */
+  inline bool decoded_first_period (qint64 msDecStarted, double trPeriod)
   {
-    auto ms = msDecStarted % 86400000;
-    auto secs = std::round (ms / 1000.0) + 1;
-    int nmod = std::fmod (double (secs), 2.0 * trPeriod);
-    return nmod;
+    return period_index_of_trigger ((msDecStarted % 86400000) / 1000.0, trPeriod) % 2 == 0;
   }
 
   struct PickInputs
@@ -197,8 +200,8 @@ namespace autoseq_step
   {
     Pick p;
     p.counter = in.counter;
-    int const nmod = decoded_period_mod (in.msDecStarted, in.trPeriod);
-    if (in.callPrioCQ && !in.lockTxFreq && in.counters2 && in.counter == 0 && in.txFirst != (nmod != 0)) p.time = 1;
+    bool const decodedFirst = decoded_first_period (in.msDecStarted, in.trPeriod);
+    if (in.callPrioCQ && !in.lockTxFreq && in.counters2 && in.counter == 0 && in.txFirst != decodedFirst) p.time = 1;
     else { if (p.counter > 0) p.counter -= 1; p.time = 0; }
     if (!in.anyNewTierChosen || in.answerWorkedB4) p.time |= 128;
     if (!in.anyNewTierChosen || in.callWorkedB4) p.time |= 64;

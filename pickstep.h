@@ -11,10 +11,12 @@
  * Tx frequency moves to it, when the DX call changes, and the answer - which Tx and QSO progress for a line to us, his
  * "DE ... 73" or anything else -, the auto filter and the restart of a transmission under way. processMessage () now
  * asks these functions and carries out what they return; test/harness/test_pickstep pins them, and compares
- * processMessage () with its body as it was before (commit 2091f46) over random clicks on random lines.
+ * processMessage () with its body as it was before (commit 2091f46; its period rule refreshed in 3.-150) over random
+ * clicks on random lines.
  *
- * Nothing here changes what the program does - the conditions and their order are the old ones, character for
- * character.
+ * Nothing here changed what the program does - the conditions and their order were the old ones, character for
+ * character - until 2026-10-19 (TODO.md 3.-150): our period from the line (tx_first_for_line) is decodebudget.h's
+ * period rule now, which answers differently for FT2's lines of the periods at x7.5 s.
  */
 
 #include <cmath>
@@ -22,18 +24,19 @@
 #include <QStringList>
 #include "contestreply.h"
 #include "txstep.h"
+#include "decodebudget.h"
 
 namespace pick_step
 {
   using namespace tx_step;   // Progress: MainWindow::QSOProgress's order
 
   /* ---- our period ----
-   * We transmit in the period the line was not sent in: the first of the pair for a line of the second. The line's time
-   * is whole seconds, and the remainder modulo two periods is cut to whole seconds again. */
+   * We transmit in the period the line was not sent in: the first of the pair for a line of the second. The line's
+   * period from its time in whole seconds is decodebudget.h's period_index_of_line () (2026-10-19, TODO 3.-150: the
+   * remainder of the seconds modulo two periods took FT2's lines of the periods at x7.5 s for the second period). */
   inline bool tx_first_for_line (int lineSeconds, double trPeriod)
   {
-    int const nmod = std::fmod (double (lineSeconds), 2.0 * trPeriod);
-    return nmod != 0;
+    return period_index_of_line (lineSeconds, trPeriod) % 2 == 1;
   }
 
   /* the period changes when the line asks for the other one - not for a line of our own transmission (a refusal is

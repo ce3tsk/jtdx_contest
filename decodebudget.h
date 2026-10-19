@@ -1,6 +1,8 @@
 #ifndef DECODEBUDGET_H
 #define DECODEBUDGET_H
 
+#include <cmath>
+
 /* CE3TSK: the TX background's time window (PIPELINED_DECODE_PLAN.md P7, DECODE_RECIPE_PLAN.md).
    The decoder's background phase runs after the period's decode until the next decode is
    due. The GUI used to decode every period, its own TX periods included (the rig's muted RX
@@ -12,9 +14,9 @@
    TX does not happen after all, the next period's decode removes .lock and the background
    stops as it always did - one unit wasted at most. */
 
-/* the index of the period a moment belongs to; a decode trigger sits at 14.1 s of its
-   period, so a moment inside the period is taken a few seconds earlier to stay clear of
-   the boundary when the trigger is late (audio delay, a lost block) */
+/* the index of the period a moment belongs to (period_index_of_trigger () below steps a
+   decode trigger back first: a trigger sits at 14.1 s of its period, and a late one must stay
+   clear of the boundary - audio delay, a lost block) */
 inline int period_index (double seconds_of_day, double period)
 {
   if (period <= 0) return 0;
@@ -25,10 +27,27 @@ inline int period_index (double seconds_of_day, double period)
    14.1 s and 6.05 s of its period. A period shorter than that would be stepped back past its
    own start and the trigger would be counted as the previous period's, which is what decides
    whether our own TX period's decode is skipped. Below 7.5 s the back-off is a third of the
-   period instead - 1.25 s for FT2's 3.75 s, against a trigger at 3.17 s. */
+   period instead - 1.25 s for FT2's 3.75 s, against a trigger at 3.17 s.
+   CE3TSK 2026-10-19 (TODO 3.-150): a step back past midnight is the previous day's last period, not period 0 - a late
+   trigger of the day's last period came out as period 0, the wrong parity (a day holds an even number of periods in
+   every mode). The auto sequencer's CQ priority asks this too (autoseqstep.h). */
 inline int period_index_of_trigger (double seconds_of_day, double period)
 {
-  return period_index (seconds_of_day - (period >= 7.5 ? 5.0 : period / 3.0), period);
+  double t = seconds_of_day - (period >= 7.5 ? 5.0 : period / 3.0);
+  if (t < 0) t += 86400.0;
+  return period_index (t, period);
+}
+
+/* CE3TSK 2026-10-19 (TODO 3.-150): the period a decode line belongs to, from its time in whole seconds of the day. A
+   live line carries its period's start cut to whole seconds (FT2's and FT4's 7.5 s is printed :07), a replayed file
+   the time of its name - JTDX names a saved period a second later when its start has a fraction (:08). Either way the
+   line's period is the last one that began before the end of its second. (The double click asked a remainder of the
+   seconds modulo two periods, which took FT2's lines of the periods at x7.5 s for the second period of their pair.) */
+inline int period_index_of_line (int seconds_of_day, double period)
+{
+  long long const p = std::llround (period * 1000.0);
+  if (p <= 0) return 0;
+  return static_cast<int> (((seconds_of_day + 1LL) * 1000 - 1) / p);
 }
 
 /* whether the period after the given one is a period of ours: "TX first" transmits in the
