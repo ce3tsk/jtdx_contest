@@ -6274,6 +6274,21 @@ Esse é o erro do próprio descodificador. Corrija o que impede o arranque - uma
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Directional CQ: the word sent after CQ, up to four letters.&lt;/p&gt;&lt;p&gt;DX, a continent (EU, NA, SA, AS, AF, OC), a prefix (JA), ASIA or USA is a region: autoselect answers callers from there. Unless &quot;Strict directional CQ operation&quot; is on, it also answers wanted stations and stations of a new DXCC, wherever they are. FD, RU, WW and the other words of three or four letters, such as TEST or POTA, name an activity: anybody may answer.&lt;/p&gt;&lt;p&gt;Three and four letters are sent in FT8, FT4 and FT2 only. No word is sent with a compound own call.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;CQ direcional: a palavra enviada depois de CQ, até quatro letras.&lt;/p&gt;&lt;p&gt;DX, um continente (EU, NA, SA, AS, AF, OC), um prefixo (JA), ASIA ou USA é uma região: a seleção automática responde a quem chama de lá. Se &quot;Operação CQ direcional estrita&quot; estiver desligada, responde também às estações procuradas e às de um DXCC novo, estejam onde estiverem. FD, RU, WW e as restantes palavras de três ou quatro letras, como TEST ou POTA, indicam uma atividade: qualquer estação pode responder.&lt;/p&gt;&lt;p&gt;Três e quatro letras só são enviadas em FT8, FT4 e FT2. Com um indicativo próprio composto, não é enviada nenhuma palavra.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>The message cannot be encoded: transmission halted</source>
+        <translation>A mensagem não pode ser codificada: transmissão interrompida</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Goes out as: %1</source>
+        <translation>Será transmitida como: %1</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>This message cannot be sent</source>
+        <translation>Esta mensagem não pode ser transmitida</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

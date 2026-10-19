@@ -6288,6 +6288,21 @@ To je greška samog dekodera. Otklonite ono što ga sprječava da se pokrene - n
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Directional CQ: the word sent after CQ, up to four letters.&lt;/p&gt;&lt;p&gt;DX, a continent (EU, NA, SA, AS, AF, OC), a prefix (JA), ASIA or USA is a region: autoselect answers callers from there. Unless &quot;Strict directional CQ operation&quot; is on, it also answers wanted stations and stations of a new DXCC, wherever they are. FD, RU, WW and the other words of three or four letters, such as TEST or POTA, name an activity: anybody may answer.&lt;/p&gt;&lt;p&gt;Three and four letters are sent in FT8, FT4 and FT2 only. No word is sent with a compound own call.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Usmjereni CQ: riječ koja se šalje nakon CQ-a, do četiri slova.&lt;/p&gt;&lt;p&gt;DX, kontinent (EU, NA, SA, AS, AF, OC), prefiks (JA), ASIA ili USA označava regiju: automatski odabir odgovara stanicama koje zovu odande. Ako &quot;Striktni rad s usmjerenim CQ-om&quot; nije uključen, odgovara i traženim stanicama i stanicama novog DXCC-a, odakle god zvale. FD, RU, WW i ostale riječi od tri ili četiri slova, poput TEST ili POTA, označavaju aktivnost: odgovoriti može bilo tko.&lt;/p&gt;&lt;p&gt;Tri i četiri slova šalju se samo u FT8, FT4 i FT2. Uz složeni vlastiti pozivni znak ne šalje se nijedna riječ.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>The message cannot be encoded: transmission halted</source>
+        <translation>Poruka se ne može kodirati: odašiljanje zaustavljeno</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Goes out as: %1</source>
+        <translation>Odašilje se kao: %1</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>This message cannot be sent</source>
+        <translation>Ova poruka se ne može odaslati</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

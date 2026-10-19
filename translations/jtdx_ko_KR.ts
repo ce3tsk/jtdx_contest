@@ -6284,6 +6284,21 @@ That is the decoder's own error. Put right whatever stops it starting - a missin
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Directional CQ: the word sent after CQ, up to four letters.&lt;/p&gt;&lt;p&gt;DX, a continent (EU, NA, SA, AS, AF, OC), a prefix (JA), ASIA or USA is a region: autoselect answers callers from there. Unless &quot;Strict directional CQ operation&quot; is on, it also answers wanted stations and stations of a new DXCC, wherever they are. FD, RU, WW and the other words of three or four letters, such as TEST or POTA, name an activity: anybody may answer.&lt;/p&gt;&lt;p&gt;Three and four letters are sent in FT8, FT4 and FT2 only. No word is sent with a compound own call.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;지향 CQ: CQ 뒤에 보내는 단어이며 최대 4글자입니다.&lt;/p&gt;&lt;p&gt;DX, 대륙(EU, NA, SA, AS, AF, OC), 접두사(JA), ASIA 또는 USA는 지역을 뜻하며, 자동 선택은 그 지역에서 부르는 국에 응답합니다. &quot;지향 CQ 엄격 적용&quot;이 꺼져 있으면 찾는 국과 새 DXCC의 국에도 어디에 있든 응답합니다. FD, RU, WW와 TEST, POTA 같은 그 밖의 3~4글자 단어는 활동을 뜻하며, 누구나 응답할 수 있습니다.&lt;/p&gt;&lt;p&gt;3글자와 4글자 단어는 FT8, FT4, FT2에서만 송신됩니다. 자기 호출부호가 복합 호출부호이면 단어를 보내지 않습니다.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>The message cannot be encoded: transmission halted</source>
+        <translation>메시지를 인코딩할 수 없습니다: 송신 중단</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Goes out as: %1</source>
+        <translation>송신되는 내용: %1</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>This message cannot be sent</source>
+        <translation>이 메시지는 송신할 수 없습니다</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

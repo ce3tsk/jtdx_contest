@@ -50,8 +50,9 @@ namespace autoseq_step
   }
 
   /* ---- the station being worked: the rules that let him go ----
-   * Asked when he is not a Fox and the post-QSO seam (afterQsoFinished) did not deal with the pass. The first rule
-   * that holds wins:
+   * Asked outside Hound mode only (the else of process_Auto ()'s `if (m_houndMode)`) and when the post-QSO seam
+   * (afterQsoFinished) did not deal with the pass - so Hound mode is no term of these rules (3.-135, the review 3.-124
+   * item 4: the old condition's `!hound` was always true here). The first rule that holds wins:
    *   QsoFinished        the QSO is over and logged and we are not keeping the frequency
    *   AnswerCQCount      "answer CQ" counter: he did not come back after we called him (RCQ, SCALL; SREPORT when
    *                      Tx1 is skipped)
@@ -67,7 +68,6 @@ namespace autoseq_step
     QsoHistory::Status status = QsoHistory::NONE;
     int count = 0;             // autoseq ()'s count, one less while transmitting
     int prio = 0;
-    bool hound = false;
     bool singleshot = false;
     bool autolog = false;
     bool loggedHim = false;    // the last QSO logged is with him
@@ -106,7 +106,7 @@ namespace autoseq_step
         r.rule = Rule::QsoFinished;
         r.reason = " cleared, AutoSeq QSO finished";
       }
-    else if ((w.status == S::RCQ || w.status == S::SCALL || (w.status == S::SREPORT && w.skipTx1 && !w.hound))
+    else if ((w.status == S::RCQ || w.status == S::SCALL || (w.status == S::SREPORT && w.skipTx1))
              && w.answerCQCount && (decode_priority::counterGivesUp (w.prio) || w.strictdirCQ)
              && (w.answerCQCounter <= w.count || w.replyOther))
       {

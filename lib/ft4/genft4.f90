@@ -59,7 +59,7 @@ subroutine genft4(msg0,ichk,ntxhash,msgsent,msgbits,i4tone)
   read(c77,'(77i1)',err=1) msgbits
   if(unpk77_success) go to 2
 1 msgbits=0
-  itone=0
+  i4tone=0   ! CE3TSK 2026-10-18 (TODO.md 3.-135): was itone=0, an implicit local - the caller's tones went out
   msgsent='*** bad message ***                  '
   go to 999
 

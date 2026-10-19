@@ -1820,6 +1820,9 @@ subroutine pack77_3(nwords,w,i3,n3,c77,ntxhash)
      if(.not.ok1 .or. .not.ok2) go to 900
      crpt=w(nwords-1)(1:3)
      if(index(crpt,'-').ge.1 .or. index(crpt,'+').ge.1) go to 900
+! CE3TSK 2026-10-18 (TODO.md 3.-133): set only for a 5x9 report below, and read whatever the report - "CE3TSK K1ABC
+! 73 TU" or a free text "K1A W9X 73 GL" was Type 3 or free text by what the stack held
+     nserial=0
      if(crpt(1:1).eq.'5' .and. crpt(2:2).ge.'2' .and. crpt(2:2).le.'9' .and.    &
           crpt(3:3).eq.'9') then
         nserial=0
@@ -1846,7 +1849,7 @@ subroutine pack77_3(nwords,w,i3,n3,c77,ntxhash)
         call pack28(w(2+itu),n28b,ntxhash)
         ir=0
         if(w(3+itu)(1:2).eq.'R ') ir=1
-        read(w(3+itu+ir),*,err=900) irpt
+        read(w(3+itu+ir),*,err=899) irpt
         irpt=(irpt-509)/10 - 2
         if(irpt.lt.0) irpt=0
         if(irpt.gt.7) irpt=7
@@ -1856,7 +1859,12 @@ subroutine pack77_3(nwords,w,i3,n3,c77,ntxhash)
 1010    format(b1,2b28.28,b1,b3.3,b13.13,b3.3)
      endif
   endif
+  return
 
+! CE3TSK 2026-10-18 (TODO.md 3.-135): a report that does not read ("K1ABC W9XYZ R ABC MA") is not Type 3 - i3 was left
+! 3 here with c77 unwritten, and what the buffer held went out (genft8) or was taken for this message (stdmsg ())
+899 i3=-1
+  n3=-1
 900 return
 end subroutine pack77_3
 
@@ -1895,6 +1903,7 @@ subroutine pack77_4(nwords,w,i3,n3,c77,ntxhash)
      endif
 
      lhashit=.false.; if(ntxhash.eq.1) lhashit=.true.
+     n12=0   ! CE3TSK 2026-10-18: save_hash_txcall leaves it as it was for "<...>" - the hash went out from the stack
      if(icq.eq.1) then
         iflip=0
         n12=0
@@ -1910,6 +1919,21 @@ subroutine pack77_4(nwords,w,i3,n3,c77,ntxhash)
         i3=4
         call save_hash_txcall(w(2),n10,n12,n22,lhashit)
         c11=adjustr(call_1(1:11))
+     else if(i3.eq.4) then
+! CE3TSK 2026-10-18 (TODO.md 3.-133): two calls, no CQ, neither in brackets - "AF0G W6/UT5UF", as a Type 4 decode
+! is shown. c11 and n12 were left unset here, and the message was packed from whatever the stack held (stdmsg () was
+! told Type 4 all the same, and still is). The standard call is the hashed one, as the program writes its own.
+        if(call_2.ne.bcall_2) then
+           iflip=0
+           call save_hash_txcall(w(1),n10,n12,n22,lhashit)
+           c11=adjustr(call_2(1:11))
+        else
+           iflip=1
+           call save_hash_txcall(w(2),n10,n12,n22,lhashit)
+           c11=adjustr(call_1(1:11))
+        endif
+     else
+        go to 900   ! CE3TSK 2026-10-18: not Type 4 (i3 is -1) - c11 was read unset here and the result thrown away
      endif
      n58=0
      do i=1,11

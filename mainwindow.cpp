@@ -58,6 +58,7 @@
 #include "decodelabel.h"   // CE3TSK
 #include "modetiming.h"   // CE3TSK: the per-mode timing constants
 #include "autoseqstep.h"  // CE3TSK 2026-10-17: the auto sequencer's decisions
+#include "txcheck.h"      // CE3TSK 2026-10-18: does a Tx message go out as it is written
 #include "contestmode.h"   // CE3TSK 2026-09-26: the modes a contest allows
 #include "savedmode.h"     // CE3TSK 2026-09-26: the saved Mode/ModeTx made safe
 #include "bandschedule.h"  // CE3TSK 2026-09-26: which scheduler entry fires
@@ -127,7 +128,6 @@ extern "C" {
 
   void genwspr_(char* msg, char* msgsent, int itone[], fortran_charlen_t, fortran_charlen_t);
 
-  bool stdmsg_(char const * msg, fortran_charlen_t);   /* CE3TSK 2026-10-12: is it a structured 77 bit message - msgtype () */
 
   void azdist_(char* MyGrid, char* HisGrid, double* utch, int* nAz, int* nEl,
                int* nDmiles, int* nDkm, int* nHotAz, int* nHotABetter,
@@ -6754,7 +6754,6 @@ void MainWindow::process_Auto()
       w.status = m_status;
       w.count = count;
       w.prio = prio;
-      w.hound = m_houndMode;
       w.singleshot = m_singleshot;
       w.autolog = m_config.autolog();
       w.loggedHim = m_lastloggedcall == m_hisCall;
@@ -6902,24 +6901,18 @@ void MainWindow::process_Auto()
     auto const step = autoseq_step::reply (in);
     if (step.watchdogReset) txwatchdog (false);
     if (step.autoFilter && step.filterFirst) autoFilter (true);
+    /* CE3TSK 2026-10-18 (3.-135, the review 3.-124 item 6): the button, and on the second tab its message into the
+       generated one - one switch (step.tx is 0..5; a Tx button leaves the tab alone, test/autoseq_wiring.sh) */
+    bool const tab2 = ui->tabWidget->currentIndex()==1;
     switch (step.tx) {
-      case 1: on_txb1_clicked(); break;
-      case 2: on_txb2_clicked(); break;
-      case 3: on_txb3_clicked(); break;
-      case 4: on_txb4_clicked(); break;
-      case 5: on_txb5_clicked(); break;
+      case 1: on_txb1_clicked(); if (tab2) ui->genMsg->setText(ui->tx1->text()); break;
+      case 2: on_txb2_clicked(); if (tab2) ui->genMsg->setText(ui->tx2->text()); break;
+      case 3: on_txb3_clicked(); if (tab2) ui->genMsg->setText(ui->tx3->text()); break;
+      case 4: on_txb4_clicked(); if (tab2) ui->genMsg->setText(ui->tx4->text()); break;
+      case 5: on_txb5_clicked(); if (tab2) ui->genMsg->setText(ui->tx5->currentText()); break;
       default: break;
     }
-    if (step.tx > 0 && ui->tabWidget->currentIndex()==1) {
-      switch (step.tx) {
-        case 1: ui->genMsg->setText(ui->tx1->text()); break;
-        case 2: ui->genMsg->setText(ui->tx2->text()); break;
-        case 3: ui->genMsg->setText(ui->tx3->text()); break;
-        case 4: ui->genMsg->setText(ui->tx4->text()); break;
-        default: ui->genMsg->setText(ui->tx5->currentText()); break;
-      }
-      if (step.tab2Ntx7) m_ntx=7;
-    }
+    if (step.tx > 0 && tab2 && step.tab2Ntx7) m_ntx=7;
     if (step.autoFilter && !step.filterFirst) autoFilter (true);
     if (step.houndLog) {
       m_logqso73=true;
@@ -7769,6 +7762,18 @@ void MainWindow::guiUpdate()
     m_currentMessage = m_curMsgTx;
     if(m_tune) { m_currentMessage = tr("TUNE"); m_currentMessageType = -1; m_nlasttx=0; }
     last_tx_label->setText(tr("LastTx: ") + m_currentMessage.trimmed());
+    /* CE3TSK 2026-10-18 (TODO.md 3.-135): a message the 77-bit packer cannot send - unpack77 refuses its own packing
+       ("W6/UT5UF AF0G TNX", an RTTY Roundup or telemetry message, typed or sent over UDP) - does not go on the air.
+       genft8 hands back "*** bad message ***" with every tone 0, which went out as one steady tone for the whole slot,
+       and genft4 left the last message's tones. Halted where the halts above are, at the start of the transmission
+       (or on a change during it), as WSJT-X 3.3.0 refuses it (test: tools/ui-check/badmessage.sh) */
+    if(!m_tune && !haltedEmpty && (m_modeTx=="FT8" || m_modeTx=="FT4" || m_modeTx=="FT2")
+       && QByteArray {msgsent}.startsWith ("*** bad message ***")) {
+      haltedEmpty=true;
+      haltTx("Transmission halted: the message cannot be encoded ");
+      QString const why {tr ("The message cannot be encoded: transmission halted")};
+      QTimer::singleShot (300, this, [this, why] {statusBar ()->showMessage (why, 10000);});
+    }
 	
     if(m_restart && !haltedEmpty) {
       QFile f {m_dataDir.absoluteFilePath (m_jtdxtime->currentDateTimeUtc2().toString("yyyyMM_")+"ALL.TXT")};
@@ -9322,34 +9327,56 @@ void MainWindow::on_addButton_clicked()
   }
 }
 
+/* CE3TSK 2026-10-18 (TODO.md 3.-135): what the 77-bit packer makes of a Tx message (txcheck.h) - packed as genft8 packs
+   it at the start of a transmission, but with ntxhash 0: the TX hash tables are left as they are */
+static tx_check::Result txCheck77 (QString text)
+{
+  text.remove (" ^");                        // as guiUpdate () sends Tx5 and the free text
+  QByteArray const ba {text.toUpper ().toLatin1 ().leftJustified (37, ' ', true)};
+  char message[38], msgsent[38], bits[77];
+  int tones[79], i3 = -1, n3 = -1, ntxhash = 0;
+  for (int i = 0; i < 37; ++i) message[i] = ba[i];
+  message[37] = 0;
+  genft8_ (message, &i3, &n3, &ntxhash, msgsent, bits, tones, 37, 37);
+  msgsent[37] = 0;
+  return tx_check::of (text, i3, n3, QString::fromLatin1 (msgsent));
+}
+
+// CE3TSK 2026-10-18: the field's own tooltip, and below it what goes out when that is not what it holds
+static void showTxCheck (QWidget * field, tx_check::Result const& check)
+{
+  if (!field->property ("jtdxBaseToolTip").isValid ()) field->setProperty ("jtdxBaseToolTip", field->toolTip ());
+  QString tip {field->property ("jtdxBaseToolTip").toString ()};
+  QString note;
+  if (tx_check::Kind::Changed == check.kind) note = MainWindow::tr ("Goes out as: %1").arg (check.sent);
+  else if (tx_check::Kind::Unencodable == check.kind) note = MainWindow::tr ("This message cannot be sent");
+  if (!note.isEmpty ()) tip = tip.isEmpty () ? note : tip + "\n" + note;
+  field->setToolTip (tip);
+}
+
 void MainWindow::msgtype(QString t, QLineEdit* tx)               //msgtype()
 {
-  char message[38];
-  char msgsent[38];
-  int len1=22;
-  QByteArray s=t.toUpper().toLocal8Bit();
-  ba2msg(s,message);
-  int ichk=1,itype=0;
-  gen9_(message,&ichk,msgsent,const_cast<int *>(itone),&itype,len1,len1);
-  msgsent[22]=0;
   bool text=false;
-  if(itype==6) text=true;
-  /* CE3TSK: WW Digi contest - "HISCALL MYCALL R GRID" is a valid FT8 77 bit message
-     (i3=1), but gen9() above is the old 72 bit packer and reports it as free text, which
-     would paint the Tx3 field pink and read as an error to the operator. */
-  if(text && m_wwDigi && m_mode.startsWith("FT")) {
-    QStringList w=t.toUpper().split(" ",SkipEmptyParts);
-    if(w.size()==4 && w[2]=="R" && w[3].length()==4 && gridOK(w[3])) text=false;
-  }
-  /* CE3TSK 2026-10-12: nor is a CQ with a word of three or four letters ("CQ TEST K1ABC FN42") free text in
-     FT8, FT4 and FT2 (cqdirection.h). gen9() knows two letters after CQ; the 77 bit packer that sends the
-     message in those modes carries four, and it is asked itself. The caller must be a standard call as well:
-     of any other the packer sends the base call alone ("CQ TEST K1ABC/QRP FN42" goes out without the /QRP)
-     or free text - such a message stays pink. */
-  if(text && m_mode.startsWith("FT")) {
-    QString const cqcaller {cq_direction::longWordCqCaller (t.toUpper())};
-    QByteArray const m77 (t.toUpper().toLatin1().leftJustified(37,' ',true));
-    if(!cqcaller.isEmpty () && stdCall(cqcaller) && stdmsg_(m77.constData(),37)) text=false;
+  /* CE3TSK 2026-10-18 (TODO.md 3.-135): in FT8, FT4 and FT2 the colour says whether the 77-bit packer sends the text as
+     it is written (txcheck.h): pink for free text, for a message it changes ("CE3TSK KH6/K1ABC RR73" goes out as
+     "CE3TSK K1ABC RR73") and for one it cannot send, with what goes out in the tooltip. The 72-bit JT9 packer asked
+     below for the other modes knew no brackets: every message the program builds for a non-standard call was pink, a
+     changed one white - and the WW Digi roger with a grid and a CQ with a longer word needed exceptions of their own */
+  if(m_mode.startsWith("FT")) {
+    auto const check = txCheck77 (t);
+    text = tx_check::Kind::AsWritten != check.kind;
+    showTxCheck (tx, check);
+  } else {
+    char message[38];
+    char msgsent[38];
+    int len1=22;
+    QByteArray s=t.toUpper().toLocal8Bit();
+    ba2msg(s,message);
+    int ichk=1,itype=0;
+    gen9_(message,&ichk,msgsent,const_cast<int *>(itone),&itype,len1,len1);
+    msgsent[22]=0;
+    if(itype==6) text=true;
+    showTxCheck (tx, {tx_check::Kind::AsWritten, {}});   // no note from an FT mode left behind
   }
   QPalette p(tx->palette());
   if(text) {
@@ -10680,14 +10707,28 @@ void MainWindow::on_freeTextMsg_currentTextChanged (QString const& text)
   if(!m_FTsetAutoSeqOff && !isAutoSeq73(text)) m_FTsetAutoSeqOff=true;
   if(isAllowedAuto73) m_FTsetAutoSeqOff=false;
   if(!text.contains(QRegularExpression {R"([@#&^])"}) && !text.isEmpty()) {
-    QString t="161545  -4  0.1 1939 & " + text;
-    DecodedText decodedtext {t,this};
+    /* CE3TSK 2026-10-18 (TODO.md 3.-135): in FT8, FT4 and FT2 green only when the 77-bit packer sends it as typed
+       (txcheck.h) - DecodedText's "standard" said green for "CE3TSK KH6/K1ABC RR73", which goes out without the KH6/,
+       and for "W6/UT5UF AF0G TNX", which cannot be sent; yellow for those, what goes out in the tooltip */
+    bool const ft {m_mode.startsWith("FT")};
+    tx_check::Result const check {ft ? txCheck77 (text) : tx_check::Result {tx_check::Kind::AsWritten, {}}};
+    bool stdfreemsg;
+    showTxCheck (ui->freeTextMsg->lineEdit (), check);   // no note from an FT mode left behind in the others
+    if(ft) {
+      stdfreemsg = tx_check::Kind::AsWritten == check.kind;
+    } else {
+      QString t="161545  -4  0.1 1939 & " + text;
+      DecodedText decodedtext {t,this};
 //      DecodedText decodedtext {"161545  -4  0.1 1939 & CQ RT9K/4    ",this};
-    bool stdfreemsg = decodedtext.isStandardMessage();
+      stdfreemsg = decodedtext.isStandardMessage();
+    }
     if(stdfreemsg) {
       ui->freeTextMsg->setStyleSheet(QString("background: %1;color: %2").arg(Radio::convert_dark("#7bff7b",m_useDarkStyle),Radio::convert_dark("#000000",m_useDarkStyle)));
     } else {
-      if(text.length() < 14) { ui->freeTextMsg->setStyleSheet(QString("background: %1;color: %2").arg(Radio::convert_dark("#7bff7b",m_useDarkStyle),Radio::convert_dark("#000000",m_useDarkStyle))); }
+      if(ft && (tx_check::Kind::Changed == check.kind || tx_check::Kind::Unencodable == check.kind)) {
+        ui->freeTextMsg->setStyleSheet(QString("background: %1;color: %2").arg(Radio::convert_dark("#ffff00",m_useDarkStyle),Radio::convert_dark("#000000",m_useDarkStyle)));
+      }
+      else if(text.length() < 14) { ui->freeTextMsg->setStyleSheet(QString("background: %1;color: %2").arg(Radio::convert_dark("#7bff7b",m_useDarkStyle),Radio::convert_dark("#000000",m_useDarkStyle))); }
       else if(text.length() >= 14) { ui->freeTextMsg->setStyleSheet(QString("background: %1;color: %2").arg(Radio::convert_dark("#ffff00",m_useDarkStyle),Radio::convert_dark("#000000",m_useDarkStyle))); }
       msgtype(text, ui->freeTextMsg->lineEdit ());
     }

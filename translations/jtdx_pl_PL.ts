@@ -6284,6 +6284,21 @@ To błąd samego dekodera. Usuń to, co uniemożliwia jego uruchomienie - brakuj
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Directional CQ: the word sent after CQ, up to four letters.&lt;/p&gt;&lt;p&gt;DX, a continent (EU, NA, SA, AS, AF, OC), a prefix (JA), ASIA or USA is a region: autoselect answers callers from there. Unless &quot;Strict directional CQ operation&quot; is on, it also answers wanted stations and stations of a new DXCC, wherever they are. FD, RU, WW and the other words of three or four letters, such as TEST or POTA, name an activity: anybody may answer.&lt;/p&gt;&lt;p&gt;Three and four letters are sent in FT8, FT4 and FT2 only. No word is sent with a compound own call.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Kierunkowe CQ: słowo wysyłane po CQ, do czterech liter.&lt;/p&gt;&lt;p&gt;DX, kontynent (EU, NA, SA, AS, AF, OC), prefiks (JA), ASIA lub USA to region: autoselekcja odpowiada wołającym stamtąd. Jeśli &quot;Praca ze ścisłym kierunkowym CQ&quot; jest wyłączona, odpowiada też potrzebnym stacjom i stacjom z nowego DXCC, skądkolwiek wołają. FD, RU, WW oraz pozostałe słowa trzy- lub czteroliterowe, takie jak TEST czy POTA, oznaczają aktywność: odpowiedzieć może każdy.&lt;/p&gt;&lt;p&gt;Trzy i cztery litery są wysyłane tylko w FT8, FT4 i FT2. Przy złożonym własnym znaku żadne słowo nie jest wysyłane.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>The message cannot be encoded: transmission halted</source>
+        <translation>Nie można zakodować wiadomości: nadawanie zatrzymane</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Goes out as: %1</source>
+        <translation>Zostanie nadane jako: %1</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>This message cannot be sent</source>
+        <translation>Tej wiadomości nie można nadać</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

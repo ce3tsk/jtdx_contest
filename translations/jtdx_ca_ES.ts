@@ -6293,6 +6293,21 @@ Aquest és l'error del descodificador mateix. Corregiu allò que n'impedeix l'in
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Directional CQ: the word sent after CQ, up to four letters.&lt;/p&gt;&lt;p&gt;DX, a continent (EU, NA, SA, AS, AF, OC), a prefix (JA), ASIA or USA is a region: autoselect answers callers from there. Unless &quot;Strict directional CQ operation&quot; is on, it also answers wanted stations and stations of a new DXCC, wherever they are. FD, RU, WW and the other words of three or four letters, such as TEST or POTA, name an activity: anybody may answer.&lt;/p&gt;&lt;p&gt;Three and four letters are sent in FT8, FT4 and FT2 only. No word is sent with a compound own call.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;CQ direccional: la paraula que s&apos;envia després de CQ, fins a quatre lletres.&lt;/p&gt;&lt;p&gt;DX, un continent (EU, NA, SA, AS, AF, OC), un prefix (JA), ASIA o USA és una regió: la selecció automàtica respon a qui crida des d&apos;allà. Si &quot;Operació CQ direccional estricta&quot; no està activada, també respon a les estacions buscades i a les d&apos;un DXCC nou, siguin on siguin. FD, RU, WW i les altres paraules de tres o quatre lletres, com TEST o POTA, indiquen una activitat: qualsevol pot respondre.&lt;/p&gt;&lt;p&gt;Tres i quatre lletres només s&apos;envien en FT8, FT4 i FT2. Amb un indicatiu propi compost no s&apos;envia cap paraula.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>The message cannot be encoded: transmission halted</source>
+        <translation>El missatge no es pot codificar: transmissió aturada</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Goes out as: %1</source>
+        <translation>S'envia com a: %1</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>This message cannot be sent</source>
+        <translation>Aquest missatge no es pot enviar</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

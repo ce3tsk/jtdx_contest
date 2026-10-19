@@ -6283,6 +6283,21 @@ That is the decoder's own error. Put right whatever stops it starting - a missin
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Directional CQ: the word sent after CQ, up to four letters.&lt;/p&gt;&lt;p&gt;DX, a continent (EU, NA, SA, AS, AF, OC), a prefix (JA), ASIA or USA is a region: autoselect answers callers from there. Unless &quot;Strict directional CQ operation&quot; is on, it also answers wanted stations and stations of a new DXCC, wherever they are. FD, RU, WW and the other words of three or four letters, such as TEST or POTA, name an activity: anybody may answer.&lt;/p&gt;&lt;p&gt;Three and four letters are sent in FT8, FT4 and FT2 only. No word is sent with a compound own call.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;定向 CQ：CQ 之後發送的詞，最多四個字母。&lt;/p&gt;&lt;p&gt;DX、大洲（EU、NA、SA、AS、AF、OC）、前綴（JA）、ASIA 或 USA 表示地區：自動選擇應答來自該地區的呼叫者。“嚴格定向CQ操作”未開啟時，它還會應答渴望的電台和新DXCC的電台，無論它們在哪裡。FD、RU、WW 以及 TEST、POTA 這類其他三或四個字母的詞表示活動：任何人都可以應答。&lt;/p&gt;&lt;p&gt;三個和四個字母的詞只在 FT8、FT4 和 FT2 中發送。自己的呼號為複合呼號時，不發送任何詞。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>The message cannot be encoded: transmission halted</source>
+        <translation>訊息無法編碼：發射已中止</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Goes out as: %1</source>
+        <translation>實際發出：%1</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>This message cannot be sent</source>
+        <translation>此訊息無法發出</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

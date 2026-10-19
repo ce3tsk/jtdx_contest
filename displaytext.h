@@ -57,14 +57,14 @@ protected:
 private:
 
     bool scroll_;
-    bool bold_;
+    bool bold_ = false;   /* CE3TSK 2026-10-18: until setContentFont () - appendText () reads it (TODO.md 3.-133) */
     bool wwDigi_ = false; /* CE3TSK: WW Digi contest, grid is the exchange */
     /* CE3TSK: copied in setConfiguration() like every other setting, rather than keeping a
        Configuration pointer - this class deliberately holds no such pointer. my_grid can
        only change through the settings dialog, which calls setConfiguration() again. */
     QString myGrid_ = "";
     Configuration::SpecialOperatingActivity specialOp_ = Configuration::SpecialOperatingActivity::NONE;
-    bool wastx_;
+    bool wastx_ = false;   /* CE3TSK 2026-10-18: nothing sent yet - displayTransmittedText () reads it before a decode sets it */
     bool useDarkStyle_;
     bool displayCountryName_;
     bool displayCountryPrefix_;

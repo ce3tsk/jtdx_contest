@@ -58,9 +58,12 @@ class QsoHistory
  	{
 	  QString	call,grid,r_rep,s_rep,tyyp,continent,mpx,mode;
 	  QString	gridCall;   /* CE3TSK: the call, in full, that sent grid - see gridSentBy () */
-	  Status	status,srx_c,srx_p,stx_c,stx_p;
-	  unsigned	b_time,time;
-	  int		distance,rx,tx,count,priority;
+	  /* CE3TSK 2026-10-18: the values message () gives a station it sees first. rx () stores one it has not seen with
+	     only call, status, rx and time, and without these his priority, count, Tx frequency, first time and steps
+	     were what the stack held - message () and autoseq () decided on them (valgrind, TODO.md 3.-133) */
+	  Status	status = NONE,srx_c = NONE,srx_p = NONE,stx_c = NONE,stx_p = NONE;
+	  unsigned	b_time = 0,time = 0;
+	  int		distance = 0,rx = 0,tx = 0,count = 0,priority = 0;
 	  bool		doubtful = false;   /* CE3TSK: see Doubt - rx () stores entries it fills only in part */
 	  unsigned	clean_time = ~0u;   /* CE3TSK: the period of his last clean message - it wins over a doubtful
 	                                   one of the same period, whichever the decoder printed first. ~0u: none

@@ -6282,6 +6282,21 @@ That is the decoder's own error. Put right whatever stops it starting - a missin
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Directional CQ: the word sent after CQ, up to four letters.&lt;/p&gt;&lt;p&gt;DX, a continent (EU, NA, SA, AS, AF, OC), a prefix (JA), ASIA or USA is a region: autoselect answers callers from there. Unless &quot;Strict directional CQ operation&quot; is on, it also answers wanted stations and stations of a new DXCC, wherever they are. FD, RU, WW and the other words of three or four letters, such as TEST or POTA, name an activity: anybody may answer.&lt;/p&gt;&lt;p&gt;Three and four letters are sent in FT8, FT4 and FT2 only. No word is sent with a compound own call.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;指定CQ：CQ の後に送る語で、英字4文字までです。&lt;/p&gt;&lt;p&gt;DX、大陸（EU、NA、SA、AS、AF、OC）、プリフィックス（JA）、ASIA、USA は地域を表し、自動選択はその地域からの呼び出しに応答します。「指定したCQに対する指定外からの呼び出しは無視する」がオフのときは、欲しい局と新しいDXCCの局にも、どこからの呼び出しでも応答します。FD、RU、WW と、TEST や POTA のようなその他の3～4文字の語はアクティビティを表し、どの局でも応答できます。&lt;/p&gt;&lt;p&gt;3文字と4文字の語は FT8、FT4、FT2 でのみ送信されます。自局のコールサインが複合コールサインのときは、語は送信されません。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>The message cannot be encoded: transmission halted</source>
+        <translation>メッセージをエンコードできません：送信を中止しました</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Goes out as: %1</source>
+        <translation>送信される内容：%1</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>This message cannot be sent</source>
+        <translation>このメッセージは送信できません</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

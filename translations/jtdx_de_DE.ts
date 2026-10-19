@@ -6284,6 +6284,21 @@ Das ist der Fehler des Decoders selbst. Beheben Sie, was seinen Start verhindert
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Directional CQ: the word sent after CQ, up to four letters.&lt;/p&gt;&lt;p&gt;DX, a continent (EU, NA, SA, AS, AF, OC), a prefix (JA), ASIA or USA is a region: autoselect answers callers from there. Unless &quot;Strict directional CQ operation&quot; is on, it also answers wanted stations and stations of a new DXCC, wherever they are. FD, RU, WW and the other words of three or four letters, such as TEST or POTA, name an activity: anybody may answer.&lt;/p&gt;&lt;p&gt;Three and four letters are sent in FT8, FT4 and FT2 only. No word is sent with a compound own call.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Gerichtetes CQ: das Wort, das nach CQ gesendet wird, bis zu vier Buchstaben.&lt;/p&gt;&lt;p&gt;DX, ein Kontinent (EU, NA, SA, AS, AF, OC), ein Präfix (JA), ASIA oder USA ist eine Region: Die Autoauswahl antwortet Anrufern von dort. Ist &quot;Strenger Betrieb bei gerichtetem CQ&quot; aus, antwortet sie außerdem gesuchten Stationen und Stationen eines neuen DXCC, egal wo sie sind. FD, RU, WW und die übrigen Wörter mit drei oder vier Buchstaben, etwa TEST oder POTA, bezeichnen eine Aktivität: Jeder darf antworten.&lt;/p&gt;&lt;p&gt;Drei und vier Buchstaben werden nur in FT8, FT4 und FT2 gesendet. Mit einem zusammengesetzten eigenen Rufzeichen wird kein Wort gesendet.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>The message cannot be encoded: transmission halted</source>
+        <translation>Die Nachricht lässt sich nicht kodieren: Sendung abgebrochen</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Goes out as: %1</source>
+        <translation>Wird gesendet als: %1</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>This message cannot be sent</source>
+        <translation>Diese Nachricht kann nicht gesendet werden</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

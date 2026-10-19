@@ -130,22 +130,6 @@ namespace cq_direction
     return mode77 && message.startsWith ("CQ " + word + " ");
   }
 
-  // the caller in a CQ with a word of three or four letters ("CQ TEST K1ABC FN42": K1ABC); empty for every
-  // other message. The program judges a typed message with the 72-bit packer, which calls such a CQ free
-  // text and has its field painted pink; in FT8, FT4 and FT2 the 77-bit packer sends it, and it is that one
-  // which must be asked - and the caller, for the packer drops what it cannot pack of a call without a
-  // word ("CQ TEST K1ABC/QRP FN42" goes out as "CQ TEST K1ABC FN42"): see MainWindow::msgtype ().
-  inline QString longWordCqCaller (QString const& message)
-  {
-    QString const m {message.simplified ()};
-    if (!m.startsWith ("CQ ")) return QString {};
-    int const end = m.indexOf (' ', 3);
-    if (end < 0) return QString {};                                    // "CQ TEST" and nobody calling
-    QString const word {m.mid (3, end - 3)};
-    if (word.size () < 3 || Box::InEffect != box (word, true)) return QString {};
-    return m.section (' ', 2, 2);
-  }
-
   // the word that goes into the CQ generated: none for a word of three letters or more that the mode cannot
   // carry (or that is no word). One and two characters are passed as they always were.
   inline QString inMessage (QString const& word, bool mode77)

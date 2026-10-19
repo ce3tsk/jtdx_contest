@@ -6284,6 +6284,21 @@ Ez magának a dekódernek a hibája. Hárítsa el, ami az indulását akadályoz
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Directional CQ: the word sent after CQ, up to four letters.&lt;/p&gt;&lt;p&gt;DX, a continent (EU, NA, SA, AS, AF, OC), a prefix (JA), ASIA or USA is a region: autoselect answers callers from there. Unless &quot;Strict directional CQ operation&quot; is on, it also answers wanted stations and stations of a new DXCC, wherever they are. FD, RU, WW and the other words of three or four letters, such as TEST or POTA, name an activity: anybody may answer.&lt;/p&gt;&lt;p&gt;Three and four letters are sent in FT8, FT4 and FT2 only. No word is sent with a compound own call.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Irányított CQ: a CQ után küldött szó, legfeljebb négy betű.&lt;/p&gt;&lt;p&gt;A DX, egy kontinens (EU, NA, SA, AS, AF, OC), egy prefix (JA), az ASIA vagy az USA régiót jelöl: az automatikus választás az onnan hívóknak válaszol. Ha a &quot;Szigorú irányított CQ-üzem&quot; nincs bekapcsolva, a figyelt állomásoknak és egy új DXCC állomásainak is válaszol, bárhol legyenek. Az FD, RU, WW és a további három- vagy négybetűs szavak, például a TEST vagy a POTA, tevékenységet jelölnek: bárki válaszolhat.&lt;/p&gt;&lt;p&gt;Három és négy betű csak FT8, FT4 és FT2 módban kerül adásra. Összetett saját hívójellel nem kerül adásra szó.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>The message cannot be encoded: transmission halted</source>
+        <translation>Az üzenet nem kódolható: az adás leállítva</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Goes out as: %1</source>
+        <translation>Így kerül adásra: %1</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>This message cannot be sent</source>
+        <translation>Ez az üzenet nem küldhető el</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

@@ -6283,6 +6283,21 @@ Dekoders: %3
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Directional CQ: the word sent after CQ, up to four letters.&lt;/p&gt;&lt;p&gt;DX, a continent (EU, NA, SA, AS, AF, OC), a prefix (JA), ASIA or USA is a region: autoselect answers callers from there. Unless &quot;Strict directional CQ operation&quot; is on, it also answers wanted stations and stations of a new DXCC, wherever they are. FD, RU, WW and the other words of three or four letters, such as TEST or POTA, name an activity: anybody may answer.&lt;/p&gt;&lt;p&gt;Three and four letters are sent in FT8, FT4 and FT2 only. No word is sent with a compound own call.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Virzīts CQ: vārds, ko raida pēc CQ, līdz četriem burtiem.&lt;/p&gt;&lt;p&gt;DX, kontinents (EU, NA, SA, AS, AF, OC), prefikss (JA), ASIA vai USA ir reģions: automātiskā izvēle atbild izsaucējiem no turienes. Ja &quot;Strikts virzītā CQ darbs&quot; nav ieslēgts, tā atbild arī meklētajām stacijām un jaunas DXCC stacijām, lai kur tās atrastos. FD, RU, WW un citi trīs vai četru burtu vārdi, piemēram, TEST vai POTA, apzīmē aktivitāti: atbildēt var ikviens.&lt;/p&gt;&lt;p&gt;Trīs un četrus burtus raida tikai FT8, FT4 un FT2 modēs. Ar saliktu paša izsaukuma signālu vārdu neraida.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>The message cannot be encoded: transmission halted</source>
+        <translation>Ziņojumu nevar kodēt: raidīšana apturēta</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Goes out as: %1</source>
+        <translation>Tiek raidīts kā: %1</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>This message cannot be sent</source>
+        <translation>Šo ziņojumu nevar nosūtīt</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

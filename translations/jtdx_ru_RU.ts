@@ -6298,6 +6298,21 @@ That is the decoder's own error. Put right whatever stops it starting - a missin
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Directional CQ: the word sent after CQ, up to four letters.&lt;/p&gt;&lt;p&gt;DX, a continent (EU, NA, SA, AS, AF, OC), a prefix (JA), ASIA or USA is a region: autoselect answers callers from there. Unless &quot;Strict directional CQ operation&quot; is on, it also answers wanted stations and stations of a new DXCC, wherever they are. FD, RU, WW and the other words of three or four letters, such as TEST or POTA, name an activity: anybody may answer.&lt;/p&gt;&lt;p&gt;Three and four letters are sent in FT8, FT4 and FT2 only. No word is sent with a compound own call.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Направленный CQ: слово, передаваемое после CQ, до четырёх букв.&lt;/p&gt;&lt;p&gt;DX, континент (EU, NA, SA, AS, AF, OC), префикс (JA), ASIA или USA - это регион: автовыбор отвечает вызывающим оттуда. Если &quot;Строго направленный вызов CQ&quot; выключен, он отвечает также отслеживаемым станциям и станциям новой DXCC, где бы они ни находились. FD, RU, WW и остальные слова из трёх или четырёх букв, например TEST или POTA, обозначают активность: ответить может любой.&lt;/p&gt;&lt;p&gt;Три и четыре буквы передаются только в FT8, FT4 и FT2. С дробным собственным позывным слово не передаётся.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>The message cannot be encoded: transmission halted</source>
+        <translation>Сообщение невозможно закодировать: передача остановлена</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Goes out as: %1</source>
+        <translation>Будет передано как: %1</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>This message cannot be sent</source>
+        <translation>Это сообщение невозможно передать</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

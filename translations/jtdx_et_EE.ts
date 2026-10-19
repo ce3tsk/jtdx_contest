@@ -6297,6 +6297,21 @@ See on dekoodri enda viga. Kõrvalda see, mis takistab käivitumist - puuduv tee
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Directional CQ: the word sent after CQ, up to four letters.&lt;/p&gt;&lt;p&gt;DX, a continent (EU, NA, SA, AS, AF, OC), a prefix (JA), ASIA or USA is a region: autoselect answers callers from there. Unless &quot;Strict directional CQ operation&quot; is on, it also answers wanted stations and stations of a new DXCC, wherever they are. FD, RU, WW and the other words of three or four letters, such as TEST or POTA, name an activity: anybody may answer.&lt;/p&gt;&lt;p&gt;Three and four letters are sent in FT8, FT4 and FT2 only. No word is sent with a compound own call.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Suunatud CQ: sõna, mis saadetakse pärast CQ-d, kuni neli tähte.&lt;/p&gt;&lt;p&gt;DX, kontinent (EU, NA, SA, AS, AF, OC), prefiks (JA), ASIA või USA on piirkond: automaatvalik vastab sealt kutsujatele. Kui &quot;Ranged suunatud CQ-toimingud&quot; ei ole sisse lülitatud, vastab see ka soovitud jaamadele ja uue DXCC jaamadele, kus iganes need asuvad. FD, RU, WW ning teised kolme- või neljatähelised sõnad, nagu TEST või POTA, tähistavad tegevust: vastata võib igaüks.&lt;/p&gt;&lt;p&gt;Kolm ja neli tähte saadetakse ainult režiimides FT8, FT4 ja FT2. Oma liitkutsungiga sõna ei saadeta.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>The message cannot be encoded: transmission halted</source>
+        <translation>Sõnumit ei saa kodeerida: saatmine peatatud</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Goes out as: %1</source>
+        <translation>Saadetakse kujul: %1</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>This message cannot be sent</source>
+        <translation>Seda sõnumit ei saa saata</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>
