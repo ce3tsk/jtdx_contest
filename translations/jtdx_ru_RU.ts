@@ -10275,6 +10275,26 @@ soundcard changes</source>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Highlight messages from US stations whose state is new in the mode according to the wsjtx_log.adi log file. The state comes from the grid square and, in a square several states share, from the station's US license, as for new US states.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Выделение сообщений от станций США, штат которых новый для вида модуляции по записям файла журнала wsjtx_log.adi. Штат определяется по локатору, а в локаторе, который делят несколько штатов, - по американской лицензии станции, как и для новых штатов США.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>In the Band Activity window, after the country of a message that carries a grid: the distance from My Grid to that grid, in km or in miles as chosen above. The column is the same on every line; a country too long for it is followed by one space.</source>
+        <translation>В окне активности диапазона, после страны сообщения, в котором есть локатор: расстояние от моего QTH локатора до этого локатора, в км или в милях, как выбрано выше. Столбец на каждой строке один и тот же; после слишком длинного для него названия страны ставится один пробел.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Show distance in messages with grid</source>
+        <translation>Показывать расстояние в сообщениях с локатором</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>In the Band Activity window, after the country of a message that carries a grid: the azimuth from My Grid to that grid, in degrees.</source>
+        <translation>В окне активности диапазона, после страны сообщения, в котором есть локатор: азимут от моего QTH локатора на этот локатор, в градусах.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Show azimuth in messages with grid</source>
+        <translation>Показывать азимут в сообщениях с локатором</translation>
+    </message>
 </context>
 <context>
     <name>main</name>

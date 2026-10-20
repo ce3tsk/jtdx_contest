@@ -10206,6 +10206,26 @@ soundcard changes</source>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Highlight messages from US stations whose state is new in the mode according to the wsjtx_log.adi log file. The state comes from the grid square and, in a square several states share, from the station's US license, as for new US states.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;wsjtx_log.adi 기준으로 해당 모드에서 새로운 주의 미국 국 메시지를 강조합니다. 주는 새로운 미국 주와 마찬가지로 그리드로, 여러 주에 걸친 그리드에서는 국의 미국 면허로 정해집니다.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>In the Band Activity window, after the country of a message that carries a grid: the distance from My Grid to that grid, in km or in miles as chosen above. The column is the same on every line; a country too long for it is followed by one space.</source>
+        <translation>밴드 활동 창에서 그리드가 포함된 메시지의 국가 뒤에: 내 그리드에서 그 그리드까지의 거리를 위에서 선택한 대로 km 또는 마일로 표시합니다. 열은 모든 줄에서 같은 위치입니다. 열보다 긴 국가 이름 뒤에는 공백 하나가 옵니다.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Show distance in messages with grid</source>
+        <translation>그리드가 있는 메시지에 거리 표시</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>In the Band Activity window, after the country of a message that carries a grid: the azimuth from My Grid to that grid, in degrees.</source>
+        <translation>밴드 활동 창에서 그리드가 포함된 메시지의 국가 뒤에: 내 그리드에서 그 그리드로의 방위각을 도 단위로 표시합니다.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Show azimuth in messages with grid</source>
+        <translation>그리드가 있는 메시지에 방위각 표시</translation>
+    </message>
 </context>
 <context>
     <name>main</name>

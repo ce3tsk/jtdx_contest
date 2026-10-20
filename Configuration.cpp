@@ -938,6 +938,8 @@ private:
   bool countryName_;
   bool countryPrefix_;
   bool countryNameTranslated_;   // CE3TSK
+  bool showDistance_;            // CE3TSK 2026-10-20: distance and azimuth after the country (distancefield.h)
+  bool showAzimuth_;
   bool usStates_;   /* CE3TSK 2026-10-02 */
   bool usStatesPending_;   /* CE3TSK: Show US states as last clicked in the open dialog - kept while the box is greyed */
   bool callNotif_;
@@ -1434,6 +1436,8 @@ bool Configuration::useDarkStyle () const {return m_->useDarkStyle_;}
 bool Configuration::countryName () const {return m_->countryName_;}
 bool Configuration::countryPrefix () const {return m_->countryPrefix_;}
 bool Configuration::countryNameTranslated () const {return m_->countryNameTranslated_;}
+bool Configuration::showDistance () const {return m_->showDistance_;}
+bool Configuration::showAzimuth () const {return m_->showAzimuth_;}
 bool Configuration::usStates () const {return m_->usStates_;}
 bool Configuration::callNotif () const {return m_->callNotif_;}
 bool Configuration::gridNotif () const {return m_->gridNotif_;}
@@ -1619,7 +1623,7 @@ namespace
 {
   /* both distances azdist gives, km and miles; false when either grid is missing (CE3TSK 2026-10-05: shared by
      grid_distance_km and grid_distance_text) */
-  bool grid_distances (QString const& myGrid, QString const& hisGrid, bool fourCharOnly, int& km, int& miles)
+  bool grid_distances (QString const& myGrid, QString const& hisGrid, bool fourCharOnly, int& km, int& miles, int& azimuth)
   {
     QString const mine = contest_grid (myGrid, fourCharOnly);
     QString const his = contest_grid (hisGrid, fourCharOnly);
@@ -1629,23 +1633,28 @@ namespace
     QByteArray a = (mine + "        ").left (8).toLatin1 ();
     QByteArray b = (his + "        ").left (8).toLatin1 ();
     double utch = 0.0;
-    int nAz = 0, nEl = 0, nHotAz = 0, nHotABetter = 0;
-    km = miles = 0;
-    azdist_ (a.data (), b.data (), &utch, &nAz, &nEl, &miles, &km, &nHotAz, &nHotABetter, 8, 8);
+    int nEl = 0, nHotAz = 0, nHotABetter = 0;
+    km = miles = azimuth = 0;
+    azdist_ (a.data (), b.data (), &utch, &azimuth, &nEl, &miles, &km, &nHotAz, &nHotABetter, 8, 8);
     return true;
   }
 }
 
 int grid_distance_km (QString const& myGrid, QString const& hisGrid, bool fourCharOnly)
 {
-  int km, miles;
-  return grid_distances (myGrid, hisGrid, fourCharOnly, km, miles) ? km : -1;
+  int km, miles, az;
+  return grid_distances (myGrid, hisGrid, fourCharOnly, km, miles, az) ? km : -1;
+}
+
+bool grid_distance_azimuth (QString const& myGrid, QString const& hisGrid, bool fourCharOnly, int& km, int& miles, int& azimuth)
+{
+  return grid_distances (myGrid, hisGrid, fourCharOnly, km, miles, azimuth);
 }
 
 QString grid_distance_text (QString const& myGrid, QString const& hisGrid, bool fourCharOnly, bool miles)
 {
-  int km, mi;
-  if (!grid_distances (myGrid, hisGrid, fourCharOnly, km, mi)) return {};
+  int km, mi, az;
+  if (!grid_distances (myGrid, hisGrid, fourCharOnly, km, mi, az)) return {};
   return miles ? QString::asprintf ("%d mi", mi) : QString::asprintf ("%d km", km);   // as the DX panel writes it
 }
 bool Configuration::newPotential () const {return m_->newPotential_;}
@@ -2727,6 +2736,8 @@ Radio::convert_dark("#fafbfe",useDarkStyle_),Radio::convert_dark("#dcdef1",useDa
   ui_->clear_DX_check_box->setChecked (clear_DX_);
   ui_->clear_DX_exit_check_box->setChecked (clear_DX_exit_);
   ui_->miles_check_box->setChecked (miles_);
+  ui_->showDistance_check_box->setChecked (showDistance_);   // CE3TSK 2026-10-20
+  ui_->showAzimuth_check_box->setChecked (showAzimuth_);
   ui_->scroll_check_box->setChecked (scroll_);
   ui_->tx_watchdog_spin_box->setValue (watchdog_);
   ui_->tune_timer_spin_box->setValue (tunetimer_);
@@ -3218,6 +3229,8 @@ void Configuration::impl::read_settings ()
   countryName_ = settings_->value ("countryName", true).toBool ();
   countryPrefix_ = settings_->value ("countryPrefix", false).toBool ();
   countryNameTranslated_ = settings_->value ("countryNameTranslated", false).toBool ();
+  showDistance_ = settings_->value (contest_profile::own_key ("ShowDistance"), false).toBool ();   // CE3TSK 2026-10-20: ours
+  showAzimuth_ = settings_->value (contest_profile::own_key ("ShowAzimuth"), false).toBool ();
   usStates_ = settings_->value (contest_profile::own_key ("ShowUSStates"), true).toBool ();   /* CE3TSK */
 
   if(settings_->value ("callsignLogFiltering").toString()=="false" || settings_->value ("callsignLogFiltering").toString()=="true")
@@ -3592,6 +3605,8 @@ void Configuration::impl::write_settings ()
   settings_->setValue ("countryName", countryName_);
   settings_->setValue ("countryPrefix", countryPrefix_);
   settings_->setValue ("countryNameTranslated", countryNameTranslated_);
+  settings_->setValue (contest_profile::own_key ("ShowDistance"), showDistance_);   // CE3TSK 2026-10-20
+  settings_->setValue (contest_profile::own_key ("ShowAzimuth"), showAzimuth_);
   settings_->setValue (contest_profile::own_key ("ShowUSStates"), usStates_);   /* CE3TSK */
   settings_->setValue ("callsignLogFiltering", callNotif_);
   settings_->setValue ("gridLogFiltering", gridNotif_);
@@ -4198,6 +4213,8 @@ void Configuration::impl::accept ()
   countryName_ = ui_->countryName_check_box->isChecked ();
   countryPrefix_ = ui_->countryPrefix_check_box->isChecked ();
   countryNameTranslated_ = ui_->countryNameTranslated_check_box->isChecked ();
+  showDistance_ = ui_->showDistance_check_box->isChecked ();   // CE3TSK 2026-10-20
+  showAzimuth_ = ui_->showAzimuth_check_box->isChecked ();
   /* CE3TSK: the box shows unticked while it is greyed, as its neighbours do - but its value is the one last
      clicked, so switching the DXCC names off (and on again) neither loses it nor brings back an older one */
   usStates_ = usStatesPending_;

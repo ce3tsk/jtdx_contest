@@ -10222,6 +10222,26 @@ canvi en la targeta de so</translation>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Highlight messages from US stations whose state is new in the mode according to the wsjtx_log.adi log file. The state comes from the grid square and, in a square several states share, from the station's US license, as for new US states.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ressalta missatges d'estacions dels EUA l'estat de les quals és nou en el mode d'acord amb l'arxiu de log wsjtx_log.adi. L'estat surt del locator i, en un quadrat compartit per diversos estats, de la llicència dels EUA de l'estació, com per als estats nous dels EUA.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>In the Band Activity window, after the country of a message that carries a grid: the distance from My Grid to that grid, in km or in miles as chosen above. The column is the same on every line; a country too long for it is followed by one space.</source>
+        <translation>A la finestra d'activitat de la banda, després del país d'un missatge que porta un locator: la distància des d'El meu Locator fins a aquest locator, en km o en milles segons l'opció de més amunt. La columna és la mateixa a cada línia; un país massa llarg per a ella va seguit d'un espai.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Show distance in messages with grid</source>
+        <translation>Mostrar la distància en missatges amb locator</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>In the Band Activity window, after the country of a message that carries a grid: the azimuth from My Grid to that grid, in degrees.</source>
+        <translation>A la finestra d'activitat de la banda, després del país d'un missatge que porta un locator: l'azimut des d'El meu Locator cap a aquest locator, en graus.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Show azimuth in messages with grid</source>
+        <translation>Mostrar l'azimut en missatges amb locator</translation>
+    </message>
 </context>
 <context>
     <name>main</name>

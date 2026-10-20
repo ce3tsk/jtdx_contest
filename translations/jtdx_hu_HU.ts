@@ -10205,6 +10205,26 @@ hangkártya módosítási tevékenységet</translation>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Highlight messages from US stations whose state is new in the mode according to the wsjtx_log.adi log file. The state comes from the grid square and, in a square several states share, from the station's US license, as for new US states.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Kiemelten jelöli azokat az amerikai állomásokat, amelyek állama új az üzemmódban a wsjtx_log.adi logfájl adatai szerint. Az állam a QRA kockából, a több állam által megosztott kockában pedig az állomás amerikai engedélyéből adódik, ahogy az új amerikai államoknál.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>In the Band Activity window, after the country of a message that carries a grid: the distance from My Grid to that grid, in km or in miles as chosen above. The column is the same on every line; a country too long for it is followed by one space.</source>
+        <translation>A Sáv_aktivitás ablakban, egy lokátort tartalmazó üzenet országa után: a távolság a saját QRA lokátortól ehhez a lokátorhoz, km-ben vagy mérföldben, ahogy fent választva. Az oszlop minden sorban ugyanott van; az ehhez túl hosszú ország után egy szóköz következik.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Show distance in messages with grid</source>
+        <translation>Távolság megjelenítése lokátoros üzeneteknél</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>In the Band Activity window, after the country of a message that carries a grid: the azimuth from My Grid to that grid, in degrees.</source>
+        <translation>A Sáv_aktivitás ablakban, egy lokátort tartalmazó üzenet országa után: az irányszög a saját QRA lokátortól e lokátor felé, fokban.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Show azimuth in messages with grid</source>
+        <translation>Irányszög megjelenítése lokátoros üzeneteknél</translation>
+    </message>
 </context>
 <context>
     <name>main</name>

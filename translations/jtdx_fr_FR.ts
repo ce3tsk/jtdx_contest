@@ -10217,6 +10217,26 @@ changements de carte son</translation>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Highlight messages from US stations whose state is new in the mode according to the wsjtx_log.adi log file. The state comes from the grid square and, in a square several states share, from the station's US license, as for new US states.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Met en évidence les messages des stations américaines dont l'État est nouveau dans le mode selon le fichier journal wsjtx_log.adi. L'État vient du locator et, dans un carré que se partagent plusieurs États, de la licence américaine de la station, comme pour les nouveaux États américains.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>In the Band Activity window, after the country of a message that carries a grid: the distance from My Grid to that grid, in km or in miles as chosen above. The column is the same on every line; a country too long for it is followed by one space.</source>
+        <translation>Dans la fenêtre d'activité de la bande, après le pays d'un message qui porte un locator : la distance de Mon Locator à ce locator, en km ou en miles selon le choix ci-dessus. La colonne est la même sur chaque ligne ; un pays trop long pour elle est suivi d'un espace.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Show distance in messages with grid</source>
+        <translation>Afficher la distance des messages avec locator</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>In the Band Activity window, after the country of a message that carries a grid: the azimuth from My Grid to that grid, in degrees.</source>
+        <translation>Dans la fenêtre d'activité de la bande, après le pays d'un message qui porte un locator : l'azimut de Mon Locator vers ce locator, en degrés.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Show azimuth in messages with grid</source>
+        <translation>Afficher l'azimut des messages avec locator</translation>
+    </message>
 </context>
 <context>
     <name>main</name>

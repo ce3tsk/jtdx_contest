@@ -467,6 +467,26 @@
               </item>
              </layout>
             </item>
+            <item row="5" column="0">
+             <widget class="QCheckBox" name="showDistance_check_box">
+              <property name="toolTip">
+               <string>In the Band Activity window, after the country of a message that carries a grid: the distance from My Grid to that grid, in km or in miles as chosen above. The column is the same on every line; a country too long for it is followed by one space.</string>
+              </property>
+              <property name="text">
+               <string>Show distance in messages with grid</string>
+              </property>
+             </widget>
+            </item>
+            <item row="5" column="1">
+             <widget class="QCheckBox" name="showAzimuth_check_box">
+              <property name="toolTip">
+               <string>In the Band Activity window, after the country of a message that carries a grid: the azimuth from My Grid to that grid, in degrees.</string>
+              </property>
+              <property name="text">
+               <string>Show azimuth in messages with grid</string>
+              </property>
+             </widget>
+            </item>
            </layout>
           </item>
          </layout>

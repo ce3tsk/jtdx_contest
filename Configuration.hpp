@@ -247,6 +247,8 @@ public:
   bool clear_DX () const;
   bool clear_DX_exit () const;
   bool miles () const;
+  bool showDistance () const;   // CE3TSK 2026-10-20: the distance after a decode's country, from its grid
+  bool showAzimuth () const;    //   and the azimuth
   bool scroll () const;
   int watchdog () const;
   int tunetimer () const;
@@ -488,6 +490,11 @@ QString contest_points_tag (int points);
    because 0 km is a real answer, a station in our own square, and scores a point.
    fourCharOnly cuts both grids to the 4 characters a contest actually exchanges. */
 int grid_distance_km (QString const& myGrid, QString const& hisGrid, bool fourCharOnly);
+
+/* CE3TSK 2026-10-20: the distance - km and miles - and the azimuth from my grid to his, by the same grid_distances ()
+   (azdist) as the score's grid_distance_km (); false when either grid is missing (distancefield.h: the field after a
+   decode's country). The DX panel calls azdist itself, on the same grids. */
+bool grid_distance_azimuth (QString const& myGrid, QString const& hisGrid, bool fourCharOnly, int& km, int& miles, int& azimuth);
 
 /* CE3TSK 2026-10-05: the same distance as the DX panel shows it - "1234 km", or "767 mi" with miles chosen - for the
    log's comment when the grid logged is not the box's (MainWindow::on_logQSOButton_clicked); "" when unknown. */

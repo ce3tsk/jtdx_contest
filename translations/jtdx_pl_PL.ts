@@ -10210,6 +10210,26 @@ zmiany dla karty dźwiękowej</translation>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Highlight messages from US stations whose state is new in the mode according to the wsjtx_log.adi log file. The state comes from the grid square and, in a square several states share, from the station's US license, as for new US states.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Podświetl wiadomości od stacji z USA, których stan jest nowy dla emisji zgodnie z danymi w pliku wsjtx_log.adi. Stan wynika z lokatora, a w lokatorze dzielonym przez kilka stanów z amerykańskiej licencji stacji, tak jak dla nowych stanów USA.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>In the Band Activity window, after the country of a message that carries a grid: the distance from My Grid to that grid, in km or in miles as chosen above. The column is the same on every line; a country too long for it is followed by one space.</source>
+        <translation>W oknie aktywności pasma, po kraju komunikatu zawierającego lokator: odległość od Mojego lokatora do tego lokatora, w km lub w milach, jak wybrano powyżej. Kolumna jest w każdym wierszu w tym samym miejscu; po kraju zbyt długim dla niej następuje jedna spacja.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Show distance in messages with grid</source>
+        <translation>Pokazuj odległość w komunikatach z lokatorem</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>In the Band Activity window, after the country of a message that carries a grid: the azimuth from My Grid to that grid, in degrees.</source>
+        <translation>W oknie aktywności pasma, po kraju komunikatu zawierającego lokator: azymut od Mojego lokatora w stronę tego lokatora, w stopniach.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Show azimuth in messages with grid</source>
+        <translation>Pokazuj azymut w komunikatach z lokatorem</translation>
+    </message>
 </context>
 <context>
     <name>main</name>

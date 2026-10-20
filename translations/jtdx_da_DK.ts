@@ -10213,6 +10213,26 @@ lydkort ændring</translation>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Highlight messages from US stations whose state is new in the mode according to the wsjtx_log.adi log file. The state comes from the grid square and, in a square several states share, from the station's US license, as for new US states.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Fremhæv beskeder fra amerikanske stationer, hvis stat er ny i moden i henhold til wsjtx_log.adi logfilen. Staten kommer fra griddet og, i et grid som flere stater deler, fra stationens amerikanske licens, som for nye amerikanske stater.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>In the Band Activity window, after the country of a message that carries a grid: the distance from My Grid to that grid, in km or in miles as chosen above. The column is the same on every line; a country too long for it is followed by one space.</source>
+        <translation>I båndaktivitetsvinduet, efter landet for en meddelelse med en grid: afstanden fra My Grid til denne grid, i km eller i miles som valgt ovenfor. Kolonnen er den samme på hver linje; et land, der er for langt til den, efterfølges af ét mellemrum.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Show distance in messages with grid</source>
+        <translation>Vis afstand i meddelelser med grid</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>In the Band Activity window, after the country of a message that carries a grid: the azimuth from My Grid to that grid, in degrees.</source>
+        <translation>I båndaktivitetsvinduet, efter landet for en meddelelse med en grid: azimut fra My Grid mod denne grid, i grader.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Show azimuth in messages with grid</source>
+        <translation>Vis azimut i meddelelser med grid</translation>
+    </message>
 </context>
 <context>
     <name>main</name>

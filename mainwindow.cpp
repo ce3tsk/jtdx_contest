@@ -525,6 +525,7 @@ MainWindow::MainWindow(bool multiple, QSettings * settings, QSharedMemory *shdme
     });
   ui->decodedTextBrowser->setConfiguration (&m_config);
   ui->decodedTextBrowser2->setConfiguration (&m_config);
+  ui->decodedTextBrowser->setDistanceField (true);   // CE3TSK 2026-10-20: Band Activity shows the distance and azimuth (distancefield.h)
   refreshSpecialOp (true); /* CE3TSK: initial, must not clear DX or halt TX */
   m_qsoHistory.jtdxtime = m_jtdxtime;
   m_qsoHistory2.jtdxtime = m_jtdxtime; 

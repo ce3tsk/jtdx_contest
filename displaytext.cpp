@@ -14,6 +14,7 @@
 #include <QPainterPath>
 #include <QPaintEvent>
 #include <QScrollBar>
+#include <QFontMetricsF>
 
 #include "Configuration.hpp"
 #include "qt_helpers.hpp"
@@ -21,6 +22,7 @@
 #include "priorities.h"   /* CE3TSK 2026-10-03 */
 #include "cqdirection.h"   /* CE3TSK 2026-10-12 */
 #include "wantedprefix.h"   /* CE3TSK 2026-10-15 */
+#include "distancefield.h"   /* CE3TSK 2026-10-20 */
 namespace dp = decode_priority;
 
 #include "moc_displaytext.cpp"
@@ -162,6 +164,9 @@ void DisplayText::setConfiguration(Configuration const * config)
   displayCountryName_ = config->countryName();
   displayCountryPrefix_ = config->countryPrefix();
   displayUSStates_ = config->usStates();   /* CE3TSK */
+  showDistance_ = config->showDistance ();   /* CE3TSK 2026-10-20: distancefield.h */
+  showAzimuth_ = config->showAzimuth ();
+  miles_ = config->miles ();
   displayNewCQZ_ = config->newCQZ();
   displayNewCQZBand_ = config->newCQZBand();
   displayNewCQZBandMode_ = config->newCQZBandMode();
@@ -280,7 +285,7 @@ void DisplayText::insertLineSpacer(QString const& line)
     appendText (line, Radio::convert_dark("#d3d3d3",useDarkStyle_), Radio::convert_dark("#000000",useDarkStyle_), 0, " ", Radio::convert_dark("#000000",useDarkStyle_), " ", true);
 }
 
-void DisplayText::appendText(QString const& text, QString const& bg, QString const& color, int std_type, QString const& servis, QString const& servis_color, QString const& cntry, bool forceBold, bool strikethrough, bool underlined, bool DXped, bool overwrite, bool wanted, QList<QPair<int, int>> const& doubtful, int cntryDoubtFrom, QString const& toolTip)
+void DisplayText::appendText(QString const& text, QString const& bg, QString const& color, int std_type, QString const& servis, QString const& servis_color, QString const& cntry, bool forceBold, bool strikethrough, bool underlined, bool DXped, bool overwrite, bool wanted, QList<QPair<int, int>> const& doubtful, int cntryDoubtFrom, QString const& toolTip, QString const& field, int fieldColumns)
 {
     QString servbg, s;
     if (std_type == 2) servbg = Radio::convert_dark("#ff0000",useDarkStyle_);
@@ -375,6 +380,26 @@ void DisplayText::appendText(QString const& text, QString const& bg, QString con
             cursor.insertText (cntry.mid (cntryDoubtFrom), doubtFormat (m_charFormat));
         } else
             cursor.insertText (cntry,m_charFormat);
+        /* CE3TSK 2026-10-20: the distance and azimuth, a part of its own after the country - no wave of the country's
+           runs on into it - in the country's colours, at the column (distancefield.h): measured in the font the country
+           was just drawn in, the padding's spaces widened by what they fall short of the column */
+        if (!field.isEmpty ()) {
+            /* (review 3.-161 3) measured on the window's own paint device - its DPI is the one the line is laid out at
+               (a second monitor of another DPI gave a CJK name's correction at the wrong scale) */
+#if QT_VERSION >= QT_VERSION_CHECK (5, 13, 0)
+            QFontMetricsF const fm {m_charFormat.font (), viewport ()};
+#else
+            QFontMetricsF const fm {m_charFormat.font ()};
+#endif
+            auto const pad = distance_field::padding (fm.horizontalAdvance (cntry), fm.horizontalAdvance (QLatin1Char (' ')), fieldColumns);
+            QTextCharFormat spacing {m_charFormat};
+            if (pad.extraPx > 0) {
+                spacing.setFontLetterSpacingType (QFont::AbsoluteSpacing);
+                spacing.setFontLetterSpacing (pad.extraPx);
+            }
+            cursor.insertText (QString (pad.spaces, QLatin1Char (' ')), spacing);
+            cursor.insertText (field, m_charFormat);
+        }
     } else {
         cursor.insertText (text.trimmed(),m_charFormat);
     }
@@ -1332,6 +1357,7 @@ int DisplayText::displayDecodedText(DecodedText* decodedText, QString myCall, QS
            scores 0 for that, so an unknown distance prints no points - " --" of the tag's
            width instead (contest_points_tag()), so the country column stays aligned on
            the lines without a grid. */
+        int tagColumns {0};   // CE3TSK 2026-10-20: the points tag's width - the distance field's column moves with it
         if (specialOp_ != Configuration::SpecialOperatingActivity::NONE) {
             /* directly after the hint character and before the country, which is what
                appendText() inserts next: "CQ XQ3SK FF46  * 1p Chile". The separator is
@@ -1341,8 +1367,32 @@ int DisplayText::displayDecodedText(DecodedText* decodedText, QString myCall, QS
             if (!cntry.isEmpty () && !cntry.startsWith (' ')) p += ' ';
             cntry = p + cntry;
             if (cntryDoubtFrom >= 0) cntryDoubtFrom += p.size ();   // CE3TSK: ?Chile? moved along
+            tagColumns = p.size ();
         }
-        appendText(messageText, bgColor, txtColor, std_type, servis, servisColor, cntry, forceBold, strikethrough, underlined, decodedText->isDXped(), false, bwantedCall||bwantedGrid||bwantedPrefix||bwantedCountry, doubtful, cntryDoubtFrom, doubtTip);
+        /* CE3TSK 2026-10-20: the distance and azimuth to the grid the MESSAGE carries (distancefield.h) - not a grid
+           remembered for the call or the DX Call box's, which `grid` above may hold; none for a grid in doubt (a likely
+           phantom decode's grid), none without My Grid (grid_distance_azimuth () says false). In a contest both grids
+           cut to 4 characters, as the score measures them. */
+        QString field;
+        if (distanceField_ && (showDistance_ || showAzimuth_)) {
+            /* (review 3.-161 5) the grid as the phantom judge reads it - the whole message field, 26 characters:
+               DecodedText's message is cut at 24 before a hash's brackets go, and <VP2E/KA1ABC> KA9XYZ FN42 lost its grid.
+               JT65's "CQ K1ABC FN42 OOO" only DecodedText reads. (3.-161 4) A grid in doubt shows none - until it is
+               trusted: the same grid heard from the call again (Verdict::lowConfidence (), as the spot and the tooltip) */
+            QString msgGrid {phantom_decodes::parts (phantom_decodes::messageField (decodedText->string ())).grid};
+            if (!distance_field::usable (msgGrid)) {
+                QString deCall;
+                decodedText->deCallAndGrid (deCall, msgGrid);
+            }
+            bool const gridInDoubt {(doubt.reasons & phantom_decodes::Grid) && doubt.lowConfidence ()};
+            int km, mi, az;
+            if (distance_field::usable (msgGrid) && !gridInDoubt
+                && grid_distance_azimuth (myGrid_, msgGrid, specialOp_ != Configuration::SpecialOperatingActivity::NONE, km, mi, az))
+                field = distance_field::text (showDistance_, showAzimuth_, miles_, km, mi, az);
+        }
+        int const fieldColumns {(displayCountryName_ ? (displayCountryPrefix_ ? (displayUSStates_ ? distance_field::prefixStateColumns : distance_field::prefixColumns)
+                                                                              : distance_field::nameColumns) : 0) + tagColumns};
+        appendText(messageText, bgColor, txtColor, std_type, servis, servisColor, cntry, forceBold, strikethrough, underlined, decodedText->isDXped(), false, bwantedCall||bwantedGrid||bwantedPrefix||bwantedCountry, doubtful, cntryDoubtFrom, doubtTip, field, fieldColumns);
         wastx_ = false;
     }
         if (notified) inotified |= 1;

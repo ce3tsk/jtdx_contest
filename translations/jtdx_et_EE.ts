@@ -10204,6 +10204,26 @@ soundcard changes</source>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Highlight messages from US stations whose state is new in the mode according to the wsjtx_log.adi log file. The state comes from the grid square and, in a square several states share, from the station's US license, as for new US states.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Tõsta esile sõnumid USA jaamadelt, mille osariik on logifaili wsjtx_log.adi andmetel režiimis uus. Osariik tuleb ruudust ja mitme osariigi vahel jagatud ruudu puhul jaama USA litsentsist, nagu uute USA osariikide puhul.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>In the Band Activity window, after the country of a message that carries a grid: the distance from My Grid to that grid, in km or in miles as chosen above. The column is the same on every line; a country too long for it is followed by one space.</source>
+        <translation>Laineala aktiivsuse aknas, lokaatoriga sõnumi riigi järel: kaugus minu lokaatorist selle lokaatorini, kilomeetrites või miilides, nagu ülal valitud. Veerg on igal real sama; liiga pikale riigile järgneb üks tühik.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Show distance in messages with grid</source>
+        <translation>Kuva kaugust lokaatoriga sõnumites</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>In the Band Activity window, after the country of a message that carries a grid: the azimuth from My Grid to that grid, in degrees.</source>
+        <translation>Laineala aktiivsuse aknas, lokaatoriga sõnumi riigi järel: asimuut minu lokaatorist selle lokaatori suunas, kraadides.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Show azimuth in messages with grid</source>
+        <translation>Kuva asimuuti lokaatoriga sõnumites</translation>
+    </message>
 </context>
 <context>
     <name>main</name>

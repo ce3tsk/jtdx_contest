@@ -10208,6 +10208,26 @@ soundcard changes</source>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Highlight messages from US stations whose state is new in the mode according to the wsjtx_log.adi log file. The state comes from the grid square and, in a square several states share, from the station's US license, as for new US states.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;突出显示根据 wsjtx_log.adi 日志文件在模式中属于新州的美国电台的信息。州由网格决定，在由多个州共享的网格中由电台的美国执照决定，与新美国州相同。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>In the Band Activity window, after the country of a message that carries a grid: the distance from My Grid to that grid, in km or in miles as chosen above. The column is the same on every line; a country too long for it is followed by one space.</source>
+        <translation>在波段活动窗口中，带网格的消息的国家或地区名称之后：从我的网格到该网格的距离，按上面的选择以公里或英里表示。每一行的列位置都相同；名称太长放不下时，其后只留一个空格。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Show distance in messages with grid</source>
+        <translation>在带网格的消息中显示距离</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>In the Band Activity window, after the country of a message that carries a grid: the azimuth from My Grid to that grid, in degrees.</source>
+        <translation>在波段活动窗口中，带网格的消息的国家或地区名称之后：从我的网格到该网格的方位角，单位为度。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Show azimuth in messages with grid</source>
+        <translation>在带网格的消息中显示方位角</translation>
+    </message>
 </context>
 <context>
     <name>main</name>

@@ -10209,6 +10209,26 @@ Zurücksetzen der Funkgeräteschnittstelle und Übernahme etwaiger
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Highlight messages from US stations whose state is new in the mode according to the wsjtx_log.adi log file. The state comes from the grid square and, in a square several states share, from the station's US license, as for new US states.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Nachrichten von US-Stationen hervorheben, deren Bundesstaat laut Logdatei wsjtx_log.adi in der Betriebsart neu ist. Der Bundesstaat ergibt sich aus dem Locator und, bei einem Locator, den sich mehrere Bundesstaaten teilen, aus der US-Lizenz der Station - wie bei neuen US-Bundesstaaten.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>In the Band Activity window, after the country of a message that carries a grid: the distance from My Grid to that grid, in km or in miles as chosen above. The column is the same on every line; a country too long for it is followed by one space.</source>
+        <translation>Im Bandaktivitätsfenster, nach dem Land einer Meldung mit Locator: die Entfernung von Mein Locator zu diesem Locator, in km oder in Meilen wie oben gewählt. Die Spalte ist auf jeder Zeile dieselbe; nach einem Land, das für sie zu lang ist, folgt ein Leerzeichen.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Show distance in messages with grid</source>
+        <translation>Entfernung bei Meldungen mit Locator anzeigen</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>In the Band Activity window, after the country of a message that carries a grid: the azimuth from My Grid to that grid, in degrees.</source>
+        <translation>Im Bandaktivitätsfenster, nach dem Land einer Meldung mit Locator: der Azimut von Mein Locator zu diesem Locator, in Grad.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Show azimuth in messages with grid</source>
+        <translation>Azimut bei Meldungen mit Locator anzeigen</translation>
+    </message>
 </context>
 <context>
     <name>main</name>

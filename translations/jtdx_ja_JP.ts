@@ -10185,6 +10185,26 @@ soundcard changes</source>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Highlight messages from US stations whose state is new in the mode according to the wsjtx_log.adi log file. The state comes from the grid square and, in a square several states share, from the station's US license, as for new US states.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;wsjtx_log.adiログファイルのデータに基づいて、モードで新しい州の米国局のメッセージを強調表示します。州は、新しい米国州と同じく、グリッドから、複数の州にまたがるグリッドでは局の米国免許から決まります。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>In the Band Activity window, after the country of a message that carries a grid: the distance from My Grid to that grid, in km or in miles as chosen above. The column is the same on every line; a country too long for it is followed by one space.</source>
+        <translation>Band activity ウィンドウで、グリッドを含むメッセージの国名の後に：自分のグリッドロケータからそのグリッドまでの距離を、上で選んだとおり km またはマイルで表示します。列はどの行でも同じ位置です。列に収まらない長い国名の後には空白が1つ入ります。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Show distance in messages with grid</source>
+        <translation>グリッド付きメッセージに距離を表示</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>In the Band Activity window, after the country of a message that carries a grid: the azimuth from My Grid to that grid, in degrees.</source>
+        <translation>Band activity ウィンドウで、グリッドを含むメッセージの国名の後に：自分のグリッドロケータからそのグリッドへの方位角を度で表示します。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Show azimuth in messages with grid</source>
+        <translation>グリッド付きメッセージに方位角を表示</translation>
+    </message>
 </context>
 <context>
     <name>main</name>
