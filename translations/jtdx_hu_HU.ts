@@ -6342,6 +6342,101 @@ Ez magának a dekódernek a hibája. Hárítsa el, ami az indulását akadályoz
         <source>This message cannot be sent</source>
         <translation>Ez az üzenet nem küldhető el</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>the band or mode was changed</source>
+        <translation>a sáv vagy a mód megváltozott</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Every minute</source>
+        <translation>Minden percben</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Every 2 minutes</source>
+        <translation>Kétpercenként</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Moves the station through the frequencies ticked above - mode and dial - at the top of every minute or of every even minute (UTC), and listens there: with PSK Reporter, a look at the bands. A right click goes to the next one at once. Enable Tx, Tune, Halt Tx, Monitor off, opening a file or a band or mode changed by hand stops it. It needs rig control (CAT), and does not run in Hound mode, in a contest or with the band scheduler on.</source>
+        <translation>A fent bejelölt frekvenciákon vezeti végig az állomást - mód és frekvencia - minden perc vagy minden páros perc elején (UTC), és ott vesz: a PSK Reporterrel áttekintés a sávokról. Jobb kattintás azonnal a következőre lép. Az Adás, a Hangolás, a Tx Állj, a kikapcsolt Vétel, egy fájl megnyitása vagy egy kézzel váltott sáv vagy mód leállítja. Rig vezérlés (CAT) kell hozzá, és nem fut Vadász módban, versenyen, sem bekapcsolt ütemezővel.</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>No FT8, FT4 or FT2 frequencies in Settings &gt; Frequencies</source>
+        <translation>Nincs FT8, FT4 vagy FT2 frekvencia a Beállítások &gt; Frekvenciák alatt</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>no frequency is ticked</source>
+        <translation>nincs bejelölt frekvencia</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>it needs rig control (CAT)</source>
+        <translation>rig vezérlés (CAT) kell hozzá</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Enable Tx is on</source>
+        <translation>az Adás be van kapcsolva</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>the station is transmitting</source>
+        <translation>az állomás ad</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Tune is on</source>
+        <translation>a Hangolás be van kapcsolva</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Monitor is off</source>
+        <translation>a Vétel ki van kapcsolva</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>a file is being decoded</source>
+        <translation>egy fájl dekódolása folyik</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Hound mode is on</source>
+        <translation>a Vadász mód be van kapcsolva</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>a contest is running</source>
+        <translation>verseny folyik</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>the band scheduler is on</source>
+        <translation>az ütemező be van kapcsolva</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Band hopping not started: %1</source>
+        <translation>A sáv ugrás nem indult el: %1</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Band hopping stopped: %1</source>
+        <translation>A sáv ugrás leállt: %1</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>the mode of no ticked frequency is available now</source>
+        <translation>egyik bejelölt frekvencia módja sem érhető el most</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Halt Tx was pressed</source>
+        <translation>megnyomták a Tx Állj gombot</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

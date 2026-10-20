@@ -6346,6 +6346,101 @@ Det er dekoderens egen fejl. Ret det, der forhindrer den i at starte - et mangle
         <source>This message cannot be sent</source>
         <translation>Denne meddelelse kan ikke sendes</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>the band or mode was changed</source>
+        <translation>båndet eller moden blev skiftet</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Every minute</source>
+        <translation>Hvert minut</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Every 2 minutes</source>
+        <translation>Hvert 2. minut</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Moves the station through the frequencies ticked above - mode and dial - at the top of every minute or of every even minute (UTC), and listens there: with PSK Reporter, a look at the bands. A right click goes to the next one at once. Enable Tx, Tune, Halt Tx, Monitor off, opening a file or a band or mode changed by hand stops it. It needs rig control (CAT), and does not run in Hound mode, in a contest or with the band scheduler on.</source>
+        <translation>Fører stationen gennem frekvenserne afkrydset ovenfor - mode og frekvens - ved starten af hvert minut eller hvert lige minut (UTC) og lytter der: med PSK Reporter et overblik over båndene. Et højreklik skifter straks til den næste. Aktiver Tx, Tune, Stop Tx, Monitor slået fra, åbning af en fil eller et bånd eller en mode skiftet manuelt stopper det. Det kræver radiostyring (CAT) og kører ikke i Hound-mode, under en contest eller med tidsplanlægningen slået til.</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>No FT8, FT4 or FT2 frequencies in Settings &gt; Frequencies</source>
+        <translation>Ingen FT8-, FT4- eller FT2-frekvenser under Indstillinger &gt; Frekvernser</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>no frequency is ticked</source>
+        <translation>ingen frekvens er afkrydset</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>it needs rig control (CAT)</source>
+        <translation>det kræver radiostyring (CAT)</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Enable Tx is on</source>
+        <translation>Aktiver Tx er slået til</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>the station is transmitting</source>
+        <translation>stationen sender</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Tune is on</source>
+        <translation>Tune er slået til</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Monitor is off</source>
+        <translation>Monitor er slået fra</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>a file is being decoded</source>
+        <translation>en fil bliver dekodet</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Hound mode is on</source>
+        <translation>Hound-mode er slået til</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>a contest is running</source>
+        <translation>en contest er i gang</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>the band scheduler is on</source>
+        <translation>tidsplanlægningen er slået til</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Band hopping not started: %1</source>
+        <translation>Bånd Hopping ikke startet: %1</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Band hopping stopped: %1</source>
+        <translation>Bånd Hopping stoppet: %1</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>the mode of no ticked frequency is available now</source>
+        <translation>ingen afkrydset frekvens har en mode, der er tilgængelig nu</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Halt Tx was pressed</source>
+        <translation>Stop Tx blev trykket</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

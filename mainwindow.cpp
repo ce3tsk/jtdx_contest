@@ -497,6 +497,13 @@ MainWindow::MainWindow(bool multiple, QSettings * settings, QSharedMemory *shdme
   m_bandButtonsTimer.setSingleShot (true);   // CE3TSK: View > Band buttons, see scheduleBandButtons ()
   m_bandButtonsTimer.setInterval (0);
   connect (&m_bandButtonsTimer, &QTimer::timeout, this, &MainWindow::rebuildBandButtons);
+  connect (&m_bandButtonsTimer, &QTimer::timeout, this, &MainWindow::rebuildHopList);   // CE3TSK 2026-10-20: Tab 3 follows the list too
+  m_hopTimer.setInterval (250);   // CE3TSK 2026-10-20: band hopping, see hopTick ()
+  connect (&m_hopTimer, &QTimer::timeout, this, &MainWindow::hopTick);
+  buildHopTab ();
+  /* CE3TSK 2026-10-20: the Tx tab picks the messages sent - Tab 1's or Tab 2's. Tab 3 (band hopping) has none, so the
+     tab whose messages are sent is the last of the two that was shown (messageTab ()) */
+  connect (ui->tabWidget, &QTabWidget::currentChanged, this, [this] (int index) { if (0 == index || 1 == index) m_messageTab = index; });
   m_dialWheelTimer.setSingleShot (true);   // CE3TSK: dial wheel tuning, see dialFrequencyWheel ()
   m_dialWheelTimer.setInterval (200);
   connect (&m_dialWheelTimer, &QTimer::timeout, this, &MainWindow::applyDialWheel);
@@ -613,7 +620,7 @@ MainWindow::MainWindow(bool multiple, QSettings * settings, QSharedMemory *shdme
         // the current free text messageski
         txwatchdog (false);
         qDebug () << "Free text UDP message - text:" << text << "send:" << send << "text empty:" << text.isEmpty ();
-        if (0 == ui->tabWidget->currentIndex ()) {
+        if (0 == messageTab ()) {
           if (!text.isEmpty ()) {
             ui->tx5->setCurrentText (text);
           }
@@ -622,7 +629,7 @@ MainWindow::MainWindow(bool multiple, QSettings * settings, QSharedMemory *shdme
           } else if (text.isEmpty ()) {
             ui->tx5->setCurrentText (text);
           }
-        } else if (1 == ui->tabWidget->currentIndex ()) {
+        } else if (1 == messageTab ()) {
           if (!text.isEmpty ()) {
             ui->freeTextMsg->setCurrentText (text);
           }
@@ -648,13 +655,13 @@ MainWindow::MainWindow(bool multiple, QSettings * settings, QSharedMemory *shdme
   connect (m_messageClient, &MessageClient::trigger_CQ, [this] (QString const& direction, bool tx_period_given, bool tx_period, bool send) {
     if (m_config.accept_udp_requests ()) {
         txwatchdog (false);
-        if (0 == ui->tabWidget->currentIndex ()) {
+        if (0 == messageTab ()) {
           if (direction != ui->direction1LineEdit->text()) ui->direction1LineEdit->setText(direction);
           if (send) ui->txb6->click ();
           if (tx_period_given && tx_period != m_txFirst) ui->TxMinuteButton->click ();
           if (send && !m_enableTx) ui->enableTxButton->click ();
         }
-        if (1 == ui->tabWidget->currentIndex ()) {
+        if (1 == messageTab ()) {
           if (direction != ui->directionLineEdit->text()) ui->directionLineEdit->setText(direction);
           if (send) ui->pbCallCQ->click ();
           if (tx_period_given && tx_period != m_txFirst) ui->TxMinuteButton->click ();
@@ -1390,8 +1397,8 @@ MainWindow::MainWindow(bool multiple, QSettings * settings, QSharedMemory *shdme
   m_myCallCompound=(!m_config.my_callsign().isEmpty() && m_config.my_callsign().contains("/")); // && !m_config.my_callsign().endsWith("/P") && !m_config.my_callsign().endsWith("/R"));
   genStdMsgs(m_rpt);
   ui->txrb6->setChecked(true); ui->genMsg->setText(ui->tx6->text());
-  if (0 == ui->tabWidget->currentIndex ()) { m_ntx=6; }
-  else if (1 == ui->tabWidget->currentIndex ()) { m_ntx=7; }
+  if (0 == messageTab ()) { m_ntx=6; }
+  else if (1 == messageTab ()) { m_ntx=7; }
   m_nlasttx = 6; m_QSOProgress = CALLING;
   ui->rbGenMsg->setChecked(true);
 //
@@ -1604,7 +1611,7 @@ void MainWindow::writeSettings()
   m_settings->setValue("DialFreq",QVariant::fromValue(m_lastMonitoredFrequency));
   m_settings->setValue("OutAttenuation",m_outAttenuationRestored ? ui->outAttenuation->value ()
                                                                  : m_outAttenuation);   // CE3TSK
-  m_settings->setValue("GUItab",ui->tabWidget->currentIndex());
+  m_settings->setValue("GUItab",m_messageTab);   // CE3TSK 2026-10-20: the message tab - Tab 3 (band hopping) is not one
   m_settings->setValue("LockTxFreq",m_lockTxFreq);
   m_settings->setValue("SkipTx1", m_skipTx1);
   m_settings->setValue("PctTx",m_pctx);
@@ -1623,6 +1630,9 @@ void MainWindow::writeSettings()
   m_settings->setValue("ModeButtons",ui->actionMode_buttons->isChecked ());   // CE3TSK
   m_settings->setValue("BandButtons",ui->actionBand_buttons->isChecked ());   // CE3TSK
   m_settings->setValue("BandModeButtons",ui->actionBand_mode_buttons->isChecked ());   // CE3TSK 2026-09-28
+  m_settings->setValue("JTDX_contest/BandHoppingTicked", m_hopTicked);   // CE3TSK 2026-10-20: band hopping, our own keys
+  m_settings->setValue("JTDX_contest/BandHoppingInterval", m_hopInterval->currentData ().toInt ());
+  m_settings->setValue("JTDX_contest/BandHoppingTabShown", ui->tabWidget->currentWidget () == m_hopTab);   // the tab shown, Tab 3 or not
   m_settings->setValue("NarrowControls",ui->actionNarrow_controls->isChecked ());   // CE3TSK
   m_settings->setValue("CallsignToClipboard",m_callToClipboard);
   m_settings->setValue("Crossband160mJA",m_crossbandOptionEnabled);
@@ -2153,6 +2163,7 @@ void MainWindow::readSettings()
     m_outAttenuation = m_settings->value ("OutAttenuation", 225).toInt ();
 
   int n=m_settings->value("GUItab",0).toInt(); if(!(n>=0 && n<=1)) n=0; ui->tabWidget->setCurrentIndex(n);
+  m_messageTab = n;   // CE3TSK 2026-10-20: messageTab ()
 
   m_lockTxFreq=m_settings->value("LockTxFreq",false).toBool();
 
@@ -2199,6 +2210,12 @@ void MainWindow::readSettings()
 
   // CE3TSK: ModeButtons is read at the top, before the geometry is restored - see there
   ui->actionBand_buttons->setChecked (m_settings->value ("BandButtons", false).toBool ());   // CE3TSK
+  /* CE3TSK 2026-10-20: band hopping - what was ticked (an entry the table does not show now keeps its tick) and how
+     often; hopping itself starts off */
+  m_hopTicked = m_settings->value ("JTDX_contest/BandHoppingTicked").toStringList ();
+  m_hopInterval->setCurrentIndex (1 == m_settings->value ("JTDX_contest/BandHoppingInterval", 2).toInt () ? 0 : 1);
+  // Tab 3 shown again when it was at the close; the messages stay those of GUItab's tab (messageTab ())
+  if (m_settings->value ("JTDX_contest/BandHoppingTabShown", false).toBool ()) ui->tabWidget->setCurrentWidget (m_hopTab);
   /* CE3TSK: this setChecked is also what applies the narrow floors at start-up - it fires
      on_actionNarrow_controls_toggled, which sets the window minimum, refits the widget limits
      and calls applyPaneFloor (); there is deliberately no second call in the constructor. */
@@ -2708,6 +2725,10 @@ void MainWindow::on_actionSettings_triggered()               //Setup Dialog
   bool spot_to_dxsummit = m_config.spot_to_dxsummit();
 
   if (QDialog::Accepted == m_config.exec ()) {
+      /* CE3TSK 2026-10-20 (review 3.-155 2, 10): what Settings OK does - the mode put back (runModeSlot () below), its
+         QSY, a TCI restart's Monitor off and on - is the program's, not the operator taking over: hopping goes on, and
+         its next due minute asks whether it still may (a scheduler switched on, the rig gone) */
+      band_hopping::OwnChange const own {m_ownChange};
       if(m_config.write_decoded_debug()) writeToALLTXT("Configuration settings change accepted");
       ui->decodedTextBrowser->setConfiguration (&m_config);
       ui->decodedTextBrowser2->setConfiguration (&m_config);
@@ -2752,7 +2773,7 @@ void MainWindow::on_actionSettings_triggered()               //Setup Dialog
       enable_DXCC_entity ();  // sets text window proportions and (re)inits the logbook
 
       if(m_config.spot_to_psk_reporter ()) {
-        pskSetLocal ();
+        pskSetLocal (ui->bandComboBox->currentText ());
       }
       bool was_monitoring = m_monitoring;
       if (m_monitoring && (m_config.restart_tci () || m_tci != (m_config.tci_audio() && m_config.is_tci()))) on_monitorButton_clicked (false);
@@ -2801,6 +2822,10 @@ void MainWindow::on_actionSettings_triggered()               //Setup Dialog
       displayDialFrequency ();
 
       runModeSlot (m_mode);   // CE3TSK 2026-09-26: modeTable ()
+      /* CE3TSK 2026-10-20 (review 3.-155 8): Tab 3 offers the rows of the station's region, every mode - a region changed
+         here re-filters the band selector, whose signals bring the rebuild only when the rows of the mode shown change
+         (in FT2, whose rows are all regions', none do) */
+      rebuildHopList ();
 
 	  m_config.transceiver_online ();
 	  m_wideGraph->setTopJT65(m_config.ntopfreq65());
@@ -2852,7 +2877,7 @@ void MainWindow::on_AutoSeqButton_clicked (bool checked)
     m_wasAutoSeq=false; //in case of toggling AutoSeq button by user
 //txrb button selection by user can brake AutoSeq, disable all txrb buttons
     enableTab1TXRB(false);
-    if(ui->tabWidget->currentIndex()==1) {
+    if(messageTab ()==1) {
       on_rbGenMsg_clicked(true);
       ui->rbGenMsg->setChecked(true);
     }
@@ -2866,6 +2891,7 @@ void MainWindow::on_AutoSeqButton_clicked (bool checked)
 
 void MainWindow::on_monitorButton_clicked (bool checked)
 {
+  if (!checked && hopping () && !m_ownChange) stopHopping (hopRefusalText (band_hopping::Refusal::MonitorOff));   // CE3TSK 2026-10-20
   if (!m_transmitting)
     {
       auto prior = m_monitoring;
@@ -2938,6 +2964,8 @@ void MainWindow::on_actionAbout_triggered() { CAboutDlg {this, m_useDarkStyle}.e
 
 void MainWindow::on_enableTxButton_clicked (bool checked)
 {
+  // CE3TSK 2026-10-20: every way to Enable Tx comes here - hopping stops (bandhopping.h)
+  if (checked && hopping ()) stopHopping (hopRefusalText (band_hopping::Refusal::EnableTx));
   if(m_enableTx && !checked && m_curMsgTx.startsWith(m_hisCall+" ")) m_lasthint=true;
   if(checked && m_lasthint) m_lasthint=false;
   m_enableTx = checked;
@@ -3112,7 +3140,10 @@ void MainWindow::keyPressEvent( QKeyEvent *e )                //keyPressEvent
       break;
     case Qt::Key_F:
       if(e->modifiers() & Qt::ControlModifier) {
-        if(ui->tabWidget->currentIndex()==0) { ui->tx5->clearEditText(); ui->tx5->setFocus(); }
+        // CE3TSK 2026-10-20 (review 3.-155 7): the message tab shown first - with Tab 3 in front the field was cleared out
+        // of sight and could not take the focus
+        if (ui->tabWidget->currentWidget () == m_hopTab) ui->tabWidget->setCurrentIndex (messageTab ());
+        if(messageTab ()==0) { ui->tx5->clearEditText(); ui->tx5->setFocus(); }
         else { ui->freeTextMsg->clearEditText(); ui->freeTextMsg->setFocus(); }
         return;
       }
@@ -3254,6 +3285,8 @@ void MainWindow::displayDialFrequency ()
     // only change this when necessary as we get called a lot and it
     // would trash any user input to the band combo box line edit
     if(report == rig_report::Action::Changed) { // handle loss of the poll response from transceiver where dial_frequency==0
+      // CE3TSK 2026-10-20: a band changed at the rig - the operator's, a hop's own QSY reports back as its echo
+      if (hopping ()) stopHopping (tr ("the band or mode was changed"));
       if(m_autoEraseBC && !startup) { // option: erase both windows if band is changed
         ui->decodedTextBrowser->clear(); ui->decodedTextBrowser2->clear();
         clearDX (" cleared, triggered by erase both windows option upon band change from transceiver");
@@ -3279,6 +3312,11 @@ void MainWindow::displayDialFrequency ()
         m_freqNominal = dial_frequency;
         Q_EMIT m_config.transceiver_frequency (m_freqNominal);
       }
+      /* CE3TSK 2026-10-20 (review 3.-155 1): this band is now the one the program knows it is on - band_changed ()'s 1 MHz
+         test reads it. Kept from the program's own last QSY, a QSY back to that band (a hop, a band button) was no band
+         change to it: the band selector stayed on the band of the rig, and 3 s later the program took its own QSY for
+         one made at the rig - hopping stopped, Enable Tx off, the decoder blanked the period. Reproduced on ef13c002 */
+      m_lastDisplayFreq = dial_frequency;
       if(m_transmitting || g_iptt==1) haltTx("band changed at the rig ");
       enableTx_mode (false);
       psk_Reporter->sendReport ();
@@ -3917,6 +3955,254 @@ void MainWindow::highlightBandButton ()
   for (auto * const button : m_bandButtons) button->setChecked (button == lit);
 }
 
+/* CE3TSK 2026-10-20: band hopping - Tab 3 of the Tx tabs. The rules, and what WS's and JTDX_improved's versions taught,
+   are in bandhopping.h; the plan is IMPROVED_FEATURES_PLAN.md, stage 1. The tab is built here rather than in
+   mainwindow.ui: its check boxes are the FT8, FT4 and FT2 rows of the frequency table (the station's region) and are
+   rebuilt with it, as the band buttons are. A hop is the scheduler's QSY (qsyTo ()), at the top of the minute. Tab 3 is
+   no message tab: the messages sent stay Tab 1's or Tab 2's (messageTab ()). */
+void MainWindow::buildHopTab ()
+{
+  m_hopTab = new QWidget;
+  auto * const layout = new QVBoxLayout {m_hopTab};
+  layout->setContentsMargins (2, 2, 2, 2);
+  layout->setSpacing (2);
+  auto * const scroll = new QScrollArea {m_hopTab};   // as many rows as the table has, in the tab's height
+  scroll->setWidgetResizable (true);
+  scroll->setFrameShape (QFrame::NoFrame);
+  scroll->setHorizontalScrollBarPolicy (Qt::ScrollBarAlwaysOff);
+  m_hopList = new QWidget;
+  scroll->setWidget (m_hopList);
+  layout->addWidget (scroll, 1);
+  auto * const row = new QHBoxLayout;
+  row->setSpacing (4);
+  m_hopInterval = new QComboBox {m_hopTab};
+  m_hopInterval->addItem (tr ("Every minute"), 1);
+  m_hopInterval->addItem (tr ("Every 2 minutes"), 2);
+  m_hopInterval->setCurrentIndex (1);
+  m_hopButton = new QPushButton {tr ("Band Hopping"), m_hopTab};
+  m_hopButton->setCheckable (true);
+  m_hopButton->setContextMenuPolicy (Qt::CustomContextMenu);   // a right click: the next one now, as in WS
+  m_hopButton->setToolTip (wrap_tooltip (tr ("Moves the station through the frequencies ticked above - mode and dial - at "
+                                             "the top of every minute or of every even minute (UTC), and listens there: "
+                                             "with PSK Reporter, a look at the bands. A right click goes to the next one at "
+                                             "once. Enable Tx, Tune, Halt Tx, Monitor off, opening a file or a band or mode "
+                                             "changed by hand stops it. It needs rig control (CAT), and does not run in "
+                                             "Hound mode, in a contest or with the band scheduler on.")));
+  connect (m_hopButton, &QPushButton::clicked, this, &MainWindow::hopButtonClicked);
+  connect (m_hopButton, &QWidget::customContextMenuRequested, this, [this] (QPoint const&) { hopRightClick (); });
+  row->addWidget (m_hopInterval);
+  row->addWidget (m_hopButton, 1);
+  layout->addLayout (row);
+  ui->tabWidget->addTab (m_hopTab, "3");
+}
+
+void MainWindow::rebuildHopList ()
+{
+  if (!m_hopList) return;
+  // the table's rows of the station's region - the band selector's rule (FrequencyList_v2::filterAcceptsRow), every mode
+  QList<band_hopping::Row> rows;
+  auto const region = m_config.region ();
+  for (auto const& item : m_config.frequencies ()->frequency_list ())
+    if (IARURegions::ALL == region || IARURegions::ALL == item.region_ || region == item.region_)
+      rows << band_hopping::Row {item.frequency_, Modes::name (item.mode_), item.default_, m_config.bands ()->find (item.frequency_)};
+  /* the timer that brings this follows every change of the band selector's list - and a hop that changes the mode
+     re-filters it: the boxes are made again only when what they offer has changed, so the tab keeps its scroll position */
+  QStringList offer;
+  for (auto const& mode : band_hopping::modes ())
+    for (auto const& o : band_hopping::offered (rows, mode))
+      offer << band_hopping::key (o.entry) + (o.byFrequency ? "f" : "b") + m_config.bands ()->find (o.entry.frequency);
+  if (m_hopList->layout () && offer == m_hopOffer) return;
+  m_hopOffer = offer;
+  delete m_hopList->layout ();
+  qDeleteAll (m_hopList->findChildren<QWidget *> (QString {}, Qt::FindDirectChildrenOnly));
+  m_hopBoxes.clear ();
+  auto * const grid = new QGridLayout {m_hopList};
+  grid->setContentsMargins (2, 0, 2, 0);
+  grid->setHorizontalSpacing (6);
+  grid->setVerticalSpacing (0);
+  int column {0};
+  for (auto const& mode : band_hopping::modes ())
+    {
+      auto const offered = band_hopping::offered (rows, mode);
+      if (offered.isEmpty ()) continue;
+      grid->addWidget (new QLabel {mode, m_hopList}, 0, column);
+      int line {1};
+      for (auto const& o : offered)
+        {
+          QString const mhz {band_button_mhz (o.entry.frequency, 3)};   // "7,0475 MHz", the dial's locale
+          QString label {m_config.bands ()->find (o.entry.frequency)};
+          if (o.byFrequency) { label = mhz; label.chop (4); }
+          auto * const box = new QCheckBox {label, m_hopList};
+          QString const key {band_hopping::key (o.entry)};
+          box->setToolTip (mhz + ' ' + mode);
+          box->setProperty ("hopKey", key);
+          box->setChecked (m_hopTicked.contains (key));
+          box->setFocusPolicy (Qt::NoFocus);
+          connect (box, &QCheckBox::toggled, this, &MainWindow::hopTicksChanged);
+          grid->addWidget (box, line++, column);
+          m_hopBoxes << box;
+          JTDX::fit_one (box);   // made after readSettings ran the narrow rules over the window, as the band buttons are
+        }
+      ++column;
+    }
+  if (!column)
+    {
+      auto * const none = new QLabel {tr ("No FT8, FT4 or FT2 frequencies in Settings > Frequencies"), m_hopList};
+      none->setWordWrap (true);
+      grid->addWidget (none, 0, 0);
+      column = 1;
+    }
+  grid->setRowStretch (grid->rowCount (), 1);
+  grid->setColumnStretch (column, 1);
+  JTDX::watch_narrow_labels (m_hopList);
+}
+
+void MainWindow::hopTicksChanged ()
+{
+  // each box speaks for its own entry: one the table does not show now (a contest's list, another region) keeps its tick
+  for (auto const * const box : m_hopBoxes)
+    {
+      auto const key = box->property ("hopKey").toString ();
+      if (box->isChecked ()) { if (!m_hopTicked.contains (key)) m_hopTicked << key; }
+      else m_hopTicked.removeAll (key);
+    }
+}
+
+bool MainWindow::hopping () const { return m_hopButton && m_hopButton->isChecked (); }
+
+int MainWindow::messageTab () const { return m_messageTab; }
+
+band_hopping::Gates MainWindow::hopGates () const
+{
+  band_hopping::Gates g;
+  g.ticked = std::any_of (m_hopBoxes.begin (), m_hopBoxes.end (), [] (QCheckBox const * b) { return b->isChecked (); });
+  g.rig = m_rigOk && !m_config.rig_name ().startsWith ("None");
+  g.enableTx = m_enableTx;
+  g.transmitting = m_transmitting || 1 == g_iptt;
+  g.tuning = m_tune;
+  g.monitoring = m_monitoring;
+  g.filePlayback = m_diskData;
+  g.hound = m_houndMode;
+  g.contest = m_wwDigi;
+  g.scheduler = m_config.usesched ();
+  return g;
+}
+
+QString MainWindow::hopRefusalText (band_hopping::Refusal refusal) const
+{
+  switch (refusal)
+    {
+    case band_hopping::Refusal::NothingTicked: return tr ("no frequency is ticked");
+    case band_hopping::Refusal::NoRig: return tr ("it needs rig control (CAT)");
+    case band_hopping::Refusal::EnableTx: return tr ("Enable Tx is on");
+    case band_hopping::Refusal::Transmitting: return tr ("the station is transmitting");
+    case band_hopping::Refusal::Tuning: return tr ("Tune is on");
+    case band_hopping::Refusal::MonitorOff: return tr ("Monitor is off");
+    case band_hopping::Refusal::FilePlayback: return tr ("a file is being decoded");
+    case band_hopping::Refusal::Hound: return tr ("Hound mode is on");
+    case band_hopping::Refusal::Contest: return tr ("a contest is running");
+    case band_hopping::Refusal::Scheduler: return tr ("the band scheduler is on");
+    case band_hopping::Refusal::None: break;
+    }
+  return {};
+}
+
+void MainWindow::hopButtonClicked (bool checked)
+{
+  if (!checked)
+    {
+      stopHopping ({});
+      return;
+    }
+  auto const refusal = band_hopping::refusal (hopGates ());
+  if (band_hopping::Refusal::None != refusal)
+    {
+      m_hopButton->setChecked (false);
+      statusBar ()->showMessage (tr ("Band hopping not started: %1").arg (hopRefusalText (refusal)), 10000);
+      if(m_config.write_decoded_debug()) writeToALLTXT("Band hopping not started: " + hopRefusalText (refusal));
+      return;
+    }
+  m_hopLastMinute = -1;
+  m_hopTimer.start ();
+  if(m_config.write_decoded_debug()) writeToALLTXT("Band hopping started");
+}
+
+void MainWindow::stopHopping (QString const& why)
+{
+  m_hopTimer.stop ();
+  if (m_hopButton) m_hopButton->setChecked (false);
+  if (!why.isEmpty ()) statusBar ()->showMessage (tr ("Band hopping stopped: %1").arg (why), 10000);
+  if(m_config.write_decoded_debug()) writeToALLTXT("Band hopping stopped" + (why.isEmpty () ? QString {} : ": " + why));
+}
+
+// m_hopTimer, four times a second while hopping: at the top of the minute it is due (bandhopping.h), the station's state
+// is asked once more, and the hop is made - or hopping stops, saying why
+void MainWindow::hopTick ()
+{
+  if (!hopping ())
+    {
+      m_hopTimer.stop ();
+      return;
+    }
+  auto const now = m_jtdxtime->currentDateTimeUtc2 ().time ();
+  int const minute {now.hour () * 60 + now.minute ()};
+  if (!band_hopping::due (minute, now.second (), m_hopInterval->currentData ().toInt (), m_hopLastMinute)) return;
+  m_hopLastMinute = minute;
+  auto const refusal = band_hopping::refusal (hopGates ());
+  if (band_hopping::Refusal::None != refusal)
+    {
+      stopHopping (hopRefusalText (refusal));
+      return;
+    }
+  hopNow ();
+}
+
+// the button's right click: a hop now - asking the station's state first, as the timer does (a change of state that has
+// no stop of its own - Hound, a contest, the scheduler, the rig lost - is found at the next due minute, and the right
+// click must not hop past it), and standing for the minute it falls in, or the next (review 3.-155 5)
+void MainWindow::hopRightClick ()
+{
+  if (!hopping ()) return;
+  auto const refusal = band_hopping::refusal (hopGates ());
+  if (band_hopping::Refusal::None != refusal)
+    {
+      stopHopping (hopRefusalText (refusal));
+      return;
+    }
+  auto const now = m_jtdxtime->currentDateTimeUtc2 ().time ();
+  int const minute {band_hopping::minute_of_manual_hop (now.hour () * 60 + now.minute (), now.second ())};
+  if (minute >= 0) m_hopLastMinute = minute;
+  hopNow ();
+}
+
+void MainWindow::hopNow ()
+{
+  QList<band_hopping::Entry> ticked;
+  for (auto const * const box : m_hopBoxes)
+    if (box->isChecked ()) ticked << band_hopping::from_key (box->property ("hopKey").toString ());
+  ticked = band_hopping::in_order (ticked);
+  /* from where the station is now. An entry whose mode is refused (the contest lock, the transmit gate) is skipped, as the
+     scheduler skips one, and the one after it tried - each at most once. The hop's own band change is not the operator's
+     (m_ownChange, band_changed ()); its mode is triggered only when it differs, so a hop within the mode is a plain QSY. */
+  band_hopping::Entry here {m_freqNominal, m_mode};
+  for (int tries = 0; tries < ticked.size (); ++tries)
+    {
+      int const i {band_hopping::next (ticked, here)};
+      if (i < 0) break;
+      auto const entry = ticked[i];
+      bool done;
+      {
+        band_hopping::OwnChange const own {m_ownChange};
+        done = qsyTo (entry.mode == m_mode ? QString {} : entry.mode, entry.frequency,
+                      "Band hopping entry skipped, mode not available now: " + band_hopping::key (entry), "band hopping");
+      }
+      if (done) return;
+      here = entry;
+    }
+  stopHopping (ticked.isEmpty () ? hopRefusalText (band_hopping::Refusal::NothingTicked)
+                                 : tr ("the mode of no ticked frequency is available now"));
+}
+
 /* CE3TSK: tuning from the dial frequency's label, with the mouse wheel (2026-09-15) and with clicks
    (2026-09-28). Over one of the three kHz digits after the decimal point - in "7.074 000" the 0,
    the 7 and the 4 - a notch or a click moves the dial by 100, 10 or 1 kHz; anywhere else on the
@@ -4067,6 +4353,7 @@ setEnableTxButtonStyle ();
   else ui->AutoTxButton->setStyleSheet(QString("QPushButton:checked{background: %1}").arg(Radio::convert_dark("#00ff00",m_useDarkStyle)));
   ui->tuneButton->setStyleSheet(QString("QPushButton:checked{background: %1}").arg(Radio::convert_dark("#ff0000",m_useDarkStyle)));
   ui->monitorButton->setStyleSheet(QString("QPushButton:checked{background: %1}").arg(Radio::convert_dark("#00ff00",m_useDarkStyle)));
+  if (m_hopButton) m_hopButton->setStyleSheet(QString("QPushButton:checked{background: %1}").arg(Radio::convert_dark("#00ff00",m_useDarkStyle)));   // CE3TSK 2026-10-20
   ui->bypassButton->setStyleSheet(QString("QPushButton:checked{background: %1}").arg(Radio::convert_dark("#00ff00",m_useDarkStyle)));
   ui->singleQSOButton->setStyleSheet(QString("QPushButton:checked{background: %1}").arg(Radio::convert_dark("#00ff00",m_useDarkStyle)));
   ui->AnsB4Button->setStyleSheet(QString("QPushButton:checked{background: %1}").arg(Radio::convert_dark("#00ff00",m_useDarkStyle)));
@@ -4453,7 +4740,11 @@ void MainWindow::closeEvent(QCloseEvent * e)
   QMainWindow::closeEvent (e);
 }
 
-void MainWindow::on_stopButton_clicked() { monitor (false); m_loopall=false; if (!m_transmitting) initLogIfNeeded (); }
+void MainWindow::on_stopButton_clicked()
+{
+  if (hopping ()) stopHopping (hopRefusalText (band_hopping::Refusal::MonitorOff));   // CE3TSK 2026-10-20
+  monitor (false); m_loopall=false; if (!m_transmitting) initLogIfNeeded ();
+}
 void MainWindow::on_AnsB4Button_clicked (bool checked) { ui->actionAnswerWorkedB4->setChecked(checked); }
 void MainWindow::on_singleQSOButton_clicked (bool checked) { ui->actionSingleShot->setChecked(checked); }
 void MainWindow::on_bypassButton_clicked (bool checked) { ui->actionBypass_all_text_filters->setChecked(checked); }
@@ -4552,6 +4843,7 @@ void MainWindow::hideMenus(bool checked)
 
 void MainWindow::on_actionOpen_triggered()                     //Open File
 {
+  if (hopping ()) stopHopping (hopRefusalText (band_hopping::Refusal::FilePlayback));   // CE3TSK 2026-10-20
   m_superFoxFreqDisk = m_superFoxBase;   // CE3TSK: a new replay looks for its Fox at the nominal tone
   monitor (false);
 
@@ -4814,6 +5106,7 @@ void MainWindow::read_wav_file (QString const& fname)
 
 void MainWindow::on_actionOpen_next_in_directory_triggered()   //Open Next
 {
+  if (hopping ()) stopHopping (hopRefusalText (band_hopping::Refusal::FilePlayback));   // CE3TSK 2026-10-20
   monitor (false);
 
   int i,len;
@@ -6074,13 +6367,26 @@ void MainWindow::on_actionFT8BgClassic_toggled(bool checked) { m_bgClassic=check
 // CE3TSK: a band or mode change must not let the TX background keep decoding the previous
 // context's retained audio and print it under the new dial - the .bgabort sentinel stops it
 // within a pass (bg_lock_gone); decode() removes the sentinel so every fresh period runs
+// CE3TSK 2026-10-20 (review 3.-155 6): also while the period's own decode runs, before its background has begun - the
+// change at the top of the minute (a hop, a band click) lands there. The sentinel waits for the background, which stops
+// at its first look (the decoder reads it in the background phase only); left alone, the background ran on the old
+// band's audio, and a line of it read after the next decode had begun was filed under the new band. Reproduced
+// 2026-10-20 (a 20 m period's background lines under the next file's 50.313 MHz header).
 void MainWindow::abortTxBackground(QString const& reason)
 {
-  if(!m_bgPhase) return;
+  // (2026-10-20) only a background that will come: m_bgAbortAsked waits for its <BackgroundFinished>
+  bool const toCome {!m_bgPhase && m_rxPhase && backgroundFollows (m_decodeOrigin.mode)};
+  if(!m_bgPhase && !toCome) return;
   QFile {m_config.temp_dir ().absoluteFilePath (".bgabort")}.open(QIODevice::ReadWrite);
   m_bgAbortAsked=true;   // item 81: this abort is ours, not the load's
   m_bgPhase=false; updateDecodeLabel();
-  if(m_config.write_decoded_debug()) writeToALLTXT("TX background aborted: " + reason);
+  if(m_config.write_decoded_debug()) writeToALLTXT("TX background aborted" + QString {toCome ? " before it began" : ""} + ": " + reason);
+}
+
+// whether a background phase follows a decode of this mode (item 78: the switch alone decides)
+bool MainWindow::backgroundFollows (QString const& mode) const
+{
+  return (mode=="FT8" && m_bgEnabled) || (mode=="FT4" && m_ft4BgEnabled) || (mode=="FT2" && m_ft2Recipe.bgon);   // CE3TSK step 5
 }
 
 void MainWindow::setBackgroundActions()
@@ -6679,6 +6985,8 @@ void MainWindow::decode()                                       //decode()
   ++dec_data.params.ndecreq;
   /* CE3TSK 2026-10-12: what the record of deleted decodes must know of this decode (deletedlog.h) */
   m_deletedRecord.decodeBegins (1 == dec_data.params.newdat, m_diskData, static_cast<qint64> (m_freqNominal));
+  /* CE3TSK 2026-10-20: and the dial and mode its lines are of (decodeorigin.h) */
+  m_decodeOrigin = decode_origin::at_begin (m_decodeOrigin, 1 == dec_data.params.newdat, static_cast<qint64> (m_freqNominal), m_mode);
   memcpy(to, from, qMin(mem_jtdxjt9->size(), size));
   QFile {m_config.temp_dir ().absoluteFilePath (".bgabort")}.remove ();   // CE3TSK: a fresh decode clears any context-change abort
   QFile {m_config.temp_dir ().absoluteFilePath (".lock")}.remove (); // Allow jtdxjt9 to start
@@ -6849,7 +7157,7 @@ void MainWindow::process_Auto()
       if (!rpt.isEmpty () && rpt == m_rpt) m_rpt = "-60";
     } else  if (m_transmittedQSOProgress != CALLING){
         on_txb6_clicked();
-        if(ui->tabWidget->currentIndex()==1) ui->genMsg->setText(ui->tx6->text());
+        if(messageTab ()==1) ui->genMsg->setText(ui->tx6->text());
     }
   }
 //  printf("%s(%0.1f) process_Auto: %s,%s,%s,%s,%d,%d,%d,%d,%d,%d,%d,%d,%d\n",m_jtdxtime->currentDateTimeUtc2().toString("hh:mm:ss.zzz").toStdString().c_str(),m_jtdxtime->GetOffset(),m_hisCall.toStdString().c_str(),hisCall.toStdString().c_str(),m_lastloggedcall.toStdString().c_str(),mode.toStdString().c_str(),m_status,prio,ui->TxFreqSpinBox->value (),m_used_freq,m_callMode,m_callPrioCQ,m_reply_other,m_reply_me,counters2);
@@ -6898,7 +7206,7 @@ void MainWindow::process_Auto()
     if (step.autoFilter && step.filterFirst) autoFilter (true);
     /* CE3TSK 2026-10-18 (3.-135, the review 3.-124 item 6): the button, and on the second tab its message into the
        generated one - one switch (step.tx is 0..5; a Tx button leaves the tab alone, test/autoseq_wiring.sh) */
-    bool const tab2 = ui->tabWidget->currentIndex()==1;
+    bool const tab2 = messageTab ()==1;
     switch (step.tx) {
       case 1: on_txb1_clicked(); if (tab2) ui->genMsg->setText(ui->tx1->text()); break;
       case 2: on_txb2_clicked(); if (tab2) ui->genMsg->setText(ui->tx2->text()); break;
@@ -7008,8 +7316,7 @@ void MainWindow::readFromStdout()                             //readFromStdout
            <BackgroundFinished> line, which re-arms the spacer) will come. Until item 78 the FT4
            decoder ran the phase only when the member target exceeded the RX count, and this
            flag had to copy that rule or every later separator was swallowed. */
-        m_bgPhase=((m_mode=="FT8" && m_bgEnabled) || (m_mode=="FT4" && m_ft4BgEnabled)
-                   || (m_mode=="FT2" && m_ft2Recipe.bgon));   // CE3TSK step 5
+        m_bgPhase=backgroundFollows (m_mode);
         updateDecodeLabel();
         updateTimingLamps();   // CE3TSK
         if(m_mode=="FT8") {
@@ -7092,13 +7399,18 @@ void MainWindow::readFromStdout()                             //readFromStdout
         } else continue;
       }
       DecodedText decodedtext {QString::fromUtf8 (t.constData ()).remove (QRegularExpression {"\r|\n"}),this};
+      /* CE3TSK 2026-10-20 (decodeorigin.h): the line is of its decode's dial and mode, those the decode began on. After a
+         band or mode change since - by hand, or a hop at the top of the minute while the old period is still being
+         decoded - it is a late line: it keeps its own band in ALL.TXT, in the phantom-decode judgement, in the windows'
+         worked-before status and in its spot, and the UDP clients, who take the band from the last Status, do not get it. */
+      bool const late {decode_origin::late (m_decodeOrigin, static_cast<qint64> (m_freqNominal), m_mode)};
       /* CE3TSK 2026-09-30: a likely phantom decode (phantomdecodes.h) is judged once, here, before
          ALL.TXT - the file, both windows, the UDP clients and the sequencer all read this verdict.
          Debug lines and free text (',' and '.', FT8, FT4 and FT2 alike) are never judged. It reads
          the message field as printed, not message () - which drops brackets and cuts long lines. A
          hint or a-priori decode, and any decode of the TX background, is no second hearing. */
       if (!decodedtext.isDebug () && !decodedtext.isNonStd1 () && !decodedtext.isNonStd2 ())
-        decodedtext.setVerdict (m_phantomDecodes.judge (phantom_decodes::messageField (decodedtext.string ()), m_freqNominal
+        decodedtext.setVerdict (m_phantomDecodes.judge (phantom_decodes::messageField (decodedtext.string ()), m_decodeOrigin.dial
                                                       , decodedtext.timeInSeconds (), decodedtext.isHint () || decodedtext.isPipeline ()
                                                       , phantomDecodeSettings (), [this] (QString const& call) {return dxccOf (call);}
                                                       , decodedtext.snr ()));
@@ -7106,10 +7418,12 @@ void MainWindow::readFromStdout()                             //readFromStdout
         QFile f {m_dataDir.absoluteFilePath (m_jtdxtime->currentDateTimeUtc2().toString("yyyyMM_")+"ALL.TXT")};
         if (f.open(QIODevice::WriteOnly | QIODevice::Text | QIODevice::Append)) {
           QTextStream out(&f);
-          if (m_RxLog==1) {
+          /* CE3TSK 2026-10-20: also when the line's dial or mode is not the last header's (a late line after a band
+             change - and the first line of the new band after it): ALL.TXT files a line under the header above it */
+          if (m_RxLog==1 || decode_origin::needs_header (m_decodeOrigin, m_allTxtHeader.dial, m_allTxtHeader.mode)) {
             out << m_jtdxtime->currentDateTimeUtc2().toString("yyyyMMdd_hhmmss")
-                << "  " << qSetRealNumberPrecision (12) << (m_freqNominal / 1.e6) << " MHz  "
-                << m_mode << 
+                << "  " << qSetRealNumberPrecision (12) << (m_decodeOrigin.dial / 1.e6) << " MHz  "
+                << m_decodeOrigin.mode << 
 #if QT_VERSION < QT_VERSION_CHECK(5, 15, 0)
                  endl;
 #else
@@ -7117,6 +7431,7 @@ void MainWindow::readFromStdout()                             //readFromStdout
 #endif
 
             m_RxLog=0;
+            m_allTxtHeader = m_decodeOrigin;
           }
           /* CE3TSK 2026-09-30: a likely phantom decode ends in its tag, "lc:grid CE" (phantomdecodes.h);
              every other line is written exactly as before */
@@ -7166,7 +7481,7 @@ void MainWindow::readFromStdout()                             //readFromStdout
         // search for a live decode, the replay's own for a replayed one
         { int const f = t.mid (15, 5).trimmed ().toInt ();
           if(m_diskData) { if(f > 0) m_superFoxFreqDisk = f; }
-          else { if(f > 0) m_superFoxFreq = f; m_superFoxSince = 0; m_superFoxDial = static_cast<qint64> (m_freqNominal); }
+          else { if(f > 0) m_superFoxFreq = f; m_superFoxSince = 0; m_superFoxDial = m_decodeOrigin.dial; }   // CE3TSK 2026-10-20: the decode's dial
           if(f > 0) superFoxRxFollow (f); }   // CE3TSK: the RX box follows the Fox (a replay's too: it is what is on screen)
         // milestone 2: ask the verification server; shown only on request, and then as a plain line
         if(parts.size () >= 3) {
@@ -7194,7 +7509,7 @@ void MainWindow::readFromStdout()                             //readFromStdout
             QString band;
             if (m_jtdxtime->currentMSecsSinceEpoch2() / 1000 - m_secBandChanged > band_label_after_s (m_mode))   // CE3TSK 2026-10-17: modetiming.h
               {
-                band = ' ' + m_config.bands ()->find (m_freqNominal) + ' ';
+                band = ' ' + m_config.bands ()->find (static_cast<Frequency> (m_decodeOrigin.dial)) + ' ';   // CE3TSK 2026-10-20: the decode's band
               }
               
             QString blnklinetime;
@@ -7258,8 +7573,8 @@ void MainWindow::readFromStdout()                             //readFromStdout
                                                     , (m_wwDigi ? m_contestLog : m_logBook)
                                                     , m_qsoHistory
                                                     , m_qsoHistory
-                                                    , m_freqNominal
-                                                    , m_mode
+                                                    , m_decodeOrigin.dial   // CE3TSK 2026-10-20: the decode's band and mode
+                                                    , m_decodeOrigin.mode
                                                     , bypassRxfFilters
                                                     , m_bypassAllFilters
                                                     , m_wideGraph->rxFreq()
@@ -7299,8 +7614,8 @@ void MainWindow::readFromStdout()                             //readFromStdout
                                                     , (m_wwDigi ? m_contestLog : m_logBook)
                                                     , m_qsoHistory2
                                                     , m_qsoHistory
-                                                    , m_freqNominal
-                                                    , m_mode
+                                                    , m_decodeOrigin.dial   // CE3TSK 2026-10-20: the decode's band and mode
+                                                    , m_decodeOrigin.mode
                                                     , bypassRxfFilters
                                                     , m_bypassAllFilters
                                                     , m_wideGraph->rxFreq());
@@ -7332,7 +7647,8 @@ void MainWindow::readFromStdout()                             //readFromStdout
           break;
         }
 
-      if((!m_config.prevent_spotting_false () || (m_config.prevent_spotting_false () && !decodedtext.isWrong ()))
+      if((!late || decode_origin::to_udp (m_decodeOrigin, m_config.bands ()->find (m_decodeOrigin.dial), m_config.bands ()->find (m_freqNominal), m_mode))   // CE3TSK 2026-10-20: a line of another band or mode is not sent (decodeorigin.h)
+         && (!m_config.prevent_spotting_false () || (m_config.prevent_spotting_false () && !decodedtext.isWrong ()))
          && (!m_config.filterUDP () || (m_config.filterUDP () && notified & 2))) {
          postDecode (true, decodedtext.string (), decodedtext.verdict ().lowConfidence ());   // CE3TSK: see Verdict
       }
@@ -7341,18 +7657,25 @@ void MainWindow::readFromStdout()                             //readFromStdout
       bool stdMsg = decodedtext.report(m_baseCall,
           Radio::base_callsign(m_hisCall), m_rptRcvd,rpt_type,m_wwDigi);
       // extract details and send to PSKreporter
-      if(m_okToPost and m_config.spot_to_psk_reporter () and stdMsg and !m_diskData) {
+      // CE3TSK 2026-10-20: a late line is spotted too, with its own dial and mode (decodeorigin.h)
+      if(decode_origin::may_spot (m_okToPost, late) and m_config.spot_to_psk_reporter () and stdMsg and !m_diskData) {
+        QString const& lineMode = m_decodeOrigin.mode;
         QString msgmode="FT8";
-        if (m_mode=="FT4") msgmode="FT4";
-        else if (m_mode=="FT2") msgmode="FT2";   // CE3TSK
+        if (lineMode=="FT4") msgmode="FT4";
+        else if (lineMode=="FT2") msgmode="FT2";   // CE3TSK
         else if (decodedtext.isJT65()) msgmode="JT65";
-        else if (m_mode.startsWith("JT9")) msgmode="JT9";
-        else if (m_mode=="T10") msgmode="T10";
+        else if (lineMode.startsWith("JT9")) msgmode="JT9";
+        else if (lineMode=="T10") msgmode="T10";
 
         int audioFrequency = decodedtext.frequencyOffset();
         int snr = decodedtext.snr();
-        Frequency frequency = m_freqNominal + audioFrequency;
-        pskSetLocal ();
+        Frequency frequency = static_cast<Frequency> (m_decodeOrigin.dial) + audioFrequency;
+        /* CE3TSK 2026-10-20 (review 3.-155 9): the station details - the antenna of Settings > Frequencies > Station details
+           - of the spot's own band, a late line's the band left. PSK Reporter sends the details with the queue, so the
+           queue goes first whenever the band they are set for changes */
+        QString const spotBand {m_config.bands ()->find (m_decodeOrigin.dial)};
+        if (spotBand != m_pskLocalBand) psk_Reporter->sendReport ();
+        pskSetLocal (spotBand);
         /* CE3TSK 2026-09-30: a likely phantom decode (phantomdecodes.h) is not spotted, as a hint or an error
            decode is not - the spot would put a call on the map where the message itself is in doubt. After
            the second hearing a grid-only mark is trusted (Verdict::lowConfidence). Nor is a sender whose
@@ -7761,7 +8084,7 @@ void MainWindow::guiUpdate()
         }
       if (m_config.TX_messages () || m_autoseq)
         {
-          if (tx_step::autoseq_off_at_tx (ui->tabWidget->currentIndex (), ui->txrb5->isChecked (), ui->rbFreeText->isChecked (),
+          if (tx_step::autoseq_off_at_tx (messageTab (), ui->txrb5->isChecked (), ui->rbFreeText->isChecked (),
                                           m_autoseq, m_Tx5setAutoSeqOff, m_FTsetAutoSeqOff)) { m_wasAutoSeq=true; on_AutoSeqButton_clicked(false); }
           ui->decodedTextBrowser2->displayTransmittedText(m_currentMessage,m_baseCall,Radio::base_callsign (m_hisCall),(m_skipTx1 && !m_houndMode ? "S" : ""),m_modeTx,
                      ui->TxFreqSpinBox->value(),m_config.color_TxMsg(),m_qsoHistory);
@@ -7813,7 +8136,7 @@ void MainWindow::guiUpdate()
     if (!m_enableTx && m_sentFirst73)
     {
       m_sentFirst73 = false;
-      if (1 == ui->tabWidget->currentIndex())
+      if (1 == messageTab ())
       {
         ui->genMsg->setText(ui->tx6->text());
         m_ntx=7;
@@ -7882,7 +8205,7 @@ void MainWindow::guiUpdate()
     }
 
     if ((m_config.TX_messages () || m_autoseq) && !m_tune) {
-      if (tx_step::autoseq_off_at_tx (ui->tabWidget->currentIndex (), ui->txrb5->isChecked (), ui->rbFreeText->isChecked (),
+      if (tx_step::autoseq_off_at_tx (messageTab (), ui->txrb5->isChecked (), ui->rbFreeText->isChecked (),
                                       m_autoseq, m_Tx5setAutoSeqOff, m_FTsetAutoSeqOff)) { m_wasAutoSeq=true; on_AutoSeqButton_clicked(false); }
       if(!haltedEmpty) ui->decodedTextBrowser2->displayTransmittedText(m_curMsgTx,m_baseCall,Radio::base_callsign (m_hisCall),(m_skipTx1 && !m_houndMode ? "S" : ""),m_modeTx,
             ui->TxFreqSpinBox->value(),m_config.color_TxMsg(),m_qsoHistory);
@@ -8029,16 +8352,25 @@ void MainWindow::set_scheduler(QString const& setto,bool mixed)
      FT8/FT4 mid-contest, with nothing parked to undo it) and the transmit gate. An entry whose mode
      is refused is skipped whole: its frequency belongs to that mode. A name that is no mode changes
      the band only, as before. */
-  if (auto * const action = modeAction (newband)) {
+  qsyTo (newband, frq, "Scheduler entry skipped, mode not available now: " + setto, "scheduler");   // CE3TSK 2026-10-20: shared with band hopping
+}
+
+/* CE3TSK 2026-10-20: the scheduler's QSY, taken out of set_scheduler () for band hopping: the mode through its action, so
+   the contest lock and the transmit gate are obeyed, then the band. A name that is no mode changes the band alone; a mode
+   refused skips the whole entry (its frequency belongs to that mode) and says so in ALL.TXT's debug lines. */
+bool MainWindow::qsyTo (QString const& mode, Frequency f, QString const& skipped, QString const& from)
+{
+  if (auto * const action = modeAction (mode)) {
     if (!trigger_if_enabled (action)) {
-      if(m_config.write_decoded_debug()) writeToALLTXT("Scheduler entry skipped, mode not available now: " + setto);
-      return;
+      if(m_config.write_decoded_debug()) writeToALLTXT(skipped);
+      return false;
     }
   }
 
   m_bandEdited = true;
-  band_changed (frq); if(m_config.write_decoded_debug()) writeToALLTXT("Band changed from scheduler, frequency: " + QString::number(frq));
-  m_wideGraph->setRxBand (m_config.bands ()->find (frq));
+  band_changed (f); if(m_config.write_decoded_debug()) writeToALLTXT("Band changed from " + from + ", frequency: " + QString::number(f));
+  m_wideGraph->setRxBand (m_config.bands ()->find (f));
+  return true;
 }
 
 void MainWindow::haltTx(QString reason) { m_haltTxWritten=true; writeHaltTxEvent(reason); on_stopTxButton_clicked(); }
@@ -8589,7 +8921,7 @@ void MainWindow::processMessage(QString const& messages, int position, bool alt,
         case 3: ui->txrb3->setChecked(true); break;
         default: ui->txrb2->setChecked(true); break;
       }
-      if(ui->tabWidget->currentIndex()==1) {
+      if(messageTab ()==1) {
         if (tx == 5) ui->genMsg->setText(ui->tx5->currentText());
         else if (tx == 4) ui->genMsg->setText(ui->tx4->text());
         else if (tx == 3) ui->genMsg->setText(ui->tx3->text());
@@ -8607,7 +8939,7 @@ void MainWindow::processMessage(QString const& messages, int position, bool alt,
       m_QSOProgress = SIGNOFF;
       m_nlasttx=5;
       ui->txrb5->setChecked(true);
-      if(ui->tabWidget->currentIndex()==1) {
+      if(messageTab ()==1) {
         ui->genMsg->setText(ui->tx5->currentText());
         m_ntx=7;
         ui->rbGenMsg->setChecked(true);
@@ -8616,12 +8948,12 @@ void MainWindow::processMessage(QString const& messages, int position, bool alt,
   else // a DE ... 73 of another station, treated like a CQ/QRZ, or myCall not in msg
     {
       int const tx = pick_step::first_tx (m_skipTx1, m_houndMode);
-      if(0 == ui->tabWidget->currentIndex()) m_ntx=tx;
+      if(0 == messageTab ()) m_ntx=tx;
       if (pick_step::Kind::Other == kind && 2 == tx && call_changed) m_qsoHistory.remove(hiscall); //prevent braking Auto Sequence by QSO history values 
       m_QSOProgress = static_cast<QSOProgress> (pick_step::progress_of_first (tx));
       m_nlasttx=tx;
       (2 == tx ? ui->txrb2 : ui->txrb1)->setChecked(true);
-      if(1 == ui->tabWidget->currentIndex()) {
+      if(1 == messageTab ()) {
         ui->genMsg->setText((2 == tx ? ui->tx2 : ui->tx1)->text());
         m_ntx=7;
         ui->rbGenMsg->setChecked(true);
@@ -8829,12 +9161,12 @@ void MainWindow::genStdMsgs(QString rpt)                       //genStdMsgs()
       m_QSOProgress = REPORT;  
       m_nlasttx=2;
       ui->txrb2->setChecked(true);
-      if (0 == ui->tabWidget->currentIndex ()) { m_ntx=2; } else if (1 == ui->tabWidget->currentIndex ()) { m_ntx=7; } }
+      if (0 == messageTab ()) { m_ntx=2; } else if (1 == messageTab ()) { m_ntx=7; } }
     else {
       m_QSOProgress = REPLYING;
       m_nlasttx=1;
       ui->txrb1->setChecked(true);
-      if (0 == ui->tabWidget->currentIndex ()) { m_ntx=1; } else if (1 == ui->tabWidget->currentIndex ()) { m_ntx=7; } }
+      if (0 == messageTab ()) { m_ntx=1; } else if (1 == messageTab ()) { m_ntx=7; } }
       m_rpt=myrpt;
 
     return;
@@ -8929,12 +9261,12 @@ void MainWindow::genStdMsgs(QString rpt)                       //genStdMsgs()
 	m_QSOProgress = REPORT;  
     m_nlasttx=2;
     ui->txrb2->setChecked(true);
-    if (0 == ui->tabWidget->currentIndex ()) { m_ntx=2; } else if (1 == ui->tabWidget->currentIndex ()) { m_ntx=7; } }
+    if (0 == messageTab ()) { m_ntx=2; } else if (1 == messageTab ()) { m_ntx=7; } }
   else {
 	m_QSOProgress = REPLYING;
     m_nlasttx=1;
     ui->txrb1->setChecked(true);
-    if (0 == ui->tabWidget->currentIndex ()) { m_ntx=1; } else if (1 == ui->tabWidget->currentIndex ()) { m_ntx=7; } }
+    if (0 == messageTab ()) { m_ntx=1; } else if (1 == messageTab ()) { m_ntx=7; } }
   m_rpt=myrpt;
   if(!ui->spotLineEdit->text().isEmpty() && ui->spotLineEdit->text().contains("#")) on_spotLineEdit_textChanged(ui->spotLineEdit->text());
 }
@@ -8994,13 +9326,13 @@ void MainWindow::clearDX (QString reason)
   clearDXfields("");
   genStdMsgs(QString {});
   ui->RxFreqSpinBox->setValue (ui->TxFreqSpinBox->value ());
-  if (1 == ui->tabWidget->currentIndex())
+  if (1 == messageTab ())
     {
       ui->genMsg->setText(ui->tx6->text());
       m_ntx=7;
       ui->rbGenMsg->setChecked(true);
     }
-  else if (0 == ui->tabWidget->currentIndex())
+  else if (0 == messageTab ())
     {
       m_ntx=6;
       ui->txrb6->setChecked(true);
@@ -9874,6 +10206,9 @@ void MainWindow::on_actionWSPR_2_triggered()
 
 void MainWindow::switch_mode (Mode mode)
 {
+  /* CE3TSK 2026-10-20 (review 3.-155 4): a mode changed by hand is the operator taking over - here, not only in
+     band_changed (), which a mode with no row near the dial (FT4 on 160 m) never reaches */
+  if (hopping () && !m_ownChange) stopHopping (tr ("the band or mode was changed"));
 // m_lastMode value is deliberately not assigned in constructor to let qsohistory init at SW startup 
   if(m_lastMode!=m_mode) {
      if (m_lastMode == "FT4") Q_EMIT m_config.transceiver_ft4_mode (false);
@@ -10236,6 +10571,10 @@ void MainWindow::band_changed (Frequency f)
                              // not restart (): restart () on a timer never started is undefined in Qt (3.-113, the review 3.-111 G9)
   m_dialWheelTimer.stop (); m_dialWheelClock.invalidate ();   // CE3TSK: any QSY ends a wheel burst, applyDialWheel () restarts the hold
   abortTxBackground("band change");   // CE3TSK
+  /* CE3TSK 2026-10-20: every band and mode change of the program ends here - the band selector, the band buttons, the
+     dial, the Mode menu (switch_mode ()), the scheduler. One not made by a hop is the operator taking over. (After the
+     echo clock, which band_change_wiring.sh keeps first.) */
+  if (hopping () && !m_ownChange) stopHopping (tr ("the band or mode was changed"));
   if (m_bandEdited) {
     if (!m_mode.startsWith ("WSPR")) { // band hopping preserves auto Tx
       if (f + m_wideGraph->nStartFreq () > m_freqNominal + ui->TxFreqSpinBox->value ()
@@ -10681,6 +11020,7 @@ void MainWindow::on_tuneButton_clicked (bool checked)
   static bool lastChecked = false;
   if (lastChecked == checked) return;
   lastChecked = checked;
+  if (checked && hopping ()) stopHopping (hopRefusalText (band_hopping::Refusal::Tuning));   // CE3TSK 2026-10-20
   if(!checked) m_addtx = -2;
   QString curBand;
   if (m_mode == "JT9+JT65" && m_modeTx == "JT65") { curBand = ui->bandComboBox->currentText()+m_modeTx; }
@@ -10744,6 +11084,7 @@ void MainWindow::stopTuneATU() { on_tuneButton_clicked(false); m_bTxTime=false; 
 
 void MainWindow::on_stopTxButton_clicked()                    //Stop Tx
 {
+  if (hopping () && !m_ownChange) stopHopping (tr ("Halt Tx was pressed"));   // CE3TSK 2026-10-20
   if (m_transmitting || m_tune) m_addtx = -1;
   if (m_tune) stop_tuning ();
   if (m_enableTx and !m_tuneup) enableTx_mode (false);
@@ -10991,6 +11332,7 @@ void MainWindow::handle_transceiver_update (Transceiver::TransceiverState const&
   if (old_state.online () == false && s.online () == true) {
       on_monitorButton_clicked(true);
       if(m_config.write_decoded_debug()) writeToALLTXT("handle_transceiver_update: transceiver state transition from offline to online");
+      band_hopping::OwnChange const own {m_ownChange};   // CE3TSK 2026-10-20 (review 3.-155 2): not the operator's
       runModeSlot (m_mode);   // CE3TSK 2026-09-26: modeTable ()
   }
   if (s.frequency () != old_state.frequency () || s.split () != m_splitMode) {
@@ -11017,6 +11359,7 @@ void MainWindow::handle_transceiver_update (Transceiver::TransceiverState const&
 #endif
 
                   f2.close();
+                  m_allTxtHeader = {static_cast<qint64> (m_freqNominal), m_mode};   // CE3TSK 2026-10-20: decodeorigin.h
                 } else {
                   JTDXMessageBox::warning_message (this, "", tr ("File Open Error")
                                                , tr ("Cannot open \"%1\" for append: %2")
@@ -11025,7 +11368,7 @@ void MainWindow::handle_transceiver_update (Transceiver::TransceiverState const&
 //              }
 
               if (m_config.spot_to_psk_reporter ()) {
-                pskSetLocal ();
+                pskSetLocal (ui->bandComboBox->currentText ());
               }
               statusChanged();
               m_wideGraph->setDialFreq(m_freqNominal / 1.e6);
@@ -11062,7 +11405,13 @@ void MainWindow::handle_transceiver_failure (QString const& reason)
   setRigLamp ("#ff0000");
   m_rigOk=false;
   ui->readFreq->setEnabled (true);
-  haltTx("Rig control error: " + reason + " ");
+  {
+    /* CE3TSK 2026-10-20 (review 3.-155 10): this halt is the program's, not Halt Tx pressed - hopping, which never
+       transmits, goes on, and its next due minute asks whether it may (the rig gone). Here, not in haltTx (): Esc and a
+       UDP client's halt are the operator's, and stop hopping as the button does */
+    band_hopping::OwnChange const own {m_ownChange};
+    haltTx("Rig control error: " + reason + " ");
+  }
   rigFailure (tr("Rig Control Error"), reason);
 }
 
@@ -11300,7 +11649,7 @@ void MainWindow::writeToALLTXT(QString const& text)
 
 void MainWindow::setTxMsgBtnColor()
 {
-  if(0 == ui->tabWidget->currentIndex ()) {
+  if(0 == messageTab ()) {
     if(m_ntx==1) ui->txb1->setStyleSheet(QString("QPushButton{background: %1}").arg(Radio::convert_dark("#88ff88",m_useDarkStyle)));
     else if(m_ntx==2) ui->txb2->setStyleSheet(QString("QPushButton{background: %1}").arg(Radio::convert_dark("#88ff88",m_useDarkStyle)));
     else if(m_ntx==3) ui->txb3->setStyleSheet(QString("QPushButton{background: %1}").arg(Radio::convert_dark("#88ff88",m_useDarkStyle)));
@@ -11308,7 +11657,7 @@ void MainWindow::setTxMsgBtnColor()
     else if(m_ntx==5) ui->txb5->setStyleSheet(QString("QPushButton{background: %1}").arg(Radio::convert_dark("#88ff88",m_useDarkStyle)));
     else if(m_ntx==6) ui->txb6->setStyleSheet(QString("QPushButton{background: %1}").arg(Radio::convert_dark("#88ff88",m_useDarkStyle)));
   }
-  else if(1 == ui->tabWidget->currentIndex ()) {
+  else if(1 == messageTab ()) {
     if(m_QSOProgress == CALLING) ui->pbCallCQ->setStyleSheet(QString("QPushButton{background: %1}").arg(Radio::convert_dark("#88ff88",m_useDarkStyle)));
     else if(m_QSOProgress == REPLYING) ui->pbAnswerCQ->setStyleSheet(QString("QPushButton{background: %1}").arg(Radio::convert_dark("#88ff88",m_useDarkStyle)));
     else if(m_QSOProgress == REPORT) ui->pbAnswerCaller->setStyleSheet(QString("QPushButton{background: %1}").arg(Radio::convert_dark("#88ff88",m_useDarkStyle)));
@@ -11320,23 +11669,24 @@ void MainWindow::setTxMsgBtnColor()
 
 void MainWindow::resetTxMsgBtnColor()
 {
-  if(0 == ui->tabWidget->currentIndex ()) {
+  if(0 == messageTab ()) {
     ui->txb1->setStyleSheet(""); ui->txb2->setStyleSheet(""); ui->txb3->setStyleSheet("");
     ui->txb4->setStyleSheet(""); ui->txb5->setStyleSheet(""); ui->txb6->setStyleSheet("");
   }
-  else if(1 == ui->tabWidget->currentIndex ()) {
+  else if(1 == messageTab ()) {
     ui->pbCallCQ->setStyleSheet(""); ui->pbAnswerCQ->setStyleSheet(""); ui->pbAnswerCaller->setStyleSheet("");
     ui->pbSendReport->setStyleSheet(""); ui->pbSendRRR->setStyleSheet(""); ui->pbSend73->setStyleSheet("");
   }
 }
 
-void MainWindow::pskSetLocal ()
+void MainWindow::pskSetLocal (QString const& band)
 {
-  // find the station row, if any, that matches the band we are on
+  m_pskLocalBand = band;
+  // find the station row, if any, that matches the band
   auto stations = m_config.stations ();
   auto matches = stations->match (stations->index (0, StationList::band_column)
                                   , Qt::DisplayRole
-                                  , ui->bandComboBox->currentText ()
+                                  , band
                                   , 1
                                   , Qt::MatchExactly);
   QString antenna_description;

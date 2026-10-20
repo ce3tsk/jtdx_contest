@@ -6343,6 +6343,101 @@ Questo è l'errore del decoder stesso. Sistemare ciò che ne impedisce l'avvio -
         <source>This message cannot be sent</source>
         <translation>Questo messaggio non può essere trasmesso</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>the band or mode was changed</source>
+        <translation>la banda o il modo sono stati cambiati</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Every minute</source>
+        <translation>Ogni minuto</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Every 2 minutes</source>
+        <translation>Ogni 2 minuti</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Moves the station through the frequencies ticked above - mode and dial - at the top of every minute or of every even minute (UTC), and listens there: with PSK Reporter, a look at the bands. A right click goes to the next one at once. Enable Tx, Tune, Halt Tx, Monitor off, opening a file or a band or mode changed by hand stops it. It needs rig control (CAT), and does not run in Hound mode, in a contest or with the band scheduler on.</source>
+        <translation>Porta la stazione attraverso le frequenze spuntate sopra - modo e frequenza - all'inizio di ogni minuto o di ogni minuto pari (UTC), e ascolta lì: con PSK Reporter, uno sguardo alle bande. Un clic destro passa subito alla successiva. Abilita Tx, Accordo, Ferma Tx, Monitora spento, l'apertura di un file o una banda o un modo cambiati a mano lo fermano. Serve il controllo della radio (CAT), e non funziona in modo Hound, durante un contest né con la programmazione attiva.</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>No FT8, FT4 or FT2 frequencies in Settings &gt; Frequencies</source>
+        <translation>Nessuna frequenza FT8, FT4 o FT2 in Impostazioni &gt; Frequenze</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>no frequency is ticked</source>
+        <translation>nessuna frequenza è spuntata</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>it needs rig control (CAT)</source>
+        <translation>serve il controllo della radio (CAT)</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Enable Tx is on</source>
+        <translation>Abilita Tx è attivo</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>the station is transmitting</source>
+        <translation>la stazione sta trasmettendo</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Tune is on</source>
+        <translation>Accordo è attivo</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Monitor is off</source>
+        <translation>Monitora è spento</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>a file is being decoded</source>
+        <translation>si sta decodificando un file</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Hound mode is on</source>
+        <translation>il modo Hound è attivo</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>a contest is running</source>
+        <translation>è in corso un contest</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>the band scheduler is on</source>
+        <translation>la programmazione è attiva</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Band hopping not started: %1</source>
+        <translation>Salto di banda non avviato: %1</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Band hopping stopped: %1</source>
+        <translation>Salto di banda fermato: %1</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>the mode of no ticked frequency is available now</source>
+        <translation>nessuna frequenza spuntata ha ora un modo disponibile</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Halt Tx was pressed</source>
+        <translation>è stato premuto Ferma Tx</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

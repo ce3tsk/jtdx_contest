@@ -6341,6 +6341,101 @@ Dekoders: %3
         <source>This message cannot be sent</source>
         <translation>Šo ziņojumu nevar nosūtīt</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>the band or mode was changed</source>
+        <translation>mainīta josla vai režīms</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Every minute</source>
+        <translation>Katru minūti</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Every 2 minutes</source>
+        <translation>Ik pēc 2 minūtēm</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Moves the station through the frequencies ticked above - mode and dial - at the top of every minute or of every even minute (UTC), and listens there: with PSK Reporter, a look at the bands. A right click goes to the next one at once. Enable Tx, Tune, Halt Tx, Monitor off, opening a file or a band or mode changed by hand stops it. It needs rig control (CAT), and does not run in Hound mode, in a contest or with the band scheduler on.</source>
+        <translation>Ved staciju cauri augstāk atzīmētajām frekvencēm - režīms un frekvence - katras minūtes vai katras pāra minūtes sākumā (UTC) un tur klausās: kopā ar PSK Reporter pārskats par joslām. Labais klikšķis uzreiz pāriet uz nākamo. Atļaut raidīt, Piestrāde, Pārtraukt Tx, izslēgts Monitors, faila atvēršana vai ar roku mainīta josla vai režīms to aptur. Vajadzīga iekārtas vadība (CAT), un tā nedarbojas Hound režīmā, sacensību laikā, ne arī ar ieslēgtu plānotāju.</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>No FT8, FT4 or FT2 frequencies in Settings &gt; Frequencies</source>
+        <translation>Iestatījumi &gt; Frekvences nav FT8, FT4 vai FT2 frekvenču</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>no frequency is ticked</source>
+        <translation>nav atzīmēta neviena frekvence</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>it needs rig control (CAT)</source>
+        <translation>vajadzīga iekārtas vadība (CAT)</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Enable Tx is on</source>
+        <translation>Atļaut raidīt ir ieslēgts</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>the station is transmitting</source>
+        <translation>stacija raida</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Tune is on</source>
+        <translation>Piestrāde ir ieslēgta</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Monitor is off</source>
+        <translation>Monitors ir izslēgts</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>a file is being decoded</source>
+        <translation>tiek dekodēts fails</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Hound mode is on</source>
+        <translation>ieslēgts Hound režīms</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>a contest is running</source>
+        <translation>notiek sacensības</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>the band scheduler is on</source>
+        <translation>ieslēgts plānotājs</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Band hopping not started: %1</source>
+        <translation>Joslu maiņa nav sākta: %1</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Band hopping stopped: %1</source>
+        <translation>Joslu maiņa apturēta: %1</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>the mode of no ticked frequency is available now</source>
+        <translation>nevienai atzīmētajai frekvencei režīms tagad nav pieejams</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Halt Tx was pressed</source>
+        <translation>nospiests Pārtraukt Tx</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

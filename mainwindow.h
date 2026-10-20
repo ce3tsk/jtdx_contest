@@ -9,6 +9,8 @@
 #include "ft2preset.h"   // CE3TSK step 5: FT2's own tiers, in FT4's fields
 #include "decodebudget.h"   // CE3TSK P7   // CE3TSK
 #include "deletedlog.h"   // CE3TSK 2026-10-12: the record of the decodes the prefix-to-grid table deleted
+#include "bandhopping.h"   // CE3TSK 2026-10-20: band hopping's rules
+#include "decodeorigin.h"   // CE3TSK 2026-10-20: the dial and mode a decode began on
 #else
 #include <QtGui>
 #endif
@@ -924,6 +926,21 @@ private:
   QPointer<QMenu> m_bandChannelsMenu;               // CE3TSK 2026-09-26: a button's right-click menu, while open
   QList<QMetaObject::Connection> m_bandButtonsConnections;
   QTimer m_bandButtonsTimer;                       // one rebuild per burst of list changes
+  /* CE3TSK 2026-10-20: band hopping - Tab 3 of the Tx tabs (bandhopping.h, IMPROVED_FEATURES_PLAN.md stage 1) */
+  QWidget * m_hopTab {nullptr};                    // the tab
+  QWidget * m_hopList {nullptr};                   // its check boxes, rebuilt with the frequency table
+  QPushButton * m_hopButton {nullptr};             // Band Hopping, checked while hopping
+  QComboBox * m_hopInterval {nullptr};             // every minute, or every even minute
+  QList<QCheckBox *> m_hopBoxes;                   // one per offered entry, its key in the "hopKey" property
+  QStringList m_hopTicked;                         // the ticked entries' keys, as the settings keep them
+  QStringList m_hopOffer;                          // what the boxes offer now - rebuilt only when it changes
+  QTimer m_hopTimer;                               // while hopping: the top of the minute is looked for 4 times a second
+  int m_hopLastMinute {-1};                        // the UTC minute of the day of the last hop
+  bool m_ownChange {false};                        // a change of the program's own runs (a hop, Settings OK, a reconnect, its
+                                                   //   own halt): not the operator taking over - band_hopping::OwnChange
+  int m_messageTab {0};                            // CE3TSK 2026-10-20: the Tx tab whose messages are sent - Tab 1 or Tab 2 (0, 1)
+  decode_origin::Origin m_decodeOrigin;            // CE3TSK 2026-10-20: the dial and mode the decode running began on
+  decode_origin::Origin m_allTxtHeader;            //   and of the last dial-and-mode header written to ALL.TXT
   QTimer m_dialWheelTimer;                         // CE3TSK: tuning from the dial (wheel, clicks), one QSY per burst of steps
   QElapsedTimer m_dialWheelClock;                  // since the last step or dial QSY, see dialWheelHolding ()
   QElapsedTimer m_ownBandClock;                    // CE3TSK 2026-10-15 (3.-107): since band_changed () - rigreport.h (a)
@@ -1223,6 +1240,21 @@ private:
   void rebuildBandButtons ();
   void highlightBandButton ();
   void selectBandButton (Radio::Frequency frequency);
+  // CE3TSK 2026-10-20: band hopping (bandhopping.h)
+  void buildHopTab ();
+  void rebuildHopList ();
+  void hopTicksChanged ();
+  void hopButtonClicked (bool checked);
+  void hopTick ();                                 // m_hopTimer: a hop at the top of the minute
+  void hopNow ();                                  // the next ticked entry, now
+  void hopRightClick ();                           // the button's right click: hop now, if the station's state allows it
+  bool backgroundFollows (QString const& mode) const;   // a background phase comes after a decode of this mode
+  void stopHopping (QString const& why);           // why: shown in the status bar
+  bool hopping () const;
+  band_hopping::Gates hopGates () const;
+  QString hopRefusalText (band_hopping::Refusal refusal) const;
+  bool qsyTo (QString const& mode, Frequency f, QString const& skipped, QString const& from);   // the scheduler's QSY, and hopping's
+  int messageTab () const;                         // CE3TSK 2026-10-20: Tab 1 or Tab 2, whichever was shown last
   void showBandChannels (QPushButton * button, QPoint const& at);   // CE3TSK 2026-09-26: the right click
   bool dialFrequencyWheel (QWheelEvent * event);   // CE3TSK
   bool dialFrequencyClick (QMouseEvent * event);   // CE3TSK 2026-09-28: clicks on the dial step it too
@@ -1267,7 +1299,8 @@ private:
   void resetTxMsgBtnColor();
   void transmit (double snr = 99.);
   void rigFailure (QString const& reason, QString const& detail);
-  void pskSetLocal ();
+  void pskSetLocal (QString const& band);          // CE3TSK 2026-10-20: the station details of that band (the antenna)
+  QString m_pskLocalBand;                          //   the band PSK Reporter's station details were last set for
   void displayDialFrequency ();
   void transmitDisplay (bool);
   void processMessage(QString const& messages, qint32 position, bool alt, bool ctrl);

@@ -6342,6 +6342,101 @@ That is the decoder's own error. Put right whatever stops it starting - a missin
         <source>This message cannot be sent</source>
         <translation>이 메시지는 송신할 수 없습니다</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>the band or mode was changed</source>
+        <translation>밴드나 모드가 바뀌었습니다</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Every minute</source>
+        <translation>매분</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Every 2 minutes</source>
+        <translation>2분마다</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Moves the station through the frequencies ticked above - mode and dial - at the top of every minute or of every even minute (UTC), and listens there: with PSK Reporter, a look at the bands. A right click goes to the next one at once. Enable Tx, Tune, Halt Tx, Monitor off, opening a file or a band or mode changed by hand stops it. It needs rig control (CAT), and does not run in Hound mode, in a contest or with the band scheduler on.</source>
+        <translation>위에서 체크한 주파수(모드와 다이얼)를 매분 또는 짝수 분(UTC)의 시작에 차례로 옮겨 가며 그곳에서 수신합니다. PSK Reporter와 함께 쓰면 밴드 상황을 볼 수 있습니다. 오른쪽 클릭하면 바로 다음으로 넘어갑니다. 송신 허용, 튠, 송신 중지, 모니터 끄기, 파일 열기, 손으로 바꾼 밴드나 모드가 이를 멈춥니다. 리그 제어(CAT)가 필요하며 Hound 모드, 콘테스트 중, 스케줄러가 켜져 있을 때는 동작하지 않습니다.</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>No FT8, FT4 or FT2 frequencies in Settings &gt; Frequencies</source>
+        <translation>설정 &gt; 주파수에 FT8, FT4, FT2 주파수가 없습니다</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>no frequency is ticked</source>
+        <translation>체크한 주파수가 없습니다</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>it needs rig control (CAT)</source>
+        <translation>리그 제어(CAT)가 필요합니다</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Enable Tx is on</source>
+        <translation>송신 허용이 켜져 있습니다</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>the station is transmitting</source>
+        <translation>송신 중입니다</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Tune is on</source>
+        <translation>튠이 켜져 있습니다</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Monitor is off</source>
+        <translation>모니터가 꺼져 있습니다</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>a file is being decoded</source>
+        <translation>파일을 디코딩하고 있습니다</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Hound mode is on</source>
+        <translation>Hound 모드가 켜져 있습니다</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>a contest is running</source>
+        <translation>콘테스트 중입니다</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>the band scheduler is on</source>
+        <translation>스케줄러가 켜져 있습니다</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Band hopping not started: %1</source>
+        <translation>밴드 호핑을 시작하지 않음: %1</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Band hopping stopped: %1</source>
+        <translation>밴드 호핑 중지됨: %1</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>the mode of no ticked frequency is available now</source>
+        <translation>체크한 주파수의 모드를 지금은 하나도 쓸 수 없습니다</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Halt Tx was pressed</source>
+        <translation>송신 중지를 눌렀습니다</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>
