@@ -2473,6 +2473,49 @@ Formāts:
     </message>
 </context>
 <context>
+    <name>DisplayText</name>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Likely phantom decode: %1 lies outside %2, the country of %3.</source>
+        <translation>Iespējama fantoma dekodēšana: %1 atrodas ārpus valsts %2, kurai pieder %3.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>%1 has sent this grid in an earlier period too: most likely a station operating away from home.</source>
+        <translation>%1 šo lokatoru sūtīja arī agrākā periodā: visticamāk, stacija, kas strādā ārpus savas mītnes zemes.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Likely phantom decode: %1 signs /R (rover) below 30 MHz, and /R is a single bit of the message.</source>
+        <translation>Iespējama fantoma dekodēšana: %1 lieto /R (rover) zem 30 MHz, un /R ir tikai viens ziņojuma bits.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Likely phantom decode: %1 and %2 both sign /P (portable), at %3 dB below 30 MHz; genuine park-to-park contacts are stronger.</source>
+        <translation>Iespējama fantoma dekodēšana: %1 un %2 abi lieto /P (portatīvs), ar %3 dB zem 30 MHz; īsti parks-parks sakari ir stiprāki.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Likely phantom decode: the prefix of %1 belongs to no country in cty.dat.</source>
+        <translation>Iespējama fantoma dekodēšana: %1 prefikss cty.dat nepieder nevienai valstij.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Not answered automatically; a double click still answers it.</source>
+        <translation>Automātiski netiek atbildēts; dubultklikšķis uz to joprojām atbild.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Sent to UDP clients as a low-confidence decode, and never spotted to PSK Reporter.</source>
+        <translation>UDP klientiem tiek nosūtīta kā zemas ticamības dekodēšana, un PSK Reporter tā nekad netiek ziņota.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>No longer of low confidence: it goes to UDP clients and PSK Reporter like any other decode.</source>
+        <translation>Vairs nav zemas ticamības: tā nonāk pie UDP klientiem un PSK Reporter kā jebkura cita dekodēšana.</translation>
+    </message>
+</context>
+<context>
     <name>EmulateSplitTransceiver</name>
     <message>
         <location filename="../EmulateSplitTransceiver.cpp" line="50"/>

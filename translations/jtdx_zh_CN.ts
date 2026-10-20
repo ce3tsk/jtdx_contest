@@ -2474,6 +2474,49 @@ Format:
     </message>
 </context>
 <context>
+    <name>DisplayText</name>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Likely phantom decode: %1 lies outside %2, the country of %3.</source>
+        <translation>可能是幻影解码：%1 位于 %3 所属国家（%2）之外。</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>%1 has sent this grid in an earlier period too: most likely a station operating away from home.</source>
+        <translation>%1 在之前的周期中也发送过这个网格：很可能是正在其本国之外操作的电台。</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Likely phantom decode: %1 signs /R (rover) below 30 MHz, and /R is a single bit of the message.</source>
+        <translation>可能是幻影解码：%1 在 30 MHz 以下带 /R（流动），而 /R 只是消息中的一个比特。</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Likely phantom decode: %1 and %2 both sign /P (portable), at %3 dB below 30 MHz; genuine park-to-park contacts are stronger.</source>
+        <translation>可能是幻影解码：%1 和 %2 都带 /P（便携），在 30 MHz 以下为 %3 dB；真正的公园对公园通联信号更强。</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Likely phantom decode: the prefix of %1 belongs to no country in cty.dat.</source>
+        <translation>可能是幻影解码：%1 的前缀在 cty.dat 中不属于任何国家。</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Not answered automatically; a double click still answers it.</source>
+        <translation>不会自动应答；双击仍可应答。</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Sent to UDP clients as a low-confidence decode, and never spotted to PSK Reporter.</source>
+        <translation>以低可信度解码发送给 UDP 客户端，并且从不报告给 PSK Reporter。</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>No longer of low confidence: it goes to UDP clients and PSK Reporter like any other decode.</source>
+        <translation>不再视为低可信度：像其他解码一样发送给 UDP 客户端和 PSK Reporter。</translation>
+    </message>
+</context>
+<context>
     <name>EmulateSplitTransceiver</name>
     <message>
         <location filename="../EmulateSplitTransceiver.cpp" line="50"/>

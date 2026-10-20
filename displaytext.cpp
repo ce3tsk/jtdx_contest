@@ -112,6 +112,36 @@ void DisplayText::paintEvent (QPaintEvent *e)
     }
 }
 
+/* CE3TSK 2026-10-19: why a line is a likely phantom decode, as its tooltip (the operator: anywhere on the line) - a
+   sentence for each reason the judge found (phantomdecodes.h), then what is done with the decode: held back from the
+   sequencer, and how it goes out (Verdict::lowConfidence). `country` names the entity the grid was judged against as
+   the country column does (cty.dat's name, translated when Settings says so); `snr` is the decode's, the level the
+   /P rule judged. Rich text, a paragraph a sentence, so a long one wraps; each escaped, as a country name may hold an '&'. */
+QString DisplayText::doubtToolTip (phantom_decodes::Verdict const& v, QString const& country, int snr)
+{
+  using namespace phantom_decodes;
+  QString const call = bareCall (v.sender);
+  QStringList s;
+  if (v.reasons & Grid)
+    {
+      s << tr ("Likely phantom decode: %1 lies outside %2, the country of %3.").arg (v.grid, country, call);
+      if (v.repeated) s << tr ("%1 has sent this grid in an earlier period too: most likely a station operating away from home.").arg (call);
+    }
+  if (v.reasons & Rover)
+    for (auto const& r : v.rovers) s << tr ("Likely phantom decode: %1 signs /R (rover) below 30 MHz, and /R is a single bit of the message.").arg (bareCall (r));
+  if (v.reasons & Portable)
+    s << tr ("Likely phantom decode: %1 and %2 both sign /P (portable), at %3 dB below 30 MHz; genuine park-to-park contacts are stronger.")
+         .arg (bareCall (v.portables.value (0)), bareCall (v.portables.value (1)), QString::number (snr));
+  if (v.reasons & Where) s << tr ("Likely phantom decode: the prefix of %1 belongs to no country in cty.dat.").arg (call);
+  if (s.isEmpty ()) return {};
+  if (v.noAnswer) s << tr ("Not answered automatically; a double click still answers it.");
+  s << (v.lowConfidence () ? tr ("Sent to UDP clients as a low-confidence decode, and never spotted to PSK Reporter.")
+                           : tr ("No longer of low confidence: it goes to UDP clients and PSK Reporter like any other decode."));
+  QString tip;
+  for (auto const& x : s) tip += "<p>" + x.toHtmlEscaped () + "</p>";
+  return tip;
+}
+
 DisplayText::DisplayText(QWidget *parent) :
     QTextEdit(parent)
 {
@@ -250,7 +280,7 @@ void DisplayText::insertLineSpacer(QString const& line)
     appendText (line, Radio::convert_dark("#d3d3d3",useDarkStyle_), Radio::convert_dark("#000000",useDarkStyle_), 0, " ", Radio::convert_dark("#000000",useDarkStyle_), " ", true);
 }
 
-void DisplayText::appendText(QString const& text, QString const& bg, QString const& color, int std_type, QString const& servis, QString const& servis_color, QString const& cntry, bool forceBold, bool strikethrough, bool underlined, bool DXped, bool overwrite, bool wanted, QList<QPair<int, int>> const& doubtful, int cntryDoubtFrom)
+void DisplayText::appendText(QString const& text, QString const& bg, QString const& color, int std_type, QString const& servis, QString const& servis_color, QString const& cntry, bool forceBold, bool strikethrough, bool underlined, bool DXped, bool overwrite, bool wanted, QList<QPair<int, int>> const& doubtful, int cntryDoubtFrom, QString const& toolTip)
 {
     QString servbg, s;
     if (std_type == 2) servbg = Radio::convert_dark("#ff0000",useDarkStyle_);
@@ -258,6 +288,9 @@ void DisplayText::appendText(QString const& text, QString const& bg, QString con
     else if (servis == "?") servbg = Radio::convert_dark("#ffff00",useDarkStyle_);
     else if (std_type == 3 && servis.length()>1) servbg = servis.mid(1);
     else servbg = Radio::convert_dark("#ffffff",useDarkStyle_);
+    /* CE3TSK 2026-10-19: the line's tooltip on every part of it, and none on any other line - m_charFormat serves them all */
+    if (toolTip.isEmpty ()) m_charFormat.clearProperty (QTextFormat::TextToolTip);
+    else m_charFormat.setToolTip (toolTip);
     auto cursor = textCursor ();
     if (scroll_) {
         if (document ()->blockCount() == 10000) {
@@ -1219,6 +1252,7 @@ int DisplayText::displayDecodedText(DecodedText* decodedText, QString myCall, QS
        underlined in red. The words are found as whole words from the message column on, the last one of each; a word
        found twice (a /R call of no country) is drawn once - appendText () skips a span it has passed. */
     QList<QPair<int, int>> doubtful;
+    QString doubtTip;
     if (doubt.marked ()) {
         beep = false;
         actwind = false;
@@ -1236,6 +1270,9 @@ int DisplayText::displayDecodedText(DecodedText* decodedText, QString myCall, QS
         if (doubt.reasons & phantom_decodes::Grid) underline (doubt.grid);
         if (doubt.reasons & phantom_decodes::Where) underline (doubt.sender);
         std::sort (doubtful.begin (), doubtful.end ());
+        QString country;   // CE3TSK 2026-10-19: the entity the grid was judged against, by the name the country column gives it
+        if (doubt.reasons & phantom_decodes::Grid) logBook.getDXCC (phantom_decodes::bareCall (doubt.sender), country);
+        doubtTip = doubtToolTip (doubt, country.section (',', 2, 2).trimmed (), decodedText->snr ());
     }
     if (show_line) {
         if (actwind) {
@@ -1305,7 +1342,7 @@ int DisplayText::displayDecodedText(DecodedText* decodedText, QString myCall, QS
             cntry = p + cntry;
             if (cntryDoubtFrom >= 0) cntryDoubtFrom += p.size ();   // CE3TSK: ?Chile? moved along
         }
-        appendText(messageText, bgColor, txtColor, std_type, servis, servisColor, cntry, forceBold, strikethrough, underlined, decodedText->isDXped(), false, bwantedCall||bwantedGrid||bwantedPrefix||bwantedCountry, doubtful, cntryDoubtFrom);
+        appendText(messageText, bgColor, txtColor, std_type, servis, servisColor, cntry, forceBold, strikethrough, underlined, decodedText->isDXped(), false, bwantedCall||bwantedGrid||bwantedPrefix||bwantedCountry, doubtful, cntryDoubtFrom, doubtTip);
         wastx_ = false;
     }
         if (notified) inotified |= 1;

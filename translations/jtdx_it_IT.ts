@@ -2474,6 +2474,49 @@ Formato:
     </message>
 </context>
 <context>
+    <name>DisplayText</name>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Likely phantom decode: %1 lies outside %2, the country of %3.</source>
+        <translation>Probabile decodifica fantasma: %1 si trova fuori dall'entità %2, quella di %3.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>%1 has sent this grid in an earlier period too: most likely a station operating away from home.</source>
+        <translation>%1 ha già inviato questa griglia in un periodo precedente: molto probabilmente una stazione che opera lontano da casa.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Likely phantom decode: %1 signs /R (rover) below 30 MHz, and /R is a single bit of the message.</source>
+        <translation>Probabile decodifica fantasma: %1 porta /R (rover) sotto i 30 MHz, e /R è un singolo bit del messaggio.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Likely phantom decode: %1 and %2 both sign /P (portable), at %3 dB below 30 MHz; genuine park-to-park contacts are stronger.</source>
+        <translation>Probabile decodifica fantasma: %1 e %2 portano entrambi /P (portatile), a %3 dB sotto i 30 MHz; i veri collegamenti parco-parco sono più forti.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Likely phantom decode: the prefix of %1 belongs to no country in cty.dat.</source>
+        <translation>Probabile decodifica fantasma: il prefisso di %1 non appartiene a nessun paese in cty.dat.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Not answered automatically; a double click still answers it.</source>
+        <translation>Nessuna risposta automatica; un doppio click risponde comunque.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Sent to UDP clients as a low-confidence decode, and never spotted to PSK Reporter.</source>
+        <translation>Inviata ai client UDP come decodifica a bassa affidabilità, e mai segnalata come spot a PSK Reporter.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>No longer of low confidence: it goes to UDP clients and PSK Reporter like any other decode.</source>
+        <translation>Non più a bassa affidabilità: va ai client UDP e a PSK Reporter come qualsiasi altra decodifica.</translation>
+    </message>
+</context>
+<context>
     <name>EmulateSplitTransceiver</name>
     <message>
         <location filename="../EmulateSplitTransceiver.cpp" line="50"/>

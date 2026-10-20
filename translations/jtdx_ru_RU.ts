@@ -2475,6 +2475,49 @@ Format:
     </message>
 </context>
 <context>
+    <name>DisplayText</name>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Likely phantom decode: %1 lies outside %2, the country of %3.</source>
+        <translation>Вероятно, фантомное декодирование: %1 лежит вне страны %2 - страны позывного %3.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>%1 has sent this grid in an earlier period too: most likely a station operating away from home.</source>
+        <translation>Станция %1 передавала этот локатор и в одном из прошлых периодов: скорее всего, она работает вдали от своей страны.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Likely phantom decode: %1 signs /R (rover) below 30 MHz, and /R is a single bit of the message.</source>
+        <translation>Вероятно, фантомное декодирование: %1 использует /R (ровер) ниже 30 МГц, а /R - это всего один бит сообщения.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Likely phantom decode: %1 and %2 both sign /P (portable), at %3 dB below 30 MHz; genuine park-to-park contacts are stronger.</source>
+        <translation>Вероятно, фантомное декодирование: оба позывных, %1 и %2, с /P (портативный), при %3 дБ ниже 30 МГц; настоящие связи парк-парк сильнее.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Likely phantom decode: the prefix of %1 belongs to no country in cty.dat.</source>
+        <translation>Вероятно, фантомное декодирование: префикс %1 по cty.dat не относится ни к одной стране.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Not answered automatically; a double click still answers it.</source>
+        <translation>Автоматически на него не отвечают; двойной щелчок по-прежнему отвечает на него.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Sent to UDP clients as a low-confidence decode, and never spotted to PSK Reporter.</source>
+        <translation>Клиентам UDP передаётся как декодирование с низкой достоверностью и никогда не отправляется спотом в PSK Reporter.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>No longer of low confidence: it goes to UDP clients and PSK Reporter like any other decode.</source>
+        <translation>Больше не считается декодированием с низкой достоверностью: идёт клиентам UDP и в PSK Reporter, как любое другое.</translation>
+    </message>
+</context>
+<context>
     <name>EmulateSplitTransceiver</name>
     <message>
         <location filename="../EmulateSplitTransceiver.cpp" line="50"/>

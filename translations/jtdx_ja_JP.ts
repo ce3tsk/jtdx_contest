@@ -2474,6 +2474,49 @@ Format:
     </message>
 </context>
 <context>
+    <name>DisplayText</name>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Likely phantom decode: %1 lies outside %2, the country of %3.</source>
+        <translation>ファントムデコードの可能性：%1 は %3 の国（%2）の外にあります。</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>%1 has sent this grid in an earlier period too: most likely a station operating away from home.</source>
+        <translation>%1 は以前の周期でもこのグリッドを送信しています。通常の運用場所とは異なる場所から運用している局である可能性が高いです。</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Likely phantom decode: %1 signs /R (rover) below 30 MHz, and /R is a single bit of the message.</source>
+        <translation>ファントムデコードの可能性：%1 は30 MHz未満で/R（ローバー）を付けています。/Rはメッセージのわずか1ビットです。</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Likely phantom decode: %1 and %2 both sign /P (portable), at %3 dB below 30 MHz; genuine park-to-park contacts are stronger.</source>
+        <translation>ファントムデコードの可能性：%1 と %2 の両方が/P（移動）を付けており、30 MHz未満で%3 dBです。実際のPark-to-Park（P2P）交信は、より強い信号で受信されるのが普通です。</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Likely phantom decode: the prefix of %1 belongs to no country in cty.dat.</source>
+        <translation>ファントムデコードの可能性：%1 のプリフィックスは cty.dat でどの国にも属しません。</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Not answered automatically; a double click still answers it.</source>
+        <translation>自動では応答しません。ダブルクリックすれば応答できます。</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Sent to UDP clients as a low-confidence decode, and never spotted to PSK Reporter.</source>
+        <translation>UDPクライアントには信頼度の低いデコードとして送られ、PSK Reporterへは決してスポットされません。</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>No longer of low confidence: it goes to UDP clients and PSK Reporter like any other decode.</source>
+        <translation>もはや信頼度の低いデコードとしては扱われません。他のデコードと同様に、UDPクライアントとPSK Reporterへ送られます。</translation>
+    </message>
+</context>
+<context>
     <name>EmulateSplitTransceiver</name>
     <message>
         <location filename="../EmulateSplitTransceiver.cpp" line="50"/>

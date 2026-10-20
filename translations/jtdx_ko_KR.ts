@@ -2474,6 +2474,49 @@ Format:
     </message>
 </context>
 <context>
+    <name>DisplayText</name>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Likely phantom decode: %1 lies outside %2, the country of %3.</source>
+        <translation>팬텀 디코드일 가능성: %1은(는) %3의 국가(%2) 밖에 있습니다.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>%1 has sent this grid in an earlier period too: most likely a station operating away from home.</source>
+        <translation>%1은(는) 이전 주기에도 이 그리드를 보냈습니다. 본국 밖에서 운용 중인 국일 가능성이 높습니다.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Likely phantom decode: %1 signs /R (rover) below 30 MHz, and /R is a single bit of the message.</source>
+        <translation>팬텀 디코드일 가능성: %1은(는) 30 MHz 미만에서 /R(로버)을 붙였습니다. /R은 메시지의 비트 하나에 불과합니다.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Likely phantom decode: %1 and %2 both sign /P (portable), at %3 dB below 30 MHz; genuine park-to-park contacts are stronger.</source>
+        <translation>팬텀 디코드일 가능성: %1과(와) %2 모두 /P(이동)를 붙였으며, 30 MHz 미만에서 %3 dB입니다. 실제 공원 간 교신은 더 강하게 수신됩니다.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Likely phantom decode: the prefix of %1 belongs to no country in cty.dat.</source>
+        <translation>팬텀 디코드일 가능성: %1의 프리픽스는 cty.dat에서 어느 국가에도 속하지 않습니다.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Not answered automatically; a double click still answers it.</source>
+        <translation>자동으로는 응답하지 않습니다. 더블클릭하면 여전히 응답할 수 있습니다.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Sent to UDP clients as a low-confidence decode, and never spotted to PSK Reporter.</source>
+        <translation>UDP 클라이언트에는 신뢰도가 낮은 디코드로 전송되며, PSK Reporter에는 절대 스폿되지 않습니다.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>No longer of low confidence: it goes to UDP clients and PSK Reporter like any other decode.</source>
+        <translation>더 이상 신뢰도가 낮은 디코드가 아닙니다. 다른 디코드와 마찬가지로 UDP 클라이언트와 PSK Reporter로 전송됩니다.</translation>
+    </message>
+</context>
+<context>
     <name>EmulateSplitTransceiver</name>
     <message>
         <location filename="../EmulateSplitTransceiver.cpp" line="50"/>

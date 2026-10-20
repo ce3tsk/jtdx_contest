@@ -27,6 +27,8 @@ public:
        colour; the window draws the wave itself (paintEvent), 2 px thick - Qt's own WaveUnderline is one pixel. */
     static constexpr int DoubtProperty = QTextFormat::UserProperty + 0x7d0;
     static bool isDoubt (QTextCharFormat const& f) {return f.property (DoubtProperty).toBool ();}
+    /* CE3TSK 2026-10-19: the tooltip of a likely phantom decode's line - why it is one, and what is done with it */
+    static QString doubtToolTip (phantom_decodes::Verdict const&, QString const& country, int snr);
     void setMyContinent (QString const&);
     void setContentFont (QFont const&);
     void insertLineSpacer(QString const&);
@@ -47,8 +49,8 @@ signals:
 public slots:
   /* CE3TSK 2026-09-30: doubtful - (column, length) of the words of `text` in doubt, cntryDoubtFrom -
      where the doubtful part of `cntry` starts (-1: none); both get the red wave underline of a
-     likely phantom decode (phantomdecodes.h) */
-  void appendText(QString const& text, QString const& bg = "#ffffff", QString const& color = "#000000", int std_type = 0, QString const& servis = " ", QString const& servis_color = "#000000", QString const& cntry = " ", bool forceBold = false, bool strikethrough = false, bool underline = false, bool DXped = false, bool overwrite = false, bool wanted = false, QList<QPair<int, int>> const& doubtful = QList<QPair<int, int>> (), int cntryDoubtFrom = -1);
+     likely phantom decode (phantomdecodes.h); 2026-10-19 toolTip - the line's, on every part of it (doubtToolTip) */
+  void appendText(QString const& text, QString const& bg = "#ffffff", QString const& color = "#000000", int std_type = 0, QString const& servis = " ", QString const& servis_color = "#000000", QString const& cntry = " ", bool forceBold = false, bool strikethrough = false, bool underline = false, bool DXped = false, bool overwrite = false, bool wanted = false, QList<QPair<int, int>> const& doubtful = QList<QPair<int, int>> (), int cntryDoubtFrom = -1, QString const& toolTip = QString ());
 
 protected:
     void mouseDoubleClickEvent(QMouseEvent *e);

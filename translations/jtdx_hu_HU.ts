@@ -2474,6 +2474,49 @@ Formátum:
     </message>
 </context>
 <context>
+    <name>DisplayText</name>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Likely phantom decode: %1 lies outside %2, the country of %3.</source>
+        <translation>Valószínű fantomdekódolás: %1 kívül esik %3 országán (%2).</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>%1 has sent this grid in an earlier period too: most likely a station operating away from home.</source>
+        <translation>%1 egy korábbi periódusban is ezt a QRA kockát küldte: nagy valószínűséggel otthonától távol forgalmazó állomás.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Likely phantom decode: %1 signs /R (rover) below 30 MHz, and /R is a single bit of the message.</source>
+        <translation>Valószínű fantomdekódolás: %1 /R (rover) jelzést visel 30 MHz alatt, és a /R az üzenet egyetlen bitje.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Likely phantom decode: %1 and %2 both sign /P (portable), at %3 dB below 30 MHz; genuine park-to-park contacts are stronger.</source>
+        <translation>Valószínű fantomdekódolás: %1 és %2 is /P (hordozható) jelzést visel, %3 dB-es jellel 30 MHz alatt; a valódi park-park összeköttetések erősebbek.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Likely phantom decode: the prefix of %1 belongs to no country in cty.dat.</source>
+        <translation>Valószínű fantomdekódolás: %1 előtagja a cty.dat szerint egyetlen országhoz sem tartozik.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Not answered automatically; a double click still answers it.</source>
+        <translation>Nem kap automatikus választ; dupla kattintással továbbra is válaszolhat rá.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Sent to UDP clients as a low-confidence decode, and never spotted to PSK Reporter.</source>
+        <translation>Az UDP kliensek alacsony megbízhatóságú dekódolásként kapják meg, és sosem kerül spotként a PSK Reporterre.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>No longer of low confidence: it goes to UDP clients and PSK Reporter like any other decode.</source>
+        <translation>Már nem alacsony megbízhatóságú: az UDP kliensekhez és a PSK Reporterhez úgy kerül, mint bármely más dekódolás.</translation>
+    </message>
+</context>
+<context>
     <name>EmulateSplitTransceiver</name>
     <message>
         <location filename="../EmulateSplitTransceiver.cpp" line="50"/>
