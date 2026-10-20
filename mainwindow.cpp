@@ -6372,10 +6372,14 @@ void MainWindow::on_actionFT8BgClassic_toggled(bool checked) { m_bgClassic=check
 // at its first look (the decoder reads it in the background phase only); left alone, the background ran on the old
 // band's audio, and a line of it read after the next decode had begun was filed under the new band. Reproduced
 // 2026-10-20 (a 20 m period's background lines under the next file's 50.313 MHz header).
-void MainWindow::abortTxBackground(QString const& reason)
+void MainWindow::abortTxBackground(QString const& reason, Frequency dial, QString const& mode)
 {
-  // (2026-10-20) only a background that will come: m_bgAbortAsked waits for its <BackgroundFinished>
-  bool const toCome {!m_bgPhase && m_rxPhase && backgroundFollows (m_decodeOrigin.mode)};
+  // (2026-10-20) only a background that will come: m_bgAbortAsked waits for its <BackgroundFinished>; and (review 3.-158 4)
+  // only when the band or the mode is no longer the decode's - Settings OK, a rig reconnecting (commonActions ()), a
+  // dial-wheel step and a click on the band the station is on (band_changed ()) change neither
+  bool const changed {m_config.bands ()->find (dial) != m_config.bands ()->find (static_cast<Frequency> (m_decodeOrigin.dial))
+                      || mode != m_decodeOrigin.mode};
+  bool const toCome {!m_bgPhase && m_rxPhase && backgroundFollows (m_decodeOrigin.mode) && changed};
   if(!m_bgPhase && !toCome) return;
   QFile {m_config.temp_dir ().absoluteFilePath (".bgabort")}.open(QIODevice::ReadWrite);
   m_bgAbortAsked=true;   // item 81: this abort is ours, not the load's
@@ -7316,7 +7320,7 @@ void MainWindow::readFromStdout()                             //readFromStdout
            <BackgroundFinished> line, which re-arms the spacer) will come. Until item 78 the FT4
            decoder ran the phase only when the member target exceeded the RX count, and this
            flag had to copy that rule or every later separator was swallowed. */
-        m_bgPhase=backgroundFollows (m_mode);
+        m_bgPhase=backgroundFollows (m_decodeOrigin.mode);   // (2026-10-20, review 3.-158 2) the decoder ran in the decode's mode
         updateDecodeLabel();
         updateTimingLamps();   // CE3TSK
         if(m_mode=="FT8") {
@@ -7671,10 +7675,8 @@ void MainWindow::readFromStdout()                             //readFromStdout
         int snr = decodedtext.snr();
         Frequency frequency = static_cast<Frequency> (m_decodeOrigin.dial) + audioFrequency;
         /* CE3TSK 2026-10-20 (review 3.-155 9): the station details - the antenna of Settings > Frequencies > Station details
-           - of the spot's own band, a late line's the band left. PSK Reporter sends the details with the queue, so the
-           queue goes first whenever the band they are set for changes */
+           - of the spot's own band, a late line's the band left (pskSetLocal () sends the queue first when it changes) */
         QString const spotBand {m_config.bands ()->find (m_decodeOrigin.dial)};
-        if (spotBand != m_pskLocalBand) psk_Reporter->sendReport ();
         pskSetLocal (spotBand);
         /* CE3TSK 2026-09-30: a likely phantom decode (phantomdecodes.h) is not spotted, as a hint or an error
            decode is not - the spot would put a call on the map where the message itself is in doubt. After
@@ -10311,7 +10313,7 @@ void MainWindow::commonActions ()
     if(ui->genMsg->text ().startsWith ("CQ ")) ui->genMsg->setText (ui->tx6->text ());
   }
   m_cqWordMode77 = mode77;
-  abortTxBackground("mode change");   // CE3TSK
+  abortTxBackground("mode change", m_freqNominal, m_mode);   // CE3TSK
   m_modeChanged=true;
 }
 
@@ -10570,7 +10572,7 @@ void MainWindow::band_changed (Frequency f)
   m_ownBandClock.start ();   // CE3TSK 2026-10-15 (3.-107): the program's own band change - its echoes (rigreport.h (a)); start (),
                              // not restart (): restart () on a timer never started is undefined in Qt (3.-113, the review 3.-111 G9)
   m_dialWheelTimer.stop (); m_dialWheelClock.invalidate ();   // CE3TSK: any QSY ends a wheel burst, applyDialWheel () restarts the hold
-  abortTxBackground("band change");   // CE3TSK
+  abortTxBackground("band change", f, m_mode);   // CE3TSK
   /* CE3TSK 2026-10-20: every band and mode change of the program ends here - the band selector, the band buttons, the
      dial, the Mode menu (switch_mode ()), the scheduler. One not made by a hop is the operator taking over. (After the
      echo clock, which band_change_wiring.sh keeps first.) */
@@ -11332,6 +11334,11 @@ void MainWindow::handle_transceiver_update (Transceiver::TransceiverState const&
   if (old_state.online () == false && s.online () == true) {
       on_monitorButton_clicked(true);
       if(m_config.write_decoded_debug()) writeToALLTXT("handle_transceiver_update: transceiver state transition from offline to online");
+      /* CE3TSK 2026-10-20 (review 3.-158 3): a band changed at the rig while rig control was gone is the operator's - seen
+         here, before the program puts its mode back: that QSY is its own, and its band change would make the rig's band
+         the one the program knows, so the rig's report would never read as a change */
+      if (hopping () && s.frequency () && !m_lastBand.isEmpty () && m_config.bands ()->find (s.frequency ()) != m_lastBand)
+        stopHopping (tr ("the band or mode was changed"));
       band_hopping::OwnChange const own {m_ownChange};   // CE3TSK 2026-10-20 (review 3.-155 2): not the operator's
       runModeSlot (m_mode);   // CE3TSK 2026-09-26: modeTable ()
   }
@@ -11681,6 +11688,10 @@ void MainWindow::resetTxMsgBtnColor()
 
 void MainWindow::pskSetLocal (QString const& band)
 {
+  /* CE3TSK 2026-10-20 (review 3.-158 1): PSK Reporter sends the details with the queue, so the queue goes first whenever
+     the band they are set for changes - whoever sets them: a spot, the rig's report of a new dial, Settings OK (the rig's
+     report after a hop switched them while the old band's late spots were still queued) */
+  if (band != m_pskLocalBand) psk_Reporter->sendReport ();
   m_pskLocalBand = band;
   // find the station row, if any, that matches the band
   auto stations = m_config.stations ();

@@ -368,7 +368,7 @@ private slots:
   void on_actionFT8BgAltPass_toggled(bool checked);
   void on_actionFT8BgClassic_toggled(bool checked);
   void setBackgroundActions();
-  void abortTxBackground(QString const& reason);   // CE3TSK: band/mode change stops the background
+  void abortTxBackground(QString const& reason, Frequency dial, QString const& mode);   // CE3TSK: band/mode change stops the background
   void updateDecodeLabel();
   void on_actionFT8PresetPipeline_triggered();
   void on_actionFT8PresetPipelineFull_triggered();
