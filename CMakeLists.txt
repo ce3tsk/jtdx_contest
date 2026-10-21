@@ -275,6 +275,7 @@ set (wsjtx_CXXSRCS
   about.cpp
   WsprTxScheduler.cpp
   mainwindow.cpp
+  altlayout.cpp   # CE3TSK 2026-10-20: View > Alternative layout
   sequencer_hooks.cpp
   Configuration.cpp
   main.cpp
@@ -653,6 +654,7 @@ set (wsprd_CSRCS
 
 set (wsjtx_UISRCS
   mainwindow.ui
+  altlayout.ui   # CE3TSK 2026-10-20: View > Alternative layout, the placeholders
   about.ui
   widegraph.ui
   logqso.ui

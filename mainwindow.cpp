@@ -70,6 +70,7 @@
 #include "dialtuning.h"    // CE3TSK: the dial's wheel and clicks, the step under the pointer
 #include "uilimits.h"      // CE3TSK: the .ui size limits against the current font
 #include "geometryrestore.h"  // CE3TSK 2026-09-26: one restore rule for the main window, Wide Graph, Log QSO
+#include "altlayout.h"        // CE3TSK 2026-10-20: View > Alternative layout
 #include "deletedlog.h"    // CE3TSK 2026-10-12: the decodes the prefix-to-grid table deleted, into a file
 #include "cqdirection.h"   // CE3TSK 2026-10-12: the word after CQ - a region or an activity - and the box it is typed into
 #include <QPainter>
@@ -1465,10 +1466,11 @@ void MainWindow::writeSettings()
 {
   parkDecodePreset (false);   // CE3TSK 2026-09-22: S-Hound's parked recipe, not its Default, is what the ini keeps (runs at close only)
   m_settings->beginGroup("MainWindow");
-  m_settings->setValue("geometry",saveGeometry ());
-  m_settings->setValue("geometryMinHint",minimumSizeHint ());   // CE3TSK: see restoreMainGeometry ()
+  bool const altShown {altLayoutShown ()};   // CE3TSK 2026-10-20: each layout its own window, see saveLayoutWindow ()
+  m_settings->setValue(altShown ? "JTDX_contest/AltGeometry" : "geometry",saveGeometry ());
+  m_settings->setValue(altShown ? "JTDX_contest/AltGeometryMinHint" : "geometryMinHint",minimumSizeHint ());   // CE3TSK: see restoreMainGeometry ()
   m_settings->setValue("state",saveState ());
-  m_settings->setValue("vertSplitter",ui->splitter->saveState());
+  m_settings->setValue(altShown ? "JTDX_contest/AltSplitter" : "vertSplitter",ui->splitter->saveState());
   m_settings->setValue("MRUdir",m_path);
   m_settings->setValue("ConvertMRUdir",m_convertPath);   /* CE3TSK */
   m_settings->setValue("ConvertOutMRUdir",m_convertOutPath);   /* CE3TSK */
@@ -1635,6 +1637,7 @@ void MainWindow::writeSettings()
   m_settings->setValue("JTDX_contest/BandHoppingInterval", m_hopInterval->currentData ().toInt ());
   m_settings->setValue("JTDX_contest/BandHoppingTabShown", ui->tabWidget->currentWidget () == m_hopTab);   // the tab shown, Tab 3 or not
   m_settings->setValue("NarrowControls",ui->actionNarrow_controls->isChecked ());   // CE3TSK
+  m_settings->setValue("JTDX_contest/AlternativeLayout", altLayoutShown ());   // CE3TSK 2026-10-20
   m_settings->setValue("CallsignToClipboard",m_callToClipboard);
   m_settings->setValue("Crossband160mJA",m_crossbandOptionEnabled);
   m_settings->setValue("Crossband160mHL",m_crossbandHLOptionEnabled);
@@ -1706,11 +1709,23 @@ void MainWindow::readSettings()
      rows. BandButtons is read further down, where it always was; the band row is empty until then. */
   ui->actionBand_mode_buttons->setChecked (m_settings->value ("Common/BandModeButtons", false).toBool ());
   applyButtonRows ();
+  /* CE3TSK 2026-10-20: View > Alternative layout, here for the same reason: the geometry below is grown against the
+     minimum size hint saved at exit, which is the hint of the layout shown then - so that layout is swapped in first,
+     and its own keys are read. The action is set without its signal: the toggle handler is the run-time switch, which
+     saves the window it leaves, and there is no window to save yet. */
+  {
+    bool const alt {m_settings->value ("Common/JTDX_contest/AlternativeLayout", false).toBool ()};
+    QSignalBlocker const blocker {ui->actionAlternative_layout};
+    ui->actionAlternative_layout->setChecked (alt && applyAlternativeLayout (true));
+  }
+  bool const altShown {altLayoutShown ()};
 
   m_settings->beginGroup("MainWindow");
   
-  m_geometry = m_settings->value ("geometry",saveGeometry()).toByteArray();
-  m_geometryMinHint = m_settings->value ("geometryMinHint").toSize ();   // CE3TSK
+  m_geometry = m_settings->value (altShown ? "JTDX_contest/AltGeometry" : "geometry",
+                                  altShown ? m_settings->value ("geometry", saveGeometry ()) : saveGeometry ()).toByteArray();
+  m_geometryMinHint = m_settings->value (altShown ? "JTDX_contest/AltGeometryMinHint" : "geometryMinHint",
+                                         altShown ? m_settings->value ("geometryMinHint") : QVariant {}).toSize ();   // CE3TSK
   /* CE3TSK: the .ui's hard size limits are reconciled with the font in use - see uilimits.h for
      what is raised and why a button is measured by its label rather than by its sizeHint.
      Configuration::set_application_font does the same for a font changed at run time; this
@@ -1736,7 +1751,10 @@ void MainWindow::readSettings()
      contributors, and they run just above. */
   restoreMainGeometry ();   // CE3TSK
   restoreState (m_settings->value ("state",saveState ()).toByteArray ());
-  ui->splitter->restoreState(m_settings->value("vertSplitter").toByteArray());
+  /* CE3TSK 2026-10-20: the alternative's split, or while it has none yet the standard's - a first start in it then
+     divides the window as the operator had it */
+  ui->splitter->restoreState(m_settings->value(altShown ? "JTDX_contest/AltSplitter" : "vertSplitter",
+                                               altShown ? m_settings->value ("vertSplitter") : QVariant {}).toByteArray());
   m_path = m_settings->value("MRUdir",m_config.save_directory ().absolutePath ()).toString ();
   m_convertPath = m_settings->value("ConvertMRUdir",m_config.save_directory ().absolutePath ()).toString ();   /* CE3TSK */
   /* CE3TSK: empty until the operator saves a converted copy somewhere; while it is empty the
@@ -3657,7 +3675,10 @@ void MainWindow::changeEvent (QEvent * event)
      the pane's minimumSizeHint read 93 during the event and 167 after the refit, and nothing
      re-ran the floor afterwards, so it stayed sized for the old font until the next toggle. */
   if (QEvent::FontChange == event->type () || QEvent::StyleChange == event->type ())
-    QTimer::singleShot (0, this, [this] { applyPaneFloor (); });
+    QTimer::singleShot (0, this, [this] {
+      applyPaneFloor ();
+      if (m_altLayout) m_altLayout->fitRows ();   // CE3TSK 2026-10-20: the alternative's row heights follow the font
+    });
 }
 
 /* CE3TSK 2026-09-18: has this window been built yet?
@@ -3775,6 +3796,90 @@ void MainWindow::on_actionNarrow_controls_toggled (bool checked)
      window path allows, i.e. more clipping than was asked for. Once the layout has run it reads
      200 and the floor lands on 437. */
   QTimer::singleShot (0, this, [this] { JTDX::refresh_narrow_labels (this); applyPaneFloor (); });
+}
+
+/* CE3TSK 2026-10-20: View > Alternative layout (altlayout.h, ALT_LAYOUT_PLAN.md) */
+bool MainWindow::altLayoutShown () const
+{
+  return m_altLayout && m_altLayout->active ();
+}
+
+/* The swap, and everything that measures the controls after it: the traded controls are refitted by AltLayout itself
+   (Narrow controls included) - not the whole window, whose refit wrote over the style sheets' minimums (review
+   3.-166) -, the right pane gets its floor, the alternative its row heights, the four buttons dynamicButtonsInit ()
+   hides by height are shown or not by the layout's rule, and the splitter keeps its share.
+   false when the alternative cannot be shown - a control without a placeholder would vanish - and then nothing has
+   changed. */
+bool MainWindow::applyAlternativeLayout (bool on)
+{
+  if (!uiBuilt ()) return false;
+  if (on == altLayoutShown ()) return true;
+  if (!m_altLayout) m_altLayout.reset (new AltLayout {ui->splitter});
+  if (!m_altLayout->problems ().isEmpty ())
+    {
+      // loud: a release build compiles qWarning () out, and a refused layout is a defect test_altlayout should have caught
+      std::cerr << "View > Alternative layout refused: "
+                << m_altLayout->problems ().join (QStringLiteral ("; ")).toStdString () << std::endl;
+      return false;
+    }
+  /* the floor's kept policy and minimum are on the right pane itself, and that pane leaves the splitter now: they go
+     back onto it first (Narrow controls off restores them the same way), and the arriving pane gets the floor below */
+  JTDX::set_pane_floor (ui->splitter, 1, 0);
+  m_altLayout->setActive (on);
+  applyPaneFloor ();
+  m_altLayout->fitRows ();
+  dynamicButtonsInit ();
+  keepSplitRatio ();
+  return true;
+}
+
+/* Each layout keeps its own window - where it is, its size, the minimum size hint it was saved with and the split -
+   so switching never squeezes one into the other's: the two minimums differ by about 70 px each way. The standard's
+   go under the stock keys, which stock JTDX reads from the shared ini and which know only the standard layout. */
+void MainWindow::saveLayoutWindow (bool alt)
+{
+  m_settings->beginGroup ("MainWindow");
+  m_settings->setValue (alt ? "JTDX_contest/AltGeometry" : "geometry", saveGeometry ());
+  m_settings->setValue (alt ? "JTDX_contest/AltGeometryMinHint" : "geometryMinHint", minimumSizeHint ());
+  m_settings->setValue (alt ? "JTDX_contest/AltSplitter" : "vertSplitter", ui->splitter->saveState ());
+  m_settings->endGroup ();
+}
+
+/* The window the arriving layout was left with, by restoreMainGeometry ()'s rule. A layout shown for the first time
+   keeps the window it is shown in, grown by as much as its minimum is above the one it replaces - the same rule, with
+   the window as it is for the saved one and the leaving layout's minimum for the saved hint. */
+void MainWindow::restoreLayoutWindow (bool alt, QSize const& leavingMinHint)
+{
+  m_settings->beginGroup ("MainWindow");
+  auto const geometry = m_settings->value (alt ? "JTDX_contest/AltGeometry" : "geometry").toByteArray ();
+  auto const minHint = m_settings->value (alt ? "JTDX_contest/AltGeometryMinHint" : "geometryMinHint").toSize ();
+  auto const split = m_settings->value (alt ? "JTDX_contest/AltSplitter" : "vertSplitter").toByteArray ();
+  m_settings->endGroup ();
+  m_geometry = geometry.isEmpty () ? saveGeometry () : geometry;
+  m_geometryMinHint = geometry.isEmpty () ? leavingMinHint : minHint;
+  restoreMainGeometry ();
+  if (!split.isEmpty ()) ui->splitter->restoreState (split);
+  // the share as the operator left it in this layout, learnt once the splitter has its sizes (as at start-up)
+  QTimer::singleShot (0, this, [this] { rememberSplitRatio (); });
+}
+
+void MainWindow::on_actionAlternative_layout_toggled (bool checked)
+{
+  if (!uiBuilt () || checked == altLayoutShown ()) return;
+  bool const was {altLayoutShown ()};
+  QSize const leavingMinHint {minimumSizeHint ()};
+  saveLayoutWindow (was);
+  if (!applyAlternativeLayout (checked))
+    {
+      QSignalBlocker const blocker {ui->actionAlternative_layout};
+      ui->actionAlternative_layout->setChecked (was);
+      return;
+    }
+  /* queued: the arriving layout's minimum is what the window is grown against, and it is known once the layouts have
+     run. A second toggle before then leaves this one with nothing to restore. */
+  QTimer::singleShot (0, this, [this, checked, leavingMinHint] {
+    if (checked == altLayoutShown ()) restoreLayoutWindow (checked, leavingMinHint);
+  });
 }
 
 namespace
@@ -3968,6 +4073,14 @@ void MainWindow::buildHopTab ()
   layout->setContentsMargins (2, 2, 2, 2);
   layout->setSpacing (2);
   auto * const scroll = new QScrollArea {m_hopTab};   // as many rows as the table has, in the tab's height
+  /* the list takes the height the tab has; it does not ask for its rows (it scrolls). Asked, the scroll area answers
+     with the list's height - Qt caps that at 24 lines, 408 px here - once it has recomputed the size hint it caches,
+     and QTabWidget takes every page's hint as it is: the Tx tabs then asked for that height. The standard layout
+     shares its height by stretch and showed nothing, but the alternative gives its Tx row what that row asks, and
+     after a switch at run time the Rx Frequency window was squeezed (TODO.md 3.-165, the operator saw it). With the
+     height ignored here - the page's own layout honours it, QTabWidget would not - the Tx tabs ask for Tab 1's height,
+     as at every start before. */
+  scroll->setSizePolicy (scroll->sizePolicy ().horizontalPolicy (), QSizePolicy::Ignored);   // the width as it was (3.-166 4)
   scroll->setWidgetResizable (true);
   scroll->setFrameShape (QFrame::NoFrame);
   scroll->setHorizontalScrollBarPolicy (Qt::ScrollBarAlwaysOff);
@@ -12363,6 +12476,13 @@ void MainWindow::on_cbShowSpot_toggled(bool b)
 
 void MainWindow::dynamicButtonsInit()
 {
+  /* CE3TSK 2026-10-20: the four are hidden by height because they share the standard layout's column, which a short
+     window cannot hold; the alternative has them in its receive and QSO rows, which it keeps at any height - hiding
+     them there would leave holes (ALT_LAYOUT_PLAN.md find 4) */
+  if (altLayoutShown ()) {
+    ui->bypassButton->show(); ui->singleQSOButton->show(); ui->AnsB4Button->show(); ui->stopButton->show();
+    return;
+  }
   QSize size=this->size();
   int height=size.height();
   if(m_menus) {

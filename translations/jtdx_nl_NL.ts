@@ -6437,6 +6437,16 @@ Dat is de fout van de decoder zelf. Verhelp wat het starten verhindert - een ont
         <source>Halt Tx was pressed</source>
         <translation>Zenden stoppen is ingedrukt</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Alternative layout</source>
+        <translation>Alternatieve indeling</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Arranges the main window like JTDX_improved's AL layout: Band Activity with the receive buttons and the dial below it, the Rx Frequency window at the top right, the Contest, RX/TX and Preset indicators between Hound and AutoSeq, and the QSO buttons in two rows. Each layout keeps its own window size and split.</source>
+        <translation>Deelt het hoofdvenster in zoals de AL-indeling van JTDX_improved: Bandactiviteit met de ontvangstknoppen en de frequentieweergave eronder, het Rx-frequentievenster rechtsboven, de indicatoren Contest, RX/TX en Preset tussen Hound en AutoSeq, en de QSO-knoppen in twee rijen. Elke indeling onthoudt haar eigen venstergrootte en verdeling.</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

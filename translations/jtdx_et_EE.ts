@@ -6450,6 +6450,16 @@ See on dekoodri enda viga. Kõrvalda see, mis takistab käivitumist - puuduv tee
         <source>Halt Tx was pressed</source>
         <translation>vajutati Peata Tx</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Alternative layout</source>
+        <translation>Alternatiivne paigutus</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Arranges the main window like JTDX_improved's AL layout: Band Activity with the receive buttons and the dial below it, the Rx Frequency window at the top right, the Contest, RX/TX and Preset indicators between Hound and AutoSeq, and the QSO buttons in two rows. Each layout keeps its own window size and split.</source>
+        <translation>Paigutab peaakna nagu JTDX_improved'i AL-paigutus: laineala aktiivsus, mille all on vastuvõtunupud ja sagedusnäit, Rx sageduse aken üleval paremal, näidikud Võistlus, RX/TX ja Preset Houndi ja AutoSeqi vahel ning QSO nupud kahes reas. Iga paigutus jätab meelde oma akna suuruse ja jaotuse.</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

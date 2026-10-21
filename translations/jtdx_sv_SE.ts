@@ -6439,6 +6439,16 @@ Det är avkodarens eget fel. Åtgärda det som hindrar den från att starta - et
         <source>Halt Tx was pressed</source>
         <translation>Stop Tx trycktes</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Alternative layout</source>
+        <translation>Alternativ layout</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Arranges the main window like JTDX_improved's AL layout: Band Activity with the receive buttons and the dial below it, the Rx Frequency window at the top right, the Contest, RX/TX and Preset indicators between Hound and AutoSeq, and the QSO buttons in two rows. Each layout keeps its own window size and split.</source>
+        <translation>Ordnar huvudfönstret som JTDX_improveds AL-layout: Bandaktivitet med mottagningsknapparna och frekvensvisningen under, Rx frekvens-fönstret uppe till höger, indikatorerna Tävling, RX/TX och Preset mellan Hound och AutoSeq, och QSO-knapparna i två rader. Varje layout behåller sin egen fönsterstorlek och delning.</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

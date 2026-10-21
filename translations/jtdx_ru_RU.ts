@@ -6451,6 +6451,16 @@ That is the decoder's own error. Put right whatever stops it starting - a missin
         <source>Halt Tx was pressed</source>
         <translation>нажата кнопка Стоп Tx</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Alternative layout</source>
+        <translation>Альтернативная компоновка</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Arranges the main window like JTDX_improved's AL layout: Band Activity with the receive buttons and the dial below it, the Rx Frequency window at the top right, the Contest, RX/TX and Preset indicators between Hound and AutoSeq, and the QSO buttons in two rows. Each layout keeps its own window size and split.</source>
+        <translation>Располагает главное окно как компоновка AL в JTDX_improved: окно активности диапазона с кнопками приёма и индикатором частоты под ним, окно RX частоты вверху справа, индикаторы Контест, RX/TX и Preset между Hound и AutoSeq и кнопки QSO в два ряда. Каждая компоновка запоминает свой размер окна и разделение.</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

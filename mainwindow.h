@@ -80,6 +80,7 @@ class Modulator;
 class SoundInput;
 class Detector;
 class DecodedText;
+class AltLayout;   // CE3TSK 2026-10-20: View > Alternative layout
 class MainWindow : public QMainWindow
 {
   Q_OBJECT;
@@ -165,6 +166,7 @@ private slots:
   void on_actionBand_buttons_toggled (bool checked);   // CE3TSK
   void on_actionBand_mode_buttons_toggled (bool checked);   // CE3TSK 2026-09-28
   void on_actionNarrow_controls_toggled (bool checked);   // CE3TSK
+  void on_actionAlternative_layout_toggled (bool checked);   // CE3TSK 2026-10-20
   void on_actionOpen_triggered();
   void on_actionConvert_bit_depth_triggered();   /* CE3TSK */
   void on_actionOpen_next_in_directory_triggered();
@@ -1148,6 +1150,14 @@ private:
   void keepSplitRatio ();
   void rememberSplitRatio ();
   bool m_splitLearned {false};   // the share is learnt once the window is laid out, then only a drag changes it
+  /* CE3TSK 2026-10-20: View > Alternative layout (altlayout.h). Built the first time it is switched on, so the
+     standard view holds nothing of it until then. Each layout keeps its own window: geometry, its minimum hint and
+     the split, under the stock keys for the standard (stock JTDX shares the ini) and our own for the alternative. */
+  QScopedPointer<AltLayout> m_altLayout;
+  bool altLayoutShown () const;
+  bool applyAlternativeLayout (bool on);
+  void saveLayoutWindow (bool alt);
+  void restoreLayoutWindow (bool alt, QSize const& leavingMinHint);
   qint32 m_ft8Freq[15] = {1810,1840,1908,3573,5357,7074,10136,14074,18100,21074,24915,28074,40680,50313,70154};
 
   //---------------------------------------------------- private functions

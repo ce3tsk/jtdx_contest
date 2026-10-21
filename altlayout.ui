@@ -1,0 +1,916 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+  <comment>CE3TSK 2026-10-20: View &gt; Alternative layout (ALT_LAYOUT_PLAN.md). One placeholder per control of the main
+  window, named alt_&lt;its name&gt;, in the arrangement the alternative shows; AltLayout (altlayout.h) swaps each control
+  with its placeholder. A placeholder with altLimits carries the control's size limits in this arrangement. A control
+  added to mainwindow.ui needs a placeholder here: test_altlayout fails until it has one. The spacing and margins of the
+  left pane, the two headers and the Rx block are the ones MainWindow::hideMenus () gives the standard's at every start
+  (review 3.-166 3; test/alt_layout_wiring.sh compares them).</comment>
+  <class>AltLayout</class>
+  <widget class="QWidget" name="AltLayout">
+    <widget class="QWidget" name="altLeftPane">
+      <layout class="QVBoxLayout" name="altLeftLayout" stretch="0,1,0,0">
+        <property name="spacing">
+          <number>1</number>
+        </property>
+        <property name="leftMargin">
+          <number>0</number>
+        </property>
+        <property name="topMargin">
+          <number>0</number>
+        </property>
+        <property name="rightMargin">
+          <number>0</number>
+        </property>
+        <property name="bottomMargin">
+          <number>0</number>
+        </property>
+        <item>
+          <layout class="QHBoxLayout" name="altBandHeaderLayout" stretch="1,0">
+            <property name="spacing">
+              <number>0</number>
+            </property>
+            <property name="leftMargin">
+              <number>0</number>
+            </property>
+            <property name="topMargin">
+              <number>0</number>
+            </property>
+            <property name="rightMargin">
+              <number>0</number>
+            </property>
+            <property name="bottomMargin">
+              <number>0</number>
+            </property>
+            <item>
+              <widget class="QWidget" name="alt_decodedTextLabel">
+              </widget>
+            </item>
+            <item>
+              <widget class="QWidget" name="alt_label_6">
+              </widget>
+            </item>
+          </layout>
+        </item>
+        <item>
+          <widget class="QWidget" name="alt_decodedTextBrowser">
+          </widget>
+        </item>
+        <item>
+          <layout class="QGridLayout" name="altReceiveGrid" columnstretch="1,1,1,1,1,1">
+            <property name="spacing">
+              <number>2</number>
+            </property>
+            <item row="0" column="0">
+              <widget class="QWidget" name="alt_swlButton">
+                <property name="altLimits" stdset="0">
+                  <bool>true</bool>
+                </property>
+                <property name="sizePolicy">
+                  <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                  </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                  <size>
+                    <width>0</width>
+                    <height>0</height>
+                  </size>
+                </property>
+                <property name="maximumSize">
+                  <size>
+                    <width>16777215</width>
+                    <height>40</height>
+                  </size>
+                </property>
+              </widget>
+            </item>
+            <item row="0" column="1">
+              <widget class="QWidget" name="alt_logQSOButton">
+                <property name="altLimits" stdset="0">
+                  <bool>true</bool>
+                </property>
+                <property name="sizePolicy">
+                  <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                  </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                  <size>
+                    <width>0</width>
+                    <height>0</height>
+                  </size>
+                </property>
+                <property name="maximumSize">
+                  <size>
+                    <width>16777215</width>
+                    <height>40</height>
+                  </size>
+                </property>
+              </widget>
+            </item>
+            <item row="0" column="2">
+              <widget class="QWidget" name="alt_stopButton">
+                <property name="altLimits" stdset="0">
+                  <bool>true</bool>
+                </property>
+                <property name="sizePolicy">
+                  <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                  </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                  <size>
+                    <width>0</width>
+                    <height>0</height>
+                  </size>
+                </property>
+                <property name="maximumSize">
+                  <size>
+                    <width>16777215</width>
+                    <height>40</height>
+                  </size>
+                </property>
+              </widget>
+            </item>
+            <item row="0" column="3">
+              <widget class="QWidget" name="alt_monitorButton">
+                <property name="altLimits" stdset="0">
+                  <bool>true</bool>
+                </property>
+                <property name="sizePolicy">
+                  <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                  </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                  <size>
+                    <width>0</width>
+                    <height>0</height>
+                  </size>
+                </property>
+                <property name="maximumSize">
+                  <size>
+                    <width>16777215</width>
+                    <height>40</height>
+                  </size>
+                </property>
+              </widget>
+            </item>
+            <item row="0" column="4">
+              <widget class="QWidget" name="alt_DecodeButton">
+                <property name="altLimits" stdset="0">
+                  <bool>true</bool>
+                </property>
+                <property name="sizePolicy">
+                  <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                  </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                  <size>
+                    <width>0</width>
+                    <height>0</height>
+                  </size>
+                </property>
+                <property name="maximumSize">
+                  <size>
+                    <width>16777215</width>
+                    <height>40</height>
+                  </size>
+                </property>
+              </widget>
+            </item>
+            <item row="0" column="5">
+              <widget class="QWidget" name="alt_EraseButton">
+                <property name="altLimits" stdset="0">
+                  <bool>true</bool>
+                </property>
+                <property name="sizePolicy">
+                  <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                  </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                  <size>
+                    <width>0</width>
+                    <height>0</height>
+                  </size>
+                </property>
+                <property name="maximumSize">
+                  <size>
+                    <width>16777215</width>
+                    <height>40</height>
+                  </size>
+                </property>
+              </widget>
+            </item>
+            <item row="1" column="0">
+              <widget class="QWidget" name="alt_syncButton">
+                <property name="altLimits" stdset="0">
+                  <bool>true</bool>
+                </property>
+                <property name="sizePolicy">
+                  <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                  </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                  <size>
+                    <width>0</width>
+                    <height>0</height>
+                  </size>
+                </property>
+                <property name="maximumSize">
+                  <size>
+                    <width>16777215</width>
+                    <height>40</height>
+                  </size>
+                </property>
+              </widget>
+            </item>
+            <item row="1" column="1">
+              <widget class="QWidget" name="alt_AGCcButton">
+                <property name="altLimits" stdset="0">
+                  <bool>true</bool>
+                </property>
+                <property name="sizePolicy">
+                  <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                  </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                  <size>
+                    <width>0</width>
+                    <height>0</height>
+                  </size>
+                </property>
+                <property name="maximumSize">
+                  <size>
+                    <width>16777215</width>
+                    <height>40</height>
+                  </size>
+                </property>
+              </widget>
+            </item>
+            <item row="1" column="2">
+              <widget class="QWidget" name="alt_filterButton">
+                <property name="altLimits" stdset="0">
+                  <bool>true</bool>
+                </property>
+                <property name="sizePolicy">
+                  <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                  </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                  <size>
+                    <width>0</width>
+                    <height>0</height>
+                  </size>
+                </property>
+                <property name="maximumSize">
+                  <size>
+                    <width>16777215</width>
+                    <height>40</height>
+                  </size>
+                </property>
+              </widget>
+            </item>
+            <item row="1" column="3">
+              <widget class="QWidget" name="alt_S_meter_button">
+                <property name="altLimits" stdset="0">
+                  <bool>true</bool>
+                </property>
+                <property name="sizePolicy">
+                  <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                  </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                  <size>
+                    <width>0</width>
+                    <height>0</height>
+                  </size>
+                </property>
+                <property name="maximumSize">
+                  <size>
+                    <width>16777215</width>
+                    <height>40</height>
+                  </size>
+                </property>
+              </widget>
+            </item>
+            <item row="1" column="4">
+              <widget class="QWidget" name="alt_hintButton">
+                <property name="altLimits" stdset="0">
+                  <bool>true</bool>
+                </property>
+                <property name="sizePolicy">
+                  <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                  </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                  <size>
+                    <width>0</width>
+                    <height>0</height>
+                  </size>
+                </property>
+                <property name="maximumSize">
+                  <size>
+                    <width>16777215</width>
+                    <height>40</height>
+                  </size>
+                </property>
+              </widget>
+            </item>
+          </layout>
+        </item>
+        <item>
+          <layout class="QHBoxLayout" name="altDialLayout" stretch="0,0,3,2">
+            <property name="spacing">
+              <number>2</number>
+            </property>
+            <item>
+              <widget class="QWidget" name="alt_bandComboBox">
+              </widget>
+            </item>
+            <item alignment="Qt::AlignVCenter">
+              <widget class="QWidget" name="alt_readFreq">
+              </widget>
+            </item>
+            <item>
+              <widget class="QWidget" name="alt_labDialFreq">
+              </widget>
+            </item>
+            <item>
+              <widget class="QWidget" name="alt_labUTC">
+              </widget>
+            </item>
+          </layout>
+        </item>
+      </layout>
+    </widget>
+    <widget class="QWidget" name="altRightPane">
+      <layout class="QVBoxLayout" name="altRightLayout" stretch="1,0,0,0,0,0">
+        <property name="spacing">
+          <number>2</number>
+        </property>
+        <property name="leftMargin">
+          <number>2</number>
+        </property>
+        <property name="topMargin">
+          <number>2</number>
+        </property>
+        <property name="rightMargin">
+          <number>2</number>
+        </property>
+        <property name="bottomMargin">
+          <number>2</number>
+        </property>
+        <item>
+          <layout class="QGridLayout" name="altRxGrid" rowstretch="0,0,1">
+            <property name="horizontalSpacing">
+              <number>0</number>
+            </property>
+            <property name="verticalSpacing">
+              <number>1</number>
+            </property>
+            <property name="leftMargin">
+              <number>0</number>
+            </property>
+            <property name="topMargin">
+              <number>0</number>
+            </property>
+            <property name="rightMargin">
+              <number>0</number>
+            </property>
+            <property name="bottomMargin">
+              <number>0</number>
+            </property>
+            <item row="0" column="0">
+              <layout class="QVBoxLayout" name="altWantedLayout">
+                <property name="spacing">
+                  <number>2</number>
+                </property>
+                <item>
+                  <layout class="QHBoxLayout" name="altWantCallLayout" stretch="1,9,0">
+                    <property name="spacing">
+                      <number>1</number>
+                    </property>
+                    <item>
+                      <widget class="QWidget" name="alt_labWantCall">
+                      </widget>
+                    </item>
+                    <item>
+                      <widget class="QWidget" name="alt_wantedCall">
+                      </widget>
+                    </item>
+                    <item>
+                      <widget class="QWidget" name="alt_cbClearCallsign">
+                      </widget>
+                    </item>
+                  </layout>
+                </item>
+                <item>
+                  <layout class="QHBoxLayout" name="altWantPfxLayout" stretch="1,9">
+                    <property name="spacing">
+                      <number>1</number>
+                    </property>
+                    <item>
+                      <widget class="QWidget" name="alt_labWantPfx">
+                      </widget>
+                    </item>
+                    <item>
+                      <widget class="QWidget" name="alt_wantedPrefix">
+                      </widget>
+                    </item>
+                  </layout>
+                </item>
+                <item>
+                  <layout class="QHBoxLayout" name="altWantGridLayout">
+                    <property name="spacing">
+                      <number>1</number>
+                    </property>
+                    <item>
+                      <widget class="QWidget" name="alt_labWantGrid">
+                      </widget>
+                    </item>
+                    <item>
+                      <widget class="QWidget" name="alt_wantedGrid">
+                      </widget>
+                    </item>
+                    <item>
+                      <widget class="QWidget" name="alt_cbClearGrid">
+                      </widget>
+                    </item>
+                  </layout>
+                </item>
+                <item>
+                  <layout class="QHBoxLayout" name="altWantCountryLayout">
+                    <property name="spacing">
+                      <number>1</number>
+                    </property>
+                    <item>
+                      <widget class="QWidget" name="alt_labWantCountry">
+                      </widget>
+                    </item>
+                    <item>
+                      <widget class="QWidget" name="alt_wantedCountry">
+                      </widget>
+                    </item>
+                  </layout>
+                </item>
+              </layout>
+            </item>
+            <item row="1" column="0">
+              <layout class="QGridLayout" name="altRxHeaderLayout">
+                <property name="horizontalSpacing">
+                  <number>0</number>
+                </property>
+                <property name="verticalSpacing">
+                  <number>0</number>
+                </property>
+                <property name="leftMargin">
+                  <number>0</number>
+                </property>
+                <property name="topMargin">
+                  <number>0</number>
+                </property>
+                <property name="rightMargin">
+                  <number>0</number>
+                </property>
+                <property name="bottomMargin">
+                  <number>0</number>
+                </property>
+                <item row="0" column="0">
+                  <widget class="QWidget" name="alt_decodedTextLabel2">
+                  </widget>
+                </item>
+                <item row="0" column="1">
+                  <widget class="QWidget" name="alt_label_7">
+                  </widget>
+                </item>
+              </layout>
+            </item>
+            <item row="2" column="0">
+              <widget class="QWidget" name="alt_decodedTextBrowser2">
+              </widget>
+            </item>
+          </layout>
+        </item>
+        <item>
+          <layout class="QHBoxLayout" name="altLampRow" stretch="1,1,1,1,1,0">
+            <property name="spacing">
+              <number>2</number>
+            </property>
+            <item>
+              <widget class="QWidget" name="alt_HoundButton">
+              </widget>
+            </item>
+            <item>
+              <widget class="QWidget" name="alt_labelContest">
+              </widget>
+            </item>
+            <item>
+              <layout class="QHBoxLayout" name="altTimingLampLayout">
+                <property name="spacing">
+                  <number>2</number>
+                </property>
+                <item>
+                  <widget class="QWidget" name="alt_labelRxTiming">
+                  </widget>
+                </item>
+                <item>
+                  <widget class="QWidget" name="alt_labelTxTiming">
+                  </widget>
+                </item>
+              </layout>
+            </item>
+            <item>
+              <widget class="QWidget" name="alt_labelPreset">
+              </widget>
+            </item>
+            <item>
+              <widget class="QWidget" name="alt_AutoSeqButton">
+              </widget>
+            </item>
+            <item>
+              <widget class="QWidget" name="alt_TxMinuteButton">
+              </widget>
+            </item>
+          </layout>
+        </item>
+        <item>
+          <layout class="QVBoxLayout" name="altSpotLayout">
+            <property name="spacing">
+              <number>1</number>
+            </property>
+            <item>
+              <widget class="QWidget" name="alt_spotMsgLabel">
+              </widget>
+            </item>
+            <item>
+              <layout class="QHBoxLayout" name="altSpotEditLayout" stretch="1,5,1,1">
+                <property name="spacing">
+                  <number>1</number>
+                </property>
+                <item>
+                  <widget class="QWidget" name="alt_spotEditLabel">
+                  </widget>
+                </item>
+                <item>
+                  <widget class="QWidget" name="alt_spotLineEdit">
+                  </widget>
+                </item>
+                <item>
+                  <widget class="QWidget" name="alt_propEditLabel">
+                  </widget>
+                </item>
+                <item>
+                  <widget class="QWidget" name="alt_propLineEdit">
+                  </widget>
+                </item>
+              </layout>
+            </item>
+          </layout>
+        </item>
+        <item>
+          <layout class="QHBoxLayout" name="altDxRow" stretch="1,0">
+            <property name="spacing">
+              <number>2</number>
+            </property>
+            <item>
+              <widget class="QWidget" name="alt_DX_controls_widget">
+              </widget>
+            </item>
+            <item>
+              <layout class="QGridLayout" name="altFreqGrid">
+                <property name="spacing">
+                  <number>2</number>
+                </property>
+                <item row="0" column="0">
+                  <widget class="QWidget" name="alt_TxFreqSpinBox">
+                  </widget>
+                </item>
+                <item row="1" column="0">
+                  <layout class="QHBoxLayout" name="altArrowsLayout">
+                    <property name="spacing">
+                      <number>2</number>
+                    </property>
+                    <item>
+                      <widget class="QWidget" name="alt_pbR2T">
+                      </widget>
+                    </item>
+                    <item>
+                      <widget class="QWidget" name="alt_pbT2R">
+                      </widget>
+                    </item>
+                  </layout>
+                </item>
+                <item row="2" column="0">
+                  <widget class="QWidget" name="alt_RxFreqSpinBox">
+                  </widget>
+                </item>
+                <item row="3" column="0">
+                  <widget class="QWidget" name="alt_pbTxLock">
+                  </widget>
+                </item>
+                <item row="0" column="1">
+                  <widget class="QWidget" name="alt_rptSpinBox">
+                  </widget>
+                </item>
+                <item row="1" column="1">
+                  <widget class="QWidget" name="alt_candListSpinBox">
+                  </widget>
+                </item>
+                <item row="2" column="1">
+                  <layout class="QVBoxLayout" name="altTxModeLayout">
+                    <property name="spacing">
+                      <number>0</number>
+                    </property>
+                    <item>
+                      <widget class="QWidget" name="alt_pbTxMode">
+                      </widget>
+                    </item>
+                    <item>
+                      <widget class="QWidget" name="alt_DTCenterSpinBox">
+                      </widget>
+                    </item>
+                  </layout>
+                </item>
+                <item row="3" column="1">
+                  <widget class="QWidget" name="alt_cbShowWanted">
+                  </widget>
+                </item>
+              </layout>
+            </item>
+          </layout>
+        </item>
+        <item>
+          <layout class="QGridLayout" name="altQsoGrid" columnstretch="1,1,1,1,1">
+            <property name="spacing">
+              <number>2</number>
+            </property>
+            <item row="0" column="0">
+              <widget class="QWidget" name="alt_ClearDxButton">
+                <property name="altLimits" stdset="0">
+                  <bool>true</bool>
+                </property>
+                <property name="sizePolicy">
+                  <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                  </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                  <size>
+                    <width>0</width>
+                    <height>0</height>
+                  </size>
+                </property>
+                <property name="maximumSize">
+                  <size>
+                    <width>16777215</width>
+                    <height>40</height>
+                  </size>
+                </property>
+              </widget>
+            </item>
+            <item row="0" column="1">
+              <widget class="QWidget" name="alt_AutoTxButton">
+                <property name="altLimits" stdset="0">
+                  <bool>true</bool>
+                </property>
+                <property name="sizePolicy">
+                  <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                  </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                  <size>
+                    <width>0</width>
+                    <height>0</height>
+                  </size>
+                </property>
+                <property name="maximumSize">
+                  <size>
+                    <width>16777215</width>
+                    <height>40</height>
+                  </size>
+                </property>
+              </widget>
+            </item>
+            <item row="0" column="2">
+              <widget class="QWidget" name="alt_singleQSOButton">
+                <property name="altLimits" stdset="0">
+                  <bool>true</bool>
+                </property>
+                <property name="sizePolicy">
+                  <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                  </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                  <size>
+                    <width>0</width>
+                    <height>0</height>
+                  </size>
+                </property>
+                <property name="maximumSize">
+                  <size>
+                    <width>16777215</width>
+                    <height>40</height>
+                  </size>
+                </property>
+              </widget>
+            </item>
+            <item row="0" column="3">
+              <widget class="QWidget" name="alt_bypassButton">
+                <property name="altLimits" stdset="0">
+                  <bool>true</bool>
+                </property>
+                <property name="sizePolicy">
+                  <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                  </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                  <size>
+                    <width>0</width>
+                    <height>0</height>
+                  </size>
+                </property>
+                <property name="maximumSize">
+                  <size>
+                    <width>16777215</width>
+                    <height>40</height>
+                  </size>
+                </property>
+              </widget>
+            </item>
+            <item row="0" column="4">
+              <widget class="QWidget" name="alt_AnsB4Button">
+                <property name="altLimits" stdset="0">
+                  <bool>true</bool>
+                </property>
+                <property name="sizePolicy">
+                  <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                  </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                  <size>
+                    <width>0</width>
+                    <height>0</height>
+                  </size>
+                </property>
+                <property name="maximumSize">
+                  <size>
+                    <width>16777215</width>
+                    <height>40</height>
+                  </size>
+                </property>
+              </widget>
+            </item>
+            <item row="1" column="0" alignment="Qt::AlignCenter">
+              <widget class="QWidget" name="alt_cbShowSpot">
+              </widget>
+            </item>
+            <item row="1" column="1">
+              <widget class="QWidget" name="alt_enableTxButton">
+                <property name="altLimits" stdset="0">
+                  <bool>true</bool>
+                </property>
+                <property name="sizePolicy">
+                  <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                  </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                  <size>
+                    <width>0</width>
+                    <height>0</height>
+                  </size>
+                </property>
+                <property name="maximumSize">
+                  <size>
+                    <width>16777215</width>
+                    <height>40</height>
+                  </size>
+                </property>
+              </widget>
+            </item>
+            <item row="1" column="2">
+              <widget class="QWidget" name="alt_stopTxButton">
+                <property name="altLimits" stdset="0">
+                  <bool>true</bool>
+                </property>
+                <property name="sizePolicy">
+                  <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                  </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                  <size>
+                    <width>0</width>
+                    <height>0</height>
+                  </size>
+                </property>
+                <property name="maximumSize">
+                  <size>
+                    <width>16777215</width>
+                    <height>40</height>
+                  </size>
+                </property>
+              </widget>
+            </item>
+            <item row="1" column="3">
+              <widget class="QWidget" name="alt_tuneButton">
+                <property name="altLimits" stdset="0">
+                  <bool>true</bool>
+                </property>
+                <property name="sizePolicy">
+                  <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                  </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                  <size>
+                    <width>0</width>
+                    <height>0</height>
+                  </size>
+                </property>
+                <property name="maximumSize">
+                  <size>
+                    <width>16777215</width>
+                    <height>40</height>
+                  </size>
+                </property>
+              </widget>
+            </item>
+            <item row="1" column="4" alignment="Qt::AlignCenter">
+              <widget class="QWidget" name="alt_cbMenus">
+              </widget>
+            </item>
+          </layout>
+        </item>
+        <item>
+          <layout class="QHBoxLayout" name="altBottomRow" stretch="0,1,0">
+            <property name="spacing">
+              <number>2</number>
+            </property>
+            <item>
+              <widget class="QWidget" name="alt_signal_meter_widget">
+              </widget>
+            </item>
+            <item>
+              <widget class="QWidget" name="alt_controls_stack_widget">
+              </widget>
+            </item>
+            <item>
+              <layout class="QGridLayout" name="altPwrLayout">
+                <property name="spacing">
+                  <number>3</number>
+                </property>
+                <item row="0" column="0">
+                  <widget class="QWidget" name="alt_PWRlabel">
+                  </widget>
+                </item>
+                <item row="1" column="0">
+                  <widget class="QWidget" name="alt_outAttenuation">
+                  </widget>
+                </item>
+                <item row="2" column="0">
+                  <widget class="QWidget" name="alt_SWRlabel">
+                  </widget>
+                </item>
+              </layout>
+            </item>
+          </layout>
+        </item>
+      </layout>
+    </widget>
+  </widget>
+  <resources/>
+  <connections/>
+</ui>

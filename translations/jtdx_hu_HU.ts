@@ -6437,6 +6437,16 @@ Ez magának a dekódernek a hibája. Hárítsa el, ami az indulását akadályoz
         <source>Halt Tx was pressed</source>
         <translation>megnyomták a Tx Állj gombot</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Alternative layout</source>
+        <translation>Alternatív elrendezés</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Arranges the main window like JTDX_improved's AL layout: Band Activity with the receive buttons and the dial below it, the Rx Frequency window at the top right, the Contest, RX/TX and Preset indicators between Hound and AutoSeq, and the QSO buttons in two rows. Each layout keeps its own window size and split.</source>
+        <translation>A főablakot a JTDX_improved AL-elrendezéséhez hasonlóan rendezi el: a Sáv_aktivitás alatt a vételi gombok és a frekvenciakijelző, jobbra fent az Rx_frekvencia ablak, a Verseny, RX/TX és Preset jelzők a Hound és az AutoSeq között, a QSO-gombok pedig két sorban. Mindegyik elrendezés megőrzi a saját ablakméretét és felosztását.</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

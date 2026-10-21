@@ -6441,6 +6441,16 @@ To je greška samog dekodera. Otklonite ono što ga sprječava da se pokrene - n
         <source>Halt Tx was pressed</source>
         <translation>pritisnuto je Zaustavi TX</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Alternative layout</source>
+        <translation>Alternativni raspored</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Arranges the main window like JTDX_improved's AL layout: Band Activity with the receive buttons and the dial below it, the Rx Frequency window at the top right, the Contest, RX/TX and Preset indicators between Hound and AutoSeq, and the QSO buttons in two rows. Each layout keeps its own window size and split.</source>
+        <translation>Raspoređuje glavni prozor kao AL raspored programa JTDX_improved: aktivnost na opsegu s gumbima za prijem i prikazom frekvencije ispod, prozor RX frekvencije gore desno, indikatori Natjecanje, RX/TX i Preset između Hound i AutoSeq te gumbi za QSO u dva reda. Svaki raspored pamti vlastitu veličinu prozora i podjelu.</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

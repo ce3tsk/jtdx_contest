@@ -6441,6 +6441,16 @@ C'est l'erreur du décodeur lui-même. Corrigez ce qui l'empêche de démarrer -
         <source>Halt Tx was pressed</source>
         <translation>Stop TX a été pressé</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Alternative layout</source>
+        <translation>Disposition alternative</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Arranges the main window like JTDX_improved's AL layout: Band Activity with the receive buttons and the dial below it, the Rx Frequency window at the top right, the Contest, RX/TX and Preset indicators between Hound and AutoSeq, and the QSO buttons in two rows. Each layout keeps its own window size and split.</source>
+        <translation>Organise la fenêtre principale comme la disposition AL de JTDX_improved : l'activité de la bande avec les boutons de réception et l'affichage de fréquence en dessous, la fenêtre de fréquence RX en haut à droite, les indicateurs Concours, RX/TX et Preset entre Hound et AutoSeq, et les boutons de QSO sur deux lignes. Chaque disposition garde sa propre taille de fenêtre et sa propre séparation.</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

@@ -4765,6 +4765,7 @@ list. The list can be maintained in Settings (F2).</string>
     <addaction name="actionBand_mode_buttons"/>
     <addaction name="actionMessage_averaging"/>
     <addaction name="separator"/>
+    <addaction name="actionAlternative_layout"/>
     <addaction name="actionNarrow_controls"/>
     <addaction name="actionUse_dark_style"/>
    </widget>
@@ -5402,6 +5403,17 @@ list. The list can be maintained in Settings (F2).</string>
    </property>
    <property name="text">
     <string>Band and mode buttons in one row</string>
+   </property>
+  </action>
+  <action name="actionAlternative_layout">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Alternative layout</string>
+   </property>
+   <property name="toolTip">
+    <string>Arranges the main window like JTDX_improved's AL layout: Band Activity with the receive buttons and the dial below it, the Rx Frequency window at the top right, the Contest, RX/TX and Preset indicators between Hound and AutoSeq, and the QSO buttons in two rows. Each layout keeps its own window size and split.</string>
    </property>
   </action>
   <action name="actionNarrow_controls">

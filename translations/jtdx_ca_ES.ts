@@ -6446,6 +6446,16 @@ Aquest és l'error del descodificador mateix. Corregiu allò que n'impedeix l'in
         <source>Halt Tx was pressed</source>
         <translation>s'ha premut Aturar TX</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Alternative layout</source>
+        <translation>Disposició alternativa</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Arranges the main window like JTDX_improved's AL layout: Band Activity with the receive buttons and the dial below it, the Rx Frequency window at the top right, the Contest, RX/TX and Preset indicators between Hound and AutoSeq, and the QSO buttons in two rows. Each layout keeps its own window size and split.</source>
+        <translation>Organitza la finestra principal com la disposició AL de JTDX_improved: l'activitat de la banda amb els botons de recepció i el dial a sota, la finestra de freqüència RX a dalt a la dreta, els indicadors Concurs, RX/TX i Preset entre Hound i AutoSeq, i els botons de QSO en dues files. Cada disposició conserva la seva mida de finestra i la seva divisió.</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

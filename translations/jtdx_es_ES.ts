@@ -6445,6 +6445,16 @@ Ese es el error del propio decodificador. Corrija lo que impide que arranque (un
         <source>Halt Tx was pressed</source>
         <translation>se pulsó Parar Tx</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Alternative layout</source>
+        <translation>Disposición alternativa</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Arranges the main window like JTDX_improved's AL layout: Band Activity with the receive buttons and the dial below it, the Rx Frequency window at the top right, the Contest, RX/TX and Preset indicators between Hound and AutoSeq, and the QSO buttons in two rows. Each layout keeps its own window size and split.</source>
+        <translation>Organiza la ventana principal como la disposición AL de JTDX_improved: Actividad de banda con los botones de recepción y el dial debajo, la ventana Frecuencia Rx arriba a la derecha, los indicadores Concurso, RX/TX y Preset entre Hound y AutoSeq, y los botones de QSO en dos filas. Cada disposición conserva su propio tamaño de ventana y su división.</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

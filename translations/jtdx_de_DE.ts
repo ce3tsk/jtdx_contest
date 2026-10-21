@@ -6437,6 +6437,16 @@ Das ist der Fehler des Decoders selbst. Beheben Sie, was seinen Start verhindert
         <source>Halt Tx was pressed</source>
         <translation>TX anhalten wurde gedrückt</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Alternative layout</source>
+        <translation>Alternatives Layout</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Arranges the main window like JTDX_improved's AL layout: Band Activity with the receive buttons and the dial below it, the Rx Frequency window at the top right, the Contest, RX/TX and Preset indicators between Hound and AutoSeq, and the QSO buttons in two rows. Each layout keeps its own window size and split.</source>
+        <translation>Ordnet das Hauptfenster wie das AL-Layout von JTDX_improved an: Bandaktivität mit den Empfangstasten und der Frequenzanzeige darunter, das RX-Frequenz-Fenster oben rechts, die Anzeigen Contest, RX/TX und Preset zwischen Hound und AutoSeq und die QSO-Tasten in zwei Reihen. Jedes Layout behält seine eigene Fenstergröße und Aufteilung.</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>
