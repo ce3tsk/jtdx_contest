@@ -10243,6 +10243,16 @@ lydkort ændring</translation>
         <source>Show azimuth in messages with grid</source>
         <translation>Vis azimut i meddelelser med grid</translation>
     </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;While Enable Tx is off, a message to you from the station in DX Call switches Enable Tx on, and the QSO goes on. Enable Tx is switched off again after 8 periods (transmit and receive).&lt;/p&gt;&lt;p&gt;Enable Tx is yellow while this can happen: AutoSeq on and a callsign in DX Call. Halt Tx or Stop holds it until DX Call changes or Enable Tx is switched on.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Mens Aktiver Tx er slået fra, slår en besked til dig fra stationen i Dx Call Aktiver Tx til, og QSO'en fortsætter. Aktiver Tx slås fra igen efter 8 perioder (sending og modtagelse).&lt;/p&gt;&lt;p&gt;Aktiver Tx er gul, mens dette kan ske: AutoSekv slået til og et kaldesignal i Dx Call. Stop Tx eller Stop sætter det i bero, indtil Dx Call ændres, eller Aktiver Tx slås til.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Wait and Reply: resume the QSO when DX Call calls me</source>
+        <translation>Vent og svar: genoptag QSO'en, når Dx Call kalder mig</translation>
+    </message>
 </context>
 <context>
     <name>main</name>

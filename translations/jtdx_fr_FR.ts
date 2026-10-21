@@ -10247,6 +10247,16 @@ changements de carte son</translation>
         <source>Show azimuth in messages with grid</source>
         <translation>Afficher l'azimut des messages avec locator</translation>
     </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;While Enable Tx is off, a message to you from the station in DX Call switches Enable Tx on, and the QSO goes on. Enable Tx is switched off again after 8 periods (transmit and receive).&lt;/p&gt;&lt;p&gt;Enable Tx is yellow while this can happen: AutoSeq on and a callsign in DX Call. Halt Tx or Stop holds it until DX Call changes or Enable Tx is switched on.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Tant que Marche TX est arrêté, un message pour vous de la station de l'Indicatif DX met Marche TX en marche, et le QSO continue. Marche TX est de nouveau arrêté après 8 périodes (émission et réception).&lt;/p&gt;&lt;p&gt;Marche TX est jaune tant que cela peut arriver : Sequ. Auto activé et un indicatif dans Indicatif DX. Stop TX ou Stop le suspend jusqu'à ce que l'Indicatif DX change ou que Marche TX soit mis en marche.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Wait and Reply: resume the QSO when DX Call calls me</source>
+        <translation>Attendre et répondre : reprendre le QSO quand l'Indicatif DX m'appelle</translation>
+    </message>
 </context>
 <context>
     <name>main</name>

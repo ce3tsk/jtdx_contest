@@ -10239,6 +10239,16 @@ Zurücksetzen der Funkgeräteschnittstelle und Übernahme etwaiger
         <source>Show azimuth in messages with grid</source>
         <translation>Azimut bei Meldungen mit Locator anzeigen</translation>
     </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;While Enable Tx is off, a message to you from the station in DX Call switches Enable Tx on, and the QSO goes on. Enable Tx is switched off again after 8 periods (transmit and receive).&lt;/p&gt;&lt;p&gt;Enable Tx is yellow while this can happen: AutoSeq on and a callsign in DX Call. Halt Tx or Stop holds it until DX Call changes or Enable Tx is switched on.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Solange TX freigeben aus ist, schaltet eine Nachricht an Sie von der Station im DX-Rufzeichen TX freigeben ein, und das QSO geht weiter. Nach 8 Perioden (Senden und Empfangen) wird TX freigeben wieder ausgeschaltet.&lt;/p&gt;&lt;p&gt;TX freigeben ist gelb, solange das geschehen kann: AutoSeq an und ein Rufzeichen im DX-Rufzeichen. TX anhalten oder Stopp setzt es aus, bis sich das DX-Rufzeichen ändert oder TX freigeben eingeschaltet wird.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Wait and Reply: resume the QSO when DX Call calls me</source>
+        <translation>Warten und Antworten: QSO fortsetzen, wenn das DX-Rufzeichen mich ruft</translation>
+    </message>
 </context>
 <context>
     <name>main</name>

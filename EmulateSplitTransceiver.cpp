@@ -19,6 +19,22 @@ EmulateSplitTransceiver::EmulateSplitTransceiver (std::unique_ptr<Transceiver> w
   connect (wrapped_.get (), &Transceiver::tci_mod_active, this, &Transceiver::tci_mod_active);
   connect (wrapped_.get (), &Transceiver::finished, this, &Transceiver::finished);
   connect (wrapped_.get (), &Transceiver::failure, this, &Transceiver::failure);
+  connect (wrapped_.get (), &Transceiver::failure, this, [this] {failed_ = true;});   // CE3TSK 2026-10-21 (3.-173)
+}
+
+/* CE3TSK 2026-10-21 (TODO.md 3.-173): stopped while keyed in split - the program closed while transmitting - the rig
+   is on the Tx dial, and the wrapped rig's shutdown drops the PTT without knowing the receive dial: the rig stayed on
+   the Tx dial (14.075 for 14.074 and the Tx audio at 2790 Hz). Unkeyed first, as the PTT's drop does it, which brings
+   it back to the receive dial - not on a rig that failed, which a state would start again */
+void EmulateSplitTransceiver::stop () noexcept
+{
+  if (requested_.ptt () && split_ && !failed_)
+    {
+      TransceiverState unkeyed {requested_};
+      unkeyed.ptt (false);
+      set (unkeyed, sequence_number_);
+    }
+  wrapped_->stop ();
 }
 
 void EmulateSplitTransceiver::set (TransceiverState const& s, unsigned sequence_number) noexcept
@@ -34,6 +50,8 @@ void EmulateSplitTransceiver::set (TransceiverState const& s, unsigned sequence_
   if (!s.ptt () || s.tx_frequency () != tx_frequency_) moved_ = false;
 
   // save for use in updates
+  requested_ = s;   // CE3TSK 2026-10-21 (3.-173): and for stop ()
+  sequence_number_ = sequence_number;
   rx_frequency_ = s.frequency ();
   tx_frequency_ = s.tx_frequency ();
   split_ = s.split ();

@@ -10235,6 +10235,16 @@ hangkártya módosítási tevékenységet</translation>
         <source>Show azimuth in messages with grid</source>
         <translation>Irányszög megjelenítése lokátoros üzeneteknél</translation>
     </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;While Enable Tx is off, a message to you from the station in DX Call switches Enable Tx on, and the QSO goes on. Enable Tx is switched off again after 8 periods (transmit and receive).&lt;/p&gt;&lt;p&gt;Enable Tx is yellow while this can happen: AutoSeq on and a callsign in DX Call. Halt Tx or Stop holds it until DX Call changes or Enable Tx is switched on.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Amíg az Adás ki van kapcsolva, a DX hívójel állomásának Önnek szóló üzenete bekapcsolja az Adást, és a QSO folytatódik. Az Adás 8 periódus (adás és vétel) után ismét kikapcsol.&lt;/p&gt;&lt;p&gt;Az Adás sárga, amíg ez megtörténhet: AutoVál bekapcsolva és hívójel a DX hívójel mezőben. A Tx Állj vagy a Stop felfüggeszti, amíg a DX hívójel meg nem változik vagy az Adás be nem kapcsol.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Wait and Reply: resume the QSO when DX Call calls me</source>
+        <translation>Várj és válaszolj: a QSO folytatása, ha a DX hívójel engem hív</translation>
+    </message>
 </context>
 <context>
     <name>main</name>

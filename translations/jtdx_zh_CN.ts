@@ -10238,6 +10238,16 @@ soundcard changes</source>
         <source>Show azimuth in messages with grid</source>
         <translation>在带网格的消息中显示方位角</translation>
     </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;While Enable Tx is off, a message to you from the station in DX Call switches Enable Tx on, and the QSO goes on. Enable Tx is switched off again after 8 periods (transmit and receive).&lt;/p&gt;&lt;p&gt;Enable Tx is yellow while this can happen: AutoSeq on and a callsign in DX Call. Halt Tx or Stop holds it until DX Call changes or Enable Tx is switched on.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;启用发射关闭时，若收到 DX 呼号中的电台发给你的消息，启用发射将打开，QSO 继续进行。8 个周期（发射和接收）后，启用发射再次关闭。&lt;/p&gt;&lt;p&gt;在可能发生这种情况时，启用发射显示为黄色：自动程序已打开，且 DX 呼号中有呼号。终止发射或停止会将其暂停，直到 DX 呼号改变或启用发射被打开。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Wait and Reply: resume the QSO when DX Call calls me</source>
+        <translation>等待并回复：DX 呼号的电台呼叫我时恢复 QSO</translation>
+    </message>
 </context>
 <context>
     <name>main</name>

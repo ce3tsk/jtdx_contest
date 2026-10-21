@@ -61,6 +61,7 @@
 #include "txstep.h"    // CE3TSK 2026-10-19: guiUpdate ()'s Tx decisions
 #include "rxstep.h"    // CE3TSK 2026-10-19: readFromStdout ()'s sequencer decisions
 #include "pickstep.h"  // CE3TSK 2026-10-19: processMessage ()'s - what a double click sets up
+#include "waitreply.h" // CE3TSK 2026-10-21: Wait and Reply
 #include "txcheck.h"      // CE3TSK 2026-10-18: does a Tx message go out as it is written
 #include "contestmode.h"   // CE3TSK 2026-09-26: the modes a contest allows
 #include "savedmode.h"     // CE3TSK 2026-09-26: the saved Mode/ModeTx made safe
@@ -609,7 +610,7 @@ MainWindow::MainWindow(bool multiple, QSettings * settings, QSharedMemory *shdme
       if (m_config.accept_udp_requests ()) {
         if (enableTx_only) { if (ui->enableTxButton->isChecked ()) ui->enableTxButton->click(); }
 //		else { ui->stopTxButton->click(); }
-		else { haltTx("UDP request "); }
+		else { haltTx("UDP request "); waitReplyHold (); }   // CE3TSK 2026-10-21: the operator's, from the client
       }
     });
   connect (m_messageClient, &MessageClient::error, this, &MainWindow::networkError);
@@ -1151,6 +1152,13 @@ MainWindow::MainWindow(bool multiple, QSettings * settings, QSharedMemory *shdme
   killFileTimer.setSingleShot(true); connect(&killFileTimer, &QTimer::timeout, this, &MainWindow::killFile);
   uploadTimer.setSingleShot(true); connect(&uploadTimer, SIGNAL(timeout()), this, SLOT(uploadSpots()));
   TxAgainTimer.setSingleShot(true); connect(&TxAgainTimer, SIGNAL(timeout()), this, SLOT(TxAgain()));
+  /* CE3TSK 2026-10-21: Wait and Reply (waitreply.h) - its eight periods, and the hold of the operator's own Halt Tx and
+     Stop: their buttons' clicks only, since haltTx () and the program's other stops come through on_stopTxButton_clicked ()
+     too and leave it armed (Alt+H, Esc and a UDP client's halt call waitReplyHold () where they are handled) */
+  m_waitReplyTimer.setSingleShot (true);
+  connect (&m_waitReplyTimer, &QTimer::timeout, this, &MainWindow::waitReplyTimeout);
+  connect (ui->stopTxButton, &QAbstractButton::clicked, this, &MainWindow::waitReplyHold);
+  connect (ui->stopButton, &QAbstractButton::clicked, this, &MainWindow::waitReplyHold);
   StopTuneTimer.setSingleShot(true); connect(&StopTuneTimer, SIGNAL(timeout()), this, SLOT(stop_tuning()));
   RxQSYTimer.setSingleShot(true); connect(&RxQSYTimer, SIGNAL(timeout()), this, SLOT(RxQSY()));
   minuteTimer.setSingleShot(true); connect (&minuteTimer, &QTimer::timeout, this, &MainWindow::on_the_minute);
@@ -2808,8 +2816,7 @@ void MainWindow::on_actionSettings_triggered()               //Setup Dialog
              AudioDevice::Mono == m_config.audio_output_channel () ? 1 : 2, m_tx_audio_buffer_frames);
           if(m_transmitting || g_iptt==1) {
   //           ui->stopTxButton->click (); // halt any transmission
-             haltTx("settings change is accepted ");
-             enableTx_mode (false);       // switch off EnableTx button
+             settingsOkPause (true);       // halt Tx and switch off EnableTx button (CE3TSK: Wait and Reply's eight periods run on)
              ui->enableTxButton->setStyleSheet(QString("QPushButton {color: %1;background: %2;border-style: solid;border-width: 1px;border-radius: 5px;border-color: %3;min-width: 63px;padding: 0px}").arg(Radio::convert_dark("#000000",m_useDarkStyle),Radio::convert_dark("#ffff76",m_useDarkStyle),Radio::convert_dark("#000000",m_useDarkStyle)));
              TxAgainTimer.start(2000);
            }
@@ -2822,8 +2829,7 @@ void MainWindow::on_actionSettings_triggered()               //Setup Dialog
       } else {
         if(m_transmitting || g_iptt==1) {
 //           ui->stopTxButton->click (); // halt any transmission
-           haltTx("settings change is accepted ");
-           enableTx_mode (false);       // switch off EnableTx button
+           settingsOkPause (true);       // halt Tx and switch off EnableTx button (CE3TSK: Wait and Reply's eight periods run on)
            ui->enableTxButton->setStyleSheet(QString("QPushButton {color: %1;background: %2;border-style: solid;border-width: 1px;border-radius: 5px;border-color: %3;min-width: 63px;padding: 0px}").arg(Radio::convert_dark("#000000",m_useDarkStyle),Radio::convert_dark("#ffff76",m_useDarkStyle),Radio::convert_dark("#000000",m_useDarkStyle)));
            TxAgainTimer.start(2000);
          }
@@ -2850,6 +2856,7 @@ void MainWindow::on_actionSettings_triggered()               //Setup Dialog
 	  m_wideGraph->setTopJT65(m_config.ntopfreq65());
 	  setXIT (ui->TxFreqSpinBox->value ());
       update_watchdog_label ();
+      waitReplyRepaint ();   // CE3TSK 2026-10-21: Wait and Reply switched on or off - Enable Tx yellow or not
       if(m_mode != "WSPR-2" && spot_to_dxsummit != m_config.spot_to_dxsummit()) {
          m_dxCallHidden=false;   // CE3TSK
          if(m_config.spot_to_dxsummit() ) { ui->pbSpotDXCall->setStyleSheet(QString("QPushButton {color: %1;background: %2;border-style: outset;border-width: 1px;border-color: %3;padding: 3px}").arg(Radio::convert_dark("#000000",m_useDarkStyle),Radio::convert_dark("#c4c4ff",m_useDarkStyle),Radio::convert_dark("#808080",m_useDarkStyle))); }
@@ -2874,7 +2881,7 @@ void MainWindow::on_filterButton_clicked (bool checked)
 }
 
 void MainWindow::toggle_filter() { ui->filterButton->click(); }
-void MainWindow::escapeHalt() { haltTx("TX halted via Escape button from widegraph "); }
+void MainWindow::escapeHalt() { haltTx("TX halted via Escape button from widegraph "); waitReplyHold (); }   // CE3TSK: hold
 void MainWindow::filter_on() { if(!m_filter) ui->filterButton->click(); }
 void MainWindow::on_swlButton_clicked (bool checked) { if(checked) m_swl=true; else m_swl=false; }
 void MainWindow::on_AGCcButton_clicked(bool checked) { if(checked) m_agcc=true; else m_agcc=false; }
@@ -2892,6 +2899,7 @@ void MainWindow::on_AutoTxButton_clicked (bool checked)
 void MainWindow::on_AutoSeqButton_clicked (bool checked)
 {
   m_autoseq = checked;
+  waitReplyRepaint ();   // CE3TSK 2026-10-21: Wait and Reply needs AutoSeq - Enable Tx yellow or not
   if (checked) {
     m_wasAutoSeq=false; //in case of toggling AutoSeq button by user
 //txrb button selection by user can brake AutoSeq, disable all txrb buttons
@@ -2985,6 +2993,9 @@ void MainWindow::on_enableTxButton_clicked (bool checked)
 {
   // CE3TSK 2026-10-20: every way to Enable Tx comes here - hopping stops (bandhopping.h)
   if (checked && hopping ()) stopHopping (hopRefusalText (band_hopping::Refusal::EnableTx));
+  // CE3TSK 2026-10-21: and Wait and Reply's eight periods end (WSJT-X: stopWRTimer), and Enable Tx on ends a hold
+  m_waitReplyTimer.stop ();
+  if (checked) m_waitReplyHeld.clear ();
   if(m_enableTx && !checked && m_curMsgTx.startsWith(m_hisCall+" ")) m_lasthint=true;
   if(checked && m_lasthint) m_lasthint=false;
   m_enableTx = checked;
@@ -3180,6 +3191,7 @@ void MainWindow::keyPressEvent( QKeyEvent *e )                //keyPressEvent
     case Qt::Key_H:
       if(e->modifiers() & Qt::AltModifier) {
         on_stopTxButton_clicked();
+        waitReplyHold ();   // CE3TSK 2026-10-21: the operator's Halt Tx
         return;
       }
       break;
@@ -3218,6 +3230,7 @@ void MainWindow::keyPressEvent( QKeyEvent *e )                //keyPressEvent
       break;
     case Qt::Key_Escape:
       haltTx("TX halted via Escape button ");
+      waitReplyHold ();   // CE3TSK 2026-10-21: the operator's Halt Tx
       break;
     /* CE3TSK 2026-09-26, review: through the actions and their gates, so the keys obey the Mode
        menu's transmit gate - calling the slots switched FT8/FT4 under a running transmission */
@@ -3445,8 +3458,90 @@ void MainWindow::setDxCallEntryColour (QString const& background)
 
 void MainWindow::setEnableTxButtonStyle ()
 {
-  if(m_enableTx) ui->enableTxButton->setStyleSheet(QString("QPushButton {color: %1;background: %2;border-style: solid;border-width: 1px;border-radius: 5px;border-color: %3;min-width: 63px;padding: 0px}").arg(Radio::convert_dark("#000000",m_useDarkStyle),Radio::convert_dark("#ff3c3c",m_useDarkStyle),Radio::convert_dark("#000000",m_useDarkStyle)));
+  /* CE3TSK 2026-10-21: yellow while Wait and Reply may switch it on (waitReplyArmed ()), as WSJT-X's; the dark style's
+     yellow is Radio.cpp's table's */
+  if(!m_enableTx && waitReplyArmed ()) ui->enableTxButton->setStyleSheet(QString("QPushButton {color: %1;background: %2;border-style: solid;border-width: 1px;border-color: %3;min-width: 63px;padding: 0px}").arg(Radio::convert_dark("#000000",m_useDarkStyle),Radio::convert_dark("#ffff00",m_useDarkStyle),Radio::convert_dark("#adadad",m_useDarkStyle)));
+  else if(m_enableTx) ui->enableTxButton->setStyleSheet(QString("QPushButton {color: %1;background: %2;border-style: solid;border-width: 1px;border-radius: 5px;border-color: %3;min-width: 63px;padding: 0px}").arg(Radio::convert_dark("#000000",m_useDarkStyle),Radio::convert_dark("#ff3c3c",m_useDarkStyle),Radio::convert_dark("#000000",m_useDarkStyle)));
   else ui->enableTxButton->setStyleSheet(QString("QPushButton {color: %1;background: %2;border-style: solid;border-width: 1px;border-color: %3;min-width: 63px;padding: 0px}").arg(Radio::convert_dark("#000000",m_useDarkStyle),Radio::convert_dark("#dcdcdc",m_useDarkStyle),Radio::convert_dark("#adadad",m_useDarkStyle)));
+}
+
+/* CE3TSK 2026-10-21: Wait and Reply (waitreply.h, WAIT_AND_REPLY_PLAN.md) - whether it may switch Enable Tx on now */
+bool MainWindow::waitReplyArmed () const
+{
+  wait_reply::State s;
+  s.setting = m_config.wait_and_reply ();
+  /* (TODO.md 3.-175, the review 3.-174 2) Settings OK's pause - TxAgain () switches Enable Tx on again 2 s after it cut a
+     transmission - is the program's, not the operator's Enable Tx off: a line from him inside it fired, and TxAgain ()
+     then ended the eight periods it had started */
+  s.enableTx = m_enableTx || TxAgainTimer.isActive ();
+  s.autoseq = m_autoseq;
+  s.mode = m_mode;
+  s.hisCall = m_hisCall;
+  s.held = m_waitReplyHeld;
+  return wait_reply::armed (s);
+}
+
+// Enable Tx painted again after a change armed () reads - but not in the two seconds after Settings OK cut a transmission
+// short (TxAgainTimer): its #ffff76 stays until TxAgain () switches Enable Tx on again, as before Wait and Reply (review
+// 3.-171, 1: the mode slot Settings OK runs repainted it grey)
+void MainWindow::waitReplyRepaint ()
+{
+  if (!TxAgainTimer.isActive ()) setEnableTxButtonStyle ();
+}
+
+// a decoded line (readFromStdout ()): the DX call's message to us switches Enable Tx on, in the period after his line's -
+// as a double click on the line sets it - with the Tx watchdog started afresh, for eight periods
+void MainWindow::waitReplyLine (QString const& msg, unsigned lineSeconds, bool toUs, bool fromHim, bool late)
+{
+  bool const lineTxFirst = pick_step::tx_first_for_line (lineSeconds, m_TRperiod);
+  wait_reply::Line l;
+  l.toUs = toUs;
+  l.fromHim = fromHim;
+  l.manualDecode = m_manualDecode;
+  l.late = late;
+  l.msg = msg;
+  l.hound = m_houndMode;
+  l.secondPeriod = lineTxFirst;
+  if (!wait_reply::fires (waitReplyArmed (), l)) return;
+  if (pick_step::period_change (m_txFirst, lineTxFirst, false) && setTxFirst (lineTxFirst, true)) setMinButton ();   // refused in S-Hound
+  txwatchdog (false);
+  enableTx_mode (true);
+  m_waitReplyTimer.start (wait_reply::cap_ms (m_TRperiod));   // after enableTx_mode (), which stops it
+  if (m_config.write_decoded_debug ()) writeToALLTXT ("Wait and Reply: " + m_hisCall + " called us, Enable Tx on for 8 periods");
+}
+
+// the operator's Halt Tx or Stop: no Wait and Reply for this DX call until it changes or Enable Tx is switched on (WSJT-X
+// holds nothing - there the DX's next message switches Enable Tx on again)
+void MainWindow::waitReplyHold ()
+{
+  m_waitReplyTimer.stop ();
+  m_waitReplyHeld = m_hisCall;
+  waitReplyRepaint ();
+}
+
+// eight periods after Wait and Reply switched Enable Tx on (WSJT-X: stopWRTimeout): off, as the button does it - a
+// transmission under way ends normally. His next message to us switches it on again.
+void MainWindow::waitReplyTimeout ()
+{
+  /* (TODO.md 3.-176) they ran on through Settings OK's pause (settingsOkPause ()) and ended in it: Enable Tx stays off
+     - TxAgain () does not come */
+  bool const paused = TxAgainTimer.isActive ();
+  if (!m_enableTx && !paused) return;
+  if (m_config.write_decoded_debug ()) writeToALLTXT ("Wait and Reply: 8 periods over, Enable Tx off");
+  TxAgainTimer.stop ();
+  enableTx_mode (false);
+}
+
+/* CE3TSK 2026-10-21 (TODO.md 3.-176, the operator's decision 1 B): Settings OK's pause (TxAgainTimer) begins - the
+   transmission halted, Enable Tx off - or ends, Enable Tx on again (TxAgain ()). Wait and Reply's eight periods, when
+   they run, run on through it and end when they would have; before, the halt ended them, and TxAgain () left Enable Tx
+   on with no end */
+void MainWindow::settingsOkPause (bool begins)
+{
+  int const left = m_waitReplyTimer.remainingTime ();   // -1: not running
+  if (begins) haltTx("settings change is accepted ");   // Halt Tx's slot switches Enable Tx off - and so stops them
+  enableTx_mode (!begins);   // which stops them
+  if (left >= 0) m_waitReplyTimer.start (left);
 }
 
 void MainWindow::setHoundButtonStyle ()
@@ -4834,6 +4929,15 @@ void MainWindow::closeEvent(QCloseEvent * e)
     {
       clearDX ("");
     }
+  /* CE3TSK 2026-10-21 (TODO.md 3.-175, the review 3.-174 1): closed while transmitting - the Tx audio stopped at once,
+     before the rig, as a transmission's end does it (stopTx ()): the rig's stop brings a "Fake It" rig back to the
+     receive dial (EmulateSplitTransceiver::stop ()), and a rig keyed by VOX - its PTT "None" to Hamlib - went on
+     transmitting the audio still playing there, ~1 kHz off its frequency, until the audio ended with the program */
+  if (m_transmitting || m_tune || g_iptt == 1)
+    {
+      if (m_tci) Q_EMIT m_config.transceiver_modulator_stop (true);   // quick: the audio not played out
+      else Q_EMIT endTransmitMessage (true);
+    }
   m_config.transceiver_offline ();
   writeSettings ();
   m_guiTimer.stop ();
@@ -4857,6 +4961,7 @@ void MainWindow::closeEvent(QCloseEvent * e)
 void MainWindow::on_stopButton_clicked()
 {
   if (hopping ()) stopHopping (hopRefusalText (band_hopping::Refusal::MonitorOff));   // CE3TSK 2026-10-20
+  m_waitReplyTimer.stop ();   // CE3TSK 2026-10-21: Wait and Reply's eight periods (WSJT-X: stopWRTimer)
   monitor (false); m_loopall=false; if (!m_transmitting) initLogIfNeeded ();
 }
 void MainWindow::on_AnsB4Button_clicked (bool checked) { ui->actionAnswerWorkedB4->setChecked(checked); }
@@ -7742,6 +7847,10 @@ void MainWindow::readFromStdout()                             //readFromStdout
         m_QSOText=decodedtext.string();
       }
 
+      /* CE3TSK 2026-10-21: Wait and Reply (waitreply.h) - before the sequencer's pass on the line below, which then answers
+         it as with Enable Tx on (the watchdog reset, the auto filter) */
+      waitReplyLine (decodedtextmsg, decodedtext.timeInSeconds (), mycallinmsg, fromHim, late);
+
       rx_step::DecodeInputs on;
       on.myCallInMsg = mycallinmsg; on.manualDecode = m_manualDecode; on.fromHim = fromHim; on.hisCallEmpty = m_hisCall.isEmpty();
       on.processAutoDone = m_processAuto_done; on.autoseq = m_autoseq; on.rrr = m_rrr; on.singleshot = m_singleshot;
@@ -9387,7 +9496,7 @@ void MainWindow::genStdMsgs(QString rpt)                       //genStdMsgs()
   if(!ui->spotLineEdit->text().isEmpty() && ui->spotLineEdit->text().contains("#")) on_spotLineEdit_textChanged(ui->spotLineEdit->text());
 }
 
-void MainWindow::TxAgain() { enableTx_mode(true); }
+void MainWindow::TxAgain() { settingsOkPause (false); }   // CE3TSK 2026-10-21 (3.-176): with what is left of them
 
 /* CE3TSK: WW Digi contest - the station answered our exchange with a signal report instead
    of his grid ("CE3TSK DL6FKR R-10"). He is running ordinary FT8/FT4: neither side can send
@@ -9926,6 +10035,9 @@ void MainWindow::on_dxCallEntry_textChanged(const QString &t) //dxCall changed
       if (m_hisCall.isEmpty()) { m_hisCallCompound=false; return; }
       else m_hisCall.clear();
   } else m_hisCall=t.toUpper().trimmed();
+  /* CE3TSK 2026-10-21: Wait and Reply - a hold lasts while the call is the one it was taken for; Enable Tx yellow or not */
+  m_waitReplyHeld = wait_reply::held_after_change (m_waitReplyHeld, m_hisCall);
+  waitReplyRepaint ();
   m_hisCallCompound=(!m_hisCall.isEmpty() && m_hisCall.contains("/")); // && !m_hisCall.endsWith("/P") && !m_hisCall.endsWith("/R"));
   if(m_myCallCompound && m_hisCallCompound) {
     if(m_skipTx1) { m_skipTx1=false; ui->skipTx1->setChecked(false); ui->skipGrid->setChecked(false); on_txb1_clicked(); }
@@ -10036,6 +10148,7 @@ void MainWindow::on_genStdMsgsPushButton_clicked() { genStdMsgs(m_rpt); }
 void MainWindow::on_logQSOButton_clicked()
 {
   if (m_hisCall.isEmpty()) return;
+  m_waitReplyTimer.stop ();   // CE3TSK 2026-10-21: Wait and Reply's eight periods end here (WSJT-X: stopWRTimer)
   auto currenttime = m_jtdxtime->currentDateTimeUtc2();
   auto dateTimeQSOOff = currenttime;
   QString rrep,srep,distance;
@@ -10347,6 +10460,7 @@ void MainWindow::switch_mode (Mode mode)
 	else { qso_count_label->setStyleSheet(QString("QLabel{background: %1}").arg(Radio::convert_dark("#ffffff",m_useDarkStyle))); }
   }
   refreshDecodePreset();   // P13: the preset lamp is greyed outside FT8 - every mode slot comes through here with m_mode set
+  waitReplyRepaint ();   // CE3TSK 2026-10-21: Wait and Reply is for the modes with AutoSeq - Enable Tx yellow or not
 }
 
 void MainWindow::commonActions ()

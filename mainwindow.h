@@ -1225,6 +1225,15 @@ private:
   void setModeLabelStyle (QString const& mode);
   void setDxCallEntryColour (QString const& background);
   void setEnableTxButtonStyle ();
+  // CE3TSK 2026-10-21: Wait and Reply (waitreply.h, WAIT_AND_REPLY_PLAN.md)
+  bool waitReplyArmed () const;
+  void waitReplyLine (QString const& msg, unsigned lineSeconds, bool toUs, bool fromHim, bool late);
+  void waitReplyHold ();
+  void waitReplyTimeout ();
+  void waitReplyRepaint ();
+  void settingsOkPause (bool begins);
+  QTimer m_waitReplyTimer;        // its eight periods
+  QString m_waitReplyHeld;        // the DX call the operator's Halt Tx or Stop held it for
   void setHoundButtonStyle ();
   void setSpotButtonStyle ();
   void initLogIfNeeded ();

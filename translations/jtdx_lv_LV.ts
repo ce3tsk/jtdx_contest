@@ -10237,6 +10237,16 @@ izmaiņas</translation>
         <source>Show azimuth in messages with grid</source>
         <translation>Rādīt azimutu ziņojumos ar lokatoru</translation>
     </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;While Enable Tx is off, a message to you from the station in DX Call switches Enable Tx on, and the QSO goes on. Enable Tx is switched off again after 8 periods (transmit and receive).&lt;/p&gt;&lt;p&gt;Enable Tx is yellow while this can happen: AutoSeq on and a callsign in DX Call. Halt Tx or Stop holds it until DX Call changes or Enable Tx is switched on.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Kamēr Atļaut raidīt ir izslēgts, ziņojums jums no stacijas laukā DX izsauk. ieslēdz Atļaut raidīt, un QSO turpinās. Pēc 8 periodiem (raidīšana un uztveršana) Atļaut raidīt atkal izslēdzas.&lt;/p&gt;&lt;p&gt;Atļaut raidīt ir dzeltens, kamēr tas var notikt: AutoSeq ieslēgts un izsaukuma signāls laukā DX izsauk. Pārtraukt Tx vai Apturēt to aptur, līdz mainās DX izsauk. vai tiek ieslēgts Atļaut raidīt.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Wait and Reply: resume the QSO when DX Call calls me</source>
+        <translation>Gaidīt un atbildēt: turpināt QSO, kad DX izsauk. stacija mani izsauc</translation>
+    </message>
 </context>
 <context>
     <name>main</name>

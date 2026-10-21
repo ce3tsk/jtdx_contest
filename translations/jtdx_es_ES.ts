@@ -10252,6 +10252,16 @@ cambios en la tarjeta de sonido</translation>
         <source>Show azimuth in messages with grid</source>
         <translation>Mostrar el azimut en mensajes con locator</translation>
     </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;While Enable Tx is off, a message to you from the station in DX Call switches Enable Tx on, and the QSO goes on. Enable Tx is switched off again after 8 periods (transmit and receive).&lt;/p&gt;&lt;p&gt;Enable Tx is yellow while this can happen: AutoSeq on and a callsign in DX Call. Halt Tx or Stop holds it until DX Call changes or Enable Tx is switched on.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Mientras Activar Tx está desactivado, un mensaje para usted de la estación de Llamada DX activa Activar Tx, y el QSO continúa. Activar Tx se desactiva de nuevo al cabo de 8 periodos (de transmisión y de recepción).&lt;/p&gt;&lt;p&gt;Activar Tx está en amarillo mientras esto puede ocurrir: AutoSeq activado y un indicativo en Llamada DX. Parar Tx o Stop lo suspende hasta que cambie la Llamada DX o se active Activar Tx.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Wait and Reply: resume the QSO when DX Call calls me</source>
+        <translation>Esperar y responder: reanudar el QSO cuando la Llamada DX me llame</translation>
+    </message>
 </context>
 <context>
     <name>main</name>

@@ -10237,6 +10237,16 @@ wijzigingen aan de geluidskaart</translation>
         <source>Show azimuth in messages with grid</source>
         <translation>Azimut tonen bij berichten met locator</translation>
     </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;While Enable Tx is off, a message to you from the station in DX Call switches Enable Tx on, and the QSO goes on. Enable Tx is switched off again after 8 periods (transmit and receive).&lt;/p&gt;&lt;p&gt;Enable Tx is yellow while this can happen: AutoSeq on and a callsign in DX Call. Halt Tx or Stop holds it until DX Call changes or Enable Tx is switched on.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Terwijl Zenden inschakelen uit staat, schakelt een bericht aan u van het station in DX-roepnaam Zenden inschakelen in, en de QSO gaat verder. Na 8 perioden (zenden en ontvangen) gaat Zenden inschakelen weer uit.&lt;/p&gt;&lt;p&gt;Zenden inschakelen is geel zolang dit kan gebeuren: AutoSeq aan en een roepnaam in DX-roepnaam. Zenden stoppen of Stoppen houdt het tegen tot DX-roepnaam verandert of Zenden inschakelen wordt ingeschakeld.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Wait and Reply: resume the QSO when DX Call calls me</source>
+        <translation>Wachten en antwoorden: QSO hervatten als de DX-roepnaam mij roept</translation>
+    </message>
 </context>
 <context>
     <name>main</name>

@@ -10236,6 +10236,16 @@ soundcard changes</source>
         <source>Show azimuth in messages with grid</source>
         <translation>그리드가 있는 메시지에 방위각 표시</translation>
     </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;While Enable Tx is off, a message to you from the station in DX Call switches Enable Tx on, and the QSO goes on. Enable Tx is switched off again after 8 periods (transmit and receive).&lt;/p&gt;&lt;p&gt;Enable Tx is yellow while this can happen: AutoSeq on and a callsign in DX Call. Halt Tx or Stop holds it until DX Call changes or Enable Tx is switched on.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;송신 허용이 꺼져 있는 동안 DX 호출부호의 국에서 나에게 보낸 메시지를 받으면 송신 허용이 켜지고 QSO가 계속됩니다. 8 주기(송신과 수신) 후에 송신 허용은 다시 꺼집니다.&lt;/p&gt;&lt;p&gt;이 일이 일어날 수 있는 동안 송신 허용은 노란색입니다: AutoSeq가 켜져 있고 DX 호출부호에 호출부호가 있을 때. 송신 중지나 정지는 DX 호출부호가 바뀌거나 송신 허용을 켤 때까지 이를 보류합니다.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Wait and Reply: resume the QSO when DX Call calls me</source>
+        <translation>대기 후 응답: DX 호출부호 국이 나를 부르면 QSO 재개</translation>
+    </message>
 </context>
 <context>
     <name>main</name>

@@ -10252,6 +10252,16 @@ canvi en la targeta de so</translation>
         <source>Show azimuth in messages with grid</source>
         <translation>Mostrar l'azimut en missatges amb locator</translation>
     </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;While Enable Tx is off, a message to you from the station in DX Call switches Enable Tx on, and the QSO goes on. Enable Tx is switched off again after 8 periods (transmit and receive).&lt;/p&gt;&lt;p&gt;Enable Tx is yellow while this can happen: AutoSeq on and a callsign in DX Call. Halt Tx or Stop holds it until DX Call changes or Enable Tx is switched on.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Mentre Activar TX està desactivat, un missatge per a tu de l'estació d'Indicatiu DX activa Activar TX, i el QSO continua. Activar TX es torna a desactivar al cap de 8 períodes (de transmissió i de recepció).&lt;/p&gt;&lt;p&gt;Activar TX és groc mentre això pot passar: AutoSeq activat i un indicatiu a Indicatiu DX. Aturar TX o Aturar ho suspèn fins que l'Indicatiu DX canvia o s'activa Activar TX.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Wait and Reply: resume the QSO when DX Call calls me</source>
+        <translation>Esperar i respondre: reprendre el QSO quan l'Indicatiu DX em crida</translation>
+    </message>
 </context>
 <context>
     <name>main</name>

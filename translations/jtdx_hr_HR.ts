@@ -10244,6 +10244,16 @@ promjena zvučne kartice</translation>
         <source>Show azimuth in messages with grid</source>
         <translation>Prikaži azimut u porukama s lokatorom</translation>
     </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;While Enable Tx is off, a message to you from the station in DX Call switches Enable Tx on, and the QSO goes on. Enable Tx is switched off again after 8 periods (transmit and receive).&lt;/p&gt;&lt;p&gt;Enable Tx is yellow while this can happen: AutoSeq on and a callsign in DX Call. Halt Tx or Stop holds it until DX Call changes or Enable Tx is switched on.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dok je Pokreni Tx isključen, poruka Vama od stanice u DX Znaku uključuje Pokreni Tx i QSO se nastavlja. Pokreni Tx se ponovno isključuje nakon 8 perioda (predaje i prijema).&lt;/p&gt;&lt;p&gt;Pokreni Tx je žut dok se to može dogoditi: AutoSeq uključen i pozivni znak u DX Znaku. Zaustavi TX ili Stop ga obustavlja dok se DX Znak ne promijeni ili dok se Pokreni Tx ne uključi.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Wait and Reply: resume the QSO when DX Call calls me</source>
+        <translation>Čekaj i odgovori: nastavi QSO kad me DX Znak pozove</translation>
+    </message>
 </context>
 <context>
     <name>main</name>

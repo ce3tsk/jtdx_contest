@@ -129,6 +129,7 @@ public:
   bool sentRR7373Count() const;
   bool strictdirCQ() const;
   bool halttxreplyother() const;
+  bool wait_and_reply () const;   // CE3TSK 2026-10-21: Wait and Reply (waitreply.h)
   bool hidefree() const;
   bool hide2ndHash() const;
   bool hideOwnContinent() const;

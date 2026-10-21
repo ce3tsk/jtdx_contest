@@ -10215,6 +10215,16 @@ soundcard changes</source>
         <source>Show azimuth in messages with grid</source>
         <translation>グリッド付きメッセージに方位角を表示</translation>
     </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;While Enable Tx is off, a message to you from the station in DX Call switches Enable Tx on, and the QSO goes on. Enable Tx is switched off again after 8 periods (transmit and receive).&lt;/p&gt;&lt;p&gt;Enable Tx is yellow while this can happen: AutoSeq on and a callsign in DX Call. Halt Tx or Stop holds it until DX Call changes or Enable Tx is switched on.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;送信開始がオフの間に DX コールの局からあなた宛てのメッセージを受信すると、送信開始がオンになり QSO が続きます。8 周期（送信と受信）の後、送信開始は再びオフになります。&lt;/p&gt;&lt;p&gt;これが起こりうる間、送信開始は黄色になります：AutoSeq がオンで、DX コールにコールサインがあるとき。送信停止または停止を押すと、DX コールが変わるか送信開始をオンにするまで保留されます。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Wait and Reply: resume the QSO when DX Call calls me</source>
+        <translation>待機して応答：DX コールの局から呼ばれたら QSO を再開</translation>
+    </message>
 </context>
 <context>
     <name>main</name>

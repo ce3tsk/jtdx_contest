@@ -880,6 +880,7 @@ private:
   bool sentRR7373Count_;
   bool strictdirCQ_;
   bool halttxreplyother_;
+  bool waitAndReply_;            // CE3TSK 2026-10-21: Wait and Reply (waitreply.h)
   bool hidefree_;
   bool hide2ndHash_;
   bool hideOwnContinent_;
@@ -1374,6 +1375,7 @@ bool Configuration::sentRReportCount () const {return m_->sentRReportCount_;}
 bool Configuration::sentRR7373Count () const {return m_->sentRR7373Count_;}
 bool Configuration::strictdirCQ () const {return m_->strictdirCQ_;}
 bool Configuration::halttxreplyother () const {return m_->halttxreplyother_;}
+bool Configuration::wait_and_reply () const {return m_->waitAndReply_;}
 bool Configuration::hidefree () const {return m_->hidefree_;}
 bool Configuration::hide2ndHash () const {return m_->hide2ndHash_;}
 bool Configuration::hideOwnContinent () const {return m_->hideOwnContinent_;}
@@ -2620,6 +2622,7 @@ Radio::convert_dark("#fafbfe",useDarkStyle_),Radio::convert_dark("#dcdef1",useDa
   ui_->sentRR7373Count_checkBox->setChecked (sentRR7373Count_);
   ui_->strictDirCQ_checkBox->setChecked (strictdirCQ_);
   ui_->haltTxReplyOther_checkBox->setChecked (halttxreplyother_);
+  ui_->waitAndReply_check_box->setChecked (waitAndReply_);   // CE3TSK 2026-10-21
   ui_->HideFree_check_box->setChecked (hidefree_);
   ui_->Hide2ndHash_check_box->setChecked (hide2ndHash_);
   ui_->HideOwnContinent_check_box->setChecked (hideOwnContinent_);
@@ -2910,6 +2913,7 @@ void Configuration::impl::read_settings ()
   sentRR7373Count_ = settings_->value ("SeqSentRR7373Count", true).toBool ();
   strictdirCQ_ = settings_->value ("StrictDirectionalCQ", false).toBool ();
   halttxreplyother_ = settings_->value ("SeqHaltTxReplyOther", false).toBool ();
+  waitAndReply_ = settings_->value (contest_profile::own_key ("WaitAndReply"), false).toBool ();   // CE3TSK 2026-10-21: ours, off
 
   if(settings_->value ("HideFreeMsgs").toString()=="false" || settings_->value ("HideFreeMsgs").toString()=="true")
     hidefree_ = settings_->value ("HideFreeMsgs").toBool ();
@@ -3501,6 +3505,7 @@ void Configuration::impl::write_settings ()
   settings_->setValue ("SeqSentRR7373Count", sentRR7373Count_);
   settings_->setValue ("StrictDirectionalCQ", strictdirCQ_);
   settings_->setValue ("SeqHaltTxReplyOther", halttxreplyother_);
+  settings_->setValue (contest_profile::own_key ("WaitAndReply"), waitAndReply_);   // CE3TSK 2026-10-21
   settings_->setValue ("HideFreeMsgs", hidefree_);
   settings_->setValue ("HideMsgsWith2ndCallAsHash", hide2ndHash_);
   settings_->setValue ("HideMsgsWithOwnContinent", hideOwnContinent_);
@@ -4182,6 +4187,7 @@ void Configuration::impl::accept ()
   sentRR7373Count_ = ui_->sentRR7373Count_checkBox->isChecked ();
   strictdirCQ_ = ui_->strictDirCQ_checkBox->isChecked ();
   halttxreplyother_ = ui_->haltTxReplyOther_checkBox->isChecked ();
+  waitAndReply_ = ui_->waitAndReply_check_box->isChecked ();   // CE3TSK 2026-10-21
   hidefree_ = ui_->HideFree_check_box->isChecked ();
   hide2ndHash_ = ui_->Hide2ndHash_check_box->isChecked ();
   hideOwnContinent_ = ui_->HideOwnContinent_check_box->isChecked ();

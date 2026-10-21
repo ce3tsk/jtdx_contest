@@ -10240,6 +10240,16 @@ modifiche alla scheda audio</translation>
         <source>Show azimuth in messages with grid</source>
         <translation>Mostra l'azimut nei messaggi con locator</translation>
     </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;While Enable Tx is off, a message to you from the station in DX Call switches Enable Tx on, and the QSO goes on. Enable Tx is switched off again after 8 periods (transmit and receive).&lt;/p&gt;&lt;p&gt;Enable Tx is yellow while this can happen: AutoSeq on and a callsign in DX Call. Halt Tx or Stop holds it until DX Call changes or Enable Tx is switched on.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Mentre Abilita Tx è spento, un messaggio per te dalla stazione in Nom DX accende Abilita Tx e il QSO prosegue. Abilita Tx si spegne di nuovo dopo 8 periodi (trasmissione e ricezione).&lt;/p&gt;&lt;p&gt;Abilita Tx è giallo finché questo può accadere: AutoSeq attivo e un nominativo in Nom DX. Ferma Tx o Ferma lo sospende finché Nom DX non cambia o Abilita Tx non viene acceso.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Wait and Reply: resume the QSO when DX Call calls me</source>
+        <translation>Attendi e rispondi: riprendi il QSO quando il Nom DX mi chiama</translation>
+    </message>
 </context>
 <context>
     <name>main</name>

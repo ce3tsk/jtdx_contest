@@ -10234,6 +10234,16 @@ soundcard changes</source>
         <source>Show azimuth in messages with grid</source>
         <translation>Kuva asimuuti lokaatoriga sõnumites</translation>
     </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;While Enable Tx is off, a message to you from the station in DX Call switches Enable Tx on, and the QSO goes on. Enable Tx is switched off again after 8 periods (transmit and receive).&lt;/p&gt;&lt;p&gt;Enable Tx is yellow while this can happen: AutoSeq on and a callsign in DX Call. Halt Tx or Stop holds it until DX Call changes or Enable Tx is switched on.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Kui Luba Tx on välja lülitatud, lülitab DX Kutsungi jaama sõnum sulle Luba Tx sisse ja QSO jätkub. Luba Tx lülitub uuesti välja 8 perioodi (saate ja vastuvõtu) järel.&lt;/p&gt;&lt;p&gt;Luba Tx on kollane, kuni see võib juhtuda: AutoSeq sees ja kutsung väljal DX Kutsung. Peata Tx või Stopp peatab selle, kuni DX Kutsung muutub või Luba Tx sisse lülitatakse.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Wait and Reply: resume the QSO when DX Call calls me</source>
+        <translation>Oota ja vasta: jätka QSO-d, kui DX Kutsung mind kutsub</translation>
+    </message>
 </context>
 <context>
     <name>main</name>

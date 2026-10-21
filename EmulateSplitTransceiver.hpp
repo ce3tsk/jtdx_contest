@@ -38,7 +38,7 @@ public:
 
   // forward everything else to wrapped Transceiver
   void start (unsigned sequence_number, JTDXDateTime* jtdxtime) noexcept override {wrapped_->start (sequence_number,jtdxtime);}
-  void stop () noexcept override {wrapped_->stop ();}
+  void stop () noexcept override;
 
 private:
   void handle_update (TransceiverState const&, unsigned seqeunce_number);
@@ -51,6 +51,11 @@ private:
   // back while the PTT is up
   bool moved_ {false};
   Frequency moved_to_ {0};
+  // CE3TSK 2026-10-21 (TODO.md 3.-173): the last state asked for and its number - stop () unkeys with them - and
+  // whether the wrapped rig failed (it is offline then: a state sent would start it again)
+  TransceiverState requested_;
+  unsigned sequence_number_ {0};
+  bool failed_ {false};
 };
 
 #endif
