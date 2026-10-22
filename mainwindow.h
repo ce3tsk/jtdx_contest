@@ -1239,17 +1239,16 @@ private:
   // CE3TSK 2026-10-21: Wait and Call (waitcall.h, WAIT_AND_CALL_PLAN.md)
   wait_call::Arm waitCallNow (QString const& band = {}) const;
   void waitCallArm ();
+  wait_call::Line waitCallLineOf (QString const& msg, unsigned lineSeconds, bool toUs, bool fromHim, bool late) const;
   void waitCallAnswer (QString const& msg, unsigned lineSeconds, bool toUs, bool fromHim, bool late);
   void waitCallLine (QString const& line, unsigned lineSeconds, bool toUs, bool fromHim, bool late);
   void waitCallCounted ();
   void waitCallCheck (QString const& band = {});
   void waitCallGivenUp (QString const& why);
   void waitCallEnd (QString const& why, bool leaveTx = false);
+  wait_call::Do waitCallDo (wait_call::Do const& d);
   void waitCallShow ();
-  wait_call::State m_waitCall {wait_call::State::Off};
-  wait_call::Arm m_waitCallAt;    // what it was armed with: the DX call, the mode, the band
-  int m_waitCallCalls {0};        // the burst's calls made
-  bool m_waitCallSkip {false};    // a transmission under way at the fire is not one of its calls
+  wait_call::Run m_waitCall;      // (3.-184) the state, what it was armed with, the calls made (waitcall.h)
   bool m_waitCallOwn {false};     // Enable Tx changed by it, or by Settings OK's pause while calling: not an end
   QTimer m_waitCallTimer;         // (3.-180) listening after the sixth call: to the end of the period after the next
   QLabel * waitcall_label {nullptr};   // the status bar's "Wait and Call K1ABC: ..."
