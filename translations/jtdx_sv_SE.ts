@@ -6449,6 +6449,31 @@ Det är avkodarens eget fel. Åtgärda det som hindrar den från att starta - et
         <source>Arranges the main window like JTDX_improved's AL layout: Band Activity with the receive buttons and the dial below it, the Rx Frequency window at the top right, the Contest, RX/TX and Preset indicators between Hound and AutoSeq, and the QSO buttons in two rows. Each layout keeps its own window size and split.</source>
         <translation>Ordnar huvudfönstret som JTDX_improveds AL-layout: Bandaktivitet med mottagningsknapparna och frekvensvisningen under, Rx frekvens-fönstret uppe till höger, indikatorerna Tävling, RX/TX och Preset mellan Hound och AutoSeq, och QSO-knapparna i två rader. Varje layout behåller sin egen fönsterstorlek och delning.</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Wait and Call</source>
+        <translation>Vänta och anropa</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;For the station in DX Call: Enable Tx goes off and turns orange, and the program waits. The first message heard from that station - its CQ, its message to anyone - calls it, as a double click on its line would, up to 6 times; then Enable Tx goes off. A message from it to you goes on as a QSO.&lt;/p&gt;&lt;p&gt;Halt Tx, Stop, Enable Tx, Tune, Log QSO, or another DX call, band or mode end it. A right click on Enable Tx switches it too. Needs AutoSeq, a callsign in DX Call and FT8, FT4 or FT2; not in a contest activity or SuperFox mode.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;För stationen i DX Anrop: Aktivera Tx slås av och blir orange, och programmet väntar. Det första meddelandet som hörs från den stationen - dess CQ, dess meddelande till vem som helst - anropar den, som ett dubbelklick på dess rad skulle göra, upp till 6 gånger; sedan slås Aktivera Tx av. Ett meddelande från den till dig fortsätter som ett QSO.&lt;/p&gt;&lt;p&gt;Stop Tx, Stop, Aktivera Tx, Justera, Logga QSO, eller en annan DX-signal, ett annat band eller trafiksätt avslutar det. Ett högerklick på Aktivera Tx slår också av och på det. Kräver Auto sekvens, en anropssignal i DX Anrop och FT8, FT4 eller FT2; inte under en tävlingsaktivitet eller i SuperFox-läge.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Wait and Call needs AutoSeq, a callsign in DX Call and FT8, FT4 or FT2 - not in a contest activity or SuperFox mode, not while band hopping</source>
+        <translation>Vänta och anropa kräver Auto sekvens, en anropssignal i DX Anrop och FT8, FT4 eller FT2 - inte under en tävlingsaktivitet eller i SuperFox-läge, inte under bandhoppning</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Wait and Call %1: waiting</source>
+        <translation>Vänta och anropa %1: väntar</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Wait and Call %1: calling %2/%3</source>
+        <translation>Vänta och anropa %1: anropar %2/%3</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

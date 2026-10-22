@@ -6445,6 +6445,31 @@ That is the decoder's own error. Put right whatever stops it starting - a missin
         <source>Arranges the main window like JTDX_improved's AL layout: Band Activity with the receive buttons and the dial below it, the Rx Frequency window at the top right, the Contest, RX/TX and Preset indicators between Hound and AutoSeq, and the QSO buttons in two rows. Each layout keeps its own window size and split.</source>
         <translation>メインウィンドウを JTDX_improved の AL レイアウトのように配置します：バンドアクティビティーの下に受信ボタンと周波数表示、右上に Rx 周波数ウィンドウ、Hound と AutoSeq の間にコンテスト・RX/TX・Preset の表示、QSO ボタンは 2 行。レイアウトごとにウィンドウのサイズと分割位置を保存します。</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Wait and Call</source>
+        <translation>待機して呼び出し</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;For the station in DX Call: Enable Tx goes off and turns orange, and the program waits. The first message heard from that station - its CQ, its message to anyone - calls it, as a double click on its line would, up to 6 times; then Enable Tx goes off. A message from it to you goes on as a QSO.&lt;/p&gt;&lt;p&gt;Halt Tx, Stop, Enable Tx, Tune, Log QSO, or another DX call, band or mode end it. A right click on Enable Tx switches it too. Needs AutoSeq, a callsign in DX Call and FT8, FT4 or FT2; not in a contest activity or SuperFox mode.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;DX コールの局のために、送信開始がオフになってオレンジ色になり、プログラムは待機します。その局から最初に聞こえたメッセージ（CQ、誰かへのメッセージ）で、その行をダブルクリックしたときと同じようにその局を最大 6 回呼び出し、その後送信開始はオフになります。その局からあなた宛てのメッセージは QSO として続きます。&lt;/p&gt;&lt;p&gt;送信停止、停止、送信開始、チューン、ログに記録、または別の DX コール、バンド、モードで終了します。送信開始の右クリックでも切り替えられます。AutoSeq、DX コールのコールサイン、FT8、FT4 または FT2 が必要です。コンテスト中や SuperFox モードでは使えません。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Wait and Call needs AutoSeq, a callsign in DX Call and FT8, FT4 or FT2 - not in a contest activity or SuperFox mode, not while band hopping</source>
+        <translation>待機して呼び出しには AutoSeq、DX コールのコールサイン、FT8、FT4 または FT2 が必要です - コンテスト中、SuperFox モード中、バンドホッピング中は使えません</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Wait and Call %1: waiting</source>
+        <translation>待機して呼び出し %1：待機中</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Wait and Call %1: calling %2/%3</source>
+        <translation>待機して呼び出し %1：呼び出し中 %2/%3</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

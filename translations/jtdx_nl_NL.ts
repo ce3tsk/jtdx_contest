@@ -6447,6 +6447,31 @@ Dat is de fout van de decoder zelf. Verhelp wat het starten verhindert - een ont
         <source>Arranges the main window like JTDX_improved's AL layout: Band Activity with the receive buttons and the dial below it, the Rx Frequency window at the top right, the Contest, RX/TX and Preset indicators between Hound and AutoSeq, and the QSO buttons in two rows. Each layout keeps its own window size and split.</source>
         <translation>Deelt het hoofdvenster in zoals de AL-indeling van JTDX_improved: Bandactiviteit met de ontvangstknoppen en de frequentieweergave eronder, het Rx-frequentievenster rechtsboven, de indicatoren Contest, RX/TX en Preset tussen Hound en AutoSeq, en de QSO-knoppen in twee rijen. Elke indeling onthoudt haar eigen venstergrootte en verdeling.</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Wait and Call</source>
+        <translation>Wachten en roepen</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;For the station in DX Call: Enable Tx goes off and turns orange, and the program waits. The first message heard from that station - its CQ, its message to anyone - calls it, as a double click on its line would, up to 6 times; then Enable Tx goes off. A message from it to you goes on as a QSO.&lt;/p&gt;&lt;p&gt;Halt Tx, Stop, Enable Tx, Tune, Log QSO, or another DX call, band or mode end it. A right click on Enable Tx switches it too. Needs AutoSeq, a callsign in DX Call and FT8, FT4 or FT2; not in a contest activity or SuperFox mode.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Voor het station in DX-roepnaam: Zenden inschakelen gaat uit en wordt oranje, en het programma wacht. Het eerste bericht dat van dat station wordt gehoord - zijn CQ, zijn bericht aan wie dan ook - roept het, zoals een dubbelklik op zijn regel zou doen, tot 6 keer; daarna gaat Zenden inschakelen uit. Een bericht ervan aan u gaat verder als QSO.&lt;/p&gt;&lt;p&gt;Zenden stoppen, Stoppen, Zenden inschakelen, Afstemmen, QSO loggen, of een andere DX-roepnaam, band of mode beëindigt het. Een rechtsklik op Zenden inschakelen schakelt het ook. Vereist AutoSeq, een roepnaam in DX-roepnaam en FT8, FT4 of FT2; niet tijdens een contestactiviteit of in SuperFox-modus.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Wait and Call needs AutoSeq, a callsign in DX Call and FT8, FT4 or FT2 - not in a contest activity or SuperFox mode, not while band hopping</source>
+        <translation>Wachten en roepen vereist AutoSeq, een roepnaam in DX-roepnaam en FT8, FT4 of FT2 - niet tijdens een contestactiviteit of in SuperFox-modus, niet tijdens bandhoppen</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Wait and Call %1: waiting</source>
+        <translation>Wachten en roepen %1: wacht</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Wait and Call %1: calling %2/%3</source>
+        <translation>Wachten en roepen %1: roept %2/%3</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

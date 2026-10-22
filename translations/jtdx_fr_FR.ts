@@ -6451,6 +6451,31 @@ C'est l'erreur du décodeur lui-même. Corrigez ce qui l'empêche de démarrer -
         <source>Arranges the main window like JTDX_improved's AL layout: Band Activity with the receive buttons and the dial below it, the Rx Frequency window at the top right, the Contest, RX/TX and Preset indicators between Hound and AutoSeq, and the QSO buttons in two rows. Each layout keeps its own window size and split.</source>
         <translation>Organise la fenêtre principale comme la disposition AL de JTDX_improved : l'activité de la bande avec les boutons de réception et l'affichage de fréquence en dessous, la fenêtre de fréquence RX en haut à droite, les indicateurs Concours, RX/TX et Preset entre Hound et AutoSeq, et les boutons de QSO sur deux lignes. Chaque disposition garde sa propre taille de fenêtre et sa propre séparation.</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Wait and Call</source>
+        <translation>Attendre et appeler</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;For the station in DX Call: Enable Tx goes off and turns orange, and the program waits. The first message heard from that station - its CQ, its message to anyone - calls it, as a double click on its line would, up to 6 times; then Enable Tx goes off. A message from it to you goes on as a QSO.&lt;/p&gt;&lt;p&gt;Halt Tx, Stop, Enable Tx, Tune, Log QSO, or another DX call, band or mode end it. A right click on Enable Tx switches it too. Needs AutoSeq, a callsign in DX Call and FT8, FT4 or FT2; not in a contest activity or SuperFox mode.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Pour la station de l'Indicatif DX : Marche TX s'arrête et devient orange, et le programme attend. Le premier message entendu de cette station - son CQ, son message à n'importe qui - l'appelle, comme le ferait un double clic sur sa ligne, jusqu'à 6 fois ; ensuite Marche TX s'arrête. Un message d'elle pour vous continue comme un QSO.&lt;/p&gt;&lt;p&gt;Stop TX, Stop, Marche TX, Tune HF, Enreg. Qso, ou un autre indicatif DX, une autre bande ou un autre mode y mettent fin. Un clic droit sur Marche TX le commute aussi. Il faut Sequ. Auto, un indicatif dans Indicatif DX et FT8, FT4 ou FT2 ; pas dans une activité de concours ni en mode SuperFox.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Wait and Call needs AutoSeq, a callsign in DX Call and FT8, FT4 or FT2 - not in a contest activity or SuperFox mode, not while band hopping</source>
+        <translation>Attendre et appeler demande Sequ. Auto, un indicatif dans Indicatif DX et FT8, FT4 ou FT2 - pas dans une activité de concours ni en mode SuperFox, ni pendant le saut de bande</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Wait and Call %1: waiting</source>
+        <translation>Attendre et appeler %1 : attente</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Wait and Call %1: calling %2/%3</source>
+        <translation>Attendre et appeler %1 : appel %2/%3</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

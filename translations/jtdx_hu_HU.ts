@@ -6447,6 +6447,31 @@ Ez magának a dekódernek a hibája. Hárítsa el, ami az indulását akadályoz
         <source>Arranges the main window like JTDX_improved's AL layout: Band Activity with the receive buttons and the dial below it, the Rx Frequency window at the top right, the Contest, RX/TX and Preset indicators between Hound and AutoSeq, and the QSO buttons in two rows. Each layout keeps its own window size and split.</source>
         <translation>A főablakot a JTDX_improved AL-elrendezéséhez hasonlóan rendezi el: a Sáv_aktivitás alatt a vételi gombok és a frekvenciakijelző, jobbra fent az Rx_frekvencia ablak, a Verseny, RX/TX és Preset jelzők a Hound és az AutoSeq között, a QSO-gombok pedig két sorban. Mindegyik elrendezés megőrzi a saját ablakméretét és felosztását.</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Wait and Call</source>
+        <translation>Várj és hívj</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;For the station in DX Call: Enable Tx goes off and turns orange, and the program waits. The first message heard from that station - its CQ, its message to anyone - calls it, as a double click on its line would, up to 6 times; then Enable Tx goes off. A message from it to you goes on as a QSO.&lt;/p&gt;&lt;p&gt;Halt Tx, Stop, Enable Tx, Tune, Log QSO, or another DX call, band or mode end it. A right click on Enable Tx switches it too. Needs AutoSeq, a callsign in DX Call and FT8, FT4 or FT2; not in a contest activity or SuperFox mode.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;A DX hívójel állomásához: az Adás kikapcsol és narancssárga lesz, a program pedig vár. Az első üzenet, amely ettől az állomástól hallható - a CQ-ja, bárkinek szóló üzenete - hívja, ahogy egy dupla kattintás a sorára tenné, legfeljebb 6 alkalommal; utána az Adás kikapcsol. Az Önnek szóló üzenete QSO-ként folytatódik.&lt;/p&gt;&lt;p&gt;A Tx Állj, a Stop, az Adás, a Hangolás, a Log QSO vagy egy másik DX hívójel, sáv vagy mód befejezi. Jobb kattintás az Adás gombon szintén kapcsolja. AutoVál, hívójel a DX hívójel mezőben és FT8, FT4 vagy FT2 kell hozzá; versenyen és SuperFox módban nem.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Wait and Call needs AutoSeq, a callsign in DX Call and FT8, FT4 or FT2 - not in a contest activity or SuperFox mode, not while band hopping</source>
+        <translation>A Várj és hívj funkcióhoz AutoVál, hívójel a DX hívójel mezőben és FT8, FT4 vagy FT2 kell - versenyen és SuperFox módban nem, sáv ugrás közben sem</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Wait and Call %1: waiting</source>
+        <translation>Várj és hívj %1: vár</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Wait and Call %1: calling %2/%3</source>
+        <translation>Várj és hívj %1: hív %2/%3</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

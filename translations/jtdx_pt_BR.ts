@@ -6437,6 +6437,31 @@ Esse é o erro do próprio decodificador. Corrija o que impede a inicialização
         <source>Arranges the main window like JTDX_improved's AL layout: Band Activity with the receive buttons and the dial below it, the Rx Frequency window at the top right, the Contest, RX/TX and Preset indicators between Hound and AutoSeq, and the QSO buttons in two rows. Each layout keeps its own window size and split.</source>
         <translation>Organiza a janela principal como o layout AL do JTDX_improved: a Atividade da banda com os botões de recepção e o mostrador de frequência abaixo, a janela Frequência Rx no canto superior direito, os indicadores Concurso, RX/TX e Preset entre Hound e AutoSeq, e os botões de QSO em duas linhas. Cada layout guarda o seu próprio tamanho de janela e a sua divisão.</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Wait and Call</source>
+        <translation>Esperar e chamar</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;For the station in DX Call: Enable Tx goes off and turns orange, and the program waits. The first message heard from that station - its CQ, its message to anyone - calls it, as a double click on its line would, up to 6 times; then Enable Tx goes off. A message from it to you goes on as a QSO.&lt;/p&gt;&lt;p&gt;Halt Tx, Stop, Enable Tx, Tune, Log QSO, or another DX call, band or mode end it. A right click on Enable Tx switches it too. Needs AutoSeq, a callsign in DX Call and FT8, FT4 or FT2; not in a contest activity or SuperFox mode.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Para a estação em EstaçãoDX/Spot: Iniciar Tx é desligado e fica laranja, e o programa espera. A primeira mensagem ouvida dessa estação - o CQ dela, a mensagem dela para qualquer um - a chama, como faria um clique duplo na linha dela, até 6 vezes; depois Iniciar Tx é desligado. Uma mensagem dela para você continua como QSO.&lt;/p&gt;&lt;p&gt;Parar Tx, Parar, Iniciar Tx, Tune, Regist. QSO, ou outra estação DX, banda ou modo o encerram. Um clique direito em Iniciar Tx também o alterna. Precisa de AutoSeq, um indicativo em EstaçãoDX/Spot e FT8, FT4 ou FT2; não em uma atividade de concurso nem no modo SuperFox.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Wait and Call needs AutoSeq, a callsign in DX Call and FT8, FT4 or FT2 - not in a contest activity or SuperFox mode, not while band hopping</source>
+        <translation>Esperar e chamar precisa de AutoSeq, um indicativo em EstaçãoDX/Spot e FT8, FT4 ou FT2 - não em uma atividade de concurso nem no modo SuperFox, nem durante o salto de banda</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Wait and Call %1: waiting</source>
+        <translation>Esperar e chamar %1: esperando</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Wait and Call %1: calling %2/%3</source>
+        <translation>Esperar e chamar %1: chamando %2/%3</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

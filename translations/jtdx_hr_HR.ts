@@ -6451,6 +6451,31 @@ To je greška samog dekodera. Otklonite ono što ga sprječava da se pokrene - n
         <source>Arranges the main window like JTDX_improved's AL layout: Band Activity with the receive buttons and the dial below it, the Rx Frequency window at the top right, the Contest, RX/TX and Preset indicators between Hound and AutoSeq, and the QSO buttons in two rows. Each layout keeps its own window size and split.</source>
         <translation>Raspoređuje glavni prozor kao AL raspored programa JTDX_improved: aktivnost na opsegu s gumbima za prijem i prikazom frekvencije ispod, prozor RX frekvencije gore desno, indikatori Natjecanje, RX/TX i Preset između Hound i AutoSeq te gumbi za QSO u dva reda. Svaki raspored pamti vlastitu veličinu prozora i podjelu.</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Wait and Call</source>
+        <translation>Čekaj i pozovi</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;For the station in DX Call: Enable Tx goes off and turns orange, and the program waits. The first message heard from that station - its CQ, its message to anyone - calls it, as a double click on its line would, up to 6 times; then Enable Tx goes off. A message from it to you goes on as a QSO.&lt;/p&gt;&lt;p&gt;Halt Tx, Stop, Enable Tx, Tune, Log QSO, or another DX call, band or mode end it. A right click on Enable Tx switches it too. Needs AutoSeq, a callsign in DX Call and FT8, FT4 or FT2; not in a contest activity or SuperFox mode.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Za stanicu u DX Znaku: Pokreni Tx se isključuje i postaje narančast, a program čeka. Prva poruka koja se čuje od te stanice - njezin CQ, njezina poruka bilo kome - poziva je, kao što bi to učinio dvostruki klik na njezin redak, do 6 puta; zatim se Pokreni Tx isključuje. Poruka od nje Vama nastavlja se kao QSO.&lt;/p&gt;&lt;p&gt;Zaustavi TX, Stop, Pokreni Tx, Tune, Log QSO ili drugi DX znak, opseg ili način rada to završavaju. Desni klik na Pokreni Tx također ga uključuje i isključuje. Treba AutoSeq, pozivni znak u DX Znaku i FT8, FT4 ili FT2; ne tijekom natjecanja ni u SuperFox načinu.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Wait and Call needs AutoSeq, a callsign in DX Call and FT8, FT4 or FT2 - not in a contest activity or SuperFox mode, not while band hopping</source>
+        <translation>Čekaj i pozovi treba AutoSeq, pozivni znak u DX Znaku i FT8, FT4 ili FT2 - ne tijekom natjecanja ni u SuperFox načinu, ne tijekom promjene opsega</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Wait and Call %1: waiting</source>
+        <translation>Čekaj i pozovi %1: čeka</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Wait and Call %1: calling %2/%3</source>
+        <translation>Čekaj i pozovi %1: poziva %2/%3</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

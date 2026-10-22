@@ -6461,6 +6461,31 @@ That is the decoder's own error. Put right whatever stops it starting - a missin
         <source>Arranges the main window like JTDX_improved's AL layout: Band Activity with the receive buttons and the dial below it, the Rx Frequency window at the top right, the Contest, RX/TX and Preset indicators between Hound and AutoSeq, and the QSO buttons in two rows. Each layout keeps its own window size and split.</source>
         <translation>Располагает главное окно как компоновка AL в JTDX_improved: окно активности диапазона с кнопками приёма и индикатором частоты под ним, окно RX частоты вверху справа, индикаторы Контест, RX/TX и Preset между Hound и AutoSeq и кнопки QSO в два ряда. Каждая компоновка запоминает свой размер окна и разделение.</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Wait and Call</source>
+        <translation>Ждать и вызвать</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;For the station in DX Call: Enable Tx goes off and turns orange, and the program waits. The first message heard from that station - its CQ, its message to anyone - calls it, as a double click on its line would, up to 6 times; then Enable Tx goes off. A message from it to you goes on as a QSO.&lt;/p&gt;&lt;p&gt;Halt Tx, Stop, Enable Tx, Tune, Log QSO, or another DX call, band or mode end it. A right click on Enable Tx switches it too. Needs AutoSeq, a callsign in DX Call and FT8, FT4 or FT2; not in a contest activity or SuperFox mode.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Для станции из поля Позывной DX: Разреш.Tx выключается и становится оранжевой, а программа ждёт. Первое услышанное от этой станции сообщение - её CQ, её сообщение кому угодно - вызывает её, как это сделал бы двойной щелчок по её строке, до 6 раз; затем Разреш.Tx выключается. Её сообщение Вам продолжается как QSO.&lt;/p&gt;&lt;p&gt;Стоп Tx, Стоп, Разреш.Tx, Настр. TX, QSO в лог или другой позывной DX, диапазон или режим завершают это. Щелчок правой кнопкой по Разреш.Tx тоже переключает его. Нужны АвтоВыбор, позывной в поле Позывной DX и FT8, FT4 или FT2; не во время контеста и не в режиме SuperFox.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Wait and Call needs AutoSeq, a callsign in DX Call and FT8, FT4 or FT2 - not in a contest activity or SuperFox mode, not while band hopping</source>
+        <translation>Для Ждать и вызвать нужны АвтоВыбор, позывной в поле Позывной DX и FT8, FT4 или FT2 - не во время контеста и не в режиме SuperFox, не во время смены диапазонов</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Wait and Call %1: waiting</source>
+        <translation>Ждать и вызвать %1: ждёт</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Wait and Call %1: calling %2/%3</source>
+        <translation>Ждать и вызвать %1: вызывает %2/%3</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

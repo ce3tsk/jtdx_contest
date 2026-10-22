@@ -6456,6 +6456,31 @@ Aquest és l'error del descodificador mateix. Corregiu allò que n'impedeix l'in
         <source>Arranges the main window like JTDX_improved's AL layout: Band Activity with the receive buttons and the dial below it, the Rx Frequency window at the top right, the Contest, RX/TX and Preset indicators between Hound and AutoSeq, and the QSO buttons in two rows. Each layout keeps its own window size and split.</source>
         <translation>Organitza la finestra principal com la disposició AL de JTDX_improved: l'activitat de la banda amb els botons de recepció i el dial a sota, la finestra de freqüència RX a dalt a la dreta, els indicadors Concurs, RX/TX i Preset entre Hound i AutoSeq, i els botons de QSO en dues files. Cada disposició conserva la seva mida de finestra i la seva divisió.</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Wait and Call</source>
+        <translation>Esperar i cridar</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;For the station in DX Call: Enable Tx goes off and turns orange, and the program waits. The first message heard from that station - its CQ, its message to anyone - calls it, as a double click on its line would, up to 6 times; then Enable Tx goes off. A message from it to you goes on as a QSO.&lt;/p&gt;&lt;p&gt;Halt Tx, Stop, Enable Tx, Tune, Log QSO, or another DX call, band or mode end it. A right click on Enable Tx switches it too. Needs AutoSeq, a callsign in DX Call and FT8, FT4 or FT2; not in a contest activity or SuperFox mode.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Per a l'estació d'Indicatiu DX: Activar TX es desactiva i es torna taronja, i el programa espera. El primer missatge que se sent d'aquesta estació - el seu CQ, el seu missatge a qualsevol - la crida, com ho faria un doble clic a la seva línia, fins a 6 vegades; després Activar TX es desactiva. Un missatge seu per a tu continua com a QSO.&lt;/p&gt;&lt;p&gt;Aturar TX, Aturar, Activar TX, Sintonitzar, Log QSO, o un altre indicatiu DX, una altra banda o un altre mode ho acaben. Un clic dret a Activar TX també ho commuta. Necessita AutoSeq, un indicatiu a Indicatiu DX i FT8, FT4 o FT2; no en una activitat de concurs ni en mode SuperFox.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Wait and Call needs AutoSeq, a callsign in DX Call and FT8, FT4 or FT2 - not in a contest activity or SuperFox mode, not while band hopping</source>
+        <translation>Esperar i cridar necessita AutoSeq, un indicatiu a Indicatiu DX i FT8, FT4 o FT2 - no en una activitat de concurs ni en mode SuperFox, ni durant el salt de banda</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Wait and Call %1: waiting</source>
+        <translation>Esperar i cridar %1: esperant</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Wait and Call %1: calling %2/%3</source>
+        <translation>Esperar i cridar %1: cridant %2/%3</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

@@ -38,6 +38,7 @@
 #include "AudioDevice.hpp"
 #include "commons.h"
 #include "Radio.hpp"
+#include "waitcall.h"   // CE3TSK 2026-10-21: Wait and Call
 #include "Modes.hpp"
 #include "Configuration.hpp"
 #include "WSPRBandHopping.hpp"
@@ -211,6 +212,7 @@ private slots:
   void on_actionUse_TX_frequency_jumps_triggered(bool checked);
   void on_actionSuperFox_mode_toggled(bool checked);   /* CE3TSK: SuperFox receive, SUPERFOX_PLAN.md */
   void on_actionVerify_Fox_online_toggled(bool checked);   /* CE3TSK: the Fox verifier, SUPERFOX_PLAN.md M2 */
+  void on_actionWait_and_Call_toggled (bool checked);   // CE3TSK 2026-10-21: Wait and Call (waitcall.h)
   void on_actionMTAuto_triggered();
   void on_actionMT1_triggered();
   void on_actionMT2_triggered();
@@ -1234,6 +1236,23 @@ private:
   void settingsOkPause (bool begins);
   QTimer m_waitReplyTimer;        // its eight periods
   QString m_waitReplyHeld;        // the DX call the operator's Halt Tx or Stop held it for
+  // CE3TSK 2026-10-21: Wait and Call (waitcall.h, WAIT_AND_CALL_PLAN.md)
+  wait_call::Arm waitCallNow (QString const& band = {}) const;
+  void waitCallArm ();
+  void waitCallAnswer (QString const& msg, unsigned lineSeconds, bool toUs, bool fromHim, bool late);
+  void waitCallLine (QString const& line, unsigned lineSeconds, bool toUs, bool fromHim, bool late);
+  void waitCallCounted ();
+  void waitCallCheck (QString const& band = {});
+  void waitCallGivenUp (QString const& why);
+  void waitCallEnd (QString const& why, bool leaveTx = false);
+  void waitCallShow ();
+  wait_call::State m_waitCall {wait_call::State::Off};
+  wait_call::Arm m_waitCallAt;    // what it was armed with: the DX call, the mode, the band
+  int m_waitCallCalls {0};        // the burst's calls made
+  bool m_waitCallSkip {false};    // a transmission under way at the fire is not one of its calls
+  bool m_waitCallOwn {false};     // Enable Tx changed by it, or by Settings OK's pause while calling: not an end
+  QTimer m_waitCallTimer;         // (3.-180) listening after the sixth call: to the end of the period after the next
+  QLabel * waitcall_label {nullptr};   // the status bar's "Wait and Call K1ABC: ..."
   void setHoundButtonStyle ();
   void setSpotButtonStyle ();
   void initLogIfNeeded ();

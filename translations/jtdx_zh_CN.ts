@@ -6446,6 +6446,31 @@ That is the decoder's own error. Put right whatever stops it starting - a missin
         <source>Arranges the main window like JTDX_improved's AL layout: Band Activity with the receive buttons and the dial below it, the Rx Frequency window at the top right, the Contest, RX/TX and Preset indicators between Hound and AutoSeq, and the QSO buttons in two rows. Each layout keeps its own window size and split.</source>
         <translation>按 JTDX_improved 的 AL 布局排列主窗口：波段活动下方是接收按钮和频率显示，右上角是接收信息窗口，竞赛、RX/TX 和 Preset 指示灯位于 Hound 与 AutoSeq 之间，QSO 按钮排成两行。每种布局各自记住窗口大小和分隔位置。</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Wait and Call</source>
+        <translation>等待并呼叫</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;For the station in DX Call: Enable Tx goes off and turns orange, and the program waits. The first message heard from that station - its CQ, its message to anyone - calls it, as a double click on its line would, up to 6 times; then Enable Tx goes off. A message from it to you goes on as a QSO.&lt;/p&gt;&lt;p&gt;Halt Tx, Stop, Enable Tx, Tune, Log QSO, or another DX call, band or mode end it. A right click on Enable Tx switches it too. Needs AutoSeq, a callsign in DX Call and FT8, FT4 or FT2; not in a contest activity or SuperFox mode.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;针对 DX 呼号中的电台：启用发射关闭并变为橙色，程序进入等待。从该电台听到的第一条消息（它的 CQ、它发给任何人的消息）会像双击其所在行一样呼叫它，最多 6 次；之后启用发射关闭。它发给你的消息会作为 QSO 继续进行。&lt;/p&gt;&lt;p&gt;终止发射、停止、启用发射、调谐、记录通联，或更换 DX 呼号、波段或模式都会结束它。右键单击启用发射也可以切换它。需要自动程序、DX 呼号中有呼号，以及 FT8、FT4 或 FT2；在竞赛活动中或 SuperFox 模式下不可用。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Wait and Call needs AutoSeq, a callsign in DX Call and FT8, FT4 or FT2 - not in a contest activity or SuperFox mode, not while band hopping</source>
+        <translation>等待并呼叫需要自动程序、DX 呼号中有呼号，以及 FT8、FT4 或 FT2 - 在竞赛活动中、SuperFox 模式下或波段预案运行时不可用</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Wait and Call %1: waiting</source>
+        <translation>等待并呼叫 %1：等待中</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Wait and Call %1: calling %2/%3</source>
+        <translation>等待并呼叫 %1：呼叫中 %2/%3</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

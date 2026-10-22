@@ -5325,6 +5325,8 @@ list. The list can be maintained in Settings (F2).</string>
     <addaction name="actionUse_TX_frequency_jumps"/>
     <addaction name="actionSuperFox_mode"/>
     <addaction name="actionVerify_Fox_online"/>
+    <addaction name="separator"/>
+    <addaction name="actionWait_and_Call"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuView"/>
@@ -7377,6 +7379,20 @@ list. The list can be maintained in Settings (F2).</string>
    </property>
    <property name="text">
     <string>Use hound TX frequency control</string>
+   </property>
+  </action>
+  <action name="actionWait_and_Call">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Wait and Call</string>
+   </property>
+   <property name="toolTip">
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;For the station in DX Call: Enable Tx goes off and turns orange, and the program waits. The first message heard from that station - its CQ, its message to anyone - calls it, as a double click on its line would, up to 6 times; then Enable Tx goes off. A message from it to you goes on as a QSO.&lt;/p&gt;&lt;p&gt;Halt Tx, Stop, Enable Tx, Tune, Log QSO, or another DX call, band or mode end it. A right click on Enable Tx switches it too. Needs AutoSeq, a callsign in DX Call and FT8, FT4 or FT2; not in a contest activity or SuperFox mode.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+   </property>
+   <property name="shortcut">
+    <string notr="true">Ctrl+W</string>
    </property>
   </action>
   <action name="actionVerify_Fox_online">

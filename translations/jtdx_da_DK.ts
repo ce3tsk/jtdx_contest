@@ -6451,6 +6451,31 @@ Det er dekoderens egen fejl. Ret det, der forhindrer den i at starte - et mangle
         <source>Arranges the main window like JTDX_improved's AL layout: Band Activity with the receive buttons and the dial below it, the Rx Frequency window at the top right, the Contest, RX/TX and Preset indicators between Hound and AutoSeq, and the QSO buttons in two rows. Each layout keeps its own window size and split.</source>
         <translation>Arrangerer hovedvinduet som JTDX_improveds AL-layout: båndaktivitet med modtageknapperne og frekvensvisningen nedenunder, Rx frekvens-vinduet øverst til højre, indikatorerne Contest, RX/TX og Preset mellem Hound og AutoSeq, og QSO-knapperne i to rækker. Hvert layout beholder sin egen vinduesstørrelse og opdeling.</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Wait and Call</source>
+        <translation>Vent og kald</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;For the station in DX Call: Enable Tx goes off and turns orange, and the program waits. The first message heard from that station - its CQ, its message to anyone - calls it, as a double click on its line would, up to 6 times; then Enable Tx goes off. A message from it to you goes on as a QSO.&lt;/p&gt;&lt;p&gt;Halt Tx, Stop, Enable Tx, Tune, Log QSO, or another DX call, band or mode end it. A right click on Enable Tx switches it too. Needs AutoSeq, a callsign in DX Call and FT8, FT4 or FT2; not in a contest activity or SuperFox mode.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;For stationen i Dx Call: Aktiver Tx slås fra og bliver orange, og programmet venter. Den første besked, der høres fra den station - dens CQ, dens besked til hvem som helst - kalder den, som et dobbeltklik på dens linje ville, op til 6 gange; derefter slås Aktiver Tx fra. En besked fra den til dig fortsætter som en QSO.&lt;/p&gt;&lt;p&gt;Stop Tx, Stop, Aktiver Tx, Tune, Log QSO eller et andet DX-kaldesignal, bånd eller mode afslutter det. Et højreklik på Aktiver Tx slår det også til og fra. Kræver AutoSekv, et kaldesignal i Dx Call og FT8, FT4 eller FT2; ikke under en contest-aktivitet eller i SuperFox-tilstand.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Wait and Call needs AutoSeq, a callsign in DX Call and FT8, FT4 or FT2 - not in a contest activity or SuperFox mode, not while band hopping</source>
+        <translation>Vent og kald kræver AutoSekv, et kaldesignal i Dx Call og FT8, FT4 eller FT2 - ikke under en contest-aktivitet eller i SuperFox-tilstand, ikke under Bånd Hopping</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Wait and Call %1: waiting</source>
+        <translation>Vent og kald %1: venter</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Wait and Call %1: calling %2/%3</source>
+        <translation>Vent og kald %1: kalder %2/%3</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

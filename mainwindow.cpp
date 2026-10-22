@@ -180,6 +180,20 @@ namespace
     auto second = time.second ();
     return now.msecsTo (now.addSecs (second > 30 ? 60 - second : -second)) - time.msec ();
   }
+
+  /* CE3TSK 2026-10-21 (TODO.md 3.-180, the review 3.-179 4): JTDX_TEST_REPLAY_AS_LIVE - a TEST HOOK: a replay's lines
+     (File > Open) count as lines of the air for Wait and Reply and Wait and Call, which otherwise never fire on a
+     recording - that would key the rig on its lines. tools/ui-check/waitreply.sh and waitcall.sh drive them with replayed
+     periods. Said on stderr when set, as JTDX_NO_DECODER_CHECK is: a silent switch is how it would stay on unseen */
+  bool replayAsLive ()
+  {
+    static bool const on = [] {
+      bool const set = qEnvironmentVariableIsSet ("JTDX_TEST_REPLAY_AS_LIVE");
+      if (set) std::cerr << "JTDX_TEST_REPLAY_AS_LIVE is set: a replay's lines fire Wait and Reply and Wait and Call\n";
+      return set;
+    } ();
+    return on;
+  }
 }
 
 //--------------------------------------------------- MainWindow constructor
@@ -1048,6 +1062,12 @@ MainWindow::MainWindow(bool multiple, QSettings * settings, QSharedMemory *shdme
   connect (ui->HoundButton, &QWidget::customContextMenuRequested, this, [this] (QPoint const&) {
       if (ui->actionSuperFox_mode->isEnabled ()) ui->actionSuperFox_mode->toggle ();
     });
+  /* CE3TSK 2026-10-21: Wait and Call (waitcall.h) - a right click on Enable Tx switches it, as DXpedition > Wait and
+     Call (Ctrl+W) does */
+  ui->enableTxButton->setContextMenuPolicy (Qt::CustomContextMenu);
+  connect (ui->enableTxButton, &QWidget::customContextMenuRequested, this, [this] (QPoint const&) {
+      ui->actionWait_and_Call->toggle ();
+    });
   /* CE3TSK: the Fox verifier (SUPERFOX_PLAN.md milestone 2) on the application's one network
      manager. It is created whether or not the operator wants it used: verify () is simply not
      called while "Verify Fox online" is off. The outcome travels as an int so that mainwindow.h
@@ -1159,6 +1179,13 @@ MainWindow::MainWindow(bool multiple, QSettings * settings, QSharedMemory *shdme
   connect (&m_waitReplyTimer, &QTimer::timeout, this, &MainWindow::waitReplyTimeout);
   connect (ui->stopTxButton, &QAbstractButton::clicked, this, &MainWindow::waitReplyHold);
   connect (ui->stopButton, &QAbstractButton::clicked, this, &MainWindow::waitReplyHold);
+  /* CE3TSK 2026-10-21 (TODO.md 3.-180, the review 3.-179 2 B): Wait and Call listening for his answer to the sixth call,
+     to the end of the period after the next one (wait_call::listen_ms ()); and the replay test hook said at once */
+  m_waitCallTimer.setSingleShot (true);
+  connect (&m_waitCallTimer, &QTimer::timeout, this, [this] {
+      waitCallEnd (QString::number (wait_call::calls) + " calls made, no answer");
+    });
+  replayAsLive ();
   StopTuneTimer.setSingleShot(true); connect(&StopTuneTimer, SIGNAL(timeout()), this, SLOT(stop_tuning()));
   RxQSYTimer.setSingleShot(true); connect(&RxQSYTimer, SIGNAL(timeout()), this, SLOT(RxQSY()));
   minuteTimer.setSingleShot(true); connect (&minuteTimer, &QTimer::timeout, this, &MainWindow::on_the_minute);
@@ -2857,6 +2884,7 @@ void MainWindow::on_actionSettings_triggered()               //Setup Dialog
 	  setXIT (ui->TxFreqSpinBox->value ());
       update_watchdog_label ();
       waitReplyRepaint ();   // CE3TSK 2026-10-21: Wait and Reply switched on or off - Enable Tx yellow or not
+      waitCallCheck ();      // a contest activity chosen ends Wait and Call
       if(m_mode != "WSPR-2" && spot_to_dxsummit != m_config.spot_to_dxsummit()) {
          m_dxCallHidden=false;   // CE3TSK
          if(m_config.spot_to_dxsummit() ) { ui->pbSpotDXCall->setStyleSheet(QString("QPushButton {color: %1;background: %2;border-style: outset;border-width: 1px;border-color: %3;padding: 3px}").arg(Radio::convert_dark("#000000",m_useDarkStyle),Radio::convert_dark("#c4c4ff",m_useDarkStyle),Radio::convert_dark("#808080",m_useDarkStyle))); }
@@ -2900,6 +2928,7 @@ void MainWindow::on_AutoSeqButton_clicked (bool checked)
 {
   m_autoseq = checked;
   waitReplyRepaint ();   // CE3TSK 2026-10-21: Wait and Reply needs AutoSeq - Enable Tx yellow or not
+  waitCallCheck ();      // and Wait and Call ends without it
   if (checked) {
     m_wasAutoSeq=false; //in case of toggling AutoSeq button by user
 //txrb button selection by user can brake AutoSeq, disable all txrb buttons
@@ -2996,6 +3025,8 @@ void MainWindow::on_enableTxButton_clicked (bool checked)
   // CE3TSK 2026-10-21: and Wait and Reply's eight periods end (WSJT-X: stopWRTimer), and Enable Tx on ends a hold
   m_waitReplyTimer.stop ();
   if (checked) m_waitReplyHeld.clear ();
+  // CE3TSK 2026-10-21: Wait and Call (waitcall.h) ends with any change of Enable Tx not its own - which Enable Tx follows
+  if (!m_waitCallOwn && checked != m_enableTx) waitCallEnd (checked ? "Enable Tx on" : "Enable Tx off", true);
   if(m_enableTx && !checked && m_curMsgTx.startsWith(m_hisCall+" ")) m_lasthint=true;
   if(checked && m_lasthint) m_lasthint=false;
   m_enableTx = checked;
@@ -3216,6 +3247,12 @@ void MainWindow::keyPressEvent( QKeyEvent *e )                //keyPressEvent
         return;
       }
       break;
+    case Qt::Key_W:   // CE3TSK 2026-10-21: Wait and Call's Ctrl+W - the action's shortcut is dead while the menus are hidden
+      if(!m_menus && e->modifiers() & Qt::ControlModifier) {
+        ui->actionWait_and_Call->toggle ();
+        return;
+      }
+      break;
     case Qt::Key_V:
       if(e->modifiers() & Qt::AltModifier) {
         m_fileToSave=m_fnameWE;
@@ -3351,6 +3388,7 @@ void MainWindow::displayDialFrequency ()
       m_lastDisplayFreq = dial_frequency;
       if(m_transmitting || g_iptt==1) haltTx("band changed at the rig ");
       enableTx_mode (false);
+      waitCallCheck (band_name);   // CE3TSK 2026-10-21 (3.-180, the review 3.-179 7): Wait and Call waiting ends too
       psk_Reporter->sendReport ();
       m_okToPost = false;
       // CE3TSK 2026-10-15 (3.-107, item 9 (b)): not on m_rigOk - the first report after a reconnect comes before the rig
@@ -3463,6 +3501,9 @@ void MainWindow::setEnableTxButtonStyle ()
   if(!m_enableTx && waitReplyArmed ()) ui->enableTxButton->setStyleSheet(QString("QPushButton {color: %1;background: %2;border-style: solid;border-width: 1px;border-color: %3;min-width: 63px;padding: 0px}").arg(Radio::convert_dark("#000000",m_useDarkStyle),Radio::convert_dark("#ffff00",m_useDarkStyle),Radio::convert_dark("#adadad",m_useDarkStyle)));
   else if(m_enableTx) ui->enableTxButton->setStyleSheet(QString("QPushButton {color: %1;background: %2;border-style: solid;border-width: 1px;border-radius: 5px;border-color: %3;min-width: 63px;padding: 0px}").arg(Radio::convert_dark("#000000",m_useDarkStyle),Radio::convert_dark("#ff3c3c",m_useDarkStyle),Radio::convert_dark("#000000",m_useDarkStyle)));
   else ui->enableTxButton->setStyleSheet(QString("QPushButton {color: %1;background: %2;border-style: solid;border-width: 1px;border-color: %3;min-width: 63px;padding: 0px}").arg(Radio::convert_dark("#000000",m_useDarkStyle),Radio::convert_dark("#dcdcdc",m_useDarkStyle),Radio::convert_dark("#adadad",m_useDarkStyle)));
+  /* CE3TSK 2026-10-21: orange while Wait and Call waits, or listens for his answer to the sixth call (3.-180) - over Wait
+     and Reply's yellow, which it leaves armed; the dark style's orange is Radio.cpp's table's */
+  if(!m_enableTx && wait_call::may_switch_on (m_waitCall)) ui->enableTxButton->setStyleSheet(QString("QPushButton {color: %1;background: %2;border-style: solid;border-width: 1px;border-color: %3;min-width: 63px;padding: 0px}").arg(Radio::convert_dark("#000000",m_useDarkStyle),Radio::convert_dark("#ffa500",m_useDarkStyle),Radio::convert_dark("#adadad",m_useDarkStyle)));
 }
 
 /* CE3TSK 2026-10-21: Wait and Reply (waitreply.h, WAIT_AND_REPLY_PLAN.md) - whether it may switch Enable Tx on now */
@@ -3499,6 +3540,7 @@ void MainWindow::waitReplyLine (QString const& msg, unsigned lineSeconds, bool t
   l.fromHim = fromHim;
   l.manualDecode = m_manualDecode;
   l.late = late;
+  l.replay = m_diskData && !replayAsLive ();   // (3.-180) a recording's line keys nothing
   l.msg = msg;
   l.hound = m_houndMode;
   l.secondPeriod = lineTxFirst;
@@ -3514,6 +3556,7 @@ void MainWindow::waitReplyLine (QString const& msg, unsigned lineSeconds, bool t
 // holds nothing - there the DX's next message switches Enable Tx on again)
 void MainWindow::waitReplyHold ()
 {
+  waitCallEnd ("Halt Tx or Stop");   // CE3TSK 2026-10-21: and Wait and Call ends (waitcall.h)
   m_waitReplyTimer.stop ();
   m_waitReplyHeld = m_hisCall;
   waitReplyRepaint ();
@@ -3538,10 +3581,225 @@ void MainWindow::waitReplyTimeout ()
    on with no end */
 void MainWindow::settingsOkPause (bool begins)
 {
+  m_waitCallOwn = m_waitCall == wait_call::State::Calling;   // (3.-178) Wait and Call's burst runs on through it too
+  if (begins && m_waitCallOwn) m_waitCallSkip = true;   // (3.-180) the call cut is none of its six - the one sent again is
   int const left = m_waitReplyTimer.remainingTime ();   // -1: not running
   if (begins) haltTx("settings change is accepted ");   // Halt Tx's slot switches Enable Tx off - and so stops them
-  enableTx_mode (!begins);   // which stops them
+  /* (3.-180, the review 3.-179 6) not on again while Wait and Call waits or listens - armed in the pause or during the
+     transmission it cut, or its sixth call cut: its Enable Tx off stands, and Settings OK's colour goes */
+  if (begins || !wait_call::may_switch_on (m_waitCall)) enableTx_mode (!begins);   // which stops them
+  else waitReplyRepaint ();
   if (left >= 0) m_waitReplyTimer.start (left);
+  m_waitCallOwn = false;
+}
+
+/* CE3TSK 2026-10-21: Wait and Call (waitcall.h, WAIT_AND_CALL_PLAN.md) - what arming asks of the window now; the band is
+   band_changed ()'s, whose frequency the dial has not taken yet */
+wait_call::Arm MainWindow::waitCallNow (QString const& band) const
+{
+  wait_call::Arm a;
+  a.autoseq = m_autoseq;
+  a.hisCall = m_hisCall;
+  a.mode = m_mode;
+  a.band = band.isEmpty () ? m_config.bands ()->find (m_freqNominal) : band;
+  a.contest = m_config.special_op_id () != Configuration::SpecialOperatingActivity::NONE;
+  a.hopping = hopping ();
+  a.superFox = superFoxActive ();
+  return a;
+}
+
+// DXpedition > Wait and Call (Ctrl+W), a right click on Enable Tx: armed for the station in DX Call, or ended
+void MainWindow::on_actionWait_and_Call_toggled (bool checked)
+{
+  if (checked) waitCallArm ();
+  else waitCallEnd ("switched off");
+}
+
+// armed: Enable Tx off - waiting is not transmitting; a transmission under way ends normally
+void MainWindow::waitCallArm ()
+{
+  if (m_waitCall != wait_call::State::Off) return;
+  auto const now = waitCallNow ();
+  if (!wait_call::may_arm (now))
+    {
+      QSignalBlocker const blocker {ui->actionWait_and_Call};
+      ui->actionWait_and_Call->setChecked (false);
+      statusBar ()->showMessage (tr ("Wait and Call needs AutoSeq, a callsign in DX Call and FT8, FT4 or FT2 - not in a contest activity or SuperFox mode, not while band hopping"), 10000);
+      return;
+    }
+  m_waitCallOwn = true;
+  if (m_enableTx) enableTx_mode (false);
+  m_waitCallOwn = false;
+  m_waitCall = wait_call::State::Waiting;
+  m_waitCallAt = now;
+  m_waitCallCalls = 0;
+  if (m_config.write_decoded_debug ()) writeToALLTXT ("Wait and Call: armed for " + m_hisCall);
+  waitCallShow ();
+}
+
+// a decoded line, before the sequencer's pass on it (readFromStdout ()): his answer to us ends it - while it waits, or
+// listens after the sixth call, with Enable Tx switched on first, in the period after his line's, so that the pass
+// answers him as with Enable Tx on (as Wait and Reply does; when that is on it has done so already, and its Enable Tx on
+// has ended this). His 73 or RR73 is no answer (3.-180)
+void MainWindow::waitCallAnswer (QString const& msg, unsigned lineSeconds, bool toUs, bool fromHim, bool late)
+{
+  if (m_waitCall == wait_call::State::Off) return;
+  bool const lineTxFirst = pick_step::tx_first_for_line (lineSeconds, m_TRperiod);
+  wait_call::Line l;
+  l.fromHim = fromHim;
+  l.toUs = toUs;
+  l.manualDecode = m_manualDecode;
+  l.late = late;
+  l.replay = m_diskData && !replayAsLive ();   // (3.-180) a recording's line keys nothing
+  l.msg = msg;
+  l.hound = m_houndMode;
+  l.secondPeriod = lineTxFirst;
+  if (!wait_call::answered (m_waitCall, l)) return;
+  if (wait_call::may_switch_on (m_waitCall))
+    {
+      if (pick_step::period_change (m_txFirst, lineTxFirst, false) && setTxFirst (lineTxFirst, true)) setMinButton ();   // as Wait and Reply
+      txwatchdog (false);
+      m_waitCallOwn = true;
+      enableTx_mode (true);
+      m_waitCallOwn = false;
+    }
+  waitCallEnd ("his answer to us", true);
+}
+
+// a decoded line, after the sequencer's pass on it: while it waits, his line to anyone else calls him - as a double
+// click on the line (the calling message, Tx1 or with Skip Tx1 Tx2, the report from it, our period opposite his), the
+// Tx watchdog started afresh, Enable Tx on; the burst's six calls start
+void MainWindow::waitCallLine (QString const& line, unsigned lineSeconds, bool toUs, bool fromHim, bool late)
+{
+  if (m_waitCall != wait_call::State::Waiting) return;
+  wait_call::Line l;
+  l.fromHim = fromHim;
+  l.toUs = toUs;
+  l.manualDecode = m_manualDecode;
+  l.late = late;
+  l.replay = m_diskData && !replayAsLive ();   // (3.-180) a recording's line keys nothing
+  l.hound = m_houndMode;
+  l.secondPeriod = pick_step::tx_first_for_line (lineSeconds, m_TRperiod);
+  if (!wait_call::fires (m_waitCall, l)) return;
+  m_waitCallOwn = true;
+  m_decodedText2 = true;   // as from Band Activity: the line is put in the Rx Frequency window
+  processMessage (line, line.size (), false, false);
+  m_decodedText2 = false;
+  m_waitCallOwn = false;
+  if (m_waitCall != wait_call::State::Waiting) return;   // the double click changed what it was armed with: ended there
+  /* (3.-180, the review 3.-179 8) checked before Enable Tx goes on: the message it would send calls him - or the double
+     click did not take his line, and what is selected (a CQ, another QSO's report) would go out six times */
+  QString const txMsg {tx_step::tx_message (m_ntx, {ui->tx1->text (), ui->tx2->text (), ui->tx3->text (), ui->tx4->text (),
+                                                    ui->tx5->currentText (), ui->tx6->text (), ui->genMsg->text (),
+                                                    ui->freeTextMsg->currentText ()})};
+  if (!wait_call::to_him (txMsg, m_hisCall))
+    {
+      waitCallEnd ("his line not taken, the message is \"" + txMsg.trimmed () + "\"");
+      return;
+    }
+  txwatchdog (false);
+  m_waitCallOwn = true;
+  if (!m_enableTx) enableTx_mode (true);
+  m_waitCallOwn = false;
+  if (!m_enableTx)
+    {
+      waitCallEnd ("Enable Tx not switched on");
+      return;
+    }
+  m_waitCall = wait_call::State::Calling;
+  m_waitCallCalls = 0;
+  /* a transmission under way at the call is none of its six - but one the double click sent again with the call
+     (processMessage ()'s restart: the same period) is the first (3.-180, the review 3.-179 8) */
+  m_waitCallSkip = m_transmitting && !m_restart;
+  if (m_config.write_decoded_debug ()) writeToALLTXT ("Wait and Call: " + m_waitCallAt.hisCall + " heard, calling: " + line.trimmed ());
+  waitCallShow ();
+}
+
+// a transmission ended (stopTx ()): while calling it is one of the six - after the sixth Enable Tx goes off (W1), and
+// his answer to it is still taken to the end of the period after the next one (3.-180, the review 3.-179 2 B)
+void MainWindow::waitCallCounted ()
+{
+  if (m_waitCall != wait_call::State::Calling) return;
+  if (m_waitCallSkip)
+    {
+      m_waitCallSkip = false;   // under way before the fire: not a call of the burst
+      return;
+    }
+  ++m_waitCallCalls;
+  if (m_config.write_decoded_debug ()) writeToALLTXT (QString {"Wait and Call: call %1 of %2"}.arg (m_waitCallCalls).arg (wait_call::calls));
+  if (!wait_call::burst_over (m_waitCallCalls))
+    {
+      waitCallShow ();
+      return;
+    }
+  m_waitCall = wait_call::State::Listening;
+  m_waitCallOwn = true;
+  enableTx_mode (false);
+  m_waitCallOwn = false;
+  m_waitCallTimer.start (wait_call::listen_ms (m_jtdxtime->currentMSecsSinceEpoch2 () % 86400000, m_TRperiod));
+  if (m_config.write_decoded_debug ()) writeToALLTXT (QString {"Wait and Call: %1 calls made, listening for his answer"}.arg (wait_call::calls));
+  waitCallShow ();
+}
+
+// where what it was armed with can change - AutoSeq, DX Call, the mode, Settings OK, the band: it ends if that no longer
+// holds (waitcall.h)
+void MainWindow::waitCallCheck (QString const& band)
+{
+  if (m_waitCall == wait_call::State::Off) return;
+  auto const now = waitCallNow (band);
+  if (wait_call::holds (m_waitCallAt, now)) return;
+  waitCallEnd (wait_call::broken (m_waitCallAt, now), wait_call::another_station (m_waitCallAt, now));   // calling: Enable Tx off but for another station
+}
+
+/* (TODO.md 3.-180, the review 3.-179 5) the sequencer gives up on him while it calls (process_Auto (), the release: the
+   answer counters, in the public tree his answer to another station) - before its clearDX () and the CQ that would
+   follow with Enable Tx on (3.-178): ended, Enable Tx off, and the transmission under way or keyed halted. The
+   operator's own clears (ClearDX, Tx6, the Tx period button, a call typed over his) end it as the other manual
+   interventions do, a transmission under way ending normally */
+void MainWindow::waitCallGivenUp (QString const& why)
+{
+  if (m_waitCall != wait_call::State::Calling) return;
+  waitCallEnd ("the sequencer gave up on him:" + why);
+  if (m_transmitting || g_iptt == 1) haltTx ("the sequencer gave up on him while Wait and Call called ");
+}
+
+// leaveTx: Enable Tx left as it is - at his answer, with another station in DX Call, and when Enable Tx itself is being
+// switched; otherwise an end while it calls stops the calls (wait_call::stops_calls ())
+void MainWindow::waitCallEnd (QString const& why, bool leaveTx)
+{
+  if (m_waitCall == wait_call::State::Off) return;
+  bool const stop = wait_call::stops_calls (m_waitCall, leaveTx);
+  m_waitCall = wait_call::State::Off;
+  m_waitCallTimer.stop ();
+  {
+    QSignalBlocker const blocker {ui->actionWait_and_Call};
+    ui->actionWait_and_Call->setChecked (false);
+  }
+  if (m_config.write_decoded_debug ()) writeToALLTXT ("Wait and Call: ended - " + why);
+  /* (3.-180, the review 3.-179 3, 6) ended while it called: the calls stop with it ("stopped by any manual
+     intervention") - Enable Tx off, a transmission under way ends normally; and Settings OK's pause does not switch it on
+     again 2 s later (m_waitCall is Off by now: no second end) */
+  if (stop)
+    {
+      TxAgainTimer.stop ();
+      if (m_enableTx) enableTx_mode (false);
+    }
+  waitCallShow ();
+}
+
+// the status bar's line, and Enable Tx painted (orange while it waits)
+void MainWindow::waitCallShow ()
+{
+  if (m_waitCall == wait_call::State::Off) waitcall_label->setVisible (false);
+  else
+    {
+      if (wait_call::may_switch_on (m_waitCall)) waitcall_label->setText (tr ("Wait and Call %1: waiting").arg (m_waitCallAt.hisCall));
+      else waitcall_label->setText (tr ("Wait and Call %1: calling %2/%3").arg (m_waitCallAt.hisCall)
+                                    .arg (qMin (m_waitCallCalls + 1, wait_call::calls)).arg (wait_call::calls));
+      waitcall_label->setToolTip (ui->actionWait_and_Call->toolTip ());
+      waitcall_label->setVisible (true);
+    }
+  waitReplyRepaint ();
 }
 
 void MainWindow::setHoundButtonStyle ()
@@ -4334,6 +4592,7 @@ void MainWindow::hopButtonClicked (bool checked)
   m_hopLastMinute = -1;
   m_hopTimer.start ();
   if(m_config.write_decoded_debug()) writeToALLTXT("Band hopping started");
+  waitCallCheck ();   // CE3TSK 2026-10-21 (3.-180, the review 3.-179 7): and Wait and Call ends
 }
 
 void MainWindow::stopHopping (QString const& why)
@@ -4710,6 +4969,17 @@ void MainWindow::createStatusBar()                           //createStatusBar
   txwatchdog_label->setFrameStyle(QFrame::Panel | QFrame::Sunken);
   statusBar()->addWidget(txwatchdog_label);
   update_watchdog_label ();
+
+  /* CE3TSK 2026-10-21: Wait and Call (waitcall.h) - "Wait and Call K1ABC: waiting" or "calling 3/6" while it is on; its
+     text's width where there is room, cut short where there is not: a minimum of its own, not its text's, so it never
+     widens the window (an Ignored width policy gave it none at all) */
+  waitcall_label = new QLabel {""};
+  waitcall_label->setAlignment(Qt::AlignCenter);
+  waitcall_label->setContentsMargins(1,1,1,1);
+  waitcall_label->setFrameStyle(QFrame::Panel | QFrame::Sunken);
+  waitcall_label->setMinimumWidth(1);
+  waitcall_label->setVisible(false);
+  statusBar()->addWidget(waitcall_label);
 
 
 
@@ -5727,6 +5997,7 @@ void MainWindow::applySuperFoxMode ()
   bool const on = superFoxActive ();
   bool const was = m_superFoxApplied;
   m_superFoxApplied = on;               // first: the Hound switch-off below comes back in here
+  waitCallCheck ();   // CE3TSK 2026-10-21 (3.-180, the review 3.-179 7): SuperFox switched on ends Wait and Call
   ui->HoundButton->setText (on ? tr ("S-Hound") : tr ("Hound"));
   if (on != was) {
     // the operator's RX value parked FIRST: the search reset below already puts the box on the Fox
@@ -7297,6 +7568,7 @@ void MainWindow::process_Auto()
       w.sentRR7373Count = m_config.sentRR7373Count();      w.sentRR7373Counter = m_config.nSentRR7373Counter();
       auto const r = autoseq_step::release (w);
       if (r.rule != autoseq_step::Rule::None) {
+        waitCallGivenUp (r.reason);   // CE3TSK 2026-10-21 (3.-180): Wait and Call calling him stops first - no CQ
         clearDX (r.reason);
         if (r.armCounter) m_counter = m_config.nAnswerCQCounter();
         if (r.callList) m_qsoHistory.calllist(hisCall,rpt.toInt(),time);
@@ -7850,6 +8122,7 @@ void MainWindow::readFromStdout()                             //readFromStdout
       /* CE3TSK 2026-10-21: Wait and Reply (waitreply.h) - before the sequencer's pass on the line below, which then answers
          it as with Enable Tx on (the watchdog reset, the auto filter) */
       waitReplyLine (decodedtextmsg, decodedtext.timeInSeconds (), mycallinmsg, fromHim, late);
+      waitCallAnswer (decodedtextmsg, decodedtext.timeInSeconds (), mycallinmsg, fromHim, late);   // CE3TSK 2026-10-21: Wait and Call
 
       rx_step::DecodeInputs on;
       on.myCallInMsg = mycallinmsg; on.manualDecode = m_manualDecode; on.fromHim = fromHim; on.hisCallEmpty = m_hisCall.isEmpty();
@@ -7873,6 +8146,9 @@ void MainWindow::readFromStdout()                             //readFromStdout
         case rx_step::OnDecode::None:
           break;
         }
+      /* CE3TSK 2026-10-21: Wait and Call (waitcall.h) - after the pass, which met his line with Enable Tx off: no halt for
+         his "reply to other" came of it */
+      waitCallLine (decodedtext.string (), decodedtext.timeInSeconds (), mycallinmsg, fromHim, late);
 
       if((!late || decode_origin::to_udp (m_decodeOrigin, m_config.bands ()->find (m_decodeOrigin.dial), m_config.bands ()->find (m_freqNominal), m_mode))   // CE3TSK 2026-10-20: a line of another band or mode is not sent (decodeorigin.h)
          && (!m_config.prevent_spotting_false () || (m_config.prevent_spotting_false () && !decodedtext.isWrong ()))
@@ -8707,6 +8983,7 @@ void MainWindow::stopTx()
     statusUpdate ();
     m_secTxStopped=m_jtdxtime->currentMSecsSinceEpoch2()/1000;
   }
+  waitCallCounted ();   // CE3TSK 2026-10-21: Wait and Call - one of its calls (waitcall.h)
 }
 
 void MainWindow::stopTx2()
@@ -10038,6 +10315,7 @@ void MainWindow::on_dxCallEntry_textChanged(const QString &t) //dxCall changed
   /* CE3TSK 2026-10-21: Wait and Reply - a hold lasts while the call is the one it was taken for; Enable Tx yellow or not */
   m_waitReplyHeld = wait_reply::held_after_change (m_waitReplyHeld, m_hisCall);
   waitReplyRepaint ();
+  waitCallCheck ();   // CE3TSK 2026-10-21: Wait and Call ends with another station in DX Call
   m_hisCallCompound=(!m_hisCall.isEmpty() && m_hisCall.contains("/")); // && !m_hisCall.endsWith("/P") && !m_hisCall.endsWith("/R"));
   if(m_myCallCompound && m_hisCallCompound) {
     if(m_skipTx1) { m_skipTx1=false; ui->skipTx1->setChecked(false); ui->skipGrid->setChecked(false); on_txb1_clicked(); }
@@ -10149,6 +10427,7 @@ void MainWindow::on_logQSOButton_clicked()
 {
   if (m_hisCall.isEmpty()) return;
   m_waitReplyTimer.stop ();   // CE3TSK 2026-10-21: Wait and Reply's eight periods end here (WSJT-X: stopWRTimer)
+  waitCallEnd ("Log QSO");    // and Wait and Call (waitcall.h)
   auto currenttime = m_jtdxtime->currentDateTimeUtc2();
   auto dateTimeQSOOff = currenttime;
   QString rrep,srep,distance;
@@ -10460,6 +10739,7 @@ void MainWindow::switch_mode (Mode mode)
 	else { qso_count_label->setStyleSheet(QString("QLabel{background: %1}").arg(Radio::convert_dark("#ffffff",m_useDarkStyle))); }
   }
   refreshDecodePreset();   // P13: the preset lamp is greyed outside FT8 - every mode slot comes through here with m_mode set
+  waitCallCheck ();      // CE3TSK 2026-10-21: another mode ends Wait and Call
   waitReplyRepaint ();   // CE3TSK 2026-10-21: Wait and Reply is for the modes with AutoSeq - Enable Tx yellow or not
 }
 
@@ -10805,6 +11085,7 @@ void MainWindow::band_changed (Frequency f)
      dial, the Mode menu (switch_mode ()), the scheduler. One not made by a hop is the operator taking over. (After the
      echo clock, which band_change_wiring.sh keeps first.) */
   if (hopping () && !m_ownChange) stopHopping (tr ("the band or mode was changed"));
+  waitCallCheck (m_config.bands ()->find (f));   // CE3TSK 2026-10-21: another band ends Wait and Call
   if (m_bandEdited) {
     if (!m_mode.startsWith ("WSPR")) { // band hopping preserves auto Tx
       if (f + m_wideGraph->nStartFreq () > m_freqNominal + ui->TxFreqSpinBox->value ()
@@ -11251,6 +11532,7 @@ void MainWindow::on_tuneButton_clicked (bool checked)
   if (lastChecked == checked) return;
   lastChecked = checked;
   if (checked && hopping ()) stopHopping (hopRefusalText (band_hopping::Refusal::Tuning));   // CE3TSK 2026-10-20
+  if (checked) waitCallEnd ("Tune");   // CE3TSK 2026-10-21: Wait and Call (waitcall.h)
   if(!checked) m_addtx = -2;
   QString curBand;
   if (m_mode == "JT9+JT65" && m_modeTx == "JT65") { curBand = ui->bandComboBox->currentText()+m_modeTx; }

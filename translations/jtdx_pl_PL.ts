@@ -6447,6 +6447,31 @@ To błąd samego dekodera. Usuń to, co uniemożliwia jego uruchomienie - brakuj
         <source>Arranges the main window like JTDX_improved's AL layout: Band Activity with the receive buttons and the dial below it, the Rx Frequency window at the top right, the Contest, RX/TX and Preset indicators between Hound and AutoSeq, and the QSO buttons in two rows. Each layout keeps its own window size and split.</source>
         <translation>Rozmieszcza okno główne jak układ AL programu JTDX_improved: Aktywność Pasma z przyciskami odbioru i wskazaniem częstotliwości pod spodem, okno Częstotliwość Rx w prawym górnym rogu, wskaźniki Zawody, RX/TX i Preset między Hound a AutoSeq oraz przyciski QSO w dwóch rzędach. Każdy układ pamięta własny rozmiar okna i podział.</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Wait and Call</source>
+        <translation>Czekaj i wywołaj</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;For the station in DX Call: Enable Tx goes off and turns orange, and the program waits. The first message heard from that station - its CQ, its message to anyone - calls it, as a double click on its line would, up to 6 times; then Enable Tx goes off. A message from it to you goes on as a QSO.&lt;/p&gt;&lt;p&gt;Halt Tx, Stop, Enable Tx, Tune, Log QSO, or another DX call, band or mode end it. A right click on Enable Tx switches it too. Needs AutoSeq, a callsign in DX Call and FT8, FT4 or FT2; not in a contest activity or SuperFox mode.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dla stacji ze Znaku DX: Aktywuj Tx wyłącza się i staje się pomarańczowe, a program czeka. Pierwsza wiadomość usłyszana od tej stacji - jej CQ, jej wiadomość do kogokolwiek - wywołuje ją, tak jak zrobiłoby to podwójne kliknięcie jej wiersza, do 6 razy; potem Aktywuj Tx się wyłącza. Wiadomość od niej do ciebie trwa dalej jako QSO.&lt;/p&gt;&lt;p&gt;Przerwij Tx, Stop, Aktywuj Tx, Strojenie, Zapisz QSO albo inny znak DX, pasmo lub emisja kończą to. Kliknięcie prawym przyciskiem na Aktywuj Tx też to przełącza. Wymaga AutoSeq, znaku w polu Znak DX i FT8, FT4 lub FT2; nie podczas zawodów ani w trybie SuperFox.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Wait and Call needs AutoSeq, a callsign in DX Call and FT8, FT4 or FT2 - not in a contest activity or SuperFox mode, not while band hopping</source>
+        <translation>Czekaj i wywołaj wymaga AutoSeq, znaku w polu Znak DX i FT8, FT4 lub FT2 - nie podczas zawodów ani w trybie SuperFox, nie podczas skakania po pasmach</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Wait and Call %1: waiting</source>
+        <translation>Czekaj i wywołaj %1: czeka</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Wait and Call %1: calling %2/%3</source>
+        <translation>Czekaj i wywołaj %1: wywołuje %2/%3</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

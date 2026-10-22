@@ -19,6 +19,7 @@
    not a decode asked for by hand and not a late line of the band or mode before (decodeorigin.h). In Hound a line of
    the second period, the Hounds', where the Fox never transmits, is not the Fox (WSJT-X's rule for seconds 15 and 45).
    The Fox's two-part message needs nothing here: the decoder prints its halves as two lines (lib/msgparser.f90).
+   (TODO.md 3.-180, the review 3.-179 4) Nor a line of a replay (File > Open): a recording's line would key the rig.
 
    The decisions are here; MainWindow carries them out (waitReplyArmed (), waitReplyLine (), waitReplyHold (),
    waitReplyTimeout (), setEnableTxButtonStyle ()), test_waitreply holds them. */
@@ -63,6 +64,7 @@ namespace wait_reply
     bool fromHim = false;      // its sender is the DX call's base call
     bool manualDecode = false;
     bool late = false;         // of the band or mode before (decode_origin::late ())
+    bool replay = false;       // (3.-180) of a recording played (File > Open), not of the air
     QString msg;               // DecodedText::message ()
     bool hound = false;
     bool secondPeriod = false; // in the second period of the pair, the Hounds' (pick_step::tx_first_for_line ())
@@ -71,7 +73,7 @@ namespace wait_reply
   // the line switches Enable Tx on
   inline bool fires (bool armedNow, Line const& l)
   {
-    return armedNow && l.toUs && l.fromHim && !l.manualDecode && !l.late && !(l.hound && l.secondPeriod)
+    return armedNow && l.toUs && l.fromHim && !l.manualDecode && !l.late && !l.replay && !(l.hound && l.secondPeriod)
         && !ends_qso (l.msg);
   }
 

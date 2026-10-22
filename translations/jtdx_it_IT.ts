@@ -6448,6 +6448,31 @@ Questo è l'errore del decoder stesso. Sistemare ciò che ne impedisce l'avvio -
         <source>Arranges the main window like JTDX_improved's AL layout: Band Activity with the receive buttons and the dial below it, the Rx Frequency window at the top right, the Contest, RX/TX and Preset indicators between Hound and AutoSeq, and the QSO buttons in two rows. Each layout keeps its own window size and split.</source>
         <translation>Dispone la finestra principale come la disposizione AL di JTDX_improved: l'attività in banda con i pulsanti di ricezione e il display della frequenza sotto, la finestra Frequenza Rx in alto a destra, gli indicatori Contest, RX/TX e Preset tra Hound e AutoSeq, e i pulsanti del QSO su due righe. Ogni disposizione mantiene le proprie dimensioni della finestra e la propria divisione.</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Wait and Call</source>
+        <translation>Attendi e chiama</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;For the station in DX Call: Enable Tx goes off and turns orange, and the program waits. The first message heard from that station - its CQ, its message to anyone - calls it, as a double click on its line would, up to 6 times; then Enable Tx goes off. A message from it to you goes on as a QSO.&lt;/p&gt;&lt;p&gt;Halt Tx, Stop, Enable Tx, Tune, Log QSO, or another DX call, band or mode end it. A right click on Enable Tx switches it too. Needs AutoSeq, a callsign in DX Call and FT8, FT4 or FT2; not in a contest activity or SuperFox mode.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Per la stazione in Nom DX: Abilita Tx si spegne e diventa arancione, e il programma attende. Il primo messaggio sentito da quella stazione - il suo CQ, il suo messaggio a chiunque - la chiama, come farebbe un doppio clic sulla sua riga, fino a 6 volte; poi Abilita Tx si spegne. Un suo messaggio per te prosegue come QSO.&lt;/p&gt;&lt;p&gt;Ferma Tx, Ferma, Abilita Tx, Accordo, QSO a Log, oppure un altro nominativo DX, un'altra banda o un altro modo lo terminano. Anche un clic destro su Abilita Tx lo commuta. Servono AutoSeq, un nominativo in Nom DX e FT8, FT4 o FT2; non durante un'attività di contest né in modo SuperFox.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Wait and Call needs AutoSeq, a callsign in DX Call and FT8, FT4 or FT2 - not in a contest activity or SuperFox mode, not while band hopping</source>
+        <translation>Attendi e chiama richiede AutoSeq, un nominativo in Nom DX e FT8, FT4 o FT2 - non durante un'attività di contest né in modo SuperFox, né durante il salto di banda</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Wait and Call %1: waiting</source>
+        <translation>Attendi e chiama %1: in attesa</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Wait and Call %1: calling %2/%3</source>
+        <translation>Attendi e chiama %1: chiamata %2/%3</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>
