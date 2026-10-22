@@ -144,6 +144,7 @@ void CountryDat::init(const QString filename,const QString filename2,bool transl
     _name.insert("St. Paul Island",tr("St. Paul Is."));
     _name.insert("Angola",tr("Angola"));
     _name.insert("Cape Verde",tr("Cape Verde"));
+    _name.insert("Cabo Verde",tr("Cape Verde"));   /* CE3TSK 2026-10-22: cty.dat's name since 2026-10-17 */
     _name.insert("Comoros",tr("Comoros"));
     _name.insert("Fed. Rep. of Germany",tr("Germany"));
     _name.insert("Philippines",tr("Philippines"));
