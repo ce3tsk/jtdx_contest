@@ -2411,6 +2411,11 @@ Formatera:
         <source>nfqso is out of bandwidth</source>
         <translation>nfqso är ur bandbredd</translation>
     </message>
+    <message>
+        <location filename="../decodedtext.cpp"/>
+        <source>ALLCALL7.TXT too long, calls skipped</source>
+        <translation>ALLCALL7.TXT för lång, anropssignaler hoppades över</translation>
+    </message>
 </context>
 <context>
     <name>Designer</name>

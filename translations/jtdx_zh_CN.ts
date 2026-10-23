@@ -2410,6 +2410,11 @@ Format:
         <source>nfqso is out of bandwidth</source>
         <translation>标准通联的带宽不足</translation>
     </message>
+    <message>
+        <location filename="../decodedtext.cpp"/>
+        <source>ALLCALL7.TXT too long, calls skipped</source>
+        <translation>ALLCALL7.TXT 太长，已跳过呼号</translation>
+    </message>
 </context>
 <context>
     <name>Designer</name>

@@ -2400,6 +2400,11 @@ Format:
         <source>nfqso is out of bandwidth</source>
         <translation>nfqso está fora da largura de banda</translation>
     </message>
+    <message>
+        <location filename="../decodedtext.cpp"/>
+        <source>ALLCALL7.TXT too long, calls skipped</source>
+        <translation>ALLCALL7.TXT demasiado longo, indicativos ignorados</translation>
+    </message>
 </context>
 <context>
     <name>Designer</name>

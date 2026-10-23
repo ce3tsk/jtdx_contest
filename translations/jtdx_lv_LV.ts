@@ -2409,6 +2409,11 @@ Formāts:
         <source>nfqso is out of bandwidth</source>
         <translation>nfqso no joslas platuma</translation>
     </message>
+    <message>
+        <location filename="../decodedtext.cpp"/>
+        <source>ALLCALL7.TXT too long, calls skipped</source>
+        <translation>ALLCALL7.TXT ir pārāk garš, izsaukuma signāli izlaisti</translation>
+    </message>
 </context>
 <context>
     <name>Designer</name>

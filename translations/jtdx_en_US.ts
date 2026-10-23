@@ -2391,6 +2391,11 @@ Format:
         <source>nfqso is out of bandwidth</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../decodedtext.cpp"/>
+        <source>ALLCALL7.TXT too long, calls skipped</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Designer</name>

@@ -16,54 +16,7 @@ subroutine cwfilter(swl,first,swlchanged)
 
 !pushing callsigns from ALLCALL to memory
   if(first) then
-! CE3TSK 2026-09-05: status='old' with iostat, not 'unknown' - the latter CREATED an empty
-! ALLCALL7.TXT wherever the share directory had none, and that empty file is what an install
-! without it then reported as broken on every start. A missing file now leaves every count at
-! zero, so the check below reports it once and sets ldbvalid false (searchcalls then accepts
-! every callsign, as JTDX does without the file). The parse itself stays unconditional: the
-! tables feed ft8b's /R acceptance and chkfalse's JT65 filter directly, not only chkflscall.
-    open(24,file=trim(share_dir)//'/ALLCALL7.TXT',status='old',iostat=ios) ! accepting Australian 7-char callsigns
-    if(ios.eq.0) then
-    do i=1,MAXC
-      read(24,1004,end=20) line
-1004  format(a80)
-      if(line(1:4).eq.'ZZZZ') exit
-      if(line(1:2).eq.'//') cycle
-      i1=index(line,',')
-      if(i1.lt.4 .or. i1.gt.8) cycle
-      callsign=line(1:i1-1)
-      if(callsign(1:1).gt.'0' .and. callsign(1:1).lt.'D') then; ncall0c=ncall0c+1; call0c(ncall0c)=callsign(1:7)
-      else if(callsign(1:1).gt.'C' .and. callsign(1:1).lt.'E') then; ncalld=ncalld+1; calld(ncalld)=callsign(1:7)
-      else if(callsign(1:1).gt.'D' .and. callsign(1:1).lt.'G') then; ncallef=ncallef+1; callef(ncallef)=callsign(1:7)
-      else if(callsign(1:1).gt.'F' .and. callsign(1:1).lt.'I') then; ncallgh=ncallgh+1; callgh(ncallgh)=callsign(1:7)
-      else if(callsign(1:1).gt.'H' .and. callsign(1:1).lt.'J') then; ncalli=ncalli+1; calli(ncalli)=callsign(1:7)
-      else if(callsign(1:1).gt.'I' .and. callsign(1:1).lt.'K') then; ncallj=ncallj+1; callj(ncallj)=callsign(1:7)
-      else if(callsign(1:1).gt.'J' .and. callsign(1:1).lt.'L') then; ncallk=ncallk+1; callk(ncallk)=callsign(1:7)
-      else if(callsign(1:1).gt.'K' .and. callsign(1:1).lt.'N') then; ncalllm=ncalllm+1; calllm(ncalllm)=callsign(1:7)
-      else if(callsign(1:1).gt.'M' .and. callsign(1:1).lt.'O') then; ncalln=ncalln+1; calln(ncalln)=callsign(1:7)
-      else if(callsign(1:1).gt.'N' .and. callsign(1:1).lt.'P') then; ncallo=ncallo+1; callo(ncallo)=callsign(1:7)
-      else if(callsign(1:1).gt.'O' .and. callsign(1:1).lt.'R') then; ncallpq=ncallpq+1; callpq(ncallpq)=callsign(1:7)
-      else if(callsign(1:1).gt.'Q' .and. callsign(1:1).lt.'S') then; ncallr=ncallr+1; callr(ncallr)=callsign(1:7)
-      else if(callsign(1:1).gt.'R' .and. callsign(1:1).lt.'U') then; ncallst=ncallst+1; callst(ncallst)=callsign(1:7)
-      else if(callsign(1:1).gt.'T' .and. callsign(1:1).lt.'W') then; ncalluv=ncalluv+1; calluv(ncalluv)=callsign(1:7)
-      else if(callsign(1:1).gt.'V' .and. callsign(1:1).lt.'X') then; ncallw=ncallw+1; callw(ncallw)=callsign(1:7)
-      else if(callsign(1:1).gt.'W' .and. callsign(1:1).le.'Z') then; ncallxz=ncallxz+1; callxz(ncallxz)=callsign(1:7)
-      endif
-    enddo
-20  close(24)
-    endif
-!print *,ncall0c,"call0c"; print *,ncalld,"calld"; print *,ncallef,"callef"; print *,ncallgh,"callgh"
-!print *,ncalli,"calli"; print *,ncallj,"callj"; print *,ncallk,"callk"; print *,ncalllm,"calllm"
-!print *,ncalln,"calln"; print *,ncallo,"callo"; print *,ncallpq,"callpq"; print *,ncallr,"callr"
-!print *,ncallst,"callst"; print *,ncalluv,"calluv"; print *,ncallw,"callw"; print *,ncallxz,"callxz"
-    if(ncall0c.lt.1 .or. ncalld.lt.1 .or. ncallef.lt.1 .or. ncallgh.lt.1 .or. ncalli.lt.1 .or. ncallj.lt.1 .or. &
-       ncallk.lt.1 .or. ncalllm.lt.1 .or. ncalln.lt.1 .or. ncallo.lt.1 .or. ncallpq.lt.1 .or. ncallr.lt.1 .or.  &
-       ncallst.lt.1 .or. ncalluv.lt.1 .or. ncallw.lt.1 .or. ncallxz.lt.1) then
-      ldbvalid=.false.
-      write(*,4) 'ALLCALL7.TXT is too short or broken?','d' ! 50th position for "d"
-4     format(a36,13x,a1)
-      call flush(6)
-    endif
+    call allcall7_read ()   ! CE3TSK 2026-10-22 (TODO.md 3.-185): its own routine since, tested alone (test/fortran)
 
     pivalue=4.d0*atan(1.d0)
     twopi=8.d0*atan(1.d0)
@@ -198,3 +151,103 @@ subroutine cwfilter(swl,first,swlchanged)
   return  
 end subroutine cwfilter
   
+
+! CE3TSK 2026-10-22 (TODO.md 3.-185): ALLCALL7.TXT into jt65_mod9's 16 tables, once, at the first decode - moved here out
+! of cwfilter's first call, with three changes. JTDX_ALLCALL7=0 or 1 says whether the file is used at all (luseallcall7,
+! LALLCALL7DEFAULT the default, off): off, it is not read, the tables are not allocated, ldbvalid is false and
+! searchcalls () finds every call; on, the tables are allocated once the file is open, and ldbvalid says whether every
+! one of them got a call. It reads up to MAXC lines, 500000 (200000 until then, which JP1LRT's 222,041-call file
+! outgrew - the X-Z table stayed empty). And a table is filled only while it has room (it was never checked): a call
+! whose table is full is left out, as is all of a file longer than MAXC lines, and that is said once - "ALLCALL7.TXT
+! too long, calls skipped", the rest used as read.
+subroutine allcall7_read ()
+
+  use jt65_mod9 ! callsign DB to memory
+  use prog_args ! path to files
+  character*16 envval
+  integer lenv,ienvstat,ios,i,i1
+
+  call get_environment_variable('JTDX_ALLCALL7',envval,lenv,ienvstat)   ! read once, single-threaded
+  if(ienvstat.eq.0 .and. lenv.gt.0) then
+    if(envval(1:1).eq.'0') luseallcall7=.false.
+    if(envval(1:1).eq.'1') luseallcall7=.true.
+  endif
+  if(.not.luseallcall7) then
+    ldbvalid=.false.   ! not used: not read, no table allocated; searchcalls () finds every call, as JTDX without the file - and no warning
+    return
+  endif
+! CE3TSK 2026-09-05: status='old' with iostat, not 'unknown' - the latter CREATED an empty
+! ALLCALL7.TXT wherever the share directory had none, and that empty file is what an install
+! without it then reported as broken on every start. A missing file now leaves every count at
+! zero, so the check below reports it once and sets ldbvalid false (searchcalls then accepts
+! every callsign, as JTDX does without the file). The tables feed ft8b's /R acceptance and
+! chkfalse's JT65 filter directly, not only chkflscall - so since 2026-10-22 (3.-185) it is the
+! switch above, not chkflscall's, that decides whether any of them is used.
+  open(24,file=trim(share_dir)//'/ALLCALL7.TXT',status='old',iostat=ios) ! accepting Australian 7-char callsigns
+  if(ios.eq.0) then
+    if(.not.allocated(call0c)) allocate(call0c(115000),calld(111000),callef(90000),callgh(75000),calli(76000),        &
+       callj(90000),callk(240000),calllm(65000),calln(94000),callo(67000),callpq(58000),callr(65000),callst(75000), &
+       calluv(104000),callw(137000),callxz(58000))   ! the sizes the fixed tables had
+    do i=1,MAXC
+      read(24,1004,end=20) line
+1004  format(a80)
+      if(line(1:4).eq.'ZZZZ') exit
+      if(line(1:2).eq.'//') cycle
+      i1=index(line,',')
+      if(i1.lt.4 .or. i1.gt.8) cycle
+      callsign=line(1:i1-1)
+      if(callsign(1:1).gt.'0' .and. callsign(1:1).lt.'D') then; call put(call0c,ncall0c)
+      else if(callsign(1:1).gt.'C' .and. callsign(1:1).lt.'E') then; call put(calld,ncalld)
+      else if(callsign(1:1).gt.'D' .and. callsign(1:1).lt.'G') then; call put(callef,ncallef)
+      else if(callsign(1:1).gt.'F' .and. callsign(1:1).lt.'I') then; call put(callgh,ncallgh)
+      else if(callsign(1:1).gt.'H' .and. callsign(1:1).lt.'J') then; call put(calli,ncalli)
+      else if(callsign(1:1).gt.'I' .and. callsign(1:1).lt.'K') then; call put(callj,ncallj)
+      else if(callsign(1:1).gt.'J' .and. callsign(1:1).lt.'L') then; call put(callk,ncallk)
+      else if(callsign(1:1).gt.'K' .and. callsign(1:1).lt.'N') then; call put(calllm,ncalllm)
+      else if(callsign(1:1).gt.'M' .and. callsign(1:1).lt.'O') then; call put(calln,ncalln)
+      else if(callsign(1:1).gt.'N' .and. callsign(1:1).lt.'P') then; call put(callo,ncallo)
+      else if(callsign(1:1).gt.'O' .and. callsign(1:1).lt.'R') then; call put(callpq,ncallpq)
+      else if(callsign(1:1).gt.'Q' .and. callsign(1:1).lt.'S') then; call put(callr,ncallr)
+      else if(callsign(1:1).gt.'R' .and. callsign(1:1).lt.'U') then; call put(callst,ncallst)
+      else if(callsign(1:1).gt.'T' .and. callsign(1:1).lt.'W') then; call put(calluv,ncalluv)
+      else if(callsign(1:1).gt.'V' .and. callsign(1:1).lt.'X') then; call put(callw,ncallw)
+      else if(callsign(1:1).gt.'W' .and. callsign(1:1).le.'Z') then; call put(callxz,ncallxz)
+      endif
+    enddo
+    if(i.gt.MAXC) then   ! MAXC lines read: whatever follows them but the end mark is left out
+      read(24,1004,end=20) line
+      if(line(1:4).ne.'ZZZZ') lallcall7cut=.true.
+    endif
+20  close(24)
+  endif
+!print *,ncall0c,"call0c"; print *,ncalld,"calld"; print *,ncallef,"callef"; print *,ncallgh,"callgh"
+!print *,ncalli,"calli"; print *,ncallj,"callj"; print *,ncallk,"callk"; print *,ncalllm,"calllm"
+!print *,ncalln,"calln"; print *,ncallo,"callo"; print *,ncallpq,"callpq"; print *,ncallr,"callr"
+!print *,ncallst,"callst"; print *,ncalluv,"calluv"; print *,ncallw,"callw"; print *,ncallxz,"callxz"
+  ldbvalid=.not.(ncall0c.lt.1 .or. ncalld.lt.1 .or. ncallef.lt.1 .or. ncallgh.lt.1 .or. ncalli.lt.1 .or. ncallj.lt.1 .or. &
+     ncallk.lt.1 .or. ncalllm.lt.1 .or. ncalln.lt.1 .or. ncallo.lt.1 .or. ncallpq.lt.1 .or. ncallr.lt.1 .or.  &
+     ncallst.lt.1 .or. ncalluv.lt.1 .or. ncallw.lt.1 .or. ncallxz.lt.1)   ! (3.-185) set here: it starts false
+  if(.not.ldbvalid) then
+    write(*,4) 'ALLCALL7.TXT is too short or broken?','d' ! 50th position for "d"
+4   format(a36,13x,a1)
+    call flush(6)
+  endif
+  if(nallcall7skip.gt.0 .or. lallcall7cut) then   ! (3.-185) once, the tables as read
+    write(*,4) 'ALLCALL7.TXT too long, calls skipped','d'
+    call flush(6)
+  endif
+
+contains
+
+! (3.-185) a call into its table while the table has room; else counted, left out
+  subroutine put(tab,n)
+    character*7, intent(inout) :: tab(:)
+    integer, intent(inout) :: n
+    if(n.lt.size(tab)) then
+      n=n+1; tab(n)=callsign(1:7)
+    else
+      nallcall7skip=nallcall7skip+1
+    endif
+  end subroutine put
+
+end subroutine allcall7_read

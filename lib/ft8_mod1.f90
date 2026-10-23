@@ -49,6 +49,7 @@ module ft8_mod1
   ! away ~45 real decodes an hour for one or two false ones). JTDX_ALLCALL7_FILTER=1 turns it
   ! on for tests of the rejection paths it gates - the FT4 /R rejection has no other way to
   ! fire (MERGE_ISSUES 5.2). Set once in decoder.f90's hook block, before any thread starts.
+  ! It needs JTDX_ALLCALL7=1 as well (the file is not read by default since 2026-10-22).
   logical :: lallcall7=.false.
   logical one(0:511,0:8),lqsomsgdcd,first_osd
   logical(1) lapmyc,lagcc,lagccbail,lhound,lenabledxcsearch,lwidedxcsearch,lmultinst,lskiptx1,ltxing

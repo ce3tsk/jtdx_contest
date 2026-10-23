@@ -2411,6 +2411,11 @@ Format:
         <source>nfqso is out of bandwidth</source>
         <translation>nfqso вне полосы пропускания</translation>
     </message>
+    <message>
+        <location filename="../decodedtext.cpp"/>
+        <source>ALLCALL7.TXT too long, calls skipped</source>
+        <translation>ALLCALL7.TXT слишком длинный, позывные пропущены</translation>
+    </message>
 </context>
 <context>
     <name>Designer</name>

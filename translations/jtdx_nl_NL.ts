@@ -2410,6 +2410,11 @@ Indeling:
         <source>nfqso is out of bandwidth</source>
         <translation>nfqso valt buiten de bandbreedte</translation>
     </message>
+    <message>
+        <location filename="../decodedtext.cpp"/>
+        <source>ALLCALL7.TXT too long, calls skipped</source>
+        <translation>ALLCALL7.TXT te lang, roepnamen overgeslagen</translation>
+    </message>
 </context>
 <context>
     <name>Designer</name>

@@ -2410,6 +2410,11 @@ Format:
         <source>nfqso is out of bandwidth</source>
         <translation>nfqso が帯域外です</translation>
     </message>
+    <message>
+        <location filename="../decodedtext.cpp"/>
+        <source>ALLCALL7.TXT too long, calls skipped</source>
+        <translation>ALLCALL7.TXTが長すぎるため、コールサインをスキップしました</translation>
+    </message>
 </context>
 <context>
     <name>Designer</name>

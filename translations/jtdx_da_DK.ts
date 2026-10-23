@@ -2413,6 +2413,11 @@ Format:
         <source>nfqso is out of bandwidth</source>
         <translation>nfqso er ude af båndbredde</translation>
     </message>
+    <message>
+        <location filename="../decodedtext.cpp"/>
+        <source>ALLCALL7.TXT too long, calls skipped</source>
+        <translation>ALLCALL7.TXT for lang, kaldesignaler sprunget over</translation>
+    </message>
 </context>
 <context>
     <name>Designer</name>

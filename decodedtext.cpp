@@ -32,6 +32,7 @@ DecodedText::DecodedText (QString const& the_string, QObject *parent)
       debug_translation_.clear();
       debug_translation_.insert("partial loss of data",tr("partial loss of data"));
       debug_translation_.insert("ALLCALL7.TXT is too short or broken?",tr("ALLCALL7.TXT is too short or broken?"));
+      debug_translation_.insert("ALLCALL7.TXT too long, calls skipped",tr("ALLCALL7.TXT too long, calls skipped"));   // CE3TSK 2026-10-22 (TODO.md 3.-185)
       debug_translation_.insert("nQSOProgress",tr("nQSOProgress"));
       debug_translation_.insert("input signal low rms",tr("input signal low rms"));
       debug_translation_.insert("audio gap detected",tr("audio gap detected"));

@@ -2410,6 +2410,11 @@ Vorming:
         <source>nfqso is out of bandwidth</source>
         <translation>qso sagedus väljaspool riba</translation>
     </message>
+    <message>
+        <location filename="../decodedtext.cpp"/>
+        <source>ALLCALL7.TXT too long, calls skipped</source>
+        <translation>ALLCALL7.TXT on liiga pikk, kutsungid jäeti vahele</translation>
+    </message>
 </context>
 <context>
     <name>Designer</name>

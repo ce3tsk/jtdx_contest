@@ -344,6 +344,8 @@ subroutine multimode_decoder(params)
   endif
 ! CE3TSK: JTDX_ALLCALL7_FILTER=1 - the ALLCALL7.TXT lookup, which chkflscall.f90 keeps off in
 ! the source. Read here, single-threaded, before any slice runs: the flag it sets is shared.
+! It needs the file read too, JTDX_ALLCALL7=1 (off by default since 2026-10-22, TODO.md 3.-185):
+! without it the lookup finds every call and the hook changes nothing.
   lallcall7=.false.
   call get_environment_variable('JTDX_ALLCALL7_FILTER',dumpfile,ldump,idumpstat)
   if(idumpstat.eq.0 .and. ldump.gt.0) lallcall7=(dumpfile(1:1).eq.'1')

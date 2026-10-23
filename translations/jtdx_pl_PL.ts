@@ -2410,6 +2410,11 @@ Format:
         <source>nfqso is out of bandwidth</source>
         <translation>nfqso jest poza pasmem</translation>
     </message>
+    <message>
+        <location filename="../decodedtext.cpp"/>
+        <source>ALLCALL7.TXT too long, calls skipped</source>
+        <translation>Za długi plik ALLCALL7.TXT, pominięto znaki wywoławcze</translation>
+    </message>
 </context>
 <context>
     <name>Designer</name>
