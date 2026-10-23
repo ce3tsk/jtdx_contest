@@ -130,6 +130,7 @@ public:
   bool strictdirCQ() const;
   bool halttxreplyother() const;
   bool wait_and_reply () const;   // CE3TSK 2026-10-21: Wait and Reply (waitreply.h)
+  bool check_SWR () const;   // CE3TSK 2026-10-23: Halt Tx when SWR > 2.5 (swrguard.h)
   bool hidefree() const;
   bool hide2ndHash() const;
   bool hideOwnContinent() const;

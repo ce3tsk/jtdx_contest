@@ -6597,6 +6597,16 @@ Esse é o erro do próprio descodificador. Corrija o que impede o arranque - uma
         <source>Enable Tx stays off for %1 s after a right click on Tune, while the radio's antenna tuner works</source>
         <translation>Ligar Tx fica desligado durante %1 s após um clique direito em Tune, enquanto o acoplador de antena do rádio trabalha</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>SWR %1 - above 2.5</source>
+        <translation>SWR %1 - acima de 2.5</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>The transmission was stopped, as by Halt Tx. Check the antenna.</source>
+        <translation>A emissão foi parada, como por Parar Tx. Verifique a antena.</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>
@@ -10396,6 +10406,16 @@ alterações na placa de som</translation>
         <location filename="../Configuration.ui"/>
         <source>Wait and Reply: resume the QSO when DX Call calls me</source>
         <translation>Esperar e responder: retomar o QSO quando a Estação DX me chamar</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>With Output power on, the transmission - a message or Tune - is halted as by Halt Tx, and a warning shown, as soon as the rig reports an SWR above 2.5: a wrong antenna, a fault. The radio's own antenna tuner cycle is not read.</source>
+        <translation>Com Potência de saída ligada, a emissão - uma mensagem ou Tune - é parada como por Parar Tx, e é mostrado um aviso, assim que o rádio indica um SWR acima de 2.5: uma antena errada, uma avaria. O ciclo do próprio acoplador de antena do rádio não é lido.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Halt Tx when SWR &gt; 2.5</source>
+        <translation>Parar Tx quando SWR &gt; 2.5</translation>
     </message>
 </context>
 <context>

@@ -6606,6 +6606,16 @@ Dekoders: %3
         <source>Enable Tx stays off for %1 s after a right click on Tune, while the radio's antenna tuner works</source>
         <translation>Atļaut raidīt paliek izslēgts %1 s pēc labā klikšķa uz Piestrāde, kamēr radio antenas skaņotājs strādā</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>SWR %1 - above 2.5</source>
+        <translation>SWR %1 - virs 2.5</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>The transmission was stopped, as by Halt Tx. Check the antenna.</source>
+        <translation>Raidīšana tika apturēta kā ar Pārtraukt Tx. Pārbaudiet antenu.</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>
@@ -10406,6 +10416,16 @@ izmaiņas</translation>
         <location filename="../Configuration.ui"/>
         <source>Wait and Reply: resume the QSO when DX Call calls me</source>
         <translation>Gaidīt un atbildēt: turpināt QSO, kad DX izsauk. stacija mani izsauc</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>With Output power on, the transmission - a message or Tune - is halted as by Halt Tx, and a warning shown, as soon as the rig reports an SWR above 2.5: a wrong antenna, a fault. The radio's own antenna tuner cycle is not read.</source>
+        <translation>Ar ieslēgtu Izejas jauda raidīšana - ziņojums vai Piestrāde - tiek apturēta kā ar Pārtraukt Tx un tiek parādīts brīdinājums, tiklīdz radio ziņo SWR virs 2.5: nepareiza antena, bojājums. Radio paša antenas skaņotāja cikls netiek nolasīts.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Halt Tx when SWR &gt; 2.5</source>
+        <translation>Pārtraukt Tx, ja SWR &gt; 2.5</translation>
     </message>
 </context>
 <context>

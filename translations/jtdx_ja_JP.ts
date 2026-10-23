@@ -6605,6 +6605,16 @@ That is the decoder's own error. Put right whatever stops it starting - a missin
         <source>Enable Tx stays off for %1 s after a right click on Tune, while the radio's antenna tuner works</source>
         <translation>チューンを右クリックした後 %1 秒間、無線機のアンテナチューナーが動作している間は送信開始はオフのままです</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>SWR %1 - above 2.5</source>
+        <translation>SWR %1 - 2.5 を超えています</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>The transmission was stopped, as by Halt Tx. Check the antenna.</source>
+        <translation>送信停止 と同様に送信を止めました。アンテナを確認してください。</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>
@@ -10384,6 +10394,16 @@ soundcard changes</source>
         <location filename="../Configuration.ui"/>
         <source>Wait and Reply: resume the QSO when DX Call calls me</source>
         <translation>待機して応答：DX コールの局から呼ばれたら QSO を再開</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>With Output power on, the transmission - a message or Tune - is halted as by Halt Tx, and a warning shown, as soon as the rig reports an SWR above 2.5: a wrong antenna, a fault. The radio's own antenna tuner cycle is not read.</source>
+        <translation>送信出力 がオンのとき、無線機が 2.5 を超える SWR を報告すると、送信（メッセージまたはチューン）を 送信停止 と同様に止めて警告を表示します：アンテナの選択違い、故障など。無線機自身のアンテナチューナーの動作中は読み取りません。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Halt Tx when SWR &gt; 2.5</source>
+        <translation>SWR &gt; 2.5 で送信停止</translation>
     </message>
 </context>
 <context>

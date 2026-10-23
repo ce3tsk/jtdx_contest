@@ -6616,6 +6616,16 @@ Aquest és l'error del descodificador mateix. Corregiu allò que n'impedeix l'in
         <source>Enable Tx stays off for %1 s after a right click on Tune, while the radio's antenna tuner works</source>
         <translation>Activar TX es queda apagat %1 s després d'un clic dret a Sintonitzar, mentre l'acoblador d'antena de la ràdio treballa</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>SWR %1 - above 2.5</source>
+        <translation>SWR %1 - per sobre de 2.5</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>The transmission was stopped, as by Halt Tx. Check the antenna.</source>
+        <translation>La transmissió s'ha aturat, com amb Aturar TX. Comprova l'antena.</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>
@@ -10421,6 +10431,16 @@ canvi en la targeta de so</translation>
         <location filename="../Configuration.ui"/>
         <source>Wait and Reply: resume the QSO when DX Call calls me</source>
         <translation>Esperar i respondre: reprendre el QSO quan l'Indicatiu DX em crida</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>With Output power on, the transmission - a message or Tune - is halted as by Halt Tx, and a warning shown, as soon as the rig reports an SWR above 2.5: a wrong antenna, a fault. The radio's own antenna tuner cycle is not read.</source>
+        <translation>Amb Potència de sortida activada, la transmissió - un missatge o Sintonitzar - s'atura com amb Aturar TX, i es mostra un avís, tan bon punt la ràdio informa d'un SWR per sobre de 2.5: una antena equivocada, una avaria. El cicle del propi acoblador d'antena de la ràdio no es llegeix.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Halt Tx when SWR &gt; 2.5</source>
+        <translation>Aturar TX quan SWR &gt; 2.5</translation>
     </message>
 </context>
 <context>

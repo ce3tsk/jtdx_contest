@@ -6607,6 +6607,16 @@ Das ist der Fehler des Decoders selbst. Beheben Sie, was seinen Start verhindert
         <source>Enable Tx stays off for %1 s after a right click on Tune, while the radio's antenna tuner works</source>
         <translation>TX freigeben bleibt %1 s nach einem Rechtsklick auf Tune aus, während der Antennentuner des Funkgeräts arbeitet</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>SWR %1 - above 2.5</source>
+        <translation>SWR %1 - über 2.5</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>The transmission was stopped, as by Halt Tx. Check the antenna.</source>
+        <translation>Die Aussendung wurde gestoppt, wie mit TX anhalten. Prüfen Sie die Antenne.</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>
@@ -10408,6 +10418,16 @@ Zurücksetzen der Funkgeräteschnittstelle und Übernahme etwaiger
         <location filename="../Configuration.ui"/>
         <source>Wait and Reply: resume the QSO when DX Call calls me</source>
         <translation>Warten und Antworten: QSO fortsetzen, wenn das DX-Rufzeichen mich ruft</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>With Output power on, the transmission - a message or Tune - is halted as by Halt Tx, and a warning shown, as soon as the rig reports an SWR above 2.5: a wrong antenna, a fault. The radio's own antenna tuner cycle is not read.</source>
+        <translation>Mit Ausgangsleistung eingeschaltet wird die Aussendung - eine Nachricht oder Tune - wie mit TX anhalten gestoppt und eine Warnung gezeigt, sobald das Funkgerät ein SWR über 2.5 meldet: eine falsche Antenne, ein Fehler. Der Abstimmzyklus des eigenen Antennentuners des Funkgeräts wird nicht gelesen.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Halt Tx when SWR &gt; 2.5</source>
+        <translation>TX anhalten bei SWR &gt; 2.5</translation>
     </message>
 </context>
 <context>

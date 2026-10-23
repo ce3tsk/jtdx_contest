@@ -617,6 +617,7 @@ private:
   Q_SLOT void on_write_decoded_check_box_clicked(bool checked);
   Q_SLOT void on_write_decoded_debug_check_box_clicked(bool checked);
   Q_SLOT void on_phantomDecodeGridMark_check_box_toggled (bool checked);    /* CE3TSK */
+  Q_SLOT void on_output_power_check_box_toggled (bool checked);   /* CE3TSK 2026-10-23: the SWR halt with it */
   Q_SLOT void on_phantomDecodeRoverMark_check_box_toggled (bool checked);   /* CE3TSK */
   Q_SLOT void on_txtColor_check_box_clicked(bool checked);
   Q_SLOT void on_workedStriked_check_box_clicked(bool checked);
@@ -881,6 +882,7 @@ private:
   bool strictdirCQ_;
   bool halttxreplyother_;
   bool waitAndReply_;            // CE3TSK 2026-10-21: Wait and Reply (waitreply.h)
+  bool checkSWR_;                // CE3TSK 2026-10-23: Halt Tx when SWR > 2.5 (swrguard.h)
   bool hidefree_;
   bool hide2ndHash_;
   bool hideOwnContinent_;
@@ -1376,6 +1378,7 @@ bool Configuration::sentRR7373Count () const {return m_->sentRR7373Count_;}
 bool Configuration::strictdirCQ () const {return m_->strictdirCQ_;}
 bool Configuration::halttxreplyother () const {return m_->halttxreplyother_;}
 bool Configuration::wait_and_reply () const {return m_->waitAndReply_;}
+bool Configuration::check_SWR () const {return m_->checkSWR_;}
 bool Configuration::hidefree () const {return m_->hidefree_;}
 bool Configuration::hide2ndHash () const {return m_->hide2ndHash_;}
 bool Configuration::hideOwnContinent () const {return m_->hideOwnContinent_;}
@@ -2634,6 +2637,8 @@ Radio::convert_dark("#fafbfe",useDarkStyle_),Radio::convert_dark("#dcdef1",useDa
   ui_->enableCallsignFilter_check_box->setChecked (enableCallsignFilter_);
   ui_->S_meter_check_box->setChecked (do_snr_);
   ui_->output_power_check_box->setChecked (do_pwr_);
+  ui_->check_SWR_check_box->setChecked (checkSWR_);   // CE3TSK 2026-10-23
+  ui_->check_SWR_check_box->setEnabled (do_pwr_);     // toggled () does not fire for a box that already holds the value
   ui_->rig_power_check_box->setChecked (rig_power_);
   ui_->rig_power_off_check_box->setChecked (rig_power_off_);
   ui_->rig_ptt_share_check_box->setChecked (rig_ptt_share_);
@@ -2914,6 +2919,7 @@ void Configuration::impl::read_settings ()
   strictdirCQ_ = settings_->value ("StrictDirectionalCQ", false).toBool ();
   halttxreplyother_ = settings_->value ("SeqHaltTxReplyOther", false).toBool ();
   waitAndReply_ = settings_->value (contest_profile::own_key ("WaitAndReply"), false).toBool ();   // CE3TSK 2026-10-21: ours, off
+  checkSWR_ = settings_->value (contest_profile::own_key ("CheckSWR"), false).toBool ();   // CE3TSK 2026-10-23: ours (WSJT-X's name), off
 
   if(settings_->value ("HideFreeMsgs").toString()=="false" || settings_->value ("HideFreeMsgs").toString()=="true")
     hidefree_ = settings_->value ("HideFreeMsgs").toBool ();
@@ -3506,6 +3512,7 @@ void Configuration::impl::write_settings ()
   settings_->setValue ("StrictDirectionalCQ", strictdirCQ_);
   settings_->setValue ("SeqHaltTxReplyOther", halttxreplyother_);
   settings_->setValue (contest_profile::own_key ("WaitAndReply"), waitAndReply_);   // CE3TSK 2026-10-21
+  settings_->setValue (contest_profile::own_key ("CheckSWR"), checkSWR_);   // CE3TSK 2026-10-23
   settings_->setValue ("HideFreeMsgs", hidefree_);
   settings_->setValue ("HideMsgsWith2ndCallAsHash", hide2ndHash_);
   settings_->setValue ("HideMsgsWithOwnContinent", hideOwnContinent_);
@@ -4188,6 +4195,7 @@ void Configuration::impl::accept ()
   strictdirCQ_ = ui_->strictDirCQ_checkBox->isChecked ();
   halttxreplyother_ = ui_->haltTxReplyOther_checkBox->isChecked ();
   waitAndReply_ = ui_->waitAndReply_check_box->isChecked ();   // CE3TSK 2026-10-21
+  checkSWR_ = ui_->check_SWR_check_box->isChecked ();   // CE3TSK 2026-10-23
   hidefree_ = ui_->HideFree_check_box->isChecked ();
   hide2ndHash_ = ui_->Hide2ndHash_check_box->isChecked ();
   hideOwnContinent_ = ui_->HideOwnContinent_check_box->isChecked ();
@@ -4621,6 +4629,13 @@ void Configuration::impl::on_phantomDecodeGridMark_check_box_toggled (bool check
 void Configuration::impl::on_phantomDecodeRoverMark_check_box_toggled (bool checked)
 {
   ui_->phantomDecodeRoverNoAnswer_check_box->setEnabled (checked);
+}
+
+/* CE3TSK 2026-10-23 (swrguard.h): the SWR is read only with Output power - the halt is greyed without it; its own value is
+   kept, and is back when Output power is (Output power unticked by the program for a rig without the reading greys it too) */
+void Configuration::impl::on_output_power_check_box_toggled (bool checked)
+{
+  ui_->check_SWR_check_box->setEnabled (checked);
 }
 
 void Configuration::impl::on_txtColor_check_box_clicked(bool checked)

@@ -6609,6 +6609,16 @@ Det är avkodarens eget fel. Åtgärda det som hindrar den från att starta - et
         <source>Enable Tx stays off for %1 s after a right click on Tune, while the radio's antenna tuner works</source>
         <translation>Aktivera Tx förblir av i %1 s efter ett högerklick på Justera, medan radions antennavstämmare arbetar</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>SWR %1 - above 2.5</source>
+        <translation>SWR %1 - över 2.5</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>The transmission was stopped, as by Halt Tx. Check the antenna.</source>
+        <translation>Sändningen stoppades, som med Stop Tx. Kontrollera antennen.</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>
@@ -10411,6 +10421,16 @@ ljudkort ändras</translation>
         <location filename="../Configuration.ui"/>
         <source>Wait and Reply: resume the QSO when DX Call calls me</source>
         <translation>Vänta och svara: återuppta QSO:t när DX Anrop anropar mig</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>With Output power on, the transmission - a message or Tune - is halted as by Halt Tx, and a warning shown, as soon as the rig reports an SWR above 2.5: a wrong antenna, a fault. The radio's own antenna tuner cycle is not read.</source>
+        <translation>Med Uteffekt på stoppas sändningen - ett meddelande eller Justera - som med Stop Tx, och en varning visas, så snart radion rapporterar ett SWR över 2.5: fel antenn, ett fel. Cykeln i radions egen antennavstämmare läses inte.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Halt Tx when SWR &gt; 2.5</source>
+        <translation>Stop Tx vid SWR &gt; 2.5</translation>
     </message>
 </context>
 <context>

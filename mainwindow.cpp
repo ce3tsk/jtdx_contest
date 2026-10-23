@@ -95,6 +95,7 @@
 #include "UpdateChecker.hpp"   // CE3TSK: Help > Check for updates, and the update icon
 #include "savepurge.h"   // CE3TSK 2026-10-23: Save > Remove saved files after 30 days
 #include "atutune.h"   // CE3TSK 2026-10-23: a right click on Tune, the radio's own antenna tuner
+#include "swrguard.h"   // CE3TSK 2026-10-23: Halt Tx when SWR > 2.5
 #include <QPainter>
 #include <QPainterPath>
 #include <QHBoxLayout>
@@ -2922,7 +2923,7 @@ void MainWindow::on_actionSettings_triggered()               //Setup Dialog
       }
       if(!m_config.do_snr()) ui->S_meter_button->setText(tr("S meter"));
       ui->S_meter_button->setEnabled(m_config.do_snr());
-      if(!m_config.do_pwr()) {ui->PWRlabel->setText(tr("Pwr")); ui->SWRlabel->setText("");}
+      if(!m_config.do_pwr()) {ui->PWRlabel->setText(tr("Pwr")); ui->SWRlabel->setText(""); ui->SWRlabel->setStyleSheet (""); m_swrTripped = false;}
       on_spotLineEdit_textChanged(ui->spotLineEdit->text());
       ui->bandComboBox->setCurrentText (m_config.bands ()->find (m_freqNominal));
   }
@@ -5913,6 +5914,46 @@ void MainWindow::atuTune ()
   m_config.transceiver_tune (false);
   m_atuTuneClock.start ();
   statusBar ()->showMessage (tr ("The radio was asked to start its antenna tuner"), 10000);
+}
+
+/* CE3TSK 2026-10-23 (TODO.md 3.-196, swrguard.h): the SWR label - the reading, yellow above 1.5 and red above 2.0
+   (WSJT-X's), the text the program's dark-style table gives each; no reading clears it, but the one that halted stays,
+   red, until the next transmission (handle_transceiver_update () arms the halt again at the PTT's rise) */
+void MainWindow::swrLabel (unsigned swr)
+{
+  if (!swr && m_swrTripped) return;
+  if (!swr)
+    {
+      ui->SWRlabel->setText ("");
+      ui->SWRlabel->setStyleSheet ("");
+      return;
+    }
+  ui->SWRlabel->setText (QString {"swr%1"}.arg (swr / 100., 0, 'f', swr < 1000 ? 2 : 1));
+  auto const shade = swr_guard::shade (swr);
+  if (swr_guard::Shade::Plain == shade) ui->SWRlabel->setStyleSheet ("");
+  else ui->SWRlabel->setStyleSheet (QString {"QLabel{color: %1; background-color: %2}"}
+                                    .arg (Radio::convert_dark ("#000000", m_useDarkStyle),
+                                          Radio::convert_dark (swr_guard::Shade::Red == shade ? "#ff0000" : "#ffff00", m_useDarkStyle)));
+}
+
+/* CE3TSK 2026-10-23 (TODO.md 3.-196, swrguard.h): an SWR above 2.5 while the program transmits - Halt Tx as if pressed:
+   the transmission or Tune, Enable Tx off, the Wait features held (they would key again into the bad antenna), hopping
+   stopped - and a warning, after the update that brought the reading (a box's own event loop must not run inside it),
+   one at a time */
+void MainWindow::swrHalt (unsigned swr)
+{
+  m_swrTripped = true;
+  QString const value {QString::number (swr / 100., 'f', 2)};
+  m_haltTxWritten = true;   // the debug record names the reason, as haltTx () does - not "Halt Tx button clicked"
+  writeHaltTxEvent ("SWR " + value + " above 2.5 ");
+  ui->stopTxButton->click ();
+  if (m_swrBoxOpen) return;
+  m_swrBoxOpen = true;
+  QTimer::singleShot (0, this, [this, value] {
+      JTDXMessageBox::warning_message (this, "", tr ("SWR %1 - above 2.5").arg (value),
+                                       tr ("The transmission was stopped, as by Halt Tx. Check the antenna."));
+      m_swrBoxOpen = false;
+    });
 }
 
 void MainWindow::on_actionNone_triggered() { m_saveWav=0; ui->actionNone->setChecked(true); }
@@ -12109,6 +12150,7 @@ void MainWindow::handle_transceiver_update (Transceiver::TransceiverState const&
   if (s.ptt () && !m_rigState.ptt ()) // safe to start audio
                                       // (caveat - DX Lab Suite Commander)
     {
+      m_swrTripped = false;   // CE3TSK 2026-10-23 (swrguard.h): a new transmission, the SWR halt armed again
  // waiting to Tx and still needed
  //Start-of-transmission sequencer delay
       if (m_tx_when_ready && g_iptt) {
@@ -12129,10 +12171,9 @@ void MainWindow::handle_transceiver_update (Transceiver::TransceiverState const&
       ui->PWRlabel->setText(QString {tr("Pwr<br>%1 W")}.arg (round(s.power()/1000.)));
     }
     if (m_rigState.swr() != s.swr()) {
-      if (s.swr() > 0) {
-        if (s.swr()<1000) ui->SWRlabel->setText(QString {"swr%1"}.arg (s.swr()/100.,0,'f',2)); else ui->SWRlabel->setText(QString {"swr%1"}.arg (s.swr()/100.,0,'f',1));}
-      else
-        ui->SWRlabel->setText("");
+      /* CE3TSK 2026-10-23 (TODO.md 3.-196, swrguard.h): Halt Tx when SWR > 2.5, and the label coloured by the reading */
+      if (swr_guard::halts (m_config.check_SWR (), s.swr (), m_transmitting || m_tune || g_iptt == 1, m_swrTripped)) swrHalt (s.swr ());
+      swrLabel (s.swr ());
     }
   }    
   m_rigState = s;

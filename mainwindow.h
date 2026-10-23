@@ -1257,6 +1257,10 @@ private:
   bool m_hideClearPhantoms {false};    // CE3TSK 2026-10-23: Misc > Hide clear phantom messages, as the windows hold it
   void removeOldSavedFiles ();   // CE3TSK 2026-10-23: Save > Remove saved files after 30 days (savepurge.h)
   void atuTune ();   // CE3TSK 2026-10-23: a right click on Tune - the radio's own antenna tuner (atutune.h)
+  void swrLabel (unsigned swr);   // CE3TSK 2026-10-23: Halt Tx when SWR > 2.5 (swrguard.h) - the label and its colour
+  void swrHalt (unsigned swr);    //   - the halt and its warning
+  bool m_swrTripped {false};      //   halted for this transmission: its reading stays on the label until the next one
+  bool m_swrBoxOpen {false};      //   one warning at a time
   QElapsedTimer m_atuTuneClock;   // (3.-195) since the last right click that asked: Enable Tx is held 6 s after it
   void enableTxTip (QString const& waitCallState = {});   // (2026-10-23) Enable Tx's tooltip: the right click, the colours
   QString m_enableTxTip;               // its first line, the .ui's (translated)

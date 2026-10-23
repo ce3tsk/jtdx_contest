@@ -6607,6 +6607,16 @@ Ez magának a dekódernek a hibája. Hárítsa el, ami az indulását akadályoz
         <source>Enable Tx stays off for %1 s after a right click on Tune, while the radio's antenna tuner works</source>
         <translation>Az Adás %1 mp-ig kikapcsolva marad a Hangolás gomb jobb kattintása után, amíg a rádió antennahangolója dolgozik</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>SWR %1 - above 2.5</source>
+        <translation>SWR %1 - 2.5 felett</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>The transmission was stopped, as by Halt Tx. Check the antenna.</source>
+        <translation>Az adás leállt, mint a Tx Állj gombbal. Ellenőrizze az antennát.</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>
@@ -10404,6 +10414,16 @@ hangkártya módosítási tevékenységet</translation>
         <location filename="../Configuration.ui"/>
         <source>Wait and Reply: resume the QSO when DX Call calls me</source>
         <translation>Várj és válaszolj: a QSO folytatása, ha a DX hívójel engem hív</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>With Output power on, the transmission - a message or Tune - is halted as by Halt Tx, and a warning shown, as soon as the rig reports an SWR above 2.5: a wrong antenna, a fault. The radio's own antenna tuner cycle is not read.</source>
+        <translation>Bekapcsolt Kimenő teljesítmény mellett az adás - üzenet vagy Hangolás - a Tx Állj gombhoz hasonlóan leáll, és figyelmeztetés jelenik meg, amint a rádió 2.5 feletti SWR-t jelez: rossz antenna, hiba. A rádió saját antennahangolójának ciklusa nem kerül leolvasásra.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Halt Tx when SWR &gt; 2.5</source>
+        <translation>Tx Állj, ha SWR &gt; 2.5</translation>
     </message>
 </context>
 <context>

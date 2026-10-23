@@ -6607,6 +6607,16 @@ That is the decoder's own error. Put right whatever stops it starting - a missin
         <source>Enable Tx stays off for %1 s after a right click on Tune, while the radio's antenna tuner works</source>
         <translation>튠을 오른쪽 클릭한 뒤 %1초 동안, 무선기의 안테나 튜너가 동작하는 사이 송신 허용은 꺼진 채로 있습니다</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>SWR %1 - above 2.5</source>
+        <translation>SWR %1 - 2.5 초과</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>The transmission was stopped, as by Halt Tx. Check the antenna.</source>
+        <translation>송신 중지처럼 송신을 멈췄습니다. 안테나를 확인하십시오.</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>
@@ -10405,6 +10415,16 @@ soundcard changes</source>
         <location filename="../Configuration.ui"/>
         <source>Wait and Reply: resume the QSO when DX Call calls me</source>
         <translation>대기 후 응답: DX 호출부호 국이 나를 부르면 QSO 재개</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>With Output power on, the transmission - a message or Tune - is halted as by Halt Tx, and a warning shown, as soon as the rig reports an SWR above 2.5: a wrong antenna, a fault. The radio's own antenna tuner cycle is not read.</source>
+        <translation>출력이 켜져 있으면 무선기가 2.5를 넘는 SWR을 알리는 즉시 송신(메시지 또는 튠)을 송신 중지처럼 멈추고 경고를 표시합니다: 잘못된 안테나, 고장 등. 무선기 자체 안테나 튜너의 동작 중에는 읽지 않습니다.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Halt Tx when SWR &gt; 2.5</source>
+        <translation>SWR &gt; 2.5이면 송신 중지</translation>
     </message>
 </context>
 <context>

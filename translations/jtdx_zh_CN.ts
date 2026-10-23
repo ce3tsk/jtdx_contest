@@ -6606,6 +6606,16 @@ That is the decoder's own error. Put right whatever stops it starting - a missin
         <source>Enable Tx stays off for %1 s after a right click on Tune, while the radio's antenna tuner works</source>
         <translation>右键单击调谐后的 %1 秒内，电台天调工作期间，启用发射保持关闭</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>SWR %1 - above 2.5</source>
+        <translation>SWR %1 - 高于 2.5</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>The transmission was stopped, as by Halt Tx. Check the antenna.</source>
+        <translation>已像 终止发射 一样停止发射。请检查天线。</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>
@@ -10407,6 +10417,16 @@ soundcard changes</source>
         <location filename="../Configuration.ui"/>
         <source>Wait and Reply: resume the QSO when DX Call calls me</source>
         <translation>等待并回复：DX 呼号的电台呼叫我时恢复 QSO</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>With Output power on, the transmission - a message or Tune - is halted as by Halt Tx, and a warning shown, as soon as the rig reports an SWR above 2.5: a wrong antenna, a fault. The radio's own antenna tuner cycle is not read.</source>
+        <translation>开启 输出功率 时，一旦电台报告 SWR 高于 2.5，就像 终止发射 一样停止发射（消息或 调谐）并显示警告：天线选错、故障等。不读取电台自带天调的调谐过程。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Halt Tx when SWR &gt; 2.5</source>
+        <translation>SWR &gt; 2.5 时终止发射</translation>
     </message>
 </context>
 <context>

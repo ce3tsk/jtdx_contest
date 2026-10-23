@@ -6611,6 +6611,16 @@ C'est l'erreur du décodeur lui-même. Corrigez ce qui l'empêche de démarrer -
         <source>Enable Tx stays off for %1 s after a right click on Tune, while the radio's antenna tuner works</source>
         <translation>Marche TX reste arrêté %1 s après un clic droit sur Tune HF, pendant que la boîte d'accord de la radio travaille</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>SWR %1 - above 2.5</source>
+        <translation>SWR %1 - supérieur à 2.5</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>The transmission was stopped, as by Halt Tx. Check the antenna.</source>
+        <translation>L'émission a été arrêtée, comme par Stop TX. Vérifiez l'antenne.</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>
@@ -10416,6 +10426,16 @@ changements de carte son</translation>
         <location filename="../Configuration.ui"/>
         <source>Wait and Reply: resume the QSO when DX Call calls me</source>
         <translation>Attendre et répondre : reprendre le QSO quand l'Indicatif DX m'appelle</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>With Output power on, the transmission - a message or Tune - is halted as by Halt Tx, and a warning shown, as soon as the rig reports an SWR above 2.5: a wrong antenna, a fault. The radio's own antenna tuner cycle is not read.</source>
+        <translation>Avec Puissance de sortie activée, l'émission - un message ou Tune HF - est arrêtée comme par Stop TX, et un avertissement affiché, dès que la radio indique un SWR supérieur à 2.5 : une mauvaise antenne, un défaut. Le cycle de la boîte d'accord propre à la radio n'est pas lu.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Halt Tx when SWR &gt; 2.5</source>
+        <translation>Stop TX quand SWR &gt; 2.5</translation>
     </message>
 </context>
 <context>

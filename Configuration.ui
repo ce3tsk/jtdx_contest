@@ -999,6 +999,22 @@ quiet period when decoding is done.</string>
           </widget>
          </item>
          <item>
+          <widget class="QCheckBox" name="check_SWR_check_box">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="toolTip">
+            <string>With Output power on, the transmission - a message or Tune - is halted as by Halt Tx, and a warning shown, as soon as the rig reports an SWR above 2.5: a wrong antenna, a fault. The radio's own antenna tuner cycle is not read.</string>
+           </property>
+           <property name="text">
+            <string>Halt Tx when SWR &gt; 2.5</string>
+           </property>
+          </widget>
+         </item>
+         <item>
           <spacer name="horizontalSpacer_28">
            <property name="orientation">
             <enum>Qt::Horizontal</enum>
