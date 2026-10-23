@@ -6558,8 +6558,18 @@ That is the decoder's own error. Put right whatever stops it starting - a missin
     </message>
     <message>
         <location filename="../mainwindow.cpp"/>
-        <source>Ctrl + click: sync JTDX internal time to the station in DX Call, from his newest decode of the last 2 minutes (FT8). A right click ends that first; the next one sets JTDX internal time back to system time.</source>
+        <source>Ctrl + click: sync JTDX internal time to the station in DX Call, from its newest decode of the last 2 minutes (FT8). A right click ends that first; the next one sets JTDX internal time back to system time.</source>
         <translation>Ctrl + щелчок: синхронизирует внутреннее время JTDX со станцией в поле Позывной DX, по её последнему декодированию за 2 минуты (FT8). Правый щелчок сначала завершает это; следующий возвращает внутреннее время JTDX к системному времени.</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Right click: Wait and Call on or off (also DXpedition &gt; Wait and Call, Ctrl+W) - Enable Tx goes off and turns orange, and the station in DX Call is called as soon as it is heard.</source>
+        <translation>Щелчок правой кнопкой: Ждать и вызвать вкл. или выкл. (также Гончая/DXpedition &gt; Ждать и вызвать, Ctrl+W) - Разреш.Tx выключается и становится оранжевой, а станция из поля Позывной DX вызывается, как только её слышно.</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Yellow: Wait and Reply (Settings &gt; Sequencing) may switch Enable Tx on when the station in DX Call calls you.</source>
+        <translation>Жёлтая: Ждать и ответить (Настройки &gt; Последовательность действий) может включить Разреш.Tx, когда станция из поля Позывной DX вызывает вас.</translation>
     </message>
 </context>
 <context>

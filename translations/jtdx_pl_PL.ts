@@ -6544,8 +6544,18 @@ To błąd samego dekodera. Usuń to, co uniemożliwia jego uruchomienie - brakuj
     </message>
     <message>
         <location filename="../mainwindow.cpp"/>
-        <source>Ctrl + click: sync JTDX internal time to the station in DX Call, from his newest decode of the last 2 minutes (FT8). A right click ends that first; the next one sets JTDX internal time back to system time.</source>
+        <source>Ctrl + click: sync JTDX internal time to the station in DX Call, from its newest decode of the last 2 minutes (FT8). A right click ends that first; the next one sets JTDX internal time back to system time.</source>
         <translation>Ctrl + klik: synchronizuje wewnętrzny czas JTDX do stacji w polu Znak DX, według jej najnowszego dekodowania z ostatnich 2 minut (FT8). Prawy klik najpierw to kończy; następny przywraca wewnętrzny czas JTDX do czasu systemowego.</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Right click: Wait and Call on or off (also DXpedition &gt; Wait and Call, Ctrl+W) - Enable Tx goes off and turns orange, and the station in DX Call is called as soon as it is heard.</source>
+        <translation>Kliknięcie prawym przyciskiem: Czekaj i wywołaj włączone lub wyłączone (także DXpedycja &gt; Czekaj i wywołaj, Ctrl+W) - Aktywuj Tx wyłącza się i staje się pomarańczowe, a stacja ze Znaku DX zostaje wywołana, gdy tylko zostanie usłyszana.</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Yellow: Wait and Reply (Settings &gt; Sequencing) may switch Enable Tx on when the station in DX Call calls you.</source>
+        <translation>Żółty: Czekaj i odpowiedz (Ustawienia &gt; Sekwencjonowanie) może włączyć Aktywuj Tx, gdy stacja ze Znaku DX cię wywoła.</translation>
     </message>
 </context>
 <context>

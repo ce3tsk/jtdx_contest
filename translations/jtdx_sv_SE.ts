@@ -6546,8 +6546,18 @@ Det är avkodarens eget fel. Åtgärda det som hindrar den från att starta - et
     </message>
     <message>
         <location filename="../mainwindow.cpp"/>
-        <source>Ctrl + click: sync JTDX internal time to the station in DX Call, from his newest decode of the last 2 minutes (FT8). A right click ends that first; the next one sets JTDX internal time back to system time.</source>
+        <source>Ctrl + click: sync JTDX internal time to the station in DX Call, from its newest decode of the last 2 minutes (FT8). A right click ends that first; the next one sets JTDX internal time back to system time.</source>
         <translation>Ctrl + klick: synkroniserar JTDX interna tid till stationen i DX Anrop, efter dess senaste avkodning de senaste 2 minuterna (FT8). Ett högerklick avslutar det först; nästa återställer JTDX interna tid till systemtiden.</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Right click: Wait and Call on or off (also DXpedition &gt; Wait and Call, Ctrl+W) - Enable Tx goes off and turns orange, and the station in DX Call is called as soon as it is heard.</source>
+        <translation>Högerklick: Vänta och anropa på eller av (även DXpedition &gt; Vänta och anropa, Ctrl+W) - Aktivera Tx slås av och blir orange, och stationen i DX Anrop anropas så snart den hörs.</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Yellow: Wait and Reply (Settings &gt; Sequencing) may switch Enable Tx on when the station in DX Call calls you.</source>
+        <translation>Gul: Vänta och svara (Inställningar &gt; Sekvensiering) kan slå på Aktivera Tx när stationen i DX Anrop anropar dig.</translation>
     </message>
 </context>
 <context>

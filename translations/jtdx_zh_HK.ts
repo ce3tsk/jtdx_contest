@@ -6543,8 +6543,18 @@ That is the decoder's own error. Put right whatever stops it starting - a missin
     </message>
     <message>
         <location filename="../mainwindow.cpp"/>
-        <source>Ctrl + click: sync JTDX internal time to the station in DX Call, from his newest decode of the last 2 minutes (FT8). A right click ends that first; the next one sets JTDX internal time back to system time.</source>
+        <source>Ctrl + click: sync JTDX internal time to the station in DX Call, from its newest decode of the last 2 minutes (FT8). A right click ends that first; the next one sets JTDX internal time back to system time.</source>
         <translation>Ctrl + 點擊：按 DX 呼號中電台最近 2 分鐘內的最新解碼，將 JTDX 內部時間同步到該電台（FT8）。右鍵點擊先結束此同步；再次右鍵點擊將 JTDX 內部時間設定回系統時間。</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Right click: Wait and Call on or off (also DXpedition &gt; Wait and Call, Ctrl+W) - Enable Tx goes off and turns orange, and the station in DX Call is called as soon as it is heard.</source>
+        <translation>右鍵單擊：開啟或關閉等待並呼叫（也可用 DX遠征 &gt; 等待並呼叫，Ctrl+W）- 啟用發射關閉並變為橙色，一旦聽到 DX 呼號中的電台就呼叫它。</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Yellow: Wait and Reply (Settings &gt; Sequencing) may switch Enable Tx on when the station in DX Call calls you.</source>
+        <translation>黃色：等待並回覆（設定 &gt; 程序）可在 DX 呼號中的電台呼叫你時開啟啟用發射。</translation>
     </message>
 </context>
 <context>

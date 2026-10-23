@@ -6544,8 +6544,18 @@ Dat is de fout van de decoder zelf. Verhelp wat het starten verhindert - een ont
     </message>
     <message>
         <location filename="../mainwindow.cpp"/>
-        <source>Ctrl + click: sync JTDX internal time to the station in DX Call, from his newest decode of the last 2 minutes (FT8). A right click ends that first; the next one sets JTDX internal time back to system time.</source>
+        <source>Ctrl + click: sync JTDX internal time to the station in DX Call, from its newest decode of the last 2 minutes (FT8). A right click ends that first; the next one sets JTDX internal time back to system time.</source>
         <translation>Ctrl + klik: synchroniseert de interne tijd van JTDX op het station in DX-roepnaam, volgens zijn nieuwste decodering van de laatste 2 minuten (FT8). Een rechtsklik beëindigt dat eerst; de volgende zet de interne tijd van JTDX terug op de systeemtijd.</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Right click: Wait and Call on or off (also DXpedition &gt; Wait and Call, Ctrl+W) - Enable Tx goes off and turns orange, and the station in DX Call is called as soon as it is heard.</source>
+        <translation>Rechtsklik: Wachten en roepen aan of uit (ook DXpeditie &gt; Wachten en roepen, Ctrl+W) - Zenden inschakelen gaat uit en wordt oranje, en het station in DX-roepnaam wordt geroepen zodra het gehoord wordt.</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Yellow: Wait and Reply (Settings &gt; Sequencing) may switch Enable Tx on when the station in DX Call calls you.</source>
+        <translation>Geel: Wachten en antwoorden (Instellingen &gt; Volgorde) kan Zenden inschakelen aanzetten wanneer het station in DX-roepnaam u roept.</translation>
     </message>
 </context>
 <context>

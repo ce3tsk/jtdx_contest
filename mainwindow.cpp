@@ -1069,6 +1069,7 @@ MainWindow::MainWindow(bool multiple, QSettings * settings, QSharedMemory *shdme
   connect (ui->enableTxButton, &QWidget::customContextMenuRequested, this, [this] (QPoint const&) {
       ui->actionWait_and_Call->toggle ();
     });
+  enableTxTip ();   // CE3TSK 2026-10-23: and its tooltip says so, with the colours the Wait features give it
   /* CE3TSK 2026-10-23: sync to one station (stationsync.h) - a right click on Sync ends a station sync, the next one sets
      the clock back to the system's, as before; taken as the button's own context menu request now, not by
      mousePressEvent (), which only saw it when the button had the focus. A left click checks it for the average Sync,
@@ -3882,7 +3883,7 @@ void MainWindow::stationSyncPaint ()
         : tr ("Synced to %1: %2 s (average offset %3 s)").arg (m_stationSync.call, station_sync::secs (t.station), station_sync::secs (t.base));
       state = "<!--ss--><b>" + state.toHtmlEscaped () + "</b><br/><!--/ss-->";
     }
-  QString const ctrl {"<!--ss--><br/><br/>" + tr ("Ctrl + click: sync JTDX internal time to the station in DX Call, from his newest decode of the last 2 minutes (FT8). A right click ends that first; the next one sets JTDX internal time back to system time.").toHtmlEscaped () + "<!--/ss-->"};
+  QString const ctrl {"<!--ss--><br/><br/>" + tr ("Ctrl + click: sync JTDX internal time to the station in DX Call, from its newest decode of the last 2 minutes (FT8). A right click ends that first; the next one sets JTDX internal time back to system time.").toHtmlEscaped () + "<!--/ss-->"};
   int const p {tip.indexOf ("<p>")};
   if (p >= 0) tip.insert (p + 3, state); else tip.prepend (state);
   int const e {tip.lastIndexOf ("</p>")};
@@ -3953,7 +3954,24 @@ void MainWindow::waitCallShow ()
       waitcall_label->setToolTip (ui->actionWait_and_Call->toolTip ());
       waitcall_label->setVisible (true);
     }
+  enableTxTip (wait_call::text (m_waitCall) != wait_call::Text::Hidden ? waitcall_label->text () : QString {});   // (2026-10-23)
   waitReplyRepaint ();
+}
+
+/* CE3TSK 2026-10-23 (the operator: "the wait and call feature uses the Enable Tx button, but its tooltip is not
+   updated"): Enable Tx's tooltip - the .ui's line, then what the Wait features do with the button: a right click switches
+   Wait and Call (orange while it waits), Wait and Reply's yellow; while Wait and Call is on, its state on top in bold,
+   the status bar's line (tools/ui-check/waitcall.sh start 14) */
+void MainWindow::enableTxTip (QString const& waitCallState)
+{
+  if (m_enableTxTip.isEmpty ()) m_enableTxTip = ui->enableTxButton->toolTip ();   // the .ui's, before it is replaced
+  QString tip {"<html><head/><body>"};
+  if (!waitCallState.isEmpty ()) tip += "<p><b>" + waitCallState.toHtmlEscaped () + "</b></p>";
+  tip += "<p>" + m_enableTxTip.toHtmlEscaped () + "</p><p>"
+    + tr ("Right click: Wait and Call on or off (also DXpedition > Wait and Call, Ctrl+W) - Enable Tx goes off and turns orange, and the station in DX Call is called as soon as it is heard.").toHtmlEscaped ()
+    + "</p><p>" + tr ("Yellow: Wait and Reply (Settings > Sequencing) may switch Enable Tx on when the station in DX Call calls you.").toHtmlEscaped ()
+    + "</p></body></html>";
+  ui->enableTxButton->setToolTip (tip);
 }
 
 void MainWindow::setHoundButtonStyle ()

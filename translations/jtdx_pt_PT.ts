@@ -6534,8 +6534,18 @@ Esse é o erro do próprio descodificador. Corrija o que impede o arranque - uma
     </message>
     <message>
         <location filename="../mainwindow.cpp"/>
-        <source>Ctrl + click: sync JTDX internal time to the station in DX Call, from his newest decode of the last 2 minutes (FT8). A right click ends that first; the next one sets JTDX internal time back to system time.</source>
+        <source>Ctrl + click: sync JTDX internal time to the station in DX Call, from its newest decode of the last 2 minutes (FT8). A right click ends that first; the next one sets JTDX internal time back to system time.</source>
         <translation>Ctrl + clique: sincroniza a hora interna do JTDX com a estação em Estação DX, pela descodificação mais recente dela nos últimos 2 minutos (FT8). Um clique direito termina isso primeiro; o seguinte define a hora interna do JTDX de volta à hora do sistema.</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Right click: Wait and Call on or off (also DXpedition &gt; Wait and Call, Ctrl+W) - Enable Tx goes off and turns orange, and the station in DX Call is called as soon as it is heard.</source>
+        <translation>Clique direito: Esperar e chamar ligado ou desligado (também DXpedition &gt; Esperar e chamar, Ctrl+W) - Ligar Tx é desligado e fica cor de laranja, e a estação em Estação DX é chamada assim que for ouvida.</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Yellow: Wait and Reply (Settings &gt; Sequencing) may switch Enable Tx on when the station in DX Call calls you.</source>
+        <translation>Amarelo: Esperar e responder (Configurações &gt; Sequência) pode ligar Ligar Tx quando a estação em Estação DX o chamar.</translation>
     </message>
 </context>
 <context>

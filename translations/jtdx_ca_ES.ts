@@ -6553,8 +6553,18 @@ Aquest és l'error del descodificador mateix. Corregiu allò que n'impedeix l'in
     </message>
     <message>
         <location filename="../mainwindow.cpp"/>
-        <source>Ctrl + click: sync JTDX internal time to the station in DX Call, from his newest decode of the last 2 minutes (FT8). A right click ends that first; the next one sets JTDX internal time back to system time.</source>
+        <source>Ctrl + click: sync JTDX internal time to the station in DX Call, from its newest decode of the last 2 minutes (FT8). A right click ends that first; the next one sets JTDX internal time back to system time.</source>
         <translation>Ctrl + clic: sincronitza l'hora interna de JTDX amb l'estació d'Indicatiu DX, segons la seva descodificació més recent dels darrers 2 minuts (FT8). Un clic dret acaba això primer; el següent torna l'hora interna de JTDX a l'hora del sistema.</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Right click: Wait and Call on or off (also DXpedition &gt; Wait and Call, Ctrl+W) - Enable Tx goes off and turns orange, and the station in DX Call is called as soon as it is heard.</source>
+        <translation>Clic dret: Esperar i cridar activat o desactivat (també Expedició DX &gt; Esperar i cridar, Ctrl+W) - Activar TX es desactiva i es torna taronja, i l'estació d'Indicatiu DX es crida tan bon punt se sent.</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Yellow: Wait and Reply (Settings &gt; Sequencing) may switch Enable Tx on when the station in DX Call calls you.</source>
+        <translation>Groc: Esperar i respondre (Configuracions &gt; Seqüència) pot activar Activar TX quan l'estació d'Indicatiu DX et crida.</translation>
     </message>
 </context>
 <context>

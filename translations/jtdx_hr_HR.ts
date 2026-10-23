@@ -6548,8 +6548,18 @@ To je greška samog dekodera. Otklonite ono što ga sprječava da se pokrene - n
     </message>
     <message>
         <location filename="../mainwindow.cpp"/>
-        <source>Ctrl + click: sync JTDX internal time to the station in DX Call, from his newest decode of the last 2 minutes (FT8). A right click ends that first; the next one sets JTDX internal time back to system time.</source>
+        <source>Ctrl + click: sync JTDX internal time to the station in DX Call, from its newest decode of the last 2 minutes (FT8). A right click ends that first; the next one sets JTDX internal time back to system time.</source>
         <translation>Ctrl + klik: sinkronizira interno vrijeme JTDX-a na stanicu u polju DX Znak, prema njenom najnovijem dekodiranju u zadnje 2 minute (FT8). Desni klik najprije to završava; sljedeći vraća interno vrijeme JTDX-a na vrijeme sustava.</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Right click: Wait and Call on or off (also DXpedition &gt; Wait and Call, Ctrl+W) - Enable Tx goes off and turns orange, and the station in DX Call is called as soon as it is heard.</source>
+        <translation>Desni klik: Čekaj i pozovi uključeno ili isključeno (također Dxpedicije &gt; Čekaj i pozovi, Ctrl+W) - Pokreni Tx se isključuje i postaje narančast, a stanica u DX Znaku poziva se čim se čuje.</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Yellow: Wait and Reply (Settings &gt; Sequencing) may switch Enable Tx on when the station in DX Call calls you.</source>
+        <translation>Žuto: Čekaj i odgovori (Postavke &gt; Sekvence) može uključiti Pokreni Tx kad Vas stanica u DX Znaku pozove.</translation>
     </message>
 </context>
 <context>

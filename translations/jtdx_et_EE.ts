@@ -6557,8 +6557,18 @@ See on dekoodri enda viga. Kõrvalda see, mis takistab käivitumist - puuduv tee
     </message>
     <message>
         <location filename="../mainwindow.cpp"/>
-        <source>Ctrl + click: sync JTDX internal time to the station in DX Call, from his newest decode of the last 2 minutes (FT8). A right click ends that first; the next one sets JTDX internal time back to system time.</source>
-        <translation>Ctrl + klõps: sünkroniseerib JTDX kella DX Kutsungu lahtris oleva jaamaga, tema viimase 2 minuti uusima dekodeeringu järgi (FT8). Paremklõps lõpetab esmalt selle; järgmine nullib JTDX kella korrektsiooni.</translation>
+        <source>Ctrl + click: sync JTDX internal time to the station in DX Call, from its newest decode of the last 2 minutes (FT8). A right click ends that first; the next one sets JTDX internal time back to system time.</source>
+        <translation>Ctrl + klõps: sünkroniseerib JTDX kella DX Kutsungu lahtris oleva jaamaga, selle uusima dekodeeringu järgi viimase 2 minuti jooksul (FT8). Paremklõps lõpetab esmalt selle; järgmine nullib JTDX kella korrektsiooni.</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Right click: Wait and Call on or off (also DXpedition &gt; Wait and Call, Ctrl+W) - Enable Tx goes off and turns orange, and the station in DX Call is called as soon as it is heard.</source>
+        <translation>Paremklõps: Oota ja kutsu sisse või välja (ka DXekspeditsioon &gt; Oota ja kutsu, Ctrl+W) - Luba Tx lülitub välja ja muutub oranžiks ning DX Kutsungi jaama kutsutakse kohe, kui seda kuuldakse.</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Yellow: Wait and Reply (Settings &gt; Sequencing) may switch Enable Tx on when the station in DX Call calls you.</source>
+        <translation>Kollane: Oota ja vasta (Seaded &gt; Järjestus) võib Luba Tx sisse lülitada, kui DX Kutsungi jaam sind kutsub.</translation>
     </message>
 </context>
 <context>

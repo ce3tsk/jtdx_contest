@@ -6542,8 +6542,18 @@ That is the decoder's own error. Put right whatever stops it starting - a missin
     </message>
     <message>
         <location filename="../mainwindow.cpp"/>
-        <source>Ctrl + click: sync JTDX internal time to the station in DX Call, from his newest decode of the last 2 minutes (FT8). A right click ends that first; the next one sets JTDX internal time back to system time.</source>
+        <source>Ctrl + click: sync JTDX internal time to the station in DX Call, from its newest decode of the last 2 minutes (FT8). A right click ends that first; the next one sets JTDX internal time back to system time.</source>
         <translation>Ctrl + クリック：JTDX内部時刻をDX コールの局に、直近2分間の最新のデコードから同期します（FT8）。右クリックでまずこれを終了し、次の右クリックでJTDX内部時刻をシステム時刻に戻します。</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Right click: Wait and Call on or off (also DXpedition &gt; Wait and Call, Ctrl+W) - Enable Tx goes off and turns orange, and the station in DX Call is called as soon as it is heard.</source>
+        <translation>右クリック：待機して呼び出しのオン/オフ（DXpedition &gt; 待機して呼び出し、Ctrl+W でも可）- 送信開始がオフになってオレンジ色になり、DX コールの局が聞こえるとすぐにその局を呼び出します。</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Yellow: Wait and Reply (Settings &gt; Sequencing) may switch Enable Tx on when the station in DX Call calls you.</source>
+        <translation>黄色：待機して応答（設定 &gt; 順序）は、DX コールの局があなたを呼んだときに送信開始をオンにすることがあります。</translation>
     </message>
 </context>
 <context>

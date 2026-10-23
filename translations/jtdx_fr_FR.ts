@@ -6548,8 +6548,18 @@ C'est l'erreur du décodeur lui-même. Corrigez ce qui l'empêche de démarrer -
     </message>
     <message>
         <location filename="../mainwindow.cpp"/>
-        <source>Ctrl + click: sync JTDX internal time to the station in DX Call, from his newest decode of the last 2 minutes (FT8). A right click ends that first; the next one sets JTDX internal time back to system time.</source>
+        <source>Ctrl + click: sync JTDX internal time to the station in DX Call, from its newest decode of the last 2 minutes (FT8). A right click ends that first; the next one sets JTDX internal time back to system time.</source>
         <translation>Ctrl + clic : synchronise l'heure interne de JTDX sur la station inscrite dans Indicatif DX, d'après son décodage le plus récent des 2 dernières minutes (FT8). Un clic droit arrête d'abord cela ; le suivant remet l'heure interne de JTDX à l'heure du système.</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Right click: Wait and Call on or off (also DXpedition &gt; Wait and Call, Ctrl+W) - Enable Tx goes off and turns orange, and the station in DX Call is called as soon as it is heard.</source>
+        <translation>Clic droit : Attendre et appeler activé ou désactivé (aussi Expédition DX &gt; Attendre et appeler, Ctrl+W) - Marche TX s'arrête et devient orange, et la station de l'Indicatif DX est appelée dès qu'elle est entendue.</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Yellow: Wait and Reply (Settings &gt; Sequencing) may switch Enable Tx on when the station in DX Call calls you.</source>
+        <translation>Jaune : Attendre et répondre (Paramètres &gt; Séquence) peut mettre Marche TX en marche quand la station de l'Indicatif DX vous appelle.</translation>
     </message>
 </context>
 <context>

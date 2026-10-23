@@ -6548,8 +6548,18 @@ Det er dekoderens egen fejl. Ret det, der forhindrer den i at starte - et mangle
     </message>
     <message>
         <location filename="../mainwindow.cpp"/>
-        <source>Ctrl + click: sync JTDX internal time to the station in DX Call, from his newest decode of the last 2 minutes (FT8). A right click ends that first; the next one sets JTDX internal time back to system time.</source>
+        <source>Ctrl + click: sync JTDX internal time to the station in DX Call, from its newest decode of the last 2 minutes (FT8). A right click ends that first; the next one sets JTDX internal time back to system time.</source>
         <translation>Ctrl + klik: synkroniserer JTDX' interne tid til stationen i Dx Call, ud fra dens nyeste dekodning i de sidste 2 minutter (FT8). Et højreklik afslutter det først; det næste sætter JTDX' interne tid tilbage til systemtiden.</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Right click: Wait and Call on or off (also DXpedition &gt; Wait and Call, Ctrl+W) - Enable Tx goes off and turns orange, and the station in DX Call is called as soon as it is heard.</source>
+        <translation>Højreklik: Vent og kald til eller fra (også DXpedition &gt; Vent og kald, Ctrl+W) - Aktiver Tx slås fra og bliver orange, og stationen i Dx Call kaldes, så snart den høres.</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Yellow: Wait and Reply (Settings &gt; Sequencing) may switch Enable Tx on when the station in DX Call calls you.</source>
+        <translation>Gul: Vent og svar (Indstillinger &gt; Sekvens styring) kan slå Aktiver Tx til, når stationen i Dx Call kalder dig.</translation>
     </message>
 </context>
 <context>

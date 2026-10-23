@@ -6544,8 +6544,18 @@ Ez magának a dekódernek a hibája. Hárítsa el, ami az indulását akadályoz
     </message>
     <message>
         <location filename="../mainwindow.cpp"/>
-        <source>Ctrl + click: sync JTDX internal time to the station in DX Call, from his newest decode of the last 2 minutes (FT8). A right click ends that first; the next one sets JTDX internal time back to system time.</source>
+        <source>Ctrl + click: sync JTDX internal time to the station in DX Call, from its newest decode of the last 2 minutes (FT8). A right click ends that first; the next one sets JTDX internal time back to system time.</source>
         <translation>Ctrl + kattintás: a JTDX belső idejét a DX hívójel mezőben lévő állomáshoz szinkronizálja, az utolsó 2 perc legújabb dekódolása alapján (FT8). Egy jobb kattintás először ezt fejezi be; a következő visszaállítja a JTDX belső idejét a rendszeridőre.</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Right click: Wait and Call on or off (also DXpedition &gt; Wait and Call, Ctrl+W) - Enable Tx goes off and turns orange, and the station in DX Call is called as soon as it is heard.</source>
+        <translation>Jobb kattintás: Várj és hívj be vagy ki (a DX expedíció &gt; Várj és hívj menüben is, Ctrl+W) - az Adás kikapcsol és narancssárga lesz, a DX hívójel állomását pedig a program azonnal hívja, amint hallja.</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Yellow: Wait and Reply (Settings &gt; Sequencing) may switch Enable Tx on when the station in DX Call calls you.</source>
+        <translation>Sárga: a Várj és válaszolj (Beállítások &gt; Kiválasztás) bekapcsolhatja az Adást, ha a DX hívójel állomása Önt hívja.</translation>
     </message>
 </context>
 <context>

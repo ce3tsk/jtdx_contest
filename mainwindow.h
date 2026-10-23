@@ -1253,6 +1253,8 @@ private:
   bool m_waitCallOwn {false};     // Enable Tx changed by it, or by Settings OK's pause while calling: not an end
   QTimer m_waitCallTimer;         // (3.-180) listening after the sixth call: to the end of the period after the next
   QLabel * waitcall_label {nullptr};   // the status bar's "Wait and Call K1ABC: ..."
+  void enableTxTip (QString const& waitCallState = {});   // (2026-10-23) Enable Tx's tooltip: the right click, the colours
+  QString m_enableTxTip;               // its first line, the .ui's (translated)
   // CE3TSK 2026-10-23: sync to one station (stationsync.h, STATION_SYNC_PLAN.md)
   void stationSyncRequest ();
   void stationSyncAverageArmed (bool checked);
