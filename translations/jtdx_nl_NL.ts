@@ -548,6 +548,11 @@ Indeling:
         <source>&amp;Correct it</source>
         <translation>&amp;Corrigeren</translation>
     </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>The downloaded file is not a CALL3.TXT call list.</source>
+        <translation>Het gedownloade bestand is geen CALL3.TXT-lijst met roepnamen.</translation>
+    </message>
 </context>
 <context>
     <name>CountryDat</name>
@@ -10426,6 +10431,16 @@ wijzigingen aan de geluidskaart</translation>
         <location filename="../Configuration.ui"/>
         <source>Halt Tx when SWR &gt; 2.5</source>
         <translation>Zenden stoppen bij SWR &gt; 2.5</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>The copy in the log directory is used. The one bundled with this release is copied there at the first start only.</source>
+        <translation>De kopie in de logmap wordt gebruikt. Die van deze uitgave wordt er alleen bij de eerste start naartoe gekopieerd.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Download the latest CALL3.TXT from wsjt-x-improved.sourceforge.io, as WSJT-X does: the calls and grid squares behind the JT65 and JT9 Hint decoders and the Lookup button. The copy replaced is kept as CALL3_backup.TXT, with any calls added by Add. The decoder reads the new list at the program's next start.</source>
+        <translation>Download de nieuwste CALL3.TXT van wsjt-x-improved.sourceforge.io, zoals WSJT-X doet: de roepnamen en locatorvakken achter de Hint-decoders van JT65 en JT9 en de knop Opzoeken. De vervangen kopie blijft bewaard als CALL3_backup.TXT, met de roepnamen die met Toevoegen zijn toegevoegd. De decoder leest de nieuwe lijst bij de volgende start van het programma.</translation>
     </message>
 </context>
 <context>

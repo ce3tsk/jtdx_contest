@@ -548,6 +548,11 @@ Format:
         <source>&amp;Correct it</source>
         <translation>수정(&amp;C)</translation>
     </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>The downloaded file is not a CALL3.TXT call list.</source>
+        <translation>다운로드한 파일은 CALL3.TXT 호출부호 목록이 아닙니다.</translation>
+    </message>
 </context>
 <context>
     <name>CountryDat</name>
@@ -10425,6 +10430,16 @@ soundcard changes</source>
         <location filename="../Configuration.ui"/>
         <source>Halt Tx when SWR &gt; 2.5</source>
         <translation>SWR &gt; 2.5이면 송신 중지</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>The copy in the log directory is used. The one bundled with this release is copied there at the first start only.</source>
+        <translation>로그 디렉터리의 사본이 사용됩니다. 이 릴리스에 포함된 사본은 처음 시작할 때만 그곳으로 복사됩니다.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Download the latest CALL3.TXT from wsjt-x-improved.sourceforge.io, as WSJT-X does: the calls and grid squares behind the JT65 and JT9 Hint decoders and the Lookup button. The copy replaced is kept as CALL3_backup.TXT, with any calls added by Add. The decoder reads the new list at the program's next start.</source>
+        <translation>WSJT-X처럼 wsjt-x-improved.sourceforge.io에서 최신 CALL3.TXT를 내려받습니다: JT65와 JT9의 힌트 디코더와 조회 버튼이 사용하는 호출부호와 그리드 로케이터입니다. 교체된 사본은 추가로 넣은 호출부호와 함께 CALL3_backup.TXT로 보관됩니다. 디코더는 다음 프로그램 시작 때 새 목록을 읽습니다.</translation>
     </message>
 </context>
 <context>

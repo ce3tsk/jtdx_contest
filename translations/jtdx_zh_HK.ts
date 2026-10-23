@@ -548,6 +548,11 @@ Format:
         <source>&amp;Correct it</source>
         <translation>修改(&amp;C)</translation>
     </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>The downloaded file is not a CALL3.TXT call list.</source>
+        <translation>下載的檔案不是 CALL3.TXT 呼號列表。</translation>
+    </message>
 </context>
 <context>
     <name>CountryDat</name>
@@ -10427,6 +10432,16 @@ soundcard changes</source>
         <location filename="../Configuration.ui"/>
         <source>Halt Tx when SWR &gt; 2.5</source>
         <translation>SWR &gt; 2.5 時終止發射</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>The copy in the log directory is used. The one bundled with this release is copied there at the first start only.</source>
+        <translation>使用日誌檔案目錄中的副本。本版本附帶的副本僅在首次啟動時複製到那裡。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Download the latest CALL3.TXT from wsjt-x-improved.sourceforge.io, as WSJT-X does: the calls and grid squares behind the JT65 and JT9 Hint decoders and the Lookup button. The copy replaced is kept as CALL3_backup.TXT, with any calls added by Add. The decoder reads the new list at the program's next start.</source>
+        <translation>像 WSJT-X 一樣從 wsjt-x-improved.sourceforge.io 下載最新的 CALL3.TXT：JT65 和 JT9 的 增強解碼 解碼器以及 檢索 按鈕所用的呼號和網格。被替換的副本連同用 新增 加入的呼號保留為 CALL3_backup.TXT。解碼器在程式下次啟動時讀取新列表。</translation>
     </message>
 </context>
 <context>

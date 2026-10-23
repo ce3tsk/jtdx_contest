@@ -4,12 +4,11 @@
 subroutine hintrxgrid9(mrs,mrs2,mycall,decoded,hintdec,s3,i4GrayCodedSym)
 
   use packjt
+  use call3list   ! CE3TSK 2026-10-23
   use prog_args
-  parameter (MAXCALLS=35000)
-  parameter (MAXMSG=MAXCALLS)
   real u1
   real s3(0:7,69)
-  integer*1 sym2(0:68,MAXMSG)
+  integer*1, allocatable :: sym2(:,:)   ! CE3TSK 2026-10-23: as many as the list (call3list.f90)
   integer mrs(69),mrs2(69),sym_rev(0:68)
   integer*4 i4Msg6BitWords(13)            !72-bit message as 6-bit words
   integer*1 i1Msg8BitBytes(13)            !72 bits and zero tail as 8-bit bytes
@@ -18,46 +17,29 @@ subroutine hintrxgrid9(mrs,mrs2,mycall,decoded,hintdec,s3,i4GrayCodedSym)
   integer*4 i4DataSymbols(69)             !Data symbols (values 0-7)
   integer*4 i4GrayCodedSym(69)            !Gray-coded symbols (values 0-7)
   logical(1) hintdec,first
-  character*6 call2(MAXCALLS)
-  character*4 grid2(MAXCALLS)
-  character line*180,mycall*6,callsign*12,grid*4,msg*22,msg00*22,decoded*22
-  character*22 msg0(MAXMSG)
+  character*6, allocatable :: call2(:)   ! CE3TSK 2026-10-23: the list's own size, on the heap (call3list.f90)
+  character*4, allocatable :: grid2(:)
+  character mycall*6,msg*22,msg00*22,decoded*22
+  character*22, allocatable :: msg0(:)
   data first/.true./
 
   save first,nused,msg0,sym2
 
   if(first) then
-     open(23,file=trim(data_dir)//'/CALL3.TXT',status='unknown')
-     j=0
-     do i=1,MAXCALLS
-        read(23,1002,end=10) line
-1002    format(a80)
-        if(line(1:4).eq.'ZZZZ') exit
-        if(line(1:2).eq.'//') cycle
-        i1=index(line,',')
-        if(i1.lt.4) cycle
-        i2=index(line(i1+1:),',')
-        if(i2.lt.5) cycle
-        i2=i2+i1
-        callsign=line(1:i1-1)
-        grid=line(i1+1:i2-1)
-        j=j+1
-        call2(j)=callsign(1:6)               !### Fix for compound callsigns!
-        grid2(j)=grid
-     enddo
-10   ncalls=j
+     call read_call3 (trim (data_dir)//'/CALL3.TXT', call2, grid2, ncalls)   ! CE3TSK 2026-10-23 (TODO 3.-199, call3list.f90)
      if(ncalls.lt.1) then
         print *, 'copy CALL3.TXT file to log directory'
         print *, 'https://ce3tsk.com' 
 !        stop 'CALL3.TXT is too short or missed?'
      endif
-     close(23)
 
      if(ncalls.eq.0) then
+        nused=0
         first=.false.
         return
      endif
 
+     allocate (sym2(0:68,ncalls), msg0(ncalls))
      j=0; nsym2=206
      do i=1,ncalls
         j=j+1

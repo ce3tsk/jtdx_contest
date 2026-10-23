@@ -335,6 +335,7 @@ set (wsjt_FSRCS
   lib/bpdecode144.f90
   lib/bpdecode174.f90
   lib/ft8v2/bpdecode174_91.f90
+  lib/call3list.f90
   lib/ccf2.f90
   lib/ccf65.f90
   lib/chkcall.f90

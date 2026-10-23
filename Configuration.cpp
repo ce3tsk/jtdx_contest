@@ -195,6 +195,7 @@ extern "C" {
 #include "NetworkServerLookup.hpp"
 #include "JTDXMessageBox.hpp"
 #include "FileDownload.hpp"            /* CE3TSK */
+#include "call3file.h"   // CE3TSK 2026-10-23: CALL3.TXT's download (TODO.md 3.-199)
 #include "logbook/countrydat.h"       /* CE3TSK */
 #include "ownstation.h"                /* CE3TSK 2026-10-04 */
 
@@ -601,6 +602,7 @@ private:
   Q_SLOT void on_cty_download_push_button_clicked (bool);    // CE3TSK: data file updates
   Q_SLOT void on_lotw_download_push_button_clicked (bool);
   Q_SLOT void on_license_download_push_button_clicked (bool);   // CE3TSK 2026-10-03
+  Q_SLOT void on_call3_download_push_button_clicked (bool);   // CE3TSK 2026-10-23 (TODO.md 3.-199)
   void start_data_file_download (FileDownload&, char const * url, char const * file_name,
                                  QDate (* version_of) (QByteArray const&), QString const& not_that_file);
   void data_file_download_failed (char const * file_name, FileDownload::Failure, QString const& detail);
@@ -698,6 +700,7 @@ private:
   FileDownload cty_download_;
   FileDownload lotw_download_;
   FileDownload license_download_;   // CE3TSK 2026-10-03
+  FileDownload call3_download_;     // CE3TSK 2026-10-23 (TODO.md 3.-199)
   QDir temp_dir_;
   QDir default_save_directory_;
   QDir save_directory_;
@@ -2136,16 +2139,18 @@ Configuration::impl::impl (Configuration * self, QNetworkAccessManager * network
   on_countryName_check_box_clicked (countryName_);
 
   // CE3TSK: data file updates - exactly one of complete() or error() arrives per download
-  for (FileDownload * download : {&cty_download_, &lotw_download_, &license_download_})
+  for (FileDownload * download : {&cty_download_, &lotw_download_, &license_download_, &call3_download_})
     {
-      connect (download, &FileDownload::complete, this, [this] (QString const&) {
+      connect (download, &FileDownload::complete, this, [this, download] (QString const&) {
           update_data_file_labels ();
-          Q_EMIT self_->data_files_updated ();
+          // (3.-199) CALL3.TXT is read where it is used - Lookup at each look-up, the decoder at its start: nothing to reload
+          if (download != &call3_download_) Q_EMIT self_->data_files_updated ();
         });
       connect (download, &FileDownload::error, this, [this, download] (FileDownload::Failure failure, QString const& detail) {
           update_data_file_labels ();
           data_file_download_failed (download == &cty_download_ ? cty_file_name
-                                     : download == &lotw_download_ ? lotw_file_name : license_file_name, failure, detail);
+                                     : download == &lotw_download_ ? lotw_file_name
+                                     : download == &license_download_ ? license_file_name : call3_file::file_name, failure, detail);
         });
     }
   ui_->gridNotif_check_box->setChecked(callNotif_ && gridNotif_);
@@ -4485,6 +4490,18 @@ void Configuration::impl::on_license_download_push_button_clicked (bool)   // CE
                             tr ("The downloaded file is not a list of US license states."));
 }
 
+/* CE3TSK 2026-10-23 (TODO.md 3.-199, call3file.h): CALL3.TXT from where WSJT-X and WS take theirs. The copy in use is
+   kept beside it first, as CALL3_backup.TXT: calls added with Add are in it, and the download replaces the whole file
+   (only a good one: a refused or failed download leaves the copy in use as it was) */
+void Configuration::impl::on_call3_download_push_button_clicked (bool)
+{
+  QDir const data_dir {QStandardPaths::writableLocation (QStandardPaths::DataLocation)};
+  QFile::remove (data_dir.absoluteFilePath (call3_file::backup_name));
+  QFile::copy (data_dir.absoluteFilePath (call3_file::file_name), data_dir.absoluteFilePath (call3_file::backup_name));
+  start_data_file_download (call3_download_, call3_file::url, call3_file::file_name, &call3_file::checked_version,
+                            tr ("The downloaded file is not a CALL3.TXT call list."));
+}
+
 void Configuration::impl::start_data_file_download (FileDownload& download, char const * url, char const * file_name,
                                                     QDate (* version_of) (QByteArray const&), QString const& not_that_file)
 {
@@ -4535,6 +4552,21 @@ void Configuration::impl::update_data_file_labels ()
   show (ui_->cty_file_status_label, ui_->cty_download_push_button, cty_download_, cty_file_name, &CountryDat::ctyVersion);
   show (ui_->lotw_file_status_label, ui_->lotw_download_push_button, lotw_download_, lotw_file_name, &CountryDat::lotwVersion);
   show (ui_->license_file_status_label, ui_->license_download_push_button, license_download_, license_file_name, &LicenseStates::version);
+
+  /* (3.-199) CALL3.TXT: always the copy in the log directory - its version, "bundled with this release" when it is the
+     bundled list's; the list of 2016-2017 has no version line */
+  ui_->call3_download_push_button->setEnabled (!call3_download_.running ());
+  if (call3_download_.running ())
+    {
+      ui_->call3_file_status_label->setText (tr ("downloading..."));
+      return;
+    }
+  auto const head = [] (QString const& path) {QFile f {path}; return f.open (QIODevice::ReadOnly) ? f.read (4096) : QByteArray {};};
+  QDate const in_use {call3_file::version (head (data_dir.absoluteFilePath (call3_file::file_name)))};
+  QDate const bundled {call3_file::version (head (data_dir_.absoluteFilePath (call3_file::file_name)))};
+  ui_->call3_file_status_label->setText (!in_use.isValid () ? tr ("version unknown")
+                                         : in_use == bundled ? tr ("%1, bundled with this release").arg (in_use.toString (Qt::ISODate))
+                                         : tr ("%1, downloaded").arg (in_use.toString (Qt::ISODate)));
 }
 
 void Configuration::impl::on_countryName_check_box_clicked(bool checked)

@@ -548,6 +548,11 @@ Format:
         <source>&amp;Correct it</source>
         <translation>&amp;Korrigieren</translation>
     </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>The downloaded file is not a CALL3.TXT call list.</source>
+        <translation>Die heruntergeladene Datei ist keine CALL3.TXT-Rufzeichenliste.</translation>
+    </message>
 </context>
 <context>
     <name>CountryDat</name>
@@ -10428,6 +10433,16 @@ Zurücksetzen der Funkgeräteschnittstelle und Übernahme etwaiger
         <location filename="../Configuration.ui"/>
         <source>Halt Tx when SWR &gt; 2.5</source>
         <translation>TX anhalten bei SWR &gt; 2.5</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>The copy in the log directory is used. The one bundled with this release is copied there at the first start only.</source>
+        <translation>Die Kopie im Logverzeichnis wird verwendet. Die mit dieser Version gelieferte wird nur beim ersten Start dorthin kopiert.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Download the latest CALL3.TXT from wsjt-x-improved.sourceforge.io, as WSJT-X does: the calls and grid squares behind the JT65 and JT9 Hint decoders and the Lookup button. The copy replaced is kept as CALL3_backup.TXT, with any calls added by Add. The decoder reads the new list at the program's next start.</source>
+        <translation>Die neueste CALL3.TXT von wsjt-x-improved.sourceforge.io herunterladen, wie WSJT-X es tut: die Rufzeichen und Locator-Felder hinter den Hint-Decodern für JT65 und JT9 und der Schaltfläche Suchen. Die ersetzte Kopie bleibt als CALL3_backup.TXT erhalten, mit den mit Hinzufügen ergänzten Rufzeichen. Der Decoder liest die neue Liste beim nächsten Start des Programms.</translation>
     </message>
 </context>
 <context>

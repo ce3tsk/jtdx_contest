@@ -548,6 +548,11 @@ Format:
         <source>&amp;Correct it</source>
         <translation>&amp;Ispravi</translation>
     </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>The downloaded file is not a CALL3.TXT call list.</source>
+        <translation>Preuzeta datoteka nije CALL3.TXT popis pozivnih znakova.</translation>
+    </message>
 </context>
 <context>
     <name>CountryDat</name>
@@ -10433,6 +10438,16 @@ promjena zvučne kartice</translation>
         <location filename="../Configuration.ui"/>
         <source>Halt Tx when SWR &gt; 2.5</source>
         <translation>Zaustavi TX kad je SWR &gt; 2.5</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>The copy in the log directory is used. The one bundled with this release is copied there at the first start only.</source>
+        <translation>Koristi se kopija u log direktoriju. Ona isporučena s ovim izdanjem kopira se onamo samo pri prvom pokretanju.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Download the latest CALL3.TXT from wsjt-x-improved.sourceforge.io, as WSJT-X does: the calls and grid squares behind the JT65 and JT9 Hint decoders and the Lookup button. The copy replaced is kept as CALL3_backup.TXT, with any calls added by Add. The decoder reads the new list at the program's next start.</source>
+        <translation>Preuzmi najnoviji CALL3.TXT s wsjt-x-improved.sourceforge.io, kao što to radi WSJT-X: pozivne znakove i lokatorska polja na kojima se temelje dekoderi Savjet za JT65 i JT9 te gumb Potraži. Zamijenjena kopija čuva se kao CALL3_backup.TXT, s pozivnim znakovima dodanima pomoću Dodaj. Dekoder čita novi popis pri sljedećem pokretanju programa.</translation>
     </message>
 </context>
 <context>

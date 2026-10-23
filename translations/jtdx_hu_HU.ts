@@ -548,6 +548,11 @@ Formátum:
         <source>&amp;Correct it</source>
         <translation>&amp;Javítom</translation>
     </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>The downloaded file is not a CALL3.TXT call list.</source>
+        <translation>A letöltött fájl nem CALL3.TXT hívójellista.</translation>
+    </message>
 </context>
 <context>
     <name>CountryDat</name>
@@ -10424,6 +10429,16 @@ hangkártya módosítási tevékenységet</translation>
         <location filename="../Configuration.ui"/>
         <source>Halt Tx when SWR &gt; 2.5</source>
         <translation>Tx Állj, ha SWR &gt; 2.5</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>The copy in the log directory is used. The one bundled with this release is copied there at the first start only.</source>
+        <translation>A Log könyvtárban lévő példány van használatban. A kiadással együtt szállított példány csak az első indításkor másolódik oda.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Download the latest CALL3.TXT from wsjt-x-improved.sourceforge.io, as WSJT-X does: the calls and grid squares behind the JT65 and JT9 Hint decoders and the Lookup button. The copy replaced is kept as CALL3_backup.TXT, with any calls added by Add. The decoder reads the new list at the program's next start.</source>
+        <translation>A legújabb CALL3.TXT letöltése a wsjt-x-improved.sourceforge.io oldalról, ahogy a WSJT-X teszi: a JT65 és JT9 Hint dekóderei és a Keres gomb mögötti hívójelek és lokátornégyzetek. A lecserélt példány CALL3_backup.TXT néven megmarad, a Hozzáad gombbal felvett hívójelekkel együtt. A dekóder a program következő indításakor olvassa be az új listát.</translation>
     </message>
 </context>
 <context>

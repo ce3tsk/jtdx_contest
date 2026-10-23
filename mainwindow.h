@@ -1261,6 +1261,7 @@ private:
   void swrHalt (unsigned swr);    //   - the halt and its warning
   bool m_swrTripped {false};      //   halted for this transmission: its reading stays on the label until the next one
   bool m_swrBoxOpen {false};      //   one warning at a time
+  unsigned m_swrShown {0};        //   (3.-197) the reading on the label, for a switch of style
   QElapsedTimer m_atuTuneClock;   // (3.-195) since the last right click that asked: Enable Tx is held 6 s after it
   void enableTxTip (QString const& waitCallState = {});   // (2026-10-23) Enable Tx's tooltip: the right click, the colours
   QString m_enableTxTip;               // its first line, the .ui's (translated)

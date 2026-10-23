@@ -549,6 +549,11 @@ Formato:
         <source>&amp;Correct it</source>
         <translation>&amp;Corregirlo</translation>
     </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>The downloaded file is not a CALL3.TXT call list.</source>
+        <translation>El archivo descargado no es una lista de indicativos CALL3.TXT.</translation>
+    </message>
 </context>
 <context>
     <name>CountryDat</name>
@@ -10441,6 +10446,16 @@ cambios en la tarjeta de sonido</translation>
         <location filename="../Configuration.ui"/>
         <source>Halt Tx when SWR &gt; 2.5</source>
         <translation>Parar Tx cuando SWR &gt; 2.5</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>The copy in the log directory is used. The one bundled with this release is copied there at the first start only.</source>
+        <translation>Se usa la copia del directorio de log. La que acompaña a esta versión se copia allí solo en el primer inicio.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Download the latest CALL3.TXT from wsjt-x-improved.sourceforge.io, as WSJT-X does: the calls and grid squares behind the JT65 and JT9 Hint decoders and the Lookup button. The copy replaced is kept as CALL3_backup.TXT, with any calls added by Add. The decoder reads the new list at the program's next start.</source>
+        <translation>Descargar el CALL3.TXT más reciente de wsjt-x-improved.sourceforge.io, como hace WSJT-X: los indicativos y cuadrículas que usan los decodificadores Sugerir de JT65 y JT9 y el botón Localizar. La copia sustituida se conserva como CALL3_backup.TXT, con los indicativos añadidos con Agregar. El decodificador lee la lista nueva en el próximo inicio del programa.</translation>
     </message>
 </context>
 <context>

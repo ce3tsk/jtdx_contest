@@ -96,6 +96,7 @@
 #include "savepurge.h"   // CE3TSK 2026-10-23: Save > Remove saved files after 30 days
 #include "atutune.h"   // CE3TSK 2026-10-23: a right click on Tune, the radio's own antenna tuner
 #include "swrguard.h"   // CE3TSK 2026-10-23: Halt Tx when SWR > 2.5
+#include "call3file.h"   // CE3TSK 2026-10-23: CALL3.TXT's Lookup line and the old bundled list (3.-200)
 #include <QPainter>
 #include <QPainterPath>
 #include <QHBoxLayout>
@@ -1473,6 +1474,14 @@ MainWindow::MainWindow(bool multiple, QSettings * settings, QSharedMemory *shdme
   mode_label->setText(m_mode);
   m_lastloggedtime=m_jtdxtime->currentDateTimeUtc2().addSecs(-7*int(m_TRperiod));
   QFile f0 {m_dataDir.absoluteFilePath ("CALL3.TXT")};
+  /* CE3TSK 2026-10-23 (TODO.md 3.-200, call3file.h): a copy that is the bundled list of 2016-2017 byte for byte - nothing
+     added with Add, nothing downloaded - gives way to the bundled one; any other copy is left as it is */
+  if (f0.open (QIODevice::ReadOnly))
+    {
+      bool const old {call3_file::is_old_bundled (f0.readAll ())};
+      f0.close ();
+      if (old) f0.remove ();
+    }
   if(!f0.exists()) { 
   QFile f1 {m_config.data_dir ().absoluteFilePath ("CALL3.TXT")};
   f1.copy(m_dataDir.absoluteFilePath ("CALL3.TXT"));
@@ -2923,7 +2932,7 @@ void MainWindow::on_actionSettings_triggered()               //Setup Dialog
       }
       if(!m_config.do_snr()) ui->S_meter_button->setText(tr("S meter"));
       ui->S_meter_button->setEnabled(m_config.do_snr());
-      if(!m_config.do_pwr()) {ui->PWRlabel->setText(tr("Pwr")); ui->SWRlabel->setText(""); ui->SWRlabel->setStyleSheet (""); m_swrTripped = false;}
+      if(!m_config.do_pwr()) {ui->PWRlabel->setText(tr("Pwr")); ui->SWRlabel->setText(""); ui->SWRlabel->setStyleSheet (""); m_swrTripped = false; m_swrShown = 0;}
       on_spotLineEdit_textChanged(ui->spotLineEdit->text());
       ui->bandComboBox->setCurrentText (m_config.bands ()->find (m_freqNominal));
   }
@@ -5037,6 +5046,7 @@ setEnableTxButtonStyle ();
   ui->AGCcButton->setStyleSheet(QString("QPushButton:checked{background: %1}").arg(Radio::convert_dark("#00ff00",m_useDarkStyle)));
   ui->hintButton->setStyleSheet(QString("QPushButton:checked{background: %1}").arg(Radio::convert_dark("#00ff00",m_useDarkStyle)));
   stationSyncPaint ();   // CE3TSK 2026-10-23: Sync green when checked, light blue while a station sync lasts
+  if (m_swrShown) swrLabel (m_swrShown);   // CE3TSK 2026-10-23 (3.-197): the SWR label's yellow or red in the new style
   /* CE3TSK 2026-09-28: the band and mode buttons light up in the green of AnsB4 and the other toggles above, not
      the style's grey - the operator: "all 3 should use the green highlight that is used elsewhere e.g. AnsB4 instead
      of the grey one". Set on the two rows rather than on each button: it reaches every button they hold, the band
@@ -5918,10 +5928,12 @@ void MainWindow::atuTune ()
 
 /* CE3TSK 2026-10-23 (TODO.md 3.-196, swrguard.h): the SWR label - the reading, yellow above 1.5 and red above 2.0
    (WSJT-X's), the text the program's dark-style table gives each; no reading clears it, but the one that halted stays,
-   red, until the next transmission (handle_transceiver_update () arms the halt again at the PTT's rise) */
+   red, until the next transmission (handle_transceiver_update () arms the halt again at the PTT's rise); the reading
+   shown kept for styleChanged (), which paints it again in a switched style */
 void MainWindow::swrLabel (unsigned swr)
 {
   if (!swr && m_swrTripped) return;
+  m_swrShown = swr;
   if (!swr)
     {
       ui->SWRlabel->setText ("");
@@ -10262,7 +10274,7 @@ void MainWindow::lookup()                                       //lookup()
           break;
         }
         QString t=QString(c);
-        if(t.indexOf(hisCall)==0) {
+        if(call3_file::entry_of (t, hisCall)) {   // CE3TSK 2026-10-23 (3.-200): the call's own line (was any starting with it)
           int i1=t.indexOf(",");
           QString hisgrid=t.mid(i1+1,6);
           i1=hisgrid.indexOf(",");
@@ -10271,7 +10283,8 @@ void MainWindow::lookup()                                       //lookup()
           } else {
             hisgrid=hisgrid.left(4) + hisgrid.mid(4,2).toLower();
           }
-          /* CE3TSK 2026-10-05: CALL3.TXT is 2016-2017 spot data, never updated - fine for distance and beam heading,
+          /* CE3TSK 2026-10-05: CALL3.TXT is spot data, not heard on air (2016-2017 in the old bundled list, 2026-09 in
+             the new one; Settings > General > Data files downloads it, 3.-199) - fine for distance and beam heading,
              never for the log or a US state. Marked only when it changes the box, so a Lookup that finds the grid
              already heard on air leaves that grid loggable. */
           if (hisgrid != ui->dxGridEntry->text ()) {
@@ -10791,7 +10804,8 @@ void MainWindow::on_logQSOButton_clicked()
      box, which clearDX empties - so a QSO completed from a late re-selection logged without a
      gridsquare although the grid had been decoded (logfields.h, WW_DIGI_CONTEST_SUPPORT 6b) */
   /* CE3TSK 2026-10-05: never a grid from CALL3.TXT - the log feeds Worked All States, now and on every reload, and
-     CALL3.TXT's grids are years-old spots. The box counts only when it holds an on-air or typed grid. */
+     CALL3.TXT's grids are spots of other days, not this QSO's (3.-199: the 2026 list, downloadable, as much as the
+     old one). The box counts only when it holds an on-air or typed grid. */
   QString historyGrid;
   m_qsoHistory.status (m_hisCall, historyGrid);
   QString const hisGridLogged = log_grid (m_hisGridFromCall3 ? QString {} : m_hisGrid, historyGrid);

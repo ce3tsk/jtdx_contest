@@ -548,6 +548,11 @@ Vorming:
         <source>&amp;Correct it</source>
         <translation>&amp;Paranda</translation>
     </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>The downloaded file is not a CALL3.TXT call list.</source>
+        <translation>Allalaaditud fail ei ole CALL3.TXT kutsungite loend.</translation>
+    </message>
 </context>
 <context>
     <name>CountryDat</name>
@@ -10423,6 +10428,16 @@ soundcard changes</source>
         <location filename="../Configuration.ui"/>
         <source>Halt Tx when SWR &gt; 2.5</source>
         <translation>Peata Tx, kui SWR &gt; 2.5</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>The copy in the log directory is used. The one bundled with this release is copied there at the first start only.</source>
+        <translation>Kasutatakse andmete kataloogis olevat koopiat. Selle versiooniga kaasas olev kopeeritakse sinna ainult esimesel käivitusel.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Download the latest CALL3.TXT from wsjt-x-improved.sourceforge.io, as WSJT-X does: the calls and grid squares behind the JT65 and JT9 Hint decoders and the Lookup button. The copy replaced is kept as CALL3_backup.TXT, with any calls added by Add. The decoder reads the new list at the program's next start.</source>
+        <translation>Laadi wsjt-x-improved.sourceforge.io-st alla uusim CALL3.TXT, nagu teeb WSJT-X: kutsungid ja ruudud, millele toetuvad JT65 ja JT9 Vihjed-dekoodrid ning nupp Otsi. Asendatud koopia jääb alles nimega CALL3_backup.TXT koos nupuga Lisa lisatud kutsungitega. Dekooder loeb uue loendi programmi järgmisel käivitusel.</translation>
     </message>
 </context>
 <context>

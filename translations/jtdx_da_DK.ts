@@ -550,6 +550,11 @@ Format:
         <source>&amp;Correct it</source>
         <translation>&amp;Ret det</translation>
     </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>The downloaded file is not a CALL3.TXT call list.</source>
+        <translation>Den downloadede fil er ikke en CALL3.TXT-liste over kaldesignaler.</translation>
+    </message>
 </context>
 <context>
     <name>CountryDat</name>
@@ -10432,6 +10437,16 @@ lydkort ændring</translation>
         <location filename="../Configuration.ui"/>
         <source>Halt Tx when SWR &gt; 2.5</source>
         <translation>Stop Tx når SWR &gt; 2.5</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>The copy in the log directory is used. The one bundled with this release is copied there at the first start only.</source>
+        <translation>Kopien i log biblioteket bruges. Den, der følger med denne udgave, kopieres derhen kun ved første start.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Download the latest CALL3.TXT from wsjt-x-improved.sourceforge.io, as WSJT-X does: the calls and grid squares behind the JT65 and JT9 Hint decoders and the Lookup button. The copy replaced is kept as CALL3_backup.TXT, with any calls added by Add. The decoder reads the new list at the program's next start.</source>
+        <translation>Download den nyeste CALL3.TXT fra wsjt-x-improved.sourceforge.io, som WSJT-X gør: kaldesignalerne og gridfelterne bag JT65- og JT9-dekoderne til Hint og knappen Slå op. Den erstattede kopi gemmes som CALL3_backup.TXT, med kaldesignaler tilføjet med Tilføj. Dekoderen læser den nye liste ved programmets næste start.</translation>
     </message>
 </context>
 <context>

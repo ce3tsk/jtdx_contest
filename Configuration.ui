@@ -824,6 +824,36 @@ quiet period when decoding is done.</string>
             </property>
            </widget>
           </item>
+          <item row="3" column="0">
+           <widget class="QLabel" name="call3_file_label">
+            <property name="text">
+             <string notr="true">CALL3.TXT:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="1">
+           <widget class="QLabel" name="call3_file_status_label">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+              <horstretch>1</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="toolTip">
+             <string>The copy in the log directory is used. The one bundled with this release is copied there at the first start only.</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="2">
+           <widget class="QPushButton" name="call3_download_push_button">
+            <property name="toolTip">
+             <string>Download the latest CALL3.TXT from wsjt-x-improved.sourceforge.io, as WSJT-X does: the calls and grid squares behind the JT65 and JT9 Hint decoders and the Lookup button. The copy replaced is kept as CALL3_backup.TXT, with any calls added by Add. The decoder reads the new list at the program's next start.</string>
+            </property>
+            <property name="text">
+             <string>Download latest</string>
+            </property>
+           </widget>
+          </item>
          </layout>
         </widget>
        </item>

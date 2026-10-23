@@ -1,4 +1,5 @@
 #include "PollingTransceiver.hpp"
+#include "pollexpect.h"   // CE3TSK 2026-10-23: the rig as asked, the readings left out
 
 #include <exception>
 
@@ -185,7 +186,7 @@ void PollingTransceiver::do_post_ptt (bool p)
 bool PollingTransceiver::do_pre_update ()
 {
   // if we are holding off a change then withhold the signal
-  if (retries_ && state () != next_state_)
+  if (retries_ && !poll_expect::as_asked (state (), next_state_))   // CE3TSK 2026-10-23: the readings left out (pollexpect.h)
     {
       return false;
     }
@@ -251,7 +252,7 @@ void PollingTransceiver::handle_timeout ()
         if (retries_)
           {
             --retries_;
-            if (state () == next_state_ || !retries_)
+            if (poll_expect::as_asked (state (), next_state_) || !retries_)   // CE3TSK 2026-10-23: as above
               {
                 // the expected state has arrived or there are no more
                 // retries

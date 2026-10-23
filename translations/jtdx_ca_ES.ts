@@ -552,6 +552,11 @@ Format:
         <source>&amp;Correct it</source>
         <translation>&amp;Corregeix-lo</translation>
     </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>The downloaded file is not a CALL3.TXT call list.</source>
+        <translation>El fitxer descarregat no és una llista d'indicatius CALL3.TXT.</translation>
+    </message>
 </context>
 <context>
     <name>CountryDat</name>
@@ -10441,6 +10446,16 @@ canvi en la targeta de so</translation>
         <location filename="../Configuration.ui"/>
         <source>Halt Tx when SWR &gt; 2.5</source>
         <translation>Aturar TX quan SWR &gt; 2.5</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>The copy in the log directory is used. The one bundled with this release is copied there at the first start only.</source>
+        <translation>S'utilitza la còpia del directori de log. La que acompanya aquesta versió s'hi copia només en el primer inici.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Download the latest CALL3.TXT from wsjt-x-improved.sourceforge.io, as WSJT-X does: the calls and grid squares behind the JT65 and JT9 Hint decoders and the Lookup button. The copy replaced is kept as CALL3_backup.TXT, with any calls added by Add. The decoder reads the new list at the program's next start.</source>
+        <translation>Descarrega el CALL3.TXT més recent de wsjt-x-improved.sourceforge.io, com fa WSJT-X: els indicatius i quadrícules que fan servir els descodificadors Suggerir de JT65 i JT9 i el botó Cercar. La còpia substituïda es conserva com a CALL3_backup.TXT, amb els indicatius afegits amb Afegir. El descodificador llegeix la llista nova en el pròxim inici del programa.</translation>
     </message>
 </context>
 <context>
