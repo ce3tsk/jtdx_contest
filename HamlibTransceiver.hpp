@@ -10,6 +10,7 @@
 
 #include "TransceiverFactory.hpp"
 #include "PollingTransceiver.hpp"
+#include "atutune.h"   // CE3TSK 2026-10-23: the radio's own antenna tuner
 
 extern "C"
 {
@@ -44,6 +45,8 @@ class HamlibTransceiver final
   void do_tx_frequency (Frequency, MODE, bool no_ignore) override;
   void do_mode (MODE) override;
   void do_ptt (bool) override;
+  void do_tune (bool) override;   // CE3TSK 2026-10-23: the radio's own antenna tuner (atutune.h)
+  atu_tune::Way tune_way () const;
 
   void do_poll () override;
 

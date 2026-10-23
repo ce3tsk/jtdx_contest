@@ -6581,6 +6581,31 @@ That is the decoder's own error. Put right whatever stops it starting - a missin
         <source>At each start, the recordings in the save directory (Settings &gt; Audio &gt; Audio files save directory) last changed more than 30 days ago are deleted - only the program's own, named by their time as 261023_153000.wav, and WSPR's .c2. Other files, subdirectories and what is in them stay.</source>
         <translation>每次啟動時，刪除儲存目錄（設定 &gt; 音頻 &gt; 聲音檔案儲存目錄）中最後修改時間超過 30 天的錄音：僅限本程式自己的錄音（以時間命名，如 261023_153000.wav）和 WSPR 的 .c2 檔案。其他檔案、子目錄及其內容保留。</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Right click: the radio starts its own antenna tuner (ATU), if it has one - a rig controlled through Hamlib, flrig included. The radio keys itself for it; not while transmitting.</source>
+        <translation>右鍵點擊：如果電台有內置天調（ATU），則啟動它 - 透過 Hamlib 控制的電台，包括 flrig。電台會自行發射以進行調諧；發射時不啟動。</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>The rig control in use cannot start the radio's antenna tuner - a rig controlled through Hamlib that has one, or flrig, can</source>
+        <translation>目前使用的電台控制無法啟動電台的天調 - 帶天調的 Hamlib 控制電台或 flrig 可以</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>The antenna tuner is not started while transmitting or tuning</source>
+        <translation>發射或調諧時不啟動天調</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>The radio was asked to start its antenna tuner</source>
+        <translation>已請求電台啟動天調</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Enable Tx stays off for %1 s after a right click on Tune, while the radio's antenna tuner works</source>
+        <translation>右鍵點擊調諧後的 %1 秒內，電台天調工作期間，啟用發射保持關閉</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

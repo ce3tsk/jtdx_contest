@@ -643,6 +643,11 @@ void TransceiverBase::update_swr (unsigned int p)
 //  requested_.swr (p);    // track rig changes
 }
 
+void TransceiverBase::update_tuner (bool can)
+{
+  actual_.tuner (can);
+}
+
 void TransceiverBase::update_complete (bool force_signal)
 {
   if ((do_pre_update () && actual_ != last_) || force_signal)

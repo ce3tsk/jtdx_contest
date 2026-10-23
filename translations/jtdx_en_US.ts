@@ -6454,6 +6454,31 @@ That is the decoder's own error. Put right whatever stops it starting - a missin
         <source>At each start, the recordings in the save directory (Settings &gt; Audio &gt; Audio files save directory) last changed more than 30 days ago are deleted - only the program's own, named by their time as 261023_153000.wav, and WSPR's .c2. Other files, subdirectories and what is in them stay.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Right click: the radio starts its own antenna tuner (ATU), if it has one - a rig controlled through Hamlib, flrig included. The radio keys itself for it; not while transmitting.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>The rig control in use cannot start the radio's antenna tuner - a rig controlled through Hamlib that has one, or flrig, can</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>The antenna tuner is not started while transmitting or tuning</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>The radio was asked to start its antenna tuner</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Enable Tx stays off for %1 s after a right click on Tune, while the radio's antenna tuner works</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

@@ -6582,6 +6582,31 @@ Dat is de fout van de decoder zelf. Verhelp wat het starten verhindert - een ont
         <source>At each start, the recordings in the save directory (Settings &gt; Audio &gt; Audio files save directory) last changed more than 30 days ago are deleted - only the program's own, named by their time as 261023_153000.wav, and WSPR's .c2. Other files, subdirectories and what is in them stay.</source>
         <translation>Bij elke start worden de opnamen in de opslagmap (Instellingen &gt; Audio &gt; Opslagmap voor audiobestanden) verwijderd die langer dan 30 dagen geleden voor het laatst zijn gewijzigd - alleen die van het programma zelf, genoemd naar hun tijd zoals 261023_153000.wav, en de .c2-bestanden van WSPR. Andere bestanden, submappen en hun inhoud blijven staan.</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Right click: the radio starts its own antenna tuner (ATU), if it has one - a rig controlled through Hamlib, flrig included. The radio keys itself for it; not while transmitting.</source>
+        <translation>Rechtsklik: de radio start zijn eigen antennetuner (ATU), als hij er een heeft - een radio die via Hamlib wordt bestuurd, flrig inbegrepen. De radio zendt daarvoor zelf; niet tijdens het zenden.</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>The rig control in use cannot start the radio's antenna tuner - a rig controlled through Hamlib that has one, or flrig, can</source>
+        <translation>De gebruikte radiobesturing kan de antennetuner van de radio niet starten - een radio die via Hamlib wordt bestuurd en er een heeft, of flrig, kan dat wel</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>The antenna tuner is not started while transmitting or tuning</source>
+        <translation>De antennetuner wordt niet gestart tijdens het zenden of afstemmen</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>The radio was asked to start its antenna tuner</source>
+        <translation>De radio is gevraagd zijn antennetuner te starten</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Enable Tx stays off for %1 s after a right click on Tune, while the radio's antenna tuner works</source>
+        <translation>Zenden inschakelen blijft %1 s uit na een rechtsklik op Afstemmen, terwijl de antennetuner van de radio werkt</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

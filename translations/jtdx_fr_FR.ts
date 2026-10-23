@@ -6586,6 +6586,31 @@ C'est l'erreur du décodeur lui-même. Corrigez ce qui l'empêche de démarrer -
         <source>At each start, the recordings in the save directory (Settings &gt; Audio &gt; Audio files save directory) last changed more than 30 days ago are deleted - only the program's own, named by their time as 261023_153000.wav, and WSPR's .c2. Other files, subdirectories and what is in them stay.</source>
         <translation>À chaque démarrage, les enregistrements du répertoire de sauvegarde (Paramètres &gt; Audio &gt; Répertoire de sauvegarde des fichiers audio) modifiés pour la dernière fois il y a plus de 30 jours sont supprimés - uniquement ceux du programme, nommés d'après leur heure comme 261023_153000.wav, et les .c2 de WSPR. Les autres fichiers, les sous-répertoires et leur contenu sont conservés.</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Right click: the radio starts its own antenna tuner (ATU), if it has one - a rig controlled through Hamlib, flrig included. The radio keys itself for it; not while transmitting.</source>
+        <translation>Clic droit : la radio lance sa propre boîte d'accord d'antenne (ATU), si elle en a une - une radio pilotée par Hamlib, flrig compris. La radio passe elle-même en émission pour cela ; pas pendant une émission.</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>The rig control in use cannot start the radio's antenna tuner - a rig controlled through Hamlib that has one, or flrig, can</source>
+        <translation>Le pilotage de la radio utilisé ne peut pas lancer la boîte d'accord de la radio - une radio pilotée par Hamlib qui en a une, ou flrig, le peut</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>The antenna tuner is not started while transmitting or tuning</source>
+        <translation>La boîte d'accord n'est pas lancée pendant une émission ou un réglage</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>The radio was asked to start its antenna tuner</source>
+        <translation>La radio a été priée de lancer sa boîte d'accord</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Enable Tx stays off for %1 s after a right click on Tune, while the radio's antenna tuner works</source>
+        <translation>Marche TX reste arrêté %1 s après un clic droit sur Tune HF, pendant que la boîte d'accord de la radio travaille</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

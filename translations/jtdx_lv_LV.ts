@@ -6581,6 +6581,31 @@ Dekoders: %3
         <source>At each start, the recordings in the save directory (Settings &gt; Audio &gt; Audio files save directory) last changed more than 30 days ago are deleted - only the program's own, named by their time as 261023_153000.wav, and WSPR's .c2. Other files, subdirectories and what is in them stay.</source>
         <translation>Katrā palaišanas reizē no saglabāšanas direktorijas (Iestatījumi &gt; Audio &gt; Audio failu saglabāšanas direktorija) tiek dzēsti ieraksti, kas pēdējo reizi mainīti pirms vairāk nekā 30 dienām - tikai paša programmas ieraksti, nosaukti pēc to laika kā 261023_153000.wav, un WSPR .c2 faili. Citi faili, apakšdirektorijas un to saturs paliek.</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Right click: the radio starts its own antenna tuner (ATU), if it has one - a rig controlled through Hamlib, flrig included. The radio keys itself for it; not while transmitting.</source>
+        <translation>Labais klikšķis: radio palaiž savu antenas skaņotāju (ATU), ja tāds ir - caur Hamlib vadīts radio, arī flrig. Radio pats ieslēdzas raidīšanā; ne raidīšanas laikā.</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>The rig control in use cannot start the radio's antenna tuner - a rig controlled through Hamlib that has one, or flrig, can</source>
+        <translation>Izmantotā radio vadība nevar palaist radio antenas skaņotāju - to var caur Hamlib vadīts radio, kuram tāds ir, vai flrig</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>The antenna tuner is not started while transmitting or tuning</source>
+        <translation>Antenas skaņotājs netiek palaists raidīšanas vai skaņošanas laikā</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>The radio was asked to start its antenna tuner</source>
+        <translation>Radio tika lūgts palaist savu antenas skaņotāju</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Enable Tx stays off for %1 s after a right click on Tune, while the radio's antenna tuner works</source>
+        <translation>Atļaut raidīt paliek izslēgts %1 s pēc labā klikšķa uz Piestrāde, kamēr radio antenas skaņotājs strādā</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

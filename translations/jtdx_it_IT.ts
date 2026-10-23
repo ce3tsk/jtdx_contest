@@ -6583,6 +6583,31 @@ Questo è l'errore del decoder stesso. Sistemare ciò che ne impedisce l'avvio -
         <source>At each start, the recordings in the save directory (Settings &gt; Audio &gt; Audio files save directory) last changed more than 30 days ago are deleted - only the program's own, named by their time as 261023_153000.wav, and WSPR's .c2. Other files, subdirectories and what is in them stay.</source>
         <translation>A ogni avvio vengono eliminate le registrazioni della cartella di salvataggio (Impostazioni &gt; Audio &gt; Cartella dove salvare i file audio) modificate l'ultima volta più di 30 giorni prima - solo quelle del programma, chiamate con la loro ora come 261023_153000.wav, e i .c2 di WSPR. Gli altri file, le sottocartelle e il loro contenuto restano.</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Right click: the radio starts its own antenna tuner (ATU), if it has one - a rig controlled through Hamlib, flrig included. The radio keys itself for it; not while transmitting.</source>
+        <translation>Clic destro: la radio avvia il proprio accordatore d'antenna (ATU), se ne ha uno - una radio controllata tramite Hamlib, flrig compreso. La radio va da sola in trasmissione per farlo; non durante una trasmissione.</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>The rig control in use cannot start the radio's antenna tuner - a rig controlled through Hamlib that has one, or flrig, can</source>
+        <translation>Il controllo della radio in uso non può avviare l'accordatore d'antenna della radio - può farlo una radio controllata tramite Hamlib che ne abbia uno, oppure flrig</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>The antenna tuner is not started while transmitting or tuning</source>
+        <translation>L'accordatore d'antenna non viene avviato durante una trasmissione o una sintonia</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>The radio was asked to start its antenna tuner</source>
+        <translation>Alla radio è stato chiesto di avviare il suo accordatore d'antenna</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Enable Tx stays off for %1 s after a right click on Tune, while the radio's antenna tuner works</source>
+        <translation>Abilita Tx resta spento per %1 s dopo un clic destro su Accordo, mentre l'accordatore d'antenna della radio lavora</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

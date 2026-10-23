@@ -6586,6 +6586,31 @@ To je greška samog dekodera. Otklonite ono što ga sprječava da se pokrene - n
         <source>At each start, the recordings in the save directory (Settings &gt; Audio &gt; Audio files save directory) last changed more than 30 days ago are deleted - only the program's own, named by their time as 261023_153000.wav, and WSPR's .c2. Other files, subdirectories and what is in them stay.</source>
         <translation>Pri svakom pokretanju brišu se snimke u mapi za spremanje (Postavke &gt; Zvuk &gt; Lokacija snimanja audio datoteka) koje su zadnji put promijenjene prije više od 30 dana - samo vlastite snimke programa, nazvane po vremenu kao 261023_153000.wav, i WSPR-ove .c2. Ostale datoteke, podmape i njihov sadržaj ostaju.</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Right click: the radio starts its own antenna tuner (ATU), if it has one - a rig controlled through Hamlib, flrig included. The radio keys itself for it; not while transmitting.</source>
+        <translation>Desni klik: radio pokreće vlastiti antenski prilagodnik (ATU), ako ga ima - radio upravljan preko Hamliba, uključujući flrig. Radio se za to sam uključuje na predaju; ne tijekom predaje.</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>The rig control in use cannot start the radio's antenna tuner - a rig controlled through Hamlib that has one, or flrig, can</source>
+        <translation>Upravljanje radijom koje se koristi ne može pokrenuti antenski prilagodnik radija - to može radio upravljan preko Hamliba koji ga ima, ili flrig</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>The antenna tuner is not started while transmitting or tuning</source>
+        <translation>Antenski prilagodnik ne pokreće se tijekom predaje ili ugađanja</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>The radio was asked to start its antenna tuner</source>
+        <translation>Radio je zamoljen da pokrene svoj antenski prilagodnik</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Enable Tx stays off for %1 s after a right click on Tune, while the radio's antenna tuner works</source>
+        <translation>Pokreni Tx ostaje isključen %1 s nakon desnog klika na Tune, dok antenski prilagodnik radija radi</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

@@ -6572,6 +6572,31 @@ Esse é o erro do próprio descodificador. Corrija o que impede o arranque - uma
         <source>At each start, the recordings in the save directory (Settings &gt; Audio &gt; Audio files save directory) last changed more than 30 days ago are deleted - only the program's own, named by their time as 261023_153000.wav, and WSPR's .c2. Other files, subdirectories and what is in them stay.</source>
         <translation>Em cada arranque, as gravações do diretório de gravação (Configurações &gt; Áudio &gt; Diretório de ficheiros de áudio guardados) modificadas pela última vez há mais de 30 dias são apagadas - só as do próprio programa, com o nome da hora como 261023_153000.wav, e os .c2 do WSPR. Os outros ficheiros, os subdiretórios e o seu conteúdo ficam.</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Right click: the radio starts its own antenna tuner (ATU), if it has one - a rig controlled through Hamlib, flrig included. The radio keys itself for it; not while transmitting.</source>
+        <translation>Clique direito: o rádio inicia o seu próprio acoplador de antena (ATU), se tiver um - um rádio controlado via Hamlib, flrig incluído. O rádio emite sozinho para isso; não durante uma emissão.</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>The rig control in use cannot start the radio's antenna tuner - a rig controlled through Hamlib that has one, or flrig, can</source>
+        <translation>O controlo do rádio em uso não pode iniciar o acoplador de antena do rádio - um rádio controlado via Hamlib que tenha um, ou o flrig, pode</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>The antenna tuner is not started while transmitting or tuning</source>
+        <translation>O acoplador de antena não é iniciado durante uma emissão ou sintonia</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>The radio was asked to start its antenna tuner</source>
+        <translation>Foi pedido ao rádio que iniciasse o seu acoplador de antena</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Enable Tx stays off for %1 s after a right click on Tune, while the radio's antenna tuner works</source>
+        <translation>Ligar Tx fica desligado durante %1 s após um clique direito em Tune, enquanto o acoplador de antena do rádio trabalha</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

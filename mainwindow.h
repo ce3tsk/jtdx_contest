@@ -1256,6 +1256,8 @@ private:
   QLabel * waitcall_label {nullptr};   // the status bar's "Wait and Call K1ABC: ..."
   bool m_hideClearPhantoms {false};    // CE3TSK 2026-10-23: Misc > Hide clear phantom messages, as the windows hold it
   void removeOldSavedFiles ();   // CE3TSK 2026-10-23: Save > Remove saved files after 30 days (savepurge.h)
+  void atuTune ();   // CE3TSK 2026-10-23: a right click on Tune - the radio's own antenna tuner (atutune.h)
+  QElapsedTimer m_atuTuneClock;   // (3.-195) since the last right click that asked: Enable Tx is held 6 s after it
   void enableTxTip (QString const& waitCallState = {});   // (2026-10-23) Enable Tx's tooltip: the right click, the colours
   QString m_enableTxTip;               // its first line, the .ui's (translated)
   // CE3TSK 2026-10-23: sync to one station (stationsync.h, STATION_SYNC_PLAN.md)

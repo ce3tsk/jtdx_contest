@@ -6582,6 +6582,31 @@ That is the decoder's own error. Put right whatever stops it starting - a missin
         <source>At each start, the recordings in the save directory (Settings &gt; Audio &gt; Audio files save directory) last changed more than 30 days ago are deleted - only the program's own, named by their time as 261023_153000.wav, and WSPR's .c2. Other files, subdirectories and what is in them stay.</source>
         <translation>시작할 때마다 저장 디렉터리(설정 &gt; 오디오 &gt; 오디오 파일 저장 디렉터리)에서 마지막으로 수정한 지 30일이 넘은 녹음을 삭제합니다. 이 프로그램 자체의 녹음(261023_153000.wav처럼 시각으로 이름 붙인 것)과 WSPR의 .c2만 해당됩니다. 다른 파일, 하위 디렉터리와 그 내용은 남습니다.</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Right click: the radio starts its own antenna tuner (ATU), if it has one - a rig controlled through Hamlib, flrig included. The radio keys itself for it; not while transmitting.</source>
+        <translation>오른쪽 클릭: 무선기에 내장 안테나 튜너(ATU)가 있으면 이를 시작합니다 - Hamlib으로 제어하는 무선기(flrig 포함). 무선기가 스스로 송신하여 튜닝합니다. 송신 중에는 시작하지 않습니다.</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>The rig control in use cannot start the radio's antenna tuner - a rig controlled through Hamlib that has one, or flrig, can</source>
+        <translation>사용 중인 리그 제어로는 무선기의 안테나 튜너를 시작할 수 없습니다 - 튜너가 있는 Hamlib 제어 무선기나 flrig라면 가능합니다</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>The antenna tuner is not started while transmitting or tuning</source>
+        <translation>송신 중이거나 튠 중에는 안테나 튜너를 시작하지 않습니다</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>The radio was asked to start its antenna tuner</source>
+        <translation>무선기에 안테나 튜너 시작을 요청했습니다</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Enable Tx stays off for %1 s after a right click on Tune, while the radio's antenna tuner works</source>
+        <translation>튠을 오른쪽 클릭한 뒤 %1초 동안, 무선기의 안테나 튜너가 동작하는 사이 송신 허용은 꺼진 채로 있습니다</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

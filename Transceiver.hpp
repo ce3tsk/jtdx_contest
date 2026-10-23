@@ -100,6 +100,7 @@ public:
       , level_ {0}
       , power_ {0}
       , swr_ {0}
+      , tuner_ {false}
     {
     }
 
@@ -129,6 +130,7 @@ public:
     int level () const {return level_;}
     unsigned int power () const {return power_;}
     unsigned int swr () const {return swr_;}
+    bool tuner () const {return tuner_;}   // CE3TSK 2026-10-23: the rig control can start the radio's own antenna tuner (atutune.h)
 
     void online (bool state) {online_ = state;}
     void frequency (Frequency f) {rx_frequency_ = f;}
@@ -156,6 +158,7 @@ public:
     void level (int strength) {level_ = strength;}
     void power (unsigned int mwpower) {power_ = mwpower;}
     void swr (unsigned int mswr) {swr_ = mswr;}
+    void tuner (bool can) {tuner_ = can;}
 
   private:
     bool online_;
@@ -184,6 +187,7 @@ public:
     int level_;
     unsigned int power_;
     unsigned int swr_;
+    bool tuner_;
     
     // Don't forget to update the debug print and != operator if you
     // add more members here

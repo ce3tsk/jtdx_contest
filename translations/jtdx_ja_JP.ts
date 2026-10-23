@@ -6580,6 +6580,31 @@ That is the decoder's own error. Put right whatever stops it starting - a missin
         <source>At each start, the recordings in the save directory (Settings &gt; Audio &gt; Audio files save directory) last changed more than 30 days ago are deleted - only the program's own, named by their time as 261023_153000.wav, and WSPR's .c2. Other files, subdirectories and what is in them stay.</source>
         <translation>起動するたびに、保存フォルダー（設定 &gt; オーディオ &gt; オーディオファイルを保存するフォルダー）内で最終更新から30日を超えた録音を削除します。対象はこのプログラム自身の録音（261023_153000.wav のように時刻で名付けたもの）と WSPR の .c2 だけです。その他のファイル、サブフォルダーとその中身は残ります。</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Right click: the radio starts its own antenna tuner (ATU), if it has one - a rig controlled through Hamlib, flrig included. The radio keys itself for it; not while transmitting.</source>
+        <translation>右クリック：無線機に内蔵アンテナチューナー（ATU）があれば、それを起動します - Hamlib で制御する無線機（flrig を含む）。無線機は自分で送信してチューニングします。送信中は起動しません。</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>The rig control in use cannot start the radio's antenna tuner - a rig controlled through Hamlib that has one, or flrig, can</source>
+        <translation>使用中のリグ制御では無線機のアンテナチューナーを起動できません - ATU のある Hamlib 制御の無線機、または flrig なら起動できます</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>The antenna tuner is not started while transmitting or tuning</source>
+        <translation>送信中またはチューン中はアンテナチューナーを起動しません</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>The radio was asked to start its antenna tuner</source>
+        <translation>無線機にアンテナチューナーの起動を要求しました</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Enable Tx stays off for %1 s after a right click on Tune, while the radio's antenna tuner works</source>
+        <translation>チューンを右クリックした後 %1 秒間、無線機のアンテナチューナーが動作している間は送信開始はオフのままです</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

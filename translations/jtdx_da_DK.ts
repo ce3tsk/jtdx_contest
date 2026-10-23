@@ -6586,6 +6586,31 @@ Det er dekoderens egen fejl. Ret det, der forhindrer den i at starte - et mangle
         <source>At each start, the recordings in the save directory (Settings &gt; Audio &gt; Audio files save directory) last changed more than 30 days ago are deleted - only the program's own, named by their time as 261023_153000.wav, and WSPR's .c2. Other files, subdirectories and what is in them stay.</source>
         <translation>Ved hver start slettes de optagelser i gemmemappen (Indstillinger &gt; Audio &gt; Bibliotek hvor audio filerne gemmes), der sidst blev ændret for mere end 30 dage siden - kun programmets egne, navngivet efter deres tidspunkt som 261023_153000.wav, og WSPR's .c2. Andre filer, undermapper og deres indhold bevares.</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Right click: the radio starts its own antenna tuner (ATU), if it has one - a rig controlled through Hamlib, flrig included. The radio keys itself for it; not while transmitting.</source>
+        <translation>Højreklik: radioen starter sin egen antennetuner (ATU), hvis den har en - en radio styret via Hamlib, flrig medregnet. Radioen sender selv til det; ikke mens der sendes.</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>The rig control in use cannot start the radio's antenna tuner - a rig controlled through Hamlib that has one, or flrig, can</source>
+        <translation>Den anvendte radiostyring kan ikke starte radioens antennetuner - det kan en radio styret via Hamlib, der har en, eller flrig</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>The antenna tuner is not started while transmitting or tuning</source>
+        <translation>Antennetuneren startes ikke, mens der sendes eller tunes</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>The radio was asked to start its antenna tuner</source>
+        <translation>Radioen er blevet bedt om at starte sin antennetuner</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Enable Tx stays off for %1 s after a right click on Tune, while the radio's antenna tuner works</source>
+        <translation>Aktiver Tx forbliver slået fra i %1 s efter et højreklik på Tune, mens radioens antennetuner arbejder</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

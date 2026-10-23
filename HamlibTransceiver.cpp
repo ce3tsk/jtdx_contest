@@ -589,6 +589,7 @@ m_jtdxtime = jtdxtime;
   tickle_hamlib_ = false;
   get_vfo_works_ = true;
   set_vfo_works_ = true;
+  update_tuner (atu_tune::Way::None != tune_way ());   // CE3TSK 2026-10-23: a right click on Tune can start the radio's tuner
 //printf("rig id %d do_snr_ %d caps %llx do_pwr_ %d do_pwr2_ %d\n",model_,do_snr_,rig_get_caps_int (model_, RIG_CAPS_HAS_GET_LEVEL),do_pwr_,do_pwr2_);
 #if JTDX_DEBUG_TO_FILE
   pFile = fopen (debug_file_.c_str(),"a");
@@ -1519,6 +1520,40 @@ void HamlibTransceiver::do_ptt (bool on)
     }
 
   update_PTT (on);
+}
+
+/* CE3TSK 2026-10-23 (TODO.md 3.-194, atutune.h): which Hamlib call starts the radio's own antenna tuner - asked of the
+   open rig, so a rig behind rigctld answers as the remote rig (its operations come with rigctld's state at the open) */
+atu_tune::Way HamlibTransceiver::tune_way () const
+{
+  return atu_tune::way (is_dummy_, rig_has_vfo_op (rig_.data (), RIG_OP_TUNE), RIG_MODEL_FLRIG == model_,
+                        rig_has_set_func (rig_.data (), RIG_FUNC_TUNER));
+}
+
+/* CE3TSK 2026-10-23 (TODO.md 3.-194, ATU_TUNE_PLAN.md): a right click on Tune - the radio starts its own antenna tuner.
+   On only: the radio ends its own cycle, and flrig's rig.tune ignores its argument, so an "off" sent there would start
+   another tuning (the window sends on and off at once, MainWindow::atuTune ()). A refused start is no rig failure - the
+   rig is not taken offline for it, as error_check () would: it goes to the standard error (qCritical: this library is
+   built with QT_NO_WARNING_OUTPUT, a qWarning would say nothing), and the window said it only asked */
+void HamlibTransceiver::do_tune (bool on)
+{
+  TRACE_CAT ("HamlibTransceiver", on << state ());
+  if (!on) return;
+  int rc {RIG_OK};
+  switch (tune_way ())
+    {
+    case atu_tune::Way::TuneOp:
+      TRACE_CAT ("HamlibTransceiver", "rig_vfo_op RIG_OP_TUNE");
+      rc = rig_vfo_op (rig_.data (), RIG_VFO_CURR, RIG_OP_TUNE);
+      break;
+    case atu_tune::Way::FlrigTuner:
+      TRACE_CAT ("HamlibTransceiver", "rig_set_func RIG_FUNC_TUNER 1 (flrig's rig.tune)");
+      rc = rig_set_func (rig_.data (), RIG_VFO_CURR, RIG_FUNC_TUNER, 1);
+      break;
+    case atu_tune::Way::None:   // the window does not ask: the rig state's tuner () is false
+      return;
+    }
+  if (RIG_OK != rc) qCritical ("Hamlib: starting the antenna tuner failed: %s", rigerror (rc));
 }
 
 void HamlibTransceiver::set_conf (char const * item, char const * value)

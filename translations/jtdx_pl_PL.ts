@@ -6582,6 +6582,31 @@ To błąd samego dekodera. Usuń to, co uniemożliwia jego uruchomienie - brakuj
         <source>At each start, the recordings in the save directory (Settings &gt; Audio &gt; Audio files save directory) last changed more than 30 days ago are deleted - only the program's own, named by their time as 261023_153000.wav, and WSPR's .c2. Other files, subdirectories and what is in them stay.</source>
         <translation>Przy każdym uruchomieniu usuwane są nagrania z katalogu zapisu (Ustawienia &gt; Audio &gt; Katalog do zapisu plików audio), które ostatnio zmieniono ponad 30 dni temu - tylko własne nagrania programu, nazwane według czasu jak 261023_153000.wav, oraz pliki .c2 WSPR. Inne pliki, podkatalogi i ich zawartość pozostają.</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Right click: the radio starts its own antenna tuner (ATU), if it has one - a rig controlled through Hamlib, flrig included. The radio keys itself for it; not while transmitting.</source>
+        <translation>Prawy klik: radio uruchamia własny tuner antenowy (ATU), jeśli go ma - radio sterowane przez Hamlib, także przez flrig. Radio samo przechodzi przy tym na nadawanie; nie podczas nadawania.</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>The rig control in use cannot start the radio's antenna tuner - a rig controlled through Hamlib that has one, or flrig, can</source>
+        <translation>Używane sterowanie radiem nie może uruchomić tunera antenowego radia - może to radio sterowane przez Hamlib, które go ma, albo flrig</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>The antenna tuner is not started while transmitting or tuning</source>
+        <translation>Tuner antenowy nie jest uruchamiany podczas nadawania ani strojenia</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>The radio was asked to start its antenna tuner</source>
+        <translation>Radio zostało poproszone o uruchomienie tunera antenowego</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Enable Tx stays off for %1 s after a right click on Tune, while the radio's antenna tuner works</source>
+        <translation>Aktywuj Tx pozostaje wyłączony przez %1 s po prawym kliknięciu Strojenie, gdy tuner antenowy radia pracuje</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

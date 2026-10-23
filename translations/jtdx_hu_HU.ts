@@ -6582,6 +6582,31 @@ Ez magának a dekódernek a hibája. Hárítsa el, ami az indulását akadályoz
         <source>At each start, the recordings in the save directory (Settings &gt; Audio &gt; Audio files save directory) last changed more than 30 days ago are deleted - only the program's own, named by their time as 261023_153000.wav, and WSPR's .c2. Other files, subdirectories and what is in them stay.</source>
         <translation>Minden indításkor törlődnek a mentési könyvtár (Beállítások &gt; Audio &gt; Audio fájlok mentése) azon felvételei, amelyek utolsó módosítása 30 napnál régebbi - csak a program saját felvételei, amelyek neve az időpontjuk, például 261023_153000.wav, és a WSPR .c2 fájljai. Az egyéb fájlok, az alkönyvtárak és tartalmuk megmaradnak.</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Right click: the radio starts its own antenna tuner (ATU), if it has one - a rig controlled through Hamlib, flrig included. The radio keys itself for it; not while transmitting.</source>
+        <translation>Jobb kattintás: a rádió elindítja saját antennahangolóját (ATU), ha van neki - Hamlib által vezérelt rádió, az flrig is. A rádió ehhez maga kapcsol adásra; adás közben nem.</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>The rig control in use cannot start the radio's antenna tuner - a rig controlled through Hamlib that has one, or flrig, can</source>
+        <translation>A használt rádióvezérlés nem tudja elindítani a rádió antennahangolóját - egy Hamlib által vezérelt rádió, amelynek van ilyen, vagy az flrig igen</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>The antenna tuner is not started while transmitting or tuning</source>
+        <translation>Az antennahangoló nem indul adás vagy hangolás közben</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>The radio was asked to start its antenna tuner</source>
+        <translation>A rádió kérést kapott az antennahangoló elindítására</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Enable Tx stays off for %1 s after a right click on Tune, while the radio's antenna tuner works</source>
+        <translation>Az Adás %1 mp-ig kikapcsolva marad a Hangolás gomb jobb kattintása után, amíg a rádió antennahangolója dolgozik</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

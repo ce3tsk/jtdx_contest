@@ -6595,6 +6595,31 @@ See on dekoodri enda viga. Kõrvalda see, mis takistab käivitumist - puuduv tee
         <source>At each start, the recordings in the save directory (Settings &gt; Audio &gt; Audio files save directory) last changed more than 30 days ago are deleted - only the program's own, named by their time as 261023_153000.wav, and WSPR's .c2. Other files, subdirectories and what is in them stay.</source>
         <translation>Igal käivitamisel kustutatakse salvestuskataloogist (Seaded &gt; Heli &gt; Helifailide salvestamise kataloog) salvestised, mida on viimati muudetud üle 30 päeva tagasi - ainult programmi enda omad, mis on nimetatud aja järgi nagu 261023_153000.wav, ja WSPR-i .c2-failid. Muud failid, alamkataloogid ja nende sisu jäävad alles.</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Right click: the radio starts its own antenna tuner (ATU), if it has one - a rig controlled through Hamlib, flrig included. The radio keys itself for it; not while transmitting.</source>
+        <translation>Paremklõps: raadio käivitab oma antennisobitaja (ATU), kui tal see on - Hamlibi kaudu juhitav raadio, ka flrig. Raadio lülitub selleks ise saatele; mitte saate ajal.</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>The rig control in use cannot start the radio's antenna tuner - a rig controlled through Hamlib that has one, or flrig, can</source>
+        <translation>Kasutatav raadio juhtimine ei saa raadio antennisobitajat käivitada - seda saab Hamlibi kaudu juhitav raadio, millel see on, või flrig</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>The antenna tuner is not started while transmitting or tuning</source>
+        <translation>Antennisobitajat ei käivitata saate või häälestamise ajal</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>The radio was asked to start its antenna tuner</source>
+        <translation>Raadiol paluti käivitada oma antennisobitaja</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Enable Tx stays off for %1 s after a right click on Tune, while the radio's antenna tuner works</source>
+        <translation>Luba Tx jääb pärast paremklõpsu nupul Häälesta %1 s välja, kuni raadio antennisobitaja töötab</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

@@ -94,6 +94,7 @@
 #include "FoxVerifier.hpp"   // CE3TSK
 #include "UpdateChecker.hpp"   // CE3TSK: Help > Check for updates, and the update icon
 #include "savepurge.h"   // CE3TSK 2026-10-23: Save > Remove saved files after 30 days
+#include "atutune.h"   // CE3TSK 2026-10-23: a right click on Tune, the radio's own antenna tuner
 #include <QPainter>
 #include <QPainterPath>
 #include <QHBoxLayout>
@@ -1073,6 +1074,18 @@ MainWindow::MainWindow(bool multiple, QSettings * settings, QSharedMemory *shdme
       ui->actionWait_and_Call->toggle ();
     });
   enableTxTip ();   // CE3TSK 2026-10-23: and its tooltip says so, with the colours the Wait features give it
+  /* CE3TSK 2026-10-23 (TODO.md 3.-194, atutune.h): a right click on Tune starts the radio's own antenna tuner - taken as the
+     button's own context menu request, as Enable Tx's and Sync's, not by mousePressEvent (), which only sees it while the
+     button has the focus (WSJT-X's way). Its tooltip says so: a paragraph after the .ui's, which keeps its translations */
+  ui->tuneButton->setContextMenuPolicy (Qt::CustomContextMenu);
+  connect (ui->tuneButton, &QWidget::customContextMenuRequested, this, [this] (QPoint const&) {atuTune ();});
+  {
+    QString tip {ui->tuneButton->toolTip ()};
+    int const e {tip.lastIndexOf ("</body>")};
+    QString const p {"<p>" + tr ("Right click: the radio starts its own antenna tuner (ATU), if it has one - a rig controlled through Hamlib, flrig included. The radio keys itself for it; not while transmitting.").toHtmlEscaped () + "</p>"};
+    if (e >= 0) tip.insert (e, p); else tip += p;
+    ui->tuneButton->setToolTip (tip);
+  }
   /* CE3TSK 2026-10-23: sync to one station (stationsync.h) - a right click on Sync ends a station sync, the next one sets
      the clock back to the system's, as before; taken as the button's own context menu request now, not by
      mousePressEvent (), which only saw it when the button had the focus. A left click checks it for the average Sync,
@@ -3037,6 +3050,19 @@ void MainWindow::on_actionAbout_triggered() { CAboutDlg {this, m_useDarkStyle}.e
 
 void MainWindow::on_enableTxButton_clicked (bool checked)
 {
+  /* CE3TSK 2026-10-23 (TODO.md 3.-195, atutune.h): not on for 6 s after a right click on Tune asked the radio to tune its
+     antenna tuner (WSJT-X: not while its Tune button shows "Tuning"). The operator's ways come through the button's clicked
+     signal - its click and key, a double click's QuickCall, a UDP client's Reply - and are held; the Wait features call
+     here directly and are not: their state follows their own change */
+  if (checked && sender () == ui->enableTxButton
+      && atu_tune::holdsEnableTx (m_atuTuneClock.isValid (), m_atuTuneClock.isValid () ? m_atuTuneClock.elapsed () : -1))
+    {
+      ui->enableTxButton->setChecked (false);
+      statusBar ()->showMessage (tr ("Enable Tx stays off for %1 s after a right click on Tune, while the radio's antenna tuner works")
+                                 .arg (atu_tune::enableTxHoldMs / 1000), 10000);
+      if (m_config.write_decoded_debug ()) writeToALLTXT ("Enable Tx held: a right click on Tune asked the radio's antenna tuner");
+      return;
+    }
   // CE3TSK 2026-10-20: every way to Enable Tx comes here - hopping stops (bandhopping.h)
   if (checked && hopping ()) stopHopping (hopRefusalText (band_hopping::Refusal::EnableTx));
   // CE3TSK 2026-10-21: and Wait and Reply's eight periods end (WSJT-X: stopWRTimer), and Enable Tx on ends a hold
@@ -5859,6 +5885,34 @@ void MainWindow::removeOldSavedFiles ()
   if (removed > 0) printf ("Save: removed %d saved files older than %d days from %s\n", removed, save_purge::days,
                            m_config.save_directory ().absolutePath ().toLocal8Bit ().constData ());
   fflush (stdout);
+}
+
+/* CE3TSK 2026-10-23 (TODO.md 3.-194, atutune.h, ATU_TUNE_PLAN.md): a right click on Tune - the radio starts its own
+   antenna tuner, as WSJT-X 3.0 has it: through Hamlib, flrig included. Not while anything is transmitted - a message or
+   the program's Tune carrier. The request goes out on and at once off: an "off" does nothing on a rig
+   (HamlibTransceiver::do_tune ()), and Configuration sends only a change - the next right click needs it off - while a
+   request left on in the rig state would reach a TCI rig chosen later as its Tune carrier. TCI, OmniRig, DX Lab and HRD
+   report no tuner: refused. (3.-195, the review of 3.-194, 1) Transmitting is also the PTT asked (g_iptt), and the rig's
+   own PTT: stopTx () clears both flags 200 ms before the PTT drops (ptt0Timer) - a right click then reached a keyed rig.
+   Enable Tx is held 6 s after it (on_enableTxButton_clicked ()) */
+void MainWindow::atuTune ()
+{
+  switch (atu_tune::refusal (m_rigOk && m_rigState.online (), m_rigState.tuner (),
+                             m_transmitting || m_tune || g_iptt == 1 || m_rigState.ptt ()))
+    {
+    case atu_tune::Refusal::NoTuner:
+      statusBar ()->showMessage (tr ("The rig control in use cannot start the radio's antenna tuner - a rig controlled through Hamlib that has one, or flrig, can"), 10000);
+      return;
+    case atu_tune::Refusal::Transmitting:
+      statusBar ()->showMessage (tr ("The antenna tuner is not started while transmitting or tuning"), 10000);
+      return;
+    case atu_tune::Refusal::None:
+      break;
+    }
+  m_config.transceiver_tune (true);
+  m_config.transceiver_tune (false);
+  m_atuTuneClock.start ();
+  statusBar ()->showMessage (tr ("The radio was asked to start its antenna tuner"), 10000);
 }
 
 void MainWindow::on_actionNone_triggered() { m_saveWav=0; ui->actionNone->setChecked(true); }

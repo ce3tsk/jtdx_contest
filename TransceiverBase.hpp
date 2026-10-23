@@ -140,6 +140,7 @@ protected:
   void update_level (int = 0);
   void update_power (unsigned int = 0);
   void update_swr (unsigned int = 0);
+  void update_tuner (bool);   // CE3TSK 2026-10-23: the rig control can start the radio's own antenna tuner (atutune.h)
   // Calling this eventually triggers the Transceiver::update(State) signal.
   void update_complete (bool force_signal = false);
 
