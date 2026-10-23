@@ -6576,6 +6576,16 @@ Det er dekoderens egen fejl. Ret det, der forhindrer den i at starte - et mangle
         <source>FT2</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Remove saved files after 30 days</source>
+        <translation>Fjern gemte filer efter 30 dage</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>At each start, the recordings in the save directory (Settings &gt; Audio &gt; Audio files save directory) last changed more than 30 days ago are deleted - only the program's own, named by their time as 261023_153000.wav, and WSPR's .c2. Other files, subdirectories and what is in them stay.</source>
+        <translation>Ved hver start slettes de optagelser i gemmemappen (Indstillinger &gt; Audio &gt; Bibliotek hvor audio filerne gemmes), der sidst blev ændret for mere end 30 dage siden - kun programmets egne, navngivet efter deres tidspunkt som 261023_153000.wav, og WSPR's .c2. Andre filer, undermapper og deres indhold bevares.</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

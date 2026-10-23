@@ -6572,6 +6572,16 @@ Ez magának a dekódernek a hibája. Hárítsa el, ami az indulását akadályoz
         <source>FT2</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Remove saved files after 30 days</source>
+        <translation>Mentett fájlok eltávolítása 30 nap után</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>At each start, the recordings in the save directory (Settings &gt; Audio &gt; Audio files save directory) last changed more than 30 days ago are deleted - only the program's own, named by their time as 261023_153000.wav, and WSPR's .c2. Other files, subdirectories and what is in them stay.</source>
+        <translation>Minden indításkor törlődnek a mentési könyvtár (Beállítások &gt; Audio &gt; Audio fájlok mentése) azon felvételei, amelyek utolsó módosítása 30 napnál régebbi - csak a program saját felvételei, amelyek neve az időpontjuk, például 261023_153000.wav, és a WSPR .c2 fájljai. Az egyéb fájlok, az alkönyvtárak és tartalmuk megmaradnak.</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

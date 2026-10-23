@@ -6574,6 +6574,16 @@ Det är avkodarens eget fel. Åtgärda det som hindrar den från att starta - et
         <source>FT2</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Remove saved files after 30 days</source>
+        <translation>Ta bort sparade filer efter 30 dagar</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>At each start, the recordings in the save directory (Settings &gt; Audio &gt; Audio files save directory) last changed more than 30 days ago are deleted - only the program's own, named by their time as 261023_153000.wav, and WSPR's .c2. Other files, subdirectories and what is in them stay.</source>
+        <translation>Vid varje start raderas de inspelningar i sparkatalogen (Inställningar &gt; Ljud &gt; Katalog för att spara ljudfiler) som senast ändrades för mer än 30 dagar sedan - bara programmets egna, namngivna efter sin tid som 261023_153000.wav, och WSPR:s .c2-filer. Andra filer, underkataloger och deras innehåll finns kvar.</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

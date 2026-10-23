@@ -6576,6 +6576,16 @@ To je greška samog dekodera. Otklonite ono što ga sprječava da se pokrene - n
         <source>FT2</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Remove saved files after 30 days</source>
+        <translation>Ukloni spremljene datoteke nakon 30 dana</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>At each start, the recordings in the save directory (Settings &gt; Audio &gt; Audio files save directory) last changed more than 30 days ago are deleted - only the program's own, named by their time as 261023_153000.wav, and WSPR's .c2. Other files, subdirectories and what is in them stay.</source>
+        <translation>Pri svakom pokretanju brišu se snimke u mapi za spremanje (Postavke &gt; Zvuk &gt; Lokacija snimanja audio datoteka) koje su zadnji put promijenjene prije više od 30 dana - samo vlastite snimke programa, nazvane po vremenu kao 261023_153000.wav, i WSPR-ove .c2. Ostale datoteke, podmape i njihov sadržaj ostaju.</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

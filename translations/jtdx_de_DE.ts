@@ -6572,6 +6572,16 @@ Das ist der Fehler des Decoders selbst. Beheben Sie, was seinen Start verhindert
         <source>FT2</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Remove saved files after 30 days</source>
+        <translation>Gespeicherte Dateien nach 30 Tagen entfernen</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>At each start, the recordings in the save directory (Settings &gt; Audio &gt; Audio files save directory) last changed more than 30 days ago are deleted - only the program's own, named by their time as 261023_153000.wav, and WSPR's .c2. Other files, subdirectories and what is in them stay.</source>
+        <translation>Bei jedem Start werden die Aufnahmen im Speicherverzeichnis (Einstellungen &gt; Audio &gt; Speicherverzeichnis für Audiodateien) gelöscht, die zuletzt vor mehr als 30 Tagen geändert wurden - nur die eigenen des Programms, nach ihrer Zeit benannt wie 261023_153000.wav, und die .c2 von WSPR. Andere Dateien, Unterverzeichnisse und ihr Inhalt bleiben erhalten.</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

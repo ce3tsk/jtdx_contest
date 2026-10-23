@@ -93,6 +93,7 @@
 #include "Audio/BWFFile.hpp"
 #include "FoxVerifier.hpp"   // CE3TSK
 #include "UpdateChecker.hpp"   // CE3TSK: Help > Check for updates, and the update icon
+#include "savepurge.h"   // CE3TSK 2026-10-23: Save > Remove saved files after 30 days
 #include <QPainter>
 #include <QPainterPath>
 #include <QHBoxLayout>
@@ -535,6 +536,7 @@ MainWindow::MainWindow(bool multiple, QSettings * settings, QSharedMemory *shdme
   ui->menuMode->setToolTipsVisible (true);
   ui->menuDXpedition->setToolTipsVisible (true);   // CE3TSK: two tooltips, SuperFox mode's and the Fox verifier's
   ui->menuMisc->setToolTipsVisible (true);   // CE3TSK 2026-10-23: Hide clear phantom messages says which ones
+  ui->menuSave->setToolTipsVisible (true);   // CE3TSK 2026-10-23: and Remove saved files after 30 days what it removes
   m_config.set_jtdxtime (m_jtdxtime);
   /* CE3TSK 2026-10-04: Settings checks the operator's own call and grid against cty.dat (ownstation.h) - the
      logbook the windows use, and nothing while cty.dat is not read */
@@ -1239,6 +1241,7 @@ MainWindow::MainWindow(bool multiple, QSettings * settings, QSharedMemory *shdme
   m_useDarkStyle = m_config.useDarkStyle(); setDecodeMenuColours();
   ui->actionUse_dark_style->setChecked (m_useDarkStyle);   // CE3TSK
   readSettings();		         //Restore user's setup params
+  if (ui->actionRemove_after_30days->isChecked ()) removeOldSavedFiles ();   // CE3TSK 2026-10-23: at each start, as WSJT-X
   refreshDecodePreset();   // P13: the preset lamp from the restored controls
 
   QString t;
@@ -1539,6 +1542,7 @@ void MainWindow::writeSettings()
   m_settings->setValue("Mode",m_mode);
   m_settings->setValue("ModeTx",m_modeTx);
   m_settings->setValue("SaveWav",m_saveWav);
+  m_settings->setValue ("RemoveAudioFiles", ui->actionRemove_after_30days->isChecked ());   // CE3TSK 2026-10-23: WSJT-X's key
   m_settings->setValue("Language",m_lang);
   m_settings->setValue("CallMode",m_callMode);
   m_settings->setValue("CallPriorityCQ",ui->actionCallPriorityAndSearchCQ->isChecked());
@@ -1897,6 +1901,7 @@ void MainWindow::readSettings()
   if(m_saveWav==0) ui->actionNone->setChecked(true);
   else if(m_saveWav==1) ui->actionSave_decoded->setChecked(true);
   else if(m_saveWav==2) ui->actionSave_all->setChecked(true);
+  ui->actionRemove_after_30days->setChecked (m_settings->value ("RemoveAudioFiles", false).toBool ());   // CE3TSK 2026-10-23
 
   m_lang=m_settings->value("Language","en_US").toString();
   ui->actionEnglish->setText("English");
@@ -5844,6 +5849,18 @@ void MainWindow::on_actionDelete_all_wav_files_in_SaveDir_triggered()
   }
 }
 
+/* CE3TSK 2026-10-23 (TODO.md 3.-192): Save > Remove saved files after 30 days, as WSJT-X 3.0 has it - at each start the
+   recordings in the save directory last changed more than 30 days ago are deleted: the program's own alone, by the names it
+   gives them (the review of 3.-192, 1), never a subdirectory or what is in one (savepurge.h). The computer's clock, not
+   the program's, which a time sync moves. */
+void MainWindow::removeOldSavedFiles ()
+{
+  int const removed {save_purge::purge (m_config.save_directory (), QDateTime::currentDateTimeUtc ())};
+  if (removed > 0) printf ("Save: removed %d saved files older than %d days from %s\n", removed, save_purge::days,
+                           m_config.save_directory ().absolutePath ().toLocal8Bit ().constData ());
+  fflush (stdout);
+}
+
 void MainWindow::on_actionNone_triggered() { m_saveWav=0; ui->actionNone->setChecked(true); }
 void MainWindow::on_actionSave_decoded_triggered() { m_saveWav=1; ui->actionSave_decoded->setChecked(true); }
 void MainWindow::on_actionSave_all_triggered() { m_saveWav=2; ui->actionSave_all->setChecked(true); }
@@ -7320,6 +7337,7 @@ void MainWindow::on_actionBypass_all_text_filters_toggled(bool checked) { m_bypa
    GUI"): the sequencer, the UDP clients and ALL.TXT get it as before */
 void MainWindow::on_actionHide_clear_phantom_messages_toggled (bool checked)
 {
+  m_hideClearPhantoms = checked;   // (3.-191) for processMessage (), which draws the line picked whatever it says
   ui->decodedTextBrowser->setHideClearPhantoms (checked);
   ui->decodedTextBrowser2->setHideClearPhantoms (checked);
 }
@@ -9567,6 +9585,9 @@ void MainWindow::processMessage(QString const& messages, int position, bool alt,
     /* CE3TSK 2026-09-30: the copy keeps its marks (phantomdecodes.h) - read back as the replay reads it */
     decodedtext.setVerdict (windowVerdict (t2disp));
 	if (!t2.contains (m_baseCall) || !m_showMyCallMsgRxWindow) {
+		/* CE3TSK 2026-10-23 (TODO.md 3.-191): the line the operator picked is drawn whatever Misc > Hide clear phantom
+		   messages says - it was in the window when it was picked, the entry switched on since */
+		ui->decodedTextBrowser2->setHideClearPhantoms (false);
 		ui->decodedTextBrowser2->displayDecodedText(&decodedtext
                                                   ,m_baseCall
                                                   ,Radio::base_callsign (m_hisCall)
@@ -9580,6 +9601,7 @@ void MainWindow::processMessage(QString const& messages, int position, bool alt,
                                                   ,m_bypassRxfFilters
                                                   ,m_bypassAllFilters
                                                   ,m_wideGraph->rxFreq());
+		ui->decodedTextBrowser2->setHideClearPhantoms (m_hideClearPhantoms);
 	}
       m_QSOText=decodedtext.string();
   }

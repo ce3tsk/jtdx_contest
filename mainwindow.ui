@@ -5199,6 +5199,8 @@ list. The list can be maintained in Settings (F2).</string>
     <addaction name="actionNone"/>
     <addaction name="actionSave_decoded"/>
     <addaction name="actionSave_all"/>
+    <addaction name="separator"/>
+    <addaction name="actionRemove_after_30days"/>
    </widget>
    <widget class="QMenu" name="menuLang">
     <property name="title">
@@ -5495,6 +5497,17 @@ list. The list can be maintained in Settings (F2).</string>
    </property>
    <property name="text">
     <string>Save all</string>
+   </property>
+  </action>
+  <action name="actionRemove_after_30days">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Remove saved files after 30 days</string>
+   </property>
+   <property name="toolTip">
+    <string>At each start, the recordings in the save directory (Settings &gt; Audio &gt; Audio files save directory) last changed more than 30 days ago are deleted - only the program's own, named by their time as 261023_153000.wav, and WSPR's .c2. Other files, subdirectories and what is in them stay.</string>
    </property>
   </action>
   <action name="actionEnglish">

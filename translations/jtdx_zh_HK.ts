@@ -6571,6 +6571,16 @@ That is the decoder's own error. Put right whatever stops it starting - a missin
         <source>FT2</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Remove saved files after 30 days</source>
+        <translation>30 天後刪除已儲存的檔案</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>At each start, the recordings in the save directory (Settings &gt; Audio &gt; Audio files save directory) last changed more than 30 days ago are deleted - only the program's own, named by their time as 261023_153000.wav, and WSPR's .c2. Other files, subdirectories and what is in them stay.</source>
+        <translation>每次啟動時，刪除儲存目錄（設定 &gt; 音頻 &gt; 聲音檔案儲存目錄）中最後修改時間超過 30 天的錄音：僅限本程式自己的錄音（以時間命名，如 261023_153000.wav）和 WSPR 的 .c2 檔案。其他檔案、子目錄及其內容保留。</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

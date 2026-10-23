@@ -6571,6 +6571,16 @@ Dekoders: %3
         <source>FT2</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Remove saved files after 30 days</source>
+        <translation>Noņemt saglabātos failus pēc 30 dienām</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>At each start, the recordings in the save directory (Settings &gt; Audio &gt; Audio files save directory) last changed more than 30 days ago are deleted - only the program's own, named by their time as 261023_153000.wav, and WSPR's .c2. Other files, subdirectories and what is in them stay.</source>
+        <translation>Katrā palaišanas reizē no saglabāšanas direktorijas (Iestatījumi &gt; Audio &gt; Audio failu saglabāšanas direktorija) tiek dzēsti ieraksti, kas pēdējo reizi mainīti pirms vairāk nekā 30 dienām - tikai paša programmas ieraksti, nosaukti pēc to laika kā 261023_153000.wav, un WSPR .c2 faili. Citi faili, apakšdirektorijas un to saturs paliek.</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

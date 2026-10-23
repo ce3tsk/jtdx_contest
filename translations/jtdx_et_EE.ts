@@ -6585,6 +6585,16 @@ See on dekoodri enda viga. Kõrvalda see, mis takistab käivitumist - puuduv tee
         <source>FT2</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Remove saved files after 30 days</source>
+        <translation>Eemalda salvestatud failid 30 päeva järel</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>At each start, the recordings in the save directory (Settings &gt; Audio &gt; Audio files save directory) last changed more than 30 days ago are deleted - only the program's own, named by their time as 261023_153000.wav, and WSPR's .c2. Other files, subdirectories and what is in them stay.</source>
+        <translation>Igal käivitamisel kustutatakse salvestuskataloogist (Seaded &gt; Heli &gt; Helifailide salvestamise kataloog) salvestised, mida on viimati muudetud üle 30 päeva tagasi - ainult programmi enda omad, mis on nimetatud aja järgi nagu 261023_153000.wav, ja WSPR-i .c2-failid. Muud failid, alamkataloogid ja nende sisu jäävad alles.</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

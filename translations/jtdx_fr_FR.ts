@@ -6576,6 +6576,16 @@ C'est l'erreur du décodeur lui-même. Corrigez ce qui l'empêche de démarrer -
         <source>FT2</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Remove saved files after 30 days</source>
+        <translation>Supprimer les fichiers sauvegardés après 30 jours</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>At each start, the recordings in the save directory (Settings &gt; Audio &gt; Audio files save directory) last changed more than 30 days ago are deleted - only the program's own, named by their time as 261023_153000.wav, and WSPR's .c2. Other files, subdirectories and what is in them stay.</source>
+        <translation>À chaque démarrage, les enregistrements du répertoire de sauvegarde (Paramètres &gt; Audio &gt; Répertoire de sauvegarde des fichiers audio) modifiés pour la dernière fois il y a plus de 30 jours sont supprimés - uniquement ceux du programme, nommés d'après leur heure comme 261023_153000.wav, et les .c2 de WSPR. Les autres fichiers, les sous-répertoires et leur contenu sont conservés.</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

@@ -6562,6 +6562,16 @@ Esse é o erro do próprio descodificador. Corrija o que impede o arranque - uma
         <source>FT2</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Remove saved files after 30 days</source>
+        <translation>Remover ficheiros guardados após 30 dias</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>At each start, the recordings in the save directory (Settings &gt; Audio &gt; Audio files save directory) last changed more than 30 days ago are deleted - only the program's own, named by their time as 261023_153000.wav, and WSPR's .c2. Other files, subdirectories and what is in them stay.</source>
+        <translation>Em cada arranque, as gravações do diretório de gravação (Configurações &gt; Áudio &gt; Diretório de ficheiros de áudio guardados) modificadas pela última vez há mais de 30 dias são apagadas - só as do próprio programa, com o nome da hora como 261023_153000.wav, e os .c2 do WSPR. Os outros ficheiros, os subdiretórios e o seu conteúdo ficam.</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

@@ -6572,6 +6572,16 @@ To błąd samego dekodera. Usuń to, co uniemożliwia jego uruchomienie - brakuj
         <source>FT2</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Remove saved files after 30 days</source>
+        <translation>Usuwaj zapisane pliki po 30 dniach</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>At each start, the recordings in the save directory (Settings &gt; Audio &gt; Audio files save directory) last changed more than 30 days ago are deleted - only the program's own, named by their time as 261023_153000.wav, and WSPR's .c2. Other files, subdirectories and what is in them stay.</source>
+        <translation>Przy każdym uruchomieniu usuwane są nagrania z katalogu zapisu (Ustawienia &gt; Audio &gt; Katalog do zapisu plików audio), które ostatnio zmieniono ponad 30 dni temu - tylko własne nagrania programu, nazwane według czasu jak 261023_153000.wav, oraz pliki .c2 WSPR. Inne pliki, podkatalogi i ich zawartość pozostają.</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

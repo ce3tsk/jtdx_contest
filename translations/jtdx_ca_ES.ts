@@ -6581,6 +6581,16 @@ Aquest és l'error del descodificador mateix. Corregiu allò que n'impedeix l'in
         <source>FT2</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Remove saved files after 30 days</source>
+        <translation>Eliminar els arxius desats després de 30 dies</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>At each start, the recordings in the save directory (Settings &gt; Audio &gt; Audio files save directory) last changed more than 30 days ago are deleted - only the program's own, named by their time as 261023_153000.wav, and WSPR's .c2. Other files, subdirectories and what is in them stay.</source>
+        <translation>A cada inici s'eliminen les gravacions del directori de desament (Configuracions &gt; Àudio &gt; Directori per desar arxius d'àudio) modificades per última vegada fa més de 30 dies - només els del programa, anomenats per la seva hora com 261023_153000.wav, i els .c2 de WSPR. La resta d'arxius, els subdirectoris i el que contenen es conserven.</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>
