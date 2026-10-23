@@ -6479,6 +6479,76 @@ Det är avkodarens eget fel. Åtgärda det som hindrar den från att starta - et
         <source>Wait and Call %1: calling %2/%3</source>
         <translation>Vänta och anropa %1: anropar %2/%3</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>right click</source>
+        <translation>högerklick</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>another DX call</source>
+        <translation>annan DX-signal</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>QSO logged</source>
+        <translation>QSO loggad</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>another band</source>
+        <translation>annat band</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>another mode</source>
+        <translation>annat trafiksätt</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Syncing to %1: %2 s</source>
+        <translation>Synkroniserar till %1: %2 s</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Station sync: put the station in DX Call first</source>
+        <translation>Stationssynk: lägg först stationen i DX Anrop</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>No recent decode of %1</source>
+        <translation>Ingen färsk avkodning av %1</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Station sync is for FT8</source>
+        <translation>Stationssynk finns bara i FT8</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Station sync active - right click on Sync to end it</source>
+        <translation>Stationssynk aktiv - högerklicka på Sync för att avsluta den</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Station sync to %1 ended: %2</source>
+        <translation>Stationssynk till %1 avslutad: %2</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Syncing to %1: %2 s, at the next safe moment</source>
+        <translation>Synkroniserar till %1: %2 s, vid nästa säkra ögonblick</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Synced to %1: %2 s (average offset %3 s)</source>
+        <translation>Synkroniserad till %1: %2 s (genomsnittlig förskjutning %3 s)</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Ctrl + click: sync JTDX internal time to the station in DX Call, from his newest decode of the last 2 minutes (FT8). A right click ends that first; the next one sets JTDX internal time back to system time.</source>
+        <translation>Ctrl + klick: synkroniserar JTDX interna tid till stationen i DX Anrop, efter dess senaste avkodning de senaste 2 minuterna (FT8). Ett högerklick avslutar det först; nästa återställer JTDX interna tid till systemtiden.</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

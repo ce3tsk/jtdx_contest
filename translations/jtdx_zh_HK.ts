@@ -6476,6 +6476,76 @@ That is the decoder's own error. Put right whatever stops it starting - a missin
         <source>Wait and Call %1: calling %2/%3</source>
         <translation>等待並呼叫 %1：呼叫中 %2/%3</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>right click</source>
+        <translation>右鍵點擊</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>another DX call</source>
+        <translation>另一個 DX 呼號</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>QSO logged</source>
+        <translation>QSO 已記錄</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>another band</source>
+        <translation>另一個波段</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>another mode</source>
+        <translation>另一個模式</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Syncing to %1: %2 s</source>
+        <translation>正在同步到 %1：%2 秒</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Station sync: put the station in DX Call first</source>
+        <translation>電台同步：請先在 DX 呼號中填入電台</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>No recent decode of %1</source>
+        <translation>最近沒有 %1 的解碼</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Station sync is for FT8</source>
+        <translation>電台同步僅用於 FT8</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Station sync active - right click on Sync to end it</source>
+        <translation>電台同步進行中 - 右鍵點擊同步可結束</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Station sync to %1 ended: %2</source>
+        <translation>同步到 %1 已結束：%2</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Syncing to %1: %2 s, at the next safe moment</source>
+        <translation>正在同步到 %1：%2 秒，在下一個安全時刻</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Synced to %1: %2 s (average offset %3 s)</source>
+        <translation>已同步到 %1：%2 秒（平均偏移 %3 秒）</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Ctrl + click: sync JTDX internal time to the station in DX Call, from his newest decode of the last 2 minutes (FT8). A right click ends that first; the next one sets JTDX internal time back to system time.</source>
+        <translation>Ctrl + 點擊：按 DX 呼號中電台最近 2 分鐘內的最新解碼，將 JTDX 內部時間同步到該電台（FT8）。右鍵點擊先結束此同步；再次右鍵點擊將 JTDX 內部時間設定回系統時間。</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

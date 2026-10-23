@@ -6481,6 +6481,76 @@ C'est l'erreur du décodeur lui-même. Corrigez ce qui l'empêche de démarrer -
         <source>Wait and Call %1: calling %2/%3</source>
         <translation>Attendre et appeler %1 : appel %2/%3</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>right click</source>
+        <translation>clic droit</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>another DX call</source>
+        <translation>un autre indicatif DX</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>QSO logged</source>
+        <translation>QSO enregistré</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>another band</source>
+        <translation>une autre bande</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>another mode</source>
+        <translation>un autre mode</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Syncing to %1: %2 s</source>
+        <translation>Synchronisation sur %1 : %2 s</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Station sync: put the station in DX Call first</source>
+        <translation>Synchro station : mettez d'abord la station dans Indicatif DX</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>No recent decode of %1</source>
+        <translation>Aucun décodage récent de %1</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Station sync is for FT8</source>
+        <translation>La synchro station n'existe qu'en FT8</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Station sync active - right click on Sync to end it</source>
+        <translation>Synchro station active - clic droit sur Sync pour l'arrêter</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Station sync to %1 ended: %2</source>
+        <translation>Synchro sur %1 terminée : %2</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Syncing to %1: %2 s, at the next safe moment</source>
+        <translation>Synchronisation sur %1 : %2 s, au prochain moment sûr</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Synced to %1: %2 s (average offset %3 s)</source>
+        <translation>Synchronisé sur %1 : %2 s (décalage moyen %3 s)</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Ctrl + click: sync JTDX internal time to the station in DX Call, from his newest decode of the last 2 minutes (FT8). A right click ends that first; the next one sets JTDX internal time back to system time.</source>
+        <translation>Ctrl + clic : synchronise l'heure interne de JTDX sur la station inscrite dans Indicatif DX, d'après son décodage le plus récent des 2 dernières minutes (FT8). Un clic droit arrête d'abord cela ; le suivant remet l'heure interne de JTDX à l'heure du système.</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

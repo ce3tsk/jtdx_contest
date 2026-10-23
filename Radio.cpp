@@ -190,6 +190,7 @@ namespace
     {"#1400b1", "#1400b1", "#a9beff"},
     {"#222222", "#222222", "#2b2b2b"},
     {"#6699ff", "#6699ff", "#0038a7"},
+    {"#66ccff", "#66ccff", "#1f475a"},   // CE3TSK 2026-10-23: a station sync's Sync button and band label (stationsync.h)
     {"#66ff66", "#66ff66", "#004f00"},
     {"#7bff7b", "#7bff7b", "#004f00"},
     {"#7fff7f", "#7fff7f", "#004f00"},

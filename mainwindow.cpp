@@ -59,6 +59,7 @@
 #include "modetiming.h"   // CE3TSK: the per-mode timing constants
 #include "autoseqstep.h"  // CE3TSK 2026-10-17: the auto sequencer's decisions
 #include "txstep.h"    // CE3TSK 2026-10-19: guiUpdate ()'s Tx decisions
+#include "txstart.h"   // CE3TSK 2026-10-23: our transmission's start, for a station sync's safe moment
 #include "rxstep.h"    // CE3TSK 2026-10-19: readFromStdout ()'s sequencer decisions
 #include "pickstep.h"  // CE3TSK 2026-10-19: processMessage ()'s - what a double click sets up
 #include "waitreply.h" // CE3TSK 2026-10-21: Wait and Reply
@@ -1068,6 +1069,13 @@ MainWindow::MainWindow(bool multiple, QSettings * settings, QSharedMemory *shdme
   connect (ui->enableTxButton, &QWidget::customContextMenuRequested, this, [this] (QPoint const&) {
       ui->actionWait_and_Call->toggle ();
     });
+  /* CE3TSK 2026-10-23: sync to one station (stationsync.h) - a right click on Sync ends a station sync, the next one sets
+     the clock back to the system's, as before; taken as the button's own context menu request now, not by
+     mousePressEvent (), which only saw it when the button had the focus. A left click checks it for the average Sync,
+     refused while a station sync lasts; Ctrl + click is eventFilter ()'s */
+  ui->syncButton->setContextMenuPolicy (Qt::CustomContextMenu);
+  connect (ui->syncButton, &QWidget::customContextMenuRequested, this, [this] (QPoint const&) { stationSyncRightClick (); });
+  connect (ui->syncButton, &QPushButton::toggled, this, [this] (bool checked) { stationSyncAverageArmed (checked); });
   /* CE3TSK: the Fox verifier (SUPERFOX_PLAN.md milestone 2) on the application's one network
      manager. It is created whether or not the operator wants it used: verify () is simply not
      called while "Verify Fox online" is off. The outcome travels as an int so that mainwindow.h
@@ -3395,6 +3403,7 @@ void MainWindow::displayDialFrequency ()
       if(m_transmitting || g_iptt==1) haltTx("band changed at the rig ");
       enableTx_mode (false);
       waitCallCheck (band_name);   // CE3TSK 2026-10-21 (3.-180, the review 3.-179 7): Wait and Call waiting ends too
+      stationSyncCheck (band_name);   // CE3TSK 2026-10-23: and a station sync (stationsync.h)
       psk_Reporter->sendReport ();
       m_okToPost = false;
       // CE3TSK 2026-10-15 (3.-107, item 9 (b)): not on m_rigOk - the first report after a reconnect comes before the rig
@@ -3478,7 +3487,9 @@ void MainWindow::setRigLamp (QString const& colour)
 void MainWindow::setBandLabelColour (QString const& colour)
 {
   m_bandLabelColour = colour;
-  ui->label_6->setStyleSheet(QString("QLabel{background: %1}").arg(Radio::convert_dark(colour,m_useDarkStyle)));
+  // CE3TSK 2026-10-23 (stationsync.h, decision 5): light blue while a station sync lasts - its text stays the average DT's
+  QString const shown {station_sync::on (m_stationSync) ? QString {"#66ccff"} : colour};
+  ui->label_6->setStyleSheet(QString("QLabel{background: %1}").arg(Radio::convert_dark(shown,m_useDarkStyle)));
 }
 
 void MainWindow::setModeLabelStyle (QString const& mode)
@@ -3724,6 +3735,159 @@ void MainWindow::waitCallEnd (QString const& why, bool leaveTx)
   e.why = why;
   e.leaveTx = leaveTx;
   waitCallDo (wait_call::step (m_waitCall, e));
+}
+
+/* CE3TSK 2026-10-23: sync to one station (stationsync.h, STATION_SYNC_PLAN.md, TODO.md 3.-186). MainWindow gathers the
+   events, station_sync::step () decides, stationSyncDo () carries it out - and is the one place the clock's offsets are
+   set (test/station_sync_wiring.sh) */
+// Ctrl + click on Sync: the station in DX Call, from his newest line of the last 2 minutes
+void MainWindow::stationSyncRequest ()
+{
+  station_sync::Event e {station_sync::Kind::Request};
+  e.hisCall = m_hisCall;
+  e.band = m_config.bands ()->find (m_freqNominal);
+  e.mode = m_mode;
+  if (!m_hisCall.isEmpty ()) e.heard = m_stationHeard.newest (m_hisCall, QDateTime::currentMSecsSinceEpoch ());
+  stationSyncDo (station_sync::step (m_stationSync, e));
+  stationSyncMoment ();   // made at once when no transmission can be touched by it
+}
+
+// a left click checked or unchecked Sync: the average Sync is refused while a station sync lasts (decision 4)
+void MainWindow::stationSyncAverageArmed (bool checked)
+{
+  if (checked) stationSyncDo (station_sync::step (m_stationSync, station_sync::Event {station_sync::Kind::AverageArmed}));
+}
+
+void MainWindow::stationSyncRightClick ()
+{
+  stationSyncDo (station_sync::step (m_stationSync, station_sync::Event {station_sync::Kind::RightClick}));
+  stationSyncMoment ();
+}
+
+// where DX Call, the band or the mode can change: another one ends a station sync
+void MainWindow::stationSyncCheck (QString const& band)
+{
+  if (!station_sync::on (m_stationSync)) return;
+  station_sync::Event e {station_sync::Kind::Check};
+  e.hisCall = m_hisCall;
+  e.band = band.isEmpty () ? m_config.bands ()->find (m_freqNominal) : band;
+  e.mode = m_mode;
+  stationSyncDo (station_sync::step (m_stationSync, e));
+}
+
+// (the review 2026-10-23, 1) his QSO only: the Log QSO window does not hold the program, an earlier QSO's may be
+// accepted while a sync to the next station lasts
+void MainWindow::stationSyncLogged (QString const& call)
+{
+  station_sync::Event e {station_sync::Kind::Logged};
+  e.hisCall = call;
+  stationSyncDo (station_sync::step (m_stationSync, e));
+}
+
+// DecodeFinished with Sync checked: the band's average DT moves the base (decision 9: at a safe moment)
+void MainWindow::stationSyncAverageResult (double avexdt)
+{
+  station_sync::Event e {station_sync::Kind::AverageResult};
+  e.avexdt = avexdt;
+  stationSyncDo (station_sync::step (m_stationSync, e));
+}
+
+// a moment a pending jump may be made at - a decode's start, DecodeFinished, a request or a right click, and every second
+// while no decode is coming (Monitor off, WSPR): where the clock stands in its period and against our transmit period,
+// and whether a transmission is under way or may be keyed. (Not the end of our transmission: a jump back there keys a
+// second one, a jump forward is made at a decode's start alone.)
+void MainWindow::stationSyncMoment ()
+{
+  if (!m_stationSync.pending) return;
+  station_sync::Event e {station_sync::Kind::Moment};
+  e.moment.transmitting = m_transmitting || g_iptt == 1;
+  e.moment.txEnabled = m_enableTx || m_tune;
+  qint64 const period = qRound64 (m_TRperiod * 1000.0);
+  qint64 const clock = m_jtdxtime->currentMSecsSinceEpoch2 ();
+  e.moment.msIntoPeriod = clock % period;
+  e.moment.handedOver = station_sync::period_now (clock, m_TRperiod) == m_handedPeriod;   // this period's audio taken by a decode already
+  e.moment.receiving = station_sync::decodes_come (m_monitoring, m_mode);   // (the review 2026-10-23, 4)
+  qint64 const t2p = clock % (2 * period);
+  qint64 at = t2p - (m_txFirst ? 0 : period);   // from the start of our transmit period, within a period either side
+  if (at >= period) at -= 2 * period;
+  if (at < -period) at += 2 * period;
+  e.moment.fromTxStartMs = at;
+  e.moment.periodMs = period;
+  e.moment.windowMs = qRound64 (tx_step::tx_window (tx_duration_s (m_modeTx, m_mode), 0, m_TRperiod, true, m_mode).tx2 * 1000.0);
+  unsigned const nsps = m_modeTx == "FT4" ? 576 : m_modeTx == "FT2" ? 288 : m_modeTx == "FT8" ? 1920 : 0;
+  e.moment.startMs = tx_start::delay_ms (nsps);
+  stationSyncDo (station_sync::step (m_stationSync, e));
+}
+
+void MainWindow::stationSyncDo (station_sync::Do const& d)
+{
+  if (d.apply) { m_jtdxtime->SetOffsets (d.offsets.base, d.offsets.station); m_clockMovedMs += d.moved; }
+  if (d.uncheck && ui->syncButton->isChecked ())
+    {
+      QSignalBlocker const blocker {ui->syncButton};
+      ui->syncButton->setChecked (false);
+    }
+  if (d.grey) ui->syncButton->setEnabled (false);   // as before: until the next decode
+  if (m_config.write_decoded_debug ()) for (auto const& line : d.debug) writeToALLTXT (line);
+  QString why;
+  switch (d.why)
+    {
+    case station_sync::Why::RightClick: why = tr ("right click"); break;
+    case station_sync::Why::DxCall: why = tr ("another DX call"); break;
+    case station_sync::Why::Logged: why = tr ("QSO logged"); break;
+    case station_sync::Why::Band: why = tr ("another band"); break;
+    case station_sync::Why::Mode: why = tr ("another mode"); break;
+    }
+  switch (d.say)
+    {
+    case station_sync::Say::Nothing: break;
+    case station_sync::Say::Started:
+      statusBar ()->showMessage (tr ("Syncing to %1: %2 s").arg (d.call, station_sync::secs (d.station)), 10000); break;
+    case station_sync::Say::NoCall:
+      statusBar ()->showMessage (tr ("Station sync: put the station in DX Call first"), 10000); break;
+    case station_sync::Say::NoDecode:
+      statusBar ()->showMessage (tr ("No recent decode of %1").arg (d.call), 10000); break;
+    case station_sync::Say::NotHere:
+      statusBar ()->showMessage (tr ("Station sync is for FT8"), 10000); break;
+    case station_sync::Say::AverageRefused:
+      statusBar ()->showMessage (tr ("Station sync active - right click on Sync to end it"), 10000); break;
+    case station_sync::Say::Ended:
+      statusBar ()->showMessage (tr ("Station sync to %1 ended: %2").arg (d.call, why), 10000); break;
+    }
+  if (d.repaint) stationSyncPaint ();
+}
+
+// the Sync button (green when checked; light blue while a station sync lasts), its tooltip's first line, and the band
+// label's colour (decisions 2, 5)
+void MainWindow::stationSyncPaint ()
+{
+  bool const on {station_sync::on (m_stationSync)};
+  // the full style of the .ui's checked state, light blue: with the background alone the native style blends its bevel
+  // over it (#a0dbfa measured for #66ccff in the light style, tools/ui-check/stationsync.sh)
+  if (on) ui->syncButton->setStyleSheet (QString ("QPushButton{background-color: %1; border-style: outset; border-width: 1px; border-radius: 5px; border-color: %2; min-width: 5em; padding: 3px}")
+                                         .arg (Radio::convert_dark ("#66ccff", m_useDarkStyle), Radio::convert_dark ("#000000", m_useDarkStyle)));
+  else ui->syncButton->setStyleSheet (QString ("QPushButton:checked{background: %1}").arg (Radio::convert_dark ("#00ff00", m_useDarkStyle)));
+  if (!m_bandLabelColour.isEmpty ()) setBandLabelColour (m_bandLabelColour);
+  // the tooltip: the .ui's text (translated) between a line of the state and one on Ctrl + click; the lines added
+  // before are taken out first, so the text is the .ui's again whatever was shown
+  QString tip {ui->syncButton->toolTip ()};
+  static QRegularExpression const added {"<!--ss-->.*<!--/ss-->", QRegularExpression::DotMatchesEverythingOption | QRegularExpression::InvertedGreedinessOption};
+  tip.remove (added);
+  QString state;
+  if (on)
+    {
+      auto const t = station_sync::target (m_stationSync);
+      state = m_stationSync.pending
+        ? tr ("Syncing to %1: %2 s, at the next safe moment").arg (m_stationSync.call, station_sync::secs (t.station))
+        : tr ("Synced to %1: %2 s (average offset %3 s)").arg (m_stationSync.call, station_sync::secs (t.station), station_sync::secs (t.base));
+      state = "<!--ss--><b>" + state.toHtmlEscaped () + "</b><br/><!--/ss-->";
+    }
+  QString const ctrl {"<!--ss--><br/><br/>" + tr ("Ctrl + click: sync JTDX internal time to the station in DX Call, from his newest decode of the last 2 minutes (FT8). A right click ends that first; the next one sets JTDX internal time back to system time.").toHtmlEscaped () + "<!--/ss-->"};
+  int const p {tip.indexOf ("<p>")};
+  if (p >= 0) tip.insert (p + 3, state); else tip.prepend (state);
+  int const e {tip.lastIndexOf ("</p>")};
+  if (e >= 0) tip.insert (e, ctrl); else tip.append (ctrl);
+  ui->syncButton->setToolTip (tip);
 }
 
 /* CE3TSK 2026-10-22 (TODO.md 3.-184): what a step of Wait and Call says the window must do (wait_call::Do), in its order.
@@ -4819,7 +4983,7 @@ setEnableTxButtonStyle ();
   ui->filterButton->setStyleSheet(QString("QPushButton:checked{background: %1}").arg(Radio::convert_dark("#00ff00",m_useDarkStyle)));
   ui->AGCcButton->setStyleSheet(QString("QPushButton:checked{background: %1}").arg(Radio::convert_dark("#00ff00",m_useDarkStyle)));
   ui->hintButton->setStyleSheet(QString("QPushButton:checked{background: %1}").arg(Radio::convert_dark("#00ff00",m_useDarkStyle)));
-  ui->syncButton->setStyleSheet(QString("QPushButton:checked{background: %1}").arg(Radio::convert_dark("#00ff00",m_useDarkStyle)));
+  stationSyncPaint ();   // CE3TSK 2026-10-23: Sync green when checked, light blue while a station sync lasts
   /* CE3TSK 2026-09-28: the band and mode buttons light up in the green of AnsB4 and the other toggles above, not
      the style's grey - the operator: "all 3 should use the green highlight that is used elsewhere e.g. AnsB4 instead
      of the grey one". Set on the two rows rather than on each button: it reaches every button they hold, the band
@@ -4887,6 +5051,15 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)  //eventFilter()
       // CE3TSK 2026-09-28: a click on the dial frequency steps it (the key press falls through to here)
       if (event->type () == QEvent::MouseButtonPress && object == ui->labDialFreq
           && dialFrequencyClick (static_cast<QMouseEvent *> (event))) return true;
+      // CE3TSK 2026-10-23: Ctrl + click on Sync syncs to the station in DX Call (stationsync.h) - taken here, so that the
+      // button is not checked for the average Sync
+      if (event->type () == QEvent::MouseButtonPress && object == ui->syncButton
+          && static_cast<QMouseEvent *> (event)->button () == Qt::LeftButton
+          && (static_cast<QMouseEvent *> (event)->modifiers () & Qt::ControlModifier))
+        {
+          stationSyncRequest ();
+          return true;
+        }
       break;
 
     case QEvent::ChildAdded:
@@ -4911,6 +5084,12 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)  //eventFilter()
     case QEvent::MouseButtonDblClick:
       // CE3TSK 2026-09-28: Qt makes the second of two quick presses a double click - still a step
       if (object == ui->labDialFreq && dialFrequencyClick (static_cast<QMouseEvent *> (event))) return true;
+      // CE3TSK 2026-10-23: a second quick Ctrl + click on Sync is one more request, never a check of the button
+      if (object == ui->syncButton && (static_cast<QMouseEvent *> (event)->modifiers () & Qt::ControlModifier))
+        {
+          if (static_cast<QMouseEvent *> (event)->button () == Qt::LeftButton) stationSyncRequest ();
+          return true;
+        }
       // CE3TSK: the DX Call button or the callsign box looks the call up on qrz.com
       if (object == ui->pbSpotDXCall || object == ui->dxCallEntry)
         {
@@ -7261,6 +7440,7 @@ void MainWindow::decode()                                       //decode()
   if(m_diskData && !m_mode.startsWith("FT")) dec_data.params.nutc=dec_data.params.nutc/100;
   if(dec_data.params.newdat==1) {
     m_msDecStarted=m_jtdxtime->currentMSecsSinceEpoch2();
+    m_clockMovedMs=0;   // CE3TSK 2026-10-23 (stationsync.h, the review 2026-10-23, 5): the jumps from here on, left out of its lag
     if(!m_mode.startsWith("FT")) {
       qint64 ms = m_msDecStarted % 86400000;
       int imin=ms/60000;
@@ -7471,7 +7651,20 @@ void MainWindow::decode()                                       //decode()
   m_deletedRecord.decodeBegins (1 == dec_data.params.newdat, m_diskData, static_cast<qint64> (m_freqNominal));
   /* CE3TSK 2026-10-20: and the dial and mode its lines are of (decodeorigin.h) */
   m_decodeOrigin = decode_origin::at_begin (m_decodeOrigin, 1 == dec_data.params.newdat, static_cast<qint64> (m_freqNominal), m_mode);
+  /* CE3TSK 2026-10-23 (stationsync.h): the clock offset this period was received under - its lines' DTs are measured
+     against it (a decode of the same data again keeps it) */
+  if (1 == dec_data.params.newdat) m_decodeClockOffset = m_jtdxtime->GetOffset ();
   memcpy(to, from, qMin(mem_jtdxjt9->size(), size));
+  /* then a decode's start, the safe moment for a pending jump: the period's audio is the decoder's copy now, a jump back
+     cannot reach our transmission, and a jump forward up to the period's end leaves the next period's buffer whole */
+  if (1 == dec_data.params.newdat && !m_diskData)
+    {
+      // (the review 2026-10-23, 2, 3) the period this decode was due for, also when it starts late, past the period's
+      // end - and the offset that period was received under, for its lines that come after the next decode began
+      m_handedPeriod = station_sync::handed_period (m_jtdxtime->currentMSecsSinceEpoch2 (), m_TRperiod);
+      m_periodOffsets.set (m_handedPeriod, m_decodeClockOffset);
+      stationSyncMoment ();
+    }
   QFile {m_config.temp_dir ().absoluteFilePath (".bgabort")}.remove ();   // CE3TSK: a fresh decode clears any context-change abort
   QFile {m_config.temp_dir ().absoluteFilePath (".lock")}.remove (); // Allow jtdxjt9 to start
   if(m_config.write_decoded_debug()) {
@@ -7770,11 +7963,11 @@ void MainWindow::readFromStdout()                             //readFromStdout
       qint64 msDecFin=m_jtdxtime->currentMSecsSinceEpoch2();
       if(!m_manualDecode && !m_diskData) {
         qint64 periodms=m_TRperiod*1000;
-        qint64 lagms=msDecFin - periodms*((m_msDecStarted / periodms)+1); // rounding to base int
+        qint64 lagms=msDecFin - m_clockMovedMs - periodms*((m_msDecStarted / periodms)+1); // rounding to base int; CE3TSK 2026-10-23: the clock's jumps left out
         float lag=lagms/1000.0; slag.setNum(lag,'f',2); if(lag > 0.0) slag="+"+slag;
       }
       if(m_diskData && m_mode.startsWith("FT")) { // estimated lag for FT4||FT8 wav file
-        qint64 lagms=msDecFin-m_msDecStarted;
+        qint64 lagms=msDecFin-m_clockMovedMs-m_msDecStarted;
         if(m_mode=="FT8") {
           if(m_swl) lagms-=300; 
           else if(ft8EarlyStartInEffect ()) lagms-=1200;
@@ -7814,8 +8007,9 @@ void MainWindow::readFromStdout()                             //readFromStdout
           }
           else m_lostaudio=false;
           if (ui->syncButton->isChecked() && !m_superFoxSlot) {   // CE3TSK: the Fox's slot ran no sync search, see decode()
-            if (navexdt > 19) m_jtdxtime->SetOffset(m_jtdxtime->GetOffset() - avexdt.toFloat());
-            ui->syncButton->setChecked(false);
+            // CE3TSK 2026-10-23 (stationsync.h, decision 9): the base's jump waits for a safe moment, as a station sync's
+            if (navexdt > 19) stationSyncAverageResult (avexdt.toDouble ());
+            ui->syncButton->setChecked(false);   // its toggled () slot takes only a check
           } else if (!ui->syncButton->isEnabled()) ui->syncButton->setEnabled(true);
         }
         else if (m_mode=="FT4") {
@@ -7834,6 +8028,7 @@ void MainWindow::readFromStdout()                             //readFromStdout
         }
       }
       else { ui->decodedTextLabel->setTextFormat(Qt::PlainText); ui->decodedTextLabel->setText("UTC     dB   DT "+tr("Freq  ")+" "+tr("Lag=")+slag); }
+      if (!m_diskData) stationSyncMoment ();   // CE3TSK 2026-10-23: DecodeFinished, a safe moment for a pending jump
       dec_data.params.nagain=0; dec_data.params.nagainfil=0; dec_data.params.ndiskdat=0;
       m_manualDecode=false; ui->DecodeButton->setChecked (false);
       QFile {m_config.temp_dir ().absoluteFilePath (".lock")}.open(QIODevice::ReadWrite);
@@ -8044,6 +8239,13 @@ void MainWindow::readFromStdout()                             //readFromStdout
       /* CE3TSK 2026-10-19 (TODO.md section 7, 1f; 3.-141): the sequencer's decisions on a line are rxstep.h's - his line's
          sender, whom he answers, the Rx frequency window, what the line asks of the sequencer */
       bool const fromHim = !deCall.isEmpty() && Radio::base_callsign (deCall) == Radio::base_callsign (m_hisCall);
+      /* CE3TSK 2026-10-23 (stationsync.h): each station's newest line - its DT, the offset its period was received
+         under, when - for a station sync to him; FT8 of the air only, not a recording, not a SuperFox slot, not late */
+      if (!deCall.isEmpty () && !decodedtext.isDebug () && !late && !m_diskData && !m_superFoxSlot
+          && station_sync::mode_has_it (m_decodeOrigin.mode))
+        m_stationHeard.hear (deCall, decodedtext.dt (),
+                             m_periodOffsets.of (period_index_of_line (decodedtext.timeInSeconds (), m_TRperiod), m_decodeClockOffset),
+                             QDateTime::currentMSecsSinceEpoch ());
       if (rx_step::rx_follows (!m_hisCall.isEmpty(), fromHim)) ui->RxFreqSpinBox->setValue (decodedtext.frequencyOffset());
       { auto const f = rx_step::reply_flags ({m_reply_me, m_reply_other, m_reply_CQ73}, fromHim, mycallinmsg, decodedtextmsg);
         m_reply_me = f.me; m_reply_other = f.other; m_reply_CQ73 = f.cq73; }
@@ -8793,6 +8995,9 @@ void MainWindow::guiUpdate()
       if (due >= 0) set_scheduler (entries[due].band, entries[due].mixed);
     }
     m_sec0=nsec;
+    // CE3TSK 2026-10-23 (stationsync.h, the review 2026-10-23, 4): with no decode to come - Monitor off, WSPR - a pending
+    // jump has no decode's start to wait for: every second is a moment, the jump made once it is safe for our transmissions
+    if (m_stationSync.pending && !station_sync::decodes_come (m_monitoring, m_mode)) stationSyncMoment ();
     if(!m_monitoring and !m_diskData) ui->signal_meter_widget->setValue(0);
     displayDialFrequency ();
     if (m_geometry_restored > 0) { m_geometry_restored -=1;
@@ -10306,6 +10511,7 @@ void MainWindow::on_dxCallEntry_textChanged(const QString &t) //dxCall changed
   m_waitReplyHeld = wait_reply::held_after_change (m_waitReplyHeld, m_hisCall);
   waitReplyRepaint ();
   waitCallCheck ();   // CE3TSK 2026-10-21: Wait and Call ends with another station in DX Call
+  stationSyncCheck ();   // CE3TSK 2026-10-23: and a station sync (stationsync.h)
   m_hisCallCompound=(!m_hisCall.isEmpty() && m_hisCall.contains("/")); // && !m_hisCall.endsWith("/P") && !m_hisCall.endsWith("/R"));
   if(m_myCallCompound && m_hisCallCompound) {
     if(m_skipTx1) { m_skipTx1=false; ui->skipTx1->setChecked(false); ui->skipGrid->setChecked(false); on_txb1_clicked(); }
@@ -10483,6 +10689,7 @@ void MainWindow::acceptQSO2(QDateTime const& QSO_date_off, QString const& call, 
 {
   QString date = QSO_date_on.toString("yyyyMMdd");
   m_qsoLogged=true;
+  stationSyncLogged (call);   // CE3TSK 2026-10-23: his QSO logged ends a station sync (stationsync.h, decision 3)
   m_logBook.addAsWorked (call, m_config.bands ()->find (dial_freq), mode, date, grid, name);
   /* CE3TSK: the contest log has its own hashes; without this the multiplier and dupe
      highlighting would not reflect a QSO until the next restart. */
@@ -10730,6 +10937,7 @@ void MainWindow::switch_mode (Mode mode)
   }
   refreshDecodePreset();   // P13: the preset lamp is greyed outside FT8 - every mode slot comes through here with m_mode set
   waitCallCheck ();      // CE3TSK 2026-10-21: another mode ends Wait and Call
+  stationSyncCheck ();   // CE3TSK 2026-10-23: and a station sync (stationsync.h)
   waitReplyRepaint ();   // CE3TSK 2026-10-21: Wait and Reply is for the modes with AutoSeq - Enable Tx yellow or not
 }
 
@@ -11076,6 +11284,7 @@ void MainWindow::band_changed (Frequency f)
      echo clock, which band_change_wiring.sh keeps first.) */
   if (hopping () && !m_ownChange) stopHopping (tr ("the band or mode was changed"));
   waitCallCheck (m_config.bands ()->find (f));   // CE3TSK 2026-10-21: another band ends Wait and Call
+  stationSyncCheck (m_config.bands ()->find (f));   // CE3TSK 2026-10-23: and a station sync (stationsync.h)
   if (m_bandEdited) {
     if (!m_mode.startsWith ("WSPR")) { // band hopping preserves auto Tx
       if (f + m_wideGraph->nStartFreq () > m_freqNominal + ui->TxFreqSpinBox->value ()
@@ -11329,11 +11538,6 @@ void MainWindow::mousePressEvent(QMouseEvent *event)             //mousePressEve
     }   
   }
   
-  if(ui->syncButton->hasFocus() && (event->button() & Qt::RightButton) && m_jtdxtime->GetOffset() != 0.0) {
-    m_jtdxtime->SetOffset(0);
-    ui->syncButton->setEnabled(false);
-  }
-
   if(ui->EraseButton->hasFocus() && (event->button() & Qt::RightButton)) {
     qint64 ms=m_jtdxtime->currentMSecsSinceEpoch2();
     ui->decodedTextBrowser2->clear();

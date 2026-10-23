@@ -6477,6 +6477,76 @@ Ez magának a dekódernek a hibája. Hárítsa el, ami az indulását akadályoz
         <source>Wait and Call %1: calling %2/%3</source>
         <translation>Várj és hívj %1: hív %2/%3</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>right click</source>
+        <translation>jobb kattintás</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>another DX call</source>
+        <translation>másik DX hívójel</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>QSO logged</source>
+        <translation>QSO naplózva</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>another band</source>
+        <translation>másik sáv</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>another mode</source>
+        <translation>másik üzemmód</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Syncing to %1: %2 s</source>
+        <translation>Szinkronizálás %1 állomáshoz: %2 s</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Station sync: put the station in DX Call first</source>
+        <translation>Állomásszinkron: előbb írja be az állomást a DX hívójel mezőbe</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>No recent decode of %1</source>
+        <translation>Nincs friss dekódolás tőle: %1</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Station sync is for FT8</source>
+        <translation>Az állomásszinkron csak FT8-ban van</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Station sync active - right click on Sync to end it</source>
+        <translation>Állomásszinkron aktív - jobb kattintás a Sync gombon befejezi</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Station sync to %1 ended: %2</source>
+        <translation>A szinkron %1 állomáshoz véget ért: %2</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Syncing to %1: %2 s, at the next safe moment</source>
+        <translation>Szinkronizálás %1 állomáshoz: %2 s, a következő biztonságos pillanatban</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Synced to %1: %2 s (average offset %3 s)</source>
+        <translation>Szinkronizálva %1 állomáshoz: %2 s (átlagos eltolás %3 s)</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Ctrl + click: sync JTDX internal time to the station in DX Call, from his newest decode of the last 2 minutes (FT8). A right click ends that first; the next one sets JTDX internal time back to system time.</source>
+        <translation>Ctrl + kattintás: a JTDX belső idejét a DX hívójel mezőben lévő állomáshoz szinkronizálja, az utolsó 2 perc legújabb dekódolása alapján (FT8). Egy jobb kattintás először ezt fejezi be; a következő visszaállítja a JTDX belső idejét a rendszeridőre.</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

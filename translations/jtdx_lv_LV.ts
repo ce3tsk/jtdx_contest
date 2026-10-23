@@ -6476,6 +6476,76 @@ Dekoders: %3
         <source>Wait and Call %1: calling %2/%3</source>
         <translation>Gaidīt un izsaukt %1: izsauc %2/%3</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>right click</source>
+        <translation>labais klikšķis</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>another DX call</source>
+        <translation>cits DX izsaukuma signāls</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>QSO logged</source>
+        <translation>QSO ierakstīts žurnālā</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>another band</source>
+        <translation>cits diapazons</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>another mode</source>
+        <translation>cits režīms</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Syncing to %1: %2 s</source>
+        <translation>Sinhronizē ar %1: %2 s</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Station sync: put the station in DX Call first</source>
+        <translation>Stacijas sinhronizācija: vispirms ierakstiet staciju laukā DX izsauk.</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>No recent decode of %1</source>
+        <translation>Nav nesenas %1 dekodēšanas</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Station sync is for FT8</source>
+        <translation>Stacijas sinhronizācija ir tikai FT8</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Station sync active - right click on Sync to end it</source>
+        <translation>Stacijas sinhronizācija aktīva - labais klikšķis uz Sinhr. to beidz</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Station sync to %1 ended: %2</source>
+        <translation>Sinhronizācija ar %1 beigusies: %2</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Syncing to %1: %2 s, at the next safe moment</source>
+        <translation>Sinhronizē ar %1: %2 s, nākamajā drošajā brīdī</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Synced to %1: %2 s (average offset %3 s)</source>
+        <translation>Sinhronizēts ar %1: %2 s (vidējā nobīde %3 s)</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Ctrl + click: sync JTDX internal time to the station in DX Call, from his newest decode of the last 2 minutes (FT8). A right click ends that first; the next one sets JTDX internal time back to system time.</source>
+        <translation>Ctrl + klikšķis: sinhronizē JTDX iekšējo laiku ar staciju laukā DX izsauk., pēc tās jaunākās dekodēšanas pēdējās 2 minūtēs (FT8). Labais klikšķis vispirms to beidz; nākamais atgriež JTDX iekšējo laiku uz sistēmas laiku.</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

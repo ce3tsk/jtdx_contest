@@ -6481,6 +6481,76 @@ To je greška samog dekodera. Otklonite ono što ga sprječava da se pokrene - n
         <source>Wait and Call %1: calling %2/%3</source>
         <translation>Čekaj i pozovi %1: poziva %2/%3</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>right click</source>
+        <translation>desni klik</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>another DX call</source>
+        <translation>drugi DX znak</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>QSO logged</source>
+        <translation>QSO upisan u dnevnik</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>another band</source>
+        <translation>drugi opseg</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>another mode</source>
+        <translation>drugi način rada</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Syncing to %1: %2 s</source>
+        <translation>Sinkronizacija na %1: %2 s</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Station sync: put the station in DX Call first</source>
+        <translation>Sinkronizacija na stanicu: najprije upišite stanicu u polje DX Znak</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>No recent decode of %1</source>
+        <translation>Nema nedavnog dekodiranja od %1</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Station sync is for FT8</source>
+        <translation>Sinkronizacija na stanicu postoji samo u FT8</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Station sync active - right click on Sync to end it</source>
+        <translation>Sinkronizacija na stanicu je aktivna - desni klik na Sinkr. je završava</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Station sync to %1 ended: %2</source>
+        <translation>Sinkronizacija na %1 završena: %2</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Syncing to %1: %2 s, at the next safe moment</source>
+        <translation>Sinkronizacija na %1: %2 s, u sljedećem sigurnom trenutku</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Synced to %1: %2 s (average offset %3 s)</source>
+        <translation>Sinkronizirano na %1: %2 s (prosječni pomak %3 s)</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Ctrl + click: sync JTDX internal time to the station in DX Call, from his newest decode of the last 2 minutes (FT8). A right click ends that first; the next one sets JTDX internal time back to system time.</source>
+        <translation>Ctrl + klik: sinkronizira interno vrijeme JTDX-a na stanicu u polju DX Znak, prema njenom najnovijem dekodiranju u zadnje 2 minute (FT8). Desni klik najprije to završava; sljedeći vraća interno vrijeme JTDX-a na vrijeme sustava.</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

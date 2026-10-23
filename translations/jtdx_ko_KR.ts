@@ -6477,6 +6477,76 @@ That is the decoder's own error. Put right whatever stops it starting - a missin
         <source>Wait and Call %1: calling %2/%3</source>
         <translation>대기 후 호출 %1: 호출 중 %2/%3</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>right click</source>
+        <translation>오른쪽 클릭</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>another DX call</source>
+        <translation>다른 DX 호출부호</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>QSO logged</source>
+        <translation>QSO 기록됨</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>another band</source>
+        <translation>다른 밴드</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>another mode</source>
+        <translation>다른 모드</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Syncing to %1: %2 s</source>
+        <translation>%1에 동기화 중: %2초</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Station sync: put the station in DX Call first</source>
+        <translation>국 동기: 먼저 DX 호출부호에 국을 넣으세요</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>No recent decode of %1</source>
+        <translation>%1의 최근 디코드가 없습니다</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Station sync is for FT8</source>
+        <translation>국 동기는 FT8에서만 됩니다</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Station sync active - right click on Sync to end it</source>
+        <translation>국 동기 중 - 끝내려면 동기를 오른쪽 클릭</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Station sync to %1 ended: %2</source>
+        <translation>%1 동기 종료: %2</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Syncing to %1: %2 s, at the next safe moment</source>
+        <translation>%1에 동기화 중: %2초, 다음 안전한 순간에</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Synced to %1: %2 s (average offset %3 s)</source>
+        <translation>%1에 동기화됨: %2초 (평균 오프셋 %3초)</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Ctrl + click: sync JTDX internal time to the station in DX Call, from his newest decode of the last 2 minutes (FT8). A right click ends that first; the next one sets JTDX internal time back to system time.</source>
+        <translation>Ctrl + 클릭: JTDX 내부 시각을 DX 호출부호의 국에 맞춥니다. 최근 2분 동안의 가장 새로운 디코드를 기준으로 합니다(FT8). 오른쪽 클릭은 먼저 이것을 끝내고, 그다음 오른쪽 클릭은 JTDX 내부 시각을 시스템 시각으로 되돌립니다.</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

@@ -39,6 +39,7 @@
 #include "commons.h"
 #include "Radio.hpp"
 #include "waitcall.h"   // CE3TSK 2026-10-21: Wait and Call
+#include "stationsync.h"   // CE3TSK 2026-10-23: sync to one station
 #include "Modes.hpp"
 #include "Configuration.hpp"
 #include "WSPRBandHopping.hpp"
@@ -1252,6 +1253,22 @@ private:
   bool m_waitCallOwn {false};     // Enable Tx changed by it, or by Settings OK's pause while calling: not an end
   QTimer m_waitCallTimer;         // (3.-180) listening after the sixth call: to the end of the period after the next
   QLabel * waitcall_label {nullptr};   // the status bar's "Wait and Call K1ABC: ..."
+  // CE3TSK 2026-10-23: sync to one station (stationsync.h, STATION_SYNC_PLAN.md)
+  void stationSyncRequest ();
+  void stationSyncAverageArmed (bool checked);
+  void stationSyncRightClick ();
+  void stationSyncCheck (QString const& band = {});
+  void stationSyncLogged (QString const& call);
+  void stationSyncMoment ();
+  void stationSyncAverageResult (double avexdt);
+  void stationSyncDo (station_sync::Do const& d);
+  void stationSyncPaint ();
+  station_sync::Run m_stationSync;   // the station synced to, the offsets in force and to come
+  station_sync::Book m_stationHeard; // each station's newest decoded line: DT, the offset it was received under, when
+  double m_decodeClockOffset {0.0};  // the clock offset the running decode's period was received under
+  station_sync::PeriodOffsets m_periodOffsets;   // (the review 2026-10-23, 3) and each recent period's, for its late lines
+  int m_handedPeriod {-1};           // the period (its index in the day) whose audio a decode last took
+  qint64 m_clockMovedMs {0};         // (the review 2026-10-23, 5) the ms the clock jumped since the decode began
   void setHoundButtonStyle ();
   void setSpotButtonStyle ();
   void initLogIfNeeded ();
