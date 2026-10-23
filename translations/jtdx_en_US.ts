@@ -6429,6 +6429,21 @@ That is the decoder's own error. Put right whatever stops it starting - a missin
         <source>Yellow: Wait and Reply (Settings &gt; Sequencing) may switch Enable Tx on when the station in DX Call calls you.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Hide clear phantom messages</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Likely phantom decodes of three kinds are not shown, in either window, also when they carry your call: a grid outside the country of the call that sent it, a call signing /R below 30 MHz, and a call of no known country (where?). Each kind only while Settings &gt; Filters &gt; Phantom decodes marks it; a station heard twice with the same grid is shown, and so are weak decodes where both calls sign /P. Only the windows leave them out, whatever Bypass all text filters says: the automatic sequencer, the UDP clients and ALL.TXT get them as before.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>FT2</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>
@@ -10089,7 +10104,7 @@ soundcard changes</source>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
-        <source>A call whose prefix belongs to no country in cty.dat - shown as where? in the country column - is most likely a phantom decode, on any band. The decode is kept, with the call and where? underlined in red, and is never answered automatically - a double click still answers it. Its ALL.TXT line ends with lc:where, and it is sent to UDP clients as a low-confidence decode. Maritime and aeronautical mobile calls (/MM, /AM) have no country and are never marked.</source>
+        <source>A call whose prefix belongs to no country in cty.dat - shown as where? in the country column - is most likely a phantom decode, on any band. The decode is kept, with the call and where? underlined in red, and is never answered automatically - a double click still answers it. Its ALL.TXT line ends with lc:where, and it is sent to UDP clients as a low-confidence decode. A maritime or aeronautical mobile call (/MM, /AM) shows where? too, and is judged by the call before the suffix: DL1ABC/MM is never marked.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

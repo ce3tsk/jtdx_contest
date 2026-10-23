@@ -6557,6 +6557,21 @@ Dat is de fout van de decoder zelf. Verhelp wat het starten verhindert - een ont
         <source>Yellow: Wait and Reply (Settings &gt; Sequencing) may switch Enable Tx on when the station in DX Call calls you.</source>
         <translation>Geel: Wachten en antwoorden (Instellingen &gt; Volgorde) kan Zenden inschakelen aanzetten wanneer het station in DX-roepnaam u roept.</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Hide clear phantom messages</source>
+        <translation>Duidelijke fantoomberichten verbergen</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Likely phantom decodes of three kinds are not shown, in either window, also when they carry your call: a grid outside the country of the call that sent it, a call signing /R below 30 MHz, and a call of no known country (where?). Each kind only while Settings &gt; Filters &gt; Phantom decodes marks it; a station heard twice with the same grid is shown, and so are weak decodes where both calls sign /P. Only the windows leave them out, whatever Bypass all text filters says: the automatic sequencer, the UDP clients and ALL.TXT get them as before.</source>
+        <translation>Waarschijnlijke fantoomdecoderingen van drie soorten worden in geen van beide vensters getoond, ook niet wanneer ze uw roepnaam bevatten: een locator buiten het land van de roepnaam die hem zond, een roepnaam met /R onder 30 MHz en een roepnaam zonder bekend land (waar?). Elke soort alleen zolang Instellingen &gt; Filters &gt; Fantoomdecoderingen haar markeert; een station dat twee keer met dezelfde locator is gehoord, wordt getoond, en ook zwakke decoderingen waarin beide roepnamen /P dragen. Alleen de vensters laten ze weg, wat Alle tekstfilters omzeilen ook zegt: de automatische volgorde (AutoSeq), de UDP-clients en ALL.TXT krijgen ze zoals voorheen.</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>FT2</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>
@@ -10269,8 +10284,8 @@ wijzigingen aan de geluidskaart</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
-        <source>A call whose prefix belongs to no country in cty.dat - shown as where? in the country column - is most likely a phantom decode, on any band. The decode is kept, with the call and where? underlined in red, and is never answered automatically - a double click still answers it. Its ALL.TXT line ends with lc:where, and it is sent to UDP clients as a low-confidence decode. Maritime and aeronautical mobile calls (/MM, /AM) have no country and are never marked.</source>
-        <translation>Een roepnaam waarvan het prefix in cty.dat bij geen enkel land hoort - in de landkolom getoond als waar? - is hoogstwaarschijnlijk een fantoomdecodering, op elke band. De decodering blijft staan, met de roepnaam en waar? rood onderstreept, en wordt nooit automatisch beantwoord - met een dubbelklik beantwoordt u haar toch. De regel in ALL.TXT eindigt op lc:where, en de decodering gaat naar UDP-clients als decodering met lage betrouwbaarheid. Maritiem en aeronautisch mobiele roepnamen (/MM, /AM) hebben geen land en worden nooit gemarkeerd.</translation>
+        <source>A call whose prefix belongs to no country in cty.dat - shown as where? in the country column - is most likely a phantom decode, on any band. The decode is kept, with the call and where? underlined in red, and is never answered automatically - a double click still answers it. Its ALL.TXT line ends with lc:where, and it is sent to UDP clients as a low-confidence decode. A maritime or aeronautical mobile call (/MM, /AM) shows where? too, and is judged by the call before the suffix: DL1ABC/MM is never marked.</source>
+        <translation>Een roepnaam waarvan het prefix in cty.dat bij geen enkel land hoort - in de landkolom getoond als waar? - is hoogstwaarschijnlijk een fantoomdecodering, op elke band. De decodering blijft staan, met de roepnaam en waar? rood onderstreept, en wordt nooit automatisch beantwoord - met een dubbelklik beantwoordt u haar toch. De regel in ALL.TXT eindigt op lc:where, en de decodering gaat naar UDP-clients als decodering met lage betrouwbaarheid. Een maritiem of aeronautisch mobiele roepnaam (/MM, /AM) wordt ook als waar? getoond, en wordt beoordeeld op de roepnaam vóór het achtervoegsel: DL1ABC/MM wordt nooit gemarkeerd.</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>

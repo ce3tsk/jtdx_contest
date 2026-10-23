@@ -21,6 +21,8 @@ public:
     void setConfiguration(Configuration const *);
     // CE3TSK 2026-10-20: this window shows the distance and azimuth after the country (distancefield.h) - Band Activity
     void setDistanceField (bool on) { distanceField_ = on; }
+    // CE3TSK 2026-10-23: Misc > Hide clear phantom messages - such a line is not drawn, all else as shown (Verdict::clearPhantom ())
+    void setHideClearPhantoms (bool on) { hideClearPhantoms_ = on; }
     /* CE3TSK 2026-09-30: where a window line's marker stands - right after the message, where
        displayDecodedText cuts the decoder's line: 49 for FT8, FT4 and FT2 (seconds in the time), 40 for
        JT65 and JT9. The country follows it. */
@@ -131,6 +133,7 @@ private:
     bool blueMarker_;
     bool hidehintMarker_;
     bool hide_TX_messages_;
+    bool hideClearPhantoms_ {false};   // CE3TSK 2026-10-23: Misc > Hide clear phantom messages
     QsoHistory::Status mystatus_ = QsoHistory::NONE;
     unsigned max_r_time = 0;
     QTextCharFormat m_charFormat;

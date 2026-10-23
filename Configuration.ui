@@ -5708,7 +5708,7 @@ AA1AAA,BB1BB,CC1CC&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
             <item row="3" column="0">
              <widget class="QCheckBox" name="phantomDecodeWhereMark_check_box">
               <property name="toolTip">
-               <string>A call whose prefix belongs to no country in cty.dat - shown as where? in the country column - is most likely a phantom decode, on any band. The decode is kept, with the call and where? underlined in red, and is never answered automatically - a double click still answers it. Its ALL.TXT line ends with lc:where, and it is sent to UDP clients as a low-confidence decode. Maritime and aeronautical mobile calls (/MM, /AM) have no country and are never marked.</string>
+               <string>A call whose prefix belongs to no country in cty.dat - shown as where? in the country column - is most likely a phantom decode, on any band. The decode is kept, with the call and where? underlined in red, and is never answered automatically - a double click still answers it. Its ALL.TXT line ends with lc:where, and it is sent to UDP clients as a low-confidence decode. A maritime or aeronautical mobile call (/MM, /AM) shows where? too, and is judged by the call before the suffix: DL1ABC/MM is never marked.</string>
               </property>
               <property name="text">
                <string>Mark calls with no known country (where?)</string>

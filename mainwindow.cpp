@@ -526,7 +526,7 @@ MainWindow::MainWindow(bool multiple, QSettings * settings, QSharedMemory *shdme
   connect (&m_dialWheelTimer, &QTimer::timeout, this, &MainWindow::applyDialWheel);
   wrap_tooltips (this);   /* CE3TSK: Qt does not word-wrap a plain tooltip, see tooltip_wrap.hpp */
   /* CE3TSK: a QAction's tooltip never appears in a menu unless that menu asks for it. Asked
-     here for View, Mode and DXpedition, and by the three preset menus for themselves (see
+     here for View, Mode, DXpedition and Misc (2026-10-23: Hide clear phantom messages, its only one), and by the three preset menus for themselves (see
      markRecommendedPresets). Every other menu still says no, so the tooltip authored on
      actionConvert_bit_depth (File) is folded by wrap_tooltips and shown nowhere.
      Mode holds exactly one, FT2's, and has_own_tooltip keeps the other seven entries silent
@@ -534,6 +534,7 @@ MainWindow::MainWindow(bool multiple, QSettings * settings, QSharedMemory *shdme
   ui->menuView->setToolTipsVisible (true);
   ui->menuMode->setToolTipsVisible (true);
   ui->menuDXpedition->setToolTipsVisible (true);   // CE3TSK: two tooltips, SuperFox mode's and the Fox verifier's
+  ui->menuMisc->setToolTipsVisible (true);   // CE3TSK 2026-10-23: Hide clear phantom messages says which ones
   m_config.set_jtdxtime (m_jtdxtime);
   /* CE3TSK 2026-10-04: Settings checks the operator's own call and grid against cty.dat (ownstation.h) - the
      logbook the windows use, and nothing while cty.dat is not read */
@@ -1576,6 +1577,7 @@ void MainWindow::writeSettings()
   m_settings->setValue("HideFTContestMessages",ui->actionHide_FT_contest_messages->isChecked());
   m_settings->setValue("HideTelemetryMessages",ui->actionHide_telemetry_messages->isChecked());
   m_settings->setValue("HideFT8Dupes",ui->actionHide_FT8_dupe_messages->isChecked());
+  m_settings->setValue ("HideClearPhantoms", ui->actionHide_clear_phantom_messages->isChecked ());   // CE3TSK 2026-10-23
   m_settings->setValue("ShowMyCallMessagesRxWindow",ui->actionMyCallRXFwindow->isChecked());
   m_settings->setValue("ShowWantedCallMessagesRxWindow",ui->actionWantedCallRXFwindow->isChecked());
   m_settings->setValue("FT8Sensitivity",m_ft8Sensitivity);
@@ -1978,6 +1980,7 @@ void MainWindow::readSettings()
   else ui->actionHide_telemetry_messages->setChecked(m_settings->value("HideTelemetryMessages").toBool());
 
   ui->actionHide_FT8_dupe_messages->setChecked(m_settings->value("HideFT8Dupes",true).toBool());
+  ui->actionHide_clear_phantom_messages->setChecked (m_settings->value ("HideClearPhantoms", false).toBool ());   // CE3TSK 2026-10-23
   ui->actionMyCallRXFwindow->setChecked(m_settings->value("ShowMyCallMessagesRxWindow",true).toBool());
   ui->actionWantedCallRXFwindow->setChecked(m_settings->value("ShowWantedCallMessagesRxWindow",true).toBool());
 
@@ -7312,6 +7315,14 @@ void MainWindow::on_actionFT8EarlyStart_toggled(bool checked) { m_FT8EarlyStart=
 void MainWindow::on_actionFT8WidebandDXCallSearch_toggled(bool checked) { m_FT8WideDxCallSearch=checked; }
 void MainWindow::on_actionBypass_text_filters_on_RX_frequency_toggled(bool checked) { m_bypassRxfFilters=checked; }
 void MainWindow::on_actionBypass_all_text_filters_toggled(bool checked) { m_bypassAllFilters=checked; ui->bypassButton->setChecked(checked); }
+/* CE3TSK 2026-10-23 (TODO.md 3.-190): Misc > Hide clear phantom messages - both windows leave such a line out from the next
+   decode on (DisplayText, phantom_decodes::Verdict::clearPhantom ()); only the windows (the operator: "hide it only from the
+   GUI"): the sequencer, the UDP clients and ALL.TXT get it as before */
+void MainWindow::on_actionHide_clear_phantom_messages_toggled (bool checked)
+{
+  ui->decodedTextBrowser->setHideClearPhantoms (checked);
+  ui->decodedTextBrowser2->setHideClearPhantoms (checked);
+}
 void MainWindow::on_actionEnable_main_window_popup_toggled(bool checked) { m_windowPopup=checked; }
 void MainWindow::on_actionAutoErase_toggled(bool checked) { m_autoErase=checked; }
 void MainWindow::on_actionEraseWindowsAtBandChange_toggled(bool checked) { m_autoEraseBC=checked; }
@@ -8390,7 +8401,7 @@ void MainWindow::readFromStdout()                             //readFromStdout
         /* CE3TSK 2026-09-30: a likely phantom decode (phantomdecodes.h) is not spotted, as a hint or an error
            decode is not - the spot would put a call on the map where the message itself is in doubt. After
            the second hearing a grid-only mark is trusted (Verdict::lowConfidence). Nor is a sender whose
-           country cty.dat does not know - an unallocated prefix; /MM and /AM excepted (unknownCountry). */
+           country cty.dat does not know - an unallocated prefix; /MM and /AM by the call before them (unknownCountry). */
         if(gridOK(grid) && !gridRR73(grid) && !decodedtext.isHint() && !decodedtext.isWrong() && !decodedtext.verdict ().lowConfidence ()
            && !countryUnknown (deCall))
           {

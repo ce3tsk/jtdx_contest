@@ -398,6 +398,7 @@ private slots:
   void on_actionFT8WidebandDXCallSearch_toggled(bool checked);
   void on_actionBypass_text_filters_on_RX_frequency_toggled(bool checked);
   void on_actionBypass_all_text_filters_toggled(bool checked);
+  void on_actionHide_clear_phantom_messages_toggled (bool checked);   // CE3TSK 2026-10-23
   void on_actionEnable_main_window_popup_toggled(bool checked);
   void on_actionAutoErase_toggled(bool checked);
   void on_actionEraseWindowsAtBandChange_toggled(bool checked);

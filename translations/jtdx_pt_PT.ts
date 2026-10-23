@@ -6547,6 +6547,21 @@ Esse é o erro do próprio descodificador. Corrija o que impede o arranque - uma
         <source>Yellow: Wait and Reply (Settings &gt; Sequencing) may switch Enable Tx on when the station in DX Call calls you.</source>
         <translation>Amarelo: Esperar e responder (Configurações &gt; Sequência) pode ligar Ligar Tx quando a estação em Estação DX o chamar.</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Hide clear phantom messages</source>
+        <translation>Ocultar mensagens fantasma evidentes</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Likely phantom decodes of three kinds are not shown, in either window, also when they carry your call: a grid outside the country of the call that sent it, a call signing /R below 30 MHz, and a call of no known country (where?). Each kind only while Settings &gt; Filters &gt; Phantom decodes marks it; a station heard twice with the same grid is shown, and so are weak decodes where both calls sign /P. Only the windows leave them out, whatever Bypass all text filters says: the automatic sequencer, the UDP clients and ALL.TXT get them as before.</source>
+        <translation>As descodificações fantasma prováveis de três tipos não são apresentadas em nenhuma das duas janelas, nem quando contêm o seu indicativo: um grid fora do país do indicativo que o emitiu, um indicativo com /R abaixo de 30 MHz e um indicativo sem país conhecido (onde?). Cada tipo só enquanto Configurações &gt; Filtros &gt; Descodificações fantasma o marca; uma estação ouvida duas vezes com o mesmo grid é apresentada, tal como as descodificações fracas em que os dois indicativos usam /P. Só as janelas as omitem, seja qual for Ignorar todos os filtros de texto: a sequência automática (AutoSeq), os clientes UDP e o ALL.TXT recebem-nas como antes.</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>FT2</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>
@@ -10259,8 +10274,8 @@ alterações na placa de som</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
-        <source>A call whose prefix belongs to no country in cty.dat - shown as where? in the country column - is most likely a phantom decode, on any band. The decode is kept, with the call and where? underlined in red, and is never answered automatically - a double click still answers it. Its ALL.TXT line ends with lc:where, and it is sent to UDP clients as a low-confidence decode. Maritime and aeronautical mobile calls (/MM, /AM) have no country and are never marked.</source>
-        <translation>Um indicativo cujo prefixo não pertence a nenhum país no cty.dat - mostrado como onde? na coluna do país - é muito provavelmente uma descodificação fantasma, em qualquer banda. A descodificação é mantida, com o indicativo e onde? sublinhados a vermelho, e nunca é respondida automaticamente - um duplo clique continua a responder-lhe. A respetiva linha no ALL.TXT termina com lc:where, e é enviada aos clientes UDP como descodificação de baixa confiança. Os indicativos móveis marítimos e aeronáuticos (/MM, /AM) não têm país e nunca são marcados.</translation>
+        <source>A call whose prefix belongs to no country in cty.dat - shown as where? in the country column - is most likely a phantom decode, on any band. The decode is kept, with the call and where? underlined in red, and is never answered automatically - a double click still answers it. Its ALL.TXT line ends with lc:where, and it is sent to UDP clients as a low-confidence decode. A maritime or aeronautical mobile call (/MM, /AM) shows where? too, and is judged by the call before the suffix: DL1ABC/MM is never marked.</source>
+        <translation>Um indicativo cujo prefixo não pertence a nenhum país no cty.dat - mostrado como onde? na coluna do país - é muito provavelmente uma descodificação fantasma, em qualquer banda. A descodificação é mantida, com o indicativo e onde? sublinhados a vermelho, e nunca é respondida automaticamente - um duplo clique continua a responder-lhe. A respetiva linha no ALL.TXT termina com lc:where, e é enviada aos clientes UDP como descodificação de baixa confiança. Um indicativo móvel marítimo ou aeronáutico (/MM, /AM) também é apresentado como onde?, e é avaliado pelo indicativo antes do sufixo: DL1ABC/MM nunca é marcado.</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>

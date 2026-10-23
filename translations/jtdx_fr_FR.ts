@@ -6561,6 +6561,21 @@ C'est l'erreur du décodeur lui-même. Corrigez ce qui l'empêche de démarrer -
         <source>Yellow: Wait and Reply (Settings &gt; Sequencing) may switch Enable Tx on when the station in DX Call calls you.</source>
         <translation>Jaune : Attendre et répondre (Paramètres &gt; Séquence) peut mettre Marche TX en marche quand la station de l'Indicatif DX vous appelle.</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Hide clear phantom messages</source>
+        <translation>Cacher les messages fantômes évidents</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Likely phantom decodes of three kinds are not shown, in either window, also when they carry your call: a grid outside the country of the call that sent it, a call signing /R below 30 MHz, and a call of no known country (where?). Each kind only while Settings &gt; Filters &gt; Phantom decodes marks it; a station heard twice with the same grid is shown, and so are weak decodes where both calls sign /P. Only the windows leave them out, whatever Bypass all text filters says: the automatic sequencer, the UDP clients and ALL.TXT get them as before.</source>
+        <translation>Les décodages fantômes probables de trois sortes ne sont affichés dans aucune des deux fenêtres, même quand ils portent votre indicatif : un locator hors du pays de l'indicatif qui l'a émis, un indicatif avec /R en dessous de 30 MHz et un indicatif sans pays connu (Locator éroné). Chaque sorte seulement tant que Paramètres &gt; Filtres &gt; Décodages fantômes la marque ; une station entendue deux fois avec le même locator est affichée, ainsi que les décodages faibles où les deux indicatifs portent /P. Seules les fenêtres les omettent, quel que soit Contourner tous les filtres de texte : la séquence automatique (Seq. Auto), les clients UDP et ALL.TXT les reçoivent comme avant.</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>FT2</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>
@@ -10279,8 +10294,8 @@ changements de carte son</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
-        <source>A call whose prefix belongs to no country in cty.dat - shown as where? in the country column - is most likely a phantom decode, on any band. The decode is kept, with the call and where? underlined in red, and is never answered automatically - a double click still answers it. Its ALL.TXT line ends with lc:where, and it is sent to UDP clients as a low-confidence decode. Maritime and aeronautical mobile calls (/MM, /AM) have no country and are never marked.</source>
-        <translation>Un indicatif dont le préfixe n'appartient à aucun pays dans cty.dat - affiché comme Locator éroné dans la colonne du pays - est très probablement un décodage fantôme, sur toutes les bandes. Le décodage est conservé, avec l'indicatif et Locator éroné soulignés en rouge, et il n'est jamais répondu automatiquement - un double-clic y répond quand même. Sa ligne dans ALL.TXT se termine par lc:where, et il est transmis aux clients UDP comme décodage de faible confiance. Les indicatifs mobiles maritimes et aéronautiques (/MM, /AM) n'ont pas de pays et ne sont jamais marqués.</translation>
+        <source>A call whose prefix belongs to no country in cty.dat - shown as where? in the country column - is most likely a phantom decode, on any band. The decode is kept, with the call and where? underlined in red, and is never answered automatically - a double click still answers it. Its ALL.TXT line ends with lc:where, and it is sent to UDP clients as a low-confidence decode. A maritime or aeronautical mobile call (/MM, /AM) shows where? too, and is judged by the call before the suffix: DL1ABC/MM is never marked.</source>
+        <translation>Un indicatif dont le préfixe n'appartient à aucun pays dans cty.dat - affiché comme Locator éroné dans la colonne du pays - est très probablement un décodage fantôme, sur toutes les bandes. Le décodage est conservé, avec l'indicatif et Locator éroné soulignés en rouge, et il n'est jamais répondu automatiquement - un double-clic y répond quand même. Sa ligne dans ALL.TXT se termine par lc:where, et il est transmis aux clients UDP comme décodage de faible confiance. Un indicatif mobile maritime ou aéronautique (/MM, /AM) est lui aussi affiché comme Locator éroné, et il est jugé d'après l'indicatif placé avant le suffixe : DL1ABC/MM n'est jamais marqué.</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>

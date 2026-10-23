@@ -23,8 +23,9 @@
             rule - so its row has no "do not answer" setting: a mark there always holds (the
             operator, 2026-09-30).
      where  the call that sent it has no country in cty.dat - the window's "where?" - on any band
-            (the operator, 2026-09-30). /MM and /AM have no country by design and are never marked
-            (unknownCountry), and only a word shaped as a call is one (callShaped): SuperFox's and
+            (the operator, 2026-09-30). /MM and /AM have no country by design: since 2026-10-23 they are judged by
+            the call before the suffix - DL1ABC/MM never, 1Z9ABC/MM is (unknownCountry; the operator: "not phantom
+            per se if the country of the call sign exists") - and only a word shaped as a call is one (callShaped): SuperFox's and
             JT65's free text carry no marker. The sequencer never picked such a call on its own
             anyway (QsoHistory wants a continent), so its row has no "do not answer" setting either.
             Silent until cty.dat is read: an empty table would make every call "where?" (the
@@ -95,6 +96,9 @@ namespace phantom_decodes
     // it sends is most likely right (the operator, 2026-09-30, C). The underline and the ALL.TXT tag stay, as
     // the record of the conflict; /R, a weak /P /P and a call of no country are never trusted.
     bool lowConfidence () const {return marked () && !(repeated && !(reasons & (Rover | Portable | Where)));}
+    // CE3TSK 2026-10-23: a clear phantom decode - what Misc > Hide clear phantom messages hides (DisplayText): a /R call
+    // on HF, a call of no country, or a grid outside the country not yet heard twice. The weak /P /P is not one (the operator)
+    bool clearPhantom () const {return (reasons & (Rover | Where)) || ((reasons & Grid) && !repeated);}
   };
 
   // a call as printed, without the brackets of a resolved hash; "" for an unresolved one (<...>)
@@ -151,15 +155,19 @@ namespace phantom_decodes
 
   // A sender whose country cty.dat does not know ("where?"): not spotted to PSK Reporter, whatever the
   // message (the operator, 2026-09-30, A3) - an unallocated prefix is a phantom decode - and the where? mark. /MM and /AM have no
-  // country by design and are not counted: a maritime or aeronautical mobile station is real, and its spot
-  // says where it is. An unresolved hash names nobody and is not counted either.
+  // country by design: a maritime or aeronautical mobile station is real, and its spot says where it is - so since 2026-10-23
+  // it is judged by the call before the suffix (the operator: "not phantom per se if the country of the call sign exists"):
+  // DL1ABC/MM is not counted, 1Z9ABC/MM is. An unresolved hash names nobody and is not counted either.
   template<typename EntityOf>
   bool unknownCountry (QString const& printed, EntityOf entityOf)
   {
     QString const call = bareCall (printed);
     if (call.isEmpty ()) return false;
-    for (auto const& part : call.split ('/').mid (1)) if ("MM" == part || "AM" == part) return false;
-    return "?" == entityOf (call).section (',', 1, 1).trimmed ();
+    QStringList parts = call.split ('/');
+    for (int i = parts.size () - 1; i > 0; --i) if ("MM" == parts[i] || "AM" == parts[i]) parts.removeAt (i);
+    QString const judged = parts.join ('/');
+    if (judged.isEmpty ()) return false;
+    return "?" == entityOf (judged).section (',', 1, 1).trimmed ();
   }
 
   /* What the checks read from a standard message: the sender, the grid it sent, every call.

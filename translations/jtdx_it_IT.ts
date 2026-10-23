@@ -6558,6 +6558,21 @@ Questo è l'errore del decoder stesso. Sistemare ciò che ne impedisce l'avvio -
         <source>Yellow: Wait and Reply (Settings &gt; Sequencing) may switch Enable Tx on when the station in DX Call calls you.</source>
         <translation>Giallo: Attendi e rispondi (Impostazioni &gt; Sequenza) può accendere Abilita Tx quando la stazione in Nom DX ti chiama.</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Hide clear phantom messages</source>
+        <translation>Nascondi i messaggi fantasma evidenti</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Likely phantom decodes of three kinds are not shown, in either window, also when they carry your call: a grid outside the country of the call that sent it, a call signing /R below 30 MHz, and a call of no known country (where?). Each kind only while Settings &gt; Filters &gt; Phantom decodes marks it; a station heard twice with the same grid is shown, and so are weak decodes where both calls sign /P. Only the windows leave them out, whatever Bypass all text filters says: the automatic sequencer, the UDP clients and ALL.TXT get them as before.</source>
+        <translation>Le probabili decodifiche fantasma di tre tipi non vengono mostrate in nessuna delle due finestre, nemmeno quando contengono il tuo nominativo: una griglia fuori dal paese del nominativo che l'ha trasmessa, un nominativo con /R sotto i 30 MHz e un nominativo senza paese noto (Boohhh?). Ogni tipo solo finché Impostazioni &gt; Filtri &gt; Decodifiche fantasma lo segna; una stazione sentita due volte con la stessa griglia viene mostrata, e così le decodifiche deboli in cui entrambi i nominativi portano /P. Solo le finestre le omettono, qualunque cosa dica Bypassa tutti i filtri di testo: la sequenza automatica (AutoSeq), i client UDP e ALL.TXT le ricevono come prima.</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>FT2</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>
@@ -10272,8 +10287,8 @@ modifiche alla scheda audio</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
-        <source>A call whose prefix belongs to no country in cty.dat - shown as where? in the country column - is most likely a phantom decode, on any band. The decode is kept, with the call and where? underlined in red, and is never answered automatically - a double click still answers it. Its ALL.TXT line ends with lc:where, and it is sent to UDP clients as a low-confidence decode. Maritime and aeronautical mobile calls (/MM, /AM) have no country and are never marked.</source>
-        <translation>Un nominativo il cui prefisso non appartiene a nessun paese in cty.dat - mostrato come Boohhh? nella colonna del paese - è molto probabilmente una decodifica fantasma, su qualsiasi banda. La decodifica viene mantenuta, con il nominativo e Boohhh? sottolineati in rosso, e non riceve mai risposta automatica - un doppio click risponde comunque. La sua riga in ALL.TXT termina con lc:where, e viene inviata ai client UDP come decodifica a bassa affidabilità. I nominativi mobili marittimi e aeronautici (/MM, /AM) non hanno un paese e non vengono mai segnati.</translation>
+        <source>A call whose prefix belongs to no country in cty.dat - shown as where? in the country column - is most likely a phantom decode, on any band. The decode is kept, with the call and where? underlined in red, and is never answered automatically - a double click still answers it. Its ALL.TXT line ends with lc:where, and it is sent to UDP clients as a low-confidence decode. A maritime or aeronautical mobile call (/MM, /AM) shows where? too, and is judged by the call before the suffix: DL1ABC/MM is never marked.</source>
+        <translation>Un nominativo il cui prefisso non appartiene a nessun paese in cty.dat - mostrato come Boohhh? nella colonna del paese - è molto probabilmente una decodifica fantasma, su qualsiasi banda. La decodifica viene mantenuta, con il nominativo e Boohhh? sottolineati in rosso, e non riceve mai risposta automatica - un doppio click risponde comunque. La sua riga in ALL.TXT termina con lc:where, e viene inviata ai client UDP come decodifica a bassa affidabilità. Un nominativo mobile marittimo o aeronautico (/MM, /AM) viene mostrato anch'esso come Boohhh?, ed è giudicato in base al nominativo prima del suffisso: DL1ABC/MM non viene mai segnato.</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>

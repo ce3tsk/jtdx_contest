@@ -6556,6 +6556,21 @@ Dekoders: %3
         <source>Yellow: Wait and Reply (Settings &gt; Sequencing) may switch Enable Tx on when the station in DX Call calls you.</source>
         <translation>Dzeltens: Gaidīt un atbildēt (Iestatījumi &gt; Secība) var ieslēgt Atļaut raidīt, kad stacija laukā DX izsauk. jūs izsauc.</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Hide clear phantom messages</source>
+        <translation>Slēpt nepārprotamus fantoma ziņojumus</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Likely phantom decodes of three kinds are not shown, in either window, also when they carry your call: a grid outside the country of the call that sent it, a call signing /R below 30 MHz, and a call of no known country (where?). Each kind only while Settings &gt; Filters &gt; Phantom decodes marks it; a station heard twice with the same grid is shown, and so are weak decodes where both calls sign /P. Only the windows leave them out, whatever Bypass all text filters says: the automatic sequencer, the UDP clients and ALL.TXT get them as before.</source>
+        <translation>Trīs veidu iespējamas fantoma dekodēšanas netiek rādītas nevienā no abiem logiem, arī tad, ja tajās ir jūsu izsaukuma signāls: lokators ārpus to nosūtījušā izsaukuma signāla valsts, izsaukuma signāls ar /R zem 30 MHz un izsaukuma signāls bez zināmas valsts (nezināma teritorija?). Katrs veids tikai tik ilgi, kamēr Iestatījumi &gt; Filtrs &gt; Fantoma dekodēšanas to atzīmē; stacija, kas dzirdēta divreiz ar to pašu lokatoru, tiek rādīta, tāpat kā vājas dekodēšanas, kurās abiem izsaukuma signāliem ir /P. Tās izlaiž tikai logi neatkarīgi no Apiet visus teksta filtrus: automātiskā secība (AutoSeq), UDP klienti un ALL.TXT tās saņem kā līdz šim.</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>FT2</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>
@@ -10269,8 +10284,8 @@ izmaiņas</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
-        <source>A call whose prefix belongs to no country in cty.dat - shown as where? in the country column - is most likely a phantom decode, on any band. The decode is kept, with the call and where? underlined in red, and is never answered automatically - a double click still answers it. Its ALL.TXT line ends with lc:where, and it is sent to UDP clients as a low-confidence decode. Maritime and aeronautical mobile calls (/MM, /AM) have no country and are never marked.</source>
-        <translation>Izsaukuma signāls, kura prefikss cty.dat nepieder nevienai valstij - valsts kolonnā parādīts kā nezināma teritorija? -, visticamāk, ir fantoma dekodēšana jebkurā joslā. Dekodēšana tiek saglabāta, izsaukuma signāls un nezināma teritorija? tiek pasvītroti sarkanā krāsā, un uz to nekad netiek atbildēts automātiski - dubultklikšķis uz to joprojām atbild. Tās rinda failā ALL.TXT beidzas ar lc:where, un UDP klientiem tā tiek nosūtīta kā zemas ticamības dekodēšana. Jūras un aviācijas mobilajiem izsaukuma signāliem (/MM, /AM) nav valsts, un tie nekad netiek atzīmēti.</translation>
+        <source>A call whose prefix belongs to no country in cty.dat - shown as where? in the country column - is most likely a phantom decode, on any band. The decode is kept, with the call and where? underlined in red, and is never answered automatically - a double click still answers it. Its ALL.TXT line ends with lc:where, and it is sent to UDP clients as a low-confidence decode. A maritime or aeronautical mobile call (/MM, /AM) shows where? too, and is judged by the call before the suffix: DL1ABC/MM is never marked.</source>
+        <translation>Izsaukuma signāls, kura prefikss cty.dat nepieder nevienai valstij - valsts kolonnā parādīts kā nezināma teritorija? -, visticamāk, ir fantoma dekodēšana jebkurā joslā. Dekodēšana tiek saglabāta, izsaukuma signāls un nezināma teritorija? tiek pasvītroti sarkanā krāsā, un uz to nekad netiek atbildēts automātiski - dubultklikšķis uz to joprojām atbild. Tās rinda failā ALL.TXT beidzas ar lc:where, un UDP klientiem tā tiek nosūtīta kā zemas ticamības dekodēšana. Jūras vai aviācijas mobilais izsaukuma signāls (/MM, /AM) arī tiek parādīts kā nezināma teritorija?, un to vērtē pēc izsaukuma signāla pirms sufiksa: DL1ABC/MM nekad netiek atzīmēts.</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>

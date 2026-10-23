@@ -6557,6 +6557,21 @@ Das ist der Fehler des Decoders selbst. Beheben Sie, was seinen Start verhindert
         <source>Yellow: Wait and Reply (Settings &gt; Sequencing) may switch Enable Tx on when the station in DX Call calls you.</source>
         <translation>Gelb: Warten und Antworten (Einstellungen &gt; Ablaufsteuerung) kann TX freigeben einschalten, wenn die Station im DX-Rufzeichen Sie ruft.</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Hide clear phantom messages</source>
+        <translation>Eindeutige Phantomnachrichten ausblenden</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Likely phantom decodes of three kinds are not shown, in either window, also when they carry your call: a grid outside the country of the call that sent it, a call signing /R below 30 MHz, and a call of no known country (where?). Each kind only while Settings &gt; Filters &gt; Phantom decodes marks it; a station heard twice with the same grid is shown, and so are weak decodes where both calls sign /P. Only the windows leave them out, whatever Bypass all text filters says: the automatic sequencer, the UDP clients and ALL.TXT get them as before.</source>
+        <translation>Wahrscheinliche Phantomdekodierungen dreier Arten werden in keinem der beiden Fenster angezeigt, auch wenn sie Ihr Rufzeichen enthalten: ein Locator außerhalb des Landes des Rufzeichens, das ihn gesendet hat, ein Rufzeichen mit /R unterhalb von 30 MHz und ein Rufzeichen ohne bekanntes Land (wo?). Jede Art nur, solange Einstellungen &gt; Filter &gt; Phantomdekodierungen sie markiert; eine zweimal mit demselben Locator gehörte Station wird angezeigt, ebenso schwache Dekodierungen, in denen beide Rufzeichen /P tragen. Nur die Fenster lassen sie weg, unabhängig von Alle Textfilter umgehen: die automatische Ablaufsteuerung (AutoSeq), die UDP-Clients und ALL.TXT erhalten sie wie bisher.</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>FT2</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>
@@ -10271,8 +10286,8 @@ Zurücksetzen der Funkgeräteschnittstelle und Übernahme etwaiger
     </message>
     <message>
         <location filename="../Configuration.ui"/>
-        <source>A call whose prefix belongs to no country in cty.dat - shown as where? in the country column - is most likely a phantom decode, on any band. The decode is kept, with the call and where? underlined in red, and is never answered automatically - a double click still answers it. Its ALL.TXT line ends with lc:where, and it is sent to UDP clients as a low-confidence decode. Maritime and aeronautical mobile calls (/MM, /AM) have no country and are never marked.</source>
-        <translation>Ein Rufzeichen, dessen Präfix in cty.dat zu keinem Land gehört - in der Länderspalte als wo? angezeigt -, ist höchstwahrscheinlich eine Phantomdekodierung, auf jedem Band. Die Dekodierung bleibt erhalten, das Rufzeichen und wo? werden rot unterstrichen, und sie wird nie automatisch beantwortet - ein Doppelklick beantwortet sie trotzdem. Ihre Zeile in ALL.TXT endet mit lc:where, und sie geht an UDP-Clients als Dekodierung mit geringer Zuverlässigkeit. Maritim und aeronautisch mobile Rufzeichen (/MM, /AM) haben kein Land und werden nie markiert.</translation>
+        <source>A call whose prefix belongs to no country in cty.dat - shown as where? in the country column - is most likely a phantom decode, on any band. The decode is kept, with the call and where? underlined in red, and is never answered automatically - a double click still answers it. Its ALL.TXT line ends with lc:where, and it is sent to UDP clients as a low-confidence decode. A maritime or aeronautical mobile call (/MM, /AM) shows where? too, and is judged by the call before the suffix: DL1ABC/MM is never marked.</source>
+        <translation>Ein Rufzeichen, dessen Präfix in cty.dat zu keinem Land gehört - in der Länderspalte als wo? angezeigt -, ist höchstwahrscheinlich eine Phantomdekodierung, auf jedem Band. Die Dekodierung bleibt erhalten, das Rufzeichen und wo? werden rot unterstrichen, und sie wird nie automatisch beantwortet - ein Doppelklick beantwortet sie trotzdem. Ihre Zeile in ALL.TXT endet mit lc:where, und sie geht an UDP-Clients als Dekodierung mit geringer Zuverlässigkeit. Ein maritim oder aeronautisch mobiles Rufzeichen (/MM, /AM) wird ebenfalls als wo? angezeigt und nach dem Rufzeichen vor dem Suffix beurteilt: DL1ABC/MM wird nie markiert.</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>

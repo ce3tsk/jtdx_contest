@@ -1269,6 +1269,12 @@ int DisplayText::displayDecodedText(DecodedText* decodedText, QString myCall, QS
     } else if (!lotw.isEmpty ()) {
         servis = "•" + servis.mid(1); // lotw 
     }
+    /* CE3TSK 2026-10-23: Misc > Hide clear phantom messages - a /R call on HF, a call of no country, a grid outside the
+       country not yet heard twice (Verdict::clearPhantom ()) is not drawn, with our call in it too. Only the window leaves
+       it out (the operator: "hide it only from the GUI") - show_line stays as the filters left it, so the history the
+       sequencer reads, the UDP clients and the Rx frequency window's routing take it as shown. The bypasses below do not
+       draw it: they are about the filters of Settings, and are on by default - the station runs with both on */
+    bool const drawn {!(hideClearPhantoms_ && doubt.clearPhantom ())};
     if (bypassAllFilters || bypassRxfFilters) {
             show_line = true;
     }
@@ -1392,8 +1398,10 @@ int DisplayText::displayDecodedText(DecodedText* decodedText, QString myCall, QS
         }
         int const fieldColumns {(displayCountryName_ ? (displayCountryPrefix_ ? (displayUSStates_ ? distance_field::prefixStateColumns : distance_field::prefixColumns)
                                                                               : distance_field::nameColumns) : 0) + tagColumns};
-        appendText(messageText, bgColor, txtColor, std_type, servis, servisColor, cntry, forceBold, strikethrough, underlined, decodedText->isDXped(), false, bwantedCall||bwantedGrid||bwantedPrefix||bwantedCountry, doubtful, cntryDoubtFrom, doubtTip, field, fieldColumns);
-        wastx_ = false;
+        if (drawn) {   // CE3TSK 2026-10-23: Misc > Hide clear phantom messages, above
+            appendText(messageText, bgColor, txtColor, std_type, servis, servisColor, cntry, forceBold, strikethrough, underlined, decodedText->isDXped(), false, bwantedCall||bwantedGrid||bwantedPrefix||bwantedCountry, doubtful, cntryDoubtFrom, doubtTip, field, fieldColumns);
+            wastx_ = false;
+        }
     }
         if (notified) inotified |= 1;
         if (show_line) inotified |= 2;

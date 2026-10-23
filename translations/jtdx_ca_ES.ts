@@ -6566,6 +6566,21 @@ Aquest és l'error del descodificador mateix. Corregiu allò que n'impedeix l'in
         <source>Yellow: Wait and Reply (Settings &gt; Sequencing) may switch Enable Tx on when the station in DX Call calls you.</source>
         <translation>Groc: Esperar i respondre (Configuracions &gt; Seqüència) pot activar Activar TX quan l'estació d'Indicatiu DX et crida.</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Hide clear phantom messages</source>
+        <translation>Amagar els missatges fantasma clars</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Likely phantom decodes of three kinds are not shown, in either window, also when they carry your call: a grid outside the country of the call that sent it, a call signing /R below 30 MHz, and a call of no known country (where?). Each kind only while Settings &gt; Filters &gt; Phantom decodes marks it; a station heard twice with the same grid is shown, and so are weak decodes where both calls sign /P. Only the windows leave them out, whatever Bypass all text filters says: the automatic sequencer, the UDP clients and ALL.TXT get them as before.</source>
+        <translation>Les probables descodificacions fantasma de tres tipus no es mostren a cap de les dues finestres, tampoc quan porten el teu indicatiu: un locator fora del país de l'indicatiu que l'ha enviat, un indicatiu amb /R per sota de 30 MHz i un indicatiu sense país conegut (sense DXCC !). Cada tipus només mentre Configuracions &gt; Filtres &gt; Descodificacions fantasma el marca; una estació escoltada dues vegades amb el mateix locator es mostra, i també les descodificacions febles en què tots dos indicatius porten /P. Només les finestres les ometen, digui el que digui Ometre tots els filtres de text: la seqüència automàtica (AutoSeq), els clients UDP i ALL.TXT les reben com abans.</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>FT2</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>
@@ -10284,8 +10299,8 @@ canvi en la targeta de so</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
-        <source>A call whose prefix belongs to no country in cty.dat - shown as where? in the country column - is most likely a phantom decode, on any band. The decode is kept, with the call and where? underlined in red, and is never answered automatically - a double click still answers it. Its ALL.TXT line ends with lc:where, and it is sent to UDP clients as a low-confidence decode. Maritime and aeronautical mobile calls (/MM, /AM) have no country and are never marked.</source>
-        <translation>Un indicatiu el prefix del qual no pertany a cap país a cty.dat - mostrat com a sense DXCC ! a la columna del país - és molt probablement una descodificació fantasma, en qualsevol banda. La descodificació es conserva, amb l'indicatiu i sense DXCC ! subratllats en vermell, i no es respon mai automàticament - un doble clic encara la respon. La seva línia a ALL.TXT acaba amb lc:where, i s'envia als clients UDP com a descodificació de baixa confiança. Els indicatius mòbils marítims i aeronàutics (/MM, /AM) no tenen país i no es marquen mai.</translation>
+        <source>A call whose prefix belongs to no country in cty.dat - shown as where? in the country column - is most likely a phantom decode, on any band. The decode is kept, with the call and where? underlined in red, and is never answered automatically - a double click still answers it. Its ALL.TXT line ends with lc:where, and it is sent to UDP clients as a low-confidence decode. A maritime or aeronautical mobile call (/MM, /AM) shows where? too, and is judged by the call before the suffix: DL1ABC/MM is never marked.</source>
+        <translation>Un indicatiu el prefix del qual no pertany a cap país a cty.dat - mostrat com a sense DXCC ! a la columna del país - és molt probablement una descodificació fantasma, en qualsevol banda. La descodificació es conserva, amb l'indicatiu i sense DXCC ! subratllats en vermell, i no es respon mai automàticament - un doble clic encara la respon. La seva línia a ALL.TXT acaba amb lc:where, i s'envia als clients UDP com a descodificació de baixa confiança. Un indicatiu mòbil marítim o aeronàutic (/MM, /AM) també es mostra com a sense DXCC !, i es jutja per l'indicatiu d'abans del sufix: DL1ABC/MM no es marca mai.</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>

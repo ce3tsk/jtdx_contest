@@ -6570,6 +6570,21 @@ See on dekoodri enda viga. Kõrvalda see, mis takistab käivitumist - puuduv tee
         <source>Yellow: Wait and Reply (Settings &gt; Sequencing) may switch Enable Tx on when the station in DX Call calls you.</source>
         <translation>Kollane: Oota ja vasta (Seaded &gt; Järjestus) võib Luba Tx sisse lülitada, kui DX Kutsungi jaam sind kutsub.</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Hide clear phantom messages</source>
+        <translation>Peida selged fantoomsõnumid</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Likely phantom decodes of three kinds are not shown, in either window, also when they carry your call: a grid outside the country of the call that sent it, a call signing /R below 30 MHz, and a call of no known country (where?). Each kind only while Settings &gt; Filters &gt; Phantom decodes marks it; a station heard twice with the same grid is shown, and so are weak decodes where both calls sign /P. Only the windows leave them out, whatever Bypass all text filters says: the automatic sequencer, the UDP clients and ALL.TXT get them as before.</source>
+        <translation>Kolme liiki tõenäolisi fantoomdekodeeringuid ei näidata kummaski aknas, ka siis mitte, kui neis on sinu kutsung: ruut väljaspool selle saatnud kutsungi riiki, /R-ga kutsung alla 30 MHz ja kutsung, millel pole teadaolevat riiki (teadmata?). Iga liik ainult siis, kui Seaded &gt; Filter &gt; Fantoomdekodeeringud seda märgistab; kaks korda sama ruuduga kuuldud jaama näidatakse, samuti nõrku dekodeeringuid, kus mõlemal kutsungil on /P. Need jätavad välja ainult aknad, sõltumata valikust Kõigist filtritest mööda minek: automaatne järjestus (AutoSeq), UDP kliendid ja ALL.TXT saavad need nagu varem.</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>FT2</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>
@@ -10266,8 +10281,8 @@ soundcard changes</source>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
-        <source>A call whose prefix belongs to no country in cty.dat - shown as where? in the country column - is most likely a phantom decode, on any band. The decode is kept, with the call and where? underlined in red, and is never answered automatically - a double click still answers it. Its ALL.TXT line ends with lc:where, and it is sent to UDP clients as a low-confidence decode. Maritime and aeronautical mobile calls (/MM, /AM) have no country and are never marked.</source>
-        <translation>Kutsung, mille prefiks ei kuulu cty.dat-is ühelegi riigile - riigi veerus näidatakse teadmata? -, on suure tõenäosusega fantoomdekodeering, igal sagedusalal. Dekodeering säilitatakse, kutsung ja teadmata? joonitakse punasega alla ja sellele ei vastata kunagi automaatselt - topeltklõps vastab sellele siiski. Selle rida failis ALL.TXT lõpeb märgendiga lc:where ning see saadetakse UDP klientidele madala usaldusväärsusega dekodeeringuna. Mere- ja lennumobiilsetel kutsungitel (/MM, /AM) pole riiki ja neid ei märgistata kunagi.</translation>
+        <source>A call whose prefix belongs to no country in cty.dat - shown as where? in the country column - is most likely a phantom decode, on any band. The decode is kept, with the call and where? underlined in red, and is never answered automatically - a double click still answers it. Its ALL.TXT line ends with lc:where, and it is sent to UDP clients as a low-confidence decode. A maritime or aeronautical mobile call (/MM, /AM) shows where? too, and is judged by the call before the suffix: DL1ABC/MM is never marked.</source>
+        <translation>Kutsung, mille prefiks ei kuulu cty.dat-is ühelegi riigile - riigi veerus näidatakse teadmata? -, on suure tõenäosusega fantoomdekodeering, igal sagedusalal. Dekodeering säilitatakse, kutsung ja teadmata? joonitakse punasega alla ja sellele ei vastata kunagi automaatselt - topeltklõps vastab sellele siiski. Selle rida failis ALL.TXT lõpeb märgendiga lc:where ning see saadetakse UDP klientidele madala usaldusväärsusega dekodeeringuna. Mere- või lennumobiilset kutsungit (/MM, /AM) näidatakse samuti kui teadmata? ja seda hinnatakse sufiksile eelneva kutsungi järgi: DL1ABC/MM-i ei märgistata kunagi.</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>

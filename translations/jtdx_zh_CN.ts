@@ -6556,6 +6556,21 @@ That is the decoder's own error. Put right whatever stops it starting - a missin
         <source>Yellow: Wait and Reply (Settings &gt; Sequencing) may switch Enable Tx on when the station in DX Call calls you.</source>
         <translation>黄色：等待并回复（设置 &gt; 程序）可在 DX 呼号中的电台呼叫你时开启启用发射。</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Hide clear phantom messages</source>
+        <translation>隐藏明显的幻影信息</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Likely phantom decodes of three kinds are not shown, in either window, also when they carry your call: a grid outside the country of the call that sent it, a call signing /R below 30 MHz, and a call of no known country (where?). Each kind only while Settings &gt; Filters &gt; Phantom decodes marks it; a station heard twice with the same grid is shown, and so are weak decodes where both calls sign /P. Only the windows leave them out, whatever Bypass all text filters says: the automatic sequencer, the UDP clients and ALL.TXT get them as before.</source>
+        <translation>以下三类可能的幻影解码不在两个窗口中显示，即使其中含有你的呼号：网格位于发送它的呼号所属国家之外、30 MHz 以下带 /R 的呼号、国家不详的呼号（不详?）。每一类仅在 设置 &gt; 过滤 &gt; 幻影解码 标记它时才隐藏；以同一网格听到两次的电台会显示，两个呼号都带 /P 的弱解码也会显示。无论 绕过所有信息过滤 是否开启，只有窗口不显示它们：自动程序（AutoSeq）、UDP 客户端和 ALL.TXT 照常收到。</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>FT2</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>
@@ -10270,8 +10285,8 @@ soundcard changes</source>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
-        <source>A call whose prefix belongs to no country in cty.dat - shown as where? in the country column - is most likely a phantom decode, on any band. The decode is kept, with the call and where? underlined in red, and is never answered automatically - a double click still answers it. Its ALL.TXT line ends with lc:where, and it is sent to UDP clients as a low-confidence decode. Maritime and aeronautical mobile calls (/MM, /AM) have no country and are never marked.</source>
-        <translation>前缀在 cty.dat 中不属于任何国家的呼号（国家栏显示为 不详?）很可能是幻影解码，在任何波段都是如此。该解码会被保留，呼号和 不详? 加红色下划线，并且从不自动应答——双击仍可应答。它在 ALL.TXT 中的行以 lc:where 结尾，并以低可信度解码发送给 UDP 客户端。海上移动和航空移动呼号（/MM、/AM）没有国家，从不标记。</translation>
+        <source>A call whose prefix belongs to no country in cty.dat - shown as where? in the country column - is most likely a phantom decode, on any band. The decode is kept, with the call and where? underlined in red, and is never answered automatically - a double click still answers it. Its ALL.TXT line ends with lc:where, and it is sent to UDP clients as a low-confidence decode. A maritime or aeronautical mobile call (/MM, /AM) shows where? too, and is judged by the call before the suffix: DL1ABC/MM is never marked.</source>
+        <translation>前缀在 cty.dat 中不属于任何国家的呼号（国家栏显示为 不详?）很可能是幻影解码，在任何波段都是如此。该解码会被保留，呼号和 不详? 加红色下划线，并且从不自动应答——双击仍可应答。它在 ALL.TXT 中的行以 lc:where 结尾，并以低可信度解码发送给 UDP 客户端。海上移动或航空移动呼号（/MM、/AM）也显示为 不详?，并按后缀之前的呼号判断：DL1ABC/MM 从不标记。</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>

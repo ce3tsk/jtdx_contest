@@ -6557,6 +6557,21 @@ That is the decoder's own error. Put right whatever stops it starting - a missin
         <source>Yellow: Wait and Reply (Settings &gt; Sequencing) may switch Enable Tx on when the station in DX Call calls you.</source>
         <translation>노란색: 대기 후 응답(설정 &gt; 시퀀스)은 DX 호출부호의 국이 나를 부르면 송신 허용을 켤 수 있습니다.</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Hide clear phantom messages</source>
+        <translation>명확한 팬텀 메시지 숨기기</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Likely phantom decodes of three kinds are not shown, in either window, also when they carry your call: a grid outside the country of the call that sent it, a call signing /R below 30 MHz, and a call of no known country (where?). Each kind only while Settings &gt; Filters &gt; Phantom decodes marks it; a station heard twice with the same grid is shown, and so are weak decodes where both calls sign /P. Only the windows leave them out, whatever Bypass all text filters says: the automatic sequencer, the UDP clients and ALL.TXT get them as before.</source>
+        <translation>다음 세 종류의 팬텀 디코드 가능성이 높은 것은 내 호출부호가 들어 있어도 두 창 어디에도 표시되지 않습니다: 보낸 호출부호의 국가 밖에 있는 그리드, 30 MHz 미만에서 /R이 붙은 호출부호, 국가를 알 수 없는 호출부호(어디?). 각 종류는 설정 &gt; 필터 &gt; 팬텀 디코드에서 표시하는 동안에만 해당됩니다. 같은 그리드로 두 번 들린 국은 표시되며, 두 호출부호 모두 /P인 약한 디코드도 표시됩니다. 모든 텍스트 필터 무시 설정과 관계없이 창에서만 빠집니다: AutoSeq, UDP 클라이언트, ALL.TXT에는 이전처럼 전달됩니다.</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>FT2</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>
@@ -10268,8 +10283,8 @@ soundcard changes</source>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
-        <source>A call whose prefix belongs to no country in cty.dat - shown as where? in the country column - is most likely a phantom decode, on any band. The decode is kept, with the call and where? underlined in red, and is never answered automatically - a double click still answers it. Its ALL.TXT line ends with lc:where, and it is sent to UDP clients as a low-confidence decode. Maritime and aeronautical mobile calls (/MM, /AM) have no country and are never marked.</source>
-        <translation>cty.dat에서 어느 국가에도 속하지 않는 프리픽스의 호출부호(국가 열에 어디?로 표시)는 어느 밴드에서든 팬텀 디코드일 가능성이 높습니다. 디코드는 유지되고 호출부호와 어디?에 빨간 밑줄이 그어지며, 자동으로는 절대 응답하지 않습니다. 더블클릭하면 여전히 응답할 수 있습니다. ALL.TXT의 해당 줄은 lc:where로 끝나며, UDP 클라이언트에는 신뢰도가 낮은 디코드로 전송됩니다. 해상 이동 및 항공 이동 호출부호(/MM, /AM)는 국가가 없으므로 표시하지 않습니다.</translation>
+        <source>A call whose prefix belongs to no country in cty.dat - shown as where? in the country column - is most likely a phantom decode, on any band. The decode is kept, with the call and where? underlined in red, and is never answered automatically - a double click still answers it. Its ALL.TXT line ends with lc:where, and it is sent to UDP clients as a low-confidence decode. A maritime or aeronautical mobile call (/MM, /AM) shows where? too, and is judged by the call before the suffix: DL1ABC/MM is never marked.</source>
+        <translation>cty.dat에서 어느 국가에도 속하지 않는 프리픽스의 호출부호(국가 열에 어디?로 표시)는 어느 밴드에서든 팬텀 디코드일 가능성이 높습니다. 디코드는 유지되고 호출부호와 어디?에 빨간 밑줄이 그어지며, 자동으로는 절대 응답하지 않습니다. 더블클릭하면 여전히 응답할 수 있습니다. ALL.TXT의 해당 줄은 lc:where로 끝나며, UDP 클라이언트에는 신뢰도가 낮은 디코드로 전송됩니다. 해상 이동 또는 항공 이동 호출부호(/MM, /AM)도 어디?로 표시되지만, 접미어 앞의 호출부호로 판단합니다. DL1ABC/MM은 표시하지 않습니다.</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>

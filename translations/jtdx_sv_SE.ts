@@ -6559,6 +6559,21 @@ Det är avkodarens eget fel. Åtgärda det som hindrar den från att starta - et
         <source>Yellow: Wait and Reply (Settings &gt; Sequencing) may switch Enable Tx on when the station in DX Call calls you.</source>
         <translation>Gul: Vänta och svara (Inställningar &gt; Sekvensiering) kan slå på Aktivera Tx när stationen i DX Anrop anropar dig.</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Hide clear phantom messages</source>
+        <translation>Dölj tydliga fantommeddelanden</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Likely phantom decodes of three kinds are not shown, in either window, also when they carry your call: a grid outside the country of the call that sent it, a call signing /R below 30 MHz, and a call of no known country (where?). Each kind only while Settings &gt; Filters &gt; Phantom decodes marks it; a station heard twice with the same grid is shown, and so are weak decodes where both calls sign /P. Only the windows leave them out, whatever Bypass all text filters says: the automatic sequencer, the UDP clients and ALL.TXT get them as before.</source>
+        <translation>Troliga fantomavkodningar av tre slag visas inte i något av de två fönstren, inte heller när de innehåller din anropssignal: en grid utanför landet för anropssignalen som sände den, en anropssignal med /R under 30 MHz och en anropssignal utan känt land (Var?). Varje slag bara medan Inställningar &gt; Filter &gt; Fantomavkodningar markerar det; en station som hörts två gånger med samma grid visas, liksom svaga avkodningar där båda anropssignalerna har /P. Bara fönstren utelämnar dem, oavsett Passera alla textfilter: den automatiska sekvensen (AutoSeq), UDP-klienterna och ALL.TXT får dem som förut.</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>FT2</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>
@@ -10274,8 +10289,8 @@ ljudkort ändras</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
-        <source>A call whose prefix belongs to no country in cty.dat - shown as where? in the country column - is most likely a phantom decode, on any band. The decode is kept, with the call and where? underlined in red, and is never answered automatically - a double click still answers it. Its ALL.TXT line ends with lc:where, and it is sent to UDP clients as a low-confidence decode. Maritime and aeronautical mobile calls (/MM, /AM) have no country and are never marked.</source>
-        <translation>En anropssignal vars prefix inte hör till något land i cty.dat - visas som Var? i landskolumnen - är med största sannolikhet en fantomavkodning, på alla band. Avkodningen behålls, med anropssignalen och Var? understrukna med rött, och den besvaras aldrig automatiskt - ett dubbelklick besvarar den ändå. Dess rad i ALL.TXT slutar med lc:where, och den skickas till UDP-klienter som en avkodning med låg tillförlitlighet. Maritima och aeronautiska mobila anropssignaler (/MM, /AM) har inget land och markeras aldrig.</translation>
+        <source>A call whose prefix belongs to no country in cty.dat - shown as where? in the country column - is most likely a phantom decode, on any band. The decode is kept, with the call and where? underlined in red, and is never answered automatically - a double click still answers it. Its ALL.TXT line ends with lc:where, and it is sent to UDP clients as a low-confidence decode. A maritime or aeronautical mobile call (/MM, /AM) shows where? too, and is judged by the call before the suffix: DL1ABC/MM is never marked.</source>
+        <translation>En anropssignal vars prefix inte hör till något land i cty.dat - visas som Var? i landskolumnen - är med största sannolikhet en fantomavkodning, på alla band. Avkodningen behålls, med anropssignalen och Var? understrukna med rött, och den besvaras aldrig automatiskt - ett dubbelklick besvarar den ändå. Dess rad i ALL.TXT slutar med lc:where, och den skickas till UDP-klienter som en avkodning med låg tillförlitlighet. En maritim eller aeronautisk mobil anropssignal (/MM, /AM) visas också som Var?, och bedöms efter anropssignalen före suffixet: DL1ABC/MM markeras aldrig.</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>

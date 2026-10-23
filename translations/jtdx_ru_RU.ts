@@ -6571,6 +6571,21 @@ That is the decoder's own error. Put right whatever stops it starting - a missin
         <source>Yellow: Wait and Reply (Settings &gt; Sequencing) may switch Enable Tx on when the station in DX Call calls you.</source>
         <translation>Жёлтая: Ждать и ответить (Настройки &gt; Последовательность действий) может включить Разреш.Tx, когда станция из поля Позывной DX вызывает вас.</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Hide clear phantom messages</source>
+        <translation>Скрыть явные фантомные сообщения</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Likely phantom decodes of three kinds are not shown, in either window, also when they carry your call: a grid outside the country of the call that sent it, a call signing /R below 30 MHz, and a call of no known country (where?). Each kind only while Settings &gt; Filters &gt; Phantom decodes marks it; a station heard twice with the same grid is shown, and so are weak decodes where both calls sign /P. Only the windows leave them out, whatever Bypass all text filters says: the automatic sequencer, the UDP clients and ALL.TXT get them as before.</source>
+        <translation>Вероятные фантомные декодирования трёх видов не показываются ни в одном из двух окон, даже если в них ваш позывной: локатор вне страны передавшего его позывного, позывной с /R ниже 30 МГц и позывной без известной страны (страна?). Каждый вид - только пока Настройки &gt; Фильтры &gt; Фантомные декодирования его отмечают; станция, услышанная дважды с одним и тем же локатором, показывается, как и слабые декодирования, где оба позывных с /P. Их пропускают только окна, независимо от Обход всех текстовых фильтров: АвтоВыбор (AutoSeq), клиенты UDP и ALL.TXT получают их как прежде.</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>FT2</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>
@@ -10337,8 +10352,8 @@ soundcard changes</source>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
-        <source>A call whose prefix belongs to no country in cty.dat - shown as where? in the country column - is most likely a phantom decode, on any band. The decode is kept, with the call and where? underlined in red, and is never answered automatically - a double click still answers it. Its ALL.TXT line ends with lc:where, and it is sent to UDP clients as a low-confidence decode. Maritime and aeronautical mobile calls (/MM, /AM) have no country and are never marked.</source>
-        <translation>Позывной, префикс которого по cty.dat не относится ни к одной стране - в столбце страны показан как страна? -, скорее всего, фантомное декодирование, на любом диапазоне. Декодирование сохраняется, позывной и страна? подчёркиваются красным, и на него никогда не отвечают автоматически - двойной щелчок по-прежнему отвечает на него. Его строка в ALL.TXT заканчивается меткой lc:where, а клиентам UDP оно передаётся как декодирование с низкой достоверностью. Морские и воздушные подвижные позывные (/MM, /AM) не имеют страны и никогда не отмечаются.</translation>
+        <source>A call whose prefix belongs to no country in cty.dat - shown as where? in the country column - is most likely a phantom decode, on any band. The decode is kept, with the call and where? underlined in red, and is never answered automatically - a double click still answers it. Its ALL.TXT line ends with lc:where, and it is sent to UDP clients as a low-confidence decode. A maritime or aeronautical mobile call (/MM, /AM) shows where? too, and is judged by the call before the suffix: DL1ABC/MM is never marked.</source>
+        <translation>Позывной, префикс которого по cty.dat не относится ни к одной стране - в столбце страны показан как страна? -, скорее всего, фантомное декодирование, на любом диапазоне. Декодирование сохраняется, позывной и страна? подчёркиваются красным, и на него никогда не отвечают автоматически - двойной щелчок по-прежнему отвечает на него. Его строка в ALL.TXT заканчивается меткой lc:where, а клиентам UDP оно передаётся как декодирование с низкой достоверностью. Морской или воздушный подвижный позывной (/MM, /AM) тоже показывается как страна?, но оценивается по позывному перед суффиксом: DL1ABC/MM никогда не отмечается.</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>

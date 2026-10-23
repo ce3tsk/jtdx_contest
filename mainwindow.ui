@@ -5270,6 +5270,7 @@ list. The list can be maintained in Settings (F2).</string>
     <addaction name="actionBypass_all_text_filters"/>
     <addaction name="actionHide_FT8_dupe_messages"/>
     <addaction name="actionHide_FT_contest_messages"/>
+    <addaction name="actionHide_clear_phantom_messages"/>
     <addaction name="actionShow_messages_decoded_from_harmonics"/>
     <addaction name="actionMyCallRXFwindow"/>
     <addaction name="actionWantedCallRXFwindow"/>
@@ -7536,6 +7537,17 @@ list. The list can be maintained in Settings (F2).</string>
    </property>
    <property name="text">
     <string>Hide FT contest messages</string>
+   </property>
+  </action>
+  <action name="actionHide_clear_phantom_messages">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Hide clear phantom messages</string>
+   </property>
+   <property name="toolTip">
+    <string>Likely phantom decodes of three kinds are not shown, in either window, also when they carry your call: a grid outside the country of the call that sent it, a call signing /R below 30 MHz, and a call of no known country (where?). Each kind only while Settings &gt; Filters &gt; Phantom decodes marks it; a station heard twice with the same grid is shown, and so are weak decodes where both calls sign /P. Only the windows leave them out, whatever Bypass all text filters says: the automatic sequencer, the UDP clients and ALL.TXT get them as before.</string>
    </property>
   </action>
   <action name="actionFT4">
