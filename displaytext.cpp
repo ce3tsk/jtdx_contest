@@ -1350,7 +1350,16 @@ int DisplayText::displayDecodedText(DecodedText* decodedText, QString myCall, QS
             QsoHistory::Doubt const d = checkCall != phantom_decodes::bareCall (doubt.sender) ? QsoHistory::DOUBT_KEEP
                                       : doubt.noAnswer ? QsoHistory::DOUBT_SET
                                       : doubt.reliable ? QsoHistory::DOUBT_CLEAR : QsoHistory::DOUBT_KEEP;
-            qsoHistory.message(checkCall,status,priority,param,tyyp,countryName.left(2),mpx,c_time,decodedText->report(),decodedText->frequencyOffset(),checkMode,d);
+            /* CE3TSK 2026-10-24 (TODO.md 3.-205): a hint or a-priori decode of his CQ (isHint: * ° ^ and the Tx
+               background's cross) in the period of his message to us that was taken is the decoder's, not his - one
+               station, one message a period - and does not take him back to calling CQ. JA5CEX 2026-09-25: "CQ VK8SSB
+               PH57" from the Tx background, on his frequency in the very period he sent us R-07, and the sequencer
+               called him from the start again. Passed on as NONE: his step stays as it is. A hint CQ of his in a period
+               of its own still counts (a DXpedition's ^ is mostly his), and a plain one in the same period too (MSHV's
+               multi-slot sends two). */
+            QsoHistory::Status step = status;
+            if (step == QsoHistory::RCQ && decodedText->isHint () && qsoHistory.answeredIn (checkCall, c_time)) step = QsoHistory::NONE;
+            qsoHistory.message(checkCall,step,priority,param,tyyp,countryName.left(2),mpx,c_time,decodedText->report(),decodedText->frequencyOffset(),checkMode,d);
         } 
         if (std_type == 2) {
             if(!redMarker_) std_type = 0;

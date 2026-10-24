@@ -375,6 +375,15 @@ QString QsoHistory::gridSentBy (QString const& callsign) const
     return t != _data.constEnd () && t->gridCall == callsign ? t->grid : QString {};
 }
 
+bool QsoHistory::answeredIn (QString const& callsign, unsigned time) const
+{
+    if (!_working) return false;
+    auto const t = _data.constFind (Radio::base_callsign (callsign));
+    if (t == _data.constEnd () || t->time != time) return false;
+    Status const s = t->srx_c;
+    return s == RCALL || s == RREPORT || s == RRREPORT || s == RRR || s == RRR73 || s == R73;
+}
+
 QsoHistory::Status QsoHistory::status(QString const& callsign, QString &grid)
 {
     if (_working)
@@ -648,7 +657,11 @@ void QsoHistory::message(QString const& callsign, Status status, int priority, Q
                   /* CE3TSK: WW Digi contest - our exchange goes out in Tx1/Tx2 as a bare
                      grid, which is recorded as SCALL, so requiring SREPORT here would
                      reject his "R GRID" and stall the QSO. */
-                  if (t.status < FIN && (t.stx_c >= SREPORT || (_wwDigi && t.stx_c >= SCALL))) {
+                  /* CE3TSK 2026-10-24 (TODO.md 3.-205): and in FT8, FT4 and FT2 his R-report straight back to our call,
+                     the plain report skipped - taken as WSJT-X 3.0.2 takes it (at REPLYING an "R..." answers with Tx4).
+                     It was dropped: the line's own answer sent RR73 and logged him, and the next transmission went back
+                     to the call - JA5CEX's VK8SSB 2026-09-25: PM74, RR73, PM74, RR73, PM74. */
+                  if (t.status < FIN && (t.stx_c >= SREPORT || ((_wwDigi || mode.startsWith ("FT")) && t.stx_c >= SCALL))) {
                       old_status = t.status;
                       t.status = status;
                       if (priority > t.priority) t.priority = priority;

@@ -38,6 +38,10 @@ class QsoHistory
 	   The sender changes only with the grid: the window hands the grid it looked up back as the message's
 	   parameter, and "CQ KH6/K1ABC" storing K1ABC's FN42 again must not make it KH6/K1ABC's. */
 	QString gridSentBy (QString const& callsign) const;
+	/* CE3TSK 2026-10-24 (TODO.md 3.-205): his last message taken was one to us (a call, a report, R-report, RRR, RR73 or
+	   73) of the period that began at time - one station sends one message a period, so a hint decode of another
+	   from him in it is the decoder's, not his */
+	bool answeredIn (QString const& callsign, unsigned time) const;
 	Status autoseq(QString &callsign, QString &grid, QString &rep, int &rx, int &tx, unsigned &time, int &count, int &prio, QString &mode);
 	Status log_data(QString const& callsign, unsigned &time, QString &rrep, QString &srep);
 	int remove(QString const& callsign);
