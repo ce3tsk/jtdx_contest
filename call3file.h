@@ -22,13 +22,23 @@
 #include <QCryptographicHash>
 #include <QDate>
 #include <QString>
+#include <QtGlobal>
 
 namespace call3_file
 {
   char const * const url {"https://wsjt-x-improved.sourceforge.io/CALL3.TXT"};
+  // (3.-201) the address the button asks: url - or JTDX_CALL3_URL's, for a test against a server on this machine
+  // (tools/ui-check/call3download.sh), as JTDX_ALLCALL7 and JTDX_SFOX_* are settings of the environment
+  inline QByteArray source_url ()
+  {
+    QByteArray const set {qgetenv ("JTDX_CALL3_URL")};
+    return set.isEmpty () ? QByteArray {url} : set;
+  }
   char const * const file_name {"CALL3.TXT"};
   char const * const backup_name {"CALL3_backup.TXT"};
   int const minimum_entries {1000};
+  // (3.-202) the settings key (under JTDX_contest\) holding the version the last download brought
+  char const * const downloaded_key {"CALL3Downloaded"};
   // (3.-200) the bundled list of 2016-2017 (JTAlert's HamSpots spots, 34 323 calls; ad08d18:contrib/CallDB/CALL3.TXT)
   char const * const old_bundled_md5 {"8251f5ca98d2462c3fbabfeed9a49ec9"};
 

@@ -2141,7 +2141,14 @@ Configuration::impl::impl (Configuration * self, QNetworkAccessManager * network
   // CE3TSK: data file updates - exactly one of complete() or error() arrives per download
   for (FileDownload * download : {&cty_download_, &lotw_download_, &license_download_, &call3_download_})
     {
-      connect (download, &FileDownload::complete, this, [this, download] (QString const&) {
+      connect (download, &FileDownload::complete, this, [this, download] (QString const& file) {
+          if (download == &call3_download_)   // (3.-202) the version a download brought, for the label (call3file.h)
+            {
+              QFile f {file};
+              SettingsGroup g {settings_, "Configuration"};   // where read_settings () reads ours
+              settings_->setValue (contest_profile::own_key (call3_file::downloaded_key),
+                                   f.open (QIODevice::ReadOnly) ? call3_file::version (f.read (4096)) : QDate {});
+            }
           update_data_file_labels ();
           // (3.-199) CALL3.TXT is read where it is used - Lookup at each look-up, the decoder at its start: nothing to reload
           if (download != &call3_download_) Q_EMIT self_->data_files_updated ();
@@ -4498,7 +4505,8 @@ void Configuration::impl::on_call3_download_push_button_clicked (bool)
   QDir const data_dir {QStandardPaths::writableLocation (QStandardPaths::DataLocation)};
   QFile::remove (data_dir.absoluteFilePath (call3_file::backup_name));
   QFile::copy (data_dir.absoluteFilePath (call3_file::file_name), data_dir.absoluteFilePath (call3_file::backup_name));
-  start_data_file_download (call3_download_, call3_file::url, call3_file::file_name, &call3_file::checked_version,
+  QByteArray const source {call3_file::source_url ()};   // (3.-201) url, or JTDX_CALL3_URL's for a test
+  start_data_file_download (call3_download_, source.constData (), call3_file::file_name, &call3_file::checked_version,
                             tr ("The downloaded file is not a CALL3.TXT call list."));
 }
 
@@ -4554,7 +4562,9 @@ void Configuration::impl::update_data_file_labels ()
   show (ui_->license_file_status_label, ui_->license_download_push_button, license_download_, license_file_name, &LicenseStates::version);
 
   /* (3.-199) CALL3.TXT: always the copy in the log directory - its version, "bundled with this release" when it is the
-     bundled list's; the list of 2016-2017 has no version line */
+     bundled list's; the list of 2016-2017 has no version line. (3.-202) "downloaded" when a download brought that version,
+     though it be the bundled list's too - the operator: "when I download the CALL3.TXT file it still says that it is the
+     bundled version"; the other three rows say "downloaded" for a downloaded copy of the bundled version too */
   ui_->call3_download_push_button->setEnabled (!call3_download_.running ());
   if (call3_download_.running ())
     {
@@ -4564,8 +4574,13 @@ void Configuration::impl::update_data_file_labels ()
   auto const head = [] (QString const& path) {QFile f {path}; return f.open (QIODevice::ReadOnly) ? f.read (4096) : QByteArray {};};
   QDate const in_use {call3_file::version (head (data_dir.absoluteFilePath (call3_file::file_name)))};
   QDate const bundled {call3_file::version (head (data_dir_.absoluteFilePath (call3_file::file_name)))};
+  QDate downloaded;
+  {
+    SettingsGroup g {settings_, "Configuration"};
+    downloaded = settings_->value (contest_profile::own_key (call3_file::downloaded_key)).toDate ();
+  }
   ui_->call3_file_status_label->setText (!in_use.isValid () ? tr ("version unknown")
-                                         : in_use == bundled ? tr ("%1, bundled with this release").arg (in_use.toString (Qt::ISODate))
+                                         : in_use == bundled && in_use != downloaded ? tr ("%1, bundled with this release").arg (in_use.toString (Qt::ISODate))
                                          : tr ("%1, downloaded").arg (in_use.toString (Qt::ISODate)));
 }
 
