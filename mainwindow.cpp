@@ -2009,7 +2009,9 @@ void MainWindow::readSettings()
   else ui->actionHide_telemetry_messages->setChecked(m_settings->value("HideTelemetryMessages").toBool());
 
   ui->actionHide_FT8_dupe_messages->setChecked(m_settings->value("HideFT8Dupes",true).toBool());
-  ui->actionHide_clear_phantom_messages->setChecked (m_settings->value ("HideClearPhantoms", false).toBool ());   // CE3TSK 2026-10-23
+  /* CE3TSK 2026-10-23; on when the ini does not keep it (2026-10-31, TODO.md 3.-212, the operator: "if it was not saved to
+     the ini, then assume that hiding is enabled") */
+  ui->actionHide_clear_phantom_messages->setChecked (m_settings->value ("HideClearPhantoms", true).toBool ());
   ui->actionMyCallRXFwindow->setChecked(m_settings->value("ShowMyCallMessagesRxWindow",true).toBool());
   ui->actionWantedCallRXFwindow->setChecked(m_settings->value("ShowWantedCallMessagesRxWindow",true).toBool());
 
