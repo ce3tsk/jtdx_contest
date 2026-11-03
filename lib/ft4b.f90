@@ -14,7 +14,7 @@ subroutine ft4b(f0,snrc,nQSOProgress,nfqso,ndepth,stophint,swl,lswl,nthr,isp,dob
   use ft4_mod1, only : dd4,sumxdt4,ndecd4
   use ft4_mod1, only : ft4res,nft4res,NDEC4MAX,ft4used
   use ft4_mod1, only : t4sync_s,t4down_s,t4bp_s,t4osd_s,t4sub_s,t4bits_s,n4sync_s,n4bp_s,n4osd_s
-  use ft8_mod1, only : avexdt,mycall,hiscall,mycalllen1
+  use ft8_mod1, only : avexdt,mycall,hiscall,mycalllen1,mybcall
   use ft4_mod1, only : nft4hintdepth,ft4hint_find,ft4hint_near
   use ft4_mod1, only : nft4osddeep,nft4syncqual,nft4idfstp,nft4alt,nft4ens,ft4falsegate,ft4ensfreq,nft4dt2
   use ft4_mod1, only : lft2,ft2snroff   ! CE3TSK: FT2 - stretched units, real-second DT, and the SNR offset
@@ -34,6 +34,7 @@ subroutine ft4b(f0,snrc,nQSOProgress,nfqso,ndepth,stophint,swl,lswl,nthr,isp,dob
   character*37 decodes(NDEC4MAX)   ! CE3TSK: was 100
   integer, intent(inout) :: ndecodes
   integer ngriddel,ndelfreq   ! CE3TSK: chkfalse8's word on a deletion by the table
+  integer ndxhalf   ! CE3TSK 2026-11-03: chkdxpedmine's word on a DXpedition message naming my call (chkprefix.f90)
   parameter (NSS=NSPS/NDOWN,NDMAX=NMAX/NDOWN)
   character message*37,msgsent*37,msg37_2*37
   character msgd*37
@@ -513,6 +514,19 @@ subroutine ft4b(f0,snrc,nQSOProgress,nfqso,ndepth,stophint,swl,lswl,nthr,isp,dob
 ! hint pass (7) are known messages, nothing to check. SNR gate: -17.5 on FT4's scale, as -20.5
 ! sits 3.5 dB above FT8's floor (JTDX_FT4_FALSEGATE overrides).
           if(iaptype.lt.4 .and. (xsnr.lt.ft4falsegate+merge(ft2snroff,0.0,lft2) .or. (iaptype.ge.1 .and. iaptype.le.3))) then
+! CE3TSK 2026-11-03 (TODO.md 3.-219): FT8's check 12 (ft8b.f90; lib/chkprefix.f90, chkdxpedmine). Types 2 and 3 fix my call
+! and leave the message type free, so a guess can read "CE3TSK RR73; X5KPD <V26JJ> -12", whose first half is an RR73 to me.
+! Asked first, as there: the skip below passes over a message naming my call. msgparser rewrites what it is given: a copy.
+            if(i3.eq.0 .and. n3.eq.1) then
+              msgchk=message; call msgparser(msgchk,msg37_2)
+              call chkdxpedmine(msgchk,msg37_2,mybcall,ndxhalf)
+              if(ndxhalf.gt.0) then
+                ndelfreq=nint(f1); if(lft2) ndelfreq=nint(2.0*f1)
+                call deleted_note(nthr,merge(msgchk,msg37_2,ndxhalf.eq.1),nsnr,xdt,ndelfreq,-12)
+                if(lft4timing) write(0,9020) i3,n3,iaptype,nsnr,msgchk(1:26)
+                message=''; cycle
+              endif
+            endif
             lmine=.false.
             if(iaptype.ne.2 .and. iaptype.ne.3) then
               if(len_trim(mycall).gt.2) then; if(index(message,trim(mycall)).gt.0) lmine=.true.; endif
@@ -617,6 +631,10 @@ subroutine ft4b(f0,snrc,nQSOProgress,nfqso,ndepth,stophint,swl,lswl,nthr,isp,dob
             if(i3.eq.0 .and. n3.eq.1) then ! special DXpedition msg
               call msgparser(message,msg37_2)
               ft4res(ir,nthr)%srv="1"; ft4res(ir,nthr)%ltwo=.true.; ft4res(ir,nthr)%lemit=.true.
+              ! CE3TSK 2026-11-03 (TODO.md 3.-218): a decode with help keeps its mark, as FT8's rules below. Types 2 and 3 do
+              ! not fix the message type, so "CE3TSK RR73; DL1ABC <V26JJ> -12" can be type 2's work; and every decode is a
+              ! hint for the next periods, this one too, full text and all (iaptype 7).
+              if(iaptype.eq.7) then; ft4res(ir,nthr)%srv='^'; else if(iaptype.ne.0) then; ft4res(ir,nthr)%srv='*'; endif
               if(nbg4run.gt.0) ft4res(ir,nthr)%srv='|'   ! CE3TSK: the background overrides '1' as FT8's does
               ft4res(ir,nthr)%m26a=message(1:26); ft4res(ir,nthr)%m26b=msg37_2(1:26)
             else

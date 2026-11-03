@@ -375,7 +375,10 @@ contains
                 else
                   if(lft8sd .or. lft8s) then; servis8='^'; else; servis8='*'; endif
                 endif
-                if(i3bit.eq.1) servis8='1'
+! CE3TSK 2026-11-03 (TODO.md 3.-218): 1 only for a DXpedition message read without help. One marker column, and a
+! guess of the a-priori pass marked 1 looked like a clean decode: the '*' is what the operator needs to see. A hint
+! decode never has i3bit set (ft8b leaves before it), so '^' is safe; the background's marks below still win.
+                if(i3bit.eq.1 .and. iaptype.eq.0) servis8='1'
                 if(nbgrun.gt.0) then
                   if(lft8sd .or. lft8s) then; servis8='#'; else; servis8='|'; endif
                 endif
@@ -446,7 +449,8 @@ contains
                 else
                   if(lft8sd .or. lft8s) then; servis8='^'; else; servis8='*'; endif
                 endif
-                if(i3bit.eq.1) servis8='1'
+! CE3TSK 2026-11-03 (TODO.md 3.-218): as in the buffered path above - an a-priori guess keeps its '*'
+                if(i3bit.eq.1 .and. iaptype.eq.0) servis8='1'
 ! CE3TSK: a pipeline message - decoded in the TX background phase: '|', or '#' for a hint
 ! decode there, which the callback prints as the box-drawing cross (a pipe with the hint's
 ! caret through it; three UTF-8 bytes, hence the placeholder in this one-byte marker)

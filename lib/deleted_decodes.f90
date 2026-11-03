@@ -3,8 +3,8 @@ module deleted_decodes
 !
 ! chkgrid's table says from which squares a prefix can be heard, and which prefixes are not allocated at all.
 ! A decode that fails it is deleted in twelve places - seven in chkfalse8.f90, the filter FT8, FT4 and FT2
-! share, two more that all three decoders call (chkprefix.f90; FT8 alone had them until 2026-10-13),
-! two in ft8b.f90 and one more that ft8b alone calls (chkprefix.f90, 2026-11-01) - and nothing told anybody. A station whose prefix or square the table has wrong lost every weak CQ unseen: on the
+! share, three more that all three decoders call (chkprefix.f90; FT8 alone had them until 2026-10-13, and
+! check 12, new on 2026-11-01, until 2026-11-03), and two in ft8b.f90 - and nothing told anybody. A station whose prefix or square the table has wrong lost every weak CQ unseen: on the
 ! day this was written the table accepted no square at all for the Azores (CU) and refused three squares
 ! that sixty stations were on the air from, and it took a decoder built for the purpose to see it.
 !
@@ -27,10 +27,11 @@ module deleted_decodes
 !     11    ft8b.f90, a rover call whose base call has six characters or more ("CQ KA1ABC/R FN42"); a
 !           shorter one ("CQ K1ABC/R FN42") is not looked at there, and is judged only when weak or
 !           a-priori (places 1 and 3)
-!     12    chkdxpedmine, FT8: a weak or a-priori DXpedition message that names my call ("X5KPD RR73;
-!           CE3TSK <V26JJ> +06"), on its other call's prefix - the half with that call goes on record
-!           ("X5KPD V26JJ RR73"). FT4 and FT2 have no Hound mode and no a-priori pass that puts my call
-!           into this message.
+!     12    chkdxpedmine, all three modes: a weak or a-priori DXpedition message that names my call ("X5KPD
+!           RR73; CE3TSK <V26JJ> +06"), on its other call's prefix - the half with that call goes on record
+!           ("X5KPD V26JJ RR73"). FT4 and FT2 have no Hound mode, but their a-priori types 2 and 3 do not fix
+!           the message type, so a guess can put my call first ("CE3TSK RR73; X5KPD <V26JJ> -12"; TODO.md
+!           3.-219). chkspecial8, FT8's other check of this message, is still FT8's alone.
 ! The program writes the lines to <month>_DELETED.TXT beside ALL.TXT (deletedlog.h). Without the variable
 ! nothing is kept and nothing is printed: file mode and every expectation set are as they were.
 !

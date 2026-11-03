@@ -141,10 +141,12 @@ subroutine chkrgrid(msg37,i3,nwhy)
 end subroutine chkrgrid
 
 subroutine chkdxpedmine(msg37,msg37_2,mybcall,nhalf)
-! CE3TSK 2026-11-01 (TODO.md 3.-216): check 12 of the record (deleted_decodes.f90), FT8: a DXpedition message that
+! CE3TSK 2026-11-01 (TODO.md 3.-216): check 12 of the record (deleted_decodes.f90), all three modes: a DXpedition message that
 ! names MY call - "K1ABC RR73; CE3TSK <V26JJ> +06", which ft8b.f90's msgparser has split into msg37 "K1ABC V26JJ RR73"
 ! and msg37_2 "CE3TSK V26JJ +06" - and whose OTHER call has a prefix the table lists as not allocated (chkprefix).
-! ft8b asks it of the weak and a-priori decodes only, the branch that asks chkspecial8.
+! ft8b asks it of the weak and a-priori decodes only, the branch that asks chkspecial8; ft4b (FT4 and FT2, 2026-11-03,
+! TODO.md 3.-219) of the ones its gate calls doubtful. They have no Hound mode, but their types 2 and 3 leave the message
+! type free, so a guess can put my call first: "CE3TSK RR73; X5KPD <V26JJ> -12".
 !
 ! chkspecial8 judges such a message only when it names neither my call nor the station being worked. In Hound mode,
 ! while I call the Fox, an a-priori pass (type 22) fixes my call and the Fox's hash in this message and leaves the
