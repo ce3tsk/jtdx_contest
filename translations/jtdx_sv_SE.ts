@@ -8525,8 +8525,8 @@ båda här.</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="2340"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Drag and drop items to rearrange order. Right click for item specific actions. Click, SHIFT+Click and, CRTL+Click to select items. @ symbol is being substituted with DX call, &amp; symbol with user&apos;s base callsign, # symbol with report to be transmitted, ^ symbol with correspondent&apos;s name retrieved from the log where name shall not exceed 7 chars.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Dra och släpp objekt för att ordna om. Högerklicka för artikelspecifika åtgärder. Klicka, SHIFT + Klicka och, CRTL + Klicka för att välja objekt. @ symbol ersätts med DX-samtal, &amp; symbol med användarens basanropssignal, # symbol med rapport som ska överföras, ^ symbol med korrespondentens namn hämtas från loggen där namnet inte får överstiga 7 karaktärer. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Drag and drop items to rearrange order. Right click for item specific actions. Click, SHIFT+Click and, CTRL+Click to select items. @ symbol is being substituted with DX call, &amp; symbol with user&apos;s base callsign, # symbol with report to be transmitted, ^ symbol with correspondent&apos;s name retrieved from the log where name shall not exceed 7 chars.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Dra och släpp objekt för att ordna om. Högerklicka för artikelspecifika åtgärder. Klicka, SHIFT + Klicka och, CTRL + Klicka för att välja objekt. @ symbol ersätts med DX-samtal, &amp; symbol med användarens basanropssignal, # symbol med rapport som ska överföras, ^ symbol med korrespondentens namn hämtas från loggen där namnet inte får överstiga 7 karaktärer. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="2391"/>

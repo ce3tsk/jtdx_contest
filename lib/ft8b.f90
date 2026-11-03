@@ -35,6 +35,7 @@ subroutine ft8b(newdat1,nQSOProgress,nfqso,nftx,napwid,lsubtract,npos,freqsub,tm
   integer isdk   ! CE3TSK: which hint copy the stored message came from
   integer ngriddel,ndelsnr,ndelfreq   ! CE3TSK: a deletion by the table, see deleted_decodes.f90
   integer nwhy   ! CE3TSK: chkrgrid's word on "CALL1 CALL2 R GRID" (chkprefix.f90)
+  integer ndxhalf   ! CE3TSK 2026-11-01: chkdxpedmine's word on a DXpedition message naming my call (chkprefix.f90)
   real deldt
   character msgdel*37
   character msgchk*37,cremhit*13   ! CE3TSK 2026-10-15 (3.-106): what the phantom checks judge; the call from the list
@@ -1750,6 +1751,18 @@ subroutine ft8b(newdat1,nQSOProgress,nfqso,nftx,napwid,lsubtract,npos,freqsub,tm
       endif
     else if(qual.lt.0.39 .or. xsnr.lt.-20.5 .or. rxdt.lt.-0.5 .or. rxdt.gt.1.9 .or. (iaptype.gt.0 .and. iaptype.lt.4) .or. &
             iaptype.eq.11 .or. iaptype.eq.21 .or. iaptype.eq.40 .or. iaptype.eq.41) then
+! CE3TSK 2026-11-01 (TODO.md 3.-216): a DXpedition message that names my call, and whose other call has a prefix the
+! table lists as not allocated - check 12 of the record (lib/chkprefix.f90, chkdxpedmine). Asked before the skips: the
+! second passes over every check for a message naming my call or the Fox's - comparing the calls with their blanks,
+! it fires today only for a call that ends the message, never for a split DXpedition half.
+      if(i3bit.eq.1) then
+        call chkdxpedmine(msg37,msg37_2,mybcall,ndxhalf)
+        if(ndxhalf.gt.0) then
+          ndelsnr=nint(xsnr); deldt=xdt-0.5+ensdtcorr; ndelfreq=nint(f1+ensfreqcorr)
+          call deleted_note(nthr,merge(msg37,msg37_2,ndxhalf.eq.1),ndelsnr,deldt,ndelfreq,-12)
+          nbadcrc=1; msg37=''; msg37_2=''; return
+        endif
+      endif
       if(iaptype.gt.3 .and. iaptype.lt.7) go to 4 ! skip, nothing to check
       if(iaptype.ne.2 .and. iaptype.ne.3 .and. iaptype.ne.11 .and. iaptype.ne.21 &
             .and. iaptype.ne.40 .and. iaptype.ne.41) then

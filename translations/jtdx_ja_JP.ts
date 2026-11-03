@@ -3231,7 +3231,7 @@ Format:
         <location filename="../mainwindow.ui" line="803"/>
         <location filename="../mainwindow.ui" line="813"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;DXSummit spot line edit: mode in the information field being spotted automatically, user can add own text message in the information field. Available macros: #D is for distance, #G is for &quot;Grid1&amp;lt;&amp;gt;Grid2&quot;, #R is for report value. Information field preview is available.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt; &lt;head /&gt; &lt;body&gt; &lt;p&gt; DXSummit spot line edit：情報欄のモードは自動的に選択されます。ユーザーは情報欄に独自のテキストメッセージを追加できます。 使用可能なマクロ：#Dは距離用、＃Gは「Grid1 &amp;lt;&amp;gt; Grid2」用、＃Rはレポート値用です。 情報フィールドのプレビューが利用可能です。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt; &lt;head /&gt; &lt;body&gt; &lt;p&gt; DXSummit spot line edit：情報欄のモードは自動的に選択されます。ユーザーは情報欄に独自のテキストメッセージを追加できます。 使用可能なマクロ：#Dは距離用、#Gは「Grid1 &amp;lt;&amp;gt; Grid2」用、#Rはレポート値用です。 情報フィールドのプレビューが利用可能です。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="806"/>
@@ -7627,9 +7627,7 @@ Please verify the correct directory name was given.</source>
     <message>
         <location filename="../Configuration.ui" line="118"/>
         <source>Maidenhead locator (only the first four characters are required).</source>
-        <translation>メイデンヘッド・ロケータ（最初の4桁は少なくとも必要）。
-しかし少なくとも6桁は入力しましょう。JTDXは最大で
-8桁までサポートしています。</translation>
+        <translation>メイデンヘッド・ロケーター（先頭4文字のみ必須）。</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="125"/>
@@ -8493,7 +8491,7 @@ Please verify the correct directory name was given.</source>
     <message>
         <location filename="../Configuration.ui" line="2798"/>
         <source>The program can send logged QSO info to the http://www.eqsl.cc web site.</source>
-        <translation>プログラムは、記録されたQSO情報をhttp://www.eqsl.ccウェブサイトに送ることができる。</translation>
+        <translation>プログラムは、ログに記録されたQSO情報を http://www.eqsl.cc のウェブサイトへ送信できます。</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="2801"/>
@@ -9210,8 +9208,8 @@ both here.</source>
     </message>
     <message>
         <location filename="../Configuration.ui" line="2340"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Drag and drop items to rearrange order. Right click for item specific actions. Click, SHIFT+Click and, CRTL+Click to select items. @ symbol is being substituted with DX call, &amp; symbol with user&apos;s base callsign, # symbol with report to be transmitted, ^ symbol with correspondent&apos;s name retrieved from the log where name shall not exceed 7 chars.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt; &lt;head /&gt; &lt;body&gt; &lt;p&gt;アイテムをドラッグアンドドロップして順序を並べ替えます。 アイテム固有のアクションを右クリックします。 クリック、Shiftキーを押しながらクリック、CRTLキーを押しながらクリックして項目を選択します。 @記号はDX呼び出しに置き換えられ、＆記号はユーザーのベースコールサインに、＃記号は送信されるレポートに、^記号はログから取得された通信者の名前に、7文字を超えてはなりません。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Drag and drop items to rearrange order. Right click for item specific actions. Click, SHIFT+Click and, CTRL+Click to select items. @ symbol is being substituted with DX call, &amp; symbol with user&apos;s base callsign, # symbol with report to be transmitted, ^ symbol with correspondent&apos;s name retrieved from the log where name shall not exceed 7 chars.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt; &lt;head /&gt; &lt;body&gt; &lt;p&gt;項目をドラッグ＆ドロップして順序を変更します。右クリックで項目ごとの操作を選べます。クリック、Shift+クリック、Ctrl+クリックで項目を選択します。マクロ記号：@ は DX Call、&amp;amp; は自局のベースコールサイン、# は送信するレポート、^ はログに記録された相手局の名前（最大7文字）に置き換わります。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="2443"/>
@@ -10403,7 +10401,7 @@ soundcard changes</source>
     <message>
         <location filename="../Configuration.ui"/>
         <source>With Output power on, the transmission - a message or Tune - is halted as by Halt Tx, and a warning shown, as soon as the rig reports an SWR above 2.5: a wrong antenna, a fault. The radio's own antenna tuner cycle is not read.</source>
-        <translation>送信出力 がオンのとき、無線機が 2.5 を超える SWR を報告すると、送信（メッセージまたはチューン）を 送信停止 と同様に止めて警告を表示します：アンテナの選択違い、故障など。無線機自身のアンテナチューナーの動作中は読み取りません。</translation>
+        <translation>［送信出力（Output power）］の取得が有効な場合、無線機からSWR 2.5超が報告されると、メッセージ送信またはTune送信を［送信停止（Halt Tx）］と同様に停止し、アンテナの選択ミスや故障の可能性を警告します。無線機内蔵ATUのチューニング中は、このSWR監視の対象外です。</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
@@ -10456,7 +10454,7 @@ soundcard changes</source>
     <message>
         <location filename="../main.cpp" line="154"/>
         <source>Writable files in test location.  Use with caution, for testing only.</source>
-        <translation>テスト位置の書き込み可能なファイル。 テスト用です。注意して使いなさい。</translation>
+        <translation>テスト用の場所に書き込み可能なファイルがあります。テスト専用ですので、注意して使用してください。</translation>
     </message>
     <message>
         <source>Shared memory</source>

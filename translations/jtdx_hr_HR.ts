@@ -8527,8 +8527,8 @@ oboje ovdje.</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="2340"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Drag and drop items to rearrange order. Right click for item specific actions. Click, SHIFT+Click and, CRTL+Click to select items. @ symbol is being substituted with DX call, &amp; symbol with user&apos;s base callsign, # symbol with report to be transmitted, ^ symbol with correspondent&apos;s name retrieved from the log where name shall not exceed 7 chars.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Povucite i ispustite stavke da biste preuredili redoslijed. Kliknite desnom tipkom za određene stavke. Kliknite, SHIFT + Kliknite i, CRTL + Kliknite za odabir stavki. @ simbol se zamjenjuje s DX pozivom, &amp; simbol s osnovnom pozivom korisnika, # simbol s izvješćem koje se šalje, ^ simbol s imenom dopisnika preuzet iz dnevnika u kojem ime ne smije biti veće od 7 znakova.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Drag and drop items to rearrange order. Right click for item specific actions. Click, SHIFT+Click and, CTRL+Click to select items. @ symbol is being substituted with DX call, &amp; symbol with user&apos;s base callsign, # symbol with report to be transmitted, ^ symbol with correspondent&apos;s name retrieved from the log where name shall not exceed 7 chars.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Povucite i ispustite stavke da biste preuredili redoslijed. Kliknite desnom tipkom za određene stavke. Kliknite, SHIFT + Kliknite i, CTRL + Kliknite za odabir stavki. @ simbol se zamjenjuje s DX pozivom, &amp; simbol s osnovnom pozivom korisnika, # simbol s izvješćem koje se šalje, ^ simbol s imenom dopisnika preuzet iz dnevnika u kojem ime ne smije biti veće od 7 znakova.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="2391"/>

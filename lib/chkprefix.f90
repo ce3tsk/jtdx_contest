@@ -139,3 +139,42 @@ subroutine chkrgrid(msg37,i3,nwhy)
   call chkprefix(call_b,lwrongcall)
   if(lwrongcall) nwhy=-9
 end subroutine chkrgrid
+
+subroutine chkdxpedmine(msg37,msg37_2,mybcall,nhalf)
+! CE3TSK 2026-11-01 (TODO.md 3.-216): check 12 of the record (deleted_decodes.f90), FT8: a DXpedition message that
+! names MY call - "K1ABC RR73; CE3TSK <V26JJ> +06", which ft8b.f90's msgparser has split into msg37 "K1ABC V26JJ RR73"
+! and msg37_2 "CE3TSK V26JJ +06" - and whose OTHER call has a prefix the table lists as not allocated (chkprefix).
+! ft8b asks it of the weak and a-priori decodes only, the branch that asks chkspecial8.
+!
+! chkspecial8 judges such a message only when it names neither my call nor the station being worked. In Hound mode,
+! while I call the Fox, an a-priori pass (type 22) fixes my call and the Fox's hash in this message and leaves the
+! first call and the report free. On 2026-11-01 at 23:10:30 it read
+! what was left of the Fox's +3 dB signal at 706 Hz as "X5KPD RR73; CE3TSK <V26JJ> +06" at -23 dB, 704 Hz; the Hound
+! sequencer took the report, and Tx left the calling frequency to send R+report (test/decode/houndphantom.sh replays
+! that period). A message from a Fox names a real Hound: of the 92 DXpedition messages naming CE3TSK in this station's
+! ALL.TXT since 2025-07, this check deletes that one and no other.
+!
+! Only the prefix, as the operator chose (2026-11-01): not chkspecial8's other rules (a first Q, a first 0, two
+! digits), and nothing about the Fox's slot or the strength - the -22 dB report of 22:16:00 the same evening shared a
+! slot with a -1 dB message and led to a QSO the Fox completed.
+!
+! nhalf = 0: it stays. 1 or 2: deleted, and the half that holds the call judged (msg37 or msg37_2) is what goes on
+! record, as prefix/12 - the line the window would have shown for that call.
+  implicit none
+  character(len=37), intent(in) :: msg37,msg37_2
+  character(len=12), intent(in) :: mybcall
+  integer, intent(out) :: nhalf
+  character call_a*12,call_b*12,other*12
+  logical(1) lwrongcall
+  integer n
+
+  nhalf=0
+  if(mybcall.eq.' ') return   ! no call of mine: a message msgparser left whole has an empty second half
+  call_a=msg37(1:index(msg37,' ')-1); call_b=msg37_2(1:index(msg37_2,' ')-1)
+  if(call_b.eq.mybcall) then; other=call_a; n=1
+  else if(call_a.eq.mybcall) then; other=call_b; n=2
+  else; return
+  endif
+  call chkprefix(other,lwrongcall)
+  if(lwrongcall) nhalf=n
+end subroutine chkdxpedmine
