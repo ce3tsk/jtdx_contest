@@ -8408,6 +8408,15 @@ void MainWindow::readFromStdout()                             //readFromStdout
       QString deCall="";
       QString grid="";
       decodedtext.deCallAndGrid(/*out*/deCall,grid);
+      /* The Wide Graph writes the call of a station calling CQ at the bottom of the waterfall, over the frequency it
+         was decoded on (cqspots.h). Only a CQ of the air band and mode shown now - not a late line of the one left -
+         and not what is in doubt: a likely phantom decode, an error or hint decode, a line that is no message. */
+      if (!late && !decodedtext.isDebug () && !decodedtext.isWrong () && !decodedtext.isHint ()
+          && !decodedtext.verdict ().marked () && decodedtext.message ().startsWith ("CQ ")) {   // CQersCall () reads DE and QRZ too
+        QString cqGrid, cqWord;
+        QString const cqCall {decodedtext.CQersCall (cqGrid, cqWord)};
+        if (!cqCall.isEmpty ()) m_wideGraph->addCqCall (cqCall, decodedtext.frequencyOffset ());
+      }
       /* CE3TSK 2026-10-19 (TODO.md section 7, 1f; 3.-141): the sequencer's decisions on a line are rxstep.h's - his line's
          sender, whom he answers, the Rx frequency window, what the line asks of the sequencer */
       bool const fromHim = !deCall.isEmpty() && Radio::base_callsign (deCall) == Radio::base_callsign (m_hisCall);

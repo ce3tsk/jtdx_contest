@@ -51,6 +51,15 @@ CPlotter::CPlotter(QWidget *parent) :                  //CPlotter Constructor
   setAutoFillBackground(false);
   setAttribute(Qt::WA_OpaquePaintEvent, false);
   setAttribute(Qt::WA_NoSystemBackground, true);
+
+  // CQ calls (cqspots.h): once a second, while any are on the board, let the expired ones go
+  m_cqClock.start();
+  m_cqTimer.setInterval(1000);
+  connect(&m_cqTimer, &QTimer::timeout, this, [this] {
+    m_cqBoard.purge(m_cqClock.elapsed());
+    if(m_cqBoard.empty()) m_cqTimer.stop();
+    update();
+  });
 }
 
 CPlotter::~CPlotter() { }                                      // Destructor
@@ -109,6 +118,7 @@ void CPlotter::paintEvent(QPaintEvent *)                                // paint
       painter.drawPixmap(m_lastMouseX, 0, m_HoverOverlayPixmap);
     }
   }
+  if(!m_cqBoard.empty()) drawCqCalls(painter);
   if(m_freq && m_lastMouseX >= 0 && m_lastMouseX != m_lastPaintedX) {
     QFont font = CPlotter::font ();
     QString freq=QString::number(int(FreqfromX(m_lastMouseX)));
@@ -341,13 +351,7 @@ void CPlotter::DrawOverlay()                                 //DrawOverlay()
     painter0.drawText(rect0, Qt::AlignHCenter|Qt::AlignVCenter,m_HDivText[i]);
   }
 
-  float bw=0.0;
-  if(m_modeTx=="FT8") bw=7*12000.0/1920.0;
-  else if(m_mode=="FT4") bw=3*12000.0/576.0;
-  else if(m_mode=="FT2") bw=3*12000.0/288.0;   // CE3TSK
-  else if(m_modeTx=="JT65") bw=66.0*11025.0/4096.0;
-  else if(m_modeTx=="JT9") bw=9.0*12000.0/m_nsps;
-  else if(m_modeTx=="T10") bw=9.0*4.0*12000.0/6912.0;
+  float bw=signalBandwidth();
 
   if(m_filter==true) { //Mark Filter Freq with blue
     QPen pen4(QColor(Radio::convert_dark("#0000ff",m_useDarkStyle)), 2);
@@ -474,6 +478,100 @@ void CPlotter::DrawOverlay()                                 //DrawOverlay()
       painter0.drawLine(x1,9,x2,9);
     }
   }
+}
+
+float CPlotter::signalBandwidth() const
+{
+  float bw=0.0;
+  if(m_modeTx=="FT8") bw=7*12000.0/1920.0;
+  else if(m_mode=="FT4") bw=3*12000.0/576.0;
+  else if(m_mode=="FT2") bw=3*12000.0/288.0;   // CE3TSK
+  else if(m_modeTx=="JT65") bw=66.0*11025.0/4096.0;
+  else if(m_modeTx=="JT9") bw=9.0*12000.0/m_nsps;
+  else if(m_modeTx=="T10") bw=9.0*4.0*12000.0/6912.0;
+  return bw;
+}
+
+/* The CQ calls (cqspots.h), painted over the waterfall's bottom edge - the lines of the waterfall that are
+   about to scroll off - and not into the waterfall, which moves a line down at every update. Each call stands
+   over its signal: a bracket as wide as the signal on the bottom line, the call in a label above it. Where
+   signals lie close together the labels go in rows above one another, joined to their brackets by a thin line. */
+void CPlotter::drawCqCalls(QPainter& painter)
+{
+  qint64 const now {m_cqClock.elapsed()};
+  auto const items = m_cqBoard.active(now);
+  if(items.empty()) return;
+  QFont font("Arial");
+  font.setPointSize(9);
+  QFontMetrics const metrics(font);
+  int const rowH {metrics.height() + 2};
+  int const visible {m_h1 - 30};            // the waterfall as it is seen: under the scale, above the spectrum
+  if(visible < rowH + 8) return;
+  int const rows {std::max(1, std::min(cq_spots::max_rows, visible / 3 / rowH))};   // at most a third of it
+  int const base {m_h1 - 3};                // the line the brackets stand on
+  qint64 const duration {static_cast<qint64>(m_cqBoard.duration_s()) * 1000};
+  float const bw {signalBandwidth()};
+
+  struct Shown {int x1; int x2; int alpha; QString text;};
+  std::vector<Shown> shown;
+  std::vector<cq_spots::Box> boxes;
+  for(auto const& item : items) {
+    if(item.freq + bw < m_startFreq || item.freq > m_startFreq + m_fSpan) continue;   // off the plot
+    Shown s;
+    s.x1 = XfromFreq(item.freq);
+    s.x2 = XfromFreq(item.freq + bw);
+    s.alpha = cq_spots::fade(item.age, duration);
+    s.text = QString::fromStdString(item.call);
+    shown.push_back(s);
+    cq_spots::Box b;
+    b.centre = (s.x1 + s.x2) / 2;
+    b.width = metrics.boundingRect(s.text).width() + 6;
+    boxes.push_back(b);
+  }
+  if(shown.empty()) return;
+  auto const slots = cq_spots::stack(boxes, m_w, rows, 2);
+
+  painter.save();
+  painter.setFont(font);
+  for(std::size_t i=0; i<shown.size(); i++) {                    //brackets, and the lines up to labels in upper rows
+    painter.setPen(QPen(QColor(255,220,0,shown[i].alpha), 1));
+    painter.drawLine(shown[i].x1, base, shown[i].x2, base);
+    painter.drawLine(shown[i].x1, base-3, shown[i].x1, base);
+    painter.drawLine(shown[i].x2, base-3, shown[i].x2, base);
+    if(slots[i].row > 0) painter.drawLine(boxes[i].centre, base-3, boxes[i].centre, base-4-slots[i].row*rowH);
+  }
+  for(std::size_t i=0; i<shown.size(); i++) {                    //the labels, over the lines
+    if(slots[i].row < 0) continue;
+    int const bottom {base - 4 - slots[i].row*rowH};
+    QRect const r {slots[i].left, bottom-(rowH-2), boxes[i].width, rowH-2};
+    painter.fillRect(r, QColor(0,0,0,shown[i].alpha*170/255));
+    painter.setPen(QColor(255,255,255,shown[i].alpha));
+    painter.drawText(r, Qt::AlignCenter, shown[i].text);
+  }
+  painter.restore();
+}
+
+void CPlotter::setCqDuration(int seconds)
+{
+  m_cqBoard.set_duration_s(seconds);
+  if(m_cqBoard.empty()) m_cqTimer.stop();
+  update();
+}
+
+void CPlotter::addCqCall(QString const& call, int freq)
+{
+  if(m_cqBoard.duration_s() <= 0) return;
+  m_cqBoard.add(call.toStdString(), freq, m_cqClock.elapsed());
+  if(!m_cqBoard.empty() && !m_cqTimer.isActive()) m_cqTimer.start();
+  update();
+}
+
+void CPlotter::clearCqCalls()
+{
+  if(m_cqBoard.empty()) return;
+  m_cqBoard.clear();
+  m_cqTimer.stop();
+  update();
 }
 
 void CPlotter::MakeFrequencyStrs()                       //MakeFrequencyStrs
@@ -646,11 +744,16 @@ void CPlotter::showFreq(bool b)
 }
 
 void CPlotter::setTxFreq(int n) { m_txFreq=n; DrawOverlay(); update(); }
-void CPlotter::setMode(QString mode) { m_mode=mode; }
+void CPlotter::setMode(QString mode) { if(mode != m_mode) clearCqCalls(); m_mode=mode; }   // the calls belong to the mode they were heard in
 void CPlotter::setTopJT65(int n) { m_topJT65=n; }
 void CPlotter::setModeTx(QString modeTx) { m_modeTx=modeTx; }
 int CPlotter::Fmax() { return m_fMax; }
-void CPlotter::setDialFreq(double d) { m_dialFreq=d; DrawOverlay(); update(); }
+void CPlotter::setDialFreq(double d)
+{
+  // the calls stand over audio frequencies: a new dial frequency (in MHz here) - another band, a QSY - makes them wrong
+  if(qAbs(d - m_dialFreq) > 0.00005) clearCqCalls();
+  m_dialFreq=d; DrawOverlay(); update();
+}
 void CPlotter::setRxBand(QString band) { m_rxBand=band; }
 void CPlotter::setTimestamp(int n) { m_timestamp=n; }
 void CPlotter::setScale(bool b) { m_Scale=b; }
