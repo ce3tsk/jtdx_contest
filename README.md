@@ -176,7 +176,7 @@ search* on — the environment every table was measured in.
 
 - One switch parks 28 settings and eight main-window controls in their contest state,
 
-names the contest in the window title and lights the Contest lamp; everything comes
+and lights the Contest lamp; everything comes
 back as it was when the contest is switched off.
 
 - The exchange `HISCALL MYCALL R GRID` received and transmitted correctly; the SNR goes to

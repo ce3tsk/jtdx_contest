@@ -198,7 +198,7 @@ float DecodedText::dt()
 */
 
 // find and extract any report. Returns true if this is a standard message
-bool DecodedText::report(QString const& myBaseCall, QString const& dxBaseCall, /*mod*/QString& report, QString& type, bool wwDigi)
+bool DecodedText::report(QString const& myBaseCall, QString const& dxBaseCall, /*mod*/QString& report, QString& type, bool gridExchange)
 {
     bool ret = is_standard_;
     QStringList w=message_.split(" ",SkipEmptyParts);
@@ -237,7 +237,7 @@ bool DecodedText::report(QString const& myBaseCall, QString const& dxBaseCall, /
                 /* CE3TSK: WW Digi contest - "MYCALL HISCALL R GRID" carries his 4 character
                    grid as the exchange in the next word, report it so that it reaches
                    m_rptRcvd and the log instead of being dropped. */
-                else if (wwDigi and tt == "R" and w.size() > 3 and w[3].length() == 4 and w[3] != "RR73")
+                else if (gridExchange and tt == "R" and w.size() > 3 and w[3].length() == 4 and w[3] != "RR73")
                 {
                     auto const& g = w[3];
                     if (g[0] >= 'A' and g[0] <= 'R' and g[1] >= 'A' and g[1] <= 'R'

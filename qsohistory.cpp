@@ -69,9 +69,21 @@ int QsoHistory::remove(QString const& callsign)
 {
   int ret=0;
   if (_working) {
-    ret=_blackdata.remove(Radio::base_callsign (callsign));
-    ret=_calldata.remove(Radio::base_callsign (callsign));
-    ret=_data.remove(Radio::base_callsign (callsign));
+    QString const key = Radio::base_callsign (callsign);
+    QSO const old = _data.value(key);
+    ret=_blackdata.remove(key);
+    ret=_calldata.remove(key);
+    ret=_data.remove(key);
+    /* CE3TSK 2026-11-03 (TODO.md 3.-224): in the contest the grid he has sent is his exchange, not a value that can break a
+       sequence: it stays known through a double click and a Halt Tx, for his report or final answering our call. With no
+       status the entry is picked by nothing. Erasing him for good is remove () and forget (). */
+    if (_contest.gridExchange && !old.grid.isEmpty ()) {
+      QSO t;   // no call: which form of it he uses is for his next message to say (message ()'s "longer form" rule fills it)
+      t.grid = old.grid;
+      t.gridCall = old.gridCall;
+      t.distance = old.distance;
+      _data.insert(key,t);
+    }
   }
   return ret;
 }
@@ -201,7 +213,7 @@ QsoHistory::Status QsoHistory::autoseq(QString &callsign, QString &grid, QString
               tt=_data[key];
               if (on_black == 0 && tt.time == max_r_time && !tt.continent.isEmpty() && !tt.doubtful && (!lastcalled || tt.time == tt.b_time) &&
                   (tt.status == RCALL || tt.status == RREPORT || tt.status == RRREPORT || tt.status == RRR || tt.status == RRR73 || 
-                    ((tt.status == RCQ || tt.status == RFIN) && !mycall && decode_priority::wanted (tt.priority)))) {
+                    ((tt.status == RCQ || tt.status == RFIN) && !mycall && !_contest.humanChoosesPartner && decode_priority::wanted (tt.priority)))) {
                 if (!lastcalled && tt.time == tt.b_time) priority = a_init;
                 if (tt.priority > priority || 
                       (priority > a_init && (((tt.status == RCALL || tt.status == RREPORT || tt.status == RRREPORT) && !mycall) || (tt.priority == priority &&
@@ -252,7 +264,7 @@ QsoHistory::Status QsoHistory::autoseq(QString &callsign, QString &grid, QString
               tt=_data[key];
               if (on_black == 0 && ((tt.time - _CQ.time < 300 && tt.time >= 300) || (tt.time < 300 && tt.time - (_CQ.time - 86100) < 300))  && !tt.continent.isEmpty() && !tt.doubtful && (!lastcalled || tt.time == tt.b_time) &&
                   (tt.status == RCALL || tt.status == RREPORT || tt.status == RRREPORT || tt.status == RRR || tt.status == RRR73 || 
-                    ((tt.status == RCQ || tt.status == RFIN) && !mycall && decode_priority::wanted (tt.priority)))) {
+                    ((tt.status == RCQ || tt.status == RFIN) && !mycall && !_contest.humanChoosesPartner && decode_priority::wanted (tt.priority)))) {
                 if (!lastcalled && tt.time == tt.b_time) priority = a_init;
                 if (tt.priority > priority || 
                       (priority > a_init && (((tt.status == RCALL || tt.status == RREPORT || tt.status == RRREPORT) && !mycall) || (tt.priority == priority &&
@@ -428,9 +440,9 @@ void QsoHistory::rx(QString const& callsign,int freq)
 
 /* CE3TSK: WW Digi contest mode. Deliberately not guarded by _working, it is a setting and
    must survive being set before or after init() clears the QSO data. */
-void QsoHistory::wwdigi(bool state) { _wwDigi = state; }
+void QsoHistory::contest (contest_rules::Rules const& rules) { _contest = rules; }
 
-void QsoHistory::message(QString const& callsign, Status status, int priority, QString const& param, QString const& tyyp, QString const& continent, QString const& mpx, unsigned time, QString const& rep, int freq, QString const& mode, Doubt doubt)
+void QsoHistory::message(QString const& callsign, Status status, int priority, QString const& param, QString const& tyyp, QString const& continent, QString const& mpx, unsigned time, QString const& rep, int freq, QString const& mode, Doubt doubt, bool guess)
 {
     if (_working)
     {
@@ -438,7 +450,7 @@ void QsoHistory::message(QString const& callsign, Status status, int priority, Q
          direction. Left as a directive it matches no continent or prefix and autoselect
          silently skips every station calling CQ WW, ours included. */
       QString tyyp_ = tyyp;
-      if (_wwDigi && tyyp_ == "WW") tyyp_ = "";
+      if (_contest.running && tyyp_ == "WW") tyyp_ = "";
       if (status == SCQ)
         {
           _CQ.call = callsign;
@@ -480,6 +492,25 @@ void QsoHistory::message(QString const& callsign, Status status, int priority, Q
           t.distance = 0;
           t.mode = "";
           t = _data.value(Radio::base_callsign (callsign),t);
+          /* CE3TSK 2026-11-03 (TODO.md 3.-222, 3.-223, 3.-224): WW Digi contest - his RR73 or RRR straight after our bare grid. His
+             grid we hold, from his CQ, and he has ours: the exchange is complete and he has signed off, so it is answered with
+             73 and logged, as WSJT-X does. It was dropped and we repeated the grid to a station gone. One decode puts a QSO in
+             the log here, so only one to be trusted with that - no hint or a-priori guess, no likely phantom decode - and only
+             within two minutes of our last call: a message much later answers nothing we sent. Late it may be: the sequencer
+             may have given him up (N3RTW, 2026-08-30), so he is left fit to be picked again. */
+          auto const hisFinalToOurCall = [&] {
+            if (!_contest.gridExchange || t.status != SCALL || t.stx_c != SCALL || t.grid.isEmpty () || guess || DOUBT_SET == doubt) return false;
+            int const apart = qAbs (int (time) - int (t.b_time));
+            return qMin (apart, 86400 - apart) <= 120;
+          };
+          auto const takeHisFinal = [&] {
+            if (t.r_rep.isEmpty ()) t.r_rep = rep;
+            if (t.s_rep.isEmpty ()) t.s_rep = rep;
+            if (t.continent.isEmpty ()) t.continent = continent.trimmed ();
+            if (t.mpx.isEmpty ()) t.mpx = mpx;
+            if (priority > t.priority) t.priority = priority;
+            as_active = true;   // a pick looks only after a call to us: nothing else would wake it for him once he is given up
+          };
           QString const known_grid = t.grid;        /* CE3TSK: see Doubt - a doubtful grid never replaces it */
           QString const known_gridCall = t.gridCall;
           int const known_distance = t.distance;
@@ -594,7 +625,7 @@ void QsoHistory::message(QString const& callsign, Status status, int priority, Q
                      real signal value instead of a locator. Set here beside s_rep, not in
                      the param branch above: the value is the SNR and has nothing to do with
                      whether he sent a grid. */
-                  if (_wwDigi) t.r_rep = rep;
+                  if (_contest.gridExchange) t.r_rep = rep;
                   t.rx = freq;
   //                max_r_time = time;
                   as_active = true;
@@ -661,7 +692,7 @@ void QsoHistory::message(QString const& callsign, Status status, int priority, Q
                      the plain report skipped - taken as WSJT-X 3.0.2 takes it (at REPLYING an "R..." answers with Tx4).
                      It was dropped: the line's own answer sent RR73 and logged him, and the next transmission went back
                      to the call - JA5CEX's VK8SSB 2026-09-25: PM74, RR73, PM74, RR73, PM74. */
-                  if (t.status < FIN && (t.stx_c >= SREPORT || ((_wwDigi || mode.startsWith ("FT")) && t.stx_c >= SCALL))) {
+                  if (t.status < FIN && (t.stx_c >= SREPORT || ((_contest.gridExchange || mode.startsWith ("FT")) && t.stx_c >= SCALL))) {
                       old_status = t.status;
                       t.status = status;
                       if (priority > t.priority) t.priority = priority;
@@ -673,7 +704,7 @@ void QsoHistory::message(QString const& callsign, Status status, int priority, Q
                          refreshed here as well because a double click on the callsign wipes
                          the history entry, and nothing else would fill it again in a
                          contest QSO where no report is ever exchanged. */
-                      if (_wwDigi) {
+                      if (_contest.gridExchange) {
                         t.r_rep = rep;
                         t.s_rep = rep;
                         if (t.grid.isEmpty () && param.length () == 4 && param != "RR73"
@@ -700,7 +731,7 @@ void QsoHistory::message(QString const& callsign, Status status, int priority, Q
                     /* CE3TSK: WW Digi contest - param is the grid we sent, our own exchange,
                        already logged as my_gridsquare. Keep s_rep on the SNR measured of his
                        signal so that rst_sent is a real report. */
-                    if (!_wwDigi) t.s_rep = param;
+                    if (!_contest.gridExchange) t.s_rep = param;
                     old_status = t.status;
                     t.status = status;
                     t.tx = freq;
@@ -712,6 +743,7 @@ void QsoHistory::message(QString const& callsign, Status status, int priority, Q
                 {
                   t.srx_p = t.srx_c;
                   t.srx_c = status;
+                  if (hisFinalToOurCall ()) takeHisFinal ();
                   if (!t.r_rep.isEmpty () && !t.s_rep.isEmpty () && t.status < FIN)
                     {
                       old_status = t.status;
@@ -736,7 +768,9 @@ void QsoHistory::message(QString const& callsign, Status status, int priority, Q
                 {
                   t.srx_p = t.srx_c;
                   t.srx_c = status;
-                  if(!t.r_rep.isEmpty () && !t.s_rep.isEmpty () && t.status >= SREPORT)
+                  bool const signedOffOurCall = hisFinalToOurCall ();
+                  if (signedOffOurCall) takeHisFinal ();
+                  if(signedOffOurCall || (!t.r_rep.isEmpty () && !t.s_rep.isEmpty () && t.status >= SREPORT))
                     {
                       if (t.status == SRR73 || (t.srx_p != RRR73 && t.status == FIN))
                         {

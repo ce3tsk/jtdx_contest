@@ -1489,7 +1489,7 @@ bool Configuration::newGridBandMode () const {return m_->newGridBandMode_;}
 /* CE3TSK */
 bool Configuration::newGridUserChoice () const {return m_->specialOpSaved_ ? m_->savedSpecialOp_.newGrid : m_->newGrid_;}
 Configuration::SpecialOperatingActivity Configuration::special_op_id () const {return m_->specialOp_;}
-bool Configuration::wwDigi () const {return m_->specialOp_ == SpecialOperatingActivity::WW_DIGI;}
+contest_rules::Rules Configuration::contest () const {return contest_rules_of (m_->specialOp_);}
 
 /* CE3TSK: the name a contest is known by, used to head the log comment. One line per
    activity as more are supported; an empty string means no contest is running. */
@@ -1527,6 +1527,23 @@ QString Configuration::special_op_cq_direction () const
     case SpecialOperatingActivity::ARRL_DIGI: break;
     }
   return QString {};
+}
+
+/* CE3TSK 2026-11-03 (TODO.md 3.-226): what each contest asks of the program. Exhaustive switch and no default, so a contest added
+   without deciding this draws -Wswitch. */
+contest_rules::Rules contest_rules_of (Configuration::SpecialOperatingActivity activity)
+{
+  switch (activity)
+    {
+    case Configuration::SpecialOperatingActivity::WW_DIGI: return contest_rules::ww_digi ();
+    case Configuration::SpecialOperatingActivity::NONE:
+    case Configuration::SpecialOperatingActivity::NA_VHF:
+    case Configuration::SpecialOperatingActivity::EU_VHF:
+    case Configuration::SpecialOperatingActivity::FIELD_DAY:
+    case Configuration::SpecialOperatingActivity::RTTY:
+    case Configuration::SpecialOperatingActivity::ARRL_DIGI: break;
+    }
+  return {};
 }
 
 /* CE3TSK: QSO points for a contest that scores by distance. Exhaustive switch and no
@@ -2744,7 +2761,7 @@ Radio::convert_dark("#fafbfe",useDarkStyle_),Radio::convert_dark("#dcdef1",useDa
     default: ui_->rbSpecialOpNone->setChecked (true); break;
   }
   next_specialOp_ = specialOp_;
-  apply_special_op_lock (specialOp_ == SpecialOperatingActivity::WW_DIGI);
+  apply_special_op_lock (contest_rules_of (specialOp_).running);
   ui_->newPotential_check_box->setChecked (newPotential_);
   ui_->Africa_check_box->setChecked (hideAfrica_);
   ui_->Antarctica_check_box->setChecked (hideAntarctica_);
@@ -3346,7 +3363,7 @@ void Configuration::impl::read_settings ()
      a hand-edited profile or another build - is left here, as choosing None and OK leaves a contest. The dialog showed
      None for it, but OK applied that activity's forcing and silently overwrote the operator's tier edits. Its parked
      set comes back, so no parked set is left behind without a contest (it would be handed back on some later exit). */
-  if (SpecialOperatingActivity::NONE != specialOp_ && SpecialOperatingActivity::WW_DIGI != specialOp_)
+  if (SpecialOperatingActivity::NONE != specialOp_ && !contest_rules_of (specialOp_).running)
     {
       specialOp_ = SpecialOperatingActivity::NONE;
       if (specialOpSaved_) set_own_settings (savedSpecialOp_);

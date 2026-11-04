@@ -19,6 +19,7 @@
 #else
 #include <QtGui>
 #endif
+#include "contestscore.h"
 #include "countrydat.h"
 
 class QDateTime;
@@ -46,11 +47,9 @@ class ADIF
            one of the square's (us_states::clearState) - otherwise a shared square counts for none. */
         bool matchState(QString const& state, QString const& band = "", QString const& mode = "") const;   // CE3TSK 2026-10-04: and per mode
         QList<QString> getCallList();
-        /* CE3TSK: contest scoring. This log holds only contest QSOs, so the field+band hash
-           built for the highlighting is already the multiplier set - its size is the count,
-           no scan needed. gridList() is for the points, which need each QSO's grid. */
-        int fieldBandCount () const { return _fieldsbandWorked.size (); }
-        QList<QString> gridList () const;
+        /* CE3TSK: contest scoring (contestscore.h). This log holds only contest QSOs: all of them,
+           the oldest first for each call, for the score to tell which count. */
+        QList<contest_score::Qso> contestQsos () const;
         int getCount(const QString mode="");
 
         // open ADIF file and append the QSO details. Return true on success

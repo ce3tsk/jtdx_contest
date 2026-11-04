@@ -31,8 +31,7 @@ public:
               QString const& logFileName, CountryDat* sharedCountries = nullptr,
               bool translatedCountryNames = false);
     CountryDat* countryData ();   /* CE3TSK: to share with a contest logbook */
-    int fieldBandCount ();          /* CE3TSK: contest multipliers */
-    QList<QString> gridList ();     /* CE3TSK: for contest points */
+    QList<contest_score::Qso> contestQsos ();   /* CE3TSK: for the contest score */
     void matchCQZ(/*in*/ const QString call,
               /*out*/ QString &countryName,
                       bool &WorkedBefore,

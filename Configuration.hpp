@@ -6,6 +6,7 @@
 #include <QFont>
 
 #include "Radio.hpp"
+#include "contestrules.h"
 #include "IARURegions.hpp"
 #include "AudioDevice.hpp"
 #include "TransceiverFactory.hpp"
@@ -240,7 +241,7 @@ public:
      sequencer behave as if wanted-criteria had been set when the operator set none. */
   bool newGridUserChoice () const;
   SpecialOperatingActivity special_op_id () const;
-  bool wwDigi () const;   /* CE3TSK: convenience, special_op_id () == WW_DIGI */
+  contest_rules::Rules contest () const;   /* CE3TSK 2026-11-03: what the contest being run asks of the program, all false when none */
   QString special_op_name () const;   /* CE3TSK: contest name for the log comment, empty when none */
   QString special_op_cq_direction () const;   /* CE3TSK: directional CQ a contest calls with */
   int special_op_points (int distanceKm) const;   /* CE3TSK: QSO points, 0 when no contest */
@@ -480,6 +481,8 @@ Q_DECLARE_METATYPE (Configuration::Type2MsgGen);
    Configuration pointer - it deliberately copies what it needs in setConfiguration() rather
    than keeping one. Configuration::special_op_points() delegates to contest_points(). */
 int contest_points (Configuration::SpecialOperatingActivity, int distanceKm);
+/* CE3TSK 2026-11-03: the row of contestrules.h for an activity */
+contest_rules::Rules contest_rules_of (Configuration::SpecialOperatingActivity);
 
 /* CE3TSK: the points tag the message window puts in front of the country name while a
    contest runs: " 1p" .. " 7p", and " --" of the same width when nothing is scored (no grid

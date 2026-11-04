@@ -68,9 +68,9 @@ public:
     float dt();
 
     // find and extract any report. Returns true if this is a standard message
-  /* CE3TSK: wwDigi enables reading a 4 character grid as the exchange, which is only correct
+  /* CE3TSK: gridExchange enables reading a 4 character grid as the exchange, which is only correct
      in a contest that exchanges grids. Defaults off so any new caller gets stock behaviour. */
-  bool report(QString const& myBaseCall, QString const& dxBaseCall, /*mod*/QString& report,QString& type, bool wwDigi = false);
+  bool report(QString const& myBaseCall, QString const& dxBaseCall, /*mod*/QString& report,QString& type, bool gridExchange = false);
 
     // get the first text word, usually the call
     QString call();

@@ -168,6 +168,12 @@ namespace autoseq_step
    * of JT65/JT9 was judged in the first period.) 128 answer worked-before, 64 call worked-before (256 a higher new
    * call instead), 16 the report decides, 32 the distance decides. With no new-one tier chosen at all, worked-before
    * is answered and called. */
+  // CE3TSK 2026-11-03 (TODO.md 3.-224): the number on the AutoSeq button: the call mode, 4 more when the search through CQ messages runs - never in a contest
+  inline int label_number (int callMode, bool searchCQ, bool humanChoosesPartner)
+  {
+    return callMode + (searchCQ && !humanChoosesPartner && callMode >= 2 ? 4 : 0);
+  }
+
   inline bool decoded_first_period (qint64 msDecStarted, double trPeriod)
   {
     return period_index_of_trigger ((msDecStarted % 86400000) / 1000.0, trPeriod) % 2 == 0;
@@ -178,6 +184,7 @@ namespace autoseq_step
     qint64 msDecStarted = 0;
     double trPeriod = 15.0;
     bool callPrioCQ = false;
+    bool humanChoosesPartner = false;   // rule XI.12, a human operator initiates calling each QSO partner, so no search
     bool lockTxFreq = false;
     bool counters2 = true;
     int counter = 0;           // m_counter
@@ -201,7 +208,7 @@ namespace autoseq_step
     Pick p;
     p.counter = in.counter;
     bool const decodedFirst = decoded_first_period (in.msDecStarted, in.trPeriod);
-    if (in.callPrioCQ && !in.lockTxFreq && in.counters2 && in.counter == 0 && in.txFirst != decodedFirst) p.time = 1;
+    if (in.callPrioCQ && !in.humanChoosesPartner && !in.lockTxFreq && in.counters2 && in.counter == 0 && in.txFirst != decodedFirst) p.time = 1;
     else { if (p.counter > 0) p.counter -= 1; p.time = 0; }
     if (!in.anyNewTierChosen || in.answerWorkedB4) p.time |= 128;
     if (!in.anyNewTierChosen || in.callWorkedB4) p.time |= 64;
@@ -215,10 +222,10 @@ namespace autoseq_step
    * A report heard from him that differs from ours is taken first (new_report): it regenerates the messages, and
    * an SREPORT step then becomes RCQ (Tx1 skipped, not a Hound) or RREPORT. In the WW Digi contest the report field
    * carries his grid, which is not a report. */
-  inline bool new_report (QString const& rpt, QString const& current, bool wwDigi)
+  inline bool new_report (QString const& rpt, QString const& current, bool gridExchange)
   {
     bool rptIsExchange = false;
-    if (wwDigi && !rpt.isEmpty ()) { bool numeric = false; rpt.toInt (&numeric); rptIsExchange = !numeric; }
+    if (gridExchange && !rpt.isEmpty ()) { bool numeric = false; rpt.toInt (&numeric); rptIsExchange = !numeric; }
     return !rpt.isEmpty () && rpt != current && !rptIsExchange;
   }
 
@@ -233,7 +240,7 @@ namespace autoseq_step
     QsoHistory::Status status = QsoHistory::NONE;
     bool skipTx1 = false;
     bool hound = false;
-    bool wwDigi = false;
+    bool gridExchange = false;
     bool hisGridKnown = false;   // m_hisGrid, as it stands after this pass's grid
     bool enableTx = false;
     bool autoseq = true;
@@ -281,7 +288,7 @@ namespace autoseq_step
         /* CE3TSK: WW Digi contest - his call carries his exchange already, so acknowledge it with Tx3 "HISCALL MYCALL
            R MYGRID" instead of repeating a bare exchange with Tx2. That produces the published 4 message contest
            sequence. Only when his grid is known, otherwise there is nothing to roger yet. */
-        r.tx = (in.wwDigi && in.hisGridKnown) ? 3 : 2;
+        r.tx = (in.gridExchange && in.hisGridKnown) ? 3 : 2;
         r.autoFilter = in.autofilter && in.enableTx && !in.filterOn;
         break;
       case S::RREPORT:

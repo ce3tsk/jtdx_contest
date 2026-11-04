@@ -14,6 +14,7 @@
 #include <QRegularExpression>
 #include <QtMath>
 #include "JTDXDateTime.h"
+#include "contestrules.h"
 class QsoHistory
 {
  public:
@@ -27,11 +28,11 @@ class QsoHistory
 	   transmissions leave it as it is (DOUBT_KEEP). */
 	enum Doubt {DOUBT_KEEP, DOUBT_SET, DOUBT_CLEAR};
 	void init();
-	void message(QString const& callsign, Status status, int priority, QString const& param, QString const& tyyp, QString const& continent, QString const& mpx, unsigned time, QString const& rep, int freq,  QString const& mode, Doubt doubt = DOUBT_KEEP);
+	void message(QString const& callsign, Status status, int priority, QString const& param, QString const& tyyp, QString const& continent, QString const& mpx, unsigned time, QString const& rep, int freq,  QString const& mode, Doubt doubt = DOUBT_KEEP, bool guess = false);   /* guess: a hint or a-priori decode */
 	void rx(QString const& callsign, int freq);
 	void time(unsigned time);
 	void owndata (QString const& mycontinent, QString const& myprefix, QString const& mygrid, bool strictdirCQ);
-	void wwdigi (bool state); /* CE3TSK: WW Digi contest mode */
+	void contest (contest_rules::Rules const& rules); /* CE3TSK: what the contest being run asks (contestrules.h) */
 	Status status(QString const& callsign, QString &grid);
 	/* CE3TSK 2026-10-02: the grid this very call sent - "" when the one kept came from another form of it.
 	   An entry is keyed by the BASE call, so VE3ABC's FN03 is also VE3ABC/W1's and KH6/K1ABC's BL11 K1ABC's.
@@ -87,7 +88,7 @@ class QsoHistory
 	bool _working = false;
 	bool as_active = false;
 	bool _strictdirCQ = false;
-	bool _wwDigi = false; /* CE3TSK: WW Digi contest mode */
+	contest_rules::Rules _contest; /* CE3TSK */
 	QSO _CQ;
 	latlng _mylatlng;
 	int a_init = 0;

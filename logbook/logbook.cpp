@@ -18,8 +18,7 @@ namespace
 }
 
 CountryDat* LogBook::countryData () { return _shared ? _shared : &_countries; }
-int LogBook::fieldBandCount () { return _log.fieldBandCount (); }        /* CE3TSK */
-QList<QString> LogBook::gridList () { return _log.gridList (); }         /* CE3TSK */
+QList<contest_score::Qso> LogBook::contestQsos () { return _log.contestQsos (); }   /* CE3TSK */
 
 void LogBook::init(const QString mycall,const QString mygrid,const QString mydate,
                    QString const& logFileName, CountryDat* sharedCountries,

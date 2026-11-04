@@ -51,6 +51,7 @@
 #include "wav16to32.h"
 #include "decoderange.h"
 #include "contestreport.h"
+#include "contestscore.h"  // CE3TSK 2026-11-03: multipliers x points
 #include "contestreply.h"
 #include "gridchange.h"
 #include "wsprmessage.h"   // CE3TSK 2026-10-14: the WSPR message of a transmission
@@ -351,7 +352,6 @@ MainWindow::MainWindow(bool multiple, QSettings * settings, QSharedMemory *shdme
   m_maxDistance {false},
   m_answerWorkedB4 {false},
   m_singleshot {false},
-  m_wwDigi {false}, /* CE3TSK: WW Digi contest mode */
   m_autofilter {false},
   m_houndMode {false},
   m_commonFT8b {true},
@@ -545,7 +545,7 @@ MainWindow::MainWindow(bool multiple, QSettings * settings, QSharedMemory *shdme
   /* CE3TSK 2026-10-04: Settings checks the operator's own call and grid against cty.dat (ownstation.h) - the
      logbook the windows use, and nothing while cty.dat is not read */
   m_config.set_country_lookup ([this] (QString const& call) -> QString {
-      return (m_wwDigi ? m_contestLog : m_logBook).countryData ()->loaded () ? dxccOf (call) : QString {};
+      return (m_contest.running ? m_contestLog : m_logBook).countryData ()->loaded () ? dxccOf (call) : QString {};
     });
   ui->decodedTextBrowser->setConfiguration (&m_config);
   ui->decodedTextBrowser2->setConfiguration (&m_config);
@@ -1415,7 +1415,7 @@ MainWindow::MainWindow(bool multiple, QSettings * settings, QSharedMemory *shdme
 
   if (m_tci) Q_EMIT m_config.transceiver_trfrequency(ui->TxFreqSpinBox->value () - m_XIT);
   else Q_EMIT transmitFrequency (ui->TxFreqSpinBox->value () - m_XIT);
-  ui->actionCallPriorityAndSearchCQ->setEnabled(m_callMode==2 || m_callMode==3);
+  ui->actionCallPriorityAndSearchCQ->setEnabled((m_callMode==2 || m_callMode==3) && !m_contest.humanChoosesPartner);   // CE3TSK 2026-11-03: applyContestLock ()
   m_callPrioCQ=ui->actionCallPriorityAndSearchCQ->isChecked() && (m_callMode==2 || m_callMode==3);
   m_maxDistance=ui->actionMaxDistance->isChecked();
   m_answerWorkedB4=ui->actionAnswerWorkedB4->isChecked();
@@ -1914,7 +1914,7 @@ void MainWindow::readSettings()
      ungated, so an ini left in FT2 or JT65 mid-contest (possible before FT2 was locked) came back
      in it, greyed and unparked. It starts in FT8 instead, as entering the contest would have. */
   auto const known = [this] (QString const& mode) { return modeAction (mode) != nullptr; };
-  auto const allowed = [this] (QString const& mode) { return !m_wwDigi || contest_allows_mode (mode); };
+  auto const allowed = [this] (QString const& mode) { return !m_contest.running || contest_allows_mode (mode); };
   QString const saved_mode {saved_mode_name (m_mode, known)};   // for a park at the end, below
   normalise_saved_mode (m_mode, m_modeTx, known, allowed);
   if(m_modeTx.startsWith("JT9")) ui->pbTxMode->setText("Tx JT9  @");
@@ -2144,7 +2144,7 @@ void MainWindow::readSettings()
   /* CE3TSK: a restart already in contest mode forces nothing (the values were forced before the
      restart and persisted) - except a control that a newer build forces than the one that parked:
      Max distance / report priority came later, so they are forced off here, after both are read. */
-  if (m_wwDigi && m_uiParkedValid) {
+  if (m_contest.running && m_uiParkedValid) {
     if (ui->actionMaxDistance->isChecked()) ui->actionMaxDistance->setChecked(false);
     if (ui->actionReport_message_priority->isChecked()) ui->actionReport_message_priority->setChecked(false);
   }
@@ -2372,7 +2372,7 @@ void MainWindow::readSettings()
      park. Entering the contest parks the operator's controls and a mode it does not allow, then
      forces its own; do that now, with every control read. normalise_saved_mode has already put the
      station in FT8, and without the park the saved mode would be lost for good. */
-  if (m_wwDigi && !m_uiParkedValid)
+  if (m_contest.running && !m_uiParkedValid)
     {
       parkContestState (saved_mode);
       forceContestControls ();
@@ -2830,7 +2830,7 @@ void MainWindow::on_actionSettings_triggered()               //Setup Dialog
       if(m_config.write_decoded_debug()) writeToALLTXT("Configuration settings change accepted");
       ui->decodedTextBrowser->setConfiguration (&m_config);
       ui->decodedTextBrowser2->setConfiguration (&m_config);
-      refreshSpecialOp (); /* CE3TSK: before anything below reads m_wwDigi */
+      refreshSpecialOp (); /* CE3TSK: before anything below reads m_contest */
       if (m_config.useDarkStyle() != m_useDarkStyle) {
         darkStyleChanged ();
         if(m_config.write_decoded_debug()) writeToALLTXT("Both windows cleared, triggered by dark style change");
@@ -2841,7 +2841,7 @@ void MainWindow::on_actionSettings_triggered()               //Setup Dialog
         m_myCallCompound=(!m_config.my_callsign().isEmpty() && m_config.my_callsign().contains("/")); // && !m_config.my_callsign().endsWith("/P") && !m_config.my_callsign().endsWith("/R"));
         if(!m_config.my_callsign().isEmpty()) {
           if(m_bMyCallStd) {
-            if(!ui->skipTx1->isEnabled() && !m_wwDigi) { ui->skipTx1->setEnabled(true); ui->skipGrid->setEnabled(true); }   /* CE3TSK */
+            if(!ui->skipTx1->isEnabled() && !m_contest.forcesSkipTx1) { ui->skipTx1->setEnabled(true); ui->skipGrid->setEnabled(true); }   /* CE3TSK */
           } else {
             if(m_skipTx1) { m_skipTx1=false; ui->skipTx1->setChecked(false); ui->skipGrid->setChecked(false); }
             ui->skipTx1->setEnabled(false); ui->skipGrid->setEnabled(false);
@@ -4771,7 +4771,7 @@ band_hopping::Gates MainWindow::hopGates () const
   g.monitoring = m_monitoring;
   g.filePlayback = m_diskData;
   g.hound = m_houndMode;
-  g.contest = m_wwDigi;
+  g.contest = m_contest.running;
   g.scheduler = m_config.usesched ();
   return g;
 }
@@ -6009,16 +6009,31 @@ void MainWindow::on_actionChinese_traditional_triggered() { ui->actionChinese_tr
 void MainWindow::on_actionJapanese_triggered() { ui->actionJapanese->setChecked(true); set_language("ja_JP"); }
 void MainWindow::on_actionKorean_triggered() { ui->actionKorean->setChecked(true); set_language("ko_KR"); }   // CE3TSK
 
+/* CE3TSK 2026-11-03 (TODO.md 3.-224): one place for the button's text */
+void MainWindow::setAutoSeqLabel ()
+{
+  switch (autoseq_step::label_number (m_callMode, m_callPrioCQ, m_contest.humanChoosesPartner))
+    {
+    case 0: ui->AutoSeqButton->setText (tr ("AutoSeq0")); break;
+    case 1: ui->AutoSeqButton->setText (tr ("AutoSeq1")); break;
+    case 2: ui->AutoSeqButton->setText (tr ("AutoSeq2")); break;
+    case 3: ui->AutoSeqButton->setText (tr ("AutoSeq3")); break;
+    case 6: ui->AutoSeqButton->setText (tr ("AutoSeq6")); break;
+    case 7: ui->AutoSeqButton->setText (tr ("AutoSeq7")); break;
+    default: break;
+    }
+}
+
 void MainWindow::on_actionCallNone_toggled(bool checked)
 {
   m_callMode=0;
   if (checked) {
-    if (m_callPrioCQ) {
+    if (m_callPrioCQ && !m_contest.humanChoosesPartner) {   // CE3TSK 2026-11-03: in a contest its setting stays as it is, applyContestLock ()
       ui->actionCallPriorityAndSearchCQ->setChecked(false);
       m_callPrioCQ=false;
     }
     ui->actionCallPriorityAndSearchCQ->setEnabled(false);
-    ui->AutoSeqButton->setText(tr("AutoSeq0"));
+    setAutoSeqLabel ();
   }
 }
 
@@ -6026,12 +6041,12 @@ void MainWindow::on_actionCallFirst_toggled(bool checked)
 {
   m_callMode=1;
   if (checked) {
-    if (m_callPrioCQ) {
+    if (m_callPrioCQ && !m_contest.humanChoosesPartner) {   // CE3TSK 2026-11-03: in a contest its setting stays as it is, applyContestLock ()
       ui->actionCallPriorityAndSearchCQ->setChecked(false);
       m_callPrioCQ=false;
     }
     ui->actionCallPriorityAndSearchCQ->setEnabled(false);
-    ui->AutoSeqButton->setText(tr("AutoSeq1"));
+    setAutoSeqLabel ();
   }
 }
 
@@ -6039,9 +6054,8 @@ void MainWindow::on_actionCallMid_toggled(bool checked)
 {
   m_callMode=2;
   if (checked) {
-    ui->actionCallPriorityAndSearchCQ->setEnabled(true);
-	if (!m_callPrioCQ) ui->AutoSeqButton->setText(tr("AutoSeq2"));
-	else ui->AutoSeqButton->setText(tr("AutoSeq6"));
+    ui->actionCallPriorityAndSearchCQ->setEnabled(!m_contest.humanChoosesPartner);   // CE3TSK 2026-11-03: applyContestLock ()
+    setAutoSeqLabel ();
   }  
 }
 
@@ -6049,9 +6063,8 @@ void MainWindow::on_actionCallEnd_toggled(bool checked)
 {
   m_callMode=3;
   if (checked) {
-    ui->actionCallPriorityAndSearchCQ->setEnabled(true);
-	if (!m_callPrioCQ) ui->AutoSeqButton->setText(tr("AutoSeq3"));
-	else ui->AutoSeqButton->setText(tr("AutoSeq7"));
+    ui->actionCallPriorityAndSearchCQ->setEnabled(!m_contest.humanChoosesPartner);   // CE3TSK 2026-11-03: applyContestLock ()
+    setAutoSeqLabel ();
   }
 }
 
@@ -6062,14 +6075,11 @@ void MainWindow::on_actionCallEnd_toggled(bool checked)
      ui->actionAutoFilter->setChecked(false);
      ui->actionAutoFilter->setEnabled(false);
      m_autofilter=false;
-     if (m_callMode==2) ui->AutoSeqButton->setText(tr("AutoSeq6"));
-     else ui->AutoSeqButton->setText(tr("AutoSeq7"));
+     setAutoSeqLabel ();   /* CE3TSK 2026-11-03: readSettings () ticks it after a stored contest was applied */
    } else {
-      /* CE3TSK: give AutoFilter back unless a contest is holding it down. It is otherwise
-         independent of the waiting-caller behaviour, which no longer touches it. */
-      if (!m_wwDigi) ui->actionAutoFilter->setEnabled(true);
-      if (m_callMode==2) ui->AutoSeqButton->setText(tr("AutoSeq2"));
-      else ui->AutoSeqButton->setText(tr("AutoSeq3"));
+      /* CE3TSK: give AutoFilter back unless a contest is holding it down. */
+      if (!m_contest.running) ui->actionAutoFilter->setEnabled(true);
+      setAutoSeqLabel ();
    }
  }
 
@@ -6111,7 +6121,7 @@ void MainWindow::on_actionEnable_hound_mode_toggled(bool checked)
     if(!m_commonFT8b && m_config.rig_name() != "None") ui->actionUse_TX_frequency_jumps->setEnabled(true); }
   else {
     setHoundButtonStyle ();
-    if(!m_wwDigi) { ui->skipTx1->setEnabled(true); ui->skipGrid->setEnabled(true); }   /* CE3TSK */
+    if(!m_contest.forcesSkipTx1) { ui->skipTx1->setEnabled(true); ui->skipGrid->setEnabled(true); }   /* CE3TSK */
     if(m_wasSkipTx1) { 
       m_skipTx1=true; ui->skipTx1->setChecked(true); ui->skipGrid->setChecked(true);
       if(ui->txrb1->isChecked()) on_txb2_clicked();
@@ -6468,7 +6478,7 @@ void MainWindow::forceContestControls ()
      on_dxCallEntry_textChanged() unchecks and disables it when one is entered, and that
      branch is deliberately not contest guarded. A non standard callsign cannot enter
      the contest at all. */
-  if (!ui->skipTx1->isChecked ())
+  if (m_contest.forcesSkipTx1 && !ui->skipTx1->isChecked ())
     { ui->skipTx1->setChecked (true); on_skipTx1_clicked (true); }
   /* RRR off: the contest wants RR73, which ends the QSO a cycle earlier. setChecked()
      is enough - these are stateChanged slots, not clicked, so they fire either way and
@@ -6493,8 +6503,23 @@ void MainWindow::applyContestLock (bool locked)
      contest rule, so this cannot re-enable it in a mode where it does not belong. */
   enableHoundAccess (m_mode == "FT8");
   ui->AutoTxButton->setEnabled (!locked);
-  /* CE3TSK: AutoSeq, the call mode and priority CQ are deliberately NOT touched - the
-     operator keeps whatever AutoSeq setting they run with, including its label and colour. */
+  /* CE3TSK: AutoSeq and the call mode are deliberately NOT touched - the operator keeps
+     whatever AutoSeq setting they run with, including its colour. */
+  /* CE3TSK 2026-11-03 (TODO.md 3.-222): the search through CQ messages is another matter: rule XI.12 wants a human operator to
+     initiate calling each QSO partner, and this option has the program choose one. While a contest runs it is ignored
+     (autoseq_step::pick_flags ()); the setting is kept, greyed, and works again afterwards. The button says what runs. */
+  {
+    bool const searchMode {2 == m_callMode || 3 == m_callMode};
+    bool const humanChooses {locked && m_contest.humanChoosesPartner};
+    /* leaving a contest in call mode 0 or 1, the setting kept through it: the option has no place there, as ever */
+    if (!humanChooses && !searchMode && m_callPrioCQ)
+      {
+        ui->actionCallPriorityAndSearchCQ->setChecked (false);
+        m_callPrioCQ = false;
+      }
+    ui->actionCallPriorityAndSearchCQ->setEnabled (!humanChooses && searchMode);
+    if (searchMode && m_callPrioCQ) setAutoSeqLabel ();
+  }
   /* single shot is two widgets kept in sync by on_singleQSOButton_clicked() and
      on_actionSingleShot_toggled(); locking only the menu item leaves the button live. */
   ui->actionSingleShot->setEnabled (!locked);
@@ -6503,16 +6528,17 @@ void MainWindow::applyContestLock (bool locked)
   /* skipTx1 and skipGrid are one setting in two widgets. Unlocking hands them to
      toggle_skipTx1(), which re-tests what legitimately forbids them - a non standard
      callsign, hound mode - rather than enabling them blindly. */
-  if (locked) { ui->skipTx1->setEnabled (false); ui->skipGrid->setEnabled (false); }
+  bool const skipTx1Forced {locked && m_contest.forcesSkipTx1};
+  if (skipTx1Forced) { ui->skipTx1->setEnabled (false); ui->skipGrid->setEnabled (false); }
   else toggle_skipTx1 ();
 
   /* CE3TSK: in WW Digi the grid is the exchange, so Tx1 (HISCALL MYCALL GRID) says exactly
      what Tx2 says and skip Tx1 is forced by forceContestControls() - the whole Tx1 row
      (button, text box, radio) is greyed so it cannot be picked by hand either. The radio
      is also owned by enableTab1TXRB() (AutoSeq greys all six), which folds this rule in. */
-  ui->txb1->setEnabled (!locked);
-  ui->tx1->setEnabled (!locked);
-  ui->txrb1->setEnabled (!locked && !m_autoseq);
+  ui->txb1->setEnabled (!skipTx1Forced);
+  ui->tx1->setEnabled (!skipTx1Forced);
+  ui->txrb1->setEnabled (!skipTx1Forced && !m_autoseq);
 
   /* RRR is two widgets as well, and FT4 has no RRR at all - commonActions() parks and
      disables it there through m_savedRRR. Unlocking must not override that.
@@ -6631,42 +6657,34 @@ void MainWindow::refreshContestLog (bool reload)
 }
 
 /* CE3TSK: multipliers x points = score, as WW Digi computes it - the sum of QSO points
-   across all bands multiplied by the sum of 2 character grid fields across all bands.
-
-   Recomputed in full rather than accumulated. The contest log holds only contest QSOs, so a
-   scan is about a thousand geodesics, a millisecond or two at QSO rate, and the display
-   cannot drift from the file the way a running total would. The multiplier count is free:
-   the field+band hash built for the highlighting is already the multiplier set. */
+   across all bands multiplied by the sum of 2 character grid fields across all bands
+   (contestscore.h), over the QSOs that count: a station once per band. */
 void MainWindow::updateContestScore ()
 {
-  contest_score_label->setVisible (m_wwDigi);
+  contest_score_label->setVisible (m_contest.running);
   if (!m_mode.startsWith ("WSPR")) countQSOs ();   /* CE3TSK: the counter follows the same log as the score */
-  if (!m_wwDigi) { contest_score_label->setText (""); return; }
+  if (!m_contest.running) { contest_score_label->setText (""); return; }
   /* CE3TSK: the same pale green the status bar already uses to highlight a label, through
      convert_dark so it follows the dark theme. Re-applied here rather than set once at
      construction so a theme change is picked up. */
   contest_score_label->setStyleSheet (QString ("QLabel{background: %1}")
                                       .arg (Radio::convert_dark ("#99ff99", m_useDarkStyle)));
-  int points = 0;
-  for (auto const& g : m_contestLog.gridList ())
-    {
-      /* a QSO with no grid gives -1 km and scores nothing */
-      points += m_config.special_op_points (grid_distance_km (m_config.my_grid (), g, true));
-    }
-  int const mults = m_contestLog.fieldBandCount ();
-  contest_score_label->setText (QString {"%1M x %2P = %3"}
-                                .arg (mults).arg (points).arg (points * mults));
+  auto const score = contest_score::sum (m_contestLog.contestQsos (), [this] (QString const& g) {
+      return m_config.special_op_points (grid_distance_km (m_config.my_grid (), g, true));
+    });
+  contest_score_label->setText (contest_score::text (score));
 }
 
 void MainWindow::refreshSpecialOp (bool initial)
 {
-  bool const was = m_wwDigi;
-  m_wwDigi = m_config.wwDigi ();
-  m_qsoHistory.wwdigi (m_wwDigi);
-  m_qsoHistory2.wwdigi (m_wwDigi);
+  auto const was = m_contestActivity;
+  m_contestActivity = m_config.special_op_id ();
+  m_contest = m_config.contest ();
+  m_qsoHistory.contest (m_contest);
+  m_qsoHistory2.contest (m_contest);
   refreshContestLog (false);   /* CE3TSK: follow the activity */
-  /* CE3TSK: the title names the contest, so it is rebuilt whenever this runs rather than
-     only on a transition - cheap, and it cannot drift out of step with the setting. */
+  /* CE3TSK: rebuilt whenever this runs rather than only on a transition - cheap. It names no contest since 2026-09-09: JTAlert
+     reads it (test_title). */
   setWindowTitle (program_title ());
   /* CE3TSK: the greying runs on every call, not only on a transition, because a restart
      already in contest mode never sees one - the constructor's call is guarded by initial.
@@ -6674,7 +6692,7 @@ void MainWindow::refreshSpecialOp (bool initial)
      be: this runs before the parking below, so forcing from here would capture the forced
      values as the operator's own. On the restart path nothing needs forcing anyway, the
      values were forced before the restart and persisted that way. */
-  applyContestLock (m_wwDigi);
+  applyContestLock (m_contest.running);
   /* CE3TSK: the band selector and its validator capture the frequency list pointer, and
      Configuration::frequencies() now hands out a different list once a contest is selected.
      Rebind on every call for the same reason the greying is done here: a restart already in
@@ -6683,10 +6701,10 @@ void MainWindow::refreshSpecialOp (bool initial)
 
   /* CE3TSK: act only on a real change of activity. This runs on every settings accept, and
      halting TX because an unrelated setting was edited would be worse than useless.
-     initial guards the call from the constructor, where m_wwDigi starts false and a stored
+     initial guards the call from the constructor, where the activity starts NONE and a stored
      contest setting would look like a transition: clearDX() also forces RxFreq to TxFreq,
      which would override the RX frequency just restored from settings. */
-  if (initial || was == m_wwDigi) return;
+  if (initial || was == m_contestActivity) return;
 
   /* The message set changes shape between a signal report and a grid exchange, so nothing
      already generated is safe to send, and a QSO in progress cannot continue across the
@@ -6706,7 +6724,7 @@ void MainWindow::refreshSpecialOp (bool initial)
      Parked only on a real off to on transition - m_uiParkedValid guards a second enable from
      capturing the forced values and turning the restore into a no-op, exactly as
      specialOpSaved_ does for the settings dialog. */
-  if (m_wwDigi)
+  if (m_contest.running)
     {
       if (!m_uiParkedValid) parkContestState (m_mode);
       if (!m_uiParked.mode.isEmpty ()) on_actionFT8_triggered ();
@@ -7855,7 +7873,7 @@ void MainWindow::process_Auto()
      it: autoseq() picks one station per pass and is disarmed by that pick, so discarding an
      unwanted choice afterwards would waste the whole period. Keeping them out of the list
      means the caller behind them is answered in this period. */
-  if (m_wwDigi)
+  if (m_contest.rejectsReports)
     {
       qint64 const nowms = m_jtdxtime->currentMSecsSinceEpoch2 ();
       m_contestIgnore.prune (nowms);
@@ -7946,6 +7964,7 @@ void MainWindow::process_Auto()
     in.msDecStarted = m_msDecStarted;
     in.trPeriod = m_TRperiod;
     in.callPrioCQ = m_callPrioCQ;
+    in.humanChoosesPartner = m_contest.humanChoosesPartner;   // CE3TSK 2026-11-03 (TODO.md 3.-222): rule XI.12, no search through CQ messages in a contest
     in.lockTxFreq = m_lockTxFreq;
     in.counters2 = counters2;
     in.counter = m_counter;
@@ -7984,7 +8003,7 @@ void MainWindow::process_Auto()
     beforeAutoselectPick (hisCall);   /* CE3TSK: the policy may reject this candidate */
     /* CE3TSK: contest - and never pick a station that answers the exchange with a signal
        report; he is not in the contest (contestReportAbort), five minute window */
-    if (!hisCall.isEmpty () && m_wwDigi
+    if (!hisCall.isEmpty () && m_contest.rejectsReports
         && m_contestIgnore.has (Radio::base_callsign (hisCall), m_jtdxtime->currentMSecsSinceEpoch2 ())) {
       if(m_config.write_decoded_debug()) writeToALLTXT("contest: " + hisCall + " skipped, he answers with a signal report");
       hisCall.clear ();
@@ -8022,7 +8041,7 @@ void MainWindow::process_Auto()
     }
     /* CE3TSK: WW Digi contest - rpt carries the 4 character grid exchange. Pushing it into
        the report spin box would set the report to 0, toInt() of a grid is 0 (autoseq_step::new_report). */
-    if (autoseq_step::new_report (rpt, m_rpt, m_wwDigi)) {
+    if (autoseq_step::new_report (rpt, m_rpt, m_contest.gridExchange)) {
       ui->rptSpinBox->setValue(rpt.toInt());
       m_status = autoseq_step::after_new_report (m_status, m_skipTx1, m_houndMode);
       genStdMsgs(rpt);
@@ -8033,8 +8052,12 @@ void MainWindow::process_Auto()
     in.status = m_status;
     in.skipTx1 = m_skipTx1;
     in.hound = m_houndMode;
-    in.wwDigi = m_wwDigi;
-    in.hisGridKnown = !m_hisGrid.isEmpty();
+    in.gridExchange = m_contest.gridExchange;
+    /* CE3TSK 2026-11-03 (TODO.md 3.-224): his grid heard on the air, or in the box unless that is CALL3.TXT's - a box that reads the
+       same as what he has since sent stays marked (on_dxGridEntry_textChanged ()), so what he sent is asked for as well */
+    QString heardGrid;
+    m_qsoHistory.status (m_hisCall, heardGrid);
+    in.hisGridKnown = !heardGrid.isEmpty () || !contest_report::exchange_grid (m_hisGrid, m_hisGridFromCall3, m_contest.gridExchange).isEmpty ();
     in.enableTx = m_enableTx;
     in.autoseq = m_autoseq;
     in.callMode = m_callMode;
@@ -8209,43 +8232,23 @@ void MainWindow::readFromStdout()                             //readFromStdout
       /* CE3TSK: WW Digi - a message ending in a signal report is not contest traffic (the
          exchange is the grid) and is as likely a phantom decode as not; dropped here, before
          ALL.TXT, both windows, the UDP clients and the sequencer (contestreport.h). */
-      if(m_wwDigi && contest_report_message (QString::fromUtf8 (t))) {   /* UTF-8: the decoder's markers include the multibyte ┼ */
+      if(m_contest.rejectsReports && contest_report_message (QString::fromUtf8 (t))) {   /* UTF-8: the decoder's markers include the multibyte ┼ */
         if(m_config.write_decoded_debug()) writeToALLTXT("contest: report message rejected " + QString::fromUtf8 (t).trimmed());
-        /* the two branches below decide: drop it (the usual case), or let it through because it
-           is our partner acknowledging and we already have his exchange */
-        /* CE3TSK: a report addressed to us needs one distinction, learned the hard way on
-           2026-08-30. 3D2USU (Fiji, RH82 - a new field) called CQ *with his grid*, we answered,
-           he acknowledged with "CE3TSK 3D2USU +05" because his software runs reports, and this
-           filter swallowed it: the sequencer never saw the acknowledgement, kept resending Tx2,
-           and the rule then dropped him and skipped him for five minutes, silently. Two other
-           stations completed with him in those same minutes.
-
-           His grid was already ours, from his CQ - so the exchange existed and the QSO was worth
-           finishing. The deadlock item 26 was written for is the case where we have *no*
-           exchange from him at all. So: if he is the station we are working and we already hold
-           his grid, let the line through to the ordinary path, where it advances the QSO the way
-           his R+grid would. Otherwise drop it and skip him, as before. */
+        /* CE3TSK 2026-11-03 (TODO.md 3.-221): what becomes of it is contest_report::step () (contestreport.h); this carries it out */
         QString const reportToUs = contest_report_to_me (QString::fromUtf8 (t), m_baseCall);
-        if(!reportToUs.isEmpty ()) {
-          QString hisKnownGrid;
-          m_qsoHistory.status (reportToUs, hisKnownGrid);
-          bool const working = !m_hisCall.isEmpty ()
-              && Radio::base_callsign (m_hisCall) == Radio::base_callsign (reportToUs);
-          if(working && gridOK (hisKnownGrid.left (4))) {
-            if(!m_contestReportSeen.contains (Radio::base_callsign (reportToUs))) {
-              m_contestReportSeen << Radio::base_callsign (reportToUs);
-              QString const why = reportToUs + " answers with reports, not the grid exchange - his grid "
-                                  + hisKnownGrid.left (4) + " is already known, so the QSO goes on";
-              ui->decodedTextBrowser->displayContestNotice (why);
-              ui->decodedTextBrowser2->displayContestNotice (why);
-              writeToALLTXT ("contest: " + why);
-            }
-            /* fall through: the line is displayed and drives the sequencer */
-          } else {
-            contestReportAbort (reportToUs);
-            continue;
-          }
-        } else continue;
+        QString hisKnownGrid;
+        if(!reportToUs.isEmpty ()) m_qsoHistory.status (reportToUs, hisKnownGrid);
+        auto const reportStep = contest_report::step (reportToUs, m_hisCall, gridOK (hisKnownGrid.left (4)));
+        if(contest_report::Step::Drop == reportStep) continue;
+        if(contest_report::Step::Abort == reportStep) { contestReportAbort (reportToUs); continue; }
+        /* the partner acknowledging: the line is displayed and drives the sequencer; the operator is told once */
+        if(!m_contestReportSeen.contains (Radio::base_callsign (reportToUs))) {
+          m_contestReportSeen << Radio::base_callsign (reportToUs);
+          QString const why = contest_report::goes_on_notice (reportToUs, hisKnownGrid);
+          ui->decodedTextBrowser->displayContestNotice (why);
+          ui->decodedTextBrowser2->displayContestNotice (why);
+          writeToALLTXT ("contest: " + why);
+        }
       }
       DecodedText decodedtext {QString::fromUtf8 (t.constData ()).remove (QRegularExpression {"\r|\n"}),this};
       /* CE3TSK 2026-10-20 (decodeorigin.h): the line is of its decode's dial and mode, those the decode began on. After a
@@ -8424,9 +8427,9 @@ void MainWindow::readFromStdout()                             //readFromStdout
       notified = ui->decodedTextBrowser->displayDecodedText (&decodedtext
                                                     , m_baseCall
                                                     , Radio::base_callsign (m_hisCall)
-                                                    , m_hisGrid.left(4)
+                                                    , contest_report::exchange_grid (m_hisGrid, m_hisGridFromCall3, m_contest.gridExchange)   // CE3TSK 2026-11-03 (TODO.md 3.-224)
                                                     , m_notified
-                                                    , (m_wwDigi ? m_contestLog : m_logBook)
+                                                    , (m_contest.running ? m_contestLog : m_logBook)
                                                     , m_qsoHistory
                                                     , m_qsoHistory
                                                     , m_decodeOrigin.dial   // CE3TSK 2026-10-20: the decode's band and mode
@@ -8465,9 +8468,9 @@ void MainWindow::readFromStdout()                             //readFromStdout
         ui->decodedTextBrowser2->displayDecodedText(&decodedtext
                                                     , m_baseCall
                                                     , Radio::base_callsign (m_hisCall)
-                                                    , m_hisGrid.left(4)
+                                                    , contest_report::exchange_grid (m_hisGrid, m_hisGridFromCall3, m_contest.gridExchange)   // CE3TSK 2026-11-03 (TODO.md 3.-224)
                                                     , m_notified
-                                                    , (m_wwDigi ? m_contestLog : m_logBook)
+                                                    , (m_contest.running ? m_contestLog : m_logBook)
                                                     , m_qsoHistory2
                                                     , m_qsoHistory
                                                     , m_decodeOrigin.dial   // CE3TSK 2026-10-20: the decode's band and mode
@@ -8519,7 +8522,7 @@ void MainWindow::readFromStdout()                             //readFromStdout
       // find and extract any report for myCall
       QString rpt_type;
       bool stdMsg = decodedtext.report(m_baseCall,
-          Radio::base_callsign(m_hisCall), m_rptRcvd,rpt_type,m_wwDigi);
+          Radio::base_callsign(m_hisCall), m_rptRcvd,rpt_type,m_contest.gridExchange);
       // extract details and send to PSKreporter
       // CE3TSK 2026-10-20: a late line is spotted too, with its own dial and mode (decodeorigin.h)
       if(decode_origin::may_spot (m_okToPost, late) and m_config.spot_to_psk_reporter () and stdMsg and !m_diskData) {
@@ -9575,7 +9578,7 @@ void MainWindow::processMessage(QString const& messages, int position, bool alt,
      here, before the period logic below touches m_txFirst or the Tx minute button. A click on
      any other line of the same station - his CQ, his grid - still works and still overrules the
      five minute skip, which is the operator's way in. */
-  if (m_wwDigi && contest_report_message (contest_displayed_message (t2, m_mode.startsWith ("FT"))))
+  if (m_contest.rejectsReports && contest_report_message (contest_displayed_message (t2, m_mode.startsWith ("FT"))))
     {
       if (m_config.write_decoded_debug ())
         writeToALLTXT ("contest: double click ignored, signal report message " + t2.trimmed ());
@@ -9713,9 +9716,9 @@ void MainWindow::processMessage(QString const& messages, int position, bool alt,
 		ui->decodedTextBrowser2->displayDecodedText(&decodedtext
                                                   ,m_baseCall
                                                   ,Radio::base_callsign (m_hisCall)
-                                                  ,m_hisGrid.left(4)
+                                                  ,contest_report::exchange_grid (m_hisGrid, m_hisGridFromCall3, m_contest.gridExchange)   // CE3TSK 2026-11-03 (TODO.md 3.-224)
                                                   ,m_notified
-                                                  ,(m_wwDigi ? m_contestLog : m_logBook)
+                                                  ,(m_contest.running ? m_contestLog : m_logBook)
                                                   ,m_qsoHistory2
                                                   ,m_qsoHistory
                                                   ,m_freqNominal
@@ -9782,7 +9785,7 @@ void MainWindow::processMessage(QString const& messages, int position, bool alt,
     {
       /* CE3TSK: the choice of the answer lives in contestreply.h (unit test test_reply): the
          WW Digi contest answers a caller's grid with Tx3 "R GRID", everything else as JTDX did */
-      int const tx = pick_step::tx_to_me (t4, m_wwDigi, t4.size () > 7 && gridOK (t4.at (7)));
+      int const tx = pick_step::tx_to_me (t4, m_contest.gridExchange, t4.size () > 7 && gridOK (t4.at (7)));
       m_ntx = tx; m_nlasttx = tx;
       m_QSOProgress = static_cast<QSOProgress> (pick_step::progress_to_me (tx));
       switch (tx) {
@@ -9801,7 +9804,7 @@ void MainWindow::processMessage(QString const& messages, int position, bool alt,
       }
     QString rpt_type;
     decodedtext.report(m_baseCall,
-      Radio::base_callsign(m_hisCall), m_rptRcvd, rpt_type,m_wwDigi);
+      Radio::base_callsign(m_hisCall), m_rptRcvd, rpt_type,m_contest.gridExchange);
     }
   else if (pick_step::Kind::De73 == kind && base_call == qso_partner_base_call) {
       // 73 back to compound call holder
@@ -9867,14 +9870,14 @@ void MainWindow::on_S_meter_button_clicked(bool checked)
    missing or malformed, so no valid 4 character exchange can be built. A placeholder grid
    is deliberately not substituted: it would reach the other operator's log as a real
    exchange. Refuse to transmit instead. */
-bool MainWindow::wwDigiNoGrid ()
+bool MainWindow::noGridToExchange ()
 {
-  return m_wwDigi && !gridOK(m_config.my_grid ().left (4));
+  return m_contest.gridExchange && !gridOK(m_config.my_grid ().left (4));
 }
 
 void MainWindow::genCQMsg ()
 {
-  if(wwDigiNoGrid ()) { ui->tx6->clear (); m_cqWordSent.clear (); m_cqGenerated = false; return; } /* CE3TSK: no exchange, no CQ */
+  if(noGridToExchange ()) { ui->tx6->clear (); m_cqWordSent.clear (); m_cqGenerated = false; return; } /* CE3TSK: no exchange, no CQ */
   QString grid{m_config.my_grid()};
   if(m_config.my_callsign().size () && grid.size ()) {
     if(stdCall(m_config.my_callsign())) {
@@ -9924,7 +9927,7 @@ void MainWindow::genStdMsgs(QString rpt)                       //genStdMsgs()
   /* CE3TSK: WW Digi contest with no usable station grid. There is no valid exchange to
      send, so clear every message and switch Enable Tx off: with nothing to transmit the
      station must not answer anyone. genCQMsg() above has already cleared Tx6. */
-  if(wwDigiNoGrid ()) {
+  if(noGridToExchange ()) {
     ui->labAz->setText("");
     ui->labDist->setText("");
     ui->tx1->setText("");
@@ -9982,7 +9985,7 @@ void MainWindow::genStdMsgs(QString rpt)                       //genStdMsgs()
     /* CE3TSK: WW Digi contest - the exchange is my 4 character grid, not a signal report.
        Tx2 becomes "HISCALL MYCALL GRID" and the contest branch a few lines below builds
        Tx3 as "HISCALL MYCALL R GRID". */
-    if(m_wwDigi) sent=my_grid; /* CE3TSK: the exchange is my grid, validated by wwDigiNoGrid() above */
+    if(m_contest.gridExchange) sent=my_grid; /* CE3TSK: the exchange is my grid, validated by noGridToExchange() above */
     QString rs,rst;
     int nn=(n+36)/6;
     if(nn<2) nn=2;
@@ -10151,22 +10154,13 @@ void MainWindow::TxAgain() { settingsOkPause (false); }   // CE3TSK 2026-10-21 (
    click on him overrules this. */
 void MainWindow::contestReportAbort (QString const& call)
 {
-  QString const base = Radio::base_callsign (call);
-  if (base.isEmpty ()) return;
-  qint64 const now = m_jtdxtime->currentMSecsSinceEpoch2 ();
-  bool const known = m_contestIgnore.has (base, now);
-  m_contestIgnore.add (base, now);
-  m_contestIgnore.prune (now);
-  bool const working = !m_hisCall.isEmpty () && Radio::base_callsign (m_hisCall) == base;
-  /* CE3TSK: out of the waiting list whatever he was - the station we are working, a station
-     calling us that we have not answered yet, or one we have never heard before. A caller
-     whose message to us carries a report instead of a grid is not a contest station, so he
-     must not sit in the QSO history waiting to be picked; process_Auto keeps him out for as
-     long as the skip list holds him. */
+  /* CE3TSK 2026-11-03 (TODO.md 3.-221): what it does is contest_report::abort_plan () (contestreport.h); this carries it out */
+  auto const plan = contest_report::abort_plan (call, m_hisCall, m_contestIgnore, m_jtdxtime->currentMSecsSinceEpoch2 ());
+  if (plan.base.isEmpty ()) return;
   m_qsoHistory.forget (call);   /* not remove(): his blacklist entry, if any, is the operator's */
-  if (working)
+  if (plan.working)
     {
-      clearDX (" cleared, " + call + " answers with a signal report - not a contest station");
+      clearDX (plan.clearReason);
       /* CE3TSK: clearDX() leaves us calling CQ, which is only the fallback. With the DX field
          empty, process_Auto()'s autoselect can answer a station that is already waiting
          instead. It runs at
@@ -10175,18 +10169,12 @@ void MainWindow::contestReportAbort (QString const& call)
          handover happens in this period and not one period later. */
       m_processAuto_done = false;
     }
-  /* CE3TSK: tell the operator. The report line itself is dropped (item 21), so without this the
-     station simply stops being answered and the newest thing on screen is his previous message -
-     the QSO looks like it evaporated. One line in both windows, and in ALL.TXT unconditionally
-     so it can be reconstructed afterwards; only the first time for each station, or a repeating
-     caller would fill the window. */
-  if (!known)
+  /* CE3TSK: in both windows, and in ALL.TXT unconditionally so it can be reconstructed afterwards */
+  if (!plan.notice.isEmpty ())
     {
-      QString const why = call + (working ? QString {" answered with a report - not the contest exchange, QSO dropped, skipped 5 min"}
-                                          : QString {" is sending reports, not the grid exchange - skipped 5 min"});
-      ui->decodedTextBrowser->displayContestNotice (why);
-      ui->decodedTextBrowser2->displayContestNotice (why);
-      writeToALLTXT ("contest: " + why);
+      ui->decodedTextBrowser->displayContestNotice (plan.notice);
+      ui->decodedTextBrowser2->displayContestNotice (plan.notice);
+      writeToALLTXT ("contest: " + plan.notice);
     }
 }
 
@@ -10244,9 +10232,9 @@ void MainWindow::countQSOs ()
      meanwhile, the score label next to them says what matters and the status bar is crowded
      enough. Called
      from updateContestScore() as well, so the switch-over and every contest QSO refresh it. */
-  LogBook& book = m_wwDigi ? m_contestLog : m_logBook;
-  date_label->setVisible (!m_wwDigi);
-  lastlogged_label->setVisible (!m_wwDigi);   /* the "Logd" last-logged label too */
+  LogBook& book = m_contest.running ? m_contestLog : m_logBook;
+  date_label->setVisible (!m_contest.running);
+  lastlogged_label->setVisible (!m_contest.running);   /* the "Logd" last-logged label too */
   char c_txt [20];
   if (m_mode == "FT8") { sprintf(c_txt,"FT8  %d",book.get_qso_count("FT8")); }
   else if (m_mode == "FT4") { sprintf(c_txt,"FT4  %d",book.get_qso_count("FT4")); }
@@ -10263,7 +10251,7 @@ void MainWindow::autoFilter (bool action) { ui->filterButton->setChecked(action)
 
 void MainWindow::enableTab1TXRB(bool state)
 {
-  ui->txrb1->setEnabled(state && !m_wwDigi);   /* CE3TSK: the Tx1 row stays greyed in WW Digi (applyContestLock) */
+  ui->txrb1->setEnabled(state && !m_contest.forcesSkipTx1);   /* CE3TSK: the Tx1 row stays greyed in WW Digi (applyContestLock) */
   ui->txrb2->setEnabled(state);
   ui->txrb3->setEnabled(state);
   ui->txrb4->setEnabled(state);
@@ -10691,9 +10679,9 @@ void MainWindow::on_dxCallEntry_textChanged(const QString &t) //dxCall changed
     if(m_skipTx1) { m_skipTx1=false; ui->skipTx1->setChecked(false); ui->skipGrid->setChecked(false); on_txb1_clicked(); }
     ui->skipTx1->setEnabled(false); ui->skipGrid->setEnabled(false);
   }
-  /* CE3TSK: !m_wwDigi - this runs on every DX call change, so without it the contest lock
+  /* CE3TSK: !m_contest.forcesSkipTx1 - this runs on every DX call change, so without it the contest lock
      would be handed back the moment a callsign is entered. */
-  else { if(!m_houndMode && !m_wwDigi) {ui->skipTx1->setEnabled(true); ui->skipGrid->setEnabled(true); }}
+  else { if(!m_houndMode && !m_contest.forcesSkipTx1) {ui->skipTx1->setEnabled(true); ui->skipGrid->setEnabled(true); }}
   auto pos = ui->dxCallEntry->cursorPosition (); 
   if (t != m_hisCall && !m_hisCall.isEmpty()) { ui->dxCallEntry->setText(m_hisCall); ui->dxCallEntry->setCursorPosition (pos); }
   else {
@@ -10769,8 +10757,8 @@ void MainWindow::on_dxGridEntry_textChanged(const QString &t) //dxGrid changed
              one rule. Scoring from a 6 character home grid would compute a distance the
              other station cannot reproduce from what we sent him. The points come from this
              same nDkm, so the distance shown, the distance logged and the score agree. */
-          QString const myG = contest_grid (m_config.my_grid (), m_wwDigi);
-          QString const hisG = contest_grid (m_hisGrid, m_wwDigi);
+          QString const myG = contest_grid (m_config.my_grid (), m_contest.gridExchange);
+          QString const hisG = contest_grid (m_hisGrid, m_contest.gridExchange);
           bool const distanceKnown = !hisG.isEmpty() && !myG.isEmpty();
           if (distanceKnown) {
             /* buffers of the 8 characters azdist reads; it pads copies of its own since 2026-10-14 (TODO 3.-69) */
@@ -10826,7 +10814,7 @@ void MainWindow::on_logQSOButton_clicked()
   QString const hisGridLogged = log_grid (m_hisGridFromCall3 ? QString {} : m_hisGrid, historyGrid);
   /* CE3TSK 2026-10-05 (review): the box's distance belongs to the box's grid - when another is logged (the box held
      CALL3.TXT's, or was empty), the distance is worked out for the one logged, the DX panel's own way; it was dropped */
-  if (hisGridLogged != m_hisGrid) distance = grid_distance_text (m_config.my_grid (), hisGridLogged, m_wwDigi, m_config.miles ());
+  if (hisGridLogged != m_hisGrid) distance = grid_distance_text (m_config.my_grid (), hisGridLogged, m_contest.gridExchange, m_config.miles ());
   if (m_config.write_decoded_debug ()) {
     auto const shown = [] (QString const& s) { return s.isEmpty () ? QStringLiteral ("-") : s; };
     writeToALLTXT ("Log grid " + m_hisCall + ": box " + shown (m_hisGrid) + (m_hisGridFromCall3 ? " (CALL3.TXT, not logged)" : "")
@@ -10843,13 +10831,13 @@ void MainWindow::on_logQSOButton_clicked()
          tolerance, while m_dateTimeQSOOn is a global that may still hold the previous QSO's
          start - the same stale-global mistake as the exchange below. Midnight, which the old
          `time < 86400` test produced, is inside nothing. */
-      rrep = log_exchange (rrep, m_rptRcvd, m_wwDigi);
+      rrep = log_exchange (rrep, m_rptRcvd, m_contest.running);
       if (srep.isEmpty()) srep=m_rptSent;
       m_logDlg->initLogQSO (m_hisCall, hisGridLogged, m_modeTx, srep, rrep, distance, m_name,
                         currenttime, dateTimeQSOOff, m_freqNominal + ui->TxFreqSpinBox->value(),autolog,m_dxPoints);
   } else { 
       m_logDlg->initLogQSO (m_hisCall, hisGridLogged, m_modeTx, m_rptSent,
-                        log_exchange (QString {}, m_rptRcvd, m_wwDigi), distance, m_name,
+                        log_exchange (QString {}, m_rptRcvd, m_contest.running), distance, m_name,
                         m_dateTimeQSOOn, dateTimeQSOOff, m_freqNominal + ui->TxFreqSpinBox->value(),autolog,m_dxPoints);
   }
   m_logqso73=false;
@@ -10868,8 +10856,8 @@ void MainWindow::acceptQSO2(QDateTime const& QSO_date_off, QString const& call, 
   m_logBook.addAsWorked (call, m_config.bands ()->find (dial_freq), mode, date, grid, name);
   /* CE3TSK: the contest log has its own hashes; without this the multiplier and dupe
      highlighting would not reflect a QSO until the next restart. */
-  if (m_wwDigi) m_contestLog.addAsWorked (call, m_config.bands ()->find (dial_freq), mode, date, grid, name);
-  if (m_wwDigi) updateContestScore ();   /* CE3TSK */
+  if (m_contest.running) m_contestLog.addAsWorked (call, m_config.bands ()->find (dial_freq), mode, date, grid, name);
+  if (m_contest.running) updateContestScore ();   /* CE3TSK */
   QString operator_call = m_config.my_callsign(); QString my_call = m_config.my_callsign(); QString my_grid = m_config.my_grid();
   /* CE3TSK 2026-10-14 (review 3.-67): the DX grid as ADIF's GRIDSQUARE takes it, 8 at most - loggers put this field there */
   m_messageClient->qso_logged (QSO_date_off, call, adif_gridsquare (grid), dial_freq, mode, rpt_sent, rpt_received, tx_power, comments, name, QSO_date_on, operator_call, my_call, my_grid);
@@ -11162,13 +11150,13 @@ void MainWindow::commonActions ()
     ui->hintButton->setEnabled(false);
   }
   else {
-    /* CE3TSK: !m_wwDigi - this runs on every mode change, so switching FT4 to FT8 during
+    /* CE3TSK: !m_contest.running - this runs on every mode change, so switching FT4 to FT8 during
        a contest would otherwise hand back a control the contest locked. */
     /* CE3TSK: m_savedRRR is cleared as it is consumed. JTDX only ever set it true - on
        entering FT4 with RRR on - and never reset it, so after one FT8/FT4/FT8 round trip
        it stayed true: unticking RRR and repeating the trip silently re-ticked it. Making
        it a one shot "owed a restore" flag is also what the contest restore assumes. */
-    if(!m_wwDigi) { ui->rrrCheckBox->setEnabled(true); ui->rrr1CheckBox->setEnabled(true);
+    if(!m_contest.running) { ui->rrrCheckBox->setEnabled(true); ui->rrr1CheckBox->setEnabled(true);
                     if(m_savedRRR) { m_savedRRR=false; ui->rrrCheckBox->click(); } }
     if(m_mode!="FT8") ui->hintButton->setEnabled(true);
   }
@@ -11209,16 +11197,16 @@ void MainWindow::WSPR_config(bool b)
   /* CE3TSK: HoundButton is owned by enableHoundAccess(), which every mode slot calls after
      this and which folds in the contest rule - but this is the one site that fights it, so
      the condition is repeated here rather than left to depend on call order. */
-  ui->label_6->setVisible(!b and ui->cbMenus->isChecked()); ui->label_7->setVisible(!b); ui->HoundButton->setEnabled(!b && !m_wwDigi);
+  ui->label_6->setVisible(!b and ui->cbMenus->isChecked()); ui->label_7->setVisible(!b); ui->HoundButton->setEnabled(!b && !m_contest.running);
   ui->logQSOButton->setEnabled(!b); ui->DecodeButton->setEnabled(!b); ui->filterButton->setEnabled(!b);
   ui->AGCcButton->setEnabled(!b); ui->swlButton->setEnabled(!b); ui->ClearDxButton->setEnabled(!b);
-  /* CE3TSK: AutoTx carries !m_wwDigi for the same reason as the single shot button above.
+  /* CE3TSK: AutoTx carries !m_contest.running for the same reason as the single shot button above.
      AutoSeq and hint are not part of the contest set. */
-  ui->hintButton->setEnabled(!b); ui->AutoTxButton->setEnabled(!b && !m_wwDigi); ui->AutoSeqButton->setEnabled(!b);
-  /* CE3TSK: !m_wwDigi on the single shot button only - every mode slot calls this, so
+  ui->hintButton->setEnabled(!b); ui->AutoTxButton->setEnabled(!b && !m_contest.running); ui->AutoSeqButton->setEnabled(!b);
+  /* CE3TSK: !m_contest.running on the single shot button only - every mode slot calls this, so
      switching FT8 to FT4 during a contest would otherwise hand back a control the contest
      locked. bypass and AnsB4 are not part of the contest set and keep the stock behaviour. */
-  ui->bypassButton->setEnabled(!b); ui->singleQSOButton->setEnabled(!b && !m_wwDigi); ui->AnsB4Button->setEnabled(!b);
+  ui->bypassButton->setEnabled(!b); ui->singleQSOButton->setEnabled(!b && !m_contest.running); ui->AnsB4Button->setEnabled(!b);
   ui->syncButton->setEnabled(!b); ui->syncButton->setVisible(!b);
   if(b) {
     ui->decodedTextLabel->setTextFormat(Qt::PlainText); ui->decodedTextLabel->setText("UTC    dB   DT "+tr("    Freq     Drift  Call          Grid    dBm   Dist"));
@@ -11626,7 +11614,7 @@ void MainWindow::on_pbAnswerCaller_clicked()
   /* CE3TSK 2026-10-14 (review 3.-82 item 16): the answer is chosen in contestreply.h (unit test test_reply) - in WW Digi
      Tx3 at the roger-report stage, as a double click on his call sends; else Tx3 without its R, or Tx2 when Tx3 holds no
      signed report (stock cut at -1 and sent "1AB" in WW Digi) */
-  CallerAnswer const answer {answer_caller (m_wwDigi, ui->tx2->text (), ui->tx3->text ())};
+  CallerAnswer const answer {answer_caller (m_contest.gridExchange, ui->tx2->text (), ui->tx3->text ())};
   ui->genMsg->setText(answer.text);
   m_ntx=7;
   m_QSOProgress = 3 == answer.tx ? ROGER_REPORT : REPORT;
@@ -11708,7 +11696,7 @@ void MainWindow::mousePressEvent(QMouseEvent *event)             //mousePressEve
       if (event->modifiers() & Qt::ControlModifier)
           m_qsoHistory.blacklist(m_hisCall);    
       else
-          m_qsoHistory.remove(m_hisCall);    
+          { m_qsoHistory.remove(m_hisCall); m_qsoHistory.forget(m_hisCall); }   // CE3TSK 2026-11-03: in a contest remove () alone keeps his grid
       clearDX (" cleared and erased from QSO history by right mouse button click, user action");
     }   
   }
@@ -11863,7 +11851,7 @@ void MainWindow::regenerateForGrid ()
   m_ntx = ntx0;
   m_nlasttx = nlasttx0;
   if (checked0 >= 0) txrb.at (checked0)->setChecked (true);
-  if (wwDigiNoGrid ()) { statusChanged (); return; }     // (review 3.-82) no exchange: every message stays cleared
+  if (noGridToExchange ()) { statusChanged (); return; }     // (review 3.-82) no exchange: every message stays cleared
   if (!m_hisCall.isEmpty ()) {
     // (review 3.-82) Tx2-Tx5 as they were - a text typed by hand, a free Tx5 - unless empty (nothing generated yet, or
     // cleared by a CQ) or carrying the old grid (WW Digi's exchange): the rule is gridchange.h's (unit test test_gridchange)
@@ -12472,7 +12460,7 @@ void MainWindow::enableHoundAccess(bool b)
      so the two conditions meet here rather than fighting. Without this, selecting FT8 during a
      contest called enableHoundAccess(true) and quietly un-greyed a control the contest had
      locked, because applyContestLock() does not run again on a mode change. */
-  b = b && !m_wwDigi;
+  b = b && !m_contest.running;
   if(b) { ui->actionEnable_hound_mode->setEnabled(true); ui->HoundButton->setEnabled(true); }
   else { ui->actionEnable_hound_mode->setChecked(false); ui->actionEnable_hound_mode->setEnabled(false); ui->HoundButton->setEnabled(false);
          ui->actionUse_TX_frequency_jumps->setChecked(false);
@@ -12770,7 +12758,7 @@ phantom_decodes::Settings MainWindow::phantomDecodeSettings ()
   s.roverMark = m_config.phantomDecodeRoverMark ();
   s.roverNoAnswer = m_config.phantomDecodeRoverNoAnswer ();
   s.portableMark = m_config.phantomDecodePortableMark ();
-  s.whereMark = m_config.phantomDecodeWhereMark () && (m_wwDigi ? m_contestLog : m_logBook).countryData ()->loaded ();
+  s.whereMark = m_config.phantomDecodeWhereMark () && (m_contest.running ? m_contestLog : m_logBook).countryData ()->loaded ();
   s.ownCall = m_baseCall;
   return s;
 }
@@ -12780,7 +12768,7 @@ phantom_decodes::Settings MainWindow::phantomDecodeSettings ()
 QString MainWindow::dxccOf (QString const& call)
 {
   QString country;
-  (m_wwDigi ? m_contestLog : m_logBook).getDXCC (call, country);
+  (m_contest.running ? m_contestLog : m_logBook).getDXCC (call, country);
   return country;
 }
 
@@ -12810,7 +12798,7 @@ phantom_decodes::Verdict MainWindow::windowVerdict (QString const& windowLine)
    read: an empty table would make every call unknown, and not one spot would go out */
 bool MainWindow::countryUnknown (QString const& call)
 {
-  return (m_wwDigi ? m_contestLog : m_logBook).countryData ()->loaded ()
+  return (m_contest.running ? m_contestLog : m_logBook).countryData ()->loaded ()
     && phantom_decodes::unknownCountry (call, [this] (QString const& c) {return dxccOf (c);});
 }
 
@@ -13119,7 +13107,7 @@ void MainWindow::on_the_minute ()
 void MainWindow::toggle_skipTx1 ()
 {
   if(m_bMyCallStd) {
-    if(!ui->skipTx1->isEnabled() && !m_wwDigi) { if(!m_houndMode) ui->skipTx1->setEnabled(true); ui->skipGrid->setEnabled(true); }   /* CE3TSK */
+    if(!ui->skipTx1->isEnabled() && !m_contest.forcesSkipTx1) { if(!m_houndMode) ui->skipTx1->setEnabled(true); ui->skipGrid->setEnabled(true); }   /* CE3TSK */
   } else {
     if(m_skipTx1) { m_skipTx1=false; ui->skipTx1->setChecked(false); ui->skipGrid->setChecked(false); }
     ui->skipTx1->setEnabled(false); ui->skipGrid->setEnabled(false);

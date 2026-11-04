@@ -3,6 +3,7 @@
 #ifndef DISPLAYTEXT_H
 #define DISPLAYTEXT_H
 
+#include "contestrules.h"
 #include <QTextEdit>
 #include <QHash>
 #include "logbook/logbook.h"
@@ -19,6 +20,7 @@ class DisplayText : public QTextEdit
 public:
     explicit DisplayText(QWidget *parent = 0);
     void setConfiguration(Configuration const *);
+    void setContest (contest_rules::Rules const& r) { contest_ = r; }   // CE3TSK: what setConfiguration () reads from the settings
     // CE3TSK 2026-10-20: this window shows the distance and azimuth after the country (distancefield.h) - Band Activity
     void setDistanceField (bool on) { distanceField_ = on; }
     // CE3TSK 2026-10-23: Misc > Hide clear phantom messages - such a line is not drawn, all else as shown (Verdict::clearPhantom ())
@@ -64,7 +66,7 @@ private:
 
     bool scroll_;
     bool bold_ = false;   /* CE3TSK 2026-10-18: until setContentFont () - appendText () reads it (TODO.md 3.-133) */
-    bool wwDigi_ = false; /* CE3TSK: WW Digi contest, grid is the exchange */
+    contest_rules::Rules contest_; /* CE3TSK: what the contest being run asks (contestrules.h) */
     /* CE3TSK: copied in setConfiguration() like every other setting, rather than keeping a
        Configuration pointer - this class deliberately holds no such pointer. my_grid can
        only change through the settings dialog, which calls setConfiguration() again. */

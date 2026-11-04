@@ -185,7 +185,7 @@ void DisplayText::setConfiguration(Configuration const * config)
   callTiers_ = config->newCQZ () || config->newITUZ () || config->newDXCC () || config->newPx () || config->newCall ();
   anyTier_ = callTiers_ || config->newGrid () || config->newState ();
   displayNewGrid_ = config->newGrid();
-  wwDigi_ = config->wwDigi(); /* CE3TSK: WW Digi contest, grid is the exchange and the field is the multiplier */
+  contest_ = config->contest (); /* CE3TSK: what the contest being run asks (contestrules.h) */
   displayNewGridBand_ = config->newGridBand();
   displayNewGridBandMode_ = config->newGridBandMode();
   displayNewPx_ = config->newPx();
@@ -493,7 +493,7 @@ int DisplayText::displayDecodedText(DecodedText* decodedText, QString myCall, QS
                         status = QsoHistory::RCALL;
                     }
                     else if (checkCall.contains(hisCall)  && mystatus_ > QsoHistory::SCQ  && mystatus_ != QsoHistory::FIN) {
-                        if (decodedText->report(myCall,Radio::base_callsign (checkCall),report,rep_type,wwDigi_) && !report.isEmpty ()) {
+                        if (decodedText->report(myCall,Radio::base_callsign (checkCall),report,rep_type,contest_.gridExchange) && !report.isEmpty ()) {
                             if (rep_type == "R")
                                 status = QsoHistory::RRREPORT;
                             else
@@ -538,7 +538,7 @@ int DisplayText::displayDecodedText(DecodedText* decodedText, QString myCall, QS
                 /* CE3TSK: WW Digi contest - "MYCALL HISCALL R GRID" is a roger plus his
                    exchange, not a fresh incoming call. Classified as RCALL the sequencer
                    keeps answering with Tx2 and the QSO never advances to RR73. */
-                if (wwDigi_ && !checkCall.isEmpty () && parts.length() == 4
+                if (contest_.gridExchange && !checkCall.isEmpty () && parts.length() == 4
                     && parts[2] == "R" && isGrid4 (parts[3])) {
                     status = QsoHistory::RRREPORT;
                     param = parts[3];
@@ -553,7 +553,7 @@ int DisplayText::displayDecodedText(DecodedText* decodedText, QString myCall, QS
                 else {
                     if (grid.isEmpty ()) dummy = qsoHistory2.status(checkCall,grid);
                     if (grid.isEmpty () && Radio::base_callsign (checkCall) == hisCall) grid = hisGrid;
-                    if (decodedText->report(myCall,Radio::base_callsign (checkCall),report,rep_type,wwDigi_)) {
+                    if (decodedText->report(myCall,Radio::base_callsign (checkCall),report,rep_type,contest_.gridExchange)) {
                         if (!checkCall.isEmpty ()) {
                             if (!report.isEmpty ()) {
                                 if (rep_type == "R")
@@ -729,14 +729,14 @@ int DisplayText::displayDecodedText(DecodedText* decodedText, QString myCall, QS
             /* CE3TSK 2026-10-03: Worked All States - a state only from a square of a single state, here and in the log
                (us_states::clearState). Never in WW Digi, whatever the profile says. The country is fetched when nothing
                above did: the code below reads it. */
-            if (displayNewState_ && !wwDigi_) {
+            if (displayNewState_ && !contest_.running) {
                 if (countryName.isEmpty ()) logBook.getDXCC (checkCall, countryName);
                 QString const prefix = countryName.section (',', 1, 1).trimmed ();
                 if (us_states::usEntity (prefix))   // the state worked out once (matchState answers with it)
                     stateJudged = !logBook.matchState (prefix, checkCall, stateGrid (), stateB4, stateB4Band, displayNewStateBand_ ? dialFreq : 0,
                                                        displayNewStateBandMode_ ? checkMode : QString {}).isEmpty ();
             }
-            /* CE3TSK: WW Digi contest - wwDigi_ switches these lookups from the 4 character
+            /* CE3TSK: WW Digi contest - contest_.fieldMultipliers switches these lookups from the 4 character
                square to the 2 character field, which is the contest multiplier. The square
                scores nothing in WW Digi, so the two are mutually exclusive and the existing
                new grid settings, colours and beep simply describe a field instead. */
@@ -744,14 +744,14 @@ int DisplayText::displayDecodedText(DecodedText* decodedText, QString myCall, QS
             auto matchGridAt = [&] (QString const& square, bool& b4, bool& b4BandMode) {
                 if (displayNewGridBand_ || displayNewGridBandMode_) {
                     if (displayNewGridBand_ && displayNewGridBandMode_) {
-                        logBook.matchGrid(/*in*/square,/*out*/b4,b4BandMode,/*in*/dialFreq,checkMode,wwDigi_);
+                        logBook.matchGrid(/*in*/square,/*out*/b4,b4BandMode,/*in*/dialFreq,checkMode,contest_.fieldMultipliers);
                     } else if (displayNewGridBand_) {
-                        logBook.matchGrid(/*in*/square,/*out*/b4,b4BandMode,/*in*/dialFreq,"",wwDigi_);
+                        logBook.matchGrid(/*in*/square,/*out*/b4,b4BandMode,/*in*/dialFreq,"",contest_.fieldMultipliers);
                     } else {
-                        logBook.matchGrid(/*in*/square,/*out*/b4,b4BandMode,/*in*/0,checkMode,wwDigi_);
+                        logBook.matchGrid(/*in*/square,/*out*/b4,b4BandMode,/*in*/0,checkMode,contest_.fieldMultipliers);
                     }
                 } else {
-                    logBook.matchGrid(/*in*/ square, /*out*/ b4 ,b4BandMode,/*in*/0,"",wwDigi_);
+                    logBook.matchGrid(/*in*/ square, /*out*/ b4 ,b4BandMode,/*in*/0,"",contest_.fieldMultipliers);
                 }
             };
             if (displayNewGrid_) matchGridAt (grid.trimmed (), gridB4, gridB4BandMode);
@@ -824,7 +824,7 @@ int DisplayText::displayDecodedText(DecodedText* decodedText, QString myCall, QS
                    it is placed at the head of the chain, above DXCC and above the zones.
                    None of those score anything in this contest, and leaving the tier in its
                    usual place below DXCC would let a new DXCC or a new zone mask a new
-                   multiplier. The matching grid tiers further down carry !wwDigi_ so they
+                   multiplier. The matching grid tiers further down carry !contest_.fieldMultipliers so they
                    cannot fire as well. */
                 /* CE3TSK: never worked, or not yet worked on this band - one multiplier either
                    way, so one block. WW Digi counts a field once per band, so "new on this band"
@@ -833,7 +833,7 @@ int DisplayText::displayDecodedText(DecodedText* decodedText, QString myCall, QS
                    band look like everyday operation) and ranked equal, so between the two the
                    SNR tie-break decides. The two conditions carried identical bodies as separate
                    branches; a later fix to one would have left the other behind. */
-                if (wwDigi_ && ((displayNewGrid_ && !gridB4)
+                if (contest_.fieldMultipliers && ((displayNewGrid_ && !gridB4)
                                 || ((displayNewGridBand_ || displayNewGridBandMode_) && !gridB4BandMode))) {
                     if ((displayPotential_ && std_type == 3) || std_type != 3) {
                         forceBold = true;
@@ -1011,9 +1011,9 @@ int DisplayText::displayDecodedText(DecodedText* decodedText, QString myCall, QS
                         else priority = dp::NewStateBand;
                         new_marker = true;
                     }
-                /* CE3TSK: !wwDigi_ - in contest mode this tier is handled at the head of the
+                /* CE3TSK: !contest_.fieldMultipliers - in contest mode this tier is handled at the head of the
                    chain instead, at a priority above DXCC */
-                } else if (!wwDigi_ && displayNewGrid_ && !gridB4) {
+                } else if (!contest_.fieldMultipliers && displayNewGrid_ && !gridB4) {
                     if ((displayPotential_ && std_type == 3) || std_type != 3) {
                         forceBold = true;
                         bgColor = color_NewGrid_;
@@ -1032,7 +1032,7 @@ int DisplayText::displayDecodedText(DecodedText* decodedText, QString myCall, QS
                         else priority = dp::NewGrid;
                         new_marker = true;
                     }
-                } else if (!wwDigi_ && (displayNewGridBand_ || displayNewGridBandMode_) && !gridB4BandMode) { /* CE3TSK: see above */
+                } else if (!contest_.fieldMultipliers && (displayNewGridBand_ || displayNewGridBandMode_) && !gridB4BandMode) { /* CE3TSK: see above */
                     if ((displayPotential_ && std_type == 3) || std_type != 3) {
                         forceBold = true;
                         bgColor = color_NewGridBand_;
@@ -1111,7 +1111,7 @@ int DisplayText::displayDecodedText(DecodedText* decodedText, QString myCall, QS
                 } else if ((displayNewCallBand_ || displayNewCallBandMode_) && !callB4BandMode) {
                     if ((displayPotential_ && std_type == 3) || std_type != 3) {
                         forceBold = true;
-                        bgColor = wwDigi_ ? color_NewCall_ : color_NewCallBand_;   /* CE3TSK: one colour in a contest - once per band is the dupe rule itself */
+                        bgColor = contest_.running ? color_NewCall_ : color_NewCallBand_;   /* CE3TSK: one colour in a contest - once per band is the dupe rule itself */
                         if (!lotw.isEmpty ()) priority = dp::NewCallBand + 1;
                         else priority = dp::NewCallBand;
                         strikethrough = false;
@@ -1122,7 +1122,7 @@ int DisplayText::displayDecodedText(DecodedText* decodedText, QString myCall, QS
                         }
                     }
                     else  if (otherMessagesMarker_) {
-                        servis = servis.left(1) + (wwDigi_ ? color_NewCall_ : color_NewCallBand_);
+                        servis = servis.left(1) + (contest_.running ? color_NewCall_ : color_NewCallBand_);
                         if (!lotw.isEmpty ()) priority = dp::NewCallBand + 1;
                         else priority = dp::NewCallBand;
                         new_marker = true;
@@ -1359,7 +1359,7 @@ int DisplayText::displayDecodedText(DecodedText* decodedText, QString myCall, QS
                multi-slot sends two). */
             QsoHistory::Status step = status;
             if (step == QsoHistory::RCQ && decodedText->isHint () && qsoHistory.answeredIn (checkCall, c_time)) step = QsoHistory::NONE;
-            qsoHistory.message(checkCall,step,priority,param,tyyp,countryName.left(2),mpx,c_time,decodedText->report(),decodedText->frequencyOffset(),checkMode,d);
+            qsoHistory.message(checkCall,step,priority,param,tyyp,countryName.left(2),mpx,c_time,decodedText->report(),decodedText->frequencyOffset(),checkMode,d,decodedText->isHint ());
         } 
         if (std_type == 2) {
             if(!redMarker_) std_type = 0;
@@ -1492,7 +1492,7 @@ void DisplayText::displayTransmittedText(QString text, QString myCall, QString h
                    recorded as the initial S73, ending the QSO in the history.
                    param is our sent exchange, it lands in QSO history as s_rep which the
                    RRR/RR73/73 states require to be non empty before they will advance. */
-                else if (wwDigi_ && parts.size() == 4 && parts[2] == "R" && isGrid4 (parts[3]))
+                else if (contest_.gridExchange && parts.size() == 4 && parts[2] == "R" && isGrid4 (parts[3]))
                   {
                     param = parts[3];
                     status = QsoHistory::SRREPORT;
@@ -1512,7 +1512,7 @@ void DisplayText::displayTransmittedText(QString text, QString myCall, QString h
                        s_rep. The RRR/RR73/73 states all refuse to advance while s_rep is
                        empty, and in this contest no signal report is ever exchanged. */
                     else {
-                      if (wwDigi_ && isGrid4 (parts[2])) param = parts[2];
+                      if (contest_.gridExchange && isGrid4 (parts[2])) param = parts[2];
                       status = QsoHistory::SCALL;
                     }
                   }

@@ -14,10 +14,10 @@
 // hasLast: a field follows his call; last: that field; lastIsGrid: it passes gridOK().
 #include <QString>
 
-inline int reply_tx_to_me (bool wwDigi, bool hasLast, QString const& last, bool lastIsGrid)
+inline int reply_tx_to_me (bool gridExchange, bool hasLast, QString const& last, bool lastIsGrid)
 {
   if (!hasLast) return 2;
-  if (lastIsGrid) return wwDigi ? 3 : 2;
+  if (lastIsGrid) return gridExchange ? 3 : 2;
   if (last.left (3) == "RRR" || last.toInt () == 73 || last.left (4) == "RR73") return 5;
   if (last.left (1) == "R") return 4;
   return 3;   // a report; toInt() of anything else is 0, which JTDX has always treated as a report
@@ -30,9 +30,9 @@ inline int reply_tx_to_me (bool wwDigi, bool hasLast, QString const& last, bool 
 // text, as if I had called him (on the air 2026-08-29). Elsewhere a Tx3 with no signed report has no "R" to cut, and the
 // report message is Tx2. tx: the Tx whose stage it is - 3 (a roger report) in WW Digi, else 2.
 struct CallerAnswer { QString text; int tx; };
-inline CallerAnswer answer_caller (bool wwDigi, QString const& tx2, QString const& tx3)
+inline CallerAnswer answer_caller (bool gridExchange, QString const& tx2, QString const& tx3)
 {
-  if (wwDigi) return {tx3, 3};
+  if (gridExchange) return {tx3, 3};
   int i0 = tx3.indexOf (" R-");
   if (i0 < 0) i0 = tx3.indexOf (" R+");
   if (i0 < 0) return {tx2, 2};

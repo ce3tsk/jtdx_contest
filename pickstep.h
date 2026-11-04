@@ -88,10 +88,10 @@ namespace pick_step
     return Kind::Other;
   }
 
-  inline int tx_to_me (QStringList const& t4, bool wwDigi, bool lastIsGrid)
+  inline int tx_to_me (QStringList const& t4, bool gridExchange, bool lastIsGrid)
   {
     if (t4.size () == 7 && t4.at (6) == "73") return 5;   // 73 back to compound call holder
-    return reply_tx_to_me (wwDigi, t4.size () > 7, t4.size () > 7 ? t4.at (7) : QString {}, lastIsGrid);
+    return reply_tx_to_me (gridExchange, t4.size () > 7, t4.size () > 7 ? t4.at (7) : QString {}, lastIsGrid);
   }
 
   inline int progress_to_me (int tx)

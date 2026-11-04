@@ -10,7 +10,7 @@
    inline in on_logQSOButton_clicked(), where nothing could test them.
 
    The QSOs that broke were completed from a late re-selection - the sequencer had let go, we
-   were calling CQ or working the next caller, and a late decode of the partner's final message
+   had moved on, and a late decode of the partner's final message
    re-selected him, sent the 73 and logged inside the same pass. */
 
 /* The QSO's start, as QsoHistory keeps it: seconds into the day, 0 when it was never recorded.

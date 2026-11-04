@@ -439,14 +439,17 @@ bool ADIF::addQSOToFile(const QString hisCall, const QString hisGrid, const QStr
     return true;
 }
 
-/* CE3TSK: the gridsquare of every QSO in this log, for contest points. Empty entries are
-   kept - a QSO without a grid scores nothing, and grid_distance_km() returns -1 for it. */
-QList<QString> ADIF::gridList () const
+/* CE3TSK: every QSO in this log, for the contest score to tell which count (contestscore.h): oldest first for each call */
+QList<contest_score::Qso> ADIF::contestQsos () const
 {
-    QList<QString> grids;
-    grids.reserve (_data.size ());
-    for (auto it = _data.constBegin (); it != _data.constEnd (); ++it) grids << it.value ().gridsquare;
-    return grids;
+    QList<contest_score::Qso> qsos;
+    qsos.reserve (_data.size ());
+    for (auto const& call : _data.uniqueKeys ())
+    {
+        auto const worked = _data.values (call);   // the last one added first
+        for (int i = worked.size () - 1; i >= 0; --i) qsos << contest_score::Qso {worked[i].call, worked[i].band, worked[i].gridsquare};
+    }
+    return qsos;
 }
 
 QString ADIF::bandFromFrequency(double dialFreq)

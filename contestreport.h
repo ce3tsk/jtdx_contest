@@ -99,4 +99,83 @@ inline QString contest_displayed_message (QString const& line, bool ft_mode)
   return line.size () > col ? line.mid (col, CONTEST_MSG_WIDTH) : QString {};
 }
 
+#include "contestignore.h"
+#include "Radio.hpp"
+
+/* CE3TSK 2026-11-03 (TODO.md 3.-221): what becomes of a report message, and of the station that sent it. The decisions
+   are here; MainWindow carries them out (readFromStdout (), contestReportAbort ()). test_contestreport, test_rxstep,
+   test_wwdigiabort and test_wwdigiseq hold them. */
+namespace contest_report
+{
+  enum class Step
+  {
+    Drop,     // between two others: only dropped, nobody is skipped
+    Abort,    // to us, and no QSO that can finish: contestReportAbort ()
+    GoesOn    // the partner acknowledging and his exchange already ours: the line goes on as any other
+  };
+
+  /* the station worked? By base call: DX Call may hold K1ABC/P while the report comes from K1ABC */
+  inline bool working (QString const& hisCall, QString const& from)
+  {
+    return !hisCall.isEmpty () && Radio::base_callsign (hisCall) == Radio::base_callsign (from);
+  }
+
+  /* A report addressed to us needs one distinction, learned the hard way on 2026-08-30. 3D2USU (Fiji, RH82 - a new field)
+     called CQ *with his grid*, we answered, he acknowledged with "CE3TSK 3D2USU +05" because his software runs reports,
+     and this filter swallowed it: the sequencer never saw the acknowledgement, kept resending Tx2, and the rule then
+     dropped him and skipped him for five minutes, silently. Two other stations completed with him in those same minutes.
+
+     His grid was already ours, from his CQ - so the exchange existed and the QSO was worth finishing. The deadlock item 26
+     was written for is the case where we have *no* exchange from him at all. So: if he is the station we are working and
+     we already hold his grid, let the line through to the ordinary path. Otherwise drop it and skip him, as before.
+
+     reportToUs: contest_report_to_me ()'s answer. hisGridOK: the QSO history holds a grid of his. */
+  inline Step step (QString const& reportToUs, QString const& hisCall, bool hisGridOK)
+  {
+    if (reportToUs.isEmpty ()) return Step::Drop;
+    return working (hisCall, reportToUs) && hisGridOK ? Step::GoesOn : Step::Abort;
+  }
+
+  /* CE3TSK 2026-11-03 (TODO.md 3.-224): the grid the windows and the sequencer may take for his: what the DX Grid box holds,
+     cut to 4 - but in the contest not one read from CALL3.TXT, a spot of another day: that is no exchange. */
+  inline QString exchange_grid (QString const& box, bool fromCall3, bool gridExchange)
+  {
+    return gridExchange && fromCall3 ? QString {} : box.left (4);
+  }
+
+  inline QString goes_on_notice (QString const& call, QString const& hisGrid)
+  {
+    return call + " answers with reports, not the grid exchange - his grid " + hisGrid.left (4) + " is already known, so the QSO goes on";
+  }
+
+  /* What the abort does. He goes on the skip list, whatever he was - the station we are working, a station calling us that
+     we have not answered yet, or one we have never heard before. A caller whose message to us carries a report instead of
+     a grid is not a contest station, so he must not sit in the QSO history waiting to be picked. Worked, DX Call is cleared.
+     The report line itself is dropped, so without a notice the station simply stops being answered and the newest thing on
+     screen is his previous message - the QSO looks like it evaporated. One notice for each station, only the first time
+     inside his window, or a repeating caller would fill the window. */
+  struct Abort
+  {
+    QString base;          // the skip list's key; empty: no call, nothing to do
+    bool working = false;  // the station worked: DX Call cleared, and the sequencer asked again in this very period
+    QString clearReason;   // clearDX ()'s, when working
+    QString notice;        // the operator's, empty when he has been told already
+  };
+
+  inline Abort abort_plan (QString const& call, QString const& hisCall, ContestIgnore& ignore, qint64 now)
+  {
+    Abort a;
+    a.base = Radio::base_callsign (call);
+    if (a.base.isEmpty ()) return a;
+    bool const known = ignore.has (a.base, now);
+    ignore.add (a.base, now);
+    ignore.prune (now);
+    a.working = working (hisCall, call);
+    if (a.working) a.clearReason = " cleared, " + call + " answers with a signal report - not a contest station";
+    if (!known) a.notice = call + (a.working ? QString {" answered with a report - not the contest exchange, QSO dropped, skipped 5 min"}
+                                             : QString {" is sending reports, not the grid exchange - skipped 5 min"});
+    return a;
+  }
+}
+
 #endif

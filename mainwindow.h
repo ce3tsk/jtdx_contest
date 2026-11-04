@@ -41,6 +41,7 @@
 #include "waitcall.h"   // CE3TSK 2026-10-21: Wait and Call
 #include "stationsync.h"   // CE3TSK 2026-10-23: sync to one station
 #include "Modes.hpp"
+#include "contestrules.h"
 #include "Configuration.hpp"
 #include "WSPRBandHopping.hpp"
 #include "Transceiver.hpp"
@@ -806,7 +807,8 @@ private:
   bool m_callWorkedB4;
   bool m_callHigherNewCall;
   bool m_singleshot;
-  bool m_wwDigi; /* CE3TSK: WW Digi contest, the exchange is the 4 character grid instead of a signal report */
+  contest_rules::Rules m_contest; /* CE3TSK 2026-11-03: what the contest being run asks of the program (contestrules.h) */
+  Configuration::SpecialOperatingActivity m_contestActivity {Configuration::SpecialOperatingActivity::NONE};
   int m_dxPoints = 0;                    /* CE3TSK: contest points for the current DX station */
   bool m_autofilter;
   bool m_houndMode;
@@ -1199,7 +1201,7 @@ private:
   void selectCqAgain (bool firstTabLast);
   void genStdMsgs(QString rpt);
   void regenerateForGrid ();             // CE3TSK 2026-10-14: the messages again after the own grid changed, the rest kept
-  bool wwDigiNoGrid (); /* CE3TSK: WW Digi contest selected but no usable station grid */
+  bool noGridToExchange (); /* CE3TSK: a contest exchanging grids selected, but no usable station grid */
   /* CE3TSK: cache the special operating activity from Configuration */
   void refreshSpecialOp (bool initial = false);
   QString m_convertPath;       /* CE3TSK: last file chosen in Convert bit depth, persisted */
@@ -1208,6 +1210,7 @@ private:
   void bindBandCombo ();       /* CE3TSK: band selector + validator, rebound on a contest change */
   void refreshContestLog (bool reload);   /* CE3TSK: reload is required, see the body */
   void updateContestScore ();  /* CE3TSK: multipliers x points = score */
+  void setAutoSeqLabel ();     /* CE3TSK: the AutoSeq button says what runs (autoseq_step::label_number ()) */
   void clearDX (QString reason);
   void contestReportAbort (QString const& call);   /* CE3TSK: he answered with a report, not a grid */
   void clearDXfields (QString reason);
