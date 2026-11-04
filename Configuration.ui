@@ -3500,6 +3500,16 @@ Right click for insert and delete options.</string>
        <item row="0" column="0">
         <layout class="QVBoxLayout" name="verticalLayout_8">
          <item>
+          <widget class="QLabel" name="labContestColors">
+           <property name="text">
+            <string>Colors apply per contest, currently: %1. Own colors get applied again when contest mode is disabled.</string>
+           </property>
+           <property name="wordWrap">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
           <widget class="QGroupBox" name="highlight_group_box">
            <property name="title">
             <string>'New one' and 'worked B4' status notifications</string>
@@ -7224,6 +7234,26 @@ AA1AAA,BB1BB,CC1CC&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
            </widget>
           </item>
           <item>
+           <widget class="QRadioButton" name="rbSpecialOpARRLDigi">
+            <property name="text">
+             <string>ARRL Digi contest</string>
+            </property>
+            <property name="toolTip">
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;ARRL International Digital Contest. The exchange is the 4 character grid instead of a signal report. A QSO scores 1 point plus 1 for each started 500 km, a station counts once per band, and there are no multipliers.&lt;/p&gt;&lt;p&gt;While this is selected the grid highlighting below is off, new calls are highlighted per band, and neither can be changed by hand. Your own settings are restored when you switch back to None.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QRadioButton" name="rbSpecialOpYBDXPI">
+            <property name="text">
+             <string>YBDXPI FT8 contest</string>
+            </property>
+            <property name="toolTip">
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;YBDXPI FT8 contest, FT8 only. The exchange is the 4 character grid instead of a signal report. A QSO scores 5 points with a YBDXPI member, otherwise 1 in your own country, 2 on your continent and 3 on another. A station counts once per band. Each prefix and each DXCC country on each band is a multiplier.&lt;/p&gt;&lt;p&gt;While this is selected new calls, prefixes and countries are highlighted, overall and per band, the grid highlighting below is off, and none of it can be changed by hand. Your own settings are restored when you switch back to None.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            </property>
+           </widget>
+          </item>
+          <item>
            <widget class="QRadioButton" name="rbSpecialOpNAVHF">
             <property name="enabled">
              <bool>false</bool>
@@ -7260,16 +7290,6 @@ AA1AAA,BB1BB,CC1CC&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
             </property>
             <property name="text">
              <string>ARRL RTTY Roundup</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QRadioButton" name="rbSpecialOpARRLDigi">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="text">
-             <string>ARRL Digi contest</string>
             </property>
            </widget>
           </item>

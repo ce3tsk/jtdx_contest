@@ -37,6 +37,8 @@ void LogBook::init(const QString mycall,const QString mygrid,const QString mydat
       _countries.load();
       /* CE3TSK 2026-10-03: the licence states, before the log - its worked-state index reads them */
       _countries.loadLicenses (CountryDat::fileToUse (dataPath, licenseFileName, &LicenseStates::version));
+      /* CE3TSK 2026-11-04: the YBDXPI members: the one in the data directory if there is one, else the bundled one */
+      _countries.loadMembers (CountryDat::fileToUse (dataPath, QStringLiteral ("ybdxpi.txt"), &ContestMembers::version));
     }
 
   _log.init(dataPath.absoluteFilePath (logFileName), countryData ());

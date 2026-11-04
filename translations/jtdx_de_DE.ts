@@ -6622,6 +6622,11 @@ Das ist der Fehler des Decoders selbst. Beheben Sie, was seinen Start verhindert
         <source>The transmission was stopped, as by Halt Tx. Check the antenna.</source>
         <translation>Die Aussendung wurde gestoppt, wie mit TX anhalten. Prüfen Sie die Antenne.</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Sum of the QSO points = score</source>
+        <translation>Summe der QSO-Punkte = Ergebnis</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>
@@ -10443,6 +10448,26 @@ Zurücksetzen der Funkgeräteschnittstelle und Übernahme etwaiger
         <location filename="../Configuration.ui"/>
         <source>Download the latest CALL3.TXT from wsjt-x-improved.sourceforge.io, as WSJT-X does: the calls and grid squares behind the JT65 and JT9 Hint decoders and the Lookup button. The copy replaced is kept as CALL3_backup.TXT, with any calls added by Add. The decoder reads the new list at the program's next start.</source>
         <translation>Die neueste CALL3.TXT von wsjt-x-improved.sourceforge.io herunterladen, wie WSJT-X es tut: die Rufzeichen und Locator-Felder hinter den Hint-Decodern für JT65 und JT9 und der Schaltfläche Suchen. Die ersetzte Kopie bleibt als CALL3_backup.TXT erhalten, mit den mit Hinzufügen ergänzten Rufzeichen. Der Decoder liest die neue Liste beim nächsten Start des Programms.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;ARRL International Digital Contest. The exchange is the 4 character grid instead of a signal report. A QSO scores 1 point plus 1 for each started 500 km, a station counts once per band, and there are no multipliers.&lt;/p&gt;&lt;p&gt;While this is selected the grid highlighting below is off, new calls are highlighted per band, and neither can be changed by hand. Your own settings are restored when you switch back to None.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;ARRL International Digital Contest. Ausgetauscht wird der vierstellige Locator statt eines Rapports. Ein QSO zählt 1 Punkt plus 1 für jede angefangenen 500 km, eine Station zählt einmal je Band, und es gibt keine Multiplikatoren.&lt;/p&gt;&lt;p&gt;Solange dies gewählt ist, ist die Locator-Hervorhebung unten aus, neue Rufzeichen werden je Band hervorgehoben, und beides kann nicht von Hand geändert werden. Ihre eigenen Einstellungen werden wiederhergestellt, sobald Sie auf Keiner zurückschalten.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>YBDXPI FT8 contest</source>
+        <translation>YBDXPI FT8 Contest</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;YBDXPI FT8 contest, FT8 only. The exchange is the 4 character grid instead of a signal report. A QSO scores 5 points with a YBDXPI member, otherwise 1 in your own country, 2 on your continent and 3 on another. A station counts once per band. Each prefix and each DXCC country on each band is a multiplier.&lt;/p&gt;&lt;p&gt;While this is selected new calls, prefixes and countries are highlighted, overall and per band, the grid highlighting below is off, and none of it can be changed by hand. Your own settings are restored when you switch back to None.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;YBDXPI FT8 Contest, nur FT8. Ausgetauscht wird der vierstellige Locator statt eines Rapports. Ein QSO zählt 5 Punkte mit einem YBDXPI-Mitglied, sonst 1 im eigenen Land, 2 auf dem eigenen Kontinent und 3 auf einem anderen. Eine Station zählt einmal je Band. Jeder Präfix und jedes DXCC-Land auf jedem Band ist ein Multiplikator.&lt;/p&gt;&lt;p&gt;Solange dies gewählt ist, werden neue Rufzeichen, Präfixe und Länder insgesamt und je Band hervorgehoben, die Locator-Hervorhebung unten ist aus, und nichts davon kann von Hand geändert werden. Ihre eigenen Einstellungen werden wiederhergestellt, sobald Sie auf Keiner zurückschalten.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Colors apply per contest, currently: %1. Own colors get applied again when contest mode is disabled.</source>
+        <translation>Farben gelten je Contest, derzeit: %1. Die eigenen Farben gelten wieder, sobald der Contest-Modus ausgeschaltet wird.</translation>
     </message>
 </context>
 <context>

@@ -50,6 +50,7 @@ class QsoHistory
 	int blacklist(QString const& callsign);
 	void calllist(QString const& callsign,int level, unsigned time);
 	int reset_count(QString const& callsign,Status status = NONE);
+	void rankAsWorked (QString const& callsign);   // CE3TSK 2026-11-04: the log has him on this band, see qsohistory.cpp
 	JTDXDateTime * jtdxtime;
  private:
  	QRegularExpression _gridRe = QRegularExpression("^[A-R]{2,2}[0-9]{2,2}[A-R]{0,2}[0-9]{0,2}[A-R]{0,2}");

@@ -6635,6 +6635,11 @@ See on dekoodri enda viga. Kõrvalda see, mis takistab käivitumist - puuduv tee
         <source>The transmission was stopped, as by Halt Tx. Check the antenna.</source>
         <translation>Saade peatati nagu nupuga Peata Tx. Kontrolli antenni.</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Sum of the QSO points = score</source>
+        <translation>QSO punktide summa = tulemus</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>
@@ -10438,6 +10443,26 @@ soundcard changes</source>
         <location filename="../Configuration.ui"/>
         <source>Download the latest CALL3.TXT from wsjt-x-improved.sourceforge.io, as WSJT-X does: the calls and grid squares behind the JT65 and JT9 Hint decoders and the Lookup button. The copy replaced is kept as CALL3_backup.TXT, with any calls added by Add. The decoder reads the new list at the program's next start.</source>
         <translation>Laadi wsjt-x-improved.sourceforge.io-st alla uusim CALL3.TXT, nagu teeb WSJT-X: kutsungid ja ruudud, millele toetuvad JT65 ja JT9 Vihjed-dekoodrid ning nupp Otsi. Asendatud koopia jääb alles nimega CALL3_backup.TXT koos nupuga Lisa lisatud kutsungitega. Dekooder loeb uue loendi programmi järgmisel käivitusel.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;ARRL International Digital Contest. The exchange is the 4 character grid instead of a signal report. A QSO scores 1 point plus 1 for each started 500 km, a station counts once per band, and there are no multipliers.&lt;/p&gt;&lt;p&gt;While this is selected the grid highlighting below is off, new calls are highlighted per band, and neither can be changed by hand. Your own settings are restored when you switch back to None.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;ARRL International Digital Contest. Vahetuseks on signaaliraporti asemel 4-märgiline lokaator. QSO annab 1 punkti ja lisaks 1 iga alustatud 500 km eest, jaam loeb sagedusala kohta üks kord ning kordajaid ei ole.&lt;/p&gt;&lt;p&gt;Kuni see on valitud, on allolev lokaatorite esiletõstmine välja lülitatud, uued kutsungid tõstetakse esile sagedusala kaupa ja seda ei saa käsitsi muuta. Teie enda seaded taastatakse, kui lülitute tagasi valikule Puudub.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>YBDXPI FT8 contest</source>
+        <translation>YBDXPI FT8 võistlus</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;YBDXPI FT8 contest, FT8 only. The exchange is the 4 character grid instead of a signal report. A QSO scores 5 points with a YBDXPI member, otherwise 1 in your own country, 2 on your continent and 3 on another. A station counts once per band. Each prefix and each DXCC country on each band is a multiplier.&lt;/p&gt;&lt;p&gt;While this is selected new calls, prefixes and countries are highlighted, overall and per band, the grid highlighting below is off, and none of it can be changed by hand. Your own settings are restored when you switch back to None.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;YBDXPI FT8 contest, ainult FT8. Vahetuseks on signaaliraporti asemel 4-märgiline lokaator. QSO annab YBDXPI liikmega 5 punkti, muidu 1 oma riigis, 2 oma mandril ja 3 teisel mandril. Jaam loeb sagedusala kohta üks kord. Iga prefiks ja iga DXCC-riik igal sagedusalal on kordaja.&lt;/p&gt;&lt;p&gt;Kuni see on valitud, tõstetakse uued kutsungid, prefiksid ja riigid esile üldiselt ja sagedusala kaupa, allolev lokaatorite esiletõstmine on välja lülitatud ja seda ei saa käsitsi muuta. Teie enda seaded taastatakse, kui lülitute tagasi valikule Puudub.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Colors apply per contest, currently: %1. Own colors get applied again when contest mode is disabled.</source>
+        <translation>Värvid kehtivad võistluse kaupa, praegu: %1. Oma värvid rakenduvad uuesti, kui võistlusrežiim välja lülitatakse.</translation>
     </message>
 </context>
 <context>

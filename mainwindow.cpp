@@ -51,6 +51,7 @@
 #include "wav16to32.h"
 #include "decoderange.h"
 #include "contestreport.h"
+#include "contestpoints.h"  // CE3TSK 2026-11-04
 #include "contestscore.h"  // CE3TSK 2026-11-03: multipliers x points
 #include "contestreply.h"
 #include "gridchange.h"
@@ -1583,6 +1584,8 @@ void MainWindow::writeSettings()
   m_settings->setValue("ContestUiRRR",m_uiParked.rrr);
   m_settings->setValue("ContestUiMaxDistance",m_uiParked.maxDistance);
   m_settings->setValue("ContestUiRprtPriority",m_uiParked.rprtPriority);
+  m_settings->setValue("ContestUiHideFTContest",m_uiParked.hideFTContest);
+  m_settings->setValue("ContestUiAnswerWorkedB4",m_uiParked.answerWorkedB4);
   m_settings->setValue("ContestUiMode",m_uiParked.mode);
   m_settings->setValue("AutoFilter",ui->actionAutoFilter->isChecked());
   m_settings->setValue("EnableHoundMode",ui->actionEnable_hound_mode->isChecked());  
@@ -1914,7 +1917,7 @@ void MainWindow::readSettings()
      ungated, so an ini left in FT2 or JT65 mid-contest (possible before FT2 was locked) came back
      in it, greyed and unparked. It starts in FT8 instead, as entering the contest would have. */
   auto const known = [this] (QString const& mode) { return modeAction (mode) != nullptr; };
-  auto const allowed = [this] (QString const& mode) { return !m_contest.running || contest_allows_mode (mode); };
+  auto const allowed = [this] (QString const& mode) { return !m_contest.running || contest_allows_mode (mode, m_contest.ft8Only); };
   QString const saved_mode {saved_mode_name (m_mode, known)};   // for a park at the end, below
   normalise_saved_mode (m_mode, m_modeTx, known, allowed);
   if(m_modeTx.startsWith("JT9")) ui->pbTxMode->setText("Tx JT9  @");
@@ -1964,6 +1967,8 @@ void MainWindow::readSettings()
 
   ui->actionMaxDistance->setChecked(m_settings->value("MaxDistance",false).toBool());
   ui->actionAnswerWorkedB4->setChecked(m_settings->value("AnswerWorkedB4",true).toBool());
+  /* CE3TSK 2026-11-04: an ini from before this was parked holds the operator's own value in the key itself */
+  m_uiParked.answerWorkedB4 = m_settings->value("ContestUiAnswerWorkedB4",ui->actionAnswerWorkedB4->isChecked()).toBool();
   ui->actionCallWorkedB4->setChecked(m_settings->value("CallWorkedB4",true).toBool());
   ui->actionCallHigherNewCall->setChecked(m_settings->value("CallHigherNewCall",false).toBool());
   ui->actionSingleShot->setChecked(m_settings->value("SingleShotQSO",false).toBool());
@@ -2003,6 +2008,8 @@ void MainWindow::readSettings()
   if(m_settings->value("HideFTContestMessages").toString()!="false" && m_settings->value("HideFTContestMessages").toString()!="true") 
     ui->actionHide_FT_contest_messages->setChecked(false);
   else ui->actionHide_FT_contest_messages->setChecked(m_settings->value("HideFTContestMessages").toBool());
+  /* CE3TSK 2026-11-04: an ini from before this was parked holds the operator's own value in the key itself */
+  m_uiParked.hideFTContest = m_settings->value("ContestUiHideFTContest",ui->actionHide_FT_contest_messages->isChecked()).toBool();
 
   if(m_settings->value("HideTelemetryMessages").toString()!="false" && m_settings->value("HideTelemetryMessages").toString()!="true") 
     ui->actionHide_telemetry_messages->setChecked(false);
@@ -2143,10 +2150,12 @@ void MainWindow::readSettings()
   ui->actionReport_message_priority->setChecked(m_settings->value("ReportMessagePriority",false).toBool());
   /* CE3TSK: a restart already in contest mode forces nothing (the values were forced before the
      restart and persisted) - except a control that a newer build forces than the one that parked:
-     Max distance / report priority came later, so they are forced off here, after both are read. */
+     Max distance / report priority came later, and Hide FT contest messages and AnsB4 later still, so they are forced here, after they are read. */
   if (m_contest.running && m_uiParkedValid) {
     if (ui->actionMaxDistance->isChecked()) ui->actionMaxDistance->setChecked(false);
     if (ui->actionReport_message_priority->isChecked()) ui->actionReport_message_priority->setChecked(false);
+    if (ui->actionHide_FT_contest_messages->isChecked()) ui->actionHide_FT_contest_messages->setChecked(false);
+    if (!ui->actionAnswerWorkedB4->isChecked()) ui->actionAnswerWorkedB4->setChecked(true);
   }
 
   m_ndepth=m_settings->value("NDepth",3).toInt(); if(!(m_ndepth>=1 && m_ndepth<=3)) m_ndepth=3;
@@ -5252,7 +5261,6 @@ void MainWindow::createStatusBar()                           //createStatusBar
   contest_score_label->setContentsMargins(1,1,1,1);
   contest_score_label->setMinimumSize(QSize(150,20));
   contest_score_label->setFrameStyle(QFrame::Panel | QFrame::Sunken);
-  contest_score_label->setToolTip(tr("Contest multipliers x QSO points = score"));
   contest_score_label->setVisible(false);
   statusBar()->addWidget(contest_score_label);
  }
@@ -6461,7 +6469,9 @@ void MainWindow::parkContestState (QString const& mode)
   m_uiParked.rrr = m_rrr;
   m_uiParked.maxDistance = m_maxDistance;
   m_uiParked.rprtPriority = m_rprtPriority;
-  m_uiParked.mode = contest_parked_mode (mode);   // contestmode.h
+  m_uiParked.hideFTContest = ui->actionHide_FT_contest_messages->isChecked ();
+  m_uiParked.answerWorkedB4 = ui->actionAnswerWorkedB4->isChecked ();
+  m_uiParked.mode = contest_parked_mode (mode, m_contest.ft8Only);   // contestmode.h
   m_uiParkedValid = true;
 }
 
@@ -6490,6 +6500,13 @@ void MainWindow::forceContestControls ()
      setChecked(): the toggled slots own m_maxDistance / m_rprtPriority. */
   if (ui->actionMaxDistance->isChecked ()) ui->actionMaxDistance->setChecked (false);
   if (ui->actionReport_message_priority->isChecked ()) ui->actionReport_message_priority->setChecked (false);
+  /* CE3TSK 2026-11-04, the operator: "needs to be disabled and parked during contest mode". It hides CQ TEST, which is how
+     ARRL Digi is called and how some call in WW Digi: decode () reads the tick, so off is all it takes. */
+  if (ui->actionHide_FT_contest_messages->isChecked ()) ui->actionHide_FT_contest_messages->setChecked (false);
+  /* CE3TSK 2026-11-04, the operator: "enable AnsB4 during contest and park its value". A station already worked ranks below every new
+     call; with this on he is still answered when no new call is calling, so one who missed our RR73 gets it again. Through setChecked ():
+     the toggled slot owns m_answerWorkedB4 and the button. */
+  if (!ui->actionAnswerWorkedB4->isChecked ()) ui->actionAnswerWorkedB4->setChecked (true);
   /* AutoFilter off and left off, not parked: it clamps decoding to +-60Hz of the RX
      frequency, which hides the stations calling us elsewhere in the passband - the ones
      a contest most wants. Through the slot, which owns m_autofilter and drops any
@@ -6520,6 +6537,9 @@ void MainWindow::applyContestLock (bool locked)
     ui->actionCallPriorityAndSearchCQ->setEnabled (!humanChooses && searchMode);
     if (searchMode && m_callPrioCQ) setAutoSeqLabel ();
   }
+  ui->actionHide_FT_contest_messages->setEnabled (!locked);   /* CE3TSK 2026-11-04: see forceContestControls () */
+  ui->actionAnswerWorkedB4->setEnabled (!locked);             /* the same */
+  ui->AnsB4Button->setEnabled (!locked);
   /* single shot is two widgets kept in sync by on_singleQSOButton_clicked() and
      on_actionSingleShot_toggled(); locking only the menu item leaves the button live. */
   ui->actionSingleShot->setEnabled (!locked);
@@ -6576,7 +6596,7 @@ void MainWindow::applyContestLock (bool locked)
      used to be listed here by hand, and FT2, which came later, was missed: entering a contest
      parks FT2 and forces FT8 like the rest, so leaving it live let one click (menu, or the Mode
      buttons row) put the station in FT2 mid-contest, with nothing parked to undo it. */
-  for (auto const& m : modeTable ()) m.action->setEnabled (!locked || contest_allows_mode (m.name));
+  for (auto const& m : modeTable ()) m.action->setEnabled (!locked || contest_allows_mode (m.name, m_contest.ft8Only));
 }
 
 /* CE3TSK: (re)open the contest's own log, or drop it when no contest is running. The
@@ -6669,10 +6689,14 @@ void MainWindow::updateContestScore ()
      construction so a theme change is picked up. */
   contest_score_label->setStyleSheet (QString ("QLabel{background: %1}")
                                       .arg (Radio::convert_dark ("#99ff99", m_useDarkStyle)));
-  auto const score = contest_score::sum (m_contestLog.contestQsos (), [this] (QString const& g) {
+  auto const score = m_contest.prefixCountryMultipliers   /* CE3TSK 2026-11-04: its points come from the call */
+    ? contest_qso::ybdxpi_score (m_contestLog.contestQsos (), *m_contestLog.countryData (), m_config.my_callsign ())
+    : contest_score::sum (m_contestLog.contestQsos (), [this] (QString const& g) {
       return m_config.special_op_points (grid_distance_km (m_config.my_grid (), g, true));
-    });
+    }, m_contest.fieldMultipliers);
   contest_score_label->setText (contest_score::text (score));
+  /* (TODO.md 3.-232) with the text: ARRL Digi has no multipliers */
+  contest_score_label->setToolTip (score.multiplied ? tr ("Contest multipliers x QSO points = score") : tr ("Sum of the QSO points = score"));
 }
 
 void MainWindow::refreshSpecialOp (bool initial)
@@ -6727,7 +6751,9 @@ void MainWindow::refreshSpecialOp (bool initial)
   if (m_contest.running)
     {
       if (!m_uiParkedValid) parkContestState (m_mode);
-      if (!m_uiParked.mode.isEmpty ()) on_actionFT8_triggered ();
+      else m_uiParked.mode = contest_parked_on_switch (m_uiParked.mode, m_mode, m_contest.ft8Only);
+      /* (2026-11-04) the second: from WW Digi in FT4 directly to a contest in FT8 alone, with nothing parked the first time */
+      if (!m_uiParked.mode.isEmpty () || !contest_allows_mode (m_mode, m_contest.ft8Only)) on_actionFT8_triggered ();
       forceContestControls ();      /* only now, with the operator's own values safely parked */
       applyContestLock (true);
     }
@@ -6751,6 +6777,8 @@ void MainWindow::refreshSpecialOp (bool initial)
          first (it clears max distance if it goes on), then max distance to its parked value. */
       if (m_rprtPriority != m_uiParked.rprtPriority) ui->actionReport_message_priority->setChecked (m_uiParked.rprtPriority);
       if (m_maxDistance != m_uiParked.maxDistance) ui->actionMaxDistance->setChecked (m_uiParked.maxDistance);
+      if (ui->actionHide_FT_contest_messages->isChecked () != m_uiParked.hideFTContest) ui->actionHide_FT_contest_messages->setChecked (m_uiParked.hideFTContest);
+      if (ui->actionAnswerWorkedB4->isChecked () != m_uiParked.answerWorkedB4) ui->actionAnswerWorkedB4->setChecked (m_uiParked.answerWorkedB4);
       /* RRR: in FT4 the widget is legitimately unavailable, so hand the value to the stock
          m_savedRRR instead and let commonActions() give it back on leaving FT4. */
       /* Additive, never clearing. m_savedRRR means "owed a restore", and JTDX sets it true
@@ -7931,6 +7959,7 @@ void MainWindow::process_Auto()
       w.guardFreq = m_nguardfreq;
       w.skipTx1 = m_skipTx1;
       w.strictdirCQ = m_strictdirCQ;
+      w.finishesQsoFirst = m_contest.finishesQsoFirst;
       w.replyOther = replyOtherOverridesCounters ();
       w.answerCQCount = m_config.answerCQCount();          w.answerCQCounter = m_config.nAnswerCQCounter();
       w.answerInCallCount = m_config.answerInCallCount();  w.answerInCallCounter = m_config.nAnswerInCallCounter();
@@ -7948,6 +7977,7 @@ void MainWindow::process_Auto()
         m_status = QsoHistory::NONE;
         if (r.counters2Off) counters2 = false;
         if (r.countersOff) counters = false;
+        if (autoseq_step::wait_for_decode_end (m_contest.finishesQsoFirst, m_passOnDecodeLine)) { m_processAuto_done = false; return; }
       }
     }
   }
@@ -7987,7 +8017,9 @@ void MainWindow::process_Auto()
       if (!hisCall.isEmpty ()) {
         /* CE3TSK 2026-10-03: by the named levels (priorities.h) */
         namespace dp = decode_priority;
-        if (prio >= dp::NewField) StrPriority = " New Grid Field "; /* CE3TSK: WW Digi multiplier */
+        if (m_contest.prefixCountryMultipliers && prio >= dp::ContestCountry) StrPriority = " New DXCC on band ";   /* (TODO.md 3.-232) */
+        else if (m_contest.prefixCountryMultipliers && prio >= dp::ContestPrefix) StrPriority = " New prefix on band ";
+        else if (prio >= dp::NewField && (m_contest.fieldMultipliers || !m_contest.running)) StrPriority = " New Grid Field "; /* CE3TSK: WW Digi multiplier; ARRL Digi's points go past it */
         else if (prio > dp::ContestPointsBase + 1) StrPriority = QString {" Contest points %1 "}.arg ((prio - dp::ContestPointsBase) / 2);
         else if (prio >= dp::NewCQZBand) StrPriority = " New CQZ ";
         else if (prio >= dp::NewITUZBand) StrPriority = " New ITUZ ";
@@ -8496,7 +8528,9 @@ void MainWindow::readFromStdout()                             //readFromStdout
         {
         case rx_step::OnDecode::ProcessAuto:
           m_processAuto_done = true;
+          m_passOnDecodeLine = true;   // CE3TSK 2026-11-04: see autoseq_step::wait_for_decode_end ()
           process_Auto();
+          m_passOnDecodeLine = false;
           break;
         case rx_step::OnDecode::CallFirst73:
           m_callFirst73 = true;
@@ -9936,7 +9970,7 @@ void MainWindow::genStdMsgs(QString rpt)                       //genStdMsgs()
     ui->tx4->setText("");
     ui->tx5->setCurrentText("");
     ui->genMsg->setText("");
-    if(m_enableTx || m_transmitting || m_btxok || g_iptt==1) haltTx("WW Digi contest, station grid is not set ");
+    if(m_enableTx || m_transmitting || m_btxok || g_iptt==1) haltTx(QString {"%1 contest, station grid is not set "}.arg (m_config.special_op_name ().replace ('-', ' ')));
     return;
   }
 
@@ -10815,6 +10849,11 @@ void MainWindow::on_logQSOButton_clicked()
   /* CE3TSK 2026-10-05 (review): the box's distance belongs to the box's grid - when another is logged (the box held
      CALL3.TXT's, or was empty), the distance is worked out for the one logged, the DX panel's own way; it was dropped */
   if (hisGridLogged != m_hisGrid) distance = grid_distance_text (m_config.my_grid (), hisGridLogged, m_contest.gridExchange, m_config.miles ());
+  /* CE3TSK 2026-11-04 (TODO.md 3.-232): the comment's points. m_dxPoints comes from the distance, and is computed when the grid changes;
+     a contest whose points come from the call asks here, for the call being logged. A QSO with no grid scores nothing. */
+  int const pointsLogged = !m_contest.prefixCountryMultipliers ? m_dxPoints
+    : hisGridLogged.length () < 4 ? 0
+    : contest_qso::ybdxpi_points_of (*m_contestLog.countryData (), m_hisCall, m_config.my_callsign ());
   if (m_config.write_decoded_debug ()) {
     auto const shown = [] (QString const& s) { return s.isEmpty () ? QStringLiteral ("-") : s; };
     writeToALLTXT ("Log grid " + m_hisCall + ": box " + shown (m_hisGrid) + (m_hisGridFromCall3 ? " (CALL3.TXT, not logged)" : "")
@@ -10834,11 +10873,11 @@ void MainWindow::on_logQSOButton_clicked()
       rrep = log_exchange (rrep, m_rptRcvd, m_contest.running);
       if (srep.isEmpty()) srep=m_rptSent;
       m_logDlg->initLogQSO (m_hisCall, hisGridLogged, m_modeTx, srep, rrep, distance, m_name,
-                        currenttime, dateTimeQSOOff, m_freqNominal + ui->TxFreqSpinBox->value(),autolog,m_dxPoints);
+                        currenttime, dateTimeQSOOff, m_freqNominal + ui->TxFreqSpinBox->value(),autolog,pointsLogged);
   } else { 
       m_logDlg->initLogQSO (m_hisCall, hisGridLogged, m_modeTx, m_rptSent,
                         log_exchange (QString {}, m_rptRcvd, m_contest.running), distance, m_name,
-                        m_dateTimeQSOOn, dateTimeQSOOff, m_freqNominal + ui->TxFreqSpinBox->value(),autolog,m_dxPoints);
+                        m_dateTimeQSOOn, dateTimeQSOOff, m_freqNominal + ui->TxFreqSpinBox->value(),autolog,pointsLogged);
   }
   m_logqso73=false;
 }
@@ -11205,8 +11244,8 @@ void MainWindow::WSPR_config(bool b)
   ui->hintButton->setEnabled(!b); ui->AutoTxButton->setEnabled(!b && !m_contest.running); ui->AutoSeqButton->setEnabled(!b);
   /* CE3TSK: !m_contest.running on the single shot button only - every mode slot calls this, so
      switching FT8 to FT4 during a contest would otherwise hand back a control the contest
-     locked. bypass and AnsB4 are not part of the contest set and keep the stock behaviour. */
-  ui->bypassButton->setEnabled(!b); ui->singleQSOButton->setEnabled(!b && !m_contest.running); ui->AnsB4Button->setEnabled(!b);
+     locked; AnsB4 the same since 2026-11-04. bypass is not part of the contest set and keeps the stock behaviour. */
+  ui->bypassButton->setEnabled(!b); ui->singleQSOButton->setEnabled(!b && !m_contest.running); ui->AnsB4Button->setEnabled(!b && !m_contest.running);
   ui->syncButton->setEnabled(!b); ui->syncButton->setVisible(!b);
   if(b) {
     ui->decodedTextLabel->setTextFormat(Qt::PlainText); ui->decodedTextLabel->setText("UTC    dB   DT "+tr("    Freq     Drift  Call          Grid    dBm   Dist"));

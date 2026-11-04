@@ -1,4 +1,5 @@
 #include "displaytext.h"
+#include "contestpoints.h"   // CE3TSK 2026-11-04
 
 #include <algorithm>
 #include <QtGlobal>
@@ -460,6 +461,8 @@ int DisplayText::displayDecodedText(DecodedText* decodedText, QString myCall, QS
     unsigned c_time = 0;
     phantom_decodes::Verdict const& doubt = decodedText->verdict ();   /* CE3TSK 2026-09-30 */
     int cntryDoubtFrom = -1;
+    bool workedOnBand = false;   // CE3TSK 2026-11-04: asked of the log below, for a contest where that QSO scores nothing
+    bool newCountryOnBand = false, newPrefixOnBand = false;   // the same: the multipliers of a contest that has those
     if (!decodedText->isDebug() && app_mode != "WSPR-2") {
         c_time = decodedText->timeInSeconds();
         if (c_time != 0 && c_time != max_r_time) {
@@ -780,6 +783,9 @@ int DisplayText::displayDecodedText(DecodedText* decodedText, QString myCall, QS
                 } else {
                     logBook.matchCall(/*in*/ checkCall, /*out*/ countryName, callB4 ,callB4BandMode);
                 }
+                workedOnBand = callB4BandMode;
+                newCountryOnBand = !countryB4BandMode;
+                newPrefixOnBand = !pxB4BandMode;
             }
 
             if (anyTier_) {
@@ -833,7 +839,9 @@ int DisplayText::displayDecodedText(DecodedText* decodedText, QString myCall, QS
                    band look like everyday operation) and ranked equal, so between the two the
                    SNR tie-break decides. The two conditions carried identical bodies as separate
                    branches; a later fix to one would have left the other behind. */
-                if (contest_.fieldMultipliers && ((displayNewGrid_ && !gridB4)
+                /* (2026-11-04) a station already worked on the band in a field not worked there: a repeat scores nothing and brings no
+                   multiplier (contest_score::sum ()), so it does not head the chain. It may only be a phantom's wrong grid anyway. */
+                if (contest_.fieldMultipliers && !(contest_.workedRanksLast && workedOnBand) && ((displayNewGrid_ && !gridB4)
                                 || ((displayNewGridBand_ || displayNewGridBandMode_) && !gridB4BandMode))) {
                     if ((displayPotential_ && std_type == 3) || std_type != 3) {
                         forceBold = true;
@@ -1334,9 +1342,27 @@ int DisplayText::displayDecodedText(DecodedText* decodedText, QString myCall, QS
        wanted call and new call colours for the whole contest. This way the colour still
        comes from whichever tier matched and only the ranking changes. */
     int contestPts = 0;
-    if (specialOp_ != Configuration::SpecialOperatingActivity::NONE && !grid.isEmpty()) {
+    if (contest_.prefixCountryMultipliers) {
+        /* CE3TSK 2026-11-04 (TODO.md 3.-230): its points come from the call, so a line with no grid shows them too. The order the
+           operator chose: a new DXCC on the band, a new prefix on the band, the points, a repeat last. New overall is new on the band. */
+        if (!checkCall.isEmpty ()) {
+            if (countryName.isEmpty ()) logBook.getDXCC (checkCall, countryName);
+            QString myCountry;
+            logBook.getDXCC (myCall_, myCountry);   // (TODO.md 3.-232) the whole call, as the score asks: K1ABC/KH6 is in Hawaii, myCall is K1ABC
+            contestPts = contest_qso::ybdxpi_points (logBook.isContestMember (checkCall), myCountry, countryName);
+            if (workedOnBand) priority = lotw.isEmpty () ? dp::None : dp::LoTW;
+            else {
+                int pp = contestPts > 0 ? dp::ContestPointsBase + 2 * contestPts : 0;
+                if (newCountryOnBand && !contest_qso::country_key (countryName).isEmpty ()) pp = dp::ContestCountry;
+                else if (newPrefixOnBand) pp = dp::ContestPrefix;
+                if (pp > 0 && !lotw.isEmpty ()) pp += 1;
+                if (pp > priority) priority = pp;
+            }
+        }
+    } else if (specialOp_ != Configuration::SpecialOperatingActivity::NONE && !grid.isEmpty()) {
         contestPts = contest_points (specialOp_, grid_distance_km (myGrid_, grid, true));
-        if (contestPts > 0) {
+        /* (2026-11-04, the operator) a station already worked on the band: his points are shown, the rank alone falls, "simply because it was answered before" */
+        if (contestPts > 0 && !(contest_.workedRanksLast && workedOnBand)) {
             int const pp = dp::ContestPointsBase + 2 * contestPts + (lotw.isEmpty () ? 0 : 1);
             if (pp > priority) priority = pp;
         }
@@ -1359,6 +1385,7 @@ int DisplayText::displayDecodedText(DecodedText* decodedText, QString myCall, QS
                multi-slot sends two). */
             QsoHistory::Status step = status;
             if (step == QsoHistory::RCQ && decodedText->isHint () && qsoHistory.answeredIn (checkCall, c_time)) step = QsoHistory::NONE;
+            if (contest_.workedRanksLast && workedOnBand) qsoHistory.rankAsWorked (checkCall);   // CE3TSK 2026-11-04: logged since his last line
             qsoHistory.message(checkCall,step,priority,param,tyyp,countryName.left(2),mpx,c_time,decodedText->report(),decodedText->frequencyOffset(),checkMode,d,decodedText->isHint ());
         } 
         if (std_type == 2) {
@@ -1378,7 +1405,8 @@ int DisplayText::displayDecodedText(DecodedText* decodedText, QString myCall, QS
                appendText() inserts next: "CQ XQ3SK FF46  * 1p Chile". The separator is
                added only when the country string does not already carry one, since the
                country table's leading spacing is not uniform. */
-            QString p = contest_points_tag (contestPts);
+            /* (2026-11-04) as wide as the contest's largest score, the antipodes': ARRL Digi goes to 42 points */
+            QString p = contest_points_tag (contestPts, contest_points (specialOp_, 20400) > 9 ? 2 : 1);
             if (!cntry.isEmpty () && !cntry.startsWith (' ')) p += ' ';
             cntry = p + cntry;
             if (cntryDoubtFrom >= 0) cntryDoubtFrom += p.size ();   // CE3TSK: ?Chile? moved along

@@ -20,6 +20,7 @@
 #include <QByteArray>
 #include <QDir>
 #include "licensestates.h"   /* CE3TSK 2026-10-03 */
+#include "contestmembers.h"   /* CE3TSK 2026-11-04 */
 
 class CountryDat
 {
@@ -51,6 +52,10 @@ public:
   void loadLicenses (QString const& filename) {_licenses.load (filename);}
   QString licenseState (QString const& call) const {return _licenses.state (call);}
   int licenseCount () const {return _licenses.size ();}
+  /* CE3TSK 2026-11-04: the YBDXPI members, loaded beside the licences */
+  void loadMembers (QString const& filename) {_members.load (filename);}
+  bool isMember (QString const& call) const {return _members.contains (call);}
+  int memberCount () const {return _members.size ();}
    
 private:
   QString _extractName(const QString line);
@@ -67,6 +72,7 @@ private:
   QHash<QString, QString> _name;
   bool _translated = false;   /* CE3TSK: see tr() */
   LicenseStates _licenses;    /* CE3TSK 2026-10-03: see licenseState () */
+  ContestMembers _members;
 };
 
 #endif

@@ -6622,6 +6622,11 @@ To błąd samego dekodera. Usuń to, co uniemożliwia jego uruchomienie - brakuj
         <source>The transmission was stopped, as by Halt Tx. Check the antenna.</source>
         <translation>Nadawanie zostało przerwane, jak przyciskiem Przerwij Tx. Sprawdź antenę.</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Sum of the QSO points = score</source>
+        <translation>Suma punktów za QSO = wynik</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>
@@ -10444,6 +10449,26 @@ zmiany dla karty dźwiękowej</translation>
         <location filename="../Configuration.ui"/>
         <source>Download the latest CALL3.TXT from wsjt-x-improved.sourceforge.io, as WSJT-X does: the calls and grid squares behind the JT65 and JT9 Hint decoders and the Lookup button. The copy replaced is kept as CALL3_backup.TXT, with any calls added by Add. The decoder reads the new list at the program's next start.</source>
         <translation>Pobierz najnowszy CALL3.TXT z wsjt-x-improved.sourceforge.io, tak jak robi to WSJT-X: znaki wywoławcze i lokatory używane przez dekodery Hint dla JT65 i JT9 oraz przycisk Sprawdzanie. Zastąpiona kopia jest zachowywana jako CALL3_backup.TXT, razem ze znakami dodanymi przyciskiem Dodanie. Dekoder wczytuje nową listę przy następnym uruchomieniu programu.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;ARRL International Digital Contest. The exchange is the 4 character grid instead of a signal report. A QSO scores 1 point plus 1 for each started 500 km, a station counts once per band, and there are no multipliers.&lt;/p&gt;&lt;p&gt;While this is selected the grid highlighting below is off, new calls are highlighted per band, and neither can be changed by hand. Your own settings are restored when you switch back to None.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;ARRL International Digital Contest. Wymianą jest 4-znakowy lokator zamiast raportu sygnału. QSO jest warte 1 punkt plus 1 za każde rozpoczęte 500 km, stacja liczy się raz na pasmo i nie ma mnożników.&lt;/p&gt;&lt;p&gt;Gdy to jest wybrane, wyróżnianie lokatorów poniżej jest wyłączone, nowe znaki są wyróżniane według pasma i nie można tego zmienić ręcznie. Twoje własne ustawienia zostaną przywrócone po powrocie do Brak.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>YBDXPI FT8 contest</source>
+        <translation>Zawody YBDXPI FT8</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;YBDXPI FT8 contest, FT8 only. The exchange is the 4 character grid instead of a signal report. A QSO scores 5 points with a YBDXPI member, otherwise 1 in your own country, 2 on your continent and 3 on another. A station counts once per band. Each prefix and each DXCC country on each band is a multiplier.&lt;/p&gt;&lt;p&gt;While this is selected new calls, prefixes and countries are highlighted, overall and per band, the grid highlighting below is off, and none of it can be changed by hand. Your own settings are restored when you switch back to None.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Zawody YBDXPI FT8, tylko FT8. Wymianą jest 4-znakowy lokator zamiast raportu sygnału. QSO jest warte 5 punktów z członkiem YBDXPI, w przeciwnym razie 1 we własnym kraju, 2 na własnym kontynencie i 3 na innym. Stacja liczy się raz na pasmo. Każdy prefiks i każdy kraj DXCC na każdym paśmie jest mnożnikiem.&lt;/p&gt;&lt;p&gt;Gdy to jest wybrane, nowe znaki, prefiksy i kraje są wyróżniane ogółem i według pasma, wyróżnianie lokatorów poniżej jest wyłączone i nie można tego zmienić ręcznie. Twoje własne ustawienia zostaną przywrócone po powrocie do Brak.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Colors apply per contest, currently: %1. Own colors get applied again when contest mode is disabled.</source>
+        <translation>Kolory obowiązują dla każdych zawodów, teraz: %1. Własne kolory wracają po wyłączeniu trybu zawodów.</translation>
     </message>
 </context>
 <context>

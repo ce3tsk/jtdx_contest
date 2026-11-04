@@ -6621,6 +6621,11 @@ That is the decoder's own error. Put right whatever stops it starting - a missin
         <source>The transmission was stopped, as by Halt Tx. Check the antenna.</source>
         <translation>已像 終止發射 一樣停止發射。請檢查天線。</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Sum of the QSO points = score</source>
+        <translation>QSO 分數之和 = 總分</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>
@@ -10442,6 +10447,26 @@ soundcard changes</source>
         <location filename="../Configuration.ui"/>
         <source>Download the latest CALL3.TXT from wsjt-x-improved.sourceforge.io, as WSJT-X does: the calls and grid squares behind the JT65 and JT9 Hint decoders and the Lookup button. The copy replaced is kept as CALL3_backup.TXT, with any calls added by Add. The decoder reads the new list at the program's next start.</source>
         <translation>像 WSJT-X 一樣從 wsjt-x-improved.sourceforge.io 下載最新的 CALL3.TXT：JT65 和 JT9 的 增強解碼 解碼器以及 檢索 按鈕所用的呼號和網格。被替換的副本連同用 新增 加入的呼號保留為 CALL3_backup.TXT。解碼器在程式下次啟動時讀取新列表。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;ARRL International Digital Contest. The exchange is the 4 character grid instead of a signal report. A QSO scores 1 point plus 1 for each started 500 km, a station counts once per band, and there are no multipliers.&lt;/p&gt;&lt;p&gt;While this is selected the grid highlighting below is off, new calls are highlighted per band, and neither can be changed by hand. Your own settings are restored when you switch back to None.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;ARRL International Digital Contest。交換內容是 4 字符網格而不是信號報告。每個 QSO 得 1 分，每開始一個 500 km 再加 1 分，同一電台每個波段只計一次，沒有乘數。&lt;/p&gt;&lt;p&gt;選中此項期間，下面的網格高亮關閉，新呼號按波段高亮，且無法手動更改。切換回“無”時會恢復你自己的設置。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>YBDXPI FT8 contest</source>
+        <translation>YBDXPI FT8 競賽</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;YBDXPI FT8 contest, FT8 only. The exchange is the 4 character grid instead of a signal report. A QSO scores 5 points with a YBDXPI member, otherwise 1 in your own country, 2 on your continent and 3 on another. A station counts once per band. Each prefix and each DXCC country on each band is a multiplier.&lt;/p&gt;&lt;p&gt;While this is selected new calls, prefixes and countries are highlighted, overall and per band, the grid highlighting below is off, and none of it can be changed by hand. Your own settings are restored when you switch back to None.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;YBDXPI FT8 競賽，僅限 FT8。交換內容是 4 字符網格而不是信號報告。與 YBDXPI 會員的 QSO 得 5 分，否則本國 1 分、本大洲 2 分、其他大洲 3 分。同一電台每個波段只計一次。每個波段上的每個前綴和每個 DXCC 實體都是乘數。&lt;/p&gt;&lt;p&gt;選中此項期間，新呼號、前綴和實體按總體和波段高亮，下面的網格高亮關閉，且無法手動更改。切換回“無”時會恢復你自己的設置。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Colors apply per contest, currently: %1. Own colors get applied again when contest mode is disabled.</source>
+        <translation>顏色按競賽應用，當前：%1。關閉競賽模式後，將重新應用你自己的顏色。</translation>
     </message>
 </context>
 <context>

@@ -6631,6 +6631,11 @@ Aquest és l'error del descodificador mateix. Corregiu allò que n'impedeix l'in
         <source>The transmission was stopped, as by Halt Tx. Check the antenna.</source>
         <translation>La transmissió s'ha aturat, com amb Aturar TX. Comprova l'antena.</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Sum of the QSO points = score</source>
+        <translation>Suma dels punts de QSO = puntuació</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>
@@ -10456,6 +10461,26 @@ canvi en la targeta de so</translation>
         <location filename="../Configuration.ui"/>
         <source>Download the latest CALL3.TXT from wsjt-x-improved.sourceforge.io, as WSJT-X does: the calls and grid squares behind the JT65 and JT9 Hint decoders and the Lookup button. The copy replaced is kept as CALL3_backup.TXT, with any calls added by Add. The decoder reads the new list at the program's next start.</source>
         <translation>Descarrega el CALL3.TXT més recent de wsjt-x-improved.sourceforge.io, com fa WSJT-X: els indicatius i quadrícules que fan servir els descodificadors Suggerir de JT65 i JT9 i el botó Cercar. La còpia substituïda es conserva com a CALL3_backup.TXT, amb els indicatius afegits amb Afegir. El descodificador llegeix la llista nova en el pròxim inici del programa.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;ARRL International Digital Contest. The exchange is the 4 character grid instead of a signal report. A QSO scores 1 point plus 1 for each started 500 km, a station counts once per band, and there are no multipliers.&lt;/p&gt;&lt;p&gt;While this is selected the grid highlighting below is off, new calls are highlighted per band, and neither can be changed by hand. Your own settings are restored when you switch back to None.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;ARRL International Digital Contest. L'intercanvi és el localitzador de 4 caràcters en lloc d'un informe de senyal. Un QSO val 1 punt més 1 per cada 500 km començats, una estació compta una vegada per banda i no hi ha multiplicadors.&lt;/p&gt;&lt;p&gt;Mentre això estigui seleccionat, el ressaltat de localitzadors de sota està desactivat, els indicatius nous es ressalten per banda i res d'això es pot canviar a mà. La vostra configuració es restaura quan torneu a Cap.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>YBDXPI FT8 contest</source>
+        <translation>Concurs YBDXPI FT8</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;YBDXPI FT8 contest, FT8 only. The exchange is the 4 character grid instead of a signal report. A QSO scores 5 points with a YBDXPI member, otherwise 1 in your own country, 2 on your continent and 3 on another. A station counts once per band. Each prefix and each DXCC country on each band is a multiplier.&lt;/p&gt;&lt;p&gt;While this is selected new calls, prefixes and countries are highlighted, overall and per band, the grid highlighting below is off, and none of it can be changed by hand. Your own settings are restored when you switch back to None.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;YBDXPI FT8 contest, només FT8. L'intercanvi és el localitzador de 4 caràcters en lloc d'un informe de senyal. Un QSO val 5 punts amb un membre de YBDXPI; altrament 1 al vostre país, 2 al vostre continent i 3 en un altre. Una estació compta una vegada per banda. Cada prefix i cada país DXCC a cada banda és un multiplicador.&lt;/p&gt;&lt;p&gt;Mentre això estigui seleccionat, els indicatius, prefixos i països nous es ressalten en general i per banda, el ressaltat de localitzadors de sota està desactivat i res d'això es pot canviar a mà. La vostra configuració es restaura quan torneu a Cap.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Colors apply per contest, currently: %1. Own colors get applied again when contest mode is disabled.</source>
+        <translation>Els colors s'apliquen per concurs, ara: %1. Els colors propis es tornen a aplicar quan es desactiva el mode concurs.</translation>
     </message>
 </context>
 <context>

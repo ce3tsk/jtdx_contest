@@ -6626,6 +6626,11 @@ To je greška samog dekodera. Otklonite ono što ga sprječava da se pokrene - n
         <source>The transmission was stopped, as by Halt Tx. Check the antenna.</source>
         <translation>Predaja je zaustavljena, kao sa Zaustavi TX. Provjerite antenu.</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Sum of the QSO points = score</source>
+        <translation>Zbroj bodova QSO-a = rezultat</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>
@@ -10448,6 +10453,26 @@ promjena zvučne kartice</translation>
         <location filename="../Configuration.ui"/>
         <source>Download the latest CALL3.TXT from wsjt-x-improved.sourceforge.io, as WSJT-X does: the calls and grid squares behind the JT65 and JT9 Hint decoders and the Lookup button. The copy replaced is kept as CALL3_backup.TXT, with any calls added by Add. The decoder reads the new list at the program's next start.</source>
         <translation>Preuzmi najnoviji CALL3.TXT s wsjt-x-improved.sourceforge.io, kao što to radi WSJT-X: pozivne znakove i lokatorska polja na kojima se temelje dekoderi Savjet za JT65 i JT9 te gumb Potraži. Zamijenjena kopija čuva se kao CALL3_backup.TXT, s pozivnim znakovima dodanima pomoću Dodaj. Dekoder čita novi popis pri sljedećem pokretanju programa.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;ARRL International Digital Contest. The exchange is the 4 character grid instead of a signal report. A QSO scores 1 point plus 1 for each started 500 km, a station counts once per band, and there are no multipliers.&lt;/p&gt;&lt;p&gt;While this is selected the grid highlighting below is off, new calls are highlighted per band, and neither can be changed by hand. Your own settings are restored when you switch back to None.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;ARRL International Digital Contest. Razmjena je lokator od 4 znaka umjesto izvješća o signalu. QSO vrijedi 1 bod plus 1 za svakih započetih 500 km, stanica se računa jednom po pojasu, a množitelja nema.&lt;/p&gt;&lt;p&gt;Dok je ovo odabrano, isticanje lokatora ispod je isključeno, novi pozivni znakovi ističu se po pojasu i ništa od toga ne može se mijenjati ručno. Vaše vlastite postavke vraćaju se kada se vratite na Ništa.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>YBDXPI FT8 contest</source>
+        <translation>YBDXPI FT8 natjecanje</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;YBDXPI FT8 contest, FT8 only. The exchange is the 4 character grid instead of a signal report. A QSO scores 5 points with a YBDXPI member, otherwise 1 in your own country, 2 on your continent and 3 on another. A station counts once per band. Each prefix and each DXCC country on each band is a multiplier.&lt;/p&gt;&lt;p&gt;While this is selected new calls, prefixes and countries are highlighted, overall and per band, the grid highlighting below is off, and none of it can be changed by hand. Your own settings are restored when you switch back to None.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;YBDXPI FT8 natjecanje, samo FT8. Razmjena je lokator od 4 znaka umjesto izvješća o signalu. QSO vrijedi 5 bodova s članom YBDXPI-ja, inače 1 u vašoj zemlji, 2 na vašem kontinentu i 3 na drugome. Stanica se računa jednom po pojasu. Svaki prefiks i svaka DXCC zemlja na svakom pojasu je množitelj.&lt;/p&gt;&lt;p&gt;Dok je ovo odabrano, novi pozivni znakovi, prefiksi i zemlje ističu se ukupno i po pojasu, isticanje lokatora ispod je isključeno i ništa od toga ne može se mijenjati ručno. Vaše vlastite postavke vraćaju se kada se vratite na Ništa.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Colors apply per contest, currently: %1. Own colors get applied again when contest mode is disabled.</source>
+        <translation>Boje vrijede po natjecanju, trenutno: %1. Vlastite boje ponovno se primjenjuju kada se način natjecanja isključi.</translation>
     </message>
 </context>
 <context>

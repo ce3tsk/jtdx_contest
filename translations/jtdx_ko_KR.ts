@@ -6622,6 +6622,11 @@ That is the decoder's own error. Put right whatever stops it starting - a missin
         <source>The transmission was stopped, as by Halt Tx. Check the antenna.</source>
         <translation>송신 중지처럼 송신을 멈췄습니다. 안테나를 확인하십시오.</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Sum of the QSO points = score</source>
+        <translation>QSO 점수의 합 = 총점</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>
@@ -10440,6 +10445,26 @@ soundcard changes</source>
         <location filename="../Configuration.ui"/>
         <source>Download the latest CALL3.TXT from wsjt-x-improved.sourceforge.io, as WSJT-X does: the calls and grid squares behind the JT65 and JT9 Hint decoders and the Lookup button. The copy replaced is kept as CALL3_backup.TXT, with any calls added by Add. The decoder reads the new list at the program's next start.</source>
         <translation>WSJT-X처럼 wsjt-x-improved.sourceforge.io에서 최신 CALL3.TXT를 내려받습니다: JT65와 JT9의 힌트 디코더와 조회 버튼이 사용하는 호출부호와 그리드 로케이터입니다. 교체된 사본은 추가로 넣은 호출부호와 함께 CALL3_backup.TXT로 보관됩니다. 디코더는 다음 프로그램 시작 때 새 목록을 읽습니다.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;ARRL International Digital Contest. The exchange is the 4 character grid instead of a signal report. A QSO scores 1 point plus 1 for each started 500 km, a station counts once per band, and there are no multipliers.&lt;/p&gt;&lt;p&gt;While this is selected the grid highlighting below is off, new calls are highlighted per band, and neither can be changed by hand. Your own settings are restored when you switch back to None.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;ARRL International Digital Contest입니다. 리포트 대신 4자 그리드를 교환합니다. QSO는 1점에 시작된 500 km마다 1점을 더하며, 같은 국은 밴드당 한 번만 계산되고 멀티플라이어는 없습니다.&lt;/p&gt;&lt;p&gt;이 항목이 선택된 동안 아래의 그리드 강조는 꺼지고 새 콜사인은 밴드별로 강조되며, 직접 바꿀 수 없습니다. 없음으로 되돌리면 원래 설정이 복원됩니다.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>YBDXPI FT8 contest</source>
+        <translation>YBDXPI FT8 콘테스트</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;YBDXPI FT8 contest, FT8 only. The exchange is the 4 character grid instead of a signal report. A QSO scores 5 points with a YBDXPI member, otherwise 1 in your own country, 2 on your continent and 3 on another. A station counts once per band. Each prefix and each DXCC country on each band is a multiplier.&lt;/p&gt;&lt;p&gt;While this is selected new calls, prefixes and countries are highlighted, overall and per band, the grid highlighting below is off, and none of it can be changed by hand. Your own settings are restored when you switch back to None.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;YBDXPI FT8 콘테스트입니다. FT8만 사용합니다. 리포트 대신 4자 그리드를 교환합니다. QSO는 YBDXPI 회원과 5점, 그 외에는 같은 나라 1점, 같은 대륙 2점, 다른 대륙 3점이며, 같은 국은 밴드당 한 번만 계산됩니다. 밴드마다 각 프리픽스와 각 DXCC 국가가 멀티플라이어입니다.&lt;/p&gt;&lt;p&gt;이 항목이 선택된 동안 새 콜사인, 프리픽스, 국가가 전체 및 밴드별로 강조되고 아래의 그리드 강조는 꺼지며, 직접 바꿀 수 없습니다. 없음으로 되돌리면 원래 설정이 복원됩니다.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Colors apply per contest, currently: %1. Own colors get applied again when contest mode is disabled.</source>
+        <translation>색상은 콘테스트별로 적용됩니다. 현재: %1. 콘테스트 모드를 끄면 내 색상이 다시 적용됩니다.</translation>
     </message>
 </context>
 <context>

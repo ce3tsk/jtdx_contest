@@ -6621,6 +6621,11 @@ Dekoders: %3
         <source>The transmission was stopped, as by Halt Tx. Check the antenna.</source>
         <translation>Raidīšana tika apturēta kā ar Pārtraukt Tx. Pārbaudiet antenu.</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Sum of the QSO points = score</source>
+        <translation>QSO punktu summa = rezultāts</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>
@@ -10441,6 +10446,26 @@ izmaiņas</translation>
         <location filename="../Configuration.ui"/>
         <source>Download the latest CALL3.TXT from wsjt-x-improved.sourceforge.io, as WSJT-X does: the calls and grid squares behind the JT65 and JT9 Hint decoders and the Lookup button. The copy replaced is kept as CALL3_backup.TXT, with any calls added by Add. The decoder reads the new list at the program's next start.</source>
         <translation>Lejupielādēt jaunāko CALL3.TXT no wsjt-x-improved.sourceforge.io, kā to dara WSJT-X: izsaukuma signāli un lokatoru kvadrāti, ko izmanto JT65 un JT9 Hint dekoderi un poga Meklēt. Aizstātā kopija tiek saglabāta kā CALL3_backup.TXT kopā ar izsaukuma signāliem, kas pievienoti ar Pievienot. Dekoderis nolasa jauno sarakstu nākamajā programmas palaišanā.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;ARRL International Digital Contest. The exchange is the 4 character grid instead of a signal report. A QSO scores 1 point plus 1 for each started 500 km, a station counts once per band, and there are no multipliers.&lt;/p&gt;&lt;p&gt;While this is selected the grid highlighting below is off, new calls are highlighted per band, and neither can be changed by hand. Your own settings are restored when you switch back to None.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;ARRL International Digital Contest. Apmaiņā tiek nodots 4 rakstzīmju lokators nevis signāla ziņojums. QSO dod 1 punktu un vēl 1 par katriem iesāktiem 500 km, stacija tiek skaitīta vienreiz katrā joslā, un reizinātāju nav.&lt;/p&gt;&lt;p&gt;Kamēr šis ir izvēlēts, zemāk esošā lokatoru izcelšana ir izslēgta, jaunie izsaukuma signāli tiek izcelti pa joslām, un to nevar mainīt ar roku. Jūsu pašu iestatījumi tiek atjaunoti, kad atgriežaties pie Nav.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>YBDXPI FT8 contest</source>
+        <translation>YBDXPI FT8 sacensības</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;YBDXPI FT8 contest, FT8 only. The exchange is the 4 character grid instead of a signal report. A QSO scores 5 points with a YBDXPI member, otherwise 1 in your own country, 2 on your continent and 3 on another. A station counts once per band. Each prefix and each DXCC country on each band is a multiplier.&lt;/p&gt;&lt;p&gt;While this is selected new calls, prefixes and countries are highlighted, overall and per band, the grid highlighting below is off, and none of it can be changed by hand. Your own settings are restored when you switch back to None.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;YBDXPI FT8 sacensības, tikai FT8. Apmaiņā tiek nodots 4 rakstzīmju lokators nevis signāla ziņojums. QSO dod 5 punktus ar YBDXPI biedru, citādi 1 savā valstī, 2 savā kontinentā un 3 citā. Stacija tiek skaitīta vienreiz katrā joslā. Katrs prefikss un katra DXCC valsts katrā joslā ir reizinātājs.&lt;/p&gt;&lt;p&gt;Kamēr šis ir izvēlēts, jaunie izsaukuma signāli, prefiksi un valstis tiek izcelti kopumā un pa joslām, zemāk esošā lokatoru izcelšana ir izslēgta, un to nevar mainīt ar roku. Jūsu pašu iestatījumi tiek atjaunoti, kad atgriežaties pie Nav.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Colors apply per contest, currently: %1. Own colors get applied again when contest mode is disabled.</source>
+        <translation>Krāsas attiecas uz katrām sacensībām, pašlaik: %1. Savas krāsas atkal tiek lietotas, kad sacensību režīms tiek izslēgts.</translation>
     </message>
 </context>
 <context>

@@ -127,6 +127,8 @@
 // settings database.
 //
 
+#include <vector>
+#include <QMap>
 #include <QSortFilterProxyModel>
 #include <QPainter>
 #include <stdexcept>
@@ -480,6 +482,34 @@ private:
      next_color_X_) still name all 34 by hand - a colour added here must be added there too. */
   struct ColorSlot { char const * key; QColor impl::* live; QColor impl::* next; };
   static ColorSlot const color_slots[];   // NOT "slots": Qt's moc macro expands it away
+  /* CE3TSK 2026-11-04 (TODO.md 3.-233): every contest has a set of its own, which starts at the recommended colours; the members hold
+     the set in use. The operator's everyday set stays under the keys it always had and comes back on leaving the contest, so a colour
+     edited in a contest stays with that contest. Staged like its frequency list: the dialog shows the set of the activity chosen in
+     it, and the one it showed stays staged until OK or Cancel. A contest's keys hold only what differs from the recommended. */
+  using ColorSet = QVector<QColor>;   // in the order of color_slots[]
+  ColorSet live_colors () const;
+  ColorSet staged_colors () const;
+  void stage_colors (ColorSet const&);
+  void read_contest_colors ();
+  void write_contest_colors ();
+  void show_colors_of (SpecialOperatingActivity);
+  static QString contest_color_key (SpecialOperatingActivity activity, char const * key)
+  {
+    return contest_profile::own_key (QString {"ContestColors%1/%2"}.arg (int (activity)).arg (key));
+  }
+  QMap<int, ColorSet> color_sets_;        // committed, by activity: None is the everyday set
+  QMap<int, ColorSet> next_color_sets_;   // the dialog's
+  SpecialOperatingActivity next_colors_shown_ = SpecialOperatingActivity::NONE;
+  QString contest_colors_note_;
+  QRadioButton * contest_radio (SpecialOperatingActivity activity) const
+  {
+    switch (activity)
+      {
+      case SpecialOperatingActivity::ARRL_DIGI: return ui_->rbSpecialOpARRLDigi;
+      case SpecialOperatingActivity::YBDXPI: return ui_->rbSpecialOpYBDXPI;
+      default: return ui_->rbSpecialOpWWDigi;
+      }
+  }
   /* CE3TSK 2026-10-04 (review): the six phantom-decode options and the suffixes of their keys - one table for
      read_settings and write_settings, which used to spell the six out three times */
   struct PhantomOption { char const * name; bool impl::* member; QCheckBox * Ui::configuration_dialog::* box; };
@@ -546,8 +576,28 @@ private:
   void save_contest_frequencies ();
   void merge_contest_frequencies ();
   void reset_contest_frequencies ();
-  static FrequencyList_v2::FrequencyItems ft_only (FrequencyList_v2::FrequencyItems const&);
+  static FrequencyList_v2::FrequencyItems ft_only (FrequencyList_v2::FrequencyItems const&, bool ft8Only = false);
   static FrequencyList_v2::FrequencyItems contest_default_frequencies (SpecialOperatingActivity);
+  /* CE3TSK 2026-11-04 (TODO.md 3.-227): each contest keeps its own working frequencies - ARRL Digi has 6 m and another 160 m, and one
+     list edited for one contest would be wrong for the next. contest_frequencies_ is the list of the contest running, or of the first
+     when none is, and every other committed list waits in contest_lists_; the dialog stages all of them. */
+  static std::vector<SpecialOperatingActivity> contests_offered ()
+  {
+    return {SpecialOperatingActivity::WW_DIGI, SpecialOperatingActivity::ARRL_DIGI, SpecialOperatingActivity::YBDXPI};
+  }
+  static QString contest_frequencies_key (SpecialOperatingActivity activity)   // WW Digi keeps the key every earlier version wrote
+  {
+    return SpecialOperatingActivity::WW_DIGI == activity ? QString {"ContestFrequencies"}
+                                                         : QString {"ContestFrequencies%1"}.arg (int (activity));
+  }
+  static SpecialOperatingActivity listed_contest (SpecialOperatingActivity activity)
+  {
+    return contest_rules_of (activity).running ? activity : SpecialOperatingActivity::WW_DIGI;
+  }
+  void show_contest_frequencies (SpecialOperatingActivity);
+  QMap<int, FrequencyList_v2::FrequencyItems> contest_lists_;
+  QMap<int, FrequencyList_v2::FrequencyItems> next_contest_lists_;
+  SpecialOperatingActivity next_contest_shown_ {SpecialOperatingActivity::WW_DIGI};
   void set_contest_default_frequencies ();
   /* CE3TSK 2026-09-22: mark or unmark the selected rows of either table as default (the "*"); the band
      buttons show the default rows, and best_working_frequency() goes by them */
@@ -628,6 +678,8 @@ private:
   Q_SLOT void on_workedDontShow_check_box_clicked(bool checked);
   Q_SLOT void on_rbSpecialOpNone_toggled(bool checked);   /* CE3TSK */
   Q_SLOT void on_rbSpecialOpWWDigi_toggled(bool checked); /* CE3TSK */
+  Q_SLOT void on_rbSpecialOpARRLDigi_toggled(bool checked); /* CE3TSK 2026-11-04 */
+  Q_SLOT void on_rbSpecialOpYBDXPI_toggled(bool checked);   /* CE3TSK 2026-11-04 */
   Q_SLOT void on_newPotential_check_box_clicked(bool checked);
 
   Q_SLOT void on_eqsluser_edit_textEdited(const QString &arg1);
@@ -1040,6 +1092,15 @@ private:
        move the radio to a frequency the contest list does not contain. */
     bool beepOnNewPx = false;
     bool usesched = false;
+    /* CE3TSK 2026-11-04 (TODO.md 3.-232): the Sequencing counters, each its box and its number (the table counters[]) */
+    bool answerCQCount = true;
+    bool answerInCallCount = true;
+    bool sentRReportCount = true;
+    bool sentRR7373Count = true;
+    int answerCQCounter = 4;
+    int answerInCallCounter = 4;
+    int sentRReportCounter = 5;
+    int sentRR7373Counter = 4;
   };
   SpecialOperatingActivity specialOp_;
   SpecialOpSettings savedSpecialOp_;
@@ -1080,7 +1141,39 @@ private:
     QLabel * Ui::configuration_dialog::* samples[6];   // the previews: plain, Mc, Sc, and the same per band
   };
   static Tier const tiers[];
+  /* CE3TSK 2026-11-04 (TODO.md 3.-232): the four Settings > Sequencing counters, one row each, and every routine walks the rows. A
+     contest holds each one on at the program's default number, greyed, and parks the operator's own box and number: every step of a
+     QSO has its limit, and the score cannot depend on a counter left off (the operator, 2026-11-04). A profile already in a contest
+     when a build first does this: read_settings parks what it finds and forces them. */
+  struct SequenceCounter
+  {
+    QCheckBox * Ui::configuration_dialog::* box;
+    QSpinBox * Ui::configuration_dialog::* number;
+    bool impl::* on;
+    qint32 impl::* value;
+    bool SpecialOpSettings::* parked_on;
+    int SpecialOpSettings::* parked_value;
+    char const * parked_on_key;      // both under JTDX_contest\ (contest_profile::own_key)
+    char const * parked_value_key;
+    int contest_value;
+  };
+  static SequenceCounter const counters[];
+  void force_counters ();
   void cascade (Tier const&, bool on);      // the tier ticked or unticked: its children follow - what a click does
+  /* CE3TSK 2026-11-04 (TODO.md 3.-227): what a contest does to a box. tiers[] says what WW Digi forces; a contest with no field
+     multipliers has no use for the new-grid tier: a new grid scores nothing there, so tier and children are off. Its beep stays
+     as it is, like WW Digi's: accept () keeps it, see there. */
+  Forced forced (Tier const& t, TierBox const& o, SpecialOperatingActivity activity) const
+  {
+    if (&Ui::configuration_dialog::newGrid_check_box == t.self.box && Forced::Free != o.contest && !contest_rules_of (activity).fieldMultipliers)
+      return Forced::Off;
+    /* a contest whose multipliers are the prefix and the country: those tiers on with per band, new on the band being the multiplier; per
+       band and mode off, FT8 alone; their beeps stay off and parked, as in the other contests */
+    if ((&Ui::configuration_dialog::newPx_check_box == t.self.box || &Ui::configuration_dialog::newDXCC_check_box == t.self.box)
+        && contest_rules_of (activity).prefixCountryMultipliers)
+      return (&o == &t.self || &o == &t.band) ? Forced::On : Forced::Off;
+    return o.contest;
+  }
   SpecialOpSettings own_settings () const;  // the operator's own set, as the members hold it
   void set_own_settings (SpecialOpSettings const&);   // and that set back into the members
   static QString tier_key (char const * key, bool ours) {return ours ? contest_profile::own_key (key) : QString {key};}
@@ -1183,6 +1276,23 @@ Configuration::impl::PhantomOption const Configuration::impl::phantom_options[] 
   {"PortableMark",  &impl::phantomDecodePortableMark_, &Ui::configuration_dialog::phantomDecodePortableMark_check_box},
   {"WhereMark",     &impl::phantomDecodeWhereMark_, &Ui::configuration_dialog::phantomDecodeWhereMark_check_box},
 };
+
+/* CE3TSK 2026-11-04 (TODO.md 3.-232): see SequenceCounter */
+Configuration::impl::SequenceCounter const Configuration::impl::counters[] = {
+  {&Ui::configuration_dialog::answerCQCount_checkBox, &Ui::configuration_dialog::sbAnswerCQCounter, &impl::answerCQCount_, &impl::nAnswerCQCounter_,
+   &SpecialOpSettings::answerCQCount, &SpecialOpSettings::answerCQCounter, "SpecialOpSavedSeqAnswerCQCount", "SpecialOpSavedSeqAnswerCQCounterValue", 4},
+  {&Ui::configuration_dialog::answerInCallCount_checkBox, &Ui::configuration_dialog::sbAnswerInCallCounter, &impl::answerInCallCount_, &impl::nAnswerInCallCounter_,
+   &SpecialOpSettings::answerInCallCount, &SpecialOpSettings::answerInCallCounter, "SpecialOpSavedSeqAnswerInCallCount", "SpecialOpSavedSeqAnswerInCallCounterValue", 4},
+  {&Ui::configuration_dialog::sentRReportCount_checkBox, &Ui::configuration_dialog::sbSentRReportCounter, &impl::sentRReportCount_, &impl::nSentRReportCounter_,
+   &SpecialOpSettings::sentRReportCount, &SpecialOpSettings::sentRReportCounter, "SpecialOpSavedSeqSentRReportCount", "SpecialOpSavedSeqSentRReportCounterValue", 5},
+  {&Ui::configuration_dialog::sentRR7373Count_checkBox, &Ui::configuration_dialog::sbSentRR7373Counter, &impl::sentRR7373Count_, &impl::nSentRR7373Counter_,
+   &SpecialOpSettings::sentRR7373Count, &SpecialOpSettings::sentRR7373Counter, "SpecialOpSavedSeqSentRR7373Count", "SpecialOpSavedSeqSentRR7373CounterValue", 4},
+};
+
+void Configuration::impl::force_counters ()
+{
+  for (auto const& c : counters) {this->*c.on = true; this->*c.value = c.contest_value;}
+}
 
 /* CE3TSK 2026-10-04 (review item 9): see Tier. Columns: box, live, staged, parked, key, parked key, ours, fallback,
    what WW Digi forces. */
@@ -1501,12 +1611,13 @@ QString Configuration::special_op_name () const
   switch (m_->specialOp_)
     {
     case SpecialOperatingActivity::WW_DIGI: return QString {"WW-Digi"};
+    case SpecialOperatingActivity::ARRL_DIGI: return QString {"ARRL-Digi"};
+    case SpecialOperatingActivity::YBDXPI: return QString {"YBDXPI-FT8"};
     case SpecialOperatingActivity::NONE:
     case SpecialOperatingActivity::NA_VHF:
     case SpecialOperatingActivity::EU_VHF:
     case SpecialOperatingActivity::FIELD_DAY:
-    case SpecialOperatingActivity::RTTY:
-    case SpecialOperatingActivity::ARRL_DIGI: break;
+    case SpecialOperatingActivity::RTTY: break;
     }
   return QString {};
 }
@@ -1519,12 +1630,13 @@ QString Configuration::special_op_cq_direction () const
   switch (m_->specialOp_)
     {
     case SpecialOperatingActivity::WW_DIGI: return QString {"WW"};
+    case SpecialOperatingActivity::ARRL_DIGI: return QString {"TEST"};   // the rules' own example: "CQ TEST N1SFE FN31"
+    case SpecialOperatingActivity::YBDXPI: return QString {"WW"};   // the rules name no word; their guide puts participants in WSJT-X's WW Digi mode
     case SpecialOperatingActivity::NONE:
     case SpecialOperatingActivity::NA_VHF:
     case SpecialOperatingActivity::EU_VHF:
     case SpecialOperatingActivity::FIELD_DAY:
-    case SpecialOperatingActivity::RTTY:
-    case SpecialOperatingActivity::ARRL_DIGI: break;
+    case SpecialOperatingActivity::RTTY: break;
     }
   return QString {};
 }
@@ -1536,12 +1648,13 @@ contest_rules::Rules contest_rules_of (Configuration::SpecialOperatingActivity a
   switch (activity)
     {
     case Configuration::SpecialOperatingActivity::WW_DIGI: return contest_rules::ww_digi ();
+    case Configuration::SpecialOperatingActivity::ARRL_DIGI: return contest_rules::arrl_digi ();
+    case Configuration::SpecialOperatingActivity::YBDXPI: return contest_rules::ybdxpi ();
     case Configuration::SpecialOperatingActivity::NONE:
     case Configuration::SpecialOperatingActivity::NA_VHF:
     case Configuration::SpecialOperatingActivity::EU_VHF:
     case Configuration::SpecialOperatingActivity::FIELD_DAY:
-    case Configuration::SpecialOperatingActivity::RTTY:
-    case Configuration::SpecialOperatingActivity::ARRL_DIGI: break;
+    case Configuration::SpecialOperatingActivity::RTTY: break;
     }
   return {};
 }
@@ -1557,19 +1670,22 @@ int contest_points (Configuration::SpecialOperatingActivity activity, int distan
   switch (activity)
     {
     case Configuration::SpecialOperatingActivity::WW_DIGI: return 1 + distanceKm / 3000;
+    /* CE3TSK 2026-11-04: rule 5.1 and 5.2: one point, plus one for each 500 km rounded up, and at least one for the distance:
+       1,565 km is 1 + 4 = 5, under 500 km is 1 + 1 = 2, and the antipodes' 20400 km are 42 */
+    case Configuration::SpecialOperatingActivity::ARRL_DIGI: return 1 + qMax (1, (distanceKm + 499) / 500);
+    case Configuration::SpecialOperatingActivity::YBDXPI: return 0;   // from the call, not the distance: contestpoints.h
     case Configuration::SpecialOperatingActivity::NONE:
     case Configuration::SpecialOperatingActivity::NA_VHF:
     case Configuration::SpecialOperatingActivity::EU_VHF:
     case Configuration::SpecialOperatingActivity::FIELD_DAY:
-    case Configuration::SpecialOperatingActivity::RTTY:
-    case Configuration::SpecialOperatingActivity::ARRL_DIGI: break;
+    case Configuration::SpecialOperatingActivity::RTTY: break;
     }
   return 0;
 }
 
-QString contest_points_tag (int points)
+QString contest_points_tag (int points, int digits)
 {
-  return points > 0 ? QString {" %1p"}.arg (points) : QString {" --"};
+  return points > 0 ? QString {" %1p"}.arg (points, digits) : QString {" "} + QString {"--"}.rightJustified (digits + 1);
 }
 
 int Configuration::special_op_points (int distanceKm) const
@@ -1602,12 +1718,13 @@ QString contest_log_slug (Configuration::SpecialOperatingActivity activity)
   switch (activity)
     {
     case Configuration::SpecialOperatingActivity::WW_DIGI: return QString {"ww-digi"};
+    case Configuration::SpecialOperatingActivity::ARRL_DIGI: return QString {"arrl-digi"};
+    case Configuration::SpecialOperatingActivity::YBDXPI: return QString {"ybdxpi"};
     case Configuration::SpecialOperatingActivity::NONE:
     case Configuration::SpecialOperatingActivity::NA_VHF:
     case Configuration::SpecialOperatingActivity::EU_VHF:
     case Configuration::SpecialOperatingActivity::FIELD_DAY:
-    case Configuration::SpecialOperatingActivity::RTTY:
-    case Configuration::SpecialOperatingActivity::ARRL_DIGI: break;
+    case Configuration::SpecialOperatingActivity::RTTY: break;
     }
   return QString {};
 }
@@ -1625,13 +1742,14 @@ QString contest_period (Configuration::SpecialOperatingActivity activity, QDateT
   switch (activity)
     {
     case Configuration::SpecialOperatingActivity::WW_DIGI:
+    case Configuration::SpecialOperatingActivity::ARRL_DIGI:   // the first full weekend of June
+    case Configuration::SpecialOperatingActivity::YBDXPI:      // the first week of November
       return QString::number (utc.date ().year ());
     case Configuration::SpecialOperatingActivity::NONE:
     case Configuration::SpecialOperatingActivity::NA_VHF:
     case Configuration::SpecialOperatingActivity::EU_VHF:
     case Configuration::SpecialOperatingActivity::FIELD_DAY:
-    case Configuration::SpecialOperatingActivity::RTTY:
-    case Configuration::SpecialOperatingActivity::ARRL_DIGI: break;
+    case Configuration::SpecialOperatingActivity::RTTY: break;
     }
   return QString {};
 }
@@ -2022,6 +2140,7 @@ Configuration::impl::impl (Configuration * self, QNetworkAccessManager * network
   , default_audio_output_device_selected_ {false}
 {
   ui_->setupUi (this);
+  contest_colors_note_ = ui_->labContestColors->text ();   // CE3TSK 2026-11-04 (TODO.md 3.-233): translated, its %1 still in it
   /* CE3TSK 2026-10-19 (TODO.md 3.-144): every page in a scroll area, so the dialog fits a small screen (settingsfit.h);
      a page is found by settings_fit::page_index () now - QTabWidget::indexOf () knows only the scroll areas */
   settings_fit::scroll_pages (ui_->configuration_tabs);
@@ -2478,6 +2597,11 @@ Radio::convert_dark("#abafe5",useDarkStyle_),Radio::convert_dark("#8588b2",useDa
 Radio::convert_dark("#6a6ea9",useDarkStyle_),Radio::convert_dark("#888dd9",useDarkStyle_),
 Radio::convert_dark("#fafbfe",useDarkStyle_),Radio::convert_dark("#dcdef1",useDarkStyle_)));
   ui_->save_path_display_label->setStyleSheet(QString("background-color: %1").arg(Radio::convert_dark("#ffffff",useDarkStyle_)));
+  /* CE3TSK 2026-11-04 (TODO.md 3.-233): the colours from the set in use. Before the radio buttons below, whose slots then find nothing
+     to change. A colour edited and cancelled used to stay staged, and a later OK committed it. */
+  stage_colors (live_colors ());
+  next_color_sets_ = color_sets_;
+  next_colors_shown_ = specialOp_;
   next_txtColor_ = txtColor_;
   next_workedColor_ = workedColor_;
   next_workedStriked_ = workedStriked_;
@@ -2697,6 +2821,8 @@ Radio::convert_dark("#fafbfe",useDarkStyle_),Radio::convert_dark("#dcdef1",useDa
   }
   next_frequencies_.frequency_list (frequencies_.frequency_list ());
   next_contest_frequencies_.frequency_list (contest_frequencies_.frequency_list ());   /* CE3TSK */
+  next_contest_lists_ = contest_lists_;   /* CE3TSK 2026-11-04 */
+  next_contest_shown_ = listed_contest (specialOp_);
   ui_->UseSched_check_box->setChecked (usesched_);
   ui_->hhComboBox_1->setCurrentText (sched_hh_1_);
   ui_->mmComboBox_1->setCurrentText (sched_mm_1_);
@@ -2758,6 +2884,8 @@ Radio::convert_dark("#fafbfe",useDarkStyle_),Radio::convert_dark("#dcdef1",useDa
   dlgEntrySpecialOp_ = specialOpSaved_ ? savedSpecialOp_ : own_settings ();
   switch (specialOp_) {
     case SpecialOperatingActivity::WW_DIGI: ui_->rbSpecialOpWWDigi->setChecked (true); break;
+    case SpecialOperatingActivity::ARRL_DIGI: ui_->rbSpecialOpARRLDigi->setChecked (true); break;
+    case SpecialOperatingActivity::YBDXPI: ui_->rbSpecialOpYBDXPI->setChecked (true); break;
     default: ui_->rbSpecialOpNone->setChecked (true); break;
   }
   next_specialOp_ = specialOp_;
@@ -2895,6 +3023,7 @@ void Configuration::impl::read_settings ()
       }
     return recommended;
   };
+  color_sets_.clear ();   // CE3TSK 2026-11-04 (TODO.md 3.-233): read_contest_colors () below, once the contest is known
   for (auto const& c : color_slots)
     {
       this->*(c.live) = this->*(c.next) = QColor {own_setting (c.key, recommended_color (c.key)).toString ()};
@@ -3221,19 +3350,20 @@ void Configuration::impl::read_settings ()
      the band selector: six FT8 and six FT4 rows, not every FT row of the everyday list.
      The everyday FT8/FT4 rows remain the fallback should that list ever be empty. After
      that it is the operator's to edit, and it persists separately. */
-  {
-    auto const cv = settings_->value ("ContestFrequencies");
-    if (cv.isValid () && cv.canConvert<FrequencyList_v2::FrequencyItems> ())
-      {
-        contest_frequencies_.frequency_list (cv.value<FrequencyList_v2::FrequencyItems> ());
-      }
-    else
-      {
-        auto seed = contest_default_frequencies (SpecialOperatingActivity::WW_DIGI);
-        if (seed.isEmpty ()) seed = ft_only (frequencies_.frequency_list ());
-        contest_frequencies_.frequency_list (seed);
-      }
-  }
+  for (auto const activity : contests_offered ())   /* CE3TSK 2026-11-04: each its own, the live one chosen below, once the activity is read */
+    {
+      auto const cv = settings_->value (contest_frequencies_key (activity));
+      if (cv.isValid () && cv.canConvert<FrequencyList_v2::FrequencyItems> ())
+        {
+          contest_lists_[int (activity)] = cv.value<FrequencyList_v2::FrequencyItems> ();
+        }
+      else
+        {
+          auto seed = contest_default_frequencies (activity);
+          if (seed.isEmpty ()) seed = ft_only (frequencies_.frequency_list ());
+          contest_lists_[int (activity)] = seed;
+        }
+    }
 
   stations_.station_list (settings_->value ("stations").value<StationList::Stations> ());
 
@@ -3314,7 +3444,7 @@ void Configuration::impl::read_settings ()
       stored = legacy ? static_cast<int> (SpecialOperatingActivity::WW_DIGI)
                       : static_cast<int> (SpecialOperatingActivity::NONE);
     }
-    if (stored < 0 || stored > static_cast<int> (SpecialOperatingActivity::ARRL_DIGI)) stored = 0;
+    if (stored < 0 || stored > static_cast<int> (SpecialOperatingActivity::YBDXPI)) stored = 0;
     specialOp_ = static_cast<SpecialOperatingActivity> (stored);
   }
   /* CE3TSK: SpecialOpGridSaved was the flag of the first interlock, which parked only the
@@ -3358,8 +3488,15 @@ void Configuration::impl::read_settings ()
   savedSpecialOp_.logAsRTTY = parked ("SpecialOpSavedLogAsRTTY", log_as_RTTY_);
   savedSpecialOp_.reportInComments = parked ("SpecialOpSavedReportComments", report_in_comments_);
   savedSpecialOp_.usesched = parked ("SpecialOpSavedUseSched", usesched_);
+  for (auto const& c : counters)   // CE3TSK 2026-11-04 (TODO.md 3.-232)
+    {
+      savedSpecialOp_.*c.parked_on = parked (tier_key (c.parked_on_key, true), this->*c.on);
+      auto const * const spin = ui_.data ()->*c.number;
+      int const n = settings_->value (tier_key (c.parked_value_key, true), this->*c.value).toInt ();
+      savedSpecialOp_.*c.parked_value = n >= spin->minimum () && n <= spin->maximum () ? n : this->*c.value;
+    }
   specialOpSaved_ = settings_->value ("SpecialOpSaved", false).toBool ();
-  /* CE3TSK 2026-10-04 (review): an activity this build does not offer - only None and WW Digi are; the others come from
+  /* CE3TSK 2026-10-04 (review): an activity this build does not offer - only None, WW Digi and ARRL Digi are; the others come from
      a hand-edited profile or another build - is left here, as choosing None and OK leaves a contest. The dialog showed
      None for it, but OK applied that activity's forcing and silently overwrote the operator's tier edits. Its parked
      set comes back, so no parked set is left behind without a contest (it would be handed back on some later exit). */
@@ -3369,6 +3506,11 @@ void Configuration::impl::read_settings ()
       if (specialOpSaved_) set_own_settings (savedSpecialOp_);
       specialOpSaved_ = false;
     }
+  /* (TODO.md 3.-232) a contest from before the counters were forced: what the members hold is the operator's own, parked just above.
+     With no parked set - a hand edited profile - the members stay the operator's until OK parks them, as every other setting here. */
+  if (SpecialOperatingActivity::NONE != specialOp_ && specialOpSaved_) force_counters ();
+  contest_frequencies_.frequency_list (contest_lists_.value (int (listed_contest (specialOp_))));   /* CE3TSK 2026-11-04 */
+  read_contest_colors ();
   beepOnFirstMsg_ = settings_->value("BeepOnFirstMsg", false).toBool();
   rig_params_.poll_interval = settings_->value ("Polling", 1).toInt (); if(!(rig_params_.poll_interval>=0 && rig_params_.poll_interval<=999)) rig_params_.poll_interval=1;
   rig_params_.split_mode = settings_->value ("SplitMode", QVariant::fromValue (TransceiverFactory::split_mode_none)).value<TransceiverFactory::SplitMode> ();
@@ -3517,6 +3659,7 @@ void Configuration::impl::write_settings ()
   settings_->setValue ("CountryFilterList", countries_);
   settings_->setValue ("CallsignFilterList", callsigns_);
   write_own_colors ();   // CE3TSK: never the shared keys, see contestprofile.h
+  write_contest_colors ();
   settings_->setValue ("Font", font_.toString ());
   settings_->setValue ("DecodedTextFont", decoded_text_font_.toString ());
   settings_->setValue ("IDint", id_interval_);
@@ -3625,7 +3768,9 @@ void Configuration::impl::write_settings ()
   settings_->setValue ("TxQSYAllowed", tx_QSY_allowed_);
   settings_->setValue ("Macros", macros_.stringList ());
   settings_->setValue ("FrequenciesForModes", QVariant::fromValue (frequencies_.frequency_list ()));
-  settings_->setValue ("ContestFrequencies", QVariant::fromValue (contest_frequencies_.frequency_list ()));   /* CE3TSK */
+  contest_lists_[int (listed_contest (specialOp_))] = contest_frequencies_.frequency_list ();   /* CE3TSK 2026-11-04 */
+  for (auto const activity : contests_offered ())
+    settings_->setValue (contest_frequencies_key (activity), QVariant::fromValue (contest_lists_.value (int (activity))));
   settings_->setValue ("stations", QVariant::fromValue (stations_.station_list ()));
   settings_->setValue ("toRTTY", log_as_RTTY_);
   settings_->setValue ("dBtoComments", report_in_comments_);
@@ -3675,6 +3820,11 @@ void Configuration::impl::write_settings ()
   settings_->setValue ("SpecialOpSavedLogAsRTTY", savedSpecialOp_.logAsRTTY);
   settings_->setValue ("SpecialOpSavedReportComments", savedSpecialOp_.reportInComments);
   settings_->setValue ("SpecialOpSavedUseSched", savedSpecialOp_.usesched);
+  for (auto const& c : counters)   // CE3TSK 2026-11-04 (TODO.md 3.-232)
+    {
+      settings_->setValue (tier_key (c.parked_on_key, true), savedSpecialOp_.*c.parked_on);
+      settings_->setValue (tier_key (c.parked_value_key, true), savedSpecialOp_.*c.parked_value);
+    }
   settings_->setValue ("SpecialOpSaved", specialOpSaved_);
   settings_->setValue ("newPotential", newPotential_);
   settings_->setValue ("ClearCallGrid", clear_DX_);
@@ -4278,7 +4428,10 @@ void Configuration::impl::accept ()
       this->*t.self.live = (ui_.data ()->*t.self.box)->isChecked ();
       for (auto const * o : {&t.band, &t.band_mode})
         if (!t.keeps_children || this->*t.self.live) this->*o->live = (ui_.data ()->*o->box)->isChecked ();
-      this->*t.beep.live = (ui_.data ()->*t.beep.box)->isChecked ();
+      /* CE3TSK 2026-11-04: a tier the chosen contest turns off shows its beep unticked (cascade), and the grid beep is not parked:
+         read from the box it would be gone when the contest is left. The member keeps it; with its tier off nothing reads it. */
+      if (t.beep.parked || !contest_rules_of (next_specialOp_).running || Forced::Off != forced (t, t.self, next_specialOp_))
+        this->*t.beep.live = (ui_.data ()->*t.beep.box)->isChecked ();
     }
 
   newPotential_ = ui_->newPotential_check_box->isChecked ();
@@ -4316,7 +4469,7 @@ void Configuration::impl::accept ()
     }
     for (auto const& t : tiers)   // CE3TSK 2026-10-04 (review item 9): what the contest needs - tiers[] says why
       for (auto const * o : {&t.self, &t.band, &t.band_mode, &t.beep})
-        if (Forced::Free != o->contest) this->*o->live = Forced::On == o->contest;
+        if (Forced::Free != o->contest) this->*o->live = Forced::On == forced (t, *o, chosen);
     autolog_ = true;
     clear_DX_ = true;
     distance_in_comments_ = true;
@@ -4324,6 +4477,7 @@ void Configuration::impl::accept ()
     log_as_RTTY_ = false;         // the log must record the mode actually used
     report_in_comments_ = false;  // the exchange is a grid, the dB report is noise
     usesched_ = false;
+    /* the counters: read above from the boxes, which the lock has forced (apply_special_op_lock) */
   } else if (was_special_op && specialOpSaved_) {
     /* CE3TSK 2026-10-04 (review): leaving the contest in this dialog. Selecting "None" handed the operator's own values
        back into the boxes (on_rbSpecialOpNone_toggled) and everything above read the boxes - so a box changed after
@@ -4338,6 +4492,9 @@ void Configuration::impl::accept ()
   }
   specialOp_ = chosen;
   next_specialOp_ = chosen;
+  /* CE3TSK 2026-11-04 (TODO.md 3.-233): the radio slots keep the chosen set on the tab, so the members took that one above */
+  next_color_sets_[int (next_colors_shown_)] = staged_colors ();
+  color_sets_ = next_color_sets_;
   beepOnFirstMsg_ = ui_->beep_on_firstMsg_check_box->isChecked();
   frequency_calibration_intercept_ = ui_->calibration_intercept_spin_box->value ();
   frequency_calibration_slope_ppm_ = ui_->calibration_slope_ppm_spin_box->value ();
@@ -4398,11 +4555,16 @@ void Configuration::impl::accept ()
     }
 
   /* CE3TSK: the contest list commits the same way */
-  if (!identical_rows (contest_frequencies_.frequency_list (), next_contest_frequencies_.frequency_list ()))
-    {
-      contest_frequencies_.frequency_list (next_contest_frequencies_.frequency_list ());
-      contest_frequencies_.sort (FrequencyList_v2::frequency_column);
-    }
+  next_contest_lists_[int (next_contest_shown_)] = next_contest_frequencies_.frequency_list ();   // CE3TSK 2026-11-04: one list per contest
+  contest_lists_ = next_contest_lists_;
+  {
+    auto const live = contest_lists_.value (int (listed_contest (specialOp_)));
+    if (!identical_rows (contest_frequencies_.frequency_list (), live))
+      {
+        contest_frequencies_.frequency_list (live);
+        contest_frequencies_.sort (FrequencyList_v2::frequency_column);
+      }
+  }
 
   if (stations_.station_list () != next_stations_.station_list ())
     {
@@ -5090,6 +5252,7 @@ Configuration::impl::SpecialOpSettings Configuration::impl::own_settings () cons
   s.logAsRTTY = log_as_RTTY_;
   s.reportInComments = report_in_comments_;
   s.usesched = usesched_;
+  for (auto const& c : counters) {s.*c.parked_on = this->*c.on; s.*c.parked_value = this->*c.value;}
   return s;
 }
 
@@ -5111,6 +5274,7 @@ void Configuration::impl::set_own_settings (SpecialOpSettings const& s)
   log_as_RTTY_ = s.logAsRTTY;
   report_in_comments_ = s.reportInComments;
   usesched_ = s.usesched;
+  for (auto const& c : counters) {this->*c.on = s.*c.parked_on; this->*c.value = s.*c.parked_value;}
 }
 
 /* CE3TSK: while a contest owns the grid highlighting, show the settings it requires and
@@ -5125,14 +5289,15 @@ void Configuration::impl::apply_special_op_lock (bool locked)
        a click does, and then its children take what the contest forces (tiers[] says what, and why). */
     for (auto const& t : tiers)
       {
-        bool const on = Forced::On == t.self.contest;
+        bool const on = Forced::On == forced (t, t.self, next_specialOp_);
         (ui_.data ()->*t.self.box)->setChecked (on);
         cascade (t, on);
         for (auto const * o : {&t.band, &t.band_mode, &t.beep})
           if (Forced::Free != o->contest)
             {
-              (ui_.data ()->*o->box)->setChecked (Forced::On == o->contest);
-              if (o->next) this->*o->next = Forced::On == o->contest;
+              bool const value = Forced::On == forced (t, *o, next_specialOp_);
+              (ui_.data ()->*o->box)->setChecked (value);
+              if (o->next) this->*o->next = value;
             }
       }
     refresh_samples ();   // CE3TSK 2026-10-03: the samples follow the forced values (item 10)
@@ -5146,6 +5311,11 @@ void Configuration::impl::apply_special_op_lock (bool locked)
     ui_->log_as_RTTY_check_box->setChecked (false);
     ui_->report_in_comments_check_box->setChecked (false);
     ui_->UseSched_check_box->setChecked (false);
+    for (auto const& c : counters)   // CE3TSK 2026-11-04 (TODO.md 3.-232)
+      {
+        (ui_.data ()->*c.box)->setChecked (true);
+        (ui_.data ()->*c.number)->setValue (c.contest_value);
+      }
   }
   /* the tiers: locked by a contest, their children greyed under a tier that is off - as stock JTDX already tied them;
      a beep follows its tier alone, contest or not, so the grid and call beeps stay the operator's. CE3TSK 2026-10-03:
@@ -5166,6 +5336,14 @@ void Configuration::impl::apply_special_op_lock (bool locked)
   /* CE3TSK: the scheduler's master switch. Its own combo boxes stay on the everyday
      frequency list, so it must not run while a contest is using a different one. */
   ui_->UseSched_check_box->setEnabled (!locked);
+  /* CE3TSK 2026-11-04 (TODO.md 3.-233): whose colours the tab shows, by the name on its radio button */
+  ui_->labContestColors->setVisible (locked);
+  if (locked) ui_->labContestColors->setText (contest_colors_note_.arg (contest_radio (next_specialOp_)->text ().remove ('&')));
+  for (auto const& c : counters)   // CE3TSK 2026-11-04 (TODO.md 3.-232)
+    {
+      (ui_.data ()->*c.box)->setEnabled (!locked);
+      (ui_.data ()->*c.number)->setEnabled (!locked);
+    }
   /* CE3TSK: the contest frequency table is the opposite way round from everything else in
      this function - it is FOR the contest, so it is editable while one is selected and
      greyed otherwise. Disabling the group box also blocks the context menu actions. */
@@ -5249,6 +5427,7 @@ void Configuration::impl::on_rbSpecialOpNone_toggled(bool checked)
 {
   if (!checked) return;
   next_specialOp_ = SpecialOperatingActivity::NONE;
+  show_colors_of (next_specialOp_);   // CE3TSK 2026-11-04 (TODO.md 3.-233)
   /* Hand the operator's own choice back straight away so the dialog previews what OK does,
      through cascade () so the staging copies and preview labels follow. Restored from the
      dialog entry triple, not from saved*_: the latter only becomes valid once a contest has
@@ -5261,6 +5440,11 @@ void Configuration::impl::on_rbSpecialOpNone_toggled(bool checked)
   ui_->log_as_RTTY_check_box->setChecked (dlgEntrySpecialOp_.logAsRTTY);
   ui_->report_in_comments_check_box->setChecked (dlgEntrySpecialOp_.reportInComments);
   ui_->UseSched_check_box->setChecked (dlgEntrySpecialOp_.usesched);
+  for (auto const& c : counters)   // CE3TSK 2026-11-04 (TODO.md 3.-232)
+    {
+      (ui_.data ()->*c.box)->setChecked (dlgEntrySpecialOp_.*c.parked_on);
+      (ui_.data ()->*c.number)->setValue (dlgEntrySpecialOp_.*c.parked_value);
+    }
   /* CE3TSK: the tiers, each through cascade () as a click does, then its children and beep explicitly from this same
      set. The cascade already gives them the operator's own values - the members while no contest is committed, this set
      while a committed one is being left (leaving_contest) - so the explicit part matters only for a profile with a
@@ -5286,7 +5470,40 @@ void Configuration::impl::on_rbSpecialOpWWDigi_toggled(bool checked)
 {
   if (!checked) return;
   next_specialOp_ = SpecialOperatingActivity::WW_DIGI;
+  show_contest_frequencies (next_specialOp_);
+  show_colors_of (next_specialOp_);   // CE3TSK 2026-11-04 (TODO.md 3.-233)
   apply_special_op_lock (true);
+}
+
+void Configuration::impl::on_rbSpecialOpARRLDigi_toggled(bool checked)
+{
+  if (!checked) return;
+  next_specialOp_ = SpecialOperatingActivity::ARRL_DIGI;
+  show_contest_frequencies (next_specialOp_);
+  show_colors_of (next_specialOp_);   // CE3TSK 2026-11-04 (TODO.md 3.-233)
+  apply_special_op_lock (true);
+}
+
+void Configuration::impl::on_rbSpecialOpYBDXPI_toggled(bool checked)
+{
+  if (!checked) return;
+  next_specialOp_ = SpecialOperatingActivity::YBDXPI;
+  show_contest_frequencies (next_specialOp_);
+  show_colors_of (next_specialOp_);   // CE3TSK 2026-11-04 (TODO.md 3.-233)
+  apply_special_op_lock (true);
+}
+
+/* CE3TSK 2026-11-04 (TODO.md 3.-227): the dialog's table shows the list of the contest chosen in it; the one it showed stays staged */
+void Configuration::impl::show_contest_frequencies (SpecialOperatingActivity activity)
+{
+  /* (TODO.md 3.-232) the modes the Insert dialog and the table's mode column offer follow the contest too: before the return below,
+     the radio button coming back to the contest already shown */
+  contest_modes_.setFilterRegularExpression (QRegularExpression {contest_rules_of (activity).ft8Only ? "^FT8$" : "^(FT8|FT4)$"});
+  if (activity == next_contest_shown_) return;
+  next_contest_lists_[int (next_contest_shown_)] = next_contest_frequencies_.frequency_list ();
+  next_contest_shown_ = activity;
+  next_contest_frequencies_.frequency_list (next_contest_lists_.value (int (activity)));
+  ui_->contest_frequencies_table_view->resizeColumnToContents (FrequencyList_v2::mode_column);
 }
 
 void Configuration::impl::on_pbCQmsg_clicked()
@@ -5521,7 +5738,11 @@ void Configuration::impl::on_pbTxMsg_clicked()
    colours again, and that offer wrote the shared keys. Runs inside the Configuration group. */
 void Configuration::impl::write_own_colors ()
 {
-  for (auto const& c : color_slots) settings_->setValue (contest_profile::own_key (c.key), this->*(c.live));
+  /* CE3TSK 2026-11-04 (TODO.md 3.-233): the everyday set, whichever is in use. On the first start read_settings comes here before the
+     sets exist: the members are that set. */
+  ColorSet const everyday = color_sets_.value (int (SpecialOperatingActivity::NONE), live_colors ());
+  int slot = 0;
+  for (auto const& c : color_slots) settings_->setValue (contest_profile::own_key (c.key), everyday.value (slot++));
   settings_->setValue (contest_profile::own_key ("UseDarkStyle"), useDarkStyle_);
   settings_->setValue ("RecommendedColorsOffered", true);
 }
@@ -5543,6 +5764,73 @@ void Configuration::fit_widget_size_limits ()
 /* CE3TSK: restore the recommended colors - both styles at once, so switching the style
    later finds a sane palette too. The swatches are repainted by handing the existing
    text-color handler the current state, which redraws every one of them. */
+/* CE3TSK 2026-11-04 (TODO.md 3.-233): see ColorSet */
+Configuration::impl::ColorSet Configuration::impl::live_colors () const
+{
+  ColorSet set;
+  for (auto const& c : color_slots) set << this->*(c.live);
+  return set;
+}
+
+Configuration::impl::ColorSet Configuration::impl::staged_colors () const
+{
+  ColorSet set;
+  for (auto const& c : color_slots) set << this->*(c.next);
+  return set;
+}
+
+void Configuration::impl::stage_colors (ColorSet const& set)
+{
+  int slot = 0;
+  for (auto const& c : color_slots) this->*(c.next) = set.value (slot++);
+}
+
+void Configuration::impl::read_contest_colors ()
+{
+  color_sets_[int (SpecialOperatingActivity::NONE)] = live_colors ();   // what read_settings has just read
+  for (auto const activity : contests_offered ())
+    {
+      ColorSet set;
+      for (auto const& c : color_slots)
+        {
+          QColor const stored {settings_->value (contest_color_key (activity, c.key)).toString ()};
+          set << (stored.isValid () ? stored : QColor {recommended_color (c.key)});
+        }
+      color_sets_[int (activity)] = set;
+    }
+  ColorSet const in_use = color_sets_.value (int (specialOp_));
+  int slot = 0;
+  for (auto const& c : color_slots) this->*(c.live) = this->*(c.next) = in_use.value (slot++);
+}
+
+void Configuration::impl::write_contest_colors ()
+{
+  for (auto const activity : contests_offered ())
+    {
+      ColorSet const set = color_sets_.value (int (activity));
+      int slot = 0;
+      for (auto const& c : color_slots)
+        {
+          QColor const color = set.value (slot++);
+          QString const key = contest_color_key (activity, c.key);
+          if (color.isValid () && color != QColor {recommended_color (c.key)}) settings_->setValue (key, color);
+          else settings_->remove (key);
+        }
+    }
+}
+
+/* the Notifications tab shows the set of the activity chosen in the dialog; the one it showed stays staged */
+void Configuration::impl::show_colors_of (SpecialOperatingActivity activity)
+{
+  if (activity == next_colors_shown_) return;
+  next_color_sets_[int (next_colors_shown_)] = staged_colors ();
+  next_colors_shown_ = activity;
+  stage_colors (next_color_sets_.value (int (activity)));
+  on_txtColor_check_box_clicked (next_txtColor_);       // the previews, as the Recommended colors button repaints them
+  on_workedColor_check_box_clicked (next_workedColor_);
+  ui_->labTx->setStyleSheet (QString ("background: %1").arg (useDarkStyle_ ? next_color_TxMsg_dark_.name () : next_color_TxMsg_.name ()));
+}
+
 void Configuration::impl::on_pbDefaultColors_clicked()
 {
   next_color_CQ_ = QColor {recommended_color ("colorCQ")};
@@ -6519,11 +6807,11 @@ void Configuration::impl::on_add_macro_push_button_clicked (bool /* checked */)
 /* CE3TSK: keep only the two modes a digital contest runs. Applied wherever items can enter
    the contest list other than through the restricted editor. */
 FrequencyList_v2::FrequencyItems
-Configuration::impl::ft_only (FrequencyList_v2::FrequencyItems const& in)
+Configuration::impl::ft_only (FrequencyList_v2::FrequencyItems const& in, bool ft8Only)
 {
   FrequencyList_v2::FrequencyItems out;
   for (auto const& item : in)
-    if (Modes::FT8 == item.mode_ || Modes::FT4 == item.mode_) out << item;
+    if (Modes::FT8 == item.mode_ || (Modes::FT4 == item.mode_ && !ft8Only)) out << item;
   return out;
 }
 
@@ -6545,12 +6833,23 @@ Configuration::impl::contest_default_frequencies (SpecialOperatingActivity activ
       for (auto f : {1844000ull, 3590000ull, 7090000ull, 14090000ull, 21090000ull, 28090000ull})
         list << FrequencyList_v2::Item {Frequency {f}, Modes::FT8, IARURegions::ALL, true};
       break;
+    case SpecialOperatingActivity::ARRL_DIGI:
+      /* CE3TSK 2026-11-04: the bottom of each sub-band the rules recommend. 160 m differs from WW Digi's, and 6 m is extra. */
+      for (auto f : {1836000ull, 3580000ull, 7080000ull, 14080000ull, 21080000ull, 28080000ull, 50330000ull})
+        list << FrequencyList_v2::Item {Frequency {f}, Modes::FT4, IARURegions::ALL, true};
+      for (auto f : {1840000ull, 3590000ull, 7090000ull, 14090000ull, 21090000ull, 28090000ull, 50340000ull})
+        list << FrequencyList_v2::Item {Frequency {f}, Modes::FT8, IARURegions::ALL, true};
+      break;
+    case SpecialOperatingActivity::YBDXPI:
+      /* CE3TSK 2026-11-04: FT8 alone, the bottom of each sub-band the rules recommend: WW Digi's FT8 list */
+      for (auto f : {1844000ull, 3590000ull, 7090000ull, 14090000ull, 21090000ull, 28090000ull})
+        list << FrequencyList_v2::Item {Frequency {f}, Modes::FT8, IARURegions::ALL, true};
+      break;
     case SpecialOperatingActivity::NONE:
     case SpecialOperatingActivity::NA_VHF:
     case SpecialOperatingActivity::EU_VHF:
     case SpecialOperatingActivity::FIELD_DAY:
     case SpecialOperatingActivity::RTTY:
-    case SpecialOperatingActivity::ARRL_DIGI:
       break;
     }
   return list;
@@ -6592,7 +6891,7 @@ void Configuration::impl::delete_contest_frequencies ()
 
 void Configuration::impl::insert_contest_frequency ()
 {
-  /* the dialog is built against contest_modes_, so it can only offer FT8 and FT4 */
+  /* the dialog is built against contest_modes_, so it can only offer what the contest allows (show_contest_frequencies) */
   if (QDialog::Accepted == contest_frequency_dialog_->exec ())
     {
       ui_->contest_frequencies_table_view->setCurrentIndex (next_contest_frequencies_.add (contest_frequency_dialog_->item ()));
@@ -6613,7 +6912,7 @@ void Configuration::impl::load_contest_frequencies ()
   delete fileDlg;
   if (!file_name.isEmpty ())
     {
-      auto const list = ft_only (read_frequencies_file (file_name));
+      auto const list = ft_only (read_frequencies_file (file_name), contest_rules_of (next_contest_shown_).ft8Only);
       if (list.size ()
           && (!next_contest_frequencies_.frequency_list ().size ()
               || JTDXMessageBox::Yes == JTDXMessageBox::query_message (this
@@ -6653,7 +6952,7 @@ void Configuration::impl::merge_contest_frequencies ()
   delete fileDlg;
   if (!file_name.isEmpty ())
     {
-      next_contest_frequencies_.frequency_list_merge (ft_only (read_frequencies_file (file_name)));
+      next_contest_frequencies_.frequency_list_merge (ft_only (read_frequencies_file (file_name), contest_rules_of (next_contest_shown_).ft8Only));
     }
 }
 
@@ -6671,7 +6970,7 @@ void Configuration::impl::reset_contest_frequencies ()
   msgbox.translate_buttons ();
   if (JTDXMessageBox::Yes == msgbox.exec ())
     {
-      next_contest_frequencies_.frequency_list (ft_only (next_frequencies_.frequency_list ()));
+      next_contest_frequencies_.frequency_list (ft_only (next_frequencies_.frequency_list (), contest_rules_of (next_contest_shown_).ft8Only));
     }
 }
 

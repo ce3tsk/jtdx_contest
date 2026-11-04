@@ -74,10 +74,10 @@ public:
 
   /* CE3TSK: special operating activity, selected on the Special operating tab. The full
      WSJT-X set is declared so that stored values keep their meaning if more are
-     implemented later; only NONE and WW_DIGI are offered in the dialog today, the rest are
+     implemented later; NONE, WW_DIGI, ARRL_DIGI and YBDXPI are offered in the dialog today, the rest are
      shown disabled. Stored as an integer, so do not renumber existing entries. */
   enum class SpecialOperatingActivity {NONE = 0, NA_VHF = 1, EU_VHF = 2, FIELD_DAY = 3,
-                                       RTTY = 4, WW_DIGI = 5, ARRL_DIGI = 6};
+                                       RTTY = 4, WW_DIGI = 5, ARRL_DIGI = 6, YBDXPI = 7};
 
   explicit Configuration (QNetworkAccessManager * network_manager, QSettings * settings, QWidget * parent = nullptr);
   ~Configuration ();
@@ -489,7 +489,7 @@ contest_rules::Rules contest_rules_of (Configuration::SpecialOperatingActivity);
    in the message, so the distance is unknown) - the country column stays aligned instead
    of shifting left on those lines, and the dash says "not scored" at a glance. Only meaningful during a contest; the caller
    decides whether to add it at all. */
-QString contest_points_tag (int points);
+QString contest_points_tag (int points, int digits = 1);   /* digits: what the contest's largest score takes, so its column stays straight */
 
 /* Great circle km between two grids, or -1 when it cannot be known. -1 rather than 0
    because 0 km is a real answer, a station in our own square, and scores a point.

@@ -1,7 +1,7 @@
 # JTDX\_CONTEST by CE3TSK
 
 A fork of **JTDX v2.2.159** (itself derived from **WSJT-X**) with an enhanced FT8
-and rebuilt FT4 decoder, and built-in support for the **WW Digi DX Contest**.
+and rebuilt FT4 decoder, and built-in support for the **WW Digi, ARRL Digi and YBDXPI FT8 contests**.
 The GUI has been repaired throughout and the dark style now works.
 
 Designed, built and measured by **Tihomir Sokcevic, CE3TSK** — Santiago de Chile,
@@ -174,7 +174,7 @@ search* on — the environment every table was measured in.
 
 ### WW Digi contest support (Settings → Contest)
 
-- One switch parks 28 settings and eight main-window controls in their contest state,
+- One switch parks 41 settings and the main-window controls in their contest state,
 
 and lights the Contest lamp; everything comes
 back as it was when the contest is switched off.
@@ -197,6 +197,27 @@ tiers already rank by distance bracket).
 - A separate contest ADIF log; worked-before, multipliers, highlighting and the score all
 
 come from it. Contest frequencies kept apart from the everyday band plan.
+
+### ARRL Digi and YBDXPI FT8 contests (Settings → Contest)
+
+Two more contests on the same switch, with the same 4-character grid exchange as WW Digi. Each has its own
+log, its own frequency list and its own score.
+
+| | WW Digi | ARRL Digi | YBDXPI FT8 |
+|---|---|---|---|
+| Modes | FT8, FT4 | FT8, FT4 | FT8 |
+| CQ | `CQ WW` | `CQ TEST` | `CQ WW` |
+| QSO points | 1 + km/3000 | 1 + 1 for each started 500 km | member 5, own country 1, own continent 2, another 3 |
+| Multipliers | the 2-character field, per band | none | the WPX prefix and the DXCC country, per band |
+| Autoselect prefers | a new field, then points | the most points | a new DXCC, a new prefix, then points |
+
+In all three a QSO under way finishes first, up to the sequencing counters in Settings, which a contest holds on and
+greyed at 4, 4, 5 and 4; yours come back afterwards. A station that keeps calling CQ is given up by its counter too,
+whatever its points. A station already worked
+on the band keeps its points on the screen but ranks below every new call, since it adds nothing to the score.
+*AnsB4* stays on and *Hide FT contest messages* off while a contest runs; both come back as they were afterwards.
+Each contest has its own notification colours, starting at the recommended ones; yours come back when you switch it off.
+The YBDXPI member list is bundled with the program. Cabrillo export is not written yet: the log is ADIF.
 
 ---
 

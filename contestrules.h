@@ -15,12 +15,38 @@ namespace contest_rules
     bool forcesSkipTx1 = false;        // Tx1 would say what Tx2 says: Skip Tx1 forced on and the Tx1 row greyed
     bool humanChoosesPartner = false;  // the operator starts each QSO: no wanted lists and no search through CQ messages (WW Digi's rule XI.12)
     bool fieldMultipliers = false;     // the 2 character field on each band is the multiplier: the new-grid tiers ask for it, at the head of the chain
+    bool workedRanksLast = false;      // a station already worked on the band scores nothing: its points are shown, it ranks below every new call whatever its field, and the contest's lock holds AnsB4 on, so it is still answered
+    bool finishesQsoFirst = false;     // a QSO under way comes before any ranking: a later step of his shows he heard us and is answered first, and "sent RR73/73" also counts our RR73 to his repeated R+grid
+    bool prefixCountryMultipliers = false;  // the WPX prefix and the DXCC country on each band are the multipliers, and a QSO's points come from the call
+    bool ft8Only = false;              // FT4 is not allowed: greyed, and left on entering
+    bool cqYbUndirected = false;       // CQ YB is the contest's too: it directs nothing
   };
 
   inline Rules ww_digi ()
   {
     Rules r;
-    r.running = r.gridExchange = r.rejectsReports = r.forcesSkipTx1 = r.humanChoosesPartner = r.fieldMultipliers = true;
+    r.running = r.gridExchange = r.rejectsReports = r.forcesSkipTx1 = r.humanChoosesPartner = r.fieldMultipliers = r.workedRanksLast = r.finishesQsoFirst = true;
+    return r;
+  }
+
+  /* The ARRL International Digital Contest (rules version 1.1): the same 4 character grid and the same four messages as WW Digi, and
+     "fully automated contacts are prohibited" (OPRG.4). The score is the sum of the QSO points with no multipliers (5.3), so a new
+     grid is worth nothing and a QSO with a station already worked on the band is worth nothing (2.3, LGCK.1). */
+  inline Rules arrl_digi ()
+  {
+    Rules r;
+    r.running = r.gridExchange = r.rejectsReports = r.forcesSkipTx1 = r.humanChoosesPartner = r.workedRanksLast = r.finishesQsoFirst = true;
+    return r;
+  }
+
+  /* The YBDXPI FT8 contest (the DX version: https://contest.ybdxpi.net/ft8/rules/): the 4 character grid, FT8 alone; points by member,
+     country and continent, multipliers the WPX prefix and the DXCC country on each band (contestpoints.h). The rules name no CQ word
+     and no rule on automation. Its guide puts participants in WSJT-X's WW Digi mode, so they call CQ WW; some call CQ YB. */
+  inline Rules ybdxpi ()
+  {
+    Rules r;
+    r.running = r.gridExchange = r.rejectsReports = r.forcesSkipTx1 = r.humanChoosesPartner = r.workedRanksLast = r.finishesQsoFirst = true;
+    r.prefixCountryMultipliers = r.ft8Only = r.cqYbUndirected = true;
     return r;
   }
 }

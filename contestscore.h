@@ -21,7 +21,8 @@ namespace contest_score
   {
     int multipliers = 0;
     int points = 0;
-    int total () const { return points * multipliers; }
+    bool multiplied = true;   // (2026-11-04) false: no multipliers, the score is the sum of the points (ARRL Digi)
+    int total () const { return multiplied ? points * multipliers : points; }
   };
 
   // A station counts once per band, FT8 and FT4 alike: the first QSO in the log, a repeat scores nothing (the 2026 log held 20
@@ -44,9 +45,10 @@ namespace contest_score
 
   // pointsOf: what a QSO with this grid scores. A multiplier: each 2 character field on each band, of the QSOs that count.
   template <class PointsOf>
-  inline Score sum (QList<Qso> const& qsos, PointsOf pointsOf)
+  inline Score sum (QList<Qso> const& qsos, PointsOf pointsOf, bool fieldMultipliers = true)
   {
     Score s;
+    s.multiplied = fieldMultipliers;
     QSet<QString> fields;
     for (auto const& q : counted (qsos))
       {
@@ -57,8 +59,24 @@ namespace contest_score
     return s;
   }
 
+  // (2026-11-04) a contest whose points and multipliers come from the call: pointsOf (Qso), multipliersOf (Qso) their keys, each once on each band
+  template <class PointsOf, class MultipliersOf>
+  inline Score sum_by_call (QList<Qso> const& qsos, PointsOf pointsOf, MultipliersOf multipliersOf)
+  {
+    Score s;
+    QSet<QString> multipliers;
+    for (auto const& q : counted (qsos))
+      {
+        s.points += pointsOf (q);
+        for (auto const& key : multipliersOf (q)) multipliers.insert (key + ' ' + q.band);
+      }
+    s.multipliers = multipliers.size ();
+    return s;
+  }
+
   inline QString text (Score const& s)
   {
+    if (!s.multiplied) return QString {"%1P"}.arg (s.points);
     return QString {"%1M x %2P = %3"}.arg (s.multipliers).arg (s.points).arg (s.total ());
   }
 }

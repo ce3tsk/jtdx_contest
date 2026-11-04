@@ -804,6 +804,7 @@ private:
   bool m_callFirst73;
   bool m_maxDistance;
   bool m_answerWorkedB4;
+  bool m_passOnDecodeLine = false;   // CE3TSK 2026-11-04: process_Auto () was run by a line, the decoder still printing
   bool m_callWorkedB4;
   bool m_callHigherNewCall;
   bool m_singleshot;
@@ -1109,6 +1110,8 @@ private:
     bool rrr = false;
     bool maxDistance = false;    /* CE3TSK: AutoSeq -> "Max distance instead of best SNR", forced off in a contest (the points tiers already rank by distance; the tie-break should be SNR) */
     bool rprtPriority = false;   /* its mutually exclusive partner - forcing the one clears the other, so both are parked */
+    bool answerWorkedB4 = true;  /* CE3TSK 2026-11-04: AnsB4, on and greyed in a contest: a station worked before ranks last and is still answered */
+    bool hideFTContest = false;  /* CE3TSK 2026-11-04: Misc > Hide FT contest messages hides CQ TEST, CQ RU and CQ FD in the decoder: off and greyed in a contest */
     QString mode = "";
   };
   ContestUiParked m_uiParked;

@@ -6620,6 +6620,11 @@ That is the decoder's own error. Put right whatever stops it starting - a missin
         <source>The transmission was stopped, as by Halt Tx. Check the antenna.</source>
         <translation>送信停止 と同様に送信を止めました。アンテナを確認してください。</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Sum of the QSO points = score</source>
+        <translation>QSO 点の合計 = スコア</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>
@@ -10417,6 +10422,26 @@ soundcard changes</source>
         <location filename="../Configuration.ui"/>
         <source>Download the latest CALL3.TXT from wsjt-x-improved.sourceforge.io, as WSJT-X does: the calls and grid squares behind the JT65 and JT9 Hint decoders and the Lookup button. The copy replaced is kept as CALL3_backup.TXT, with any calls added by Add. The decoder reads the new list at the program's next start.</source>
         <translation>WSJT-X と同じく wsjt-x-improved.sourceforge.io から最新の CALL3.TXT をダウンロードします：JT65 と JT9 のヒント デコーダーと 検索 ボタンが使うコールサインとグリッドロケーターです。置き換えたコピーは 追加 で加えたコールサインとともに CALL3_backup.TXT として残ります。デコーダーは次回のプログラム起動時に新しいリストを読み込みます。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;ARRL International Digital Contest. The exchange is the 4 character grid instead of a signal report. A QSO scores 1 point plus 1 for each started 500 km, a station counts once per band, and there are no multipliers.&lt;/p&gt;&lt;p&gt;While this is selected the grid highlighting below is off, new calls are highlighted per band, and neither can be changed by hand. Your own settings are restored when you switch back to None.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;ARRL International Digital Contest。交換内容はシグナルレポートではなく4文字のグリッドです。QSO の得点は 1 点に、500 km ごと(端数は切り上げ)に 1 点を加えたものです。同じ局はバンドごとに 1 回だけ数え、マルチプライヤーはありません。&lt;/p&gt;&lt;p&gt;これを選択している間、下のグリッド強調表示はオフになり、新しいコールサインをバンドごとに強調表示します。どちらも手動では変更できません。None に戻すと、元の設定が復元されます。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>YBDXPI FT8 contest</source>
+        <translation>YBDXPI FT8 コンテスト</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;YBDXPI FT8 contest, FT8 only. The exchange is the 4 character grid instead of a signal report. A QSO scores 5 points with a YBDXPI member, otherwise 1 in your own country, 2 on your continent and 3 on another. A station counts once per band. Each prefix and each DXCC country on each band is a multiplier.&lt;/p&gt;&lt;p&gt;While this is selected new calls, prefixes and countries are highlighted, overall and per band, the grid highlighting below is off, and none of it can be changed by hand. Your own settings are restored when you switch back to None.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;YBDXPI FT8 コンテスト。FT8 のみです。交換内容はシグナルレポートではなく4文字のグリッドです。QSO の得点は YBDXPI メンバーとは 5 点、それ以外は自国内 1 点、同じ大陸 2 点、他の大陸 3 点です。同じ局はバンドごとに 1 回だけ数えます。各バンドのプリフィックスと DXCC エンティティがそれぞれマルチプライヤーになります。&lt;/p&gt;&lt;p&gt;これを選択している間、新しいコールサイン、プリフィックス、エンティティを全体およびバンドごとに強調表示し、下のグリッド強調表示はオフになります。いずれも手動では変更できません。None に戻すと、元の設定が復元されます。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Colors apply per contest, currently: %1. Own colors get applied again when contest mode is disabled.</source>
+        <translation>色はコンテストごとに適用されます。現在: %1。コンテストモードを無効にすると、自分の色が再び適用されます。</translation>
     </message>
 </context>
 <context>

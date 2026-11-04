@@ -69,6 +69,7 @@ public:
                                                     // WorkedBeforeBand: on dialFreq's band and/or in mode, whichever is given
     /* CE3TSK 2026-10-03: the state of the call's US licence (CountryDat::licenseState), "" when it has none */
     QString licenseState (QString const& call) {return countries ().licenseState (call);}
+    bool isContestMember (QString const& call) {return countries ().isMember (call);}   /* CE3TSK 2026-11-04: the YBDXPI members */
     void matchPX(/*in*/ const QString call,
               /*out*/ QString &countryName,
                       bool &WorkedBefore,

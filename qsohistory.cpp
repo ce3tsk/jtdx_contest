@@ -127,6 +127,16 @@ void QsoHistory::calllist(QString const& callsign, int level=-35, unsigned time=
   }
 }
 
+/* CE3TSK 2026-11-04 (TODO.md 3.-229): message () only ever raises a station's priority, so one logged during this session kept the rank
+   he had before his QSO. In a contest that ranks a repeat last the log's word counts from his next line on; message () then raises it
+   to what that line is worth. */
+void QsoHistory::rankAsWorked (QString const& callsign)
+{
+  if (!_working) return;
+  auto const it = _data.find (Radio::base_callsign (callsign));
+  if (it != _data.end ()) it->priority = 0;
+}
+
 int QsoHistory::reset_count(QString const& callsign,Status status)
 {
   int ret=0;
@@ -208,7 +218,24 @@ QsoHistory::Status QsoHistory::autoseq(QString &callsign, QString &grid, QString
             Rrep = "-60";
             bool mycall = false;
             bool lastcalled = false;
-            foreach(QString key,_data.keys()) {
+            /* (2026-11-04, the operator) "the goal is to finish an ongoing QSO, and then only come prioritizations". With the DX box empty
+               - we gave up on him - a later step of his, heard now, shows he heard us: only such stations are looked at. One who has
+               had our RR73 or has the QSO in the log is not under way any more: he had it up to the Settings' count, and ranks last. */
+            QStringList candidates = _data.keys ();
+            if (_contest.finishesQsoFirst)
+              {
+                QStringList underWay;
+                foreach (QString const& key, candidates)
+                  {
+                    QSO const q = _data.value (key);
+                    if (_blackdata.value (key, 0) == 0 && q.time == max_r_time && !q.continent.isEmpty () && !q.doubtful && q.stx_c != NONE && q.stx_c < SRR73
+                        && (q.status == RREPORT || q.status == RRREPORT || q.status == RRR || q.status == RRR73)
+                        && !decode_priority::noNewTier (q.priority))
+                      underWay << key;
+                  }
+                if (!underWay.isEmpty ()) candidates = underWay;
+              }
+            foreach(QString key,candidates) {
               on_black=_blackdata.value(key,0);
               tt=_data[key];
               if (on_black == 0 && tt.time == max_r_time && !tt.continent.isEmpty() && !tt.doubtful && (!lastcalled || tt.time == tt.b_time) &&
@@ -450,7 +477,7 @@ void QsoHistory::message(QString const& callsign, Status status, int priority, Q
          direction. Left as a directive it matches no continent or prefix and autoselect
          silently skips every station calling CQ WW, ours included. */
       QString tyyp_ = tyyp;
-      if (_contest.running && tyyp_ == "WW") tyyp_ = "";
+      if (_contest.running && (tyyp_ == "WW" || (_contest.cqYbUndirected && tyyp_ == "YB"))) tyyp_ = "";
       if (status == SCQ)
         {
           _CQ.call = callsign;

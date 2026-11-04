@@ -6622,6 +6622,11 @@ Ez magának a dekódernek a hibája. Hárítsa el, ami az indulását akadályoz
         <source>The transmission was stopped, as by Halt Tx. Check the antenna.</source>
         <translation>Az adás leállt, mint a Tx Állj gombbal. Ellenőrizze az antennát.</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Sum of the QSO points = score</source>
+        <translation>A QSO-pontok összege = pontszám</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>
@@ -10439,6 +10444,26 @@ hangkártya módosítási tevékenységet</translation>
         <location filename="../Configuration.ui"/>
         <source>Download the latest CALL3.TXT from wsjt-x-improved.sourceforge.io, as WSJT-X does: the calls and grid squares behind the JT65 and JT9 Hint decoders and the Lookup button. The copy replaced is kept as CALL3_backup.TXT, with any calls added by Add. The decoder reads the new list at the program's next start.</source>
         <translation>A legújabb CALL3.TXT letöltése a wsjt-x-improved.sourceforge.io oldalról, ahogy a WSJT-X teszi: a JT65 és JT9 Hint dekóderei és a Keres gomb mögötti hívójelek és lokátornégyzetek. A lecserélt példány CALL3_backup.TXT néven megmarad, a Hozzáad gombbal felvett hívójelekkel együtt. A dekóder a program következő indításakor olvassa be az új listát.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;ARRL International Digital Contest. The exchange is the 4 character grid instead of a signal report. A QSO scores 1 point plus 1 for each started 500 km, a station counts once per band, and there are no multipliers.&lt;/p&gt;&lt;p&gt;While this is selected the grid highlighting below is off, new calls are highlighted per band, and neither can be changed by hand. Your own settings are restored when you switch back to None.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;ARRL International Digital Contest. A csere a 4 karakteres lokátor a jelentés helyett. Egy QSO 1 pontot ér, plusz 1 pontot minden megkezdett 500 km után, egy állomás sávonként egyszer számít, és nincsenek szorzók.&lt;/p&gt;&lt;p&gt;Amíg ez van kiválasztva, az alábbi lokátorkiemelés ki van kapcsolva, az új hívójelek sávonként vannak kiemelve, és ezek kézzel nem módosíthatók. A saját beállításai visszaállnak, amikor visszavált a Nincs értékre.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>YBDXPI FT8 contest</source>
+        <translation>YBDXPI FT8 verseny</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;YBDXPI FT8 contest, FT8 only. The exchange is the 4 character grid instead of a signal report. A QSO scores 5 points with a YBDXPI member, otherwise 1 in your own country, 2 on your continent and 3 on another. A station counts once per band. Each prefix and each DXCC country on each band is a multiplier.&lt;/p&gt;&lt;p&gt;While this is selected new calls, prefixes and countries are highlighted, overall and per band, the grid highlighting below is off, and none of it can be changed by hand. Your own settings are restored when you switch back to None.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;YBDXPI FT8 verseny, csak FT8. A csere a 4 karakteres lokátor a jelentés helyett. Egy QSO 5 pontot ér YBDXPI-taggal, egyébként 1-et a saját országában, 2-t a saját kontinensén és 3-at egy másikon. Egy állomás sávonként egyszer számít. Minden prefixum és minden DXCC ország minden sávon szorzó.&lt;/p&gt;&lt;p&gt;Amíg ez van kiválasztva, az új hívójelek, prefixumok és országok összesítve és sávonként is ki vannak emelve, az alábbi lokátorkiemelés ki van kapcsolva, és ezek kézzel nem módosíthatók. A saját beállításai visszaállnak, amikor visszavált a Nincs értékre.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Colors apply per contest, currently: %1. Own colors get applied again when contest mode is disabled.</source>
+        <translation>A színek versenyenként érvényesek, jelenleg: %1. A saját színek újra érvényesek, amikor a verseny mód kikapcsol.</translation>
     </message>
 </context>
 <context>

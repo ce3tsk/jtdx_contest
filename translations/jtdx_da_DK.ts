@@ -6626,6 +6626,11 @@ Det er dekoderens egen fejl. Ret det, der forhindrer den i at starte - et mangle
         <source>The transmission was stopped, as by Halt Tx. Check the antenna.</source>
         <translation>Udsendelsen blev standset, som med Stop Tx. Kontrollér antennen.</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Sum of the QSO points = score</source>
+        <translation>Summen af QSO-point = score</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>
@@ -10447,6 +10452,26 @@ lydkort ændring</translation>
         <location filename="../Configuration.ui"/>
         <source>Download the latest CALL3.TXT from wsjt-x-improved.sourceforge.io, as WSJT-X does: the calls and grid squares behind the JT65 and JT9 Hint decoders and the Lookup button. The copy replaced is kept as CALL3_backup.TXT, with any calls added by Add. The decoder reads the new list at the program's next start.</source>
         <translation>Download den nyeste CALL3.TXT fra wsjt-x-improved.sourceforge.io, som WSJT-X gør: kaldesignalerne og gridfelterne bag JT65- og JT9-dekoderne til Hint og knappen Slå op. Den erstattede kopi gemmes som CALL3_backup.TXT, med kaldesignaler tilføjet med Tilføj. Dekoderen læser den nye liste ved programmets næste start.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;ARRL International Digital Contest. The exchange is the 4 character grid instead of a signal report. A QSO scores 1 point plus 1 for each started 500 km, a station counts once per band, and there are no multipliers.&lt;/p&gt;&lt;p&gt;While this is selected the grid highlighting below is off, new calls are highlighted per band, and neither can be changed by hand. Your own settings are restored when you switch back to None.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;ARRL International Digital Contest. Udvekslingen er locatoren på 4 tegn i stedet for en signalrapport. En QSO giver 1 point plus 1 for hver påbegyndte 500 km, en station tæller én gang pr. bånd, og der er ingen multiplikatorer.&lt;/p&gt;&lt;p&gt;Mens dette er valgt, er locatorfremhævningen nedenfor slået fra, nye kaldesignaler fremhæves pr. bånd, og intet af det kan ændres manuelt. Dine egne indstillinger gendannes, når du skifter tilbage til Ingen.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>YBDXPI FT8 contest</source>
+        <translation>YBDXPI FT8-contest</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;YBDXPI FT8 contest, FT8 only. The exchange is the 4 character grid instead of a signal report. A QSO scores 5 points with a YBDXPI member, otherwise 1 in your own country, 2 on your continent and 3 on another. A station counts once per band. Each prefix and each DXCC country on each band is a multiplier.&lt;/p&gt;&lt;p&gt;While this is selected new calls, prefixes and countries are highlighted, overall and per band, the grid highlighting below is off, and none of it can be changed by hand. Your own settings are restored when you switch back to None.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;YBDXPI FT8 contest, kun FT8. Udvekslingen er locatoren på 4 tegn i stedet for en signalrapport. En QSO giver 5 point med et YBDXPI-medlem, ellers 1 i dit eget land, 2 på dit kontinent og 3 på et andet. En station tæller én gang pr. bånd. Hvert præfiks og hvert DXCC-land på hvert bånd er en multiplikator.&lt;/p&gt;&lt;p&gt;Mens dette er valgt, fremhæves nye kaldesignaler, præfikser og lande samlet og pr. bånd, locatorfremhævningen nedenfor er slået fra, og intet af det kan ændres manuelt. Dine egne indstillinger gendannes, når du skifter tilbage til Ingen.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Colors apply per contest, currently: %1. Own colors get applied again when contest mode is disabled.</source>
+        <translation>Farver gælder pr. konkurrence, lige nu: %1. Egne farver bruges igen, når konkurrencetilstand slås fra.</translation>
     </message>
 </context>
 <context>

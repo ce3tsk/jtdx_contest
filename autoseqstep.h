@@ -86,6 +86,7 @@ namespace autoseq_step
     bool answerInCallCount = false;  int answerInCallCounter = 0;
     bool sentRReportCount = false;   int sentRReportCounter = 0;
     bool sentRR7373Count = false;    int sentRR7373Counter = 0;
+    bool finishesQsoFirst = false;   // contest_rules::Rules: "sent RR73/73" also counts our RR73 to his repeated R+grid
   };
 
   struct Release
@@ -110,7 +111,9 @@ namespace autoseq_step
         r.reason = " cleared, AutoSeq QSO finished";
       }
     else if ((w.status == S::RCQ || w.status == S::SCALL || (w.status == S::SREPORT && w.skipTx1))
-             && w.answerCQCount && (decode_priority::counterGivesUp (w.prio) || w.strictdirCQ)
+             /* (TODO.md 3.-232) in a contest the rank is the points: every station would be one never given up, and a station
+                that keeps calling CQ would hold the operator for good */
+             && w.answerCQCount && (decode_priority::counterGivesUp (w.prio) || w.strictdirCQ || w.finishesQsoFirst)
              && (w.answerCQCounter <= w.count || w.replyOther))
       {
         r.rule = Rule::AnswerCQCount;
@@ -145,8 +148,11 @@ namespace autoseq_step
         r.counters2Off = true;
         r.countersOff = w.singleshot;
       }
+    /* (2026-11-04, the operator: the limits for resending are the Settings' counters) his R+grid again and again after our RR73 was
+       under no counter at all: a station that never hears us held the sequencer for good, the callers waiting. count is our RR73s
+       so far, his first R+grid having set it to 0 (QsoHistory::message ()). */
     else if ((w.status == S::RRR || w.status == S::RRR73 || w.status == S::R73 || w.status == S::SRR73
-              || w.status == S::S73) && w.sentRR7373Count && w.sentRR7373Counter <= w.count)
+              || w.status == S::S73 || (w.finishesQsoFirst && w.status == S::RRREPORT)) && w.sentRR7373Count && w.sentRR7373Counter <= w.count)
       {
         r.rule = Rule::SentRR7373Count;
         r.reason = " cleared, RRR|RR73|R73 count reached";
@@ -155,6 +161,14 @@ namespace autoseq_step
         r.countersOff = w.singleshot;
       }
     return r;
+  }
+
+  /* (2026-11-04, TODO.md 3.-229) a line of the station worked runs the sequencer's pass at once, while the decoder is still printing. Let
+     go in that pass, autoselect would see him alone: his line has arrived and the others have not, and it would take him again, the
+     counter having done nothing. So it waits for the decode's end. Only in a contest that finishes the QSO first: nothing else moves. */
+  inline bool wait_for_decode_end (bool finishesQsoFirst, bool passOnDecodeLine)
+  {
+    return finishesQsoFirst && passOnDecodeLine;
   }
 
   /* ---- autoselect: the flag word handed to QsoHistory::autoseq () for a new pick ----

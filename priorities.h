@@ -32,6 +32,8 @@ namespace decode_priority
     NewITUZBand = 28, NewITUZ = 30,
     NewCQZBand = 32, NewCQZ = 34,
     ContestPointsBase = 34,                            // 34 + 2 * points (+1 LoTW): 1 point 36/37 .. 7 points 48/49
+    // (2026-11-04) the YBDXPI contest, whose points end at 5, 44/45: a multiplier ranks above them, a new country above a new prefix
+    ContestPrefix = 46, ContestCountry = 50,
     NewField = 52                                      // WW Digi multiplier, the head of the chain
   };
 
