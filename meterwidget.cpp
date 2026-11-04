@@ -56,7 +56,7 @@ void MeterWidget::paintEvent (QPaintEvent * event)
   auto const& target = contentsRect ();
   QRect r {QPoint {target.left (), static_cast<int> (target.top () + target.height () - m_signal / 90. * target.height ())}
     , QPoint {target.right (), target.bottom ()}};
-  p.setBrush (QColor {255, 180, 0});
+  p.setBrush (QColor {75, 180, 0});
   if (m_signal > 89 || m_signal < 30) {p.setBrush(QColor {255, 150, 150});}
 
   p.drawRect (r);

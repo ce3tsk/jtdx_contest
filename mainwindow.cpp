@@ -65,6 +65,7 @@
 #include "pickstep.h"  // CE3TSK 2026-10-19: processMessage ()'s - what a double click sets up
 #include "waitreply.h" // CE3TSK 2026-10-21: Wait and Reply
 #include "txcheck.h"      // CE3TSK 2026-10-18: does a Tx message go out as it is written
+#include "txlevel.h"      // the Tx level control: dB in the spin box, 0 .. 450 stored
 #include "contestmode.h"   // CE3TSK 2026-09-26: the modes a contest allows
 #include "savedmode.h"     // CE3TSK 2026-09-26: the saved Mode/ModeTx made safe
 #include "bandschedule.h"  // CE3TSK 2026-09-26: which scheduler entry fires
@@ -1686,7 +1687,7 @@ void MainWindow::writeSettings()
   m_settings->setValue("TxFreq",ui->TxFreqSpinBox->value());
   m_settings->setValue("WSPRfreq",ui->WSPRfreqSpinBox->value());
   m_settings->setValue("DialFreq",QVariant::fromValue(m_lastMonitoredFrequency));
-  m_settings->setValue("OutAttenuation",m_outAttenuationRestored ? ui->outAttenuation->value ()
+  m_settings->setValue("OutAttenuation",m_outAttenuationRestored ? outAttValue()
                                                                  : m_outAttenuation);   // CE3TSK
   m_settings->setValue("GUItab",m_messageTab);   // CE3TSK 2026-10-20: the message tab - Tab 3 (band hopping) is not one
   m_settings->setValue("LockTxFreq",m_lockTxFreq);
@@ -3473,8 +3474,8 @@ void MainWindow::displayDialFrequency ()
       if (m_config.pwrBandTxMemory() && !m_tune) {
           if (m_mode == "JT9+JT65" && m_modeTx == "JT65") { curBand = band_name+m_modeTx; }
           else { curBand = band_name+m_mode; }
-          if (m_pwrBandTxMemory.contains(curBand)) { m_PwrBandSetOK = false; ui->outAttenuation->setValue(m_pwrBandTxMemory[curBand].toInt()); m_PwrBandSetOK = true;/* printf("set power from freq %s %s %d\n",m_lastBand.toStdString().c_str(),curBand.toStdString().c_str(),m_pwrBandTxMemory[curBand].toInt());*/}
-          else if (m_outAttenuationRestored) { m_pwrBandTxMemory[curBand] = ui->outAttenuation->value(); }   /* CE3TSK: only record a band once the slider holds a real value, never the .ui default */
+          if (m_pwrBandTxMemory.contains(curBand)) { m_PwrBandSetOK = false; setOutAttValue(m_pwrBandTxMemory[curBand].toInt()); m_PwrBandSetOK = true;/* printf("set power from freq %s %s %d\n",m_lastBand.toStdString().c_str(),curBand.toStdString().c_str(),m_pwrBandTxMemory[curBand].toInt());*/}
+          else if (m_outAttenuationRestored) { m_pwrBandTxMemory[curBand] = outAttValue(); }   /* CE3TSK: only record a band once the slider holds a real value, never the .ui default */
       }
       startup=false;
     }
@@ -8408,6 +8409,17 @@ void MainWindow::readFromStdout()                             //readFromStdout
       QString deCall="";
       QString grid="";
       decodedtext.deCallAndGrid(/*out*/deCall,grid);
+      /* The Wide Graph writes the call of a station calling CQ at the bottom of the waterfall, over the frequency it
+         was decoded on (cqspots.h). Only a CQ of the air band and mode shown now - not a late line of the one left -
+         and not what is in doubt: a likely phantom decode, an error decode, a line that is no message. A hint decode
+         ('*') is a CQ like any other here: it stands in the Band Activity window too, and the waterfall is meant to
+         show every station calling CQ that the decoder has found. */
+      if (!late && !decodedtext.isDebug () && !decodedtext.isWrong ()
+          && !decodedtext.verdict ().marked () && decodedtext.message ().startsWith ("CQ ")) {   // CQersCall () reads DE and QRZ too
+        QString cqGrid, cqWord;
+        QString const cqCall {decodedtext.CQersCall (cqGrid, cqWord)};
+        if (!cqCall.isEmpty ()) m_wideGraph->addCqCall (cqCall, decodedtext.frequencyOffset ());
+      }
       /* CE3TSK 2026-10-19 (TODO.md section 7, 1f; 3.-141): the sequencer's decisions on a line are rxstep.h's - his line's
          sender, whom he answers, the Rx frequency window, what the line asks of the sequencer */
       bool const fromHim = !deCall.isEmpty() && Radio::base_callsign (deCall) == Radio::base_callsign (m_hisCall);
@@ -9649,11 +9661,11 @@ void MainWindow::processMessage(QString const& messages, int position, bool alt,
               curBand = ui->bandComboBox->currentText()+m_mode;
               if (m_pwrBandTxMemory.contains(curBand))
                 {
-                  ui->outAttenuation->setValue(m_pwrBandTxMemory[curBand].toInt());
+                  setOutAttValue(m_pwrBandTxMemory[curBand].toInt());
                 }
               else if (m_outAttenuationRestored)
                 {
-                  m_pwrBandTxMemory[curBand] = ui->outAttenuation->value();   /* CE3TSK: never the .ui default */
+                  m_pwrBandTxMemory[curBand] = outAttValue();   /* CE3TSK: never the .ui default */
                 }
             }
           m_modeTx="JT9";
@@ -9668,11 +9680,11 @@ void MainWindow::processMessage(QString const& messages, int position, bool alt,
               if (m_pwrBandTxMemory.contains(curBand))
                 {
 //                  printf("auto mode changed %s JT65 %s:%d\n",m_mode.toStdString().c_str(),curBand.toStdString().c_str(),m_pwrBandTxMemory[curBand].toInt());
-                  ui->outAttenuation->setValue(m_pwrBandTxMemory[curBand].toInt());
+                  setOutAttValue(m_pwrBandTxMemory[curBand].toInt());
                 }
               else if (m_outAttenuationRestored)
                 {
-                  m_pwrBandTxMemory[curBand] = ui->outAttenuation->value();   /* CE3TSK: never the .ui default */
+                  m_pwrBandTxMemory[curBand] = outAttValue();   /* CE3TSK: never the .ui default */
                 }
             }
           m_modeTx="JT65";
@@ -11512,7 +11524,7 @@ void MainWindow::band_changed (Frequency f)
        distinction to avoid saving the slider's .ui default over a good stored value. */
     if (!m_outAttenuationRestored)
       {
-        if (ui->outAttenuation->value () == 1) ui->outAttenuation->setValue (m_outAttenuation);
+        if (outAttValue() == 1) setOutAttValue(m_outAttenuation);
         m_outAttenuationRestored = true;
       }
     if (qAbs(fDelta)>1000000) {
@@ -11532,8 +11544,8 @@ void MainWindow::band_changed (Frequency f)
         if (m_config.pwrBandTxMemory() && !m_tune) {
             if (m_mode == "JT9+JT65" && m_modeTx == "JT65") { curBand = m_config.bands ()->find (m_freqNominal)+m_modeTx; }
             else { curBand = m_config.bands ()->find (m_freqNominal)+m_mode; }
-            if (m_pwrBandTxMemory.contains(curBand)) { m_PwrBandSetOK = false; ui->outAttenuation->setValue(m_pwrBandTxMemory[curBand].toInt()); m_PwrBandSetOK = true;/* printf("set power from bandchange % lld %lld %s %d\n",m_lastDisplayFreq,m_freqNominal,curBand.toStdString().c_str(),m_pwrBandTxMemory[curBand].toInt());*/}
-            else if (m_outAttenuationRestored) { m_pwrBandTxMemory[curBand] = ui->outAttenuation->value(); }   /* CE3TSK: only record a band once the slider holds a real value, never the .ui default */
+            if (m_pwrBandTxMemory.contains(curBand)) { m_PwrBandSetOK = false; setOutAttValue(m_pwrBandTxMemory[curBand].toInt()); m_PwrBandSetOK = true;/* printf("set power from bandchange % lld %lld %s %d\n",m_lastDisplayFreq,m_freqNominal,curBand.toStdString().c_str(),m_pwrBandTxMemory[curBand].toInt());*/}
+            else if (m_outAttenuationRestored) { m_pwrBandTxMemory[curBand] = outAttValue(); }   /* CE3TSK: only record a band once the slider holds a real value, never the .ui default */
         }
         ui->bandComboBox->setCurrentText (m_config.bands ()->find (m_freqNominal));
         m_wideGraph->setRxBand (m_config.bands ()->find (m_freqNominal));
@@ -11898,14 +11910,14 @@ void MainWindow::on_tuneButton_clicked (bool checked)
     /* CE3TSK: what the slider held before the tune, so the end of the tune can come back to it
        even on a band that has nothing remembered - otherwise the operator is left transmitting
        at tune drive. */
-    m_outAttenuationPreTune = ui->outAttenuation->value();
+    m_outAttenuationPreTune = outAttValue();
     if (m_config.pwrBandTuneMemory ()) {
       /* CE3TSK: only record a band once the slider holds a real value, never the .ui default -
          the guard every power-memory write carries. */
-      if (m_outAttenuationRestored) m_pwrBandTxMemory[curBand] = ui->outAttenuation->value(); // remember our Tx pwr
+      if (m_outAttenuationRestored) m_pwrBandTxMemory[curBand] = outAttValue(); // remember our Tx pwr
       if (m_pwrBandTuneMemory.contains(curBand)) {
         m_PwrBandSetOK = false;
-        ui->outAttenuation->setValue(m_pwrBandTuneMemory[curBand].toInt()); // set to Tune pwr
+        setOutAttValue(m_pwrBandTuneMemory[curBand].toInt()); // set to Tune pwr
         m_PwrBandSetOK = true;
       }
     }
@@ -11914,13 +11926,13 @@ void MainWindow::on_tuneButton_clicked (bool checked)
 		/* CE3TSK: the same guard the other power-memory writes carry - a slider still at the .ui
 		   default of 1 (the rig never came up, so band_changed () never restored it) must not be
 		   memorised as this band's tune drive. */
-		if (m_outAttenuationRestored) m_pwrBandTuneMemory[curBand] = ui->outAttenuation->value(); // remember our Tune pwr
+		if (m_outAttenuationRestored) m_pwrBandTuneMemory[curBand] = outAttValue(); // remember our Tune pwr
 		m_PwrBandSetOK = false;
 		/* CE3TSK: come back to the remembered Tx drive, or failing that to whatever the slider
 		   held before the tune. Reading an absent key would give 0, i.e. minimum drive, and
 		   leaving the slider alone would transmit at tune drive. */
-		if (m_pwrBandTxMemory.contains(curBand)) ui->outAttenuation->setValue(m_pwrBandTxMemory[curBand].toInt()); // set to Tx pwr
-		else if (m_outAttenuationPreTune >= 0) ui->outAttenuation->setValue(m_outAttenuationPreTune);
+		if (m_pwrBandTxMemory.contains(curBand)) setOutAttValue(m_pwrBandTxMemory[curBand].toInt()); // set to Tx pwr
+		else if (m_outAttenuationPreTune >= 0) setOutAttValue(m_outAttenuationPreTune);
 		m_PwrBandSetOK = true;
     }
 	m_outAttenuationPreTune = -1;
@@ -12008,8 +12020,8 @@ void MainWindow::on_pbTxMode_clicked()
   if (m_config.pwrBandTxMemory() && !m_tune) {
       if (m_mode == "JT9+JT65" && m_modeTx == "JT65") { curBand = ui->bandComboBox->currentText()+m_modeTx; }
       else { curBand = ui->bandComboBox->currentText()+m_mode; }
-      if (m_pwrBandTxMemory.contains(curBand)) { ui->outAttenuation->setValue(m_pwrBandTxMemory[curBand].toInt()); }
-      else if (m_outAttenuationRestored) { m_pwrBandTxMemory[curBand] = ui->outAttenuation->value(); }   /* CE3TSK: only record a band once the slider holds a real value, never the .ui default */
+      if (m_pwrBandTxMemory.contains(curBand)) { setOutAttValue(m_pwrBandTxMemory[curBand].toInt()); }
+      else if (m_outAttenuationRestored) { m_pwrBandTxMemory[curBand] = outAttValue(); }   /* CE3TSK: only record a band once the slider holds a real value, never the .ui default */
   }
   m_wideGraph->setModeTx(m_modeTx);
   statusChanged();
@@ -12367,8 +12379,19 @@ void MainWindow::transmit (double snr)
   if(m_nlasttx==0 && !m_tune) m_nlasttx=m_ntx;
 }
 
-void MainWindow::on_outAttenuation_valueChanged (int a)
+int MainWindow::outAttValue () const
 {
+  return tx_level::units_from_db (ui->outAttenuation->value ());
+}
+
+void MainWindow::setOutAttValue (int units)
+{
+  ui->outAttenuation->setValue (tx_level::db_from_units (units));
+}
+
+void MainWindow::on_outAttenuation_valueChanged (double dB)
+{
+  int const a {tx_level::units_from_db (dB)};   // the whole number the program keeps (txlevel.h)
   /* CE3TSK: only a change the operator made says the slider holds a real value. m_PwrBandSetOK is
      false around our own setValue calls (the band and tune memories), and setting the flag there
      defeated the guard it exists for: a tune started before band_changed () had restored the drive

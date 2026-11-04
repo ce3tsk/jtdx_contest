@@ -500,7 +500,7 @@ private slots:
   void on_pbTxLock_clicked(bool);
   void on_skipTx1_clicked(bool checked);
   void on_skipGrid_clicked(bool checked);
-  void on_outAttenuation_valueChanged (int);
+  void on_outAttenuation_valueChanged (double);   // the Tx level in dB; see txlevel.h
   void rigOpen ();
   void handle_transceiver_update (Transceiver::TransceiverState const&);
   void handle_transceiver_failure (QString const& reason);
@@ -607,6 +607,10 @@ private:
   int m_rx_audio_buffer_frames;
   int m_tx_audio_buffer_frames;
   int m_outAttenuation = 225;
+  /* The Tx level control is a spin box in dB (txlevel.h); the program keeps the level as the whole number the slider
+     used to hold, 0 .. 450, in the per-band memories and the settings. These two are the only way to the control. */
+  int outAttValue () const;
+  void setOutAttValue (int units);
   /* CE3TSK: has m_outAttenuation actually reached the slider yet?  The stored power is only
      applied once the rig reports a frequency (band_changed / displayDialFrequency), but it
      used to be written back from the slider unconditionally - so a session where the rig

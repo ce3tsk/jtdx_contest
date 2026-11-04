@@ -16,8 +16,11 @@
 #include <QFrame>
 #include <QImage>
 #include <QVector>
+#include <QElapsedTimer>
+#include <QTimer>
 #include <cstring>
 #include "JTDXDateTime.h"
+#include "cqspots.h"
 #define VERT_DIVS 7	//specify grid screen divisions
 #define HORZ_DIVS 20
 
@@ -84,6 +87,12 @@ public:
   void setFlatten(bool b);
   void setTol(int n);
   void setRxBand(QString band);
+  // CQ calls at the bottom of the waterfall (cqspots.h): the callsign of a station calling CQ, written over
+  // its audio frequency for the given number of seconds; 0 switches it off
+  void setCqDuration(int seconds);
+  int  cqDuration() const {return m_cqBoard.duration_s();}
+  void addCqCall(QString const& call, int freq);
+  void clearCqCalls();
 
 signals:
   void freezeDecode1(int n);
@@ -103,6 +112,8 @@ private:
   void MakeFrequencyStrs();
   int XfromFreq(float f);
   float FreqfromX(int x);
+  float signalBandwidth() const;           // width in Hz of one signal of the mode, 0 if there is none
+  void drawCqCalls(QPainter& painter);     // the CQ calls over the waterfall's bottom edge
 
   bool    m_bCurrent;
   bool    m_bCumulative;
@@ -151,6 +162,10 @@ private:
   double  m_TRperiod;
 
   float   m_sum[2048];
+
+  cq_spots::Board m_cqBoard;
+  QElapsedTimer   m_cqClock;               // monotonic: the calls' age does not follow a clock that is set
+  QTimer          m_cqTimer;               // runs while there are calls on the board, to let them expire
 
   qint32  m_dBStepSize;
   qint32  m_FreqUnits;
