@@ -399,7 +399,7 @@ QString ExportCabrillo::suggestedName () const
 {
   if (shown_ < 0) return QString {};
   LogFile const& f = logs_[shown_];
-  return cabrillo::file_name (contest_cabrillo (f.activity), f.slug, f.year, call_->currentText ());
+  return cabrillo::file_name (QFileInfo {f.path}.fileName ());
 }
 
 bool ExportCabrillo::saveTo (QString const& path)

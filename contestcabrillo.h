@@ -39,7 +39,6 @@ namespace cabrillo
     QString name;                     // the CONTEST: tag it starts with
     QString assisted;                 // the CATEGORY-ASSISTED it starts with
     bool transmitterColumn = false;   // its QSO template ends in the transmitter: 0, a single one
-    bool callNamesFile = false;       // its rules name the file: your_callsign.log
     bool locationIsGrid = false;      // its guide asks the grid for LOCATION, not DX or a section
     QStringList bands;                // the CATEGORY-BAND it takes
     QStringList powers;               // the CATEGORY-POWER it takes, the one offered first at the head
@@ -70,13 +69,13 @@ namespace cabrillo
   }
 
   /* Its rules: "in Cabrillo Format from WSJT", and "Incomplete content" goes to the check log. Its guide to WSJT-X's export: "Contest name YBDXPI", "Your 4 Grid Locator"
-     for the location, "Fill with Assisted". Its definition file for N1MM says YBDXPIFT8, so the tag can be edited. All band only. The file named by its rules. */
+     for the location, "Fill with Assisted". Its definition file for N1MM says YBDXPIFT8, so the tag can be edited. All band only. Its rules ask the file renamed
+     your_callsign.log: left to the upload, the file is named after the log as the other contests' (the operator, 2026-11-05). */
   inline Contest ybdxpi ()
   {
     Contest c;
     c.name = "YBDXPI";
     c.assisted = "ASSISTED";
-    c.callNamesFile = true;
     c.locationIsGrid = true;
     c.bands = QStringList {"ALL"};
     c.powers = QStringList {"LOW", "HIGH", "QRP"};
@@ -319,13 +318,10 @@ namespace cabrillo
     return t;
   }
 
-  // a call's / is no character for a file name
-  inline QString file_name (Contest const& c, QString const& slug, int year, QString const& call)
+  // the file's name: the contest log's own, .cbr for its .adi - wsjtx_ybdxpi-2026_log.adi gives wsjtx_ybdxpi-2026_log.cbr, in every contest (the operator, 2026-11-05)
+  inline QString file_name (QString const& logName)
   {
-    QString safe {call};
-    safe.replace ('/', '-');
-    if (c.callNamesFile) return safe + ".log";
-    return safe + '_' + slug + '-' + QString::number (year) + ".cbr";
+    return (logName.endsWith (".adi") ? logName.left (logName.size () - 4) : logName) + ".cbr";
   }
 
   // the year in contest_log_filename ()'s name for a contest's log; 0 for any other name
