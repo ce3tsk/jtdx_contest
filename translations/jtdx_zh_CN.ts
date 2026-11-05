@@ -2535,6 +2535,84 @@ Format:
     </message>
 </context>
 <context>
+    <name>ExportCabrillo</name>
+    <message>
+        <location filename="../exportcabrillo.cpp"/>
+        <source>Export Cabrillo log</source>
+        <translation>导出 Cabrillo 日志</translation>
+    </message>
+    <message>
+        <location filename="../exportcabrillo.cpp"/>
+        <source>Contest log:</source>
+        <translation>竞赛日志：</translation>
+    </message>
+    <message>
+        <location filename="../exportcabrillo.cpp"/>
+        <source>No contest log in %1.</source>
+        <translation>%1 中没有竞赛日志。</translation>
+    </message>
+    <message>
+        <location filename="../exportcabrillo.cpp"/>
+        <source>Cannot read "%1": %2</source>
+        <translation>无法读取 "%1"：%2</translation>
+    </message>
+    <message>
+        <location filename="../exportcabrillo.cpp"/>
+        <source>%1 QSOs to save.</source>
+        <translation>待保存的 QSO：%1。</translation>
+    </message>
+    <message>
+        <location filename="../exportcabrillo.cpp"/>
+        <source>Left out, damaged: %1 (log line %2).</source>
+        <translation>已排除，已损坏：%1（日志行 %2）。</translation>
+    </message>
+    <message>
+        <location filename="../exportcabrillo.cpp"/>
+        <source>Left out, another own call: %1 (log line %2).</source>
+        <translation>已排除，其他本台呼号：%1（日志行 %2）。</translation>
+    </message>
+    <message>
+        <location filename="../exportcabrillo.cpp"/>
+        <source>Left out, the same QSO logged twice: %1 (log line %2).</source>
+        <translation>已排除，同一 QSO 记录两次：%1（日志行 %2）。</translation>
+    </message>
+    <message>
+        <location filename="../exportcabrillo.cpp"/>
+        <source>Save the Cabrillo log</source>
+        <translation>保存 Cabrillo 日志</translation>
+    </message>
+    <message>
+        <location filename="../exportcabrillo.cpp"/>
+        <source>Cabrillo log (*.cbr *.log)</source>
+        <translation>Cabrillo 日志 (*.cbr *.log)</translation>
+    </message>
+    <message>
+        <location filename="../exportcabrillo.cpp"/>
+        <source>Cannot write "%1": %2</source>
+        <translation>无法写入 "%1"：%2</translation>
+    </message>
+    <message>
+        <location filename="../exportcabrillo.cpp"/>
+        <source>Cabrillo log saved: %1</source>
+        <translation>Cabrillo 日志已保存：%1</translation>
+    </message>
+    <message>
+        <location filename="../exportcabrillo.cpp"/>
+        <source>LOCATION: give your ARRL or RAC section.</source>
+        <translation>LOCATION：请填写您的 ARRL 或 RAC 分区。</translation>
+    </message>
+    <message>
+        <location filename="../exportcabrillo.cpp"/>
+        <source>No claimed score: the country data is not loaded.</source>
+        <translation>无申报分数：国家数据未加载。</translation>
+    </message>
+    <message>
+        <location filename="../exportcabrillo.cpp"/>
+        <source>No grid, saved with ZZ00: %1 (log line %2).</source>
+        <translation>无网格，以 ZZ00 保存：%1（日志行 %2）。</translation>
+    </message>
+</context>
+<context>
     <name>FrequencyDialog</name>
     <message>
         <location filename="../Configuration.cpp" line="219"/>
@@ -6625,6 +6703,11 @@ That is the decoder's own error. Put right whatever stops it starting - a missin
         <location filename="../mainwindow.cpp"/>
         <source>Sum of the QSO points = score</source>
         <translation>QSO 分数之和 = 总分</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Export Cabrillo log...</source>
+        <translation>导出 Cabrillo 日志...</translation>
     </message>
 </context>
 <context>

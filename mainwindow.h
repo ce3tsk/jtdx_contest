@@ -16,6 +16,7 @@
 #endif
 #include <QThread>
 #include <memory>
+#include <QPointer>
 #include <QTimer>
 #include <QElapsedTimer>   // CE3TSK: the update icon's pulse
 #include <QList>
@@ -67,6 +68,7 @@ class FoxVerifier;   /* CE3TSK */
 class UpdateChecker;   // CE3TSK
 class QToolButton;   // CE3TSK
 class QLineEdit;
+class ExportCabrillo;
 class QFont;
 class QHostInfo;
 class WideGraph;
@@ -176,6 +178,7 @@ private slots:
   void on_actionDecode_remaining_files_in_directory_triggered();
   void on_actionDelete_all_wav_files_in_SaveDir_triggered();
   void on_actionOpen_log_directory_triggered ();
+  void on_actionExport_Cabrillo_log_triggered ();   // CE3TSK 2026-11-05
   void on_actionNone_triggered();
   void on_actionSave_all_triggered();
   void on_actionEnglish_triggered();
@@ -589,6 +592,7 @@ private:
 
   QScopedPointer<WideGraph> m_wideGraph;
   QScopedPointer<LogQSO> m_logDlg;
+  QPointer<ExportCabrillo> m_exportCabrillo;   // CE3TSK 2026-11-05: open or not, and one at a time
   QScopedPointer<HelpTextWindow> m_shortcuts;
   QScopedPointer<HelpTextWindow> m_prefixes;
   QScopedPointer<HelpTextWindow> m_mouseCmnds;

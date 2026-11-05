@@ -2537,6 +2537,84 @@ Formato:
     </message>
 </context>
 <context>
+    <name>ExportCabrillo</name>
+    <message>
+        <location filename="../exportcabrillo.cpp"/>
+        <source>Export Cabrillo log</source>
+        <translation>Exportar log Cabrillo</translation>
+    </message>
+    <message>
+        <location filename="../exportcabrillo.cpp"/>
+        <source>Contest log:</source>
+        <translation>Log del concurso:</translation>
+    </message>
+    <message>
+        <location filename="../exportcabrillo.cpp"/>
+        <source>No contest log in %1.</source>
+        <translation>No hay ningún log de concurso en %1.</translation>
+    </message>
+    <message>
+        <location filename="../exportcabrillo.cpp"/>
+        <source>Cannot read "%1": %2</source>
+        <translation>No se puede leer "%1": %2</translation>
+    </message>
+    <message>
+        <location filename="../exportcabrillo.cpp"/>
+        <source>%1 QSOs to save.</source>
+        <translation>%1 QSO para guardar.</translation>
+    </message>
+    <message>
+        <location filename="../exportcabrillo.cpp"/>
+        <source>Left out, damaged: %1 (log line %2).</source>
+        <translation>Omitido, dañado: %1 (línea del log %2).</translation>
+    </message>
+    <message>
+        <location filename="../exportcabrillo.cpp"/>
+        <source>Left out, another own call: %1 (log line %2).</source>
+        <translation>Omitido, otro indicativo propio: %1 (línea del log %2).</translation>
+    </message>
+    <message>
+        <location filename="../exportcabrillo.cpp"/>
+        <source>Left out, the same QSO logged twice: %1 (log line %2).</source>
+        <translation>Omitido, el mismo QSO registrado dos veces: %1 (línea del log %2).</translation>
+    </message>
+    <message>
+        <location filename="../exportcabrillo.cpp"/>
+        <source>Save the Cabrillo log</source>
+        <translation>Guardar el log Cabrillo</translation>
+    </message>
+    <message>
+        <location filename="../exportcabrillo.cpp"/>
+        <source>Cabrillo log (*.cbr *.log)</source>
+        <translation>Log Cabrillo (*.cbr *.log)</translation>
+    </message>
+    <message>
+        <location filename="../exportcabrillo.cpp"/>
+        <source>Cannot write "%1": %2</source>
+        <translation>No se puede escribir "%1": %2</translation>
+    </message>
+    <message>
+        <location filename="../exportcabrillo.cpp"/>
+        <source>Cabrillo log saved: %1</source>
+        <translation>Log Cabrillo guardado: %1</translation>
+    </message>
+    <message>
+        <location filename="../exportcabrillo.cpp"/>
+        <source>LOCATION: give your ARRL or RAC section.</source>
+        <translation>LOCATION: indique su sección ARRL o RAC.</translation>
+    </message>
+    <message>
+        <location filename="../exportcabrillo.cpp"/>
+        <source>No claimed score: the country data is not loaded.</source>
+        <translation>Sin puntuación declarada: los datos de países no están cargados.</translation>
+    </message>
+    <message>
+        <location filename="../exportcabrillo.cpp"/>
+        <source>No grid, saved with ZZ00: %1 (log line %2).</source>
+        <translation>Sin locator, guardado con ZZ00: %1 (línea del log %2).</translation>
+    </message>
+</context>
+<context>
     <name>FrequencyDialog</name>
     <message>
         <location filename="../Configuration.cpp" line="219"/>
@@ -6634,6 +6712,11 @@ Ese es el error del propio decodificador. Corrija lo que impide que arranque (un
         <location filename="../mainwindow.cpp"/>
         <source>Sum of the QSO points = score</source>
         <translation>Suma de los puntos de QSO = puntuación</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Export Cabrillo log...</source>
+        <translation>Exportar log Cabrillo...</translation>
     </message>
 </context>
 <context>

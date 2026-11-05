@@ -263,6 +263,7 @@ set (wsjtx_CXXSRCS
   Modulator.cpp
   Detector.cpp
   logqso.cpp
+  exportcabrillo.cpp
   displaytext.cpp
   decodedtext.cpp
   getfile.cpp

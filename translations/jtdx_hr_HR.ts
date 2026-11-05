@@ -2535,6 +2535,84 @@ Format:
     </message>
 </context>
 <context>
+    <name>ExportCabrillo</name>
+    <message>
+        <location filename="../exportcabrillo.cpp"/>
+        <source>Export Cabrillo log</source>
+        <translation>Izvezi Cabrillo log</translation>
+    </message>
+    <message>
+        <location filename="../exportcabrillo.cpp"/>
+        <source>Contest log:</source>
+        <translation>Log natjecanja:</translation>
+    </message>
+    <message>
+        <location filename="../exportcabrillo.cpp"/>
+        <source>No contest log in %1.</source>
+        <translation>Nema loga natjecanja u %1.</translation>
+    </message>
+    <message>
+        <location filename="../exportcabrillo.cpp"/>
+        <source>Cannot read "%1": %2</source>
+        <translation>Nije moguće pročitati "%1": %2</translation>
+    </message>
+    <message>
+        <location filename="../exportcabrillo.cpp"/>
+        <source>%1 QSOs to save.</source>
+        <translation>QSO-ova za spremanje: %1.</translation>
+    </message>
+    <message>
+        <location filename="../exportcabrillo.cpp"/>
+        <source>Left out, damaged: %1 (log line %2).</source>
+        <translation>Izostavljeno, oštećeno: %1 (redak loga %2).</translation>
+    </message>
+    <message>
+        <location filename="../exportcabrillo.cpp"/>
+        <source>Left out, another own call: %1 (log line %2).</source>
+        <translation>Izostavljeno, drugi vlastiti pozivni znak: %1 (redak loga %2).</translation>
+    </message>
+    <message>
+        <location filename="../exportcabrillo.cpp"/>
+        <source>Left out, the same QSO logged twice: %1 (log line %2).</source>
+        <translation>Izostavljeno, isti QSO zapisan dvaput: %1 (redak loga %2).</translation>
+    </message>
+    <message>
+        <location filename="../exportcabrillo.cpp"/>
+        <source>Save the Cabrillo log</source>
+        <translation>Spremi Cabrillo log</translation>
+    </message>
+    <message>
+        <location filename="../exportcabrillo.cpp"/>
+        <source>Cabrillo log (*.cbr *.log)</source>
+        <translation>Cabrillo log (*.cbr *.log)</translation>
+    </message>
+    <message>
+        <location filename="../exportcabrillo.cpp"/>
+        <source>Cannot write "%1": %2</source>
+        <translation>Nije moguće zapisati "%1": %2</translation>
+    </message>
+    <message>
+        <location filename="../exportcabrillo.cpp"/>
+        <source>Cabrillo log saved: %1</source>
+        <translation>Cabrillo log spremljen: %1</translation>
+    </message>
+    <message>
+        <location filename="../exportcabrillo.cpp"/>
+        <source>LOCATION: give your ARRL or RAC section.</source>
+        <translation>LOCATION: navedite svoju ARRL ili RAC sekciju.</translation>
+    </message>
+    <message>
+        <location filename="../exportcabrillo.cpp"/>
+        <source>No claimed score: the country data is not loaded.</source>
+        <translation>Nema prijavljenog rezultata: podaci o zemljama nisu učitani.</translation>
+    </message>
+    <message>
+        <location filename="../exportcabrillo.cpp"/>
+        <source>No grid, saved with ZZ00: %1 (log line %2).</source>
+        <translation>Bez lokatora, spremljeno sa ZZ00: %1 (redak loga %2).</translation>
+    </message>
+</context>
+<context>
     <name>FrequencyDialog</name>
     <message>
         <location filename="../Configuration.cpp" line="219"/>
@@ -6630,6 +6708,11 @@ To je greška samog dekodera. Otklonite ono što ga sprječava da se pokrene - n
         <location filename="../mainwindow.cpp"/>
         <source>Sum of the QSO points = score</source>
         <translation>Zbroj bodova QSO-a = rezultat</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Export Cabrillo log...</source>
+        <translation>Izvezi Cabrillo log...</translation>
     </message>
 </context>
 <context>

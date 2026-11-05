@@ -4750,6 +4750,7 @@ list. The list can be maintained in Settings (F2).</string>
     <addaction name="actionErase_wsjtx_log_adi"/>
     <addaction name="actionOpen_wsjtx_log_adi"/>
     <addaction name="actionOpen_log_directory"/>
+    <addaction name="actionExport_Cabrillo_log"/>
     <addaction name="separator"/>
     <addaction name="actionSettings"/>
     <addaction name="separator"/>
@@ -5872,6 +5873,11 @@ list. The list can be maintained in Settings (F2).</string>
   <action name="actionOpen_log_directory">
    <property name="text">
     <string>Open log directory</string>
+   </property>
+  </action>
+  <action name="actionExport_Cabrillo_log">
+   <property name="text">
+    <string>Export Cabrillo log...</string>
    </property>
   </action>
   <action name="actionMessage_averaging">

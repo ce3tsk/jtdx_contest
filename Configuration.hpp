@@ -3,6 +3,8 @@
 
 #include <QObject>
 #include <functional>
+#include <vector>
+#include <QList>
 #include <QFont>
 
 #include "Radio.hpp"
@@ -26,6 +28,9 @@ class FrequencyList_v2;
 class StationList;
 class QStringListModel;
 class QHostAddress;
+class CountryDat;
+namespace cabrillo {struct Contest;}
+namespace contest_score {struct Qso; struct Score;}
 
 //
 // Class Configuration
@@ -483,6 +488,12 @@ Q_DECLARE_METATYPE (Configuration::Type2MsgGen);
 int contest_points (Configuration::SpecialOperatingActivity, int distanceKm);
 /* CE3TSK 2026-11-03: the row of contestrules.h for an activity */
 contest_rules::Rules contest_rules_of (Configuration::SpecialOperatingActivity);
+/* CE3TSK 2026-11-05 (TODO.md 3.-235): the contests the program offers; what each one's Cabrillo file says (contestcabrillo.h); and a
+   contest log's score, one sum for the status bar and the file's CLAIMED-SCORE: contest mode may be off when the file is written. */
+std::vector<Configuration::SpecialOperatingActivity> contests_offered ();
+cabrillo::Contest contest_cabrillo (Configuration::SpecialOperatingActivity);
+contest_score::Score contest_log_score (contest_rules::Rules const&, Configuration::SpecialOperatingActivity, QList<contest_score::Qso> const&
+                                         , CountryDat&, QString const& myCall, QString const& myGrid);
 
 /* CE3TSK: the points tag the message window puts in front of the country name while a
    contest runs: " 1p" .. " 7p", and " --" of the same width when nothing is scored (no grid

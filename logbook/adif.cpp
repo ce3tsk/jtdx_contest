@@ -48,34 +48,7 @@ void ADIF::init(QString filename, CountryDat *countries)
 
 QString ADIF::_extractField(const QString line, const QString fieldName)
 {
-    int fieldNameIndex = line.indexOf('<' + fieldName  ,0,Qt::CaseInsensitive);
-    if (fieldNameIndex >=0)
-    {
-        int closingBracketIndex = line.indexOf('>',fieldNameIndex);
-        int fieldLengthIndex = line.indexOf(':',fieldNameIndex);  // find the size delimiter
-        int dataTypeIndex = -1;
-        if (fieldLengthIndex >= 0)
-        {
-          dataTypeIndex = line.indexOf(':',fieldLengthIndex+1);  // check for a second : indicating there is a data type
-          if (dataTypeIndex > closingBracketIndex)
-            dataTypeIndex = -1; // second : was found but it was beyond the closing >
-        }
-
-        if ((closingBracketIndex > fieldNameIndex) && (fieldLengthIndex > fieldNameIndex) && (fieldLengthIndex< closingBracketIndex))
-        {
-            int fieldLengthCharCount = closingBracketIndex - fieldLengthIndex -1;
-            if (dataTypeIndex >= 0)
-              fieldLengthCharCount -= 2; // data type indicator is always a colon followed by a single character
-            QString fieldLengthString = line.mid(fieldLengthIndex+1,fieldLengthCharCount);
-            int fieldLength = fieldLengthString.toInt();
-            if (fieldLength > 0)
-            {
-              QString field = line.mid(closingBracketIndex+1,fieldLength);
-              return field;
-            }
-       }
-    }
-    return "";
+    return adif_field (line, fieldName);   /* CE3TSK 2026-11-05: logfields.h, the Cabrillo export reads with it too */
 }
 
 

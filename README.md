@@ -217,7 +217,7 @@ whatever its points. A station already worked
 on the band keeps its points on the screen but ranks below every new call, since it adds nothing to the score.
 *AnsB4* stays on and *Hide FT contest messages* off while a contest runs; both come back as they were afterwards.
 Each contest has its own notification colours, starting at the recommended ones; yours come back when you switch it off.
-The YBDXPI member list is bundled with the program. Cabrillo export is not written yet: the log is ADIF.
+The YBDXPI member list is bundled with the program. File > Export Cabrillo log... writes a contest's log as the file its sponsors ask for: every QSO in the log, the organisers doing the checking, the end of each QSO as its time, and says what it could not include and why.
 
 ---
 

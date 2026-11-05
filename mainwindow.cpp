@@ -48,6 +48,7 @@
 #include "widegraph.h"
 #include "sleep.h"
 #include "logqso.h"
+#include "exportcabrillo.h"   // CE3TSK 2026-11-05
 #include "wav16to32.h"
 #include "decoderange.h"
 #include "contestreport.h"
@@ -6689,11 +6690,7 @@ void MainWindow::updateContestScore ()
      construction so a theme change is picked up. */
   contest_score_label->setStyleSheet (QString ("QLabel{background: %1}")
                                       .arg (Radio::convert_dark ("#99ff99", m_useDarkStyle)));
-  auto const score = m_contest.prefixCountryMultipliers   /* CE3TSK 2026-11-04: its points come from the call */
-    ? contest_qso::ybdxpi_score (m_contestLog.contestQsos (), *m_contestLog.countryData (), m_config.my_callsign ())
-    : contest_score::sum (m_contestLog.contestQsos (), [this] (QString const& g) {
-      return m_config.special_op_points (grid_distance_km (m_config.my_grid (), g, true));
-    }, m_contest.fieldMultipliers);
+  auto const score = contest_log_score (m_contest, m_config.special_op_id (), m_contestLog.contestQsos (), *m_contestLog.countryData (), m_config.my_callsign (), m_config.my_grid ());
   contest_score_label->setText (contest_score::text (score));
   /* (TODO.md 3.-232) with the text: ARRL Digi has no multipliers */
   contest_score_label->setToolTip (score.multiplied ? tr ("Contest multipliers x QSO points = score") : tr ("Sum of the QSO points = score"));
@@ -11391,6 +11388,20 @@ void MainWindow::on_actionOpen_wsjtx_log_adi_triggered()
 void MainWindow::on_actionOpen_log_directory_triggered ()
 {
   QDesktopServices::openUrl (QUrl::fromLocalFile (m_dataDir.absolutePath ()));
+}
+
+/* CE3TSK 2026-11-05 (TODO.md 3.-235): also with contest mode off, the logs are due after the contest. It only reads the logs. Not modal: the sequencer runs on behind it, and
+   Halt Tx, Stop and Enable Tx have to stay within reach. */
+void MainWindow::on_actionExport_Cabrillo_log_triggered ()
+{
+  if (!m_exportCabrillo)
+    {
+      m_exportCabrillo = new ExportCabrillo {m_settings, &m_config, m_logBook.countryData (), this};
+      m_exportCabrillo->setAttribute (Qt::WA_DeleteOnClose);
+    }
+  m_exportCabrillo->show ();
+  m_exportCabrillo->raise ();
+  m_exportCabrillo->activateWindow ();
 }
 
 bool MainWindow::gridOK(QString g)

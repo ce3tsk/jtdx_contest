@@ -36,6 +36,40 @@ inline QString adif_gridsquare (QString const& grid)
   return grid.left (8);
 }
 
+/* CE3TSK 2026-11-05 (TODO.md 3.-235): a field of an ADIF record, by its name with the colon ("CALL:"); empty when it is not there. Moved
+   here from ADIF::_extractField, unchanged, for the Cabrillo export to read a log with the same reader as the program. */
+inline QString adif_field (QString const& line, QString const& fieldName)
+{
+    int fieldNameIndex = line.indexOf('<' + fieldName  ,0,Qt::CaseInsensitive);
+    if (fieldNameIndex >=0)
+    {
+        int closingBracketIndex = line.indexOf('>',fieldNameIndex);
+        int fieldLengthIndex = line.indexOf(':',fieldNameIndex);  // find the size delimiter
+        int dataTypeIndex = -1;
+        if (fieldLengthIndex >= 0)
+        {
+          dataTypeIndex = line.indexOf(':',fieldLengthIndex+1);  // check for a second : indicating there is a data type
+          if (dataTypeIndex > closingBracketIndex)
+            dataTypeIndex = -1; // second : was found but it was beyond the closing >
+        }
+
+        if ((closingBracketIndex > fieldNameIndex) && (fieldLengthIndex > fieldNameIndex) && (fieldLengthIndex< closingBracketIndex))
+        {
+            int fieldLengthCharCount = closingBracketIndex - fieldLengthIndex -1;
+            if (dataTypeIndex >= 0)
+              fieldLengthCharCount -= 2; // data type indicator is always a colon followed by a single character
+            QString fieldLengthString = line.mid(fieldLengthIndex+1,fieldLengthCharCount);
+            int fieldLength = fieldLengthString.toInt();
+            if (fieldLength > 0)
+            {
+              QString field = line.mid(closingBracketIndex+1,fieldLength);
+              return field;
+            }
+       }
+    }
+    return "";
+}
+
 /* The received exchange. `stored` is this station's own r_rep; `global` is m_rptRcvd, one
    variable holding the last report parsed from *any* message - and in the contest a "report"
    is a grid, which is how KD6WW's CM98 reached JR5JEU's entry. In a contest an empty exchange

@@ -203,6 +203,8 @@ extern "C" {
 
 #include "pimpl_impl.hpp"
 #include "uilimits.h"   // CE3TSK: the .ui size limits against the current font
+#include "contestcabrillo.h"   // CE3TSK 2026-11-05
+#include "contestpoints.h"     // CE3TSK 2026-11-05: contest_log_score ()
 #include "contestprofile.h"   // CE3TSK: JTDX_contest's own notification colours
 #include "settingsfit.h"   // CE3TSK 2026-10-19: the dialog on a small screen
 
@@ -581,10 +583,6 @@ private:
   /* CE3TSK 2026-11-04 (TODO.md 3.-227): each contest keeps its own working frequencies - ARRL Digi has 6 m and another 160 m, and one
      list edited for one contest would be wrong for the next. contest_frequencies_ is the list of the contest running, or of the first
      when none is, and every other committed list waits in contest_lists_; the dialog stages all of them. */
-  static std::vector<SpecialOperatingActivity> contests_offered ()
-  {
-    return {SpecialOperatingActivity::WW_DIGI, SpecialOperatingActivity::ARRL_DIGI, SpecialOperatingActivity::YBDXPI};
-  }
   static QString contest_frequencies_key (SpecialOperatingActivity activity)   // WW Digi keeps the key every earlier version wrote
   {
     return SpecialOperatingActivity::WW_DIGI == activity ? QString {"ContestFrequencies"}
@@ -1710,6 +1708,38 @@ int Configuration::special_op_points (int distanceKm) const
 QString contest_grid (QString const& grid, bool fourCharOnly)
 {
   return fourCharOnly ? grid.left (4) : grid;
+}
+
+std::vector<Configuration::SpecialOperatingActivity> contests_offered ()
+{
+  return {Configuration::SpecialOperatingActivity::WW_DIGI, Configuration::SpecialOperatingActivity::ARRL_DIGI, Configuration::SpecialOperatingActivity::YBDXPI};
+}
+
+/* CE3TSK 2026-11-05 (TODO.md 3.-235): what a contest's Cabrillo file says. Exhaustive switch, no default. */
+cabrillo::Contest contest_cabrillo (Configuration::SpecialOperatingActivity activity)
+{
+  switch (activity)
+    {
+    case Configuration::SpecialOperatingActivity::WW_DIGI: return cabrillo::ww_digi ();
+    case Configuration::SpecialOperatingActivity::ARRL_DIGI: return cabrillo::arrl_digi ();
+    case Configuration::SpecialOperatingActivity::YBDXPI: return cabrillo::ybdxpi ();
+    case Configuration::SpecialOperatingActivity::NONE:
+    case Configuration::SpecialOperatingActivity::NA_VHF:
+    case Configuration::SpecialOperatingActivity::EU_VHF:
+    case Configuration::SpecialOperatingActivity::FIELD_DAY:
+    case Configuration::SpecialOperatingActivity::RTTY: break;
+    }
+  return {};
+}
+
+contest_score::Score contest_log_score (contest_rules::Rules const& rules, Configuration::SpecialOperatingActivity activity, QList<contest_score::Qso> const& qsos
+                                         , CountryDat& countries, QString const& myCall, QString const& myGrid)
+{
+  return rules.prefixCountryMultipliers   /* CE3TSK 2026-11-04: its points come from the call */
+    ? contest_qso::ybdxpi_score (qsos, countries, myCall)
+    : contest_score::sum (qsos, [&] (QString const& g) {
+      return contest_points (activity, grid_distance_km (myGrid, g, true));
+    }, rules.fieldMultipliers);
 }
 
 /* CE3TSK: filename stem for the contest's own log. Exhaustive switch, no default. */
