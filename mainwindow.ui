@@ -1920,7 +1920,7 @@
                  <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;The button provides choice between S-meter units and dBm. CAT shall be set up via Hamlib or TCI to get S-meter working, some rigs may not be supported.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                 </property>
                 <property name="styleSheet">
-                 <string notr="true">QPushButton { Text-align:left; padding: 2px; } QPushButton:disabled { text-align: center; }</string>
+                 <string notr="true">QPushButton { text-align: center; padding: 2px; }</string>
                 </property>
                 <property name="text">
                  <string>S meter</string>

@@ -1600,7 +1600,9 @@ void DisplayText::displayTransmittedText(QString text, QString myCall, QString h
    reads as "the software did something", distinct from a decode and from the pink QSY line. */
 void DisplayText::displayContestNotice(QString text)
 {
-  QString t = QDateTime::currentDateTimeUtc().toString("hhmmss") + "            " + text;
+  /* CE3TSK 2026-11-07, the operator: "with less spaces so that more is visible without scrolling" - one space after the time, no
+     longer the twelve of a decode's dB, DT and frequency columns */
+  QString t = QDateTime::currentDateTimeUtc().toString("hhmmss") + " " + text;
   QString bg=Radio::convert_dark("#f0b23a",useDarkStyle_);
   appendText(t,bg,Radio::convert_dark("#000000",useDarkStyle_),0," ",Radio::convert_dark("#000000",useDarkStyle_));
 }

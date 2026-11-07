@@ -6591,6 +6591,11 @@ void MainWindow::applyContestLock (bool locked)
   else
     /* at rest: the same grey box the preset lamp below it uses for its uncoloured cases */
     ui->labelContest->setStyleSheet ("QLabel{border: 1px solid #808080; border-radius: 3px; padding: 1px 4px}");
+  /* CE3TSK 2026-11-06, the operator: "add the name of the contest also to the tooltip of the contest lamp when it is lit" -
+     the name on top of the .ui's own line, which is this literal in this context, so its translation */
+  QString const lampTip {tr ("Lit while a contest is selected on the Contest tab of the settings")};
+  QString const contestName {m_config.special_op_name ()};
+  ui->labelContest->setToolTip (locked && !contestName.isEmpty () ? contestName + '\n' + lampTip : lampTip);
 
   /* FT8 and FT4 stay selectable; every other member of the mode group is greyed.
      CE3TSK 2026-09-26, review: asked of contestmode.h for every mode of the table - the modes
@@ -10276,6 +10281,9 @@ void MainWindow::countQSOs ()
   else if (m_mode == "T10") { sprintf(c_txt,"T10  %d",book.get_qso_count("T10")); }
   else { sprintf(c_txt," "); }
   qso_count_label->setText(c_txt);
+  /* CE3TSK 2026-11-06, the operator: "a tooltip on the FT8/FT4 status line count of worked QSOs that shows the name of
+     the contest" - the name its log comment carries; no tooltip outside a contest, as before */
+  qso_count_label->setToolTip (m_contest.running ? m_config.special_op_name () : QString {});
 }
 
 void MainWindow::autoFilter (bool action) { ui->filterButton->setChecked(action); on_filterButton_clicked (action); }
