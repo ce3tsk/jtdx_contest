@@ -6738,6 +6738,11 @@ Ese es el error del propio decodificador. Corrija lo que impide que arranque (un
         <source>No presets</source>
         <translation>Sin preajustes</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Right click: the %1 decoding presets.</source>
+        <translation>Clic derecho: los preajustes de decodificación de %1.</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

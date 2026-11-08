@@ -6731,6 +6731,11 @@ Questo è l'errore del decoder stesso. Sistemare ciò che ne impedisce l'avvio -
         <source>No presets</source>
         <translation>Nessun preset</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Right click: the %1 decoding presets.</source>
+        <translation>Clic destro: i preset di decodifica %1.</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

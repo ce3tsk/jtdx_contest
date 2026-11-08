@@ -4640,8 +4640,9 @@ MainWindow::ModePresets MainWindow::modePresets (QAction const * mode) const
 
 /* CE3TSK 2026-11-07: a right click on a mode button: the mode's own presets, the Presets submenu's entries themselves (modepresets.h), their
    ticks refreshed first as the Decode menu does; picking one is picking it there. Any other mode: "No presets", greyed. The mode is not
-   switched: the presets of FT4 can be set while FT8 runs, as from the Decode menu. popup () and the hover cleared, as showBandChannels (). */
-void MainWindow::showModePresets (QPushButton * button, QAction * mode, QPoint const& at)
+   switched: the presets of FT4 can be set while FT8 runs, as from the Decode menu. popup () and the hover cleared, as showBandChannels ().
+   CE3TSK 2026-11-08: the owner is the preset lamp too, with the mode in use (eventFilter ()). */
+void MainWindow::showModePresets (QWidget * owner, QAction * mode, QPoint const& at)
 {
   if (m_modePresetsMenu) m_modePresetsMenu->close ();
   auto const entry = modePresets (mode);
@@ -4650,9 +4651,9 @@ void MainWindow::showModePresets (QPushButton * button, QAction * mode, QPoint c
   menu->setAttribute (Qt::WA_DeleteOnClose);
   m_modePresetsMenu = menu;
   mode_presets::fill (menu, entry.presets, tr ("No presets"));
-  button->setAttribute (Qt::WA_UnderMouse, false);
-  button->update ();
-  menu->popup (button->mapToGlobal (at));
+  owner->setAttribute (Qt::WA_UnderMouse, false);
+  owner->update ();
+  menu->popup (owner->mapToGlobal (at));
 }
 
 void MainWindow::selectBandButton (Radio::Frequency frequency)
@@ -5195,6 +5196,18 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)  //eventFilter()
 
     case QEvent::ToolTip:
       if(!m_showTooltips) return true;
+      break;
+
+    case QEvent::ContextMenu:
+      /* CE3TSK 2026-11-08, the operator: "add the right click preset feature to the preset lamp, i.e. it will show the preset menu of the
+         currently chosen mode" - the mode buttons' popup, for m_mode. Taken here: outside FT8, FT4 and FT2 the lamp is greyed, and a disabled
+         widget's own event () drops the right click, while its event filter still sees it - so there it says No presets, greyed, as a mode
+         button without presets does. */
+      if (object == ui->labelPreset)
+        {
+          showModePresets (ui->labelPreset, modeAction (m_mode), static_cast<QContextMenuEvent *> (event)->pos ());
+          return true;   // taken: nothing under the lamp gets it too
+        }
       break;
 
     case QEvent::Wheel:
@@ -7491,11 +7504,15 @@ void MainWindow::refreshDecodePreset()
      text, which the catalogues already carry, so these were the last English left on the lamp.
      "Custom" itself stays the English word in every language: it is what the lamp reads, and the
      lamp's own tooltip quotes it verbatim in all 20 catalogues. */
-  ui->labelPreset->setToolTip(wrap_tooltip(ft2 ? (p2==FT2Preset::Custom ? tr("Custom - the FT2 RX / TX background controls match no preset") : names2[static_cast<int>(p2)]->text())
-                              : ft4 ? (p4==FT4Preset::Custom ? tr("Custom - the FT4 RX / TX background controls match no preset") : names4[static_cast<int>(p4)]->text())
-                              : !ft8 ? tr("FT* decoding preset - greyed while the mode is none of them")
-                              : p==DecodePreset::Custom ? tr("Custom - the RX / TX background controls match no preset")
-                              : !names[static_cast<int>(p)] ? tr("ensemble - the RX-only recipe of the former Ensemble preset (no menu entry)") : names[static_cast<int>(p)]->text()));
+  QString lampTip {ft2 ? (p2==FT2Preset::Custom ? tr("Custom - the FT2 RX / TX background controls match no preset") : names2[static_cast<int>(p2)]->text())
+                   : ft4 ? (p4==FT4Preset::Custom ? tr("Custom - the FT4 RX / TX background controls match no preset") : names4[static_cast<int>(p4)]->text())
+                   : !ft8 ? tr("FT* decoding preset - greyed while the mode is none of them")
+                   : p==DecodePreset::Custom ? tr("Custom - the RX / TX background controls match no preset")
+                   : !names[static_cast<int>(p)] ? tr("ensemble - the RX-only recipe of the former Ensemble preset (no menu entry)") : names[static_cast<int>(p)]->text()};
+  /* CE3TSK 2026-11-08: and what its right click does (eventFilter ()), where the mode has presets - as on the mode buttons; greyed, the
+     right click says No presets and the tooltip says nothing of it, as a mode button without presets */
+  if (ft8 || ft4 || ft2) lampTip += '\n' + tr("Right click: the %1 decoding presets.").arg(m_mode);
+  ui->labelPreset->setToolTip(wrap_tooltip(lampTip));
 }
 
 // CE3TSK: the decoder label's count: "/D-" while the period's decode runs, "/D" when it is

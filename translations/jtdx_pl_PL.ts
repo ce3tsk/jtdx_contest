@@ -6730,6 +6730,11 @@ To błąd samego dekodera. Usuń to, co uniemożliwia jego uruchomienie - brakuj
         <source>No presets</source>
         <translation>Brak ustawień</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Right click: the %1 decoding presets.</source>
+        <translation>Prawy klik: ustawienia dekodowania %1.</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

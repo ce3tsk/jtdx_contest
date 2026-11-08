@@ -6728,6 +6728,11 @@ That is the decoder's own error. Put right whatever stops it starting - a missin
         <source>No presets</source>
         <translation>プリセットなし</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Right click: the %1 decoding presets.</source>
+        <translation>右クリック: %1 のデコードのプリセット。</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

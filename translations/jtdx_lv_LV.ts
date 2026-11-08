@@ -6729,6 +6729,11 @@ Dekoders: %3
         <source>No presets</source>
         <translation>Nav priekšiestatījumu</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Right click: the %1 decoding presets.</source>
+        <translation>Labais klikšķis: %1 dekodēšanas priekšiestatījumi.</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

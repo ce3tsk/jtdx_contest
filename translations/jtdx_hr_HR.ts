@@ -6734,6 +6734,11 @@ To je greška samog dekodera. Otklonite ono što ga sprječava da se pokrene - n
         <source>No presets</source>
         <translation>Nema predložaka</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Right click: the %1 decoding presets.</source>
+        <translation>Desni klik: predlošci dekodiranja za %1.</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

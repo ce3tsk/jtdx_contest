@@ -1340,7 +1340,7 @@ private:
      ticks that its Decode menu runs as it opens, none for a mode without presets */
   struct ModePresets { QAction * mode; QMenu * presets; void (MainWindow::* refresh) (); };
   ModePresets modePresets (QAction const * mode) const;   // all three null: a mode without presets
-  void showModePresets (QPushButton * button, QAction * mode, QPoint const& at);
+  void showModePresets (QWidget * owner, QAction * mode, QPoint const& at);   // a mode button, or the preset lamp
   bool dialFrequencyWheel (QWheelEvent * event);   // CE3TSK
   bool dialFrequencyClick (QMouseEvent * event);   // CE3TSK 2026-09-28: clicks on the dial step it too
   qint64 dialStepAt (int x) const;                 //   the step under the pointer, see dialtuning.h

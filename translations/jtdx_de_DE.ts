@@ -6730,6 +6730,11 @@ Das ist der Fehler des Decoders selbst. Beheben Sie, was seinen Start verhindert
         <source>No presets</source>
         <translation>Keine Voreinstellungen</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Right click: the %1 decoding presets.</source>
+        <translation>Rechtsklick: die Voreinstellungen der %1-Dekodierung.</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

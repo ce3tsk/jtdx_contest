@@ -6730,6 +6730,11 @@ Ez magának a dekódernek a hibája. Hárítsa el, ami az indulását akadályoz
         <source>No presets</source>
         <translation>Nincs előbeállítás</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Right click: the %1 decoding presets.</source>
+        <translation>Jobb kattintás: a(z) %1 dekódolási előbeállításai.</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

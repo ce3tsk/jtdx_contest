@@ -6739,6 +6739,11 @@ Aquest és l'error del descodificador mateix. Corregiu allò que n'impedeix l'in
         <source>No presets</source>
         <translation>Sense predefinicions</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Right click: the %1 decoding presets.</source>
+        <translation>Clic dret: les predefinicions de descodificació de %1.</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

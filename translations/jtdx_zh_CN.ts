@@ -6729,6 +6729,11 @@ That is the decoder's own error. Put right whatever stops it starting - a missin
         <source>No presets</source>
         <translation>没有预设</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Right click: the %1 decoding presets.</source>
+        <translation>右键单击：%1 的解码预设。</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

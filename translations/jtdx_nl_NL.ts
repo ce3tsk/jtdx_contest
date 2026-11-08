@@ -6730,6 +6730,11 @@ Dat is de fout van de decoder zelf. Verhelp wat het starten verhindert - een ont
         <source>No presets</source>
         <translation>Geen voorinstellingen</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Right click: the %1 decoding presets.</source>
+        <translation>Rechtsklik: de voorinstellingen voor %1-decodering.</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

@@ -6743,6 +6743,11 @@ See on dekoodri enda viga. Kõrvalda see, mis takistab käivitumist - puuduv tee
         <source>No presets</source>
         <translation>Eelseadeid pole</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Right click: the %1 decoding presets.</source>
+        <translation>Paremklõps: %1 dekodeerimise eelseaded.</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

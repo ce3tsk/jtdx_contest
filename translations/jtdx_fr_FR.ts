@@ -6734,6 +6734,11 @@ C'est l'erreur du décodeur lui-même. Corrigez ce qui l'empêche de démarrer -
         <source>No presets</source>
         <translation>Aucun préréglage</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Right click: the %1 decoding presets.</source>
+        <translation>Clic droit : les préréglages de décodage %1.</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

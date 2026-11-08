@@ -6734,6 +6734,11 @@ Det er dekoderens egen fejl. Ret det, der forhindrer den i at starte - et mangle
         <source>No presets</source>
         <translation>Ingen forudindstillinger</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Right click: the %1 decoding presets.</source>
+        <translation>Højreklik: forudindstillingerne for %1-dekodning.</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

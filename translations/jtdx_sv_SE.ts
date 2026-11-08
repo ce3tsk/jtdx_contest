@@ -6732,6 +6732,11 @@ Det är avkodarens eget fel. Åtgärda det som hindrar den från att starta - et
         <source>No presets</source>
         <translation>Inga förinställningar</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Right click: the %1 decoding presets.</source>
+        <translation>Högerklick: förinställningarna för %1-avkodning.</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>
