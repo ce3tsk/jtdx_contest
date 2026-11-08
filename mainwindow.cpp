@@ -72,6 +72,7 @@
 #include "bandschedule.h"  // CE3TSK 2026-09-26: which scheduler entry fires
 #include "actiongate.h"    // CE3TSK 2026-09-26: trigger () that obeys the enabled state
 #include "bandchannels.h"  // CE3TSK 2026-09-26: the band buttons, and the other frequencies on a right click
+#include "modepresets.h"   // CE3TSK 2026-11-07: and a mode button's decoding presets on a right click
 #include "dialtuning.h"    // CE3TSK: the dial's wheel and clicks, the step under the pointer
 #include "uilimits.h"      // CE3TSK: the .ui size limits against the current font
 #include "geometryrestore.h"  // CE3TSK 2026-09-26: one restore rule for the main window, Wide Graph, Log QSO
@@ -4202,7 +4203,12 @@ void MainWindow::buildModeButtons ()
       /* the tooltip is decided once: it is FT2's alone, and like every text here it changes only
          with the language, which takes a restart - has_own_tooltip () builds a probe QAction, and
          follow () runs for all eight at every start and end of a transmission */
-      button->setToolTip (has_own_tooltip (action) ? action->toolTip () : QString {});
+      /* CE3TSK 2026-11-07, the operator: "add also a tool tip to the mode buttons" - what a click does, and for a mode with presets what
+         the right click does; FT2's own words after it */
+      QString const mode {action->iconText ()};
+      QString tip {modePresets (action).presets ? tr ("Switch to %1. Right click: the %1 decoding presets.").arg (mode) : tr ("Switch to %1.").arg (mode)};
+      if (has_own_tooltip (action)) tip += '\n' + action->toolTip ();
+      button->setToolTip (tip);
       auto const follow = [button, action]
         {
           button->setText (action->iconText ());   // the entry's text without its & mnemonic, as Qt strips it
@@ -4223,6 +4229,10 @@ void MainWindow::buildModeButtons ()
              way. */
           if (!action->isChecked ()) trigger_if_enabled (action);   // a greyed button is not clicked, but ask anyway
           follow ();
+        });
+      button->setContextMenuPolicy (Qt::CustomContextMenu);   // CE3TSK 2026-11-07: the mode's decoding presets
+      connect (button, &QWidget::customContextMenuRequested, this, [this, button, action] (QPoint const& at) {
+          showModePresets (button, action, at);
         });
       ui->modeButtonsLayout->addWidget (button);
       m_modeButtons << qMakePair (button, action);   // CE3TSK 2026-09-28: for the one row
@@ -4612,6 +4622,34 @@ void MainWindow::showBandChannels (QPushButton * button, QPoint const& at)
      drawn hovered - over the lit colour, and after the dial had moved to another band - until the pointer
      next crossed it (measured, tools/ui-check/bandchannels.sh). A popup covers what is under it, so the
      button is left now; the pointer coming back over it is an ordinary enter. */
+  button->setAttribute (Qt::WA_UnderMouse, false);
+  button->update ();
+  menu->popup (button->mapToGlobal (at));
+}
+
+/* CE3TSK 2026-11-07: the modes with decoding presets, their Presets submenu and the refresh their Decode menu runs as it opens (the tick
+   follows the settings, set by hand as well) - one table for the tooltip and the right click */
+MainWindow::ModePresets MainWindow::modePresets (QAction const * mode) const
+{
+  for (auto const& e : {ModePresets {ui->actionFT8, ui->menuFT8_preset, &MainWindow::refreshDecodePreset},
+                        ModePresets {ui->actionFT4, ui->menuFT4_preset, &MainWindow::refreshFT4Preset},
+                        ModePresets {ui->actionFT2, ui->menuFT2_preset, &MainWindow::refreshFT2Preset}})
+    if (e.mode == mode) return e;
+  return {nullptr, nullptr, nullptr};
+}
+
+/* CE3TSK 2026-11-07: a right click on a mode button: the mode's own presets, the Presets submenu's entries themselves (modepresets.h), their
+   ticks refreshed first as the Decode menu does; picking one is picking it there. Any other mode: "No presets", greyed. The mode is not
+   switched: the presets of FT4 can be set while FT8 runs, as from the Decode menu. popup () and the hover cleared, as showBandChannels (). */
+void MainWindow::showModePresets (QPushButton * button, QAction * mode, QPoint const& at)
+{
+  if (m_modePresetsMenu) m_modePresetsMenu->close ();
+  auto const entry = modePresets (mode);
+  if (entry.refresh) (this->*entry.refresh) ();
+  auto * const menu = new QMenu {this};
+  menu->setAttribute (Qt::WA_DeleteOnClose);
+  m_modePresetsMenu = menu;
+  mode_presets::fill (menu, entry.presets, tr ("No presets"));
   button->setAttribute (Qt::WA_UnderMouse, false);
   button->update ();
   menu->popup (button->mapToGlobal (at));

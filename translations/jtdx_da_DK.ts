@@ -6719,6 +6719,21 @@ Det er dekoderens egen fejl. Ret det, der forhindrer den i at starte - et mangle
         <source>Export Cabrillo log...</source>
         <translation>Eksportér Cabrillo-log...</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Switch to %1. Right click: the %1 decoding presets.</source>
+        <translation>Skift til %1. Højreklik: forudindstillingerne for %1-dekodning.</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Switch to %1.</source>
+        <translation>Skift til %1.</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>No presets</source>
+        <translation>Ingen forudindstillinger</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

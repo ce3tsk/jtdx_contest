@@ -6713,6 +6713,21 @@ That is the decoder's own error. Put right whatever stops it starting - a missin
         <source>Export Cabrillo log...</source>
         <translation>Cabrilloログをエクスポート...</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Switch to %1. Right click: the %1 decoding presets.</source>
+        <translation>%1 に切り替えます。右クリック: %1 のデコードのプリセット。</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Switch to %1.</source>
+        <translation>%1 に切り替えます。</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>No presets</source>
+        <translation>プリセットなし</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

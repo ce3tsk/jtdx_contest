@@ -937,6 +937,7 @@ private:
   QList<QPushButton *> m_bandButtons;              // CE3TSK: View > Band buttons
   QPointer<QAbstractItemModel> m_bandButtonsModel; // the list they were built from
   QPointer<QMenu> m_bandChannelsMenu;               // CE3TSK 2026-09-26: a button's right-click menu, while open
+  QPointer<QMenu> m_modePresetsMenu;                // CE3TSK 2026-11-07: a mode button's, while open (modepresets.h)
   QList<QMetaObject::Connection> m_bandButtonsConnections;
   QTimer m_bandButtonsTimer;                       // one rebuild per burst of list changes
   /* CE3TSK 2026-10-20: band hopping - Tab 3 of the Tx tabs (bandhopping.h, IMPROVED_FEATURES_PLAN.md stage 1) */
@@ -1335,6 +1336,11 @@ private:
   bool qsyTo (QString const& mode, Frequency f, QString const& skipped, QString const& from);   // the scheduler's QSY, and hopping's
   int messageTab () const;                         // CE3TSK 2026-10-20: Tab 1 or Tab 2, whichever was shown last
   void showBandChannels (QPushButton * button, QPoint const& at);   // CE3TSK 2026-09-26: the right click
+  /* CE3TSK 2026-11-07: a mode button's right click, its decoding presets (modepresets.h); the mode's Presets submenu and the refresh of its
+     ticks that its Decode menu runs as it opens, none for a mode without presets */
+  struct ModePresets { QAction * mode; QMenu * presets; void (MainWindow::* refresh) (); };
+  ModePresets modePresets (QAction const * mode) const;   // all three null: a mode without presets
+  void showModePresets (QPushButton * button, QAction * mode, QPoint const& at);
   bool dialFrequencyWheel (QWheelEvent * event);   // CE3TSK
   bool dialFrequencyClick (QMouseEvent * event);   // CE3TSK 2026-09-28: clicks on the dial step it too
   qint64 dialStepAt (int x) const;                 //   the step under the pointer, see dialtuning.h

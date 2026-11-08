@@ -6714,6 +6714,21 @@ That is the decoder's own error. Put right whatever stops it starting - a missin
         <source>Export Cabrillo log...</source>
         <translation>导出 Cabrillo 日志...</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Switch to %1. Right click: the %1 decoding presets.</source>
+        <translation>切换到 %1。右键单击：%1 的解码预设。</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Switch to %1.</source>
+        <translation>切换到 %1。</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>No presets</source>
+        <translation>没有预设</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

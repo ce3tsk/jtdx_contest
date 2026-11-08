@@ -6728,6 +6728,21 @@ See on dekoodri enda viga. Kõrvalda see, mis takistab käivitumist - puuduv tee
         <source>Export Cabrillo log...</source>
         <translation>Ekspordi Cabrillo-logi...</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Switch to %1. Right click: the %1 decoding presets.</source>
+        <translation>Lülitu %1-le. Paremklõps: %1 dekodeerimise eelseaded.</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Switch to %1.</source>
+        <translation>Lülitu %1-le.</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>No presets</source>
+        <translation>Eelseadeid pole</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

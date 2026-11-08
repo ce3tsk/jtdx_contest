@@ -6724,6 +6724,21 @@ Aquest és l'error del descodificador mateix. Corregiu allò que n'impedeix l'in
         <source>Export Cabrillo log...</source>
         <translation>Exporta el log Cabrillo...</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Switch to %1. Right click: the %1 decoding presets.</source>
+        <translation>Canvia a %1. Clic dret: les predefinicions de descodificació de %1.</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Switch to %1.</source>
+        <translation>Canvia a %1.</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>No presets</source>
+        <translation>Sense predefinicions</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

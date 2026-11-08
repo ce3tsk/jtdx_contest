@@ -6715,6 +6715,21 @@ To błąd samego dekodera. Usuń to, co uniemożliwia jego uruchomienie - brakuj
         <source>Export Cabrillo log...</source>
         <translation>Eksportuj log Cabrillo...</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Switch to %1. Right click: the %1 decoding presets.</source>
+        <translation>Przełącz na %1. Prawy klik: ustawienia dekodowania %1.</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Switch to %1.</source>
+        <translation>Przełącz na %1.</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>No presets</source>
+        <translation>Brak ustawień</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

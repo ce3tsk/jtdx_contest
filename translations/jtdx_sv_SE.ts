@@ -6717,6 +6717,21 @@ Det är avkodarens eget fel. Åtgärda det som hindrar den från att starta - et
         <source>Export Cabrillo log...</source>
         <translation>Exportera Cabrillo-logg...</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Switch to %1. Right click: the %1 decoding presets.</source>
+        <translation>Byt till %1. Högerklick: förinställningarna för %1-avkodning.</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Switch to %1.</source>
+        <translation>Byt till %1.</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>No presets</source>
+        <translation>Inga förinställningar</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

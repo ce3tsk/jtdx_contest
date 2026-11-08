@@ -6716,6 +6716,21 @@ Questo è l'errore del decoder stesso. Sistemare ciò che ne impedisce l'avvio -
         <source>Export Cabrillo log...</source>
         <translation>Esporta il log Cabrillo...</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Switch to %1. Right click: the %1 decoding presets.</source>
+        <translation>Passa a %1. Clic destro: i preset di decodifica %1.</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Switch to %1.</source>
+        <translation>Passa a %1.</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>No presets</source>
+        <translation>Nessun preset</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

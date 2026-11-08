@@ -6715,6 +6715,21 @@ That is the decoder's own error. Put right whatever stops it starting - a missin
         <source>Export Cabrillo log...</source>
         <translation>Cabrillo 로그 내보내기...</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Switch to %1. Right click: the %1 decoding presets.</source>
+        <translation>%1(으)로 전환합니다. 오른쪽 클릭: %1 디코딩 프리셋.</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Switch to %1.</source>
+        <translation>%1(으)로 전환합니다.</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>No presets</source>
+        <translation>프리셋 없음</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

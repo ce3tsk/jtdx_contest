@@ -6715,6 +6715,21 @@ Dat is de fout van de decoder zelf. Verhelp wat het starten verhindert - een ont
         <source>Export Cabrillo log...</source>
         <translation>Cabrillo-log exporteren...</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Switch to %1. Right click: the %1 decoding presets.</source>
+        <translation>Overschakelen naar %1. Rechtsklik: de voorinstellingen voor %1-decodering.</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Switch to %1.</source>
+        <translation>Overschakelen naar %1.</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>No presets</source>
+        <translation>Geen voorinstellingen</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

@@ -6715,6 +6715,21 @@ Ez magának a dekódernek a hibája. Hárítsa el, ami az indulását akadályoz
         <source>Export Cabrillo log...</source>
         <translation>Cabrillo log exportálása...</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Switch to %1. Right click: the %1 decoding presets.</source>
+        <translation>Váltás erre: %1. Jobb kattintás: a(z) %1 dekódolási előbeállításai.</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Switch to %1.</source>
+        <translation>Váltás erre: %1.</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>No presets</source>
+        <translation>Nincs előbeállítás</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

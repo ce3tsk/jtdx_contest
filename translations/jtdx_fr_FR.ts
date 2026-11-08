@@ -6719,6 +6719,21 @@ C'est l'erreur du décodeur lui-même. Corrigez ce qui l'empêche de démarrer -
         <source>Export Cabrillo log...</source>
         <translation>Exporter le log Cabrillo...</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Switch to %1. Right click: the %1 decoding presets.</source>
+        <translation>Passer en %1. Clic droit : les préréglages de décodage %1.</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Switch to %1.</source>
+        <translation>Passer en %1.</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>No presets</source>
+        <translation>Aucun préréglage</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

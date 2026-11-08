@@ -6719,6 +6719,21 @@ To je greška samog dekodera. Otklonite ono što ga sprječava da se pokrene - n
         <source>Export Cabrillo log...</source>
         <translation>Izvezi Cabrillo log...</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Switch to %1. Right click: the %1 decoding presets.</source>
+        <translation>Prebaci na %1. Desni klik: predlošci dekodiranja za %1.</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Switch to %1.</source>
+        <translation>Prebaci na %1.</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>No presets</source>
+        <translation>Nema predložaka</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

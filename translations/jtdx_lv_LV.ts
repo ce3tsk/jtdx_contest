@@ -6714,6 +6714,21 @@ Dekoders: %3
         <source>Export Cabrillo log...</source>
         <translation>Eksportēt Cabrillo žurnālu...</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Switch to %1. Right click: the %1 decoding presets.</source>
+        <translation>Pārslēgt uz %1. Labais klikšķis: %1 dekodēšanas priekšiestatījumi.</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Switch to %1.</source>
+        <translation>Pārslēgt uz %1.</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>No presets</source>
+        <translation>Nav priekšiestatījumu</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>
