@@ -509,6 +509,7 @@ private:
       {
       case SpecialOperatingActivity::ARRL_DIGI: return ui_->rbSpecialOpARRLDigi;
       case SpecialOperatingActivity::YBDXPI: return ui_->rbSpecialOpYBDXPI;
+      case SpecialOperatingActivity::FT_CHALLENGE: return ui_->rbSpecialOpFTChallenge;
       default: return ui_->rbSpecialOpWWDigi;
       }
   }
@@ -678,6 +679,7 @@ private:
   Q_SLOT void on_rbSpecialOpWWDigi_toggled(bool checked); /* CE3TSK */
   Q_SLOT void on_rbSpecialOpARRLDigi_toggled(bool checked); /* CE3TSK 2026-11-04 */
   Q_SLOT void on_rbSpecialOpYBDXPI_toggled(bool checked);   /* CE3TSK 2026-11-04 */
+  Q_SLOT void on_rbSpecialOpFTChallenge_toggled(bool checked);   /* CE3TSK 2026-11-07 */
   Q_SLOT void on_newPotential_check_box_clicked(bool checked);
 
   Q_SLOT void on_eqsluser_edit_textEdited(const QString &arg1);
@@ -1611,6 +1613,7 @@ QString Configuration::special_op_name () const
     case SpecialOperatingActivity::WW_DIGI: return QString {"WW-Digi"};
     case SpecialOperatingActivity::ARRL_DIGI: return QString {"ARRL-Digi"};
     case SpecialOperatingActivity::YBDXPI: return QString {"YBDXPI-FT8"};
+    case SpecialOperatingActivity::FT_CHALLENGE: return QString {"FT-Challenge"};
     case SpecialOperatingActivity::NONE:
     case SpecialOperatingActivity::NA_VHF:
     case SpecialOperatingActivity::EU_VHF:
@@ -1630,6 +1633,8 @@ QString Configuration::special_op_cq_direction () const
     case SpecialOperatingActivity::WW_DIGI: return QString {"WW"};
     case SpecialOperatingActivity::ARRL_DIGI: return QString {"TEST"};   // the rules' own example: "CQ TEST N1SFE FN31"
     case SpecialOperatingActivity::YBDXPI: return QString {"WW"};   // the rules name no word; their guide puts participants in WSJT-X's WW Digi mode
+    /* CE3TSK 2026-11-07, the operator: plain CQ, as WSJT-X runs it for this contest; it draws the stations outside the contest, who count */
+    case SpecialOperatingActivity::FT_CHALLENGE: return QString {};
     case SpecialOperatingActivity::NONE:
     case SpecialOperatingActivity::NA_VHF:
     case SpecialOperatingActivity::EU_VHF:
@@ -1648,6 +1653,7 @@ contest_rules::Rules contest_rules_of (Configuration::SpecialOperatingActivity a
     case Configuration::SpecialOperatingActivity::WW_DIGI: return contest_rules::ww_digi ();
     case Configuration::SpecialOperatingActivity::ARRL_DIGI: return contest_rules::arrl_digi ();
     case Configuration::SpecialOperatingActivity::YBDXPI: return contest_rules::ybdxpi ();
+    case Configuration::SpecialOperatingActivity::FT_CHALLENGE: return contest_rules::ft_challenge ();
     case Configuration::SpecialOperatingActivity::NONE:
     case Configuration::SpecialOperatingActivity::NA_VHF:
     case Configuration::SpecialOperatingActivity::EU_VHF:
@@ -1664,7 +1670,7 @@ contest_rules::Rules contest_rules_of (Configuration::SpecialOperatingActivity a
    which is 7, and nothing on Earth is further. */
 int contest_points (Configuration::SpecialOperatingActivity activity, int distanceKm)
 {
-  if (distanceKm < 0) return 0;               // distance not known, so nothing is scored
+  if (distanceKm < 0 && !contest_rules_of (activity).missingGridScores) return 0;   // distance not known, so nothing is scored
   switch (activity)
     {
     case Configuration::SpecialOperatingActivity::WW_DIGI: return 1 + distanceKm / 3000;
@@ -1672,6 +1678,9 @@ int contest_points (Configuration::SpecialOperatingActivity activity, int distan
        1,565 km is 1 + 4 = 5, under 500 km is 1 + 1 = 2, and the antipodes' 20400 km are 42 */
     case Configuration::SpecialOperatingActivity::ARRL_DIGI: return 1 + qMax (1, (distanceKm + 499) / 500);
     case Configuration::SpecialOperatingActivity::YBDXPI: return 0;   // from the call, not the distance: contestpoints.h
+    /* CE3TSK 2026-11-07: its rules, "1 point plus 1 additional point for each 3000 km" between the grid square centres, WW Digi's: 5541 km is 2.
+       A missing grid is 1 point (its FAQ), and so is an unknown distance: -1 counts as 0 km. */
+    case Configuration::SpecialOperatingActivity::FT_CHALLENGE: return 1 + qMax (0, distanceKm) / 3000;
     case Configuration::SpecialOperatingActivity::NONE:
     case Configuration::SpecialOperatingActivity::NA_VHF:
     case Configuration::SpecialOperatingActivity::EU_VHF:
@@ -1712,7 +1721,7 @@ QString contest_grid (QString const& grid, bool fourCharOnly)
 
 std::vector<Configuration::SpecialOperatingActivity> contests_offered ()
 {
-  return {Configuration::SpecialOperatingActivity::WW_DIGI, Configuration::SpecialOperatingActivity::ARRL_DIGI, Configuration::SpecialOperatingActivity::YBDXPI};
+  return {Configuration::SpecialOperatingActivity::WW_DIGI, Configuration::SpecialOperatingActivity::ARRL_DIGI, Configuration::SpecialOperatingActivity::YBDXPI, Configuration::SpecialOperatingActivity::FT_CHALLENGE};
 }
 
 /* CE3TSK 2026-11-05 (TODO.md 3.-235): what a contest's Cabrillo file says. Exhaustive switch, no default. */
@@ -1723,6 +1732,7 @@ cabrillo::Contest contest_cabrillo (Configuration::SpecialOperatingActivity acti
     case Configuration::SpecialOperatingActivity::WW_DIGI: return cabrillo::ww_digi ();
     case Configuration::SpecialOperatingActivity::ARRL_DIGI: return cabrillo::arrl_digi ();
     case Configuration::SpecialOperatingActivity::YBDXPI: return cabrillo::ybdxpi ();
+    case Configuration::SpecialOperatingActivity::FT_CHALLENGE: return cabrillo::ft_challenge ();   // CE3TSK 2026-11-07: its exchange has the report too
     case Configuration::SpecialOperatingActivity::NONE:
     case Configuration::SpecialOperatingActivity::NA_VHF:
     case Configuration::SpecialOperatingActivity::EU_VHF:
@@ -1739,7 +1749,7 @@ contest_score::Score contest_log_score (contest_rules::Rules const& rules, Confi
     ? contest_qso::ybdxpi_score (qsos, countries, myCall)
     : contest_score::sum (qsos, [&] (QString const& g) {
       return contest_points (activity, grid_distance_km (myGrid, g, true));
-    }, rules.fieldMultipliers);
+    }, rules.fieldMultipliers, rules.missingGridScores);
 }
 
 /* CE3TSK: filename stem for the contest's own log. Exhaustive switch, no default. */
@@ -1750,6 +1760,7 @@ QString contest_log_slug (Configuration::SpecialOperatingActivity activity)
     case Configuration::SpecialOperatingActivity::WW_DIGI: return QString {"ww-digi"};
     case Configuration::SpecialOperatingActivity::ARRL_DIGI: return QString {"arrl-digi"};
     case Configuration::SpecialOperatingActivity::YBDXPI: return QString {"ybdxpi"};
+    case Configuration::SpecialOperatingActivity::FT_CHALLENGE: return QString {"ft-challenge"};
     case Configuration::SpecialOperatingActivity::NONE:
     case Configuration::SpecialOperatingActivity::NA_VHF:
     case Configuration::SpecialOperatingActivity::EU_VHF:
@@ -1774,6 +1785,7 @@ QString contest_period (Configuration::SpecialOperatingActivity activity, QDateT
     case Configuration::SpecialOperatingActivity::WW_DIGI:
     case Configuration::SpecialOperatingActivity::ARRL_DIGI:   // the first full weekend of June
     case Configuration::SpecialOperatingActivity::YBDXPI:      // the first week of November
+    case Configuration::SpecialOperatingActivity::FT_CHALLENGE:   // the first full weekend of December
       return QString::number (utc.date ().year ());
     case Configuration::SpecialOperatingActivity::NONE:
     case Configuration::SpecialOperatingActivity::NA_VHF:
@@ -2916,6 +2928,7 @@ Radio::convert_dark("#fafbfe",useDarkStyle_),Radio::convert_dark("#dcdef1",useDa
     case SpecialOperatingActivity::WW_DIGI: ui_->rbSpecialOpWWDigi->setChecked (true); break;
     case SpecialOperatingActivity::ARRL_DIGI: ui_->rbSpecialOpARRLDigi->setChecked (true); break;
     case SpecialOperatingActivity::YBDXPI: ui_->rbSpecialOpYBDXPI->setChecked (true); break;
+    case SpecialOperatingActivity::FT_CHALLENGE: ui_->rbSpecialOpFTChallenge->setChecked (true); break;
     default: ui_->rbSpecialOpNone->setChecked (true); break;
   }
   next_specialOp_ = specialOp_;
@@ -3474,7 +3487,7 @@ void Configuration::impl::read_settings ()
       stored = legacy ? static_cast<int> (SpecialOperatingActivity::WW_DIGI)
                       : static_cast<int> (SpecialOperatingActivity::NONE);
     }
-    if (stored < 0 || stored > static_cast<int> (SpecialOperatingActivity::YBDXPI)) stored = 0;
+    if (stored < 0 || stored > static_cast<int> (SpecialOperatingActivity::FT_CHALLENGE)) stored = 0;
     specialOp_ = static_cast<SpecialOperatingActivity> (stored);
   }
   /* CE3TSK: SpecialOpGridSaved was the flag of the first interlock, which parked only the
@@ -3526,7 +3539,7 @@ void Configuration::impl::read_settings ()
       savedSpecialOp_.*c.parked_value = n >= spin->minimum () && n <= spin->maximum () ? n : this->*c.value;
     }
   specialOpSaved_ = settings_->value ("SpecialOpSaved", false).toBool ();
-  /* CE3TSK 2026-10-04 (review): an activity this build does not offer - only None, WW Digi and ARRL Digi are; the others come from
+  /* CE3TSK 2026-10-04 (review): an activity this build does not offer - None and contests_offered ()'s are; the others come from
      a hand-edited profile or another build - is left here, as choosing None and OK leaves a contest. The dialog showed
      None for it, but OK applied that activity's forcing and silently overwrote the operator's tier edits. Its parked
      set comes back, so no parked set is left behind without a contest (it would be handed back on some later exit). */
@@ -5523,6 +5536,15 @@ void Configuration::impl::on_rbSpecialOpYBDXPI_toggled(bool checked)
   apply_special_op_lock (true);
 }
 
+void Configuration::impl::on_rbSpecialOpFTChallenge_toggled(bool checked)
+{
+  if (!checked) return;
+  next_specialOp_ = SpecialOperatingActivity::FT_CHALLENGE;
+  show_contest_frequencies (next_specialOp_);
+  show_colors_of (next_specialOp_);
+  apply_special_op_lock (true);
+}
+
 /* CE3TSK 2026-11-04 (TODO.md 3.-227): the dialog's table shows the list of the contest chosen in it; the one it showed stays staged */
 void Configuration::impl::show_contest_frequencies (SpecialOperatingActivity activity)
 {
@@ -6873,6 +6895,14 @@ Configuration::impl::contest_default_frequencies (SpecialOperatingActivity activ
     case SpecialOperatingActivity::YBDXPI:
       /* CE3TSK 2026-11-04: FT8 alone, the bottom of each sub-band the rules recommend: WW Digi's FT8 list */
       for (auto f : {1844000ull, 3590000ull, 7090000ull, 14090000ull, 21090000ull, 28090000ull})
+        list << FrequencyList_v2::Item {Frequency {f}, Modes::FT8, IARURegions::ALL, true};
+      break;
+    case SpecialOperatingActivity::FT_CHALLENGE:
+      /* CE3TSK 2026-11-07: its five bands, no 160 m and no 6 m; FT4 on 20 m at 14.080 as in the other contests, not the 14.083 its rules
+         suggest (the operator, 2026-11-04). Its JA sub-bands on 80 m are not in the list. */
+      for (auto f : {3580000ull, 7080000ull, 14080000ull, 21080000ull, 28080000ull})
+        list << FrequencyList_v2::Item {Frequency {f}, Modes::FT4, IARURegions::ALL, true};
+      for (auto f : {3590000ull, 7090000ull, 14090000ull, 21090000ull, 28090000ull})
         list << FrequencyList_v2::Item {Frequency {f}, Modes::FT8, IARURegions::ALL, true};
       break;
     case SpecialOperatingActivity::NONE:

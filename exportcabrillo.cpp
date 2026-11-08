@@ -80,6 +80,7 @@ ExportCabrillo::ExportCabrillo (QSettings * settings, Configuration const * conf
   categoryPower_ = box ("CATEGORY-POWER");
   categoryTransmitter_ = box ("CATEGORY-TRANSMITTER");
   categoryStation_ = box ("CATEGORY-STATION");
+  categoryOverlay_ = box ("CATEGORY-OVERLAY");   // CE3TSK 2026-11-07: the FT Challenge's Classic overlay; greyed in a contest with none
   claimed_ = line ("CLAIMED-SCORE", 0);
   claimed_->setValidator (new QRegularExpressionValidator {QRegularExpression {"[0-9]*"}, claimed_});
   operators_ = line ("OPERATORS", 0);
@@ -109,6 +110,7 @@ ExportCabrillo::ExportCabrillo (QSettings * settings, Configuration const * conf
   place (6, 0, "CATEGORY-POWER", categoryPower_);
   place (7, 0, "CATEGORY-TRANSMITTER", categoryTransmitter_);
   place (8, 0, "CATEGORY-STATION", categoryStation_);
+  place (9, 0, "CATEGORY-OVERLAY", categoryOverlay_);
   place (0, 1, "CLAIMED-SCORE", claimed_);
   place (1, 1, "OPERATORS", operators_);
   place (2, 1, "NAME", name_);
@@ -271,6 +273,8 @@ void ExportCabrillo::showContestFields (LogFile const& f)
   fill (categoryPower_, c.powers, saved ("Power"));
   fill (categoryTransmitter_, c.transmitters, saved ("Transmitter"));
   fill (categoryStation_, QStringList {"FIXED", "MOBILE", "PORTABLE", "EXPEDITION"}, saved ("Station"));
+  fill (categoryOverlay_, c.overlays.isEmpty () ? QStringList {""} : c.overlays, saved ("Overlay"));
+  categoryOverlay_->setEnabled (!c.overlays.isEmpty ());
   soapbox_->setText (saved ("Soapbox"));
 }
 
@@ -286,6 +290,7 @@ void ExportCabrillo::storeContestFields () const
   settings_->setValue (at + "Power", categoryPower_->currentText ());
   settings_->setValue (at + "Transmitter", categoryTransmitter_->currentText ());
   settings_->setValue (at + "Station", categoryStation_->currentText ());
+  settings_->setValue (at + "Overlay", categoryOverlay_->currentText ());
   settings_->setValue (at + "Soapbox", soapbox_->text ());
 }
 
@@ -363,6 +368,7 @@ QString ExportCabrillo::summary () const
     if (!where.isEmpty ()) lines << text.arg (where.size ()).arg (cabrillo::line_list (where));
   };
   add (tr ("No grid, saved with ZZ00: %1 (log line %2)."), selection_.noGrid);
+  if (contest_cabrillo (f.activity).reportInExchange) add (tr ("No report, saved with +99: %1 (log line %2)."), selection_.noReport);   // CE3TSK 2026-11-07
   add (tr ("Left out, damaged: %1 (log line %2)."), f.log.damaged);
   add (tr ("Left out, another own call: %1 (log line %2)."), selection_.otherCall);
   add (tr ("Left out, the same QSO logged twice: %1 (log line %2)."), selection_.twice);
@@ -382,6 +388,7 @@ QString ExportCabrillo::fileText () const
   h.categoryPower = categoryPower_->currentText ();
   h.categoryTransmitter = categoryTransmitter_->currentText ();
   h.categoryStation = categoryStation_->currentText ();
+  h.categoryOverlay = categoryOverlay_->currentText ();
   h.claimedScore = claimed_->text ();
   h.gridLocator = cabrillo::own_grid (selection_.qsos);
   h.operators = operators_->text ();

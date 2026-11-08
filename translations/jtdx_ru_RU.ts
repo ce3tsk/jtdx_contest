@@ -2612,6 +2612,11 @@ Format:
         <source>No grid, saved with ZZ00: %1 (log line %2).</source>
         <translation>Без локатора, сохранено с ZZ00: %1 (строка лога %2).</translation>
     </message>
+    <message>
+        <location filename="../exportcabrillo.cpp"/>
+        <source>No report, saved with +99: %1 (log line %2).</source>
+        <translation>Без рапорта, сохранено с +99: %1 (строка лога %2).</translation>
+    </message>
 </context>
 <context>
     <name>FrequencyDialog</name>
@@ -10617,6 +10622,16 @@ soundcard changes</source>
         <location filename="../Configuration.ui"/>
         <source>Colors apply per contest, currently: %1. Own colors get applied again when contest mode is disabled.</source>
         <translation>Цвета действуют для каждого соревнования, сейчас: %1. Собственные цвета применяются снова при отключении режима соревнования.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>International FT Challenge</source>
+        <translation>International FT Challenge</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;International FT Challenge, FT8 and FT4 on 80, 40, 20, 15 and 10 m. The normal QSO: your grid in Tx1, then the signal reports, so Skip Tx 1 is off and cannot be switched on. A QSO scores 1 point plus 1 for each full 3000 km. Without the other station's grid it scores 1 point, and the contest log gets ZZ00 for the grid. A station counts once per band. The multiplier is the 2 character grid field on each band.&lt;/p&gt;&lt;p&gt;While this is selected the grid highlighting below is set to per band on the grid field, and cannot be changed by hand. Your own settings are restored when you switch back to None.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;International FT Challenge, FT8 и FT4 на 80, 40, 20, 15 и 10 м. Обычная связь: ваш квадрат в Tx1, затем рапорты о сигнале, поэтому «Проп. TX 1» выключен и не может быть включён. QSO даёт 1 очко и ещё 1 за каждые полные 3000 км. Без квадрата другой станции QSO даёт 1 очко, а в журнал соревнования записывается квадрат ZZ00. Станция засчитывается один раз на диапазоне. Множителем является поле квадрата из 2 символов на каждом диапазоне.&lt;/p&gt;&lt;p&gt;Пока это выбрано, выделение квадратов ниже устанавливается по диапазону по полю квадрата и не может быть изменено вручную. Ваши собственные настройки восстанавливаются при возврате к «Нет».&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>

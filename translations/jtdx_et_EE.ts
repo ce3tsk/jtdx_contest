@@ -2612,6 +2612,11 @@ Vorming:
         <source>No grid, saved with ZZ00: %1 (log line %2).</source>
         <translation>Ruut puudub, salvestatud ZZ00-ga: %1 (logi rida %2).</translation>
     </message>
+    <message>
+        <location filename="../exportcabrillo.cpp"/>
+        <source>No report, saved with +99: %1 (log line %2).</source>
+        <translation>Raport puudub, salvestatud +99-ga: %1 (logi rida %2).</translation>
+    </message>
 </context>
 <context>
     <name>FrequencyDialog</name>
@@ -10546,6 +10551,16 @@ soundcard changes</source>
         <location filename="../Configuration.ui"/>
         <source>Colors apply per contest, currently: %1. Own colors get applied again when contest mode is disabled.</source>
         <translation>Värvid kehtivad võistluse kaupa, praegu: %1. Oma värvid rakenduvad uuesti, kui võistlusrežiim välja lülitatakse.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>International FT Challenge</source>
+        <translation>International FT Challenge</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;International FT Challenge, FT8 and FT4 on 80, 40, 20, 15 and 10 m. The normal QSO: your grid in Tx1, then the signal reports, so Skip Tx 1 is off and cannot be switched on. A QSO scores 1 point plus 1 for each full 3000 km. Without the other station's grid it scores 1 point, and the contest log gets ZZ00 for the grid. A station counts once per band. The multiplier is the 2 character grid field on each band.&lt;/p&gt;&lt;p&gt;While this is selected the grid highlighting below is set to per band on the grid field, and cannot be changed by hand. Your own settings are restored when you switch back to None.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;International FT Challenge, FT8 ja FT4 sagedusaladel 80, 40, 20, 15 ja 10 m. Tavaline QSO: teie lokaator saates Tx1, seejärel signaaliraportid, seega on Jäta Tx 1 vahele välja lülitatud ja seda ei saa sisse lülitada. QSO annab 1 punkti ja lisaks 1 iga täis 3000 km eest. Ilma teise jaama lokaatorita annab see 1 punkti ja võistluse logisse kirjutatakse lokaatoriks ZZ00. Jaam loeb sagedusala kohta üks kord. Kordajaks on 2-märgiline lokaatoriväli igal sagedusalal.&lt;/p&gt;&lt;p&gt;Kuni see on valitud, on allolev lokaatorite esiletõstmine seatud sagedusala kaupa lokaatoriväljale ja seda ei saa käsitsi muuta. Teie enda seaded taastatakse, kui lülitute tagasi valikule Puudub.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>

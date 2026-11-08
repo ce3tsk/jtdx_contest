@@ -3,6 +3,7 @@
    and the rank read is what the file says. Nothing here needs the program, so it is tested on its own.
 
    A line: QSO: freq DG date time own-call own-grid his-call his-grid [t]
+     or, where the exchange has the report too (the FT Challenge): QSO: freq DG date time own-call sent own-grid his-call received his-grid
      freq   what was logged in whole kHz, cut; 6 m is "50"; with no frequency logged, the band's lower edge, which the Cabrillo spec takes too
      time   the END of the QSO, as WSJT-X writes it and WW Digi's rule X.1 asks ("logged at the time they are completed"), minutes cut
      grids  the first 4 characters of the record's own, never the report fields: in a grid exchange those are made up
@@ -43,6 +44,8 @@ namespace cabrillo
     QStringList bands;                // the CATEGORY-BAND it takes
     QStringList powers;               // the CATEGORY-POWER it takes, the one offered first at the head
     QStringList transmitters;         // the CATEGORY-TRANSMITTER it takes: this log has no way to say which of two transmitters made a QSO
+    bool reportInExchange = false;    // (2026-11-07) its exchange is the signal report and the grid: both reports on the line (the FT Challenge)
+    QStringList overlays;             // (2026-11-07) the CATEGORY-OVERLAY it takes, "" (none, not written) first; empty: the contest has none
   };
 
   // ww-digi.com/cabrillo.htm
@@ -83,10 +86,32 @@ namespace cabrillo
     return c;
   }
 
+  /* CE3TSK 2026-11-07 (TODO.md 3.-231): the International FT Challenge (https://www.rttycontesting.com/ft-challenge/cabrillo/, its rules 3 and 7.15).
+     Its exchange is the grid and the report, its line the page's own example: QSO: 14090 DG 2024-12-07 1833 W0YK -03 CM97 KL7DE +01 BE49.
+     Power LOW (100 W) or QRP (5 W), HIGH making the log a check log; ALL bands, no single band entry; the Classic overlay for a single
+     operator with one radio. Its example header says ASSISTED, its categories being "Unlimited". The location as the ARRL's: DX, the USA's
+     and Canada's their section (its example: SCV). MSHV 2.76.7 writes the same columns. */
+  inline Contest ft_challenge ()
+  {
+    Contest c;
+    c.name = "FT-CHALLENGE";
+    c.assisted = "ASSISTED";
+    c.reportInExchange = true;
+    c.bands = QStringList {"ALL"};
+    c.powers = QStringList {"LOW", "QRP"};
+    c.transmitters = QStringList {"ONE"};
+    c.overlays = QStringList {"", "CLASSIC"};
+    return c;
+  }
+
+  // a report the log has none of goes out as MSHV writes it: no SNR an FT8 or FT4 decode gives, so the checker cannot take it for one. The window names each.
+  QString const MISSING_REPORT {"+99"};
+
   struct Record
   {
     int line = 0;                     // where it starts in the log file
     QString call, band, frequency, grid, ownCall, ownGrid;   // grid: empty, or 4 characters
+    QString rstSent, rstRcvd;         // (2026-11-07) a sign and two digits, or empty: the reports, read only where the exchange has them
     QDateTime start, end;
   };
 
@@ -134,6 +159,15 @@ namespace cabrillo
     return edges.value (band);
   }
 
+  // (2026-11-07) a signal report as the line carries it, a sign and two digits: -05, +12; empty for anything else (R-12, a grid, nothing)
+  inline QString report_of (QString const& field)
+  {
+    static QRegularExpression const report {"^([+-]?)([0-9]{1,2})$"};
+    auto const m = report.match (field.trimmed ());
+    if (!m.hasMatch ()) return QString {};
+    return (m.captured (1).isEmpty () ? QString {"+"} : m.captured (1)) + m.captured (2).rightJustified (2, '0');
+  }
+
   inline bool parse (QString const& part, Record& r)
   {
     r.call = adif_field (part, "CALL:").trimmed ().toUpper ();
@@ -143,6 +177,8 @@ namespace cabrillo
     r.ownGrid = adif_field (part, "MY_GRIDSQUARE:").trimmed ().left (4).toUpper ();
     r.grid = adif_field (part, "GRIDSQUARE:").trimmed ().left (4).toUpper ();
     if (!is_grid (r.grid)) r.grid.clear ();   // no exchange: R-12 or 1234 typed in the box is none either
+    r.rstSent = report_of (adif_field (part, "RST_SENT:"));
+    r.rstRcvd = report_of (adif_field (part, "RST_RCVD:"));
     QString const dateOn = adif_field (part, "QSO_DATE:").trimmed ();
     QString const dateOff = adif_field (part, "QSO_DATE_OFF:").trimmed ();
     QString const timeOff = adif_field (part, "TIME_OFF:").trimmed ();
@@ -205,11 +241,11 @@ namespace cabrillo
     return calls;
   }
 
-  // what goes in the file, in order of time, and the lines of what does not. noGrid are among the qsos.
+  // what goes in the file, in order of time, and the lines of what does not. noGrid and noReport are among the qsos.
   struct Selection
   {
     QList<Record> qsos;
-    QList<int> otherCall, twice, noGrid;
+    QList<int> otherCall, twice, noGrid, noReport;   // noReport: a report missing either way, said only where the exchange has them
   };
 
   inline Selection select (QList<Record> const& records, QString const& call)
@@ -225,12 +261,15 @@ namespace cabrillo
           {
             s.twice << r.line;
             if (s.qsos[*first].grid.isEmpty ()) s.qsos[*first].grid = r.grid;   // the same QSO: only the later copy has his grid
+            if (s.qsos[*first].rstSent.isEmpty ()) s.qsos[*first].rstSent = r.rstSent;   // (2026-11-07) or the reports
+            if (s.qsos[*first].rstRcvd.isEmpty ()) s.qsos[*first].rstRcvd = r.rstRcvd;
             continue;
           }
         seen.insert (key, s.qsos.size ());
         s.qsos << r;
       }
     for (auto const& q : s.qsos) if (q.grid.isEmpty ()) s.noGrid << q.line;
+    for (auto const& q : s.qsos) if (q.rstSent.isEmpty () || q.rstRcvd.isEmpty ()) s.noReport << q.line;
     std::stable_sort (s.qsos.begin (), s.qsos.end (), [] (Record const& a, Record const& b) {return a.end < b.end;});
     return s;
   }
@@ -260,15 +299,18 @@ namespace cabrillo
     QDate const d = r.end.date ();
     QTime const t = r.end.time ();
     QString const received = r.grid.isEmpty () ? QString {"ZZ00"} : r.grid;
-    QString line = "QSO: " + r.frequency.rightJustified (5) + " DG "
-      + digits (d.year (), 4) + '-' + digits (d.month (), 2) + '-' + digits (d.day (), 2) + ' ' + digits (t.hour (), 2) + digits (t.minute (), 2) + ' '
-      + r.ownCall.leftJustified (13) + ' ' + r.ownGrid.leftJustified (8) + ' ' + r.call.leftJustified (13) + ' ';
+    QString const front = "QSO: " + r.frequency.rightJustified (5) + " DG "
+      + digits (d.year (), 4) + '-' + digits (d.month (), 2) + '-' + digits (d.day (), 2) + ' ' + digits (t.hour (), 2) + digits (t.minute (), 2) + ' ';
+    if (c.reportInExchange)   // (2026-11-07) the report sent, our grid; his call, the report received, his grid; MSHV's widths
+      return front + r.ownCall.leftJustified (13) + ' ' + (r.rstSent.isEmpty () ? MISSING_REPORT : r.rstSent).leftJustified (3) + ' ' + r.ownGrid.leftJustified (4) + ' '
+        + r.call.leftJustified (13) + ' ' + (r.rstRcvd.isEmpty () ? MISSING_REPORT : r.rstRcvd).leftJustified (3) + ' ' + received;
+    QString line = front + r.ownCall.leftJustified (13) + ' ' + r.ownGrid.leftJustified (8) + ' ' + r.call.leftJustified (13) + ' ';
     return line + (c.transmitterColumn ? received.leftJustified (12) + " 0" : received);
   }
 
   struct Header
   {
-    QString contest, call, location, categoryOperator, categoryAssisted, categoryBand, categoryPower, categoryTransmitter, categoryStation;
+    QString contest, call, location, categoryOperator, categoryAssisted, categoryBand, categoryPower, categoryTransmitter, categoryStation, categoryOverlay;
     QString claimedScore, gridLocator, operators, name, address1, address2, email, club, soapbox, createdBy;
   };
 
@@ -303,6 +345,7 @@ namespace cabrillo
     tag ("CATEGORY-MODE", "DIGI");
     tag ("CATEGORY-TRANSMITTER", h.categoryTransmitter);
     tag ("CATEGORY-STATION", h.categoryStation);
+    tag ("CATEGORY-OVERLAY", h.categoryOverlay);   // (2026-11-07) where the contest has one and it is chosen
     tag ("CLAIMED-SCORE", h.claimedScore);
     tag ("GRID-LOCATOR", h.gridLocator);
     for (auto const& line : operator_lines (h.operators)) tag ("OPERATORS", line);

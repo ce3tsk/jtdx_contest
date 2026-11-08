@@ -27,14 +27,15 @@ namespace contest_score
 
   // A station counts once per band, FT8 and FT4 alike: the first QSO in the log, a repeat scores nothing (the 2026 log held 20
   // of them). A QSO with no grid has no exchange: it scores nothing and takes no place from a later QSO with the grid.
+  // (2026-11-07) missingGridScores: a contest where it still counts (the FT Challenge), so it is the first QSO like any other.
   // qsos: oldest first for each call (LogBook::contestQsos ()).
-  inline QList<Qso> counted (QList<Qso> const& qsos)
+  inline QList<Qso> counted (QList<Qso> const& qsos, bool missingGridScores = false)
   {
     QList<Qso> c;
     QSet<QString> worked;
     for (auto const& q : qsos)
       {
-        if (q.grid.length () < 4) continue;
+        if (q.grid.length () < 4 && !missingGridScores) continue;
         QString const key = q.call.toUpper () + ' ' + q.band;
         if (worked.contains (key)) continue;
         worked.insert (key);
@@ -43,17 +44,19 @@ namespace contest_score
     return c;
   }
 
-  // pointsOf: what a QSO with this grid scores. A multiplier: each 2 character field on each band, of the QSOs that count.
+  // pointsOf: what a QSO with this grid scores. A multiplier: each 2 character field on each band, of the QSOs that count; a QSO with
+  // no grid brings none (missingGridScores: it counts, pointsOf with an empty grid says what it is worth).
   template <class PointsOf>
-  inline Score sum (QList<Qso> const& qsos, PointsOf pointsOf, bool fieldMultipliers = true)
+  inline Score sum (QList<Qso> const& qsos, PointsOf pointsOf, bool fieldMultipliers = true, bool missingGridScores = false)
   {
     Score s;
     s.multiplied = fieldMultipliers;
     QSet<QString> fields;
-    for (auto const& q : counted (qsos))
+    for (auto const& q : counted (qsos, missingGridScores))
       {
-        s.points += pointsOf (q.grid);
-        fields.insert (q.grid.left (2).toUpper () + q.band);
+        bool const hasGrid = q.grid.length () >= 4;   // (3.-231 review) a part grid typed in the dialog is none: the contest log says ZZ00 for it
+        s.points += pointsOf (hasGrid ? q.grid : QString {});
+        if (hasGrid) fields.insert (q.grid.left (2).toUpper () + q.band);
       }
     s.multipliers = fields.size ();
     return s;

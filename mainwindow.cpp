@@ -2277,6 +2277,11 @@ void MainWindow::readSettings()
   m_skipTx1=m_settings->value("SkipTx1",true).toBool();
   ui->skipTx1->setChecked(m_skipTx1);
   ui->skipGrid->setChecked(m_skipTx1);
+  /* CE3TSK 2026-11-07 (TODO.md 3.-231 review): a restart in a contest that forbids Skip Tx1 with it on in the ini - stock JTDX writes this key
+     too - would leave it on and greyed for the whole contest. Off through the slot, as entering does; the operator's own value is parked
+     already (m_uiParkedValid), and with nothing parked forceContestControls () at the end of readSettings () parks it first */
+  if (m_contest.running && m_uiParkedValid && m_contest.forbidsSkipTx1 && m_skipTx1)
+    { ui->skipTx1->setChecked (false); on_skipTx1_clicked (false); }
 
   m_pctx=m_settings->value("PctTx",20).toInt(); if(!(m_pctx>=0 && m_pctx<=100)) m_pctx=20;
   m_dBm=m_settings->value("dBm",37).toInt(); if(!(m_dBm>=-30 && m_dBm<=60)) m_dBm=37;
@@ -2851,7 +2856,7 @@ void MainWindow::on_actionSettings_triggered()               //Setup Dialog
         m_myCallCompound=(!m_config.my_callsign().isEmpty() && m_config.my_callsign().contains("/")); // && !m_config.my_callsign().endsWith("/P") && !m_config.my_callsign().endsWith("/R"));
         if(!m_config.my_callsign().isEmpty()) {
           if(m_bMyCallStd) {
-            if(!ui->skipTx1->isEnabled() && !m_contest.forcesSkipTx1) { ui->skipTx1->setEnabled(true); ui->skipGrid->setEnabled(true); }   /* CE3TSK */
+            if(!ui->skipTx1->isEnabled() && !contestHoldsSkipTx1 ()) { ui->skipTx1->setEnabled(true); ui->skipGrid->setEnabled(true); }   /* CE3TSK */
           } else {
             if(m_skipTx1) { m_skipTx1=false; ui->skipTx1->setChecked(false); ui->skipGrid->setChecked(false); }
             ui->skipTx1->setEnabled(false); ui->skipGrid->setEnabled(false);
@@ -6130,7 +6135,7 @@ void MainWindow::on_actionEnable_hound_mode_toggled(bool checked)
     if(!m_commonFT8b && m_config.rig_name() != "None") ui->actionUse_TX_frequency_jumps->setEnabled(true); }
   else {
     setHoundButtonStyle ();
-    if(!m_contest.forcesSkipTx1) { ui->skipTx1->setEnabled(true); ui->skipGrid->setEnabled(true); }   /* CE3TSK */
+    if(!contestHoldsSkipTx1 ()) { ui->skipTx1->setEnabled(true); ui->skipGrid->setEnabled(true); }   /* CE3TSK */
     if(m_wasSkipTx1) { 
       m_skipTx1=true; ui->skipTx1->setChecked(true); ui->skipGrid->setChecked(true);
       if(ui->txrb1->isChecked()) on_txb2_clicked();
@@ -6491,6 +6496,10 @@ void MainWindow::forceContestControls ()
      the contest at all. */
   if (m_contest.forcesSkipTx1 && !ui->skipTx1->isChecked ())
     { ui->skipTx1->setChecked (true); on_skipTx1_clicked (true); }
+  /* CE3TSK 2026-11-07 (TODO.md 3.-231): the FT Challenge the other way: its FAQ, "you should always call other stations with your Grid
+     Square message", and Tx1 carries the grid. The same slot moves the Tx selection back to Tx1. */
+  if (m_contest.forbidsSkipTx1 && ui->skipTx1->isChecked ())
+    { ui->skipTx1->setChecked (false); on_skipTx1_clicked (false); }
   /* RRR off: the contest wants RR73, which ends the QSO a cycle earlier. setChecked()
      is enough - these are stateChanged slots, not clicked, so they fire either way and
      keep rrr1CheckBox and m_rrr in step. */
@@ -6548,9 +6557,10 @@ void MainWindow::applyContestLock (bool locked)
 
   /* skipTx1 and skipGrid are one setting in two widgets. Unlocking hands them to
      toggle_skipTx1(), which re-tests what legitimately forbids them - a non standard
-     callsign, hound mode - rather than enabling them blindly. */
+     callsign, hound mode - rather than enabling them blindly.
+     CE3TSK 2026-11-07: greyed in a contest that holds them either way, on (forced) or off (forbidden, the FT Challenge) */
   bool const skipTx1Forced {locked && m_contest.forcesSkipTx1};
-  if (skipTx1Forced) { ui->skipTx1->setEnabled (false); ui->skipGrid->setEnabled (false); }
+  if (locked && contestHoldsSkipTx1 ()) { ui->skipTx1->setEnabled (false); ui->skipGrid->setEnabled (false); }
   else toggle_skipTx1 ();
 
   /* CE3TSK: in WW Digi the grid is the exchange, so Tx1 (HISCALL MYCALL GRID) says exactly
@@ -8091,7 +8101,7 @@ void MainWindow::process_Auto()
        same as what he has since sent stays marked (on_dxGridEntry_textChanged ()), so what he sent is asked for as well */
     QString heardGrid;
     m_qsoHistory.status (m_hisCall, heardGrid);
-    in.hisGridKnown = !heardGrid.isEmpty () || !contest_report::exchange_grid (m_hisGrid, m_hisGridFromCall3, m_contest.gridExchange).isEmpty ();
+    in.hisGridKnown = !heardGrid.isEmpty () || !contest_report::exchange_grid (m_hisGrid, m_hisGridFromCall3, m_contest.running).isEmpty ();
     in.enableTx = m_enableTx;
     in.autoseq = m_autoseq;
     in.callMode = m_callMode;
@@ -8461,7 +8471,7 @@ void MainWindow::readFromStdout()                             //readFromStdout
       notified = ui->decodedTextBrowser->displayDecodedText (&decodedtext
                                                     , m_baseCall
                                                     , Radio::base_callsign (m_hisCall)
-                                                    , contest_report::exchange_grid (m_hisGrid, m_hisGridFromCall3, m_contest.gridExchange)   // CE3TSK 2026-11-03 (TODO.md 3.-224)
+                                                    , contest_report::exchange_grid (m_hisGrid, m_hisGridFromCall3, m_contest.running)   // CE3TSK 2026-11-03 (TODO.md 3.-224)
                                                     , m_notified
                                                     , (m_contest.running ? m_contestLog : m_logBook)
                                                     , m_qsoHistory
@@ -8502,7 +8512,7 @@ void MainWindow::readFromStdout()                             //readFromStdout
         ui->decodedTextBrowser2->displayDecodedText(&decodedtext
                                                     , m_baseCall
                                                     , Radio::base_callsign (m_hisCall)
-                                                    , contest_report::exchange_grid (m_hisGrid, m_hisGridFromCall3, m_contest.gridExchange)   // CE3TSK 2026-11-03 (TODO.md 3.-224)
+                                                    , contest_report::exchange_grid (m_hisGrid, m_hisGridFromCall3, m_contest.running)   // CE3TSK 2026-11-03 (TODO.md 3.-224)
                                                     , m_notified
                                                     , (m_contest.running ? m_contestLog : m_logBook)
                                                     , m_qsoHistory2
@@ -9752,7 +9762,7 @@ void MainWindow::processMessage(QString const& messages, int position, bool alt,
 		ui->decodedTextBrowser2->displayDecodedText(&decodedtext
                                                   ,m_baseCall
                                                   ,Radio::base_callsign (m_hisCall)
-                                                  ,contest_report::exchange_grid (m_hisGrid, m_hisGridFromCall3, m_contest.gridExchange)   // CE3TSK 2026-11-03 (TODO.md 3.-224)
+                                                  ,contest_report::exchange_grid (m_hisGrid, m_hisGridFromCall3, m_contest.running)   // CE3TSK 2026-11-03 (TODO.md 3.-224)
                                                   ,m_notified
                                                   ,(m_contest.running ? m_contestLog : m_logBook)
                                                   ,m_qsoHistory2
@@ -9908,7 +9918,9 @@ void MainWindow::on_S_meter_button_clicked(bool checked)
    exchange. Refuse to transmit instead. */
 bool MainWindow::noGridToExchange ()
 {
-  return m_contest.gridExchange && !gridOK(m_config.my_grid ().left (4));
+  /* (2026-11-07, TODO.md 3.-231 review) a grid exchange, and any contest that runs: the FT Challenge's exchange is the grid in Tx1 and
+     the CQ, and without it every partner would log us with ZZ00 */
+  return (m_contest.gridExchange || m_contest.running) && !gridOK(m_config.my_grid ().left (4));
 }
 
 void MainWindow::genCQMsg ()
@@ -9960,7 +9972,7 @@ void MainWindow::genStdMsgs(QString rpt)                       //genStdMsgs()
 
   genCQMsg ();
 
-  /* CE3TSK: WW Digi contest with no usable station grid. There is no valid exchange to
+  /* CE3TSK: a contest with no usable station grid (noGridToExchange ()). There is no valid exchange to
      send, so clear every message and switch Enable Tx off: with nothing to transmit the
      station must not answer anyone. genCQMsg() above has already cleared Tx6. */
   if(noGridToExchange ()) {
@@ -10718,9 +10730,9 @@ void MainWindow::on_dxCallEntry_textChanged(const QString &t) //dxCall changed
     if(m_skipTx1) { m_skipTx1=false; ui->skipTx1->setChecked(false); ui->skipGrid->setChecked(false); on_txb1_clicked(); }
     ui->skipTx1->setEnabled(false); ui->skipGrid->setEnabled(false);
   }
-  /* CE3TSK: !m_contest.forcesSkipTx1 - this runs on every DX call change, so without it the contest lock
+  /* CE3TSK: !contestHoldsSkipTx1 () - this runs on every DX call change, so without it the contest lock
      would be handed back the moment a callsign is entered. */
-  else { if(!m_houndMode && !m_contest.forcesSkipTx1) {ui->skipTx1->setEnabled(true); ui->skipGrid->setEnabled(true); }}
+  else { if(!m_houndMode && !contestHoldsSkipTx1 ()) {ui->skipTx1->setEnabled(true); ui->skipGrid->setEnabled(true); }}
   auto pos = ui->dxCallEntry->cursorPosition (); 
   if (t != m_hisCall && !m_hisCall.isEmpty()) { ui->dxCallEntry->setText(m_hisCall); ui->dxCallEntry->setCursorPosition (pos); }
   else {
@@ -10795,9 +10807,11 @@ void MainWindow::on_dxGridEntry_textChanged(const QString &t) //dxGrid changed
              carries, through contest_grid() so the DX panel and the per decode scoring use
              one rule. Scoring from a 6 character home grid would compute a distance the
              other station cannot reproduce from what we sent him. The points come from this
-             same nDkm, so the distance shown, the distance logged and the score agree. */
-          QString const myG = contest_grid (m_config.my_grid (), m_contest.gridExchange);
-          QString const hisG = contest_grid (m_hisGrid, m_contest.gridExchange);
+             same nDkm, so the distance shown, the distance logged and the score agree.
+             CE3TSK 2026-11-07 (TODO.md 3.-231): asked of running, a contest that scores from the 4 characters, not of
+             gridExchange: the FT Challenge has no grid exchange and measures its points the same way. */
+          QString const myG = contest_grid (m_config.my_grid (), m_contest.running);
+          QString const hisG = contest_grid (m_hisGrid, m_contest.running);
           bool const distanceKnown = !hisG.isEmpty() && !myG.isEmpty();
           if (distanceKnown) {
             /* buffers of the 8 characters azdist reads; it pads copies of its own since 2026-10-14 (TODO 3.-69) */
@@ -10853,10 +10867,12 @@ void MainWindow::on_logQSOButton_clicked()
   QString const hisGridLogged = log_grid (m_hisGridFromCall3 ? QString {} : m_hisGrid, historyGrid);
   /* CE3TSK 2026-10-05 (review): the box's distance belongs to the box's grid - when another is logged (the box held
      CALL3.TXT's, or was empty), the distance is worked out for the one logged, the DX panel's own way; it was dropped */
-  if (hisGridLogged != m_hisGrid) distance = grid_distance_text (m_config.my_grid (), hisGridLogged, m_contest.gridExchange, m_config.miles ());
+  if (hisGridLogged != m_hisGrid) distance = grid_distance_text (m_config.my_grid (), hisGridLogged, m_contest.running, m_config.miles ());   // running: see on_dxGridEntry_textChanged
   /* CE3TSK 2026-11-04 (TODO.md 3.-232): the comment's points. m_dxPoints comes from the distance, and is computed when the grid changes;
      a contest whose points come from the call asks here, for the call being logged. A QSO with no grid scores nothing. */
-  int const pointsLogged = !m_contest.prefixCountryMultipliers ? m_dxPoints
+  /* (2026-11-07, TODO.md 3.-231) a contest where a QSO with no grid still counts: from the grid logged, which may not be the box's, and 1 with none */
+  int const pointsLogged = m_contest.missingGridScores ? m_config.special_op_points (grid_distance_km (m_config.my_grid (), hisGridLogged, true))
+    : !m_contest.prefixCountryMultipliers ? m_dxPoints
     : hisGridLogged.length () < 4 ? 0
     : contest_qso::ybdxpi_points_of (*m_contestLog.countryData (), m_hisCall, m_config.my_callsign ());
   if (m_config.write_decoded_debug ()) {
@@ -13165,7 +13181,7 @@ void MainWindow::on_the_minute ()
 void MainWindow::toggle_skipTx1 ()
 {
   if(m_bMyCallStd) {
-    if(!ui->skipTx1->isEnabled() && !m_contest.forcesSkipTx1) { if(!m_houndMode) ui->skipTx1->setEnabled(true); ui->skipGrid->setEnabled(true); }   /* CE3TSK */
+    if(!ui->skipTx1->isEnabled() && !contestHoldsSkipTx1 ()) { if(!m_houndMode) ui->skipTx1->setEnabled(true); ui->skipGrid->setEnabled(true); }   /* CE3TSK */
   } else {
     if(m_skipTx1) { m_skipTx1=false; ui->skipTx1->setChecked(false); ui->skipGrid->setChecked(false); }
     ui->skipTx1->setEnabled(false); ui->skipGrid->setEnabled(false);

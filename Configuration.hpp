@@ -79,10 +79,10 @@ public:
 
   /* CE3TSK: special operating activity, selected on the Special operating tab. The full
      WSJT-X set is declared so that stored values keep their meaning if more are
-     implemented later; NONE, WW_DIGI, ARRL_DIGI and YBDXPI are offered in the dialog today, the rest are
+     implemented later; NONE, WW_DIGI, ARRL_DIGI, YBDXPI and FT_CHALLENGE are offered in the dialog today, the rest are
      shown disabled. Stored as an integer, so do not renumber existing entries. */
   enum class SpecialOperatingActivity {NONE = 0, NA_VHF = 1, EU_VHF = 2, FIELD_DAY = 3,
-                                       RTTY = 4, WW_DIGI = 5, ARRL_DIGI = 6, YBDXPI = 7};
+                                       RTTY = 4, WW_DIGI = 5, ARRL_DIGI = 6, YBDXPI = 7, FT_CHALLENGE = 8};
 
   explicit Configuration (QNetworkAccessManager * network_manager, QSettings * settings, QWidget * parent = nullptr);
   ~Configuration ();
@@ -497,7 +497,8 @@ contest_score::Score contest_log_score (contest_rules::Rules const&, Configurati
 
 /* CE3TSK: the points tag the message window puts in front of the country name while a
    contest runs: " 1p" .. " 7p", and " --" of the same width when nothing is scored (no grid
-   in the message, so the distance is unknown) - the country column stays aligned instead
+   in the message, so the distance is unknown; in the FT Challenge, which scores a station with
+   no grid at 1 point, a line with no call) - the country column stays aligned instead
    of shifting left on those lines, and the dash says "not scored" at a glance. Only meaningful during a contest; the caller
    decides whether to add it at all. */
 QString contest_points_tag (int points, int digits = 1);   /* digits: what the contest's largest score takes, so its column stays straight */

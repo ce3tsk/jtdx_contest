@@ -2601,6 +2601,11 @@ Format:
         <source>No grid, saved with ZZ00: %1 (log line %2).</source>
         <translation>Sem grid, salvo com ZZ00: %1 (linha do log %2).</translation>
     </message>
+    <message>
+        <location filename="../exportcabrillo.cpp"/>
+        <source>No report, saved with +99: %1 (log line %2).</source>
+        <translation>Sem reporte, salvo com +99: %1 (linha do log %2).</translation>
+    </message>
 </context>
 <context>
     <name>FrequencyDialog</name>
@@ -10541,6 +10546,16 @@ alteração na placa de som</translation>
         <location filename="../Configuration.ui"/>
         <source>Colors apply per contest, currently: %1. Own colors get applied again when contest mode is disabled.</source>
         <translation>As cores valem por concurso, agora: %1. As suas cores voltam a valer quando o modo concurso é desativado.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>International FT Challenge</source>
+        <translation>International FT Challenge</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;International FT Challenge, FT8 and FT4 on 80, 40, 20, 15 and 10 m. The normal QSO: your grid in Tx1, then the signal reports, so Skip Tx 1 is off and cannot be switched on. A QSO scores 1 point plus 1 for each full 3000 km. Without the other station's grid it scores 1 point, and the contest log gets ZZ00 for the grid. A station counts once per band. The multiplier is the 2 character grid field on each band.&lt;/p&gt;&lt;p&gt;While this is selected the grid highlighting below is set to per band on the grid field, and cannot be changed by hand. Your own settings are restored when you switch back to None.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;International FT Challenge, FT8 e FT4 em 80, 40, 20, 15 e 10 m. O QSO normal: o seu locator no Tx1 e depois os relatórios de sinal, por isso Saltar Tx 1 fica desligado e não pode ser ligado. Um QSO vale 1 ponto mais 1 a cada 3000 km completos. Sem o locator da outra estação vale 1 ponto, e o log do concurso recebe ZZ00 como locator. Uma estação conta uma vez por banda. O multiplicador é o campo de locator de 2 caracteres em cada banda.&lt;/p&gt;&lt;p&gt;Enquanto isto estiver selecionado, o destaque de locators abaixo fica definido por banda sobre o campo do locator e não pode ser alterado à mão. Suas configurações são redefinidas quando voltar a Nenhum.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>

@@ -1359,7 +1359,9 @@ int DisplayText::displayDecodedText(DecodedText* decodedText, QString myCall, QS
                 if (pp > priority) priority = pp;
             }
         }
-    } else if (specialOp_ != Configuration::SpecialOperatingActivity::NONE && !grid.isEmpty()) {
+    } else if (specialOp_ != Configuration::SpecialOperatingActivity::NONE && (!grid.isEmpty() || (contest_.missingGridScores && !checkCall.isEmpty ()))) {
+        /* CE3TSK 2026-11-07 (TODO.md 3.-231): a contest where a station with no grid still counts, the FT Challenge: 1 point on his line,
+           where the others show " --", and his rank as any 1 point station's (grid_distance_km () says -1 without his grid) */
         contestPts = contest_points (specialOp_, grid_distance_km (myGrid_, grid, true));
         /* (2026-11-04, the operator) a station already worked on the band: his points are shown, the rank alone falls, "simply because it was answered before" */
         if (contestPts > 0 && !(contest_.workedRanksLast && workedOnBand)) {
@@ -1398,7 +1400,9 @@ int DisplayText::displayDecodedText(DecodedText* decodedText, QString myCall, QS
            grid_distance_km() returns -1 when either grid is missing and contest_points()
            scores 0 for that, so an unknown distance prints no points - " --" of the tag's
            width instead (contest_points_tag()), so the country column stays aligned on
-           the lines without a grid. */
+           the lines without a grid. (2026-11-07) Except in a contest that counts a QSO
+           with no grid (missingGridScores, the FT Challenge): there such a line is worth 1
+           point and shows " 1p"; " --" is left for a line with no call. */
         int tagColumns {0};   // CE3TSK 2026-10-20: the points tag's width - the distance field's column moves with it
         if (specialOp_ != Configuration::SpecialOperatingActivity::NONE) {
             /* directly after the hint character and before the country, which is what

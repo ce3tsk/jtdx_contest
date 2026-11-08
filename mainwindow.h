@@ -1123,6 +1123,8 @@ private:
   void applyContestLock (bool locked);   /* CE3TSK: grey or un-grey, never forces */
   void parkContestState (QString const& mode);   // CE3TSK 2026-09-26: the contest park, shared
   void forceContestControls ();          /* CE3TSK: set them, only after parking */
+  /* CE3TSK 2026-11-07 (TODO.md 3.-231): a contest that holds Skip Tx1, on (WW Digi) or off (the FT Challenge): no site hands the box back */
+  bool contestHoldsSkipTx1 () const {return m_contest.forcesSkipTx1 || m_contest.forbidsSkipTx1;}
 
   /* declared after m_logBook so it is destroyed first: it borrows that object's country
      data, and must not outlive it. */

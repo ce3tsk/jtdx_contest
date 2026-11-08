@@ -137,10 +137,12 @@ namespace contest_report
   }
 
   /* CE3TSK 2026-11-03 (TODO.md 3.-224): the grid the windows and the sequencer may take for his: what the DX Grid box holds,
-     cut to 4 - but in the contest not one read from CALL3.TXT, a spot of another day: that is no exchange. */
-  inline QString exchange_grid (QString const& box, bool fromCall3, bool gridExchange)
+     cut to 4 - but in the contest not one read from CALL3.TXT, a spot of another day: that is no exchange.
+     (2026-11-07, 3.-231 review) in any contest that runs, not only a grid exchange: in the FT Challenge a grid only in CALL3.TXT
+     counts as none (the operator), so it is 1 point and ZZ00, never his CALL3.TXT square's points. The callers pass running. */
+  inline QString exchange_grid (QString const& box, bool fromCall3, bool contest)
   {
-    return gridExchange && fromCall3 ? QString {} : box.left (4);
+    return contest && fromCall3 ? QString {} : box.left (4);
   }
 
   inline QString goes_on_notice (QString const& call, QString const& hisGrid)

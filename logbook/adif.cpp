@@ -114,7 +114,7 @@ void ADIF::load(const QString mycall,const QString mygrid,const QString mydate)
                 if (q.mode.left(3) == "JT9") q.mode = "JT9";
                 else if (q.mode.left(4) == "JT65") q.mode = "JT65";
                 q.date = _extractField(record,"QSO_DATE:");
-                q.gridsquare = _extractField(record,"GRIDSQUARE:");
+                q.gridsquare = adif_read_gridsquare (_extractField(record,"GRIDSQUARE:"));   /* CE3TSK 2026-11-07: ZZ00 is no grid */
                 q.name = _extractField(record,"NAME:");
                 if (!q.call.isEmpty ()) {
                     _data.insert(q.call,q);

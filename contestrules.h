@@ -20,6 +20,8 @@ namespace contest_rules
     bool prefixCountryMultipliers = false;  // the WPX prefix and the DXCC country on each band are the multipliers, and a QSO's points come from the call
     bool ft8Only = false;              // FT4 is not allowed: greyed, and left on entering
     bool cqYbUndirected = false;       // CQ YB is the contest's too: it directs nothing
+    bool forbidsSkipTx1 = false;       // (2026-11-07) Tx1 carries the grid, half of the exchange: Skip Tx1 forced off, greyed, the Tx1 row offered
+    bool missingGridScores = false;    // (2026-11-07) a QSO with no grid still counts, 1 point and no multiplier; the contest log says ZZ00 for it
   };
 
   inline Rules ww_digi ()
@@ -47,6 +49,20 @@ namespace contest_rules
     Rules r;
     r.running = r.gridExchange = r.rejectsReports = r.forcesSkipTx1 = r.humanChoosesPartner = r.workedRanksLast = r.finishesQsoFirst = true;
     r.prefixCountryMultipliers = r.ft8Only = r.cqYbUndirected = true;
+    return r;
+  }
+
+  /* CE3TSK 2026-11-07 (TODO.md 3.-231, FT_CHALLENGE_PLAN.md): the International FT Challenge (https://www.rttycontesting.com/ft-challenge/rules/):
+     the normal FT8 and FT4 QSO, the grid in Tx1 and the signal reports after it; points and multipliers as WW Digi's, from the 4 character
+     grid. Its FAQ: "you should always call other stations with your Grid Square message", so Skip Tx1 is off; a station that sends no grid
+     still counts, 1 point and no multiplier, logged as ZZ00 ("the log submittal process will fill in any missing Grid Squares with ZZ00").
+     Rule 7.13: "the operator must take some action for each QSO". Not gridExchange, rejectsReports or forcesSkipTx1: reports are its traffic. */
+  inline Rules ft_challenge ()
+  {
+    Rules r;
+    r.running = r.finishesQsoFirst = r.workedRanksLast = r.humanChoosesPartner = true;   // as every contest
+    r.fieldMultipliers = true;                                                         // WW Digi's score
+    r.forbidsSkipTx1 = r.missingGridScores = true;
     return r;
   }
 }

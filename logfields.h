@@ -36,6 +36,22 @@ inline QString adif_gridsquare (QString const& grid)
   return grid.left (8);
 }
 
+/* CE3TSK 2026-11-07 (TODO.md 3.-231, the operator): the grid a contest's own log gets. A contest where a QSO with no grid still counts, the FT
+   Challenge, writes ZZ00 for it, its FAQ's "enter ZZ00 as the Grid Square if you can". In the contest log only: the everyday log stays with
+   none, so ZZ00 reaches no LoTW, QRZ or map upload. Inside the program the grid is simply missing (adif_read_gridsquare ()). */
+inline QString contest_log_grid (QString const& grid, bool missingGridScores)
+{
+  /* (3.-231 review) fewer than 4 characters, as the score asks of the same QSO in memory (contest_score::counted (), sum ()): the two agree */
+  return missingGridScores && grid.length () < 4 ? QString {"ZZ00"} : grid;
+}
+
+/* CE3TSK 2026-11-07: GRIDSQUARE as a log is read back: ZZ00, ZZ being no Maidenhead field, is no grid, in any log. So nothing sees it: no
+   worked grid or field, no distance, not the DX Grid box. */
+inline QString adif_read_gridsquare (QString const& field)
+{
+  return field.left (2).compare (QLatin1String {"ZZ"}, Qt::CaseInsensitive) == 0 ? QString {} : field;
+}
+
 /* CE3TSK 2026-11-05 (TODO.md 3.-235): a field of an ADIF record, by its name with the colon ("CALL:"); empty when it is not there. Moved
    here from ADIF::_extractField, unchanged, for the Cabrillo export to read a log with the same reader as the program. */
 inline QString adif_field (QString const& line, QString const& fieldName)

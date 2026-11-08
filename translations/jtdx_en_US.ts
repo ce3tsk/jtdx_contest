@@ -2592,6 +2592,11 @@ Format:
         <source>No grid, saved with ZZ00: %1 (log line %2).</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../exportcabrillo.cpp"/>
+        <source>No report, saved with +99: %1 (log line %2).</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>FrequencyDialog</name>
@@ -10368,6 +10373,16 @@ soundcard changes</source>
     <message>
         <location filename="../Configuration.ui"/>
         <source>Colors apply per contest, currently: %1. Own colors get applied again when contest mode is disabled.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>International FT Challenge</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;International FT Challenge, FT8 and FT4 on 80, 40, 20, 15 and 10 m. The normal QSO: your grid in Tx1, then the signal reports, so Skip Tx 1 is off and cannot be switched on. A QSO scores 1 point plus 1 for each full 3000 km. Without the other station's grid it scores 1 point, and the contest log gets ZZ00 for the grid. A station counts once per band. The multiplier is the 2 character grid field on each band.&lt;/p&gt;&lt;p&gt;While this is selected the grid highlighting below is set to per band on the grid field, and cannot be changed by hand. Your own settings are restored when you switch back to None.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

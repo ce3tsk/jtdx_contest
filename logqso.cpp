@@ -214,7 +214,9 @@ void LogQSO::accept()
       ADIF contestAdi;
       auto contestPath = QDir {QStandardPaths::writableLocation (QStandardPaths::DataLocation)}.absoluteFilePath (contestFile);
       contestAdi.init (contestPath);
-      if (!contestAdi.addQSOToFile (hisCall,hisGrid,mode,rptSent,rptRcvd,m_dateTimeOn,m_dateTimeOff,band,comments,name,strDialFreq,m_myCall,m_myGrid,m_txPower,m_send_to_eqsl))
+      /* CE3TSK 2026-11-07 (TODO.md 3.-231): ZZ00 for a missing grid where the contest counts the QSO, here alone (logfields.h) */
+      QString const contestGrid {contest_log_grid (hisGrid, m_config->contest ().missingGridScores)};
+      if (!contestAdi.addQSOToFile (hisCall,contestGrid,mode,rptSent,rptRcvd,m_dateTimeOn,m_dateTimeOff,band,comments,name,strDialFreq,m_myCall,m_myGrid,m_txPower,m_send_to_eqsl))
         {
           JTDXMessageBox::information_message(0,"","Cannot open contest log \"" + contestPath + "\".");
         }

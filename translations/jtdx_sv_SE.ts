@@ -2612,6 +2612,11 @@ Formatera:
         <source>No grid, saved with ZZ00: %1 (log line %2).</source>
         <translation>Inget grid, sparat med ZZ00: %1 (loggrad %2).</translation>
     </message>
+    <message>
+        <location filename="../exportcabrillo.cpp"/>
+        <source>No report, saved with +99: %1 (log line %2).</source>
+        <translation>Ingen rapport, sparat med +99: %1 (loggrad %2).</translation>
+    </message>
 </context>
 <context>
     <name>FrequencyDialog</name>
@@ -10554,6 +10559,16 @@ ljudkort ändras</translation>
         <location filename="../Configuration.ui"/>
         <source>Colors apply per contest, currently: %1. Own colors get applied again when contest mode is disabled.</source>
         <translation>Färger gäller per tävling, just nu: %1. Egna färger används igen när tävlingsläget stängs av.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>International FT Challenge</source>
+        <translation>International FT Challenge</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;International FT Challenge, FT8 and FT4 on 80, 40, 20, 15 and 10 m. The normal QSO: your grid in Tx1, then the signal reports, so Skip Tx 1 is off and cannot be switched on. A QSO scores 1 point plus 1 for each full 3000 km. Without the other station's grid it scores 1 point, and the contest log gets ZZ00 for the grid. A station counts once per band. The multiplier is the 2 character grid field on each band.&lt;/p&gt;&lt;p&gt;While this is selected the grid highlighting below is set to per band on the grid field, and cannot be changed by hand. Your own settings are restored when you switch back to None.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;International FT Challenge, FT8 och FT4 på 80, 40, 20, 15 och 10 m. Den vanliga QSO:n: din lokator i Tx1, sedan signalrapporterna, så Hoppa över Tx 1 är avstängt och kan inte slås på. En QSO ger 1 poäng plus 1 för varje fulla 3000 km. Utan den andra stationens lokator ger den 1 poäng, och tävlingsloggen får ZZ00 som lokator. En station räknas en gång per band. Multiplikatorn är lokatorfältet med 2 tecken på varje band.&lt;/p&gt;&lt;p&gt;Medan detta är valt sätts lokatormarkeringen nedan till per band på lokatorfältet och kan inte ändras för hand. Dina egna inställningar återställs när du växlar tillbaka till Ingen.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>

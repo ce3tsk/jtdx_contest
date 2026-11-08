@@ -2614,6 +2614,11 @@ Format:
         <source>No grid, saved with ZZ00: %1 (log line %2).</source>
         <translation>Intet grid, gemt med ZZ00: %1 (loglinje %2).</translation>
     </message>
+    <message>
+        <location filename="../exportcabrillo.cpp"/>
+        <source>No report, saved with +99: %1 (log line %2).</source>
+        <translation>Ingen rapport, gemt med +99: %1 (loglinje %2).</translation>
+    </message>
 </context>
 <context>
     <name>FrequencyDialog</name>
@@ -10555,6 +10560,16 @@ lydkort ændring</translation>
         <location filename="../Configuration.ui"/>
         <source>Colors apply per contest, currently: %1. Own colors get applied again when contest mode is disabled.</source>
         <translation>Farver gælder pr. konkurrence, lige nu: %1. Egne farver bruges igen, når konkurrencetilstand slås fra.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>International FT Challenge</source>
+        <translation>International FT Challenge</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;International FT Challenge, FT8 and FT4 on 80, 40, 20, 15 and 10 m. The normal QSO: your grid in Tx1, then the signal reports, so Skip Tx 1 is off and cannot be switched on. A QSO scores 1 point plus 1 for each full 3000 km. Without the other station's grid it scores 1 point, and the contest log gets ZZ00 for the grid. A station counts once per band. The multiplier is the 2 character grid field on each band.&lt;/p&gt;&lt;p&gt;While this is selected the grid highlighting below is set to per band on the grid field, and cannot be changed by hand. Your own settings are restored when you switch back to None.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;International FT Challenge, FT8 og FT4 på 80, 40, 20, 15 og 10 m. Den normale QSO: din locator i Tx1 og derefter signalrapporterne, så Skip TX 1 er slået fra og kan ikke slås til. En QSO giver 1 point plus 1 for hver fulde 3000 km. Uden den anden stations locator giver den 1 point, og contestloggen får ZZ00 som locator. En station tæller én gang pr. bånd. Multiplikatoren er locatorfeltet på 2 tegn på hvert bånd.&lt;/p&gt;&lt;p&gt;Mens dette er valgt, sættes locatorfremhævningen nedenfor til pr. bånd på locatorfeltet og kan ikke ændres manuelt. Dine egne indstillinger gendannes, når du skifter tilbage til Ingen.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>

@@ -2610,6 +2610,11 @@ Formāts:
         <source>No grid, saved with ZZ00: %1 (log line %2).</source>
         <translation>Bez lokatora, saglabāts ar ZZ00: %1 (žurnāla rinda %2).</translation>
     </message>
+    <message>
+        <location filename="../exportcabrillo.cpp"/>
+        <source>No report, saved with +99: %1 (log line %2).</source>
+        <translation>Bez ziņojuma, saglabāts ar +99: %1 (žurnāla rinda %2).</translation>
+    </message>
 </context>
 <context>
     <name>FrequencyDialog</name>
@@ -10549,6 +10554,16 @@ izmaiņas</translation>
         <location filename="../Configuration.ui"/>
         <source>Colors apply per contest, currently: %1. Own colors get applied again when contest mode is disabled.</source>
         <translation>Krāsas attiecas uz katrām sacensībām, pašlaik: %1. Savas krāsas atkal tiek lietotas, kad sacensību režīms tiek izslēgts.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>International FT Challenge</source>
+        <translation>International FT Challenge</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;International FT Challenge, FT8 and FT4 on 80, 40, 20, 15 and 10 m. The normal QSO: your grid in Tx1, then the signal reports, so Skip Tx 1 is off and cannot be switched on. A QSO scores 1 point plus 1 for each full 3000 km. Without the other station's grid it scores 1 point, and the contest log gets ZZ00 for the grid. A station counts once per band. The multiplier is the 2 character grid field on each band.&lt;/p&gt;&lt;p&gt;While this is selected the grid highlighting below is set to per band on the grid field, and cannot be changed by hand. Your own settings are restored when you switch back to None.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;International FT Challenge, FT8 un FT4 80, 40, 20, 15 un 10 m joslās. Parasts QSO: jūsu lokators Tx1, pēc tam signāla ziņojumi, tāpēc Izlaist Tx 1 ir izslēgts un to nevar ieslēgt. QSO dod 1 punktu un vēl 1 par katriem pilniem 3000 km. Bez otras stacijas lokatora tas dod 1 punktu, un sacensību žurnālā kā lokators tiek ierakstīts ZZ00. Stacija tiek skaitīta vienreiz katrā joslā. Reizinātājs ir 2 rakstzīmju lokatora lauks katrā joslā.&lt;/p&gt;&lt;p&gt;Kamēr šis ir izvēlēts, zemāk esošā lokatoru izcelšana ir iestatīta pa joslām uz lokatora lauka un to nevar mainīt ar roku. Jūsu pašu iestatījumi tiek atjaunoti, kad atgriežaties pie Nav.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>

@@ -90,6 +90,7 @@ private:
   QComboBox * categoryPower_;
   QComboBox * categoryTransmitter_;
   QComboBox * categoryStation_;
+  QComboBox * categoryOverlay_;   // CE3TSK 2026-11-07
   QLineEdit * claimed_;
   QLineEdit * operators_;
   QLineEdit * name_;

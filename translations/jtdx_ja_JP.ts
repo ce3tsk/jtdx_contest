@@ -2611,6 +2611,11 @@ Format:
         <source>No grid, saved with ZZ00: %1 (log line %2).</source>
         <translation>グリッドなし、ZZ00で保存: %1 件 (ログの行 %2)。</translation>
     </message>
+    <message>
+        <location filename="../exportcabrillo.cpp"/>
+        <source>No report, saved with +99: %1 (log line %2).</source>
+        <translation>レポートなし、+99で保存: %1 件 (ログの行 %2)。</translation>
+    </message>
 </context>
 <context>
     <name>FrequencyDialog</name>
@@ -10525,6 +10530,16 @@ soundcard changes</source>
         <location filename="../Configuration.ui"/>
         <source>Colors apply per contest, currently: %1. Own colors get applied again when contest mode is disabled.</source>
         <translation>色はコンテストごとに適用されます。現在: %1。コンテストモードを無効にすると、自分の色が再び適用されます。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>International FT Challenge</source>
+        <translation>International FT Challenge</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;International FT Challenge, FT8 and FT4 on 80, 40, 20, 15 and 10 m. The normal QSO: your grid in Tx1, then the signal reports, so Skip Tx 1 is off and cannot be switched on. A QSO scores 1 point plus 1 for each full 3000 km. Without the other station's grid it scores 1 point, and the contest log gets ZZ00 for the grid. A station counts once per band. The multiplier is the 2 character grid field on each band.&lt;/p&gt;&lt;p&gt;While this is selected the grid highlighting below is set to per band on the grid field, and cannot be changed by hand. Your own settings are restored when you switch back to None.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;International FT Challenge。80、40、20、15、10 m の FT8 と FT4 です。通常の QSO で、Tx1 で自局のグリッドを送り、その後シグナルレポートを交換するため、「スキップTx 1」はオフになり、オンにはできません。QSO の得点は 1 点に、3000 km ごと(端数は切り捨て)に 1 点を加えたものです。相手局のグリッドがない場合は 1 点で、コンテストログにはグリッドとして ZZ00 が記録されます。同じ局はバンドごとに 1 回だけ数えます。マルチプライヤーは各バンドの 2 文字のグリッドフィールドです。&lt;/p&gt;&lt;p&gt;これが選択されている間、下のグリッド強調表示はグリッドフィールドに対するバンドごとの設定に固定され、手動では変更できません。「なし」に戻すと、ご自身の設定が復元されます。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>

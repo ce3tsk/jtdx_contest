@@ -2611,6 +2611,11 @@ Format:
         <source>No grid, saved with ZZ00: %1 (log line %2).</source>
         <translation>그리드 없음, ZZ00으로 저장: %1개 (로그 줄 %2).</translation>
     </message>
+    <message>
+        <location filename="../exportcabrillo.cpp"/>
+        <source>No report, saved with +99: %1 (log line %2).</source>
+        <translation>리포트 없음, +99로 저장: %1개 (로그 줄 %2).</translation>
+    </message>
 </context>
 <context>
     <name>FrequencyDialog</name>
@@ -10548,6 +10553,16 @@ soundcard changes</source>
         <location filename="../Configuration.ui"/>
         <source>Colors apply per contest, currently: %1. Own colors get applied again when contest mode is disabled.</source>
         <translation>색상은 콘테스트별로 적용됩니다. 현재: %1. 콘테스트 모드를 끄면 내 색상이 다시 적용됩니다.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>International FT Challenge</source>
+        <translation>International FT Challenge</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;International FT Challenge, FT8 and FT4 on 80, 40, 20, 15 and 10 m. The normal QSO: your grid in Tx1, then the signal reports, so Skip Tx 1 is off and cannot be switched on. A QSO scores 1 point plus 1 for each full 3000 km. Without the other station's grid it scores 1 point, and the contest log gets ZZ00 for the grid. A station counts once per band. The multiplier is the 2 character grid field on each band.&lt;/p&gt;&lt;p&gt;While this is selected the grid highlighting below is set to per band on the grid field, and cannot be changed by hand. Your own settings are restored when you switch back to None.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;International FT Challenge입니다. 80, 40, 20, 15, 10 m에서 FT8과 FT4를 사용합니다. 일반 QSO로, Tx1에 내 그리드를 보내고 그다음 리포트를 교환하므로 Tx 1 건너뛰기는 꺼져 있으며 켤 수 없습니다. QSO는 1점에 3000 km를 채울 때마다 1점을 더합니다. 상대국의 그리드가 없으면 1점이며, 콘테스트 로그에는 그리드로 ZZ00이 기록됩니다. 같은 국은 밴드당 한 번만 계산됩니다. 멀티플라이어는 각 밴드의 2자 그리드 필드입니다.&lt;/p&gt;&lt;p&gt;이 항목이 선택된 동안 아래의 그리드 강조는 그리드 필드 기준의 밴드별로 고정되며 직접 바꿀 수 없습니다. 없음으로 되돌리면 원래 설정이 복원됩니다.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>

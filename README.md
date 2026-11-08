@@ -1,7 +1,7 @@
 # JTDX\_CONTEST by CE3TSK
 
 A fork of **JTDX v2.2.159** (itself derived from **WSJT-X**) with an enhanced FT8
-and rebuilt FT4 decoder, and built-in support for the **WW Digi, ARRL Digi and YBDXPI FT8 contests**.
+and rebuilt FT4 decoder, and built-in support for the **WW Digi, ARRL Digi, YBDXPI FT8 and International FT Challenge contests**.
 The GUI has been repaired throughout and the dark style now works.
 
 Designed, built and measured by **Tihomir Sokcevic, CE3TSK** — Santiago de Chile,
@@ -198,26 +198,31 @@ tiers already rank by distance bracket).
 
 come from it. Contest frequencies kept apart from the everyday band plan.
 
-### ARRL Digi and YBDXPI FT8 contests (Settings → Contest)
+### ARRL Digi, YBDXPI FT8 and International FT Challenge contests (Settings → Contest)
 
-Two more contests on the same switch, with the same 4-character grid exchange as WW Digi. Each has its own
+Three more contests on the same switch. ARRL Digi and YBDXPI have the same 4-character grid exchange as WW Digi;
+the International FT Challenge has the normal FT8 QSO, the grid in Tx1 and then the signal reports. Each has its own
 log, its own frequency list and its own score.
 
-| | WW Digi | ARRL Digi | YBDXPI FT8 |
-|---|---|---|---|
-| Modes | FT8, FT4 | FT8, FT4 | FT8 |
-| CQ | `CQ WW` | `CQ TEST` | `CQ WW` |
-| QSO points | 1 + km/3000 | 1 + 1 for each started 500 km | member 5, own country 1, own continent 2, another 3 |
-| Multipliers | the 2-character field, per band | none | the WPX prefix and the DXCC country, per band |
-| Autoselect prefers | a new field, then points | the most points | a new DXCC, a new prefix, then points |
+| | WW Digi | ARRL Digi | YBDXPI FT8 | FT Challenge |
+|---|---|---|---|---|
+| Modes | FT8, FT4 | FT8, FT4 | FT8 | FT8, FT4, on 80-10 m |
+| Exchange | the grid | the grid | the grid | the grid in Tx1, then reports; *Skip Tx1* off |
+| CQ | `CQ WW` | `CQ TEST` | `CQ WW` | plain `CQ` |
+| QSO points | 1 + km/3000 | 1 + 1 for each started 500 km | member 5, own country 1, own continent 2, another 3 | 1 + km/3000, 1 with no grid |
+| Multipliers | the 2-character field, per band | none | the WPX prefix and the DXCC country, per band | the 2-character field, per band |
+| Autoselect prefers | a new field, then points | the most points | a new DXCC, a new prefix, then points | a new field, then points |
 
-In all three a QSO under way finishes first, up to the sequencing counters in Settings, which a contest holds on and
+In all four a QSO under way finishes first, up to the sequencing counters in Settings, which a contest holds on and
 greyed at 4, 4, 5 and 4; yours come back afterwards. A station that keeps calling CQ is given up by its counter too,
 whatever its points. A station already worked
 on the band keeps its points on the screen but ranks below every new call, since it adds nothing to the score.
 *AnsB4* stays on and *Hide FT contest messages* off while a contest runs; both come back as they were afterwards.
 Each contest has its own notification colours, starting at the recommended ones; yours come back when you switch it off.
 The YBDXPI member list is bundled with the program. File > Export Cabrillo log... writes a contest's log as the file its sponsors ask for: every QSO in the log, the organisers doing the checking, the end of each QSO as its time, and says what it could not include and why.
+In the FT Challenge a station that sends no grid still counts, for 1 point: its contest log says `ZZ00` for the grid, as the
+contest asks, and the everyday log stays without one. Its Cabrillo file carries the reports with the grids, and offers the
+Classic overlay.
 
 ---
 
