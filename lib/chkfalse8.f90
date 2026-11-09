@@ -5,6 +5,8 @@ subroutine chkfalse8(msg37,i3,n3,nbadcrc,iaptype,lcall1hash,ngriddel)
   character*6 mask6(3)
   integer, intent(in) :: i3,n3
   logical(1) falsedec,lchkcall,lgvalid,lwrongcall
+  character word4*4                ! CE3TSK 2026-11-08 (TODO 3.-241): a third word of four characters
+  integer irpt                     ! ... the number of an R+report in it
   logical(1), intent(in) :: lcall1hash
 ! CE3TSK 2026-10-12: why the message was deleted, when it was the prefix-to-grid table (chkgrid) that deleted
 ! it: the number of the place below, 1 to 7 in the order of this file - positive when the square is not in the
@@ -228,6 +230,23 @@ subroutine chkfalse8(msg37,i3,n3,nbadcrc,iaptype,lcall1hash,ngriddel)
       endif
     else if(indxr.lt.1) then
       if(ispc3-ispc2.eq.5) then
+! CE3TSK 2026-11-08 (TODO 3.-241): the third word of four characters was taken for a square, and anything not shaped like
+! one for an invalid message. Two words a station sends are not what that makes of them: the R+report ("R-12",
+! "R+05"; pack77 sends -50 to +50) and RR73 - which pack77 does send as the square RR73, open Arctic Ocean (83 N,
+! 175 E) where no station is, so the word is always the acknowledgment. Both were deleted here - "R-12" as invalid,
+! "RR73" judged against the squares of the prefix - so FT4 and FT2, which try this type before type 3 while they wait
+! for a report or an R-report, threw away the DX station's R-report, and the duplicate list then kept the next pass
+! from decoding it again (measured: LATE_START_AP.md, F1). From the station being worked they stand as they are; from
+! any other call they are judged as before, so nothing new reaches the screen from a stranger.
+        word4=msg37(ispc2+1:ispc3-1)
+        if(fromhis(msg37(ispc1+1:ispc2-1))) then
+          if(word4.eq.'RR73') return
+          if(word4(1:1).eq.'R' .and. (word4(2:2).eq.'-' .or. word4(2:2).eq.'+') .and. &
+             word4(3:3).ge.'0' .and. word4(3:3).le.'9' .and. word4(4:4).ge.'0' .and. word4(4:4).le.'9') then
+            irpt=10*(ichar(word4(3:3))-ichar('0'))+ichar(word4(4:4))-ichar('0')
+            if(irpt.le.50) return   ! the review of 2026-11-08: +50 is sent too (it stopped at +49)
+          endif
+        endif
         if(msg37(ispc2+1:ispc2+1).gt.'@' .and. msg37(ispc2+1:ispc2+1).lt.'S' .and. &
            msg37(ispc2+2:ispc2+2).gt.'@' .and. msg37(ispc2+2:ispc2+2).lt.'S' .and. &
            msg37(ispc2+3:ispc2+3).lt.':' .and. msg37(ispc2+4:ispc2+4).lt.':') then
@@ -286,6 +305,9 @@ subroutine chkfalse8(msg37,i3,n3,nbadcrc,iaptype,lcall1hash,ngriddel)
          msg37(ispc2+2:ispc2+2).gt.'@' .and. msg37(ispc2+2:ispc2+2).lt.'S' .and. &
          msg37(ispc2+3:ispc2+3).lt.':' .and. msg37(ispc2+4:ispc2+4).lt.':') grid=msg37(ispc2+1:ispc3-1)
     endif
+    ! CE3TSK 2026-11-08 (TODO 3.-241): his RR73 - the square of open sea pack77 sends for the word - stands from the DX
+    ! call, as in place 4; after an R (no program sends "R RR73") it is judged as before (the review of 2026-11-08)
+    if(indxr.lt.1 .and. grid.eq.'RR73' .and. fromhis(msg37(ispc1+1:ispc2-1))) return
     if(len_trim(grid).eq.4) then
       if(indxr.gt.7 .and. callsign(1:5).ne.'<...>') then   ! CE3TSK 2026-10-13: the roger's square is not judged, and 2026-10-14 an unresolved hash is - see place 4 above
         call chkprefix(callsign,lwrongcall); lgvalid=.true.
@@ -322,14 +344,16 @@ subroutine chkfalse8(msg37,i3,n3,nbadcrc,iaptype,lcall1hash,ngriddel)
                msg37(ispc2+2:ispc2+2).gt.'@' .and. msg37(ispc2+2:ispc2+2).lt.'S' .and. &
                msg37(ispc2+3:ispc2+3).lt.':' .and. msg37(ispc2+4:ispc2+4).lt.':') grid=msg37(ispc2+1:ispc3-1)
           endif
+! CE3TSK 2026-11-08 (TODO 3.-241): both calls are mine and the DX station's here, so "RR73" is his acknowledgment - pack77
+! sends the word as the square RR73, open Arctic Ocean where no station is. It was judged against the squares of his
+! prefix and deleted, and FT4 and FT2 - whose type 3 comes before type 6 - then kept their RR73 pass from running (the
+! duplicate list; LATE_START_AP.md, F1). Hound mode's type 21 always let it through (AP mask 'mybcall hisbcall ???'
+! can trigger RR73 message); its own line below is folded into this one. After an R - "MYCALL HISCALL R RR73", which
+! no program sends, and whose phantom would be taken for his RR73 - it is judged on the square as before (the review
+! of 2026-11-08: the first form of this line let it through).
+          if(indxr.lt.1 .and. grid.eq.'RR73') return
           if(len_trim(grid).eq.4 .and. grid.ne.hisgrid4) then ! correctly decoded contest message
-            if(iaptype.eq.21) then
-              if(grid.eq.'RR73') then
-                return ! AP mask 'mybcall hisbcall ???' can trigger RR73 message
-              else
-                nbadcrc=1; msg37=''; return ! not valid message in Hound mode
-              endif
-            endif
+            if(iaptype.eq.21) then; nbadcrc=1; msg37=''; return; endif ! not valid message in Hound mode
 ! CE3TSK 2026-10-13: here the roger IS judged on its square, as the grid message is - unlike places 4 and 5.
 ! Both calls are given to the decoder for this type, so a phantom needs no call to come out right: sixteen
 ! free bits, half of them "R" and a square. The program takes "MYCALL HISCALL R GRID" from the station being
@@ -540,4 +564,12 @@ subroutine chkfalse8(msg37,i3,n3,nbadcrc,iaptype,lcall1hash,ngriddel)
   endif
 
   return
+
+contains
+! CE3TSK 2026-11-08 (TODO 3.-241): "from the station being worked" - the word is the DX call. One test for places 4
+! and 5, so that a later change to it reaches both.
+  logical(1) function fromhis(word)
+    character(len=*), intent(in) :: word
+    fromhis=len_trim(hiscall).gt.2 .and. word.eq.hiscall
+  end function fromhis
 end subroutine chkfalse8
