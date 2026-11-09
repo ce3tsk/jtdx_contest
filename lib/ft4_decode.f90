@@ -65,6 +65,7 @@ contains
     integer lenv,istatv
     character c77*77
     character*37 decodes(NDEC4MAX)   ! CE3TSK: was 100, and unchecked - see where ft4b fills it
+    logical(1) decrej(NDEC4MAX)      ! CE3TSK 2026-11-09 (TODO 3.-242): that entry of decodes was rejected (ft4b)
     character*12 mycall0,hiscall0,call_a,call_b
     character*4 servis4
     complex cd2(0:NDMAX-1)                  !Complex waveform
@@ -93,7 +94,7 @@ contains
     mycalllen1=len_trim(mycall)+1
     smax=0.; smax1=0.; nd1=0 ! smax init value shall be increased to 1.+ ?
 
-    maxcand=max(1,min(NCAND4MAX,nft4maxcand)); ndecodes=0; decodes=' '; fa=nfa; fb=nfb   ! CE3TSK: was 100
+    maxcand=max(1,min(NCAND4MAX,nft4maxcand)); ndecodes=0; decodes=' '; decrej=.false.; fa=nfa; fb=nfb   ! CE3TSK: was 100
     call get_environment_variable('JTDX_FT4_TIMING',envv,lenv,istatv); lft4timing=(istatv.eq.0 .and. lenv.gt.0)
 ! ndepth=1: 1 pass, no subtraction
 ! ndepth=2: 3 passes, bp only
@@ -128,7 +129,7 @@ contains
       do icand=1,ncand
         call ft4b(candidate(1,icand),candidate(2,icand),nQSOProgress,nfqso,ndepth,stophint, &
                   swl,lswl,nthr,isp,dobigfft,dosubtract,doosd,max_iterations,decodes,ndecodes, &
-                  lft4timing,icand.eq.nvirt)
+                  lft4timing,icand.eq.nvirt,decrej)
       enddo    !Candidate list
     enddo       !Subtraction loop
 

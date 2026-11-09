@@ -8,7 +8,7 @@
 ! slice decode (skipping the remaining candidates, passes and the delta collect); it now
 ! rejects the candidate only - a RETURN from here - exactly as ft8b's chkflscall rejections do.
 subroutine ft4b(f0,snrc,nQSOProgress,nfqso,ndepth,stophint,swl,lswl,nthr,isp,dobigfft, &
-                dosubtract,doosd,max_iterations,decodes,ndecodes,lft4timing,lvirt)
+                dosubtract,doosd,max_iterations,decodes,ndecodes,lft4timing,lvirt,decrej)
   use packjt77
   use ft4_mod1, only : nFT4decd,nfafilt,nfbfilt,lfilter,lhidetest,lhidetelemetry
   use ft4_mod1, only : dd4,sumxdt4,ndecd4
@@ -33,6 +33,8 @@ subroutine ft4b(f0,snrc,nQSOProgress,nfqso,ndepth,stophint,swl,lswl,nthr,isp,dob
   logical, intent(inout) :: dobigfft
   character*37 decodes(NDEC4MAX)   ! CE3TSK: was 100
   integer, intent(inout) :: ndecodes
+  logical(1), intent(inout) :: decrej(NDEC4MAX)   ! CE3TSK 2026-11-09 (TODO 3.-242): the shared filter rejected that entry
+  integer idec,irej                ! ... this message's entry; its text repeats a rejected entry
   integer ngriddel,ndelfreq   ! CE3TSK: chkfalse8's word on a deletion by the table
   integer ndxhalf   ! CE3TSK 2026-11-03: chkdxpedmine's word on a DXpedition message naming my call (chkprefix.f90)
   parameter (NSS=NSPS/NDOWN,NDMAX=NMAX/NDOWN)
@@ -475,9 +477,23 @@ subroutine ft4b(f0,snrc,nQSOProgress,nfqso,ndepth,stophint,swl,lswl,nthr,isp,dob
             endif
           endif
 
-          idupe=0
-          do i=1,ndecodes; if(decodes(i).eq.message) idupe=1; enddo
+! CE3TSK 2026-11-09 (TODO 3.-242): a repeat of a message this slice has already judged ends the candidate - the first
+! verdict on a message wins, and the checks rely on that (a directed CQ the plain pass deleted on its prefix is not
+! shown by the CQ a-priori pass, which that check does not judge: test/decode/deleted.sh). With one exception now: a
+! message the shared filter (chkfalse8) rejected no longer ends a pass that knows the whole message - types 4-6 and the
+! hint memory's 7, the decodes the program trusts without a check. That is how FT4 and FT2 lost the DX station's RR73
+! (LATE_START_AP.md F1): type 3 decoded it and the filter rejected it, the same candidate's type 6 decoded it next and
+! found it in this list, and the candidate ended; so did the virtual candidate's type 3, before its type 6. Only the
+! filter's rejects are marked: the other checks judge messages no whole-message pass decodes - CQs, rogers with a
+! grid, i3=2, "TU;", DXpedition messages.
+          idupe=0; irej=0
+          do i=1,ndecodes
+            if(decodes(i).eq.message) then
+              if(decrej(i)) then; irej=1; else; idupe=1; endif
+            endif
+          enddo
           if(idupe.eq.1) exit
+          if(irej.eq.1 .and. (iaptype.lt.4 .or. iaptype.gt.7)) exit
 ! CE3TSK 2026-10-12: the same fault as ft8b's msgsrcvd, in the FT4 and FT2 decoder. The slice's list for the
 ! duplicate test held 100 and nothing checked the count: the 101st message of ONE slice was written past its
 ! end - "Index '101' of dimension 1 of array 'decodes'" in the bounds-checked build, and not a line of the
@@ -488,8 +504,9 @@ subroutine ft4b(f0,snrc,nQSOProgress,nfqso,ndepth,stophint,swl,lswl,nthr,isp,dob
 ! can be full while the buffer is not. Then a message decoded again is not seen as a repeat - it is kept and
 ! counted a second time - and the third pass, which ft4_decode.f90 runs only when the second one added to
 ! this list, is skipped. That takes more than NDEC4MAX (200) messages in one slice.
+          idec=0   ! CE3TSK 2026-11-09 (TODO 3.-242): this message's entry, for the filter's reject to mark
           if(ndecodes.lt.size(decodes)) then
-            ndecodes=ndecodes+1; decodes(ndecodes)=message
+            ndecodes=ndecodes+1; decodes(ndecodes)=message; idec=ndecodes
           endif
           if(snr.gt.0.0) then; xsnr=10*log10(snr)-14.8; else; xsnr=-21.0; endif
           if(lft2 .and. snr.gt.0.0) xsnr=xsnr+ft2snroff   ! CE3TSK: FT2's own scale, see ft4_mod1
@@ -547,6 +564,7 @@ subroutine ft4b(f0,snrc,nQSOProgress,nfqso,ndepth,stophint,swl,lswl,nthr,isp,dob
               if(nbadcrc.eq.1) then
                 if(lft4timing) write(0,9020) i3,n3,iaptype,nsnr,msg37_2(1:26)
 9020                format('ft4 reject i3 ',i2,' n3 ',i2,' iaptype ',i2,' snr ',i4,' ',a)
+                if(idec.gt.0) decrej(idec)=.true.   ! 2026-11-09 (TODO 3.-242): a whole-message pass may still take it
                 message=''; cycle
               endif
             endif

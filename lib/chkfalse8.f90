@@ -7,6 +7,7 @@ subroutine chkfalse8(msg37,i3,n3,nbadcrc,iaptype,lcall1hash,ngriddel)
   logical(1) falsedec,lchkcall,lgvalid,lwrongcall
   character word4*4                ! CE3TSK 2026-11-08 (TODO 3.-241): a third word of four characters
   integer irpt                     ! ... the number of an R+report in it
+  logical(1) lreply                ! ... an R+report or RR73 (2026-11-09, TODO 3.-243)
   logical(1), intent(in) :: lcall1hash
 ! CE3TSK 2026-10-12: why the message was deleted, when it was the prefix-to-grid table (chkgrid) that deleted
 ! it: the number of the place below, 1 to 7 in the order of this file - positive when the square is not in the
@@ -236,16 +237,27 @@ subroutine chkfalse8(msg37,i3,n3,nbadcrc,iaptype,lcall1hash,ngriddel)
 ! 175 E) where no station is, so the word is always the acknowledgment. Both were deleted here - "R-12" as invalid,
 ! "RR73" judged against the squares of the prefix - so FT4 and FT2, which try this type before type 3 while they wait
 ! for a report or an R-report, threw away the DX station's R-report, and the duplicate list then kept the next pass
-! from decoding it again (measured: LATE_START_AP.md, F1). From the station being worked they stand as they are; from
-! any other call they are judged as before, so nothing new reaches the screen from a stranger.
+! from decoding it again (measured: LATE_START_AP.md, F1). From the station being worked they stand as they are.
+! 2026-11-09 (TODO 3.-243, the operator's decision on the review's points 4 and 7): from any other call they are judged
+! as the roger with a square is here - the prefix alone (chkprefix), on record as prefix/4 when it is not allocated.
+! The R+report was deleted as "invalid", off the record (the rule was written for "R174", which unpack77 no longer
+! makes), and RR73 judged as a square of open sea, on record as grid/4; both are real messages to me - a late
+! R-report after the DX call has moved on - and the plain report from any call has always passed this place. The
+! sequencer takes either only from a station it has sent a call or a report to (qsohistory.cpp, RRREPORT and RRR73),
+! so a phantom of them is shown but answers nothing. An unresolved hash names no station: deleted, off the record.
         word4=msg37(ispc2+1:ispc3-1)
-        if(fromhis(msg37(ispc1+1:ispc2-1))) then
-          if(word4.eq.'RR73') return
-          if(word4(1:1).eq.'R' .and. (word4(2:2).eq.'-' .or. word4(2:2).eq.'+') .and. &
-             word4(3:3).ge.'0' .and. word4(3:3).le.'9' .and. word4(4:4).ge.'0' .and. word4(4:4).le.'9') then
-            irpt=10*(ichar(word4(3:3))-ichar('0'))+ichar(word4(4:4))-ichar('0')
-            if(irpt.le.50) return   ! the review of 2026-11-08: +50 is sent too (it stopped at +49)
-          endif
+        lreply=word4.eq.'RR73'
+        if(word4(1:1).eq.'R' .and. (word4(2:2).eq.'-' .or. word4(2:2).eq.'+') .and. &
+           word4(3:3).ge.'0' .and. word4(3:3).le.'9' .and. word4(4:4).ge.'0' .and. word4(4:4).le.'9') then
+          irpt=10*(ichar(word4(3:3))-ichar('0'))+ichar(word4(4:4))-ichar('0')
+          lreply=irpt.le.50   ! the review of 2026-11-08: +50 is sent too (it stopped at +49)
+        endif
+        if(lreply) then
+          if(fromhis(msg37(ispc1+1:ispc2-1))) return
+          if(callsign(1:5).eq.'<...>') then; nbadcrc=1; msg37=''; return; endif
+          call chkprefix(callsign,lwrongcall)
+          if(lwrongcall) then; ngriddel=-4; nbadcrc=1; msg37=''; endif
+          return
         endif
         if(msg37(ispc2+1:ispc2+1).gt.'@' .and. msg37(ispc2+1:ispc2+1).lt.'S' .and. &
            msg37(ispc2+2:ispc2+2).gt.'@' .and. msg37(ispc2+2:ispc2+2).lt.'S' .and. &
@@ -306,8 +318,16 @@ subroutine chkfalse8(msg37,i3,n3,nbadcrc,iaptype,lcall1hash,ngriddel)
          msg37(ispc2+3:ispc2+3).lt.':' .and. msg37(ispc2+4:ispc2+4).lt.':') grid=msg37(ispc2+1:ispc3-1)
     endif
     ! CE3TSK 2026-11-08 (TODO 3.-241): his RR73 - the square of open sea pack77 sends for the word - stands from the DX
-    ! call, as in place 4; after an R (no program sends "R RR73") it is judged as before (the review of 2026-11-08)
-    if(indxr.lt.1 .and. grid.eq.'RR73' .and. fromhis(msg37(ispc1+1:ispc2-1))) return
+    ! call, as in place 4; after an R (no program sends "R RR73") it is judged as before (the review of 2026-11-08).
+    ! 2026-11-09 (TODO 3.-243): from any other call it is judged as the roger with a square is here, the prefix alone
+    ! (it was judged as a square, on record as grid/5); an unresolved hash names no station - deleted, off the record.
+    if(indxr.lt.1 .and. grid.eq.'RR73') then
+      if(fromhis(msg37(ispc1+1:ispc2-1))) return
+      if(callsign(1:5).eq.'<...>') then; nbadcrc=1; msg37=''; return; endif
+      call chkprefix(callsign,lwrongcall)
+      if(lwrongcall) then; ngriddel=-5; nbadcrc=1; msg37=''; endif
+      return
+    endif
     if(len_trim(grid).eq.4) then
       if(indxr.gt.7 .and. callsign(1:5).ne.'<...>') then   ! CE3TSK 2026-10-13: the roger's square is not judged, and 2026-10-14 an unresolved hash is - see place 4 above
         call chkprefix(callsign,lwrongcall); lgvalid=.true.
@@ -568,8 +588,18 @@ subroutine chkfalse8(msg37,i3,n3,nbadcrc,iaptype,lcall1hash,ngriddel)
 contains
 ! CE3TSK 2026-11-08 (TODO 3.-241): "from the station being worked" - the word is the DX call. One test for places 4
 ! and 5, so that a later change to it reaches both.
+! 2026-11-09 (TODO 3.-244, the review's point 6): or the DX call with a rover's /R or a portable's /P that the other one
+! lacks - "K1ABC/R" in the message, "K1ABC" in the DX Call box, or the other way round - as ft8b compares his base call
+! (hisbcall). Any other difference is another call: "K1ABCD", "K1AB", "PJ4/K1ABC" unless the box holds it.
   logical(1) function fromhis(word)
     character(len=*), intent(in) :: word
-    fromhis=len_trim(hiscall).gt.2 .and. word.eq.hiscall
+    fromhis=nosuffix(word).eq.nosuffix(hiscall)   ! (no DX call matches nothing: no word of a message is empty)
   end function fromhis
+  character(len=12) function nosuffix(call)   ! the call without a trailing /R or /P (the blank after it: its end)
+    character(len=*), intent(in) :: call
+    integer n
+    nosuffix=call
+    n=index(nosuffix,'/R '); if(n.eq.0) n=index(nosuffix,'/P ')
+    if(n.gt.0) nosuffix(n:)=' '
+  end function nosuffix
 end subroutine chkfalse8
