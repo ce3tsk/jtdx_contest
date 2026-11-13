@@ -553,6 +553,11 @@ Format:
         <source>The downloaded file is not a CALL3.TXT call list.</source>
         <translation>다운로드한 파일은 CALL3.TXT 호출부호 목록이 아닙니다.</translation>
     </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Hard to read: this text color stands only %1:1 against its background, less than 3:1. The Recommended colors button restores colors that read well.</source>
+        <translation>읽기 어려움: 이 글자 색은 배경 대비 %1:1에 불과하여 3:1보다 낮습니다. 권장 색상 버튼으로 잘 읽히는 색상을 복원할 수 있습니다.</translation>
+    </message>
 </context>
 <context>
     <name>CountryDat</name>

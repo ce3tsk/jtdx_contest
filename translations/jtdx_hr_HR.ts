@@ -553,6 +553,11 @@ Format:
         <source>The downloaded file is not a CALL3.TXT call list.</source>
         <translation>Preuzeta datoteka nije CALL3.TXT popis pozivnih znakova.</translation>
     </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Hard to read: this text color stands only %1:1 against its background, less than 3:1. The Recommended colors button restores colors that read well.</source>
+        <translation>Teško čitljivo: ova boja teksta ima kontrast od samo %1:1 prema svojoj pozadini, manje od 3:1. Gumb Preporučene boje vraća boje koje se dobro čitaju.</translation>
+    </message>
 </context>
 <context>
     <name>CountryDat</name>

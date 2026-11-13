@@ -553,6 +553,11 @@ Formāts:
         <source>The downloaded file is not a CALL3.TXT call list.</source>
         <translation>Lejupielādētais fails nav CALL3.TXT izsaukuma signālu saraksts.</translation>
     </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Hard to read: this text color stands only %1:1 against its background, less than 3:1. The Recommended colors button restores colors that read well.</source>
+        <translation>Grūti salasāms: šīs teksta krāsas kontrasts pret fonu ir tikai %1:1, mazāk nekā 3:1. Poga Ieteicamās krāsas atjauno labi salasāmas krāsas.</translation>
+    </message>
 </context>
 <context>
     <name>CountryDat</name>

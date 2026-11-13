@@ -1,5 +1,6 @@
 #include "displaytext.h"
 #include "contestpoints.h"   // CE3TSK 2026-11-04
+#include "swatchcontrast.h"   // CE3TSK 2026-11-12 (TODO.md 3.-246): the wave's colour against its background
 
 #include <algorithm>
 #include <QtGlobal>
@@ -44,11 +45,20 @@ static bool isGrid4 (QString const& w)
    WaveUnderline is one pixel, and in the dark style it all but vanished on the category colours (option C of
    the comparison: the same reds, twice as thick). So the span carries DoubtProperty and its colour, Qt draws
    no underline under it (any underline the segment had gives way to the wave, as it did before), and
-   paintEvent () draws the wave over Qt's text. */
+   paintEvent () draws the wave over Qt's text.
+   2026-11-12 (TODO.md 3.-246, its review): the red stays red down to 2.0:1 against the background under it, the floor
+   the operator set for it (Radio.cpp fixed_colors); below that the wave is black or white, whichever stands out
+   (swatchcontrast.h) - its shape still says "in doubt". That is the dark style inverted, where the line's own colour is
+   the background: #ff7878 on CQ 1.89:1, on a call to us 1.14:1, on a standard call 1.15:1, and since 3.-246 on a wanted
+   message part (the my-call colour). With the recommended colours every other background keeps the red (the lowest,
+   new CQ zone etc. in the light style, 2.04:1). */
 QTextCharFormat DisplayText::doubtFormat (QTextCharFormat f) const
 {
   f.setUnderlineStyle (QTextCharFormat::NoUnderline);
-  f.setUnderlineColor (QColor {Radio::convert_dark ("#e60000", useDarkStyle_)});
+  double constexpr waveFloor {2.0};
+  QColor const red {Radio::convert_dark ("#e60000", useDarkStyle_)};
+  QColor const bg {Qt::NoBrush == f.background ().style () ? QColor {} : f.background ().color ()};
+  f.setUnderlineColor (bg.isValid () && swatch_contrast::ratio (red, bg) < waveFloor ? swatch_contrast::frame_colour (bg) : red);
   f.setProperty (DoubtProperty, true);
   return f;
 }
@@ -286,7 +296,7 @@ void DisplayText::insertLineSpacer(QString const& line)
     appendText (line, Radio::convert_dark("#d3d3d3",useDarkStyle_), Radio::convert_dark("#000000",useDarkStyle_), 0, " ", Radio::convert_dark("#000000",useDarkStyle_), " ", true);
 }
 
-void DisplayText::appendText(QString const& text, QString const& bg, QString const& color, int std_type, QString const& servis, QString const& servis_color, QString const& cntry, bool forceBold, bool strikethrough, bool underlined, bool DXped, bool overwrite, bool wanted, QList<QPair<int, int>> const& doubtful, int cntryDoubtFrom, QString const& toolTip, QString const& field, int fieldColumns)
+void DisplayText::appendText(QString const& text, QString const& bg, QString const& color, int std_type, QString const& servis, QString const& servis_color, QString const& cntry, bool forceBold, bool strikethrough, bool underlined, bool DXped, bool overwrite, bool wanted, QList<QPair<int, int>> const& doubtful, int cntryDoubtFrom, QString const& toolTip, QString const& field, int fieldColumns, bool inverted)
 {
     QString servbg, s;
     if (std_type == 2) servbg = Radio::convert_dark("#ff0000",useDarkStyle_);
@@ -347,7 +357,14 @@ void DisplayText::appendText(QString const& text, QString const& bg, QString con
         else if (underlined) m_charFormat.setUnderlineStyle(QTextCharFormat::SingleUnderline);
         else m_charFormat.setUnderlineStyle(QTextCharFormat::NoUnderline);
         if (wanted) {
-            m_charFormat.setFontItalic(true); m_charFormat.setForeground(QColor(color_MyCall_)); m_charFormat.setFontOverline(true);
+            /* CE3TSK 2026-11-12 (TODO.md 3.-246): the wanted colour follows the inversion, as the line's other two do -
+               its text, or with Inverse text/background color its background. It stayed the text (stock JTDX), on the
+               line's own colour turned background: 2.00:1 light / 1.66:1 dark on a CQ line, 1.0:1 on a standard call's,
+               with the recommended colours. Swapped, every pair is one the recommended palette is checked for. The
+               servis column below sets both colours again, so the background ends with the message part. */
+            m_charFormat.setFontItalic(true); m_charFormat.setFontOverline(true);
+            if (inverted) m_charFormat.setBackground (QColor(color_MyCall_));
+            else m_charFormat.setForeground(QColor(color_MyCall_));
             if (!underlined && !DXped) m_charFormat.setFontUnderline(true);
             }
         /* CE3TSK 2026-09-30: the words in doubt get a red wave underline over whatever this segment
@@ -426,6 +443,7 @@ int DisplayText::displayDecodedText(DecodedText* decodedText, QString myCall, QS
     bool forceBold = false;
     bool strikethrough = false;
     bool underlined = false;
+    bool inverted = false;   // CE3TSK 2026-11-12 (TODO.md 3.-246): Inverse text/background color applied to this line
     bool beep = false;
     bool actwind = false;
     bool show_line = true;
@@ -1194,7 +1212,8 @@ int DisplayText::displayDecodedText(DecodedText* decodedText, QString myCall, QS
         }
          
             
-        if (displayTxtColor_ && (displayPotential_ || std_type != 3)) {
+        inverted = displayTxtColor_ && (displayPotential_ || std_type != 3);
+        if (inverted) {
             swpColor = bgColor;
             bgColor = txtColor;
             txtColor = swpColor;
@@ -1329,6 +1348,7 @@ int DisplayText::displayDecodedText(DecodedText* decodedText, QString myCall, QS
     if (jt65bc) {
         bgColor = Radio::convert_dark("#ffffff",useDarkStyle_);
         txtColor = Radio::convert_dark("#000000",useDarkStyle_);
+        inverted = false;   // CE3TSK 2026-11-12 (TODO.md 3.-246, review): drawn plain - a wanted colour is its text again
     }
 
     /* CE3TSK: contest points as a ranking tier, sitting below the new field tier (52/53, both
@@ -1440,7 +1460,7 @@ int DisplayText::displayDecodedText(DecodedText* decodedText, QString myCall, QS
         int const fieldColumns {(displayCountryName_ ? (displayCountryPrefix_ ? (displayUSStates_ ? distance_field::prefixStateColumns : distance_field::prefixColumns)
                                                                               : distance_field::nameColumns) : 0) + tagColumns};
         if (drawn) {   // CE3TSK 2026-10-23: Misc > Hide clear phantom messages, above
-            appendText(messageText, bgColor, txtColor, std_type, servis, servisColor, cntry, forceBold, strikethrough, underlined, decodedText->isDXped(), false, bwantedCall||bwantedGrid||bwantedPrefix||bwantedCountry, doubtful, cntryDoubtFrom, doubtTip, field, fieldColumns);
+            appendText(messageText, bgColor, txtColor, std_type, servis, servisColor, cntry, forceBold, strikethrough, underlined, decodedText->isDXped(), false, bwantedCall||bwantedGrid||bwantedPrefix||bwantedCountry, doubtful, cntryDoubtFrom, doubtTip, field, fieldColumns, inverted);
             wastx_ = false;
         }
     }

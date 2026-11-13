@@ -180,6 +180,7 @@ extern "C" {
 #include <QtGui>
 #include "qt_helpers.hpp"
 #include "tooltip_wrap.hpp"   /* CE3TSK */
+#include "swatchcontrast.h"   // CE3TSK 2026-11-12 (TODO.md 3.-246)
 #include "thread_shutdown.hpp"   /* CE3TSK */
 #include "MetaDataRegistry.hpp"
 #include "SettingsGroup.hpp"
@@ -2190,6 +2191,26 @@ Configuration::impl::impl (Configuration * self, QNetworkAccessManager * network
      dialog's width (settings_fit measures every page as it is now); its list opens as wide as its names */
   ui_->rig_combo_box->setMinimumContentsLength (16);
   wrap_tooltips (this);   /* CE3TSK: Qt does not word-wrap a plain tooltip, see tooltip_wrap.hpp */
+  /* CE3TSK 2026-11-12 (TODO.md 3.-246): Notifications - a swatch whose two colours would be hard to read on a decoded line
+     gets a dashed frame and a tooltip with the ratio (swatchcontrast.h): the 42 of the tiers and the 7 others. The
+     text of a swatch with no text colour of its own (Tx messages) is the transmitted line's, convert_dark ("#000000"):
+     black, in the dark style #e6dcd2. The ratio is rounded DOWN to the tenth - a pair at 2.97:1 is marked, and "3.0:1"
+     would contradict "less than 3:1" - and written with a point in every language, as the "3:1" beside it (QLocale ()
+     is the system's, not the program's language: main.cpp sets no default). */
+  {
+    auto * const marker = new swatch_contrast::Marker {
+        [this] {return QColor {Radio::convert_dark ("#000000", useDarkStyle_)};},
+        [this] (double r) {
+          return wrap_tooltip (tr ("Hard to read: this text color stands only %1:1 against its background, less than 3:1. "
+                                   "The Recommended colors button restores colors that read well.").arg (std::floor (r * 10.) / 10., 0, 'f', 1));
+        },
+        this};
+    for (auto const& t : tiers)
+      for (auto const s : t.samples) (ui_.data ()->*s)->installEventFilter (marker);
+    for (QLabel * const l : {ui_->labCQ, ui_->labMyCall, ui_->labStandardCall, ui_->labTx, ui_->labWorkedCall, ui_->labWorkedMcCall,
+                             ui_->labWorkedScCall})
+      l->installEventFilter (marker);
+  }
   call_tooltip_ = ui_->callsign_line_edit->toolTip ();   // CE3TSK 2026-10-04: refresh_own_marks adds to them
   /* CE3TSK 2026-10-04 (review item 9): the tier boxes, one table - a tier cascades to the three under it, a child
      stages its value; and while a contest is being left (leaving_contest ()) a child clicked goes into the operator's

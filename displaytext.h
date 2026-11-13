@@ -55,8 +55,9 @@ signals:
 public slots:
   /* CE3TSK 2026-09-30: doubtful - (column, length) of the words of `text` in doubt, cntryDoubtFrom -
      where the doubtful part of `cntry` starts (-1: none); both get the red wave underline of a
-     likely phantom decode (phantomdecodes.h); 2026-10-19 toolTip - the line's, on every part of it (doubtToolTip) */
-  void appendText(QString const& text, QString const& bg = "#ffffff", QString const& color = "#000000", int std_type = 0, QString const& servis = " ", QString const& servis_color = "#000000", QString const& cntry = " ", bool forceBold = false, bool strikethrough = false, bool underline = false, bool DXped = false, bool overwrite = false, bool wanted = false, QList<QPair<int, int>> const& doubtful = QList<QPair<int, int>> (), int cntryDoubtFrom = -1, QString const& toolTip = QString (), QString const& field = QString (), int fieldColumns = 0);
+     likely phantom decode (phantomdecodes.h); 2026-10-19 toolTip - the line's, on every part of it (doubtToolTip);
+     2026-11-12 inverted - the line's text and background swapped: a wanted call's colour is then its background */
+  void appendText(QString const& text, QString const& bg = "#ffffff", QString const& color = "#000000", int std_type = 0, QString const& servis = " ", QString const& servis_color = "#000000", QString const& cntry = " ", bool forceBold = false, bool strikethrough = false, bool underline = false, bool DXped = false, bool overwrite = false, bool wanted = false, QList<QPair<int, int>> const& doubtful = QList<QPair<int, int>> (), int cntryDoubtFrom = -1, QString const& toolTip = QString (), QString const& field = QString (), int fieldColumns = 0, bool inverted = false);
 
 protected:
     void mouseDoubleClickEvent(QMouseEvent *e);

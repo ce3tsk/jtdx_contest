@@ -553,6 +553,11 @@ Formátum:
         <source>The downloaded file is not a CALL3.TXT call list.</source>
         <translation>A letöltött fájl nem CALL3.TXT hívójellista.</translation>
     </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Hard to read: this text color stands only %1:1 against its background, less than 3:1. The Recommended colors button restores colors that read well.</source>
+        <translation>Nehezen olvasható: ez a szövegszín csak %1:1 kontrasztot ad a hátterével, kevesebbet, mint 3:1. Az Ajánlott színek gomb jól olvasható színeket állít vissza.</translation>
+    </message>
 </context>
 <context>
     <name>CountryDat</name>

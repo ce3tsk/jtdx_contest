@@ -553,6 +553,11 @@ Format:
         <source>The downloaded file is not a CALL3.TXT call list.</source>
         <translation>Die heruntergeladene Datei ist keine CALL3.TXT-Rufzeichenliste.</translation>
     </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Hard to read: this text color stands only %1:1 against its background, less than 3:1. The Recommended colors button restores colors that read well.</source>
+        <translation>Schwer lesbar: Diese Textfarbe hebt sich nur mit %1:1 von ihrem Hintergrund ab, weniger als 3:1. Die Schaltfläche Empfohlene Farben stellt gut lesbare Farben wieder her.</translation>
+    </message>
 </context>
 <context>
     <name>CountryDat</name>
