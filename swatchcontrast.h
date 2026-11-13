@@ -112,7 +112,10 @@ namespace swatch_contrast
           painter.drawRect (QRectF {label->rect ()}.adjusted (1, 1, -1, -1));
           return true;
         }
-      QToolTip::showText (static_cast<QHelpEvent *> (e)->globalPos (), tip_ (ratio (p.background, p.text)), label);
+      /* (the operator 2026-11-13) shown for the swatch's window, not the swatch: a tooltip takes the style sheet of the
+         widget it is shown for, and the swatch's own is the very pair it warns of - the tip came out in it, #ff6fff on
+         #ff6fff, unreadable. For the window it is drawn as every other tooltip of the dialog. */
+      QToolTip::showText (static_cast<QHelpEvent *> (e)->globalPos (), tip_ (ratio (p.background, p.text)), label->window ());
       return true;
     }
 
