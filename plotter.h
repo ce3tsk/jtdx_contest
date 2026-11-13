@@ -91,7 +91,8 @@ public:
   // its audio frequency for the given number of seconds; 0 switches it off
   void setCqDuration(int seconds);
   int  cqDuration() const {return m_cqBoard.duration_s();}
-  void addCqCall(QString const& call, int freq);
+  void addCqCall(QString const& call, int freq, qint64 dial, QString const& mode, bool replay);   // the air it was heard on
+  void setCqOrigin(qint64 dial, QString const& mode, bool replay);   // the air the waterfall shows now
   void clearCqCalls();
 
 signals:
@@ -164,6 +165,7 @@ private:
   float   m_sum[2048];
 
   cq_spots::Board m_cqBoard;
+  cq_spots::Origin m_cqNow;                // the air shown now: only its calls are drawn
   QElapsedTimer   m_cqClock;               // monotonic: the calls' age does not follow a clock that is set
   QTimer          m_cqTimer;               // runs while there are calls on the board, to let them expire
 

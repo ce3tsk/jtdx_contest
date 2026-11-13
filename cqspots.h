@@ -2,12 +2,13 @@
 #define CQSPOTS_H
 
 // CQ calls on the waterfall - by Michael DO3BOX (GitHub pull requests #3 and #5, 2026-10-28/29), taken into
-// JTDX_CONTEST 2026-11-13 (TODO.md 3.-250): his labels, rows and fade as he wrote them; off by default, and only the
-// CQs the Band Activity window shows (MainWindow::readFromStdout ()).
+// JTDX_CONTEST 2026-11-13 (TODO.md 3.-250): his labels, rows and fade as he wrote them, on by default with his 30 s (the
+// operator, after first taking it off by default), and only the CQs the Band Activity window shows
+// (MainWindow::readFromStdout ()).
 //
 // The callsigns of the stations calling CQ are written at the bottom of the waterfall, over the audio
 // frequency each of them was decoded on, and stay there for a time the operator sets (Wide Graph > "CQ calls",
-// in seconds; 0, the default, switches it off). A glance at the waterfall then tells who is where - a call is no
+// in seconds, 30 by default; 0 switches it off). A glance at the waterfall then tells who is where - a call is no
 // longer to be looked for in the Band Activity window by its frequency column.
 //
 // The rules are here, once, in plain C++ without Qt, so they can be run without a window; CPlotter draws what
@@ -19,6 +20,11 @@
 //     is 50 Hz wide, a call is wider than that on any screen), so they are stacked in rows above the waterfall's
 //     bottom edge, packed so that as many as possible fit; where they do not all fit, the oldest calls are
 //     left unwritten (their frequency brackets are still drawn, and the plot counts them: "+N")
+//   - (TODO.md 3.-250's review) an entry is of the air it was heard on - the dial, the mode, a recording or the live
+//     band (Origin) - and is shown only while the waterfall shows that air (shows_on): a dial within 50 Hz of its
+//     own, the same mode, a replay's calls over a replay and live calls over live audio. A QSY, another mode, a
+//     dial turned in small steps, a band changed at the rig while transmitting, a recording opened or Monitor back
+//     on each hide what is not of the air now - it had been cleared on some of those paths and not on others
 
 #include <algorithm>
 #include <cstddef>
@@ -31,11 +37,32 @@ namespace cq_spots
   int const max_rows {8};         // label rows at most, above the bracket line
   std::size_t const max_entries {256};   // a busy band holds fewer in any period; this only bounds the memory
 
+  struct Origin          // the air a call was heard on, or the waterfall shows now
+  {
+    // constructors rather than member defaults: the tree is C++11, where a default stops brace initialisation
+    Origin () : dial {0}, replay {false} {}
+    Origin (long long d, std::string const& m, bool r) : dial {d}, mode {m}, replay {r} {}
+    long long dial;      // the dial frequency, Hz
+    std::string mode;
+    bool replay;         // a recording opened from a file, not the band
+  };
+
+  long long const dial_tolerance_hz {50};
+
+  // is an entry heard on spot's air shown while the waterfall shows now's? Its audio frequency means the same place
+  // only on the same dial - within 50 Hz, a third of an FT8 signal's width -, in the same mode, live or replayed alike
+  inline bool shows_on (Origin const& spot, Origin const& now)
+  {
+    long long const d {spot.dial - now.dial};
+    return spot.mode == now.mode && spot.replay == now.replay && d <= dial_tolerance_hz && d >= -dial_tolerance_hz;
+  }
+
   struct Spot
   {
     std::string call;
     int freq;            // audio frequency in Hz, as in the decode line
     long long when;      // milliseconds on a monotonic clock
+    Origin origin;       // the air it was heard on
   };
 
   struct Item            // an entry as it is drawn now
@@ -60,15 +87,15 @@ namespace cq_spots
     bool empty () const {return spots_.empty ();}
     void clear () {spots_.clear ();}
 
-    // the callsign was heard calling CQ on freq Hz at now_ms
-    void add (std::string const& call, int freq, long long now_ms)
+    // the callsign was heard calling CQ on freq Hz at now_ms, on the air origin
+    void add (std::string const& call, int freq, long long now_ms, Origin const& origin = {})
     {
       if (!duration_s_ || call.empty () || freq <= 0) return;
       auto const same = std::find_if (spots_.begin (), spots_.end ()
                                       , [&call] (Spot const& s) {return s.call == call;});
       if (same != spots_.end ()) spots_.erase (same);   // spots_ stays in the order the calls were heard
       if (spots_.size () >= max_entries) spots_.erase (spots_.begin ());
-      spots_.push_back (Spot {call, freq, now_ms});
+      spots_.push_back (Spot {call, freq, now_ms, origin});
     }
 
     // drops what has run out; true if anything was dropped
@@ -81,13 +108,14 @@ namespace cq_spots
       return dropped;
     }
 
-    // what is on the board at now_ms, the newest first
-    std::vector<Item> active (long long now_ms) const
+    // what is on the board at now_ms, the newest first - with where, only the entries shown on that air
+    std::vector<Item> active (long long now_ms, Origin const* where = nullptr) const
     {
       std::vector<Item> items;
       for (auto s = spots_.rbegin (); s != spots_.rend (); ++s)
         {
           if (expired (*s, now_ms)) continue;
+          if (where && !shows_on (s->origin, *where)) continue;
           items.push_back (Item {s->call, s->freq, std::max (0LL, now_ms - s->when)});
         }
       return items;

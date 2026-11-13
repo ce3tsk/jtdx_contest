@@ -47,7 +47,11 @@ public:
   void   setTol(int n);
   void   setRxBand(QString band);
   void   setWSPRtransmitted();
-  void   addCqCall(QString const& call, int freq);   // a station calling CQ, decoded on audio frequency freq (Hz)
+  // CQ calls on the waterfall (cqspots.h): a station calling CQ, decoded on audio frequency freq (Hz) on the air of
+  // dial (Hz), mode and replay (a recording); the air the waterfall shows now; and whether "CQ calls" is on at all
+  void   addCqCall(QString const& call, int freq, qint64 dial, QString const& mode, bool replay);
+  void   setCqOrigin(qint64 dial, QString const& mode, bool replay);
+  bool   cqCallsOn() const;
 
 signals:
   void freezeDecode2(int n);

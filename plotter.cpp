@@ -500,7 +500,7 @@ float CPlotter::signalBandwidth() const
 void CPlotter::drawCqCalls(QPainter& painter)
 {
   qint64 const now {m_cqClock.elapsed()};
-  auto const items = m_cqBoard.active(now);
+  auto const items = m_cqBoard.active(now, &m_cqNow);   // (3.-250's review) only the calls of the air shown now
   if(items.empty()) return;
   QFont font("Arial");
   font.setPointSize(8);                     // small: the narrower the labels, the more of them fit
@@ -567,10 +567,10 @@ void CPlotter::setCqDuration(int seconds)
   update();
 }
 
-void CPlotter::addCqCall(QString const& call, int freq)
+void CPlotter::addCqCall(QString const& call, int freq, qint64 dial, QString const& mode, bool replay)
 {
   if(m_cqBoard.duration_s() <= 0) return;
-  m_cqBoard.add(call.toStdString(), freq, m_cqClock.elapsed());
+  m_cqBoard.add(call.toStdString(), freq, m_cqClock.elapsed(), cq_spots::Origin {dial, mode.toStdString(), replay});
   if(!m_cqBoard.empty() && !m_cqTimer.isActive()) m_cqTimer.start();
   update();
 }
@@ -753,14 +753,22 @@ void CPlotter::showFreq(bool b)
 }
 
 void CPlotter::setTxFreq(int n) { m_txFreq=n; DrawOverlay(); update(); }
-void CPlotter::setMode(QString mode) { if(mode != m_mode) clearCqCalls(); m_mode=mode; }   // the calls belong to the mode they were heard in
+void CPlotter::setMode(QString mode) { m_mode=mode; m_cqNow.mode=mode.toStdString(); update(); }   // the CQ calls of another mode are not shown
+void CPlotter::setCqOrigin(qint64 dial, QString const& mode, bool replay)
+{
+  // (3.-250's review) the air the waterfall shows now, from the program's side: each decode's start (its dial even when
+  // the dial was reported with the PTT up and setDialFreq () never came), a recording opened, Monitor back on
+  m_cqNow = cq_spots::Origin {dial, mode.toStdString(), replay};
+  update();
+}
 void CPlotter::setTopJT65(int n) { m_topJT65=n; }
 void CPlotter::setModeTx(QString modeTx) { m_modeTx=modeTx; }
 int CPlotter::Fmax() { return m_fMax; }
 void CPlotter::setDialFreq(double d)
 {
-  // the calls stand over audio frequencies: a new dial frequency (in MHz here) - another band, a QSY - makes them wrong
-  if(qAbs(d - m_dialFreq) > 0.00005) clearCqCalls();
+  // the CQ calls stand over audio frequencies: shown only while the dial is within 50 Hz of the one each was heard on
+  // (cqspots.h) - measured from its own dial, so a dial turned in small steps cannot carry them off their signals
+  m_cqNow.dial = qRound64(d * 1.e6);
   m_dialFreq=d; DrawOverlay(); update();
 }
 void CPlotter::setRxBand(QString band) { m_rxBand=band; }

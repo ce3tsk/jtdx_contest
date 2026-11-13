@@ -115,9 +115,10 @@ WideGraph::WideGraph(QSettings * settings, JTDXDateTime * jtdxtime, QWidget *par
   ui->cbFreq->setChecked(m_freq);
   ui->widePlot->showFreq(m_freq);
 
-  /* CQ calls at the bottom of the waterfall (cqspots.h, Michael DO3BOX): seconds, 0 = off - the default (TODO.md 3.-250),
-     and what a value out of the spin box's range falls back to */
-  int cqCalls=m_settings->value("CqCalls",0).toInt(); if(!(cqCalls>=0 && cqCalls<=600)) cqCalls=0;
+  /* CQ calls at the bottom of the waterfall (cqspots.h, Michael DO3BOX): seconds, 0 = off; 30 the default (TODO.md 3.-250,
+     the operator: on by default) and what a value out of the spin box's range, or no number at all, falls back to */
+  bool cqCallsRead {false};
+  int cqCalls=m_settings->value("CqCalls",30).toInt(&cqCallsRead); if(!cqCallsRead || !(cqCalls>=0 && cqCalls<=600)) cqCalls=30;
   ui->cqCallsSpinBox->setValue(cqCalls);
   ui->widePlot->setCqDuration(cqCalls);   // the spin box signals only a change from its default
 
@@ -604,9 +605,19 @@ void WideGraph::on_cqCallsSpinBox_valueChanged(int n)            //CQ calls: sec
   ui->widePlot->setCqDuration(n);
 }
 
-void WideGraph::addCqCall(QString const& call, int freq)
+void WideGraph::addCqCall(QString const& call, int freq, qint64 dial, QString const& mode, bool replay)
 {
-  ui->widePlot->addCqCall(call, freq);
+  ui->widePlot->addCqCall(call, freq, dial, mode, replay);
+}
+
+void WideGraph::setCqOrigin(qint64 dial, QString const& mode, bool replay)
+{
+  ui->widePlot->setCqOrigin(dial, mode, replay);
+}
+
+bool WideGraph::cqCallsOn() const
+{
+  return ui->widePlot->cqDuration() > 0;
 }
 
 void WideGraph::on_adjust_palette_push_button_clicked (bool)   //Adjust Palette

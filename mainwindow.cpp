@@ -3043,6 +3043,7 @@ void MainWindow::monitor (bool state)
   ui->monitorButton->setChecked (state);
   if (state) {
     m_diskData = false;	// no longer reading WAV files
+    m_wideGraph->setCqOrigin (static_cast<qint64> (m_freqNominal), m_mode, false);   // (3.-250's review) a recording's CQ calls hidden
     if (!m_monitoring) {
       m_mslastMon=m_jtdxtime->currentMSecsSinceEpoch2();
       if (m_tci) Q_EMIT m_config.transceiver_audio(true);
@@ -5930,6 +5931,7 @@ void MainWindow::diskDat()                                   //diskDat()
     int k;
     int kstep=m_FFTSize;
     m_diskData=true;
+    m_wideGraph->setCqOrigin (static_cast<qint64> (m_freqNominal), m_mode, true);   // (3.-250's review) the live CQ calls hidden
     for(int n=1; n<=m_hsymStop; n++) {                      // Do the waterfall spectra
       k=(n+1)*kstep;
 //      if(k > dec_data.params.kin) break;
@@ -7933,6 +7935,11 @@ void MainWindow::decode()                                       //decode()
   m_deletedRecord.decodeBegins (1 == dec_data.params.newdat, m_diskData, static_cast<qint64> (m_freqNominal));
   /* CE3TSK 2026-10-20: and the dial and mode its lines are of (decodeorigin.h) */
   m_decodeOrigin = decode_origin::at_begin (m_decodeOrigin, 1 == dec_data.params.newdat, static_cast<qint64> (m_freqNominal), m_mode);
+  /* (TODO.md 3.-250's review) whether its lines are of a recording, as its dial and mode (a decode of the same data again
+     keeps it); and the air the waterfall shows now for the CQ calls on it - the dial of now, also when it was reported
+     with the PTT up and the Wide Graph was never told (handle_transceiver_update () tells it only with the PTT down) */
+  if (1 == dec_data.params.newdat) m_decodeReplay = m_diskData;
+  m_wideGraph->setCqOrigin (static_cast<qint64> (m_freqNominal), m_mode, m_diskData);
   /* CE3TSK 2026-10-23 (stationsync.h): the clock offset this period was received under - its lines' DTs are measured
      against it (a decode of the same data again keeps it) */
   if (1 == dec_data.params.newdat) m_decodeClockOffset = m_jtdxtime->GetOffset ();
@@ -8550,12 +8557,15 @@ void MainWindow::readFromStdout()                             //readFromStdout
          shown (notified & 2: not one its filters hid - worked before, continents, countries, callsigns, my continent), of
          the air band and mode shown now (not a late line of the one left), and not what is in doubt: a likely phantom
          decode, an error decode ('?'), a debug line. A hint decode ('*') is a CQ like any other here: it stands in the
-         window too. The Wide Graph does nothing with it while its "CQ calls" is off, the default. */
-      if ((notified & 2) && !late && !decodedtext.isDebug () && !decodedtext.isWrong ()
+         window too. Nothing is asked while the Wide Graph's "CQ calls" is off (0 s; 30 by default) (CQersCall () compiles its
+         expression at each call). (3.-250's review) Each call goes with the air it was heard on - the decode's dial and
+         mode, and whether a recording was decoded - and is drawn only while the waterfall shows that air. */
+      if ((notified & 2) && !late && m_wideGraph->cqCallsOn () && !decodedtext.isDebug () && !decodedtext.isWrong ()
           && !decodedtext.verdict ().marked () && decodedtext.message ().startsWith ("CQ ")) {
         QString cqGrid, cqWord;
         QString const cqCall {decodedtext.CQersCall (cqGrid, cqWord)};
-        if (!cqCall.isEmpty ()) m_wideGraph->addCqCall (cqCall, decodedtext.frequencyOffset ());
+        if (!cqCall.isEmpty ())
+          m_wideGraph->addCqCall (cqCall, decodedtext.frequencyOffset (), m_decodeOrigin.dial, m_decodeOrigin.mode, m_decodeReplay);
       }
 
       //Right (Rx Frequency) window

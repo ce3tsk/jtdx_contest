@@ -955,6 +955,7 @@ private:
                                                    //   own halt): not the operator taking over - band_hopping::OwnChange
   int m_messageTab {0};                            // CE3TSK 2026-10-20: the Tx tab whose messages are sent - Tab 1 or Tab 2 (0, 1)
   decode_origin::Origin m_decodeOrigin;            // CE3TSK 2026-10-20: the dial and mode the decode running began on
+  bool m_decodeReplay = false;                      // (TODO.md 3.-250's review) and whether it decodes a recording
   decode_origin::Origin m_allTxtHeader;            //   and of the last dial-and-mode header written to ALL.TXT
   QTimer m_dialWheelTimer;                         // CE3TSK: tuning from the dial (wheel, clicks), one QSY per burst of steps
   QElapsedTimer m_dialWheelClock;                  // since the last step or dial QSY, see dialWheelHolding ()
