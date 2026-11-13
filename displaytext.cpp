@@ -25,6 +25,7 @@
 #include "cqdirection.h"   /* CE3TSK 2026-10-12 */
 #include "wantedprefix.h"   /* CE3TSK 2026-10-15 */
 #include "distancefield.h"   /* CE3TSK 2026-10-20 */
+#include "stdcall.h"   /* CE3TSK 2026-11-13 */
 namespace dp = decode_priority;
 
 #include "moc_displaytext.cpp"
@@ -1379,9 +1380,14 @@ int DisplayText::displayDecodedText(DecodedText* decodedText, QString myCall, QS
                 if (pp > priority) priority = pp;
             }
         }
-    } else if (specialOp_ != Configuration::SpecialOperatingActivity::NONE && (!grid.isEmpty() || (contest_.missingGridScores && !checkCall.isEmpty ()))) {
+    } else if (specialOp_ != Configuration::SpecialOperatingActivity::NONE
+               && (!grid.isEmpty() || (contest_.missingGridScores && !checkCall.isEmpty () && !std_call::standard_station (checkCall)))) {
         /* CE3TSK 2026-11-07 (TODO.md 3.-231): a contest where a station with no grid still counts, the FT Challenge: 1 point on his line,
-           where the others show " --", and his rank as any 1 point station's (grid_distance_km () says -1 without his grid) */
+           where the others show " --", and his rank as any 1 point station's (grid_distance_km () says -1 without his grid).
+           (2026-11-13, TODO.md 3.-251, the operator) only a station whose grid cannot come - a compound call (V5/G0RIB,
+           G0RIB/MM), which the messages carry with no grid: a standard call's line without one shows " --" and ranks with
+           no points, as in the other contests - his grid comes in his CQ or his first call. The score and the log are not
+           this: a QSO with no grid still counts 1 point, ZZ00 in the contest log. */
         contestPts = contest_points (specialOp_, grid_distance_km (myGrid_, grid, true));
         /* (2026-11-04, the operator) a station already worked on the band: his points are shown, the rank alone falls, "simply because it was answered before" */
         if (contestPts > 0 && !(contest_.workedRanksLast && workedOnBand)) {
