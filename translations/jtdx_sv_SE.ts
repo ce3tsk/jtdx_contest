@@ -7823,6 +7823,26 @@ Kontrollera att rätt katalognamn anges.</translation>
         <source>Wide Graph</source>
         <translation>Bred graf</translation>
     </message>
+    <message>
+        <location filename="../widegraph.ui"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Show the callsigns of stations calling CQ at the bottom of the waterfall, over their transmit frequency, for this many seconds. 0 switches it off.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Visar anropssignalerna för stationer som ropar CQ längst ned i vattenfallet, över deras sändningsfrekvens, i så många sekunder. 0 stänger av det.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../widegraph.ui"/>
+        <source>CQ calls off</source>
+        <translation>CQ-anrop av</translation>
+    </message>
+    <message>
+        <location filename="../widegraph.ui"/>
+        <source> s</source>
+        <translation> s</translation>
+    </message>
+    <message>
+        <location filename="../widegraph.ui"/>
+        <source>CQ calls </source>
+        <translation>CQ-anrop </translation>
+    </message>
 </context>
 <context>
     <name>configuration_dialog</name>

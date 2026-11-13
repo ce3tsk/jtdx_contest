@@ -7821,6 +7821,26 @@ Bitte prüfen Sie, ob der Verzeichnisname richtig angegeben wurde.</translation>
         <source>Wide Graph</source>
         <translation>Breitband-Anzeige</translation>
     </message>
+    <message>
+        <location filename="../widegraph.ui"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Show the callsigns of stations calling CQ at the bottom of the waterfall, over their transmit frequency, for this many seconds. 0 switches it off.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Zeigt die Rufzeichen der Stationen, die CQ rufen, am unteren Rand des Wasserfalls über ihrer Sendefrequenz an, so viele Sekunden lang. 0 schaltet es aus.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../widegraph.ui"/>
+        <source>CQ calls off</source>
+        <translation>CQ-Rufe aus</translation>
+    </message>
+    <message>
+        <location filename="../widegraph.ui"/>
+        <source> s</source>
+        <translation> s</translation>
+    </message>
+    <message>
+        <location filename="../widegraph.ui"/>
+        <source>CQ calls </source>
+        <translation>CQ-Rufe </translation>
+    </message>
 </context>
 <context>
     <name>configuration_dialog</name>

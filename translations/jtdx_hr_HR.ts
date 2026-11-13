@@ -7825,6 +7825,26 @@ Provjerite je li dato točno ime imenika.</translation>
         <source>Wide Graph</source>
         <translation>Vodopad</translation>
     </message>
+    <message>
+        <location filename="../widegraph.ui"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Show the callsigns of stations calling CQ at the bottom of the waterfall, over their transmit frequency, for this many seconds. 0 switches it off.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Prikazuje pozivne znakove stanica koje zovu CQ na dnu vodopada, iznad njihove frekvencije odašiljanja, toliko sekundi. 0 to isključuje.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../widegraph.ui"/>
+        <source>CQ calls off</source>
+        <translation>Bez CQ poziva</translation>
+    </message>
+    <message>
+        <location filename="../widegraph.ui"/>
+        <source> s</source>
+        <translation> s</translation>
+    </message>
+    <message>
+        <location filename="../widegraph.ui"/>
+        <source>CQ calls </source>
+        <translation>CQ pozivi </translation>
+    </message>
 </context>
 <context>
     <name>configuration_dialog</name>

@@ -47,6 +47,7 @@ public:
   void   setTol(int n);
   void   setRxBand(QString band);
   void   setWSPRtransmitted();
+  void   addCqCall(QString const& call, int freq);   // a station calling CQ, decoded on audio frequency freq (Hz)
 
 signals:
   void freezeDecode2(int n);
@@ -85,6 +86,7 @@ private slots:
   void on_cbControls_toggled(bool b);
   void on_cbBars_toggled(bool b);
   void on_cbFreq_toggled(bool b);
+  void on_cqCallsSpinBox_valueChanged(int n);
   void on_adjust_palette_push_button_clicked (bool);
   void on_gainSlider_valueChanged(int value);
   void on_zeroSlider_valueChanged(int value);

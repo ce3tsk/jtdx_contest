@@ -115,6 +115,12 @@ WideGraph::WideGraph(QSettings * settings, JTDXDateTime * jtdxtime, QWidget *par
   ui->cbFreq->setChecked(m_freq);
   ui->widePlot->showFreq(m_freq);
 
+  /* CQ calls at the bottom of the waterfall (cqspots.h, Michael DO3BOX): seconds, 0 = off - the default (TODO.md 3.-250),
+     and what a value out of the spin box's range falls back to */
+  int cqCalls=m_settings->value("CqCalls",0).toInt(); if(!(cqCalls>=0 && cqCalls<=600)) cqCalls=0;
+  ui->cqCallsSpinBox->setValue(cqCalls);
+  ui->widePlot->setCqDuration(cqCalls);   // the spin box signals only a change from its default
+
   m_bScale=m_settings->value("Scale",true).toBool();
   ui->cbScale->setChecked(m_bScale);
   ui->widePlot->setScale(m_bScale);
@@ -259,6 +265,7 @@ void WideGraph::saveSettings()                                           //saveS
   m_settings->setValue ("HideControls", ui->controls_widget->isHidden ());
   m_settings->setValue ("Bars", m_bars);
   m_settings->setValue ("Freq", m_freq);
+  m_settings->setValue ("CqCalls", ui->cqCallsSpinBox->value ());
   m_settings->endGroup ();
 }
 
@@ -590,6 +597,16 @@ void WideGraph::on_cbFreq_toggled(bool b)
 {
   m_freq = b;
   ui->widePlot->showFreq(m_freq);
+}
+
+void WideGraph::on_cqCallsSpinBox_valueChanged(int n)            //CQ calls: seconds on the waterfall
+{
+  ui->widePlot->setCqDuration(n);
+}
+
+void WideGraph::addCqCall(QString const& call, int freq)
+{
+  ui->widePlot->addCqCall(call, freq);
 }
 
 void WideGraph::on_adjust_palette_push_button_clicked (bool)   //Adjust Palette

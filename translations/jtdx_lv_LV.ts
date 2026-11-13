@@ -7821,6 +7821,26 @@ Lūdzu, pārbaudiet, vai norādīts pareizs direktorijas nosaukums.</translation
         <source>Wide Graph</source>
         <translation>Platais grafiks</translation>
     </message>
+    <message>
+        <location filename="../widegraph.ui"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Show the callsigns of stations calling CQ at the bottom of the waterfall, over their transmit frequency, for this many seconds. 0 switches it off.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Rāda CQ izsaucošo staciju izsaukuma signālus ūdenskrituma apakšā virs to raidīšanas frekvences tik sekundes. 0 to izslēdz.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../widegraph.ui"/>
+        <source>CQ calls off</source>
+        <translation>CQ izsaukumi: nē</translation>
+    </message>
+    <message>
+        <location filename="../widegraph.ui"/>
+        <source> s</source>
+        <translation> s</translation>
+    </message>
+    <message>
+        <location filename="../widegraph.ui"/>
+        <source>CQ calls </source>
+        <translation>CQ izsaukumi </translation>
+    </message>
 </context>
 <context>
     <name>configuration_dialog</name>

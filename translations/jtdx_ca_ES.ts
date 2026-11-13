@@ -7834,6 +7834,26 @@ Verifica el nom del directori correcte.</translation>
         <source>Wide Graph</source>
         <translation>Gràfic Ampli</translation>
     </message>
+    <message>
+        <location filename="../widegraph.ui"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Show the callsigns of stations calling CQ at the bottom of the waterfall, over their transmit frequency, for this many seconds. 0 switches it off.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Mostra els indicatius de les estacions que criden CQ a la part inferior de la cascada, sobre la seva freqüència de transmissió, durant aquests segons. 0 ho desactiva.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../widegraph.ui"/>
+        <source>CQ calls off</source>
+        <translation>Crides CQ: no</translation>
+    </message>
+    <message>
+        <location filename="../widegraph.ui"/>
+        <source> s</source>
+        <translation> s</translation>
+    </message>
+    <message>
+        <location filename="../widegraph.ui"/>
+        <source>CQ calls </source>
+        <translation>Crides CQ </translation>
+    </message>
 </context>
 <context>
     <name>configuration_dialog</name>

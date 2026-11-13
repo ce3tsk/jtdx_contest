@@ -7822,6 +7822,26 @@ Verificare che il nome della cartella sia corretto.</translation>
         <source>Wide Graph</source>
         <translation>Spettro</translation>
     </message>
+    <message>
+        <location filename="../widegraph.ui"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Show the callsigns of stations calling CQ at the bottom of the waterfall, over their transmit frequency, for this many seconds. 0 switches it off.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Mostra i nominativi delle stazioni che chiamano CQ in fondo al waterfall, sopra la loro frequenza di trasmissione, per questi secondi. 0 lo disattiva.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../widegraph.ui"/>
+        <source>CQ calls off</source>
+        <translation>Chiamate CQ: no</translation>
+    </message>
+    <message>
+        <location filename="../widegraph.ui"/>
+        <source> s</source>
+        <translation> s</translation>
+    </message>
+    <message>
+        <location filename="../widegraph.ui"/>
+        <source>CQ calls </source>
+        <translation>Chiamate CQ </translation>
+    </message>
 </context>
 <context>
     <name>configuration_dialog</name>

@@ -7821,6 +7821,26 @@ Please verify the correct directory name was given.</source>
         <source>Wide Graph</source>
         <translation>광대역 그래프</translation>
     </message>
+    <message>
+        <location filename="../widegraph.ui"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Show the callsigns of stations calling CQ at the bottom of the waterfall, over their transmit frequency, for this many seconds. 0 switches it off.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;CQ를 내는 국의 호출부호를 폭포도 아래쪽, 그 송신 주파수 위에 이 시간(초) 동안 표시합니다. 0이면 꺼집니다.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../widegraph.ui"/>
+        <source>CQ calls off</source>
+        <translation>CQ 호출 끔</translation>
+    </message>
+    <message>
+        <location filename="../widegraph.ui"/>
+        <source> s</source>
+        <translation> 초</translation>
+    </message>
+    <message>
+        <location filename="../widegraph.ui"/>
+        <source>CQ calls </source>
+        <translation>CQ 호출 </translation>
+    </message>
 </context>
 <context>
     <name>configuration_dialog</name>

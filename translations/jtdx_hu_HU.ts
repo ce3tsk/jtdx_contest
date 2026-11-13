@@ -7821,6 +7821,26 @@ Ellenőrizze, hogy a helyes könyvtárnevet adta-e meg.</translation>
         <source>Wide Graph</source>
         <translation>Széles sávú grafikon</translation>
     </message>
+    <message>
+        <location filename="../widegraph.ui"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Show the callsigns of stations calling CQ at the bottom of the waterfall, over their transmit frequency, for this many seconds. 0 switches it off.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;A CQ-t hívó állomások hívójelét a vízesés alján, adási frekvenciájuk fölött mutatja ennyi másodpercig. 0 kikapcsolja.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../widegraph.ui"/>
+        <source>CQ calls off</source>
+        <translation>CQ hívások ki</translation>
+    </message>
+    <message>
+        <location filename="../widegraph.ui"/>
+        <source> s</source>
+        <translation> mp</translation>
+    </message>
+    <message>
+        <location filename="../widegraph.ui"/>
+        <source>CQ calls </source>
+        <translation>CQ hívások </translation>
+    </message>
 </context>
 <context>
     <name>configuration_dialog</name>

@@ -8545,6 +8545,18 @@ void MainWindow::readFromStdout()                             //readFromStdout
                                                     );
       if(m_position != 0) ui->decodedTextBrowser->horizontalScrollBar()->setValue(m_position);
 	  if (notified & 1) m_notified = true;
+      /* CQ calls on the waterfall (cqspots.h, by Michael DO3BOX; TODO.md 3.-250): the call of a station calling CQ is written
+         at the bottom of the waterfall, over the frequency it was decoded on - the CQs the Band Activity window has just
+         shown (notified & 2: not one its filters hid - worked before, continents, countries, callsigns, my continent), of
+         the air band and mode shown now (not a late line of the one left), and not what is in doubt: a likely phantom
+         decode, an error decode ('?'), a debug line. A hint decode ('*') is a CQ like any other here: it stands in the
+         window too. The Wide Graph does nothing with it while its "CQ calls" is off, the default. */
+      if ((notified & 2) && !late && !decodedtext.isDebug () && !decodedtext.isWrong ()
+          && !decodedtext.verdict ().marked () && decodedtext.message ().startsWith ("CQ ")) {
+        QString cqGrid, cqWord;
+        QString const cqCall {decodedtext.CQersCall (cqGrid, cqWord)};
+        if (!cqCall.isEmpty ()) m_wideGraph->addCqCall (cqCall, decodedtext.frequencyOffset ());
+      }
 
       //Right (Rx Frequency) window
 	  
