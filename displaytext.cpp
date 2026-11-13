@@ -1381,13 +1381,14 @@ int DisplayText::displayDecodedText(DecodedText* decodedText, QString myCall, QS
             }
         }
     } else if (specialOp_ != Configuration::SpecialOperatingActivity::NONE
-               && (!grid.isEmpty() || (contest_.missingGridScores && !checkCall.isEmpty () && !std_call::standard_station (checkCall)))) {
+               && (!grid.isEmpty() || (contest_.missingGridScores && !checkCall.isEmpty () && !std_call::grid_can_come (checkCall, myCall_)))) {
         /* CE3TSK 2026-11-07 (TODO.md 3.-231): a contest where a station with no grid still counts, the FT Challenge: 1 point on his line,
            where the others show " --", and his rank as any 1 point station's (grid_distance_km () says -1 without his grid).
-           (2026-11-13, TODO.md 3.-251, the operator) only a station whose grid cannot come - a compound call (V5/G0RIB,
-           G0RIB/MM), which the messages carry with no grid: a standard call's line without one shows " --" and ranks with
-           no points, as in the other contests - his grid comes in his CQ or his first call. The score and the log are not
-           this: a QSO with no grid still counts 1 point, ZZ00 in the contest log. */
+           (2026-11-13, TODO.md 3.-251, the operator) only a station whose grid cannot come (stdcall.h, grid_can_come ()): a
+           compound call (V5/G0RIB, G0RIB/MM), or a pair the messages carry with no grid (his /P call to our compound one, a
+           /R and a /P call); a standard call's line without one shows " --" and ranks with no points, as in the other
+           contests - his grid comes in his CQ or his first call. The score and the log are not this: a QSO with no grid
+           still counts 1 point, ZZ00 in the contest log. */
         contestPts = contest_points (specialOp_, grid_distance_km (myGrid_, grid, true));
         /* (2026-11-04, the operator) a station already worked on the band: his points are shown, the rank alone falls, "simply because it was answered before" */
         if (contestPts > 0 && !(contest_.workedRanksLast && workedOnBand)) {
@@ -1427,8 +1428,10 @@ int DisplayText::displayDecodedText(DecodedText* decodedText, QString myCall, QS
            scores 0 for that, so an unknown distance prints no points - " --" of the tag's
            width instead (contest_points_tag()), so the country column stays aligned on
            the lines without a grid. (2026-11-07) Except in a contest that counts a QSO
-           with no grid (missingGridScores, the FT Challenge): there such a line is worth 1
-           point and shows " 1p"; " --" is left for a line with no call. */
+           with no grid (missingGridScores, the FT Challenge): there a line with no grid is
+           worth 1 point and shows " 1p" - since 2026-11-13 (3.-251) only where his grid
+           cannot come (grid_can_come () above: a compound call, a pair sent without one);
+           a standard call's line, and a line with no call, show " --". */
         int tagColumns {0};   // CE3TSK 2026-10-20: the points tag's width - the distance field's column moves with it
         if (specialOp_ != Configuration::SpecialOperatingActivity::NONE) {
             /* directly after the hint character and before the country, which is what
