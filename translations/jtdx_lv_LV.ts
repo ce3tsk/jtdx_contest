@@ -3261,6 +3261,121 @@ Formāts:
         <source>Cannot open &quot;%1&quot; for append: %2</source>
         <translation>Nevar atvērt &quot;%1&quot; lai pievienotu: %2&quot;</translation>
     </message>
+    <message>
+        <location filename="../logqso.ui"/>
+        <source>Prop Mode</source>
+        <translation>Izplatīšanās</translation>
+    </message>
+    <message>
+        <location filename="../logqso.ui"/>
+        <source>How the signal travelled (ADIF PROP_MODE). Satellite also logs the satellite, its mode and your receive frequency. On the QO-100 uplink, 2400.000 to 2400.500 MHz, all four are filled in for you, and not kept for the next QSO.</source>
+        <translation>Kā signāls izplatījās (ADIF PROP_MODE). Pavadonis reģistrē arī pavadoni, tā režīmu un jūsu uztveršanas frekvenci. QO-100 augšupsaitē, no 2400,000 līdz 2400,500 MHz, visi četri tiek aizpildīti automātiski un netiek saglabāti nākamajam QSO.</translation>
+    </message>
+    <message>
+        <location filename="../logqso.ui"/>
+        <source>Satellite</source>
+        <translation>Pavadonis</translation>
+    </message>
+    <message>
+        <location filename="../logqso.ui"/>
+        <source>Sat Mode</source>
+        <translation>Pavadoņa režīms</translation>
+    </message>
+    <message>
+        <location filename="../logqso.ui"/>
+        <source>RX Frequency</source>
+        <translation>Uztveršanas frekvence</translation>
+    </message>
+    <message>
+        <location filename="../logqso.ui"/>
+        <source>Your receive frequency in MHz (ADIF FREQ_RX), its band logged with it (BAND_RX). On the QO-100 uplink it is filled in: your dial plus your Rx audio frequency, plus 8089.5 MHz.</source>
+        <translation>Jūsu uztveršanas frekvence MHz (ADIF FREQ_RX), reģistrēta kopā ar tās joslu (BAND_RX). QO-100 augšupsaitē tā tiek aizpildīta: skalas frekvence plus jūsu RX audio frekvence, plus 8089,5 MHz.</translation>
+    </message>
+    <message>
+        <location filename="../logqso.cpp"/>
+        <source>Aircraft scatter</source>
+        <translation>Izkliede no lidmašīnām</translation>
+    </message>
+    <message>
+        <location filename="../logqso.cpp"/>
+        <source>Aurora-E</source>
+        <translation>Aurora-E</translation>
+    </message>
+    <message>
+        <location filename="../logqso.cpp"/>
+        <source>Aurora</source>
+        <translation>Aurora</translation>
+    </message>
+    <message>
+        <location filename="../logqso.cpp"/>
+        <source>Back scatter</source>
+        <translation>Atpakaļizkliede</translation>
+    </message>
+    <message>
+        <location filename="../logqso.cpp"/>
+        <source>Echolink</source>
+        <translation>Echolink</translation>
+    </message>
+    <message>
+        <location filename="../logqso.cpp"/>
+        <source>Earth-moon-earth</source>
+        <translation>Zeme-Mēness-Zeme</translation>
+    </message>
+    <message>
+        <location filename="../logqso.cpp"/>
+        <source>Sporadic E</source>
+        <translation>Sporādiskais E</translation>
+    </message>
+    <message>
+        <location filename="../logqso.cpp"/>
+        <source>F2 Reflection</source>
+        <translation>Atstarošana no F2</translation>
+    </message>
+    <message>
+        <location filename="../logqso.cpp"/>
+        <source>Field aligned irregularities</source>
+        <translation>Ar lauku saskaņotas nehomogenitātes</translation>
+    </message>
+    <message>
+        <location filename="../logqso.cpp"/>
+        <source>Internet-assisted</source>
+        <translation>Caur internetu</translation>
+    </message>
+    <message>
+        <location filename="../logqso.cpp"/>
+        <source>Ionoscatter</source>
+        <translation>Jonosfēras izkliede</translation>
+    </message>
+    <message>
+        <location filename="../logqso.cpp"/>
+        <source>IRLP</source>
+        <translation>IRLP</translation>
+    </message>
+    <message>
+        <location filename="../logqso.cpp"/>
+        <source>Meteor scatter</source>
+        <translation>Meteoru izkliede</translation>
+    </message>
+    <message>
+        <location filename="../logqso.cpp"/>
+        <source>Non-satellite repeater or transponder</source>
+        <translation>Retranslators vai transponders (ne pavadonis)</translation>
+    </message>
+    <message>
+        <location filename="../logqso.cpp"/>
+        <source>Rain scatter</source>
+        <translation>Izkliede lietū</translation>
+    </message>
+    <message>
+        <location filename="../logqso.cpp"/>
+        <source>Trans-equatorial</source>
+        <translation>Transekvatoriāla</translation>
+    </message>
+    <message>
+        <location filename="../logqso.cpp"/>
+        <source>Tropospheric ducting</source>
+        <translation>Troposfēras kanāls</translation>
+    </message>
 </context>
 <context>
     <name>MainWindow</name>

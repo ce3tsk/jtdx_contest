@@ -701,6 +701,7 @@ set (TOP_LEVEL_RESOURCES
   lotw-user-activity.csv
   us-license-states.txt   # CE3TSK 2026-10-03: tools/make_license_states.py, from the FCC's licence file
   ybdxpi.txt   # CE3TSK 2026-11-04: the YBDXPI members, https://contest.ybdxpi.net/ft8/software/udc-files/
+  sat.dat   # CE3TSK 2026-11-13 (TODO.md 3.-247): the Log QSO's satellites, WSJT-X 3.0.2's (GPL-3.0), ":/sat.dat"
   icons/Darwin/jtdx.iconset/icon_128x128.png
   contrib/decpasses.png
   contrib/dtrange.png

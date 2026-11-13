@@ -391,6 +391,118 @@
     </layout>
    </item>
    <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_propMode">
+     <item>
+      <widget class="QLabel" name="labPropMode">
+       <property name="text">
+        <string>Prop Mode</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="comboBoxPropMode">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="toolTip">
+        <string>How the signal travelled (ADIF PROP_MODE). Satellite also logs the satellite, its mode and your receive frequency. On the QO-100 uplink, 2400.000 to 2400.500 MHz, all four are filled in for you, and not kept for the next QSO.</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QCheckBox" name="cbPropMode">
+       <property name="text">
+        <string>Retain</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_satellite">
+     <item>
+      <widget class="QLabel" name="labSatellite">
+       <property name="text">
+        <string>Satellite</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="comboBoxSatellite">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QCheckBox" name="cbSatellite">
+       <property name="text">
+        <string>Retain</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_satMode">
+     <item>
+      <widget class="QLabel" name="labSatMode">
+       <property name="text">
+        <string>Sat Mode</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="comboBoxSatMode">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QCheckBox" name="cbSatMode">
+       <property name="text">
+        <string>Retain</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_freqRx">
+     <item>
+      <widget class="QLabel" name="labFreqRx">
+       <property name="text">
+        <string>RX Frequency</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="freqRx">
+       <property name="toolTip">
+        <string>Your receive frequency in MHz (ADIF FREQ_RX), its band logged with it (BAND_RX). On the QO-100 uplink it is filled in: your dial plus your Rx audio frequency, plus 8089.5 MHz.</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QCheckBox" name="cbFreqRx">
+       <property name="text">
+        <string>Retain</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
     <spacer name="verticalSpacer">
      <property name="orientation">
       <enum>Qt::Vertical</enum>
@@ -429,6 +541,16 @@
   <tabstop>cbTxPower</tabstop>
   <tabstop>comments</tabstop>
   <tabstop>cbComments</tabstop>
+  <tabstop>eqslcomments</tabstop>
+  <tabstop>cbEqslComments</tabstop>
+  <tabstop>comboBoxPropMode</tabstop>
+  <tabstop>cbPropMode</tabstop>
+  <tabstop>comboBoxSatellite</tabstop>
+  <tabstop>cbSatellite</tabstop>
+  <tabstop>comboBoxSatMode</tabstop>
+  <tabstop>cbSatMode</tabstop>
+  <tabstop>freqRx</tabstop>
+  <tabstop>cbFreqRx</tabstop>
  </tabstops>
  <resources/>
  <connections>

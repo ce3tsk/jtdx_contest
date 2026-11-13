@@ -31,7 +31,10 @@ public:
   void initLogQSO(QString const& hisCall, QString const& hisGrid, QString mode,
                   QString const& rptSent, QString const& rptRcvd, QString const& distance,
                   QString const& name, QDateTime const& dateTimeOn,
-                  QDateTime const& dateTimeOff, Radio::Frequency dialFreq, bool autologging,
+                  QDateTime const& dateTimeOff, Radio::Frequency dialFreq,
+                  /* CE3TSK 2026-11-13 (TODO.md 3.-247): dial + Rx audio - a satellite's RX Frequency (satlog.h).
+                     Required, so the compiler names every call site. */
+                  Radio::Frequency rxFreq, bool autologging,
                   /* CE3TSK: contest points, 0 outside a contest. Required rather than
                      defaulted so the compiler names every call site. */
                   int points);
@@ -45,7 +48,10 @@ signals:
                   , QString const& rpt_sent, QString const& rpt_received
                   , QString const& tx_power, QString const& comments
                   , QString const& name, QDateTime const& QSO_date_on
-                  , QString const& eqslcomments, QByteArray const& myadif2);
+                  , QString const& eqslcomments
+                  /* CE3TSK 2026-11-13 (TODO.md 3.-247): ADIF PROP_MODE, SAT_NAME, SAT_MODE, FREQ_RX as logged */
+                  , QString const& prop_mode, QString const& satellite, QString const& sat_mode, QString const& freq_rx
+                  , QByteArray const& myadif2);
 
 protected:
   void hideEvent (QHideEvent *) override;
@@ -61,6 +67,13 @@ private:
   QString m_txPower;
   QString m_comments;
   QString m_eqslcomments;
+  /* CE3TSK 2026-11-13 (TODO.md 3.-247): the satellite rows' retained values - the operator's own choices only, set as
+     they are made (QComboBox::activated, QLineEdit::textEdited), never by a prefill (satlog.h) */
+  QString m_propMode;
+  QString m_satellite;
+  QString m_satMode;
+  QString m_freqRx;
+  void satRowsEnabled ();   // Satellite and Sat Mode only with Prop Mode Satellite, as WSJT-X
   Radio::Frequency m_dialFreq;
   QString m_myCall;
   QString m_myGrid;

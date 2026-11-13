@@ -3240,6 +3240,121 @@ Format:
         <source>Cannot open &quot;%1&quot; for append: %2</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../logqso.ui"/>
+        <source>Prop Mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../logqso.ui"/>
+        <source>How the signal travelled (ADIF PROP_MODE). Satellite also logs the satellite, its mode and your receive frequency. On the QO-100 uplink, 2400.000 to 2400.500 MHz, all four are filled in for you, and not kept for the next QSO.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../logqso.ui"/>
+        <source>Satellite</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../logqso.ui"/>
+        <source>Sat Mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../logqso.ui"/>
+        <source>RX Frequency</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../logqso.ui"/>
+        <source>Your receive frequency in MHz (ADIF FREQ_RX), its band logged with it (BAND_RX). On the QO-100 uplink it is filled in: your dial plus your Rx audio frequency, plus 8089.5 MHz.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../logqso.cpp"/>
+        <source>Aircraft scatter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../logqso.cpp"/>
+        <source>Aurora-E</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../logqso.cpp"/>
+        <source>Aurora</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../logqso.cpp"/>
+        <source>Back scatter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../logqso.cpp"/>
+        <source>Echolink</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../logqso.cpp"/>
+        <source>Earth-moon-earth</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../logqso.cpp"/>
+        <source>Sporadic E</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../logqso.cpp"/>
+        <source>F2 Reflection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../logqso.cpp"/>
+        <source>Field aligned irregularities</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../logqso.cpp"/>
+        <source>Internet-assisted</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../logqso.cpp"/>
+        <source>Ionoscatter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../logqso.cpp"/>
+        <source>IRLP</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../logqso.cpp"/>
+        <source>Meteor scatter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../logqso.cpp"/>
+        <source>Non-satellite repeater or transponder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../logqso.cpp"/>
+        <source>Rain scatter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../logqso.cpp"/>
+        <source>Trans-equatorial</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../logqso.cpp"/>
+        <source>Tropospheric ducting</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MainWindow</name>

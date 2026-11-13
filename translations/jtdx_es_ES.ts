@@ -3264,6 +3264,121 @@ Formato:
         <source>Cannot open &quot;%1&quot; for append: %2</source>
         <translation>No se puede abrir &quot;%1&quot; para añadir: %2</translation>
     </message>
+    <message>
+        <location filename="../logqso.ui"/>
+        <source>Prop Mode</source>
+        <translation>Modo de propagación</translation>
+    </message>
+    <message>
+        <location filename="../logqso.ui"/>
+        <source>How the signal travelled (ADIF PROP_MODE). Satellite also logs the satellite, its mode and your receive frequency. On the QO-100 uplink, 2400.000 to 2400.500 MHz, all four are filled in for you, and not kept for the next QSO.</source>
+        <translation>Cómo viajó la señal (ADIF PROP_MODE). Satélite registra además el satélite, su modo y su frecuencia de recepción. En el enlace ascendente de QO-100, de 2400,000 a 2400,500 MHz, los cuatro se rellenan solos y no se conservan para el siguiente QSO.</translation>
+    </message>
+    <message>
+        <location filename="../logqso.ui"/>
+        <source>Satellite</source>
+        <translation>Satélite</translation>
+    </message>
+    <message>
+        <location filename="../logqso.ui"/>
+        <source>Sat Mode</source>
+        <translation>Modo de satélite</translation>
+    </message>
+    <message>
+        <location filename="../logqso.ui"/>
+        <source>RX Frequency</source>
+        <translation>Frecuencia de RX</translation>
+    </message>
+    <message>
+        <location filename="../logqso.ui"/>
+        <source>Your receive frequency in MHz (ADIF FREQ_RX), its band logged with it (BAND_RX). On the QO-100 uplink it is filled in: your dial plus your Rx audio frequency, plus 8089.5 MHz.</source>
+        <translation>Su frecuencia de recepción en MHz (ADIF FREQ_RX), registrada con su banda (BAND_RX). En el enlace ascendente de QO-100 se rellena sola: la frecuencia del dial más su frecuencia de audio de RX, más 8089,5 MHz.</translation>
+    </message>
+    <message>
+        <location filename="../logqso.cpp"/>
+        <source>Aircraft scatter</source>
+        <translation>Dispersión por aviones</translation>
+    </message>
+    <message>
+        <location filename="../logqso.cpp"/>
+        <source>Aurora-E</source>
+        <translation>Aurora-E</translation>
+    </message>
+    <message>
+        <location filename="../logqso.cpp"/>
+        <source>Aurora</source>
+        <translation>Aurora</translation>
+    </message>
+    <message>
+        <location filename="../logqso.cpp"/>
+        <source>Back scatter</source>
+        <translation>Retrodispersión</translation>
+    </message>
+    <message>
+        <location filename="../logqso.cpp"/>
+        <source>Echolink</source>
+        <translation>Echolink</translation>
+    </message>
+    <message>
+        <location filename="../logqso.cpp"/>
+        <source>Earth-moon-earth</source>
+        <translation>Tierra-Luna-Tierra</translation>
+    </message>
+    <message>
+        <location filename="../logqso.cpp"/>
+        <source>Sporadic E</source>
+        <translation>E esporádica</translation>
+    </message>
+    <message>
+        <location filename="../logqso.cpp"/>
+        <source>F2 Reflection</source>
+        <translation>Reflexión F2</translation>
+    </message>
+    <message>
+        <location filename="../logqso.cpp"/>
+        <source>Field aligned irregularities</source>
+        <translation>Irregularidades alineadas con el campo</translation>
+    </message>
+    <message>
+        <location filename="../logqso.cpp"/>
+        <source>Internet-assisted</source>
+        <translation>Asistido por Internet</translation>
+    </message>
+    <message>
+        <location filename="../logqso.cpp"/>
+        <source>Ionoscatter</source>
+        <translation>Dispersión ionosférica</translation>
+    </message>
+    <message>
+        <location filename="../logqso.cpp"/>
+        <source>IRLP</source>
+        <translation>IRLP</translation>
+    </message>
+    <message>
+        <location filename="../logqso.cpp"/>
+        <source>Meteor scatter</source>
+        <translation>Dispersión meteórica</translation>
+    </message>
+    <message>
+        <location filename="../logqso.cpp"/>
+        <source>Non-satellite repeater or transponder</source>
+        <translation>Repetidor o transpondedor no satelital</translation>
+    </message>
+    <message>
+        <location filename="../logqso.cpp"/>
+        <source>Rain scatter</source>
+        <translation>Dispersión por lluvia</translation>
+    </message>
+    <message>
+        <location filename="../logqso.cpp"/>
+        <source>Trans-equatorial</source>
+        <translation>Transecuatorial</translation>
+    </message>
+    <message>
+        <location filename="../logqso.cpp"/>
+        <source>Tropospheric ducting</source>
+        <translation>Conducto troposférico</translation>
+    </message>
 </context>
 <context>
     <name>MainWindow</name>

@@ -3262,6 +3262,121 @@ Format:
         <source>Cannot open &quot;%1&quot; for append: %2</source>
         <translation>"%1"을(를) 추가 모드로 열 수 없습니다: %2</translation>
     </message>
+    <message>
+        <location filename="../logqso.ui"/>
+        <source>Prop Mode</source>
+        <translation>전파 방식</translation>
+    </message>
+    <message>
+        <location filename="../logqso.ui"/>
+        <source>How the signal travelled (ADIF PROP_MODE). Satellite also logs the satellite, its mode and your receive frequency. On the QO-100 uplink, 2400.000 to 2400.500 MHz, all four are filled in for you, and not kept for the next QSO.</source>
+        <translation>신호가 전파된 방식입니다 (ADIF PROP_MODE). 위성을 선택하면 위성, 위성 모드, 수신 주파수도 기록됩니다. QO-100 업링크(2400.000~2400.500 MHz)에서는 네 항목이 자동으로 채워지며 다음 QSO로 유지되지 않습니다.</translation>
+    </message>
+    <message>
+        <location filename="../logqso.ui"/>
+        <source>Satellite</source>
+        <translation>위성</translation>
+    </message>
+    <message>
+        <location filename="../logqso.ui"/>
+        <source>Sat Mode</source>
+        <translation>위성 모드</translation>
+    </message>
+    <message>
+        <location filename="../logqso.ui"/>
+        <source>RX Frequency</source>
+        <translation>수신 주파수</translation>
+    </message>
+    <message>
+        <location filename="../logqso.ui"/>
+        <source>Your receive frequency in MHz (ADIF FREQ_RX), its band logged with it (BAND_RX). On the QO-100 uplink it is filled in: your dial plus your Rx audio frequency, plus 8089.5 MHz.</source>
+        <translation>수신 주파수(MHz, ADIF FREQ_RX)이며 해당 밴드도 함께 기록됩니다(BAND_RX). QO-100 업링크에서는 다이얼 주파수에 수신 오디오 주파수와 8089.5 MHz를 더한 값으로 채워집니다.</translation>
+    </message>
+    <message>
+        <location filename="../logqso.cpp"/>
+        <source>Aircraft scatter</source>
+        <translation>항공기 산란</translation>
+    </message>
+    <message>
+        <location filename="../logqso.cpp"/>
+        <source>Aurora-E</source>
+        <translation>오로라-E</translation>
+    </message>
+    <message>
+        <location filename="../logqso.cpp"/>
+        <source>Aurora</source>
+        <translation>오로라</translation>
+    </message>
+    <message>
+        <location filename="../logqso.cpp"/>
+        <source>Back scatter</source>
+        <translation>후방 산란</translation>
+    </message>
+    <message>
+        <location filename="../logqso.cpp"/>
+        <source>Echolink</source>
+        <translation>Echolink</translation>
+    </message>
+    <message>
+        <location filename="../logqso.cpp"/>
+        <source>Earth-moon-earth</source>
+        <translation>지구-달-지구</translation>
+    </message>
+    <message>
+        <location filename="../logqso.cpp"/>
+        <source>Sporadic E</source>
+        <translation>스포라딕 E</translation>
+    </message>
+    <message>
+        <location filename="../logqso.cpp"/>
+        <source>F2 Reflection</source>
+        <translation>F2층 반사</translation>
+    </message>
+    <message>
+        <location filename="../logqso.cpp"/>
+        <source>Field aligned irregularities</source>
+        <translation>자기장 정렬 불규칙성</translation>
+    </message>
+    <message>
+        <location filename="../logqso.cpp"/>
+        <source>Internet-assisted</source>
+        <translation>인터넷 경유</translation>
+    </message>
+    <message>
+        <location filename="../logqso.cpp"/>
+        <source>Ionoscatter</source>
+        <translation>전리층 산란</translation>
+    </message>
+    <message>
+        <location filename="../logqso.cpp"/>
+        <source>IRLP</source>
+        <translation>IRLP</translation>
+    </message>
+    <message>
+        <location filename="../logqso.cpp"/>
+        <source>Meteor scatter</source>
+        <translation>유성 산란</translation>
+    </message>
+    <message>
+        <location filename="../logqso.cpp"/>
+        <source>Non-satellite repeater or transponder</source>
+        <translation>비위성 중계기 또는 트랜스폰더</translation>
+    </message>
+    <message>
+        <location filename="../logqso.cpp"/>
+        <source>Rain scatter</source>
+        <translation>강우 산란</translation>
+    </message>
+    <message>
+        <location filename="../logqso.cpp"/>
+        <source>Trans-equatorial</source>
+        <translation>적도 횡단</translation>
+    </message>
+    <message>
+        <location filename="../logqso.cpp"/>
+        <source>Tropospheric ducting</source>
+        <translation>대류권 덕팅</translation>
+    </message>
 </context>
 <context>
     <name>MainWindow</name>

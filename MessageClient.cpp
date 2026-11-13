@@ -472,7 +472,9 @@ void MessageClient::qso_logged (QDateTime time_off, QString const& dx_call, QStr
                                 , QString const& report_received, QString const& tx_power
                                 , QString const& comments, QString const& name, QDateTime time_on
                                 , QString const& operator_call, QString const& my_call
-                                , QString const& my_grid)
+                                , QString const& my_grid, QString const& exchange_sent, QString const& exchange_rcvd
+                                , QString const& propmode, QString const& satellite, QString const& satmode
+                                , QString const& freq_rx)
 {
    if (m_->server_port_ && !m_->server_string_.isEmpty ())
     {
@@ -480,7 +482,9 @@ void MessageClient::qso_logged (QDateTime time_off, QString const& dx_call, QStr
       NetworkMessage::Builder out {&message, NetworkMessage::QSOLogged, m_->id_, m_->schema_};
       out << time_off << dx_call.toUtf8 () << dx_grid.toUtf8 () << dial_frequency << mode.toUtf8 ()
           << report_sent.toUtf8 () << report_received.toUtf8 () << tx_power.toUtf8 () << comments.toUtf8 ()
-          << name.toUtf8 () << time_on << operator_call.toUtf8 () << my_call.toUtf8 () << my_grid.toUtf8 ();
+          << name.toUtf8 () << time_on << operator_call.toUtf8 () << my_call.toUtf8 () << my_grid.toUtf8 ()
+          << exchange_sent.toUtf8 () << exchange_rcvd.toUtf8 () << propmode.toUtf8 () << satellite.toUtf8 ()
+          << satmode.toUtf8 () << freq_rx.toUtf8 ();   // CE3TSK 2026-11-13 (TODO.md 3.-247): WSJT-X 3.0's, appended
       m_->send_message (out, message);
     }
 }

@@ -493,6 +493,7 @@ private slots:
                   , QString const& rpt_sent, QString const& rpt_received
                   , QString const& tx_power, QString const& comments
                   , QString const& name, QDateTime const&, QString const& eqslcomments
+                  , QString const& prop_mode, QString const& satellite, QString const& sat_mode, QString const& freq_rx
                   , QByteArray const& myadif2);
   void on_bandComboBox_currentIndexChanged (int index);
   void on_bandComboBox_activated (int index);

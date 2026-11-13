@@ -97,4 +97,21 @@ inline QString log_exchange (QString const& stored, QString const& global, bool 
   return contest ? QString {} : global;
 }
 
+/* CE3TSK 2026-11-13 (TODO.md 3.-247, its review): the exchange sent and received of the QSO Logged UDP message, WSJT-X
+   3.0's two fields - in a contest what the contest is scored on: the two 4 character grids where the grid is the
+   exchange (WW Digi, ARRL Digi - the reports in the log's RST fields are only reports there), else the reports; outside a
+   contest none, as WSJT-X sends them. */
+struct UdpExchange
+{
+  QString sent;
+  QString received;
+};
+inline UdpExchange udp_exchange (bool contest, bool gridExchange, QString const& myGrid, QString const& hisGrid,
+                                 QString const& reportSent, QString const& reportReceived)
+{
+  if (!contest) return {};
+  if (gridExchange) return {myGrid.left (4).toUpper (), hisGrid.left (4).toUpper ()};
+  return {reportSent, reportReceived};
+}
+
 #endif

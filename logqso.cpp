@@ -8,6 +8,9 @@
 #include "geometryrestore.h"   /* CE3TSK 2026-09-26: the restore rule, shared */
 #include <QStandardPaths>
 #include <QDir>
+#include <QAbstractItemView>
+#include <QRegularExpressionValidator>
+#include <QStyle>
 #include <QDebug>
 
 #include "JTDXMessageBox.hpp"
@@ -16,8 +19,48 @@
 #include "Configuration.hpp"
 #include "Bands.hpp"
 
+#include "satlog.h"   /* CE3TSK 2026-11-13 (TODO.md 3.-247): the satellite rows */
+#include "tooltip_wrap.hpp"   /* ... and their tooltips, folded */
+
 #include "ui_logqso.h"
 #include "moc_logqso.cpp"
+
+/* CE3TSK 2026-11-13 (TODO.md 3.-247): the satellite rows, as WSJT-X has them (widgets/logqso.cpp, DF2ET's patch; GPL-3.0):
+   the ADIF propagation modes with their names, the satellite modes, and the satellites of sat.dat ("key|name" a line, the
+   key the ADIF SAT_NAME) - a sat.dat in the program's data folder first, so a new satellite can be added, else the one built
+   in (":/sat.dat", WSJT-X 3.0.2's, the same as WS 3.2.1's). */
+namespace
+{
+  struct PropMode
+  {
+    char const * id_;
+    char const * name_;
+  };
+  PropMode const prop_modes[] = {
+    {"", ""},
+    {"AS", QT_TRANSLATE_NOOP ("LogQSO", "Aircraft scatter")},
+    {"AUE", QT_TRANSLATE_NOOP ("LogQSO", "Aurora-E")},
+    {"AUR", QT_TRANSLATE_NOOP ("LogQSO", "Aurora")},
+    {"BS", QT_TRANSLATE_NOOP ("LogQSO", "Back scatter")},
+    {"ECH", QT_TRANSLATE_NOOP ("LogQSO", "Echolink")},
+    {"EME", QT_TRANSLATE_NOOP ("LogQSO", "Earth-moon-earth")},
+    {"ES", QT_TRANSLATE_NOOP ("LogQSO", "Sporadic E")},
+    {"F2", QT_TRANSLATE_NOOP ("LogQSO", "F2 Reflection")},
+    {"FAI", QT_TRANSLATE_NOOP ("LogQSO", "Field aligned irregularities")},
+    {"INTERNET", QT_TRANSLATE_NOOP ("LogQSO", "Internet-assisted")},
+    {"ION", QT_TRANSLATE_NOOP ("LogQSO", "Ionoscatter")},
+    {"IRL", QT_TRANSLATE_NOOP ("LogQSO", "IRLP")},
+    {"MS", QT_TRANSLATE_NOOP ("LogQSO", "Meteor scatter")},
+    {"RPT", QT_TRANSLATE_NOOP ("LogQSO", "Non-satellite repeater or transponder")},
+    {"RS", QT_TRANSLATE_NOOP ("LogQSO", "Rain scatter")},
+    {"SAT", QT_TRANSLATE_NOOP ("LogQSO", "Satellite")},
+    {"TEP", QT_TRANSLATE_NOOP ("LogQSO", "Trans-equatorial")},
+    {"TR", QT_TRANSLATE_NOOP ("LogQSO", "Tropospheric ducting")},
+  };
+  char const * const sat_modes[] = {"", "A", "B", "BS", "JA", "JD", "K", "KA", "KT", "L", "LS", "LU", "LX", "S", "SX", "T", "US",
+                                    "UV", "VS", "VU"};
+  char const * const sat_file_name {"sat.dat"};
+}
 
 LogQSO::LogQSO(QSettings * settings, Configuration const * config, JTDXDateTime * jtdxtime, QWidget *parent)
   : QDialog(parent)
@@ -32,7 +75,65 @@ LogQSO::LogQSO(QSettings * settings, Configuration const * config, JTDXDateTime 
 //  setWindowTitle("JTDX " + versnumber.simplified () + " - Log QSO");
   setWindowTitle(QCoreApplication::applicationName () + " v" + QCoreApplication::applicationVersion () + " - Log QSO");
 
+  wrap_tooltips (this);   // CE3TSK 2026-11-13 (TODO.md 3.-247): Qt does not word-wrap a plain tooltip (tooltip_wrap.hpp)
+  /* CE3TSK 2026-11-13 (TODO.md 3.-247): the satellite rows' lists, and the operator's own choices kept as they are made -
+     activated and textEdited come from the operator only, never from initLogQSO () setting them (satlog.h) */
+  for (auto const& m : prop_modes) ui->comboBoxPropMode->addItem (tr (m.name_), QString::fromLatin1 (m.id_));
+  for (auto const* m : sat_modes) ui->comboBoxSatMode->addItem (QString::fromLatin1 (m), QString::fromLatin1 (m));
+  ui->comboBoxSatellite->addItem (QString {}, QString {});
+  {
+    QDir const data {QStandardPaths::writableLocation (QStandardPaths::DataLocation)};
+    QFile f {data.exists (sat_file_name) ? data.absoluteFilePath (sat_file_name) : QString {":/"} + sat_file_name};
+    if (f.open (QIODevice::ReadOnly | QIODevice::Text))
+      for (QString const& line : QString::fromUtf8 (f.readAll ()).split ('\n'))
+        {
+          auto const w = line.trimmed ().split ('|');
+          if (w.size () == 2 && !w[0].trimmed ().isEmpty ()) ui->comboBoxSatellite->addItem (w[1].trimmed (), w[0].trimmed ());
+        }
+  }
+  /* (review 2026-11-13) RX Frequency takes MHz with one decimal point or comma and nothing else (satlog.h rx_typed), and
+     the two long lists do not set the dialog's width: eight characters at the least (they stretch with the dialog), no room
+     for an icon they never show, the open list as wide as its longest entry. Measured: a dozen characters with the icon's
+     room was 189 px, and in Russian ("Вид распространения" beside it) the Prop Mode row then set the dialog's minimum,
+     538 px against 481 without the rows. Configuration's rig list keeps 16 for the same reason. */
+  ui->freqRx->setValidator (new QRegularExpressionValidator {QRegularExpression {QString::fromLatin1 (sat_log::rx_typed)}, ui->freqRx});
+  for (QComboBox* box : {ui->comboBoxPropMode, ui->comboBoxSatellite})
+    {
+      box->setSizeAdjustPolicy (QComboBox::AdjustToMinimumContentsLength);
+      box->setMinimumContentsLength (8);
+      box->view ()->setMinimumWidth (box->view ()->sizeHintForColumn (0) + 2 * box->view ()->frameWidth ()
+                                     + box->style ()->pixelMetric (QStyle::PM_ScrollBarExtent));
+    }
+  connect (ui->comboBoxPropMode, QOverload<int>::of (&QComboBox::currentIndexChanged), this, [this] (int) {satRowsEnabled ();});
+  connect (ui->comboBoxPropMode, QOverload<int>::of (&QComboBox::activated), this, [this] (int) {
+      m_propMode = ui->comboBoxPropMode->currentData ().toString ();
+    });
+  connect (ui->comboBoxSatellite, QOverload<int>::of (&QComboBox::activated), this, [this] (int) {
+      m_satellite = ui->comboBoxSatellite->currentData ().toString ();
+    });
+  connect (ui->comboBoxSatMode, QOverload<int>::of (&QComboBox::activated), this, [this] (int) {
+      m_satMode = ui->comboBoxSatMode->currentData ().toString ();
+    });
+  connect (ui->freqRx, &QLineEdit::textEdited, this, [this] (QString const& t) {m_freqRx = t;});
+
   loadSettings ();
+  satRowsEnabled ();
+}
+
+// CE3TSK 2026-11-13 (TODO.md 3.-247): Satellite and Sat Mode, and their Retain, only with Prop Mode Satellite (WSJT-X);
+// (review 2026-11-13) and emptied then, as WSJT-X's propModeChanged () does - the dialog shows what is logged. Only what is
+// shown: the operator's retained choice (m_satellite, m_satMode) stays.
+void LogQSO::satRowsEnabled ()
+{
+  bool const sat {ui->comboBoxPropMode->currentData ().toString () == sat_log::sat_prop_mode};
+  if (!sat)
+    {
+      ui->comboBoxSatellite->setCurrentIndex (0);
+      ui->comboBoxSatMode->setCurrentIndex (0);
+    }
+  for (QWidget* w : {static_cast<QWidget*> (ui->comboBoxSatellite), static_cast<QWidget*> (ui->cbSatellite),
+                     static_cast<QWidget*> (ui->comboBoxSatMode), static_cast<QWidget*> (ui->cbSatMode)})
+    w->setEnabled (sat);
 }
 
 LogQSO::~LogQSO ()
@@ -68,6 +169,15 @@ void LogQSO::loadSettings ()
   m_txPower = m_settings->value ("TxPower", "").toString ();
   m_comments = m_settings->value ("LogComments", "").toString();
   m_eqslcomments = m_settings->value ("LogEQSLComments", "").toString();
+  /* CE3TSK 2026-11-13 (TODO.md 3.-247): the satellite rows, WSJT-X's key names */
+  ui->cbPropMode->setChecked (m_settings->value ("SavePropMode", false).toBool ());
+  ui->cbSatellite->setChecked (m_settings->value ("SaveSatellite", false).toBool ());
+  ui->cbSatMode->setChecked (m_settings->value ("SaveSatMode", false).toBool ());
+  ui->cbFreqRx->setChecked (m_settings->value ("SaveFreqRx", false).toBool ());
+  m_propMode = m_settings->value ("PropMode", "").toString ();
+  m_satellite = m_settings->value ("Satellite", "").toString ();
+  m_satMode = m_settings->value ("SatMode", "").toString ();
+  m_freqRx = m_settings->value ("FreqRx", "").toString ();
   m_settings->endGroup ();
 }
 
@@ -87,13 +197,21 @@ void LogQSO::storeSettings () const
   m_settings->setValue ("TxPower", m_txPower);
   m_settings->setValue ("LogComments", m_comments);
   m_settings->setValue ("LogEQSLComments", m_eqslcomments);
+  m_settings->setValue ("SavePropMode", ui->cbPropMode->isChecked ());
+  m_settings->setValue ("SaveSatellite", ui->cbSatellite->isChecked ());
+  m_settings->setValue ("SaveSatMode", ui->cbSatMode->isChecked ());
+  m_settings->setValue ("SaveFreqRx", ui->cbFreqRx->isChecked ());
+  m_settings->setValue ("PropMode", m_propMode);
+  m_settings->setValue ("Satellite", m_satellite);
+  m_settings->setValue ("SatMode", m_satMode);
+  m_settings->setValue ("FreqRx", m_freqRx);
   m_settings->endGroup ();
 }
 
 void LogQSO::initLogQSO(QString const& hisCall, QString const& hisGrid, QString mode,
                         QString const& rptSent, QString const& rptRcvd, QString const& distance,
                         QString const& name, QDateTime const& dateTimeOn, QDateTime const& dateTimeOff,
-                        Radio::Frequency dialFreq, bool autologging, int points)
+                        Radio::Frequency dialFreq, Radio::Frequency rxFreq, bool autologging, int points)
 {
   m_send_to_eqsl=m_config->send_to_eqsl();
   ui->call->setText(hisCall);
@@ -148,6 +266,21 @@ void LogQSO::initLogQSO(QString const& hisCall, QString const& hisGrid, QString 
   m_enable_tcp_connection=m_config->enable_tcp_connection();
   m_debug=m_config->write_decoded_debug();
   ui->band->setText(m_config->bands ()->find (dialFreq));
+  /* CE3TSK 2026-11-13 (TODO.md 3.-247): the satellite rows - filled in on a satellite's uplink (satlog.h), else each as
+     its Retain says: the operator's own last choice, or empty. A prefilled value is shown, never kept. */
+  {
+    auto const fill = sat_log::prefill (dialFreq, rxFreq);
+    auto const pick = [] (QComboBox* box, QString const& id) {box->setCurrentIndex (qMax (0, box->findData (id)));};
+    pick (ui->comboBoxPropMode, fill.on ? fill.prop_mode : ui->cbPropMode->isChecked () ? m_propMode : QString {});
+    /* (review 2026-11-13) a satellite the list lacks - an own sat.dat without QO-100, a retained one since removed - is
+       added under its key rather than logged as no satellite at all */
+    QString const satellite {fill.on ? fill.satellite : ui->cbSatellite->isChecked () ? m_satellite : QString {}};
+    if (!satellite.isEmpty () && ui->comboBoxSatellite->findData (satellite) < 0) ui->comboBoxSatellite->addItem (satellite, satellite);
+    pick (ui->comboBoxSatellite, satellite);
+    pick (ui->comboBoxSatMode, fill.on ? fill.sat_mode : ui->cbSatMode->isChecked () ? m_satMode : QString {});
+    ui->freqRx->setText (fill.on ? fill.freq_rx : ui->cbFreqRx->isChecked () ? m_freqRx : QString {});
+    satRowsEnabled ();
+  }
 
   if(!autologging) {
 	 /* CE3TSK 2026-09-26, the operator: the dialog must open in front, so that it stays
@@ -189,13 +322,24 @@ void LogQSO::accept()
   eqslcomments=ui->eqslcomments->text();
   m_eqslcomments=eqslcomments;
   QString strDialFreq(QString::number(m_dialFreq / 1.e6,'f',6));
+  /* CE3TSK 2026-11-13 (TODO.md 3.-247): the satellite rows - the satellite and its mode only with Prop Mode Satellite
+     (WSJT-X); the RX frequency read as a number (satlog.h), its band logged beside it as BAND_RX (WSJT-X writes none) */
+  QString const propMode {ui->comboBoxPropMode->currentData ().toString ()};
+  bool const sat {propMode == sat_log::sat_prop_mode};
+  QString const satName {sat ? ui->comboBoxSatellite->currentData ().toString () : QString {}};
+  QString const satMode {sat ? ui->comboBoxSatMode->currentData ().toString () : QString {}};
+  /* (review 2026-11-13) the RX frequency only with Prop Mode Satellite too: one kept by Retain - a QO-100 RX Frequency
+     corrected by hand for the LNB's drift - would make the next HF QSO a cross-band one (BAND_RX 3cm) */
+  QString const freqRx {sat ? sat_log::freq_rx (ui->freqRx->text ()) : QString {}};
+  QString const bandRx {freqRx.isEmpty () ? QString {} : m_config->bands ()->find (sat_log::hz (freqRx))};
 
   //Log this QSO to ADIF file "wsjtx_log.adi"
   QString filename = "wsjtx_log.adi";  // TODO allow user to set
   ADIF adifile;
   auto adifilePath = QDir {QStandardPaths::writableLocation (QStandardPaths::DataLocation)}.absoluteFilePath ("wsjtx_log.adi");
   adifile.init(adifilePath);
-  if (!adifile.addQSOToFile(hisCall,hisGrid,mode,rptSent,rptRcvd,m_dateTimeOn,m_dateTimeOff,band,comments,name,strDialFreq,m_myCall,m_myGrid,m_txPower,m_send_to_eqsl))
+  if (!adifile.addQSOToFile(hisCall,hisGrid,mode,rptSent,rptRcvd,m_dateTimeOn,m_dateTimeOff,band,comments,name,strDialFreq,m_myCall,m_myGrid,m_txPower,m_send_to_eqsl,
+                            propMode,satName,satMode,freqRx,bandRx))
   {
       JTDXMessageBox::information_message(0,"","Cannot open file \"" + adifilePath + "\".");
    }
@@ -216,7 +360,8 @@ void LogQSO::accept()
       contestAdi.init (contestPath);
       /* CE3TSK 2026-11-07 (TODO.md 3.-231): ZZ00 for a missing grid where the contest counts the QSO, here alone (logfields.h) */
       QString const contestGrid {contest_log_grid (hisGrid, m_config->contest ().missingGridScores)};
-      if (!contestAdi.addQSOToFile (hisCall,contestGrid,mode,rptSent,rptRcvd,m_dateTimeOn,m_dateTimeOff,band,comments,name,strDialFreq,m_myCall,m_myGrid,m_txPower,m_send_to_eqsl))
+      if (!contestAdi.addQSOToFile (hisCall,contestGrid,mode,rptSent,rptRcvd,m_dateTimeOn,m_dateTimeOff,band,comments,name,strDialFreq,m_myCall,m_myGrid,m_txPower,m_send_to_eqsl,
+                                    propMode,satName,satMode,freqRx,bandRx))
         {
           JTDXMessageBox::information_message(0,"","Cannot open contest log \"" + contestPath + "\".");
         }
@@ -279,13 +424,16 @@ void LogQSO::accept()
     if (comments.length() > 0) {
       myadif+=" <COMMENT:" + QString::number(comments.length()) + ">" + comments;
     }
+    /* CE3TSK 2026-11-13 (TODO.md 3.-247): the satellite fields, as in the log file (satlog.h, one writer) */
+    myadif+=sat_log::adif ({propMode, satName, satMode, bandRx, freqRx}, true);
     if (m_send_to_eqsl) {
       myadif+=" <EQSL_QSL_SENT:1>Y <EQSL_QSLSDATE:8>" + m_jtdxtime->currentDateTimeUtc2().toString("yyyyMMdd");
     }
     myadif+=" <EOR> ";
     myadif2 = myadif.trimmed().toUtf8();
 
-  Q_EMIT acceptQSO (m_dateTimeOff, hisCall, hisGrid, m_dialFreq, mode, rptSent, rptRcvd, m_txPower, comments, name, m_dateTimeOn, eqslcomments, myadif2);
+  Q_EMIT acceptQSO (m_dateTimeOff, hisCall, hisGrid, m_dialFreq, mode, rptSent, rptRcvd, m_txPower, comments, name, m_dateTimeOn, eqslcomments,
+                    propMode, satName, satMode, freqRx, myadif2);
   
   myadif="<command:3>Log <parameters:" + QString::number(myadif.length()) + "> " + myadif;
   myadif2 = myadif.toUtf8();

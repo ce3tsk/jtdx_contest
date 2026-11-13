@@ -10949,11 +10949,13 @@ void MainWindow::on_logQSOButton_clicked()
       rrep = log_exchange (rrep, m_rptRcvd, m_contest.running);
       if (srep.isEmpty()) srep=m_rptSent;
       m_logDlg->initLogQSO (m_hisCall, hisGridLogged, m_modeTx, srep, rrep, distance, m_name,
-                        currenttime, dateTimeQSOOff, m_freqNominal + ui->TxFreqSpinBox->value(),autolog,pointsLogged);
+                        currenttime, dateTimeQSOOff, m_freqNominal + ui->TxFreqSpinBox->value(),
+                        m_freqNominal + ui->RxFreqSpinBox->value(),autolog,pointsLogged);   // CE3TSK 2026-11-13: + the Rx (satlog.h)
   } else { 
       m_logDlg->initLogQSO (m_hisCall, hisGridLogged, m_modeTx, m_rptSent,
                         log_exchange (QString {}, m_rptRcvd, m_contest.running), distance, m_name,
-                        m_dateTimeQSOOn, dateTimeQSOOff, m_freqNominal + ui->TxFreqSpinBox->value(),autolog,pointsLogged);
+                        m_dateTimeQSOOn, dateTimeQSOOff, m_freqNominal + ui->TxFreqSpinBox->value(),
+                        m_freqNominal + ui->RxFreqSpinBox->value(),autolog,pointsLogged);
   }
   m_logqso73=false;
 }
@@ -10963,7 +10965,9 @@ void MainWindow::acceptQSO2(QDateTime const& QSO_date_off, QString const& call, 
                             , QString const& rpt_sent, QString const& rpt_received
                             , QString const& tx_power, QString const& comments
                             , QString const& name, QDateTime const& QSO_date_on
-                            , QString const& eqslcomments, QByteArray const& myadif2)
+                            , QString const& eqslcomments
+                            , QString const& prop_mode, QString const& satellite, QString const& sat_mode, QString const& freq_rx
+                            , QByteArray const& myadif2)
 {
   QString date = QSO_date_on.toString("yyyyMMdd");
   m_qsoLogged=true;
@@ -10975,7 +10979,12 @@ void MainWindow::acceptQSO2(QDateTime const& QSO_date_off, QString const& call, 
   if (m_contest.running) updateContestScore ();   /* CE3TSK */
   QString operator_call = m_config.my_callsign(); QString my_call = m_config.my_callsign(); QString my_grid = m_config.my_grid();
   /* CE3TSK 2026-10-14 (review 3.-67): the DX grid as ADIF's GRIDSQUARE takes it, 8 at most - loggers put this field there */
-  m_messageClient->qso_logged (QSO_date_off, call, adif_gridsquare (grid), dial_freq, mode, rpt_sent, rpt_received, tx_power, comments, name, QSO_date_on, operator_call, my_call, my_grid);
+  /* CE3TSK 2026-11-13 (TODO.md 3.-247): WSJT-X's fields after My grid - exchange sent and received (logfields.h
+     udp_exchange: in a contest the grids where the grid is the exchange, else the reports; none outside one, as WSJT-X),
+     then the satellite's four */
+  UdpExchange const exchange {udp_exchange (m_contest.running, m_contest.gridExchange, my_grid, grid, rpt_sent, rpt_received)};
+  m_messageClient->qso_logged (QSO_date_off, call, adif_gridsquare (grid), dial_freq, mode, rpt_sent, rpt_received, tx_power, comments, name, QSO_date_on, operator_call, my_call, my_grid,
+                               exchange.sent, exchange.received, prop_mode, satellite, sat_mode, freq_rx);
   if(m_config.enable_udp1_adif_sending()) m_messageClient->logged_ADIF(myadif2);
   if(m_config.enable_udp2_broadcast() && m_config.valid_udp2()) {
     QUdpSocket sock;
@@ -10983,7 +10992,8 @@ void MainWindow::acceptQSO2(QDateTime const& QSO_date_off, QString const& call, 
       { JTDXMessageBox::warning_message (this, "", tr ("Error sending QSO ADIF data to secondary UDP server"), tr ("Write returned \"%1\"").arg (sock.errorString ())); }
   }
   if (m_config.send_to_eqsl())
-      Eqsl->upload(m_config.eqsl_username(),m_config.eqsl_passwd(),m_config.eqsl_nickname(),call,mode,QSO_date_on,rpt_sent,m_config.bands ()->find (dial_freq),eqslcomments);
+      Eqsl->upload(m_config.eqsl_username(),m_config.eqsl_passwd(),m_config.eqsl_nickname(),call,mode,QSO_date_on,rpt_sent,m_config.bands ()->find (dial_freq),eqslcomments,
+                   prop_mode,satellite);   // CE3TSK 2026-11-13 (TODO.md 3.-247, its review): a satellite QSO as logged
   setDxCallEntryColour ("#7fff7f");
   m_lastloggedcall=call;
   m_lastloggedtime=m_jtdxtime->currentDateTimeUtc2();

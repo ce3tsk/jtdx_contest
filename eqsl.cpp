@@ -13,6 +13,9 @@
 #include <QUrlQuery>
 #include <QDebug>
 
+#include "eqsl.h"
+#include "satlog.h"   // CE3TSK 2026-11-13 (TODO.md 3.-247): the satellite's tags
+
 #include "moc_eqsl.cpp"
 
 namespace
@@ -36,7 +39,8 @@ void EQSL::upload(QString const& eqsl_username, QString const& eqsl_passwd, QStr
                   , QString const& call, QString const& mode
                   , QDateTime const& QSO_date_on
                   , QString const& rpt_sent, QString const& band
-                  , QString const& eqslcomments)
+                  , QString const& eqslcomments
+                  , QString const& prop_mode, QString const& sat_name)
 {
 
     if (m_in_progress) {
@@ -47,17 +51,28 @@ void EQSL::upload(QString const& eqsl_username, QString const& eqsl_passwd, QStr
     myadif+="<EQSL_USER:" + QString::number(eqsl_username.length()) + ">" + eqsl_username;
     myadif+="<EQSL_PSWD:" + QString::number(eqsl_passwd.length()) + ">" + eqsl_passwd;
     myadif+="<PROGRAMID:4>JTDX<EOH><APP_EQSL_QTH_NICKNAME:" + QString::number(eqsl_nickname.length()) + ">" + eqsl_nickname;
+    myadif+=record (call, mode, QSO_date_on, rpt_sent, band, eqslcomments, prop_mode, sat_name);
+
+    uploadTimer->start(1);
+}
+
+QString EQSL::record (QString const& call, QString const& mode, QDateTime const& QSO_date_on
+                      , QString const& rpt_sent, QString const& band, QString const& eqslcomments
+                      , QString const& prop_mode, QString const& sat_name)
+{
+    QString myadif;
     myadif+="<CALL:" + QString::number(call.length()) + ">" + call;
     myadif+="<MODE:"  + QString::number(mode.length()) + ">" + mode;
     myadif+="<QSO_DATE:8>" + QSO_date_on.date().toString("yyyyMMdd");
     myadif+="<TIME_ON:4>" + QSO_date_on.time().toString("hhmm");
     myadif+="<RST_SENT:" + QString::number(rpt_sent.length()) + ">" + rpt_sent;
     myadif+="<BAND:" + QString::number(band.length()) + ">" + band;
+    /* CE3TSK 2026-11-13 (TODO.md 3.-247, its review): a satellite QSO as the log has it - eQSL's card names the satellite */
+    myadif+=sat_log::tag ("PROP_MODE", prop_mode) + sat_log::tag ("SAT_NAME", sat_name);
     if(eqslcomments!="") myadif+="<QSLMSG:" + QString::number(eqslcomments.length()) + ">" + eqslcomments;
 //    myadif+="<QSLMSG:19>TNX For QSO TU 73!.";
     myadif+="<EOR>";
-
-    uploadTimer->start(1);
+    return myadif;
 }
 
 void EQSL::networkReply(QNetworkReply *reply)

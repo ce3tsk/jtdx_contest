@@ -54,7 +54,11 @@ class ADIF
 
         // open ADIF file and append the QSO details. Return true on success
         bool addQSOToFile(const QString hisCall, const QString hisGrid, const QString mode, const QString rptSent, const QString rptRcvd, QDateTime const& dateTimeOn, QDateTime const& dateTimeOff, const QString band,
-                                const QString comments, const QString name, const QString strDialFreq, const QString m_myCall, const QString m_myGrid, const QString m_txPower,const bool send_to_eqsl);
+                                const QString comments, const QString name, const QString strDialFreq, const QString m_myCall, const QString m_myGrid, const QString m_txPower,const bool send_to_eqsl,
+                          /* CE3TSK 2026-11-13 (TODO.md 3.-247): ADIF PROP_MODE, SAT_NAME, SAT_MODE, FREQ_RX, BAND_RX -
+                             each written only when it is not empty (satlog.h) */
+                          QString const& propMode = QString {}, QString const& satName = QString {},
+                          QString const& satMode = QString {}, QString const& freqRx = QString {}, QString const& bandRx = QString {});
 
         static QString bandFromFrequency(double dialFreq);
 

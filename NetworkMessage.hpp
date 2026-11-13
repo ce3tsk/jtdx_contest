@@ -221,10 +221,21 @@
  *                         Operator call          utf8
  *                         My call                utf8
  *                         My grid                utf8
+ *                         Exchange sent          utf8
+ *                         Exchange received      utf8
+ *                         ADIF Propagation mode  utf8
+ *                         Satellite name         utf8
+ *                         Satellite mode         utf8
+ *                         RX frequency (MHz)     utf8
  *
  *      The  QSO logged  message is  sent  to the  server(s) when  the
  *      JTDX  user  accepts the "Log  QSO" dialog by clicking the "OK"
  *      button.
+ *      CE3TSK 2026-11-13 (TODO.md 3.-247): the last six as WSJT-X 3.0 sends them, appended - a server that knows only
+ *      the fields before them reads those and leaves the rest (MessageServer.cpp does). The exchange (logfields.h
+ *      udp_exchange): in a contest the two 4 character grids where the grid is the exchange (WW Digi, ARRL Digi),
+ *      else the two reports; outside a contest both empty, as WSJT-X sends them. The satellite fields are those of
+ *      the ADIF record, empty when not logged.
  *
  *
  * Close         Out       6                      quint32

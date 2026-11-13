@@ -62,7 +62,10 @@ public:
                           , Frequency dial_frequency, QString const& mode, QString const& report_sent
                           , QString const& report_received, QString const& tx_power, QString const& comments
                           , QString const& name, QDateTime time_on, QString const& operator_call
-                          , QString const& my_call, QString const& my_grid);
+                          , QString const& my_call, QString const& my_grid
+                          /* CE3TSK 2026-11-13 (TODO.md 3.-247): WSJT-X 3.0's last six, in its order */
+                          , QString const& exchange_sent, QString const& exchange_rcvd, QString const& propmode
+                          , QString const& satellite, QString const& satmode, QString const& freq_rx);
 
   // ADIF_record argument should be valid ADIF excluding any <EOR> end
   // of record marker
