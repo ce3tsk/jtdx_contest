@@ -3377,6 +3377,11 @@ Format:
         <source>Tropospheric ducting</source>
         <translation>Troposferski kanal</translation>
     </message>
+    <message>
+        <location filename="../logqso.cpp"/>
+        <source>Adds one period of the mode, %1 s, to the end of the QSO - for a closing 73 that came after this window opened.</source>
+        <translation>Pomiče kraj QSO-a za jedno razdoblje načina rada, %1 s - za završni 73 koji je stigao nakon otvaranja ovog prozora.</translation>
+    </message>
 </context>
 <context>
     <name>MainWindow</name>

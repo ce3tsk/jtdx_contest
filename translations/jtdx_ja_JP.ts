@@ -3377,6 +3377,11 @@ Format:
         <source>Tropospheric ducting</source>
         <translation>対流圏ダクト</translation>
     </message>
+    <message>
+        <location filename="../logqso.cpp"/>
+        <source>Adds one period of the mode, %1 s, to the end of the QSO - for a closing 73 that came after this window opened.</source>
+        <translation>QSO の終了時刻にモードの 1 周期 (%1 秒) を加えます。このウィンドウが開いた後に届いた最後の 73 のためです。</translation>
+    </message>
 </context>
 <context>
     <name>MainWindow</name>

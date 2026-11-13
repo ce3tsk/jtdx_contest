@@ -3380,6 +3380,11 @@ Format:
         <source>Tropospheric ducting</source>
         <translation>Troposfærisk ducting</translation>
     </message>
+    <message>
+        <location filename="../logqso.cpp"/>
+        <source>Adds one period of the mode, %1 s, to the end of the QSO - for a closing 73 that came after this window opened.</source>
+        <translation>Lægger én periode af moden, %1 s, til QSO'ets sluttid - for et afsluttende 73, der kom efter at dette vindue blev åbnet.</translation>
+    </message>
 </context>
 <context>
     <name>MainWindow</name>

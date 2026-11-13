@@ -3367,6 +3367,11 @@ Format:
         <source>Tropospheric ducting</source>
         <translation>Conduta troposférica</translation>
     </message>
+    <message>
+        <location filename="../logqso.cpp"/>
+        <source>Adds one period of the mode, %1 s, to the end of the QSO - for a closing 73 that came after this window opened.</source>
+        <translation>Acrescenta um período do modo, %1 s, ao fim do QSO - para um 73 final que chegou depois de esta janela abrir.</translation>
+    </message>
 </context>
 <context>
     <name>MainWindow</name>

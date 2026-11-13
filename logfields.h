@@ -97,6 +97,34 @@ inline QString log_exchange (QString const& stored, QString const& global, bool 
   return contest ? QString {} : global;
 }
 
+/* CE3TSK 2026-11-13 (TODO.md 3.-248, GitHub issue 4, EA3FA): one transmission period of the logged mode, in ms - the step
+   of the Log QSO's "+15 s" button beside End. The window opens as our first 73 or RR73 starts and End is the end of that
+   transmission (MainWindow::on_logQSOButton_clicked), so his closing 73 is a period later, or more if he repeats it. FT8
+   15 s, FT4 7.5 s, FT2 3.75 s, WSPR-2 120 s; every other mode JTDX logs (JT65, JT9, T10) 60 s. (review 2026-11-13) The
+   Mode field as the operator may type it, so spaces and case do not matter; MainWindow's own period of each mode
+   (m_TRperiod) must be the same - test/logperiod_wiring.sh compares the two, so a new mode cannot be left out here. */
+inline qint64 log_period_ms (QString const& mode)
+{
+  QString const m {mode.trimmed ().toUpper ()};
+  if (m == "FT8") return 15000;
+  if (m == "FT4") return 7500;
+  if (m == "FT2") return 3750;
+  if (m == "WSPR-2") return 120000;
+  return 60000;
+}
+
+// (review 2026-11-13) the period in seconds as the button and its tooltip write it: 15, 7.5, 3.75, 60
+inline QString log_period_seconds (qint64 ms)
+{
+  return QString::number (ms / 1000., 'g', 6);
+}
+
+// the button's text: "+15 s", "+7.5 s", "+3.75 s", "+60 s" - the SI symbol, the same in every language
+inline QString log_period_text (qint64 ms)
+{
+  return QStringLiteral ("+%1 s").arg (log_period_seconds (ms));
+}
+
 /* CE3TSK 2026-11-13 (TODO.md 3.-247, its review): the exchange sent and received of the QSO Logged UDP message, WSJT-X
    3.0's two fields - in a contest what the contest is scored on: the two 4 character grids where the grid is the
    exchange (WW Digi, ARRL Digi - the reports in the log's RST fields are only reports there), else the reports; outside a

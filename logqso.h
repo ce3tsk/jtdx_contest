@@ -74,6 +74,10 @@ private:
   QString m_satMode;
   QString m_freqRx;
   void satRowsEnabled ();   // Satellite and Sat Mode only with Prop Mode Satellite, as WSJT-X
+  /* CE3TSK 2026-11-13 (TODO.md 3.-248, GitHub issue 4): the step of the "+15 s" button beside End - one period of the
+     logged mode (logfields.h log_period_ms ()), set by initLogQSO () */
+  qint64 m_periodMs {15000};
+  void showPeriod ();
   Radio::Frequency m_dialFreq;
   QString m_myCall;
   QString m_myGrid;

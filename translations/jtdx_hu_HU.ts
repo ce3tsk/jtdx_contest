@@ -3377,6 +3377,11 @@ Formátum:
         <source>Tropospheric ducting</source>
         <translation>Troposzférikus csatorna</translation>
     </message>
+    <message>
+        <location filename="../logqso.cpp"/>
+        <source>Adds one period of the mode, %1 s, to the end of the QSO - for a closing 73 that came after this window opened.</source>
+        <translation>A mód egy periódusát, %1 s-ot hozzáadja a QSO végéhez - az ablak megnyitása után érkezett záró 73 miatt.</translation>
+    </message>
 </context>
 <context>
     <name>MainWindow</name>

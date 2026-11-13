@@ -3376,6 +3376,11 @@ Formāts:
         <source>Tropospheric ducting</source>
         <translation>Troposfēras kanāls</translation>
     </message>
+    <message>
+        <location filename="../logqso.cpp"/>
+        <source>Adds one period of the mode, %1 s, to the end of the QSO - for a closing 73 that came after this window opened.</source>
+        <translation>Pievieno QSO beigām vienu režīma periodu, %1 s - noslēdzošajam 73, kas pienāca pēc šī loga atvēršanas.</translation>
+    </message>
 </context>
 <context>
     <name>MainWindow</name>

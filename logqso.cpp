@@ -115,9 +115,30 @@ LogQSO::LogQSO(QSettings * settings, Configuration const * config, JTDXDateTime 
       m_satMode = ui->comboBoxSatMode->currentData ().toString ();
     });
   connect (ui->freqRx, &QLineEdit::textEdited, this, [this] (QString const& t) {m_freqRx = t;});
+  /* CE3TSK 2026-11-13 (TODO.md 3.-248, GitHub issue 4, Rafa EA3FA): "+15 s" beside End - the window opens as our 73 or RR73
+     starts, his closing 73 is a period later; each click puts End one period of the mode later (FT4 7.5 s, FT2 3.75 s,
+     milliseconds kept, so two FT4 clicks are 15 s), where the arrows took a click a second */
+  connect (ui->addPeriodButton, &QToolButton::clicked, this, [this] {
+      ui->end_date_time->setDateTime (ui->end_date_time->dateTime ().addMSecs (m_periodMs));
+    });
+  /* (review 2026-11-13) Mode corrected by hand - it is what accept () logs: the step and the text follow it. The edits
+     hold UTC (logqso.ui timeSpec, as WSJT-X's), so a click never jumps an hour at the PC's daylight saving change. */
+  connect (ui->mode, &QLineEdit::textEdited, this, [this] (QString const& t) {
+      m_periodMs = log_period_ms (t);
+      showPeriod ();
+    });
+  showPeriod ();
 
   loadSettings ();
   satRowsEnabled ();
+}
+
+// CE3TSK 2026-11-13 (TODO.md 3.-248): the "+15 s" button's text and tooltip for the period of the logged mode
+void LogQSO::showPeriod ()
+{
+  ui->addPeriodButton->setText (log_period_text (m_periodMs));
+  ui->addPeriodButton->setToolTip (wrap_tooltip (tr ("Adds one period of the mode, %1 s, to the end of the QSO - for a closing 73 "
+                                                     "that came after this window opened.").arg (log_period_seconds (m_periodMs))));
 }
 
 // CE3TSK 2026-11-13 (TODO.md 3.-247): Satellite and Sat Mode, and their Retain, only with Prop Mode Satellite (WSJT-X);
@@ -252,6 +273,8 @@ void LogQSO::initLogQSO(QString const& hisCall, QString const& hisGrid, QString 
     else t+="  " + dist;
     ui->comments->setText(t);
   }
+  m_periodMs = log_period_ms (mode);   // CE3TSK 2026-11-13 (TODO.md 3.-248): before JT9 may be logged as RTTY
+  showPeriod ();
   if(m_config->log_as_RTTY() and mode.left(3)=="JT9") mode="RTTY";
   ui->mode->setText(mode);
   ui->sent->setText(rptSent);

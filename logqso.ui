@@ -81,6 +81,9 @@
          <property name="displayFormat">
           <string notr="true">yyyy-MM-dd HH:mm:ss</string>
          </property>
+         <property name="timeSpec">
+          <enum>Qt::UTC</enum>
+         </property>
         </widget>
        </item>
       </layout>
@@ -88,19 +91,36 @@
      <item>
       <layout class="QVBoxLayout" name="verticalLayout_3">
        <item>
-        <widget class="QLabel" name="lab2_3">
-         <property name="font">
-          <font>
-           <pointsize>10</pointsize>
-          </font>
-         </property>
-         <property name="text">
-          <string>End</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignCenter</set>
-         </property>
-        </widget>
+        <layout class="QHBoxLayout" name="horizontalLayout_end">
+         <item>
+          <widget class="QLabel" name="lab2_3">
+           <property name="font">
+            <font>
+             <pointsize>10</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>End</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QToolButton" name="addPeriodButton">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="text">
+            <string notr="true">+15 s</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </item>
        <item>
         <widget class="QDateTimeEdit" name="end_date_time">
@@ -112,6 +132,9 @@
          </property>
          <property name="displayFormat">
           <string notr="true">yyyy-MM-dd HH:mm:ss</string>
+         </property>
+         <property name="timeSpec">
+          <enum>Qt::UTC</enum>
          </property>
         </widget>
        </item>
@@ -531,6 +554,7 @@
   <tabstop>call</tabstop>
   <tabstop>start_date_time</tabstop>
   <tabstop>end_date_time</tabstop>
+  <tabstop>addPeriodButton</tabstop>
   <tabstop>mode</tabstop>
   <tabstop>band</tabstop>
   <tabstop>sent</tabstop>
