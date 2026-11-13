@@ -48,7 +48,7 @@ private:
   {
     Configuration::SpecialOperatingActivity activity;
     QString slug, path;
-    int year;
+    QString period;   // (2026-11-13) its name's "2026-11", or "2026" for a log named before the month was in it
     QByteArray bytes;
     cabrillo::Log log;
     QString readError;

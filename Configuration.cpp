@@ -1771,13 +1771,15 @@ QString contest_log_slug (Configuration::SpecialOperatingActivity activity)
   return QString {};
 }
 
-/* The period that separates one running of a contest from the next, at the granularity that
-   contest uses: a year for WW Digi, and "yyyy-MM" or an ISO week for a monthly or weekly one.
-   Taken from the QSO date so that it does not depend on when contest mode was toggled.
+/* The period that separates one running of a contest from the next: the QSO's UTC year and month, "yyyy-MM" (CE3TSK
+   2026-11-13, TODO.md 3.-252, the operator: "year-month instead of year only" - a test or a QSO made in another month of
+   the year no longer goes into the contest's own file; it was the year alone until then, and the Cabrillo export still
+   offers the logs named so). Taken from the QSO date so that it does not depend on when contest mode was toggled.
 
-   A contest crossing 31 December would split across two files. WW Digi runs in August so it
-   cannot arise; this is the one function that would need a per contest anchor if such a
-   contest is ever added. */
+   A contest crossing the end of a month would split across two files. None of the four does - WW Digi the last full
+   weekend of August, ARRL Digi the first full weekend of June, YBDXPI the first weekend of November (2026-11-07/08), the
+   FT Challenge the first full weekend of December -; this is the one function that would need a per contest anchor if
+   such a contest is ever added. */
 QString contest_period (Configuration::SpecialOperatingActivity activity, QDateTime const& when)
 {
   QDateTime const utc = when.toUTC ();
@@ -1787,7 +1789,8 @@ QString contest_period (Configuration::SpecialOperatingActivity activity, QDateT
     case Configuration::SpecialOperatingActivity::ARRL_DIGI:   // the first full weekend of June
     case Configuration::SpecialOperatingActivity::YBDXPI:      // the first week of November
     case Configuration::SpecialOperatingActivity::FT_CHALLENGE:   // the first full weekend of December
-      return QString::number (utc.date ().year ());
+      // the digits by hand, not QDate::toString (): nothing of the locale, and four digits and two always
+      return QString {"%1-%2"}.arg (utc.date ().year (), 4, 10, QChar {'0'}).arg (utc.date ().month (), 2, 10, QChar {'0'});
     case Configuration::SpecialOperatingActivity::NONE:
     case Configuration::SpecialOperatingActivity::NA_VHF:
     case Configuration::SpecialOperatingActivity::EU_VHF:

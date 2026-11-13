@@ -208,7 +208,7 @@ void ExportCabrillo::readLog (LogFile& f) const
 
 QString ExportCabrillo::logLabel (LogFile const& f) const
 {
-  return QString {"%1 %2 (%3 QSO)"}.arg (contest_cabrillo (f.activity).name).arg (f.year).arg (f.log.records.size ());
+  return QString {"%1 %2 (%3 QSO)"}.arg (contest_cabrillo (f.activity).name).arg (f.period).arg (f.log.records.size ());
 }
 
 // every contest's logs here, the file of the contest running first, then the newest
@@ -220,9 +220,9 @@ void ExportCabrillo::findLogs ()
       QString const slug = contest_log_slug (activity);
       for (auto const& name : dataDir_.entryList (QStringList {"wsjtx_" + slug + "-*_log.adi"}, QDir::Files))
         {
-          int const year = cabrillo::log_year (name, slug);
-          if (!year) continue;
-          LogFile f {activity, slug, dataDir_.absoluteFilePath (name), year, {}, {}, {}};
+          QString const period = cabrillo::log_period (name, slug);   // (2026-11-13) "2026-11", or a year-named log's "2026"
+          if (period.isEmpty ()) continue;
+          LogFile f {activity, slug, dataDir_.absoluteFilePath (name), period, {}, {}, {}};
           readLog (f);
           logs_ << f;
         }
