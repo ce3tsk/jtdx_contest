@@ -1066,6 +1066,21 @@ QPushButton::menu-indicator {
   bottom: 4px;
 }
 
+/* JTDX 2026-11-13 (TODO.md 3.-254): the default button - the one Enter presses - gets a ring, as the light style
+   (Fusion) frames it; upstream draws none, so the contest log question's two buttons looked alike. The ring follows the
+   default, which in a dialog moves to whichever button has the focus. -1px padding takes back the border's pixel: the
+   button keeps its size, nothing moves when the default does. Disabled, no ring: Enter presses nothing then (Fusion the
+   same). #259AE9 is the style's lighter accent - its #1A72BB was lost against the button's #455364. */
+QPushButton:default {
+  border: 1px solid #259AE9;
+  padding: -1px;
+}
+
+QPushButton:default:disabled {
+  border: none;
+  padding: 0px;
+}
+
 QDialogButtonBox QPushButton {
   /* Issue #194 #248 - Special case of QPushButton inside dialogs, for better UI */
   min-width: 80px;
