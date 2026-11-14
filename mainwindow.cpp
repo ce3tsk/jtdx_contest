@@ -2346,7 +2346,6 @@ void MainWindow::readSettings()
   m_callToClipboard=m_settings->value("CallsignToClipboard",true).toBool();
   ui->actionCallsign_to_clipboard->setChecked(m_callToClipboard);
 
-
   m_crossbandHLOptionEnabled=m_settings->value("Crossband160mHL",true).toBool();
   ui->actionCrossband_160m_HL->setChecked(m_crossbandHLOptionEnabled);
 
