@@ -32,6 +32,7 @@
 #include <QTime>
 #include "contestscore.h"
 #include "logfields.h"
+#include "contestsession.h"   // (3.-253) the contest log names' one parser
 
 namespace cabrillo
 {
@@ -361,26 +362,20 @@ namespace cabrillo
     return t;
   }
 
-  // the file's name: the contest log's own, .cbr for its .adi - wsjtx_ybdxpi-2026-11_log.adi gives wsjtx_ybdxpi-2026-11_log.cbr, in every contest
-  // (the operator, 2026-11-05; the month in the name since 2026-11-13)
+  // the file's name: the contest log's own, .cbr for its .adi - wsjtx_ybdxpi-2026-11-07_log.adi gives wsjtx_ybdxpi-2026-11-07_log.cbr, in every
+  // contest (the operator, 2026-11-05; the session's day in the log's name since 2026-11-13, TODO.md 3.-253)
   inline QString file_name (QString const& logName)
   {
     return (logName.endsWith (".adi") ? logName.left (logName.size () - 4) : logName) + ".cbr";
   }
 
-  // the period in contest_log_filename ()'s name for a contest's log - its year and month, "2026-11", since 2026-11-13 (TODO.md
-  // 3.-252); before that its year, "2026", and the logs named so are offered as they are: the station keeps them, and they
-  // hold contests worked then. Empty for any other name: another file, a backup, a word for a number, a month 00 or 13.
+  // what a contest log's name says of its time: a session's day (and number) since 3.-253, the year and month (3.-252) or the year
+  // of the logs named before, which are offered as they are; empty for any other name. contestsession.h's, the one parser.
   inline QString log_period (QString const& fileName, QString const& slug)
   {
-    QString const before = "wsjtx_" + slug + '-', after {"_log.adi"};
-    if (!fileName.startsWith (before) || !fileName.endsWith (after)) return QString {};
-    QString const p = fileName.mid (before.size (), fileName.size () - before.size () - after.size ());
-    auto digits = [] (QString const& s) { for (QChar const c : s) if (c < '0' || c > '9') return false; return !s.isEmpty (); };
-    if (p.size () == 4 && digits (p)) return p;
-    if (p.size () == 7 && p[4] == '-' && digits (p.left (4)) && digits (p.mid (5)) && p.mid (5).toInt () >= 1 && p.mid (5).toInt () <= 12) return p;
-    return QString {};
+    return contest_session::period_of (fileName, slug);
   }
+
 
   // lines of the log for the dialog's summary: the first dozen say what to look for
   inline QString line_list (QList<int> const& lines)

@@ -374,8 +374,12 @@ void LogQSO::accept()
 
      Written in addition to the normal log, never instead of it. A failure here is reported as
      loudly as one on the main log: silent divergence would leave the score quietly wrong with
-     nothing to say so. */
-  QString const contestFile = contest_log_filename (m_config->special_op_id (), m_dateTimeOn);
+     nothing to say so.
+
+     (2026-11-13, TODO.md 3.-253) the session's file, as MainWindow keeps it - not a name from the QSO's date: a QSO begun before
+     midnight and logged after, or one whose date is typed, goes where the score and the worked stations are read from. Empty
+     outside a contest. */
+  QString const contestFile = m_config->contest ().running ? m_contestLogFile : QString {};
   if (!contestFile.isEmpty ())
     {
       ADIF contestAdi;

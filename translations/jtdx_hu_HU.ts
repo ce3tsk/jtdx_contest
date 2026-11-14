@@ -6860,6 +6860,32 @@ Ez magának a dekódernek a hibája. Hárítsa el, ami az indulását akadályoz
         <source>Right click: the %1 decoding presets.</source>
         <translation>Jobb kattintás: a(z) %1 dekódolási előbeállításai.</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Contest log</source>
+        <translation>Verseny log</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Log begun %1: %2
+QSOs in it: %3
+
+Continue this log, or start a new one?</source>
+        <translation>A log kezdete %1: %2
+QSO-k benne: %3
+
+Folytatja ezt a logot, vagy újat kezd?</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Continue this log</source>
+        <translation>Ezt a logot folytatja</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Start a new log</source>
+        <translation>Új log kezdése</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

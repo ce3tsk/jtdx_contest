@@ -6864,6 +6864,32 @@ To je greška samog dekodera. Otklonite ono što ga sprječava da se pokrene - n
         <source>Right click: the %1 decoding presets.</source>
         <translation>Desni klik: predlošci dekodiranja za %1.</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Contest log</source>
+        <translation>Log natjecanja</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Log begun %1: %2
+QSOs in it: %3
+
+Continue this log, or start a new one?</source>
+        <translation>Log započet %1: %2
+QSO-ova u njemu: %3
+
+Nastaviti ovaj log ili započeti novi?</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Continue this log</source>
+        <translation>Nastavi ovaj log</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Start a new log</source>
+        <translation>Započni novi log</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

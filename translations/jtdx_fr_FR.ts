@@ -6864,6 +6864,32 @@ C'est l'erreur du décodeur lui-même. Corrigez ce qui l'empêche de démarrer -
         <source>Right click: the %1 decoding presets.</source>
         <translation>Clic droit : les préréglages de décodage %1.</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Contest log</source>
+        <translation>Log du concours</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Log begun %1: %2
+QSOs in it: %3
+
+Continue this log, or start a new one?</source>
+        <translation>Log commencé le %1 : %2
+QSO qu'il contient : %3
+
+Continuer ce log ou en commencer un nouveau ?</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Continue this log</source>
+        <translation>Continuer ce log</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Start a new log</source>
+        <translation>Commencer un nouveau log</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

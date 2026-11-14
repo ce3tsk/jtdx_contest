@@ -6859,6 +6859,32 @@ That is the decoder's own error. Put right whatever stops it starting - a missin
         <source>Right click: the %1 decoding presets.</source>
         <translation>右鍵單擊：%1 的解碼預設。</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Contest log</source>
+        <translation>競賽日誌</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Log begun %1: %2
+QSOs in it: %3
+
+Continue this log, or start a new one?</source>
+        <translation>日誌開始於 %1：%2
+其中的 QSO：%3
+
+繼續這個日誌，還是開始新的日誌？</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Continue this log</source>
+        <translation>繼續這個日誌</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Start a new log</source>
+        <translation>開始新的日誌</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

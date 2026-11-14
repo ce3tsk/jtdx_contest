@@ -6873,6 +6873,32 @@ See on dekoodri enda viga. Kõrvalda see, mis takistab käivitumist - puuduv tee
         <source>Right click: the %1 decoding presets.</source>
         <translation>Paremklõps: %1 dekodeerimise eelseaded.</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Contest log</source>
+        <translation>Võistluse logi</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Log begun %1: %2
+QSOs in it: %3
+
+Continue this log, or start a new one?</source>
+        <translation>Logi alustatud %1: %2
+QSO-sid selles: %3
+
+Kas jätkata seda logi või alustada uut?</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Continue this log</source>
+        <translation>Jätka seda logi</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Start a new log</source>
+        <translation>Alusta uut logi</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

@@ -18,6 +18,7 @@
 #include <QRegularExpressionValidator>
 #include <QSaveFile>
 #include <QSettings>
+#include <QSignalBlocker>
 #include <QStandardPaths>
 #include <QVBoxLayout>
 #include <algorithm>
@@ -43,12 +44,13 @@ namespace
   }
 }
 
-ExportCabrillo::ExportCabrillo (QSettings * settings, Configuration const * configuration, CountryDat * countries, QWidget * parent)
+ExportCabrillo::ExportCabrillo (QSettings * settings, Configuration const * configuration, CountryDat * countries, QString const& runningLog, QWidget * parent)
   : QDialog {parent}
   , settings_ {settings}
   , configuration_ {configuration}
   , countries_ {countries}
   , dataDir_ {QStandardPaths::writableLocation (QStandardPaths::DataLocation)}
+  , runningLog_ {runningLog}
 {
   setWindowTitle (QApplication::applicationName () + " - " + tr ("Export Cabrillo log"));
 
@@ -183,11 +185,54 @@ ExportCabrillo::~ExportCabrillo ()
   settings_->setValue (GROUP + "geometry", saveGeometry ());
 }
 
-// not modal, so a QSO can be logged while it is open: it reads again when it comes back to the front
+/* not modal, so a QSO can be logged while it is open: it reads again when it comes back to the front - the list again when a log
+   was begun or removed since (3.-253's review 5: a new session's file comes with its first QSO), else the log shown */
 bool ExportCabrillo::event (QEvent * e)
 {
-  if (QEvent::WindowActivate == e->type ()) reload ();
+  if (QEvent::WindowActivate == e->type ())
+    {
+      QStringList now, before;
+      for (auto const& f : listed ()) now << f.path;
+      for (auto const& f : logs_) before << f.path;
+      now.sort ();
+      before.sort ();
+      if (now != before) relist ();
+      else reload ();
+    }
   return QDialog::event (e);
+}
+
+void ExportCabrillo::setRunningLog (QString const& name)
+{
+  if (name == runningLog_) return;
+  runningLog_ = name;
+  relist ();
+}
+
+/* (3.-253's review 5) the list again, the session MainWindow has open first: the log shown stays shown when it is still there, what
+   is typed for it kept */
+void ExportCabrillo::relist ()
+{
+  QString const showing {shown_ < 0 ? QString {} : logs_[shown_].path};
+  storeContestFields ();
+  shown_ = -1;
+  findLogs ();
+  int at {0};
+  for (int i = 0; i < logs_.size (); ++i)
+    if (logs_[i].path == showing) at = i;
+  {
+    QSignalBlocker const quiet {logBox_};   // showLog () once, below, not for every row on the way
+    logBox_->clear ();
+    for (auto const& f : logs_) logBox_->addItem (logLabel (f));
+    logBox_->setCurrentIndex (at);
+  }
+  if (!logs_.isEmpty ()) showLog (at);
+  else
+    {
+      summary_->setText (summary ());
+      preview_->clear ();
+      buttons_->button (QDialogButtonBox::Save)->setEnabled (false);
+    }
 }
 
 void ExportCabrillo::readLog (LogFile& f) const
@@ -208,25 +253,45 @@ void ExportCabrillo::readLog (LogFile& f) const
 
 QString ExportCabrillo::logLabel (LogFile const& f) const
 {
-  return QString {"%1 %2 (%3 QSO)"}.arg (contest_cabrillo (f.activity).name).arg (f.period).arg (f.log.records.size ());
+  /* (2026-11-13, TODO.md 3.-253) a session's day says when it began; its first and last QSO (UTC, month-day hour:minute) tell two
+     sessions of one profile apart - "WW-DIGI 2026-10-17 (212 QSO, 10-17 12:00 - 10-18 11:58)" */
+  QString span;
+  if (!f.log.records.isEmpty ())
+    {
+      QDateTime first, last;
+      for (auto const& r : f.log.records)
+        {
+          if (r.start.isValid () && (!first.isValid () || r.start < first)) first = r.start;
+          if (r.start.isValid () && (!last.isValid () || r.start > last)) last = r.start;
+        }
+      if (first.isValid ())
+        span = QString {", %1 - %2"}.arg (first.toUTC ().toString ("MM-dd HH:mm"), last.toUTC ().toString ("MM-dd HH:mm"));
+    }
+  return QString {"%1 %2 (%3 QSO%4)"}.arg (contest_cabrillo (f.activity).name).arg (f.period).arg (f.log.records.size ()).arg (span);
 }
 
-// every contest's logs here, the file of the contest running first, then the newest
-void ExportCabrillo::findLogs ()
+// every contest's logs here, by contestsession.h's names (3.-253's review 7), not read
+QList<ExportCabrillo::LogFile> ExportCabrillo::listed () const
 {
-  QString const running = contest_log_filename (configuration_->special_op_id (), QDateTime::currentDateTimeUtc ());
+  QList<LogFile> found;
   for (auto const activity : contests_offered ())
     {
       QString const slug = contest_log_slug (activity);
-      for (auto const& name : dataDir_.entryList (QStringList {"wsjtx_" + slug + "-*_log.adi"}, QDir::Files))
+      for (auto const& name : dataDir_.entryList (QStringList {contest_session::prefix (slug) + '*' + contest_session::suffix ()}, QDir::Files))
         {
-          QString const period = cabrillo::log_period (name, slug);   // (2026-11-13) "2026-11", or a year-named log's "2026"
-          if (period.isEmpty ()) continue;
-          LogFile f {activity, slug, dataDir_.absoluteFilePath (name), period, {}, {}, {}};
-          readLog (f);
-          logs_ << f;
+          QString const period = cabrillo::log_period (name, slug);   // (2026-11-13) a session's day, or a year- or month-named log's
+          if (!period.isEmpty ()) found << LogFile {activity, slug, dataDir_.absoluteFilePath (name), period, {}, {}, {}};
         }
     }
+  return found;
+}
+
+// every contest's logs here, read, the session's file MainWindow has open first (3.-253), then the newest
+void ExportCabrillo::findLogs ()
+{
+  QString const running {runningLog_};
+  logs_ = listed ();
+  for (auto& f : logs_) readLog (f);
   std::stable_sort (logs_.begin (), logs_.end (), [&running] (LogFile const& a, LogFile const& b) {
     bool const aRuns = QFileInfo {a.path}.fileName () == running;
     bool const bRuns = QFileInfo {b.path}.fileName () == running;
@@ -265,7 +330,13 @@ void ExportCabrillo::showContestFields (LogFile const& f)
 {
   auto const c = contest_cabrillo (f.activity);
   auto saved = [this, &f] (char const* key, QString const& otherwise = QString {}) {return settings_->value (GROUP + f.slug + '/' + key, otherwise).toString ();};
-  contest_->setText (saved ("Contest", c.name));
+  /* (3.-253) CONTEST: the one typed for this log, else the contest's own - a profile used for another contest gets that contest's
+     tag in its own log, and the profile's other logs keep theirs. The tag typed for the whole profile before (Contest, no longer
+     written - review 6) only for the year- and month-named logs of that time: a session never starts from it */
+  QString const file {QFileInfo {f.path}.fileName ()};
+  QDate begun; int n {0};
+  QString const otherwise {contest_session::parse (file, f.slug, &begun, &n) ? c.name : saved ("Contest", c.name)};
+  contest_->setText (settings_->value (GROUP + f.slug + "/ContestOf/" + file, otherwise).toString ());
   location_->setText (saved ("Location", defaultLocation (f)));
   fill (categoryOperator_, QStringList {"SINGLE-OP", "MULTI-OP", "CHECKLOG"}, saved ("Operator"));
   fill (categoryAssisted_, QStringList {"", "ASSISTED", "NON-ASSISTED"}, saved ("Assisted", c.assisted));
@@ -282,7 +353,7 @@ void ExportCabrillo::storeContestFields () const
 {
   if (shown_ < 0) return;
   QString const at = GROUP + logs_[shown_].slug + '/';
-  settings_->setValue (at + "Contest", contest_->text ());
+  settings_->setValue (at + "ContestOf/" + QFileInfo {logs_[shown_].path}.fileName (), contest_->text ());   // (3.-253) this log's
   settings_->setValue (at + "Location", location_->text ());
   settings_->setValue (at + "Operator", categoryOperator_->currentText ());
   settings_->setValue (at + "Assisted", categoryAssisted_->currentText ());

@@ -1771,42 +1771,8 @@ QString contest_log_slug (Configuration::SpecialOperatingActivity activity)
   return QString {};
 }
 
-/* The period that separates one running of a contest from the next: the QSO's UTC year and month, "yyyy-MM" (CE3TSK
-   2026-11-13, TODO.md 3.-252, the operator: "year-month instead of year only" - a test or a QSO made in another month of
-   the year no longer goes into the contest's own file; it was the year alone until then, and the Cabrillo export still
-   offers the logs named so). Taken from the QSO date so that it does not depend on when contest mode was toggled.
-
-   A contest crossing the end of a month would split across two files. None of the four does - WW Digi the last full
-   weekend of August, ARRL Digi the first full weekend of June, YBDXPI the first weekend of November (2026-11-07/08), the
-   FT Challenge the first full weekend of December -; this is the one function that would need a per contest anchor if
-   such a contest is ever added. */
-QString contest_period (Configuration::SpecialOperatingActivity activity, QDateTime const& when)
-{
-  QDateTime const utc = when.toUTC ();
-  switch (activity)
-    {
-    case Configuration::SpecialOperatingActivity::WW_DIGI:
-    case Configuration::SpecialOperatingActivity::ARRL_DIGI:   // the first full weekend of June
-    case Configuration::SpecialOperatingActivity::YBDXPI:      // the first week of November
-    case Configuration::SpecialOperatingActivity::FT_CHALLENGE:   // the first full weekend of December
-      // the digits by hand, not QDate::toString (): nothing of the locale, and four digits and two always
-      return QString {"%1-%2"}.arg (utc.date ().year (), 4, 10, QChar {'0'}).arg (utc.date ().month (), 2, 10, QChar {'0'});
-    case Configuration::SpecialOperatingActivity::NONE:
-    case Configuration::SpecialOperatingActivity::NA_VHF:
-    case Configuration::SpecialOperatingActivity::EU_VHF:
-    case Configuration::SpecialOperatingActivity::FIELD_DAY:
-    case Configuration::SpecialOperatingActivity::RTTY: break;
-    }
-  return QString {};
-}
-
-QString contest_log_filename (Configuration::SpecialOperatingActivity activity, QDateTime const& when)
-{
-  QString const slug = contest_log_slug (activity);
-  QString const period = contest_period (activity, when);
-  if (slug.isEmpty () || period.isEmpty ()) return QString {};
-  return QString {"wsjtx_%1-%2_log.adi"}.arg (slug, period);
-}
+/* (2026-11-13, TODO.md 3.-253) contest_period () and contest_log_filename () - a contest log named by the QSO's year, then year and
+   month (3.-252) - are gone: a contest log is a session's file (contestsession.h), which MainWindow chooses and keeps. */
 
 namespace
 {

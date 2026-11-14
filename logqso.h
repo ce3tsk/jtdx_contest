@@ -39,6 +39,10 @@ public:
                      defaulted so the compiler names every call site. */
                   int points);
 
+  /* CE3TSK 2026-11-13 (TODO.md 3.-253): the file of the contest log's session (contestsession.h), which MainWindow keeps -
+     every contest QSO of the session goes there, whatever its date; empty outside a contest */
+  void setContestLogFile (QString const& name) { m_contestLogFile = name; }
+
 public slots:
   void accept();
 
@@ -82,6 +86,7 @@ private:
   QString m_myCall;
   QString m_myGrid;
   QDateTime m_dateTimeOn;
+  QString m_contestLogFile;   // (3.-253) the session's file, MainWindow's
   QDateTime m_dateTimeOff;
   bool m_send_to_eqsl;
   QString m_eqsl_username;

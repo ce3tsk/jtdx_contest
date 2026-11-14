@@ -6869,6 +6869,32 @@ Aquest és l'error del descodificador mateix. Corregiu allò que n'impedeix l'in
         <source>Right click: the %1 decoding presets.</source>
         <translation>Clic dret: les predefinicions de descodificació de %1.</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Contest log</source>
+        <translation>Log del concurs</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Log begun %1: %2
+QSOs in it: %3
+
+Continue this log, or start a new one?</source>
+        <translation>Log començat el %1: %2
+QSO que conté: %3
+
+Continuar aquest log o començar-ne un de nou?</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Continue this log</source>
+        <translation>Continuar aquest log</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Start a new log</source>
+        <translation>Començar un log nou</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

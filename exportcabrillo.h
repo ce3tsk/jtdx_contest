@@ -32,13 +32,15 @@ class ExportCabrillo final
   Q_OBJECT
 
 public:
-  ExportCabrillo (QSettings *, Configuration const *, CountryDat *, QWidget * parent = nullptr);
+  // runningLog: the contest log session's file MainWindow has open (TODO.md 3.-253), listed first; empty outside a contest
+  ExportCabrillo (QSettings *, Configuration const *, CountryDat *, QString const& runningLog, QWidget * parent = nullptr);
   ~ExportCabrillo ();
 
   QString fileText () const;   // what Save writes
   QString summary () const;    // what is saved, what is left out and why
   QString suggestedName () const;
   bool saveTo (QString const& path);   // whole or not at all; says how it went in the summary
+  void setRunningLog (QString const&);   // (3.-253's review 5) another session open in MainWindow: listed again, that one first
 
 protected:
   bool event (QEvent *) override;
@@ -54,7 +56,9 @@ private:
     QString readError;
   };
 
+  QList<LogFile> listed () const;   // every contest log here, not read
   void findLogs ();
+  void relist ();
   void readLog (LogFile&) const;
   void reload ();
   QString logLabel (LogFile const&) const;
@@ -72,6 +76,7 @@ private:
   Configuration const * configuration_;
   CountryDat * countries_;
   QDir dataDir_;
+  QString runningLog_;   // (3.-253) the contest log session MainWindow has open
   QList<LogFile> logs_;
   int shown_ {-1};
   bool loading_ {false};

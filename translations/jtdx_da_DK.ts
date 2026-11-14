@@ -6864,6 +6864,32 @@ Det er dekoderens egen fejl. Ret det, der forhindrer den i at starte - et mangle
         <source>Right click: the %1 decoding presets.</source>
         <translation>Højreklik: forudindstillingerne for %1-dekodning.</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Contest log</source>
+        <translation>Konkurrencelog</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Log begun %1: %2
+QSOs in it: %3
+
+Continue this log, or start a new one?</source>
+        <translation>Log påbegyndt %1: %2
+QSO'er i den: %3
+
+Fortsæt denne log, eller start en ny?</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Continue this log</source>
+        <translation>Fortsæt denne log</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Start a new log</source>
+        <translation>Start en ny log</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

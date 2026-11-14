@@ -521,13 +521,9 @@ QString grid_distance_text (QString const& myGrid, QString const& hisGrid, bool 
    cannot drift apart. */
 QString contest_grid (QString const& grid, bool fourCharOnly);
 
-/* CE3TSK: the separate log a contest keeps. contest_log_filename() is empty when no contest
-   is running. The period is derived from the QSO date, never from when contest mode was
-   switched on, so enabling and disabling it mid contest cannot move the boundary: its UTC
-   year and month (since 2026-11-13, TODO.md 3.-252), wsjtx_ybdxpi-2026-11_log.adi. */
+/* CE3TSK: the separate log a contest keeps, named by this slug ("ww-digi"; empty when no contest). The file is a session's
+   (contestsession.h, TODO.md 3.-253): wsjtx_ww-digi-2026-10-17_log.adi, chosen and kept by MainWindow. */
 QString contest_log_slug (Configuration::SpecialOperatingActivity);
-QString contest_period (Configuration::SpecialOperatingActivity, QDateTime const& when);
-QString contest_log_filename (Configuration::SpecialOperatingActivity, QDateTime const& when);
 
 #if !defined (QT_NO_DEBUG_STREAM)
 ENUM_QDEBUG_OPS_DECL (Configuration, DataMode);

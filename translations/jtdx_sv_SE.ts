@@ -6862,6 +6862,32 @@ Det är avkodarens eget fel. Åtgärda det som hindrar den från att starta - et
         <source>Right click: the %1 decoding presets.</source>
         <translation>Högerklick: förinställningarna för %1-avkodning.</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Contest log</source>
+        <translation>Tävlingslogg</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Log begun %1: %2
+QSOs in it: %3
+
+Continue this log, or start a new one?</source>
+        <translation>Logg påbörjad %1: %2
+QSO:n i den: %3
+
+Fortsätta denna logg eller börja en ny?</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Continue this log</source>
+        <translation>Fortsätt denna logg</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Start a new log</source>
+        <translation>Börja en ny logg</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

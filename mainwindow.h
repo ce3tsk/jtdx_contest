@@ -68,6 +68,7 @@ class FoxVerifier;   /* CE3TSK */
 class UpdateChecker;   // CE3TSK
 class QToolButton;   // CE3TSK
 class QLineEdit;
+class QMessageBox;   // CE3TSK 2026-11-13 (3.-253's review 1)
 class ExportCabrillo;
 class QFont;
 class QHostInfo;
@@ -1103,7 +1104,11 @@ private:
      highlighting are answered from this instead of m_logBook, so a field worked in an
      earlier year does not suppress this year's multiplier. Shares m_logBook's country data. */
   LogBook m_contestLog;
-  QString m_contestLogFile;
+  QString m_contestLogFile;   // (3.-253) the contest log session's file (contestsession.h)
+  QString m_contestLogSlug;   // (3.-253) the profile it is of
+  bool m_contestSessionChosen = false;   // (3.-253) a session chosen in this run: the first choice is the program's start
+  int m_contestSessionAsked = 0;   // (3.-253's review 1) counts the choices: a question asked for an earlier one is void
+  QPointer<QMessageBox> m_contestSessionBox;   // (review 1) the question while it is open
 
   /* CE3TSK: the main window controls a contest takes over. These are MainWindow state rather
      than Configuration settings, so the interlock in the settings dialog does not reach them
@@ -1221,6 +1226,9 @@ private:
   QValidator * m_bandValidator = nullptr;   /* CE3TSK: the live band validator, rebound with the combo */
   void bindBandCombo ();       /* CE3TSK: band selector + validator, rebound on a contest change */
   void refreshContestLog (bool reload);   /* CE3TSK: reload is required, see the body */
+  void openContestLog (QString const& want, bool reload);   // (3.-253) the session's file as the contest log
+  QString chooseContestSession (QString const& slug, bool atStart);   // (3.-253) contestsession.h's decision, the question asked
+  QString askContestSession (QString const& slug, QString const& offered, QString const& fresh, int qsos, bool newFirst);
   void updateContestScore ();  /* CE3TSK: multipliers x points = score */
   void setAutoSeqLabel ();     /* CE3TSK: the AutoSeq button says what runs (autoseq_step::label_number ()) */
   void clearDX (QString reason);

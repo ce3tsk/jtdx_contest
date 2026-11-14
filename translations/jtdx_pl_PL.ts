@@ -6860,6 +6860,32 @@ To błąd samego dekodera. Usuń to, co uniemożliwia jego uruchomienie - brakuj
         <source>Right click: the %1 decoding presets.</source>
         <translation>Prawy klik: ustawienia dekodowania %1.</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Contest log</source>
+        <translation>Log zawodów</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Log begun %1: %2
+QSOs in it: %3
+
+Continue this log, or start a new one?</source>
+        <translation>Log rozpoczęty %1: %2
+Łączności w nim: %3
+
+Kontynuować ten log czy zacząć nowy?</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Continue this log</source>
+        <translation>Kontynuuj ten log</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Start a new log</source>
+        <translation>Zacznij nowy log</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

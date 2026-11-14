@@ -6874,6 +6874,32 @@ That is the decoder's own error. Put right whatever stops it starting - a missin
         <source>Right click: the %1 decoding presets.</source>
         <translation>Правый щелчок: пресеты декодирования %1.</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Contest log</source>
+        <translation>Лог соревнования</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Log begun %1: %2
+QSOs in it: %3
+
+Continue this log, or start a new one?</source>
+        <translation>Лог начат %1: %2
+QSO в нём: %3
+
+Продолжить этот лог или начать новый?</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Continue this log</source>
+        <translation>Продолжить этот лог</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Start a new log</source>
+        <translation>Начать новый лог</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

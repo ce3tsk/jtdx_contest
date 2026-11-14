@@ -6860,6 +6860,32 @@ That is the decoder's own error. Put right whatever stops it starting - a missin
         <source>Right click: the %1 decoding presets.</source>
         <translation>오른쪽 클릭: %1 디코딩 프리셋.</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Contest log</source>
+        <translation>콘테스트 로그</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Log begun %1: %2
+QSOs in it: %3
+
+Continue this log, or start a new one?</source>
+        <translation>%1에 시작한 로그: %2
+QSO 수: %3
+
+이 로그를 계속할까요, 새 로그를 시작할까요?</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Continue this log</source>
+        <translation>이 로그 계속</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Start a new log</source>
+        <translation>새 로그 시작</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

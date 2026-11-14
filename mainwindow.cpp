@@ -7,6 +7,7 @@
 #include <fftw3.h>
 #include <thread>
 
+#include <QMessageBox>   // CE3TSK 2026-11-13 (3.-253): the contest log session's question
 #include <QProcessEnvironment>
 #include <iostream>
 #include <QLineEdit>
@@ -79,6 +80,7 @@
 #include "altlayout.h"        // CE3TSK 2026-10-20: View > Alternative layout
 #include "deletedlog.h"    // CE3TSK 2026-10-12: the decodes the prefix-to-grid table deleted, into a file
 #include "stdcall.h"      // CE3TSK 2026-11-13: a standard callsign (stdCall ())
+#include "contestsession.h"   // CE3TSK 2026-11-13: the contest log's session (TODO.md 3.-253)
 #include "cqdirection.h"   // CE3TSK 2026-10-12: the word after CQ - a region or an activity - and the box it is typed into
 #include <QPainter>
 #include <functional>   // CE3TSK P13: the recursive menu hook
@@ -6724,8 +6726,31 @@ void MainWindow::bindBandCombo ()
 
 void MainWindow::refreshContestLog (bool reload)
 {
-  QString const want = contest_log_filename (m_config.special_op_id (),
-                                             m_jtdxtime->currentDateTimeUtc2 ());
+  /* (2026-11-13, TODO.md 3.-253) the contest log is a session's file (contestsession.h): chosen when a contest is switched on,
+     back on or changed - asking whether to continue a log of that profile begun this week -, then kept, in the settings too,
+     so the clock and a QSO's date never choose it again (a month's end inside a contest moved the open log away from the
+     file the QSOs went to, 3.-252's review). The program's first call is its start: the stored session, asked about only
+     when it is older than a week and holds QSOs. Settings accepted with the same contest: the same session. */
+  QString const slug {contest_log_slug (m_config.special_op_id ())};
+  bool const same {slug == m_contestLogSlug && !m_contestLogFile.isEmpty ()};
+  if (!same)
+    {
+      /* (3.-253's review 1) another contest, or none: a question about the session of the one before is void - closed if it is
+         open, its answer dropped (a choice is made, and asked about, from inside another window's event loop too) */
+      ++m_contestSessionAsked;
+      if (m_contestSessionBox) m_contestSessionBox->done (QDialog::Rejected);
+    }
+  QString const want {slug.isEmpty () ? QString {} : same ? m_contestLogFile : chooseContestSession (slug, !m_contestSessionChosen)};
+  m_contestLogSlug = slug;
+  m_contestSessionChosen = true;
+  openContestLog (want, reload);
+}
+
+/* the session's file open as the contest log: Log QSO writes to it, the Cabrillo export lists it first */
+void MainWindow::openContestLog (QString const& want, bool reload)
+{
+  m_logDlg->setContestLogFile (want);
+  if (m_exportCabrillo) m_exportCabrillo->setRunningLog (want);   // (3.-253's review 5) an open export lists it again, first
   /* reload is not optional and not defaulted. It must be true after m_logBook.init(), where
      the shared country data has only just been read: ADIF::load() resolves each QSO's country
      as it parses, so a contest log parsed earlier - at startup m_logBook has not been
@@ -6744,6 +6769,68 @@ void MainWindow::refreshContestLog (bool reload)
   /* always, even when nothing was re-read: the station grid may have changed, and every
      QSO's points are measured from it */
   updateContestScore ();
+}
+
+/* (TODO.md 3.-253) the session of the profile slug: contest_session::decide () on the settings' session and the profile's logs in the
+   data directory, today by the program's clock. The offered session is opened and written to the settings at once; the question,
+   when there is one, comes once the change is complete (review 1) - at the program's start once the window is up, at a contest
+   switched on or changed once refreshSpecialOp () has applied all of it: asked from inside it, the timers ran against a contest
+   half applied (a QSO logged meanwhile went to the old contest's file). A later choice makes it void (refreshContestLog ()). */
+QString MainWindow::chooseContestSession (QString const& slug, bool atStart)
+{
+  QString const key {"Common/JTDX_contest/ContestLogs/" + slug};
+  auto const store = [this, key] (QString const& name) {
+    m_settings->setValue (key, name);
+    if (m_config.write_decoded_debug ()) writeToALLTXT ("Contest log session: " + name);
+  };
+  QMap<QString, int> files;
+  QStringList unread;   // (review 4) a log that cannot be read is said, and offered as one with QSOs - never passed over unseen
+  for (auto const& name : m_dataDir.entryList (QStringList {contest_session::prefix (slug) + '*' + contest_session::suffix ()}, QDir::Files))
+    {
+      QFile f {m_dataDir.absoluteFilePath (name)};
+      if (f.open (QIODevice::ReadOnly)) files[name] = contest_session::qso_count (f.readAll ());
+      else
+        {
+          files[name] = contest_session::unreadable;
+          unread << ExportCabrillo::tr ("Cannot read \"%1\": %2").arg (f.fileName (), f.errorString ());   // the export's words for the same
+        }
+    }
+  auto const d = contest_session::decide (slug, m_jtdxtime->currentDateTimeUtc2 ().date (), m_settings->value (key).toString (), files, atStart);
+  if (d.choice == contest_session::Choice::Ask || !unread.isEmpty ())
+    {
+      int const asked {m_contestSessionAsked}, qsos {files.value (d.name)};
+      QTimer::singleShot (0, this, [this, store, slug, d, qsos, unread, asked] {
+          if (asked != m_contestSessionAsked) return;   // chosen again since
+          if (!unread.isEmpty ()) JTDXMessageBox::warning_message (this, tr ("Contest log"), unread.join ('\n'));
+          if (d.choice != contest_session::Choice::Ask || asked != m_contestSessionAsked) return;
+          QString const chosen {askContestSession (slug, d.name, d.fresh, qsos, d.newFirst)};
+          if (asked != m_contestSessionAsked || chosen == d.name) return;   // the answer to a question made void while it was open: dropped
+          store (chosen);
+          openContestLog (chosen, true);
+        });
+    }
+  store (d.name);
+  return d.name;
+}
+
+/* (3.-253) continue the offered session, or begin the fresh one: Continue is the default - a misclick in the middle of a contest must not
+   open an empty log -, but for a session begun a week or more ago (newFirst, review 3) a new log is: that question is there to catch
+   contest mode left on since. Escape keeps the log either way: dismissing the question changes nothing. */
+QString MainWindow::askContestSession (QString const& slug, QString const& offered, QString const& fresh, int qsos, bool newFirst)
+{
+  QDate begun; int n {0};
+  contest_session::parse (offered, slug, &begun, &n);
+  QMessageBox box {QMessageBox::Question, tr ("Contest log"),
+                   tr ("Log begun %1: %2\nQSOs in it: %3\n\nContinue this log, or start a new one?")
+                   .arg (begun.toString ("yyyy-MM-dd")).arg (offered)
+                   .arg (qsos == contest_session::unreadable ? QString {"?"} : QString::number (qsos)), QMessageBox::NoButton, this};
+  auto * const keep = box.addButton (tr ("Continue this log"), QMessageBox::AcceptRole);
+  auto * const another = box.addButton (tr ("Start a new log"), QMessageBox::RejectRole);
+  box.setDefaultButton (newFirst ? another : keep);
+  box.setEscapeButton (keep);
+  m_contestSessionBox = &box;   // closed when the choice is made void while it is open (review 1)
+  box.exec ();
+  return box.clickedButton () == another ? fresh : offered;
 }
 
 /* CE3TSK: multipliers x points = score, as WW Digi computes it - the sum of QSO points
@@ -11500,7 +11587,7 @@ void MainWindow::on_actionExport_Cabrillo_log_triggered ()
 {
   if (!m_exportCabrillo)
     {
-      m_exportCabrillo = new ExportCabrillo {m_settings, &m_config, m_logBook.countryData (), this};
+      m_exportCabrillo = new ExportCabrillo {m_settings, &m_config, m_logBook.countryData (), m_contestLogFile, this};   // (3.-253) the session's log first
       m_exportCabrillo->setAttribute (Qt::WA_DeleteOnClose);
     }
   m_exportCabrillo->show ();

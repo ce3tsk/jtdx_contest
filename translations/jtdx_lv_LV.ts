@@ -6859,6 +6859,32 @@ Dekoders: %3
         <source>Right click: the %1 decoding presets.</source>
         <translation>Labais klikšķis: %1 dekodēšanas priekšiestatījumi.</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Contest log</source>
+        <translation>Sacensību žurnāls</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Log begun %1: %2
+QSOs in it: %3
+
+Continue this log, or start a new one?</source>
+        <translation>Žurnāls sākts %1: %2
+QSO tajā: %3
+
+Turpināt šo žurnālu vai sākt jaunu?</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Continue this log</source>
+        <translation>Turpināt šo žurnālu</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Start a new log</source>
+        <translation>Sākt jaunu žurnālu</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>

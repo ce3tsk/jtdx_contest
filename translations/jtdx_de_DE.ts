@@ -6860,6 +6860,32 @@ Das ist der Fehler des Decoders selbst. Beheben Sie, was seinen Start verhindert
         <source>Right click: the %1 decoding presets.</source>
         <translation>Rechtsklick: die Voreinstellungen der %1-Dekodierung.</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Contest log</source>
+        <translation>Contest-Log</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Log begun %1: %2
+QSOs in it: %3
+
+Continue this log, or start a new one?</source>
+        <translation>Log begonnen am %1: %2
+QSOs darin: %3
+
+Dieses Log fortsetzen oder ein neues beginnen?</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Continue this log</source>
+        <translation>Dieses Log fortsetzen</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp"/>
+        <source>Start a new log</source>
+        <translation>Neues Log beginnen</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>
