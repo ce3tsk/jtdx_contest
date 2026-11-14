@@ -5021,11 +5021,6 @@ Click by right mouse&apos;s button sets JTDX internal time back to system time.&
         <translation>双击|自动选择 时对方呼号复制到剪贴板</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6056"/>
-        <source>Crossband 160m operation with Japan</source>
-        <translation>与日本的160米跨波段操作</translation>
-    </message>
-    <message>
         <location filename="../mainwindow.ui" line="6064"/>
         <source>Crossband 160m operation with Korea</source>
         <translation>与韩国的160米跨波段操作</translation>

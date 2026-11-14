@@ -5021,11 +5021,6 @@ De lijst beheert u bij Instellingen (F2).</translation>
         <translation>Roepnaam naar het klembord bij dubbelklik/automatische keuze</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6056"/>
-        <source>Crossband 160m operation with Japan</source>
-        <translation>160 m-crossbandverkeer met Japan</translation>
-    </message>
-    <message>
         <location filename="../mainwindow.ui" line="6064"/>
         <source>Crossband 160m operation with Korea</source>
         <translation>160 m-crossbandverkeer met Korea</translation>

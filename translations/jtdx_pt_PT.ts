@@ -5011,11 +5011,6 @@ Clicar com o botão direito do rato define a hora interna do JTDX de volta à ho
         <translation>Indicativo de chamada para a área de transferência com um clique duplo | seleção automática</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6056"/>
-        <source>Crossband 160m operation with Japan</source>
-        <translation>Operação de banda cruzada de 160m com o Japão</translation>
-    </message>
-    <message>
         <location filename="../mainwindow.ui" line="6064"/>
         <source>Crossband 160m operation with Korea</source>
         <translation>Operação de banda cruzada de 160m com a Korea</translation>

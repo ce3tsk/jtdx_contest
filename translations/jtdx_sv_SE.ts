@@ -5023,11 +5023,6 @@ lista. Listan kan underhållas i Inställningar (F2).</translation>
         <translation>Anropssignal till urklippet genom att dubbelklicka | autosel</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6056"/>
-        <source>Crossband 160m operation with Japan</source>
-        <translation>Korsband 160m operation med Japan</translation>
-    </message>
-    <message>
         <location filename="../mainwindow.ui" line="6064"/>
         <source>Crossband 160m operation with Korea</source>
         <translation>160 m tvärbandstrafik med Korea</translation>

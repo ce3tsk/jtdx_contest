@@ -5026,11 +5026,6 @@ Click by right mouse&apos;s button sets JTDX internal time back to system time.&
         <translation>ダブルクリックでコールサインをクリップボードへ自動選択</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6056"/>
-        <source>Crossband 160m operation with Japan</source>
-        <translation>160mBandでクロスバンド（1840 DX ⇔ 1908 JA)運用をする</translation>
-    </message>
-    <message>
         <location filename="../mainwindow.ui" line="6064"/>
         <source>Crossband 160m operation with Korea</source>
         <translation>160mバンドでHLとのクロスバンド運用をする</translation>

@@ -5028,11 +5028,6 @@ En fer clic amb el botó dret del ratolí, l&apos;hora interna de JTDX torna a l
         <translation>Indicatiu al portapapers amb doble clic | selecció automàtica</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6056"/>
-        <source>Crossband 160m operation with Japan</source>
-        <translation>Operació de banda creuada de 160m amb el Japó</translation>
-    </message>
-    <message>
         <location filename="../mainwindow.ui" line="6064"/>
         <source>Crossband 160m operation with Korea</source>
         <translation>Operació de banda creuada de 160m amb Corea</translation>

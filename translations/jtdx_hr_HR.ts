@@ -5025,11 +5025,6 @@ popis. Popis se može održavati u Postavkama (F2).</translation>
         <translation>Pozivni znak u međuspremnik dvoklik | automatski odabir</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6056"/>
-        <source>Crossband 160m operation with Japan</source>
-        <translation>Crossband rad na 160m sa Japanom</translation>
-    </message>
-    <message>
         <location filename="../mainwindow.ui" line="6064"/>
         <source>Crossband 160m operation with Korea</source>
         <translation>Crossband rad sa Koreom na 160m</translation>

@@ -5028,11 +5028,6 @@ l hacer clic con el botón derecho del mouse, la hora interna de JTDX vuelve a l
         <translation>Indicativo de llamada al portapapeles con doble clic | selección automática</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6056"/>
-        <source>Crossband 160m operation with Japan</source>
-        <translation>Operación de banda cruzada de 160m con Japón</translation>
-    </message>
-    <message>
         <location filename="../mainwindow.ui" line="6064"/>
         <source>Crossband 160m operation with Korea</source>
         <translation>Operación de banda cruzada de 160 m con Corea</translation>

@@ -5021,11 +5021,6 @@ A listát a menü, Fájl -&gt; Beállítások (F2)-ban lehet karbantartani.</tra
         <translation>A hívójelre történő dupla kattintáskor tegye a vágólapra|automatikus kiválasztás</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6056"/>
-        <source>Crossband 160m operation with Japan</source>
-        <translation>Keresztsávos 160m-es összeköttetés Japánnal</translation>
-    </message>
-    <message>
         <location filename="../mainwindow.ui" line="6064"/>
         <source>Crossband 160m operation with Korea</source>
         <translation>Keresztsávos 160m-es összeköttetés Koreával</translation>

@@ -5021,11 +5021,6 @@ Die Liste wird in den Einstellungen (F2) gepflegt.</translation>
         <translation>Rufzeichen bei Doppelklick|Autoauswahl in die Zwischenablage</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6056"/>
-        <source>Crossband 160m operation with Japan</source>
-        <translation>160-m-Cross-Band-Betrieb mit Japan</translation>
-    </message>
-    <message>
         <location filename="../mainwindow.ui" line="6064"/>
         <source>Crossband 160m operation with Korea</source>
         <translation>160-m-Cross-Band-Betrieb mit Korea</translation>

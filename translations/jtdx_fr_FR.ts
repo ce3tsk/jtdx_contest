@@ -5025,11 +5025,6 @@ ou sélectionnez une macro prédéfinie dans la liste déroulante.
         <translation>Indicatif d&apos;appel au presse-papiers au double-clic|autoselect</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6056"/>
-        <source>Crossband 160m operation with Japan</source>
-        <translation>Opération Crossband 160m avec le Japon</translation>
-    </message>
-    <message>
         <location filename="../mainwindow.ui" line="6064"/>
         <source>Crossband 160m operation with Korea</source>
         <translation>Crossband 160m operation avec la Koree</translation>

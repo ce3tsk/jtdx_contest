@@ -5011,11 +5011,6 @@ Botão direito do mouse: define o sincronismo interno do JTDX conforme o tempo d
         <translation>Indicativo de chamada para a área de transferência com um clique duplo | Seleção Automática</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6056"/>
-        <source>Crossband 160m operation with Japan</source>
-        <translation>Operação de banda cruzada em 160m com o Japão</translation>
-    </message>
-    <message>
         <location filename="../mainwindow.ui" line="6064"/>
         <source>Crossband 160m operation with Korea</source>
         <translation>Operação de banda cruzada em 160m com a Coreia</translation>

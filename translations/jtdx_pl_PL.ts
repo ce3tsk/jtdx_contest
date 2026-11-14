@@ -5021,11 +5021,6 @@ listy. Listą można zarządzać w zakładce Ustawienia (F2).</translation>
         <translation>Znak wywoławczy do schowka po podwójnym kliknięciu|autoselect</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6056"/>
-        <source>Crossband 160m operation with Japan</source>
-        <translation>Praca crossband na 160m z Japonią</translation>
-    </message>
-    <message>
         <location filename="../mainwindow.ui" line="6064"/>
         <source>Crossband 160m operation with Korea</source>
         <translation>Praca crossband na 160m z Korea</translation>

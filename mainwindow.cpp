@@ -348,7 +348,6 @@ MainWindow::MainWindow(bool multiple, QSettings * settings, QSharedMemory *shdme
   m_logqso73 {false},
   m_processAuto_done {false},
   m_haltTrans {false},
-  m_crossbandOptionEnabled {true},
   m_crossbandHLOptionEnabled {true},
   m_repliedCQ {""},
   m_dxbcallTxHalted {""},
@@ -1721,7 +1720,6 @@ void MainWindow::writeSettings()
   m_settings->setValue("NarrowControls",ui->actionNarrow_controls->isChecked ());   // CE3TSK
   m_settings->setValue("JTDX_contest/AlternativeLayout", altLayoutShown ());   // CE3TSK 2026-10-20
   m_settings->setValue("CallsignToClipboard",m_callToClipboard);
-  m_settings->setValue("Crossband160mJA",m_crossbandOptionEnabled);
   m_settings->setValue("Crossband160mHL",m_crossbandHLOptionEnabled);
   m_settings->setValue("QuickCall",m_autoTx);
   m_settings->setValue("AutoSequence",m_autoseq);
@@ -2348,8 +2346,6 @@ void MainWindow::readSettings()
   m_callToClipboard=m_settings->value("CallsignToClipboard",true).toBool();
   ui->actionCallsign_to_clipboard->setChecked(m_callToClipboard);
 
-  m_crossbandOptionEnabled=m_settings->value("Crossband160mJA",false).toBool();
-  ui->actionCrossband_160m_JA->setChecked(m_crossbandOptionEnabled);
 
   m_crossbandHLOptionEnabled=m_settings->value("Crossband160mHL",true).toBool();
   ui->actionCrossband_160m_HL->setChecked(m_crossbandHLOptionEnabled);
@@ -6950,7 +6946,6 @@ void MainWindow::refreshSpecialOp (bool initial)
 void MainWindow::on_actionShow_tooltips_main_window_toggled(bool checked) { m_showTooltips = checked; }
 void MainWindow::on_actionColor_Tx_message_buttons_toggled(bool checked) { m_colorTxMsgButtons = checked; }
 void MainWindow::on_actionCallsign_to_clipboard_toggled(bool checked) { m_callToClipboard = checked; }
-void MainWindow::on_actionCrossband_160m_JA_toggled(bool checked) { m_crossbandOptionEnabled = checked; }
 void MainWindow::on_actionCrossband_160m_HL_toggled(bool checked) { m_crossbandHLOptionEnabled = checked; }
 
 void MainWindow::on_actionShow_messages_decoded_from_harmonics_toggled(bool checked)
@@ -12293,12 +12288,13 @@ void MainWindow::setXIT(int n, Frequency base)
         // All conditions are met, reset the transceiver Tx dial
         // frequency
         m_freqTxNominal = base + m_XIT;
-        if (base == 1908000) {
-          if (m_crossbandOptionEnabled && m_m_prefix != "JA") m_freqTxNominal -= 68000;
-        } else if (base == 1810000) {
+        /* CE3TSK 2026-11-14 (TODO.md 3.-217 (a), the operator, on Yoshi JP1LRT's question): Misc > "Crossband 160m
+           operation with Japan" removed - a station outside Japan on 1908 kHz sent on 1840, a JA station on 1840 sent on
+           1908. Since the JA allocation of 2020-04-21 (1825-1875 kHz added) JA stations work FT8 on 1840 kHz directly.
+           A Crossband160mJA left in the settings is never read. Korea's crossband stays as it was. */
+        if (base == 1810000) {
           if (m_crossbandHLOptionEnabled && m_m_prefix != "HL") m_freqTxNominal += 30000;
         } else if (base == 1840000) {
-          if (m_crossbandOptionEnabled && m_m_prefix == "JA") m_freqTxNominal += 68000;
           if (m_crossbandHLOptionEnabled && m_m_prefix == "HL") m_freqTxNominal -= 30000;
         }
         Q_EMIT m_config.transceiver_tx_frequency (m_freqTxNominal);

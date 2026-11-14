@@ -5021,11 +5021,6 @@ Enter를 누르면 현재 문구가 목록에 추가됩니다.
         <translation>두 번 클릭·자동 선택 시 호출부호를 클립보드로</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6056"/>
-        <source>Crossband 160m operation with Japan</source>
-        <translation>일본과의 160m 크로스밴드 운용</translation>
-    </message>
-    <message>
         <location filename="../mainwindow.ui" line="6064"/>
         <source>Crossband 160m operation with Korea</source>
         <translation>한국과의 160m 크로스밴드 운용</translation>

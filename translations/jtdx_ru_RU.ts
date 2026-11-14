@@ -5034,11 +5034,6 @@ Click by right mouse&apos;s button sets JTDX internal time back to system time.&
         <translation>Позывной корреспондента в буфер обмена  двойным щелчком или при автовыборе</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6056"/>
-        <source>Crossband 160m operation with Japan</source>
-        <translation>Работа разнесенными частотами на 160м с Японией</translation>
-    </message>
-    <message>
         <location filename="../mainwindow.ui" line="6064"/>
         <source>Crossband 160m operation with Korea</source>
         <translation>Работа разнесенными частотами на 160м с Юж.Кореей</translation>
