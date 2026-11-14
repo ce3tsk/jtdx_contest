@@ -4311,16 +4311,16 @@ Decoding of current and next interval can be broken by the time shift.&lt;br&gt;
 Note:&lt;br&gt;
 - if your computer clock difference is more than 7.5 seconds, there is a chance you will be reporting spots in wrong interval, also QSO start/end time can be affected&lt;br&gt;
 - DT of TX signal will be affected in wrong way if you are trying to compensate RX audio stream delay caused by buffering in SDR software.&lt;br&gt;&lt;br&gt;
-Click by right mouse&apos;s button sets JTDX internal time back to system time.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Fes clic amb el botó esquerre del ratolí per canviar el temps intern del JTDX per tal de proporcionar una millor sincronització del descodificador als senyals del flux d&apos;àudio del RX entrant.&lt;br&gt;
-S&apos;admeten dos escenaris:&lt;br&gt;
-- sincronització més precisa, si hi ha senyals descodificats en l&apos;interval anterior i la mitjana DT està fora del rang -0,19 .. 0,19 s. El valor DT mitjà s&apos;utilitza per al canvi de temps JTDX.
+Click by right mouse&apos;s button sets JTDX internal time back to system time; during a sync to one station (Ctrl + click), the first right click ends that sync.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Fes clic amb el botó esquerre del ratolí per canviar el temps intern del JTDX per tal de proporcionar una millor sincronització del descodificador als senyals del flux d'àudio del RX entrant.&lt;br&gt;
+S'admeten dos escenaris:&lt;br&gt;
+- sincronització més precisa, si hi ha senyals descodificats en l'interval anterior i la mitjana DT està fora del rang -0,19 .. 0,19 s. El valor DT mitjà s'utilitza per al canvi de temps JTDX.
 Es recomana mantenir almenys cinc intervals entre dos intents consecutius de sincronització aproximada i precisa.&lt;br&gt;
-La descodificació de l&apos;interval actual i següent es pot trencar pel canvi de temps.&lt;br&gt;
+La descodificació de l'interval actual i següent es pot trencar pel canvi de temps.&lt;br&gt;
 Nota:&lt;br&gt;
-- Si la diferència del rellotge del teu ordinador és de més de 7,5 segons, hi ha la possibilitat que informis de punts en un interval incorrecte, també l&apos;hora d&apos;inici i final de QSO es pot veure afectada&lt;br&gt;
-- La DT del senyal de TX es veurà afectada de manera incorrecta si intentes compensar el retard de la transmissió d&apos;àudio de RX causat per l&apos;emmagatzematge en memòria intermèdia al programari SDR.&lt;br&gt;&lt;br&gt;
-En fer clic amb el botó dret del ratolí, l&apos;hora interna de JTDX torna a l&apos;hora del sistema.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+- Si la diferència del rellotge del teu ordinador és de més de 7,5 segons, hi ha la possibilitat que informis de punts en un interval incorrecte, també l'hora d'inici i final de QSO es pot veure afectada&lt;br&gt;
+- La DT del senyal de TX es veurà afectada de manera incorrecta si intentes compensar el retard de la transmissió d'àudio de RX causat per l'emmagatzematge en memòria intermèdia al programari SDR.&lt;br&gt;&lt;br&gt;
+En fer clic amb el botó dret del ratolí, l'hora interna de JTDX torna a l'hora del sistema; durant una sincronització amb una estació (Ctrl + clic), el primer clic dret acaba aquesta sincronització.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3048"/>
@@ -6761,8 +6761,8 @@ Aquest és l'error del descodificador mateix. Corregiu allò que n'impedeix l'in
     </message>
     <message>
         <location filename="../mainwindow.cpp"/>
-        <source>Ctrl + click: sync JTDX internal time to the station in DX Call, from its newest decode of the last 2 minutes (FT8). A right click ends that first; the next one sets JTDX internal time back to system time.</source>
-        <translation>Ctrl + clic: sincronitza l'hora interna de JTDX amb l'estació d'Indicatiu DX, segons la seva descodificació més recent dels darrers 2 minuts (FT8). Un clic dret acaba això primer; el següent torna l'hora interna de JTDX a l'hora del sistema.</translation>
+        <source>Ctrl + click: sync JTDX internal time to the station in DX Call, from its newest decode of the last 2 minutes (FT8).</source>
+        <translation>Ctrl + clic: sincronitza l'hora interna de JTDX amb l'estació d'Indicatiu DX, segons la seva descodificació més recent dels darrers 2 minuts (FT8).</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp"/>
@@ -8815,7 +8815,7 @@ tots dos aquí.</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="2340"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Drag and drop items to rearrange order. Right click for item specific actions. Click, SHIFT+Click and, CTRL+Click to select items. @ symbol is being substituted with DX call, &amp; symbol with user&apos;s base callsign, # symbol with report to be transmitted, ^ symbol with correspondent&apos;s name retrieved from the log where name shall not exceed 7 chars.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Drag and drop items to rearrange order. Right click for item specific actions. Click, SHIFT+Click and CTRL+Click to select items. @ symbol is being substituted with DX call, &amp; symbol with user&apos;s base callsign, # symbol with report to be transmitted, ^ symbol with correspondent&apos;s name retrieved from the log where name shall not exceed 7 chars.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Arrossega i deixa anar elements per reorganitzar l&apos;ordre. Fes clic dret per a accions específiques de l&apos;article. Fes clic, MAJÚS + clic i CTRL + clic per seleccionar elements. El símbol @ es substitueix amb l&apos;indicatiu DX, i el símbol &amp; amb l&apos;indicatiu base de l&apos;usuari, el símbol # amb l&apos;informe a transmetre, el símbol ^ amb el nom del corresponsal recuperat del log on el nom no pot superar els 7 caràcters. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
     </message>
     <message>

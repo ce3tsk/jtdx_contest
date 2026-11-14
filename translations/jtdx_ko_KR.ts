@@ -3945,7 +3945,7 @@ Decoding of current and next interval can be broken by the time shift.&lt;br&gt;
 Note:&lt;br&gt;
 - if your computer clock difference is more than 7.5 seconds, there is a chance you will be reporting spots in wrong interval, also QSO start/end time can be affected&lt;br&gt;
 - DT of TX signal will be affected in wrong way if you are trying to compensate RX audio stream delay caused by buffering in SDR software.&lt;br&gt;&lt;br&gt;
-Click by right mouse&apos;s button sets JTDX internal time back to system time.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+Click by right mouse&apos;s button sets JTDX internal time back to system time; during a sync to one station (Ctrl + click), the first right click ends that sync.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;왼쪽 버튼을 누르면 JTDX의 내부 시각을 옮겨 수신 오디오의 신호에 디코더를 더 잘 맞춥니다.&lt;br&gt;
 두 가지 경우를 지원합니다:&lt;br&gt;
 - 거친 동기: 폭포도에 어긋난 신호가 보이는데 아무것도 디코드되지 않을 때, 디코더가 최소 전력값으로 구간 시작까지의 시간차를 추정합니다&lt;br&gt;
@@ -3955,7 +3955,7 @@ Click by right mouse&apos;s button sets JTDX internal time back to system time.&
 참고:&lt;br&gt;
 - 컴퓨터 시계가 7.5초 이상 어긋나 있으면 엉뚱한 구간으로 스팟을 보고할 수 있고 QSO 시작·종료 시각도 영향을 받습니다&lt;br&gt;
 - SDR 소프트웨어의 버퍼링으로 생긴 수신 오디오 지연을 이 기능으로 보정하려 하면 송신 신호의 DT가 잘못됩니다.&lt;br&gt;&lt;br&gt;
-오른쪽 버튼을 누르면 내부 시각을 시스템 시각으로 되돌립니다.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+오른쪽 버튼을 누르면 내부 시각을 시스템 시각으로 되돌립니다. 한 국에 동기화하는 동안(Ctrl + 클릭)에는 첫 번째 오른쪽 클릭이 그 동기화를 끝냅니다.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3202"/>
@@ -6752,8 +6752,8 @@ That is the decoder's own error. Put right whatever stops it starting - a missin
     </message>
     <message>
         <location filename="../mainwindow.cpp"/>
-        <source>Ctrl + click: sync JTDX internal time to the station in DX Call, from its newest decode of the last 2 minutes (FT8). A right click ends that first; the next one sets JTDX internal time back to system time.</source>
-        <translation>Ctrl + 클릭: JTDX 내부 시각을 DX 호출부호의 국에 맞춥니다. 최근 2분 동안의 가장 새로운 디코드를 기준으로 합니다(FT8). 오른쪽 클릭은 먼저 이것을 끝내고, 그다음 오른쪽 클릭은 JTDX 내부 시각을 시스템 시각으로 되돌립니다.</translation>
+        <source>Ctrl + click: sync JTDX internal time to the station in DX Call, from its newest decode of the last 2 minutes (FT8).</source>
+        <translation>Ctrl + 클릭: JTDX 내부 시각을 DX 호출부호의 국에 맞춥니다. 최근 2분 동안의 가장 새로운 디코드를 기준으로 합니다(FT8).</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp"/>
@@ -8800,7 +8800,7 @@ both here.</source>
     </message>
     <message>
         <location filename="../Configuration.ui" line="2340"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Drag and drop items to rearrange order. Right click for item specific actions. Click, SHIFT+Click and, CTRL+Click to select items. @ symbol is being substituted with DX call, &amp; symbol with user&apos;s base callsign, # symbol with report to be transmitted, ^ symbol with correspondent&apos;s name retrieved from the log where name shall not exceed 7 chars.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Drag and drop items to rearrange order. Right click for item specific actions. Click, SHIFT+Click and CTRL+Click to select items. @ symbol is being substituted with DX call, &amp; symbol with user&apos;s base callsign, # symbol with report to be transmitted, ^ symbol with correspondent&apos;s name retrieved from the log where name shall not exceed 7 chars.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;끌어다 놓아 순서를 바꿉니다. 오른쪽 클릭으로 항목별 작업을 실행합니다. 클릭, Shift+클릭, Ctrl+클릭으로 항목을 선택합니다. @는 DX 호출부호로, &amp;는 사용자의 기본 호출부호로, #는 보낼 리포트로, ^는 로그에서 가져온 상대의 이름(최대 7자)으로 바뀝니다.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>

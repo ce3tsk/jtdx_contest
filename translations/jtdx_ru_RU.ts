@@ -4314,7 +4314,7 @@ Decoding of current and next interval can be broken by the time shift.&lt;br&gt;
 Note:&lt;br&gt;
 - if your computer clock difference is more than 7.5 seconds, there is a chance you will be reporting spots in wrong interval, also QSO start/end time can be affected&lt;br&gt;
 - DT of TX signal will be affected in wrong way if you are trying to compensate RX audio stream delay caused by buffering in SDR software.&lt;br&gt;&lt;br&gt;
-Click by right mouse&apos;s button sets JTDX internal time back to system time.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+Click by right mouse&apos;s button sets JTDX internal time back to system time; during a sync to one station (Ctrl + click), the first right click ends that sync.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Левая кнопка мыши позволяет сместить внутреннее время JTDX для синхронизации декодера с сигналами во входящем RX звуковом потоке.&lt;br&gt;
 Два варианта работы:&lt;br&gt;
 - грубая синхронизация, если на водопаде сигналы смещены и не декодируются декодером, в декодере определяется смещение до начала интервала поиском минимального значения мощности в сигнале&lt;br&gt;
@@ -4324,7 +4324,7 @@ Click by right mouse&apos;s button sets JTDX internal time back to system time.&
 Примечание:&lt;br&gt;
 - если часы Вашего компьютера отличаются от точного времени более чем на 7.5 секунд то при смещении времени JTDX есть вероятность того что Ваши споты будут показываться в неверном интервале, также время начала/окончания QSO будет с ошибкой&lt;br&gt;
 - DT TX сигнала изменится в противоположную сторону на величину смещения времени JTDX если Вы пытаетесь скомпенсировать задержку RX звукового потока вызванную буферизацией в программном обеспечении SDR.&lt;br&gt;&lt;br&gt;
-Правая кнопка мыши приведет внутреннее время JTDX обратно к системному времени.&lt;br&gt;&lt;br&gt;Если кнопка Синхр нажата левой клавишей мыши то в ожидании выполнения синхронизации кнопка Синхр будет удерживаться окрашенной в зеленый цвет, смещение внутреннего времени JTDX произойдет после окончания декодирования интервала после чего программа поменяет цвет кнопки.&lt;br&gt;&lt;br&gt;
+Правая кнопка мыши приведет внутреннее время JTDX обратно к системному времени; во время синхронизации с одной станцией (Ctrl + щелчок) первый правый щелчок завершает эту синхронизацию.&lt;br&gt;&lt;br&gt;Если кнопка Синхр нажата левой клавишей мыши то в ожидании выполнения синхронизации кнопка Синхр будет удерживаться окрашенной в зеленый цвет, смещение внутреннего времени JTDX произойдет после окончания декодирования интервала после чего программа поменяет цвет кнопки.&lt;br&gt;&lt;br&gt;
 Если кнопка Синхр нажата правой клавишей мыши то изменение внутреннего времени JTDX к системному времени будет выполнено сразу после нажатия кнопки, кнопка будет оставаться недоступной до конца текущего интервала для индикации что она была нажата и для предупреждения ее повторного нажатия в этом же интервале.&lt;br&gt;&lt;br&gt;
 При нажатии кнопки Синхр синхронизация выполняется разово, для новой попытки синхронизации необходимо снова нажать кнопку.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
@@ -6766,8 +6766,8 @@ That is the decoder's own error. Put right whatever stops it starting - a missin
     </message>
     <message>
         <location filename="../mainwindow.cpp"/>
-        <source>Ctrl + click: sync JTDX internal time to the station in DX Call, from its newest decode of the last 2 minutes (FT8). A right click ends that first; the next one sets JTDX internal time back to system time.</source>
-        <translation>Ctrl + щелчок: синхронизирует внутреннее время JTDX со станцией в поле Позывной DX, по её последнему декодированию за 2 минуты (FT8). Правый щелчок сначала завершает это; следующий возвращает внутреннее время JTDX к системному времени.</translation>
+        <source>Ctrl + click: sync JTDX internal time to the station in DX Call, from its newest decode of the last 2 minutes (FT8).</source>
+        <translation>Ctrl + щелчок: синхронизирует внутреннее время JTDX со станцией в поле Позывной DX, по её последнему декодированию за 2 минуты (FT8).</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp"/>
@@ -8831,8 +8831,8 @@ both here.</source>
     </message>
     <message>
         <location filename="../Configuration.ui" line="2340"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Drag and drop items to rearrange order. Right click for item specific actions. Click, SHIFT+Click and, CTRL+Click to select items. @ symbol is being substituted with DX call, &amp; symbol with user&apos;s base callsign, # symbol with report to be transmitted, ^ symbol with correspondent&apos;s name retrieved from the log where name shall not exceed 7 chars.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Для перемещения сообщений используйте удержание и перемещение строк мышью. Для конкретных действий над элементом щелкнете правой кнопкой мыши.&lt;br&gt;SHIFT + Клик , CTRL + Клик для выбора элементов. Символ @ подставляет позывной корреспондента . # символ подставляет позывной пользователя, символ # и R# - передаваемый рапорт,символ ^ - имя корреспондента из журнала,при этом имя не должно превышать 7 символов.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Drag and drop items to rearrange order. Right click for item specific actions. Click, SHIFT+Click and CTRL+Click to select items. @ symbol is being substituted with DX call, &amp; symbol with user&apos;s base callsign, # symbol with report to be transmitted, ^ symbol with correspondent&apos;s name retrieved from the log where name shall not exceed 7 chars.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Для перемещения сообщений используйте удержание и перемещение строк мышью. Для конкретных действий над элементом щелкнете правой кнопкой мыши.&lt;br&gt;SHIFT + Клик и CTRL + Клик для выбора элементов. Символ @ подставляет позывной корреспондента . # символ подставляет позывной пользователя, символ # и R# - передаваемый рапорт,символ ^ - имя корреспондента из журнала,при этом имя не должно превышать 7 символов.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="2391"/>

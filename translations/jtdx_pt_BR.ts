@@ -4294,7 +4294,7 @@ Decoding of current and next interval can be broken by the time shift.&lt;br&gt;
 Note:&lt;br&gt;
 - if your computer clock difference is more than 7.5 seconds, there is a chance you will be reporting spots in wrong interval, also QSO start/end time can be affected&lt;br&gt;
 - DT of TX signal will be affected in wrong way if you are trying to compensate RX audio stream delay caused by buffering in SDR software.&lt;br&gt;&lt;br&gt;
-Click by right mouse&apos;s button sets JTDX internal time back to system time.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+Click by right mouse&apos;s button sets JTDX internal time back to system time; during a sync to one station (Ctrl + click), the first right click ends that sync.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Botão esquerdo do mouse: muda o tempo interno do JTDX, fornecendo melhor sincronização do decodificador para o fluxo dos sinais de áudio RX.&lt;br&gt;
 Dois cenários são suportados:&lt;br&gt;
 - Sincronização aproximada, se houver sinais deslocados na cascata e nenhum sinal decodificado, o valor mais fraco será usado no decodificador para avaliar o deslocamento de tempo até o início do intervalo.&lt;br&gt;
@@ -4304,7 +4304,7 @@ A decodificação do intervalo atual e do próximo intervalo pode ser interrompi
 Observação:&lt;br&gt;
 - Se a diferença do relógio do seu computador for superior a 7,5 segundos, há uma chance de você decodificar contatos no intervalo errado, também o horário de início/término do QSO pode ser afetado.&lt;br&gt;
 - O DT do sinal TX será afetado de maneira errada se você estiver tentando compensar o atraso do fluxo de áudio RX causado pelo buffer no software SDR.&lt;br&gt;&lt;br&gt;
-Botão direito do mouse: define o sincronismo interno do JTDX conforme o tempo do sistema.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+Botão direito do mouse: define o sincronismo interno do JTDX conforme o tempo do sistema; durante uma sincronização com uma estação (Ctrl + clique), o primeiro clique direito encerra essa sincronização.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3048"/>
@@ -6742,8 +6742,8 @@ Esse é o erro do próprio decodificador. Corrija o que impede a inicialização
     </message>
     <message>
         <location filename="../mainwindow.cpp"/>
-        <source>Ctrl + click: sync JTDX internal time to the station in DX Call, from its newest decode of the last 2 minutes (FT8). A right click ends that first; the next one sets JTDX internal time back to system time.</source>
-        <translation>Ctrl + clique: sincroniza o tempo interno do JTDX com a estação em EstaçãoDX, pela decodificação mais recente dela nos últimos 2 minutos (FT8). Um clique direito encerra isso primeiro; o seguinte define o tempo interno do JTDX de volta ao tempo do sistema.</translation>
+        <source>Ctrl + click: sync JTDX internal time to the station in DX Call, from its newest decode of the last 2 minutes (FT8).</source>
+        <translation>Ctrl + clique: sincroniza o tempo interno do JTDX com a estação em EstaçãoDX, pela decodificação mais recente dela nos últimos 2 minutos (FT8).</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp"/>
@@ -8792,8 +8792,8 @@ ambos .</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="2340"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Drag and drop items to rearrange order. Right click for item specific actions. Click, SHIFT+Click and, CTRL+Click to select items. @ symbol is being substituted with DX call, &amp; symbol with user&apos;s base callsign, # symbol with report to be transmitted, ^ symbol with correspondent&apos;s name retrieved from the log where name shall not exceed 7 chars.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Arraste e solte itens para reorganizar a ordem. Clique com o botão direito do mouse para ações específicas do item. Clique, SHIFT + Clique e, CTRL + Clique para selecionar itens. O símbolo @ será substituído pela chamada DX, &amp; símbolo com o indicativo base do usuário, # símbolo com o relatório transmitido, ^ símbolo com o nome do correspondente recuperado do log em que o nome não deve exceder 7 caracteres. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Drag and drop items to rearrange order. Right click for item specific actions. Click, SHIFT+Click and CTRL+Click to select items. @ symbol is being substituted with DX call, &amp; symbol with user&apos;s base callsign, # symbol with report to be transmitted, ^ symbol with correspondent&apos;s name retrieved from the log where name shall not exceed 7 chars.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Arraste e solte itens para reorganizar a ordem. Clique com o botão direito do mouse para ações específicas do item. Clique, SHIFT + Clique e CTRL + Clique para selecionar itens. O símbolo @ será substituído pela chamada DX, &amp; símbolo com o indicativo base do usuário, # símbolo com o relatório transmitido, ^ símbolo com o nome do correspondente recuperado do log em que o nome não deve exceder 7 caracteres. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="2391"/>

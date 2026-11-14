@@ -4304,7 +4304,7 @@ Decoding of current and next interval can be broken by the time shift.&lt;br&gt;
 Note:&lt;br&gt;
 - if your computer clock difference is more than 7.5 seconds, there is a chance you will be reporting spots in wrong interval, also QSO start/end time can be affected&lt;br&gt;
 - DT of TX signal will be affected in wrong way if you are trying to compensate RX audio stream delay caused by buffering in SDR software.&lt;br&gt;&lt;br&gt;
-Click by right mouse&apos;s button sets JTDX internal time back to system time.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+Click by right mouse&apos;s button sets JTDX internal time back to system time; during a sync to one station (Ctrl + click), the first right click ends that sync.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;滑鼠左鍵點擊可改變JTDX的內部時間以提供更好的解碼器同步使訊號進入接收音訊流.&lt;br&gt;
 支持兩種方案:&lt;br&gt;
 - 粗略同步, 如果瀑布上有移位訊號, 且沒有解碼訊號, 則解碼器中使用最小能量值來評估時間偏移, 直到間隔開始&lt;br&gt;
@@ -4314,7 +4314,7 @@ Click by right mouse&apos;s button sets JTDX internal time back to system time.&
 注釋:&lt;br&gt;
 - 如果你的電腦時鐘差超過7.5秒, 你就有可能在錯誤的時間間隔報告點, 通聯的開始/結束時間也會受到影響&lt;br&gt;
 - 如果您試圖補償SDR軟件中緩衝造成的接收音訊流延遲, 則發射訊號的時差將以錯誤方向受到影響.&lt;br&gt;&lt;br&gt;
-按一下滑鼠右鍵將JTDX內部時間設定回系統時間.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+按一下滑鼠右鍵將JTDX內部時間設定回系統時間；與單個電台同步期間（Ctrl + 點擊），第一次右鍵點擊結束該同步.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3048"/>
@@ -6751,8 +6751,8 @@ That is the decoder's own error. Put right whatever stops it starting - a missin
     </message>
     <message>
         <location filename="../mainwindow.cpp"/>
-        <source>Ctrl + click: sync JTDX internal time to the station in DX Call, from its newest decode of the last 2 minutes (FT8). A right click ends that first; the next one sets JTDX internal time back to system time.</source>
-        <translation>Ctrl + 點擊：按 DX 呼號中電台最近 2 分鐘內的最新解碼，將 JTDX 內部時間同步到該電台（FT8）。右鍵點擊先結束此同步；再次右鍵點擊將 JTDX 內部時間設定回系統時間。</translation>
+        <source>Ctrl + click: sync JTDX internal time to the station in DX Call, from its newest decode of the last 2 minutes (FT8).</source>
+        <translation>Ctrl + 點擊：按 DX 呼號中電台最近 2 分鐘內的最新解碼，將 JTDX 內部時間同步到該電台（FT8）。</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp"/>
@@ -8801,8 +8801,8 @@ both here.</source>
     </message>
     <message>
         <location filename="../Configuration.ui" line="2340"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Drag and drop items to rearrange order. Right click for item specific actions. Click, SHIFT+Click and, CTRL+Click to select items. @ symbol is being substituted with DX call, &amp; symbol with user&apos;s base callsign, # symbol with report to be transmitted, ^ symbol with correspondent&apos;s name retrieved from the log where name shall not exceed 7 chars.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;拖放項目以重新排列順序.右鍵單擊項目特定操作.點擊,shift + 點擊和,crtl + 點擊選擇項目.@ 符號被 dx 調用所取代,符號用用戶的基本呼號、# 符號和要發射的報告.這些簡化符號用於將QSO為特殊的標注.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Drag and drop items to rearrange order. Right click for item specific actions. Click, SHIFT+Click and CTRL+Click to select items. @ symbol is being substituted with DX call, &amp; symbol with user&apos;s base callsign, # symbol with report to be transmitted, ^ symbol with correspondent&apos;s name retrieved from the log where name shall not exceed 7 chars.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;拖放項目以重新排列順序.右鍵單擊項目特定操作.點擊,shift + 點擊和 Ctrl + 點擊選擇項目.@ 符號被 dx 調用所取代,符號用用戶的基本呼號、# 符號和要發射的報告.這些簡化符號用於將QSO為特殊的標注.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="2391"/>

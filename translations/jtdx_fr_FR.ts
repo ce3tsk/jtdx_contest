@@ -3949,17 +3949,17 @@ Decoding of current and next interval can be broken by the time shift.&lt;br&gt;
 Note:&lt;br&gt;
 - if your computer clock difference is more than 7.5 seconds, there is a chance you will be reporting spots in wrong interval, also QSO start/end time can be affected&lt;br&gt;
 - DT of TX signal will be affected in wrong way if you are trying to compensate RX audio stream delay caused by buffering in SDR software.&lt;br&gt;&lt;br&gt;
-Click by right mouse&apos;s button sets JTDX internal time back to system time.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+Click by right mouse&apos;s button sets JTDX internal time back to system time; during a sync to one station (Ctrl + click), the first right click ends that sync.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Le clic par le bouton gauche de la souris décale le temps interne du JTDX pour fournir une meilleure synchronisation du décodeur avec les signaux dans le flux audio RX entrant.&lt;br&gt;
 Deux scénarios sont pris en charge : &lt;br&gt;
-- synchronisation approximative, s&apos;il y a des signaux décalés sur la cascade et aucun signal décodé, la valeur de puissance minimale est utilisée dans le décodeur pour évaluer le décalage temporel jusqu&apos;au début de l&apos;intervalle&lt;br&gt;.
- une synchronisation plus précise, s&apos;il y a des signaux décodés dans l&apos;intervalle précédent et la moyenne.DT  est hors de la -0.19 .. 0.19 sec. La valeur DT moyenne est utilisée pour le décalage horaire du JTDX.&lt;br&gt;
-Il est recommandé de garder un intervalle d&apos;au moins cinq entre deux tentatives consécutives de synchronisation approximative et précise.&lt;br&gt;
-Le décodage de l&apos;intervalle actuel et de l&apos;intervalle suivant peut être brisé par le décalage temporel.&lt;br&gt;
+- synchronisation approximative, s'il y a des signaux décalés sur la cascade et aucun signal décodé, la valeur de puissance minimale est utilisée dans le décodeur pour évaluer le décalage temporel jusqu'au début de l'intervalle&lt;br&gt;.
+ une synchronisation plus précise, s'il y a des signaux décodés dans l'intervalle précédent et la moyenne.DT  est hors de la -0.19 .. 0.19 sec. La valeur DT moyenne est utilisée pour le décalage horaire du JTDX.&lt;br&gt;
+Il est recommandé de garder un intervalle d'au moins cinq entre deux tentatives consécutives de synchronisation approximative et précise.&lt;br&gt;
+Le décodage de l'intervalle actuel et de l'intervalle suivant peut être brisé par le décalage temporel.&lt;br&gt;
 Note:&lt;br&gt;
-- si la différence d&apos;horloge de votre ordinateur est supérieure à 7,5 secondes, il est possible que vous signaliez les spots dans un intervalle erroné, et que l&apos;heure de début/fin de QSO soit affectée&lt;br&gt;.
+- si la différence d'horloge de votre ordinateur est supérieure à 7,5 secondes, il est possible que vous signaliez les spots dans un intervalle erroné, et que l'heure de début/fin de QSO soit affectée&lt;br&gt;.
 - Le DT du signal TX sera affecté de manière erronée si vous essayez de compenser le retard du flux audio RX causé par la mise en mémoire tampon dans le logiciel SDR.&lt;br&gt;&lt;br&gt;.
-Un clic par le bouton droit de la souris remet l&apos;heure interne de JTDX à l&apos;heure du système.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+Un clic par le bouton droit de la souris remet l'heure interne de JTDX à l'heure du système ; pendant une synchronisation sur une station (Ctrl + clic), le premier clic droit arrête cette synchronisation.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3202"/>
@@ -6756,8 +6756,8 @@ C'est l'erreur du décodeur lui-même. Corrigez ce qui l'empêche de démarrer -
     </message>
     <message>
         <location filename="../mainwindow.cpp"/>
-        <source>Ctrl + click: sync JTDX internal time to the station in DX Call, from its newest decode of the last 2 minutes (FT8). A right click ends that first; the next one sets JTDX internal time back to system time.</source>
-        <translation>Ctrl + clic : synchronise l'heure interne de JTDX sur la station inscrite dans Indicatif DX, d'après son décodage le plus récent des 2 dernières minutes (FT8). Un clic droit arrête d'abord cela ; le suivant remet l'heure interne de JTDX à l'heure du système.</translation>
+        <source>Ctrl + click: sync JTDX internal time to the station in DX Call, from its newest decode of the last 2 minutes (FT8).</source>
+        <translation>Ctrl + clic : synchronise l'heure interne de JTDX sur la station inscrite dans Indicatif DX, d'après son décodage le plus récent des 2 dernières minutes (FT8).</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp"/>
@@ -8803,8 +8803,8 @@ les deux ici.</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="2340"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Drag and drop items to rearrange order. Right click for item specific actions. Click, SHIFT+Click and, CTRL+Click to select items. @ symbol is being substituted with DX call, &amp; symbol with user&apos;s base callsign, # symbol with report to be transmitted, ^ symbol with correspondent&apos;s name retrieved from the log where name shall not exceed 7 chars.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;glisser et déposer des objets pour réorganiser l'ordre. Cliquez avec le bouton droit de la souris pour des actions spécifiques à un élément. Cliquer, SHIFT+Cliquer et, CTRL+Cliquer pour sélectionner les éléments. Le symbole @ est remplacé par l'appel DX, &amp; le symbole par l'indicatif de base de l'utilisateur, le symbole # avec le rapport à transmettre, le symbole ^ avec le nom du correspondant récupéré dans le journal où le nom ne doit pas dépasser 7 caractères.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Drag and drop items to rearrange order. Right click for item specific actions. Click, SHIFT+Click and CTRL+Click to select items. @ symbol is being substituted with DX call, &amp; symbol with user&apos;s base callsign, # symbol with report to be transmitted, ^ symbol with correspondent&apos;s name retrieved from the log where name shall not exceed 7 chars.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;glisser et déposer des objets pour réorganiser l'ordre. Cliquez avec le bouton droit de la souris pour des actions spécifiques à un élément. Cliquer, SHIFT+Cliquer et CTRL+Cliquer pour sélectionner les éléments. Le symbole @ est remplacé par l'appel DX, &amp; le symbole par l'indicatif de base de l'utilisateur, le symbole # avec le rapport à transmettre, le symbole ^ avec le nom du correspondant récupéré dans le journal où le nom ne doit pas dépasser 7 caractères.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="2391"/>

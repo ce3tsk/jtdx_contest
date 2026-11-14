@@ -3947,7 +3947,7 @@ void MainWindow::stationSyncPaint ()
         : tr ("Synced to %1: %2 s (average offset %3 s)").arg (m_stationSync.call, station_sync::secs (t.station), station_sync::secs (t.base));
       state = "<!--ss--><b>" + state.toHtmlEscaped () + "</b><br/><!--/ss-->";
     }
-  QString const ctrl {"<!--ss--><br/><br/>" + tr ("Ctrl + click: sync JTDX internal time to the station in DX Call, from its newest decode of the last 2 minutes (FT8). A right click ends that first; the next one sets JTDX internal time back to system time.").toHtmlEscaped () + "<!--/ss-->"};
+  QString const ctrl {"<!--ss--><br/><br/>" + tr ("Ctrl + click: sync JTDX internal time to the station in DX Call, from its newest decode of the last 2 minutes (FT8).").toHtmlEscaped () + "<!--/ss-->"};
   int const p {tip.indexOf ("<p>")};
   if (p >= 0) tip.insert (p + 3, state); else tip.prepend (state);
   int const e {tip.lastIndexOf ("</p>")};

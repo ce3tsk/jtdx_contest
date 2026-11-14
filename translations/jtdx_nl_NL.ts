@@ -3945,7 +3945,7 @@ Decoding of current and next interval can be broken by the time shift.&lt;br&gt;
 Note:&lt;br&gt;
 - if your computer clock difference is more than 7.5 seconds, there is a chance you will be reporting spots in wrong interval, also QSO start/end time can be affected&lt;br&gt;
 - DT of TX signal will be affected in wrong way if you are trying to compensate RX audio stream delay caused by buffering in SDR software.&lt;br&gt;&lt;br&gt;
-Click by right mouse&apos;s button sets JTDX internal time back to system time.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+Click by right mouse&apos;s button sets JTDX internal time back to system time; during a sync to one station (Ctrl + click), the first right click ends that sync.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Met de linkermuisknop verschuift u de interne tijd van JTDX, zodat de decoder beter synchroniseert met de signalen in de binnenkomende audio.&lt;br&gt;
 Twee gevallen worden ondersteund:&lt;br&gt;
 - rough synchronization, if there are shifted signals on the waterfall and no a signal decoded, minimum power value is used in decoder to evaluate time shift till beginning of interval&lt;br&gt;
@@ -3955,7 +3955,7 @@ Decoding of current and next interval can be broken by the time shift.&lt;br&gt;
 Let op:&lt;br&gt;
 - if your computer clock difference is more than 7.5 seconds, there is a chance you will be reporting spots in wrong interval, also QSO start/end time can be affected&lt;br&gt;
 - DT of TX signal will be affected in wrong way if you are trying to compensate RX audio stream delay caused by buffering in SDR software.&lt;br&gt;&lt;br&gt;
-Met de rechtermuisknop zet u de interne tijd van JTDX terug op de systeemtijd.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+Met de rechtermuisknop zet u de interne tijd van JTDX terug op de systeemtijd; tijdens een synchronisatie op één station (Ctrl + klik) beëindigt de eerste rechtsklik die synchronisatie.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3202"/>
@@ -6752,8 +6752,8 @@ Dat is de fout van de decoder zelf. Verhelp wat het starten verhindert - een ont
     </message>
     <message>
         <location filename="../mainwindow.cpp"/>
-        <source>Ctrl + click: sync JTDX internal time to the station in DX Call, from its newest decode of the last 2 minutes (FT8). A right click ends that first; the next one sets JTDX internal time back to system time.</source>
-        <translation>Ctrl + klik: synchroniseert de interne tijd van JTDX op het station in DX-roepnaam, volgens zijn nieuwste decodering van de laatste 2 minuten (FT8). Een rechtsklik beëindigt dat eerst; de volgende zet de interne tijd van JTDX terug op de systeemtijd.</translation>
+        <source>Ctrl + click: sync JTDX internal time to the station in DX Call, from its newest decode of the last 2 minutes (FT8).</source>
+        <translation>Ctrl + klik: synchroniseert de interne tijd van JTDX op het station in DX-roepnaam, volgens zijn nieuwste decodering van de laatste 2 minuten (FT8).</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp"/>
@@ -8800,7 +8800,7 @@ aangesloten, kiest u hier meestal mono of beide.</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="2340"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Drag and drop items to rearrange order. Right click for item specific actions. Click, SHIFT+Click and, CTRL+Click to select items. @ symbol is being substituted with DX call, &amp; symbol with user&apos;s base callsign, # symbol with report to be transmitted, ^ symbol with correspondent&apos;s name retrieved from the log where name shall not exceed 7 chars.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Drag and drop items to rearrange order. Right click for item specific actions. Click, SHIFT+Click and CTRL+Click to select items. @ symbol is being substituted with DX call, &amp; symbol with user&apos;s base callsign, # symbol with report to be transmitted, ^ symbol with correspondent&apos;s name retrieved from the log where name shall not exceed 7 chars.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Sleep items om de volgorde te wijzigen. Rechtsklik voor acties per item. Klik, Shift+klik en Ctrl+klik selecteren items. @ wordt vervangen door de DX-roepnaam, &amp; door de eigen basisroepnaam, # door het te zenden rapport en ^ door de naam uit het log (maximaal 7 tekens).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>

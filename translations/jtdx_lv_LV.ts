@@ -4303,7 +4303,7 @@ Decoding of current and next interval can be broken by the time shift.&lt;br&gt;
 Note:&lt;br&gt;
 - if your computer clock difference is more than 7.5 seconds, there is a chance you will be reporting spots in wrong interval, also QSO start/end time can be affected&lt;br&gt;
 - DT of TX signal will be affected in wrong way if you are trying to compensate RX audio stream delay caused by buffering in SDR software.&lt;br&gt;&lt;br&gt;
-Click by right mouse&apos;s button sets JTDX internal time back to system time.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+Click by right mouse&apos;s button sets JTDX internal time back to system time; during a sync to one station (Ctrl + click), the first right click ends that sync.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ar kreiso peles pogu var nobīdīt JTDX iekšējo laiku, lai dekodētājs labāk sinhronizētos ar ienākošās audio plūsmas signāliem.&lt;br&gt;
 Tiek atbalstīti divi scenāriji:&lt;br&gt;
 - rupja sinhronizācija, ja ūdenskritumā ir nobīdīti signāli un neviens nav dekodēts; laika nobīdes līdz intervāla sākumam novērtēšanai dekodētājs izmanto minimālo jaudas vērtību&lt;br&gt;
@@ -4313,7 +4313,7 @@ Laika nobīde var izjaukt pašreizējā un nākamā intervāla dekodēšanu.&lt;
 Piezīme:&lt;br&gt;
 - ja datora pulksteņa novirze pārsniedz 7,5 sekundes, spoti var tikt ziņoti nepareizā intervālā un var tikt ietekmēts arī QSO sākuma/beigu laiks&lt;br&gt;
 - raidāmā signāla DT tiks ietekmēts nelabvēlīgi, ja mēģināsiet kompensēt uztveršanas audio plūsmas aizturi, ko rada SDR programmatūras buferizācija.&lt;br&gt;&lt;br&gt;
-Ar labo peles pogu JTDX iekšējais laiks tiek atgriezts uz sistēmas laiku.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+Ar labo peles pogu JTDX iekšējais laiks tiek atgriezts uz sistēmas laiku; sinhronizācijas ar vienu staciju laikā (Ctrl + klikšķis) pirmais labais klikšķis beidz šo sinhronizāciju.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3048"/>
@@ -6751,8 +6751,8 @@ Dekoders: %3
     </message>
     <message>
         <location filename="../mainwindow.cpp"/>
-        <source>Ctrl + click: sync JTDX internal time to the station in DX Call, from its newest decode of the last 2 minutes (FT8). A right click ends that first; the next one sets JTDX internal time back to system time.</source>
-        <translation>Ctrl + klikšķis: sinhronizē JTDX iekšējo laiku ar staciju laukā DX izsauk., pēc tās jaunākās dekodēšanas pēdējās 2 minūtēs (FT8). Labais klikšķis vispirms to beidz; nākamais atgriež JTDX iekšējo laiku uz sistēmas laiku.</translation>
+        <source>Ctrl + click: sync JTDX internal time to the station in DX Call, from its newest decode of the last 2 minutes (FT8).</source>
+        <translation>Ctrl + klikšķis: sinhronizē JTDX iekšējo laiku ar staciju laukā DX izsauk., pēc tās jaunākās dekodēšanas pēdējās 2 minūtēs (FT8).</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp"/>
@@ -8840,7 +8840,7 @@ kanāliem, parasti šeit jāizvēlas mono vai abi.</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="2340"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Drag and drop items to rearrange order. Right click for item specific actions. Click, SHIFT+Click and, CTRL+Click to select items. @ symbol is being substituted with DX call, &amp; symbol with user&apos;s base callsign, # symbol with report to be transmitted, ^ symbol with correspondent&apos;s name retrieved from the log where name shall not exceed 7 chars.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Drag and drop items to rearrange order. Right click for item specific actions. Click, SHIFT+Click and CTRL+Click to select items. @ symbol is being substituted with DX call, &amp; symbol with user&apos;s base callsign, # symbol with report to be transmitted, ^ symbol with correspondent&apos;s name retrieved from the log where name shall not exceed 7 chars.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Velciet un nometiet vienumus, lai mainītu secību. Ar labo peles pogu var veikt konkrētas darbības. Vienumus atlasa ar klikšķi, SHIFT+klikšķi un CTRL+klikšķi. Simbolu @ aizstāj DX izsaukuma signāls, &amp; - lietotāja pamata izsaukuma signāls, # - raidāmais raports, ^ - korespondenta vārds no žurnāla, kas nedrīkst pārsniegt 7 rakstzīmes.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>

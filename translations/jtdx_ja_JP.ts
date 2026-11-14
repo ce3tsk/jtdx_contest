@@ -4341,11 +4341,8 @@ Decoding of current and next interval can be broken by the time shift.&lt;br&gt;
 Note:&lt;br&gt;
 - if your computer clock difference is more than 7.5 seconds, there is a chance you will be reporting spots in wrong interval, also QSO start/end time can be affected&lt;br&gt;
 - DT of TX signal will be affected in wrong way if you are trying to compensate RX audio stream delay caused by buffering in SDR software.&lt;br&gt;&lt;br&gt;
-Click by right mouse&apos;s button sets JTDX internal time back to system time.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;この機能はインターネットでNTPサーバーで時計を合わすことができる方、GPSを使って時計を合わせることができる方には
-必要のない機能です。移動運用などで時計合わせができない方には便利な機能です。&lt;br&gt;
--------------------------------------------------------------------&lt;br&gt;
-マウスの左ボタンでクリックすると、受信オーディオストリーム内の信号にデコーダをより適切に同期させるため、JTDX内部時刻をシフトします。&lt;br&gt;
+Click by right mouse&apos;s button sets JTDX internal time back to system time; during a sync to one station (Ctrl + click), the first right click ends that sync.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;マウスの左ボタンでクリックすると、受信オーディオストリーム内の信号にデコーダをより適切に同期させるため、JTDX内部時刻をシフトします。&lt;br&gt;
 次の2つの方法に対応しています。&lt;br&gt;
 - 粗い同期：ウォーターフォール上に時間のずれた信号があり、信号が1つもデコードされていない場合、デコーダ内の最小電力値を使って周期開始までの時間ずれを推定します。&lt;br&gt;
 - より精密な同期：前の周期で信号がデコードされ、平均DTが -0.19～0.19 秒の範囲外にある場合、その平均DT値をJTDXの時刻シフトに使用します。&lt;br&gt;
@@ -4354,7 +4351,7 @@ Click by right mouse&apos;s button sets JTDX internal time back to system time.&
 注意：&lt;br&gt;
 - コンピュータの時計が7.5秒を超えてずれていると、誤った周期としてスポットを送信する可能性があり、QSOの開始／終了時刻にも影響することがあります。&lt;br&gt;
 - SDRソフトウェアのバッファリングによる受信オーディオの遅延を補正しようとすると、送信信号のDTは誤った方向に変化します。&lt;br&gt;&lt;br&gt;
-マウスの右ボタンでクリックすると、JTDX内部時刻をシステム時刻に戻します。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+マウスの右ボタンでクリックすると、JTDX内部時刻をシステム時刻に戻します。特定の局への同期中（Ctrl + クリック）は、最初の右クリックでその同期を終了します。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3048"/>
@@ -6750,8 +6747,8 @@ That is the decoder's own error. Put right whatever stops it starting - a missin
     </message>
     <message>
         <location filename="../mainwindow.cpp"/>
-        <source>Ctrl + click: sync JTDX internal time to the station in DX Call, from its newest decode of the last 2 minutes (FT8). A right click ends that first; the next one sets JTDX internal time back to system time.</source>
-        <translation>Ctrl + クリック：JTDX内部時刻をDX コールの局に、直近2分間の最新のデコードから同期します（FT8）。右クリックでまずこれを終了し、次の右クリックでJTDX内部時刻をシステム時刻に戻します。</translation>
+        <source>Ctrl + click: sync JTDX internal time to the station in DX Call, from its newest decode of the last 2 minutes (FT8).</source>
+        <translation>Ctrl + クリック：JTDX内部時刻をDX コールの局に、直近2分間の最新のデコードから同期します（FT8）。</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp"/>
@@ -9487,7 +9484,7 @@ both here.</source>
     </message>
     <message>
         <location filename="../Configuration.ui" line="2340"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Drag and drop items to rearrange order. Right click for item specific actions. Click, SHIFT+Click and, CTRL+Click to select items. @ symbol is being substituted with DX call, &amp; symbol with user&apos;s base callsign, # symbol with report to be transmitted, ^ symbol with correspondent&apos;s name retrieved from the log where name shall not exceed 7 chars.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Drag and drop items to rearrange order. Right click for item specific actions. Click, SHIFT+Click and CTRL+Click to select items. @ symbol is being substituted with DX call, &amp; symbol with user&apos;s base callsign, # symbol with report to be transmitted, ^ symbol with correspondent&apos;s name retrieved from the log where name shall not exceed 7 chars.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt; &lt;head /&gt; &lt;body&gt; &lt;p&gt;項目をドラッグ＆ドロップして順序を変更します。右クリックで項目ごとの操作を選べます。クリック、Shift+クリック、Ctrl+クリックで項目を選択します。マクロ記号：@ は DX Call、&amp;amp; は自局のベースコールサイン、# は送信するレポート、^ はログに記録された相手局の名前（最大7文字）に置き換わります。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>

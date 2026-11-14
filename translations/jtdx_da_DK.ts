@@ -3943,7 +3943,7 @@ Decoding of current and next interval can be broken by the time shift.&lt;br&gt;
 Note:&lt;br&gt;
 - if your computer clock difference is more than 7.5 seconds, there is a chance you will be reporting spots in wrong interval, also QSO start/end time can be affected&lt;br&gt;
 - DT of TX signal will be affected in wrong way if you are trying to compensate RX audio stream delay caused by buffering in SDR software.&lt;br&gt;&lt;br&gt;
-Click by right mouse&apos;s button sets JTDX internal time back to system time.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+Click by right mouse&apos;s button sets JTDX internal time back to system time; during a sync to one station (Ctrl + click), the first right click ends that sync.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Venstre museknap forskyder JTDX' interne tid, så dekoderen synkroniserer bedre med signalerne i den indkommende RX-lydstrøm.&lt;br&gt;
 To scenarier understøttes:&lt;br&gt;
 - rough synchronization, if there are shifted signals on the waterfall and no a signal decoded, minimum power value is used in decoder to evaluate time shift till beginning of interval&lt;br&gt;
@@ -3953,7 +3953,7 @@ Decoding of current and next interval can be broken by the time shift.&lt;br&gt;
 Bemærk:&lt;br&gt;
 - if your computer clock difference is more than 7.5 seconds, there is a chance you will be reporting spots in wrong interval, also QSO start/end time can be affected&lt;br&gt;
 - DT of TX signal will be affected in wrong way if you are trying to compensate RX audio stream delay caused by buffering in SDR software.&lt;br&gt;&lt;br&gt;
-Højre museknap sætter JTDX' interne tid tilbage til systemtiden.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+Højre museknap sætter JTDX' interne tid tilbage til systemtiden; under en synkronisering til én station (Ctrl + klik) afslutter det første højreklik den synkronisering.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3202"/>
@@ -6756,8 +6756,8 @@ Det er dekoderens egen fejl. Ret det, der forhindrer den i at starte - et mangle
     </message>
     <message>
         <location filename="../mainwindow.cpp"/>
-        <source>Ctrl + click: sync JTDX internal time to the station in DX Call, from its newest decode of the last 2 minutes (FT8). A right click ends that first; the next one sets JTDX internal time back to system time.</source>
-        <translation>Ctrl + klik: synkroniserer JTDX' interne tid til stationen i Dx Call, ud fra dens nyeste dekodning i de sidste 2 minutter (FT8). Et højreklik afslutter det først; det næste sætter JTDX' interne tid tilbage til systemtiden.</translation>
+        <source>Ctrl + click: sync JTDX internal time to the station in DX Call, from its newest decode of the last 2 minutes (FT8).</source>
+        <translation>Ctrl + klik: synkroniserer JTDX' interne tid til stationen i Dx Call, ud fra dens nyeste dekodning i de sidste 2 minutter (FT8).</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp"/>
@@ -8806,8 +8806,8 @@ begge her.</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="2340"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Drag and drop items to rearrange order. Right click for item specific actions. Click, SHIFT+Click and, CTRL+Click to select items. @ symbol is being substituted with DX call, &amp; symbol with user&apos;s base callsign, # symbol with report to be transmitted, ^ symbol with correspondent&apos;s name retrieved from the log where name shall not exceed 7 chars.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Træk og slip emner for at omarrangere rækkefølge. Højreklik for elementspecifikke handlinger. Klik, SKIFT + Klik og, CTRL + Klik for at vælge emner. @ symbol erstattes med DX-opkald, &amp; symbol med modpartens base-kaldesignal, # symbol med rapport, der skal transmitteres, ^ symbol med modpartens navn hentet fra loggen, hvor navnet ikke må overstige 7 tegn. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Drag and drop items to rearrange order. Right click for item specific actions. Click, SHIFT+Click and CTRL+Click to select items. @ symbol is being substituted with DX call, &amp; symbol with user&apos;s base callsign, # symbol with report to be transmitted, ^ symbol with correspondent&apos;s name retrieved from the log where name shall not exceed 7 chars.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; Træk og slip emner for at omarrangere rækkefølge. Højreklik for elementspecifikke handlinger. Klik, SKIFT + Klik og CTRL + Klik for at vælge emner. @ symbol erstattes med DX-opkald, &amp; symbol med modpartens base-kaldesignal, # symbol med rapport, der skal transmitteres, ^ symbol med modpartens navn hentet fra loggen, hvor navnet ikke må overstige 7 tegn. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="2391"/>
