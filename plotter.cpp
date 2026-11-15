@@ -494,7 +494,7 @@ float CPlotter::signalBandwidth() const
 
 /* The CQ calls (cqspots.h), painted over the waterfall's bottom edge - the lines of the waterfall that are
    about to scroll off - and not into the waterfall, which moves a line down at every update. Each call stands
-   over its signal: a bracket as wide as the signal on the bottom line, the call in a label above it. Where
+   over its signal: a bracket as wide as the signal on the bottom line, the call in yellow in a label above it. Where
    signals lie close together the labels go in rows above one another, joined to their brackets by a thin line.
    A call for which no row is left keeps its bracket, and the top right corner counts them: "+3". */
 void CPlotter::drawCqCalls(QPainter& painter)
@@ -547,7 +547,7 @@ void CPlotter::drawCqCalls(QPainter& painter)
     int const bottom {base - 4 - placed[i].row*rowH};
     QRect const r {placed[i].left, bottom-(rowH-2), boxes[i].width, rowH-2};
     painter.fillRect(r, QColor(0,0,0,shown[i].alpha*170/255));
-    painter.setPen(QColor(255,255,255,shown[i].alpha));
+    painter.setPen(QColor(255,220,0,shown[i].alpha));   // yellow, as its bracket: easier to see (the operator 2026-11-15)
     painter.drawText(r, Qt::AlignCenter, shown[i].text);
   }
   if(hidden > 0) {                                               //calls with no room: a count, top right of the waterfall
