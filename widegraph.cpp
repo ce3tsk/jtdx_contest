@@ -32,6 +32,10 @@ WideGraph::WideGraph(QSettings * settings, JTDXDateTime * jtdxtime, QWidget *par
 
   setWindowTitle (QApplication::applicationName () + " - " + tr ("Wide Graph"));
   setWindowFlags (Qt::WindowCloseButtonHint | Qt::WindowMinimizeButtonHint);
+  // (2026-11-15) tooltips also while another window is the active one: Qt shows a resting mouse's tooltip only in the
+  // active window, and the waterfall is looked at with the main window active - a CQ call's tooltip (plotter.cpp) would
+  // show only after a click into the Wide Graph
+  setAttribute (Qt::WA_AlwaysShowToolTips);
   setMaximumWidth (MAX_SCREENSIZE);
   setMaximumHeight (880);
 

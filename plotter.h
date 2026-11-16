@@ -19,6 +19,7 @@
 #include <QElapsedTimer>
 #include <QTimer>
 #include <cstring>
+#include <vector>
 #include "JTDXDateTime.h"
 #include "cqspots.h"
 #define VERT_DIVS 7	//specify grid screen divisions
@@ -107,6 +108,7 @@ protected:
   void paintEvent(QPaintEvent *event);
   void resizeEvent(QResizeEvent* event);
   virtual void keyPressEvent( QKeyEvent *e );
+  bool event(QEvent* e) override;          // a CQ call's tooltip, on its label or bracket
 
 private:
 
@@ -115,6 +117,7 @@ private:
   float FreqfromX(int x);
   float signalBandwidth() const;           // width in Hz of one signal of the mode, 0 if there is none
   void drawCqCalls(QPainter& painter);     // the CQ calls over the waterfall's bottom edge
+  QString cqCallsAt(QPoint const& p, QRect* area = nullptr) const;   // the call(s) drawn at p, one a line, or ""
 
   bool    m_bCurrent;
   bool    m_bCumulative;
@@ -168,6 +171,10 @@ private:
   cq_spots::Origin m_cqNow;                // the air shown now: only its calls are drawn
   QElapsedTimer   m_cqClock;               // monotonic: the calls' age does not follow a clock that is set
   QTimer          m_cqTimer;               // runs while there are calls on the board, to let them expire
+  // (2026-11-15) where the last paint put each call: its label, and its bracket - for a call with no row the only place
+  // it shows. A label names its own call; a bracket every call heard on that signal
+  struct CqHit {QRect area; QString call; bool label;};
+  std::vector<CqHit> m_cqHits;
 
   qint32  m_dBStepSize;
   qint32  m_FreqUnits;
@@ -190,6 +197,8 @@ private:
   qint32  m_tol;
   qint32  m_lastMouseX;
   qint32  m_lastPaintedX;
+  qint32  m_lastMouseY;                    // (2026-11-15) a call's label lies above or below another's
+  QString m_lastTip;                       // the frequency tooltip last shown, with the call(s) under the mouse
   char    m_sutc[6];
 
 private slots:

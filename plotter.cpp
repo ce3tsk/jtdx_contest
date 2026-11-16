@@ -43,7 +43,8 @@ CPlotter::CPlotter(QWidget *parent) :                  //CPlotter Constructor
   m_txFreq {0},
   m_startFreq {0},
   m_lastMouseX {-1},
-  m_lastPaintedX {-1}
+  m_lastPaintedX {-1},
+  m_lastMouseY {-1}
 {
   setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
   setFocusPolicy(Qt::StrongFocus);
@@ -118,13 +119,21 @@ void CPlotter::paintEvent(QPaintEvent *)                                // paint
       painter.drawPixmap(m_lastMouseX, 0, m_HoverOverlayPixmap);
     }
   }
+  m_cqHits.clear();
   if(!m_cqBoard.empty()) drawCqCalls(painter);
-  if(m_freq && m_lastMouseX >= 0 && m_lastMouseX != m_lastPaintedX) {
-    QFont font = CPlotter::font ();
+  if(m_freq && m_lastMouseX >= 0) {
     QString freq=QString::number(int(FreqfromX(m_lastMouseX)));
-    int z = font.pointSize()*freq.length()+64/font.pointSize();
-    QPoint pos = m_pos + QPoint(-z,-10);
-    QToolTip::showText(pos,freq);
+    // (2026-11-15, the operator) over a CQ call's label or bracket: the call, the frequency on the line below, centred
+    QString const calls {cqCallsAt(QPoint(m_lastMouseX, m_lastMouseY))};
+    QString const tip {calls.isEmpty() ? freq
+                       : "<div align=\"center\">" + calls.toHtmlEscaped().replace('\n', "<br>") + "<br>" + freq + "</div>"};
+    if(m_lastMouseX != m_lastPaintedX || tip != m_lastTip) {
+      QFont font = CPlotter::font ();
+      int z = font.pointSize()*freq.length()+64/font.pointSize();
+      QPoint pos = m_pos + QPoint(-z,-10);
+      QToolTip::showText(pos,tip);
+      m_lastTip = tip;
+    }
   }
   m_lastPaintedX = m_lastMouseX;
   m_paintEventBusy=false;
@@ -540,6 +549,8 @@ void CPlotter::drawCqCalls(QPainter& painter)
     painter.drawLine(shown[i].x1, base-3, shown[i].x1, base);
     painter.drawLine(shown[i].x2, base-3, shown[i].x2, base);
     if(placed[i].row > 0) painter.drawLine(boxes[i].centre, base-3, boxes[i].centre, base-4-placed[i].row*rowH);
+    // (2026-11-15) the bracket a little taller than drawn, for the mouse: its line and ticks, 2 px more each way
+    m_cqHits.push_back({QRect(QPoint(shown[i].x1-2, base-5), QPoint(shown[i].x2+2, base+1)), shown[i].text, false});
   }
   int hidden {0};
   for(std::size_t i=0; i<shown.size(); i++) {                    //the labels, over the lines
@@ -547,6 +558,7 @@ void CPlotter::drawCqCalls(QPainter& painter)
     int const bottom {base - 4 - placed[i].row*rowH};
     QRect const r {placed[i].left, bottom-(rowH-2), boxes[i].width, rowH-2};
     painter.fillRect(r, QColor(0,0,0,shown[i].alpha*170/255));
+    m_cqHits.push_back({r, shown[i].text, true});
     painter.setPen(QColor(255,220,0,shown[i].alpha));   // yellow, as its bracket: easier to see (the operator 2026-11-15)
     painter.drawText(r, Qt::AlignCenter, shown[i].text);
   }
@@ -558,6 +570,47 @@ void CPlotter::drawCqCalls(QPainter& painter)
     painter.drawText(r, Qt::AlignCenter, more);
   }
   painter.restore();
+}
+
+/* (2026-11-15, the operator: "show also the CQ call ... as a tooltip when the mouse is over the text") the call(s) the
+   last paint drew at p: a label's own call, else every call whose bracket is there - calls heard on one signal share it,
+   and a call with no row left shows nowhere else - one a line, in the order drawn; "" over anything else. */
+QString CPlotter::cqCallsAt(QPoint const& p, QRect* area) const
+{
+  for(auto const& h : m_cqHits)
+    if(h.label && h.area.contains(p)) {
+      if(area) *area = h.area;
+      return h.call;
+    }
+  QStringList calls;
+  QRect all;
+  for(auto const& h : m_cqHits)
+    if(!h.label && h.area.contains(p) && !calls.contains(h.call)) {
+      calls << h.call;
+      all = all.united(h.area);
+    }
+  if(area) *area = all;
+  return calls.join('\n');
+}
+
+// (2026-11-15) the mouse resting on a CQ call's label or bracket: the call as a tooltip, centred when there are several.
+// With the frequency under the mouse shown (m_freq) the paint shows it instead - the call above the frequency.
+bool CPlotter::event(QEvent* e)
+{
+  if(e->type() == QEvent::ToolTip) {
+    if(m_freq) return true;
+    auto const help = static_cast<QHelpEvent*>(e);
+    QRect area;
+    QString const calls {cqCallsAt(help->pos(), &area)};
+    if(calls.isEmpty()) {
+      QToolTip::hideText();
+      e->ignore();
+    } else
+      QToolTip::showText(help->globalPos(), calls.contains('\n')
+                         ? "<div align=\"center\">" + calls.toHtmlEscaped().replace('\n', "<br>") + "</div>" : calls, this, area);
+    return true;
+  }
+  return QFrame::event(e);
 }
 
 void CPlotter::setCqDuration(int seconds)
@@ -666,6 +719,8 @@ void CPlotter::leaveEvent(QEvent *event)
 {
     m_lastMouseX = -1;
     m_lastPaintedX = -1;
+    m_lastMouseY = -1;
+    m_lastTip.clear();
     event->ignore();
 }
 
@@ -676,6 +731,7 @@ void CPlotter::mouseMoveEvent (QMouseEvent * event)
     if(x>m_Size.width()) x = m_Size.width();
     if(m_freq) m_pos = event->globalPos();
     m_lastMouseX = x;
+    m_lastMouseY = event->y();
     update();
 
     event->ignore();
