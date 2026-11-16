@@ -624,6 +624,16 @@ bool WideGraph::cqCallsOn() const
   return ui->widePlot->cqDuration() > 0;
 }
 
+void WideGraph::addDecode(QString const& message, int snr, int freq, int time_s, qint64 dial, QString const& mode, bool replay)
+{
+  ui->widePlot->addDecode(message, snr, freq, time_s, dial, mode, replay);
+}
+
+void WideGraph::beginReplay()
+{
+  ui->widePlot->beginReplay();
+}
+
 void WideGraph::on_adjust_palette_push_button_clicked (bool)   //Adjust Palette
 {
   try

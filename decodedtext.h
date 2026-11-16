@@ -39,6 +39,10 @@ public:
 
     QString string();
     QString message() { return message_; };
+    /* CE3TSK 2026-11-16 (TODO.md 3.-259's review): the message whole, as decoded - message () is cut at 24 characters
+       and loses its brackets, so a Fox's message for two ("K1ABC RR73; W9XYZ <KH1/KH7Z> -08") lost its sender. With
+       whatever follows the message on its line (a hint's '*'). */
+    QString wholeMessage() const { return string_.mid (column_qsoText + padding_).trimmed (); }
     int indexOf(QString s) { return string_.indexOf(s); };
     int indexOf(QString s, int i) { return string_.indexOf(s,i); };
     QString mid(int f, int t) { return string_.mid(f,t); };

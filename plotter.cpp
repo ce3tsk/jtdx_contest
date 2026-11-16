@@ -15,6 +15,12 @@ extern "C" {
 }
 extern dec_data dec_data;
 
+// (2026-11-15) a tooltip's text: one line as it is, several one a line and centred
+static QString tipText(QString const& calls)
+{
+  return calls.contains('\n') ? "<div align=\"center\">" + calls.toHtmlEscaped().replace('\n', "<br>") + "</div>" : calls;
+}
+
 CPlotter::CPlotter(QWidget *parent) :                  //CPlotter Constructor
   QFrame {parent},
   m_jtdxtime {nullptr},
@@ -30,7 +36,9 @@ CPlotter::CPlotter(QWidget *parent) :                  //CPlotter Constructor
   m_paintEventBusy {false},
   m_fftBinWidth {1500.0/2048.0},
   m_dialFreq {0.},
+  m_TRperiod {15.0},
   m_sum {},
+  m_replayPending {false},
   m_dBStepSize {10},
   m_FreqUnits {1},
   m_hdivs {HORZ_DIVS},
@@ -96,6 +104,7 @@ void CPlotter::resizeEvent(QResizeEvent* )                    //resizeEvent()
     m_OverlayPixmap = QPixmap(m_Size.width(), m_h2);
     m_OverlayPixmap.fill(Qt::black);
     m_WaterfallPixmap.fill(Qt::black);
+    m_traces.clear();                       // (2026-11-15) the rows they were of are gone
     m_2DPixmap.fill(Qt::black);
     m_ScalePixmap = QPixmap(m_w,30);
     m_ScalePixmap.fill(Qt::white);
@@ -124,9 +133,8 @@ void CPlotter::paintEvent(QPaintEvent *)                                // paint
   if(m_freq && m_lastMouseX >= 0) {
     QString freq=QString::number(int(FreqfromX(m_lastMouseX)));
     // (2026-11-15, the operator) over a CQ call's label or bracket: the call, the frequency on the line below, centred
-    QString const calls {cqCallsAt(QPoint(m_lastMouseX, m_lastMouseY))};
-    QString const tip {calls.isEmpty() ? freq
-                       : "<div align=\"center\">" + calls.toHtmlEscaped().replace('\n', "<br>") + "<br>" + freq + "</div>"};
+    QString const calls {callsAt(QPoint(m_lastMouseX, m_lastMouseY))};
+    QString const tip {calls.isEmpty() ? freq : tipText(calls + '\n' + freq)};
     if(m_lastMouseX != m_lastPaintedX || tip != m_lastTip) {
       QFont font = CPlotter::font ();
       int z = font.pointSize()*freq.length()+64/font.pointSize();
@@ -158,7 +166,11 @@ void CPlotter::draw(float swide[], bool bScroll)                            //dr
   double gain2d = pow(10.0,0.02*(m_plot2dGain));
 
 //move current data down one line (must do this before attaching a QPainter object)
-  if(bScroll) m_WaterfallPixmap.scroll(0,1,0,0,m_w,m_h1);
+  if(bScroll) {
+    m_WaterfallPixmap.scroll(0,1,0,0,m_w,m_h1);
+    noteRow();                             // (2026-11-15) the row in the waterfall's record, then what the mouse rests on
+    followTip();
+  }
   QPainter painter1(&m_WaterfallPixmap);
   m_2DPixmap = m_OverlayPixmap.copy(0,0,m_w,m_h2);
   QPainter painter2D(&m_2DPixmap);
@@ -593,25 +605,97 @@ QString CPlotter::cqCallsAt(QPoint const& p, QRect* area) const
   return calls.join('\n');
 }
 
-// (2026-11-15) the mouse resting on a CQ call's label or bracket: the call as a tooltip, centred when there are several.
-// With the frequency under the mouse shown (m_freq) the paint shows it instead - the call above the frequency.
+// (2026-11-15) the mouse resting on a CQ call's label or bracket, or on a signal's trace (callsAt ()): what is there as a
+// tooltip, centred when there are several lines. With the frequency under the mouse shown (m_freq) the paint shows it
+// instead - the calls above the frequency.
 bool CPlotter::event(QEvent* e)
 {
   if(e->type() == QEvent::ToolTip) {
     if(m_freq) return true;
     auto const help = static_cast<QHelpEvent*>(e);
     QRect area;
-    QString const calls {cqCallsAt(help->pos(), &area)};
+    QString const calls {callsAt(help->pos(), &area)};
     if(calls.isEmpty()) {
+      m_traceTip.clear();
       QToolTip::hideText();
       e->ignore();
-    } else
-      QToolTip::showText(help->globalPos(), calls.contains('\n')
-                         ? "<div align=\"center\">" + calls.toHtmlEscaped().replace('\n', "<br>") + "</div>" : calls, this, area);
+    } else {
+      m_traceTipAt = help->pos();
+      m_traceTip = tipText(calls);
+      QToolTip::showText(help->globalPos(), m_traceTip, this, area);
+    }
     return true;
   }
   return QFrame::event(e);
 }
+
+/* (2026-11-15, the operator: "show the decoded call signs in the waterfall itself ... putting the mouse atop a trace and
+   it shows in the tooltip which signals are there", each line "K1ABC -12", the call signs of the Band Activity window)
+   tracespots.h has the rules. Each row is noted as it is drawn, with its scale and the air shown (m_cqNow, as for the CQ
+   calls). Live, its period is the clock's - the second of the UTC day its decoded lines carry (TODO.md 3.-259's review:
+   not the waterfall's period line, which is not drawn when Monitor comes on in the middle of a period, so those rows had
+   joined the period before it); a recording's first row begins the recording's period (beginReplay ()); a row of
+   another air begins a new part of its period. */
+void CPlotter::noteRow()
+{
+  m_traces.row(trace_spots::Scale {double(m_startFreq), m_binsPerPixel*m_fftBinWidth});
+  bool const replayStart {m_replayPending && m_cqNow.replay};   // a recording that drew no row leaves nothing pending
+  m_replayPending = false;
+  if(replayStart) m_traces.begin_period(0, m_cqNow, signalBandwidth());
+  else if(m_cqNow.replay) m_traces.air(m_cqNow, signalBandwidth());
+  else {
+    qint64 const ms {(m_jtdxtime ? m_jtdxtime->currentMSecsSinceEpoch2() : QDateTime::currentMSecsSinceEpoch()) % 86400000};
+    double const into {m_TRperiod > 0. ? fmod(double(ms), 1000.*m_TRperiod) : 0.};   // ms into the period
+    m_traces.live(int((ms - into)/1000.), m_cqNow, signalBandwidth());
+  }
+  m_traces.keep(m_h1);
+}
+
+// the waterfall moved a row down under the resting mouse's tooltip: it names what is there now, or goes
+void CPlotter::followTip()
+{
+  if(m_traceTip.isEmpty()) return;
+  if(!QToolTip::isVisible() || QToolTip::text() != m_traceTip) {   // gone by itself, or another's now
+    m_traceTip.clear();
+    return;
+  }
+  QRect area;
+  QString const calls {callsAt(m_traceTipAt, &area)};
+  QString const tip {calls.isEmpty() ? QString() : tipText(calls)};
+  if(tip == m_traceTip) return;
+  m_traceTip = tip;
+  if(tip.isEmpty()) QToolTip::hideText();
+  else QToolTip::showText(mapToGlobal(m_traceTipAt), tip, this, area);
+}
+
+// the signals whose trace is at p in the waterfall as it is seen (under the scale, above the spectrum), one a line
+QString CPlotter::tracesAt(QPoint const& p, QRect* area) const
+{
+  if(p.y() < 30 || p.y() >= m_h1) return QString();
+  auto const hit = m_traces.at(p.y() - 30, p.x());
+  if(hit.found.empty()) return QString();
+  QStringList lines;
+  for(auto const& s : hit.found) lines << QString::fromStdString(trace_spots::label(s));
+  // where the tooltip stays up: the trace's columns, the whole waterfall down - its rows move down under a resting mouse
+  // (TODO.md 3.-259's review: the period's rows as they were when it was shown hid it once the mouse followed them); a
+  // move onto another period asks again (QEvent::ToolTip) and gets what is there
+  if(area) *area = QRect(QPoint(hit.left_px, 30), QPoint(hit.right_px, m_h1 - 1));
+  return lines.join('\n');
+}
+
+QString CPlotter::callsAt(QPoint const& p, QRect* area) const
+{
+  QString const calls {cqCallsAt(p, area)};
+  return calls.isEmpty() ? tracesAt(p, area) : calls;
+}
+
+void CPlotter::addDecode(QString const& message, int snr, int freq, int time_s, qint64 dial, QString const& mode, bool replay)
+{
+  std::string const call {trace_spots::sender(message.toStdString())};
+  if(!call.empty()) m_traces.add(time_s, cq_spots::Origin {dial, mode.toStdString(), replay}, call, snr, freq);
+}
+
+void CPlotter::beginReplay() { m_replayPending = true; }
 
 void CPlotter::setCqDuration(int seconds)
 {
@@ -721,6 +805,7 @@ void CPlotter::leaveEvent(QEvent *event)
     m_lastPaintedX = -1;
     m_lastMouseY = -1;
     m_lastTip.clear();
+    m_traceTip.clear();
     event->ignore();
 }
 

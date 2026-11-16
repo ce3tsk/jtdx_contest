@@ -52,6 +52,10 @@ public:
   void   addCqCall(QString const& call, int freq, qint64 dial, QString const& mode, bool replay);
   void   setCqOrigin(qint64 dial, QString const& mode, bool replay);
   bool   cqCallsOn() const;
+  // (2026-11-15) a line the Band Activity window shows, with its period's time and air: named over its trace (tracespots.h);
+  // a recording about to be drawn
+  void   addDecode(QString const& message, int snr, int freq, int time_s, qint64 dial, QString const& mode, bool replay);
+  void   beginReplay();
 
 signals:
   void freezeDecode2(int n);

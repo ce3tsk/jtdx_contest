@@ -22,6 +22,7 @@
 #include <vector>
 #include "JTDXDateTime.h"
 #include "cqspots.h"
+#include "tracespots.h"
 #define VERT_DIVS 7	//specify grid screen divisions
 #define HORZ_DIVS 20
 
@@ -95,6 +96,11 @@ public:
   void addCqCall(QString const& call, int freq, qint64 dial, QString const& mode, bool replay);   // the air it was heard on
   void setCqOrigin(qint64 dial, QString const& mode, bool replay);   // the air the waterfall shows now
   void clearCqCalls();
+  // (2026-11-15) each line the Band Activity window shows, with the period it was decoded of - its time, the second of
+  // the UTC day, and its air: the mouse over a signal's trace in the waterfall names it, "K1ABC -12" (tracespots.h)
+  void addDecode(QString const& message, int snr, int freq, int time_s, qint64 dial, QString const& mode, bool replay);
+  void beginReplay();                // a recording is about to be drawn: its first row begins its own period
+  int  tracePeriods() const {return static_cast<int>(m_traces.periods());}   // the periods kept (for test_cqcalls)
 
 signals:
   void freezeDecode1(int n);
@@ -118,6 +124,10 @@ private:
   float signalBandwidth() const;           // width in Hz of one signal of the mode, 0 if there is none
   void drawCqCalls(QPainter& painter);     // the CQ calls over the waterfall's bottom edge
   QString cqCallsAt(QPoint const& p, QRect* area = nullptr) const;   // the call(s) drawn at p, one a line, or ""
+  QString tracesAt(QPoint const& p, QRect* area = nullptr) const;    // the signals whose trace is at p, one a line, or ""
+  QString callsAt(QPoint const& p, QRect* area = nullptr) const;     // a CQ call's label or bracket first, else the traces
+  void noteRow();                          // a row just drawn (tracespots.h)
+  void followTip();                        // the resting mouse's tooltip, after the waterfall moved under it
 
   bool    m_bCurrent;
   bool    m_bCumulative;
@@ -175,6 +185,10 @@ private:
   // it shows. A label names its own call; a bracket every call heard on that signal
   struct CqHit {QRect area; QString call; bool label;};
   std::vector<CqHit> m_cqHits;
+  trace_spots::Board m_traces;             // (2026-11-15) the waterfall's rows, its periods and their decoded lines
+  bool    m_replayPending;                 // a recording's first row is still to come
+  QPoint  m_traceTipAt;                    // where the resting mouse's tooltip was asked for, while it shows: the
+  QString m_traceTip;                      // waterfall moves on under it, and the tooltip follows what is there
 
   qint32  m_dBStepSize;
   qint32  m_FreqUnits;

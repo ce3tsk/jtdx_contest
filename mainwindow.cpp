@@ -5930,6 +5930,8 @@ void MainWindow::diskDat()                                   //diskDat()
     int kstep=m_FFTSize;
     m_diskData=true;
     m_wideGraph->setCqOrigin (static_cast<qint64> (m_freqNominal), m_mode, true);   // (3.-250's review) the live CQ calls hidden
+    // (2026-11-15) its rows one period of their own: its decoded lines go to it (tracespots.h)
+    m_wideGraph->beginReplay ();
     for(int n=1; n<=m_hsymStop; n++) {                      // Do the waterfall spectra
       k=(n+1)*kstep;
 //      if(k > dec_data.params.kin) break;
@@ -8649,6 +8651,15 @@ void MainWindow::readFromStdout()                             //readFromStdout
         if (!cqCall.isEmpty ())
           m_wideGraph->addCqCall (cqCall, decodedtext.frequencyOffset (), m_decodeOrigin.dial, m_decodeOrigin.mode, m_decodeReplay);
       }
+      /* (2026-11-15, the operator: the decoded call signs in the waterfall itself - the mouse over a trace names its signals,
+         "K1ABC -12", the call signs of the Band Activity window) every line the window has just shown, CQ or not, goes to
+         the waterfall with the period it was decoded of - its time, its air - and the plot finds its sender (tracespots.h)
+         in the WHOLE message (message () is cut at 24 characters: a Fox's second call came cut). Not an error decode
+         ('?'), a debug line, nor (TODO.md 3.-259's review, the operator 2026-11-16: "let's leave phantom decodes out") a
+         likely phantom decode, as for the CQ calls; a late line too, which its own air puts to the rows of its band. */
+      if ((notified & 2) && !decodedtext.isDebug () && !decodedtext.isWrong () && !decodedtext.verdict ().marked ())
+        m_wideGraph->addDecode (decodedtext.wholeMessage (), decodedtext.snr (), decodedtext.frequencyOffset (),
+                                static_cast<int> (decodedtext.timeInSeconds ()), m_decodeOrigin.dial, m_decodeOrigin.mode, m_decodeReplay);
 
       //Right (Rx Frequency) window
 	  
