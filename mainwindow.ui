@@ -4761,6 +4761,7 @@ list. The list can be maintained in Settings (F2).</string>
      <string>View</string>
     </property>
     <addaction name="actionWide_Waterfall"/>
+    <addaction name="actionReception_map"/>
     <addaction name="actionMode_buttons"/>
     <addaction name="actionBand_buttons"/>
     <addaction name="actionBand_mode_buttons"/>
@@ -5384,6 +5385,11 @@ list. The list can be maintained in Settings (F2).</string>
   <action name="actionWide_Waterfall">
    <property name="text">
     <string>Waterfall</string>
+   </property>
+  </action>
+  <action name="actionReception_map">
+   <property name="text">
+    <string>Reception map</string>
    </property>
   </action>
   <action name="actionMode_buttons">

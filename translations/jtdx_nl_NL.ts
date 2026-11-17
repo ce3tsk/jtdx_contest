@@ -107,6 +107,11 @@
         <source>Support this work on Ko-fi</source>
         <translation>Steun dit werk op Ko-fi</translation>
     </message>
+    <message>
+        <location filename="../about.cpp"/>
+        <source>&lt;b&gt;The Reception Map&lt;/b&gt; shows the reception reports of pskreporter.info (%1), distributed by&lt;br&gt;mqtt.pskreporter.info (%2), on a map made with Natural Earth.</source>
+        <translation>&lt;b&gt;De Ontvangstkaart&lt;/b&gt; toont de ontvangstrapporten van pskreporter.info (%1), verspreid door&lt;br&gt;mqtt.pskreporter.info (%2), op een kaart gemaakt met Natural Earth.</translation>
+    </message>
 </context>
 <context>
     <name>CallsignDialog</name>
@@ -6881,6 +6886,11 @@ Dit log voortzetten of een nieuw beginnen?</translation>
         <source>Start a new log</source>
         <translation>Nieuw log beginnen</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Reception map</source>
+        <translation>Ontvangstkaart</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>
@@ -7239,6 +7249,94 @@ Controleer of de mapnaam juist is.</translation>
         <location filename="../Configuration.cpp"/>
         <source>Close</source>
         <translation>Sluiten</translation>
+    </message>
+</context>
+<context>
+    <name>ReceptionMap</name>
+    <message>
+        <location filename="../receptionmap.cpp"/>
+        <source>Reception Map</source>
+        <translation>Ontvangstkaart</translation>
+    </message>
+    <message>
+        <location filename="../receptionmap.cpp"/>
+        <source>connecting</source>
+        <translation>verbinden</translation>
+    </message>
+    <message>
+        <location filename="../receptionmap.cpp"/>
+        <source>no connection - next try in %1 s</source>
+        <translation>geen verbinding - volgende poging over %1 s</translation>
+    </message>
+    <message>
+        <location filename="../receptionmap.cpp"/>
+        <source>hears %1</source>
+        <translation>hoort %1</translation>
+    </message>
+    <message>
+        <location filename="../receptionmap.cpp"/>
+        <source>hears %1 (%2 on the map)</source>
+        <translation>hoort %1 (%2 op de kaart)</translation>
+    </message>
+    <message>
+        <location filename="../receptionmap.cpp"/>
+        <source>heard by %1</source>
+        <translation>gehoord door %1</translation>
+    </message>
+    <message>
+        <location filename="../receptionmap.cpp"/>
+        <source>both ways %1</source>
+        <translation>beide kanten %1</translation>
+    </message>
+    <message>
+        <location filename="../receptionmap.cpp"/>
+        <source>%1 reporting</source>
+        <translation>%1 rapporteren</translation>
+    </message>
+    <message>
+        <location filename="../receptionmap.cpp"/>
+        <source>both ways</source>
+        <translation>beide kanten</translation>
+    </message>
+    <message>
+        <location filename="../receptionmap.cpp"/>
+        <source>we hear</source>
+        <translation>wij horen</translation>
+    </message>
+    <message>
+        <location filename="../receptionmap.cpp"/>
+        <source>Show stations we hear</source>
+        <translation>Stations tonen die wij horen</translation>
+    </message>
+    <message>
+        <location filename="../receptionmap.cpp"/>
+        <source>Show other stations</source>
+        <translation>Andere stations tonen</translation>
+    </message>
+    <message>
+        <location filename="../receptionmap.cpp"/>
+        <source>Show DXCC prefixes</source>
+        <translation>DXCC-prefixen tonen</translation>
+    </message>
+    <message>
+        <location filename="../receptionmap.cpp"/>
+        <source>Reduced data</source>
+        <translation>Beperkte gegevens</translation>
+    </message>
+    <message>
+        <location filename="../receptionmap.cpp"/>
+        <source>Show age labels</source>
+        <translation>Tijdlabels tonen</translation>
+    </message>
+    <message>
+        <location filename="../receptionmap.cpp"/>
+        <source>Show 30 minutes</source>
+        <translation>30 minuten tonen</translation>
+    </message>
+    <message>
+        <location filename="../receptionmap.cpp"/>
+        <source>no feed for this band and mode</source>
+        <translation>geen datastroom voor deze band en mode</translation>
     </message>
 </context>
 <context>
@@ -7861,6 +7959,89 @@ Controleer of de mapnaam juist is.</translation>
         <location filename="../widegraph.ui"/>
         <source>CQ calls </source>
         <translation>CQ-roepers </translation>
+    </message>
+</context>
+<context>
+    <name>WorldMapView</name>
+    <message>
+        <location filename="../worldmapview.cpp"/>
+        <source>Centre on my station</source>
+        <translation>Centreren op mijn station</translation>
+    </message>
+    <message>
+        <location filename="../worldmapview.cpp"/>
+        <source>%1 s</source>
+        <translation>%1 s</translation>
+    </message>
+    <message>
+        <location filename="../worldmapview.cpp"/>
+        <source>%1 min</source>
+        <translation>%1 min</translation>
+    </message>
+    <message>
+        <location filename="../worldmapview.cpp"/>
+        <source>%1 s ago</source>
+        <translation>%1 s geleden</translation>
+    </message>
+    <message>
+        <location filename="../worldmapview.cpp"/>
+        <source>%1 min ago</source>
+        <translation>%1 min geleden</translation>
+    </message>
+    <message>
+        <location filename="../worldmapview.cpp"/>
+        <source>and %1 more</source>
+        <translation>en nog %1</translation>
+    </message>
+    <message>
+        <location filename="../worldmapview.cpp"/>
+        <source>heard us %1 UTC, %2</source>
+        <translation>hoorde ons %1 UTC, %2</translation>
+    </message>
+    <message>
+        <location filename="../worldmapview.cpp"/>
+        <source>our signal %1 MHz, %2, %3</source>
+        <translation>ons signaal %1 MHz, %2, %3</translation>
+    </message>
+    <message>
+        <location filename="../worldmapview.cpp"/>
+        <source>no report</source>
+        <translation>geen rapport</translation>
+    </message>
+    <message>
+        <location filename="../worldmapview.cpp"/>
+        <source>heard by us %1 UTC, %2</source>
+        <translation>door ons gehoord %1 UTC, %2</translation>
+    </message>
+    <message>
+        <location filename="../worldmapview.cpp"/>
+        <source>Tx %1 MHz, %2</source>
+        <translation>Tx %1 MHz, %2</translation>
+    </message>
+    <message>
+        <location filename="../worldmapview.cpp"/>
+        <source>heard by us %1 dB, %2</source>
+        <translation>door ons gehoord %1 dB, %2</translation>
+    </message>
+    <message>
+        <location filename="../worldmapview.cpp"/>
+        <source>Zoom to stations that hear me</source>
+        <translation>Zoomen naar stations die mij horen</translation>
+    </message>
+    <message>
+        <location filename="../worldmapview.cpp"/>
+        <source>Zoom to stations that hear me or I hear</source>
+        <translation>Zoomen naar stations die mij horen of ik hoor</translation>
+    </message>
+    <message>
+        <location filename="../worldmapview.cpp"/>
+        <source>Zoom to stations I hear</source>
+        <translation>Zoomen naar stations die ik hoor</translation>
+    </message>
+    <message>
+        <location filename="../worldmapview.cpp"/>
+        <source>and %1 more here</source>
+        <translation>en nog %1 hier</translation>
     </message>
 </context>
 <context>

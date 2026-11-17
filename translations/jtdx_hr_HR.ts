@@ -107,6 +107,11 @@
         <source>Support this work on Ko-fi</source>
         <translation>Podržite ovaj rad na Ko-fiju</translation>
     </message>
+    <message>
+        <location filename="../about.cpp"/>
+        <source>&lt;b&gt;The Reception Map&lt;/b&gt; shows the reception reports of pskreporter.info (%1), distributed by&lt;br&gt;mqtt.pskreporter.info (%2), on a map made with Natural Earth.</source>
+        <translation>&lt;b&gt;Karta prijema&lt;/b&gt; prikazuje izvještaje o prijemu s pskreporter.info (%1), koje distribuira&lt;br&gt;mqtt.pskreporter.info (%2), na karti izrađenoj s Natural Earth.</translation>
+    </message>
 </context>
 <context>
     <name>CallsignDialog</name>
@@ -6885,6 +6890,11 @@ Nastaviti ovaj log ili započeti novi?</translation>
         <source>Start a new log</source>
         <translation>Započni novi log</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Reception map</source>
+        <translation>Karta prijema</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>
@@ -7243,6 +7253,94 @@ Provjerite je li dato točno ime imenika.</translation>
         <location filename="../Configuration.cpp"/>
         <source>Close</source>
         <translation>Zatvori</translation>
+    </message>
+</context>
+<context>
+    <name>ReceptionMap</name>
+    <message>
+        <location filename="../receptionmap.cpp"/>
+        <source>Reception Map</source>
+        <translation>Karta prijema</translation>
+    </message>
+    <message>
+        <location filename="../receptionmap.cpp"/>
+        <source>connecting</source>
+        <translation>povezivanje</translation>
+    </message>
+    <message>
+        <location filename="../receptionmap.cpp"/>
+        <source>no connection - next try in %1 s</source>
+        <translation>nema veze - sljedeći pokušaj za %1 s</translation>
+    </message>
+    <message>
+        <location filename="../receptionmap.cpp"/>
+        <source>hears %1</source>
+        <translation>čujemo %1</translation>
+    </message>
+    <message>
+        <location filename="../receptionmap.cpp"/>
+        <source>hears %1 (%2 on the map)</source>
+        <translation>čujemo %1 (%2 na karti)</translation>
+    </message>
+    <message>
+        <location filename="../receptionmap.cpp"/>
+        <source>heard by %1</source>
+        <translation>čuje nas %1</translation>
+    </message>
+    <message>
+        <location filename="../receptionmap.cpp"/>
+        <source>both ways %1</source>
+        <translation>obostrano %1</translation>
+    </message>
+    <message>
+        <location filename="../receptionmap.cpp"/>
+        <source>%1 reporting</source>
+        <translation>%1 izvještava</translation>
+    </message>
+    <message>
+        <location filename="../receptionmap.cpp"/>
+        <source>both ways</source>
+        <translation>obostrano</translation>
+    </message>
+    <message>
+        <location filename="../receptionmap.cpp"/>
+        <source>we hear</source>
+        <translation>čujemo</translation>
+    </message>
+    <message>
+        <location filename="../receptionmap.cpp"/>
+        <source>Show stations we hear</source>
+        <translation>Prikaži stanice koje čujemo</translation>
+    </message>
+    <message>
+        <location filename="../receptionmap.cpp"/>
+        <source>Show other stations</source>
+        <translation>Prikaži ostale stanice</translation>
+    </message>
+    <message>
+        <location filename="../receptionmap.cpp"/>
+        <source>Show DXCC prefixes</source>
+        <translation>Prikaži DXCC prefikse</translation>
+    </message>
+    <message>
+        <location filename="../receptionmap.cpp"/>
+        <source>Reduced data</source>
+        <translation>Smanjeni podaci</translation>
+    </message>
+    <message>
+        <location filename="../receptionmap.cpp"/>
+        <source>Show age labels</source>
+        <translation>Prikaži vremenske oznake</translation>
+    </message>
+    <message>
+        <location filename="../receptionmap.cpp"/>
+        <source>Show 30 minutes</source>
+        <translation>Prikaži 30 minuta</translation>
+    </message>
+    <message>
+        <location filename="../receptionmap.cpp"/>
+        <source>no feed for this band and mode</source>
+        <translation>nema toka podataka za ovaj opseg i mod</translation>
     </message>
 </context>
 <context>
@@ -7865,6 +7963,89 @@ Provjerite je li dato točno ime imenika.</translation>
         <location filename="../widegraph.ui"/>
         <source>CQ calls </source>
         <translation>CQ pozivi </translation>
+    </message>
+</context>
+<context>
+    <name>WorldMapView</name>
+    <message>
+        <location filename="../worldmapview.cpp"/>
+        <source>Centre on my station</source>
+        <translation>Centriraj na moju stanicu</translation>
+    </message>
+    <message>
+        <location filename="../worldmapview.cpp"/>
+        <source>%1 s</source>
+        <translation>%1 s</translation>
+    </message>
+    <message>
+        <location filename="../worldmapview.cpp"/>
+        <source>%1 min</source>
+        <translation>%1 min</translation>
+    </message>
+    <message>
+        <location filename="../worldmapview.cpp"/>
+        <source>%1 s ago</source>
+        <translation>prije %1 s</translation>
+    </message>
+    <message>
+        <location filename="../worldmapview.cpp"/>
+        <source>%1 min ago</source>
+        <translation>prije %1 min</translation>
+    </message>
+    <message>
+        <location filename="../worldmapview.cpp"/>
+        <source>and %1 more</source>
+        <translation>i još %1</translation>
+    </message>
+    <message>
+        <location filename="../worldmapview.cpp"/>
+        <source>heard us %1 UTC, %2</source>
+        <translation>čula nas %1 UTC, %2</translation>
+    </message>
+    <message>
+        <location filename="../worldmapview.cpp"/>
+        <source>our signal %1 MHz, %2, %3</source>
+        <translation>naš signal %1 MHz, %2, %3</translation>
+    </message>
+    <message>
+        <location filename="../worldmapview.cpp"/>
+        <source>no report</source>
+        <translation>bez raporta</translation>
+    </message>
+    <message>
+        <location filename="../worldmapview.cpp"/>
+        <source>heard by us %1 UTC, %2</source>
+        <translation>čuli smo je %1 UTC, %2</translation>
+    </message>
+    <message>
+        <location filename="../worldmapview.cpp"/>
+        <source>Tx %1 MHz, %2</source>
+        <translation>Tx %1 MHz, %2</translation>
+    </message>
+    <message>
+        <location filename="../worldmapview.cpp"/>
+        <source>heard by us %1 dB, %2</source>
+        <translation>čujemo je %1 dB, %2</translation>
+    </message>
+    <message>
+        <location filename="../worldmapview.cpp"/>
+        <source>Zoom to stations that hear me</source>
+        <translation>Zumiraj na stanice koje me čuju</translation>
+    </message>
+    <message>
+        <location filename="../worldmapview.cpp"/>
+        <source>Zoom to stations that hear me or I hear</source>
+        <translation>Zumiraj na stanice koje me čuju ili čujem</translation>
+    </message>
+    <message>
+        <location filename="../worldmapview.cpp"/>
+        <source>Zoom to stations I hear</source>
+        <translation>Zumiraj na stanice koje čujem</translation>
+    </message>
+    <message>
+        <location filename="../worldmapview.cpp"/>
+        <source>and %1 more here</source>
+        <translation>i još %1 ovdje</translation>
     </message>
 </context>
 <context>

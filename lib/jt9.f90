@@ -689,6 +689,17 @@ subroutine jt9files(offset,nfiles,mode,ndepth,flow,fsplit,fhigh,nrxfreq,ncycles,
      if(ienv.eq.0 .and. lenv.gt.0) then
         read(envval(1:lenv),*,iostat=ienv) nbandfile; if(ienv.eq.0 .and. iarg-offset.eq.nbandfile) params%lbandchanged=.true.
      endif
+     ! CE3TSK 2026-11-16 test hook (TODO 3.-263): JTDX_FEEDCALLS_SWAP=n puts compound_calls_feed.txt.next in the place of
+     ! the data directory's compound_calls_feed.txt before the n-th file is decoded - as the program writes a new list
+     ! while the decoder runs (the list must be read again); said on stderr, with how it went
+     call get_environment_variable('JTDX_FEEDCALLS_SWAP',envval,lenv,ienv)
+     if(ienv.eq.0 .and. lenv.gt.0) then
+        read(envval(1:lenv),*,iostat=ienv) nbandfile
+        if(ienv.eq.0 .and. iarg-offset.eq.nbandfile) then
+           call rename(trim(data_dir)//'/compound_calls_feed.txt.next',trim(data_dir)//'/compound_calls_feed.txt',ienv)
+           write(0,'(a,i0,a,i0)') 'JTDX_FEEDCALLS_SWAP: the new list in place before file ',nbandfile,', status ',ienv
+        endif
+     endif
      ! CE3TSK 2026-10-15 test hook: JTDX_MODECHANGED=n raises lmodechanged on the n-th file WITHOUT changing the mode - as
      ! the program does when its Settings are closed or the rig comes back online (the hash tables must stay)
      call get_environment_variable('JTDX_MODECHANGED',envval,lenv,ienv)

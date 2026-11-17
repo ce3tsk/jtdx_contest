@@ -107,6 +107,11 @@
         <source>Support this work on Ko-fi</source>
         <translation>Ko-fi에서 이 작업을 후원하기</translation>
     </message>
+    <message>
+        <location filename="../about.cpp"/>
+        <source>&lt;b&gt;The Reception Map&lt;/b&gt; shows the reception reports of pskreporter.info (%1), distributed by&lt;br&gt;mqtt.pskreporter.info (%2), on a map made with Natural Earth.</source>
+        <translation>&lt;b&gt;수신 지도&lt;/b&gt;는 pskreporter.info(%1)의 수신 리포트를&lt;br&gt;mqtt.pskreporter.info(%2)를 통해 받아 Natural Earth로 만든 지도에 표시합니다.</translation>
+    </message>
 </context>
 <context>
     <name>CallsignDialog</name>
@@ -6881,6 +6886,11 @@ QSO 수: %3
         <source>Start a new log</source>
         <translation>새 로그 시작</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Reception map</source>
+        <translation>수신 지도</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>
@@ -7239,6 +7249,94 @@ Please verify the correct directory name was given.</source>
         <location filename="../Configuration.cpp"/>
         <source>Close</source>
         <translation>닫기</translation>
+    </message>
+</context>
+<context>
+    <name>ReceptionMap</name>
+    <message>
+        <location filename="../receptionmap.cpp"/>
+        <source>Reception Map</source>
+        <translation>수신 지도</translation>
+    </message>
+    <message>
+        <location filename="../receptionmap.cpp"/>
+        <source>connecting</source>
+        <translation>연결 중</translation>
+    </message>
+    <message>
+        <location filename="../receptionmap.cpp"/>
+        <source>no connection - next try in %1 s</source>
+        <translation>연결 없음 - %1초 후 재시도</translation>
+    </message>
+    <message>
+        <location filename="../receptionmap.cpp"/>
+        <source>hears %1</source>
+        <translation>우리가 수신 %1</translation>
+    </message>
+    <message>
+        <location filename="../receptionmap.cpp"/>
+        <source>hears %1 (%2 on the map)</source>
+        <translation>우리가 수신 %1 (지도에 %2)</translation>
+    </message>
+    <message>
+        <location filename="../receptionmap.cpp"/>
+        <source>heard by %1</source>
+        <translation>우리를 수신 %1</translation>
+    </message>
+    <message>
+        <location filename="../receptionmap.cpp"/>
+        <source>both ways %1</source>
+        <translation>양방향 %1</translation>
+    </message>
+    <message>
+        <location filename="../receptionmap.cpp"/>
+        <source>%1 reporting</source>
+        <translation>보고 %1국</translation>
+    </message>
+    <message>
+        <location filename="../receptionmap.cpp"/>
+        <source>both ways</source>
+        <translation>양방향</translation>
+    </message>
+    <message>
+        <location filename="../receptionmap.cpp"/>
+        <source>we hear</source>
+        <translation>우리가 수신</translation>
+    </message>
+    <message>
+        <location filename="../receptionmap.cpp"/>
+        <source>Show stations we hear</source>
+        <translation>우리가 수신한 국 표시</translation>
+    </message>
+    <message>
+        <location filename="../receptionmap.cpp"/>
+        <source>Show other stations</source>
+        <translation>다른 국 표시</translation>
+    </message>
+    <message>
+        <location filename="../receptionmap.cpp"/>
+        <source>Show DXCC prefixes</source>
+        <translation>DXCC 프리픽스 표시</translation>
+    </message>
+    <message>
+        <location filename="../receptionmap.cpp"/>
+        <source>Reduced data</source>
+        <translation>데이터 줄이기</translation>
+    </message>
+    <message>
+        <location filename="../receptionmap.cpp"/>
+        <source>Show age labels</source>
+        <translation>경과 시간 표시</translation>
+    </message>
+    <message>
+        <location filename="../receptionmap.cpp"/>
+        <source>Show 30 minutes</source>
+        <translation>30분 표시</translation>
+    </message>
+    <message>
+        <location filename="../receptionmap.cpp"/>
+        <source>no feed for this band and mode</source>
+        <translation>이 밴드와 모드의 데이터 피드 없음</translation>
     </message>
 </context>
 <context>
@@ -7861,6 +7959,89 @@ Please verify the correct directory name was given.</source>
         <location filename="../widegraph.ui"/>
         <source>CQ calls </source>
         <translation>CQ 호출 </translation>
+    </message>
+</context>
+<context>
+    <name>WorldMapView</name>
+    <message>
+        <location filename="../worldmapview.cpp"/>
+        <source>Centre on my station</source>
+        <translation>내 국을 중앙에 표시</translation>
+    </message>
+    <message>
+        <location filename="../worldmapview.cpp"/>
+        <source>%1 s</source>
+        <translation>%1초</translation>
+    </message>
+    <message>
+        <location filename="../worldmapview.cpp"/>
+        <source>%1 min</source>
+        <translation>%1분</translation>
+    </message>
+    <message>
+        <location filename="../worldmapview.cpp"/>
+        <source>%1 s ago</source>
+        <translation>%1초 전</translation>
+    </message>
+    <message>
+        <location filename="../worldmapview.cpp"/>
+        <source>%1 min ago</source>
+        <translation>%1분 전</translation>
+    </message>
+    <message>
+        <location filename="../worldmapview.cpp"/>
+        <source>and %1 more</source>
+        <translation>외 %1국</translation>
+    </message>
+    <message>
+        <location filename="../worldmapview.cpp"/>
+        <source>heard us %1 UTC, %2</source>
+        <translation>우리 신호 수신 %1 UTC, %2</translation>
+    </message>
+    <message>
+        <location filename="../worldmapview.cpp"/>
+        <source>our signal %1 MHz, %2, %3</source>
+        <translation>우리 신호 %1 MHz, %2, %3</translation>
+    </message>
+    <message>
+        <location filename="../worldmapview.cpp"/>
+        <source>no report</source>
+        <translation>리포트 없음</translation>
+    </message>
+    <message>
+        <location filename="../worldmapview.cpp"/>
+        <source>heard by us %1 UTC, %2</source>
+        <translation>우리가 수신 %1 UTC, %2</translation>
+    </message>
+    <message>
+        <location filename="../worldmapview.cpp"/>
+        <source>Tx %1 MHz, %2</source>
+        <translation>송신 %1 MHz, %2</translation>
+    </message>
+    <message>
+        <location filename="../worldmapview.cpp"/>
+        <source>heard by us %1 dB, %2</source>
+        <translation>우리가 수신 %1 dB, %2</translation>
+    </message>
+    <message>
+        <location filename="../worldmapview.cpp"/>
+        <source>Zoom to stations that hear me</source>
+        <translation>우리를 수신하는 국으로 확대</translation>
+    </message>
+    <message>
+        <location filename="../worldmapview.cpp"/>
+        <source>Zoom to stations that hear me or I hear</source>
+        <translation>우리를 수신하거나 우리가 수신한 국으로 확대</translation>
+    </message>
+    <message>
+        <location filename="../worldmapview.cpp"/>
+        <source>Zoom to stations I hear</source>
+        <translation>우리가 수신한 국으로 확대</translation>
+    </message>
+    <message>
+        <location filename="../worldmapview.cpp"/>
+        <source>and %1 more here</source>
+        <translation>외 %1개 엔티티</translation>
     </message>
 </context>
 <context>

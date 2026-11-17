@@ -107,6 +107,11 @@
         <source>Support this work on Ko-fi</source>
         <translation>在 Ko-fi 上支持这项工作</translation>
     </message>
+    <message>
+        <location filename="../about.cpp"/>
+        <source>&lt;b&gt;The Reception Map&lt;/b&gt; shows the reception reports of pskreporter.info (%1), distributed by&lt;br&gt;mqtt.pskreporter.info (%2), on a map made with Natural Earth.</source>
+        <translation>&lt;b&gt;接收地图&lt;/b&gt;显示 pskreporter.info（%1）的接收报告，由&lt;br&gt;mqtt.pskreporter.info（%2）分发，地图以 Natural Earth 制作。</translation>
+    </message>
 </context>
 <context>
     <name>CallsignDialog</name>
@@ -6880,6 +6885,11 @@ Continue this log, or start a new one?</source>
         <source>Start a new log</source>
         <translation>开始新的日志</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Reception map</source>
+        <translation>接收地图</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>
@@ -7238,6 +7248,94 @@ Please verify the correct directory name was given.</source>
         <location filename="../Configuration.cpp"/>
         <source>Close</source>
         <translation>关闭</translation>
+    </message>
+</context>
+<context>
+    <name>ReceptionMap</name>
+    <message>
+        <location filename="../receptionmap.cpp"/>
+        <source>Reception Map</source>
+        <translation>接收地图</translation>
+    </message>
+    <message>
+        <location filename="../receptionmap.cpp"/>
+        <source>connecting</source>
+        <translation>正在连接</translation>
+    </message>
+    <message>
+        <location filename="../receptionmap.cpp"/>
+        <source>no connection - next try in %1 s</source>
+        <translation>无连接 - %1 秒后重试</translation>
+    </message>
+    <message>
+        <location filename="../receptionmap.cpp"/>
+        <source>hears %1</source>
+        <translation>本台收到 %1</translation>
+    </message>
+    <message>
+        <location filename="../receptionmap.cpp"/>
+        <source>hears %1 (%2 on the map)</source>
+        <translation>本台收到 %1（地图上 %2）</translation>
+    </message>
+    <message>
+        <location filename="../receptionmap.cpp"/>
+        <source>heard by %1</source>
+        <translation>收到本台 %1</translation>
+    </message>
+    <message>
+        <location filename="../receptionmap.cpp"/>
+        <source>both ways %1</source>
+        <translation>双向 %1</translation>
+    </message>
+    <message>
+        <location filename="../receptionmap.cpp"/>
+        <source>%1 reporting</source>
+        <translation>报告电台 %1</translation>
+    </message>
+    <message>
+        <location filename="../receptionmap.cpp"/>
+        <source>both ways</source>
+        <translation>双向</translation>
+    </message>
+    <message>
+        <location filename="../receptionmap.cpp"/>
+        <source>we hear</source>
+        <translation>本台收到</translation>
+    </message>
+    <message>
+        <location filename="../receptionmap.cpp"/>
+        <source>Show stations we hear</source>
+        <translation>显示本台收到的电台</translation>
+    </message>
+    <message>
+        <location filename="../receptionmap.cpp"/>
+        <source>Show other stations</source>
+        <translation>显示其他电台</translation>
+    </message>
+    <message>
+        <location filename="../receptionmap.cpp"/>
+        <source>Show DXCC prefixes</source>
+        <translation>显示 DXCC 前缀</translation>
+    </message>
+    <message>
+        <location filename="../receptionmap.cpp"/>
+        <source>Reduced data</source>
+        <translation>精简数据</translation>
+    </message>
+    <message>
+        <location filename="../receptionmap.cpp"/>
+        <source>Show age labels</source>
+        <translation>显示时间标签</translation>
+    </message>
+    <message>
+        <location filename="../receptionmap.cpp"/>
+        <source>Show 30 minutes</source>
+        <translation>显示 30 分钟</translation>
+    </message>
+    <message>
+        <location filename="../receptionmap.cpp"/>
+        <source>no feed for this band and mode</source>
+        <translation>此波段和模式没有数据流</translation>
     </message>
 </context>
 <context>
@@ -7860,6 +7958,89 @@ Please verify the correct directory name was given.</source>
         <location filename="../widegraph.ui"/>
         <source>CQ calls </source>
         <translation>CQ 呼叫 </translation>
+    </message>
+</context>
+<context>
+    <name>WorldMapView</name>
+    <message>
+        <location filename="../worldmapview.cpp"/>
+        <source>Centre on my station</source>
+        <translation>以本电台为中心</translation>
+    </message>
+    <message>
+        <location filename="../worldmapview.cpp"/>
+        <source>%1 s</source>
+        <translation>%1 秒</translation>
+    </message>
+    <message>
+        <location filename="../worldmapview.cpp"/>
+        <source>%1 min</source>
+        <translation>%1 分</translation>
+    </message>
+    <message>
+        <location filename="../worldmapview.cpp"/>
+        <source>%1 s ago</source>
+        <translation>%1 秒前</translation>
+    </message>
+    <message>
+        <location filename="../worldmapview.cpp"/>
+        <source>%1 min ago</source>
+        <translation>%1 分钟前</translation>
+    </message>
+    <message>
+        <location filename="../worldmapview.cpp"/>
+        <source>and %1 more</source>
+        <translation>另有 %1 个</translation>
+    </message>
+    <message>
+        <location filename="../worldmapview.cpp"/>
+        <source>heard us %1 UTC, %2</source>
+        <translation>收到本台 %1 UTC，%2</translation>
+    </message>
+    <message>
+        <location filename="../worldmapview.cpp"/>
+        <source>our signal %1 MHz, %2, %3</source>
+        <translation>本台信号 %1 MHz，%2，%3</translation>
+    </message>
+    <message>
+        <location filename="../worldmapview.cpp"/>
+        <source>no report</source>
+        <translation>无信号报告</translation>
+    </message>
+    <message>
+        <location filename="../worldmapview.cpp"/>
+        <source>heard by us %1 UTC, %2</source>
+        <translation>本台收到 %1 UTC，%2</translation>
+    </message>
+    <message>
+        <location filename="../worldmapview.cpp"/>
+        <source>Tx %1 MHz, %2</source>
+        <translation>发射 %1 MHz，%2</translation>
+    </message>
+    <message>
+        <location filename="../worldmapview.cpp"/>
+        <source>heard by us %1 dB, %2</source>
+        <translation>本台收到 %1 dB，%2</translation>
+    </message>
+    <message>
+        <location filename="../worldmapview.cpp"/>
+        <source>Zoom to stations that hear me</source>
+        <translation>缩放到收到本台的电台</translation>
+    </message>
+    <message>
+        <location filename="../worldmapview.cpp"/>
+        <source>Zoom to stations that hear me or I hear</source>
+        <translation>缩放到收到本台或本台收到的电台</translation>
+    </message>
+    <message>
+        <location filename="../worldmapview.cpp"/>
+        <source>Zoom to stations I hear</source>
+        <translation>缩放到本台收到的电台</translation>
+    </message>
+    <message>
+        <location filename="../worldmapview.cpp"/>
+        <source>and %1 more here</source>
+        <translation>此处另有 %1 个</translation>
     </message>
 </context>
 <context>

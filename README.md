@@ -287,6 +287,49 @@ Operating:
   only when the earlier ones do not know the call. The code lines are hidden unless `ShowOTP=true`.
 - JTDX\_CONTEST does **not** transmit SuperFox.
 
+### Reception map (View → Reception map)
+
+A world map for the band and mode you are on, of the last 15 minutes - or 30, with *Show 30 minutes*: who hears you,
+whom you hear, and everyone else who is listening there.
+
+- **Stations that hear you** are dots in the colour of the report they gave you (four blues, the darker the
+  stronger), each with its age above it - seconds, then minutes - the newest on top. They are the
+  reception reports of [PSK Reporter](https://pskreporter.info), which arrive live from
+  [mqtt.pskreporter.info](https://mqtt.pskreporter.info) while the window is open.
+- **Stations you hear** are orange diamonds. They come from your own decodes, not from the network - every
+  decode, whatever the Band Activity window's filters hide: the program keeps them from its start, so the map opens
+  with the last 15 (or 30) minutes already on it, and this half works with no internet at all. A station is placed by the grid of its own messages, else by your log or
+  CALL3.TXT - and where it reports to PSK Reporter as well, from that same square, by the finer locator it gives
+  there; one with no known place is counted in the status line and not drawn.
+- **Heard both ways:** the dot wears an orange ring and its age an orange frame.
+- **Everyone else reporting** on the band and mode is a small grey dot.
+- **The mouse on a station** - on its mark or on the age above it - shows its tooltip - call, locator, DXCC entity, when and how strong it heard you,
+  its own transmit frequency when someone reported it, distance and azimuth, and - for any station that reports,
+  asked of the server when the mouse comes to it - the receiver's software and antenna when it publishes them; and,
+  for a station that hears you, the great circle from you to it. Resting
+  on the map where no station is, the mouse is told the locator under it and the DXCC entities of that square. On
+  your own station's mark it shows your call, locator and entity, and how many hear you and how many you hear.
+- **The map** is drawn by the program itself from Natural Earth's public-domain borders: your longitude in the
+  middle, night and day by the clock, the DXCC prefixes once you zoom in. Wheel to zoom, drag to move, `+`, `-`
+  and `Home`; light and dark style.
+- **Right click** for the menu: *Centre on my station*; three ways to fit the view - *Zoom to stations that hear me
+  or I hear*, *Zoom to stations that hear me*, *Zoom to stations I hear*; what is shown - *Show stations we
+  hear*, *Show other stations*, *Show age labels*, *Show DXCC prefixes*, *Show 30 minutes*; and *Reduced data*. Every
+  setting is kept. What the feed sent and what you heard is kept for 30 minutes whichever is shown, so the longer
+  view is complete the moment you choose it. With **Reduced data** the server is
+  asked only for the reports of your own call and for its 1 % sample of the band, instead of every report of the
+  band and mode - a small fraction of the traffic, for a slow or metered connection.
+- **Fewer `<...>` in the decodes.** A station with a compound or special call (PJ4/K1ABC, F/DC6JN, TC31COP)
+  sends its call in full only in some of its messages; in the others it travels as a hash, which the decoder
+  shows as `<...>` until it has heard the call in full itself. While the map is open, such calls that two
+  different receivers reported to PSK Reporter are written to `compound_calls_feed.txt` in the log directory, and
+  the decoder reads a hash from there when it knows no better - after the calls it has heard itself, never
+  instead of them. A call is kept for 30 days after its last report; deleting the file undoes all of it, whether
+  the program is running or not.
+- The window only listens. It sends the server its subscriptions and nothing else - no callsign unless
+  *Reduced data* is on - under a random client name, and it is connected only while the window is open. PSK
+  Reporter spotting stays the separate setting it always was.
+
 ## Building
 
 Building is the same as for original JTDX and WSJT-X, so follow the already existing
@@ -425,6 +468,10 @@ problems a benchmark cannot. Thank you:
 - **Eduardo CA3EAP**
 - **Miguel CA7FKZ**
 - **Cristian CA8CEU**
+
+The Reception map shows the reception reports collected by [pskreporter.info](https://pskreporter.info)
+(Philip Gladstone N1DQ) and distributed over MQTT by [mqtt.pskreporter.info](https://mqtt.pskreporter.info)
+(Tom M0LTE). Its map is made with [Natural Earth](https://www.naturalearthdata.com) (public domain).
 
 ## Copyright and license
 

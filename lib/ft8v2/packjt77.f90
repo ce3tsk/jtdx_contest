@@ -105,6 +105,21 @@ module packjt77
 ! call as <...> (remember_hide), as before the list existed, and the message shown keeps it. Slices 1 to 24 only (25 is
 ! FT4's round trip, above 25 transmitted messages - neither reads the list).
   character (len=13), dimension(1:24) :: remhit=''
+! CE3TSK 2026-11-16 (TODO 3.-263, the operator: "check the reports for compound call signs and add them to the local
+! compound call sign data so that we get more hashes and reduce <...> place holders"): the FEED's compound calls -
+! nonstandard calls that two receivers or more reported to PSK Reporter while the program's Reception map was open.
+! The PROGRAM writes them to the data directory's compound_calls_feed.txt (feedcalls.h: a call and the day it was last
+! reported, as compound_calls.txt); this decoder only reads them - at its first decode and whenever the file is
+! another (its size or its time), feed_refresh in fillhash. hash22 asks them LAST: after the live table
+! and after the remembered calls, which this decoder heard in full itself; two of them of one hash read <...>. Not
+! reported for NFEEDAGE days when the file is read: not taken. A call read from here counts as one from a list (remhit): the phantom checks
+! of an a-priori decode judge it as <...>. File mode leaves the file alone unless JTDX_REMEMBER_CALLS is set, as the
+! remembered list - a benchmark must not depend on what a map once heard. Deleting the file undoes all of it.
+  integer, parameter :: MAXFEED=5000, NFEEDAGE=30
+  character (len=13), dimension(1:MAXFEED) :: feedcall=''
+  integer, dimension(1:MAXFEED) :: feedhash=-1
+  integer :: nfeed=0
+  integer :: nfeedsize=-1, nfeedtime=-1   ! the file as it was last read: -1 never looked, -2 not there
   real :: remsnrdrop=0.0          ! file mode's JTDX_REMEMBER_SNRDROP=n: the SNR gates n dB lower, for the tests only
   integer :: nzhash=0
   integer :: nztxhash=0
@@ -194,6 +209,18 @@ subroutine hash22(n22,c13,nthr)
     if(k.gt.0) then
       c13='<'//trim(remcall(k))//'>'
       if(nthr.ge.1 .and. nthr.le.24) remhit(nthr)=remcall(k)   ! CE3TSK 2026-10-15 (3.-106): from the list
+    else if(k.eq.0) then
+! CE3TSK 2026-11-16 (TODO 3.-263): nor a remembered one - a compound call of the feed's, when exactly one has the hash
+      do i=1,nfeed
+        if(feedhash(i).eq.n22) then
+          if(k.ne.0) then; k=-1; exit; endif
+          k=i
+        endif
+      enddo
+      if(k.gt.0) then
+        c13='<'//trim(feedcall(k))//'>'
+        if(nthr.ge.1 .and. nthr.le.24) remhit(nthr)=feedcall(k)   ! a call from a list, as a remembered one (3.-106)
+      endif
     endif
   endif
 
@@ -524,6 +551,66 @@ subroutine remember_load(dir)
   close(iu,iostat=ios)
   return
 end subroutine remember_load
+
+subroutine feed_refresh(dir)
+! CE3TSK 2026-11-16 (TODO 3.-263): the feed's compound calls read again when their file is another than at the last
+! look - its size or its time: asked at the start of every decode (fillhash), one question of the file system. The
+! program writes the file at most once a minute, so two versions never share a second.
+  character(len=*), intent(in) :: dir
+  integer :: ivals(13),ios,nsize,ntime
+
+  if(.not.lremember) return
+  call stat(trim(dir)//'/compound_calls_feed.txt',ivals,ios)
+  if(ios.ne.0) then; nsize=-2; ntime=-2; else; nsize=ivals(8); ntime=ivals(10); endif
+  if(nsize.eq.nfeedsize .and. ntime.eq.nfeedtime) return
+  nfeedsize=nsize; nfeedtime=ntime
+  call feed_load(dir)
+  return
+end subroutine feed_refresh
+
+subroutine feed_load(dir)
+! CE3TSK 2026-11-16 (TODO 3.-263): dir/compound_calls_feed.txt, whole - a line is a call and the day it was last
+! reported (yyyymmdd), as in compound_calls.txt; a line that is no such call, a date that is none, a call not reported
+! for NFEEDAGE days, my own call and a call already taken are passed over; MAXFEED calls at most, the file's first.
+! No file: no calls. The decoder never writes this file.
+  character(len=*), intent(in) :: dir
+  character(len=80) :: line
+  character*13 cw
+  integer iu,ios,nd,i,n22,k
+  logical lhave
+
+  nfeed=0
+  open(newunit=iu,file=trim(dir)//'/compound_calls_feed.txt',status='old',action='read',iostat=ios)
+  if(ios.ne.0) then
+     if(lremtrace) write(0,'(a)') 'feed no list'
+     return
+  endif
+  do
+     read(iu,'(a)',iostat=ios) line
+     if(ios.ne.0) exit
+     line=adjustl(line)
+     if(line(1:1).eq.'#' .or. len_trim(line).eq.0) cycle
+     i=index(line,' ')
+     if(i.lt.4 .or. i.gt.12) cycle
+     cw=line(1:i-1)
+     read(line(i:),*,iostat=ios) nd
+     if(ios.ne.0) cycle
+     if(nd.lt.19000101 .or. nd.gt.99991231 .or. mod(nd/100,100).lt.1 .or. mod(nd/100,100).gt.12 .or. mod(nd,100).lt.1) cycle
+     if(ntoday.gt.0 .and. remjday(ntoday)-remjday(nd).gt.NFEEDAGE) cycle
+     if(.not.hashed_call(cw)) cycle
+     if(cw.eq.mycall13) cycle
+     n22=ihashcall(cw,22); lhave=.false.
+     do k=1,nfeed
+        if(feedhash(k).eq.n22 .and. feedcall(k).eq.cw) then; lhave=.true.; exit; endif
+     enddo
+     if(lhave) cycle
+     if(nfeed.ge.MAXFEED) exit
+     nfeed=nfeed+1; feedcall(nfeed)=cw; feedhash(nfeed)=n22
+  enddo
+  close(iu,iostat=ios)
+  if(lremtrace) write(0,'(a,i0,a)') 'feed read ',nfeed,' calls'
+  return
+end subroutine feed_load
 
 subroutine remember_hide(msg37,crem)
 ! CE3TSK 2026-10-15 (TODO 3.-106): the message as the phantom checks judge an a-priori decode - crem, the call hash22

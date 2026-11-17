@@ -34,6 +34,9 @@ public:
   void load();
   QString find(const QString prefix); // return country name or ""
   bool loaded () const {return !_data.isEmpty ();}   // CE3TSK: cty.dat was read - see MainWindow::countryUnknown
+  /* CE3TSK 2026-11-16 (TODO.md 3.-260, stage 4): an entity's name as the decode windows write it - cty.dat's own
+     shortened ("Spratly Is.") and, when Settings says so, in the program's language - for the Reception map */
+  QString displayName (QString const& ctyName) const {return _name.value (ctyName, ctyName);}
   QString find2(const QString call); // return lotw date or ""
 
   /* CE3TSK: the version a cty.dat or LoTW user activity file carries - cty.dat's =VERyyyymmdd

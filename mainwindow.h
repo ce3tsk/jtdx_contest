@@ -54,6 +54,8 @@
 #include "JTDXDateTime.h"
 #include "thread_shutdown.hpp"   // CE3TSK: m_audioThread's deleter
 #include "rigreport.h"   // CE3TSK 2026-10-15 (3.-107): the rig's band reports and a QSY the PTT held back
+#include "receptionspots.h"   // CE3TSK 2026-11-16 (3.-260): what we hear, kept from the program's start for the Reception map
+#include "call3file.h"        // (3.-261) CALL3.TXT by call, for where a station we hear is
 
 
 //--------------------------------------------------------------- MainWindow
@@ -87,6 +89,7 @@ class SoundInput;
 class Detector;
 class DecodedText;
 class AltLayout;   // CE3TSK 2026-10-20: View > Alternative layout
+class ReceptionMap;   // CE3TSK 2026-11-16: View > Reception map (TODO.md 3.-260)
 class MainWindow : public QMainWindow
 {
   Q_OBJECT;
@@ -167,6 +170,7 @@ private slots:
   void on_pbSpotDXCall_clicked ();  
   void on_actionJTDX_Web_Site_triggered();
   void on_actionWide_Waterfall_triggered();
+  void on_actionReception_map_triggered ();   // CE3TSK 2026-11-16 (TODO.md 3.-260)
   void on_actionUse_dark_style_triggered (bool checked);   // CE3TSK
   void on_actionMode_buttons_toggled (bool checked);   // CE3TSK
   void on_actionBand_buttons_toggled (bool checked);   // CE3TSK
@@ -592,6 +596,12 @@ private:
   JTDXMessageBox m_rigErrorMessageBox;
 
   QScopedPointer<WideGraph> m_wideGraph;
+  QScopedPointer<ReceptionMap> m_receptionMap;   // CE3TSK 2026-11-16 (TODO.md 3.-260): made when first opened
+  reception_spots::HeardLog m_heardLog;          // (stage 3) the stations WE hear, from our own decodes - kept from the start, window or no window
+  long long m_heardPruned {0};                   //   the minute it was last pruned in
+  call3_file::Index m_call3Index;                //   CALL3.TXT by call (3.-261), read when the map first asks where a call is
+  bool m_call3Read {false};
+  QString localGridOf (QString const& call);     //   a call's grid as the program itself knows it: its log, then CALL3.TXT
   QScopedPointer<LogQSO> m_logDlg;
   QPointer<ExportCabrillo> m_exportCabrillo;   // CE3TSK 2026-11-05: open or not, and one at a time
   QScopedPointer<HelpTextWindow> m_shortcuts;

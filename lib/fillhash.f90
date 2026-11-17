@@ -68,6 +68,8 @@ subroutine fillhash(numthreads,lfill)
     nlast_trusted=0
     call remember_today()   ! CE3TSK 2026-10-15: the day a remembered call was last heard
     mycall13=mycall//' '; dxcall13=hiscall//' '
+    call feed_refresh(data_dir)   ! CE3TSK 2026-11-16 (TODO 3.-263): the feed's compound calls, when their file is another
+                                  ! (after my call is known: the list leaves it out)
     if(mycall13.ne.mycall13_0) then
       if(len(trim(mycall13)).gt.2) then
         mycall13_set=.true.

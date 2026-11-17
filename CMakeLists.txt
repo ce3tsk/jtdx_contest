@@ -277,6 +277,9 @@ set (wsjtx_CXXSRCS
   WsprTxScheduler.cpp
   mainwindow.cpp
   altlayout.cpp   # CE3TSK 2026-10-20: View > Alternative layout
+  worldmapview.cpp   # CE3TSK 2026-11-16 (TODO.md 3.-260): View > Reception map, the map
+  receptionmap.cpp   # and its window
+  spotfeed.cpp   # (stage 2) the feed of mqtt.pskreporter.info, listened to
   sequencer_hooks.cpp
   Configuration.cpp
   main.cpp
@@ -702,6 +705,7 @@ set (TOP_LEVEL_RESOURCES
   us-license-states.txt   # CE3TSK 2026-10-03: tools/make_license_states.py, from the FCC's licence file
   ybdxpi.txt   # CE3TSK 2026-11-04: the YBDXPI members, https://contest.ybdxpi.net/ft8/software/udc-files/
   sat.dat   # CE3TSK 2026-11-13 (TODO.md 3.-247): the Log QSO's satellites, WSJT-X 3.0.2's (GPL-3.0), ":/sat.dat"
+  geodata/worldmap.bin   # CE3TSK 2026-11-16 (TODO.md 3.-260): the Reception map's world, Natural Earth (public domain), geodata/make_world_map.py, ":/worldmap.bin"
   icons/Darwin/jtdx.iconset/icon_128x128.png
   contrib/decpasses.png
   contrib/dtrange.png

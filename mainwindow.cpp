@@ -78,6 +78,8 @@
 #include "uilimits.h"      // CE3TSK: the .ui size limits against the current font
 #include "geometryrestore.h"  // CE3TSK 2026-09-26: one restore rule for the main window, Wide Graph, Log QSO
 #include "altlayout.h"        // CE3TSK 2026-10-20: View > Alternative layout
+#include "receptionmap.h"     // CE3TSK 2026-11-16: View > Reception map (TODO.md 3.-260)
+#include "worldmapview.h"     // (stage 4) its map is handed the DXCC entities (dxccplaces.h)
 #include "deletedlog.h"    // CE3TSK 2026-10-12: the decodes the prefix-to-grid table deleted, into a file
 #include "stdcall.h"      // CE3TSK 2026-11-13: a standard callsign (stdCall ())
 #include "contestsession.h"   // CE3TSK 2026-11-13: the contest log's session (TODO.md 3.-253)
@@ -1406,6 +1408,8 @@ MainWindow::MainWindow(bool multiple, QSettings * settings, QSharedMemory *shdme
   morse_(const_cast<char *> (m_config.my_callsign ().toLatin1().constData()),
          const_cast<int *> (icw), &m_ncw, m_config.my_callsign ().length());
   on_actionWide_Waterfall_triggered();
+  /* CE3TSK 2026-11-16 (TODO.md 3.-260): the Reception map comes back when it was open at the last exit */
+  if (ReceptionMap::wasOpen (m_settings)) on_actionReception_map_triggered ();
   m_wideGraph->setTol(500);
   syncTxLock ();   // CE3TSK: the wide graph's copy of the lock, out of effect under a SuperFox
   m_wideGraph->setMode(m_mode);
@@ -2845,6 +2849,7 @@ void MainWindow::on_actionSettings_triggered()               //Setup Dialog
       ui->decodedTextBrowser->setConfiguration (&m_config);
       ui->decodedTextBrowser2->setConfiguration (&m_config);
       refreshSpecialOp (); /* CE3TSK: before anything below reads m_contest */
+      if (m_receptionMap) m_receptionMap->setOwnLocator (m_config.my_grid_full ());   // CE3TSK 2026-11-16 (TODO.md 3.-260): our place on the map
       if (m_config.useDarkStyle() != m_useDarkStyle) {
         darkStyleChanged ();
         if(m_config.write_decoded_debug()) writeToALLTXT("Both windows cleared, triggered by dark style change");
@@ -5132,6 +5137,7 @@ setEnableTxButtonStyle ();
     ui->bandComboBox->lineEdit ()->setStyleSheet (QString("QLineEdit {color: %1; background-color : %2}").arg(Radio::convert_dark("#ffff00",m_useDarkStyle),Radio::convert_dark("#ff0000",m_useDarkStyle)));
   if (Qt::RichText == ui->decodedTextLabel->textFormat ()) updateDecodeLabel ();   // Avg= and Lag= carry colours
   m_wideGraph->setDarkStyle(m_useDarkStyle);
+  if (m_receptionMap) m_receptionMap->setDarkStyle (m_useDarkStyle);   // CE3TSK 2026-11-16 (TODO.md 3.-260)
   statusUpdate ();
 }
 
@@ -5599,6 +5605,72 @@ void MainWindow::msgBox(QString t) { msgBox0.setText(t); msgBox0.translate_butto
 void MainWindow::on_actionJTDX_Web_Site_triggered() { QDesktopServices::openUrl (QUrl {"https://ce3tsk.com/"}); }
 
 void MainWindow::on_actionWide_Waterfall_triggered() { m_wideGraph->show(); } //Display Waterfalls
+
+/* CE3TSK 2026-11-16 (TODO.md 3.-260, RECEPTION_MAP_PLAN.md stage 1): View > Reception map. The window is made when it
+   is first asked for; from then on it follows the style and our locator - my_grid_full (), all ten characters (the
+   operator, 2026-11-16: "This is psk reporter based so please use all available grid precision for the reception
+   map"; until then the ten were PSK Reporter's alone, 3.-65) - and it closes with the program - its
+   closeForExit () notes whether it was open, so that it comes back at the next start. */
+void MainWindow::on_actionReception_map_triggered ()
+{
+  if (!m_receptionMap)
+    {
+      m_receptionMap.reset (new ReceptionMap {m_settings, m_jtdxtime});
+      m_receptionMap->setDarkStyle (m_useDarkStyle);
+      m_receptionMap->setOwnLocator (m_config.my_grid_full ());   // all ten characters, as PSK Reporter gets them
+      // (stage 3) what we hear is the program's own log; where a call is, its DXCC entity and how far it is, as the
+      // decode windows have them
+      m_receptionMap->setHeardLog (&m_heardLog);
+      m_receptionMap->setLookups ([this] (QString const& call) {return localGridOf (call);},
+                                  [this] (QString const& call) {
+                                    QString entity;
+                                    m_logBook.getDXCC (call, entity);   // "continent,prefix,name,cq zone,itu zone"; the prefix "?" when unknown
+                                    QStringList const parts {entity.split (QLatin1Char (','))};
+                                    return parts.size () > 2 && parts.at (1) != QLatin1String ("?") ? parts.at (2) : QString {};
+                                  },
+                                  [this] (QString const& locator) {
+                                    int km, mi, azimuth;
+                                    if (!grid_distance_azimuth (m_config.my_grid (), locator, false, km, mi, azimuth)) return QString {};
+                                    return (m_config.miles () ? QString::number (mi) + QStringLiteral (" mi") : QString::number (km) + QStringLiteral (" km"))
+                                           + QStringLiteral ("   ") + QString::number (((azimuth % 360) + 360) % 360) + QChar {0x00B0};
+                                  });
+      // (stage 4) the DXCC entities for the prefixes on the map and for what a resting mouse is told: cty.dat as the log
+      // book reads it - the data directory's copy unless the bundled one is newer - each named as the decode windows
+      // name it
+      QFile cty {CountryDat::fileToUse (QDir {QStandardPaths::writableLocation (QStandardPaths::DataLocation)}, "cty.dat", &CountryDat::ctyVersion)};
+      std::vector<dxcc_places::Entity> entities;
+      if (cty.open (QIODevice::ReadOnly)) entities = dxcc_places::entities (cty.readAll ().toStdString ());
+      for (auto& e : entities) e.name = m_logBook.countryData ()->displayName (QString::fromStdString (e.name)).toStdString ();
+      m_receptionMap->map ()->setEntities (entities);
+      // (2026-11-16, TODO.md 3.-263) the feed's compound calls go where the decoder looks for them: its data directory
+      m_receptionMap->setFeedCallsFile (m_dataDir.absoluteFilePath (feed_calls::fileName));
+      m_receptionMap->setStation (m_config.my_callsign (), m_config.bands ()->find (m_freqNominal), m_mode);
+      connect (this, &MainWindow::finished, m_receptionMap.data (), &ReceptionMap::closeForExit);
+    }
+  if (m_receptionMap->isMinimized ()) m_receptionMap->showNormal (); else m_receptionMap->show ();
+  m_receptionMap->raise ();
+  m_receptionMap->activateWindow ();
+}
+
+/* CE3TSK 2026-11-16 (TODO.md 3.-260, stage 3): where a call is, as the program itself knows it - for a station we hear
+   whose messages gave no grid (receptionspots.h). Its log first, a grid heard on the air once; then CALL3.TXT, spot
+   data (as the DX Call's Lookup: fine for a place, never for the log). No portable or mobile call: it is not at
+   home. CALL3.TXT is read once, when the map first asks - and (the review of 2026-11-16, TODO.md 3.-261) into an index
+   by call (call3file.h): the list was read through for every call, 1.5 ms each on the station's 3.3 MB. */
+QString MainWindow::localGridOf (QString const& call)
+{
+  if (call.isEmpty () || call.endsWith ("/P") || call.endsWith ("/MM") || call.endsWith ("/A") || call.endsWith ("/M")) return {};
+  QString grid, name;
+  if (m_logBook.getData (call, grid, name) && reception_spots::placed (grid.toStdString ())) return grid;
+  if (!m_call3Read)
+    {
+      m_call3Read = true;
+      QFile f {m_dataDir.absoluteFilePath ("CALL3.TXT")};
+      if (f.open (QIODevice::ReadOnly)) m_call3Index.read (f.readAll ());
+    }
+  QString const found {QString::fromLatin1 (m_call3Index.grid (call.toLatin1 ()))};
+  return reception_spots::placed (found.toStdString ()) ? found : QString {};
+}
 
 void MainWindow::on_actionCopyright_Notice_triggered()
 {
@@ -8660,6 +8732,29 @@ void MainWindow::readFromStdout()                             //readFromStdout
       if ((notified & 2) && !decodedtext.isDebug () && !decodedtext.isWrong () && !decodedtext.verdict ().marked ())
         m_wideGraph->addDecode (decodedtext.wholeMessage (), decodedtext.snr (), decodedtext.frequencyOffset (),
                                 static_cast<int> (decodedtext.timeInSeconds ()), m_decodeOrigin.dial, m_decodeOrigin.mode, m_decodeReplay);
+      /* CE3TSK 2026-11-16 (TODO.md 3.-260, RECEPTION_MAP_PLAN.md stage 3): and to the log of what WE hear, which the
+         Reception map shows - of the air only (no recording). Kept from the program's start whether the map is open or
+         not, so that it opens with the last 15 minutes; nothing of it comes from the feed (the operator, 2026-11-16).
+         (The review of the same day, TODO.md 3.-261) EVERY decode, whatever the Band Activity window's filters hide - CQ
+         only, worked before, continents, countries, callsigns (the operator: "remove the filters hide heard station
+         limitation and show all received"): a station we decode is a station we hear. Still not what is in doubt - an
+         error decode, a debug line, a likely phantom decode. Whose line it is and the grid it gives are receptionspots.h's
+         line () of the WHOLE message - the waterfall's sender, not the second word of any text; nobody's line (free
+         text) is nobody heard. The time is the line's period, the frequency the dial of its decode and its audio. */
+      if (!decodedtext.isDebug () && !decodedtext.isWrong () && !decodedtext.verdict ().marked () && !m_decodeReplay)
+        {
+          auto const heard = reception_spots::line (decodedtext.wholeMessage ().toStdString ());
+          long long const utcNow {QDateTime::currentSecsSinceEpoch ()};
+          if (!heard.sender.empty ())
+            m_heardLog.hear (heard.sender, m_config.bands ()->find (m_decodeOrigin.dial).toStdString (), m_decodeOrigin.mode.toStdString (),
+                             heard.grid, reception_spots::periodTime (static_cast<int> (decodedtext.timeInSeconds ()), utcNow), decodedtext.snr (),
+                             static_cast<long long> (m_decodeOrigin.dial) + decodedtext.frequencyOffset ());
+          if (utcNow / 60 != m_heardPruned)
+            {
+              m_heardLog.prune (utcNow);
+              m_heardPruned = utcNow / 60;
+            }
+        }
 
       //Right (Rx Frequency) window
 	  
@@ -13373,6 +13468,9 @@ void MainWindow::statusUpdate () const
                                   m_config.my_callsign (), m_config.my_grid (),
                                   m_hisGrid, m_txwatchdog, submode != QChar::Null ? QString {submode} : QString {},
                                   false, m_txFirst, false);
+  /* CE3TSK 2026-11-16 (TODO.md 3.-260, stage 3): the Reception map follows our call, band and mode - told here, where
+     every change of them comes by; the same again changes nothing there */
+  if (m_receptionMap) m_receptionMap->setStation (m_config.my_callsign (), m_config.bands ()->find (m_freqNominal), m_mode);
 }
 
 void MainWindow::childEvent (QChildEvent * e)

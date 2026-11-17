@@ -18,6 +18,9 @@
 #ifndef CALL3FILE_H
 #define CALL3FILE_H
 
+#include <algorithm>
+#include <cstring>
+#include <vector>
 #include <QByteArray>
 #include <QCryptographicHash>
 #include <QDate>
@@ -112,6 +115,72 @@ namespace call3_file
   {
     return QCryptographicHash::hash (content, QCryptographicHash::Md5).toHex () == old_bundled_md5;
   }
+
+  /* (the review of 2026-11-16, TODO.md 3.-261) The Reception map asked where a call is by reading the list through for
+     each call - 3.3 MB, 1.5 ms a call measured on the station's list, 150 ms for a band's hundred calls without a
+     grid, in the thread that also starts the transmission. Here the list is kept with its lines in the order of their
+     calls: a call's grid is a search of some seventeen steps. As the Lookup button reads the list: the call's own
+     line - the first of them in the list - and what stands between its comma and the next one or the line's end, six
+     characters at most. */
+  class Index
+  {
+  public:
+    void read (QByteArray const& content)
+    {
+      m_content = content;
+      m_lines.clear ();
+      char const * const text {m_content.constData ()};
+      int at {0};
+      while (at < m_content.size ())
+        {
+          int end {m_content.indexOf ('\n', at)};
+          if (end < 0) end = m_content.size ();
+          // (the second review, TODO.md 3.-264) the line's comma is looked for in the LINE. Looked for to the end of
+          // the list, a stretch without commas - a list cut short, a file that is no CALL3.TXT - was read through once
+          // a line: 100,000 such lines 7.3 s, measured, in the thread that also starts the transmission.
+          char const * const found {static_cast<char const *> (std::memchr (text + at, ',', static_cast<std::size_t> (end - at)))};
+          int const comma {found ? static_cast<int> (found - text) : -1};
+          if (comma > at) m_lines.push_back (Line {at, comma - at, end - comma - 1});
+          at = end + 1;
+        }
+      std::stable_sort (m_lines.begin (), m_lines.end (), [text] (Line const& a, Line const& b) {
+          return before (text + a.at, a.call, text + b.at, b.call);
+        });
+    }
+
+    int entries () const {return static_cast<int> (m_lines.size ());}
+
+    // the grid of the call's line; empty without one
+    QByteArray grid (QByteArray const& call) const
+    {
+      if (call.isEmpty ()) return {};
+      char const * const text {m_content.constData ()};
+      auto const it = std::lower_bound (m_lines.begin (), m_lines.end (), call, [text] (Line const& l, QByteArray const& c) {
+          return before (text + l.at, l.call, c.constData (), c.size ());
+        });
+      if (it == m_lines.end () || it->call != call.size () || std::memcmp (text + it->at, call.constData (), static_cast<std::size_t> (it->call))) return {};
+      QByteArray rest {m_content.mid (it->at + it->call + 1, qMin (6, it->rest))};
+      int const comma {rest.indexOf (',')};
+      if (comma >= 0) rest.truncate (comma);
+      return rest.trimmed ();
+    }
+
+  private:
+    struct Line
+    {
+      int at;      // where the line begins
+      int call;    // its call's length
+      int rest;    // and what follows the comma, to the line's end
+    };
+    static bool before (char const * a, int na, char const * b, int nb)
+    {
+      int const c {std::memcmp (a, b, static_cast<std::size_t> (na < nb ? na : nb))};
+      return c ? c < 0 : na < nb;
+    }
+
+    QByteArray m_content;
+    std::vector<Line> m_lines;
+  };
 }
 
 #endif
