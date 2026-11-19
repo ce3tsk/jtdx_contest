@@ -53,6 +53,7 @@
 #include "qsohistory.h"
 #include "JTDXDateTime.h"
 #include "thread_shutdown.hpp"   // CE3TSK: m_audioThread's deleter
+#include "msk144decoder.h"       // CE3TSK 2026-11-17: MSK144's decoder, in its own thread (MSK144_PLAN.md step 1a)
 #include "rigreport.h"   // CE3TSK 2026-10-15 (3.-107): the rig's band reports and a QSY the PTT held back
 #include "receptionspots.h"   // CE3TSK 2026-11-16 (3.-260): what we hear, kept from the program's start for the Reception map
 #include "call3file.h"        // (3.-261) CALL3.TXT by call, for where a station we hear is
@@ -75,6 +76,7 @@ class ExportCabrillo;
 class QFont;
 class QHostInfo;
 class WideGraph;
+class FastGraph;   // CE3TSK 2026-11-17 (MSK144_PLAN.md step 1b): WSJT-X's Fast Graph
 class LogQSO;
 class Transceiver;
 class MessageClient;
@@ -170,6 +172,7 @@ private slots:
   void on_pbSpotDXCall_clicked ();  
   void on_actionJTDX_Web_Site_triggered();
   void on_actionWide_Waterfall_triggered();
+  void on_actionFast_Graph_triggered();   // CE3TSK 2026-11-17
   void on_actionReception_map_triggered ();   // CE3TSK 2026-11-16 (TODO.md 3.-260)
   void on_actionUse_dark_style_triggered (bool checked);   // CE3TSK
   void on_actionMode_buttons_toggled (bool checked);   // CE3TSK
@@ -439,6 +442,7 @@ private slots:
   void on_actionT10_triggered();
   void on_actionFT4_triggered();
   void on_actionFT2_triggered();   // CE3TSK
+  void on_actionMSK144_triggered();   // CE3TSK 2026-11-17
   void on_actionFT8_triggered();
   void on_actionJT65_triggered();
   void on_actionJT9_JT65_triggered();
@@ -515,6 +519,7 @@ private slots:
   void on_actionShort_list_of_add_on_prefixes_and_suffixes_triggered();
   void band_changed (Frequency);
   void monitor (bool);
+  void monitorForTx (bool);   // CE3TSK 2026-11-18: for our own transmission (MSK144: no new run)
   void stop_tuning ();
   void stopTuneATU();
   void enableTx_mode(bool);
@@ -564,6 +569,7 @@ private:
   Q_SIGNAL void resumeAudioInputStream () const;
   Q_SIGNAL void startDetector (AudioDevice::Channel) const;
   Q_SIGNAL void FFTSize (unsigned) const;
+  Q_SIGNAL void mskWindow (Msk144Window const&) const;   // CE3TSK 2026-11-17: a window for the MSK144 decoder's thread
   Q_SIGNAL void detectorClose () const;
   Q_SIGNAL void finished () const;
   Q_SIGNAL void transmitFrequency (double) const;
@@ -596,6 +602,7 @@ private:
   JTDXMessageBox m_rigErrorMessageBox;
 
   QScopedPointer<WideGraph> m_wideGraph;
+  QScopedPointer<FastGraph> m_fastGraph;   // CE3TSK 2026-11-17: MSK144's picture of the period (step 1b)
   QScopedPointer<ReceptionMap> m_receptionMap;   // CE3TSK 2026-11-16 (TODO.md 3.-260): made when first opened
   reception_spots::HeardLog m_heardLog;          // (stage 3) the stations WE hear, from our own decodes - kept from the start, window or no window
   long long m_heardPruned {0};                   //   the minute it was last pruned in
@@ -751,6 +758,71 @@ private:
      which is also what the preset table and the lamp compare against. */
   FT4Recipe m_ft2Recipe;
   int m_ft2RXBudget;           // tenths; FT2's deadline is 0.58 s, so its default is 5, not FT4's 13
+  /* CE3TSK 2026-11-17 (MSK144_PLAN.md step 1a): MSK144. It is not decoded by jtdxjt9 after the period but while the
+     period is received, 0.6 s windows every 0.3 s, by WSJT-X's decoder linked into this process and run in a thread of
+     its own (msk144decoder.h; the windows' arithmetic is msk144feed.h). The thread is owned as the audio thread is.
+     (Step 2) It transmits: the frame over and over for the whole of our period (txstart.h, the modulators). */
+  std::unique_ptr<QThread, thread_shutdown::stop_and_delete> m_mskThread {
+    new QThread, thread_shutdown::stop_and_delete {thread_shutdown::audio_msecs, "MSK144 decoder"}};
+  Msk144Decoder * m_mskDecoder = nullptr;   // lives in m_mskThread and is deleted when the thread finishes
+  int m_mskRun = 0;              // raised whenever what is received changes: the mode, the band, monitoring, a recording
+  int m_mskTR = 15;              // the T/R period in use, s: 5, 10, 15 or 30 - the band's (step 1b)
+  int m_mskTRs[3] = {30, 30, 15};   // as WSJT-X keeps it: every other band, 2 m, 6 m and 4 m (msk144::TrSlot)
+  void mskBandPeriod (QString const& band);
+  bool m_mskEndPosted = false;   // (step 2) the period being received has had its end handed to the decoder
+  int m_mskBoxRx = -1;           // (step 2) the Rx and Tx frequency boxes' values of the other modes, kept while
+  int m_mskBoxTx = -1;           //   MSK144 holds both at 1500 Hz; -1: not in the mode
+  void mskModeState ();
+  void mskSequencerPeriodEnd (int periodUtc, bool replay = false);
+  void mskSequencerPeriodBegin ();   // (2026-11-19, TODO.md 3.-275 P2) the first word of a period: the flags of the one before let go
+  bool m_mskSeqOver = true;          //   ... which are let go once: the period they are of has had its end (or nothing was received yet)
+  void mskClosePeriod ();
+  void mskDecodeMoment (int periodUtc, bool replay);
+  bool m_mskOwnTx = false;       // monitoring is being switched for our own transmission (monitorForTx ())
+  bool m_mskActive = false;      // the mode's slot has run and no other since: its period may be applied
+  // (step 1b) the period's audio, block by block as it arrives, for its recording; and the recording waiting for
+  // the decoder's word on the period (Save > Save decoded keeps a period that gave a line)
+  QVector<qint16> m_mskAudio;
+  QVector<qint16> m_mskSaveAudio;
+  int m_mskSaveUtc = -1;
+  QString m_mskSaveName;
+  int m_mskFtol = 50;            // F Tol, Hz
+  int m_mskDepth = 3;            // 1 Fast, 2 Normal, 3 Deep (WSJT-X's default)
+  /* (2026-11-18, MSK144_PLAN.md section 17) short messages, WSJT-X's "Sh": Decode > MSK144 decoding > Short messages
+     (Sh). The setting is m_mskSh; what is sent and decoded asks mskShInEffect () - the mode, and a pair of calls a
+     short message has room for (msk144feed.h, sh_fits). */
+  bool m_mskSh = false;
+  bool mskShInEffect () const;
+  void mskShSet (bool on);
+  void mskShMessages ();
+  void mskShLabel ();
+  bool rrrInEffect () const;     // RRR, not RR73, answers his roger: the operator's choice, or short messages (no RR73)
+  QActionGroup * m_mskTRGroup = nullptr;
+  QActionGroup * m_mskFtolGroup = nullptr;
+  QActionGroup * m_mskDepthGroup = nullptr;
+  QList<QByteArray> m_mskLines;  // the decoder's lines on their way through readFromStdout ()
+  int m_mskLastK = 0;            // the samples of the period at the block before: fewer now, a new period has begun
+  bool m_mskOwn = false;         // (2026-11-19, TODO.md 3.-275) ... if that count is the feed's own: this block came a block after the one before
+  bool m_mskFromBoundary = false;   // (2026-11-19) the samples are counted from the Detector's own period start - not
+                                    // from the audio coming on (Monitor, the start, a transmission's end): msk144feed.h
+  int m_mskK0 = -1;              // (2026-11-19, TODO.md 3.-275 P3) where the feed's count begins in the Detector's, which goes
+                                 //   on from another mode's blocks when the mode is entered; -1: with the next block
+  int m_mskSkip = 0;             // (2026-11-19, 3.-275 P4) blocks still passed over after the dial moved
+  qint64 m_mskDial = 0;          //   ... the dial at the block before (0: none yet)
+  bool m_mskOpen = false;        // windows of a period have been handed over and its end has not
+  Msk144Window m_mskOf;          // what the last window handed over was of (no samples)
+  int m_mskSpecK = 0;            // the samples of the period at the Fast Graph's last block: fewer now, a new picture
+  void mskSpectra (int k);
+  void mskSink (qint64 frames);
+  void mskPost (int k);
+  void mskEndPeriod ();
+  void mskNewRun ();
+  void mskPlayRecording ();
+  void mskDecoded (QString const& line, Msk144Window const& of);
+  void mskPeriodEnd (Msk144Window const& of, int lines);
+  void mskMenuSetup ();
+  void mskApplyPeriod ();
+  void mskMenuMark ();
   int m_ft2BgMargin;           // tenths, as FT4's
   int m_nDecodesRx;            // decodes of the period's own decode, before the background
   QString m_decodeLabelPrefix; // "UTC dB DT Freq Avg= Lag=" as set at <DecodeFinished>; the lag and the count follow
@@ -784,6 +856,12 @@ private:
   qint32  m_currentMessageType;
   QString m_currentMessage;
   QString m_curMsgTx;
+  /* CE3TSK 2026-11-18 (MSK144_PLAN.md section 17): a short message of MSK144 as it is sent, "<K1ABC CE3TSK> R+03" - for
+     ALL.TXT, the Tx lines and the status bar. The two above are the sequencer's text and carry no brackets, as every
+     77-bit mode's: without them a short message reads as the long one, and no record could say which went out. Empty
+     for every other transmission. */
+  QString m_txShown;
+  QString txShown () const { return m_txShown.isEmpty () ? m_currentMessage : m_txShown; }
   qint32  m_lastMessageType;
   QString m_lastMessageSent;
   bool    m_lockTxFreq;

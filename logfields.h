@@ -103,9 +103,12 @@ inline QString log_exchange (QString const& stored, QString const& global, bool 
    15 s, FT4 7.5 s, FT2 3.75 s, WSPR-2 120 s; every other mode JTDX logs (JT65, JT9, T10) 60 s. (review 2026-11-13) The
    Mode field as the operator may type it, so spaces and case do not matter; MainWindow's own period of each mode
    (m_TRperiod) must be the same - test/logperiod_wiring.sh compares the two, so a new mode cannot be left out here. */
-inline qint64 log_period_ms (QString const& mode)
+inline qint64 log_period_ms (QString const& mode, qint64 msk144Ms = 15000)
 {
   QString const m {mode.trimmed ().toUpper ()};
+  // (2026-11-17, MSK144_PLAN.md step 2) MSK144's period is the operator's - 5, 10, 15 or 30 s - and is handed in
+  // (LogQSO::setMsk144Period, by the main window whenever it sets one)
+  if (m == "MSK144") return msk144Ms > 0 ? msk144Ms : 15000;
   if (m == "FT8") return 15000;
   if (m == "FT4") return 7500;
   if (m == "FT2") return 3750;

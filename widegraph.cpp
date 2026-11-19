@@ -611,6 +611,9 @@ void WideGraph::on_cqCallsSpinBox_valueChanged(int n)            //CQ calls: sec
 
 void WideGraph::addCqCall(QString const& call, int freq, qint64 dial, QString const& mode, bool replay)
 {
+  /* CE3TSK 2026-11-17 (MSK144_PLAN.md step 1a): the waterfall does not run in MSK144 - that mode's picture is the Fast
+     Graph's (step 1b) - so a call or a trace's name drawn here would stand on the picture of something else */
+  if (mode == "MSK144") return;
   ui->widePlot->addCqCall(call, freq, dial, mode, replay);
 }
 
@@ -626,6 +629,7 @@ bool WideGraph::cqCallsOn() const
 
 void WideGraph::addDecode(QString const& message, int snr, int freq, int time_s, qint64 dial, QString const& mode, bool replay)
 {
+  if (mode == "MSK144") return;   // CE3TSK 2026-11-17: see addCqCall ()
   ui->widePlot->addDecode(message, snr, freq, time_s, dial, mode, replay);
 }
 

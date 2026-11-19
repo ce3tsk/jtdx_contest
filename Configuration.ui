@@ -3334,7 +3334,7 @@ for assessing propagation and system performance.</string>
             <item>
              <widget class="QGroupBox" name="groupBox_3">
               <property name="toolTip">
-               <string>See WSPR documentattion Appendix C for details of how to determine these factors for your radio.</string>
+               <string>See WSPR documentation Appendix C for details of how to determine these factors for your radio.</string>
               </property>
               <property name="title">
                <string>Frequency Calibration</string>
@@ -4246,7 +4246,7 @@ Right click for insert and delete options.</string>
              <item row="1" column="4" alignment="Qt::AlignRight|Qt::AlignVCenter">
               <widget class="QLabel" name="label_14">
                <property name="toolTip">
-                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;On top of the preview pane there are types of message that being checked for some criterion, text color being selected for each  type of message.&lt;br&gt;&lt;br&gt;On left side there are criteria allocated in the hierarchy order, and background color being selected for messages for each criterion.&lt;br&gt;&lt;br&gt;'Worked one' notification functionality is based on the residual principle, triggered if all activated 'New one' criteria or criterion are not met.&lt;br&gt;&lt;br&gt;'Inverse color' may be used if user would like to highlight CQ and 'MyCall' messages by some specific backgroung color.&lt;br&gt;&lt;br&gt;For beginning one criterion can be chose and for new band/mode notifications may be used similar color with the different saturation level, later number of required criteria can be increased.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;On top of the preview pane there are types of message that being checked for some criterion, text color being selected for each  type of message.&lt;br&gt;&lt;br&gt;On left side there are criteria allocated in the hierarchy order, and background color being selected for messages for each criterion.&lt;br&gt;&lt;br&gt;'Worked one' notification functionality is based on the residual principle, triggered if all activated 'New one' criteria or criterion are not met.&lt;br&gt;&lt;br&gt;'Inverse color' may be used if user would like to highlight CQ and 'MyCall' messages by some specific background color.&lt;br&gt;&lt;br&gt;For beginning one criterion can be chosen and for new band/mode notifications may be used similar color with the different saturation level, later number of required criteria can be increased.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                </property>
                <property name="text">
                 <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Configuration tips&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
@@ -5360,7 +5360,7 @@ Right click for insert and delete options.</string>
          <item>
           <widget class="QGroupBox" name="continent_groupBox">
            <property name="toolTip">
-            <string/>
+            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This filter hides a message only while 'Bypass all text filters' in the 'Misc' menu (the 'Bypass' button, Alt+F) is off, and in the 'Rx Frequency' window only while 'Bypass text filters on RX frequency' is off too. Both are on to begin with.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
            </property>
            <property name="title">
             <string>Hide messages from continents</string>
@@ -5427,7 +5427,7 @@ Right click for insert and delete options.</string>
          <item>
           <widget class="QGroupBox" name="countries_groupBox">
            <property name="toolTip">
-            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;'Show DXCC name/prefix' shall be activated in General tab of the settings or any 'New one' notification to get this functionality working.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This filter hides a message only while 'Bypass all text filters' in the 'Misc' menu (the 'Bypass' button, Alt+F) is off, and in the 'Rx Frequency' window only while 'Bypass text filters on RX frequency' is off too. Both are on to begin with.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
            </property>
            <property name="title">
             <string>Hide messages from countries</string>
@@ -5497,6 +5497,9 @@ ZD8,ZD9,ZF,ZK3,ZL,ZL7,ZL8,ZL9,ZP,ZS,ZS8&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</str
          </item>
          <item>
           <widget class="QGroupBox" name="groupBox_10">
+           <property name="toolTip">
+            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This filter hides a message only while 'Bypass all text filters' in the 'Misc' menu (the 'Bypass' button, Alt+F) is off, and in the 'Rx Frequency' window only while 'Bypass text filters on RX frequency' is off too. Both are on to begin with.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+           </property>
            <property name="title">
             <string>Hide messages from callsigns</string>
            </property>

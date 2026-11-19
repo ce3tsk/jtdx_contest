@@ -146,6 +146,12 @@ namespace
       {50313000, Modes::FT8, IARURegions::ALL,true},
       {50318000, Modes::FT4, IARURegions::ALL,true}, // provisional
       {50320000, Modes::FT2, IARURegions::ALL,true},   // CE3TSK: FT2, the operator's list
+      /* CE3TSK 2026-11-17 (MSK144_PLAN.md step 1a): MSK144's rows are WSJT-X's (3.0.2 and 3.3.0-beta6 have the same
+         seven), with its regions: 50.380 in Region 1 and 50.260 in Regions 2 and 3, 70.230 and 144.360 in Region 1,
+         144.150 in Region 2, 432.360 everywhere */
+      {50380000, Modes::MSK144, IARURegions::R1,true},
+      {50260000, Modes::MSK144, IARURegions::R2,true},
+      {50260000, Modes::MSK144, IARURegions::R3,true},
       {50323000, Modes::FT8, IARURegions::ALL,true},
       
       {70100000, Modes::FT8, IARURegions::R1,false},
@@ -153,17 +159,21 @@ namespace
       {70102000, Modes::JT65, IARURegions::R1,true},
       {70104000, Modes::JT9, IARURegions::R1,true},
       {70091000, Modes::WSPR, IARURegions::R1,true},
+      {70230000, Modes::MSK144, IARURegions::R1,true},   // CE3TSK 2026-11-17: WSJT-X's
       
       {144120000, Modes::JT65, IARURegions::ALL,true},
       {144170000, Modes::FT4, IARURegions::ALL,true},
       {144174000, Modes::FT8, IARURegions::ALL,true},
       {144489000, Modes::WSPR, IARURegions::ALL,true},
+      {144360000, Modes::MSK144, IARURegions::R1,true},   // CE3TSK 2026-11-17: WSJT-X's
+      {144150000, Modes::MSK144, IARURegions::R2,true},
       
       {222065000, Modes::JT65, IARURegions::R2,true},
 	  
       {432065000, Modes::JT65, IARURegions::ALL,true},
       {432174000, Modes::FT8, IARURegions::ALL,true},
       {432300000, Modes::WSPR, IARURegions::ALL,true},
+      {432360000, Modes::MSK144, IARURegions::ALL,true},   // CE3TSK 2026-11-17: WSJT-X's
       
       {902065000, Modes::JT65, IARURegions::R2,true},
       
@@ -299,6 +309,44 @@ FrequencyList_v2::FrequencyItems FrequencyList_v2::default_rows (Mode mode)
       if (item.mode_ == mode) rows << item;
     }
   return rows;
+}
+
+/* CE3TSK 2026-11-17: the two things a mode added after a profile's table was stored needs - they were written out
+   for FT2 in Configuration.cpp (2026-09-16 and 2026-09-22) and are here, for FT2 and MSK144 alike, where a test
+   reaches them (test/harness/test_freqseed.cpp). Both work on a list and touch nothing else. */
+
+// the mode's shipped rows, added to a list that has no row of the mode; true when it added any
+bool FrequencyList_v2::seed_rows (FrequencyItems& list, Mode mode)
+{
+  for (auto const& item : list) { if (item.mode_ == mode) return false; }
+  auto const rows = default_rows (mode);
+  for (auto const& row : rows) list << row;
+  return !rows.isEmpty ();
+}
+
+/* rows of the mode that came back as ALL: an ALL row on exactly one of the mode's shipped frequencies (same region)
+   is the mode's again - unless a row of the mode is already there (re-added by hand), which the ALL copy would only
+   duplicate; true when a row changed */
+bool FrequencyList_v2::restore_rows (FrequencyItems& list, Mode mode)
+{
+  auto const shipped = default_rows (mode);
+  bool changed {false};
+  auto const has = [&list, mode] (Frequency f, Region r) {
+      for (auto const& i : list) if (i.mode_ == mode && i.frequency_ == f && i.region_ == r) return true;
+      return false;
+    };
+  for (auto& item : list)
+    {
+      if (item.mode_ != Modes::ALL) continue;
+      for (auto const& row : shipped)
+        {
+          if (item.frequency_ == row.frequency_ && item.region_ == row.region_ && !has (item.frequency_, item.region_))
+            {
+              item.mode_ = mode; changed = true; break;
+            }
+        }
+    }
+  return changed;
 }
 
 int FrequencyList_v2::best_working_frequency (Frequency f) const

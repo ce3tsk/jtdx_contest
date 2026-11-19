@@ -19,7 +19,8 @@ namespace
     "FT8",
     "FT4",
     "WSPR",
-    "FT2"   // CE3TSK: index-parallel to the enum
+    "FT2",   // CE3TSK: index-parallel to the enum
+    "MSK144"   // CE3TSK 2026-11-17
   };
 }
 

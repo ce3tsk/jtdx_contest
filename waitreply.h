@@ -32,7 +32,7 @@ namespace wait_reply
   inline bool mode_has_it (QString const& mode)
   {
     return mode == "FT8" || mode == "FT4" || mode == "FT2" || mode == "JT65" || mode == "JT9" || mode == "T10"
-        || mode == "JT9+JT65";
+        || mode == "JT9+JT65" || mode == "MSK144";   // CE3TSK 2026-11-17 (MSK144_PLAN.md step 2): since MSK144 transmits
   }
 
   struct State

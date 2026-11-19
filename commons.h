@@ -175,6 +175,7 @@ extern struct {
 #define NUM_WSPR_SYMBOLS 162               //(50+31)*2, embedded sync
 #define NUM_FT8_SYMBOLS 79
 #define NUM_FT4_SYMBOLS 105
+#define NUM_MSK144_SYMBOLS 144             //s8 + 48 bits + s8 + 80 bits
 
 #define NUM_CW_SYMBOLS 250
 #define TX_SAMPLE_RATE 48000

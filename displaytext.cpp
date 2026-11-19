@@ -26,6 +26,7 @@
 #include "wantedprefix.h"   /* CE3TSK 2026-10-15 */
 #include "distancefield.h"   /* CE3TSK 2026-10-20 */
 #include "stdcall.h"   /* CE3TSK 2026-11-13 */
+#include "modetiming.h"   /* CE3TSK 2026-11-18: lines_have_seconds () */
 namespace dp = decode_priority;
 
 #include "moc_displaytext.cpp"
@@ -457,7 +458,9 @@ int DisplayText::displayDecodedText(DecodedText* decodedText, QString myCall, QS
     bool bwantedPrefix = false;
     bool bwantedGrid = false;
     bool bwantedCountry = false;
-    if (app_mode.startsWith("FT")) messageText = decodedText->string().left(49);
+    /* CE3TSK 2026-11-17 (MSK144_PLAN.md step 2): MSK144's lines are the FT modes' - hhmmss, the message two columns
+       further right. Step 1 left this one out: a message of more than 17 characters stood cut in both windows. */
+    if (lines_have_seconds (app_mode)) messageText = decodedText->string().left(49);
     else if (app_mode == "WSPR-2") messageText = decodedText->string().trimmed();
     else messageText = decodedText->string().left(40);
     QString servis = " ";
@@ -497,7 +500,7 @@ int DisplayText::displayDecodedText(DecodedText* decodedText, QString myCall, QS
         if (!hisCall.isEmpty () && messageText.contains(Radio::base_callsign (hisCall))) txtColor = color_StandardCall_;
         checkCall = decodedText->CQersCall(grid,tyyp);
         checkCall2 = decodedText->call();
-        if(!app_mode.startsWith("FT") && (messageText.contains("2nd-h") || messageText.contains("3rd-h"))) jt65bc = true;
+        if(!lines_have_seconds (app_mode) && (messageText.contains("2nd-h") || messageText.contains("3rd-h"))) jt65bc = true;
         if (!checkCall.isEmpty ()) {
             if (grid.isEmpty ()) dummy = qsoHistory2.status(checkCall,grid);
             if (grid.isEmpty () && Radio::base_callsign (checkCall) == hisCall) grid = hisGrid;
@@ -1509,12 +1512,13 @@ void DisplayText::displayTransmittedText(QString text, QString myCall, QString h
                                           through to the default " @ ", which is JT9's marker, and
                                           the first FT2 QSO showed one character on the lines
                                           received and another on the lines sent. */
+    else if(modeTx=="MSK144") t1=" & ";   // CE3TSK 2026-11-17: WSJT-X's character for MSK144, as the decoder prints it
     else if(modeTx=="JT65") t1=" # ";
     else if(modeTx=="T10") t1=" + ";
     
     QStringList txs = t.split ("; ");
     for (int i=0; i<txs.size(); i++) {
-        if(modeTx.startsWith("FT")) {
+        if(lines_have_seconds (modeTx)) {   // CE3TSK 2026-11-17: MSK144's lines have seconds too (modetiming.h)
           t = QDateTime::currentDateTimeUtc().toString("hhmmss") + \
             "  Tx      " + t2 + t1 + txs.at(i).left(24);
           t = t.leftJustified(49,' ');
@@ -1525,7 +1529,9 @@ void DisplayText::displayTransmittedText(QString text, QString myCall, QString h
         ttime = 3600 * t.mid (0, 2).toUInt () + 60 * t.mid (2, 2).toUInt();
         if (t.mid (4, 2) != "  ") ttime += t.mid (4, 2).toUInt();        
 
-        QStringList parts = txs.at(i).split (' ', SkipEmptyParts);
+        /* CE3TSK 2026-11-18 (MSK144_PLAN.md section 17): a short message of MSK144 is shown as it is sent, "<K1ABC
+           CE3TSK> R+03", and read here as the long one it stands for - every other text arrives without brackets */
+        QStringList parts = QString {txs.at(i)}.remove (QChar {'<'}).remove (QChar {'>'}).split (' ', SkipEmptyParts);
         if (parts.size () > 1) 
           {
             QString param="";

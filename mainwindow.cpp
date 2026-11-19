@@ -47,6 +47,7 @@
 #include "plotter.h"
 #include "about.h"
 #include "widegraph.h"
+#include "fastgraph.h"   // CE3TSK 2026-11-17 (MSK144_PLAN.md step 1b): WSJT-X's Fast Graph, MSK144's picture
 #include "sleep.h"
 #include "logqso.h"
 #include "exportcabrillo.h"   // CE3TSK 2026-11-05
@@ -61,6 +62,7 @@
 #include "logfields.h"   // CE3TSK: what a log entry takes when the QSO skipped a step   /* CE3TSK: contest-mode rejection of signal-report messages */
 #include "decodelabel.h"   // CE3TSK
 #include "modetiming.h"   // CE3TSK: the per-mode timing constants
+#include "msk144feed.h"   // CE3TSK 2026-11-17: MSK144's windows (MSK144_PLAN.md step 1a)
 #include "autoseqstep.h"  // CE3TSK 2026-10-17: the auto sequencer's decisions
 #include "txstep.h"    // CE3TSK 2026-10-19: guiUpdate ()'s Tx decisions
 #include "txstart.h"   // CE3TSK 2026-10-23: our transmission's start, for a station sync's safe moment
@@ -132,6 +134,9 @@ extern "C" {
 
   void genft4_(char* msg, int* ichk, int* ntxhash, char* msgsent, char ft4msgbits[], int itone[], fortran_charlen_t, fortran_charlen_t);
 
+  // CE3TSK 2026-11-17 (MSK144_PLAN.md step 2): lib/msk144/genmsk_128_90.f90 - the frame's tones, the transmit pair
+  void genmsk_128_90_(char* msg, int* ichk, char* msgsent, int itone[], int* itype, fortran_charlen_t, fortran_charlen_t);
+
   void gen_ft8wave_(int itone[], int* nsym, int* nsps, float* bt, float* fsample, float* f0, float xjunk[], float wave[], int* icmplx, int* nwave);
 
   void gen_ft4wave_(int itone[], int* nsym, int* nsps, float* fsample, float* f0, float xjunk[], float wave[], int* icmplx, int* nwave);
@@ -160,6 +165,14 @@ extern "C" {
 
   void wav12_(short d2[], short d1[], int* nbytes, short* nbitsam2);
 
+  // CE3TSK 2026-11-17 (MSK144_PLAN.md step 1b): WSJT-X's lib/hspec.f90, byte for byte - asked for the Fast Graph's
+  // spectra alone (bmsk144 false: the decoding it would also do is the decoder thread's here)
+  void hspec_(short int d2[], int* k, int* nutc0, int* ntrperiod, int* nrxfreq, int* ntol,
+              bool* bmsk144, bool* btrain, double const pcoeffs[], int* ingain,
+              char const * mycall, char const * hiscall, bool* bshmsg, bool* bswl,
+              char const * ddir, float green[], float s[], int* jh, float * pxmax, float * rmsNoGain, char line[],
+              fortran_charlen_t, fortran_charlen_t, fortran_charlen_t, fortran_charlen_t);
+
   void foxgen_();
 }
 
@@ -172,6 +185,15 @@ qint32  g_iptt {0};
 wchar_t buffer[256];
 int   old_row {-1};
 QVector<QColor> g_ColorTbl;
+/* CE3TSK 2026-11-17 (MSK144_PLAN.md step 1b): the Fast Graph's picture, kept as WSJT-X keeps it - the period being
+   received (hspec fills it, block by block) and the period before it, which the plot draws below */
+float fast_green[703];
+float fast_green2[703];
+float fast_s[44992];                                    //44992=64*703
+float fast_s2[44992];
+int   fast_jh {0};
+int   fast_jhpeak {0};
+int   fast_jh2 {0};
 
 namespace
 {
@@ -232,6 +254,7 @@ MainWindow::MainWindow(bool multiple, QSettings * settings, QSharedMemory *shdme
   m_WSPR_band_hopping {settings, &m_config, this},
   m_WSPR_tx_next {false},
   m_wideGraph (new WideGraph(settings, m_jtdxtime)),
+  m_fastGraph (new FastGraph (settings)),   // CE3TSK 2026-11-17
   m_logDlg (new LogQSO (settings, &m_config, m_jtdxtime, this)),
   m_lastDialFreq {145000000},
   //m_dialFreq {std::numeric_limits<Radio::Frequency>::max ()},
@@ -541,8 +564,8 @@ MainWindow::MainWindow(bool multiple, QSettings * settings, QSharedMemory *shdme
      here for View, Mode, DXpedition and Misc (2026-10-23: Hide clear phantom messages, its only one), and by the three preset menus for themselves (see
      markRecommendedPresets). Every other menu still says no, so the tooltip authored on
      actionConvert_bit_depth (File) is folded by wrap_tooltips and shown nowhere.
-     Mode holds exactly one, FT2's, and has_own_tooltip keeps the other seven entries silent
-     rather than echoing their own labels back. */
+     Mode holds two, FT2's and (2026-11-17) MSK144's, and has_own_tooltip keeps the other seven entries
+     silent rather than echoing their own labels back. */
   ui->menuView->setToolTipsVisible (true);
   ui->menuMode->setToolTipsVisible (true);
   ui->menuDXpedition->setToolTipsVisible (true);   // CE3TSK: two tooltips, SuperFox mode's and the Fox verifier's
@@ -627,6 +650,20 @@ MainWindow::MainWindow(bool multiple, QSettings * settings, QSharedMemory *shdme
   connect(m_wideGraph.data (), SIGNAL(setXIT2(int)),this,SLOT(setXIT(int)));
 
   connect (this, &MainWindow::finished, m_wideGraph.data (), &WideGraph::close);
+  connect (this, &MainWindow::finished, m_fastGraph.data (), &FastGraph::close);   // CE3TSK 2026-11-17: it saves its settings at its close
+
+  /* CE3TSK 2026-11-17 (MSK144_PLAN.md step 1a): the MSK144 decoder, in a thread of its own (msk144decoder.h). The
+     windows this thread hands over wait in that thread's queue and are decoded in their order; the lines come back
+     the same way. It idles in every other mode. */
+  qRegisterMetaType<Msk144Window> ("Msk144Window");
+  m_fastGraph->setClock (m_jtdxtime);   // CE3TSK 2026-11-18 (the review 3.-270 P13): the picture's time is the program's
+  m_mskDecoder = new Msk144Decoder {m_dataDir.absolutePath ()};
+  m_mskDecoder->moveToThread (m_mskThread.get ());
+  connect (m_mskThread.get (), &QThread::finished, m_mskDecoder, &QObject::deleteLater);
+  connect (this, &MainWindow::mskWindow, m_mskDecoder, &Msk144Decoder::decode);
+  connect (m_mskDecoder, &Msk144Decoder::decoded, this, &MainWindow::mskDecoded);
+  connect (m_mskDecoder, &Msk144Decoder::periodEnd, this, &MainWindow::mskPeriodEnd);
+  m_mskThread->start ();
 
   // setup the log QSO dialog
   connect (m_logDlg.data (), &LogQSO::acceptQSO, this, &MainWindow::acceptQSO2);
@@ -713,6 +750,7 @@ MainWindow::MainWindow(bool multiple, QSettings * settings, QSharedMemory *shdme
 
   m_modeGroup = new QActionGroup(this);   // CE3TSK 2026-09-26: kept, transmitDisplay () greys it
   for (auto const& m : modeTable ()) m.action->setActionGroup(m_modeGroup);
+  mskMenuSetup ();   // CE3TSK 2026-11-17: Decode > MSK144 decoding
   buildModeButtons ();   // CE3TSK: View > Mode buttons, one per entry just grouped
 
   QActionGroup* languageGroup = new QActionGroup(this);
@@ -1520,6 +1558,11 @@ MainWindow::MainWindow(bool multiple, QSettings * settings, QSharedMemory *shdme
 //--------------------------------------------------- MainWindow destructor
 MainWindow::~MainWindow()
 {
+  // CE3TSK 2026-11-17: the MSK144 decoder's thread first - it uses the FFT plans that are freed below
+  // (the review 3.-270 P12) the windows still waiting for it are passed over, each at once: the thread's quit is
+  // queued behind them, and a recording just opened kept it past the five seconds it is given
+  mskNewRun ();
+  m_mskThread.reset ();
   QString fname {QDir::toNativeSeparators(m_dataDir.absoluteFilePath ("wsjtx_wisdom.dat"))};
   QByteArray cfname=fname.toLocal8Bit();
   fftwf_export_wisdom_to_filename(cfname);
@@ -1638,6 +1681,13 @@ void MainWindow::writeSettings()
   m_settings->setValue("FT4BgQSORXfreqSensitivity",m_ft4BgRXfSens);
   m_settings->setValue("FT4EnsembleEffort",m_ft4Ensemble);
   m_settings->setValue("FT4RXBudget",m_ft4RXBudget);   // CE3TSK item 80: tenths
+  // CE3TSK 2026-11-17 (MSK144_PLAN.md step 1a): Decode > MSK144 decoding
+  m_settings->setValue("MSK144TRperiod",m_mskTRs[msk144::tr_other]);   // (step 1b) by band, as WSJT-X: the other bands,
+  m_settings->setValue("MSK144TRperiod2m",m_mskTRs[msk144::tr_2m]);      // 2 m,
+  m_settings->setValue("MSK144TRperiod6m",m_mskTRs[msk144::tr_6m]);      // 6 m and 4 m
+  m_settings->setValue("MSK144FTol",m_mskFtol);
+  m_settings->setValue("MSK144Depth",m_mskDepth);
+  m_settings->setValue("MSK144ShMsgs",m_mskSh);   // (2026-11-18) short messages
   /* CE3TSK step 5: FT2's own values, one key per field of the recipe. They are written under
      their own names rather than shared with FT4 because the two modes want different answers:
      FT2 decodes a 3.75 s period against a 0.58 s deadline. */
@@ -1693,8 +1743,9 @@ void MainWindow::writeSettings()
   m_settings->setValue("NFT8QSORXfreqSensitivity",m_nFT8RXfSens);
   m_settings->setValue("NFT4Depth",m_nFT4depth);
   m_settings->setValue("SwitchFilterOff",m_FilterState);
-  m_settings->setValue("RxFreq",m_rxParkedValid ? m_rxParked : ui->RxFreqSpinBox->value());   // CE3TSK: S-Hound's Fox frequency is not the operator's
-  m_settings->setValue("TxFreq",ui->TxFreqSpinBox->value());
+  // CE3TSK 2026-11-17: nor is MSK144's 1500 Hz in both boxes - the other modes' values are kept (mskModeState ())
+  m_settings->setValue("RxFreq",m_mskBoxRx >= 0 ? m_mskBoxRx : m_rxParkedValid ? m_rxParked : ui->RxFreqSpinBox->value());   // CE3TSK: S-Hound's Fox frequency is not the operator's
+  m_settings->setValue("TxFreq",m_mskBoxTx >= 0 ? m_mskBoxTx : ui->TxFreqSpinBox->value());
   m_settings->setValue("WSPRfreq",ui->WSPRfreqSpinBox->value());
   m_settings->setValue("DialFreq",QVariant::fromValue(m_lastMonitoredFrequency));
   m_settings->setValue("OutAttenuation",m_outAttenuationRestored ? ui->outAttenuation->value ()
@@ -2070,6 +2121,21 @@ void MainWindow::readSettings()
   // CE3TSK item 80: FT8's P8 budget and P7 margin, FT4's own values - the RX budget against the 1.36 s reply
   // deadline, the margin the background leaves before the next decode (the max effort preset sets 0.5 s)
   m_ft4RXBudget=m_settings->value("FT4RXBudget",13).toInt(); if(!(m_ft4RXBudget>=5 && m_ft4RXBudget<=600)) m_ft4RXBudget=13;
+  // CE3TSK 2026-11-17 (MSK144_PLAN.md steps 1a, 1b): WSJT-X's values and its defaults - the T/R period remembered for
+  // 2 m (30 s), for 6 m and 4 m (15 s) and for every other band (30 s); F Tol 50 Hz; Deep
+  {
+    char const * const keys[3] = {"MSK144TRperiod", "MSK144TRperiod2m", "MSK144TRperiod6m"};
+    for (int i = 0; i < 3; ++i)
+      {
+        auto const slot = static_cast<msk144::TrSlot> (i);
+        m_mskTRs[i] = m_settings->value (keys[i], msk144::tr_default (slot)).toInt ();
+        if (!msk144::tr_valid (m_mskTRs[i])) m_mskTRs[i] = msk144::tr_default (slot);
+      }
+  }
+  m_mskFtol=m_settings->value("MSK144FTol",50).toInt(); if(!(m_mskFtol>=20 && m_mskFtol<=500)) m_mskFtol=50;
+  m_mskDepth=m_settings->value("MSK144Depth",3).toInt(); if(!(m_mskDepth>=1 && m_mskDepth<=3)) m_mskDepth=3;
+  m_mskSh=m_settings->value("MSK144ShMsgs",false).toBool();   // (2026-11-18) short messages: off, as WSJT-X starts
+  mskMenuMark ();
   {   // CE3TSK step 5: FT2's own settings, defaulting to its recommended preset on a profile without them
     FT4Recipe const d = ft2_preset_recipe (FT2Preset::Recommended);
     m_ft2Recipe.depth=m_settings->value("FT2Depth",d.depth).toInt();
@@ -2445,6 +2511,17 @@ void MainWindow::setClockStyle(bool reset)
   secms.remove(2,1); int ft4int = secms.toInt()/7500;
   int ft2int = secms.toInt()/3750;   // CE3TSK: FT2's period index inside the minute, 0..15
 
+  /* CE3TSK 2026-11-17 (MSK144_PLAN.md step 1a): MSK144's period is the operator's - 5, 10, 15 or 30 s - and the clock
+     takes one colour for the first period of each pair and the other for the second, at the start and at every
+     refresh alike (modetiming.h's clock_refresh_due asks every five seconds) */
+  if(m_mode=="MSK144") {
+    int const period = secms.toInt()/(1000*qMax(1,m_mskTR));
+    if(period%2==0) ui->labUTC->setStyleSheet(QString("font-size: 18pt;background: %1;color : %2").arg(Radio::convert_dark("#96ffff",m_useDarkStyle),Radio::convert_dark("#1400b1",m_useDarkStyle)));
+    else ui->labUTC->setStyleSheet(QString("font-size: 18pt;background: %1;color: %2").arg(Radio::convert_dark("#ffff96",m_useDarkStyle),Radio::convert_dark("#0000ff",m_useDarkStyle)));
+    m_start=false;
+    return;
+  }
+
   if(m_start || reset) {
     if(m_mode.startsWith("FT")) {
       if(m_mode=="FT8") {
@@ -2498,10 +2575,10 @@ void MainWindow::setAutoSeqButtonStyle(bool checked) {
     else { ui->AutoSeqButton->setStyleSheet(QString("QPushButton {color: %1;background: %2;border-style: solid;border-width: 1px;border-radius: 5px;border-color: %3;min-width: 5em;padding: 3px}").arg(Radio::convert_dark("#000000",m_useDarkStyle),Radio::convert_dark("#00ff00",m_useDarkStyle),Radio::convert_dark("#000000",m_useDarkStyle))); }
   } else {
     if(m_singleshot) {
-      if(m_mode.startsWith("FT")) { ui->AutoSeqButton->setStyleSheet(QString("QPushButton {color: %1;background: %2;border-style: solid;border-width: 1px;border-color: %3;min-width: 5em;padding: 3px}").arg(Radio::convert_dark("#0000ff",m_useDarkStyle),Radio::convert_dark("#ffbbbb",m_useDarkStyle),Radio::convert_dark("#808080",m_useDarkStyle))); }
+      if(messages_77bit (m_mode)) { ui->AutoSeqButton->setStyleSheet(QString("QPushButton {color: %1;background: %2;border-style: solid;border-width: 1px;border-color: %3;min-width: 5em;padding: 3px}").arg(Radio::convert_dark("#0000ff",m_useDarkStyle),Radio::convert_dark("#ffbbbb",m_useDarkStyle),Radio::convert_dark("#808080",m_useDarkStyle))); }
       else { ui->AutoSeqButton->setStyleSheet(QString("QPushButton {color: %1;background: %2;border-style: solid;border-width: 1px;border-color: %3;min-width: 5em;padding: 3px}").arg(Radio::convert_dark("#0000ff",m_useDarkStyle),Radio::convert_dark("#e0e0e0",m_useDarkStyle),Radio::convert_dark("#808080",m_useDarkStyle))); }}
     else { 
-      if(m_mode.startsWith("FT")) { ui->AutoSeqButton->setStyleSheet(QString("QPushButton {color: %1;background: %2;border-style: solid;border-width: 1px;border-color: %3;min-width: 5em;padding: 3px}").arg(Radio::convert_dark("#000000",m_useDarkStyle),Radio::convert_dark("#ffbbbb",m_useDarkStyle),Radio::convert_dark("#808080",m_useDarkStyle))); }
+      if(messages_77bit (m_mode)) { ui->AutoSeqButton->setStyleSheet(QString("QPushButton {color: %1;background: %2;border-style: solid;border-width: 1px;border-color: %3;min-width: 5em;padding: 3px}").arg(Radio::convert_dark("#000000",m_useDarkStyle),Radio::convert_dark("#ffbbbb",m_useDarkStyle),Radio::convert_dark("#808080",m_useDarkStyle))); }
 	  else { ui->AutoSeqButton->setStyleSheet(QString("QPushButton {color: %1;background: %2;border-style: solid;border-width: 1px;border-color: %3;min-width: 5em;padding: 3px}").arg(Radio::convert_dark("#000000",m_useDarkStyle),Radio::convert_dark("#e0e0e0",m_useDarkStyle),Radio::convert_dark("#808080",m_useDarkStyle))); }
     }
   }
@@ -2517,6 +2594,7 @@ void MainWindow::setMinButton()
 		else if(m_mode=="FT2") ui->TxMinuteButton->setText("TX 0.0");   // CE3TSK: FT2's periods start every 3.75 s
 		else ui->TxMinuteButton->setText("TX 00");
       }
+      else if(m_mode=="MSK144") ui->TxMinuteButton->setText("TX 1st");   // CE3TSK 2026-11-17: the first period of each pair, whatever its length
       else ui->TxMinuteButton->setText(tr("TX Even"));
       ui->TxMinuteButton->setStyleSheet(QString("QPushButton {background: %1}").arg(Radio::convert_dark("#96ffff",m_useDarkStyle)));
     } else {
@@ -2525,6 +2603,7 @@ void MainWindow::setMinButton()
         else if(m_mode=="FT2") ui->TxMinuteButton->setText("TX 3.75");   // CE3TSK
         else ui->TxMinuteButton->setText("TX 7.5");
       } 
+      else if(m_mode=="MSK144") ui->TxMinuteButton->setText("TX 2nd");   // CE3TSK 2026-11-17
       else ui->TxMinuteButton->setText(tr("TX Odd"));
       ui->TxMinuteButton->setStyleSheet(QString("QPushButton {background: %1}").arg(Radio::convert_dark("#ffff96",m_useDarkStyle)));
     }
@@ -2558,7 +2637,7 @@ void MainWindow::writeHaltTxEvent(QString reason)
           out << m_jtdxtime->currentDateTimeUtc2().toString("yyyyMMdd_hhmmss.zzz") << "(" << m_jtdxtime->GetOffset() << ")"
               << "  Halt Tx triggered at TX: " << reason << qSetRealNumberPrecision (12) << (m_freqNominal / 1.e6)
               << " MHz  " << m_modeTx
-              << ":  " << m_currentMessage <<
+              << ":  " << txShown () <<
 #if QT_VERSION < QT_VERSION_CHECK(5, 15, 0)
                  endl;
 #else
@@ -2610,6 +2689,10 @@ void MainWindow::dataSink(qint64 frames)
   static bool lastdelayed {false};
 
   if(m_diskData) dec_data.params.ndiskdat=1; else dec_data.params.ndiskdat=0;
+
+  // CE3TSK 2026-11-17 (MSK144_PLAN.md step 1a): MSK144 is decoded window by window as the audio arrives - no symbol
+  // spectra, no decode at the period's end, no jtdxjt9
+  if(m_mode=="MSK144") { m_delay=0; mskSink (frames); return; }   // (step 1b) and no start delay of another mode's is kept
 
 // Get power, spectrum, and ihsym
   trmin=m_TRperiod/60.0;
@@ -3041,9 +3124,25 @@ void MainWindow::on_monitorButton_clicked (bool checked)
     }
 }
 
+void MainWindow::monitorForTx (bool state)
+{
+  m_mskOwnTx = true;
+  monitor (state);
+  m_mskOwnTx = false;
+}
+
 void MainWindow::monitor (bool state)
 {
   ui->monitorButton->setChecked (state);
+  /* CE3TSK 2026-11-17: MSK144's windows still waiting are of what was received before - a new run.
+     2026-11-18 (the review 3.-270 P1): not for our own transmission (monitorForTx ()). The period that was being
+     received ends where the transmission begins, and what the decoder has not yet returned of it - its last lines,
+     its end with the sequencer's pass - is still to come and is taken, late if need be, as jtdxjt9's lines and its
+     <DecodeFinished> are in the other modes. A new run passed all of it over: no pass, the flags of the period left
+     set, and the partner's next message was not acted on. Nothing at the transmission's end: the period was closed
+     at its start. */
+  if (m_mskOwnTx && m_mskActive) { if (!state) mskClosePeriod (); }
+  else mskNewRun ();
   if (state) {
     m_diskData = false;	// no longer reading WAV files
     m_wideGraph->setCqOrigin (static_cast<qint64> (m_freqNominal), m_mode, false);   // (3.-250's review) a recording's CQ calls hidden
@@ -3068,6 +3167,11 @@ void MainWindow::monitor (bool state)
       else if(m_mode == "FT2") {
          curdsec=period_position_tenths(msmin,tr_period_of(m_mode)); if(curdsec > 0 && curdsec < 20) m_delay=curdsec+m_addtx; else m_delay = 0;
       }
+      /* CE3TSK 2026-11-17 (MSK144_PLAN.md step 1b): MSK144 has no decode at a period's end to move - its windows are
+         decoded as they come, and how late the audio began is msk144::late_start_s ()'s. Left to the rule below, a
+         delay of up to 35 s stood until the mode was left, and FT8 then decoded at its first block (reproduced:
+         tools/ui-check/msk144rx.sh types the band at second 16-28 of the minute) */
+      else if(m_mode == "MSK144") m_delay = 0;
 	  else if(!m_mode.startsWith("WSPR")) {
          if(curdsec > 0 && curdsec < 350) m_delay=curdsec+m_addtx; else m_delay = 0; // 2 second processing delay
       }
@@ -3500,6 +3604,9 @@ void MainWindow::displayDialFrequency ()
     }
     ui->bandComboBox->setCurrentText (band_name);
     m_wideGraph->setRxBand (band_name);
+    /* CE3TSK 2026-11-18 (the review 3.-270 P4): MSK144's T/R period is the band's - of a band changed at the rig too,
+       which does not come through band_changed (): the old band's period stayed */
+    if (!band_name.isEmpty ()) mskBandPeriod (band_name);
   }
   if(report != rig_report::Action::Echo) m_lastBand = band_name;
   // search working frequencies for one we are within 10kHz of (1 Mhz of on VHF and up)
@@ -3569,6 +3676,7 @@ void MainWindow::setModeLabelStyle (QString const& mode)
   else if (mode == "T10") colour = "#aaffff";
   else if (mode == "FT4") colour = "#a99ee2";
   else if (mode == "FT2") colour = "#ffacda";   // CE3TSK
+  else if (mode == "MSK144") colour = "#ff6666";   // CE3TSK 2026-11-17: WSJT-X's
   else if (mode == "JT65") colour = "#66ff66";
   else if (mode == "JT9+JT65") colour = "#ffff66";
   else if (mode == "WSPR-2") colour = "#ff66ff";
@@ -3883,7 +3991,7 @@ void MainWindow::stationSyncMoment ()
   if (at < -period) at += 2 * period;
   e.moment.fromTxStartMs = at;
   e.moment.periodMs = period;
-  e.moment.windowMs = qRound64 (tx_step::tx_window (tx_duration_s (m_modeTx, m_mode), 0, m_TRperiod, true, m_mode).tx2 * 1000.0);
+  e.moment.windowMs = qRound64 (tx_step::tx_window (tx_duration_s (m_modeTx, m_mode, m_TRperiod), 0, m_TRperiod, true, m_mode).tx2 * 1000.0);
   unsigned const nsps = m_modeTx == "FT4" ? 576 : m_modeTx == "FT2" ? 288 : m_modeTx == "FT8" ? 1920 : 0;
   e.moment.startMs = tx_start::delay_ms (nsps);
   stationSyncDo (station_sync::step (m_stationSync, e));
@@ -4175,6 +4283,9 @@ QVector<MainWindow::ModeEntry> const& MainWindow::modeTable () const
           {"JT9+JT65", ui->actionJT9_JT65, &MainWindow::on_actionJT9_JT65_triggered},
           {"JT9", ui->actionJT9, &MainWindow::on_actionJT9_triggered},
           {"T10", ui->actionT10, &MainWindow::on_actionT10_triggered},
+          /* CE3TSK 2026-11-17 (MSK144_PLAN.md step 1a): the eighth, not the fourth - "Band and mode buttons in one
+             row" shows the menu's first four, FT8, FT4, FT2 and JT65, and they stay those */
+          {"MSK144", ui->actionMSK144, &MainWindow::on_actionMSK144_triggered},
           {"WSPR-2", ui->actionWSPR_2, &MainWindow::on_actionWSPR_2_triggered}};
   return m_modeTable;
 }
@@ -5605,6 +5716,9 @@ void MainWindow::msgBox(QString t) { msgBox0.setText(t); msgBox0.translate_butto
 void MainWindow::on_actionJTDX_Web_Site_triggered() { QDesktopServices::openUrl (QUrl {"https://ce3tsk.com/"}); }
 
 void MainWindow::on_actionWide_Waterfall_triggered() { m_wideGraph->show(); } //Display Waterfalls
+// CE3TSK 2026-11-17 (MSK144_PLAN.md step 1b): View > Fast Graph - MSK144's window, back when it was closed (the entry
+// is greyed in every other mode)
+void MainWindow::on_actionFast_Graph_triggered() { m_fastGraph->showNormal (); m_fastGraph->raise (); }
 
 /* CE3TSK 2026-11-16 (TODO.md 3.-260, RECEPTION_MAP_PLAN.md stage 1): View > Reception map. The window is made when it
    is first asked for; from then on it follows the style and our locator - my_grid_full (), all ten characters (the
@@ -5995,9 +6109,537 @@ void MainWindow::on_actionOpen_next_in_directory_triggered()   //Open Next
 //Open all remaining files
 void MainWindow::on_actionDecode_remaining_files_in_directory_triggered() { m_loopall=true; on_actionOpen_next_in_directory_triggered(); }
 
+/* CE3TSK 2026-11-17 (MSK144_PLAN.md step 1a): MSK144's audio on its way to the decoder. The Detector announces the
+   end of every 3584-sample block (frames = the samples of the period so far); at each one from the second on, the
+   newest 7168 samples are copied and handed to the decoder's thread - msk144feed.h has the rule, which is WSJT-X's.
+   Nothing is read later from the audio buffer: the copy is the window, so what the audio thread writes next (the
+   next period begins at the buffer's start) cannot reach a window already handed over. */
+void MainWindow::mskSink (qint64 frames)
+{
+  /* CE3TSK 2026-11-19 (TODO.md 3.-275, the review 3.-274's P6): a block that was on its way when the audio was
+     switched off - our transmission's start, Monitor off - is of nothing that is being received. Taken, it opened
+     the period again that the transmission's start had just closed: a window after that period's end, a second end
+     with a second pass of the sequencer, and a count left standing, against which the first block after the
+     transmission looked like the Detector's boundary (the period of 3.-272's defect again). */
+  if (!m_monitoring) return;
+  int const kd {static_cast<int> (frames)};   // the Detector's count: the samples of ITS period so far
+  if (kd == m_mskLastK) return;                // nothing new
+  /* the Detector has begun a new period (it counts from 0 again): the one before is over. Its end is also handed
+     over at its last window, below - but the Detector begins a period with the first block of audio after the
+     clock's boundary, so a period can be a fraction of a second short and its last window never come. */
+  /* CE3TSK 2026-11-19 (TODO.md 3.-275, the operator's "as recommended"; found in the feed's pass): only when the count
+     that fell was the feed's OWN - one it has followed by a block (the first after a new run or a period's close
+     counts: it is a block on from nothing). A block of the mode before, still on its way when MSK144 is entered,
+     is not, unless the Detector had only just begun: when the Detector, given the mode's T/R period, then
+     began anew at once, the fall from that block's count looked like the Detector's boundary - a period closed that
+     had none (a pass of the sequencer at the mode's entry) and the new count taken for one from the boundary, which
+     in a period's last second is the period of 3.-272's defect again. One block of the mode told before a REAL
+     boundary is not followed either: that fraction of a period gets no end and no pass (FT8 entered after its last
+     symbol decodes nothing), and the count behind it is timed as audio that came on - the same period, as long as
+     its first blocks are not half a second late. */
+  if (kd < m_mskLastK && m_mskOwn) { mskClosePeriod (); m_mskFromBoundary = true; }   // (2026-11-19) and this count began at a boundary
+  bool const inStep {kd - m_mskLastK == msk144::block};
+  m_mskOwn = inStep;
+  m_mskLastK = kd;
+  /* CE3TSK 2026-11-19 (TODO.md 3.-275, the review 3.-274's P4): the dial has moved since the block before - a band
+     change with the T/R period kept starts no new run, and one with another period starts it BEFORE the audio of the
+     new dial is there. A window is stamped with the dial of the moment it is handed over (mskPost ()), so the one or
+     two after the move held up to 0.6 s of the old dial's audio under the new one: a line of it went to Band
+     Activity, ALL.TXT, the UDP clients and the Reception map as heard on the new band. The block the move is seen
+     at and the one after it are passed over - the old dial's audio still on its way, the rig's change - and the
+     feed's count begins anew behind them.
+     (The operator's "as recommended": only for a move of MORE than the F Tol in use. Audio from before a smaller
+     one is still good under the new dial - the decoder would have found the signal there too, a line of it is real
+     and its frequency off by less than the move - and a rig whose reported frequency flickers by a hertz, or tuning
+     by hand, no longer keeps the mode passing blocks over. Each step is judged alone, against the dial of the block
+     before: many small ones that add up to more pass nothing over.) */
+  qint64 const dial {static_cast<qint64> (m_freqNominal)};
+  if (dial != m_mskDial)
+    {
+      if (0 != m_mskDial && qAbs (dial - m_mskDial) > qint64 (m_mskFtol)) m_mskSkip = 2;
+      m_mskDial = dial;
+    }
+  /* CE3TSK 2026-11-19 (TODO.md 3.-275, the review 3.-274's P3): where the feed's own count begins in the Detector's.
+     At the Detector's start - its boundary, the audio coming on - the two are one. But the Detector does not begin
+     anew when the mode is entered: it goes on from the blocks of the mode before (FT8's 3456 samples), no count of
+     it was a multiple of 3584 again before its next period, window_ends_at () refused every block, and nothing was
+     decoded for up to a whole T/R period while the Fast Graph showed the signals. The feed's count begins with the
+     first block it is told of - and anew whenever the Detector's does not go on by a block (one of the other mode's
+     size still on its way) - as it does when the audio comes on in the middle of a period: late_start_s () says how
+     far into the period that was. */
+  if (m_mskSkip > 0) { --m_mskSkip; m_mskK0 = -1; }
+  else if (m_mskK0 < 0 || !inStep) m_mskK0 = kd >= msk144::block ? kd - msk144::block : -1;
+  if (0 != m_mskK0) m_mskFromBoundary = false;   // counted from elsewhere than the Detector's own start
+  if (kd < msk144::block) return;
+  mskSpectra (kd);
+  // the level of the newest block for the meter, as symspec gives it in the other modes: the peak, in dB
+  int peak {0};
+  for (int i = kd - msk144::block; i < kd; ++i) peak = qMax (peak, qAbs (int (dec_data.d2[i])));
+  ui->signal_meter_widget->setValue (peak > 0 ? qMin (90.0, 20.0 * std::log10 (double (peak))) : 0.0);
+  if (m_mskK0 < 0) { m_mskAudio.clear (); return; }   // a block passed over: of no window, of no recording
+  int const k {kd - m_mskK0};                  // the feed's count: the samples received since it began
+  /* (step 1b) the period's audio for its recording, block by block as it arrives: at the period's end the Detector
+     has begun to write the next one over it. Only while Save asks for recordings, and only whole from the feed's
+     first block - switched on in the middle of a period, Save begins with the next. */
+  if (!m_diskData && m_saveWav != 0 && 0 == k % msk144::block)
+    {
+      if (k == msk144::block) m_mskAudio.clear ();
+      if (m_mskAudio.size () == k - msk144::block)
+        {
+          m_mskAudio.resize (k);
+          std::copy (dec_data.d2 + kd - msk144::block, dec_data.d2 + kd, m_mskAudio.begin () + k - msk144::block);
+        }
+    }
+  else m_mskAudio.clear ();
+  if (!msk144::window_ends_at (k)) return;
+  int const periodSamples {int (m_TRperiod * RX_SAMPLE_RATE + 0.5)};
+  if (k > periodSamples) return;
+  mskPost (k);
+  if (k + msk144::block > periodSamples) mskEndPeriod ();   // the period's last window: the next would end beyond it
+}
+
+/* CE3TSK 2026-11-17 (MSK144_PLAN.md step 1b): the Fast Graph's picture of the period, up to sample k - WSJT-X's
+   hspec (lib/msk144/hspec.f90, its file byte for byte), called at every block's end as WSJT-X's fastSink calls it.
+   It is asked for the spectra alone: the decoding it would also do is the decoder thread's here. When the samples
+   count from the start again a new period has begun, and the picture of the one before moves to the plot's lower
+   half. Here, in the thread that paints: 7 or 14 transforms of 512 points a block. */
+void MainWindow::mskSpectra (int k)
+{
+  if (k < m_mskSpecK)
+    {
+      memcpy (fast_green2, fast_green, sizeof fast_green);
+      memcpy (fast_s2, fast_s, sizeof fast_s);
+      fast_jh2 = fast_jh;
+    }
+  m_mskSpecK = k;
+  int nutc0 {0};
+  int nTRpDepth {int (m_TRperiod) + 1000 * m_mskDepth};
+  int rxFreq {1500};
+  int ftol {m_mskFtol};
+  int ingain {0};                      // WSJT-X's input gain slider, which this program does not have
+  bool bmsk144 {false}, btrain {false}, bshmsg {false}, bswl {false};
+  double const pcoeffs[5] = {0., 0., 0., 0., 0.};
+  float pxmax {0}, rmsNoGain {0};
+  char line[80];
+  line[0] = 0;
+  QByteArray const blank (12, ' ');
+  QByteArray const dir {m_dataDir.absolutePath ().toLocal8Bit ()};
+  hspec_ (dec_data.d2, &k, &nutc0, &nTRpDepth, &rxFreq, &ftol, &bmsk144, &btrain, pcoeffs, &ingain,
+          blank.constData (), blank.constData (), &bshmsg, &bswl, dir.constData (), fast_green, fast_s, &fast_jh,
+          &pxmax, &rmsNoGain, line, static_cast<fortran_charlen_t> (12), static_cast<fortran_charlen_t> (12),
+          static_cast<fortran_charlen_t> (dir.size ()), static_cast<fortran_charlen_t> (sizeof line));
+  m_fastGraph->plotSpec (m_diskData, dec_data.params.nutc);
+}
+
+// the window that ends at sample k of the period, to the decoder's thread
+void MainWindow::mskPost (int k)
+{
+  Msk144Window w;
+  w.k = k;
+  w.ftol = m_mskFtol;
+  w.rxFreq = 1500;                     // the decoder's band is fixed around 1500 Hz (WSJT-X: the Rx box is set to it)
+  w.depth = m_mskDepth;
+  w.myCall = m_config.my_callsign ();
+  w.hisCall = m_hisCall;
+  w.shMsgs = mskShInEffect ();          // (2026-11-18) the decoder looks for his short messages too
+  w.run = m_mskRun;
+  w.dial = static_cast<qint64> (m_freqNominal);
+  w.replay = m_diskData;
+  if (m_diskData) w.utc = dec_data.params.nutc;   // from the recording's name (read_wav_file)
+  else
+    {
+      qint64 const now {m_jtdxtime->currentMSecsSinceEpoch2 () % 86400000};
+      w.utc = msk144::live_period_utc (now, k, m_TRperiod, m_mskFromBoundary);
+      w.lateStart = msk144::late_start_s (now, k, m_TRperiod, m_mskFromBoundary);   // Monitor came on inside the period
+    }
+  /* (2026-11-19, TODO.md 3.-275 P3) k is the feed's count; its samples lie in the buffer from where that count began
+     in the Detector's (m_mskK0: 0 at the Detector's own start; none for a recording, which lies at the buffer's start) */
+  qint16 const * const newest {dec_data.d2 + qMax (0, m_mskK0) + k};
+  if (k < msk144::window || msk144::silent (newest - msk144::window)) return;
+  m_mskOf = w;                         // without the samples
+  m_mskOpen = true;
+  w.samples.resize (msk144::window);
+  std::copy (newest - msk144::window, newest, w.samples.begin ());
+  Q_EMIT mskWindow (w);
+}
+
+/* the period whose windows have been handed over is over: its end follows them to the decoder's thread, and comes
+   back (mskPeriodEnd ()) when every one of them has been decoded. Once a period; a period that gave no window - no
+   audio, or Monitor off - has no end to tell of. */
+void MainWindow::mskEndPeriod ()
+{
+  if (!m_mskOpen) return;
+  m_mskOpen = false;
+  m_mskEndPosted = true;
+  /* (step 1b) its recording, made ready: the period's length, the audio where it belongs in it (a period Monitor
+     came on in begins with nothing), named by the period's start. Whether it is written is decided when the decoder
+     has gone through the period (mskPeriodEnd ()): Save decoded keeps a period that gave a line. */
+  if (!m_mskOf.replay && !m_mskAudio.isEmpty ())
+    {
+      m_mskSaveAudio = msk144::period_recording (m_mskAudio, m_mskOf.lateStart, m_TRperiod);
+      m_mskSaveUtc = m_mskOf.utc;
+      m_mskSaveName = msk144::recording_name (m_jtdxtime->currentDateTimeUtc2 (), m_mskOf.utc);
+    }
+  m_mskAudio.clear ();
+  Q_EMIT mskWindow (m_mskOf);          // no samples: the period's end
+}
+
+/* (2026-11-18, the review 3.-270 P1) the period being received is over - the Detector has begun the next one, or our
+   own transmission begins (monitor ()): msk144feed.h's period_close () says what that asks for. A period that gave
+   the decoder nothing - no audio - tells it of no end, and the sequencer has its pass after it all the same. */
+void MainWindow::mskClosePeriod ()
+{
+  switch (msk144::period_close (m_mskLastK, m_mskOpen, m_mskEndPosted))
+    {
+    case msk144::PeriodClose::End: mskEndPeriod (); break;
+    case msk144::PeriodClose::Pass:
+      mskSequencerPeriodEnd (msk144::live_period_utc (m_jtdxtime->currentMSecsSinceEpoch2 () % 86400000, m_mskLastK, m_TRperiod,
+                                                      m_mskFromBoundary));
+      break;
+    case msk144::PeriodClose::Nothing: break;
+    }
+  m_mskEndPosted = false;
+  m_mskLastK = 0;
+  m_mskOwn = false;                    // (2026-11-19, 3.-275) nor is there a count the feed is following
+  m_mskFromBoundary = false;           // (2026-11-19) what is counted next begins when the audio does - mskSink () says otherwise
+  m_mskK0 = -1;                        // (2026-11-19, 3.-275 P3) nor is where the feed's count begins in the Detector's
+  m_mskAudio.clear ();
+}
+
+/* what is received has changed - the mode, the band, monitoring switched, a recording opened: the windows still
+   waiting for the decoder and the lines still on their way are of what was received before, and are passed over */
+void MainWindow::mskNewRun ()
+{
+  ++m_mskRun;
+  if (m_mskDecoder) m_mskDecoder->setRun (m_mskRun);
+  m_mskLines.clear ();
+  m_mskOpen = false;                   // the period that was being received is of the run that has ended
+  m_mskEndPosted = false;
+  m_mskLastK = 0;
+  m_mskOwn = false;                    // (2026-11-19, 3.-275) a block still on its way is of no count the feed follows
+  m_mskFromBoundary = false;           // (2026-11-19) the audio comes on anew: its count is not the Detector's period
+  m_mskK0 = -1;                        // (2026-11-19, 3.-275 P3) the feed's count begins with the next block it is told of
+  m_mskSeqOver = true;                 // (2026-11-19, 3.-275 P2) and the sequencer's flags are of what was received before
+  m_mskAudio.clear ();                 // (step 1b) and so is its recording
+  m_mskSaveAudio.clear (); m_mskSaveUtc = -1;
+}
+
+// a recording that File > Open has read, through the decoder as if it were being received: every window it holds
+void MainWindow::mskPlayRecording ()
+{
+  m_diskData = true;
+  mskNewRun ();
+  int const last {msk144::last_window_end (dec_data.params.kin, m_TRperiod)};
+  // (step 1b) its picture, every block of it; the picture before it moves down, whatever it was of
+  m_mskSpecK = std::numeric_limits<int>::max ();
+  int const blocks {qMin (dec_data.params.kin, int (m_TRperiod * RX_SAMPLE_RATE + 0.5)) / msk144::block};
+  for (int b = 1; b <= blocks; ++b) mskSpectra (b * msk144::block);
+  for (int k = msk144::window; k <= last; k += msk144::block) mskPost (k);
+  if (!m_mskOpen)                      // not one window: shorter than a window, or silent - its end all the same
+    {
+      m_mskOf = Msk144Window {};
+      m_mskOf.utc = dec_data.params.nutc; m_mskOf.run = m_mskRun; m_mskOf.replay = true;
+      m_mskOf.dial = static_cast<qint64> (m_freqNominal);
+      m_mskOpen = true;
+    }
+  mskEndPeriod ();
+}
+
+/* a line of the MSK144 decoder: through readFromStdout (), as a line of jtdxjt9 goes - ALL.TXT, the phantom-decode
+   judgement, both windows and their filters, the UDP clients, PSK Reporter. The line is of its window's dial, and
+   of a recording when its window was.
+   A decode of the mode before may still be writing - FT8's passes and its background run on after the mode is
+   changed - and its lines are of the dial and mode it began on (m_decodeOrigin, set by decode ()). So: its lines
+   that are waiting first, as what they are; then this line as MSK144's; and what jtdxjt9's lines are of put back,
+   for those still to come (test_rxstep, the tree's own text of this function). */
+void MainWindow::mskDecoded (QString const& line, Msk144Window const& of)
+{
+  if (of.run != m_mskRun) return;
+  /* (the review 3.-270 P11) every one of them: readFromStdout () returns at a <DecodeFinished>, and a line behind it
+     was then read below as MSK144's */
+  while (proc_jtdxjt9.canReadLine ()) readFromStdout ();
+  auto const jt9Origin = m_decodeOrigin;
+  bool const jt9Replay {m_decodeReplay};
+  m_decodeOrigin = decode_origin::Origin {of.dial, QStringLiteral ("MSK144")};
+  m_decodeReplay = of.replay;
+  mskSequencerPeriodBegin ();          // (2026-11-19) the first line of a period: the flags of the one before are let go
+  m_mskLines << (msk144::display_line (line) + '\n').toLatin1 ();
+  mskDecodeMoment (of.utc, of.replay);   // the sequencer may be asked on this line
+  readFromStdout ();
+  m_decodeOrigin = jt9Origin;
+  m_decodeReplay = jt9Replay;
+}
+
+/* CE3TSK 2026-11-17 (MSK144_PLAN.md step 2): a period of MSK144 is over - what jtdxjt9's <DecodeFinished> and the next
+   decode's start do for the sequencer in the other modes: the guard band of the mode, the sequencer's pass unless a
+   line of the period asked for it already (rxstep.h), and the flags of the period that begins. After every period
+   RECEIVED, whole or cut short by our own transmission's start: from mskPeriodEnd () when the decoder has gone
+   through its windows, from mskClosePeriod () when it gave the decoder none. None after a period we transmitted in,
+   as in the other modes - nothing was received, and the flags are those the period before it left.
+   (2026-11-18, the review 3.-270 P8: this said "received or transmitted", which it never did.)
+   (2026-11-19, TODO.md 3.-275, the review 3.-274's P2: the flags are no longer let go here - mskSequencerPeriodBegin ().) */
+void MainWindow::mskSequencerPeriodEnd (int periodUtc, bool replay)
+{
+  mskDecodeMoment (periodUtc, replay);
+  m_nguardfreq = guard_freq_hz (m_modeTx, m_nguardfreq);
+  mskSequencerPeriodBegin ();          // a period that gave no line begins, for the sequencer, with its end
+  if (rx_step::auto_at_decode_end (m_autoseq, m_processAuto_done, m_manualDecode)) { m_processAuto_done = true; process_Auto (); }
+  m_mskSeqOver = true;
+  /* CE3TSK 2026-11-19 (TODO.md 3.-275, the review 3.-274's P5): the log initialisation a changed wsjtx_log.adi or a
+     downloaded cty.dat / LoTW list left pending (initLogIfNeeded ()) - three quarters of a period after every period
+     received, with audio in it or none, where the other modes' timer has it after a decode's end (killFile ()).
+     Nothing started it in this mode: while monitoring the log was never read again. Not for a recording played
+     back, as there. */
+  if (!replay) QTimer::singleShot (int (750.0 * m_TRperiod), this, [this] { initLogIfNeeded (); });
+}
+
+/* CE3TSK 2026-11-19 (TODO.md 3.-275, the review 3.-274's P2): the first word the decoder says of a period - a line of
+   it, or its end when it gave none - lets go the sequencer's flags of the period BEFORE: asked already, his 73 first,
+   whom he answers, the frequency in use. What decode () does at a decode's start in the other modes. They were let
+   go right after the pass at a period's end, so the transmission that began a moment later found "not asked yet" and
+   guiUpdate () asked the sequencer a second time for the same period (tx_step::auto_at_tx_start (): call mode 2, and
+   modes 0 and 1 from RRR73 on). Counted by the decoder's own words, in their order - not by the clock: a decoder
+   that is late says the end of a period after the next one has begun. */
+void MainWindow::mskSequencerPeriodBegin ()
+{
+  if (!m_mskSeqOver) return;
+  m_mskSeqOver = false;
+  m_processAuto_done = false; m_callFirst73 = false;
+  m_reply_me = false; m_reply_other = false; m_reply_CQ73 = false;
+  m_used_freq = 0;
+}
+
+/* (2026-11-18, the review 3.-270 P6) the moment the decode of the period that began at periodUtc is counted from:
+   Call priority's search through the CQ messages asks whether the period decoded is the one the other side transmits
+   in (autoseqstep.h). decode () notes it for the other modes and returns at once in this one - the search judged every
+   period by the last decode of another mode, or by 0. A recording played back: the clock's, as in the other modes. */
+void MainWindow::mskDecodeMoment (int periodUtc, bool replay)
+{
+  qint64 const now {m_jtdxtime->currentMSecsSinceEpoch2 ()};
+  m_msDecStarted = replay ? now : now - now % 86400000 + msk144::decode_moment_ms (periodUtc, m_TRperiod);
+}
+
+/* every window of a period has been decoded and its lines shown: what jtdxjt9's <DecodeFinished> does for the other
+   modes - the next line begins a new period (the separator), a first complete period has been received (spots may
+   go out), the sequencer has its pass (step 2: mskSequencerPeriodEnd ()), and the next recording may be opened. */
+void MainWindow::mskPeriodEnd (Msk144Window const& of, int lines)
+{
+  if (of.run != m_mskRun) return;
+  /* CE3TSK 2026-11-19 (TODO.md 3.-275, the review 3.-274's P9): m_bDecoded is not written here. It is the other modes'
+     note for killFile (), which judges THEIR last recording three quarters of a period after their decode's end - a
+     timer that may still be waiting when this mode's first period ends - and this mode asks its own count (below). */
+  m_okToPost = true;
+  m_blankLine = true;
+  m_notified = false;
+  m_nDecodes = 0;
+  mskSequencerPeriodEnd (of.utc, of.replay);
+  if (of.replay) m_startAnother = m_loopall;
+  if (m_config.write_decoded_debug ())
+    writeToALLTXT (QString {"MSK144 period %1 decoded: %2 line(s)"}.arg (of.utc, 6, 10, QChar {'0'}).arg (lines));
+  /* (step 1b) the period's recording: Save all keeps every period received, Save decoded one that gave a line. It is
+     written from the copy made at the period's end, in a thread of its own as the other modes' recordings are - and
+     unlike theirs not from the audio buffer, which the next period is already filling. */
+  if (!of.replay && of.utc == m_mskSaveUtc && !m_mskSaveAudio.isEmpty ())
+    {
+      if (m_saveWav == 2 || (m_saveWav == 1 && lines > 0))
+        {
+          QVector<qint16> const audio {m_mskSaveAudio};
+          QString const name {m_config.save_directory ().absoluteFilePath (m_mskSaveName)};
+          QString const call {m_config.my_callsign ()}, grid {m_config.my_grid ()}, hisCall {m_hisCall}, hisGrid {m_hisGrid};
+          Frequency const dial {static_cast<Frequency> (of.dial)};
+          auto * const clock = m_jtdxtime;
+          m_saveWAVWatcher.setFuture (QtConcurrent::run ([this, name, audio, call, grid, dial, hisCall, hisGrid, clock] {
+              return save_wave_file (name, audio.constData (), audio.size (), call, grid, "MSK144", dial, hisCall, hisGrid, clock);
+            }));
+          if (m_config.write_decoded_debug ()) writeToALLTXT ("MSK144 period saved: " + m_mskSaveName + ".wav");
+        }
+      m_mskSaveAudio.clear (); m_mskSaveUtc = -1;
+    }
+}
+
+/* CE3TSK 2026-11-17 (MSK144_PLAN.md step 2): MSK144 entered or left - every mode's slot comes here (commonActions (),
+   and WSPR-2's own). The Fast Graph is the mode's alone, as in WSJT-X. And so is the audio frequency: an MSK144
+   signal is 2.4 kHz wide around 1500 Hz, sent there and looked for there, so both frequency boxes are held at 1500 Hz
+   while the mode is on (their range is that one value: whatever sets them - a double click, the sequencer, Tx/Rx
+   lock - leaves them there) and get the other modes' values back when it is left; the settings keep those.
+   (WSJT-X lets the Rx box move between 1400 and 1600 Hz: not here - the sequencer moves that box to his frequency
+   and to the Tx box's in eight places, and F Tol reaches 500 Hz either side.) */
+void MainWindow::mskModeState ()
+{
+  bool const on {m_mode == "MSK144"};
+  m_mskActive = on;
+  /* (2026-11-18) short messages: what Tx4 says is the mode's, and so is the messages' form - a short message left in
+     Tx3 would be the next mode's to send, and the mode entered with a DX call wants its own */
+  mskShLabel ();
+  if (!m_mode.startsWith ("WSPR") && !ui->tx3->text ().isEmpty () && msk144::sh_form (ui->tx3->text ()) != mskShInEffect ())
+    mskShMessages ();
+  if (!on) m_fastGraph->hide ();
+  ui->actionFast_Graph->setEnabled (on);
+  if (on && m_mskBoxRx < 0)
+    {
+      m_mskBoxRx = ui->RxFreqSpinBox->value ();
+      m_mskBoxTx = ui->TxFreqSpinBox->value ();
+      ui->TxFreqSpinBox->setRange (1500, 1500);
+      ui->RxFreqSpinBox->setRange (1500, 1500);
+    }
+  else if (!on && m_mskBoxRx >= 0)
+    {
+      int const rx {m_mskBoxRx}, tx {m_mskBoxTx};
+      m_mskBoxRx = m_mskBoxTx = -1;
+      ui->TxFreqSpinBox->setRange (100, 5000);   // the form's
+      ui->RxFreqSpinBox->setRange (1, 5000);
+      ui->TxFreqSpinBox->setValue (tx);
+      ui->RxFreqSpinBox->setValue (rx);
+    }
+}
+
+// Decode > MSK144 decoding: the T/R period, F Tol and the depth - WSJT-X's values
+void MainWindow::mskMenuSetup ()
+{
+  m_mskTRGroup = new QActionGroup {this};
+  int const periods[] = {5, 10, 15, 30};
+  for (int period : periods)
+    {
+      auto a = ui->menuMSK144_TR->addAction (QString {"%1 s"}.arg (period));
+      a->setCheckable (true); a->setData (period); a->setActionGroup (m_mskTRGroup);
+    }
+  connect (m_mskTRGroup, &QActionGroup::triggered, this, [this] (QAction * a) {
+      if (a->data ().toInt () == m_mskTR) return;
+      m_mskTR = a->data ().toInt ();
+      // (step 1b) the pick is remembered for the band the dial is on, as WSJT-X does
+      m_mskTRs[msk144::tr_slot (m_config.bands ()->find (m_freqNominal))] = m_mskTR;
+      if (m_mskActive) mskApplyPeriod ();
+    });
+  m_mskFtolGroup = new QActionGroup {this};
+  int const tols[] = {20, 50, 100, 150, 200, 250, 300, 350, 400, 450, 500};
+  for (int tol : tols)
+    {
+      auto a = ui->menuMSK144_FTol->addAction (QString {"%1 Hz"}.arg (tol));
+      a->setCheckable (true); a->setData (tol); a->setActionGroup (m_mskFtolGroup);
+    }
+  connect (m_mskFtolGroup, &QActionGroup::triggered, this, [this] (QAction * a) {m_mskFtol = a->data ().toInt ();});
+  m_mskDepthGroup = new QActionGroup {this};
+  ui->actionMSK144_Fast->setData (1); ui->actionMSK144_Normal->setData (2); ui->actionMSK144_Deep->setData (3);
+  for (auto a : {ui->actionMSK144_Fast, ui->actionMSK144_Normal, ui->actionMSK144_Deep}) a->setActionGroup (m_mskDepthGroup);
+  connect (m_mskDepthGroup, &QActionGroup::triggered, this, [this] (QAction * a) {m_mskDepth = a->data ().toInt ();});
+  connect (ui->actionMSK144_Sh, &QAction::triggered, this, [this] (bool on) {mskShSet (on);});   // the operator's click
+}
+
+/* CE3TSK 2026-11-18 (MSK144_PLAN.md section 17): short messages - WSJT-X's "Sh" box, here an entry of Decode > MSK144
+   decoding. "<K1ABC CE3TSK> R+03": 20 ms instead of 72, for the short pings of 2 m and up. With it on, in MSK144,
+   Tx3, Tx4 and Tx5 are short messages (a roger and report, RRR, 73), the report is one of the seven a short message
+   can carry, RRR answers his roger whatever the RRR/RR73 box says (there is no short RR73), and the decoder looks
+   for his short messages - those of my call and the DX call alone (msk144feed.h). */
+bool MainWindow::mskShInEffect () const
+{
+  return m_mskSh && m_mode == "MSK144" && msk144::sh_fits (m_config.my_callsign (), m_hisCall);
+}
+
+bool MainWindow::rrrInEffect () const
+{
+  return m_rrr || mskShInEffect ();
+}
+
+void MainWindow::mskShSet (bool on)
+{
+  if (on == m_mskSh) return;
+  m_mskSh = on;
+  mskShLabel ();
+  if (m_config.write_decoded_debug ()) writeToALLTXT (QString {"MSK144 short messages: %1"}.arg (on ? "on" : "off"));
+  if (m_mode == "MSK144") mskShMessages ();
+}
+
+/* the second tab's button says what Tx4 will say.
+   CE3TSK 2026-11-19 (TODO.md 3.-275, the review 3.-274's P8): by the rule the messages are made by - short messages IN
+   EFFECT (mskShInEffect (): a pair of calls a short message has room for), not the entry and the mode alone. For a
+   pair too long Tx4 holds RR73 with the box so, and the button said RRR. With no DX call there is no pair to ask
+   about yet: the button says what Tx4 will say for one that fits. Asked again when the DX call changes. */
+void MainWindow::mskShLabel ()
+{
+  bool const sh {m_mskSh && m_mode == "MSK144" && (m_hisCall.isEmpty () || mskShInEffect ())};
+  ui->pbSendRRR->setText ((m_rrr || sh) ? "RRR" : "RR73");
+}
+
+/* the Tx messages again, in the form that holds now - after the entry's click, and on the way into and out of the mode
+   (mskModeState ()). And nothing else, as regenerateForGrid ():
+   genStdMsgs alone also resets the Tx selection and the QSO's progress and turns AutoSeq on again. Tx5 is written
+   again, as in WSJT-X. A transmission under way goes on with the message it began. */
+void MainWindow::mskShMessages ()
+{
+  if (m_hisCall.isEmpty () || ui->tx1->text ().isEmpty ()) return;   // nothing generated: nothing to put in another form
+  QStringList const before {ui->tx1->text (), ui->tx2->text (), ui->tx3->text (), ui->tx4->text (), ui->tx5->currentText (), ui->tx6->text ()};
+  QString const gen0 {ui->genMsg->text ()};
+  int const held = gen0.isEmpty () ? -1 : before.indexOf (gen0);
+  QList<QRadioButton*> const txrb {ui->txrb1, ui->txrb2, ui->txrb3, ui->txrb4, ui->txrb5, ui->txrb6};
+  int checked0 {-1};
+  for (int i = 0; i < txrb.size (); ++i) if (txrb.at (i)->isChecked ()) checked0 = i;
+  int const ntx0 {m_ntx};
+  int const nlasttx0 {m_nlasttx};
+  auto const progress0 = m_QSOProgress;
+  bool const wasAutoSeq0 {m_wasAutoSeq};
+  bool const txGenerated0 {m_txGenerated};
+  QString const colour0 {m_dxCallEntryColour};
+  m_wasAutoSeq = false;                // genStdMsgs would turn AutoSeq on again
+  genStdMsgs (m_rpt);
+  m_wasAutoSeq = wasAutoSeq0;
+  m_txGenerated = txGenerated0;
+  if (!colour0.isEmpty ()) setDxCallEntryColour (colour0);
+  m_QSOProgress = progress0;
+  m_ntx = ntx0;
+  m_nlasttx = nlasttx0;
+  if (checked0 >= 0) txrb.at (checked0)->setChecked (true);
+  QStringList const after {ui->tx1->text (), ui->tx2->text (), ui->tx3->text (), ui->tx4->text (), ui->tx5->currentText (), ui->tx6->text ()};
+  ui->genMsg->setText (held >= 0 ? after.at (held) : gen0);
+  statusChanged ();
+}
+
+/* a T/R period picked while MSK144 is on: what commonActions () does with the period, and no more - the mode's whole
+   switch would also take the dial back to the band's working frequency */
+void MainWindow::mskApplyPeriod ()
+{
+  /* (step 2) a transmission under way was started for the period that ends here - where it stops and where our
+     period lies are the new period's from now on: it is halted, Enable Tx with it (WSJT-X lets it run on) */
+  if ((m_transmitting || g_iptt == 1) && int (m_TRperiod) != m_mskTR) haltTx ("MSK144 T/R period changed ");
+  m_TRperiod = m_mskTR;
+  m_logDlg->setMsk144Period (m_TRperiod);   // (step 2) the Log QSO window's step beside End
+  if (m_config.write_decoded_debug ())
+    writeToALLTXT (QString {"MSK144 T/R period: %1 s (%2)"}.arg (m_mskTR).arg (m_config.bands ()->find (m_freqNominal)));
+  if (m_tci) Q_EMIT m_config.transceiver_period (m_TRperiod);
+  else { m_modulator->setPeriod (m_TRperiod); m_detector->setPeriod (m_TRperiod); }
+  m_wideGraph->setPeriod (m_TRperiod, m_nsps);
+  progressBar->setMaximum (int (m_TRperiod));
+  progressBar->setFormat ("%v/" + QString::number (m_TRperiod));
+  setClockStyle (true);
+  m_fastGraph->setTRPeriod (m_TRperiod);   // (step 1b) its time scale: a block a pixel under 30 s, two blocks at 30 s
+  mskNewRun ();                        // what is waiting was received in periods of the other length
+}
+
+/* (step 1b) the T/R period of the band the dial is on - WSJT-X remembers one for 2 m, one for 6 m and 4 m, one for
+   the rest. After every band change, the program's own (band_changed ()) or one made at the rig
+   (displayDialFrequency (), which also shows the band at the start), and in every mode: m_mskTR is the dial's band's
+   at all times, so the Decode menu marks it and stores a pick for it whether MSK144 is on or not (2026-11-18, the
+   review 3.-270 P4 and P9). */
+void MainWindow::mskBandPeriod (QString const& band)
+{
+  int const period {m_mskTRs[msk144::tr_slot (band)]};
+  if (period == m_mskTR) return;
+  m_mskTR = period;
+  mskMenuMark ();
+  if (m_mskActive) mskApplyPeriod ();   // not on the way into the mode (its slot applies the period itself), nor at
+}                                       // the program's start before the slot has run
+
+void MainWindow::mskMenuMark ()
+{
+  for (auto a : m_mskTRGroup->actions ()) a->setChecked (a->data ().toInt () == m_mskTR);
+  for (auto a : m_mskFtolGroup->actions ()) a->setChecked (a->data ().toInt () == m_mskFtol);
+  for (auto a : m_mskDepthGroup->actions ()) a->setChecked (a->data ().toInt () == m_mskDepth);
+  ui->actionMSK144_Sh->setChecked (m_mskSh);
+}
+
 void MainWindow::diskDat()                                   //diskDat()
 {
   if(dec_data.params.kin>0) {
+    if(m_mode=="MSK144") { mskPlayRecording (); return; }   // CE3TSK 2026-11-17: its own windows, see mskSink ()
     int k;
     int kstep=m_FFTSize;
     m_diskData=true;
@@ -7835,6 +8477,13 @@ void MainWindow::on_actionSpecial_mouse_commands_triggered()
 
 void MainWindow::on_DecodeButton_clicked (bool /* checked */)	//Decode request
 {
+  /* CE3TSK 2026-11-17 (MSK144_PLAN.md step 1a): MSK144's lines come while the period is received, so on the air
+     there is nothing left to ask for; a recording that File > Open read is decoded once more */
+  if(m_mode=="MSK144") {
+    ui->DecodeButton->setChecked (false);
+    if(m_diskData && dec_data.params.kin>0) mskPlayRecording ();
+    return;
+  }
   if(!m_rxDone) { ui->DecodeButton->setChecked (false); return; }
   if(!m_decoderBusy && m_mode != "WSPR-2") {
     dec_data.params.newdat=0;
@@ -7859,6 +8508,9 @@ void MainWindow::freezeDecode(int n)                          //freezeDecode()
 
 void MainWindow::decode()                                       //decode()
 {
+  // CE3TSK 2026-11-17 (MSK144_PLAN.md step 1a): MSK144 is decoded as it is received, in this process (mskSink ()) -
+  // jtdxjt9 is never asked, whoever calls: the Decode button, a key, a click on the waterfall
+  if(m_mode=="MSK144") { m_manualDecode=false; return; }
   if(!m_dataAvailable or m_TRperiod==0.0) { m_manualDecode=false; return; }
   decodeBusy(true); // shall be second line
   m_bgPhase=false;   // CE3TSK: a new period's decode ends any background phase
@@ -8364,8 +9016,10 @@ void MainWindow::process_Auto()
 
 void MainWindow::readFromStdout()                             //readFromStdout
 {
-  while(proc_jtdxjt9.canReadLine()) {
-    QByteArray t=proc_jtdxjt9.readLine();
+  /* CE3TSK 2026-11-17 (MSK144_PLAN.md step 1a): a line of the MSK144 decoder (mskDecoded ()) is taken before jtdxjt9's -
+     in MSK144 jtdxjt9 has nothing to say */
+  while(!m_mskLines.isEmpty () || proc_jtdxjt9.canReadLine()) {
+    QByteArray t=m_mskLines.isEmpty () ? proc_jtdxjt9.readLine() : m_mskLines.takeFirst ();
     /* CE3TSK 2026-10-12: a decode the prefix-to-grid table deleted. It is not a decode line and nothing for
        the windows, the sequencer or ALL.TXT: it goes to <month>_DELETED.TXT beside ALL.TXT (deletedlog.h),
        and must be taken here, before anything below reads the line as a decode. The record knows from
@@ -8627,7 +9281,7 @@ void MainWindow::readFromStdout()                             //readFromStdout
               }
               
             QString blnklinetime;
-            if (m_mode.startsWith("FT")) {
+            if (lines_have_seconds (m_mode)) {   // CE3TSK 2026-11-17: modetiming.h - MSK144 too
 				blnklinetime = m_jtdxtime->currentDateTimeUtc2().toString("dd.MM.yy hh:mm:ss' UTC ----'");
             } else {
 				blnklinetime = m_jtdxtime->currentDateTimeUtc2().toString("dd.MM.yy hh:mm' UTC '");
@@ -8654,7 +9308,7 @@ void MainWindow::readFromStdout()                             //readFromStdout
 	   
 //      DecodedText decodedtext {"161545  -4  0.1 1939 & CQ RT9K/4    ",this};
 	  QString tcut = t.replace("\n","");
-	  if (!m_mode.startsWith("FT")) {
+	  if (!lines_have_seconds (m_mode)) {   // CE3TSK 2026-11-17: modetiming.h - MSK144's lines are hhmmss too
 		tcut = tcut.remove(0,21);
 	  } else {
 		tcut = tcut.remove(0,23);
@@ -8799,7 +9453,7 @@ void MainWindow::readFromStdout()                             //readFromStdout
 
       rx_step::DecodeInputs on;
       on.myCallInMsg = mycallinmsg; on.manualDecode = m_manualDecode; on.fromHim = fromHim; on.hisCallEmpty = m_hisCall.isEmpty();
-      on.processAutoDone = m_processAuto_done; on.autoseq = m_autoseq; on.rrr = m_rrr; on.singleshot = m_singleshot;
+      on.processAutoDone = m_processAuto_done; on.autoseq = m_autoseq; on.rrr = rrrInEffect (); on.singleshot = m_singleshot;
       on.hound = m_houndMode; on.callMode = m_callMode; on.status = m_status; on.msg = decodedtextmsg;
       switch (rx_step::on_decode (on))
         {
@@ -8841,6 +9495,7 @@ void MainWindow::readFromStdout()                             //readFromStdout
         QString msgmode="FT8";
         if (lineMode=="FT4") msgmode="FT4";
         else if (lineMode=="FT2") msgmode="FT2";   // CE3TSK
+        else if (lineMode=="MSK144") msgmode="MSK144";   // CE3TSK 2026-11-17
         else if (decodedtext.isJT65()) msgmode="JT65";
         else if (lineMode.startsWith("JT9")) msgmode="JT9";
         else if (lineMode=="T10") msgmode="T10";
@@ -8992,6 +9647,8 @@ void MainWindow::decodeBusy(bool b)                             //decodeBusy()
 }
 
 //------------------------------------------------------------- //guiUpdate()
+static tx_check::Result txCheck77 (QString text);   // below, with the Tx fields' check (2026-11-17: asked for MSK144 here)
+
 void MainWindow::guiUpdate()
 {
   static int iptt0=0;
@@ -9002,9 +9659,9 @@ void MainWindow::guiUpdate()
   double txDuration;
 
   if(m_TRperiod==0.0) m_TRperiod=60.0;
-  txDuration=tx_duration_s (m_modeTx, m_mode);   // CE3TSK 2026-10-17: modetiming.h
+  txDuration=tx_duration_s (m_modeTx, m_mode, m_TRperiod);   // CE3TSK 2026-10-17: modetiming.h
 
-  if(m_mode.startsWith("FT")) icw[0]=0;                                   //No CW ID in FT8 mode
+  if(lines_have_seconds (m_mode)) icw[0]=0;               //No CW ID in FT8 mode; CE3TSK 2026-11-17: nor in MSK144 (modetiming.h)
   /* CE3TSK 2026-10-19 (TODO.md section 7, 1f; 3.-140): the Tx decisions below are txstep.h's - when our transmission is
      due and where it may not go, the sequencer and the PTT at its start, the text sent and the halts, a 73 sent, the
      report recorded, what the start sets; the files, the rig, the widgets and the timers stay here */
@@ -9149,6 +9806,7 @@ void MainWindow::guiUpdate()
       if(tx_step::Halt::None != halt) {
         haltedEmpty=true;
         if(m_houndMode) m_currentMessage=txMsg; else m_currentMessage.clear();
+        m_txShown.clear ();   // CE3TSK 2026-11-19 (TODO.md 3.-275, the review's P7): nor is the short message sent before this one
         haltTx(tx_step::halt_reason (halt, m_hisCall));
         if(tx_step::Halt::SuperFoxNotDecoded == halt) {
           // the other halts here explain themselves (an empty message, no callsign); this one needs
@@ -9195,6 +9853,23 @@ void MainWindow::guiUpdate()
         int nsym=103; int nsps=4*288; float fsample=48000.0; float f0=ui->TxFreqSpinBox->value() - m_XIT; int nwave=(nsym+2)*nsps; int icmplx=0;
         gen_ft4wave_(const_cast<int *>(itone),&nsym,&nsps,&fsample,&f0,foxcom_.wave,foxcom_.wave,&icmplx,&nwave);
       }
+      /* CE3TSK 2026-11-17 (MSK144_PLAN.md step 2): MSK144 - the frame's 144 tones, or the 40 of a short message
+         ("<K1ABC W9XYZ> R+03", which the generator marks with -40 behind them); the modulator sends the frame over and
+         over (txstart.h). The message type stays 0, as in the FT modes. WSJT-X's generator says nothing of a message
+         the 77-bit packer cannot send, so the packer is asked (txcheck.h) and the answer said as genft8 says it -
+         not of a test tone ("@1000": the first tone is then a frequency, which the modulator sends steadily). */
+      else if(m_modeTx=="MSK144") {
+        int ichk=0; int itype=0;
+        genmsk_128_90_(message, &ichk, msgsent, const_cast<int *> (itone), &itype, 37, 37);
+        /* (2026-11-18) and a short message goes out only as it is written (msk144feed.h, sh_sendable): the generator
+           takes a text with a doubled blank inside the brackets, or with more behind the report, and sends something
+           else than it gives back as sent */
+        QString const mskText {QString::fromLatin1 (message, 37).trimmed ()};
+        if(message[0] != '@' && (itone[40] >= 0 ? tx_check::Kind::Unencodable == txCheck77 (mskText).kind : !msk144::sh_sendable (mskText))) {
+          for (int i = 0; i < NUM_MSK144_SYMBOLS; ++i) itone[i] = 0;
+          std::memcpy (msgsent, "*** bad message ***                  ", 37);
+        }
+      }
       else if(m_modeTx=="JT65") { gen65_(message, &ichk, msgsent, const_cast<int *> (itone), &m_currentMessageType, len1, len1); }
       else if(m_modeTx=="JT9") { gen9_(message, &ichk, msgsent, const_cast<int *> (itone), &m_currentMessageType, len1, len1); }
       else if(m_modeTx=="T10") { gen10_(message, &ichk, msgsent, const_cast<int *> (itone), &m_currentMessageType, len1, len1); }							  
@@ -9204,16 +9879,18 @@ void MainWindow::guiUpdate()
       msgsent[37]=0;
     }
     m_curMsgTx = QString::fromLatin1 (msgsent);
-    if(m_mode.startsWith("FT")) { m_curMsgTx.remove (QChar {'<'}); m_curMsgTx.remove (QChar {'>'}); }
+    // CE3TSK 2026-11-18: a short message (the generator's mark behind its 40 tones) is recorded as it is sent
+    m_txShown = (m_modeTx=="MSK144" && !m_tune && itone[40] < 0) ? m_curMsgTx.trimmed () : QString {};
+    if(messages_77bit (m_mode)) { m_curMsgTx.remove (QChar {'<'}); m_curMsgTx.remove (QChar {'>'}); }   // CE3TSK 2026-11-17: MSK144 (modetiming.h)
     m_currentMessage = m_curMsgTx;
     if(m_tune) { m_currentMessage = tr("TUNE"); m_currentMessageType = -1; m_nlasttx=0; }
-    last_tx_label->setText(tr("LastTx: ") + m_currentMessage.trimmed());
+    last_tx_label->setText(tr("LastTx: ") + txShown ().trimmed());
     /* CE3TSK 2026-10-18 (TODO.md 3.-135): a message the 77-bit packer cannot send - unpack77 refuses its own packing
        ("W6/UT5UF AF0G TNX", an RTTY Roundup or telemetry message, typed or sent over UDP) - does not go on the air.
        genft8 hands back "*** bad message ***" with every tone 0, which went out as one steady tone for the whole slot,
        and genft4 left the last message's tones. Halted where the halts above are, at the start of the transmission
        (or on a change during it), as WSJT-X 3.3.0 refuses it (test: tools/ui-check/badmessage.sh) */
-    if(!m_tune && !haltedEmpty && (m_modeTx=="FT8" || m_modeTx=="FT4" || m_modeTx=="FT2")
+    if(!m_tune && !haltedEmpty && messages_77bit (m_modeTx)
        && QByteArray {msgsent}.startsWith ("*** bad message ***")) {
       haltedEmpty=true;
       haltTx("Transmission halted: the message cannot be encoded ");
@@ -9229,7 +9906,7 @@ void MainWindow::guiUpdate()
           out << m_jtdxtime->currentDateTimeUtc2().toString("yyyyMMdd_hhmmss.zzz") << "(" << m_jtdxtime->GetOffset() << ")"
               << "  Retransmitting " << qSetRealNumberPrecision (12) << (m_freqNominal / 1.e6)
               << " MHz +" << ui->TxFreqSpinBox->value () <<"Hz  " << m_modeTx
-              << ":  " << m_currentMessage << 
+              << ":  " << txShown () << 
 #if QT_VERSION < QT_VERSION_CHECK(5, 15, 0)
                  endl;
 #else
@@ -9262,7 +9939,7 @@ void MainWindow::guiUpdate()
         {
           if (tx_step::autoseq_off_at_tx (messageTab (), ui->txrb5->isChecked (), ui->rbFreeText->isChecked (),
                                           m_autoseq, m_Tx5setAutoSeqOff, m_FTsetAutoSeqOff)) { m_wasAutoSeq=true; on_AutoSeqButton_clicked(false); }
-          ui->decodedTextBrowser2->displayTransmittedText(m_currentMessage,m_baseCall,Radio::base_callsign (m_hisCall),(m_skipTx1 && !m_houndMode ? "S" : ""),m_modeTx,
+          ui->decodedTextBrowser2->displayTransmittedText(txShown (),m_baseCall,Radio::base_callsign (m_hisCall),(m_skipTx1 && !m_houndMode ? "S" : ""),m_modeTx,
                      ui->TxFreqSpinBox->value(),m_config.color_TxMsg(),m_qsoHistory);
         }
     }
@@ -9282,7 +9959,7 @@ void MainWindow::guiUpdate()
                                             m_lastMessageSent);
 
     if (m_sentFirst73) {
-      if (!m_mode.startsWith("FT") && m_config.id_after_73 ()) icw[0] = m_ncw;
+      if (!lines_have_seconds (m_mode) && m_config.id_after_73 ()) icw[0] = m_ncw;   // CE3TSK 2026-11-17: no CW ID in MSK144 (modetiming.h)
       // with the guard against logging the same call twice in two periods (modetiming.h), which never decides here
       if (tx_step::log_after_73 (m_config.prompt_to_log (), m_config.autolog (), m_tune, m_lastloggedcall, m_hisCall,
                                  m_jtdxtime->currentDateTimeUtc2 ().toMSecsSinceEpoch () - m_lastloggedtime.toMSecsSinceEpoch (),
@@ -9297,7 +9974,7 @@ void MainWindow::guiUpdate()
         enableTxButtonTimer.start (100);
     }
 
-    if(!m_mode.startsWith("FT") && m_config.id_interval () >0) {
+    if(!lines_have_seconds (m_mode) && m_config.id_interval () >0) {   // modetiming.h: no CW ID in the modes of periods under a minute
       int nmin=(m_sec0-m_secID)/60;
       if(nmin >= m_config.id_interval ()) {
         icw[0]=m_ncw;
@@ -9338,7 +10015,7 @@ void MainWindow::guiUpdate()
           QString autoseqa=ui->AutoSeqButton->text(); int indx=autoseqa.length()-1; QString autoseq="AutoSeq"+autoseqa[indx];
           out << m_jtdxtime->currentDateTimeUtc2().toString("yyyyMMdd_hhmmss.zzz") << "(" << m_jtdxtime->GetOffset() << ")"
               << "  JTDX v" << QCoreApplication::applicationVersion () << revision () <<" Transmitting " << qSetRealNumberPrecision (12)
-              << (m_freqNominal / 1.e6) << " MHz + " << ui->TxFreqSpinBox->value () <<"Hz  " << m_modeTx << ":  " << m_currentMessage <<
+              << (m_freqNominal / 1.e6) << " MHz + " << ui->TxFreqSpinBox->value () <<"Hz  " << m_modeTx << ":  " << txShown () <<
 #if QT_VERSION < QT_VERSION_CHECK(5, 15, 0)
                  endl
 #else
@@ -9365,7 +10042,7 @@ void MainWindow::guiUpdate()
         else {
           out << m_jtdxtime->currentDateTimeUtc2().toString("yyyyMMdd_hhmmss.zzz") << "(" << m_jtdxtime->GetOffset() << ")"
               << "  Transmitting " << qSetRealNumberPrecision (12)
-              << (m_freqNominal / 1.e6) << " MHz + " << ui->TxFreqSpinBox->value () <<"Hz  " << m_modeTx << ":  " << m_currentMessage <<
+              << (m_freqNominal / 1.e6) << " MHz + " << ui->TxFreqSpinBox->value () <<"Hz  " << m_modeTx << ":  " << txShown () <<
 #if QT_VERSION < QT_VERSION_CHECK(5, 15, 0)
                  endl;
 #else
@@ -9383,7 +10060,7 @@ void MainWindow::guiUpdate()
     if ((m_config.TX_messages () || m_autoseq) && !m_tune) {
       if (tx_step::autoseq_off_at_tx (messageTab (), ui->txrb5->isChecked (), ui->rbFreeText->isChecked (),
                                       m_autoseq, m_Tx5setAutoSeqOff, m_FTsetAutoSeqOff)) { m_wasAutoSeq=true; on_AutoSeqButton_clicked(false); }
-      if(!haltedEmpty) ui->decodedTextBrowser2->displayTransmittedText(m_curMsgTx,m_baseCall,Radio::base_callsign (m_hisCall),(m_skipTx1 && !m_houndMode ? "S" : ""),m_modeTx,
+      if(!haltedEmpty) ui->decodedTextBrowser2->displayTransmittedText(m_txShown.isEmpty () ? m_curMsgTx : m_txShown,m_baseCall,Radio::base_callsign (m_hisCall),(m_skipTx1 && !m_houndMode ? "S" : ""),m_modeTx,
             ui->TxFreqSpinBox->value(),m_config.color_TxMsg(),m_qsoHistory);
     }
     static_assert (int (CALLING) == tx_step::CALLING && int (REPLYING) == tx_step::REPLYING && int (REPORT) == tx_step::REPORT
@@ -9396,7 +10073,7 @@ void MainWindow::guiUpdate()
     if (!m_config.tx_QSY_allowed ()) ui->TxFreqSpinBox->setDisabled(true);
     m_transmittedQSOProgress = m_QSOProgress;
     transmitDisplay (true);
-    if(tx_step::filter_off_at_tx (m_filter, m_FilterState, m_QSOProgress, m_rrr)) autoFilter (false);
+    if(tx_step::filter_off_at_tx (m_filter, m_FilterState, m_QSOProgress, rrrInEffect ())) autoFilter (false);
     statusUpdate ();
   }
 
@@ -9428,7 +10105,7 @@ void MainWindow::guiUpdate()
     if(m_transmitting) {
       setTxStatusColour ("#ffff33");
       if(m_tune) tx_status_label->setText(tr("Tx: TUNE"));
-      else tx_status_label->setText(tr("Tx: ") + m_curMsgTx.trimmed());
+      else tx_status_label->setText(tr("Tx: ") + (m_txShown.isEmpty () ? m_curMsgTx : m_txShown).trimmed());
 	  setProgressBarStyle ();
     } else if(m_monitoring) {
 	  if (!m_txwatchdog) {
@@ -9624,7 +10301,7 @@ void MainWindow::startTx2()
           QTextStream out(&f);
           out << m_jtdxtime->currentDateTimeUtc2().toString("yyMMdd hhmm")
               << "  Transmitting " << qSetRealNumberPrecision (12) << (m_freqNominal / 1.e6) << " MHz:  "
-              << m_currentMessage << "  " + m_mode <<
+              << txShown () << "  " + m_mode <<
 #if QT_VERSION < QT_VERSION_CHECK(5, 15, 0)
                  endl;
 #else
@@ -9657,7 +10334,7 @@ void MainWindow::stopTx()
   }
   if (m_tci) ptt0Timer.start(0); else {
     ptt0Timer.start(200);                //Sequencer delay
-    if(!m_monitoroff) monitor (true);
+    if(!m_monitoroff) monitorForTx (true);
     statusUpdate ();
     m_secTxStopped=m_jtdxtime->currentMSecsSinceEpoch2()/1000;
   }
@@ -9679,7 +10356,7 @@ void MainWindow::stopTx2()
       if(m_config.write_decoded_debug()) writeToALLTXT("Band changed after the transmission (a QSY the PTT held back), frequency: " + QString::number(pendingQsy));
     });
   if (m_tci) {
-    if(!m_monitoroff) monitor (true);
+    if(!m_monitoroff) monitorForTx (true);
     statusUpdate ();
     m_secTxStopped=m_jtdxtime->currentMSecsSinceEpoch2()/1000;
   }
@@ -9689,7 +10366,7 @@ void MainWindow::stopTx2()
     WSPR_scheduling ();
     m_ntr=0;
   }
-  last_tx_label->setText(tr("LastTx: ") + m_currentMessage.trimmed());
+  last_tx_label->setText(tr("LastTx: ") + txShown ().trimmed());
   /* CE3TSK 2026-09-26, review: the controls come back as the PTT drops, not up to a second later
      at guiUpdate's next pass. That pass stays as the net for an end that never comes through here
      (Halt pressed before the PTT rose), and a transmission already begun again makes this a no-op. */
@@ -9742,8 +10419,7 @@ void MainWindow::on_TxMinuteButton_clicked(bool checked)        //TxFirst
 void MainWindow::on_rrrCheckBox_stateChanged(int nrrr)        //RRR or RR73
 {
   m_rrr = (nrrr==2);
-  if(!m_rrr) { ui->pbSendRRR->setText("RR73"); }
-  else { ui->pbSendRRR->setText("RRR"); }
+  mskShLabel ();   // CE3TSK 2026-11-18: "RRR" or "RR73" - and "RRR" while MSK144 sends short messages
   ui->rrr1CheckBox->setChecked(m_rrr);
   if(ui->genMsg->text().contains (" RRR") || ui->genMsg->text().contains (" RR73")) on_pbSendRRR_clicked();
 }
@@ -9751,6 +10427,7 @@ void MainWindow::on_rrrCheckBox_stateChanged(int nrrr)        //RRR or RR73
 void MainWindow::on_rrr1CheckBox_stateChanged(int nrrr)        //RRR or RR73
 {
   m_rrr = (nrrr==2);
+  mskShLabel ();   // CE3TSK 2026-11-18: as the other box's slot
   ui->rrrCheckBox->setChecked(m_rrr);
   if(!ui->tx4->text().isEmpty ()) genStdMsgs(m_rpt); // can change message for non tx4 transmission?
 }
@@ -9872,7 +10549,7 @@ void MainWindow::processMessage(QString const& messages, int position, bool alt,
   bool tx_message = false;
   auto tcut = t2;
   
-  if (!m_mode.startsWith("FT")) {
+  if (!lines_have_seconds (m_mode)) {   // CE3TSK 2026-11-17: modetiming.h - MSK144's lines too
     t2disp=t2.left(40)+"     "+t2.mid(40,1);
     tcut.remove(0,21);
     tx_message = t2.mid(6,2) == "Tx";
@@ -9918,7 +10595,12 @@ void MainWindow::processMessage(QString const& messages, int position, bool alt,
     }
   }
 
-  auto t3 = decodedtext.string ().left(47);
+  /* CE3TSK 2026-11-18 (MSK144_PLAN.md section 17): a short message of MSK144, "<CE3TSK K1ABC> R+03", is read here as
+     the long one it stands for (msk144feed.h). The line's words are taken as they stand below, and "<CE3TSK" was
+     nobody's call: his roger, RRR or 73 was answered as a CQ - with Tx1. (The sequencer's own pass reads a line
+     through DecodedText, which drops the brackets.) */
+  QString const lineRead {m_mode == "MSK144" ? msk144::sh_line_plain (decodedtext.string ()) : decodedtext.string ()};
+  auto t3 = lineRead.left(47);
   auto t4 = t3.replace (QRegularExpression {" CQ ([A-Z]{1,2}|[0-9]{3,3}) "}, " CQ_\\1 ").split (" ", SkipEmptyParts);
   if(t4.size () < 6) return;             //Skip the rest if no decoded text
 
@@ -9929,7 +10611,7 @@ void MainWindow::processMessage(QString const& messages, int position, bool alt,
 
   if(addWanted) {
     if(!hiscall.isEmpty() && hiscall != m_hisCall && hiscall != m_config.my_callsign()) {
-      QString t5{""}; if(m_mode.startsWith("FT")) t5=hiscall; else t5=Radio::base_callsign(hiscall);
+      QString t5{""}; if(messages_77bit (m_mode)) t5=hiscall; else t5=Radio::base_callsign(hiscall);
       QString t6{""};
       if(m_wantedCall.isEmpty())  ui->wantedCall->setText(t5);
       else if(m_wantedCallList.length()<20 && !m_wantedCall.startsWith(t5+",") && !m_wantedCall.endsWith(","+t5) 
@@ -10090,7 +10772,7 @@ void MainWindow::processMessage(QString const& messages, int position, bool alt,
   genStdMsgs(rpt);
 
 // Determine appropriate response to received message
-  auto dtext = " " + decodedtext.string () + " ";
+  auto dtext = " " + lineRead + " ";   // (2026-11-18) a short message of MSK144 as the long one it stands for
   auto const kind = pick_step::kind_of (dtext, m_baseCall, firstcall, t4);
   if (pick_step::Kind::ToMe == kind)
     {
@@ -10208,8 +10890,8 @@ void MainWindow::genCQMsg ()
 // code below shall be combined into m_CQtype or CQ CONTEST shall be combined into m_cqdir
     /* CE3TSK 2026-10-12: a word of three or four letters goes into the CQ only in the modes that carry it
        (cqdirection.h); in JT65, JT9 and T10 the CQ stays plain and the box shows the word as not in effect */
-    QString const cqword {cq_direction::inMessage (m_cqdir, m_mode.startsWith ("FT"))};
-    m_cqWordSent = cq_direction::wordInCq (m_cqdir, m_mode.startsWith ("FT"), stdCall (m_config.my_callsign ()));   /* CE3TSK 2026-10-14: what takeCqWord compares with */
+    QString const cqword {cq_direction::inMessage (m_cqdir, messages_77bit (m_mode))};
+    m_cqWordSent = cq_direction::wordInCq (m_cqdir, messages_77bit (m_mode), stdCall (m_config.my_callsign ()));   /* CE3TSK 2026-10-14: what takeCqWord compares with */
     m_cqGenerated = true;
     if(!cqword.isEmpty () && stdCall(m_config.my_callsign())) { QString t="CQ " + cqword + " " + m_config.my_callsign() + " " + grid.left(4); /* CE3TSK: same local grid as the plain CQ above */
       msgtype(t, ui->tx6);
@@ -10275,7 +10957,7 @@ void MainWindow::genStdMsgs(QString rpt)                       //genStdMsgs()
 //  bool longCompoundMix=((m_myCallCompound and !m_hisCallCompound and !m_bHisCallStd) or (m_hisCallCompound and !m_myCallCompound and !m_bMyCallStd));
   QString t0=hisBase + " " + m_baseCall + " ";
 
-  if(m_mode.startsWith("FT")) {
+  if(messages_77bit (m_mode)) {   // CE3TSK 2026-11-17: modetiming.h - MSK144's messages are these
     QString t0a,t0b;
     if(m_bHisCallStd and m_bMyCallStd) t0=hisCall + " " + my_callsign + " ";
     t0a="<"+hisCall + "> " + my_callsign + " ";
@@ -10286,7 +10968,12 @@ void MainWindow::genStdMsgs(QString rpt)                       //genStdMsgs()
     int n=rpt.toInt();
     myrpt = QString::asprintf("%+2.2d",n);
     QString t2,t3;
-    QString sent=myrpt;
+    /* CE3TSK 2026-11-18 (MSK144_PLAN.md section 17): MSK144's short messages. The report that goes out is then one of
+       the seven a short message can carry, in Tx2 as in Tx3 (WSJT-X sets its report box to it); m_rpt stays the
+       report as it was measured - the sequencer compares that with the next one (autoseq_step::new_report). */
+    bool const sh {mskShInEffect ()};
+    QString const rptOut {sh ? QString::asprintf("%+2.2d",msk144::sh_report (n)) : myrpt};
+    QString sent=rptOut;
     /* CE3TSK: WW Digi contest - the exchange is my 4 character grid, not a signal report.
        Tx2 becomes "HISCALL MYCALL GRID" and the contest branch a few lines below builds
        Tx3 as "HISCALL MYCALL R GRID". */
@@ -10313,14 +11000,20 @@ void MainWindow::genStdMsgs(QString rpt)                       //genStdMsgs()
 //    if((m_houndMode and !m_bHisCallStd and !m_bMyCallStd) or (!m_houndMode and ((bothCallsCompound and !bothCallsP and !bothCallsR) or longCompoundMix)))
     if((m_houndMode and !m_bHisCallStd and !m_bMyCallStd) or (!m_houndMode and bothCallsCompound and !bothCallsP and !bothCallsR))
       t="<"+hisCall + "> " + Radio::base_callsign(my_callsign) + " ";
-    if(sent==myrpt) msgtype(t + "R" + sent, ui->tx3);
-    if(sent!=myrpt) msgtype(t + "R " + sent, ui->tx3);
+    if(sent==rptOut) msgtype(t + "R" + sent, ui->tx3);
+    if(sent!=rptOut) msgtype(t + "R " + sent, ui->tx3);
+    /* (2026-11-18) Tx3, Tx4 and Tx5 as short messages: the two calls as they are, whatever their kind - what is sent
+       is a hash of the text between the brackets, and the other side builds the same text from its own call and DX
+       call. RRR: a short message has no RR73. */
+    QString const shHead {msk144::sh_head (hisCall, my_callsign)};
+    if(sh) msgtype(shHead + "R" + rptOut, ui->tx3);
 
     t=t0 + (m_rrr ? "RRR" : "RR73");
 //    if((!m_bHisCallStd and m_bMyCallStd) or (bothCallsCompound and !bothCallsP and !bothCallsR) or longCompoundMix)
     if((!m_bHisCallStd and m_bMyCallStd) or (bothCallsCompound and !bothCallsP and !bothCallsR))
       t=hisCall + " <" + my_callsign + "> " + (m_rrr ? "RRR" : "RR73");
     else if((m_bHisCallStd and !m_bMyCallStd)) t="<" + hisCall + "> " + my_callsign + " " + (m_rrr ? "RRR" : "RR73");
+    if(sh) t=shHead + "RRR";
     msgtype(t, ui->tx4);
 
     t=t0 + "73";
@@ -10328,6 +11021,7 @@ void MainWindow::genStdMsgs(QString rpt)                       //genStdMsgs()
     if((!m_bHisCallStd and m_bMyCallStd) or (bothCallsCompound and !bothCallsP and !bothCallsR))
       t=hisCall + " <" + my_callsign + "> 73";
     else if((m_bHisCallStd and !m_bMyCallStd)) t="<" + hisCall + "> " + my_callsign + " 73";
+    if(sh) t=shHead + "73";
 
 /*    if(unconditional || hisBase != m_lastCallsign || !m_lastCallsign.size ()) {
       // only update tx5 when (forced-unconditional or ) callsign changes */
@@ -10544,6 +11238,7 @@ void MainWindow::countQSOs ()
   if (m_mode == "FT8") { sprintf(c_txt,"FT8  %d",book.get_qso_count("FT8")); }
   else if (m_mode == "FT4") { sprintf(c_txt,"FT4  %d",book.get_qso_count("FT4")); }
   else if (m_mode == "FT2") { sprintf(c_txt,"FT2  %d",book.get_qso_count("FT2")); }   // CE3TSK
+  else if (m_mode == "MSK144") { sprintf(c_txt,"MSK144  %d",book.get_qso_count("MSK144")); }   // CE3TSK 2026-11-17
   else if (m_mode == "JT9+JT65") { sprintf(c_txt,"JT65/9 %d/%d",book.get_qso_count("JT65"),book.get_qso_count("JT9")); }
   else if (m_mode == "JT9") { sprintf(c_txt,"JT9  %d",book.get_qso_count("JT9")); }
   else if (m_mode == "JT65") { sprintf(c_txt,"JT65  %d",book.get_qso_count("JT65")); }
@@ -10729,8 +11424,12 @@ void MainWindow::msgtype(QString t, QLineEdit* tx)               //msgtype()
      "CE3TSK K1ABC RR73") and for one it cannot send, with what goes out in the tooltip. The 72-bit JT9 packer asked
      below for the other modes knew no brackets: every message the program builds for a non-standard call was pink, a
      changed one white - and the WW Digi roger with a grid and a CQ with a longer word needed exceptions of their own */
-  if(m_mode.startsWith("FT")) {
-    auto const check = txCheck77 (t);
+  if(messages_77bit (m_mode)) {
+    /* CE3TSK 2026-11-18: a short message in MSK144 ("<K1ABC CE3TSK> R+03") is not the 77-bit packer's to judge - it
+       goes out as its own frame of 40 symbols, or, when it says none of the sixteen things one can say, not at all */
+    auto const check = (m_mode == "MSK144" && msk144::sh_form (t))
+      ? tx_check::Result {msk144::sh_sendable (t) ? tx_check::Kind::AsWritten : tx_check::Kind::Unencodable, {}}
+      : txCheck77 (t);
     text = tx_check::Kind::AsWritten != check.kind;
     showTxCheck (tx, check);
   } else {
@@ -10894,7 +11593,7 @@ void MainWindow::cqWordChanged (QLineEdit * box, QString const& dir)
 void MainWindow::showCqWord ()
 {
   QString const word {ui->directionLineEdit->text ()};       // both boxes hold it, upper case
-  m_cqWordMode77 = m_mode.startsWith ("FT");
+  m_cqWordMode77 = messages_77bit (m_mode);
   bool const green {!m_cqWordTimer.isActive () && cq_direction::Box::InEffect == cq_direction::box (word, m_cqWordMode77)};
   QString const sheet {QString ("QLineEdit {background: %1}")
       .arg (Radio::convert_dark (word.isEmpty () ? "#ffffff" : green ? "#82ff8c" : "#fffa82", m_useDarkStyle))};
@@ -10977,6 +11676,7 @@ void MainWindow::on_dxCallEntry_textChanged(const QString &t) //dxCall changed
       if (m_hisCall.isEmpty()) { m_hisCallCompound=false; return; }
       else m_hisCall.clear();
   } else m_hisCall=t.toUpper().trimmed();
+  mskShLabel ();   // CE3TSK 2026-11-19 (TODO.md 3.-275, the review's P8): what Tx4 will say hangs on the pair of calls
   /* CE3TSK 2026-10-21: Wait and Reply - a hold lasts while the call is the one it was taken for; Enable Tx yellow or not */
   m_waitReplyHeld = wait_reply::held_after_change (m_waitReplyHeld, m_hisCall);
   waitReplyRepaint ();
@@ -11105,6 +11805,7 @@ void MainWindow::on_logQSOButton_clicked()
     if(m_mode == "FT8") dateTimeQSOOff = currenttime.addSecs (14);
     else if(m_mode == "FT4") dateTimeQSOOff = currenttime.addSecs (7);
     else if(m_mode == "FT2") dateTimeQSOOff = currenttime.addSecs (3);   // CE3TSK
+    else if(m_mode == "MSK144") dateTimeQSOOff = currenttime.addSecs (qMax (1, int (m_TRperiod) - 1));   // CE3TSK 2026-11-17: its period is the operator's
     else dateTimeQSOOff = currenttime.addSecs (50);
   }
   if (dateTimeQSOOff < m_dateTimeQSOOn) m_dateTimeQSOOn = dateTimeQSOOff;
@@ -11206,7 +11907,7 @@ void MainWindow::acceptQSO2(QDateTime const& QSO_date_off, QString const& call, 
 //clean up wanted call from window/list if QSO with this call is logged in
   if(ui->cbClearCallsign->isChecked ()) {
     int wcallidx=-1;
-    if(m_mode.startsWith("FT")) wcallidx=m_wantedCallList.indexOf(call);
+    if(messages_77bit (m_mode)) wcallidx=m_wantedCallList.indexOf(call);
     else wcallidx=m_wantedCallList.indexOf(Radio::base_callsign (call));
     if(wcallidx >= 0) {
       m_wantedCallList.removeAt(wcallidx); ui->wantedCall->setText(m_wantedCallList.join(","));
@@ -11300,6 +12001,42 @@ void MainWindow::on_actionFT2_triggered()
   enableHoundAccess(false);
 }
 
+/* CE3TSK 2026-11-17 (MSK144_PLAN.md step 1a): MSK144, WSJT-X's meteor-scatter mode - a 72 ms frame sent without a
+   pause, decoded while the period is being received; (step 2) and transmitted the same way, for the whole of our
+   period, on 1500 Hz - both frequency boxes are held there in this mode (mskModeState ()).
+   The period is the operator's (Decode > MSK144 decoding > T/R: 5, 10, 15 or 30 s), not the mode's. The Detector's
+   block becomes 3584 samples (commonActions), at whose every end mskSink () hands the decoder's thread a window. */
+void MainWindow::on_actionMSK144_triggered()
+{
+  if (m_mode=="WSPR-2") killFile();
+  if (m_mode!="MSK144" && ui->enableTxButton->isChecked ()) ui->enableTxButton->click ();   // a transmission of the mode left ends here: the period and the frequency are others
+  m_mode="MSK144";
+  WSPR_config(false);
+  m_mskTR=m_mskTRs[msk144::tr_slot (m_config.bands ()->find (m_freqNominal))];   // (step 1b) the band's
+  m_TRperiod=m_mskTR;            // before switch_mode: a band change on the way reads the period
+  switch_mode (Modes::MSK144);
+  m_TRperiod=m_mskTR;            // (step 1b) the band's, should the mode's frequency be on another band
+  m_logDlg->setMsk144Period (m_TRperiod);   // (step 2) the Log QSO window's step beside End
+  m_modeTx="MSK144";
+  setModeLabelStyle ("MSK144");
+  ui->actionMSK144->setChecked(true);
+  ui->pbTxMode->setText("Tx MSK144 &&");   // "&&" draws one: a lone & marks a shortcut key and is not drawn
+  ui->pbTxMode->setEnabled(false);
+  on_AutoSeqButton_clicked(true);   // (step 2) as the FT modes' slots - and as WSJT-X's own slot checks its Auto Seq
+  /* (2026-11-18, the review 3.-270 P10) Hound and S-Hound end BEFORE commonActions (): its mskModeState () remembers
+     the two frequency boxes for the way out of the mode, and S-Hound holds the Rx box on the Fox with the operator's
+     value parked - handed back only when S-Hound ends. Ended after, the Fox's frequency was what MSK144 remembered and
+     gave back, and the parked value was lost against the boxes' range of 1500 alone. */
+  enableHoundAccess(false);
+  commonActions();
+  enableHoundAccess(false);
+  mskMenuMark ();
+  // CE3TSK 2026-11-17 (step 1b): the mode's picture is the Fast Graph, shown whenever the mode is entered (WSJT-X)
+  m_fastGraph->setMode (m_mode);
+  m_fastGraph->setTRPeriod (m_TRperiod);
+  m_fastGraph->showNormal ();
+}
+
 void MainWindow::on_actionFT8_triggered()
 {
   if (m_mode=="WSPR-2") killFile();
@@ -11325,7 +12062,7 @@ void MainWindow::on_actionFT8_triggered()
 void MainWindow::on_actionJT65_triggered()
 {
   if (m_mode=="WSPR-2") killFile();
-  if(m_mode.startsWith("FT") or m_mode=="T10" or m_mode.left(4)=="WSPR") {
+  if(messages_77bit (m_mode) or m_mode=="T10" or m_mode.left(4)=="WSPR") {   // CE3TSK 2026-11-17: MSK144 (modetiming.h)
 // If coming from FT,T10 or WSPR mode, pretend temporarily that we're coming
 // from JT9 and click the pbTxMode button
     m_modeTx="JT9";
@@ -11382,6 +12119,7 @@ void MainWindow::on_actionWSPR_2_triggered()
   m_wideGraph->setPeriod(m_TRperiod,m_nsps);
   m_wideGraph->setMode(m_mode);
   m_wideGraph->setModeTx(m_modeTx);
+  mskModeState ();   // CE3TSK 2026-11-17: out of MSK144 - this slot does not come through commonActions ()
   ui->TxFreqSpinBox->setValue(ui->WSPRfreqSpinBox->value());
   ui->pbTxMode->setText(tr("Tx WSPR"));
   ui->pbTxMode->setEnabled(false);
@@ -11404,6 +12142,7 @@ void MainWindow::switch_mode (Mode mode)
   /* CE3TSK 2026-10-20 (review 3.-155 4): a mode changed by hand is the operator taking over - here, not only in
      band_changed (), which a mode with no row near the dial (FT4 on 160 m) never reaches */
   if (hopping () && !m_ownChange) stopHopping (tr ("the band or mode was changed"));
+  mskNewRun ();   // CE3TSK 2026-11-17: into MSK144, out of it, or its T/R period changed - what waits is of before
 // m_lastMode value is deliberately not assigned in constructor to let qsohistory init at SW startup 
   if(m_lastMode!=m_mode) {
      if (m_lastMode == "FT4") Q_EMIT m_config.transceiver_ft4_mode (false);
@@ -11443,6 +12182,8 @@ void MainWindow::commonActions ()
 //  m_detector->setPeriod(m_TRperiod);   // TODO - not thread safe
   m_nsps=6912;                   //For symspec only
   if (m_mode=="FT2") m_nsps=3456;   // CE3TSK: half the block, so the waterfall keeps its rate in a half-length period
+  if (m_mode=="MSK144") m_nsps=msk144::window;   // CE3TSK 2026-11-17: the Detector's block is half of it, 3584 - a window ends at each
+  mskModeState ();                               // the Fast Graph is MSK144's alone, and so are the frequency boxes at 1500 Hz
   m_FFTSize = m_nsps / 2;
   if (m_tci) Q_EMIT m_config.transceiver_blocksize(m_FFTSize);
   else Q_EMIT FFTSize (m_FFTSize);
@@ -11452,7 +12193,8 @@ void MainWindow::commonActions ()
   m_wideGraph->show();
   mode_label->setText(m_mode);
   QString t;
-  if (m_mode.startsWith("FT")) t = "UTC     dB   DT "+tr("Freq   Message");
+  if (m_mode=="MSK144") t = "UTC     dB    T "+tr("Freq   Message");   // CE3TSK 2026-11-17: T, the moment in the period
+  else if (m_mode.startsWith("FT")) t = "UTC     dB   DT "+tr("Freq   Message");
   else t = "UTC   dB   DT "+tr("Freq   Message");
   ui->decodedTextLabel->setTextFormat(Qt::PlainText); ui->decodedTextLabel->setText(t);
   setBandLabelColour ("#fdedc5");
@@ -11502,7 +12244,7 @@ void MainWindow::commonActions ()
      the Settings are closed and when the rig comes back online. (It went through the boxes' slots, which
      press the CQ button: a DX call that was typed and the QSO's messages were gone, AutoSeq was back on,
      and a CQ on the air was restarted.) */
-  bool const mode77 {m_mode.startsWith ("FT")};
+  bool const mode77 {messages_77bit (m_mode)};
   if(m_cqdir.size () > 2 && mode77 != m_cqWordMode77) {
     showCqWord ();
     genCQMsg ();
@@ -11824,6 +12566,7 @@ void MainWindow::band_changed (Frequency f)
       qint64 ms = m_jtdxtime->currentMSecsSinceEpoch2() % 86400000; int nsec=ms/1000;
       // TR period is the only reliable way in this point of code at the mode change
       double TRperiod=tr_period_of(m_mode);   // CE3TSK: modetiming.h - this chain used to forget FT2
+      if(m_mode=="MSK144") TRperiod=m_mskTR;   // CE3TSK 2026-11-17: the operator's, not the mode's
       int nseqmod = fmod(double(nsec),TRperiod);
       m_nsecBandChanged=nseqmod;
     }
@@ -11899,6 +12642,9 @@ void MainWindow::band_changed (Frequency f)
     m_lastloggedtime=m_lastloggedtime.addSecs(-7*int(m_TRperiod));
     m_lastloggedcall.clear(); setLastLogdLabel();
   }
+  /* CE3TSK 2026-11-17 (MSK144_PLAN.md step 1b): the new band's T/R period. 2026-11-18 (the review 3.-270 P9): in every
+     mode - the Decode menu's mark is the band's, and a pick there is stored for the band the dial is on. */
+  mskBandPeriod (m_config.bands ()->find (m_freqNominal));
 }
 
 void MainWindow::enable_DXCC_entity ()
@@ -12071,7 +12817,7 @@ void MainWindow::on_pbAnswerCQ_clicked()
 {
   genStdMsgs(m_rpt);
   ui->genMsg->setText(ui->tx1->text());
-  if(!m_mode.startsWith("FT")) { QString t=ui->tx2->text(); int i0=t.indexOf("/"); int i1=t.indexOf(" "); if(i0>0 and i0<i1) ui->genMsg->setText(t); }
+  if(!messages_77bit (m_mode)) { QString t=ui->tx2->text(); int i0=t.indexOf("/"); int i1=t.indexOf(" "); if(i0>0 and i0<i1) ui->genMsg->setText(t); }
   m_ntx=7;
   m_QSOProgress = REPLYING;
   m_nlasttx=1;
@@ -12130,7 +12876,7 @@ void MainWindow::on_freeTextMsg_currentTextChanged (QString const& text)
     /* CE3TSK 2026-10-18 (TODO.md 3.-135): in FT8, FT4 and FT2 green only when the 77-bit packer sends it as typed
        (txcheck.h) - DecodedText's "standard" said green for "CE3TSK KH6/K1ABC RR73", which goes out without the KH6/,
        and for "W6/UT5UF AF0G TNX", which cannot be sent; yellow for those, what goes out in the tooltip */
-    bool const ft {m_mode.startsWith("FT")};
+    bool const ft {messages_77bit (m_mode)};
     tx_check::Result const check {ft ? txCheck77 (text) : tx_check::Result {tx_check::Kind::AsWritten, {}}};
     bool stdfreemsg;
     showTxCheck (ui->freeTextMsg->lineEdit (), check);   // no note from an FT mode left behind in the others
@@ -12683,6 +13429,15 @@ void MainWindow::transmit (double snr)
     else Q_EMIT sendMessage (NUM_FT4_SYMBOLS,288.0,ui->TxFreqSpinBox->value()-m_XIT,toneSpacing,m_soundOutput,
                         m_config.audio_output_channel(),true,snr,m_TRperiod);
   }
+  /* CE3TSK 2026-11-17 (MSK144_PLAN.md step 2): MSK144, as WSJT-X starts it - 6 samples a symbol, the tones at 1000 and
+     2000 Hz (f0 1000, 6000/nsps apart) whatever the Tx box holds. 6 samples a symbol is what tells the modulators to
+     send the frame over and over, from the period's start to half a second before its end (txstart.h). */
+  else if (m_modeTx == "MSK144") {
+    toneSpacing=1000.0;
+    if (m_tci) Q_EMIT m_config.transceiver_modulator_start(NUM_MSK144_SYMBOLS,6.0,1000.0,toneSpacing,true,snr,m_TRperiod);
+    else Q_EMIT sendMessage (NUM_MSK144_SYMBOLS,6.0,1000.0,toneSpacing,m_soundOutput,
+                        m_config.audio_output_channel(),true,snr,m_TRperiod);
+  }
   else if (m_modeTx == "JT65") {
     toneSpacing=11025.0/4096.0;
     if (m_tci) Q_EMIT m_config.transceiver_modulator_start(NUM_JT65_SYMBOLS,4096.0*12000.0/11025.0,ui->TxFreqSpinBox->value()-m_XIT,toneSpacing,true,snr,m_TRperiod);
@@ -12923,7 +13678,7 @@ void MainWindow::transmitDisplay (bool transmitting)
   if (transmitting == m_transmitting) {
     if (transmitting) {
       ui->signal_meter_widget->setValue(0);
-      if (m_monitoring) monitor (false);
+      if (m_monitoring) monitorForTx (false);
       m_btxok=true;
     }
     auto QSY_allowed = !transmitting or m_config.tx_QSY_allowed () or !m_config.split_mode ();
@@ -12967,7 +13722,14 @@ void MainWindow::replyToUDP (QTime time, qint32 snr, float delta_time, quint32 d
 //msgBox(message_text);
       // a message we are willing to accept
       QString format_string {"%1 %2 %3 %4 %5 %6"};
-      auto const& time_string = time.toString (("~" == mode || ":" == mode) ? "hhmmss" : "hhmm");
+      /* CE3TSK 2026-11-19 (TODO.md 3.-275, the review's P1): the time as the LINE has it. It was "hhmmss" for the
+         mode characters "~" and ":" alone - FT8's and FT4's - so a line of FT2 (";") or of MSK144 ("&"), whose times
+         have seconds too, was looked for with "hhmm", not found, and the Reply dropped.
+         (The operator's "as recommended": by the request's own mode character - modetiming.h's mark_has_seconds () -
+         and the compared length below with it, not by the mode the program is in: a line left in Band Activity from
+         a mode of the other kind, FT8's while in JT65 or JT65's while in FT8, is found too.) */
+      bool const seconds {mark_has_seconds (mode)};
+      auto const& time_string = time.toString (seconds ? "hhmmss" : "hhmm");
       auto msgText = format_string
         .arg (time_string)
         .arg (snr, 3)
@@ -12977,7 +13739,7 @@ void MainWindow::replyToUDP (QTime time, qint32 snr, float delta_time, quint32 d
         .arg (message_text);
       auto messages = ui->decodedTextBrowser->toPlainText ();
       int position;
-      if(m_mode.startsWith("FT")) position = messages.lastIndexOf (msgText.left(42));
+      if(seconds) position = messages.lastIndexOf (msgText.left(42));
       else position = messages.lastIndexOf (msgText.left(40));
       if (position < 0) {
           // try again with with -0.0 delta time

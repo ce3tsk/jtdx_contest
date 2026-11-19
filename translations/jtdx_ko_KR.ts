@@ -2628,6 +2628,39 @@ Format:
     </message>
 </context>
 <context>
+    <name>FastGraph</name>
+    <message>
+        <location filename="../fastgraph.ui"/>
+        <source>Fast Graph</source>
+        <translation>고속 그래프</translation>
+    </message>
+    <message>
+        <location filename="../fastgraph.ui"/>
+        <source>Waterfall gain</source>
+        <translation>폭포도 게인</translation>
+    </message>
+    <message>
+        <location filename="../fastgraph.ui"/>
+        <source>Waterfall zero</source>
+        <translation>폭포도 영점</translation>
+    </message>
+    <message>
+        <location filename="../fastgraph.ui"/>
+        <source>Spectrum zero</source>
+        <translation>스펙트럼 영점</translation>
+    </message>
+    <message>
+        <location filename="../fastgraph.ui"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Set reasonable levels for gain and zero sliders.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;게인과 영점 슬라이더를 적절한 레벨로 설정합니다.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../fastgraph.ui"/>
+        <source>Auto Level</source>
+        <translation>자동 레벨</translation>
+    </message>
+</context>
+<context>
     <name>FrequencyDialog</name>
     <message>
         <location filename="../Configuration.cpp" line="219"/>
@@ -3690,7 +3723,7 @@ Format:
     <message>
         <location filename="../mainwindow.ui" line="1992"/>
         <location filename="../mainwindow.ui" line="2008"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Comma separated list of the wanted callsigns. Autoselection under AutoSeq 1..7 will process wanted callsign according to the choosen notifications/priorities, this functionality is not supported under AutoSeq0. Non FT8 modes only: for compound callsigns the base callsign shall be used in the list, sometimes base callsign will be copied from the decoded message: when logging such QSO user will have to change correspondent&apos;s callsign to compound one if needed.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Comma separated list of the wanted callsigns. Autoselection under AutoSeq 1..7 will process wanted callsign according to the chosen notifications/priorities, this functionality is not supported under AutoSeq0. Non FT8 modes only: for compound callsigns the base callsign shall be used in the list, sometimes base callsign will be copied from the decoded message: when logging such QSO user will have to change correspondent&apos;s callsign to compound one if needed.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;찾는 호출부호를 쉼표로 구분한 목록입니다. AutoSeq 1..7에서 선택한 알림·우선순위에 따라 처리하며, AutoSeq0에서는 지원되지 않습니다. FT8 이외의 모드에서만: 복합 호출부호는 기본 호출부호를 적어야 하며, 때때로 디코드된 메시지에서 기본 호출부호가 복사됩니다. 그런 QSO를 기록할 때는 필요하면 상대 호출부호를 복합 형태로 고쳐야 합니다.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
@@ -3712,7 +3745,7 @@ Format:
     <message>
         <location filename="../mainwindow.ui" line="2041"/>
         <location filename="../mainwindow.ui" line="2057"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Comma separated list of the wanted prefixes. Autoselection under AutoSeq 1..7 will process wanted prefix according to the choosen notifications/priorities, this functionality is not supported under AutoSeq0. For compound callsigns prefix is recognized at beginning of the callsign, and after the slash too: AA1AAA/VP9 counts for VP9. Autoselection will process wanted callsign according to the choosen notifications/priorities. Non FT8 modes only: sometimes the base callsign will be copied from the decoded message: when logging such QSO user will have to change correspondent&apos;s callsign to compound one if needed.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Comma separated list of the wanted prefixes. Autoselection under AutoSeq 1..7 will process wanted prefix according to the chosen notifications/priorities, this functionality is not supported under AutoSeq0. For compound callsigns prefix is recognized at beginning of the callsign, and after the slash too: AA1AAA/VP9 counts for VP9. Autoselection will process wanted callsign according to the chosen notifications/priorities. Non FT8 modes only: sometimes the base callsign will be copied from the decoded message: when logging such QSO user will have to change correspondent&apos;s callsign to compound one if needed.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;찾는 접두사를 쉼표로 구분한 목록입니다. AutoSeq 1..7에서 선택한 알림·우선순위에 따라 처리하며, AutoSeq0에서는 지원되지 않습니다. 복합 호출부호에서는 호출부호 앞부분과 슬래시 뒤에서도 접두사를 인식합니다(AA1AAA/VP9는 VP9로 칩니다). FT8 이외의 모드에서만: 때때로 디코드된 메시지에서 기본 호출부호가 복사되므로, 그런 QSO를 기록할 때는 필요하면 복합 형태로 고쳐야 합니다.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
@@ -3723,7 +3756,7 @@ Format:
     <message>
         <location filename="../mainwindow.ui" line="2074"/>
         <location filename="../mainwindow.ui" line="2090"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Comma separated list of the wanted grid squares where four char grid being supported only. Autoselection under AutoSeq 1..7 will process wanted grid according to the choosen notifications/priorities, this functionality is not supported under AutoSeq0.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Comma separated list of the wanted grid squares where four char grid being supported only. Autoselection under AutoSeq 1..7 will process wanted grid according to the chosen notifications/priorities, this functionality is not supported under AutoSeq0.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;찾는 그리드를 쉼표로 구분한 목록이며 4자 그리드만 지원합니다. AutoSeq 1..7에서 선택한 알림·우선순위에 따라 처리하며, AutoSeq0에서는 지원되지 않습니다.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
@@ -3739,7 +3772,7 @@ Format:
     <message>
         <location filename="../mainwindow.ui" line="2116"/>
         <location filename="../mainwindow.ui" line="2141"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Comma separated list of the wanted countries: main country prefix shall be used in this list. For compound callsigns prefix is recognized at beginning of the callsign. Autoselection under AutoSeq 1..7 will process wanted country according to the choosen notifications/priorities, this functionality is not supported under AutoSeq0. Non FT8 modes only: sometimes the base callsign will be copied from the decoded message: when logging such QSO user will have to change correspondent&apos;s callsign to compound one if needed. List of the main country prefixes: 1A,1S,3A,3B6,3B8,3B9,3C,3C0,3D2,3D2/C,&lt;br&gt;
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Comma separated list of the wanted countries: main country prefix shall be used in this list. For compound callsigns prefix is recognized at beginning of the callsign. Autoselection under AutoSeq 1..7 will process wanted country according to the chosen notifications/priorities, this functionality is not supported under AutoSeq0. Non FT8 modes only: sometimes the base callsign will be copied from the decoded message: when logging such QSO user will have to change correspondent&apos;s callsign to compound one if needed. List of the main country prefixes: 1A,1S,3A,3B6,3B8,3B9,3C,3C0,3D2,3D2/C,&lt;br&gt;
 3D2/R,3DA,3V,3W,3X,3Y/B,3Y/P,4J,4L,4O,4S,4U1I,4U1U,*4U1V,4W,4X,5A,5B,5H,5N,5R,5T,&lt;br&gt;
 5U,5V,5W,5X,5Z,6W,6Y,7O,7P,7Q,7X,8P,8Q,8R,9A,9G,9H,9J,9K,9L,9M2,9M6,9N,9Q,9U,9V,9X,&lt;br&gt;
 9Y,A2,A3,A4,A5,A6,A7,A9,AP,BS7,BV,BV9P,BY,C2,C3,C5,C6,C9,CE,CE0X,CE0Y,CE0Z,CE9,CM,&lt;br&gt;
@@ -6891,6 +6924,56 @@ QSO 수: %3
         <source>Reception map</source>
         <translation>수신 지도</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>MSK144 decoding</source>
+        <translation>MSK144 디코딩</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>T/R period</source>
+        <translation>T/R 주기</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>F Tol</source>
+        <translation>F Tol</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>MSK144</source>
+        <translation>MSK144</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>MSK144: WSJT-X's meteor scatter mode, decoded while the period is received. Its T/R period, F Tol and depth are in the Decode menu, under MSK144 decoding.</source>
+        <translation>MSK144: WSJT-X의 유성 산란 통신 모드로, 주기를 수신하는 동안 디코딩합니다. T/R 주기, F Tol, 디코딩 깊이는 디코드 메뉴의 MSK144 디코딩에 있습니다.</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Fast</source>
+        <translation>빠름</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Normal</source>
+        <translation>보통</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Deep</source>
+        <translation>깊음</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Fast Graph</source>
+        <translation>고속 그래프</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Short messages (Sh)</source>
+        <translation>짧은 메시지 (Sh)</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>
@@ -9318,7 +9401,7 @@ http://pskreporter.info 사이트에 보낼 수 있습니다.
     </message>
     <message>
         <location filename="../Configuration.ui" line="3127"/>
-        <source>See WSPR documentattion Appendix C for details of how to determine these factors for your radio.</source>
+        <source>See WSPR documentation Appendix C for details of how to determine these factors for your radio.</source>
         <translation>무전기에 맞는 값을 정하는 방법은 WSPR 문서의 부록 C를 참고하십시오.</translation>
     </message>
     <message>
@@ -9746,7 +9829,7 @@ Right click for insert and delete options.</source>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3795"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;On top of the preview pane there are types of message that being checked for some criterion, text color being selected for each  type of message.&lt;br&gt;&lt;br&gt;On left side there are criteria allocated in the hierarchy order, and background color being selected for messages for each criterion.&lt;br&gt;&lt;br&gt;&apos;Worked one&apos; notification functionality is based on the residual principle, triggered if all activated &apos;New one&apos; criteria or criterion are not met.&lt;br&gt;&lt;br&gt;&apos;Inverse color&apos; may be used if user would like to highlight CQ and &apos;MyCall&apos; messages by some specific backgroung color.&lt;br&gt;&lt;br&gt;For beginning one criterion can be chose and for new band/mode notifications may be used similar color with the different saturation level, later number of required criteria can be increased.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;On top of the preview pane there are types of message that being checked for some criterion, text color being selected for each  type of message.&lt;br&gt;&lt;br&gt;On left side there are criteria allocated in the hierarchy order, and background color being selected for messages for each criterion.&lt;br&gt;&lt;br&gt;&apos;Worked one&apos; notification functionality is based on the residual principle, triggered if all activated &apos;New one&apos; criteria or criterion are not met.&lt;br&gt;&lt;br&gt;&apos;Inverse color&apos; may be used if user would like to highlight CQ and &apos;MyCall&apos; messages by some specific background color.&lt;br&gt;&lt;br&gt;For beginning one criterion can be chosen and for new band/mode notifications may be used similar color with the different saturation level, later number of required criteria can be increased.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;미리보기 위쪽에는 검사 대상이 되는 메시지 종류가 있으며, 종류마다 글자색을 고릅니다.&lt;br&gt;&lt;br&gt;왼쪽에는 우선순위 순으로 기준이 있으며, 기준마다 배경색을 고릅니다.&lt;br&gt;&lt;br&gt;'이미 교신함' 알림은 잔여 원칙에 따라, 활성화된 '새로운 것' 기준이 하나도 맞지 않을 때 표시됩니다.&lt;br&gt;&lt;br&gt;'색 반전'은 CQ와 '내 호출부호' 메시지를 특정 배경색으로 강조하고 싶을 때 씁니다.&lt;br&gt;&lt;br&gt;처음에는 기준 하나만 고르고, 밴드/모드 알림에는 같은 색의 채도만 달리해 쓴 뒤 나중에 기준을 늘려도 됩니다.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
@@ -9954,8 +10037,8 @@ Right click for insert and delete options.</source>
     </message>
     <message>
         <location filename="../Configuration.ui" line="5020"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&apos;Show DXCC name/prefix&apos; shall be activated in General tab of the settings or any &apos;New one&apos; notification to get this functionality working.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;이 기능을 쓰려면 일반 탭에서 'DXCC 이름/접두사 표시'나 '새로운 것' 알림을 켜야 합니다.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This filter hides a message only while &apos;Bypass all text filters&apos; in the &apos;Misc&apos; menu (the &apos;Bypass&apos; button, Alt+F) is off, and in the &apos;Rx Frequency&apos; window only while &apos;Bypass text filters on RX frequency&apos; is off too. Both are on to begin with.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;이 필터는 '기타' 메뉴의 '모든 텍스트 필터 무시'('필터 무시' 버튼, Alt+F)이 꺼져 있을 때만 메시지를 숨기며, 'RX 주파수' 창에서는 'RX 주파수에서 텍스트 필터 무시'도 꺼져 있을 때만 숨깁니다. 처음에는 둘 다 켜져 있습니다.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="5023"/>

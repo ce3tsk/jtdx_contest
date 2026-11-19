@@ -266,6 +266,7 @@ set (wsjtx_CXXSRCS
   exportcabrillo.cpp
   displaytext.cpp
   decodedtext.cpp
+  msk144decoder.cpp
   getfile.cpp
   soundout.cpp
   soundin.cpp
@@ -273,6 +274,8 @@ set (wsjtx_CXXSRCS
   signalmeter.cpp
   plotter.cpp
   widegraph.cpp
+  fastplot.cpp     # CE3TSK 2026-11-17 (MSK144_PLAN.md step 1b): WSJT-X's Fast Graph, the plot
+  fastgraph.cpp    # and the window
   about.cpp
   WsprTxScheduler.cpp
   mainwindow.cpp
@@ -298,12 +301,14 @@ set (wsjt_CXXSRCS
   lib/crc10.cpp
   lib/crc12.cpp
   lib/crc14.cpp
+  lib/msk144/crc13.cpp
   )
 # deal with a GCC v6 UB error message
 set_source_files_properties (
   lib/crc10.cpp
   lib/crc12.cpp
   lib/crc14.cpp
+  lib/msk144/crc13.cpp
   PROPERTIES COMPILE_FLAGS -fpermissive)
 
 if (WIN32)
@@ -410,6 +415,36 @@ set (wsjt_FSRCS
   lib/ft4/ft4sim.f90
   lib/ft2/ft2sim.f90
   lib/ft8_decode.f90
+  # CE3TSK 2026-11-17 (MSK144_PLAN.md step 0): the MSK144 decoder - WSJT-X 3.0.2's routines, in file mode only
+  # (jtdxjt9 --msk144). msk144sim and msk144code are programs of their own, below
+  lib/msk144/analytic.f90
+  lib/msk144/bpdecode128_90.f90
+  lib/msk144/bpdecode40.f90
+  lib/msk144/chkcrc13a.f90
+  lib/msk144/decode_msk144.f90
+  lib/msk144/encode_128_90.f90
+  lib/msk144/encode_msk40.f90
+  lib/msk144/fmtmsg37.f90
+  lib/msk144/genmsk_128_90.f90
+  lib/msk144/genmsk40.f90
+  lib/msk144/makepings.f90
+  lib/msk144/msk_spectrum.f90
+  lib/msk144/msk144_files.f90
+  lib/msk144/msk144_freq_search.f90
+  lib/msk144/msk144_hash.f90
+  lib/msk144/msk144_window.f90
+  lib/msk144/hspec.f90
+  lib/msk144/msk144decodeframe.f90
+  lib/msk144/msk144signalquality.f90
+  lib/msk144/msk144spd.f90
+  lib/msk144/msk144sync.f90
+  lib/msk144/msk40_freq_search.f90
+  lib/msk144/msk40decodeframe.f90
+  lib/msk144/msk40spd.f90
+  lib/msk144/msk40sync.f90
+  lib/msk144/mskrtd.f90
+  lib/msk144/tweak1.f90
+  lib/msk144/update_msk40_hasharray.f90
   lib/ft8_downsample.f90
   lib/ft8_mod1.f90
   lib/ft8ensemble.f90
@@ -662,6 +697,7 @@ set (wsjtx_UISRCS
   altlayout.ui   # CE3TSK 2026-10-20: View > Alternative layout, the placeholders
   about.ui
   widegraph.ui
+  fastgraph.ui
   logqso.ui
   Configuration.ui
   )
@@ -1341,6 +1377,16 @@ target_include_directories (ft4sim PRIVATE ${CMAKE_BINARY_DIR}/fortran_modules) 
 add_executable (ft2sim lib/ft2/ft2sim.f90 jtdx.rc)   # CE3TSK: FT2 is FT4's frame at twice the rate
 target_link_libraries (ft2sim wsjt_fort wsjt_cxx)
 target_include_directories (ft2sim PRIVATE ${CMAKE_BINARY_DIR}/fortran_modules)   # CE3TSK
+
+# CE3TSK 2026-11-17 (MSK144_PLAN.md step 0): WSJT-X 3.0.2's two MSK144 tools. msk144sim writes periods of simulated
+# pings (message, T/R period, frequency, ping width, SNR, number of files); msk144code shows how a message is packed
+add_executable (msk144sim lib/msk144/msk144sim.f90 jtdx.rc)
+target_link_libraries (msk144sim wsjt_fort wsjt_cxx)
+target_include_directories (msk144sim PRIVATE ${CMAKE_BINARY_DIR}/fortran_modules)
+
+add_executable (msk144code lib/msk144/msk144code.f90 jtdx.rc)
+target_link_libraries (msk144code wsjt_fort wsjt_cxx)
+target_include_directories (msk144code PRIVATE ${CMAKE_BINARY_DIR}/fortran_modules)
 
 # CE3TSK: SuperFox test tools (SUPERFOX_PLAN.md). sfoxsim writes SuperFox audio, sfrx decodes
 # wav files through sfrx_sub, which hands them to the same sfrx_core the decoder process calls

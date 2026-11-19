@@ -10,6 +10,7 @@
 #include <QTimer>
 #include <QQueue>
 #include <QByteArray>
+#include <QStringList>
 #include <QHostAddress>
 
 #include "NetworkMessage.hpp"
@@ -467,6 +468,19 @@ void MessageClient::clear_decodes ()
     }
 }
 
+namespace
+{
+  /* CE3TSK 2026-11-19 (TODO.md 3.-273, the reports of JA4JOE and JI1BBN): a text of the QSO Logged message that has no
+     value goes out as an empty string (00 00 00 00), never as QDataStream's mark for a null one (ff ff ff ff - what a
+     null QString's toUtf8 () is written as). rc12 sent that mark in the fields it appended after My grid; JTAlert,
+     which had only ever met WSJT-X's empty strings there, took the mark's bytes for text - a PROP_MODE of twelve
+     unreadable characters in its log, which TQSL refuses, and the like in STX_STRING and SRX_STRING. */
+  QByteArray logged_text (QString const& text)
+  {
+    return text.isEmpty () ? QByteArray ("") : text.toUtf8 ();
+  }
+}
+
 void MessageClient::qso_logged (QDateTime time_off, QString const& dx_call, QString const& dx_grid
                                 , Frequency dial_frequency, QString const& mode, QString const& report_sent
                                 , QString const& report_received, QString const& tx_power
@@ -480,11 +494,18 @@ void MessageClient::qso_logged (QDateTime time_off, QString const& dx_call, QStr
     {
       QByteArray message;
       NetworkMessage::Builder out {&message, NetworkMessage::QSOLogged, m_->id_, m_->schema_};
-      out << time_off << dx_call.toUtf8 () << dx_grid.toUtf8 () << dial_frequency << mode.toUtf8 ()
-          << report_sent.toUtf8 () << report_received.toUtf8 () << tx_power.toUtf8 () << comments.toUtf8 ()
-          << name.toUtf8 () << time_on << operator_call.toUtf8 () << my_call.toUtf8 () << my_grid.toUtf8 ()
-          << exchange_sent.toUtf8 () << exchange_rcvd.toUtf8 () << propmode.toUtf8 () << satellite.toUtf8 ()
-          << satmode.toUtf8 () << freq_rx.toUtf8 ();   // CE3TSK 2026-11-13 (TODO.md 3.-247): WSJT-X 3.0's, appended
+      out << time_off << logged_text (dx_call) << logged_text (dx_grid) << dial_frequency << logged_text (mode)
+          << logged_text (report_sent) << logged_text (report_received) << logged_text (tx_power) << logged_text (comments)
+          << logged_text (name) << time_on << logged_text (operator_call) << logged_text (my_call) << logged_text (my_grid);
+      /* CE3TSK 2026-11-13 (TODO.md 3.-247): WSJT-X 3.0's six after My grid - and 2026-11-19 (3.-273) only as far as the
+         last of them that has a value. The message has no field names, a reader knows a value by its place alone, so
+         one is left out by ending the message before it: a QSO with no exchange, no propagation mode and no satellite
+         ends after My grid, byte for byte as before 3.-247 (rc11); one in a contest after the two exchanges; a
+         propagation mode alone after it, the two exchanges before it empty strings, as WSJT-X sends them. */
+      QStringList const more {exchange_sent, exchange_rcvd, propmode, satellite, satmode, freq_rx};
+      int last {more.size ()};
+      while (last > 0 && more.at (last - 1).isEmpty ()) --last;
+      for (int i = 0; i < last; ++i) out << logged_text (more.at (i));
       m_->send_message (out, message);
     }
 }

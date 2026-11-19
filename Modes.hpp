@@ -25,6 +25,7 @@ public:
     FT4,
     WSPR,
     FT2,   // CE3TSK: appended, never inserted - the frequency table stores these as integers
+    MSK144,   // CE3TSK 2026-11-17: appended (MSK144_PLAN.md step 1a)
     MODES_END_SENTINAL_AND_COUNT
   };
 

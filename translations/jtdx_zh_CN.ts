@@ -2628,6 +2628,39 @@ Format:
     </message>
 </context>
 <context>
+    <name>FastGraph</name>
+    <message>
+        <location filename="../fastgraph.ui"/>
+        <source>Fast Graph</source>
+        <translation>快速图</translation>
+    </message>
+    <message>
+        <location filename="../fastgraph.ui"/>
+        <source>Waterfall gain</source>
+        <translation>瀑布增益</translation>
+    </message>
+    <message>
+        <location filename="../fastgraph.ui"/>
+        <source>Waterfall zero</source>
+        <translation>瀑布零度</translation>
+    </message>
+    <message>
+        <location filename="../fastgraph.ui"/>
+        <source>Spectrum zero</source>
+        <translation>频谱零度</translation>
+    </message>
+    <message>
+        <location filename="../fastgraph.ui"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Set reasonable levels for gain and zero sliders.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;为增益和零点滑块设置合理的电平。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../fastgraph.ui"/>
+        <source>Auto Level</source>
+        <translation>自动电平</translation>
+    </message>
+</context>
+<context>
     <name>FrequencyDialog</name>
     <message>
         <location filename="../Configuration.cpp" line="219"/>
@@ -3690,7 +3723,7 @@ Format:
     <message>
         <location filename="../mainwindow.ui" line="1992"/>
         <location filename="../mainwindow.ui" line="2008"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Comma separated list of the wanted callsigns. Autoselection under AutoSeq 1..7 will process wanted callsign according to the choosen notifications/priorities, this functionality is not supported under AutoSeq0. Non FT8 modes only: for compound callsigns the base callsign shall be used in the list, sometimes base callsign will be copied from the decoded message: when logging such QSO user will have to change correspondent&apos;s callsign to compound one if needed.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Comma separated list of the wanted callsigns. Autoselection under AutoSeq 1..7 will process wanted callsign according to the chosen notifications/priorities, this functionality is not supported under AutoSeq0. Non FT8 modes only: for compound callsigns the base callsign shall be used in the list, sometimes base callsign will be copied from the decoded message: when logging such QSO user will have to change correspondent&apos;s callsign to compound one if needed.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;逗号分隔的通缉呼号列表. 自动程序 1..7下的自动选择..7将根据所选择的 通知/优先级 处理所需的呼号, 此功能在 自动程序0 不受支持.仅适用于非FT8模式:对于复合呼号, 列表中应使用基本呼号, 有时基本呼号将从解码的信息中復制:当登录时, 这种通联用户将不得不更改相应的如果需要的话, 用呼号表示复合呼号.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
@@ -3712,7 +3745,7 @@ Format:
     <message>
         <location filename="../mainwindow.ui" line="2041"/>
         <location filename="../mainwindow.ui" line="2057"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Comma separated list of the wanted prefixes. Autoselection under AutoSeq 1..7 will process wanted prefix according to the choosen notifications/priorities, this functionality is not supported under AutoSeq0. For compound callsigns prefix is recognized at beginning of the callsign, and after the slash too: AA1AAA/VP9 counts for VP9. Autoselection will process wanted callsign according to the choosen notifications/priorities. Non FT8 modes only: sometimes the base callsign will be copied from the decoded message: when logging such QSO user will have to change correspondent&apos;s callsign to compound one if needed.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Comma separated list of the wanted prefixes. Autoselection under AutoSeq 1..7 will process wanted prefix according to the chosen notifications/priorities, this functionality is not supported under AutoSeq0. For compound callsigns prefix is recognized at beginning of the callsign, and after the slash too: AA1AAA/VP9 counts for VP9. Autoselection will process wanted callsign according to the chosen notifications/priorities. Non FT8 modes only: sometimes the base callsign will be copied from the decoded message: when logging such QSO user will have to change correspondent&apos;s callsign to compound one if needed.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;.自动程序下的 1..7 自动选择将根据选择的通知/优先级处理想要的前缀, 自动程序0 不支持此功能.对于复合呼号, 在呼号的开头和斜杠之后识别前缀: AA1AAA/VP9 计为 VP9.自动选择将根据选择的 通知/优先级 处理想要的呼号.仅非FT8模式:有时基本呼号将从解码的信息中復制；当记录此类通联时, 如果需要, 用户将不得不将联系人呼号更改为復合呼号.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
@@ -3723,7 +3756,7 @@ Format:
     <message>
         <location filename="../mainwindow.ui" line="2074"/>
         <location filename="../mainwindow.ui" line="2090"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Comma separated list of the wanted grid squares where four char grid being supported only. Autoselection under AutoSeq 1..7 will process wanted grid according to the choosen notifications/priorities, this functionality is not supported under AutoSeq0.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Comma separated list of the wanted grid squares where four char grid being supported only. Autoselection under AutoSeq 1..7 will process wanted grid according to the chosen notifications/priorities, this functionality is not supported under AutoSeq0.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;逗号分隔的所需网格方块列表, 其中仅支持四个字符网格.自动程序下的 1..7 自动选择将根据选择的通知/优先级处理所需的网格, 此功能在自动请求下不受支持 自动程序0.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
@@ -3739,7 +3772,7 @@ Format:
     <message>
         <location filename="../mainwindow.ui" line="2116"/>
         <location filename="../mainwindow.ui" line="2141"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Comma separated list of the wanted countries: main country prefix shall be used in this list. For compound callsigns prefix is recognized at beginning of the callsign. Autoselection under AutoSeq 1..7 will process wanted country according to the choosen notifications/priorities, this functionality is not supported under AutoSeq0. Non FT8 modes only: sometimes the base callsign will be copied from the decoded message: when logging such QSO user will have to change correspondent&apos;s callsign to compound one if needed. List of the main country prefixes: 1A,1S,3A,3B6,3B8,3B9,3C,3C0,3D2,3D2/C,&lt;br&gt;
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Comma separated list of the wanted countries: main country prefix shall be used in this list. For compound callsigns prefix is recognized at beginning of the callsign. Autoselection under AutoSeq 1..7 will process wanted country according to the chosen notifications/priorities, this functionality is not supported under AutoSeq0. Non FT8 modes only: sometimes the base callsign will be copied from the decoded message: when logging such QSO user will have to change correspondent&apos;s callsign to compound one if needed. List of the main country prefixes: 1A,1S,3A,3B6,3B8,3B9,3C,3C0,3D2,3D2/C,&lt;br&gt;
 3D2/R,3DA,3V,3W,3X,3Y/B,3Y/P,4J,4L,4O,4S,4U1I,4U1U,*4U1V,4W,4X,5A,5B,5H,5N,5R,5T,&lt;br&gt;
 5U,5V,5W,5X,5Z,6W,6Y,7O,7P,7Q,7X,8P,8Q,8R,9A,9G,9H,9J,9K,9L,9M2,9M6,9N,9Q,9U,9V,9X,&lt;br&gt;
 9Y,A2,A3,A4,A5,A6,A7,A9,AP,BS7,BV,BV9P,BY,C2,C3,C5,C6,C9,CE,CE0X,CE0Y,CE0Z,CE9,CM,&lt;br&gt;
@@ -6890,6 +6923,56 @@ Continue this log, or start a new one?</source>
         <source>Reception map</source>
         <translation>接收地图</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>MSK144 decoding</source>
+        <translation>MSK144 解码</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>T/R period</source>
+        <translation>T/R 周期</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>F Tol</source>
+        <translation>F Tol</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>MSK144</source>
+        <translation>MSK144</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>MSK144: WSJT-X's meteor scatter mode, decoded while the period is received. Its T/R period, F Tol and depth are in the Decode menu, under MSK144 decoding.</source>
+        <translation>MSK144：WSJT-X 的流星散射模式，在接收周期的同时解码。T/R 周期、F Tol 和深度在解码菜单的 MSK144 解码中。</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Fast</source>
+        <translation>快速</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Normal</source>
+        <translation>标准</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Deep</source>
+        <translation>深度</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Fast Graph</source>
+        <translation>快速图</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Short messages (Sh)</source>
+        <translation>短信息 (Sh)</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>
@@ -9319,7 +9402,7 @@ for assessing propagation and system performance.</source>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3127"/>
-        <source>See WSPR documentattion Appendix C for details of how to determine these factors for your radio.</source>
+        <source>See WSPR documentation Appendix C for details of how to determine these factors for your radio.</source>
         <translation>有关如何为您的无线电设备确定这些因素的详细信息,请参阅 WSPR 文件附录C.</translation>
     </message>
     <message>
@@ -9747,7 +9830,7 @@ Right click for insert and delete options.</source>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3795"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;On top of the preview pane there are types of message that being checked for some criterion, text color being selected for each  type of message.&lt;br&gt;&lt;br&gt;On left side there are criteria allocated in the hierarchy order, and background color being selected for messages for each criterion.&lt;br&gt;&lt;br&gt;&apos;Worked one&apos; notification functionality is based on the residual principle, triggered if all activated &apos;New one&apos; criteria or criterion are not met.&lt;br&gt;&lt;br&gt;&apos;Inverse color&apos; may be used if user would like to highlight CQ and &apos;MyCall&apos; messages by some specific backgroung color.&lt;br&gt;&lt;br&gt;For beginning one criterion can be chose and for new band/mode notifications may be used similar color with the different saturation level, later number of required criteria can be increased.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;On top of the preview pane there are types of message that being checked for some criterion, text color being selected for each  type of message.&lt;br&gt;&lt;br&gt;On left side there are criteria allocated in the hierarchy order, and background color being selected for messages for each criterion.&lt;br&gt;&lt;br&gt;&apos;Worked one&apos; notification functionality is based on the residual principle, triggered if all activated &apos;New one&apos; criteria or criterion are not met.&lt;br&gt;&lt;br&gt;&apos;Inverse color&apos; may be used if user would like to highlight CQ and &apos;MyCall&apos; messages by some specific background color.&lt;br&gt;&lt;br&gt;For beginning one criterion can be chosen and for new band/mode notifications may be used similar color with the different saturation level, later number of required criteria can be increased.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;在预览窗格的顶部有正在检查某些条件的信息类型,为每种类型的信息选择文本颜色.&lt;br&gt;&lt;br&gt;左侧按层次结构顺序分配了条件,并为每个条件的信息选择了背景色.&lt;br&gt;&lt;br&gt;&quot;曾经通联&quot; 通知功能基于剩余原则,如果不符合所有激活的 &quot;新&quot; 标准或条件,则触发.&lt;br&gt;&lt;br&gt;如果用户希望通过某些特定的背景颜色突出显示CQ和 &quot;我的呼号&quot; 信息,则可以使用 &quot;反向颜色&quot;.&lt;br&gt;&lt;br&gt;对于开始,可以选择一个标准,对于新的波段/模式通知,可以使用不同饱和度水平的类似颜色,以后可以增加所需的标准的数量.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
@@ -9955,8 +10038,8 @@ Right click for insert and delete options.</source>
     </message>
     <message>
         <location filename="../Configuration.ui" line="5020"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&apos;Show DXCC name/prefix&apos; shall be activated in General tab of the settings or any &apos;New one&apos; notification to get this functionality working.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&apos;显示DXCC名称/前缀&apos; 应在设置的常规选项卡或任何 &apos;新的&apos; 使该功能正常工作的通知.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This filter hides a message only while &apos;Bypass all text filters&apos; in the &apos;Misc&apos; menu (the &apos;Bypass&apos; button, Alt+F) is off, and in the &apos;Rx Frequency&apos; window only while &apos;Bypass text filters on RX frequency&apos; is off too. Both are on to begin with.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;仅当'杂项'菜单中的'绕过所有信息过滤'（'绕过过滤'按钮，Alt+F）关闭时，此过滤才会隐藏信息；在'接收信息'窗口中，还须'接收信息窗口不使用信息过滤'也关闭。两者初始均为开启。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="5023"/>

@@ -61,6 +61,9 @@ public:
      a mode added later has no rows at all in a profile that already exists - new defaults reach
      only a fresh install. This lets such a mode be seeded once into an existing table. */
   static FrequencyItems default_rows (Mode);
+  // CE3TSK 2026-11-17: a mode added after a profile's table was stored - see FrequencyList.cpp
+  static bool seed_rows (FrequencyItems& list, Mode);
+  static bool restore_rows (FrequencyItems& list, Mode);
 
   enum Column {region_column, mode_column, frequency_column, frequency_mhz_column, mode_frequency_mhz_column, SENTINAL};
 

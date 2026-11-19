@@ -236,6 +236,12 @@
  *      udp_exchange): in a contest the two 4 character grids where the grid is the exchange (WW Digi, ARRL Digi),
  *      else the two reports; outside a contest both empty, as WSJT-X sends them. The satellite fields are those of
  *      the ADIF record, empty when not logged.
+ *      CE3TSK 2026-11-19 (TODO.md 3.-273): those six go out only as far as the last of them that has a value -
+ *      the message ends before the rest. With no exchange, no propagation mode and no satellite it ends after My
+ *      grid, as it did before they were appended; in a contest after the two exchanges; with a propagation mode
+ *      after it, the two exchanges before it empty. And no text of this message is ever sent as a null one
+ *      (ff ff ff ff): one without a value is an empty text (00 00 00 00), as WSJT-X's are. JTAlert read the null
+ *      marks rc12 sent after My grid as text (PROP_MODE of twelve unreadable characters, which TQSL refuses).
  *
  *
  * Close         Out       6                      quint32

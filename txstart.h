@@ -17,7 +17,36 @@ namespace tx_start
     if (1920 == nsps) return 500;   // FT8
     if (576 == nsps) return 500;    // FT4
     if (288 == nsps) return 150;    // FT2
+    if (6 == nsps) return 0;        // MSK144 (2026-11-17): from the period's start, see repeats_frame ()
     return 1000;
+  }
+
+  /* CE3TSK 2026-11-17 (MSK144_PLAN.md step 2): MSK144 - 6 samples a symbol at 12 kHz, which no other mode has - sends
+     its frame of 144 symbols (72 ms; 40 symbols, 20 ms, for a short message) over and over for the whole
+     transmission, with no start delay, and stops half a second before the period's end: WSJT-X's "fast mode" in
+     Modulator.cpp (`isym=isym%m_symbolsLength`, `i1=m_TRperiod*48000.0 - 24000.0`, `i0=i1-816`, tuning
+     `999999*m_nsps`). Both modulators ask here.
+     Not WSJT-X's: asked for late, WSJT-X begins with the frame's first symbol and sends for the period less half a
+     second FROM THEN (its main window cuts that a quarter second before the period's end); here a late start begins
+     where an on-time one would be by then - as every other mode's does - and so ends half a second before the
+     period's end whenever it began. */
+  inline bool repeats_frame (unsigned nsps) { return 6 == nsps; }
+
+  // the frame's symbols: genmsk_128_90 marks a short message with -40 in the tone after its 40
+  inline unsigned frame_symbols (int tone40) { return tone40 < 0 ? 40u : 144u; }
+
+  // the frame of the period after which nothing more is sent, and how many frames before it the fade begins
+  inline unsigned repeat_end_frame (double trPeriod, unsigned frameRate)
+  {
+    return static_cast<unsigned> (trPeriod * frameRate - frameRate / 2.0);
+  }
+  constexpr unsigned repeat_fade_frames = 816;
+
+  // Tune's tone ends by itself after this many frames (the main window ends it long before): 9999 symbols' worth -
+  // which at MSK144's 6 would be a second and a quarter, so WSJT-X gives its fast mode a hundred times as many
+  inline unsigned tune_end_frame (unsigned nsps)
+  {
+    return (repeats_frame (nsps) ? 999999u : 9999u) * nsps;
   }
 
   // the frames of silence to send when the transmission is asked for mstr ms into the period, up to its start; none

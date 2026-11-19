@@ -2618,6 +2618,39 @@ Format:
     </message>
 </context>
 <context>
+    <name>FastGraph</name>
+    <message>
+        <location filename="../fastgraph.ui"/>
+        <source>Fast Graph</source>
+        <translation>Gráfico Rápido</translation>
+    </message>
+    <message>
+        <location filename="../fastgraph.ui"/>
+        <source>Waterfall gain</source>
+        <translation>Ganho da cascata</translation>
+    </message>
+    <message>
+        <location filename="../fastgraph.ui"/>
+        <source>Waterfall zero</source>
+        <translation>Cascata zero</translation>
+    </message>
+    <message>
+        <location filename="../fastgraph.ui"/>
+        <source>Spectrum zero</source>
+        <translation>Espectro zero</translation>
+    </message>
+    <message>
+        <location filename="../fastgraph.ui"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Set reasonable levels for gain and zero sliders.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Define níveis razoáveis para os controles deslizantes de ganho e zero.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../fastgraph.ui"/>
+        <source>Auto Level</source>
+        <translation>Nível automático</translation>
+    </message>
+</context>
+<context>
     <name>FrequencyDialog</name>
     <message>
         <location filename="../Configuration.cpp" line="219"/>
@@ -3680,7 +3713,7 @@ Format:
     <message>
         <location filename="../mainwindow.ui" line="1992"/>
         <location filename="../mainwindow.ui" line="2008"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Comma separated list of the wanted callsigns. Autoselection under AutoSeq 1..7 will process wanted callsign according to the choosen notifications/priorities, this functionality is not supported under AutoSeq0. Non FT8 modes only: for compound callsigns the base callsign shall be used in the list, sometimes base callsign will be copied from the decoded message: when logging such QSO user will have to change correspondent&apos;s callsign to compound one if needed.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Comma separated list of the wanted callsigns. Autoselection under AutoSeq 1..7 will process wanted callsign according to the chosen notifications/priorities, this functionality is not supported under AutoSeq0. Non FT8 modes only: for compound callsigns the base callsign shall be used in the list, sometimes base callsign will be copied from the decoded message: when logging such QSO user will have to change correspondent&apos;s callsign to compound one if needed.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Lista separada por vírgula dos indicativos desejados. A seleção automática no AutoSeq 1..7 processará o indicativo desejado de acordo com as notificações/prioridades escolhidas, esta funcionalidade não é suportada no AutoSeq0. Somente modos não FT8: para indicativos compostos, o indicativo base deve ser usado na lista; às vezes, o indicativo base será copiado da mensagem decodificada: ao registrar esse usuário QSO, será necessário alterar o indicativo do correspondente para o composto um, se necessário&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
@@ -3702,7 +3735,7 @@ Format:
     <message>
         <location filename="../mainwindow.ui" line="2041"/>
         <location filename="../mainwindow.ui" line="2057"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Comma separated list of the wanted prefixes. Autoselection under AutoSeq 1..7 will process wanted prefix according to the choosen notifications/priorities, this functionality is not supported under AutoSeq0. For compound callsigns prefix is recognized at beginning of the callsign, and after the slash too: AA1AAA/VP9 counts for VP9. Autoselection will process wanted callsign according to the choosen notifications/priorities. Non FT8 modes only: sometimes the base callsign will be copied from the decoded message: when logging such QSO user will have to change correspondent&apos;s callsign to compound one if needed.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Comma separated list of the wanted prefixes. Autoselection under AutoSeq 1..7 will process wanted prefix according to the chosen notifications/priorities, this functionality is not supported under AutoSeq0. For compound callsigns prefix is recognized at beginning of the callsign, and after the slash too: AA1AAA/VP9 counts for VP9. Autoselection will process wanted callsign according to the chosen notifications/priorities. Non FT8 modes only: sometimes the base callsign will be copied from the decoded message: when logging such QSO user will have to change correspondent&apos;s callsign to compound one if needed.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Lista separada por vírgula dos prefixos desejados. A seleção automática no AutoSeq 1..7 processará o prefixo desejado de acordo com as notificações/prioridades escolhidas; essa funcionalidade não é suportada no AutoSeq0. Em um indicativo composto, o prefixo é reconhecido no início do indicativo e também após a barra: AA1AAA/VP9 conta como VP9. A seleção automática processará o indicativo desejado de acordo com as notificações/prioridades escolhidas. Somente modos não FT8: às vezes o indicativo base será copiado da mensagem decodificada: ao registrar esse usuário QSO, será necessário alterar o indicativo do correspondente para compor um, se necessário.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
@@ -3713,7 +3746,7 @@ Format:
     <message>
         <location filename="../mainwindow.ui" line="2074"/>
         <location filename="../mainwindow.ui" line="2090"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Comma separated list of the wanted grid squares where four char grid being supported only. Autoselection under AutoSeq 1..7 will process wanted grid according to the choosen notifications/priorities, this functionality is not supported under AutoSeq0.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Comma separated list of the wanted grid squares where four char grid being supported only. Autoselection under AutoSeq 1..7 will process wanted grid according to the chosen notifications/priorities, this functionality is not supported under AutoSeq0.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Lista separada por vírgula dos Grids desejados, onde apenas quatro caracteres são suportados. A seleção automática no AutoSeq 1..7 processará o Grid desejado de acordo com as notificações/prioridades escolhidas; essa funcionalidade não é suportada no AutoSeq0.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
@@ -3729,7 +3762,7 @@ Format:
     <message>
         <location filename="../mainwindow.ui" line="2116"/>
         <location filename="../mainwindow.ui" line="2141"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Comma separated list of the wanted countries: main country prefix shall be used in this list. For compound callsigns prefix is recognized at beginning of the callsign. Autoselection under AutoSeq 1..7 will process wanted country according to the choosen notifications/priorities, this functionality is not supported under AutoSeq0. Non FT8 modes only: sometimes the base callsign will be copied from the decoded message: when logging such QSO user will have to change correspondent&apos;s callsign to compound one if needed. List of the main country prefixes: 1A,1S,3A,3B6,3B8,3B9,3C,3C0,3D2,3D2/C,&lt;br&gt;
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Comma separated list of the wanted countries: main country prefix shall be used in this list. For compound callsigns prefix is recognized at beginning of the callsign. Autoselection under AutoSeq 1..7 will process wanted country according to the chosen notifications/priorities, this functionality is not supported under AutoSeq0. Non FT8 modes only: sometimes the base callsign will be copied from the decoded message: when logging such QSO user will have to change correspondent&apos;s callsign to compound one if needed. List of the main country prefixes: 1A,1S,3A,3B6,3B8,3B9,3C,3C0,3D2,3D2/C,&lt;br&gt;
 3D2/R,3DA,3V,3W,3X,3Y/B,3Y/P,4J,4L,4O,4S,4U1I,4U1U,*4U1V,4W,4X,5A,5B,5H,5N,5R,5T,&lt;br&gt;
 5U,5V,5W,5X,5Z,6W,6Y,7O,7P,7Q,7X,8P,8Q,8R,9A,9G,9H,9J,9K,9L,9M2,9M6,9N,9Q,9U,9V,9X,&lt;br&gt;
 9Y,A2,A3,A4,A5,A6,A7,A9,AP,BS7,BV,BV9P,BY,C2,C3,C5,C6,C9,CE,CE0X,CE0Y,CE0Z,CE9,CM,&lt;br&gt;
@@ -6881,6 +6914,56 @@ Continuar este log ou começar um novo?</translation>
         <source>Reception map</source>
         <translation>Mapa de recepção</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>MSK144 decoding</source>
+        <translation>Decodificação MSK144</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>T/R period</source>
+        <translation>Período T/R</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>F Tol</source>
+        <translation>F Tol</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>MSK144</source>
+        <translation>MSK144</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>MSK144: WSJT-X's meteor scatter mode, decoded while the period is received. Its T/R period, F Tol and depth are in the Decode menu, under MSK144 decoding.</source>
+        <translation>MSK144: o modo de meteor scatter do WSJT-X, decodificado enquanto o período é recebido. O período T/R, F Tol e a profundidade estão no menu Decodificar, em Decodificação MSK144.</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Fast</source>
+        <translation>Rápido</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Normal</source>
+        <translation>Normal</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Deep</source>
+        <translation>Profundo</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Fast Graph</source>
+        <translation>Gráfico Rápido</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui"/>
+        <source>Short messages (Sh)</source>
+        <translation>Mensagens curtas (Sh)</translation>
+    </message>
 </context>
 <context>
     <name>Modes</name>
@@ -9350,7 +9433,7 @@ para avaliar a propagação e o desempenho do sistema.</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="3127"/>
-        <source>See WSPR documentattion Appendix C for details of how to determine these factors for your radio.</source>
+        <source>See WSPR documentation Appendix C for details of how to determine these factors for your radio.</source>
         <translation>Consulte o Apêndice C da documentação do WSPR para obter detalhes de como determinar esses fatores para o seu rádio.</translation>
     </message>
     <message>
@@ -9738,7 +9821,7 @@ Clique com o botão direito do mouse para inserir e excluir opções.</translati
     </message>
     <message>
         <location filename="../Configuration.ui" line="3795"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;On top of the preview pane there are types of message that being checked for some criterion, text color being selected for each  type of message.&lt;br&gt;&lt;br&gt;On left side there are criteria allocated in the hierarchy order, and background color being selected for messages for each criterion.&lt;br&gt;&lt;br&gt;&apos;Worked one&apos; notification functionality is based on the residual principle, triggered if all activated &apos;New one&apos; criteria or criterion are not met.&lt;br&gt;&lt;br&gt;&apos;Inverse color&apos; may be used if user would like to highlight CQ and &apos;MyCall&apos; messages by some specific backgroung color.&lt;br&gt;&lt;br&gt;For beginning one criterion can be chose and for new band/mode notifications may be used similar color with the different saturation level, later number of required criteria can be increased.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;On top of the preview pane there are types of message that being checked for some criterion, text color being selected for each  type of message.&lt;br&gt;&lt;br&gt;On left side there are criteria allocated in the hierarchy order, and background color being selected for messages for each criterion.&lt;br&gt;&lt;br&gt;&apos;Worked one&apos; notification functionality is based on the residual principle, triggered if all activated &apos;New one&apos; criteria or criterion are not met.&lt;br&gt;&lt;br&gt;&apos;Inverse color&apos; may be used if user would like to highlight CQ and &apos;MyCall&apos; messages by some specific background color.&lt;br&gt;&lt;br&gt;For beginning one criterion can be chosen and for new band/mode notifications may be used similar color with the different saturation level, later number of required criteria can be increased.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; No topo do painel de visualização, existem tipos de mensagem que estão sendo verificados por algum critério, a cor do texto sendo selecionada para cada tipo de mensagem. &lt;br&gt; &lt;br&gt; No lado esquerdo existem critérios alocados na ordem da hierarquia e a cor de segundo plano está sendo selecionada para mensagens para cada critério. &lt;br&gt; &lt;br&gt; A funcionalidade de notificação &apos;Trabalhou&apos; é baseada no princípio residual, acionado se todos os critérios ou critérios &apos;Novos&apos; ativados não são atendidas. &lt;br&gt; &lt;br&gt; &apos;Cor inversa&apos; pode ser usada se o usuário desejar destacar as mensagens CQ e &apos;MyCall&apos; por alguma cor específica do background. &lt;br&gt; &lt;br&gt; Para o início, um critério pode ser escolhido e para as notificações de nova banda/modo podem ser usadas em cores semelhantes com o nível de saturação diferente; o número posterior de critérios necessários pode ser aumentado. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
     </message>
     <message>
@@ -9946,8 +10029,8 @@ Clique com o botão direito do mouse para inserir e excluir opções.</translati
     </message>
     <message>
         <location filename="../Configuration.ui" line="5020"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&apos;Show DXCC name/prefix&apos; shall be activated in General tab of the settings or any &apos;New one&apos; notification to get this functionality working.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt; &lt;p&gt; &apos;Mostrar nome/prefixo do DXCC&apos; deve ser ativado na guia Geral das configurações ou em qualquer notificação &apos;Novo&apos; para que essa funcionalidade trabalhe. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This filter hides a message only while &apos;Bypass all text filters&apos; in the &apos;Misc&apos; menu (the &apos;Bypass&apos; button, Alt+F) is off, and in the &apos;Rx Frequency&apos; window only while &apos;Bypass text filters on RX frequency&apos; is off too. Both are on to begin with.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Este filtro só oculta uma mensagem enquanto 'Ignorar todos os filtros de texto' no menu 'Misc' (o botão 'Bypass', Alt+F) estiver desativado, e na janela 'Frequência Rx' só enquanto 'Ignorar filtros de texto na frequência de RX' também estiver. Ambos começam ativados.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="5023"/>

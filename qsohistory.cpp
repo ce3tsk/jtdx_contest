@@ -5,6 +5,7 @@
 
 #include "qsohistory.h"
 #include "priorities.h"   /* CE3TSK 2026-10-03: the named levels and the rules read from them */
+#include "modetiming.h"   /* CE3TSK 2026-11-18: messages_77bit () */
 void QsoHistory::init()
 {
     _data.clear();
@@ -719,7 +720,7 @@ void QsoHistory::message(QString const& callsign, Status status, int priority, Q
                      the plain report skipped - taken as WSJT-X 3.0.2 takes it (at REPLYING an "R..." answers with Tx4).
                      It was dropped: the line's own answer sent RR73 and logged him, and the next transmission went back
                      to the call - JA5CEX's VK8SSB 2026-09-25: PM74, RR73, PM74, RR73, PM74. */
-                  if (t.status < FIN && (t.stx_c >= SREPORT || ((_contest.gridExchange || mode.startsWith ("FT")) && t.stx_c >= SCALL))) {
+                  if (t.status < FIN && (t.stx_c >= SREPORT || ((_contest.gridExchange || messages_77bit (mode)) && t.stx_c >= SCALL))) {   /* 2026-11-17: MSK144, the same messages */
                       old_status = t.status;
                       t.status = status;
                       if (priority > t.priority) t.priority = priority;

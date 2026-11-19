@@ -3324,17 +3324,15 @@ void Configuration::impl::read_settings ()
              2026-09 - never reach a profile that already has a table of its own, and the mode would
              have no working frequency anywhere. Seed them once. The flag is what makes it once: an
              operator who deletes the rows keeps them deleted. */
-          if (!settings_->value ("FT2FrequenciesSeeded", false).toBool ())
+          /* CE3TSK 2026-11-17 (MSK144_PLAN.md step 1a): MSK144's rows the same way, under a flag of their own; the
+             two steps are FrequencyList_v2::seed_rows and restore_rows now (test/harness/test_freqseed.cpp) */
+          for (auto const& added : {std::make_pair (Modes::FT2, "FT2FrequenciesSeeded"),
+                                    std::make_pair (Modes::MSK144, "MSK144FrequenciesSeeded")})
             {
+              if (settings_->value (added.second, false).toBool ()) continue;
               auto list = frequencies_.frequency_list ();
-              bool seen {false};
-              for (auto const& item : list) { if (item.mode_ == Modes::FT2) { seen = true; break; } }
-              if (!seen)
-                {
-                  for (auto const& row : FrequencyList_v2::default_rows (Modes::FT2)) list << row;
-                  frequencies_.frequency_list (list);
-                }
-              settings_->setValue ("FT2FrequenciesSeeded", true);
+              if (FrequencyList_v2::seed_rows (list, added.first)) frequencies_.frequency_list (list);
+              settings_->setValue (added.second, true);
             }
           /* CE3TSK 2026-09-22: FT2 rows that came back as ALL. A program that does not know FT2 - stock JTDX,
              which shares this ini, or an older build of this one - reads the mode name "FT2" as the first mode,
@@ -3344,26 +3342,11 @@ void Configuration::impl::read_settings ()
              load, because the next stock run does it again; only existing rows are touched, so an FT2 row the
              operator deleted stays deleted. */
           {
-            auto list = frequencies_.frequency_list ();
-            auto const ft2 = FrequencyList_v2::default_rows (Modes::FT2);
-            bool changed {false};
             // an FT2 row already there (re-added by hand after a stock run) keeps the ALL copy from becoming a
-            // duplicate of it (review 2026-09-22)
-            auto const has_ft2 = [&list] (Radio::Frequency f, IARURegions::Region r) {
-                for (auto const& i : list) if (i.mode_ == Modes::FT2 && i.frequency_ == f && i.region_ == r) return true;
-                return false;
-              };
-            for (auto& item : list)
-              {
-                if (item.mode_ != Modes::ALL) continue;
-                for (auto const& row : ft2)
-                  {
-                    if (item.frequency_ == row.frequency_ && item.region_ == row.region_ && !has_ft2 (item.frequency_, item.region_))
-                      {
-                        item.mode_ = Modes::FT2; changed = true; break;
-                      }
-                  }
-              }
+            // duplicate of it (review 2026-09-22). 2026-11-17: MSK144's rows the same - stock JTDX knows neither mode
+            auto list = frequencies_.frequency_list ();
+            bool changed {false};
+            for (auto mode : {Modes::FT2, Modes::MSK144}) changed = FrequencyList_v2::restore_rows (list, mode) || changed;
             if (changed) frequencies_.frequency_list (list);
           }
         }

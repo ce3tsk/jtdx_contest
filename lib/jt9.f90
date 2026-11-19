@@ -39,8 +39,13 @@ program jt9
   logical :: lswl=.false.,ldeeposd=.false.,learly=.false.,lhidedupes=.false.,ltwo=.false.,lalt=.false.,lagcccomp=.false.
   logical :: lrxbudgetset=.false.   ! CE3TSK item 80: -l given (the RX budget's default is per mode otherwise)
   integer :: nsftol=0   ! CE3TSK: -o, SuperFox receive (SUPERFOX_PLAN.md): 0 off, else the sync search range in Hz
+  ! CE3TSK 2026-11-17 (MSK144_PLAN.md step 0): --msk144, file mode only. -p is its T/R period in SECONDS (as in WSJT-X's
+  ! jt9 -k; everywhere else here -p is minutes and file mode does not read it), 15 when not given; F Tol 20 is WSJT-X's
+  integer :: nmsktol=20,ntrmsk=15
+  logical :: lperiodset=.false.
+  logical :: lmsksh=.false.   ! CE3TSK 2026-11-18: -q, MSK144's short messages are decoded too
   logical :: read_files = .true., tx9 = .false., display_help = .false.
-  type (option) :: long_options(54) = [ &
+  type (option) :: long_options(57) = [ &
     option ('help', .false., 'h', 'Display this help message', ''),          &
     option ('version', .false., 'v',                                      &
         'Print name, version and shared-memory interface fingerprint',     &
@@ -128,6 +133,11 @@ program jt9
     option ('bg-rxf-sens', .true., 'Z', 'background: RX frequency sensitivity 1-3, default 2', 'SENS'), &
     option ('bg-classic', .true., 'n',                                        &
         'background: the classic unit (P9), a plain non-SWL decode with CYCLES cycles (3-9), 0 off, default 6', 'CYCLES'), &
+    option ('msk144', .false., '1', 'MSK144 mode, file mode only: every file one T/R period, decoded window by'  &
+        //' window as WSJT-X''s jt9 -k does; -p is the period in SECONDS here (default 15), -f -d -c -x as given', ''), &
+    option ('tolerance', .true., 'i', 'MSK144: F Tol, the frequency tolerance, default HERTZ=20', 'HERTZ'), &
+    option ('short-messages', .false., 'q', 'MSK144: short messages (Sh) are decoded too - those of the two'    &
+        //' calls given with -c and -x', ''), &
     option ('superfox', .true., 'o',                                          &
         'SuperFox receive (SuperHound): even slots go to the SuperFox decoder, which looks for the sync tone'  &
         //' HERTZ either side of -f (normally -f 750 -o 50); 0 off, default 0', 'HERTZ') ]
@@ -150,7 +160,7 @@ program jt9
   wisfile=C_NULL_CHAR
   mycall=''; hiscall=''; mygrid=''; hisgrid=''
   do
-     call getopt('hvs:e:a:b:r:m:p:d:f:w:t:9642TL:S:H:c:G:x:g:8C:K:E:R:A:WN:j:OyuzXQM:l:B:k:I:D:F:J:P:U:V:Y:Z:n:o:',   &
+     call getopt('hvs:e:a:b:r:m:p:d:f:w:t:9642TL:S:H:c:G:x:g:8C:K:E:R:A:WN:j:OyuzXQM:l:B:k:I:D:F:J:P:U:V:Y:Z:n:o:1i:q',   &
           long_options,c,   &
           optarg,arglen,stat,offset,remain,.true.)
      if (stat .ne. 0) then
@@ -187,6 +197,7 @@ program jt9
            read (optarg(:arglen), *) nthreads
         case ('p')
            read (optarg(:arglen), *) ntrperiod
+           lperiodset = .true.   ! CE3TSK: --msk144 takes it for seconds
         case ('d')
            read (optarg(:arglen), *) ndepth
         case ('f')
@@ -265,6 +276,12 @@ program jt9
            read (optarg(:arglen), *) nbgclassic
         case ('o')   ! CE3TSK: SuperFox receive
            read (optarg(:arglen), *) nsftol
+        case ('1')   ! CE3TSK 2026-11-17: MSK144 (MSK144_PLAN.md step 0)
+           mode = 144
+        case ('i')
+           read (optarg(:arglen), *) nmsktol
+        case ('q')   ! CE3TSK 2026-11-18: MSK144's short messages
+           lmsksh = .true.
         case ('6')
            if (mode.lt.65) mode = mode + 65
         case ('9')
@@ -331,11 +348,18 @@ program jt9
         read(cremember(1:lremenv),*,iostat=iremenv) remsnrdrop
         if(iremenv.ne.0) remsnrdrop=0.0
      endif
+     ! CE3TSK 2026-11-17 (MSK144_PLAN.md step 0): MSK144 has a decoder of its own, called window by window as the running
+     ! program will call it - not through multimode_decoder and not through the parameter block (lib/msk144/msk144_files.f90)
+     if(mode.eq.144) then
+        if(lperiodset) ntrmsk=ntrperiod
+        call msk144_files(offset,remain,ntrmsk,ndepth,nrxfreq,nmsktol,mycall,hiscall,lmsksh)
+     else
      call jt9files(offset,remain,mode,ndepth,flow,fsplit,fhigh,nrxfreq,ncycles,   &
           nswlcycles,nsens,nrxfsens,naggr,lswl,ncandthin,nthreads,ldeeposd,learly,lhidedupes,ltwo,lalt,lagcccomp,   &
           nensemble,nbgeffort,nbgswl,nbgcycles,nbgswlcycles,nbgosd,nbgtwo,nbgalt,nbgens,nbgsens,nbgrxf,nbgbudget,nrxbudget,   &
           nbgclassic,lrxbudgetset,nsftol,   &
           mycall,mygrid,hiscall,hisgrid)
+     endif
   endif
 
 999 continue

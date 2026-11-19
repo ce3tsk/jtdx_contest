@@ -67,6 +67,10 @@ inline int period_position_tenths (qint64 ms, double period)
 inline bool clock_refresh_due (QString const& mode, int isecond)
 {
   if (mode == "FT8") return isecond % 15 == 0;
+  // CE3TSK 2026-11-17: MSK144's period is the operator's choice of 5, 10, 15 or 30 s, and every one of them begins
+  // on a multiple of five seconds; the colour is taken from the period itself (setClockStyle), so a refresh inside
+  // a longer period changes nothing
+  if (mode == "MSK144") return isecond % 5 == 0;
   if (mode == "FT4") return isecond % 15 == 0 || isecond == 8 || isecond == 23
                          || isecond == 38 || isecond == 53;
   if (mode == "FT2") { int const s = isecond % 15; return s == 0 || s == 4 || s == 8 || s == 12; }
@@ -86,6 +90,7 @@ inline int guard_freq_hz (QString const& modeTx, int current)
   if (modeTx == "FT8") return 51;
   if (modeTx == "FT4") return 84;
   if (modeTx == "FT2") return 168;   // 4 tones at 41.667 Hz, twice FT4's width
+  if (modeTx == "MSK144") return 500;   // (2026-11-17) every station is around 1500 Hz in this mode: F Tol's widest
   if (modeTx == "JT65") return 176;
   if (modeTx == "JT9") return 16;
   if (modeTx == "T10") return 67;
@@ -93,9 +98,12 @@ inline int guard_freq_hz (QString const& modeTx, int current)
 }
 
 /* How long a transmission lasts, in seconds from the period's start, before any CW ID: by the Tx mode, WSPR-2 by the
- * mode; 0 for anything else. */
-inline double tx_duration_s (QString const& modeTx, QString const& mode)
+ * mode; 0 for anything else. (2026-11-17, MSK144_PLAN.md step 2) MSK144's is the period's, which is the operator's:
+ * a quarter second less (WSJT-X's tx_duration (): trPeriod-0.25) - the modulator itself ends at half a second less
+ * (txstart.h). With no period given it has none. */
+inline double tx_duration_s (QString const& modeTx, QString const& mode, double trPeriod = 0.0)
 {
+  if (modeTx == "MSK144") return trPeriod > 0.25 ? trPeriod - 0.25 : 0.0;
   if (modeTx == "FT8") return 13.64;               // 1.0 + 79*1920/12000.0
   if (modeTx == "FT4") return 6.04;                // 1.0 + 105*576/12000.0
   if (modeTx == "FT2") return 3.02;                // 0.5 + 105*288/12000.0: 2.52 s of signal in a 3.75 s period, so the margin is half a second, not FT4's whole one
@@ -113,6 +121,7 @@ inline int band_label_after_s (QString const& mode)
   if (mode == "FT8") return 14;
   if (mode == "FT4") return 6;
   if (mode == "FT2") return 3;
+  if (mode == "MSK144") return 14;   // CE3TSK 2026-11-17: its period is the operator's, 5 to 30 s; FT8's figure
   return 50;
 }
 
@@ -127,4 +136,32 @@ inline int relog_guard_ms (double period, int periods)
   return int (period) * periods * 1000;
 }
 
+/* CE3TSK 2026-11-17 (MSK144_PLAN.md step 1a): the modes whose periods are shorter than a minute - FT8, FT4, FT2 and
+ * MSK144 - time their decode lines to the second: "hhmmss", six digits, where JT65, JT9 and T10 write "hhmm". The
+ * line's columns follow from it (the message begins two columns further right), and so does the time on the line
+ * between two periods. It was `mode.startsWith ("FT")` wherever it was asked, which MSK144 is not. */
+inline bool lines_have_seconds (QString const& mode)
+{
+  return mode.startsWith ("FT") || mode == "MSK144";
+}
+
+/* CE3TSK 2026-11-19 (TODO.md 3.-275, the operator's "as recommended" on the review 3.-274's P1): the same question
+ * asked of a LINE - of the character that stands for its mode between the frequency and the message, as the decoders
+ * print it and DisplayText::displayTransmittedText () writes it: "~" FT8, ":" FT4, ";" FT2 and "&" MSK144 have
+ * seconds; "#" JT65, "@" JT9 and "+" T10 have none. A UDP Reply names its line by that character (replyToUDP ()):
+ * asked this way a line left in Band Activity from a mode of the other kind than the one the program is in now is
+ * still found. test_qsoanswer walks every mode the program has and holds the two rules to each other. */
+inline bool mark_has_seconds (QString const& mark)
+{
+  return mark == "~" || mark == ":" || mark == ";" || mark == "&";
+}
+
+/* CE3TSK 2026-11-17 (MSK144_PLAN.md step 2): the modes whose messages are the 77-bit ones - FT8, FT4, FT2 and MSK144.
+ * A call with a prefix or a suffix goes whole or as a hash in angle brackets, RR73 is a message of its own, a CQ takes
+ * a word of up to four letters, the Tx fields are checked by the 77-bit packer, AutoSeq is the rule. JT65, JT9 and
+ * T10 pack 72 bits. The same list as lines_have_seconds () today, asked for another reason. */
+inline bool messages_77bit (QString const& mode)
+{
+  return mode.startsWith ("FT") || mode == "MSK144";
+}
 #endif

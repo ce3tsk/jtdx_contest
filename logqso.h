@@ -81,6 +81,10 @@ private:
   /* CE3TSK 2026-11-13 (TODO.md 3.-248, GitHub issue 4): the step of the "+15 s" button beside End - one period of the
      logged mode (logfields.h log_period_ms ()), set by initLogQSO () */
   qint64 m_periodMs {15000};
+  qint64 m_msk144Ms {15000};   // (2026-11-17) MSK144's T/R period, the operator's: the step when that mode is logged
+public:
+  void setMsk144Period (double seconds) { m_msk144Ms = qRound64 (seconds * 1000.0); }
+private:
   void showPeriod ();
   Radio::Frequency m_dialFreq;
   QString m_myCall;

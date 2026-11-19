@@ -1867,7 +1867,10 @@ quint16 TCITransceiver::readAudioData (float * data, qint32 maxSize)
         unsigned int isym=0;
         qint16 sample=0;
         if(!m_tuning) isym=m_ic/(4.0*m_nsps);          // Actual fsample=48000
-		bool slowCwId=((isym >= m_symbolsLength) && (icw[0] > 0));
+        // CE3TSK 2026-11-17 (MSK144_PLAN.md step 2): MSK144 sends its frame over and over (txstart.h) - and no CW ID,
+        // which would begin with the frame's second round
+        bool const repeats {tx_start::repeats_frame (m_nsps)};
+		bool slowCwId=((isym >= m_symbolsLength) && (icw[0] > 0)) && !repeats;
         m_nspd=2560;                 // 22.5 WPM
 
         if(m_TRperiod > 16.0 && slowCwId) {     // Transmit CW ID?
@@ -1921,7 +1924,10 @@ quint16 TCITransceiver::readAudioData (float * data, qint32 maxSize)
         // fade out parameters (no fade out for tuning)
         unsigned int i0,i1;
         if(m_tuning) {
-          i1 = i0 = 9999 * m_nsps;
+          i1 = i0 = tx_start::tune_end_frame (m_nsps);   // CE3TSK 2026-11-17: 9999 * m_nsps, MSK144's longer (txstart.h)
+        } else if (repeats) {
+          i1 = tx_start::repeat_end_frame (m_TRperiod, audioSampleRate);
+          i0 = i1 - tx_start::repeat_fade_frames;
         } else {
           i0=(m_symbolsLength - 0.017) * 4.0 * m_nsps;
           i1= m_symbolsLength * 4.0 * m_nsps;
@@ -1930,9 +1936,10 @@ quint16 TCITransceiver::readAudioData (float * data, qint32 maxSize)
         sample=0;
         for (unsigned i = 0; i < numFrames && m_ic <= i1; ++i) {
 //          printf("algus %d %lld %d %d",i,numFrames,m_ic,i1);
-          if(m_TRperiod > 16.0 || m_tuning) {
+          if(m_TRperiod > 16.0 || m_tuning || repeats) {   // CE3TSK 2026-11-17: MSK144 at any period
             isym=0;
             if(!m_tuning) isym=m_ic / (4.0 * m_nsps);       //Actual fsample=48000
+            if (repeats) isym %= tx_start::frame_symbols (itone[40]);   // the frame again, 144 symbols or a short message's 40
             if (isym != m_isym0 || m_trfrequency != m_frequency0) {
               if(itone[0]>=100) {
                 m_toneFrequency0=itone[0];

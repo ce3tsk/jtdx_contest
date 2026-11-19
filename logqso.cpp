@@ -124,7 +124,7 @@ LogQSO::LogQSO(QSettings * settings, Configuration const * config, JTDXDateTime 
   /* (review 2026-11-13) Mode corrected by hand - it is what accept () logs: the step and the text follow it. The edits
      hold UTC (logqso.ui timeSpec, as WSJT-X's), so a click never jumps an hour at the PC's daylight saving change. */
   connect (ui->mode, &QLineEdit::textEdited, this, [this] (QString const& t) {
-      m_periodMs = log_period_ms (t);
+      m_periodMs = log_period_ms (t, m_msk144Ms);
       showPeriod ();
     });
   showPeriod ();
@@ -273,7 +273,7 @@ void LogQSO::initLogQSO(QString const& hisCall, QString const& hisGrid, QString 
     else t+="  " + dist;
     ui->comments->setText(t);
   }
-  m_periodMs = log_period_ms (mode);   // CE3TSK 2026-11-13 (TODO.md 3.-248): before JT9 may be logged as RTTY
+  m_periodMs = log_period_ms (mode, m_msk144Ms);   // CE3TSK 2026-11-13 (TODO.md 3.-248): before JT9 may be logged as RTTY
   showPeriod ();
   if(m_config->log_as_RTTY() and mode.left(3)=="JT9") mode="RTTY";
   ui->mode->setText(mode);
