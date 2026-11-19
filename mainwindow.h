@@ -792,6 +792,11 @@ private:
      (Sh). The setting is m_mskSh; what is sent and decoded asks mskShInEffect () - the mode, and a pair of calls a
      short message has room for (msk144feed.h, sh_fits). */
   bool m_mskSh = false;
+  /* (2026-11-19, TODO.md 3.-277) MSK144 switched on in this profile: [Common] MSK144Enabled, no control in the GUI.
+     Off, the mode is not offered (modetiming.h mode_offered ()): its entry and button greyed, no way into it. */
+  bool m_mskEnabled = false;
+  bool modeOffered (QString const& mode) const;
+  void modeEntriesEnable (bool contestLocked);   // which entries of the Mode menu can be picked
   bool mskShInEffect () const;
   void mskShSet (bool on);
   void mskShMessages ();
@@ -1409,7 +1414,7 @@ private:
   QVector<ModeEntry> const& modeTable () const;
   mutable QVector<ModeEntry> m_modeTable;             // filled by modeTable () on first use
   QAction * modeAction (QString const& mode) const;   // nullptr for a name that is no mode
-  bool runModeSlot (QString const& mode);             // that mode's slot, ungated; false if none
+  bool runModeSlot (QString const& mode);             // that mode's slot, ungated but for a mode not offered; false if none
   QActionGroup * m_modeGroup {nullptr};               // the eight; greyed while transmitting
   // CE3TSK: View > Band buttons
   void scheduleBandButtons ();

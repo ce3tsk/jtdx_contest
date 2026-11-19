@@ -17,6 +17,14 @@ inline bool contest_allows_mode (QString const& mode, bool ft8Only = false)
   return mode == "FT8" || (mode == "FT4" && !ft8Only);
 }
 
+// CE3TSK 2026-11-19 (TODO.md 3.-277): whether an entry of the Mode menu can be picked - a mode that is offered
+// (modetiming.h mode_offered (): MSK144 only where it is switched on) and, while a contest runs, one it allows. The
+// mode row's buttons follow their entries.
+inline bool mode_entry_enabled (QString const& mode, bool contestLocked, bool ft8Only, bool offered)
+{
+  return offered && (!contestLocked || contest_allows_mode (mode, ft8Only));
+}
+
 // the mode to park on entering a contest: nothing when the contest allows the current one (the
 // empty string then means "nothing to restore", and leaving keeps whichever FT mode is current)
 inline QString contest_parked_mode (QString const& mode, bool ft8Only = false)

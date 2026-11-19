@@ -1652,6 +1652,7 @@ void MainWindow::writeSettings()
   iniOnly ("SuperFoxTol", m_superFoxTol, 50);
   iniOnly ("SuperFoxFreq", m_superFoxBase, 750);
   iniOnly ("ShowOTP", m_showOTP, false);
+  iniOnly ("MSK144Enabled", m_mskEnabled, false);   // CE3TSK 2026-11-19 (TODO.md 3.-277): kept where it is on, never written off
   iniOnly ("UpdateCheck", m_updateCheckAuto, true);   // CE3TSK 2026-09-22: false = no background update check
   // a list, best server first (FoxVerifier.hpp); QSettings writes it "a, b" and one server as plain text
   iniOnly ("OTPUrl", m_foxVerifier ? m_foxVerifier->base_urls () : QStringList {FoxVerifier::default_base_url ()}, QStringList {FoxVerifier::default_base_url ()});
@@ -1965,6 +1966,11 @@ void MainWindow::readSettings()
   else if(m_acceptUDP==2) ui->actionAcceptUDPCQ73->setChecked(true);
   else if(m_acceptUDP==3) ui->actionAcceptUDPAny->setChecked(true);
 
+  /* CE3TSK 2026-11-19 (TODO.md 3.-277): MSK144 switched on in this profile? Read HERE, before the stored mode is
+     judged: not offered, "MSK144" is a name the program does not have. The Mode menu's entries were set by
+     applyContestLock () in the constructor, before the key was known - set again now. */
+  m_mskEnabled=m_settings->value("MSK144Enabled",false).toBool();
+  modeEntriesEnable (m_contest.running);
   m_mode=m_settings->value("Mode","FT8").toString();
   m_modeTx=m_settings->value("ModeTx","FT8").toString();
 
@@ -1974,7 +1980,7 @@ void MainWindow::readSettings()
      allows: the lock greys the others, but the start-up dispatch runs the saved mode's slot
      ungated, so an ini left in FT2 or JT65 mid-contest (possible before FT2 was locked) came back
      in it, greyed and unparked. It starts in FT8 instead, as entering the contest would have. */
-  auto const known = [this] (QString const& mode) { return modeAction (mode) != nullptr; };
+  auto const known = [this] (QString const& mode) { return modeAction (mode) != nullptr && modeOffered (mode); };   // (3.-277) and offered
   auto const allowed = [this] (QString const& mode) { return !m_contest.running || contest_allows_mode (mode, m_contest.ft8Only); };
   QString const saved_mode {saved_mode_name (m_mode, known)};   // for a park at the end, below
   normalise_saved_mode (m_mode, m_modeTx, known, allowed);
@@ -4298,6 +4304,7 @@ QAction * MainWindow::modeAction (QString const& mode) const
 
 bool MainWindow::runModeSlot (QString const& mode)
 {
+  if (!modeOffered (mode)) return false;   // CE3TSK 2026-11-19 (TODO.md 3.-277): a mode not offered is no mode here
   for (auto const& m : modeTable ())
     if (mode == m.name)
       {
@@ -4305,6 +4312,21 @@ bool MainWindow::runModeSlot (QString const& mode)
         return true;
       }
   return false;
+}
+
+// CE3TSK 2026-11-19 (TODO.md 3.-277): can this mode be entered at all - modetiming.h mode_offered (), MSK144's switch
+bool MainWindow::modeOffered (QString const& mode) const
+{
+  return mode_offered (mode, m_mskEnabled);
+}
+
+/* which entries of the Mode menu can be picked (contestmode.h mode_entry_enabled ()): a mode that is offered and,
+   with a contest running, one it allows. From applyContestLock (), and from readSettings once MSK144's key is known.
+   The mode row's buttons follow their entries (buildModeButtons ()). An entry greyed here stays greyed when a
+   transmission's end enables the mode group again: QActionGroup::setEnabled passes over what was greyed by itself. */
+void MainWindow::modeEntriesEnable (bool contestLocked)
+{
+  for (auto const& m : modeTable ()) m.action->setEnabled (mode_entry_enabled (m.name, contestLocked, m_contest.ft8Only, modeOffered (m.name)));
 }
 
 void MainWindow::buildModeButtons ()
@@ -7379,7 +7401,7 @@ void MainWindow::applyContestLock (bool locked)
      used to be listed here by hand, and FT2, which came later, was missed: entering a contest
      parks FT2 and forces FT8 like the rest, so leaving it live let one click (menu, or the Mode
      buttons row) put the station in FT2 mid-contest, with nothing parked to undo it. */
-  for (auto const& m : modeTable ()) m.action->setEnabled (!locked || contest_allows_mode (m.name, m_contest.ft8Only));
+  modeEntriesEnable (locked);   // (2026-11-19, TODO.md 3.-277) and MSK144 only where it is switched on
 }
 
 /* CE3TSK: (re)open the contest's own log, or drop it when no contest is running. The
@@ -12008,6 +12030,9 @@ void MainWindow::on_actionFT2_triggered()
    block becomes 3584 samples (commonActions), at whose every end mskSink () hands the decoder's thread a window. */
 void MainWindow::on_actionMSK144_triggered()
 {
+  /* CE3TSK 2026-11-19 (TODO.md 3.-277): not offered - the entry is greyed, and Qt 5.15's QAction::trigger () fires a
+     greyed entry all the same (actiongate.h). Nothing changes; the mark goes back to the mode the program is in. */
+  if (!modeOffered ("MSK144")) { if (auto * const now = modeAction (m_mode)) now->setChecked (true); return; }
   if (m_mode=="WSPR-2") killFile();
   if (m_mode!="MSK144" && ui->enableTxButton->isChecked ()) ui->enableTxButton->click ();   // a transmission of the mode left ends here: the period and the frequency are others
   m_mode="MSK144";

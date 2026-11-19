@@ -164,4 +164,16 @@ inline bool messages_77bit (QString const& mode)
 {
   return mode.startsWith ("FT") || mode == "MSK144";
 }
+
+/* CE3TSK 2026-11-19 (TODO.md 3.-277, the operator: "let's temporarily disable msk144 mode for the release, i.e. grey
+ * the menu entry and its mode button"): MSK144 is in the program and not released yet - it has not been on the air.
+ * A mode is OFFERED when it can be entered at all: every mode but MSK144 always, MSK144 only where the profile's ini
+ * says [Common] MSK144Enabled=true (a key with no control in the GUI, off when it is not there). Not offered, the
+ * Mode menu's entry and the mode row's button are greyed and the name is one the program does not have: a stored or
+ * parked "MSK144" starts in FT8, a schedule's entry is skipped. Everything asks this one question
+ * (MainWindow::modeOffered ()); with the key on the program is the one it was before the key. */
+inline bool mode_offered (QString const& mode, bool msk144Enabled)
+{
+  return mode != "MSK144" || msk144Enabled;
+}
 #endif
