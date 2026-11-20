@@ -59,10 +59,11 @@ CAboutDlg::CAboutDlg(QWidget *parent, bool useDarkStyle) :
                          + tr ("<b>Thanks to the operators who beta tested the first release candidates</b> on the air:") + "<br>"
                          "Willy XQ3SK &middot; Eduardo CA3EAP &middot; Miguel CA7FKZ &middot; Cristian CA8CEU.<br><br>"
                          /* CE3TSK 2026-11-16 (TODO.md 3.-260, RECEPTION_MAP_PLAN.md 5.11): whose data View > Reception map shows -
-                            the names put in, not translated, as the rest */
+                            the names put in, not translated, as the rest; Tom Fanning M0LTE by his full name, as he asked
+                            on 2026-11-20 when he agreed to the use */
                          + tr ("<b>The Reception Map</b> shows the reception reports of pskreporter.info (%1), distributed by<br>"
                                "mqtt.pskreporter.info (%2), on a map made with Natural Earth.")
-                             .arg (QStringLiteral ("Philip Gladstone N1DQ"), QStringLiteral ("Tom M0LTE")) + "<br><br>"
+                             .arg (QStringLiteral ("Philip Gladstone N1DQ"), QStringLiteral ("Tom Fanning M0LTE")) + "<br><br>"
                          + tr ("<b>Derivative work of JTDX</b> by Igor Chernikov, UA3DJY, and Arvo J&auml;rve, ES1JA, &copy; 2016-2022,<br>"
                                "created with contributions from") + "<br>"
                          "5P1KZX, 9A5CW, BD3OOX, CE2EC, CT1AXS, DK7UY, DO1IP, EA1AHY, EA3W,<br>"

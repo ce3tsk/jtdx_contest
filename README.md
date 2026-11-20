@@ -471,7 +471,7 @@ problems a benchmark cannot. Thank you:
 
 The Reception map shows the reception reports collected by [pskreporter.info](https://pskreporter.info)
 (Philip Gladstone N1DQ) and distributed over MQTT by [mqtt.pskreporter.info](https://mqtt.pskreporter.info)
-(Tom M0LTE). Its map is made with [Natural Earth](https://www.naturalearthdata.com) (public domain).
+(Tom Fanning M0LTE). Its map is made with [Natural Earth](https://www.naturalearthdata.com) (public domain).
 
 ## Copyright and license
 
