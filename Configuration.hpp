@@ -256,6 +256,10 @@ public:
   bool clear_DX_exit () const;
   bool miles () const;
   bool showDistance () const;   // CE3TSK 2026-10-20: the distance after a decode's country, from its grid
+  /* CE3TSK 2026-11-21 (TODO.md 3.-280, QSL_CONFIRMATIONS_PLAN.md D9): a LoTW user worked but not LoTW-confirmed counts as
+     never worked in every highlight tier that is on, in a colour of its own (on by default; nothing before confirmations
+     are downloaded, never in a contest) */
+  bool countUnconfirmedAsNew () const;
   bool showAzimuth () const;    //   and the azimuth
   bool scroll () const;
   int watchdog () const;
@@ -323,6 +327,7 @@ public:
   QColor color_NewDXCCBand () const;
   QColor color_NewStateBand () const;
   QColor color_NewCall () const;
+  QColor color_Unconfirmed () const;   // CE3TSK 2026-11-21 (TODO.md 3.-280): a LoTW user worked, not LoTW-confirmed
   QColor color_NewCallBand () const;
   QColor color_NewPx () const;
   QColor color_NewPxBand () const;

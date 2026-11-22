@@ -9,6 +9,7 @@
 #include <windows.h>
 #include <winhttp.h>
 
+#include <algorithm>
 #include <atomic>
 #include <string>
 
@@ -33,6 +34,10 @@
 #endif
 #ifndef WINHTTP_QUERY_RETRY_AFTER
 # define WINHTTP_QUERY_RETRY_AFTER 36
+#endif
+// (review 2026-11-21) the wait for a response's headers - a timeout of its own, 90 s unless set
+#ifndef WINHTTP_OPTION_RECEIVE_RESPONSE_TIMEOUT
+# define WINHTTP_OPTION_RECEIVE_RESPONSE_TIMEOUT 7
 #endif
 
 namespace
@@ -84,7 +89,14 @@ public:
   {
   }
 
-  void cancel () { cancel_.store (true); }
+  /* (review 2026-11-21) from the owner's thread: the flag for the read loop, and the request's handle closed, which is
+     how WinHTTP aborts a synchronous call waiting on it - WinHttpReceiveResponse while Club Log builds an export would
+     otherwise hold the exit for the owner's whole wait and leave the thread behind */
+  void cancel ()
+  {
+    cancel_.store (true);
+    if (HINTERNET const h = request_live_.exchange (nullptr)) WinHttpCloseHandle (h);
+  }
 
   // valid once finished () has been emitted; error_ empty means fetched
   QByteArray body_;
@@ -106,6 +118,7 @@ private:
   QByteArray const request_body_;
   int const timeout_ms_;
   std::atomic<bool> cancel_ {false};
+  std::atomic<HINTERNET> request_live_ {nullptr};   // the request's handle: whoever takes it from here closes it
 };
 
 void WinHttpFetch::Worker::run ()
@@ -120,7 +133,14 @@ void WinHttpFetch::Worker::run ()
       error_ = QString {"%1: %2"}.arg (QString::fromLatin1 (call)).arg (error_text (code));
     };
 
-  Handle session, connection, request;
+  Handle session, connection;
+  // the request's handle lives in request_live_ (cancel () may close it from the other thread); this closes it on the
+  // way out unless cancel () already has - never twice
+  struct Owned
+  {
+    std::atomic<HINTERNET> & live;
+    ~Owned () { if (HINTERNET const h = live.exchange (nullptr)) WinHttpCloseHandle (h); }
+  } const owned {request_live_};
 
   // automatic proxy discovery needs Windows 8.1 or later; older systems take the static
   // configuration instead, which is what WinINet and Internet Options have always used
@@ -162,10 +182,17 @@ void WinHttpFetch::Worker::run ()
   target += extra;
   // WINHTTP_DEFAULT_ACCEPT_TYPES sends no Accept header at all, so name it as the Qt transport does
   LPCWSTR accept_types[] {L"*/*", nullptr};
-  request.h = WinHttpOpenRequest (connection.h, as_wide (method_), target.c_str (), nullptr, WINHTTP_NO_REFERER,
-                                  accept_types,
-                                  (INTERNET_SCHEME_HTTPS == parts.nScheme) ? WINHTTP_FLAG_SECURE : 0u);
-  if (!request.h) { fail_with_last_error ("WinHttpOpenRequest"); return; }
+  HINTERNET const request_h = WinHttpOpenRequest (connection.h, as_wide (method_), target.c_str (), nullptr, WINHTTP_NO_REFERER,
+                                                   accept_types,
+                                                   (INTERNET_SCHEME_HTTPS == parts.nScheme) ? WINHTTP_FLAG_SECURE : 0u);
+  if (!request_h) { fail_with_last_error ("WinHttpOpenRequest"); return; }
+  request_live_.store (request_h);
+  if (cancelled ()) { error_ = QString {"The download was cancelled."}; return; }   // cancel () came before the store
+
+  // (review 2026-11-21) the headers may take as long as a read: Club Log builds a large export before its first byte.
+  // Never below WinHTTP's own 90 s: the other downloads keep the wait they always had
+  DWORD response_timeout {DWORD (std::max (timeout_ms_, 90000))};
+  WinHttpSetOption (request_h, WINHTTP_OPTION_RECEIVE_RESPONSE_TIMEOUT, &response_timeout, sizeof response_timeout);
 
   // redirects are followed by default, https to http is refused by default, and the default
   // limit is ten - the same three rules the Qt transport is given explicitly
@@ -173,23 +200,23 @@ void WinHttpFetch::Worker::run ()
   if (!headers_.isEmpty ())
     {
       DWORD no_redirects {WINHTTP_DISABLE_REDIRECTS};
-      if (!WinHttpSetOption (request.h, WINHTTP_OPTION_DISABLE_FEATURE, &no_redirects, sizeof no_redirects))
+      if (!WinHttpSetOption (request_h, WINHTTP_OPTION_DISABLE_FEATURE, &no_redirects, sizeof no_redirects))
         { fail_with_last_error ("WinHttpSetOption"); return; }
     }
 
   DWORD const body_size {DWORD (request_body_.size ())};
-  if (!WinHttpSendRequest (request.h,
+  if (!WinHttpSendRequest (request_h,
                            headers_.isEmpty () ? WINHTTP_NO_ADDITIONAL_HEADERS : as_wide (headers_),
                            headers_.isEmpty () ? 0 : DWORD (-1),   // -1: up to the terminating null
                            body_size ? const_cast<char *> (request_body_.constData ()) : WINHTTP_NO_REQUEST_DATA,
                            body_size, body_size, 0))
     { fail_with_last_error ("WinHttpSendRequest"); return; }
-  if (!WinHttpReceiveResponse (request.h, nullptr))
+  if (!WinHttpReceiveResponse (request_h, nullptr))
     { fail_with_last_error ("WinHttpReceiveResponse"); return; }
 
   DWORD status {0};
   DWORD status_size {sizeof status};
-  if (WinHttpQueryHeaders (request.h, WINHTTP_QUERY_STATUS_CODE | WINHTTP_QUERY_FLAG_NUMBER,
+  if (WinHttpQueryHeaders (request_h, WINHTTP_QUERY_STATUS_CODE | WINHTTP_QUERY_FLAG_NUMBER,
                            WINHTTP_HEADER_NAME_BY_INDEX, &status, &status_size, WINHTTP_NO_HEADER_INDEX))
     {
       status_ = int (status);
@@ -198,7 +225,7 @@ void WinHttpFetch::Worker::run ()
   {
     wchar_t value[256] {};
     DWORD value_size {sizeof value};
-    if (WinHttpQueryHeaders (request.h, WINHTTP_QUERY_RETRY_AFTER, WINHTTP_HEADER_NAME_BY_INDEX,
+    if (WinHttpQueryHeaders (request_h, WINHTTP_QUERY_RETRY_AFTER, WINHTTP_HEADER_NAME_BY_INDEX,
                              value, &value_size, WINHTTP_NO_HEADER_INDEX))
       retry_after_ = QString::fromWCharArray (value, int (value_size / sizeof value[0])).toLatin1 ();
   }
@@ -207,12 +234,12 @@ void WinHttpFetch::Worker::run ()
     {
       if (cancelled ()) { error_ = QString {"The download was cancelled."}; return; }
       DWORD available {0};
-      if (!WinHttpQueryDataAvailable (request.h, &available))
+      if (!WinHttpQueryDataAvailable (request_h, &available))
         { fail_with_last_error ("WinHttpQueryDataAvailable"); return; }
       if (!available) break;                      // the response is complete
       QByteArray chunk (int (available), '\0');
       DWORD read {0};
-      if (!WinHttpReadData (request.h, chunk.data (), available, &read))
+      if (!WinHttpReadData (request_h, chunk.data (), available, &read))
         { fail_with_last_error ("WinHttpReadData"); return; }
       if (!read) break;
       chunk.truncate (int (read));

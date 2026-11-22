@@ -628,6 +628,11 @@ Format:
         <source>Club Log refused the token. Make a new one in Club Log under Settings &gt; API and paste it here.</source>
         <translation>Club Log hat das Token abgelehnt. Erstellen Sie in Club Log unter Settings &gt; API ein neues und fügen Sie es hier ein.</translation>
     </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Club Log is busy; the next try is at %1 UTC.</source>
+        <translation>Club Log ist ausgelastet; der nächste Versuch ist um %1 UTC.</translation>
+    </message>
 </context>
 <context>
     <name>CountryDat</name>
@@ -11113,6 +11118,21 @@ Um einmal den ganzen LoTW-Bestand abzurufen, dort vorher "Only confirmations sin
         <location filename="../Configuration.ui"/>
         <source>Do&amp;wnload LoTW confirmations from Club Log</source>
         <translation>LoTW-Bestätigungen von Club Log heru&amp;nterladen</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>With confirmations downloaded from Club Log, a station in the LoTW users file that you have worked but that has not confirmed through LoTW counts as never worked in every tier above that is on: it is shown in its own color and the auto sequencer calls it as new. Not in a contest.</source>
+        <translation>Mit von Club Log heruntergeladenen Bestätigungen zählt eine Station aus der LoTW-Nutzerdatei, die Sie gearbeitet haben, die aber nicht per LoTW bestätigt hat, in jeder eingeschalteten Stufe oben als nie gearbeitet: sie wird in einer eigenen Farbe angezeigt, und der automatische Ablauf ruft sie als neu. Nicht in einem Contest.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Count LoTW users worked but not LoTW-confirmed as new</source>
+        <translation>Gearbeitete, aber nicht per LoTW bestätigte LoTW-Nutzer als neu zählen</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Worked, not LoTW-confirmed</source>
+        <translation>Gearbeitet, nicht per LoTW bestätigt</translation>
     </message>
 </context>
 <context>

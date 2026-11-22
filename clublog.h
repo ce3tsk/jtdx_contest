@@ -26,6 +26,7 @@ namespace club_log
   constexpr char const * file_name {"clublog_qsl.adi"};
   constexpr char const * api_env {"JTDX_CLUBLOG_API"};
   constexpr int refresh_hours {12};
+  constexpr int max_wait_hours {24};   // (review 2026-11-21) the longest wait a Retry-After may impose: a day
   constexpr qint64 max_export_size {256 * 1024 * 1024};   // 46,549 QSOs are 11 MB
   constexpr int timeout_ms {120000};                       // Club Log builds the export before the first byte
 
@@ -43,7 +44,11 @@ namespace club_log
 
   // the token's file beside the settings file: JTDX.ini -> JTDX_clublog.token
   QString token_path (QString const& settings_file);
+  /* the token in the file, or none: a byte-order mark in front (Notepad) is dropped, and what is not a token
+     (plausible_token) is none - it would only reach a header and be refused there (review 2026-11-21) */
   QString read_token (QString const& path);
+  // what the settings keep of a token Club Log refused: its SHA-256 in hex - never the token itself (review 2026-11-21)
+  QString token_id (QString const& token);
   /* written readable and writable by the owner alone before the token goes in; an empty token removes the file.
      Returns an empty string, or what went wrong (never the token). */
   QString write_token (QString const& path, QString const& token);
@@ -67,8 +72,9 @@ namespace club_log
   enum class After {Retry, WaitRetryAfter, TokenRefused};
   After after_status (int http_status);   // 0: no answer from the server at all
   /* when the next automatic download may start after a failure: an hour later (the network was down, the server
-     failed), at Club Log's Retry-After (an hour when it named none, never sooner than a minute), or never while the
-     token is refused - until the user changes it or presses the button */
+     failed), at Club Log's Retry-After (an hour when it named none, never sooner than a minute nor later than
+     max_wait_hours - a broken proxy's "years" must not stop the downloads for good), or never while the token is
+     refused - until the user saves another */
   QDateTime next_try (After after, QDateTime const& retry_after, QDateTime const& now);
 }
 

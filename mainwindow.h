@@ -1195,6 +1195,10 @@ private:
      highlighting are answered from this instead of m_logBook, so a field worked in an
      earlier year does not suppress this year's multiplier. Shares m_logBook's country data. */
   LogBook m_contestLog;
+  /* CE3TSK 2026-11-21 (TODO.md 3.-280): the confirmations Club Log has (clublog_qsl.adi, from the Club Log download in
+     Settings > Reporting), judged with m_logBook's country data; given to the two decode windows while it holds any */
+  LogBook m_confirmedBook;
+  bool m_confirmedInitNeeded = false;   // downloaded while monitoring: read at the next initLogIfNeeded ()
   QString m_contestLogFile;   // (3.-253) the contest log session's file (contestsession.h)
   QString m_contestLogSlug;   // (3.-253) the profile it is of
   bool m_contestSessionChosen = false;   // (3.-253) a session chosen in this run: the first choice is the program's start
@@ -1399,6 +1403,7 @@ private:
   void setHoundButtonStyle ();
   void setSpotButtonStyle ();
   void initLogIfNeeded ();
+  void initConfirmedBook ();   // CE3TSK 2026-11-21 (TODO.md 3.-280)
   void setTxStatusColour (QString const& colour);
   void setProgressBarStyle ();
   void applyPaneFloor ();   // CE3TSK: the right pane's floor under Narrow controls

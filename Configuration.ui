@@ -3934,6 +3934,19 @@ Right click for insert and delete options.</string>
                 </property>
                </widget>
               </item>
+              <item row="10" column="0" colspan="4">
+               <widget class="QCheckBox" name="count_unconfirmed_check_box">
+                <property name="toolTip">
+                 <string>With confirmations downloaded from Club Log, a station in the LoTW users file that you have worked but that has not confirmed through LoTW counts as never worked in every tier above that is on: it is shown in its own color and the auto sequencer calls it as new. Not in a contest.</string>
+                </property>
+                <property name="text">
+                 <string>Count LoTW users worked but not LoTW-confirmed as new</string>
+                </property>
+                <property name="checked">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
               <item row="9" column="4">
                <spacer name="horizontalSpacer_7">
                 <property name="orientation">
@@ -5363,6 +5376,76 @@ Right click for insert and delete options.</string>
                </property>
                <property name="styleSheet">
                 <string notr="true">QLabel{font-weight: bold;background-color: #00ff00;color: #707070}</string>
+               </property>
+               <property name="text">
+                <string>K1ABC</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item row="9" column="4">
+              <widget class="QPushButton" name="pbUnconfirmed">
+               <property name="minimumSize">
+                <size>
+                 <width>155</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="text">
+                <string>Worked, not LoTW-confirmed</string>
+               </property>
+              </widget>
+             </item>
+             <item row="9" column="5">
+              <widget class="QLabel" name="labUnconfirmed">
+               <property name="minimumSize">
+                <size>
+                 <width>80</width>
+                 <height>18</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">QLabel{font-weight: bold;background-color: #e0e070}</string>
+               </property>
+               <property name="text">
+                <string>K1ABC</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item row="9" column="6">
+              <widget class="QLabel" name="labMcUnconfirmed">
+               <property name="minimumSize">
+                <size>
+                 <width>80</width>
+                 <height>18</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">QLabel{font-weight: bold;background-color: #e0e070;color: #ff0000}</string>
+               </property>
+               <property name="text">
+                <string>K1ABC</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item row="9" column="7">
+              <widget class="QLabel" name="labScUnconfirmed">
+               <property name="minimumSize">
+                <size>
+                 <width>80</width>
+                 <height>18</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">QLabel{font-weight: bold;background-color: #e0e070;color: #707070}</string>
                </property>
                <property name="text">
                 <string>K1ABC</string>

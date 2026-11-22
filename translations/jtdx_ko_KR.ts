@@ -628,6 +628,11 @@ Format:
         <source>Club Log refused the token. Make a new one in Club Log under Settings &gt; API and paste it here.</source>
         <translation>Club Log가 토큰을 거부했습니다. Club Log의 Settings &gt; API에서 새로 만들어 여기에 붙여 넣으십시오.</translation>
     </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Club Log is busy; the next try is at %1 UTC.</source>
+        <translation>Club Log가 바쁩니다. 다음 시도는 %1 UTC입니다.</translation>
+    </message>
 </context>
 <context>
     <name>CountryDat</name>
@@ -11110,6 +11115,21 @@ LoTW 전체 기록을 한 번 가져오려면 먼저 그곳에서 "Only confirma
         <location filename="../Configuration.ui"/>
         <source>Do&amp;wnload LoTW confirmations from Club Log</source>
         <translation>Club Log에서 LoTW 확인 다운로드(&amp;W)</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>With confirmations downloaded from Club Log, a station in the LoTW users file that you have worked but that has not confirmed through LoTW counts as never worked in every tier above that is on: it is shown in its own color and the auto sequencer calls it as new. Not in a contest.</source>
+        <translation>Club Log에서 받은 확인이 있으면, LoTW 사용자 파일에 있는 국 중 교신했지만 LoTW로 확인하지 않은 국은 위에서 켜진 모든 단계에서 교신하지 않은 것으로 간주됩니다. 고유한 색으로 표시되고 자동 시퀀서가 새 국으로 호출합니다. 콘테스트에서는 적용되지 않습니다.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Count LoTW users worked but not LoTW-confirmed as new</source>
+        <translation>교신했지만 LoTW 확인이 없는 LoTW 사용자를 새로운 것으로 간주</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Worked, not LoTW-confirmed</source>
+        <translation>교신함, LoTW 미확인</translation>
     </message>
 </context>
 <context>

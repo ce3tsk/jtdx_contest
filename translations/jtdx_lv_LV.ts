@@ -628,6 +628,11 @@ Formāts:
         <source>Club Log refused the token. Make a new one in Club Log under Settings &gt; API and paste it here.</source>
         <translation>Club Log noraidīja tokenu. Izveidojiet jaunu Club Log sadaļā Settings &gt; API un ielīmējiet to šeit.</translation>
     </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Club Log is busy; the next try is at %1 UTC.</source>
+        <translation>Club Log ir aizņemts; nākamais mēģinājums %1 UTC.</translation>
+    </message>
 </context>
 <context>
     <name>CountryDat</name>
@@ -11111,6 +11116,21 @@ Lai vienreiz iegūtu visu LoTW ierakstu, vispirms noņemiet tur atzīmi "Only co
         <location filename="../Configuration.ui"/>
         <source>Do&amp;wnload LoTW confirmations from Club Log</source>
         <translation>Le&amp;jupielādēt LoTW apstiprinājumus no Club Log</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>With confirmations downloaded from Club Log, a station in the LoTW users file that you have worked but that has not confirmed through LoTW counts as never worked in every tier above that is on: it is shown in its own color and the auto sequencer calls it as new. Not in a contest.</source>
+        <translation>Ar no Club Log lejupielādētiem apstiprinājumiem stacija no LoTW lietotāju faila, ar kuru ir sakari, bet kura nav apstiprinājusi caur LoTW, katrā augstāk ieslēgtajā līmenī skaitās kā nekad nestrādāta: tā tiek parādīta savā krāsā, un automātiskais sekvencētājs to izsauc kā jaunu. Ne sacensībās.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Count LoTW users worked but not LoTW-confirmed as new</source>
+        <translation>Uzskatīt par jauniem LoTW lietotājus, ar kuriem ir sakari, bet bez LoTW apstiprinājuma</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Worked, not LoTW-confirmed</source>
+        <translation>Strādāts, nav apstiprināts LoTW</translation>
     </message>
 </context>
 <context>

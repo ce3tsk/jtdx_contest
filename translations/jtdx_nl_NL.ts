@@ -628,6 +628,11 @@ Indeling:
         <source>Club Log refused the token. Make a new one in Club Log under Settings &gt; API and paste it here.</source>
         <translation>Club Log heeft het token geweigerd. Maak een nieuw aan in Club Log onder Settings &gt; API en plak het hier.</translation>
     </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Club Log is busy; the next try is at %1 UTC.</source>
+        <translation>Club Log is bezet; de volgende poging is om %1 UTC.</translation>
+    </message>
 </context>
 <context>
     <name>CountryDat</name>
@@ -11111,6 +11116,21 @@ Om één keer het hele LoTW-register op te halen, vinkt u daar eerst "Only confi
         <location filename="../Configuration.ui"/>
         <source>Do&amp;wnload LoTW confirmations from Club Log</source>
         <translation>LoTW-bevestigingen dow&amp;nloaden van Club Log</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>With confirmations downloaded from Club Log, a station in the LoTW users file that you have worked but that has not confirmed through LoTW counts as never worked in every tier above that is on: it is shown in its own color and the auto sequencer calls it as new. Not in a contest.</source>
+        <translation>Met bevestigingen gedownload van Club Log telt een station uit het LoTW-gebruikersbestand dat u hebt gewerkt maar dat niet via LoTW heeft bevestigd, in elk ingeschakeld niveau hierboven als nooit gewerkt: het wordt in een eigen kleur getoond en de automatische sequencer roept het als nieuw. Niet in een contest.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Count LoTW users worked but not LoTW-confirmed as new</source>
+        <translation>Gewerkte maar niet via LoTW bevestigde LoTW-gebruikers als nieuw tellen</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Worked, not LoTW-confirmed</source>
+        <translation>Gewerkt, niet LoTW-bevestigd</translation>
     </message>
 </context>
 <context>

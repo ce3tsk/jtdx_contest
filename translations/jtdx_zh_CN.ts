@@ -628,6 +628,11 @@ Format:
         <source>Club Log refused the token. Make a new one in Club Log under Settings &gt; API and paste it here.</source>
         <translation>Club Log 拒绝了该令牌。请在 Club Log 的 Settings &gt; API 中新建一个并粘贴到这里。</translation>
     </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Club Log is busy; the next try is at %1 UTC.</source>
+        <translation>Club Log 繁忙；下次尝试时间为 %1 UTC。</translation>
+    </message>
 </context>
 <context>
     <name>CountryDat</name>
@@ -11112,6 +11117,21 @@ Club Log 只有它已获取的 LoTW 确认。
         <location filename="../Configuration.ui"/>
         <source>Do&amp;wnload LoTW confirmations from Club Log</source>
         <translation>从 Club Log 下载 LoTW 确认(&amp;W)</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>With confirmations downloaded from Club Log, a station in the LoTW users file that you have worked but that has not confirmed through LoTW counts as never worked in every tier above that is on: it is shown in its own color and the auto sequencer calls it as new. Not in a contest.</source>
+        <translation>下载了 Club Log 的确认后，LoTW 用户文件中已通联但未通过 LoTW 确认的电台，在上面每个已开启的级别中都视为从未通联：以其专用颜色显示，自动序列器会把它当作新的来呼叫。比赛中不适用。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Count LoTW users worked but not LoTW-confirmed as new</source>
+        <translation>将已通联但未经 LoTW 确认的 LoTW 用户视为新</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Worked, not LoTW-confirmed</source>
+        <translation>已通联，未经 LoTW 确认</translation>
     </message>
 </context>
 <context>

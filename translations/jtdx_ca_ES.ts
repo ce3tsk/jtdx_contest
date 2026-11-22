@@ -632,6 +632,11 @@ Format:
         <source>Club Log refused the token. Make a new one in Club Log under Settings &gt; API and paste it here.</source>
         <translation>Club Log ha rebutjat el testimoni. Creeu-ne un de nou a Club Log a Settings &gt; API i enganxeu-lo aquí.</translation>
     </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Club Log is busy; the next try is at %1 UTC.</source>
+        <translation>Club Log està ocupat; el pròxim intent és a les %1 UTC.</translation>
+    </message>
 </context>
 <context>
     <name>CountryDat</name>
@@ -11126,6 +11131,21 @@ Per obtenir una vegada tot el registre de LoTW, desmarqueu-hi abans "Only confir
         <location filename="../Configuration.ui"/>
         <source>Do&amp;wnload LoTW confirmations from Club Log</source>
         <translation>Descarre&amp;ga les confirmacions de LoTW de Club Log</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>With confirmations downloaded from Club Log, a station in the LoTW users file that you have worked but that has not confirmed through LoTW counts as never worked in every tier above that is on: it is shown in its own color and the auto sequencer calls it as new. Not in a contest.</source>
+        <translation>Amb les confirmacions descarregades de Club Log, una estació del fitxer d'usuaris de LoTW que heu treballat però que no ha confirmat per LoTW compta com a mai treballada en cada nivell de dalt que estigui activat: es mostra amb el seu propi color i el seqüenciador automàtic la crida com a nova. No en un concurs.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Count LoTW users worked but not LoTW-confirmed as new</source>
+        <translation>Compta com a nous els usuaris de LoTW treballats però no confirmats per LoTW</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Worked, not LoTW-confirmed</source>
+        <translation>Treballat, no confirmat per LoTW</translation>
     </message>
 </context>
 <context>

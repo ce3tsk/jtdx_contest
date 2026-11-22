@@ -628,6 +628,11 @@ Formátum:
         <source>Club Log refused the token. Make a new one in Club Log under Settings &gt; API and paste it here.</source>
         <translation>A Club Log elutasította a tokent. Hozzon létre egy újat a Club Logban a Settings &gt; API alatt, és illessze be ide.</translation>
     </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Club Log is busy; the next try is at %1 UTC.</source>
+        <translation>A Club Log foglalt; a következő próbálkozás: %1 UTC.</translation>
+    </message>
 </context>
 <context>
     <name>CountryDat</name>
@@ -11109,6 +11114,21 @@ A teljes LoTW nyilvántartás egyszeri lekéréséhez előbb kapcsolja ki ott a(
         <location filename="../Configuration.ui"/>
         <source>Do&amp;wnload LoTW confirmations from Club Log</source>
         <translation>LoTW visszaigazolások letöltése &amp;a Club Logból</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>With confirmations downloaded from Club Log, a station in the LoTW users file that you have worked but that has not confirmed through LoTW counts as never worked in every tier above that is on: it is shown in its own color and the auto sequencer calls it as new. Not in a contest.</source>
+        <translation>A Club Logból letöltött visszaigazolásokkal a LoTW-felhasználók fájljában szereplő állomás, amellyel forgalmazott, de amely nem igazolt vissza a LoTW-n, a fenti bekapcsolt szintek mindegyikében soha nem forgalmazottnak számít: saját színével jelenik meg, és az automatikus sorrendvezérlő újként hívja. Versenyben nem.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Count LoTW users worked but not LoTW-confirmed as new</source>
+        <translation>A forgalmazott, de LoTW-n vissza nem igazolt LoTW-felhasználók újnak számítanak</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Worked, not LoTW-confirmed</source>
+        <translation>Forgalmazva, LoTW-n nem igazolva</translation>
     </message>
 </context>
 <context>

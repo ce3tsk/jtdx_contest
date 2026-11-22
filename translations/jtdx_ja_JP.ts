@@ -628,6 +628,11 @@ Format:
         <source>Club Log refused the token. Make a new one in Club Log under Settings &gt; API and paste it here.</source>
         <translation>Club Log はトークンを拒否しました。Club Log の Settings &gt; API で新しく作成し、ここに貼り付けてください。</translation>
     </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Club Log is busy; the next try is at %1 UTC.</source>
+        <translation>Club Log は混雑しています。次の試行は %1 UTC です。</translation>
+    </message>
 </context>
 <context>
     <name>CountryDat</name>
@@ -11088,6 +11093,21 @@ LoTW の全記録を一度取得するには、先にそこで "Only confirmatio
         <location filename="../Configuration.ui"/>
         <source>Do&amp;wnload LoTW confirmations from Club Log</source>
         <translation>LoTW のコンファームを Club Log からダウンロード</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>With confirmations downloaded from Club Log, a station in the LoTW users file that you have worked but that has not confirmed through LoTW counts as never worked in every tier above that is on: it is shown in its own color and the auto sequencer calls it as new. Not in a contest.</source>
+        <translation>Club Log からダウンロードしたコンファームがあると、LoTW ユーザーファイルにある局のうち、交信済みだが LoTW でコンファームしていない局は、上でオンになっている各段階で未交信として扱われます。専用の色で表示され、自動シーケンサーは新規として呼びます。コンテスト中は対象外です。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Count LoTW users worked but not LoTW-confirmed as new</source>
+        <translation>交信済みで LoTW 未コンファームの LoTW ユーザーを新規として扱う</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Worked, not LoTW-confirmed</source>
+        <translation>交信済み、LoTW 未コンファーム</translation>
     </message>
 </context>
 <context>

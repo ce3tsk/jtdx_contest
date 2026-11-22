@@ -628,6 +628,11 @@ Format:
         <source>Club Log refused the token. Make a new one in Club Log under Settings &gt; API and paste it here.</source>
         <translation>Club Log odrzucił token. Utwórz nowy w Club Log w Settings &gt; API i wklej go tutaj.</translation>
     </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Club Log is busy; the next try is at %1 UTC.</source>
+        <translation>Club Log jest zajęty; następna próba o %1 UTC.</translation>
+    </message>
 </context>
 <context>
     <name>CountryDat</name>
@@ -11114,6 +11119,21 @@ Aby raz pobrać cały rejestr LoTW, najpierw odznacz tam "Only confirmations sin
         <location filename="../Configuration.ui"/>
         <source>Do&amp;wnload LoTW confirmations from Club Log</source>
         <translation>Pob&amp;ierz potwierdzenia LoTW z Club Log</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>With confirmations downloaded from Club Log, a station in the LoTW users file that you have worked but that has not confirmed through LoTW counts as never worked in every tier above that is on: it is shown in its own color and the auto sequencer calls it as new. Not in a contest.</source>
+        <translation>Przy potwierdzeniach pobranych z Club Log stacja z pliku użytkowników LoTW, z którą masz łączność, ale która nie potwierdziła przez LoTW, liczy się jako nigdy nie zrobiona na każdym włączonym poziomie powyżej: jest pokazywana we własnym kolorze, a automatyczny sekwencer woła ją jak nową. Nie w zawodach.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Count LoTW users worked but not LoTW-confirmed as new</source>
+        <translation>Traktuj jako nowych użytkowników LoTW zrobionych, ale niepotwierdzonych przez LoTW</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Worked, not LoTW-confirmed</source>
+        <translation>Zrobione, niepotwierdzone w LoTW</translation>
     </message>
 </context>
 <context>

@@ -628,6 +628,11 @@ Format:
         <source>Club Log refused the token. Make a new one in Club Log under Settings &gt; API and paste it here.</source>
         <translation>Club Log je odbio token. Napravite novi u Club Logu pod Settings &gt; API i zalijepite ga ovdje.</translation>
     </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Club Log is busy; the next try is at %1 UTC.</source>
+        <translation>Club Log je zauzet; sljedeći pokušaj je u %1 UTC.</translation>
+    </message>
 </context>
 <context>
     <name>CountryDat</name>
@@ -11118,6 +11123,21 @@ Da biste jednom dohvatili cijeli LoTW zapis, ondje prvo isključite "Only confir
         <location filename="../Configuration.ui"/>
         <source>Do&amp;wnload LoTW confirmations from Club Log</source>
         <translation>Preu&amp;zmi LoTW potvrde iz Club Loga</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>With confirmations downloaded from Club Log, a station in the LoTW users file that you have worked but that has not confirmed through LoTW counts as never worked in every tier above that is on: it is shown in its own color and the auto sequencer calls it as new. Not in a contest.</source>
+        <translation>S potvrdama preuzetima iz Club Loga, stanica iz datoteke korisnika LoTW-a koju ste odradili, ali koja nije potvrdila preko LoTW-a, računa se kao nikad odrađena u svakoj uključenoj razini iznad: prikazuje se u vlastitoj boji, a automatski sekvencer je poziva kao novu. Ne u natjecanju.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Count LoTW users worked but not LoTW-confirmed as new</source>
+        <translation>Odrađene, ali LoTW-om nepotvrđene korisnike LoTW-a smatraj novima</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Worked, not LoTW-confirmed</source>
+        <translation>Odrađeno, nepotvrđeno LoTW-om</translation>
     </message>
 </context>
 <context>

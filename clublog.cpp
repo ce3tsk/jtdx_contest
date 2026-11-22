@@ -1,6 +1,7 @@
 // CE3TSK 2026-11-21 (TODO.md 3.-280): see clublog.h
 #include "clublog.h"
 
+#include <QCryptographicHash>
 #include <QDir>
 #include <QFile>
 #include <QFileInfo>
@@ -54,7 +55,15 @@ namespace club_log
     // a file made by hand, readable by others: made the user's alone before anything is taken from it
     auto const others = QFileDevice::ReadGroup | QFileDevice::WriteGroup | QFileDevice::ReadOther | QFileDevice::WriteOther;
     if (f.permissions () & others) f.setPermissions (QFileDevice::ReadOwner | QFileDevice::WriteOwner);
-    return QString::fromLatin1 (f.readLine (1024)).trimmed ();
+    auto line = f.readLine (1024);
+    if (line.startsWith ("\xEF\xBB\xBF")) line.remove (0, 3);   // UTF-8 byte-order mark: Notepad writes one
+    auto const token = QString::fromLatin1 (line).trimmed ();
+    return plausible_token (token) ? token : QString {};
+  }
+
+  QString token_id (QString const& token)
+  {
+    return QString::fromLatin1 (QCryptographicHash::hash (token.toUtf8 (), QCryptographicHash::Sha256).toHex ());
   }
 
   QString write_token (QString const& path, QString const& token)
@@ -144,7 +153,7 @@ namespace club_log
       {
       case After::TokenRefused: return {};
       case After::WaitRetryAfter:
-        if (retry_after.isValid ()) return qMax (retry_after, now.addSecs (60));
+        if (retry_after.isValid ()) return qMin (qMax (retry_after, now.addSecs (60)), now.addSecs (qint64 {max_wait_hours} * 3600));
         return now.addSecs (3600);
       case After::Retry: break;
       }

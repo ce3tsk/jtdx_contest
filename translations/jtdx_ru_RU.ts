@@ -629,6 +629,11 @@ Format:
         <source>Club Log refused the token. Make a new one in Club Log under Settings &gt; API and paste it here.</source>
         <translation>Club Log отклонил токен. Создайте новый в Club Log в разделе Settings &gt; API и вставьте его сюда.</translation>
     </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Club Log is busy; the next try is at %1 UTC.</source>
+        <translation>Club Log занят; следующая попытка в %1 UTC.</translation>
+    </message>
 </context>
 <context>
     <name>CountryDat</name>
@@ -11179,6 +11184,21 @@ To fetch the whole LoTW record once, clear "Only confirmations since the last do
         <location filename="../Configuration.ui"/>
         <source>Do&amp;wnload LoTW confirmations from Club Log</source>
         <translation>&amp;Загрузить подтверждения LoTW из Club Log</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>With confirmations downloaded from Club Log, a station in the LoTW users file that you have worked but that has not confirmed through LoTW counts as never worked in every tier above that is on: it is shown in its own color and the auto sequencer calls it as new. Not in a contest.</source>
+        <translation>При подтверждениях, загруженных из Club Log, станция из файла пользователей LoTW, с которой была связь, но которая не подтвердила её через LoTW, считается не сработанной на каждом включённом уровне выше: она показывается своим цветом, и автоматический секвенсор зовёт её как новую. Не в соревнованиях.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Count LoTW users worked but not LoTW-confirmed as new</source>
+        <translation>Считать новыми пользователей LoTW, с которыми была связь, но без подтверждения в LoTW</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Worked, not LoTW-confirmed</source>
+        <translation>Сработано, не подтверждено в LoTW</translation>
     </message>
 </context>
 <context>

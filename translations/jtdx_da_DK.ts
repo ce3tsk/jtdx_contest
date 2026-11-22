@@ -630,6 +630,11 @@ Format:
         <source>Club Log refused the token. Make a new one in Club Log under Settings &gt; API and paste it here.</source>
         <translation>Club Log afviste tokenet. Opret et nyt i Club Log under Settings &gt; API, og indsæt det her.</translation>
     </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Club Log is busy; the next try is at %1 UTC.</source>
+        <translation>Club Log er optaget; næste forsøg er %1 UTC.</translation>
+    </message>
 </context>
 <context>
     <name>CountryDat</name>
@@ -11117,6 +11122,21 @@ For at hente hele LoTW-registret én gang skal du først fjerne markeringen i "O
         <location filename="../Configuration.ui"/>
         <source>Do&amp;wnload LoTW confirmations from Club Log</source>
         <translation>&amp;Hent LoTW-bekræftelser fra Club Log</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>With confirmations downloaded from Club Log, a station in the LoTW users file that you have worked but that has not confirmed through LoTW counts as never worked in every tier above that is on: it is shown in its own color and the auto sequencer calls it as new. Not in a contest.</source>
+        <translation>Med bekræftelser hentet fra Club Log tæller en station i LoTW-brugerfilen, som du har kørt, men som ikke har bekræftet via LoTW, som aldrig kørt på hvert niveau ovenfor, der er slået til: den vises i sin egen farve, og den automatiske sekvenser kalder den som ny. Ikke i en contest.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Count LoTW users worked but not LoTW-confirmed as new</source>
+        <translation>Tæl LoTW-brugere, der er kørt, men ikke LoTW-bekræftet, som nye</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Worked, not LoTW-confirmed</source>
+        <translation>Kørt, ikke LoTW-bekræftet</translation>
     </message>
 </context>
 <context>

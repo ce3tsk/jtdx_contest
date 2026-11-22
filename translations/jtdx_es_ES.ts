@@ -629,6 +629,11 @@ Formato:
         <source>Club Log refused the token. Make a new one in Club Log under Settings &gt; API and paste it here.</source>
         <translation>Club Log rechazó el token. Cree uno nuevo en Club Log en Settings &gt; API y péguelo aquí.</translation>
     </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Club Log is busy; the next try is at %1 UTC.</source>
+        <translation>Club Log está ocupado; el próximo intento es a las %1 UTC.</translation>
+    </message>
 </context>
 <context>
     <name>CountryDat</name>
@@ -11126,6 +11131,21 @@ Para obtener una vez todo el registro de LoTW, desmarque antes allí "Only confi
         <location filename="../Configuration.ui"/>
         <source>Do&amp;wnload LoTW confirmations from Club Log</source>
         <translation>Descar&amp;gar confirmaciones de LoTW de Club Log</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>With confirmations downloaded from Club Log, a station in the LoTW users file that you have worked but that has not confirmed through LoTW counts as never worked in every tier above that is on: it is shown in its own color and the auto sequencer calls it as new. Not in a contest.</source>
+        <translation>Con las confirmaciones descargadas de Club Log, una estación del archivo de usuarios de LoTW que ha trabajado pero que no ha confirmado por LoTW cuenta como nunca trabajada en cada nivel de arriba que esté activado: se muestra con su propio color y el secuenciador automático la llama como nueva. No en un concurso.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Count LoTW users worked but not LoTW-confirmed as new</source>
+        <translation>Contar como nuevos los usuarios de LoTW trabajados pero no confirmados por LoTW</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Worked, not LoTW-confirmed</source>
+        <translation>Trabajado, no confirmado por LoTW</translation>
     </message>
 </context>
 <context>

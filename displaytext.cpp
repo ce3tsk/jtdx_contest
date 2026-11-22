@@ -251,6 +251,8 @@ void DisplayText::setConfiguration(Configuration const * config)
   color_NewPx_ = config->color_NewPx().name();
   color_NewPxBand_ = config->color_NewPxBand().name();
   color_NewCall_ = config->color_NewCall().name();
+  color_Unconfirmed_ = config->color_Unconfirmed ().name ();   /* CE3TSK 2026-11-21 (TODO.md 3.-280) */
+  countUnconfirmed_ = config->countUnconfirmedAsNew ();
   color_NewCallBand_ = config->color_NewCallBand().name();
   hideContinents_ = config->hideContinents();
   countries_ = config->countries();
@@ -810,6 +812,46 @@ int DisplayText::displayDecodedText(DecodedText* decodedText, QString myCall, QS
                 newPrefixOnBand = !pxB4BandMode;
             }
 
+            /* CE3TSK 2026-11-21 (TODO.md 3.-280, QSL_CONFIRMATIONS_PLAN.md D3, D4, D7, D8, D9): a LoTW user worked but not
+               LoTW-confirmed counts as never worked in every tier that is on - the decode ranks as that tier, so the
+               sequencer calls it as new, and shows the colour of its own (the chain's end). Only a station in the LoTW users
+               file (D8), never in a contest, and nothing while no confirmations were downloaded. Each tier is asked of the
+               confirmations as of the log - band and mode as the options count them - and starts at "confirmed": a lookup
+               that cannot judge (no call, no grid, an unknown country) leaves it so, as the log side starts at "worked".
+               workedOnBand and the two above stay the log's: they are about having worked the station (dupes, Hide). */
+            bool unconfirmedAt[dp::NewField + 2] = {};   // by the level a tier's new decode ranks at, without the LoTW step
+            if (countUnconfirmed_ && confirmed_ && !lotw.isEmpty () && !contest_.running) {
+                QString confirmedName {countryName};   // the country the log side found, so each lookup judges the same
+                auto const confirm = [&] (bool worked, bool workedBandMode, bool confirmedAll, bool confirmedBandMode,
+                                          bool& b4, bool& b4BandMode, int level, int bandLevel) {
+                    if (worked && !confirmedAll) {b4 = false; unconfirmedAt[level] = true;}
+                    if (workedBandMode && !confirmedBandMode) {b4BandMode = false; unconfirmedAt[bandLevel] = true;}
+                };
+                auto const tier = [&] (void (LogBook::* match) (QString, QString&, bool&, bool&, double, QString),
+                                       bool on, bool band, bool bandMode, bool& b4, bool& b4BandMode, int level, int bandLevel) {
+                    if (!on || (!b4 && !b4BandMode)) return;
+                    bool c4 = true, c4BandMode = true;
+                    (confirmed_->*match) (checkCall, confirmedName, c4, c4BandMode, band ? dialFreq : 0, bandMode ? checkMode : QString {});
+                    confirm (b4, b4BandMode, c4, c4BandMode, b4, b4BandMode, level, bandLevel);
+                };
+                tier (&LogBook::matchCQZ, displayNewCQZ_, displayNewCQZBand_, displayNewCQZBandMode_, cqzB4, cqzB4BandMode, dp::NewCQZ, dp::NewCQZBand);
+                tier (&LogBook::matchITUZ, displayNewITUZ_, displayNewITUZBand_, displayNewITUZBandMode_, ituzB4, ituzB4BandMode, dp::NewITUZ, dp::NewITUZBand);
+                tier (&LogBook::matchDXCC, displayNewDXCC_, displayNewDXCCBand_, displayNewDXCCBandMode_, countryB4, countryB4BandMode, dp::NewDXCC, dp::NewDXCCBand);
+                tier (&LogBook::matchPX, displayNewPx_, displayNewPxBand_, displayNewPxBandMode_, pxB4, pxB4BandMode, dp::NewPx, dp::NewPxBand);
+                tier (&LogBook::matchCall, displayNewCall_, displayNewCallBand_, displayNewCallBandMode_, callB4, callB4BandMode, dp::NewCall, dp::NewCallBand);
+                if (displayNewGrid_ && !grid.trimmed ().isEmpty () && (gridB4 || gridB4BandMode)) {
+                    bool c4 = true, c4BandMode = true;
+                    confirmed_->matchGrid (grid.trimmed (), c4, c4BandMode, (displayNewGridBand_ ? dialFreq : 0), (displayNewGridBandMode_ ? checkMode : QString {}));
+                    confirm (gridB4, gridB4BandMode, c4, c4BandMode, gridB4, gridB4BandMode, dp::NewGrid, dp::NewGridBand);
+                }
+                if (displayNewState_ && stateJudged && (stateB4 || stateB4Band)) {
+                    bool c4 = true, c4Band = true;
+                    confirmed_->matchState (countryName.section (',', 1, 1).trimmed (), checkCall, stateGrid (), c4, c4Band,
+                                            displayNewStateBand_ ? dialFreq : 0, displayNewStateBandMode_ ? checkMode : QString {});
+                    confirm (stateB4, stateB4Band, c4, c4Band, stateB4, stateB4Band, dp::NewState, dp::NewStateBand);
+                }
+            }
+
             if (anyTier_) {
 //Worked
                 /* CE3TSK 2026-10-03 (review items 7 and 6, the operator): a decode is "worked" only when a tier that is on
@@ -1158,6 +1200,12 @@ int DisplayText::displayDecodedText(DecodedText* decodedText, QString myCall, QS
                         new_marker = true;
                     }
                 } 
+                /* CE3TSK 2026-11-21 (TODO.md 3.-280, D3): the tier that fired is new only because the LoTW user worked in it
+                   has not LoTW-confirmed - the colour of its own, the tier's rank kept (a LoTW user's: the level + 1) */
+                if (priority > 0 && priority - 1 < int (sizeof unconfirmedAt) && unconfirmedAt[priority - 1]) {
+                    if (new_marker) servis = servis.left (1) + color_Unconfirmed_;
+                    else bgColor = color_Unconfirmed_;
+                }
                 if (judged && displayWorkedDontShow_ && std_type != 2 && ((!forceBold && ((displayPotential_ && std_type == 3) || std_type != 3)) || (!new_marker && otherMessagesMarker_ && std_type == 3))) {
                     show_line = false;
                 }

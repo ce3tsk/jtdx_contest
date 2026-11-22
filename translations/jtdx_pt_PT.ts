@@ -618,6 +618,11 @@ Format:
         <source>Club Log refused the token. Make a new one in Club Log under Settings &gt; API and paste it here.</source>
         <translation>O Club Log recusou o token. Crie um novo no Club Log em Settings &gt; API e cole-o aqui.</translation>
     </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Club Log is busy; the next try is at %1 UTC.</source>
+        <translation>O Club Log está ocupado; a próxima tentativa é às %1 UTC.</translation>
+    </message>
 </context>
 <context>
     <name>CountryDat</name>
@@ -11101,6 +11106,21 @@ Para obter uma vez todo o registo do LoTW, desmarque aí antes "Only confirmatio
         <location filename="../Configuration.ui"/>
         <source>Do&amp;wnload LoTW confirmations from Club Log</source>
         <translation>Tra&amp;nsferir confirmações do LoTW do Club Log</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>With confirmations downloaded from Club Log, a station in the LoTW users file that you have worked but that has not confirmed through LoTW counts as never worked in every tier above that is on: it is shown in its own color and the auto sequencer calls it as new. Not in a contest.</source>
+        <translation>Com as confirmações transferidas do Club Log, uma estação do ficheiro de utilizadores do LoTW que trabalhou, mas que não confirmou pelo LoTW, conta como nunca trabalhada em cada nível acima que esteja ligado: é mostrada na sua própria cor e o sequenciador automático chama-a como nova. Não em concursos.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Count LoTW users worked but not LoTW-confirmed as new</source>
+        <translation>Contar como novos os utilizadores do LoTW trabalhados mas não confirmados pelo LoTW</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Worked, not LoTW-confirmed</source>
+        <translation>Trabalhado, não confirmado no LoTW</translation>
     </message>
 </context>
 <context>

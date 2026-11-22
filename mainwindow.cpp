@@ -109,6 +109,7 @@
 #include "swrguard.h"   // CE3TSK 2026-10-23: Halt Tx when SWR > 2.5
 #include "reservedlabel.h"   // CE3TSK 2026-10-26: the Pwr column keeps its size (3.-211)
 #include "call3file.h"   // CE3TSK 2026-10-23: CALL3.TXT's Lookup line and the old bundled list (3.-200)
+#include "clublog.h"   // CE3TSK 2026-11-21: the confirmations Club Log has (3.-280)
 #include <QPainter>
 #include <QPainterPath>
 #include <QHBoxLayout>
@@ -1196,6 +1197,12 @@ MainWindow::MainWindow(bool multiple, QSettings * settings, QSharedMemory *shdme
   connect (&m_config, &Configuration::udp_server_changed, m_messageClient, &MessageClient::set_server);
   connect (&m_config, &Configuration::udp_server_port_changed, m_messageClient, &MessageClient::set_server_port);
   connect (&m_config, &Configuration::data_files_updated, this, &MainWindow::dataFilesUpdated);   // CE3TSK
+  /* CE3TSK 2026-11-21 (TODO.md 3.-280): new confirmations downloaded - read at once when no period is to be protected, else at
+     the period's end, as a changed log is */
+  connect (&m_config, &Configuration::confirmations_updated, this, [this] {
+      m_confirmedInitNeeded = true;
+      if (!m_monitoring && !m_transmitting) initLogIfNeeded ();
+    });
 
 
   // set up message text validators
@@ -9569,11 +9576,13 @@ void MainWindow::initLogIfNeeded ()
     printf("%s(%0.1f) Timing Log_init_needed\n",m_jtdxtime->currentDateTimeUtc2().toString("hh:mm:ss.zzz").toStdString().c_str(),m_jtdxtime->GetOffset());
     if(m_config.write_decoded_debug()) writeToALLTXT(m_dataFilesChanged ? "Log initialization is started: cty.dat or the LoTW user list was downloaded" : "Log initialization is started: wsjtx_log.adi file was changed");
     m_logBook.init(m_config.callNotif() ? m_config.my_callsign() : "",m_config.gridNotif() ? m_config.my_grid() : "",m_config.timeFrom(),"wsjtx_log.adi",nullptr,m_config.countryNameTranslated());
+    initConfirmedBook ();   /* CE3TSK 2026-11-21: on the country data just read */
     refreshContestLog(true);   /* CE3TSK: country data has just been read */
     countQSOs ();
     m_logInitNeeded=false;
     m_dataFilesChanged=false;
   }
+  if (m_confirmedInitNeeded) initConfirmedBook ();   // CE3TSK 2026-11-21 (TODO.md 3.-280): confirmations downloaded
 }
 
 void MainWindow::set_language (QString const& lang)
@@ -10263,6 +10272,27 @@ void MainWindow::haltTxTuneTimer()
    holds the GUI for about 2.7 s, so while monitoring or transmitting (a transmission turns
    monitoring off) it waits in initLogIfNeeded(), the path a changed wsjtx_log.adi already takes;
    otherwise there is no period to protect. */
+/* CE3TSK 2026-11-21 (TODO.md 3.-280, QSL_CONFIRMATIONS_PLAN.md steps 2 and 3): the confirmations downloaded from Club Log,
+   read as the log is - My Call's alone when "Use current callsign" is on (D5), from the same date - and with m_logBook's
+   country data, so a confirmation and a QSO are judged by one cty.dat. A Club Log export carries no MY_GRIDSQUARE: never
+   filtered by grid. The windows get it only while it holds a confirmation: none means no change at all. */
+void MainWindow::initConfirmedBook ()
+{
+  m_confirmedInitNeeded = false;
+  if (!m_logBook.countryData ()->loaded ())   // the log not read yet: its first reading calls this again
+    {
+      m_confirmedInitNeeded = true;
+      return;
+    }
+  m_confirmedBook.init (m_config.callNotif () ? m_config.my_callsign () : "", "", m_config.timeFrom (),
+                        club_log::file_name, m_logBook.countryData ());
+  int const confirmed {m_confirmedBook.get_qso_count ()};
+  LogBook * const book {confirmed > 0 ? &m_confirmedBook : nullptr};
+  ui->decodedTextBrowser->setConfirmations (book);
+  ui->decodedTextBrowser2->setConfirmations (book);
+  if (m_config.write_decoded_debug ()) writeToALLTXT (QString {"Confirmations: %1 QSOs from %2"}.arg (confirmed).arg (club_log::file_name));
+}
+
 void MainWindow::dataFilesUpdated ()
 {
   m_logInitNeeded = true;
@@ -12685,6 +12715,7 @@ void MainWindow::enable_DXCC_entity ()
       m_qsoHistory.init(); if(m_config.write_decoded_debug()) writeToALLTXT("QSO history initialized by enable_DXCC_entity");
       m_logBook.init(m_config.callNotif() ? m_config.my_callsign() : "",m_config.gridNotif() ? m_config.my_grid() : "",m_config.timeFrom(),"wsjtx_log.adi",nullptr,m_config.countryNameTranslated());
       m_logBookLoaded = true;
+      initConfirmedBook ();   /* CE3TSK 2026-11-21: on the country data just read, with the call and date just set */
       refreshContestLog(true);   /* CE3TSK: country data has just been read */
       m_callsign = m_config.my_callsign();
       m_grid = m_config.my_grid();

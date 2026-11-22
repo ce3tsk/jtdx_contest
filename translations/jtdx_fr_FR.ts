@@ -628,6 +628,11 @@ Format:
         <source>Club Log refused the token. Make a new one in Club Log under Settings &gt; API and paste it here.</source>
         <translation>Club Log a refusé le jeton. Créez-en un nouveau dans Club Log sous Settings &gt; API et collez-le ici.</translation>
     </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Club Log is busy; the next try is at %1 UTC.</source>
+        <translation>Club Log est occupé ; prochain essai à %1 UTC.</translation>
+    </message>
 </context>
 <context>
     <name>CountryDat</name>
@@ -11121,6 +11126,21 @@ Pour récupérer une fois tout l'enregistrement LoTW, décochez d'abord "Only co
         <location filename="../Configuration.ui"/>
         <source>Do&amp;wnload LoTW confirmations from Club Log</source>
         <translation>Télé&amp;charger les confirmations LoTW depuis Club Log</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>With confirmations downloaded from Club Log, a station in the LoTW users file that you have worked but that has not confirmed through LoTW counts as never worked in every tier above that is on: it is shown in its own color and the auto sequencer calls it as new. Not in a contest.</source>
+        <translation>Avec les confirmations téléchargées depuis Club Log, une station du fichier des utilisateurs LoTW que vous avez contactée mais qui n'a pas confirmé par LoTW compte comme jamais contactée dans chaque niveau ci-dessus qui est activé : elle s'affiche dans sa propre couleur et le séquenceur automatique l'appelle comme nouvelle. Pas en concours.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Count LoTW users worked but not LoTW-confirmed as new</source>
+        <translation>Compter comme nouveaux les utilisateurs LoTW contactés mais non confirmés par LoTW</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Worked, not LoTW-confirmed</source>
+        <translation>Contacté, non confirmé LoTW</translation>
     </message>
 </context>
 <context>

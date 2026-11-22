@@ -628,6 +628,11 @@ Vorming:
         <source>Club Log refused the token. Make a new one in Club Log under Settings &gt; API and paste it here.</source>
         <translation>Club Log lükkas tokeni tagasi. Looge Club Logis jaotises Settings &gt; API uus ja kleepige see siia.</translation>
     </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Club Log is busy; the next try is at %1 UTC.</source>
+        <translation>Club Log on hõivatud; järgmine katse on %1 UTC.</translation>
+    </message>
 </context>
 <context>
     <name>CountryDat</name>
@@ -11108,6 +11113,21 @@ Kogu LoTW kirje ühekordseks hankimiseks eemaldage seal enne märge valikult "On
         <location filename="../Configuration.ui"/>
         <source>Do&amp;wnload LoTW confirmations from Club Log</source>
         <translation>Laad&amp;i LoTW kinnitused Club Logist alla</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>With confirmations downloaded from Club Log, a station in the LoTW users file that you have worked but that has not confirmed through LoTW counts as never worked in every tier above that is on: it is shown in its own color and the auto sequencer calls it as new. Not in a contest.</source>
+        <translation>Club Logist alla laaditud kinnitustega loetakse LoTW kasutajate failis olev jaam, kellega olete töötanud, kuid kes pole LoTW kaudu kinnitanud, igas ülaltoodud sisse lülitatud tasemes kunagi töötamata jaamaks: see kuvatakse oma värviga ja automaatne järjestaja kutsub seda kui uut. Mitte võistlusel.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Count LoTW users worked but not LoTW-confirmed as new</source>
+        <translation>Loe töötatud, kuid LoTW-s kinnitamata LoTW kasutajad uuteks</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Worked, not LoTW-confirmed</source>
+        <translation>Töötatud, LoTW-s kinnitamata</translation>
     </message>
 </context>
 <context>

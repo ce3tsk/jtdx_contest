@@ -25,6 +25,10 @@ public:
     void setDistanceField (bool on) { distanceField_ = on; }
     // CE3TSK 2026-10-23: Misc > Hide clear phantom messages - such a line is not drawn, all else as shown (Verdict::clearPhantom ())
     void setHideClearPhantoms (bool on) { hideClearPhantoms_ = on; }
+    /* CE3TSK 2026-11-21 (TODO.md 3.-280, QSL_CONFIRMATIONS_PLAN.md steps 2 and 3): the confirmations downloaded (Club Log's
+       LoTW QSLs, clublog_qsl.adi), judged by the log's own cty.dat - nullptr while there are none. A LoTW user worked but
+       not LoTW-confirmed then counts as never worked, in the colour of its own (Configuration::countUnconfirmedAsNew) */
+    void setConfirmations (LogBook * confirmed) { confirmed_ = confirmed; }
     /* CE3TSK 2026-09-30: where a window line's marker stands - right after the message, where
        displayDecodedText cuts the decoder's line: 49 for FT8, FT4 and FT2 (seconds in the time), 40 for
        JT65 and JT9. The country follows it. */
@@ -164,6 +168,9 @@ private:
     QString color_NewPxBand_;
     QString color_NewCall_;
     QString color_NewCallBand_;
+    QString color_Unconfirmed_;            // CE3TSK 2026-11-21 (3.-280): a LoTW user worked but not LoTW-confirmed
+    bool countUnconfirmed_ = false;        //   ... counted as never worked (Settings > Notifications, on by default)
+    LogBook * confirmed_ = nullptr;        //   ... by these confirmations (setConfirmations)
     QString hideContinents_;
     QString countries_;
     QString callsigns_;

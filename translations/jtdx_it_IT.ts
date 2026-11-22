@@ -628,6 +628,11 @@ Formato:
         <source>Club Log refused the token. Make a new one in Club Log under Settings &gt; API and paste it here.</source>
         <translation>Club Log ha rifiutato il token. Crearne uno nuovo in Club Log in Settings &gt; API e incollarlo qui.</translation>
     </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Club Log is busy; the next try is at %1 UTC.</source>
+        <translation>Club Log è occupato; il prossimo tentativo è alle %1 UTC.</translation>
+    </message>
 </context>
 <context>
     <name>CountryDat</name>
@@ -11114,6 +11119,21 @@ Per recuperare una volta l'intero registro LoTW, deselezionare prima lì "Only c
         <location filename="../Configuration.ui"/>
         <source>Do&amp;wnload LoTW confirmations from Club Log</source>
         <translation>S&amp;carica le conferme LoTW da Club Log</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>With confirmations downloaded from Club Log, a station in the LoTW users file that you have worked but that has not confirmed through LoTW counts as never worked in every tier above that is on: it is shown in its own color and the auto sequencer calls it as new. Not in a contest.</source>
+        <translation>Con le conferme scaricate da Club Log, una stazione del file degli utenti LoTW collegata ma che non ha confermato via LoTW conta come mai collegata in ogni livello qui sopra attivo: è mostrata nel suo colore e il sequencer automatico la chiama come nuova. Non in un contest.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Count LoTW users worked but not LoTW-confirmed as new</source>
+        <translation>Considera nuovi gli utenti LoTW collegati ma non confermati via LoTW</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Worked, not LoTW-confirmed</source>
+        <translation>Collegato, non confermato LoTW</translation>
     </message>
 </context>
 <context>

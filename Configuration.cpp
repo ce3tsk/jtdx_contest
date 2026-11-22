@@ -270,6 +270,9 @@ namespace
     {"colorNewPxBand", "#50e090", "#0a6231"},
     {"colorNewCall", "#afaf34", "#595900"},
     {"colorNewCallBand", "#e0e070", "#58581a"},
+    /* CE3TSK 2026-11-21 (TODO.md 3.-280, D3): a LoTW user worked but not LoTW-confirmed - violet, a hue no other row uses;
+       worst text pair about 4.9:1 light (#3e3e3e... #850000), 4.2:1 dark */
+    {"colorUnconfirmed", "#c8a0ff", "#5a2d91"},
   };
 
   QString recommended_color (QString const& key)
@@ -661,7 +664,11 @@ private:
   /* CE3TSK 2026-11-21 (TODO.md 3.-280): Club Log's confirmed QSOs (clublog.h) - at the start and every
      club_log::refresh_hours when a token is there, or on the button */
   Q_SLOT void on_clublog_download_push_button_clicked (bool);
-  void start_clublog_download (QString const& token, bool manual);
+  void start_clublog_download (QString const& token, QString const& call, bool manual);
+  bool clublog_token_acceptable ();   // OK's check of the token box (review 2026-11-21: not validate ()'s)
+  // the tokens Club Log refused, each by club_log::token_id; inside SettingsGroup "Configuration" (review 2026-11-21)
+  bool clublog_refused (QString const& token) const;
+  void clublog_set_refused (QString const& token, bool refused);
   Q_SLOT void clublog_check_due ();   // a slot: a test asks it by name, as the timers do
   void clublog_finished (bool ok, FileDownload::Failure failure, QString const& detail);
   void update_clublog_label ();
@@ -709,6 +716,8 @@ private:
   Q_SLOT void on_pbNewDXCCBand_clicked();
   Q_SLOT void on_pbNewStateBand_clicked();
   Q_SLOT void on_pbNewCall_clicked();
+  Q_SLOT void on_count_unconfirmed_check_box_toggled (bool) {refresh_samples ();}   // CE3TSK 2026-11-21
+  Q_SLOT void on_pbUnconfirmed_clicked();
   Q_SLOT void on_pbNewCallBand_clicked();
   Q_SLOT void on_pbNewPx_clicked();
   Q_SLOT void on_pbNewPxBand_clicked();
@@ -769,8 +778,9 @@ private:
   bool clublog_manual_ {false};     // the button started it: a failure is shown in a box as well
   QDateTime clublog_next_try_;      // after a failure, club_log::next_try (); invalid: whenever one is due
   QString clublog_download_token_;  // the token the running download asks with
-  QString clublog_downloaded_with_; // the token of this run's last good download
-  bool clublog_new_token_ {false};  // a token saved that no download has used yet: the next look asks at once
+  QString clublog_download_call_;   // and the call whose log it asks for
+  QString clublog_downloaded_with_; // token and call of this run's last good download (clublog_key)
+  bool clublog_ask_now_ {false};    // a token or call saved that no download has used yet: the next look asks at once
   QString clublog_error_;           // the last attempt's failure, worded, for the status line
   club_log::Export clublog_export_; // the download being written: its validator reads it, its transform writes it
   QDir temp_dir_;
@@ -890,7 +900,9 @@ private:
   QColor color_NewPxBand_;
   QColor next_color_NewPxBand_;
   QColor color_NewCall_;
+  QColor color_Unconfirmed_;
   QColor next_color_NewCall_;
+  QColor next_color_Unconfirmed_;
   QColor color_NewCallBand_;
   QColor next_color_NewCallBand_;
   QColor color_StandardCall_;
@@ -928,7 +940,9 @@ private:
   QColor color_NewPxBand_dark_;
   QColor next_color_NewPxBand_dark_;
   QColor color_NewCall_dark_;
+  QColor color_Unconfirmed_dark_;
   QColor next_color_NewCall_dark_;
+  QColor next_color_Unconfirmed_dark_;
   QColor color_NewCallBand_dark_;
   QColor next_color_NewCallBand_dark_;
   QColor color_StandardCall_dark_;
@@ -1017,6 +1031,7 @@ private:
   bool countryPrefix_;
   bool countryNameTranslated_;   // CE3TSK
   bool showDistance_;            // CE3TSK 2026-10-20: distance and azimuth after the country (distancefield.h)
+  bool countUnconfirmed_;        // CE3TSK 2026-11-21 (TODO.md 3.-280, D9): a LoTW user worked, not LoTW-confirmed, as new
   bool showAzimuth_;
   bool usStates_;   /* CE3TSK 2026-10-02 */
   bool usStatesPending_;   /* CE3TSK: Show US states as last clicked in the open dialog - kept while the box is greyed */
@@ -1406,7 +1421,9 @@ Configuration::impl::ColorSlot const Configuration::impl::color_slots[] = {
   {"colorNewPxBand",       &impl::color_NewPxBand_,       &impl::next_color_NewPxBand_},
   {"colorNewPxBand_dark",  &impl::color_NewPxBand_dark_,  &impl::next_color_NewPxBand_dark_},
   {"colorNewCall",         &impl::color_NewCall_,         &impl::next_color_NewCall_},
+  {"colorUnconfirmed",         &impl::color_Unconfirmed_,         &impl::next_color_Unconfirmed_},
   {"colorNewCall_dark",    &impl::color_NewCall_dark_,    &impl::next_color_NewCall_dark_},
+  {"colorUnconfirmed_dark",    &impl::color_Unconfirmed_dark_,    &impl::next_color_Unconfirmed_dark_},
   {"colorNewCallBand",     &impl::color_NewCallBand_,     &impl::next_color_NewCallBand_},
   {"colorNewCallBand_dark", &impl::color_NewCallBand_dark_, &impl::next_color_NewCallBand_dark_},
 };
@@ -1483,6 +1500,7 @@ QColor Configuration::color_NewStateBand () const {return m_->useDarkStyle_? m_-
 QColor Configuration::color_NewGrid () const {return m_->useDarkStyle_? m_->color_NewGrid_dark_ : m_->color_NewGrid_;}
 QColor Configuration::color_NewGridBand () const {return m_->useDarkStyle_? m_->color_NewGridBand_dark_ : m_->color_NewGridBand_;}
 QColor Configuration::color_NewCall () const {return m_->useDarkStyle_? m_->color_NewCall_dark_ : m_->color_NewCall_;}
+QColor Configuration::color_Unconfirmed () const {return m_->useDarkStyle_? m_->color_Unconfirmed_dark_ : m_->color_Unconfirmed_;}
 QColor Configuration::color_NewCallBand () const {return m_->useDarkStyle_? m_->color_NewCallBand_dark_ : m_->color_NewCallBand_;}
 QColor Configuration::color_NewPx () const {return m_->useDarkStyle_? m_->color_NewPx_dark_ : m_->color_NewPx_;}
 QColor Configuration::color_NewPxBand () const {return m_->useDarkStyle_? m_->color_NewPxBand_dark_ : m_->color_NewPxBand_;}
@@ -1575,6 +1593,7 @@ bool Configuration::countryName () const {return m_->countryName_;}
 bool Configuration::countryPrefix () const {return m_->countryPrefix_;}
 bool Configuration::countryNameTranslated () const {return m_->countryNameTranslated_;}
 bool Configuration::showDistance () const {return m_->showDistance_;}
+bool Configuration::countUnconfirmedAsNew () const {return m_->countUnconfirmed_;}
 bool Configuration::showAzimuth () const {return m_->showAzimuth_;}
 bool Configuration::usStates () const {return m_->usStates_;}
 bool Configuration::callNotif () const {return m_->callNotif_;}
@@ -2180,7 +2199,8 @@ Configuration::impl::impl (Configuration * self, QNetworkAccessManager * network
   ui_->rig_combo_box->setMinimumContentsLength (16);
   wrap_tooltips (this);   /* CE3TSK: Qt does not word-wrap a plain tooltip, see tooltip_wrap.hpp */
   /* CE3TSK 2026-11-12 (TODO.md 3.-246): Notifications - a swatch whose two colours would be hard to read on a decoded line
-     gets a dashed frame and a tooltip with the ratio (swatchcontrast.h): the 42 of the tiers and the 7 others. The
+     gets a dashed frame and a tooltip with the ratio (swatchcontrast.h): the 42 of the tiers, the 7 others and (2026-11-21) the 3 of
+     a LoTW user worked but not LoTW-confirmed. The
      text of a swatch with no text colour of its own (Tx messages) is the transmitted line's, convert_dark ("#000000"):
      black, in the dark style #e6dcd2. The ratio is rounded DOWN to the tenth - a pair at 2.97:1 is marked, and "3.0:1"
      would contradict "less than 3:1" - and written with a point in every language, as the "3:1" beside it (QLocale ()
@@ -2196,7 +2216,7 @@ Configuration::impl::impl (Configuration * self, QNetworkAccessManager * network
     for (auto const& t : tiers)
       for (auto const s : t.samples) (ui_.data ()->*s)->installEventFilter (marker);
     for (QLabel * const l : {ui_->labCQ, ui_->labMyCall, ui_->labStandardCall, ui_->labTx, ui_->labWorkedCall, ui_->labWorkedMcCall,
-                             ui_->labWorkedScCall})
+                             ui_->labWorkedScCall, ui_->labUnconfirmed, ui_->labMcUnconfirmed, ui_->labScUnconfirmed})
       l->installEventFilter (marker);
   }
   call_tooltip_ = ui_->callsign_line_edit->toolTip ();   // CE3TSK 2026-10-04: refresh_own_marks adds to them
@@ -2692,6 +2712,7 @@ Radio::convert_dark("#fafbfe",useDarkStyle_),Radio::convert_dark("#dcdef1",useDa
     ui_->labNewPx->setStyleSheet(QString("font-weight: bold;background: %2;color: %1").arg(useDarkStyle_? color_NewPx_dark_.name() : color_NewPx_.name(),useDarkStyle_? color_CQ_dark_.name() : color_CQ_.name()));
     ui_->labNewPxBand->setStyleSheet(QString("font-weight: bold;background: %2;color: %1").arg(useDarkStyle_? color_NewPxBand_dark_.name() : color_NewPxBand_.name(),useDarkStyle_? color_CQ_dark_.name() : color_CQ_.name()));
     ui_->labNewCall->setStyleSheet(QString("font-weight: bold;background: %2;color: %1").arg(useDarkStyle_? color_NewCall_dark_.name() : color_NewCall_.name(),useDarkStyle_? color_CQ_dark_.name() : color_CQ_.name()));
+    ui_->labUnconfirmed->setStyleSheet(QString("font-weight: bold;background: %2;color: %1").arg(useDarkStyle_? color_Unconfirmed_dark_.name() : color_Unconfirmed_.name(),useDarkStyle_? color_CQ_dark_.name() : color_CQ_.name()));
     ui_->labNewCallBand->setStyleSheet(QString("font-weight: bold;background: %2;color: %1").arg(useDarkStyle_? color_NewCallBand_dark_.name() : color_NewCallBand_.name(),useDarkStyle_? color_CQ_dark_.name() : color_CQ_.name()));
     if (workedColor_) {
       if (workedStriked_) {
@@ -2733,6 +2754,7 @@ Radio::convert_dark("#fafbfe",useDarkStyle_),Radio::convert_dark("#dcdef1",useDa
     ui_->labNewMcPx->setStyleSheet(QString("font-weight: bold;background: %2;color: %1").arg(useDarkStyle_? color_NewPx_dark_.name() : color_NewPx_.name(),useDarkStyle_? color_MyCall_dark_.name() : color_MyCall_.name()));
     ui_->labNewMcPxBand->setStyleSheet(QString("font-weight: bold;background: %2;color: %1").arg(useDarkStyle_? color_NewPxBand_dark_.name() : color_NewPxBand_.name(),useDarkStyle_? color_MyCall_dark_.name() : color_MyCall_.name()));
     ui_->labNewMcCall->setStyleSheet(QString("font-weight: bold;background: %2;color: %1").arg(useDarkStyle_? color_NewCall_dark_.name() : color_NewCall_.name(),useDarkStyle_? color_MyCall_dark_.name() : color_MyCall_.name()));
+    ui_->labMcUnconfirmed->setStyleSheet(QString("font-weight: bold;background: %2;color: %1").arg(useDarkStyle_? color_Unconfirmed_dark_.name() : color_Unconfirmed_.name(),useDarkStyle_? color_MyCall_dark_.name() : color_MyCall_.name()));
     ui_->labNewMcCallBand->setStyleSheet(QString("font-weight: bold;background: %2;color: %1").arg(useDarkStyle_? color_NewCallBand_dark_.name() : color_NewCallBand_.name(),useDarkStyle_? color_MyCall_dark_.name() : color_MyCall_.name()));
     ui_->labNewScCQZ->setStyleSheet(QString("font-weight: bold;background: %2;color: %1").arg(useDarkStyle_? color_NewCQZ_dark_.name() : color_NewCQZ_.name(),useDarkStyle_? color_StandardCall_dark_.name() : color_StandardCall_.name()));
     ui_->labNewScCQZBand->setStyleSheet(QString("font-weight: bold;background: %2;color: %1").arg(useDarkStyle_? color_NewCQZBand_dark_.name() : color_NewCQZBand_.name(),useDarkStyle_? color_StandardCall_dark_.name() : color_StandardCall_.name()));
@@ -2747,6 +2769,7 @@ Radio::convert_dark("#fafbfe",useDarkStyle_),Radio::convert_dark("#dcdef1",useDa
     ui_->labNewScPx->setStyleSheet(QString("font-weight: bold;background: %2;color: %1").arg(useDarkStyle_? color_NewPx_dark_.name() : color_NewPx_.name(),useDarkStyle_? color_StandardCall_dark_.name() : color_StandardCall_.name()));
     ui_->labNewScPxBand->setStyleSheet(QString("font-weight: bold;background: %2;color: %1").arg(useDarkStyle_? color_NewPxBand_dark_.name() : color_NewPxBand_.name(),useDarkStyle_? color_StandardCall_dark_.name() : color_StandardCall_.name()));
     ui_->labNewScCall->setStyleSheet(QString("font-weight: bold;background: %2;color: %1").arg(useDarkStyle_? color_NewCall_dark_.name() : color_NewCall_.name(),useDarkStyle_? color_StandardCall_dark_.name() : color_StandardCall_.name()));
+    ui_->labScUnconfirmed->setStyleSheet(QString("font-weight: bold;background: %2;color: %1").arg(useDarkStyle_? color_Unconfirmed_dark_.name() : color_Unconfirmed_.name(),useDarkStyle_? color_StandardCall_dark_.name() : color_StandardCall_.name()));
     ui_->labNewScCallBand->setStyleSheet(QString("font-weight: bold;background: %2;color: %1").arg(useDarkStyle_? color_NewCallBand_dark_.name() : color_NewCallBand_.name(),useDarkStyle_? color_StandardCall_dark_.name() : color_StandardCall_.name()));
   } else {
     ui_->labCQ->setStyleSheet(QString("background: %2;color: %1").arg(useDarkStyle_? color_CQ_dark_.name() : color_CQ_.name(),Radio::convert_dark("#ffffff",useDarkStyle_)));
@@ -2765,6 +2788,7 @@ Radio::convert_dark("#fafbfe",useDarkStyle_),Radio::convert_dark("#dcdef1",useDa
     ui_->labNewPx->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? color_NewPx_dark_.name() : color_NewPx_.name(),useDarkStyle_? color_CQ_dark_.name() : color_CQ_.name()));
     ui_->labNewPxBand->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? color_NewPxBand_dark_.name() : color_NewPxBand_.name(),useDarkStyle_? color_CQ_dark_.name() : color_CQ_.name()));
     ui_->labNewCall->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? color_NewCall_dark_.name() : color_NewCall_.name(),useDarkStyle_? color_CQ_dark_.name() : color_CQ_.name()));
+    ui_->labUnconfirmed->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? color_Unconfirmed_dark_.name() : color_Unconfirmed_.name(),useDarkStyle_? color_CQ_dark_.name() : color_CQ_.name()));
     ui_->labNewCallBand->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? color_NewCallBand_dark_.name() : color_NewCallBand_.name(),useDarkStyle_? color_CQ_dark_.name() : color_CQ_.name()));
     if (workedColor_) {
       if (workedStriked_) {
@@ -2806,6 +2830,7 @@ Radio::convert_dark("#fafbfe",useDarkStyle_),Radio::convert_dark("#dcdef1",useDa
     ui_->labNewMcPx->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? color_NewPx_dark_.name() : color_NewPx_.name(),useDarkStyle_? color_MyCall_dark_.name() : color_MyCall_.name()));
     ui_->labNewMcPxBand->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? color_NewPxBand_dark_.name() : color_NewPxBand_.name(),useDarkStyle_? color_MyCall_dark_.name() : color_MyCall_.name()));
     ui_->labNewMcCall->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? color_NewCall_dark_.name() : color_NewCall_.name(),useDarkStyle_? color_MyCall_dark_.name() : color_MyCall_.name()));
+    ui_->labMcUnconfirmed->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? color_Unconfirmed_dark_.name() : color_Unconfirmed_.name(),useDarkStyle_? color_MyCall_dark_.name() : color_MyCall_.name()));
     ui_->labNewMcCallBand->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? color_NewCallBand_dark_.name() : color_NewCallBand_.name(),useDarkStyle_? color_MyCall_dark_.name() : color_MyCall_.name()));
     ui_->labNewScCQZ->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? color_NewCQZ_dark_.name() : color_NewCQZ_.name(),useDarkStyle_? color_StandardCall_dark_.name() : color_StandardCall_.name()));
     ui_->labNewScCQZBand->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? color_NewCQZBand_dark_.name() : color_NewCQZBand_.name(),useDarkStyle_? color_StandardCall_dark_.name() : color_StandardCall_.name()));
@@ -2820,6 +2845,7 @@ Radio::convert_dark("#fafbfe",useDarkStyle_),Radio::convert_dark("#dcdef1",useDa
     ui_->labNewScPx->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? color_NewPx_dark_.name() : color_NewPx_.name(),useDarkStyle_? color_StandardCall_dark_.name() : color_StandardCall_.name()));
     ui_->labNewScPxBand->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? color_NewPxBand_dark_.name() : color_NewPxBand_.name(),useDarkStyle_? color_StandardCall_dark_.name() : color_StandardCall_.name()));
     ui_->labNewScCall->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? color_NewCall_dark_.name() : color_NewCall_.name(),useDarkStyle_? color_StandardCall_dark_.name() : color_StandardCall_.name()));
+    ui_->labScUnconfirmed->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? color_Unconfirmed_dark_.name() : color_Unconfirmed_.name(),useDarkStyle_? color_StandardCall_dark_.name() : color_StandardCall_.name()));
     ui_->labNewScCallBand->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? color_NewCallBand_dark_.name() : color_NewCallBand_.name(),useDarkStyle_? color_StandardCall_dark_.name() : color_StandardCall_.name()));
   }
   refresh_samples ();   // CE3TSK 2026-10-03: every sample from the staged values (item 10)
@@ -2968,6 +2994,7 @@ Radio::convert_dark("#fafbfe",useDarkStyle_),Radio::convert_dark("#dcdef1",useDa
   ui_->clear_DX_exit_check_box->setChecked (clear_DX_exit_);
   ui_->miles_check_box->setChecked (miles_);
   ui_->showDistance_check_box->setChecked (showDistance_);   // CE3TSK 2026-10-20
+  ui_->count_unconfirmed_check_box->setChecked (countUnconfirmed_);   // CE3TSK 2026-11-21 (TODO.md 3.-280)
   ui_->showAzimuth_check_box->setChecked (showAzimuth_);
   ui_->scroll_check_box->setChecked (scroll_);
   ui_->tx_watchdog_spin_box->setValue (watchdog_);
@@ -3448,6 +3475,7 @@ void Configuration::impl::read_settings ()
   countryPrefix_ = settings_->value ("countryPrefix", false).toBool ();
   countryNameTranslated_ = settings_->value ("countryNameTranslated", false).toBool ();
   showDistance_ = settings_->value (contest_profile::own_key ("ShowDistance"), false).toBool ();   // CE3TSK 2026-10-20: ours
+  countUnconfirmed_ = settings_->value (contest_profile::own_key ("CountUnconfirmedAsNew"), true).toBool ();   // 2026-11-21 (D9): on
   showAzimuth_ = settings_->value (contest_profile::own_key ("ShowAzimuth"), false).toBool ();
   usStates_ = settings_->value (contest_profile::own_key ("ShowUSStates"), true).toBool ();   /* CE3TSK */
 
@@ -3841,6 +3869,7 @@ void Configuration::impl::write_settings ()
   settings_->setValue ("countryPrefix", countryPrefix_);
   settings_->setValue ("countryNameTranslated", countryNameTranslated_);
   settings_->setValue (contest_profile::own_key ("ShowDistance"), showDistance_);   // CE3TSK 2026-10-20
+  settings_->setValue (contest_profile::own_key ("CountUnconfirmedAsNew"), countUnconfirmed_);   // CE3TSK 2026-11-21
   settings_->setValue (contest_profile::own_key ("ShowAzimuth"), showAzimuth_);
   settings_->setValue (contest_profile::own_key ("ShowUSStates"), usStates_);   /* CE3TSK */
   settings_->setValue ("callsignLogFiltering", callNotif_);
@@ -4082,18 +4111,17 @@ void Configuration::impl::set_rig_invariants ()
                                               || TransceiverFactory::basic_transceiver_name_ != rig);
 }
 
+namespace
+{
+  // CE3TSK 2026-11-21 (review): what a Club Log download was made with - the token and the call whose log it is
+  QString clublog_key (QString const& token, QString const& call)
+  {
+    return token + '\n' + call.trimmed ().toUpper ();
+  }
+}
+
 bool Configuration::impl::validate ()
 {
-  // CE3TSK 2026-11-21 (TODO.md 3.-280): a Club Log token as Club Log makes them, or none
-  {
-    auto const token = ui_->clublog_token_edit->text ().trimmed ();
-    if (!token.isEmpty () && !club_log::plausible_token (token))
-      {
-        JTDXMessageBox::warning_message (this, tr ("This is not a Club Log token"),
-                                         tr ("A Club Log API token begins with cl_. Make one in Club Log under Settings > API, copy it with the button beside it and paste it here."));
-        return false;
-      }
-  }
   if (ui_->sound_input_combo_box->currentIndex () < 0
       && !QAudioDeviceInfo::availableDevices (QAudio::AudioInput).empty ())
     {
@@ -4212,6 +4240,7 @@ void Configuration::impl::accept ()
     {
       return;			// not accepting
     }
+  if (!clublog_token_acceptable ()) return;   // CE3TSK 2026-11-21 (review): here, not in validate () - Test CAT runs that too
   if (!own_station_confirmed ()) return;   // CE3TSK 2026-10-04: the operator chose to correct the call or grid
 
   /* CE3TSK: capture the grid highlighting as committed before this dialog run, so that
@@ -4274,6 +4303,7 @@ void Configuration::impl::accept ()
   color_NewPx_ = next_color_NewPx_;
   color_NewPxBand_ = next_color_NewPxBand_;
   color_NewCall_ = next_color_NewCall_;
+  color_Unconfirmed_ = next_color_Unconfirmed_;
   color_NewCallBand_ = next_color_NewCallBand_;
   color_StandardCall_ = next_color_StandardCall_;
   color_WorkedCall_ = next_color_WorkedCall_;
@@ -4293,6 +4323,7 @@ void Configuration::impl::accept ()
   color_NewPx_dark_ = next_color_NewPx_dark_;
   color_NewPxBand_dark_ = next_color_NewPxBand_dark_;
   color_NewCall_dark_ = next_color_NewCall_dark_;
+  color_Unconfirmed_dark_ = next_color_Unconfirmed_dark_;
   color_NewCallBand_dark_ = next_color_NewCallBand_dark_;
   color_StandardCall_dark_ = next_color_StandardCall_dark_;
   color_WorkedCall_dark_ = next_color_WorkedCall_dark_;
@@ -4375,6 +4406,7 @@ void Configuration::impl::accept ()
     }
   Q_ASSERT (audio_output_channel_ <= AudioDevice::Both);
 
+  auto const clublog_old_call = my_callsign_;   // CE3TSK 2026-11-21 (review): a new call is another Club Log log
   my_callsign_ = ui_->callsign_line_edit->text ();
   my_grid_ = ui_->grid_line_edit->text ();
   timeFrom_ = ui_->logTime_line_edit->text ();
@@ -4390,10 +4422,11 @@ void Configuration::impl::accept ()
   eqsl_username_ = ui_->eqsluser_edit->text ();
   eqsl_passwd_ = ui_->eqslpasswd_edit->text ();
   eqsl_nickname_ = ui_->eqslnick_edit->text ();
-  /* CE3TSK 2026-11-21 (TODO.md 3.-280): the Club Log token into its own file (clublog.h), never the ini. A new token
-     undoes a refusal, and a download follows at once: it may be another account's */
+  /* CE3TSK 2026-11-21 (TODO.md 3.-280): the Club Log token into its own file (clublog.h), never the ini. A new token, or
+     a new My Call (another log), is asked with at once: it may be another account's */
   {
     auto const token = ui_->clublog_token_edit->text ().trimmed ();
+    bool changed {clublog_old_call.trimmed ().toUpper () != my_callsign_.trimmed ().toUpper ()};
     if (token != clublog_token_)
       {
         auto const why = club_log::write_token (clublog_token_file (), token);
@@ -4403,21 +4436,27 @@ void Configuration::impl::accept ()
           }
         else
           {
+            {
+              SettingsGroup g {settings_, "Configuration"};
+              // (review) a refusal stays with the token Club Log refused: re-written with the old token still saved,
+              // so that an older program's plain "true" becomes that token's id before another is saved
+              clublog_set_refused (clublog_token_, clublog_refused (clublog_token_));
+              settings_->remove (contest_profile::own_key ("ClubLogRetryAfter"));
+            }
             clublog_token_ = token;
             clublog_next_try_ = QDateTime {};
             clublog_error_.clear ();
-            {
-              SettingsGroup g {settings_, "Configuration"};
-              settings_->remove (contest_profile::own_key ("ClubLogRefused"));
-              settings_->remove (contest_profile::own_key ("ClubLogRetryAfter"));
-            }
-            // the counts of the last download stay until a download replaces them (the operator 2026-11-21: they were
-            // lost when the time of that download was thrown away here); a token no download has used yet is asked
-            // with at once, without the 12 hours - the one the button has just used is not asked again
-            clublog_new_token_ = !clublog_token_.isEmpty () && clublog_token_ != clublog_downloaded_with_;
-            update_clublog_label ();
-            if (!clublog_token_.isEmpty ()) QTimer::singleShot (0, this, [this] {clublog_check_due ();});
+            changed = true;
           }
+      }
+    if (changed)
+      {
+        // the counts of the last download stay until a download replaces them (the operator 2026-11-21: they were lost
+        // when the time of that download was thrown away here); a token or call no download has used yet is asked with
+        // at once, without the 12 hours - what the button has just used is not asked again, a refused token never
+        clublog_ask_now_ = !clublog_token_.isEmpty () && clublog_key (clublog_token_, my_callsign_) != clublog_downloaded_with_;
+        update_clublog_label ();
+        if (clublog_ask_now_) QTimer::singleShot (0, this, [this] {clublog_check_due ();});
       }
   }
   usesched_ = ui_->UseSched_check_box->isChecked ();
@@ -4496,6 +4535,7 @@ void Configuration::impl::accept ()
   countryPrefix_ = ui_->countryPrefix_check_box->isChecked ();
   countryNameTranslated_ = ui_->countryNameTranslated_check_box->isChecked ();
   showDistance_ = ui_->showDistance_check_box->isChecked ();   // CE3TSK 2026-10-20
+  countUnconfirmed_ = ui_->count_unconfirmed_check_box->isChecked ();   // CE3TSK 2026-11-21 (TODO.md 3.-280)
   showAzimuth_ = ui_->showAzimuth_check_box->isChecked ();
   /* CE3TSK: the box shows unticked while it is greyed, as its neighbours do - but its value is the one last
      clicked, so switching the DXCC names off (and on again) neither loses it nor brings back an older one */
@@ -4819,7 +4859,63 @@ void Configuration::impl::on_clublog_download_push_button_clicked (bool)
                                        tr ("A Club Log API token begins with cl_. Make one in Club Log under Settings > API, copy it with the button beside it and paste it here."));
       return;
     }
-  start_clublog_download (token, true);
+  {
+    SettingsGroup g {settings_, "Configuration"};
+    if (clublog_refused (token))   // (review) never asked again with a token Club Log refused
+      {
+        JTDXMessageBox::warning_message (this, tr ("Download from Club Log failed"),
+                                         tr ("Club Log refused the token. Make a new one in Club Log under Settings > API and paste it here."));
+        return;
+      }
+  }
+  // (review) the call in the General tab's box, saved or not yet - as the token is taken from its box
+  start_clublog_download (token, ui_->callsign_line_edit->text (), true);
+}
+
+/* CE3TSK 2026-11-21 (review): OK takes a Club Log token as Club Log makes them, or none. Only a token changed in the
+   box is judged: the one already saved came through here or read_token (), and Test CAT and Test PTT call validate (),
+   which must not ask about it */
+bool Configuration::impl::clublog_token_acceptable ()
+{
+  auto const token = ui_->clublog_token_edit->text ().trimmed ();
+  if (token.isEmpty () || token == clublog_token_ || club_log::plausible_token (token)) return true;
+  JTDXMessageBox::warning_message (this, tr ("This is not a Club Log token"),
+                                   tr ("A Club Log API token begins with cl_. Make one in Club Log under Settings > API, copy it with the button beside it and paste it here."));
+  return false;
+}
+
+namespace
+{
+  /* the refused tokens' ids as the settings hold them; "true": 3137fe36 to 89829892 kept a plain flag, meaning the token
+     saved then - a bool when set in this run, the text "true" when read from the file */
+  QStringList clublog_refused_ids (QVariant const& v)
+  {
+    if (QVariant::Bool == v.type ()) return v.toBool () ? QStringList {"true"} : QStringList {};
+    return v.toStringList ();
+  }
+}
+
+bool Configuration::impl::clublog_refused (QString const& token) const
+{
+  if (token.isEmpty ()) return false;
+  auto const ids = clublog_refused_ids (settings_->value (contest_profile::own_key ("ClubLogRefused")));
+  return ids.contains (club_log::token_id (token)) || (ids.contains ("true") && token == clublog_token_);
+}
+
+void Configuration::impl::clublog_set_refused (QString const& token, bool refused)
+{
+  auto ids = clublog_refused_ids (settings_->value (contest_profile::own_key ("ClubLogRefused")));
+  ids.removeAll ("false");
+  if (ids.removeAll ("true") && !clublog_token_.isEmpty ()) ids << club_log::token_id (clublog_token_);
+  if (!token.isEmpty ())
+    {
+      auto const id = club_log::token_id (token);
+      ids.removeAll (id);
+      if (refused) ids << id;
+    }
+  while (ids.size () > 8) ids.removeFirst ();   // the last eight are plenty
+  if (ids.isEmpty ()) settings_->remove (contest_profile::own_key ("ClubLogRefused"));
+  else settings_->setValue (contest_profile::own_key ("ClubLogRefused"), ids);
 }
 
 void Configuration::impl::clublog_check_due ()
@@ -4830,19 +4926,19 @@ void Configuration::impl::clublog_check_due ()
   QDateTime last;
   {
     SettingsGroup g {settings_, "Configuration"};
-    if (settings_->value (contest_profile::own_key ("ClubLogRefused"), false).toBool ()) return;   // the user must act
+    if (clublog_refused (clublog_token_)) return;   // the user must act
     auto const retry = settings_->value (contest_profile::own_key ("ClubLogRetryAfter")).toDateTime ();
     if (retry.isValid () && now < retry) return;
     last = settings_->value (contest_profile::own_key ("ClubLogDownloaded")).toDateTime ();
   }
-  if (!clublog_new_token_ && !club_log::due (last, now)) return;
-  start_clublog_download (clublog_token_, false);
+  if (!clublog_ask_now_ && !club_log::due (last, now)) return;
+  start_clublog_download (clublog_token_, my_callsign_, false);
 }
 
-void Configuration::impl::start_clublog_download (QString const& token, bool manual)
+void Configuration::impl::start_clublog_download (QString const& token, QString const& call, bool manual)
 {
-  if (clublog_download_.running () || !network_manager_) return;
-  auto const url = club_log::export_url (club_log::api_base (), my_callsign_);
+  if (clublog_download_.running () || !network_manager_ || !club_log::plausible_token (token)) return;
+  auto const url = club_log::export_url (club_log::api_base (), call);
   if (url.isEmpty ())
     {
       clublog_error_ = club_log::api_base ().isEmpty () ? tr ("Club Log downloads are switched off (JTDX_CLUBLOG_API).")
@@ -4853,6 +4949,7 @@ void Configuration::impl::start_clublog_download (QString const& token, bool man
     }
   clublog_manual_ = manual;
   clublog_download_token_ = token;
+  clublog_download_call_ = call;
   clublog_error_.clear ();
   FileDownload::Request request;
   request.method = "POST";
@@ -4883,12 +4980,12 @@ void Configuration::impl::clublog_finished (bool ok, FileDownload::Failure failu
       {
         SettingsGroup g {settings_, "Configuration"};
         settings_->setValue (contest_profile::own_key ("ClubLogDownloaded"), now);
-        clublog_downloaded_with_ = clublog_download_token_;
-        if (clublog_download_token_ == clublog_token_) clublog_new_token_ = false;
+        clublog_downloaded_with_ = clublog_key (clublog_download_token_, clublog_download_call_);
+        if (clublog_downloaded_with_ == clublog_key (clublog_token_, my_callsign_)) clublog_ask_now_ = false;
         settings_->setValue (contest_profile::own_key ("ClubLogQsos"), clublog_export_.qsos);
         settings_->setValue (contest_profile::own_key ("ClubLogConfirmed"), clublog_export_.confirmed_qsos);
         settings_->setValue (contest_profile::own_key ("ClubLogEntities"), clublog_export_.entities);
-        settings_->remove (contest_profile::own_key ("ClubLogRefused"));
+        clublog_set_refused (clublog_download_token_, false);
         settings_->remove (contest_profile::own_key ("ClubLogRetryAfter"));
       }
       clublog_export_ = club_log::Export {};
@@ -4902,12 +4999,14 @@ void Configuration::impl::clublog_finished (bool ok, FileDownload::Failure failu
   int const status {FileDownload::Failure::HttpStatus == failure ? detail.toInt () : 0};
   auto const after = club_log::after_status (status);
   auto const retry_after = clublog_download_.retry_after ();
-  clublog_next_try_ = club_log::next_try (after, retry_after, now);
+  // (review) a refusal is the token's that asked: one the button tried from the box leaves the saved token's schedule
+  if (club_log::After::TokenRefused != after || clublog_download_token_ == clublog_token_)
+    clublog_next_try_ = club_log::next_try (after, retry_after, now);
   {
     SettingsGroup g {settings_, "Configuration"};
-    if (club_log::After::TokenRefused == after) settings_->setValue (contest_profile::own_key ("ClubLogRefused"), true);
-    if (club_log::After::WaitRetryAfter == after && retry_after.isValid ())
-      settings_->setValue (contest_profile::own_key ("ClubLogRetryAfter"), retry_after);
+    if (club_log::After::TokenRefused == after) clublog_set_refused (clublog_download_token_, true);
+    if (club_log::After::WaitRetryAfter == after && retry_after.isValid ())   // as next_try () bounded it
+      settings_->setValue (contest_profile::own_key ("ClubLogRetryAfter"), clublog_next_try_);
   }
   switch (failure)
     {
@@ -4915,7 +5014,9 @@ void Configuration::impl::clublog_finished (bool ok, FileDownload::Failure failu
       if (club_log::After::TokenRefused == after)
         clublog_error_ = tr ("Club Log refused the token (HTTP status %1). Make a new one in Club Log under Settings > API and paste it here.").arg (status);
       else if (club_log::After::WaitRetryAfter == after)
-        clublog_error_ = tr ("Club Log asks to wait until %1 UTC.").arg (clublog_next_try_.toUTC ().toString ("yyyy-MM-dd hh:mm"));
+        clublog_error_ = retry_after.isValid ()   // (review) "asks" only when Club Log named a time
+          ? tr ("Club Log asks to wait until %1 UTC.").arg (clublog_next_try_.toUTC ().toString ("yyyy-MM-dd hh:mm"))
+          : tr ("Club Log is busy; the next try is at %1 UTC.").arg (clublog_next_try_.toUTC ().toString ("yyyy-MM-dd hh:mm"));
       else
         clublog_error_ = tr ("The server answered with HTTP status %1.").arg (detail);
       break;
@@ -4949,7 +5050,7 @@ void Configuration::impl::update_clublog_label ()
     qsos = settings_->value (contest_profile::own_key ("ClubLogQsos"), 0).toInt ();
     confirmed = settings_->value (contest_profile::own_key ("ClubLogConfirmed"), 0).toInt ();
     entities = settings_->value (contest_profile::own_key ("ClubLogEntities"), 0).toInt ();
-    refused = settings_->value (contest_profile::own_key ("ClubLogRefused"), false).toBool ();
+    refused = clublog_refused (clublog_token_);
   }
   QString text;
   if (clublog_token_.isEmpty () && ui_->clublog_token_edit->text ().trimmed ().isEmpty ())
@@ -5130,6 +5231,7 @@ void Configuration::impl::on_txtColor_check_box_clicked(bool checked)
     ui_->labNewPx->setStyleSheet(QString("font-weight: bold;background: %2;color: %1").arg(useDarkStyle_? next_color_NewPx_dark_.name() : next_color_NewPx_.name(),useDarkStyle_? next_color_CQ_dark_.name() : next_color_CQ_.name()));
     ui_->labNewPxBand->setStyleSheet(QString("font-weight: bold;background: %2;color: %1").arg(useDarkStyle_? next_color_NewPxBand_dark_.name() : next_color_NewPxBand_.name(),useDarkStyle_? next_color_CQ_dark_.name() : next_color_CQ_.name()));
     ui_->labNewCall->setStyleSheet(QString("font-weight: bold;background: %2;color: %1").arg(useDarkStyle_? next_color_NewCall_dark_.name() : next_color_NewCall_.name(),useDarkStyle_? next_color_CQ_dark_.name() : next_color_CQ_.name()));
+    ui_->labUnconfirmed->setStyleSheet(QString("font-weight: bold;background: %2;color: %1").arg(useDarkStyle_? next_color_Unconfirmed_dark_.name() : next_color_Unconfirmed_.name(),useDarkStyle_? next_color_CQ_dark_.name() : next_color_CQ_.name()));
     ui_->labNewCallBand->setStyleSheet(QString("font-weight: bold;background: %2;color: %1").arg(useDarkStyle_? next_color_NewCallBand_dark_.name() : next_color_NewCallBand_.name(),useDarkStyle_? next_color_CQ_dark_.name() : next_color_CQ_.name()));
     if (next_workedColor_) {
       if (next_workedStriked_) {
@@ -5171,6 +5273,7 @@ void Configuration::impl::on_txtColor_check_box_clicked(bool checked)
     ui_->labNewMcPx->setStyleSheet(QString("font-weight: bold;background: %2;color: %1").arg(useDarkStyle_? next_color_NewPx_dark_.name() : next_color_NewPx_.name(),useDarkStyle_? next_color_MyCall_dark_.name() : next_color_MyCall_.name()));
     ui_->labNewMcPxBand->setStyleSheet(QString("font-weight: bold;background: %2;color: %1").arg(useDarkStyle_? next_color_NewPxBand_dark_.name() : next_color_NewPxBand_.name(),useDarkStyle_? next_color_MyCall_dark_.name() : next_color_MyCall_.name()));
     ui_->labNewMcCall->setStyleSheet(QString("font-weight: bold;background: %2;color: %1").arg(useDarkStyle_? next_color_NewCall_dark_.name() : next_color_NewCall_.name(),useDarkStyle_? next_color_MyCall_dark_.name() : next_color_MyCall_.name()));
+    ui_->labMcUnconfirmed->setStyleSheet(QString("font-weight: bold;background: %2;color: %1").arg(useDarkStyle_? next_color_Unconfirmed_dark_.name() : next_color_Unconfirmed_.name(),useDarkStyle_? next_color_MyCall_dark_.name() : next_color_MyCall_.name()));
     ui_->labNewMcCallBand->setStyleSheet(QString("font-weight: bold;background: %2;color: %1").arg(useDarkStyle_? next_color_NewCallBand_dark_.name() : next_color_NewCallBand_.name(),useDarkStyle_? next_color_MyCall_dark_.name() : next_color_MyCall_.name()));
     ui_->labNewScCQZ->setStyleSheet(QString("font-weight: bold;background: %2;color: %1").arg(useDarkStyle_? next_color_NewCQZ_dark_.name() : next_color_NewCQZ_.name(),useDarkStyle_? next_color_StandardCall_dark_.name() : next_color_StandardCall_.name()));
     ui_->labNewScCQZBand->setStyleSheet(QString("font-weight: bold;background: %2;color: %1").arg(useDarkStyle_? next_color_NewCQZBand_dark_.name() : next_color_NewCQZBand_.name(),useDarkStyle_? next_color_StandardCall_dark_.name() : next_color_StandardCall_.name()));
@@ -5185,6 +5288,7 @@ void Configuration::impl::on_txtColor_check_box_clicked(bool checked)
     ui_->labNewScPx->setStyleSheet(QString("font-weight: bold;background: %2;color: %1").arg(useDarkStyle_? next_color_NewPx_dark_.name() : next_color_NewPx_.name(),useDarkStyle_? next_color_StandardCall_dark_.name() : next_color_StandardCall_.name()));
     ui_->labNewScPxBand->setStyleSheet(QString("font-weight: bold;background: %2;color: %1").arg(useDarkStyle_? next_color_NewPxBand_dark_.name() : next_color_NewPxBand_.name(),useDarkStyle_? next_color_StandardCall_dark_.name() : next_color_StandardCall_.name()));
     ui_->labNewScCall->setStyleSheet(QString("font-weight: bold;background: %2;color: %1").arg(useDarkStyle_? next_color_NewCall_dark_.name() : next_color_NewCall_.name(),useDarkStyle_? next_color_StandardCall_dark_.name() : next_color_StandardCall_.name()));
+    ui_->labScUnconfirmed->setStyleSheet(QString("font-weight: bold;background: %2;color: %1").arg(useDarkStyle_? next_color_Unconfirmed_dark_.name() : next_color_Unconfirmed_.name(),useDarkStyle_? next_color_StandardCall_dark_.name() : next_color_StandardCall_.name()));
     ui_->labNewScCallBand->setStyleSheet(QString("font-weight: bold;background: %2;color: %1").arg(useDarkStyle_? next_color_NewCallBand_dark_.name() : next_color_NewCallBand_.name(),useDarkStyle_? next_color_StandardCall_dark_.name() : next_color_StandardCall_.name()));
   } else {
     ui_->labCQ->setStyleSheet(QString("background: %2;color: %1").arg(useDarkStyle_? next_color_CQ_dark_.name() : next_color_CQ_.name(),Radio::convert_dark("#ffffff",useDarkStyle_)));
@@ -5203,6 +5307,7 @@ void Configuration::impl::on_txtColor_check_box_clicked(bool checked)
     ui_->labNewPx->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? next_color_NewPx_dark_.name() : next_color_NewPx_.name(),useDarkStyle_? next_color_CQ_dark_.name() : next_color_CQ_.name()));
     ui_->labNewPxBand->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? next_color_NewPxBand_dark_.name() : next_color_NewPxBand_.name(),useDarkStyle_? next_color_CQ_dark_.name() : next_color_CQ_.name()));
     ui_->labNewCall->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? next_color_NewCall_dark_.name() : next_color_NewCall_.name(),useDarkStyle_? next_color_CQ_dark_.name() : next_color_CQ_.name()));
+    ui_->labUnconfirmed->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? next_color_Unconfirmed_dark_.name() : next_color_Unconfirmed_.name(),useDarkStyle_? next_color_CQ_dark_.name() : next_color_CQ_.name()));
     ui_->labNewCallBand->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? next_color_NewCallBand_dark_.name() : next_color_NewCallBand_.name(),useDarkStyle_? next_color_CQ_dark_.name() : next_color_CQ_.name()));
     if (next_workedColor_) {
       if (next_workedStriked_) {
@@ -5244,6 +5349,7 @@ void Configuration::impl::on_txtColor_check_box_clicked(bool checked)
     ui_->labNewMcPx->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? next_color_NewPx_dark_.name() : next_color_NewPx_.name(),useDarkStyle_? next_color_MyCall_dark_.name() : next_color_MyCall_.name()));
     ui_->labNewMcPxBand->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? next_color_NewPxBand_dark_.name() : next_color_NewPxBand_.name(),useDarkStyle_? next_color_MyCall_dark_.name() : next_color_MyCall_.name()));
     ui_->labNewMcCall->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? next_color_NewCall_dark_.name() : next_color_NewCall_.name(),useDarkStyle_? next_color_MyCall_dark_.name() : next_color_MyCall_.name()));
+    ui_->labMcUnconfirmed->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? next_color_Unconfirmed_dark_.name() : next_color_Unconfirmed_.name(),useDarkStyle_? next_color_MyCall_dark_.name() : next_color_MyCall_.name()));
     ui_->labNewMcCallBand->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? next_color_NewCallBand_dark_.name() : next_color_NewCallBand_.name(),useDarkStyle_? next_color_MyCall_dark_.name() : next_color_MyCall_.name()));
     ui_->labNewScCQZ->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? next_color_NewCQZ_dark_.name() : next_color_NewCQZ_.name(),useDarkStyle_? next_color_StandardCall_dark_.name() : next_color_StandardCall_.name()));
     ui_->labNewScCQZBand->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? next_color_NewCQZBand_dark_.name() : next_color_NewCQZBand_.name(),useDarkStyle_? next_color_StandardCall_dark_.name() : next_color_StandardCall_.name()));
@@ -5258,6 +5364,7 @@ void Configuration::impl::on_txtColor_check_box_clicked(bool checked)
     ui_->labNewScPx->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? next_color_NewPx_dark_.name() : next_color_NewPx_.name(),useDarkStyle_? next_color_StandardCall_dark_.name() : next_color_StandardCall_.name()));
     ui_->labNewScPxBand->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? next_color_NewPxBand_dark_.name() : next_color_NewPxBand_.name(),useDarkStyle_? next_color_StandardCall_dark_.name() : next_color_StandardCall_.name()));
     ui_->labNewScCall->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? next_color_NewCall_dark_.name() : next_color_NewCall_.name(),useDarkStyle_? next_color_StandardCall_dark_.name() : next_color_StandardCall_.name()));
+    ui_->labScUnconfirmed->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? next_color_Unconfirmed_dark_.name() : next_color_Unconfirmed_.name(),useDarkStyle_? next_color_StandardCall_dark_.name() : next_color_StandardCall_.name()));
     ui_->labNewScCallBand->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? next_color_NewCallBand_dark_.name() : next_color_NewCallBand_.name(),useDarkStyle_? next_color_StandardCall_dark_.name() : next_color_StandardCall_.name()));
   }
 }
@@ -5659,6 +5766,8 @@ void Configuration::impl::refresh_samples ()
     }
   ui_->labStandardCall->setVisible (next_newPotential_);
   ui_->labWorkedScCall->setVisible (any_tier_staged () && next_newPotential_);
+  // CE3TSK 2026-11-21 (TODO.md 3.-280): the colour of a LoTW user worked but not LoTW-confirmed, while the box counts them
+  show_samples (ui_->labUnconfirmed, ui_->labMcUnconfirmed, ui_->labScUnconfirmed, ui_->count_unconfirmed_check_box->isChecked ());
 }
 
 void Configuration::impl::show_samples (QLabel * main, QLabel * mc, QLabel * sc, bool on)
@@ -5782,6 +5891,7 @@ void Configuration::impl::on_pbCQmsg_clicked()
         ui_->labNewPx->setStyleSheet(QString("font-weight: bold;background: %2;color: %1").arg(useDarkStyle_? next_color_NewPx_dark_.name() : next_color_NewPx_.name(),useDarkStyle_? next_color_CQ_dark_.name() : next_color_CQ_.name()));
         ui_->labNewPxBand->setStyleSheet(QString("font-weight: bold;background: %2;color: %1").arg(useDarkStyle_? next_color_NewPxBand_dark_.name() : next_color_NewPxBand_.name(),useDarkStyle_? next_color_CQ_dark_.name() : next_color_CQ_.name()));
         ui_->labNewCall->setStyleSheet(QString("font-weight: bold;background: %2;color: %1").arg(useDarkStyle_? next_color_NewCall_dark_.name() : next_color_NewCall_.name(),useDarkStyle_? next_color_CQ_dark_.name() : next_color_CQ_.name()));
+        ui_->labUnconfirmed->setStyleSheet(QString("font-weight: bold;background: %2;color: %1").arg(useDarkStyle_? next_color_Unconfirmed_dark_.name() : next_color_Unconfirmed_.name(),useDarkStyle_? next_color_CQ_dark_.name() : next_color_CQ_.name()));
         ui_->labNewCallBand->setStyleSheet(QString("font-weight: bold;background: %2;color: %1").arg(useDarkStyle_? next_color_NewCallBand_dark_.name() : next_color_NewCallBand_.name(),useDarkStyle_? next_color_CQ_dark_.name() : next_color_CQ_.name()));
         if (next_workedColor_) {
           if (next_workedStriked_) {
@@ -5813,6 +5923,7 @@ void Configuration::impl::on_pbCQmsg_clicked()
         ui_->labNewPx->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? next_color_NewPx_dark_.name() : next_color_NewPx_.name(),useDarkStyle_? next_color_CQ_dark_.name() : next_color_CQ_.name()));
         ui_->labNewPxBand->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? next_color_NewPxBand_dark_.name() : next_color_NewPxBand_.name(),useDarkStyle_? next_color_CQ_dark_.name() : next_color_CQ_.name()));
         ui_->labNewCall->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? next_color_NewCall_dark_.name() : next_color_NewCall_.name(),useDarkStyle_? next_color_CQ_dark_.name() : next_color_CQ_.name()));
+        ui_->labUnconfirmed->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? next_color_Unconfirmed_dark_.name() : next_color_Unconfirmed_.name(),useDarkStyle_? next_color_CQ_dark_.name() : next_color_CQ_.name()));
         ui_->labNewCallBand->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? next_color_NewCallBand_dark_.name() : next_color_NewCallBand_.name(),useDarkStyle_? next_color_CQ_dark_.name() : next_color_CQ_.name()));
         if (next_workedColor_) {
           if (next_workedStriked_) {
@@ -5854,6 +5965,7 @@ void Configuration::impl::on_pbMyCall_clicked()
         ui_->labNewMcPx->setStyleSheet(QString("font-weight: bold;background: %2;color: %1").arg(useDarkStyle_? next_color_NewPx_dark_.name() : next_color_NewPx_.name(),useDarkStyle_? next_color_MyCall_dark_.name() : next_color_MyCall_.name()));
         ui_->labNewMcPxBand->setStyleSheet(QString("font-weight: bold;background: %2;color: %1").arg(useDarkStyle_? next_color_NewPxBand_dark_.name() : next_color_NewPxBand_.name(),useDarkStyle_? next_color_MyCall_dark_.name() : next_color_MyCall_.name()));
         ui_->labNewMcCall->setStyleSheet(QString("font-weight: bold;background: %2;color: %1").arg(useDarkStyle_? next_color_NewCall_dark_.name() : next_color_NewCall_.name(),useDarkStyle_? next_color_MyCall_dark_.name() : next_color_MyCall_.name()));
+        ui_->labMcUnconfirmed->setStyleSheet(QString("font-weight: bold;background: %2;color: %1").arg(useDarkStyle_? next_color_Unconfirmed_dark_.name() : next_color_Unconfirmed_.name(),useDarkStyle_? next_color_MyCall_dark_.name() : next_color_MyCall_.name()));
         ui_->labNewMcCallBand->setStyleSheet(QString("font-weight: bold;background: %2;color: %1").arg(useDarkStyle_? next_color_NewCallBand_dark_.name() : next_color_NewCallBand_.name(),useDarkStyle_? next_color_MyCall_dark_.name() : next_color_MyCall_.name()));
         if (next_workedColor_) {
           if (next_workedStriked_) {
@@ -5885,6 +5997,7 @@ void Configuration::impl::on_pbMyCall_clicked()
         ui_->labNewMcPx->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? next_color_NewPx_dark_.name() : next_color_NewPx_.name(),useDarkStyle_? next_color_MyCall_dark_.name() : next_color_MyCall_.name()));
         ui_->labNewMcPxBand->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? next_color_NewPxBand_dark_.name() : next_color_NewPxBand_.name(),useDarkStyle_? next_color_MyCall_dark_.name() : next_color_MyCall_.name()));
         ui_->labNewMcCall->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? next_color_NewCall_dark_.name() : next_color_NewCall_.name(),useDarkStyle_? next_color_MyCall_dark_.name() : next_color_MyCall_.name()));
+        ui_->labMcUnconfirmed->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? next_color_Unconfirmed_dark_.name() : next_color_Unconfirmed_.name(),useDarkStyle_? next_color_MyCall_dark_.name() : next_color_MyCall_.name()));
         ui_->labNewMcCallBand->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? next_color_NewCallBand_dark_.name() : next_color_NewCallBand_.name(),useDarkStyle_? next_color_MyCall_dark_.name() : next_color_MyCall_.name()));
         if (next_workedColor_) {
           if (next_workedStriked_) {
@@ -5926,6 +6039,7 @@ void Configuration::impl::on_pbStandardCall_clicked()
         ui_->labNewScPx->setStyleSheet(QString("font-weight: bold;background: %2;color: %1").arg(useDarkStyle_? next_color_NewPx_dark_.name() : next_color_NewPx_.name(),useDarkStyle_? next_color_StandardCall_dark_.name() : next_color_StandardCall_.name()));
         ui_->labNewScPxBand->setStyleSheet(QString("font-weight: bold;background: %2;color: %1").arg(useDarkStyle_? next_color_NewPxBand_dark_.name() : next_color_NewPxBand_.name(),useDarkStyle_? next_color_StandardCall_dark_.name() : next_color_StandardCall_.name()));
         ui_->labNewScCall->setStyleSheet(QString("font-weight: bold;background: %2;color: %1").arg(useDarkStyle_? next_color_NewCall_dark_.name() : next_color_NewCall_.name(),useDarkStyle_? next_color_StandardCall_dark_.name() : next_color_StandardCall_.name()));
+        ui_->labScUnconfirmed->setStyleSheet(QString("font-weight: bold;background: %2;color: %1").arg(useDarkStyle_? next_color_Unconfirmed_dark_.name() : next_color_Unconfirmed_.name(),useDarkStyle_? next_color_StandardCall_dark_.name() : next_color_StandardCall_.name()));
         ui_->labNewScCallBand->setStyleSheet(QString("font-weight: bold;background: %2;color: %1").arg(useDarkStyle_? next_color_NewCallBand_dark_.name() : next_color_NewCallBand_.name(),useDarkStyle_? next_color_StandardCall_dark_.name() : next_color_StandardCall_.name()));
         if (next_workedColor_) {
           if (next_workedStriked_) {
@@ -5957,6 +6071,7 @@ void Configuration::impl::on_pbStandardCall_clicked()
         ui_->labNewScPx->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? next_color_NewPx_dark_.name() : next_color_NewPx_.name(),useDarkStyle_? next_color_StandardCall_dark_.name() : next_color_StandardCall_.name()));
         ui_->labNewScPxBand->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? next_color_NewPxBand_dark_.name() : next_color_NewPxBand_.name(),useDarkStyle_? next_color_StandardCall_dark_.name() : next_color_StandardCall_.name()));
         ui_->labNewScCall->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? next_color_NewCall_dark_.name() : next_color_NewCall_.name(),useDarkStyle_? next_color_StandardCall_dark_.name() : next_color_StandardCall_.name()));
+        ui_->labScUnconfirmed->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? next_color_Unconfirmed_dark_.name() : next_color_Unconfirmed_.name(),useDarkStyle_? next_color_StandardCall_dark_.name() : next_color_StandardCall_.name()));
         ui_->labNewScCallBand->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? next_color_NewCallBand_dark_.name() : next_color_NewCallBand_.name(),useDarkStyle_? next_color_StandardCall_dark_.name() : next_color_StandardCall_.name()));
         if (next_workedColor_) {
           if (next_workedStriked_) {
@@ -6123,7 +6238,9 @@ void Configuration::impl::on_pbDefaultColors_clicked()
   next_color_NewPxBand_ = QColor {recommended_color ("colorNewPxBand")};
   next_color_NewPxBand_dark_ = QColor {recommended_color ("colorNewPxBand_dark")};
   next_color_NewCall_ = QColor {recommended_color ("colorNewCall")};
+  next_color_Unconfirmed_ = QColor {recommended_color ("colorUnconfirmed")};
   next_color_NewCall_dark_ = QColor {recommended_color ("colorNewCall_dark")};
+  next_color_Unconfirmed_dark_ = QColor {recommended_color ("colorUnconfirmed_dark")};
   next_color_NewCallBand_ = QColor {recommended_color ("colorNewCallBand")};
   next_color_NewCallBand_dark_ = QColor {recommended_color ("colorNewCallBand_dark")};
   on_txtColor_check_box_clicked (next_txtColor_);
@@ -6342,6 +6459,25 @@ void Configuration::impl::on_pbNewPxBand_clicked()
         ui_->labNewPxBand->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? next_color_NewPxBand_dark_.name() : next_color_NewPxBand_.name(),useDarkStyle_? next_color_CQ_dark_.name() : next_color_CQ_.name()));
         ui_->labNewMcPxBand->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? next_color_NewPxBand_dark_.name() : next_color_NewPxBand_.name(),useDarkStyle_? next_color_MyCall_dark_.name() : next_color_MyCall_.name()));
         ui_->labNewScPxBand->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? next_color_NewPxBand_dark_.name() : next_color_NewPxBand_.name(),useDarkStyle_? next_color_StandardCall_dark_.name() : next_color_StandardCall_.name()));
+      }
+    }
+}
+
+/* CE3TSK 2026-11-21 (TODO.md 3.-280): a LoTW user worked but not LoTW-confirmed, as on_pbNewCall_clicked */
+void Configuration::impl::on_pbUnconfirmed_clicked()
+{
+  auto new_color = QColorDialog::getColor(QColor(useDarkStyle_? next_color_Unconfirmed_dark_.name() : next_color_Unconfirmed_.name()), this, "Worked, not LoTW-Confirmed Messages Color");
+  if (new_color.isValid ())
+    {
+      if (useDarkStyle_) next_color_Unconfirmed_dark_ = new_color; else next_color_Unconfirmed_ = new_color;
+      if (next_txtColor_) {
+        ui_->labUnconfirmed->setStyleSheet(QString("font-weight: bold;background: %2;color: %1").arg(useDarkStyle_? next_color_Unconfirmed_dark_.name() : next_color_Unconfirmed_.name(),useDarkStyle_? next_color_CQ_dark_.name() : next_color_CQ_.name()));
+        ui_->labMcUnconfirmed->setStyleSheet(QString("font-weight: bold;background: %2;color: %1").arg(useDarkStyle_? next_color_Unconfirmed_dark_.name() : next_color_Unconfirmed_.name(),useDarkStyle_? next_color_MyCall_dark_.name() : next_color_MyCall_.name()));
+        ui_->labScUnconfirmed->setStyleSheet(QString("font-weight: bold;background: %2;color: %1").arg(useDarkStyle_? next_color_Unconfirmed_dark_.name() : next_color_Unconfirmed_.name(),useDarkStyle_? next_color_StandardCall_dark_.name() : next_color_StandardCall_.name()));
+      } else {
+        ui_->labUnconfirmed->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? next_color_Unconfirmed_dark_.name() : next_color_Unconfirmed_.name(),useDarkStyle_? next_color_CQ_dark_.name() : next_color_CQ_.name()));
+        ui_->labMcUnconfirmed->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? next_color_Unconfirmed_dark_.name() : next_color_Unconfirmed_.name(),useDarkStyle_? next_color_MyCall_dark_.name() : next_color_MyCall_.name()));
+        ui_->labScUnconfirmed->setStyleSheet(QString("font-weight: bold;background: %1;color: %2").arg(useDarkStyle_? next_color_Unconfirmed_dark_.name() : next_color_Unconfirmed_.name(),useDarkStyle_? next_color_StandardCall_dark_.name() : next_color_StandardCall_.name()));
       }
     }
 }
