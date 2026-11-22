@@ -2890,6 +2890,11 @@ Format:
         <source>Hint or a-priori decode: the decoder had help with this message; the window's mark does not tell which kind.</source>
         <translation>Dekodiranje uz pomoć (hint) ili a priori: dekoder je za ovu poruku imao pomoć; oznaka u prozoru ne govori koje vrste.</translation>
     </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Worked before and LoTW-confirmed: nothing new in the notifications that are on.</source>
+        <translation>Već rađen i potvrđen LoTW-om: ništa novo u uključenim obavijestima.</translation>
+    </message>
 </context>
 <context>
     <name>EmulateSplitTransceiver</name>
@@ -11455,6 +11460,21 @@ Prvo preuzimanje traje nekoliko minuta; nakon toga dohvaća se samo ono što se 
         <location filename="../Configuration.ui"/>
         <source>Download LoTW confirmations from &amp;QRZ.com</source>
         <translation>Preuzmi LoTW potvrde s &amp;QRZ.com</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>With LoTW confirmations downloaded from Club Log or QRZ.com, a decode worked in every tier above that is on, and LoTW-confirmed in each of them with the band and mode those tiers count, is shown in its own color. A new tier keeps its own color, and the auto sequencer is not affected. Not in a contest.</source>
+        <translation>S LoTW potvrdama preuzetima iz Club Loga ili s QRZ.com-a, dekodiranje odrađeno u svakoj uključenoj razini iznad i potvrđeno LoTW-om u svakoj od njih, s opsegom i načinom rada koje te razine broje, prikazuje se u vlastitoj boji. Nova razina zadržava svoju boju, a automatski sekvencer nije zahvaćen. Ne u natjecanju.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Highlight worked calls that are LoTW-confirmed</source>
+        <translation>Istakni odrađene znakove potvrđene LoTW-om</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Worked, LoTW-confirmed</source>
+        <translation>Odrađeno, potvrđeno LoTW-om</translation>
     </message>
 </context>
 <context>

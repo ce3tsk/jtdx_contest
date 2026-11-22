@@ -2871,6 +2871,11 @@ Format:
         <source>Hint or a-priori decode: the decoder had help with this message; the window's mark does not tell which kind.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Worked before and LoTW-confirmed: nothing new in the notifications that are on.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>EmulateSplitTransceiver</name>
@@ -11252,6 +11257,21 @@ The first download takes a few minutes; after it only what changed is fetched.</
     <message>
         <location filename="../Configuration.ui"/>
         <source>Download LoTW confirmations from &amp;QRZ.com</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>With LoTW confirmations downloaded from Club Log or QRZ.com, a decode worked in every tier above that is on, and LoTW-confirmed in each of them with the band and mode those tiers count, is shown in its own color. A new tier keeps its own color, and the auto sequencer is not affected. Not in a contest.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Highlight worked calls that are LoTW-confirmed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Worked, LoTW-confirmed</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

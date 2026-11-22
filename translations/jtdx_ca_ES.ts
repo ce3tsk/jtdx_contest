@@ -2895,6 +2895,11 @@ Format:
         <source>Hint or a-priori decode: the decoder had help with this message; the window's mark does not tell which kind.</source>
         <translation>Descodificació per suggeriment o a priori: el descodificador ha tingut ajuda amb aquest missatge; la marca de la finestra no diu de quin tipus.</translation>
     </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Worked before and LoTW-confirmed: nothing new in the notifications that are on.</source>
+        <translation>Treballat anteriorment i confirmat per LoTW: res de nou a les notificacions activades.</translation>
+    </message>
 </context>
 <context>
     <name>EmulateSplitTransceiver</name>
@@ -11463,6 +11468,21 @@ La primera descàrrega triga uns minuts; després només es descarrega el que ha
         <location filename="../Configuration.ui"/>
         <source>Download LoTW confirmations from &amp;QRZ.com</source>
         <translation>Descarrega les confirmacions de LoTW de Q&amp;RZ.com</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>With LoTW confirmations downloaded from Club Log or QRZ.com, a decode worked in every tier above that is on, and LoTW-confirmed in each of them with the band and mode those tiers count, is shown in its own color. A new tier keeps its own color, and the auto sequencer is not affected. Not in a contest.</source>
+        <translation>Amb les confirmacions de LoTW descarregades de Club Log o QRZ.com, una descodificació treballada en cada nivell de dalt que estigui activat, i confirmada per LoTW en cadascun amb la banda i el mode que compten aquests nivells, es mostra amb el seu propi color. Un nivell nou conserva el seu color, i el seqüenciador automàtic no se'n veu afectat. No en un concurs.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Highlight worked calls that are LoTW-confirmed</source>
+        <translation>Ressalta els indicatius treballats confirmats per LoTW</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Worked, LoTW-confirmed</source>
+        <translation>Treballat, confirmat per LoTW</translation>
     </message>
 </context>
 <context>

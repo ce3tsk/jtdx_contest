@@ -2890,6 +2890,11 @@ Format:
         <source>Hint or a-priori decode: the decoder had help with this message; the window's mark does not tell which kind.</source>
         <translation>Dekodowanie z podpowiedzią lub a priori: dekoder miał pomoc przy tej wiadomości; znacznik w oknie nie mówi, jakiego rodzaju.</translation>
     </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Worked before and LoTW-confirmed: nothing new in the notifications that are on.</source>
+        <translation>Zrobiony wcześniej i potwierdzony w LoTW: nic nowego we włączonych powiadomieniach.</translation>
+    </message>
 </context>
 <context>
     <name>EmulateSplitTransceiver</name>
@@ -11451,6 +11456,21 @@ Pierwsze pobieranie trwa kilka minut; potem pobierane jest tylko to, co się zmi
         <location filename="../Configuration.ui"/>
         <source>Download LoTW confirmations from &amp;QRZ.com</source>
         <translation>Pobierz potwierdzenia LoTW z &amp;QRZ.com</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>With LoTW confirmations downloaded from Club Log or QRZ.com, a decode worked in every tier above that is on, and LoTW-confirmed in each of them with the band and mode those tiers count, is shown in its own color. A new tier keeps its own color, and the auto sequencer is not affected. Not in a contest.</source>
+        <translation>Przy potwierdzeniach LoTW pobranych z Club Log lub QRZ.com dekodowanie zrobione na każdym włączonym poziomie powyżej i potwierdzone w LoTW na każdym z nich, z pasmem i emisją, które te poziomy liczą, jest pokazywane we własnym kolorze. Nowy poziom zachowuje swój kolor, a automatyczny sekwencer pozostaje bez zmian. Nie w zawodach.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Highlight worked calls that are LoTW-confirmed</source>
+        <translation>Wyróżniaj zrobione znaki potwierdzone w LoTW</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Worked, LoTW-confirmed</source>
+        <translation>Zrobione, potwierdzone w LoTW</translation>
     </message>
 </context>
 <context>

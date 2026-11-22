@@ -235,9 +235,10 @@ QStringList DisplayText::markSentences (QString const& mark, bool lotw, bool win
   return s;
 }
 
-void DisplayText::setConfirmations (LogBook * confirmed)
+void DisplayText::setConfirmations (LogBook * confirmed, LogBook * pending)
 {
   confirmed_ = confirmed && confirmed->get_qso_count () > 0 ? confirmed : nullptr;
+  pending_ = confirmed_ ? pending : nullptr;   // (2026-11-22, D12) no confirmations: nothing pending either
 }
 
 DisplayText::DisplayText(QWidget *parent) :
@@ -336,6 +337,8 @@ void DisplayText::setConfiguration(Configuration const * config)
   color_NewCall_ = config->color_NewCall().name();
   color_Unconfirmed_ = config->color_Unconfirmed ().name ();   /* CE3TSK 2026-11-21 (TODO.md 3.-280) */
   countUnconfirmed_ = config->countUnconfirmedAsNew ();
+  color_Confirmed_ = config->color_Confirmed ().name ();   /* CE3TSK 2026-11-22 (TODO.md 3.-280, D12) */
+  highlightConfirmed_ = config->highlightConfirmed ();
   color_NewCallBand_ = config->color_NewCallBand().name();
   hideContinents_ = config->hideContinents();
   countries_ = config->countries();
@@ -554,6 +557,7 @@ int DisplayText::displayDecodedText(DecodedText* decodedText, QString myCall, QS
     QString unconfirmedTip;   // CE3TSK 2026-11-22 (TODO.md 3.-280): why the line is in the colour of a LoTW user worked, not confirmed
     QString tierTip;          // CE3TSK 2026-11-22 (the operator): the tier the line's colour shows, for its tooltip
     bool workedTip = false;   // and "worked before": a tier could judge it, and none fired
+    bool confirmedTip = false;   // (2026-11-22, D12) worked, and LoTW-confirmed in every tier that is on
     QString lineHead;         // the tooltip's first line: the caller and its DXCC
     QString checkCall2;
     QString grid;
@@ -920,6 +924,11 @@ int DisplayText::displayDecodedText(DecodedText* decodedText, QString myCall, QS
                     if (!on || (!b4 && !b4BandMode)) return;
                     bool c4 = true, c4BandMode = true;
                     (confirmed_->*match) (checkCall, confirmedName, c4, c4BandMode, band ? dialFreq : 0, bandMode ? checkMode : QString {});
+                    if (pending_ && (!c4 || !c4BandMode)) {   // (2026-11-22) or confirmed for now (D10)
+                        bool p4 = false, p4BandMode = false;
+                        (pending_->*match) (checkCall, confirmedName, p4, p4BandMode, band ? dialFreq : 0, bandMode ? checkMode : QString {});
+                        c4 = c4 || p4; c4BandMode = c4BandMode || p4BandMode;
+                    }
                     confirm (b4, b4BandMode, c4, c4BandMode, b4, b4BandMode, level, bandLevel);
                 };
                 tier (&LogBook::matchCQZ, displayNewCQZ_, displayNewCQZBand_, displayNewCQZBandMode_, cqzB4, cqzB4BandMode, dp::NewCQZ, dp::NewCQZBand);
@@ -930,12 +939,23 @@ int DisplayText::displayDecodedText(DecodedText* decodedText, QString myCall, QS
                 if (displayNewGrid_ && !grid.trimmed ().isEmpty () && (gridB4 || gridB4BandMode)) {
                     bool c4 = true, c4BandMode = true;
                     confirmed_->matchGrid (grid.trimmed (), c4, c4BandMode, (displayNewGridBand_ ? dialFreq : 0), (displayNewGridBandMode_ ? checkMode : QString {}));
+                    if (pending_ && (!c4 || !c4BandMode)) {   // (2026-11-22) or confirmed for now (D10)
+                        bool p4 = false, p4BandMode = false;
+                        pending_->matchGrid (grid.trimmed (), p4, p4BandMode, (displayNewGridBand_ ? dialFreq : 0), (displayNewGridBandMode_ ? checkMode : QString {}));
+                        c4 = c4 || p4; c4BandMode = c4BandMode || p4BandMode;
+                    }
                     confirm (gridB4, gridB4BandMode, c4, c4BandMode, gridB4, gridB4BandMode, dp::NewGrid, dp::NewGridBand);
                 }
                 if (displayNewState_ && stateJudged && (stateB4 || stateB4Band)) {
                     bool c4 = true, c4Band = true;
                     confirmed_->matchState (countryName.section (',', 1, 1).trimmed (), checkCall, stateGrid (), c4, c4Band,
                                             displayNewStateBand_ ? dialFreq : 0, displayNewStateBandMode_ ? checkMode : QString {});
+                    if (pending_ && (!c4 || !c4Band)) {   // (2026-11-22) or confirmed for now (D10)
+                        bool p4 = false, p4Band = false;
+                        pending_->matchState (countryName.section (',', 1, 1).trimmed (), checkCall, stateGrid (), p4, p4Band,
+                                              displayNewStateBand_ ? dialFreq : 0, displayNewStateBandMode_ ? checkMode : QString {});
+                        c4 = c4 || p4; c4Band = c4Band || p4Band;
+                    }
                     confirm (stateB4, stateB4Band, c4, c4Band, stateB4, stateB4Band, dp::NewState, dp::NewStateBand);
                 }
             }
@@ -1321,6 +1341,42 @@ int DisplayText::displayDecodedText(DecodedText* decodedText, QString myCall, QS
                 if (!value.isEmpty ()) tierTip = tierSentence (level, value, where.join (' '));
                 else workedTip = judged && dp::noNewTier (priority)   // (review) where a tier could be drawn at all: else a new
                                  && ((displayPotential_ && std_type == 3) || std_type != 3 || otherMessagesMarker_);   // one goes unseen
+                /* CE3TSK 2026-11-22 (TODO.md 3.-280, D12; the operator: "only if the call sign appears as worked considering
+                   all the selected notification settings does the LotW confirmed highlight come into play as lowest priority"):
+                   worked in every tier that is on - nothing fired - and LoTW-confirmed in each, as that tier counts it (its
+                   band and mode): the colour of its own where the worked state is drawn, when Settings asks (off by default),
+                   and the tooltip says so. A tier that cannot judge (no grid, no state) is left out, as on the log's side.
+                   Never in a contest; nothing while no confirmations were downloaded; the rank is the worked one's. */
+                if (workedTip && confirmed_ && !contest_.running) {
+                    confirmedTip = true;
+                    QString confirmedName {countryName};
+                    auto const held = [&] (void (LogBook::* match) (QString, QString&, bool&, bool&, double, QString), bool on, bool band, bool bandMode) {
+                        if (!on || !confirmedTip) return;
+                        bool c4 = false, c4BandMode = false;
+                        (confirmed_->*match) (checkCall, confirmedName, c4, c4BandMode, band ? dialFreq : 0, bandMode ? checkMode : QString {});
+                        if (!c4 || ((band || bandMode) && !c4BandMode)) confirmedTip = false;
+                    };
+                    held (&LogBook::matchCQZ, displayNewCQZ_, displayNewCQZBand_, displayNewCQZBandMode_);
+                    held (&LogBook::matchITUZ, displayNewITUZ_, displayNewITUZBand_, displayNewITUZBandMode_);
+                    held (&LogBook::matchDXCC, displayNewDXCC_, displayNewDXCCBand_, displayNewDXCCBandMode_);
+                    held (&LogBook::matchPX, displayNewPx_, displayNewPxBand_, displayNewPxBandMode_);
+                    held (&LogBook::matchCall, displayNewCall_, displayNewCallBand_, displayNewCallBandMode_);
+                    if (confirmedTip && displayNewGrid_ && !grid.trimmed ().isEmpty ()) {
+                        bool c4 = false, c4BandMode = false;
+                        confirmed_->matchGrid (grid.trimmed (), c4, c4BandMode, (displayNewGridBand_ ? dialFreq : 0), (displayNewGridBandMode_ ? checkMode : QString {}));
+                        if (!c4 || ((displayNewGridBand_ || displayNewGridBandMode_) && !c4BandMode)) confirmedTip = false;
+                    }
+                    if (confirmedTip && displayNewState_ && stateJudged) {
+                        bool c4 = false, c4Band = false;
+                        confirmed_->matchState (countryName.section (',', 1, 1).trimmed (), checkCall, stateGrid (), c4, c4Band,
+                                                displayNewStateBand_ ? dialFreq : 0, displayNewStateBandMode_ ? checkMode : QString {});
+                        if (!c4 || ((displayNewStateBand_ || displayNewStateBandMode_) && !c4Band)) confirmedTip = false;
+                    }
+                    if (confirmedTip && highlightConfirmed_) {
+                        if ((displayPotential_ && std_type == 3) || std_type != 3) bgColor = color_Confirmed_;
+                        else if (otherMessagesMarker_) servis = servis.left (1) + color_Confirmed_;
+                    }
+                }
                 /* CE3TSK 2026-11-21 (TODO.md 3.-280, D3): the tier that fired is new only because the LoTW user worked in it
                    has not LoTW-confirmed - the colour of its own, the tier's rank kept (a LoTW user's: the level + 1) */
                 if (priority > 0 && priority - 1 < int (sizeof unconfirmedAt) && unconfirmedAt[priority - 1]) {
@@ -1650,7 +1706,8 @@ int DisplayText::displayDecodedText(DecodedText* decodedText, QString myCall, QS
         /* CE3TSK 2026-11-22 (the operator): the line's tooltip - what its colours say after the tier (the text colour, the
            marker cell's, the wanted lists), what the decoder's mark says (lineToolTip ()) */
         QStringList colours;
-        if (workedTip) colours << tr ("Worked before: nothing new in the notifications that are on.");
+        if (workedTip) colours << (confirmedTip ? tr ("Worked before and LoTW-confirmed: nothing new in the notifications that are on.")   // (D12)
+                                                : tr ("Worked before: nothing new in the notifications that are on."));
         if (std_type == 1) colours << tr ("Calls CQ.");
         else if (std_type == 5) colours << tr ("A message to you from your DX call.");
         else if (toMe) colours << tr ("A message to you.");

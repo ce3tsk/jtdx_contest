@@ -3996,6 +3996,16 @@ Right click for insert and delete options.</string>
                 </property>
                </widget>
               </item>
+              <item row="11" column="0" colspan="4">
+               <widget class="QCheckBox" name="highlight_confirmed_check_box">
+                <property name="toolTip">
+                 <string>With LoTW confirmations downloaded from Club Log or QRZ.com, a decode worked in every tier above that is on, and LoTW-confirmed in each of them with the band and mode those tiers count, is shown in its own color. A new tier keeps its own color, and the auto sequencer is not affected. Not in a contest.</string>
+                </property>
+                <property name="text">
+                 <string>Highlight worked calls that are LoTW-confirmed</string>
+                </property>
+               </widget>
+              </item>
               <item row="9" column="4">
                <spacer name="horizontalSpacer_7">
                 <property name="orientation">
@@ -5495,6 +5505,76 @@ Right click for insert and delete options.</string>
                </property>
                <property name="styleSheet">
                 <string notr="true">QLabel{font-weight: bold;background-color: #e0e070;color: #707070}</string>
+               </property>
+               <property name="text">
+                <string>K1ABC</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item row="10" column="0">
+              <widget class="QPushButton" name="pbConfirmed">
+               <property name="minimumSize">
+                <size>
+                 <width>155</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="text">
+                <string>Worked, LoTW-confirmed</string>
+               </property>
+              </widget>
+             </item>
+             <item row="10" column="1">
+              <widget class="QLabel" name="labConfirmed">
+               <property name="minimumSize">
+                <size>
+                 <width>80</width>
+                 <height>18</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">QLabel{font-weight: bold;background-color: #bff2b6}</string>
+               </property>
+               <property name="text">
+                <string>K1ABC</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item row="10" column="2">
+              <widget class="QLabel" name="labMcConfirmed">
+               <property name="minimumSize">
+                <size>
+                 <width>80</width>
+                 <height>18</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">QLabel{font-weight: bold;background-color: #bff2b6;color: #ff0000}</string>
+               </property>
+               <property name="text">
+                <string>K1ABC</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item row="10" column="3">
+              <widget class="QLabel" name="labScConfirmed">
+               <property name="minimumSize">
+                <size>
+                 <width>80</width>
+                 <height>18</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">QLabel{font-weight: bold;background-color: #bff2b6;color: #707070}</string>
                </property>
                <property name="text">
                 <string>K1ABC</string>

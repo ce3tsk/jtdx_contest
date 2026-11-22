@@ -2891,6 +2891,11 @@ Formatera:
         <source>Hint or a-priori decode: the decoder had help with this message; the window's mark does not tell which kind.</source>
         <translation>Ledtråds- eller a priori-avkodning: avkodaren fick hjälp med detta meddelande; fönstrets märke visar inte vilket slag.</translation>
     </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Worked before and LoTW-confirmed: nothing new in the notifications that are on.</source>
+        <translation>Körd tidigare och LoTW-bekräftad: inget nytt i de aviseringar som är påslagna.</translation>
+    </message>
 </context>
 <context>
     <name>EmulateSplitTransceiver</name>
@@ -11453,6 +11458,21 @@ Den första hämtningen tar några minuter; sedan hämtas bara det som ändrats.
         <location filename="../Configuration.ui"/>
         <source>Download LoTW confirmations from &amp;QRZ.com</source>
         <translation>Hämta LoTW-bekräftelser från &amp;QRZ.com</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>With LoTW confirmations downloaded from Club Log or QRZ.com, a decode worked in every tier above that is on, and LoTW-confirmed in each of them with the band and mode those tiers count, is shown in its own color. A new tier keeps its own color, and the auto sequencer is not affected. Not in a contest.</source>
+        <translation>Med LoTW-bekräftelser hämtade från Club Log eller QRZ.com visas en avkodning som är körd på varje påslagen nivå ovan, och LoTW-bekräftad på var och en med det band och den mod som nivåerna räknar, i en egen färg. En ny nivå behåller sin egen färg, och den automatiska sekvenseraren påverkas inte. Inte i en contest.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Highlight worked calls that are LoTW-confirmed</source>
+        <translation>Framhäv körda signaler som är LoTW-bekräftade</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Worked, LoTW-confirmed</source>
+        <translation>Körd, LoTW-bekräftad</translation>
     </message>
 </context>
 <context>

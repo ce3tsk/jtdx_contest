@@ -1406,6 +1406,7 @@ private:
   void initLogIfNeeded ();
   void initConfirmedBook ();   // CE3TSK 2026-11-21 (TODO.md 3.-280)
   QStringList m_confirmedFiles;   // CE3TSK 2026-11-22: the confirmations files read last (Configuration::confirmations_files)
+  LogBook m_pendingBook;          // CE3TSK 2026-11-22 (D10, D12): the log's QSOs confirmed for now, apart from the confirmations
   void setTxStatusColour (QString const& colour);
   void setProgressBarStyle ();
   void applyPaneFloor ();   // CE3TSK: the right pane's floor under Narrow controls

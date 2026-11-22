@@ -10305,13 +10305,15 @@ void MainWindow::initConfirmedBook ()
     }
   int const confirmed {m_confirmedBook.get_qso_count ()};
   /* 2026-11-22 (the operator): the log's QSOs from the newest confirmed QSO's day on count as confirmed for now - and each
-     QSO logged from now on (acceptQSO2): Club Log cannot hold their confirmations yet */
-  m_confirmedFrom = m_confirmedBook.takePending (m_logBook);
-  ui->decodedTextBrowser->setConfirmations (&m_confirmedBook);    // taken only while it holds a QSO (the window's rule)
-  ui->decodedTextBrowser2->setConfirmations (&m_confirmedBook);
-  if (m_config.write_decoded_debug ()) writeToALLTXT (QString {"Confirmations: %1 QSOs from %2, the log's QSOs from %3 on pending (%4 in all)"}
+     QSO logged from now on (acceptQSO2): Club Log cannot hold their confirmations yet. In a book of their own (D12): no
+     LoTW confirmation - the violet tier asks both books, the LoTW-confirmed colour the confirmations alone */
+  m_pendingBook.init (own, "", m_config.timeFrom (), QString {}, m_logBook.countryData ());
+  m_confirmedFrom = m_pendingBook.takePending (m_confirmedBook, m_logBook);
+  ui->decodedTextBrowser->setConfirmations (&m_confirmedBook, &m_pendingBook);    // taken only while it holds a QSO (the window's rule)
+  ui->decodedTextBrowser2->setConfirmations (&m_confirmedBook, &m_pendingBook);
+  if (m_config.write_decoded_debug ()) writeToALLTXT (QString {"Confirmations: %1 QSOs from %2, the log's QSOs from %3 on pending (%4)"}
                                                       .arg (confirmed).arg (m_confirmedFiles.isEmpty () ? QString {"none"} : m_confirmedFiles.join (" and "), m_confirmedFrom)
-                                                      .arg (m_confirmedBook.get_qso_count ()));
+                                                      .arg (m_pendingBook.get_qso_count ()));
 }
 
 void MainWindow::dataFilesUpdated ()
@@ -11951,7 +11953,7 @@ void MainWindow::acceptQSO2(QDateTime const& QSO_date_off, QString const& call, 
   stationSyncLogged (call);   // CE3TSK 2026-10-23: his QSO logged ends a station sync (stationsync.h, decision 3)
   m_logBook.addAsWorked (call, m_config.bands ()->find (dial_freq), mode, date, grid, name);
   /* CE3TSK 2026-11-22 (TODO.md 3.-280, the operator): and confirmed for now - no confirmation of it can be downloaded yet */
-  if (!m_confirmedFrom.isEmpty ()) m_confirmedBook.addAsWorked (call, m_config.bands ()->find (dial_freq), mode, date, grid, name);
+  if (!m_confirmedFrom.isEmpty ()) m_pendingBook.addAsWorked (call, m_config.bands ()->find (dial_freq), mode, date, grid, name);
   /* CE3TSK: the contest log has its own hashes; without this the multiplier and dupe
      highlighting would not reflect a QSO until the next restart. */
   if (m_contest.running) m_contestLog.addAsWorked (call, m_config.bands ()->find (dial_freq), mode, date, grid, name);

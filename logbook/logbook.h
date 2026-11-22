@@ -32,13 +32,14 @@ public:
               bool translatedCountryNames = false);
     CountryDat* countryData ();   /* CE3TSK: to share with a contest logbook */
     QList<contest_score::Qso> contestQsos ();   /* CE3TSK: for the contest score */
-    /* CE3TSK 2026-11-22 (TODO.md 3.-280, the operator): for a book of confirmations (Club Log's LoTW QSLs) - they judge
-       only the QSOs they can hold. Club Log has only what its LoTW Sync fetched, by hand now and then, so the newest
-       confirmed QSO's day is as far as they surely reach: every QSO of `log` from that day on is taken here as
-       confirmed for now, and the caller takes each QSO logged from now on (addAsWorked) - else a LoTW user just worked
-       would count as new again. Returns that day; "" when this book holds no QSO, and then nothing is taken (no
-       confirmations count as none, DisplayText::setConfirmations). */
-    QString takePending (LogBook& log);
+    /* CE3TSK 2026-11-22 (TODO.md 3.-280, the operator): for the book beside the confirmations (Club Log's LoTW QSLs) -
+       they judge only the QSOs they can hold. Club Log has only what its LoTW Sync fetched, by hand now and then, so the
+       newest confirmed QSO's day is as far as they surely reach: every QSO of `log` from that day on is taken HERE, in
+       this book of its own, as confirmed for now, and the caller adds each QSO logged from now on (addAsWorked) - else a
+       LoTW user just worked would count as new again. Apart from `confirmations` (D12): a QSO confirmed for now is no
+       LoTW confirmation - the violet tier counts it, the LoTW-confirmed colour does not. Returns that day; "" when
+       `confirmations` holds no QSO, and then nothing is taken (no confirmations count as none). */
+    QString takePending (LogBook& confirmations, LogBook& log);
     /* CE3TSK 2026-11-22 (TODO.md 3.-280, the operator: "add up both LotW confirmation sources"): every QSO of `other`
        added here as worked (Club Log's confirmations and QRZ.com's in one book); the number added */
     int addAll (LogBook& other);

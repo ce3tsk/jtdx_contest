@@ -2880,6 +2880,11 @@ Format:
         <source>Hint or a-priori decode: the decoder had help with this message; the window's mark does not tell which kind.</source>
         <translation>Descodificação por dica ou a priori: o descodificador teve ajuda com esta mensagem; a marca da janela não diz de que tipo.</translation>
     </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Worked before and LoTW-confirmed: nothing new in the notifications that are on.</source>
+        <translation>Já trabalhado e confirmado no LoTW: nada de novo nas notificações ligadas.</translation>
+    </message>
 </context>
 <context>
     <name>EmulateSplitTransceiver</name>
@@ -11438,6 +11443,21 @@ A primeira transferência demora alguns minutos; depois só é transferido o que
         <location filename="../Configuration.ui"/>
         <source>Download LoTW confirmations from &amp;QRZ.com</source>
         <translation>Transferir confirmações do LoTW do &amp;QRZ.com</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>With LoTW confirmations downloaded from Club Log or QRZ.com, a decode worked in every tier above that is on, and LoTW-confirmed in each of them with the band and mode those tiers count, is shown in its own color. A new tier keeps its own color, and the auto sequencer is not affected. Not in a contest.</source>
+        <translation>Com as confirmações do LoTW transferidas do Club Log ou do QRZ.com, uma descodificação trabalhada em cada nível acima que esteja ligado, e confirmada pelo LoTW em cada um com a banda e o modo que esses níveis contam, é mostrada na sua própria cor. Um nível novo mantém a sua cor, e o sequenciador automático não é afetado. Não em concursos.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Highlight worked calls that are LoTW-confirmed</source>
+        <translation>Destacar indicativos trabalhados confirmados pelo LoTW</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Worked, LoTW-confirmed</source>
+        <translation>Trabalhado, confirmado no LoTW</translation>
     </message>
 </context>
 <context>

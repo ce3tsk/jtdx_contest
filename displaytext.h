@@ -30,7 +30,9 @@ public:
        as never worked, in the colour of its own (Configuration::countUnconfirmedAsNew). 2026-11-22 (the operator): taken
        only while they hold a QSO - none downloaded, a download with none, none of My Call's - or every LoTW user worked
        would count as new */
-    void setConfirmations (LogBook * confirmed);
+    /* CE3TSK 2026-11-22: the confirmations (none while they hold no QSO) and, beside them, the log's QSOs confirmed for now
+       (LogBook::takePending) - the violet tier counts both, the LoTW-confirmed colour the confirmations alone (D12) */
+    void setConfirmations (LogBook * confirmed, LogBook * pending = nullptr);
     /* CE3TSK 2026-09-30: where a window line's marker stands - right after the message, where
        displayDecodedText cuts the decoder's line: 49 for FT8, FT4 and FT2 (seconds in the time), 40 for
        JT65 and JT9. The country follows it. */
@@ -184,6 +186,9 @@ private:
     QString color_NewCallBand_;
     QString color_Unconfirmed_;            // CE3TSK 2026-11-21 (3.-280): a LoTW user worked but not LoTW-confirmed
     bool countUnconfirmed_ = false;        //   ... counted as never worked (Settings > Notifications, on by default)
+    QString color_Confirmed_;              // CE3TSK 2026-11-22 (3.-280, D12): a worked call LoTW-confirmed in every tier on
+    LogBook * pending_ {nullptr};          // CE3TSK 2026-11-22 (D10, D12): the log's QSOs confirmed for now (setConfirmations)
+    bool highlightConfirmed_ = false;      //   ... in its colour (Settings > Notifications, off by default)
     LogBook * confirmed_ = nullptr;        //   ... by these confirmations (setConfirmations)
     QString hideContinents_;
     QString countries_;

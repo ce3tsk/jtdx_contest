@@ -263,6 +263,7 @@ public:
      never worked in every highlight tier that is on, in a colour of its own (on by default; nothing before confirmations
      are downloaded, never in a contest) */
   bool countUnconfirmedAsNew () const;
+  bool highlightConfirmed () const;   // CE3TSK 2026-11-22 (TODO.md 3.-280, D12): a worked call LoTW-confirmed in its colour
   bool showAzimuth () const;    //   and the azimuth
   bool scroll () const;
   int watchdog () const;
@@ -331,6 +332,7 @@ public:
   QColor color_NewStateBand () const;
   QColor color_NewCall () const;
   QColor color_Unconfirmed () const;   // CE3TSK 2026-11-21 (TODO.md 3.-280): a LoTW user worked, not LoTW-confirmed
+  QColor color_Confirmed () const;     // CE3TSK 2026-11-22 (D12): a worked call LoTW-confirmed in every tier on
   QColor color_NewCallBand () const;
   QColor color_NewPx () const;
   QColor color_NewPxBand () const;

@@ -2890,6 +2890,11 @@ Format:
         <source>Hint or a-priori decode: the decoder had help with this message; the window's mark does not tell which kind.</source>
         <translation>Hint- oder A-priori-Dekodierung: Der Decoder hatte bei dieser Nachricht Hilfe; die Markierung im Fenster sagt nicht, welche Art.</translation>
     </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Worked before and LoTW-confirmed: nothing new in the notifications that are on.</source>
+        <translation>Bereits gearbeitet und per LoTW bestätigt: nichts Neues in den eingeschalteten Benachrichtigungen.</translation>
+    </message>
 </context>
 <context>
     <name>EmulateSplitTransceiver</name>
@@ -11450,6 +11455,21 @@ Der erste Download dauert einige Minuten; danach wird nur abgerufen, was sich ge
         <location filename="../Configuration.ui"/>
         <source>Download LoTW confirmations from &amp;QRZ.com</source>
         <translation>LoTW-Bestätigungen von &amp;QRZ.com herunterladen</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>With LoTW confirmations downloaded from Club Log or QRZ.com, a decode worked in every tier above that is on, and LoTW-confirmed in each of them with the band and mode those tiers count, is shown in its own color. A new tier keeps its own color, and the auto sequencer is not affected. Not in a contest.</source>
+        <translation>Mit von Club Log oder QRZ.com heruntergeladenen LoTW-Bestätigungen wird eine Dekodierung, die in jeder eingeschalteten Stufe oben gearbeitet und in jeder davon per LoTW bestätigt ist, mit dem Band und der Betriebsart, die diese Stufen zählen, in einer eigenen Farbe angezeigt. Eine neue Stufe behält ihre eigene Farbe, und der automatische Ablauf bleibt unberührt. Nicht in einem Contest.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Highlight worked calls that are LoTW-confirmed</source>
+        <translation>Gearbeitete, per LoTW bestätigte Rufzeichen hervorheben</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Worked, LoTW-confirmed</source>
+        <translation>Gearbeitet, per LoTW bestätigt</translation>
     </message>
 </context>
 <context>

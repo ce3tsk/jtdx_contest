@@ -2890,6 +2890,11 @@ Format:
         <source>Hint or a-priori decode: the decoder had help with this message; the window's mark does not tell which kind.</source>
         <translation>ヒントまたはアプリオリデコード：このメッセージのデコードには補助がありましたが、ウィンドウのマークではどちらかは分かりません。</translation>
     </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Worked before and LoTW-confirmed: nothing new in the notifications that are on.</source>
+        <translation>交信済みで LoTW コンファーム済み：オンになっている通知に新しいものはありません。</translation>
+    </message>
 </context>
 <context>
     <name>EmulateSplitTransceiver</name>
@@ -11425,6 +11430,21 @@ QRZ.com の Logbook の Settings で：
         <location filename="../Configuration.ui"/>
         <source>Download LoTW confirmations from &amp;QRZ.com</source>
         <translation>LoTW のコンファームを QRZ.com からダウンロード</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>With LoTW confirmations downloaded from Club Log or QRZ.com, a decode worked in every tier above that is on, and LoTW-confirmed in each of them with the band and mode those tiers count, is shown in its own color. A new tier keeps its own color, and the auto sequencer is not affected. Not in a contest.</source>
+        <translation>Club Log または QRZ.com からダウンロードした LoTW のコンファームがあると、上でオンになっている各段階で交信済みで、それぞれの段階が数えるバンドとモードで LoTW コンファーム済みのデコードは、専用の色で表示されます。新しい段階は自分の色のままで、自動シーケンサーには影響しません。コンテスト中は対象外です。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Highlight worked calls that are LoTW-confirmed</source>
+        <translation>LoTW でコンファーム済みの交信済みコールサインを強調表示</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Worked, LoTW-confirmed</source>
+        <translation>交信済み、LoTW コンファーム済み</translation>
     </message>
 </context>
 <context>

@@ -2890,6 +2890,11 @@ Format:
         <source>Hint or a-priori decode: the decoder had help with this message; the window's mark does not tell which kind.</source>
         <translation>힌트 또는 선험 디코드: 디코더가 이 메시지에 도움을 받았습니다. 창의 표시로는 어느 쪽인지 알 수 없습니다.</translation>
     </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Worked before and LoTW-confirmed: nothing new in the notifications that are on.</source>
+        <translation>이미 교신했고 LoTW 확인됨: 켜져 있는 알림에 새로운 것이 없습니다.</translation>
+    </message>
 </context>
 <context>
     <name>EmulateSplitTransceiver</name>
@@ -11447,6 +11452,21 @@ QRZ.com Logbook의 Settings에서:
         <location filename="../Configuration.ui"/>
         <source>Download LoTW confirmations from &amp;QRZ.com</source>
         <translation>QRZ.com에서 LoTW 확인 다운로드(&amp;Q)</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>With LoTW confirmations downloaded from Club Log or QRZ.com, a decode worked in every tier above that is on, and LoTW-confirmed in each of them with the band and mode those tiers count, is shown in its own color. A new tier keeps its own color, and the auto sequencer is not affected. Not in a contest.</source>
+        <translation>Club Log 또는 QRZ.com에서 받은 LoTW 확인이 있으면, 위에서 켜진 모든 단계에서 교신했고 그 단계들이 세는 밴드와 모드로 각각 LoTW 확인된 디코드는 고유한 색으로 표시됩니다. 새 단계는 자기 색을 유지하며, 자동 시퀀서에는 영향이 없습니다. 콘테스트에서는 적용되지 않습니다.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Highlight worked calls that are LoTW-confirmed</source>
+        <translation>LoTW로 확인된 교신한 호출부호 강조</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Worked, LoTW-confirmed</source>
+        <translation>교신함, LoTW 확인됨</translation>
     </message>
 </context>
 <context>

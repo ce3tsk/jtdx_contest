@@ -2894,6 +2894,11 @@ Format:
         <source>Hint or a-priori decode: the decoder had help with this message; the window's mark does not tell which kind.</source>
         <translation>Décodage par indice ou a priori : le décodeur a été aidé pour ce message ; la marque de la fenêtre ne dit pas de quelle sorte.</translation>
     </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Worked before and LoTW-confirmed: nothing new in the notifications that are on.</source>
+        <translation>Déjà contacté et confirmé par LoTW : rien de nouveau dans les notifications activées.</translation>
+    </message>
 </context>
 <context>
     <name>EmulateSplitTransceiver</name>
@@ -11458,6 +11463,21 @@ Le premier téléchargement prend quelques minutes ; ensuite, seul ce qui a chan
         <location filename="../Configuration.ui"/>
         <source>Download LoTW confirmations from &amp;QRZ.com</source>
         <translation>Télécharger les confirmations LoTW depuis &amp;QRZ.com</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>With LoTW confirmations downloaded from Club Log or QRZ.com, a decode worked in every tier above that is on, and LoTW-confirmed in each of them with the band and mode those tiers count, is shown in its own color. A new tier keeps its own color, and the auto sequencer is not affected. Not in a contest.</source>
+        <translation>Avec les confirmations LoTW téléchargées depuis Club Log ou QRZ.com, un décodage contacté dans chaque niveau ci-dessus qui est activé, et confirmé par LoTW dans chacun avec la bande et le mode que comptent ces niveaux, s'affiche dans sa propre couleur. Un nouveau niveau garde sa couleur, et le séquenceur automatique n'est pas concerné. Pas en concours.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Highlight worked calls that are LoTW-confirmed</source>
+        <translation>Mettre en évidence les indicatifs contactés confirmés par LoTW</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Worked, LoTW-confirmed</source>
+        <translation>Contacté, confirmé LoTW</translation>
     </message>
 </context>
 <context>

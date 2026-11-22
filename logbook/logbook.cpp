@@ -275,9 +275,9 @@ bool LogBook::getData(const QString call, QString &gridsquare, QString &name)
     return _log.getData(call,gridsquare,name);
 }
 
-QString LogBook::takePending (LogBook& log)   /* CE3TSK 2026-11-22: see logbook.h */
+QString LogBook::takePending (LogBook& confirmations, LogBook& log)   /* CE3TSK 2026-11-22: see logbook.h */
 {
-    QString const from {_log.newestDate ()};
+    QString const from {confirmations._log.newestDate ()};
     if (!from.isEmpty ()) _log.addFrom (log._log, from);
     return from;
 }

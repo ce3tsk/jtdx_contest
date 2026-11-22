@@ -2890,6 +2890,11 @@ Format:
         <source>Hint or a-priori decode: the decoder had help with this message; the window's mark does not tell which kind.</source>
         <translation>提示解码或先验解码：解码器在这条消息上得到了辅助；窗口中的标记无法说明是哪一种。</translation>
     </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Worked before and LoTW-confirmed: nothing new in the notifications that are on.</source>
+        <translation>曾经通联且经 LoTW 确认：已开启的通知中没有新内容。</translation>
+    </message>
 </context>
 <context>
     <name>EmulateSplitTransceiver</name>
@@ -11449,6 +11454,21 @@ QRZ.com 只有它已导入的 LoTW 确认。
         <location filename="../Configuration.ui"/>
         <source>Download LoTW confirmations from &amp;QRZ.com</source>
         <translation>从 QRZ.com 下载 LoTW 确认(&amp;Z)</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>With LoTW confirmations downloaded from Club Log or QRZ.com, a decode worked in every tier above that is on, and LoTW-confirmed in each of them with the band and mode those tiers count, is shown in its own color. A new tier keeps its own color, and the auto sequencer is not affected. Not in a contest.</source>
+        <translation>下载了 Club Log 或 QRZ.com 的 LoTW 确认后，在上面每个已开启的级别中都已通联、并在每个级别按其计算的波段和模式经 LoTW 确认的解码，以其专用颜色显示。新的级别保留自己的颜色，自动序列器不受影响。比赛中不适用。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Highlight worked calls that are LoTW-confirmed</source>
+        <translation>突出显示经 LoTW 确认的已通联呼号</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Worked, LoTW-confirmed</source>
+        <translation>已通联，经 LoTW 确认</translation>
     </message>
 </context>
 <context>

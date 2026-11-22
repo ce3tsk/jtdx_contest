@@ -2890,6 +2890,11 @@ Formátum:
         <source>Hint or a-priori decode: the decoder had help with this message; the window's mark does not tell which kind.</source>
         <translation>Hint vagy a priori dekódolás: a dekóder segítséget kapott ehhez az üzenethez; az ablak jele nem mutatja, melyik fajtát.</translation>
     </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Worked before and LoTW-confirmed: nothing new in the notifications that are on.</source>
+        <translation>Volt már QSO, LoTW-n igazolva: semmi új a bekapcsolt értesítésekben.</translation>
+    </message>
 </context>
 <context>
     <name>EmulateSplitTransceiver</name>
@@ -11446,6 +11451,21 @@ Az első letöltés néhány percig tart; utána csak a változások töltődnek
         <location filename="../Configuration.ui"/>
         <source>Download LoTW confirmations from &amp;QRZ.com</source>
         <translation>LoTW visszaigazolások letöltése a &amp;QRZ.com-ról</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>With LoTW confirmations downloaded from Club Log or QRZ.com, a decode worked in every tier above that is on, and LoTW-confirmed in each of them with the band and mode those tiers count, is shown in its own color. A new tier keeps its own color, and the auto sequencer is not affected. Not in a contest.</source>
+        <translation>A Club Logból vagy a QRZ.com-ról letöltött LoTW-visszaigazolásokkal a fenti bekapcsolt szintek mindegyikében forgalmazott, és mindegyikben a LoTW-n igazolt dekódolás – az e szintek által számolt sávval és üzemmóddal – saját színével jelenik meg. Egy új szint megtartja a saját színét, és az automatikus sorrendvezérlőt nem érinti. Versenyben nem.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Highlight worked calls that are LoTW-confirmed</source>
+        <translation>A forgalmazott, LoTW-n igazolt hívójelek kiemelése</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Worked, LoTW-confirmed</source>
+        <translation>Forgalmazva, LoTW-n igazolva</translation>
     </message>
 </context>
 <context>

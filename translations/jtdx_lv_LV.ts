@@ -2889,6 +2889,11 @@ Formāts:
         <source>Hint or a-priori decode: the decoder had help with this message; the window's mark does not tell which kind.</source>
         <translation>Dekodēšana ar norādi vai a priori: dekoderam šim ziņojumam bija palīdzība; loga atzīme nepasaka, kāda veida.</translation>
     </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Worked before and LoTW-confirmed: nothing new in the notifications that are on.</source>
+        <translation>Jau strādāts un apstiprināts LoTW: ieslēgtajos paziņojumos nekā jauna.</translation>
+    </message>
 </context>
 <context>
     <name>EmulateSplitTransceiver</name>
@@ -11448,6 +11453,21 @@ Pirmā lejupielāde aizņem dažas minūtes; pēc tam tiek iegūts tikai tas, ka
         <location filename="../Configuration.ui"/>
         <source>Download LoTW confirmations from &amp;QRZ.com</source>
         <translation>Lejupielādēt LoTW apstiprinājumus no &amp;QRZ.com</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>With LoTW confirmations downloaded from Club Log or QRZ.com, a decode worked in every tier above that is on, and LoTW-confirmed in each of them with the band and mode those tiers count, is shown in its own color. A new tier keeps its own color, and the auto sequencer is not affected. Not in a contest.</source>
+        <translation>Ar no Club Log vai QRZ.com lejupielādētiem LoTW apstiprinājumiem dekodējums, kas strādāts katrā augstāk ieslēgtajā līmenī un katrā no tiem apstiprināts LoTW ar diapazonu un režīmu, ko šie līmeņi skaita, tiek parādīts savā krāsā. Jauns līmenis patur savu krāsu, un automātisko sekvencētāju tas neietekmē. Ne sacensībās.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Highlight worked calls that are LoTW-confirmed</source>
+        <translation>Izcelt strādātos izsaukuma signālus, kas apstiprināti LoTW</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Worked, LoTW-confirmed</source>
+        <translation>Strādāts, apstiprināts LoTW</translation>
     </message>
 </context>
 <context>
