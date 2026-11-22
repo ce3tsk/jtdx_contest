@@ -41,11 +41,16 @@ public:
 
   // max_body_size is not enforced as a failure here: the read loop simply stops once the body is
   // past it and the caller reports it, so the size rule stays in one place
-  void start (QString const& url, QString const& user_agent, qint64 max_body_size);
+  // CE3TSK 2026-11-21 (TODO.md 3.-280): method, headers ("Name: value\r\n" each) and body for Club Log's POST; a
+  // request with headers follows no redirect (FileDownload::Request); timeout_ms bounds each wait for the server
+  void start (QString const& url, QString const& user_agent, qint64 max_body_size,
+              QByteArray const& method = "GET", QByteArray const& headers = QByteArray {},
+              QByteArray const& body = QByteArray {}, int timeout_ms = 20000);
   void abort ();
   bool running () const;
 
-  Q_SIGNAL void fetched (QByteArray const& body, int http_status);
+  // retry_after: the reply's Retry-After header as it came, empty when it had none
+  Q_SIGNAL void fetched (QByteArray const& body, int http_status, QByteArray const& retry_after);
   // the transport-level reason, already worded by Windows; the caller decides how to present it
   Q_SIGNAL void failed (QString const& detail);
 

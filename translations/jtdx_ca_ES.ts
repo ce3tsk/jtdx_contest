@@ -567,6 +567,71 @@ Format:
         <source>Hard to read: this text color stands only %1:1 against its background, less than 3:1. The Recommended colors button restores colors that read well.</source>
         <translation>Difícil de llegir: aquest color de text només arriba a %1:1 respecte al seu fons, menys de 3:1. El botó Colors recomanats restaura colors que es llegeixen bé.</translation>
     </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>This is not a Club Log token</source>
+        <translation>Això no és un testimoni de Club Log</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>A Club Log API token begins with cl_. Make one in Club Log under Settings &gt; API, copy it with the button beside it and paste it here.</source>
+        <translation>Un testimoni de l'API de Club Log comença per cl_. Creeu-ne un a Club Log a Settings &gt; API, copieu-lo amb el botó del costat i enganxeu-lo aquí.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>The Club Log token could not be saved</source>
+        <translation>No s'ha pogut desar el testimoni de Club Log</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Club Log downloads are switched off (JTDX_CLUBLOG_API).</source>
+        <translation>Les descàrregues de Club Log estan desactivades (JTDX_CLUBLOG_API).</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>My Call on the General tab is not a call Club Log can have a log of.</source>
+        <translation>El meu Indicatiu a la pestanya General no és un indicatiu del qual Club Log pugui tenir un registre.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Download from Club Log failed</source>
+        <translation>Ha fallat la descàrrega de Club Log</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>The answer was not a Club Log ADIF export.</source>
+        <translation>La resposta no era una exportació ADIF de Club Log.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Club Log refused the token (HTTP status %1). Make a new one in Club Log under Settings &gt; API and paste it here.</source>
+        <translation>Club Log ha rebutjat el testimoni (estat HTTP %1). Creeu-ne un de nou a Club Log a Settings &gt; API i enganxeu-lo aquí.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Club Log asks to wait until %1 UTC.</source>
+        <translation>Club Log demana esperar fins a les %1 UTC.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>No token: nothing is downloaded from Club Log.</source>
+        <translation>Sense testimoni: no es descarrega res de Club Log.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1 of %2 QSOs confirmed by LoTW, %3 DXCC entities; downloaded %4 UTC</source>
+        <translation>%1 de %2 QSO confirmats per LoTW, %3 entitats DXCC; descarregat el %4 UTC</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Not downloaded yet.</source>
+        <translation>Encara no s'ha descarregat.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Club Log refused the token. Make a new one in Club Log under Settings &gt; API and paste it here.</source>
+        <translation>Club Log ha rebutjat el testimoni. Creeu-ne un de nou a Club Log a Settings &gt; API i enganxeu-lo aquí.</translation>
+    </message>
 </context>
 <context>
     <name>CountryDat</name>
@@ -11029,6 +11094,38 @@ canvi en la targeta de so</translation>
         <location filename="../Configuration.ui"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;International FT Challenge, FT8 and FT4 on 80, 40, 20, 15 and 10 m. The normal QSO: your grid in Tx1, then the signal reports, so Skip Tx 1 is off and cannot be switched on. A QSO scores 1 point plus 1 for each full 3000 km. Without the other station's grid it scores 1 point, and the contest log gets ZZ00 for the grid. A station counts once per band. The multiplier is the 2 character grid field on each band.&lt;/p&gt;&lt;p&gt;While this is selected the grid highlighting below is set to per band on the grid field, and cannot be changed by hand. Your own settings are restored when you switch back to None.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;International FT Challenge, FT8 i FT4 a 80, 40, 20, 15 i 10 m. El QSO normal: el vostre localitzador al Tx1 i després els informes de senyal, per això Ometre TX 1 està desactivat i no es pot activar. Un QSO val 1 punt més 1 per cada 3000 km complets. Sense el localitzador de l'altra estació val 1 punt, i el registre del concurs hi posa ZZ00 com a localitzador. Una estació compta una vegada per banda. El multiplicador és el camp de localitzador de 2 caràcters a cada banda.&lt;/p&gt;&lt;p&gt;Mentre això estigui seleccionat, el ressaltat de localitzadors de sota es fixa per banda sobre el camp del localitzador i no es pot canviar a mà. La vostra configuració es restaura quan torneu a Cap.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Club Log to&amp;ken:</source>
+        <translation>&amp;Testimoni de Club Log:</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Your Club Log API token. To create one, log in to Club Log, go to Settings &gt; API and click the "Create token" button there. Copy the token, paste it into this box and press OK.
+With it the program downloads your LoTW confirmations from Club Log at the start and every 12 hours. It is kept in a file of its own that only you can read, never in the settings file.</source>
+        <translation>El vostre testimoni de l'API de Club Log. Per crear-ne un, inicieu la sessió a Club Log, aneu a Settings &gt; API i feu-hi clic al botó "Create token". Copieu el testimoni, enganxeu-lo en aquest quadre i premeu Acceptar.
+Amb ell el programa descarrega les vostres confirmacions de LoTW des de Club Log en iniciar-se i cada 12 hores. Es desa en un fitxer propi que només vós podeu llegir, mai al fitxer de configuració.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Download your LoTW confirmations from Club Log now; the program also does it at the start and every 12 hours.
+Club Log has only the LoTW confirmations it has fetched.
+In Club Log, under Tools &gt; LoTW Sync:
+1. Certificates: add your LoTW certificate once.
+2. Download confirmations: fetch the new ones now and then.
+To fetch the whole LoTW record once, clear "Only confirmations since the last download" there first.</source>
+        <translation>Descarrega ara les vostres confirmacions de LoTW des de Club Log; el programa també ho fa en iniciar-se i cada 12 hores.
+Club Log només té les confirmacions de LoTW que ha obtingut.
+A Club Log, a Tools &gt; LoTW Sync:
+1. Certificates: afegiu-hi una vegada el vostre certificat de LoTW.
+2. Download confirmations: obteniu-hi les noves de tant en tant.
+Per obtenir una vegada tot el registre de LoTW, desmarqueu-hi abans "Only confirmations since the last download".</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Do&amp;wnload LoTW confirmations from Club Log</source>
+        <translation>Descarre&amp;ga les confirmacions de LoTW de Club Log</translation>
     </message>
 </context>
 <context>

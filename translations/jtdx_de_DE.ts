@@ -563,6 +563,71 @@ Format:
         <source>Hard to read: this text color stands only %1:1 against its background, less than 3:1. The Recommended colors button restores colors that read well.</source>
         <translation>Schwer lesbar: Diese Textfarbe hebt sich nur mit %1:1 von ihrem Hintergrund ab, weniger als 3:1. Die Schaltfläche Empfohlene Farben stellt gut lesbare Farben wieder her.</translation>
     </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>This is not a Club Log token</source>
+        <translation>Das ist kein Club-Log-Token</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>A Club Log API token begins with cl_. Make one in Club Log under Settings &gt; API, copy it with the button beside it and paste it here.</source>
+        <translation>Ein API-Token von Club Log beginnt mit cl_. Erstellen Sie eines in Club Log unter Settings &gt; API, kopieren Sie es mit der Schaltfläche daneben und fügen Sie es hier ein.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>The Club Log token could not be saved</source>
+        <translation>Das Club-Log-Token konnte nicht gespeichert werden</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Club Log downloads are switched off (JTDX_CLUBLOG_API).</source>
+        <translation>Downloads von Club Log sind ausgeschaltet (JTDX_CLUBLOG_API).</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>My Call on the General tab is not a call Club Log can have a log of.</source>
+        <translation>Mein Rufzeichen auf der Registerkarte Allgemein ist kein Rufzeichen, zu dem Club Log ein Log haben kann.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Download from Club Log failed</source>
+        <translation>Download von Club Log fehlgeschlagen</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>The answer was not a Club Log ADIF export.</source>
+        <translation>Die Antwort war kein ADIF-Export von Club Log.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Club Log refused the token (HTTP status %1). Make a new one in Club Log under Settings &gt; API and paste it here.</source>
+        <translation>Club Log hat das Token abgelehnt (HTTP-Status %1). Erstellen Sie in Club Log unter Settings &gt; API ein neues und fügen Sie es hier ein.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Club Log asks to wait until %1 UTC.</source>
+        <translation>Club Log bittet, bis %1 UTC zu warten.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>No token: nothing is downloaded from Club Log.</source>
+        <translation>Kein Token: Von Club Log wird nichts heruntergeladen.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1 of %2 QSOs confirmed by LoTW, %3 DXCC entities; downloaded %4 UTC</source>
+        <translation>%1 von %2 QSOs über LoTW bestätigt, %3 DXCC-Gebiete; heruntergeladen %4 UTC</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Not downloaded yet.</source>
+        <translation>Noch nicht heruntergeladen.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Club Log refused the token. Make a new one in Club Log under Settings &gt; API and paste it here.</source>
+        <translation>Club Log hat das Token abgelehnt. Erstellen Sie in Club Log unter Settings &gt; API ein neues und fügen Sie es hier ein.</translation>
+    </message>
 </context>
 <context>
     <name>CountryDat</name>
@@ -11016,6 +11081,38 @@ Zurücksetzen der Funkgeräteschnittstelle und Übernahme etwaiger
         <location filename="../Configuration.ui"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;International FT Challenge, FT8 and FT4 on 80, 40, 20, 15 and 10 m. The normal QSO: your grid in Tx1, then the signal reports, so Skip Tx 1 is off and cannot be switched on. A QSO scores 1 point plus 1 for each full 3000 km. Without the other station's grid it scores 1 point, and the contest log gets ZZ00 for the grid. A station counts once per band. The multiplier is the 2 character grid field on each band.&lt;/p&gt;&lt;p&gt;While this is selected the grid highlighting below is set to per band on the grid field, and cannot be changed by hand. Your own settings are restored when you switch back to None.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;International FT Challenge, FT8 und FT4 auf 80, 40, 20, 15 und 10 m. Das normale QSO: Ihr Locator in Tx1, danach die Rapporte, daher ist 'Tx 1 überspringen' aus und lässt sich nicht einschalten. Ein QSO zählt 1 Punkt plus 1 für je volle 3000 km. Ohne den Locator der Gegenstation zählt es 1 Punkt, und das Contest-Log erhält dafür den Locator ZZ00. Eine Station zählt einmal je Band. Der Multiplikator ist das zweistellige Locator-Feld auf jedem Band.&lt;/p&gt;&lt;p&gt;Solange dies gewählt ist, steht die Locator-Hervorhebung unten fest auf 'je Band' für das Locator-Feld und kann nicht von Hand geändert werden. Ihre eigenen Einstellungen werden wiederhergestellt, sobald Sie auf Keiner zurückschalten.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Club Log to&amp;ken:</source>
+        <translation>Club-Log-T&amp;oken:</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Your Club Log API token. To create one, log in to Club Log, go to Settings &gt; API and click the "Create token" button there. Copy the token, paste it into this box and press OK.
+With it the program downloads your LoTW confirmations from Club Log at the start and every 12 hours. It is kept in a file of its own that only you can read, never in the settings file.</source>
+        <translation>Ihr API-Token von Club Log. So erstellen Sie eines: Melden Sie sich bei Club Log an, gehen Sie zu Settings &gt; API und klicken Sie dort auf die Schaltfläche "Create token". Kopieren Sie das Token, fügen Sie es in dieses Feld ein und klicken Sie auf OK.
+Damit lädt das Programm beim Start und alle 12 Stunden Ihre LoTW-Bestätigungen von Club Log herunter. Es wird in einer eigenen Datei gespeichert, die nur Sie lesen können, nie in der Einstellungsdatei.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Download your LoTW confirmations from Club Log now; the program also does it at the start and every 12 hours.
+Club Log has only the LoTW confirmations it has fetched.
+In Club Log, under Tools &gt; LoTW Sync:
+1. Certificates: add your LoTW certificate once.
+2. Download confirmations: fetch the new ones now and then.
+To fetch the whole LoTW record once, clear "Only confirmations since the last download" there first.</source>
+        <translation>Ihre LoTW-Bestätigungen jetzt von Club Log herunterladen; das Programm tut das auch beim Start und alle 12 Stunden.
+Club Log hat nur die LoTW-Bestätigungen, die es abgerufen hat.
+In Club Log unter Tools &gt; LoTW Sync:
+1. Certificates: Ihr LoTW-Zertifikat einmal hinzufügen.
+2. Download confirmations: die neuen von Zeit zu Zeit abrufen.
+Um einmal den ganzen LoTW-Bestand abzurufen, dort vorher "Only confirmations since the last download" abwählen.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Do&amp;wnload LoTW confirmations from Club Log</source>
+        <translation>LoTW-Bestätigungen von Club Log heru&amp;nterladen</translation>
     </message>
 </context>
 <context>

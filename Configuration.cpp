@@ -199,6 +199,7 @@ extern "C" {
 #include "JTDXMessageBox.hpp"
 #include "FileDownload.hpp"            /* CE3TSK */
 #include "call3file.h"   // CE3TSK 2026-10-23: CALL3.TXT's download (TODO.md 3.-199)
+#include "clublog.h"     // CE3TSK 2026-11-21: Club Log's confirmed QSOs (TODO.md 3.-280)
 #include "logbook/countrydat.h"       /* CE3TSK */
 #include "ownstation.h"                /* CE3TSK 2026-10-04 */
 
@@ -657,6 +658,14 @@ private:
                                  QDate (* version_of) (QByteArray const&), QString const& not_that_file);
   void data_file_download_failed (char const * file_name, FileDownload::Failure, QString const& detail);
   void update_data_file_labels ();
+  /* CE3TSK 2026-11-21 (TODO.md 3.-280): Club Log's confirmed QSOs (clublog.h) - at the start and every
+     club_log::refresh_hours when a token is there, or on the button */
+  Q_SLOT void on_clublog_download_push_button_clicked (bool);
+  void start_clublog_download (QString const& token, bool manual);
+  Q_SLOT void clublog_check_due ();   // a slot: a test asks it by name, as the timers do
+  void clublog_finished (bool ok, FileDownload::Failure failure, QString const& detail);
+  void update_clublog_label ();
+  QString clublog_token_file () const {return club_log::token_path (settings_->fileName ());}
   Q_SLOT void on_callNotif_check_box_clicked(bool checked);
   Q_SLOT void on_otherMessagesMarker_check_box_clicked(bool checked);
   Q_SLOT void on_RR73_marker_check_box_clicked(bool checked);
@@ -754,6 +763,16 @@ private:
   FileDownload lotw_download_;
   FileDownload license_download_;   // CE3TSK 2026-10-03
   FileDownload call3_download_;     // CE3TSK 2026-10-23 (TODO.md 3.-199)
+  FileDownload clublog_download_;   // CE3TSK 2026-11-21 (TODO.md 3.-280)
+  QTimer clublog_timer_;            // looks every half hour whether a download is due
+  QString clublog_token_;           // from its own file, never in the ini (clublog.h)
+  bool clublog_manual_ {false};     // the button started it: a failure is shown in a box as well
+  QDateTime clublog_next_try_;      // after a failure, club_log::next_try (); invalid: whenever one is due
+  QString clublog_download_token_;  // the token the running download asks with
+  QString clublog_downloaded_with_; // the token of this run's last good download
+  bool clublog_new_token_ {false};  // a token saved that no download has used yet: the next look asks at once
+  QString clublog_error_;           // the last attempt's failure, worded, for the status line
+  club_log::Export clublog_export_; // the download being written: its validator reads it, its transform writes it
   QDir temp_dir_;
   QDir default_save_directory_;
   QDir save_directory_;
@@ -2328,6 +2347,18 @@ Configuration::impl::impl (Configuration * self, QNetworkAccessManager * network
                                      : download == &license_download_ ? license_file_name : call3_file::file_name, failure, detail);
         });
     }
+
+  // CE3TSK 2026-11-21 (TODO.md 3.-280): Club Log's confirmed QSOs - exactly one of complete() or error() per start
+  clublog_token_ = club_log::read_token (clublog_token_file ());
+  connect (&clublog_download_, &FileDownload::complete, this, [this] (QString const&) {
+      clublog_finished (true, FileDownload::Failure::Network, QString {});
+    });
+  connect (&clublog_download_, &FileDownload::error, this, [this] (FileDownload::Failure failure, QString const& detail) {
+      clublog_finished (false, failure, detail);
+    });
+  connect (&clublog_timer_, &QTimer::timeout, this, &Configuration::impl::clublog_check_due);
+  clublog_timer_.start (30 * 60 * 1000);
+  QTimer::singleShot (60 * 1000, this, [this] {clublog_check_due ();});   // a minute after the start, not in it
   ui_->gridNotif_check_box->setChecked(callNotif_ && gridNotif_);
   ui_->gridNotif_check_box->setEnabled(callNotif_);
   ui_->blueMarker_check_box->setChecked(redMarker_ && blueMarker_);
@@ -2603,6 +2634,8 @@ Configuration::impl::~impl ()
 void Configuration::impl::initialize_models ()
 {
   update_data_file_labels ();   // CE3TSK
+  ui_->clublog_token_edit->setText (clublog_token_);   // CE3TSK 2026-11-21 (TODO.md 3.-280)
+  update_clublog_label ();
 
   //
   // setup PTT port combo box drop down content
@@ -4051,6 +4084,16 @@ void Configuration::impl::set_rig_invariants ()
 
 bool Configuration::impl::validate ()
 {
+  // CE3TSK 2026-11-21 (TODO.md 3.-280): a Club Log token as Club Log makes them, or none
+  {
+    auto const token = ui_->clublog_token_edit->text ().trimmed ();
+    if (!token.isEmpty () && !club_log::plausible_token (token))
+      {
+        JTDXMessageBox::warning_message (this, tr ("This is not a Club Log token"),
+                                         tr ("A Club Log API token begins with cl_. Make one in Club Log under Settings > API, copy it with the button beside it and paste it here."));
+        return false;
+      }
+  }
   if (ui_->sound_input_combo_box->currentIndex () < 0
       && !QAudioDeviceInfo::availableDevices (QAudio::AudioInput).empty ())
     {
@@ -4347,6 +4390,36 @@ void Configuration::impl::accept ()
   eqsl_username_ = ui_->eqsluser_edit->text ();
   eqsl_passwd_ = ui_->eqslpasswd_edit->text ();
   eqsl_nickname_ = ui_->eqslnick_edit->text ();
+  /* CE3TSK 2026-11-21 (TODO.md 3.-280): the Club Log token into its own file (clublog.h), never the ini. A new token
+     undoes a refusal, and a download follows at once: it may be another account's */
+  {
+    auto const token = ui_->clublog_token_edit->text ().trimmed ();
+    if (token != clublog_token_)
+      {
+        auto const why = club_log::write_token (clublog_token_file (), token);
+        if (!why.isEmpty ())
+          {
+            JTDXMessageBox::warning_message (this, tr ("The Club Log token could not be saved"), why);
+          }
+        else
+          {
+            clublog_token_ = token;
+            clublog_next_try_ = QDateTime {};
+            clublog_error_.clear ();
+            {
+              SettingsGroup g {settings_, "Configuration"};
+              settings_->remove (contest_profile::own_key ("ClubLogRefused"));
+              settings_->remove (contest_profile::own_key ("ClubLogRetryAfter"));
+            }
+            // the counts of the last download stay until a download replaces them (the operator 2026-11-21: they were
+            // lost when the time of that download was thrown away here); a token no download has used yet is asked
+            // with at once, without the 12 hours - the one the button has just used is not asked again
+            clublog_new_token_ = !clublog_token_.isEmpty () && clublog_token_ != clublog_downloaded_with_;
+            update_clublog_label ();
+            if (!clublog_token_.isEmpty ()) QTimer::singleShot (0, this, [this] {clublog_check_due ();});
+          }
+      }
+  }
   usesched_ = ui_->UseSched_check_box->isChecked ();
   sched_hh_1_ = ui_->hhComboBox_1->currentText ();
   sched_mm_1_ = ui_->mmComboBox_1->currentText ();
@@ -4733,6 +4806,163 @@ void Configuration::impl::data_file_download_failed (char const * file_name, Fil
     }
   JTDXMessageBox::warning_message (this, tr ("Download of %1 failed").arg (file_name), reason,
                                    tr ("The copy in use has not been changed."));
+}
+
+/* CE3TSK 2026-11-21 (TODO.md 3.-280): Club Log's confirmed QSOs (clublog.h). The button downloads with the token in
+   the box, saved or not yet; the automatic downloads with the saved one. */
+void Configuration::impl::on_clublog_download_push_button_clicked (bool)
+{
+  auto const token = ui_->clublog_token_edit->text ().trimmed ();
+  if (!club_log::plausible_token (token))
+    {
+      JTDXMessageBox::warning_message (this, tr ("This is not a Club Log token"),
+                                       tr ("A Club Log API token begins with cl_. Make one in Club Log under Settings > API, copy it with the button beside it and paste it here."));
+      return;
+    }
+  start_clublog_download (token, true);
+}
+
+void Configuration::impl::clublog_check_due ()
+{
+  if (clublog_download_.running () || clublog_token_.isEmpty () || !network_manager_) return;
+  auto const now = QDateTime::currentDateTimeUtc ();
+  if (clublog_next_try_.isValid () && now < clublog_next_try_) return;
+  QDateTime last;
+  {
+    SettingsGroup g {settings_, "Configuration"};
+    if (settings_->value (contest_profile::own_key ("ClubLogRefused"), false).toBool ()) return;   // the user must act
+    auto const retry = settings_->value (contest_profile::own_key ("ClubLogRetryAfter")).toDateTime ();
+    if (retry.isValid () && now < retry) return;
+    last = settings_->value (contest_profile::own_key ("ClubLogDownloaded")).toDateTime ();
+  }
+  if (!clublog_new_token_ && !club_log::due (last, now)) return;
+  start_clublog_download (clublog_token_, false);
+}
+
+void Configuration::impl::start_clublog_download (QString const& token, bool manual)
+{
+  if (clublog_download_.running () || !network_manager_) return;
+  auto const url = club_log::export_url (club_log::api_base (), my_callsign_);
+  if (url.isEmpty ())
+    {
+      clublog_error_ = club_log::api_base ().isEmpty () ? tr ("Club Log downloads are switched off (JTDX_CLUBLOG_API).")
+                                                         : tr ("My Call on the General tab is not a call Club Log can have a log of.");
+      update_clublog_label ();
+      if (manual) JTDXMessageBox::warning_message (this, tr ("Download from Club Log failed"), clublog_error_);
+      return;
+    }
+  clublog_manual_ = manual;
+  clublog_download_token_ = token;
+  clublog_error_.clear ();
+  FileDownload::Request request;
+  request.method = "POST";
+  request.headers = {{"Authorization", "Bearer " + token.toLatin1 ()}, {"Content-Type", "application/json"}};
+  request.body = "{}";   // the whole log
+  request.max_body_size = club_log::max_export_size;
+  request.timeout_ms = club_log::timeout_ms;
+  QDir const data_dir {QStandardPaths::writableLocation (QStandardPaths::DataLocation)};
+  clublog_download_.configure (network_manager_, url, data_dir.absoluteFilePath (club_log::file_name),
+                               "JTDX_contest/" + QCoreApplication::applicationVersion () + " (https://github.com/ce3tsk/jtdx_contest)",
+                               [this] (QByteArray const& body) {
+                                 clublog_export_ = club_log::read_export (body, QDateTime::currentDateTimeUtc ());
+                                 return clublog_export_.error.isEmpty () ? QString {} : tr ("The answer was not a Club Log ADIF export.");
+                               },
+                               request,
+                               [this] (QByteArray const&) {return clublog_export_.confirmed;});
+  clublog_download_.start_download ();
+  update_clublog_label ();
+}
+
+void Configuration::impl::clublog_finished (bool ok, FileDownload::Failure failure, QString const& detail)
+{
+  auto const manual = clublog_manual_;
+  clublog_manual_ = false;
+  auto const now = QDateTime::currentDateTimeUtc ();
+  if (ok)
+    {
+      {
+        SettingsGroup g {settings_, "Configuration"};
+        settings_->setValue (contest_profile::own_key ("ClubLogDownloaded"), now);
+        clublog_downloaded_with_ = clublog_download_token_;
+        if (clublog_download_token_ == clublog_token_) clublog_new_token_ = false;
+        settings_->setValue (contest_profile::own_key ("ClubLogQsos"), clublog_export_.qsos);
+        settings_->setValue (contest_profile::own_key ("ClubLogConfirmed"), clublog_export_.confirmed_qsos);
+        settings_->setValue (contest_profile::own_key ("ClubLogEntities"), clublog_export_.entities);
+        settings_->remove (contest_profile::own_key ("ClubLogRefused"));
+        settings_->remove (contest_profile::own_key ("ClubLogRetryAfter"));
+      }
+      clublog_export_ = club_log::Export {};
+      clublog_next_try_ = QDateTime {};
+      clublog_error_.clear ();
+      update_clublog_label ();
+      Q_EMIT self_->confirmations_updated ();
+      return;
+    }
+  clublog_export_ = club_log::Export {};
+  int const status {FileDownload::Failure::HttpStatus == failure ? detail.toInt () : 0};
+  auto const after = club_log::after_status (status);
+  auto const retry_after = clublog_download_.retry_after ();
+  clublog_next_try_ = club_log::next_try (after, retry_after, now);
+  {
+    SettingsGroup g {settings_, "Configuration"};
+    if (club_log::After::TokenRefused == after) settings_->setValue (contest_profile::own_key ("ClubLogRefused"), true);
+    if (club_log::After::WaitRetryAfter == after && retry_after.isValid ())
+      settings_->setValue (contest_profile::own_key ("ClubLogRetryAfter"), retry_after);
+  }
+  switch (failure)
+    {
+    case FileDownload::Failure::HttpStatus:
+      if (club_log::After::TokenRefused == after)
+        clublog_error_ = tr ("Club Log refused the token (HTTP status %1). Make a new one in Club Log under Settings > API and paste it here.").arg (status);
+      else if (club_log::After::WaitRetryAfter == after)
+        clublog_error_ = tr ("Club Log asks to wait until %1 UTC.").arg (clublog_next_try_.toUTC ().toString ("yyyy-MM-dd hh:mm"));
+      else
+        clublog_error_ = tr ("The server answered with HTTP status %1.").arg (detail);
+      break;
+    case FileDownload::Failure::NoSsl: clublog_error_ = tr ("SSL/TLS support is not installed, so %1 cannot be fetched.").arg (detail); break;
+    case FileDownload::Failure::TooLarge: clublog_error_ = tr ("The download was stopped at %1 MB.").arg (detail); break;
+    case FileDownload::Failure::Rejected: clublog_error_ = detail; break;
+    case FileDownload::Failure::Write: clublog_error_ = tr ("The file could not be saved: %1").arg (detail); break;
+    case FileDownload::Failure::Network: clublog_error_ = tr ("Network error: %1").arg (detail); break;
+    }
+  update_clublog_label ();
+  if (manual)
+    JTDXMessageBox::warning_message (this, tr ("Download from Club Log failed"), clublog_error_,
+                                     tr ("The copy in use has not been changed."));
+}
+
+void Configuration::impl::update_clublog_label ()
+{
+  auto const running = clublog_download_.running ();
+  ui_->clublog_download_push_button->setEnabled (!running);
+  if (running)
+    {
+      ui_->clublog_status_label->setText (tr ("downloading..."));
+      return;
+    }
+  QDateTime last;
+  int qsos {0}, confirmed {0}, entities {0};
+  bool refused {false};
+  {
+    SettingsGroup g {settings_, "Configuration"};
+    last = settings_->value (contest_profile::own_key ("ClubLogDownloaded")).toDateTime ();
+    qsos = settings_->value (contest_profile::own_key ("ClubLogQsos"), 0).toInt ();
+    confirmed = settings_->value (contest_profile::own_key ("ClubLogConfirmed"), 0).toInt ();
+    entities = settings_->value (contest_profile::own_key ("ClubLogEntities"), 0).toInt ();
+    refused = settings_->value (contest_profile::own_key ("ClubLogRefused"), false).toBool ();
+  }
+  QString text;
+  if (clublog_token_.isEmpty () && ui_->clublog_token_edit->text ().trimmed ().isEmpty ())
+    text = tr ("No token: nothing is downloaded from Club Log.");
+  else if (last.isValid ())
+    text = tr ("%1 of %2 QSOs confirmed by LoTW, %3 DXCC entities; downloaded %4 UTC")
+      .arg (QLocale {}.toString (confirmed)).arg (QLocale {}.toString (qsos)).arg (entities)
+      .arg (last.toUTC ().toString ("yyyy-MM-dd hh:mm"));
+  else
+    text = tr ("Not downloaded yet.");
+  if (!clublog_error_.isEmpty ()) text += '\n' + clublog_error_;
+  else if (refused) text += '\n' + tr ("Club Log refused the token. Make a new one in Club Log under Settings > API and paste it here.");
+  ui_->clublog_status_label->setText (text);
 }
 
 void Configuration::impl::update_data_file_labels ()

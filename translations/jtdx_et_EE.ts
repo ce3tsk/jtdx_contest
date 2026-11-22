@@ -563,6 +563,71 @@ Vorming:
         <source>Hard to read: this text color stands only %1:1 against its background, less than 3:1. The Recommended colors button restores colors that read well.</source>
         <translation>Raskesti loetav: selle tekstivärvi kontrast tausta suhtes on ainult %1:1, vähem kui 3:1. Nupp Soovitatud värvid taastab hästi loetavad värvid.</translation>
     </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>This is not a Club Log token</source>
+        <translation>See ei ole Club Logi token</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>A Club Log API token begins with cl_. Make one in Club Log under Settings &gt; API, copy it with the button beside it and paste it here.</source>
+        <translation>Club Logi API token algab tähtedega cl_. Looge see Club Logis jaotises Settings &gt; API, kopeerige kõrvaloleva nupuga ja kleepige siia.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>The Club Log token could not be saved</source>
+        <translation>Club Logi tokenit ei õnnestunud salvestada</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Club Log downloads are switched off (JTDX_CLUBLOG_API).</source>
+        <translation>Allalaadimised Club Logist on välja lülitatud (JTDX_CLUBLOG_API).</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>My Call on the General tab is not a call Club Log can have a log of.</source>
+        <translation>Minu kutsung vahekaardil Üldine ei ole kutsung, mille kohta Club Logil saab logi olla.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Download from Club Log failed</source>
+        <translation>Allalaadimine Club Logist ebaõnnestus</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>The answer was not a Club Log ADIF export.</source>
+        <translation>Vastus ei olnud Club Logi ADIF-eksport.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Club Log refused the token (HTTP status %1). Make a new one in Club Log under Settings &gt; API and paste it here.</source>
+        <translation>Club Log lükkas tokeni tagasi (HTTP olek %1). Looge Club Logis jaotises Settings &gt; API uus ja kleepige see siia.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Club Log asks to wait until %1 UTC.</source>
+        <translation>Club Log palub oodata kuni %1 UTC.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>No token: nothing is downloaded from Club Log.</source>
+        <translation>Tokenit pole: Club Logist ei laadita midagi alla.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1 of %2 QSOs confirmed by LoTW, %3 DXCC entities; downloaded %4 UTC</source>
+        <translation>%1 / %2 QSO-st LoTW-s kinnitatud, %3 DXCC territooriumi; alla laaditud %4 UTC</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Not downloaded yet.</source>
+        <translation>Veel alla laadimata.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Club Log refused the token. Make a new one in Club Log under Settings &gt; API and paste it here.</source>
+        <translation>Club Log lükkas tokeni tagasi. Looge Club Logis jaotises Settings &gt; API uus ja kleepige see siia.</translation>
+    </message>
 </context>
 <context>
     <name>CountryDat</name>
@@ -11011,6 +11076,38 @@ soundcard changes</source>
         <location filename="../Configuration.ui"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;International FT Challenge, FT8 and FT4 on 80, 40, 20, 15 and 10 m. The normal QSO: your grid in Tx1, then the signal reports, so Skip Tx 1 is off and cannot be switched on. A QSO scores 1 point plus 1 for each full 3000 km. Without the other station's grid it scores 1 point, and the contest log gets ZZ00 for the grid. A station counts once per band. The multiplier is the 2 character grid field on each band.&lt;/p&gt;&lt;p&gt;While this is selected the grid highlighting below is set to per band on the grid field, and cannot be changed by hand. Your own settings are restored when you switch back to None.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;International FT Challenge, FT8 ja FT4 sagedusaladel 80, 40, 20, 15 ja 10 m. Tavaline QSO: teie lokaator saates Tx1, seejärel signaaliraportid, seega on Jäta Tx 1 vahele välja lülitatud ja seda ei saa sisse lülitada. QSO annab 1 punkti ja lisaks 1 iga täis 3000 km eest. Ilma teise jaama lokaatorita annab see 1 punkti ja võistluse logisse kirjutatakse lokaatoriks ZZ00. Jaam loeb sagedusala kohta üks kord. Kordajaks on 2-märgiline lokaatoriväli igal sagedusalal.&lt;/p&gt;&lt;p&gt;Kuni see on valitud, on allolev lokaatorite esiletõstmine seatud sagedusala kaupa lokaatoriväljale ja seda ei saa käsitsi muuta. Teie enda seaded taastatakse, kui lülitute tagasi valikule Puudub.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Club Log to&amp;ken:</source>
+        <translation>Club Logi to&amp;ken:</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Your Club Log API token. To create one, log in to Club Log, go to Settings &gt; API and click the "Create token" button there. Copy the token, paste it into this box and press OK.
+With it the program downloads your LoTW confirmations from Club Log at the start and every 12 hours. It is kept in a file of its own that only you can read, never in the settings file.</source>
+        <translation>Teie Club Logi API token. Selle loomiseks logige Club Logi sisse, minge jaotisse Settings &gt; API ja klõpsake seal nuppu "Create token". Kopeerige token, kleepige see sellesse lahtrisse ja vajutage Kinnita.
+Sellega laadib programm käivitamisel ja iga 12 tunni järel Club Logist alla teie LoTW kinnitused. Seda hoitakse eraldi failis, mida saate lugeda ainult teie, mitte kunagi seadete failis.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Download your LoTW confirmations from Club Log now; the program also does it at the start and every 12 hours.
+Club Log has only the LoTW confirmations it has fetched.
+In Club Log, under Tools &gt; LoTW Sync:
+1. Certificates: add your LoTW certificate once.
+2. Download confirmations: fetch the new ones now and then.
+To fetch the whole LoTW record once, clear "Only confirmations since the last download" there first.</source>
+        <translation>Laadi oma LoTW kinnitused kohe Club Logist alla; programm teeb seda ka käivitamisel ja iga 12 tunni järel.
+Club Logis on ainult need LoTW kinnitused, mille see on hankinud.
+Club Logis jaotises Tools &gt; LoTW Sync:
+1. Certificates: lisage üks kord oma LoTW sertifikaat.
+2. Download confirmations: hankige aeg-ajalt uued.
+Kogu LoTW kirje ühekordseks hankimiseks eemaldage seal enne märge valikult "Only confirmations since the last download".</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Do&amp;wnload LoTW confirmations from Club Log</source>
+        <translation>Laad&amp;i LoTW kinnitused Club Logist alla</translation>
     </message>
 </context>
 <context>

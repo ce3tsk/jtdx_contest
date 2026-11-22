@@ -457,6 +457,12 @@ public:
   Q_SIGNAL void data_files_updated () const;
 
   //
+  // CE3TSK 2026-11-21 (TODO.md 3.-280): Club Log's confirmed QSOs were downloaded anew (clublog.h); the file is
+  // club_log::file_name in the data directory
+  //
+  Q_SIGNAL void confirmations_updated () const;
+
+  //
   // These signals are emitted and reflect transceiver state changes
   //
 

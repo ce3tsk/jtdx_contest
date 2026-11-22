@@ -563,6 +563,71 @@ Formāts:
         <source>Hard to read: this text color stands only %1:1 against its background, less than 3:1. The Recommended colors button restores colors that read well.</source>
         <translation>Grūti salasāms: šīs teksta krāsas kontrasts pret fonu ir tikai %1:1, mazāk nekā 3:1. Poga Ieteicamās krāsas atjauno labi salasāmas krāsas.</translation>
     </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>This is not a Club Log token</source>
+        <translation>Tas nav Club Log tokens</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>A Club Log API token begins with cl_. Make one in Club Log under Settings &gt; API, copy it with the button beside it and paste it here.</source>
+        <translation>Club Log API tokens sākas ar cl_. Izveidojiet to Club Log sadaļā Settings &gt; API, nokopējiet ar blakus esošo pogu un ielīmējiet šeit.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>The Club Log token could not be saved</source>
+        <translation>Club Log tokenu neizdevās saglabāt</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Club Log downloads are switched off (JTDX_CLUBLOG_API).</source>
+        <translation>Lejupielādes no Club Log ir izslēgtas (JTDX_CLUBLOG_API).</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>My Call on the General tab is not a call Club Log can have a log of.</source>
+        <translation>Mans Call cilnē Vispārīgi nav izsaukuma signāls, kuram Club Log var būt žurnāls.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Download from Club Log failed</source>
+        <translation>Lejupielāde no Club Log neizdevās</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>The answer was not a Club Log ADIF export.</source>
+        <translation>Atbilde nebija Club Log ADIF eksports.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Club Log refused the token (HTTP status %1). Make a new one in Club Log under Settings &gt; API and paste it here.</source>
+        <translation>Club Log noraidīja tokenu (HTTP statuss %1). Izveidojiet jaunu Club Log sadaļā Settings &gt; API un ielīmējiet to šeit.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Club Log asks to wait until %1 UTC.</source>
+        <translation>Club Log lūdz gaidīt līdz %1 UTC.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>No token: nothing is downloaded from Club Log.</source>
+        <translation>Nav tokena: no Club Log nekas netiek lejupielādēts.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1 of %2 QSOs confirmed by LoTW, %3 DXCC entities; downloaded %4 UTC</source>
+        <translation>Ar LoTW apstiprināti %1 no %2 QSO, %3 DXCC teritorijas; lejupielādēts %4 UTC</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Not downloaded yet.</source>
+        <translation>Vēl nav lejupielādēts.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Club Log refused the token. Make a new one in Club Log under Settings &gt; API and paste it here.</source>
+        <translation>Club Log noraidīja tokenu. Izveidojiet jaunu Club Log sadaļā Settings &gt; API un ielīmējiet to šeit.</translation>
+    </message>
 </context>
 <context>
     <name>CountryDat</name>
@@ -11014,6 +11079,38 @@ izmaiņas</translation>
         <location filename="../Configuration.ui"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;International FT Challenge, FT8 and FT4 on 80, 40, 20, 15 and 10 m. The normal QSO: your grid in Tx1, then the signal reports, so Skip Tx 1 is off and cannot be switched on. A QSO scores 1 point plus 1 for each full 3000 km. Without the other station's grid it scores 1 point, and the contest log gets ZZ00 for the grid. A station counts once per band. The multiplier is the 2 character grid field on each band.&lt;/p&gt;&lt;p&gt;While this is selected the grid highlighting below is set to per band on the grid field, and cannot be changed by hand. Your own settings are restored when you switch back to None.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;International FT Challenge, FT8 un FT4 80, 40, 20, 15 un 10 m joslās. Parasts QSO: jūsu lokators Tx1, pēc tam signāla ziņojumi, tāpēc Izlaist Tx 1 ir izslēgts un to nevar ieslēgt. QSO dod 1 punktu un vēl 1 par katriem pilniem 3000 km. Bez otras stacijas lokatora tas dod 1 punktu, un sacensību žurnālā kā lokators tiek ierakstīts ZZ00. Stacija tiek skaitīta vienreiz katrā joslā. Reizinātājs ir 2 rakstzīmju lokatora lauks katrā joslā.&lt;/p&gt;&lt;p&gt;Kamēr šis ir izvēlēts, zemāk esošā lokatoru izcelšana ir iestatīta pa joslām uz lokatora lauka un to nevar mainīt ar roku. Jūsu pašu iestatījumi tiek atjaunoti, kad atgriežaties pie Nav.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Club Log to&amp;ken:</source>
+        <translation>Club Log to&amp;kens:</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Your Club Log API token. To create one, log in to Club Log, go to Settings &gt; API and click the "Create token" button there. Copy the token, paste it into this box and press OK.
+With it the program downloads your LoTW confirmations from Club Log at the start and every 12 hours. It is kept in a file of its own that only you can read, never in the settings file.</source>
+        <translation>Jūsu Club Log API tokens. Lai to izveidotu, piesakieties Club Log, atveriet sadaļu Settings &gt; API un noklikšķiniet tur uz pogas "Create token". Nokopējiet tokenu, ielīmējiet to šajā lodziņā un nospiediet Labi.
+Ar to programma startējot un ik pēc 12 stundām lejupielādē no Club Log jūsu LoTW apstiprinājumus. Tas tiek glabāts atsevišķā failā, ko varat lasīt tikai jūs, nekad iestatījumu failā.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Download your LoTW confirmations from Club Log now; the program also does it at the start and every 12 hours.
+Club Log has only the LoTW confirmations it has fetched.
+In Club Log, under Tools &gt; LoTW Sync:
+1. Certificates: add your LoTW certificate once.
+2. Download confirmations: fetch the new ones now and then.
+To fetch the whole LoTW record once, clear "Only confirmations since the last download" there first.</source>
+        <translation>Lejupielādēt jūsu LoTW apstiprinājumus no Club Log tagad; programma to dara arī startējot un ik pēc 12 stundām.
+Club Log ir tikai tie LoTW apstiprinājumi, ko tas ir ieguvis.
+Club Log sadaļā Tools &gt; LoTW Sync:
+1. Certificates: vienreiz pievienojiet savu LoTW sertifikātu.
+2. Download confirmations: laiku pa laikam iegūstiet jaunos.
+Lai vienreiz iegūtu visu LoTW ierakstu, vispirms noņemiet tur atzīmi "Only confirmations since the last download".</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Do&amp;wnload LoTW confirmations from Club Log</source>
+        <translation>Le&amp;jupielādēt LoTW apstiprinājumus no Club Log</translation>
     </message>
 </context>
 <context>

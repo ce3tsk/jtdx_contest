@@ -563,6 +563,71 @@ Format:
         <source>Hard to read: this text color stands only %1:1 against its background, less than 3:1. The Recommended colors button restores colors that read well.</source>
         <translation>읽기 어려움: 이 글자 색은 배경 대비 %1:1에 불과하여 3:1보다 낮습니다. 권장 색상 버튼으로 잘 읽히는 색상을 복원할 수 있습니다.</translation>
     </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>This is not a Club Log token</source>
+        <translation>Club Log 토큰이 아닙니다</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>A Club Log API token begins with cl_. Make one in Club Log under Settings &gt; API, copy it with the button beside it and paste it here.</source>
+        <translation>Club Log API 토큰은 cl_로 시작합니다. Club Log의 Settings &gt; API에서 만들고, 옆의 버튼으로 복사하여 여기에 붙여 넣으십시오.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>The Club Log token could not be saved</source>
+        <translation>Club Log 토큰을 저장할 수 없습니다</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Club Log downloads are switched off (JTDX_CLUBLOG_API).</source>
+        <translation>Club Log 다운로드가 꺼져 있습니다(JTDX_CLUBLOG_API).</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>My Call on the General tab is not a call Club Log can have a log of.</source>
+        <translation>일반 탭의 내 호출부호는 Club Log에 로그가 있을 수 있는 호출부호가 아닙니다.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Download from Club Log failed</source>
+        <translation>Club Log에서 다운로드 실패</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>The answer was not a Club Log ADIF export.</source>
+        <translation>응답이 Club Log ADIF 내보내기가 아니었습니다.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Club Log refused the token (HTTP status %1). Make a new one in Club Log under Settings &gt; API and paste it here.</source>
+        <translation>Club Log가 토큰을 거부했습니다(HTTP 상태 %1). Club Log의 Settings &gt; API에서 새로 만들어 여기에 붙여 넣으십시오.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Club Log asks to wait until %1 UTC.</source>
+        <translation>Club Log가 %1 UTC까지 기다리라고 요청합니다.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>No token: nothing is downloaded from Club Log.</source>
+        <translation>토큰 없음: Club Log에서 아무것도 다운로드하지 않습니다.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1 of %2 QSOs confirmed by LoTW, %3 DXCC entities; downloaded %4 UTC</source>
+        <translation>QSO %2개 중 %1개 LoTW 확인됨, DXCC 엔티티 %3개; %4 UTC에 다운로드</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Not downloaded yet.</source>
+        <translation>아직 다운로드하지 않았습니다.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Club Log refused the token. Make a new one in Club Log under Settings &gt; API and paste it here.</source>
+        <translation>Club Log가 토큰을 거부했습니다. Club Log의 Settings &gt; API에서 새로 만들어 여기에 붙여 넣으십시오.</translation>
+    </message>
 </context>
 <context>
     <name>CountryDat</name>
@@ -11013,6 +11078,38 @@ soundcard changes</source>
         <location filename="../Configuration.ui"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;International FT Challenge, FT8 and FT4 on 80, 40, 20, 15 and 10 m. The normal QSO: your grid in Tx1, then the signal reports, so Skip Tx 1 is off and cannot be switched on. A QSO scores 1 point plus 1 for each full 3000 km. Without the other station's grid it scores 1 point, and the contest log gets ZZ00 for the grid. A station counts once per band. The multiplier is the 2 character grid field on each band.&lt;/p&gt;&lt;p&gt;While this is selected the grid highlighting below is set to per band on the grid field, and cannot be changed by hand. Your own settings are restored when you switch back to None.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;International FT Challenge입니다. 80, 40, 20, 15, 10 m에서 FT8과 FT4를 사용합니다. 일반 QSO로, Tx1에 내 그리드를 보내고 그다음 리포트를 교환하므로 Tx 1 건너뛰기는 꺼져 있으며 켤 수 없습니다. QSO는 1점에 3000 km를 채울 때마다 1점을 더합니다. 상대국의 그리드가 없으면 1점이며, 콘테스트 로그에는 그리드로 ZZ00이 기록됩니다. 같은 국은 밴드당 한 번만 계산됩니다. 멀티플라이어는 각 밴드의 2자 그리드 필드입니다.&lt;/p&gt;&lt;p&gt;이 항목이 선택된 동안 아래의 그리드 강조는 그리드 필드 기준의 밴드별로 고정되며 직접 바꿀 수 없습니다. 없음으로 되돌리면 원래 설정이 복원됩니다.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Club Log to&amp;ken:</source>
+        <translation>Club Log 토큰(&amp;K):</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Your Club Log API token. To create one, log in to Club Log, go to Settings &gt; API and click the "Create token" button there. Copy the token, paste it into this box and press OK.
+With it the program downloads your LoTW confirmations from Club Log at the start and every 12 hours. It is kept in a file of its own that only you can read, never in the settings file.</source>
+        <translation>Club Log API 토큰입니다. 만들려면 Club Log에 로그인하여 Settings &gt; API로 이동한 다음 "Create token" 버튼을 클릭합니다. 토큰을 복사하여 이 칸에 붙여 넣고 확인을 누릅니다.
+이 토큰으로 프로그램은 시작할 때와 12시간마다 Club Log에서 LoTW 확인을 다운로드합니다. 토큰은 설정 파일이 아니라 본인만 읽을 수 있는 별도의 파일에 보관됩니다.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Download your LoTW confirmations from Club Log now; the program also does it at the start and every 12 hours.
+Club Log has only the LoTW confirmations it has fetched.
+In Club Log, under Tools &gt; LoTW Sync:
+1. Certificates: add your LoTW certificate once.
+2. Download confirmations: fetch the new ones now and then.
+To fetch the whole LoTW record once, clear "Only confirmations since the last download" there first.</source>
+        <translation>지금 Club Log에서 LoTW 확인을 다운로드합니다. 프로그램은 시작할 때와 12시간마다도 다운로드합니다.
+Club Log에는 Club Log가 가져온 LoTW 확인만 있습니다.
+Club Log의 Tools &gt; LoTW Sync에서:
+1. Certificates: LoTW 인증서를 한 번 추가합니다.
+2. Download confirmations: 새 확인을 가끔 가져옵니다.
+LoTW 전체 기록을 한 번 가져오려면 먼저 그곳에서 "Only confirmations since the last download" 선택을 해제합니다.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Do&amp;wnload LoTW confirmations from Club Log</source>
+        <translation>Club Log에서 LoTW 확인 다운로드(&amp;W)</translation>
     </message>
 </context>
 <context>

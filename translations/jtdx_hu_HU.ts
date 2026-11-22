@@ -563,6 +563,71 @@ Formátum:
         <source>Hard to read: this text color stands only %1:1 against its background, less than 3:1. The Recommended colors button restores colors that read well.</source>
         <translation>Nehezen olvasható: ez a szövegszín csak %1:1 kontrasztot ad a hátterével, kevesebbet, mint 3:1. Az Ajánlott színek gomb jól olvasható színeket állít vissza.</translation>
     </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>This is not a Club Log token</source>
+        <translation>Ez nem Club Log token</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>A Club Log API token begins with cl_. Make one in Club Log under Settings &gt; API, copy it with the button beside it and paste it here.</source>
+        <translation>A Club Log API token cl_ betűkkel kezdődik. Hozzon létre egyet a Club Logban a Settings &gt; API alatt, másolja ki a mellette lévő gombbal, és illessze be ide.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>The Club Log token could not be saved</source>
+        <translation>A Club Log tokent nem sikerült menteni</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Club Log downloads are switched off (JTDX_CLUBLOG_API).</source>
+        <translation>A Club Log letöltések ki vannak kapcsolva (JTDX_CLUBLOG_API).</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>My Call on the General tab is not a call Club Log can have a log of.</source>
+        <translation>Az Általános lapon megadott hívójel nem olyan hívójel, amelyhez a Club Lognak naplója lehet.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Download from Club Log failed</source>
+        <translation>A Club Log letöltés sikertelen</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>The answer was not a Club Log ADIF export.</source>
+        <translation>A válasz nem Club Log ADIF export volt.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Club Log refused the token (HTTP status %1). Make a new one in Club Log under Settings &gt; API and paste it here.</source>
+        <translation>A Club Log elutasította a tokent (HTTP állapot: %1). Hozzon létre egy újat a Club Logban a Settings &gt; API alatt, és illessze be ide.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Club Log asks to wait until %1 UTC.</source>
+        <translation>A Club Log azt kéri, várjon %1 UTC-ig.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>No token: nothing is downloaded from Club Log.</source>
+        <translation>Nincs token: a Club Logból semmi sem töltődik le.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1 of %2 QSOs confirmed by LoTW, %3 DXCC entities; downloaded %4 UTC</source>
+        <translation>%2 QSO-ból %1 visszaigazolva a LoTW-n, %3 DXCC entitás; letöltve: %4 UTC</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Not downloaded yet.</source>
+        <translation>Még nincs letöltve.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Club Log refused the token. Make a new one in Club Log under Settings &gt; API and paste it here.</source>
+        <translation>A Club Log elutasította a tokent. Hozzon létre egy újat a Club Logban a Settings &gt; API alatt, és illessze be ide.</translation>
+    </message>
 </context>
 <context>
     <name>CountryDat</name>
@@ -11012,6 +11077,38 @@ hangkártya módosítási tevékenységet</translation>
         <location filename="../Configuration.ui"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;International FT Challenge, FT8 and FT4 on 80, 40, 20, 15 and 10 m. The normal QSO: your grid in Tx1, then the signal reports, so Skip Tx 1 is off and cannot be switched on. A QSO scores 1 point plus 1 for each full 3000 km. Without the other station's grid it scores 1 point, and the contest log gets ZZ00 for the grid. A station counts once per band. The multiplier is the 2 character grid field on each band.&lt;/p&gt;&lt;p&gt;While this is selected the grid highlighting below is set to per band on the grid field, and cannot be changed by hand. Your own settings are restored when you switch back to None.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;International FT Challenge, FT8 és FT4 a 80, 40, 20, 15 és 10 m-es sávon. A szokásos QSO: a saját lokátor a Tx1-ben, utána a jelentések, ezért az Ugrás Tx 2 ki van kapcsolva, és nem kapcsolható be. Egy QSO 1 pontot ér, plusz 1 pontot minden teljes 3000 km után. A másik állomás lokátora nélkül 1 pontot ér, és a versenynaplóba lokátorként ZZ00 kerül. Egy állomás sávonként egyszer számít. A szorzó a 2 karakteres lokátormező minden sávon.&lt;/p&gt;&lt;p&gt;Amíg ez van kiválasztva, az alábbi lokátorkiemelés sávonkéntire van állítva a lokátormezőn, és kézzel nem módosítható. A saját beállításai visszaállnak, amikor visszavált a Nincs értékre.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Club Log to&amp;ken:</source>
+        <translation>Club Log to&amp;ken:</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Your Club Log API token. To create one, log in to Club Log, go to Settings &gt; API and click the "Create token" button there. Copy the token, paste it into this box and press OK.
+With it the program downloads your LoTW confirmations from Club Log at the start and every 12 hours. It is kept in a file of its own that only you can read, never in the settings file.</source>
+        <translation>Az Ön Club Log API tokenje. Létrehozásához jelentkezzen be a Club Logba, lépjen a Settings &gt; API részre, és kattintson ott a(z) "Create token" gombra. Másolja ki a tokent, illessze be ebbe a mezőbe, és nyomja meg az OK gombot.
+Ezzel a program indításkor és 12 óránként letölti a Club Logból az Ön LoTW visszaigazolásait. Külön fájlban tárolódik, amelyet csak Ön olvashat, soha nem a beállítási fájlban.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Download your LoTW confirmations from Club Log now; the program also does it at the start and every 12 hours.
+Club Log has only the LoTW confirmations it has fetched.
+In Club Log, under Tools &gt; LoTW Sync:
+1. Certificates: add your LoTW certificate once.
+2. Download confirmations: fetch the new ones now and then.
+To fetch the whole LoTW record once, clear "Only confirmations since the last download" there first.</source>
+        <translation>Az Ön LoTW visszaigazolásainak letöltése most a Club Logból; a program indításkor és 12 óránként is megteszi.
+A Club Logban csak azok a LoTW visszaigazolások vannak meg, amelyeket lekért.
+A Club Logban a Tools &gt; LoTW Sync alatt:
+1. Certificates: egyszer adja hozzá a LoTW tanúsítványát.
+2. Download confirmations: időnként kérje le az újakat.
+A teljes LoTW nyilvántartás egyszeri lekéréséhez előbb kapcsolja ki ott a(z) "Only confirmations since the last download" jelölőnégyzetet.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Do&amp;wnload LoTW confirmations from Club Log</source>
+        <translation>LoTW visszaigazolások letöltése &amp;a Club Logból</translation>
     </message>
 </context>
 <context>

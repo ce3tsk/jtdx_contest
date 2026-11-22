@@ -3089,6 +3089,62 @@ for assessing propagation and system performance.</string>
               </property>
              </widget>
             </item>
+            <item row="2" column="4" rowspan="3">
+             <layout class="QGridLayout" name="clublog_grid_layout">
+              <property name="spacing">
+               <number>2</number>
+              </property>
+              <item row="0" column="0">
+               <widget class="QLabel" name="clublog_token_label">
+                <property name="text">
+                 <string>Club Log to&amp;ken:</string>
+                </property>
+                <property name="buddy">
+                 <cstring>clublog_token_edit</cstring>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="1">
+               <widget class="QLineEdit" name="clublog_token_edit">
+                <property name="toolTip">
+                 <string>Your Club Log API token. To create one, log in to Club Log, go to Settings &gt; API and click the &quot;Create token&quot; button there. Copy the token, paste it into this box and press OK.
+With it the program downloads your LoTW confirmations from Club Log at the start and every 12 hours. It is kept in a file of its own that only you can read, never in the settings file.</string>
+                </property>
+                <property name="echoMode">
+                 <enum>QLineEdit::Password</enum>
+                </property>
+                <property name="placeholderText">
+                 <string notr="true">cl_...</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="0" colspan="2">
+               <widget class="QPushButton" name="clublog_download_push_button">
+                <property name="toolTip">
+                 <string>Download your LoTW confirmations from Club Log now; the program also does it at the start and every 12 hours.
+Club Log has only the LoTW confirmations it has fetched.
+In Club Log, under Tools &gt; LoTW Sync:
+1. Certificates: add your LoTW certificate once.
+2. Download confirmations: fetch the new ones now and then.
+To fetch the whole LoTW record once, clear &quot;Only confirmations since the last download&quot; there first.</string>
+                </property>
+                <property name="text">
+                 <string>Do&amp;wnload LoTW confirmations from Club Log</string>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="0" colspan="2">
+               <widget class="QLabel" name="clublog_status_label">
+                <property name="text">
+                 <string notr="true"/>
+                </property>
+                <property name="wordWrap">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
             <item row="4" column="0">
              <widget class="QLabel" name="eqslnick_label">
               <property name="text">

@@ -563,6 +563,71 @@ Format:
         <source>Hard to read: this text color stands only %1:1 against its background, less than 3:1. The Recommended colors button restores colors that read well.</source>
         <translation>难以阅读：此文字颜色与背景的对比度仅为 %1:1，低于 3:1。“推荐颜色”按钮可恢复易读的颜色。</translation>
     </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>This is not a Club Log token</source>
+        <translation>这不是 Club Log 令牌</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>A Club Log API token begins with cl_. Make one in Club Log under Settings &gt; API, copy it with the button beside it and paste it here.</source>
+        <translation>Club Log 的 API 令牌以 cl_ 开头。请在 Club Log 的 Settings &gt; API 中创建一个，用旁边的按钮复制，然后粘贴到这里。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>The Club Log token could not be saved</source>
+        <translation>无法保存 Club Log 令牌</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Club Log downloads are switched off (JTDX_CLUBLOG_API).</source>
+        <translation>已关闭从 Club Log 下载 (JTDX_CLUBLOG_API)。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>My Call on the General tab is not a call Club Log can have a log of.</source>
+        <translation>常规选项卡中的“我的呼号”不是 Club Log 可能有其日志的呼号。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Download from Club Log failed</source>
+        <translation>从 Club Log 下载失败</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>The answer was not a Club Log ADIF export.</source>
+        <translation>回复不是 Club Log 的 ADIF 导出。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Club Log refused the token (HTTP status %1). Make a new one in Club Log under Settings &gt; API and paste it here.</source>
+        <translation>Club Log 拒绝了该令牌 (HTTP 状态 %1)。请在 Club Log 的 Settings &gt; API 中新建一个并粘贴到这里。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Club Log asks to wait until %1 UTC.</source>
+        <translation>Club Log 要求等到 %1 UTC。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>No token: nothing is downloaded from Club Log.</source>
+        <translation>没有令牌：不从 Club Log 下载任何内容。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1 of %2 QSOs confirmed by LoTW, %3 DXCC entities; downloaded %4 UTC</source>
+        <translation>%2 个 QSO 中已由 LoTW 确认 %1 个，%3 个 DXCC 实体；下载于 %4 UTC</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Not downloaded yet.</source>
+        <translation>尚未下载。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Club Log refused the token. Make a new one in Club Log under Settings &gt; API and paste it here.</source>
+        <translation>Club Log 拒绝了该令牌。请在 Club Log 的 Settings &gt; API 中新建一个并粘贴到这里。</translation>
+    </message>
 </context>
 <context>
     <name>CountryDat</name>
@@ -11015,6 +11080,38 @@ soundcard changes</source>
         <location filename="../Configuration.ui"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;International FT Challenge, FT8 and FT4 on 80, 40, 20, 15 and 10 m. The normal QSO: your grid in Tx1, then the signal reports, so Skip Tx 1 is off and cannot be switched on. A QSO scores 1 point plus 1 for each full 3000 km. Without the other station's grid it scores 1 point, and the contest log gets ZZ00 for the grid. A station counts once per band. The multiplier is the 2 character grid field on each band.&lt;/p&gt;&lt;p&gt;While this is selected the grid highlighting below is set to per band on the grid field, and cannot be changed by hand. Your own settings are restored when you switch back to None.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;International FT Challenge。80、40、20、15 和 10 m 波段的 FT8 和 FT4。普通 QSO：在 Tx1 中发送你的网格，然后交换信号报告，因此“跳过 Tx 1”关闭且无法打开。每个 QSO 得 1 分，每满 3000 km 再加 1 分。没有对方电台的网格时得 1 分，竞赛日志中网格记为 ZZ00。同一电台每个波段只计一次。乘数是每个波段的 2 字符网格字段。&lt;/p&gt;&lt;p&gt;选中此项期间，下面的网格高亮将按波段固定作用于网格字段，且无法手动更改。切换回“无”时会恢复你自己的设置。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Club Log to&amp;ken:</source>
+        <translation>Club Log 令牌(&amp;K):</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Your Club Log API token. To create one, log in to Club Log, go to Settings &gt; API and click the "Create token" button there. Copy the token, paste it into this box and press OK.
+With it the program downloads your LoTW confirmations from Club Log at the start and every 12 hours. It is kept in a file of its own that only you can read, never in the settings file.</source>
+        <translation>您的 Club Log API 令牌。创建方法：登录 Club Log，进入 Settings &gt; API，点击那里的 "Create token" 按钮。复制令牌，粘贴到此框中，然后按“确定”。
+程序用它在启动时以及每 12 小时从 Club Log 下载您的 LoTW 确认。它保存在只有您能读取的单独文件中，绝不保存在设置文件里。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Download your LoTW confirmations from Club Log now; the program also does it at the start and every 12 hours.
+Club Log has only the LoTW confirmations it has fetched.
+In Club Log, under Tools &gt; LoTW Sync:
+1. Certificates: add your LoTW certificate once.
+2. Download confirmations: fetch the new ones now and then.
+To fetch the whole LoTW record once, clear "Only confirmations since the last download" there first.</source>
+        <translation>立即从 Club Log 下载您的 LoTW 确认；程序也会在启动时以及每 12 小时下载。
+Club Log 只有它已获取的 LoTW 确认。
+在 Club Log 的 Tools &gt; LoTW Sync 中：
+1. Certificates：添加一次您的 LoTW 证书。
+2. Download confirmations：不时获取新的确认。
+要一次获取完整的 LoTW 记录，请先在那里取消勾选 "Only confirmations since the last download"。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Do&amp;wnload LoTW confirmations from Club Log</source>
+        <translation>从 Club Log 下载 LoTW 确认(&amp;W)</translation>
     </message>
 </context>
 <context>

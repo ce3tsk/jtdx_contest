@@ -24,6 +24,9 @@
 #include <QObject>
 #include <QString>
 #include <QByteArray>
+#include <QDateTime>
+#include <QList>
+#include <QPair>
 #include <QPointer>
 #include <QNetworkReply>
 
@@ -47,6 +50,22 @@ public:
 
   // an empty string accepts the content, anything else is the reason it was refused
   using Validator = std::function<QString (QByteArray const&)>;
+  // CE3TSK 2026-11-21 (TODO.md 3.-280): what is written in place of the accepted body - the Club Log export keeps only
+  // its confirmed QSOs. Runs after the validator, on the same body.
+  using Transform = std::function<QByteArray (QByteArray const&)>;
+
+  /* CE3TSK 2026-11-21 (TODO.md 3.-280): a request other than a plain GET - Club Log's REST API wants a POST with a JSON
+     body and its token in an Authorization header. The headers are sent and never logged or put in an error's detail.
+     A request with headers of its own follows NO redirect: Qt and WinHTTP would send them on to wherever it points,
+     and a token must reach only the host it was made for. A redirect is then a failure with its HTTP status. */
+  struct Request
+  {
+    QByteArray method {"GET"};
+    QList<QPair<QByteArray, QByteArray>> headers;
+    QByteArray body;
+    qint64 max_body_size {64 * 1024 * 1024};   // the LoTW activity file is about 6 MB
+    int timeout_ms {0};   // with no byte moving; 0: the transport's own (Qt 30 s, WinHTTP 20 s a read), as before
+  };
 
   explicit FileDownload (QObject * parent = nullptr);
   ~FileDownload ();
@@ -54,7 +73,15 @@ public:
   void configure (QNetworkAccessManager * network_manager, QString const& source_url,
                   QString const& destination_filename, QString const& user_agent,
                   Validator validator = Validator {});
+  // (3.-280) and with a Request of its own (a default Request {} argument cannot stand inside the class)
+  void configure (QNetworkAccessManager * network_manager, QString const& source_url,
+                  QString const& destination_filename, QString const& user_agent,
+                  Validator validator, Request const& request, Transform transform = Transform {});
   bool running () const;
+  /* CE3TSK 2026-11-21: after an HTTP 429 or 503, the time its Retry-After names (seconds or an HTTP date); invalid when
+     the last reply named none. Club Log: "on 429 wait for Retry-After". */
+  QDateTime retry_after () const {return retry_after_;}
+  static QDateTime parse_retry_after (QByteArray const& value, QDateTime const& now);
 
   Q_SLOT void start_download ();
   Q_SLOT void abort ();
@@ -72,7 +99,8 @@ private:
      is reported by its status, and Qt flags a 404 as a network error too. */
   void deliver (QByteArray const& body, int http_status,
                 Failure transport_failure = Failure::Network,
-                QString const& transport_detail = QString {});
+                QString const& transport_detail = QString {},
+                QByteArray const& retry_after = QByteArray {});
   void fail (Failure failure, QString const& detail);
 
   QNetworkAccessManager * manager_ {nullptr};
@@ -80,6 +108,9 @@ private:
   QString destination_filename_;
   QString user_agent_;
   Validator validator_;
+  Request request_;
+  Transform transform_;
+  QDateTime retry_after_;
   QPointer<QNetworkReply> reply_;
   QByteArray body_;
 #if defined (Q_OS_WIN)

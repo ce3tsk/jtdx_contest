@@ -24,6 +24,16 @@
 #ifndef WINHTTP_DECOMPRESSION_FLAG_ALL
 # define WINHTTP_DECOMPRESSION_FLAG_ALL 0x00000003
 #endif
+// CE3TSK 2026-11-21 (TODO.md 3.-280): in winhttp.h for long; defined here in case an old header lacks them
+#ifndef WINHTTP_OPTION_DISABLE_FEATURE
+# define WINHTTP_OPTION_DISABLE_FEATURE 63
+#endif
+#ifndef WINHTTP_DISABLE_REDIRECTS
+# define WINHTTP_DISABLE_REDIRECTS 0x00000002
+#endif
+#ifndef WINHTTP_QUERY_RETRY_AFTER
+# define WINHTTP_QUERY_RETRY_AFTER 36
+#endif
 
 namespace
 {
@@ -62,10 +72,15 @@ class WinHttpFetch::Worker final
   : public QThread
 {
 public:
-  Worker (QString const& url, QString const& user_agent, qint64 max_body_size)
+  Worker (QString const& url, QString const& user_agent, qint64 max_body_size, QByteArray const& method,
+          QByteArray const& headers, QByteArray const& body, int timeout_ms)
     : url_ {url}
     , user_agent_ {user_agent}
     , max_body_size_ {max_body_size}
+    , method_ {QString::fromLatin1 (method)}
+    , headers_ {QString::fromLatin1 (headers)}
+    , request_body_ {body}
+    , timeout_ms_ {timeout_ms}
   {
   }
 
@@ -74,6 +89,7 @@ public:
   // valid once finished () has been emitted; error_ empty means fetched
   QByteArray body_;
   int status_ {0};
+  QByteArray retry_after_;
   QString error_;
 
 protected:
@@ -85,6 +101,10 @@ private:
   QString const url_;
   QString const user_agent_;
   qint64 const max_body_size_;
+  QString const method_;
+  QString const headers_;         // never logged: Club Log's carries the token
+  QByteArray const request_body_;
+  int const timeout_ms_;
   std::atomic<bool> cancel_ {false};
 };
 
@@ -117,7 +137,7 @@ void WinHttpFetch::Worker::run ()
 
   // bounded so that a stalled server cannot hold up a cancel or the application's exit; the
   // receive timeout is per read, not for the whole transfer
-  WinHttpSetTimeouts (session.h, 10000, 10000, 10000, 20000);
+  WinHttpSetTimeouts (session.h, 10000, 10000, 10000, timeout_ms_);
 
   // gzip where the platform offers it (Windows 8.1 and later); older ones just refuse the option
   DWORD decompression {WINHTTP_DECOMPRESSION_FLAG_ALL};
@@ -142,15 +162,27 @@ void WinHttpFetch::Worker::run ()
   target += extra;
   // WINHTTP_DEFAULT_ACCEPT_TYPES sends no Accept header at all, so name it as the Qt transport does
   LPCWSTR accept_types[] {L"*/*", nullptr};
-  request.h = WinHttpOpenRequest (connection.h, L"GET", target.c_str (), nullptr, WINHTTP_NO_REFERER,
+  request.h = WinHttpOpenRequest (connection.h, as_wide (method_), target.c_str (), nullptr, WINHTTP_NO_REFERER,
                                   accept_types,
                                   (INTERNET_SCHEME_HTTPS == parts.nScheme) ? WINHTTP_FLAG_SECURE : 0u);
   if (!request.h) { fail_with_last_error ("WinHttpOpenRequest"); return; }
 
   // redirects are followed by default, https to http is refused by default, and the default
   // limit is ten - the same three rules the Qt transport is given explicitly
+  // (3.-280) except for a request with headers of its own: WinHTTP would send them, a token too, wherever it points
+  if (!headers_.isEmpty ())
+    {
+      DWORD no_redirects {WINHTTP_DISABLE_REDIRECTS};
+      if (!WinHttpSetOption (request.h, WINHTTP_OPTION_DISABLE_FEATURE, &no_redirects, sizeof no_redirects))
+        { fail_with_last_error ("WinHttpSetOption"); return; }
+    }
 
-  if (!WinHttpSendRequest (request.h, WINHTTP_NO_ADDITIONAL_HEADERS, 0, WINHTTP_NO_REQUEST_DATA, 0, 0, 0))
+  DWORD const body_size {DWORD (request_body_.size ())};
+  if (!WinHttpSendRequest (request.h,
+                           headers_.isEmpty () ? WINHTTP_NO_ADDITIONAL_HEADERS : as_wide (headers_),
+                           headers_.isEmpty () ? 0 : DWORD (-1),   // -1: up to the terminating null
+                           body_size ? const_cast<char *> (request_body_.constData ()) : WINHTTP_NO_REQUEST_DATA,
+                           body_size, body_size, 0))
     { fail_with_last_error ("WinHttpSendRequest"); return; }
   if (!WinHttpReceiveResponse (request.h, nullptr))
     { fail_with_last_error ("WinHttpReceiveResponse"); return; }
@@ -162,6 +194,14 @@ void WinHttpFetch::Worker::run ()
     {
       status_ = int (status);
     }
+  // (3.-280) as it came - seconds or an HTTP date; FileDownload::parse_retry_after reads both
+  {
+    wchar_t value[256] {};
+    DWORD value_size {sizeof value};
+    if (WinHttpQueryHeaders (request.h, WINHTTP_QUERY_RETRY_AFTER, WINHTTP_HEADER_NAME_BY_INDEX,
+                             value, &value_size, WINHTTP_NO_HEADER_INDEX))
+      retry_after_ = QString::fromWCharArray (value, int (value_size / sizeof value[0])).toLatin1 ();
+  }
 
   for (;;)
     {
@@ -204,7 +244,8 @@ WinHttpFetch::~WinHttpFetch ()
   worker_ = nullptr;
 }
 
-void WinHttpFetch::start (QString const& url, QString const& user_agent, qint64 max_body_size)
+void WinHttpFetch::start (QString const& url, QString const& user_agent, qint64 max_body_size,
+                          QByteArray const& method, QByteArray const& headers, QByteArray const& body, int timeout_ms)
 {
   if (running ()) return;
   /* the previous fetch, already finished. Detached rather than deleted outright: its
@@ -212,7 +253,7 @@ void WinHttpFetch::start (QString const& url, QString const& user_agent, qint64 
      flight for it, and that slot would otherwise read the results of whichever worker is current
      by then - emitting an empty fetched () and orphaning a running thread. */
   if (worker_) { worker_->disconnect (this); worker_->deleteLater (); worker_ = nullptr; }
-  worker_ = new Worker {url, user_agent, max_body_size};
+  worker_ = new Worker {url, user_agent, max_body_size, method, headers, body, timeout_ms};
   connect (worker_, &QThread::finished, this, &WinHttpFetch::worker_finished);
   worker_->start ();
 }
@@ -234,8 +275,9 @@ void WinHttpFetch::worker_finished ()
   auto const error = worker->error_;
   auto const body = worker->body_;
   auto const status = worker->status_;
+  auto const retry_after = worker->retry_after_;
   worker_ = nullptr;                              // running () is false before either signal
   worker->deleteLater ();
-  if (error.isEmpty ()) Q_EMIT fetched (body, status);
+  if (error.isEmpty ()) Q_EMIT fetched (body, status, retry_after);
   else Q_EMIT failed (error);
 }

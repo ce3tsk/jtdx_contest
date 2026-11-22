@@ -563,6 +563,71 @@ Format:
         <source>Hard to read: this text color stands only %1:1 against its background, less than 3:1. The Recommended colors button restores colors that read well.</source>
         <translation>Difficile à lire : cette couleur de texte n'atteint que %1:1 par rapport à son fond, moins de 3:1. Le bouton Couleurs recommandées rétablit des couleurs bien lisibles.</translation>
     </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>This is not a Club Log token</source>
+        <translation>Ce n'est pas un jeton Club Log</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>A Club Log API token begins with cl_. Make one in Club Log under Settings &gt; API, copy it with the button beside it and paste it here.</source>
+        <translation>Un jeton d'API Club Log commence par cl_. Créez-en un dans Club Log sous Settings &gt; API, copiez-le avec le bouton à côté et collez-le ici.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>The Club Log token could not be saved</source>
+        <translation>Le jeton Club Log n'a pas pu être enregistré</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Club Log downloads are switched off (JTDX_CLUBLOG_API).</source>
+        <translation>Les téléchargements depuis Club Log sont désactivés (JTDX_CLUBLOG_API).</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>My Call on the General tab is not a call Club Log can have a log of.</source>
+        <translation>Mon indicatif de l'onglet Général n'est pas un indicatif dont Club Log peut avoir un log.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Download from Club Log failed</source>
+        <translation>Échec du téléchargement depuis Club Log</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>The answer was not a Club Log ADIF export.</source>
+        <translation>La réponse n'était pas un export ADIF de Club Log.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Club Log refused the token (HTTP status %1). Make a new one in Club Log under Settings &gt; API and paste it here.</source>
+        <translation>Club Log a refusé le jeton (statut HTTP %1). Créez-en un nouveau dans Club Log sous Settings &gt; API et collez-le ici.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Club Log asks to wait until %1 UTC.</source>
+        <translation>Club Log demande d'attendre jusqu'à %1 UTC.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>No token: nothing is downloaded from Club Log.</source>
+        <translation>Pas de jeton : rien n'est téléchargé depuis Club Log.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1 of %2 QSOs confirmed by LoTW, %3 DXCC entities; downloaded %4 UTC</source>
+        <translation>%1 QSO confirmés par LoTW sur %2, %3 entités DXCC ; téléchargé le %4 UTC</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Not downloaded yet.</source>
+        <translation>Pas encore téléchargé.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Club Log refused the token. Make a new one in Club Log under Settings &gt; API and paste it here.</source>
+        <translation>Club Log a refusé le jeton. Créez-en un nouveau dans Club Log sous Settings &gt; API et collez-le ici.</translation>
+    </message>
 </context>
 <context>
     <name>CountryDat</name>
@@ -11024,6 +11089,38 @@ changements de carte son</translation>
         <location filename="../Configuration.ui"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;International FT Challenge, FT8 and FT4 on 80, 40, 20, 15 and 10 m. The normal QSO: your grid in Tx1, then the signal reports, so Skip Tx 1 is off and cannot be switched on. A QSO scores 1 point plus 1 for each full 3000 km. Without the other station's grid it scores 1 point, and the contest log gets ZZ00 for the grid. A station counts once per band. The multiplier is the 2 character grid field on each band.&lt;/p&gt;&lt;p&gt;While this is selected the grid highlighting below is set to per band on the grid field, and cannot be changed by hand. Your own settings are restored when you switch back to None.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;International FT Challenge, FT8 et FT4 sur 80, 40, 20, 15 et 10 m. Le QSO normal : votre locator dans Tx1, puis les rapports de signal, donc Sauter Tx 1 est désactivé et ne peut pas être activé. Un QSO vaut 1 point plus 1 par tranche complète de 3000 km. Sans le locator de l'autre station il vaut 1 point, et le log du concours reçoit ZZ00 comme locator. Une station compte une fois par bande. Le multiplicateur est le champ de locator à 2 caractères sur chaque bande.&lt;/p&gt;&lt;p&gt;Tant que ceci est sélectionné, la mise en évidence des locators ci-dessous est fixée par bande sur le champ du locator et ne peut pas être modifiée à la main. Vos propres réglages sont rétablis lorsque vous revenez à Aucun.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Club Log to&amp;ken:</source>
+        <translation>&amp;Jeton Club Log :</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Your Club Log API token. To create one, log in to Club Log, go to Settings &gt; API and click the "Create token" button there. Copy the token, paste it into this box and press OK.
+With it the program downloads your LoTW confirmations from Club Log at the start and every 12 hours. It is kept in a file of its own that only you can read, never in the settings file.</source>
+        <translation>Votre jeton d'API Club Log. Pour en créer un, connectez-vous à Club Log, allez dans Settings &gt; API et cliquez sur le bouton "Create token". Copiez le jeton, collez-le dans ce champ et appuyez sur OK.
+Avec lui, le programme télécharge depuis Club Log vos confirmations LoTW au démarrage et toutes les 12 heures. Il est conservé dans un fichier à part que vous seul pouvez lire, jamais dans le fichier de configuration.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Download your LoTW confirmations from Club Log now; the program also does it at the start and every 12 hours.
+Club Log has only the LoTW confirmations it has fetched.
+In Club Log, under Tools &gt; LoTW Sync:
+1. Certificates: add your LoTW certificate once.
+2. Download confirmations: fetch the new ones now and then.
+To fetch the whole LoTW record once, clear "Only confirmations since the last download" there first.</source>
+        <translation>Télécharger maintenant vos confirmations LoTW depuis Club Log ; le programme le fait aussi au démarrage et toutes les 12 heures.
+Club Log n'a que les confirmations LoTW qu'il a récupérées.
+Dans Club Log, sous Tools &gt; LoTW Sync :
+1. Certificates : ajoutez une fois votre certificat LoTW.
+2. Download confirmations : récupérez de temps en temps les nouvelles.
+Pour récupérer une fois tout l'enregistrement LoTW, décochez d'abord "Only confirmations since the last download" à cet endroit.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Do&amp;wnload LoTW confirmations from Club Log</source>
+        <translation>Télé&amp;charger les confirmations LoTW depuis Club Log</translation>
     </message>
 </context>
 <context>
