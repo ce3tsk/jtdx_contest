@@ -293,6 +293,7 @@ set (wsjtx_CXXSRCS
   JTDXDateTime.cpp
   FileDownload.cpp
   clublog.cpp        # CE3TSK 2026-11-21: Club Log's confirmed QSOs (TODO.md 3.-280)
+  qrzlogbook.cpp     # CE3TSK 2026-11-22: QRZ.com's LoTW confirmations (TODO.md 3.-280)
   HttpFetch.cpp      # CE3TSK: one in-memory HTTP(S) GET on the same two transports (SUPERFOX_PLAN.md M2)
   FoxVerifier.cpp    # CE3TSK: checks a Fox's one-time code with the verification server
   UpdateChecker.cpp  # CE3TSK: Help > Check for updates, latest.json on ce3tsk.com

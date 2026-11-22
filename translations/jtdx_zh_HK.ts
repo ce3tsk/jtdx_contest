@@ -633,6 +633,76 @@ Format:
         <source>Club Log is busy; the next try is at %1 UTC.</source>
         <translation>Club Log 繁忙；下次嘗試時間為 %1 UTC。</translation>
     </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>The QRZ.com API key could not be saved</source>
+        <translation>無法儲存 QRZ.com API 密鑰</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>This is not a QRZ.com API key</source>
+        <translation>這不是 QRZ.com API 密鑰</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>A QRZ.com Logbook API key is four groups of four letters and digits, as XXXX-XXXX-XXXX-XXXX. Copy it from your logbook's settings at QRZ.com and paste it here.</source>
+        <translation>QRZ.com Logbook API 密鑰由四組、每組四個字母和數字組成，形如 XXXX-XXXX-XXXX-XXXX。請從 QRZ.com 上您的日誌簿設定中複製，貼上到這裏。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Download from QRZ.com failed</source>
+        <translation>從 QRZ.com 下載失敗</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>QRZ.com refused the key. Copy your logbook's key from QRZ.com again and paste it here; the API needs a QRZ.com subscription.</source>
+        <translation>QRZ.com 拒絕了該密鑰。請從 QRZ.com 重新複製您日誌簿的密鑰並貼上到這裏；API 需要 QRZ.com 訂閱。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>QRZ.com downloads are switched off (JTDX_QRZ_API).</source>
+        <translation>已關閉從 QRZ.com 下載 (JTDX_QRZ_API)。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>QRZ.com refused the key (%1). Copy your logbook's key from QRZ.com again and paste it here; the API needs a QRZ.com subscription.</source>
+        <translation>QRZ.com 拒絕了該密鑰 (%1)。請從 QRZ.com 重新複製您日誌簿的密鑰並貼上到這裏；API 需要 QRZ.com 訂閱。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>QRZ.com asks to wait until %1 UTC.</source>
+        <translation>QRZ.com 要求等到 %1 UTC。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>QRZ.com is busy; the next try is at %1 UTC.</source>
+        <translation>QRZ.com 繁忙；下次嘗試時間為 %1 UTC。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>QRZ.com answered: %1</source>
+        <translation>QRZ.com 回覆：%1</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>No key: nothing is downloaded from QRZ.com.</source>
+        <translation>沒有密鑰：不從 QRZ.com 下載任何內容。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1 QSOs confirmed by LoTW, %2 DXCC entities; downloaded %3 UTC</source>
+        <translation>已由 LoTW 確認 %1 個 QSO，%2 個 DXCC 實體；下載於 %3 UTC</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Club Log refused %1 with this token: the call is not on the token's Club Log account, or Club Log asks to correct the request. Add the call to your Club Log account, or correct My Call on the General tab.</source>
+        <translation>Club Log 拒絕了使用此權杖的 %1：該呼號不在此權杖的 Club Log 帳戶中，或 Club Log 要求更正請求。請將該呼號加入您的 Club Log 帳戶，或更正一般分頁中的「我的呼號」。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Club Log refused %1 with this token (HTTP status %2): the call is not on the token's Club Log account, or Club Log asks to correct the request. Add the call to your Club Log account, or correct My Call on the General tab.</source>
+        <translation>Club Log 拒絕了使用此權杖的 %1（HTTP 狀態 %2）：該呼號不在此權杖的 Club Log 帳戶中，或 Club Log 要求更正請求。請將該呼號加入您的 Club Log 帳戶，或更正一般分頁中的「我的呼號」。</translation>
+    </message>
 </context>
 <context>
     <name>CountryDat</name>
@@ -2604,6 +2674,221 @@ Format:
         <location filename="../displaytext.cpp"/>
         <source>No longer of low confidence: it goes to UDP clients and PSK Reporter like any other decode.</source>
         <translation>不再視為低可信度：像其他解碼一樣傳送給 UDP 用戶端和 PSK Reporter。</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>%1 is a LoTW user, and you have worked %2, but none of those QSOs is LoTW-confirmed.</source>
+        <translation>%1 是 LoTW 用戶；您已通聯 %2，但這些 QSO 均未經 LoTW 確認。</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>So it counts as never worked, and the auto sequencer treats it as new.</source>
+        <translation>因此它被視為從未通聯，自動序列器也把它當作新的。</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>CQ zone %1</source>
+        <translation>CQ 區 %1</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>ITU zone %1</source>
+        <translation>ITU 區 %1</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>prefix %1</source>
+        <translation>前綴 %1</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>grid %1</source>
+        <translation>網格 %1</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>US state %1</source>
+        <translation>美國州 %1</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Confirmed in LoTW already? Club Log and QRZ.com have only the LoTW confirmations they have fetched: in Club Log, Tools &gt; LoTW Sync &gt; Download confirmations; in your QRZ.com Logbook, Settings &gt; Logbook of the World Import/Export &gt; Import. The program downloads them every 12 hours.</source>
+        <translation>已在 LoTW 中確認？Club Log 和 QRZ.com 只有各自已取得的 LoTW 確認：在 Club Log 中使用 Tools &gt; LoTW Sync &gt; Download confirmations；在您的 QRZ.com Logbook 中使用 Settings &gt; Logbook of the World Import/Export &gt; Import。程式每 12 小時下載一次。</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>New Maidenhead field: %1</source>
+        <translation>新的梅登黑德區塊：%1</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>New CQ zone: %1</source>
+        <translation>新的 CQ 區：%1</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>New CQ zone on %1: %2</source>
+        <translation>新的 CQ 區（%1）：%2</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>New ITU zone: %1</source>
+        <translation>新的 ITU 區：%1</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>New ITU zone on %1: %2</source>
+        <translation>新的 ITU 區（%1）：%2</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>New DXCC: %1</source>
+        <translation>新DXCC：%1</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>New DXCC on %1: %2</source>
+        <translation>新DXCC（%1）：%2</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>New US state: %1</source>
+        <translation>新的美國州：%1</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>New US state on %1: %2</source>
+        <translation>新的美國州（%1）：%2</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>New grid: %1</source>
+        <translation>新網格：%1</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>New grid on %1: %2</source>
+        <translation>新網格（%1）：%2</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>New prefix: %1</source>
+        <translation>新前綴：%1</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>New prefix on %1: %2</source>
+        <translation>新前綴（%1）：%2</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>New call: %1</source>
+        <translation>新呼號：%1</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>New call on %1: %2</source>
+        <translation>新呼號（%1）：%2</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Hint decode: the decoder matched it to a message it expected - of the QSO in progress, or one heard before - instead of reading it bit by bit.</source>
+        <translation>提示解碼：解碼器沒有逐位讀取，而是把它與預期的訊息（進行中的 QSO 的訊息，或以前聽到的訊息）相匹配。</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>A-priori decode: the decoder took part of the message as known - CQ, My Call, the DX call, or RRR, RR73 or 73 - and decoded the rest.</source>
+        <translation>先驗解碼：解碼器把訊息的一部分（CQ、我的呼號、DX 呼號，或 RRR、RR73、73）當作已知，並解出其餘部分。</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Hint decode in the TX background: found while you transmitted, by matching it to a message the decoder expected.</source>
+        <translation>發射後台中的提示解碼：在您發射期間，通過與解碼器預期的訊息相匹配而找到。</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Decoded in the TX background: the decoder went on with the last receive period while you transmitted. The mark does not tell a plain decode from an a-priori one.</source>
+        <translation>在發射後台中解碼：您發射期間，解碼器繼續處理上一個接收週期。該標記不區分普通解碼和先驗解碼。</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Likely a false decode: many of its symbols had to be corrected.</source>
+        <translation>很可能是錯誤解碼：它的許多符號都需要糾正。</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>A DXpedition-mode message (Fox and Hound), decoded without help.</source>
+        <translation>DXpedition 模式訊息（Fox 和 Hound），無輔助解碼。</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Free text.</source>
+        <translation>自由文字。</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>A LoTW user: uploaded to LoTW within the last year.</source>
+        <translation>LoTW 用戶：過去一年內向 LoTW 上傳過。</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Worked before: nothing new in the notifications that are on.</source>
+        <translation>曾經通聯：已開啟的通知中沒有新內容。</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Calls CQ.</source>
+        <translation>正在呼叫 CQ。</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>A message to you from your DX call.</source>
+        <translation>您的 DX 呼號發給您的訊息。</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>A message to you.</source>
+        <translation>發給您的訊息。</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Ends a QSO: RR73 or 73.</source>
+        <translation>結束 QSO：RR73 或 73。</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Has the call of your DX Call box.</source>
+        <translation>包含您的 DX 呼號框中的呼號。</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>On your list of wanted calls.</source>
+        <translation>在您的目標呼號列表中。</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Its prefix is on your list of wanted prefixes.</source>
+        <translation>前綴在您的目標前綴列表中。</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Its grid is on your list of wanted grids.</source>
+        <translation>網格在您的目標網格列表中。</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Its country is on your list of wanted countries.</source>
+        <translation>國家在您的目標國家列表中。</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>New Maidenhead field on %1: %2</source>
+        <translation>新的梅登黑德區塊（%1）：%2</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Hint or a-priori decode: the decoder had help with this message; the window's mark does not tell which kind.</source>
+        <translation>提示解碼或先驗解碼：解碼器在這條訊息上得到了輔助；視窗中的標記無法說明是哪一種。</translation>
     </message>
 </context>
 <context>
@@ -11120,8 +11405,8 @@ Club Log 只有它已取得的 LoTW 確認。
     </message>
     <message>
         <location filename="../Configuration.ui"/>
-        <source>With confirmations downloaded from Club Log, a station in the LoTW users file that you have worked but that has not confirmed through LoTW counts as never worked in every tier above that is on: it is shown in its own color and the auto sequencer calls it as new. Not in a contest.</source>
-        <translation>下載了 Club Log 的確認後，LoTW 用戶檔案中已通聯但未經 LoTW 確認的電台，在上面每個已開啟的級別中都視為從未通聯：以其專用顏色顯示，自動序列器會把它當作新的來呼叫。比賽中不適用。</translation>
+        <source>With LoTW confirmations downloaded from Club Log or QRZ.com, a station in the LoTW users file that you have worked but that has not confirmed through LoTW counts as never worked in every tier above that is on: it is shown in its own color and the auto sequencer calls it as new. QSOs from the day of the newest confirmed QSO on, and every QSO you log, count as confirmed for now: LoTW may not have confirmed them yet. Not in a contest.</source>
+        <translation>下載了 Club Log 或 QRZ.com 的 LoTW 確認後，LoTW 用戶檔案中已通聯但未經 LoTW 確認的電台，在上面每個已開啟的級別中都視為從未通聯：以其專用顏色顯示，自動序列器會把它當作新的來呼叫。從最新一個已確認 QSO 的那天起的 QSO，以及您記錄的每個 QSO，暫時都視為已確認：LoTW 可能還沒有確認它們。比賽中不適用。</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
@@ -11132,6 +11417,38 @@ Club Log 只有它已取得的 LoTW 確認。
         <location filename="../Configuration.ui"/>
         <source>Worked, not LoTW-confirmed</source>
         <translation>已通聯，未經 LoTW 確認</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>QRZ.com API ke&amp;y:</source>
+        <translation>QRZ.com API 密鑰(&amp;Y):</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Your QRZ.com Logbook API key. To find it, log in to QRZ.com, open your Logbook, click Settings at the top right and, under "QRZ Logbook API", click "Show" beside the API Key. Copy the key, paste it into this box and press OK. The API needs a QRZ.com subscription (XML level or higher).
+With it the program downloads your LoTW confirmations from QRZ.com at the start and every 12 hours. It is kept in a file of its own that only you can read, never in the settings file.</source>
+        <translation>您的 QRZ.com Logbook API 密鑰。尋找方法：登入 QRZ.com，開啟您的 Logbook，按一下右上角的 Settings，在 "QRZ Logbook API" 下按一下 API Key 旁邊的 "Show"。複製密鑰，貼上到此方塊中，然後按「確定」。API 需要 QRZ.com 訂閱（XML 級別或更高）。
+程式用它在啟動時及每 12 小時從 QRZ.com 下載您的 LoTW 確認。它儲存在只有您能讀取的獨立檔案中，絕不儲存在設定檔案裏。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Download your LoTW confirmations from QRZ.com now; the program also does it at the start and every 12 hours. Only the confirmations from LoTW count, not QRZ.com's own.
+QRZ.com has only the LoTW confirmations it has imported.
+In your QRZ.com Logbook, under Settings:
+1. LoTW Settings: enter your LoTW username once.
+2. Logbook of the World Import/Export, Import: fetch the new ones now and then (QRZ.com asks for your LoTW password).
+The first download takes a few minutes; after it only what changed is fetched.</source>
+        <translation>立即從 QRZ.com 下載您的 LoTW 確認；程式也會在啟動時及每 12 小時下載。只計算來自 LoTW 的確認，不計 QRZ.com 自己的確認。
+QRZ.com 只有它已匯入的 LoTW 確認。
+在您的 QRZ.com Logbook 的 Settings 中：
+1. LoTW Settings：輸入一次您的 LoTW 用戶名稱。
+2. Logbook of the World Import/Export，Import：不時取得新的確認（QRZ.com 會詢問您的 LoTW 密碼）。
+首次下載需要幾分鐘；之後只取得有變化的部分。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Download LoTW confirmations from &amp;QRZ.com</source>
+        <translation>從 QRZ.com 下載 LoTW 確認(&amp;Z)</translation>
     </message>
 </context>
 <context>

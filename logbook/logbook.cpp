@@ -41,7 +41,9 @@ void LogBook::init(const QString mycall,const QString mygrid,const QString mydat
       _countries.loadMembers (CountryDat::fileToUse (dataPath, QStringLiteral ("ybdxpi.txt"), &ContestMembers::version));
     }
 
-  _log.init(dataPath.absoluteFilePath (logFileName), countryData ());
+  /* CE3TSK 2026-11-22 (TODO.md 3.-280): no name, no file - an empty book (the windows' confirmations when no source's file
+     is what the saved token or key fetched) */
+  _log.init(logFileName.isEmpty () ? QString {} : dataPath.absoluteFilePath (logFileName), countryData ());
   _log.load(mycall,mygrid,mydate);
 
   /*
@@ -271,6 +273,18 @@ void LogBook::addAsWorked(const QString call, const QString band, const QString 
 bool LogBook::getData(const QString call, QString &gridsquare, QString &name)
 {
     return _log.getData(call,gridsquare,name);
+}
+
+QString LogBook::takePending (LogBook& log)   /* CE3TSK 2026-11-22: see logbook.h */
+{
+    QString const from {_log.newestDate ()};
+    if (!from.isEmpty ()) _log.addFrom (log._log, from);
+    return from;
+}
+
+int LogBook::addAll (LogBook& other)   /* CE3TSK 2026-11-22: see logbook.h */
+{
+    return _log.addFrom (other._log, QString {});
 }
 
 int LogBook::get_qso_count(const QString mod)

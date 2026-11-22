@@ -50,6 +50,10 @@ class ADIF
         /* CE3TSK: contest scoring (contestscore.h). This log holds only contest QSOs: all of them,
            the oldest first for each call, for the score to tell which count. */
         QList<contest_score::Qso> contestQsos () const;
+        /* CE3TSK 2026-11-22 (TODO.md 3.-280): the newest QSO's day as QSO_DATE gives it ("yyyyMMdd"), "" for none; and
+           every QSO of `from` on that day or later added here, as add () adds one (the number added) */
+        QString newestDate () const;
+        int addFrom (ADIF const& from, QString const& date);
         int getCount(const QString mode="");
 
         // open ADIF file and append the QSO details. Return true on success

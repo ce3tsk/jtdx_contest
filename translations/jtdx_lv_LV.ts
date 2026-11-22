@@ -633,6 +633,76 @@ Formāts:
         <source>Club Log is busy; the next try is at %1 UTC.</source>
         <translation>Club Log ir aizņemts; nākamais mēģinājums %1 UTC.</translation>
     </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>The QRZ.com API key could not be saved</source>
+        <translation>QRZ.com API atslēgu neizdevās saglabāt</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>This is not a QRZ.com API key</source>
+        <translation>Tā nav QRZ.com API atslēga</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>A QRZ.com Logbook API key is four groups of four letters and digits, as XXXX-XXXX-XXXX-XXXX. Copy it from your logbook's settings at QRZ.com and paste it here.</source>
+        <translation>QRZ.com Logbook API atslēga ir četras grupas pa četriem burtiem un cipariem, piemēram, XXXX-XXXX-XXXX-XXXX. Nokopējiet to no sava žurnāla iestatījumiem QRZ.com un ielīmējiet šeit.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Download from QRZ.com failed</source>
+        <translation>Lejupielāde no QRZ.com neizdevās</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>QRZ.com refused the key. Copy your logbook's key from QRZ.com again and paste it here; the API needs a QRZ.com subscription.</source>
+        <translation>QRZ.com noraidīja atslēgu. Vēlreiz nokopējiet sava žurnāla atslēgu no QRZ.com un ielīmējiet to šeit; API ir nepieciešams QRZ.com abonements.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>QRZ.com downloads are switched off (JTDX_QRZ_API).</source>
+        <translation>Lejupielādes no QRZ.com ir izslēgtas (JTDX_QRZ_API).</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>QRZ.com refused the key (%1). Copy your logbook's key from QRZ.com again and paste it here; the API needs a QRZ.com subscription.</source>
+        <translation>QRZ.com noraidīja atslēgu (%1). Vēlreiz nokopējiet sava žurnāla atslēgu no QRZ.com un ielīmējiet to šeit; API ir nepieciešams QRZ.com abonements.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>QRZ.com asks to wait until %1 UTC.</source>
+        <translation>QRZ.com lūdz gaidīt līdz %1 UTC.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>QRZ.com is busy; the next try is at %1 UTC.</source>
+        <translation>QRZ.com ir aizņemts; nākamais mēģinājums %1 UTC.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>QRZ.com answered: %1</source>
+        <translation>QRZ.com atbildēja: %1</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>No key: nothing is downloaded from QRZ.com.</source>
+        <translation>Nav atslēgas: no QRZ.com nekas netiek lejupielādēts.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1 QSOs confirmed by LoTW, %2 DXCC entities; downloaded %3 UTC</source>
+        <translation>Ar LoTW apstiprināti %1 QSO, %2 DXCC teritorijas; lejupielādēts %3 UTC</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Club Log refused %1 with this token: the call is not on the token's Club Log account, or Club Log asks to correct the request. Add the call to your Club Log account, or correct My Call on the General tab.</source>
+        <translation>Club Log noraidīja %1 ar šo tokenu: izsaukuma signāls nav tokena Club Log kontā, vai Club Log lūdz labot pieprasījumu. Pievienojiet izsaukuma signālu savam Club Log kontam vai izlabojiet Mans Call cilnē Vispārīgi.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Club Log refused %1 with this token (HTTP status %2): the call is not on the token's Club Log account, or Club Log asks to correct the request. Add the call to your Club Log account, or correct My Call on the General tab.</source>
+        <translation>Club Log noraidīja %1 ar šo tokenu (HTTP statuss %2): izsaukuma signāls nav tokena Club Log kontā, vai Club Log lūdz labot pieprasījumu. Pievienojiet izsaukuma signālu savam Club Log kontam vai izlabojiet Mans Call cilnē Vispārīgi.</translation>
+    </message>
 </context>
 <context>
     <name>CountryDat</name>
@@ -2603,6 +2673,221 @@ Formāts:
         <location filename="../displaytext.cpp"/>
         <source>No longer of low confidence: it goes to UDP clients and PSK Reporter like any other decode.</source>
         <translation>Vairs nav zemas ticamības: tā nonāk pie UDP klientiem un PSK Reporter kā jebkura cita dekodēšana.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>%1 is a LoTW user, and you have worked %2, but none of those QSOs is LoTW-confirmed.</source>
+        <translation>%1 ir LoTW lietotājs; strādāts: %2, bet neviens no šiem QSO nav apstiprināts LoTW.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>So it counts as never worked, and the auto sequencer treats it as new.</source>
+        <translation>Tāpēc tā skaitās kā nekad nestrādāta, un automātiskais sekvencētājs to uzskata par jaunu.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>CQ zone %1</source>
+        <translation>CQ zona %1</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>ITU zone %1</source>
+        <translation>ITU zona %1</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>prefix %1</source>
+        <translation>prefikss %1</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>grid %1</source>
+        <translation>lokātors %1</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>US state %1</source>
+        <translation>ASV štats %1</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Confirmed in LoTW already? Club Log and QRZ.com have only the LoTW confirmations they have fetched: in Club Log, Tools &gt; LoTW Sync &gt; Download confirmations; in your QRZ.com Logbook, Settings &gt; Logbook of the World Import/Export &gt; Import. The program downloads them every 12 hours.</source>
+        <translation>Jau apstiprināts LoTW? Club Log un QRZ.com ir tikai tie LoTW apstiprinājumi, ko tie ir ieguvuši: Club Log sadaļā Tools &gt; LoTW Sync &gt; Download confirmations; savā QRZ.com Logbook sadaļā Settings &gt; Logbook of the World Import/Export &gt; Import. Programma tos lejupielādē ik pēc 12 stundām.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>New Maidenhead field: %1</source>
+        <translation>Jauns Maidenhead lauks: %1</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>New CQ zone: %1</source>
+        <translation>Jauna CQ zona: %1</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>New CQ zone on %1: %2</source>
+        <translation>Jauna CQ zona (%1): %2</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>New ITU zone: %1</source>
+        <translation>Jauna ITU zona: %1</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>New ITU zone on %1: %2</source>
+        <translation>Jauna ITU zona (%1): %2</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>New DXCC: %1</source>
+        <translation>Jauna DXCC: %1</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>New DXCC on %1: %2</source>
+        <translation>Jauna DXCC (%1): %2</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>New US state: %1</source>
+        <translation>Jauns ASV štats: %1</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>New US state on %1: %2</source>
+        <translation>Jauns ASV štats (%1): %2</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>New grid: %1</source>
+        <translation>Jauns lokātors: %1</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>New grid on %1: %2</source>
+        <translation>Jauns lokātors (%1): %2</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>New prefix: %1</source>
+        <translation>Jauns prefikss: %1</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>New prefix on %1: %2</source>
+        <translation>Jauns prefikss (%1): %2</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>New call: %1</source>
+        <translation>Jauns izsaukuma signāls: %1</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>New call on %1: %2</source>
+        <translation>Jauns izsaukuma signāls (%1): %2</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Hint decode: the decoder matched it to a message it expected - of the QSO in progress, or one heard before - instead of reading it bit by bit.</source>
+        <translation>Dekodēšana ar norādi: dekoders to salīdzināja ar gaidītu ziņojumu - no notiekošā QSO vai iepriekš dzirdētu - nevis nolasīja bitu pa bitam.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>A-priori decode: the decoder took part of the message as known - CQ, My Call, the DX call, or RRR, RR73 or 73 - and decoded the rest.</source>
+        <translation>A priori dekodēšana: dekoders daļu ziņojuma pieņēma kā zināmu - CQ, manu izsaukuma signālu, DX izsaukuma signālu vai RRR, RR73 vai 73 - un dekodēja pārējo.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Hint decode in the TX background: found while you transmitted, by matching it to a message the decoder expected.</source>
+        <translation>Dekodēšana ar norādi raidīšanas fonā: atrasts raidīšanas laikā, salīdzinot ar ziņojumu, ko dekoders gaidīja.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Decoded in the TX background: the decoder went on with the last receive period while you transmitted. The mark does not tell a plain decode from an a-priori one.</source>
+        <translation>Dekodēts raidīšanas fonā: dekoders raidīšanas laikā turpināja darbu ar pēdējo uztveršanas periodu. Atzīme neatšķir parastu dekodēšanu no a priori dekodēšanas.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Likely a false decode: many of its symbols had to be corrected.</source>
+        <translation>Visticamāk, kļūdaina dekodēšana: daudzi tās simboli bija jālabo.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>A DXpedition-mode message (Fox and Hound), decoded without help.</source>
+        <translation>DXpedīcijas režīma ziņojums (Fox un Hound), dekodēts bez palīdzības.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Free text.</source>
+        <translation>Brīvs teksts.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>A LoTW user: uploaded to LoTW within the last year.</source>
+        <translation>LoTW lietotājs: pēdējā gada laikā augšupielādējis LoTW.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Worked before: nothing new in the notifications that are on.</source>
+        <translation>Jau strādāts: ieslēgtajos paziņojumos nekā jauna.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Calls CQ.</source>
+        <translation>Izsauc CQ.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>A message to you from your DX call.</source>
+        <translation>Ziņojums jums no jūsu DX izsaukuma signāla.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>A message to you.</source>
+        <translation>Ziņojums jums.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Ends a QSO: RR73 or 73.</source>
+        <translation>Beidz QSO: RR73 vai 73.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Has the call of your DX Call box.</source>
+        <translation>Satur izsaukuma signālu no jūsu lauka DX izsauk.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>On your list of wanted calls.</source>
+        <translation>Ir jūsu vēlamo izsaukuma signālu sarakstā.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Its prefix is on your list of wanted prefixes.</source>
+        <translation>Prefikss ir jūsu vēlamo prefiksu sarakstā.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Its grid is on your list of wanted grids.</source>
+        <translation>Lokātors ir jūsu vēlamo lokātoru sarakstā.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Its country is on your list of wanted countries.</source>
+        <translation>Valsts ir jūsu vēlamo valstu sarakstā.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>New Maidenhead field on %1: %2</source>
+        <translation>Jauns Maidenhead lauks (%1): %2</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Hint or a-priori decode: the decoder had help with this message; the window's mark does not tell which kind.</source>
+        <translation>Dekodēšana ar norādi vai a priori: dekoderam šim ziņojumam bija palīdzība; loga atzīme nepasaka, kāda veida.</translation>
     </message>
 </context>
 <context>
@@ -11119,8 +11404,8 @@ Lai vienreiz iegūtu visu LoTW ierakstu, vispirms noņemiet tur atzīmi "Only co
     </message>
     <message>
         <location filename="../Configuration.ui"/>
-        <source>With confirmations downloaded from Club Log, a station in the LoTW users file that you have worked but that has not confirmed through LoTW counts as never worked in every tier above that is on: it is shown in its own color and the auto sequencer calls it as new. Not in a contest.</source>
-        <translation>Ar no Club Log lejupielādētiem apstiprinājumiem stacija no LoTW lietotāju faila, ar kuru ir sakari, bet kura nav apstiprinājusi caur LoTW, katrā augstāk ieslēgtajā līmenī skaitās kā nekad nestrādāta: tā tiek parādīta savā krāsā, un automātiskais sekvencētājs to izsauc kā jaunu. Ne sacensībās.</translation>
+        <source>With LoTW confirmations downloaded from Club Log or QRZ.com, a station in the LoTW users file that you have worked but that has not confirmed through LoTW counts as never worked in every tier above that is on: it is shown in its own color and the auto sequencer calls it as new. QSOs from the day of the newest confirmed QSO on, and every QSO you log, count as confirmed for now: LoTW may not have confirmed them yet. Not in a contest.</source>
+        <translation>Ar no Club Log vai QRZ.com lejupielādētiem LoTW apstiprinājumiem stacija no LoTW lietotāju faila, ar kuru ir sakari, bet kura nav apstiprinājusi caur LoTW, katrā augstāk ieslēgtajā līmenī skaitās kā nekad nestrādāta: tā tiek parādīta savā krāsā, un automātiskais sekvencētājs to izsauc kā jaunu. QSO, sākot no jaunākā apstiprinātā QSO dienas, un katrs QSO, ko ierakstāt žurnālā, pagaidām skaitās apstiprināti: LoTW tos, iespējams, vēl nav apstiprinājis. Ne sacensībās.</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
@@ -11131,6 +11416,38 @@ Lai vienreiz iegūtu visu LoTW ierakstu, vispirms noņemiet tur atzīmi "Only co
         <location filename="../Configuration.ui"/>
         <source>Worked, not LoTW-confirmed</source>
         <translation>Strādāts, nav apstiprināts LoTW</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>QRZ.com API ke&amp;y:</source>
+        <translation>QR&amp;Z.com API atslēga:</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Your QRZ.com Logbook API key. To find it, log in to QRZ.com, open your Logbook, click Settings at the top right and, under "QRZ Logbook API", click "Show" beside the API Key. Copy the key, paste it into this box and press OK. The API needs a QRZ.com subscription (XML level or higher).
+With it the program downloads your LoTW confirmations from QRZ.com at the start and every 12 hours. It is kept in a file of its own that only you can read, never in the settings file.</source>
+        <translation>Jūsu QRZ.com Logbook API atslēga. Lai to atrastu, piesakieties QRZ.com, atveriet savu Logbook, noklikšķiniet augšā pa labi uz Settings un sadaļā "QRZ Logbook API" blakus API Key noklikšķiniet uz "Show". Nokopējiet atslēgu, ielīmējiet to šajā lodziņā un nospiediet Labi. API ir nepieciešams QRZ.com abonements (XML līmenis vai augstāks).
+Ar to programma startējot un ik pēc 12 stundām lejupielādē no QRZ.com jūsu LoTW apstiprinājumus. Tā tiek glabāta atsevišķā failā, ko varat lasīt tikai jūs, nekad iestatījumu failā.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Download your LoTW confirmations from QRZ.com now; the program also does it at the start and every 12 hours. Only the confirmations from LoTW count, not QRZ.com's own.
+QRZ.com has only the LoTW confirmations it has imported.
+In your QRZ.com Logbook, under Settings:
+1. LoTW Settings: enter your LoTW username once.
+2. Logbook of the World Import/Export, Import: fetch the new ones now and then (QRZ.com asks for your LoTW password).
+The first download takes a few minutes; after it only what changed is fetched.</source>
+        <translation>Lejupielādēt jūsu LoTW apstiprinājumus no QRZ.com tagad; programma to dara arī startējot un ik pēc 12 stundām. Skaitās tikai LoTW apstiprinājumi, nevis paša QRZ.com apstiprinājumi.
+QRZ.com ir tikai tie LoTW apstiprinājumi, ko tas ir importējis.
+Savā QRZ.com Logbook sadaļā Settings:
+1. LoTW Settings: vienreiz ievadiet savu LoTW lietotājvārdu.
+2. Logbook of the World Import/Export, Import: laiku pa laikam iegūstiet jaunos (QRZ.com prasa jūsu LoTW paroli).
+Pirmā lejupielāde aizņem dažas minūtes; pēc tam tiek iegūts tikai tas, kas mainījies.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Download LoTW confirmations from &amp;QRZ.com</source>
+        <translation>Lejupielādēt LoTW apstiprinājumus no &amp;QRZ.com</translation>
     </message>
 </context>
 <context>

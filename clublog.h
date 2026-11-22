@@ -10,7 +10,8 @@
    confirmed DXCC, zone, grid or call is judged by the same cty.dat lookup as a worked one.
 
    Club Log's rules, kept here and in Configuration: a User-Agent naming the product, never a retry after 401, 403 or
-   422 (the token is wrong, revoked or not for this call - the user must act), on 429 wait until its Retry-After, and
+   422 (the user must act: 401 the token is wrong or revoked; since 2026-11-22 403 - the call is not on the token's
+   account - and 422 - a request to correct - refuse that call with that token alone), on 429 wait until its Retry-After, and
    far below 60 requests a minute and 500 a day: one request at most every refresh_hours, or when the user asks.
 
    The token is a password. It lives in a file of its own beside the settings file, readable by the user alone
@@ -69,7 +70,7 @@ namespace club_log
   bool due (QDateTime const& last_success, QDateTime const& now);
 
   // how a failed download's HTTP status leaves the automatic ones
-  enum class After {Retry, WaitRetryAfter, TokenRefused};
+  enum class After {Retry, WaitRetryAfter, TokenRefused, CallRefused};   // CallRefused: 403, 422 - that call with that token
   After after_status (int http_status);   // 0: no answer from the server at all
   /* when the next automatic download may start after a failure: an hour later (the network was down, the server
      failed), at Club Log's Retry-After (an hour when it named none, never sooner than a minute nor later than

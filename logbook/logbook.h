@@ -26,12 +26,22 @@ public:
        contest's own. sharedCountries lets a second logbook borrow the first's country
        database instead of parsing cty.dat (344 KB) a second time; null means own it.
        translatedCountryNames picks the UI-language country names over the English ones; it only
-       matters when this logbook owns its country data. */
+       matters when this logbook owns its country data. An empty logFileName gives an empty book (2026-11-22). */
     void init(const QString mycall,const QString mygrid,const QString mydate,
               QString const& logFileName, CountryDat* sharedCountries = nullptr,
               bool translatedCountryNames = false);
     CountryDat* countryData ();   /* CE3TSK: to share with a contest logbook */
     QList<contest_score::Qso> contestQsos ();   /* CE3TSK: for the contest score */
+    /* CE3TSK 2026-11-22 (TODO.md 3.-280, the operator): for a book of confirmations (Club Log's LoTW QSLs) - they judge
+       only the QSOs they can hold. Club Log has only what its LoTW Sync fetched, by hand now and then, so the newest
+       confirmed QSO's day is as far as they surely reach: every QSO of `log` from that day on is taken here as
+       confirmed for now, and the caller takes each QSO logged from now on (addAsWorked) - else a LoTW user just worked
+       would count as new again. Returns that day; "" when this book holds no QSO, and then nothing is taken (no
+       confirmations count as none, DisplayText::setConfirmations). */
+    QString takePending (LogBook& log);
+    /* CE3TSK 2026-11-22 (TODO.md 3.-280, the operator: "add up both LotW confirmation sources"): every QSO of `other`
+       added here as worked (Club Log's confirmations and QRZ.com's in one book); the number added */
+    int addAll (LogBook& other);
     void matchCQZ(/*in*/ const QString call,
               /*out*/ QString &countryName,
                       bool &WorkedBefore,

@@ -26,9 +26,11 @@ public:
     // CE3TSK 2026-10-23: Misc > Hide clear phantom messages - such a line is not drawn, all else as shown (Verdict::clearPhantom ())
     void setHideClearPhantoms (bool on) { hideClearPhantoms_ = on; }
     /* CE3TSK 2026-11-21 (TODO.md 3.-280, QSL_CONFIRMATIONS_PLAN.md steps 2 and 3): the confirmations downloaded (Club Log's
-       LoTW QSLs, clublog_qsl.adi), judged by the log's own cty.dat - nullptr while there are none. A LoTW user worked but
-       not LoTW-confirmed then counts as never worked, in the colour of its own (Configuration::countUnconfirmedAsNew) */
-    void setConfirmations (LogBook * confirmed) { confirmed_ = confirmed; }
+       LoTW QSLs, clublog_qsl.adi), judged by the log's own cty.dat. A LoTW user worked but not LoTW-confirmed then counts
+       as never worked, in the colour of its own (Configuration::countUnconfirmedAsNew). 2026-11-22 (the operator): taken
+       only while they hold a QSO - none downloaded, a download with none, none of My Call's - or every LoTW user worked
+       would count as new */
+    void setConfirmations (LogBook * confirmed);
     /* CE3TSK 2026-09-30: where a window line's marker stands - right after the message, where
        displayDecodedText cuts the decoder's line: 49 for FT8, FT4 and FT2 (seconds in the time), 40 for
        JT65 and JT9. The country follows it. */
@@ -39,6 +41,18 @@ public:
     static bool isDoubt (QTextCharFormat const& f) {return f.property (DoubtProperty).toBool ();}
     /* CE3TSK 2026-10-19: the tooltip of a likely phantom decode's line - why it is one, and what is done with it */
     static QString doubtToolTip (phantom_decodes::Verdict const&, QString const& country, int snr);
+    /* CE3TSK 2026-11-22 (TODO.md 3.-280): the tooltip of a line in the colour of a LoTW user worked but not LoTW-confirmed -
+       `worked` names what was worked in the tier that fired, as that tier counts it ("Germany (40m FT8)") */
+    static QString unconfirmedToolTip (QString const& call, QString const& worked);
+    /* CE3TSK 2026-11-22 (the operator): every decode line's tooltip - the caller and its DXCC in bold, what the line's
+       colours say (the tier, then the unconfirmed LoTW user's why, then the rest), what its mark says, then why it is a
+       likely phantom decode. The plain sentences are escaped here; `unconfirmed` and `phantom` are paragraphs already */
+    static QString lineToolTip (QString const& head, QString const& tier, QString const& unconfirmed, QStringList const& colours,
+                                QStringList const& marks, QString const& phantom);
+    // the tier that fired (decode_priority level), what it counts and, for an "on band/mode" tier, where: "New DXCC on 20m FT8: Germany"
+    static QString tierSentence (int level, QString const& value, QString const& where);
+    // what the decoder's mark says, and the LoTW user's
+    static QStringList markSentences (QString const& mark, bool lotw, bool windowCopy = false, bool jt = false);
     void setMyContinent (QString const&);
     void setContentFont (QFont const&);
     void insertLineSpacer(QString const&);

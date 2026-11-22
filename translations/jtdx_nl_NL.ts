@@ -633,6 +633,76 @@ Indeling:
         <source>Club Log is busy; the next try is at %1 UTC.</source>
         <translation>Club Log is bezet; de volgende poging is om %1 UTC.</translation>
     </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>The QRZ.com API key could not be saved</source>
+        <translation>De API-sleutel van QRZ.com kon niet worden opgeslagen</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>This is not a QRZ.com API key</source>
+        <translation>Dit is geen API-sleutel van QRZ.com</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>A QRZ.com Logbook API key is four groups of four letters and digits, as XXXX-XXXX-XXXX-XXXX. Copy it from your logbook's settings at QRZ.com and paste it here.</source>
+        <translation>Een API-sleutel van het QRZ.com-Logbook bestaat uit vier groepen van vier letters en cijfers, zoals XXXX-XXXX-XXXX-XXXX. Kopieer hem uit de instellingen van uw logbook op QRZ.com en plak hem hier.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Download from QRZ.com failed</source>
+        <translation>Downloaden van QRZ.com mislukt</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>QRZ.com refused the key. Copy your logbook's key from QRZ.com again and paste it here; the API needs a QRZ.com subscription.</source>
+        <translation>QRZ.com heeft de sleutel geweigerd. Kopieer de sleutel van uw logbook opnieuw van QRZ.com en plak hem hier; de API vereist een abonnement op QRZ.com.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>QRZ.com downloads are switched off (JTDX_QRZ_API).</source>
+        <translation>Downloads van QRZ.com zijn uitgeschakeld (JTDX_QRZ_API).</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>QRZ.com refused the key (%1). Copy your logbook's key from QRZ.com again and paste it here; the API needs a QRZ.com subscription.</source>
+        <translation>QRZ.com heeft de sleutel geweigerd (%1). Kopieer de sleutel van uw logbook opnieuw van QRZ.com en plak hem hier; de API vereist een abonnement op QRZ.com.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>QRZ.com asks to wait until %1 UTC.</source>
+        <translation>QRZ.com vraagt te wachten tot %1 UTC.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>QRZ.com is busy; the next try is at %1 UTC.</source>
+        <translation>QRZ.com is bezet; de volgende poging is om %1 UTC.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>QRZ.com answered: %1</source>
+        <translation>QRZ.com antwoordde: %1</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>No key: nothing is downloaded from QRZ.com.</source>
+        <translation>Geen sleutel: er wordt niets van QRZ.com gedownload.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1 QSOs confirmed by LoTW, %2 DXCC entities; downloaded %3 UTC</source>
+        <translation>%1 QSO's bevestigd door LoTW, %2 DXCC-entiteiten; gedownload %3 UTC</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Club Log refused %1 with this token: the call is not on the token's Club Log account, or Club Log asks to correct the request. Add the call to your Club Log account, or correct My Call on the General tab.</source>
+        <translation>Club Log heeft %1 met dit token geweigerd: de roepnaam staat niet op het Club Log-account van het token, of Club Log vraagt het verzoek te verbeteren. Voeg de roepnaam toe aan uw Club Log-account, of verbeter Mijn roepnaam op het tabblad Algemeen.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Club Log refused %1 with this token (HTTP status %2): the call is not on the token's Club Log account, or Club Log asks to correct the request. Add the call to your Club Log account, or correct My Call on the General tab.</source>
+        <translation>Club Log heeft %1 met dit token geweigerd (HTTP-status %2): de roepnaam staat niet op het Club Log-account van het token, of Club Log vraagt het verzoek te verbeteren. Voeg de roepnaam toe aan uw Club Log-account, of verbeter Mijn roepnaam op het tabblad Algemeen.</translation>
+    </message>
 </context>
 <context>
     <name>CountryDat</name>
@@ -2604,6 +2674,221 @@ Indeling:
         <location filename="../displaytext.cpp"/>
         <source>No longer of low confidence: it goes to UDP clients and PSK Reporter like any other decode.</source>
         <translation>Niet langer met lage betrouwbaarheid: de decodering gaat naar UDP-clients en PSK Reporter zoals elke andere.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>%1 is a LoTW user, and you have worked %2, but none of those QSOs is LoTW-confirmed.</source>
+        <translation>%1 is een LoTW-gebruiker en u hebt %2 gewerkt, maar geen van die QSO's is LoTW-bevestigd.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>So it counts as never worked, and the auto sequencer treats it as new.</source>
+        <translation>Daarom telt het als nooit gewerkt en behandelt de automatische sequencer het als nieuw.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>CQ zone %1</source>
+        <translation>CQ-zone %1</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>ITU zone %1</source>
+        <translation>ITU-zone %1</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>prefix %1</source>
+        <translation>prefix %1</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>grid %1</source>
+        <translation>locator %1</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>US state %1</source>
+        <translation>Amerikaanse staat %1</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Confirmed in LoTW already? Club Log and QRZ.com have only the LoTW confirmations they have fetched: in Club Log, Tools &gt; LoTW Sync &gt; Download confirmations; in your QRZ.com Logbook, Settings &gt; Logbook of the World Import/Export &gt; Import. The program downloads them every 12 hours.</source>
+        <translation>Al bevestigd in LoTW? Club Log en QRZ.com hebben alleen de LoTW-bevestigingen die ze hebben opgehaald: in Club Log Tools &gt; LoTW Sync &gt; Download confirmations; in uw QRZ.com-Logbook Settings &gt; Logbook of the World Import/Export &gt; Import. Het programma downloadt ze elke 12 uur.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>New Maidenhead field: %1</source>
+        <translation>Nieuw Maidenhead-veld: %1</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>New CQ zone: %1</source>
+        <translation>Nieuwe CQ-zone: %1</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>New CQ zone on %1: %2</source>
+        <translation>Nieuwe CQ-zone op %1: %2</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>New ITU zone: %1</source>
+        <translation>Nieuwe ITU-zone: %1</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>New ITU zone on %1: %2</source>
+        <translation>Nieuwe ITU-zone op %1: %2</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>New DXCC: %1</source>
+        <translation>Nieuw DXCC: %1</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>New DXCC on %1: %2</source>
+        <translation>Nieuw DXCC op %1: %2</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>New US state: %1</source>
+        <translation>Nieuwe Amerikaanse staat: %1</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>New US state on %1: %2</source>
+        <translation>Nieuwe Amerikaanse staat op %1: %2</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>New grid: %1</source>
+        <translation>Nieuwe locator: %1</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>New grid on %1: %2</source>
+        <translation>Nieuwe locator op %1: %2</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>New prefix: %1</source>
+        <translation>Nieuwe prefix: %1</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>New prefix on %1: %2</source>
+        <translation>Nieuwe prefix op %1: %2</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>New call: %1</source>
+        <translation>Nieuwe roepnaam: %1</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>New call on %1: %2</source>
+        <translation>Nieuwe roepnaam op %1: %2</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Hint decode: the decoder matched it to a message it expected - of the QSO in progress, or one heard before - instead of reading it bit by bit.</source>
+        <translation>Hint-decodering: de decoder heeft het gekoppeld aan een bericht dat hij verwachtte - van de lopende QSO, of een eerder gehoord - in plaats van het bit voor bit te lezen.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>A-priori decode: the decoder took part of the message as known - CQ, My Call, the DX call, or RRR, RR73 or 73 - and decoded the rest.</source>
+        <translation>A-priori-decodering: de decoder nam een deel van het bericht als bekend aan - CQ, mijn roepnaam, de DX-roepnaam, of RRR, RR73 of 73 - en decodeerde de rest.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Hint decode in the TX background: found while you transmitted, by matching it to a message the decoder expected.</source>
+        <translation>Hint-decodering op de TX-achtergrond: gevonden terwijl u zond, door het te koppelen aan een bericht dat de decoder verwachtte.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Decoded in the TX background: the decoder went on with the last receive period while you transmitted. The mark does not tell a plain decode from an a-priori one.</source>
+        <translation>Gedecodeerd op de TX-achtergrond: de decoder ging tijdens uw uitzending door met de laatste ontvangstperiode. Het teken onderscheidt een gewone decodering niet van een a-priori-decodering.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Likely a false decode: many of its symbols had to be corrected.</source>
+        <translation>Waarschijnlijk een valse decodering: veel van zijn symbolen moesten worden gecorrigeerd.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>A DXpedition-mode message (Fox and Hound), decoded without help.</source>
+        <translation>Een bericht in DXpedition-modus (Fox en Hound), zonder hulp gedecodeerd.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Free text.</source>
+        <translation>Vrije tekst.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>A LoTW user: uploaded to LoTW within the last year.</source>
+        <translation>LoTW-gebruiker: heeft het afgelopen jaar naar LoTW geüpload.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Worked before: nothing new in the notifications that are on.</source>
+        <translation>Al gewerkt: niets nieuws in de meldingen die aan staan.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Calls CQ.</source>
+        <translation>Roept CQ.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>A message to you from your DX call.</source>
+        <translation>Een bericht aan u van uw DX-roepnaam.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>A message to you.</source>
+        <translation>Een bericht aan u.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Ends a QSO: RR73 or 73.</source>
+        <translation>Sluit een QSO af: RR73 of 73.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Has the call of your DX Call box.</source>
+        <translation>Bevat de roepnaam uit uw vak DX-roepnaam.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>On your list of wanted calls.</source>
+        <translation>Op uw lijst van gezochte roepnamen.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Its prefix is on your list of wanted prefixes.</source>
+        <translation>De prefix staat op uw lijst van gezochte prefixen.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Its grid is on your list of wanted grids.</source>
+        <translation>De locator staat op uw lijst van gezochte locators.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Its country is on your list of wanted countries.</source>
+        <translation>Het land staat op uw lijst van gezochte landen.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>New Maidenhead field on %1: %2</source>
+        <translation>Nieuw Maidenhead-veld op %1: %2</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Hint or a-priori decode: the decoder had help with this message; the window's mark does not tell which kind.</source>
+        <translation>Hint- of a-priori-decodering: de decoder had hulp bij dit bericht; het teken in het venster zegt niet welke soort.</translation>
     </message>
 </context>
 <context>
@@ -11119,8 +11404,8 @@ Om één keer het hele LoTW-register op te halen, vinkt u daar eerst "Only confi
     </message>
     <message>
         <location filename="../Configuration.ui"/>
-        <source>With confirmations downloaded from Club Log, a station in the LoTW users file that you have worked but that has not confirmed through LoTW counts as never worked in every tier above that is on: it is shown in its own color and the auto sequencer calls it as new. Not in a contest.</source>
-        <translation>Met bevestigingen gedownload van Club Log telt een station uit het LoTW-gebruikersbestand dat u hebt gewerkt maar dat niet via LoTW heeft bevestigd, in elk ingeschakeld niveau hierboven als nooit gewerkt: het wordt in een eigen kleur getoond en de automatische sequencer roept het als nieuw. Niet in een contest.</translation>
+        <source>With LoTW confirmations downloaded from Club Log or QRZ.com, a station in the LoTW users file that you have worked but that has not confirmed through LoTW counts as never worked in every tier above that is on: it is shown in its own color and the auto sequencer calls it as new. QSOs from the day of the newest confirmed QSO on, and every QSO you log, count as confirmed for now: LoTW may not have confirmed them yet. Not in a contest.</source>
+        <translation>Met LoTW-bevestigingen gedownload van Club Log of QRZ.com telt een station uit het LoTW-gebruikersbestand dat u hebt gewerkt maar dat niet via LoTW heeft bevestigd, in elk ingeschakeld niveau hierboven als nooit gewerkt: het wordt in een eigen kleur getoond en de automatische sequencer roept het als nieuw. QSO's vanaf de dag van de nieuwste bevestigde QSO, en elke QSO die u logt, tellen voorlopig als bevestigd: LoTW heeft ze misschien nog niet bevestigd. Niet in een contest.</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
@@ -11131,6 +11416,38 @@ Om één keer het hele LoTW-register op te halen, vinkt u daar eerst "Only confi
         <location filename="../Configuration.ui"/>
         <source>Worked, not LoTW-confirmed</source>
         <translation>Gewerkt, niet LoTW-bevestigd</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>QRZ.com API ke&amp;y:</source>
+        <translation>API-sleutel van Q&amp;RZ.com:</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Your QRZ.com Logbook API key. To find it, log in to QRZ.com, open your Logbook, click Settings at the top right and, under "QRZ Logbook API", click "Show" beside the API Key. Copy the key, paste it into this box and press OK. The API needs a QRZ.com subscription (XML level or higher).
+With it the program downloads your LoTW confirmations from QRZ.com at the start and every 12 hours. It is kept in a file of its own that only you can read, never in the settings file.</source>
+        <translation>De API-sleutel van uw QRZ.com-Logbook. Om hem te vinden: meld u aan bij QRZ.com, open uw Logbook, klik rechtsboven op Settings en klik onder "QRZ Logbook API" op "Show" naast API Key. Kopieer de sleutel, plak hem in dit vak en druk op OK. De API vereist een abonnement op QRZ.com (XML-niveau of hoger).
+Hiermee downloadt het programma bij het starten en elke 12 uur uw LoTW-bevestigingen van QRZ.com. Hij wordt bewaard in een eigen bestand dat alleen u kunt lezen, nooit in het instellingenbestand.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Download your LoTW confirmations from QRZ.com now; the program also does it at the start and every 12 hours. Only the confirmations from LoTW count, not QRZ.com's own.
+QRZ.com has only the LoTW confirmations it has imported.
+In your QRZ.com Logbook, under Settings:
+1. LoTW Settings: enter your LoTW username once.
+2. Logbook of the World Import/Export, Import: fetch the new ones now and then (QRZ.com asks for your LoTW password).
+The first download takes a few minutes; after it only what changed is fetched.</source>
+        <translation>Uw LoTW-bevestigingen nu downloaden van QRZ.com; het programma doet dat ook bij het starten en elke 12 uur. Alleen de bevestigingen uit LoTW tellen, niet die van QRZ.com zelf.
+QRZ.com heeft alleen de LoTW-bevestigingen die het heeft geïmporteerd.
+In uw QRZ.com-Logbook onder Settings:
+1. LoTW Settings: vul één keer uw LoTW-gebruikersnaam in.
+2. Logbook of the World Import/Export, Import: haal af en toe de nieuwe op (QRZ.com vraagt uw LoTW-wachtwoord).
+De eerste download duurt een paar minuten; daarna wordt alleen opgehaald wat veranderd is.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Download LoTW confirmations from &amp;QRZ.com</source>
+        <translation>LoTW-bevestigingen downloaden van &amp;QRZ.com</translation>
     </message>
 </context>
 <context>

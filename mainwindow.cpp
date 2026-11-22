@@ -110,6 +110,7 @@
 #include "reservedlabel.h"   // CE3TSK 2026-10-26: the Pwr column keeps its size (3.-211)
 #include "call3file.h"   // CE3TSK 2026-10-23: CALL3.TXT's Lookup line and the old bundled list (3.-200)
 #include "clublog.h"   // CE3TSK 2026-11-21: the confirmations Club Log has (3.-280)
+#include "qrzlogbook.h"   // CE3TSK 2026-11-22: QRZ.com's LoTW confirmations, added to Club Log's (3.-280)
 #include <QPainter>
 #include <QPainterPath>
 #include <QHBoxLayout>
@@ -2984,6 +2985,12 @@ void MainWindow::on_actionSettings_triggered()               //Setup Dialog
 
       on_dxGridEntry_textChanged (m_hisGrid); // recalculate distances in case of units change
       enable_DXCC_entity ();  // sets text window proportions and (re)inits the logbook
+      /* CE3TSK 2026-11-22 (TODO.md 3.-280): a token, key or My Call saved that did not fetch a confirmations file, or did: the
+         windows read the files anew, as after a download (enable_DXCC_entity () has when My Call changed) */
+      if (m_config.confirmations_files () != m_confirmedFiles) {
+        m_confirmedInitNeeded = true;
+        if (!m_monitoring && !m_transmitting) initLogIfNeeded ();
+      }
 
       if(m_config.spot_to_psk_reporter ()) {
         pskSetLocal (ui->bandComboBox->currentText ());
@@ -10284,13 +10291,27 @@ void MainWindow::initConfirmedBook ()
       m_confirmedInitNeeded = true;
       return;
     }
-  m_confirmedBook.init (m_config.callNotif () ? m_config.my_callsign () : "", "", m_config.timeFrom (),
-                        club_log::file_name, m_logBook.countryData ());
+  /* 2026-11-22: only the files Configuration names - each source's while it holds what the saved token or key (and My Call)
+     fetched; none: an empty book. (The operator: "add up both LotW confirmation sources ... so that we get the best sample in
+     case something is missing on one side": QRZ.com's LoTW confirmations, read as Club Log's, added to them) */
+  m_confirmedFiles = m_config.confirmations_files ();
+  QString const own {m_config.callNotif () ? m_config.my_callsign () : ""};
+  m_confirmedBook.init (own, "", m_config.timeFrom (), m_confirmedFiles.value (0), m_logBook.countryData ());
+  for (int i = 1; i < m_confirmedFiles.size (); ++i)
+    {
+      LogBook other;
+      other.init (own, "", m_config.timeFrom (), m_confirmedFiles[i], m_logBook.countryData ());
+      m_confirmedBook.addAll (other);
+    }
   int const confirmed {m_confirmedBook.get_qso_count ()};
-  LogBook * const book {confirmed > 0 ? &m_confirmedBook : nullptr};
-  ui->decodedTextBrowser->setConfirmations (book);
-  ui->decodedTextBrowser2->setConfirmations (book);
-  if (m_config.write_decoded_debug ()) writeToALLTXT (QString {"Confirmations: %1 QSOs from %2"}.arg (confirmed).arg (club_log::file_name));
+  /* 2026-11-22 (the operator): the log's QSOs from the newest confirmed QSO's day on count as confirmed for now - and each
+     QSO logged from now on (acceptQSO2): Club Log cannot hold their confirmations yet */
+  m_confirmedFrom = m_confirmedBook.takePending (m_logBook);
+  ui->decodedTextBrowser->setConfirmations (&m_confirmedBook);    // taken only while it holds a QSO (the window's rule)
+  ui->decodedTextBrowser2->setConfirmations (&m_confirmedBook);
+  if (m_config.write_decoded_debug ()) writeToALLTXT (QString {"Confirmations: %1 QSOs from %2, the log's QSOs from %3 on pending (%4 in all)"}
+                                                      .arg (confirmed).arg (m_confirmedFiles.isEmpty () ? QString {"none"} : m_confirmedFiles.join (" and "), m_confirmedFrom)
+                                                      .arg (m_confirmedBook.get_qso_count ()));
 }
 
 void MainWindow::dataFilesUpdated ()
@@ -10754,6 +10775,7 @@ void MainWindow::processMessage(QString const& messages, int position, bool alt,
     DecodedText decodedtext {t2disp,this};
     /* CE3TSK 2026-09-30: the copy keeps its marks (phantomdecodes.h) - read back as the replay reads it */
     decodedtext.setVerdict (windowVerdict (t2disp));
+    decodedtext.setWindowCopy (true);   // CE3TSK 2026-11-22: its mark is the window's (the line's tooltip)
 	if (!t2.contains (m_baseCall) || !m_showMyCallMsgRxWindow) {
 		/* CE3TSK 2026-10-23 (TODO.md 3.-191): the line the operator picked is drawn whatever Misc > Hide clear phantom
 		   messages says - it was in the window when it was picked, the entry switched on since */
@@ -11928,6 +11950,8 @@ void MainWindow::acceptQSO2(QDateTime const& QSO_date_off, QString const& call, 
   m_qsoLogged=true;
   stationSyncLogged (call);   // CE3TSK 2026-10-23: his QSO logged ends a station sync (stationsync.h, decision 3)
   m_logBook.addAsWorked (call, m_config.bands ()->find (dial_freq), mode, date, grid, name);
+  /* CE3TSK 2026-11-22 (TODO.md 3.-280, the operator): and confirmed for now - no confirmation of it can be downloaded yet */
+  if (!m_confirmedFrom.isEmpty ()) m_confirmedBook.addAsWorked (call, m_config.bands ()->find (dial_freq), mode, date, grid, name);
   /* CE3TSK: the contest log has its own hashes; without this the multiplier and dupe
      highlighting would not reflect a QSO until the next restart. */
   if (m_contest.running) m_contestLog.addAsWorked (call, m_config.bands ()->find (dial_freq), mode, date, grid, name);

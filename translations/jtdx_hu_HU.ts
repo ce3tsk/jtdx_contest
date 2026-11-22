@@ -633,6 +633,76 @@ Formátum:
         <source>Club Log is busy; the next try is at %1 UTC.</source>
         <translation>A Club Log foglalt; a következő próbálkozás: %1 UTC.</translation>
     </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>The QRZ.com API key could not be saved</source>
+        <translation>A QRZ.com API kulcsot nem sikerült menteni</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>This is not a QRZ.com API key</source>
+        <translation>Ez nem QRZ.com API kulcs</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>A QRZ.com Logbook API key is four groups of four letters and digits, as XXXX-XXXX-XXXX-XXXX. Copy it from your logbook's settings at QRZ.com and paste it here.</source>
+        <translation>A QRZ.com Logbook API kulcsa négy, egyenként négy betűből és számjegyből álló csoport, például XXXX-XXXX-XXXX-XXXX. Másolja ki a QRZ.com-on a logbookja beállításaiból, és illessze be ide.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Download from QRZ.com failed</source>
+        <translation>A QRZ.com letöltés sikertelen</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>QRZ.com refused the key. Copy your logbook's key from QRZ.com again and paste it here; the API needs a QRZ.com subscription.</source>
+        <translation>A QRZ.com elutasította a kulcsot. Másolja ki újra a logbookja kulcsát a QRZ.com-ról, és illessze be ide; az API-hoz QRZ.com előfizetés kell.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>QRZ.com downloads are switched off (JTDX_QRZ_API).</source>
+        <translation>A QRZ.com letöltések ki vannak kapcsolva (JTDX_QRZ_API).</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>QRZ.com refused the key (%1). Copy your logbook's key from QRZ.com again and paste it here; the API needs a QRZ.com subscription.</source>
+        <translation>A QRZ.com elutasította a kulcsot (%1). Másolja ki újra a logbookja kulcsát a QRZ.com-ról, és illessze be ide; az API-hoz QRZ.com előfizetés kell.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>QRZ.com asks to wait until %1 UTC.</source>
+        <translation>A QRZ.com azt kéri, várjon %1 UTC-ig.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>QRZ.com is busy; the next try is at %1 UTC.</source>
+        <translation>A QRZ.com foglalt; a következő próbálkozás: %1 UTC.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>QRZ.com answered: %1</source>
+        <translation>A QRZ.com válasza: %1</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>No key: nothing is downloaded from QRZ.com.</source>
+        <translation>Nincs kulcs: a QRZ.com-ról semmi sem töltődik le.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1 QSOs confirmed by LoTW, %2 DXCC entities; downloaded %3 UTC</source>
+        <translation>%1 QSO visszaigazolva a LoTW-n, %2 DXCC entitás; letöltve: %3 UTC</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Club Log refused %1 with this token: the call is not on the token's Club Log account, or Club Log asks to correct the request. Add the call to your Club Log account, or correct My Call on the General tab.</source>
+        <translation>A Club Log elutasította a(z) %1 hívójelet ezzel a tokennel: a hívójel nincs a token Club Log fiókjában, vagy a Club Log a kérés javítását kéri. Adja hozzá a hívójelet a Club Log fiókjához, vagy javítsa a hívójelet az Általános lapon.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Club Log refused %1 with this token (HTTP status %2): the call is not on the token's Club Log account, or Club Log asks to correct the request. Add the call to your Club Log account, or correct My Call on the General tab.</source>
+        <translation>A Club Log elutasította a(z) %1 hívójelet ezzel a tokennel (HTTP-állapot: %2): a hívójel nincs a token Club Log fiókjában, vagy a Club Log a kérés javítását kéri. Adja hozzá a hívójelet a Club Log fiókjához, vagy javítsa a hívójelet az Általános lapon.</translation>
+    </message>
 </context>
 <context>
     <name>CountryDat</name>
@@ -2604,6 +2674,221 @@ Formátum:
         <location filename="../displaytext.cpp"/>
         <source>No longer of low confidence: it goes to UDP clients and PSK Reporter like any other decode.</source>
         <translation>Már nem alacsony megbízhatóságú: az UDP kliensekhez és a PSK Reporterhez úgy kerül, mint bármely más dekódolás.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>%1 is a LoTW user, and you have worked %2, but none of those QSOs is LoTW-confirmed.</source>
+        <translation>%1 LoTW-felhasználó; forgalmazva: %2, de ezek közül egyik QSO sincs a LoTW-n igazolva.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>So it counts as never worked, and the auto sequencer treats it as new.</source>
+        <translation>Ezért soha nem forgalmazottnak számít, és az automatikus sorrendvezérlő újként kezeli.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>CQ zone %1</source>
+        <translation>CQ zóna %1</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>ITU zone %1</source>
+        <translation>ITU zóna %1</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>prefix %1</source>
+        <translation>prefix %1</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>grid %1</source>
+        <translation>QRA kocka %1</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>US state %1</source>
+        <translation>USA-állam %1</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Confirmed in LoTW already? Club Log and QRZ.com have only the LoTW confirmations they have fetched: in Club Log, Tools &gt; LoTW Sync &gt; Download confirmations; in your QRZ.com Logbook, Settings &gt; Logbook of the World Import/Export &gt; Import. The program downloads them every 12 hours.</source>
+        <translation>Már igazolva van a LoTW-n? A Club Logban és a QRZ.com-on csak azok a LoTW visszaigazolások vannak meg, amelyeket lekértek: a Club Logban Tools &gt; LoTW Sync &gt; Download confirmations; a QRZ.com Logbookjában Settings &gt; Logbook of the World Import/Export &gt; Import. A program 12 óránként letölti őket.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>New Maidenhead field: %1</source>
+        <translation>Új Maidenhead mező: %1</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>New CQ zone: %1</source>
+        <translation>Új CQ zóna: %1</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>New CQ zone on %1: %2</source>
+        <translation>Új CQ zóna (%1): %2</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>New ITU zone: %1</source>
+        <translation>Új ITU zóna: %1</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>New ITU zone on %1: %2</source>
+        <translation>Új ITU zóna (%1): %2</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>New DXCC: %1</source>
+        <translation>Új DXCC: %1</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>New DXCC on %1: %2</source>
+        <translation>Új DXCC (%1): %2</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>New US state: %1</source>
+        <translation>Új USA-állam: %1</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>New US state on %1: %2</source>
+        <translation>Új USA-állam (%1): %2</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>New grid: %1</source>
+        <translation>Új QRA kocka: %1</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>New grid on %1: %2</source>
+        <translation>Új QRA kocka (%1): %2</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>New prefix: %1</source>
+        <translation>Új prefix: %1</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>New prefix on %1: %2</source>
+        <translation>Új prefix (%1): %2</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>New call: %1</source>
+        <translation>Új hívójel: %1</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>New call on %1: %2</source>
+        <translation>Új hívójel (%1): %2</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Hint decode: the decoder matched it to a message it expected - of the QSO in progress, or one heard before - instead of reading it bit by bit.</source>
+        <translation>Hint dekódolás: a dekóder egy általa várt üzenethez illesztette - a folyamatban lévő QSO-ból vagy egy korábban hallottból - ahelyett, hogy bitenként olvasta volna.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>A-priori decode: the decoder took part of the message as known - CQ, My Call, the DX call, or RRR, RR73 or 73 - and decoded the rest.</source>
+        <translation>A priori dekódolás: a dekóder az üzenet egy részét ismertnek vette - CQ, a saját hívójel, a DX hívójel vagy RRR, RR73 vagy 73 - és a többit dekódolta.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Hint decode in the TX background: found while you transmitted, by matching it to a message the decoder expected.</source>
+        <translation>Hint dekódolás az adás hátterében: adás közben találta, egy általa várt üzenethez illesztve.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Decoded in the TX background: the decoder went on with the last receive period while you transmitted. The mark does not tell a plain decode from an a-priori one.</source>
+        <translation>Dekódolva az adás hátterében: a dekóder adás közben tovább dolgozott az utolsó vételi perióduson. A jel nem különbözteti meg a sima dekódolást az a priori dekódolástól.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Likely a false decode: many of its symbols had to be corrected.</source>
+        <translation>Valószínűleg hamis dekódolás: sok szimbólumát javítani kellett.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>A DXpedition-mode message (Fox and Hound), decoded without help.</source>
+        <translation>DXpedíciós módú üzenet (Fox és Hound), segítség nélkül dekódolva.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Free text.</source>
+        <translation>Szabad szöveg.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>A LoTW user: uploaded to LoTW within the last year.</source>
+        <translation>LoTW-felhasználó: az elmúlt évben töltött fel a LoTW-re.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Worked before: nothing new in the notifications that are on.</source>
+        <translation>Volt már QSO: semmi új a bekapcsolt értesítésekben.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Calls CQ.</source>
+        <translation>CQ-t hív.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>A message to you from your DX call.</source>
+        <translation>Önnek szóló üzenet az Ön DX hívójelétől.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>A message to you.</source>
+        <translation>Önnek szóló üzenet.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Ends a QSO: RR73 or 73.</source>
+        <translation>QSO-t zár le: RR73 vagy 73.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Has the call of your DX Call box.</source>
+        <translation>Tartalmazza a DX hívójel mezőben lévő hívójelet.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>On your list of wanted calls.</source>
+        <translation>Szerepel a keresett hívójelek listáján.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Its prefix is on your list of wanted prefixes.</source>
+        <translation>A prefixe szerepel a keresett prefixek listáján.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Its grid is on your list of wanted grids.</source>
+        <translation>A QRA kockája szerepel a keresett QRA kockák listáján.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Its country is on your list of wanted countries.</source>
+        <translation>Az országa szerepel a keresett országok listáján.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>New Maidenhead field on %1: %2</source>
+        <translation>Új Maidenhead mező (%1): %2</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Hint or a-priori decode: the decoder had help with this message; the window's mark does not tell which kind.</source>
+        <translation>Hint vagy a priori dekódolás: a dekóder segítséget kapott ehhez az üzenethez; az ablak jele nem mutatja, melyik fajtát.</translation>
     </message>
 </context>
 <context>
@@ -11117,8 +11402,8 @@ A teljes LoTW nyilvántartás egyszeri lekéréséhez előbb kapcsolja ki ott a(
     </message>
     <message>
         <location filename="../Configuration.ui"/>
-        <source>With confirmations downloaded from Club Log, a station in the LoTW users file that you have worked but that has not confirmed through LoTW counts as never worked in every tier above that is on: it is shown in its own color and the auto sequencer calls it as new. Not in a contest.</source>
-        <translation>A Club Logból letöltött visszaigazolásokkal a LoTW-felhasználók fájljában szereplő állomás, amellyel forgalmazott, de amely nem igazolt vissza a LoTW-n, a fenti bekapcsolt szintek mindegyikében soha nem forgalmazottnak számít: saját színével jelenik meg, és az automatikus sorrendvezérlő újként hívja. Versenyben nem.</translation>
+        <source>With LoTW confirmations downloaded from Club Log or QRZ.com, a station in the LoTW users file that you have worked but that has not confirmed through LoTW counts as never worked in every tier above that is on: it is shown in its own color and the auto sequencer calls it as new. QSOs from the day of the newest confirmed QSO on, and every QSO you log, count as confirmed for now: LoTW may not have confirmed them yet. Not in a contest.</source>
+        <translation>A Club Logból vagy a QRZ.com-ról letöltött LoTW-visszaigazolásokkal a LoTW-felhasználók fájljában szereplő állomás, amellyel forgalmazott, de amely nem igazolt vissza a LoTW-n, a fenti bekapcsolt szintek mindegyikében soha nem forgalmazottnak számít: saját színével jelenik meg, és az automatikus sorrendvezérlő újként hívja. A legújabb visszaigazolt QSO napjától kezdve a QSO-k, és minden QSO, amelyet naplóz, egyelőre visszaigazoltnak számítanak: lehet, hogy a LoTW még nem igazolta vissza őket. Versenyben nem.</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
@@ -11129,6 +11414,38 @@ A teljes LoTW nyilvántartás egyszeri lekéréséhez előbb kapcsolja ki ott a(
         <location filename="../Configuration.ui"/>
         <source>Worked, not LoTW-confirmed</source>
         <translation>Forgalmazva, LoTW-n nem igazolva</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>QRZ.com API ke&amp;y:</source>
+        <translation>QR&amp;Z.com API kulcs:</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Your QRZ.com Logbook API key. To find it, log in to QRZ.com, open your Logbook, click Settings at the top right and, under "QRZ Logbook API", click "Show" beside the API Key. Copy the key, paste it into this box and press OK. The API needs a QRZ.com subscription (XML level or higher).
+With it the program downloads your LoTW confirmations from QRZ.com at the start and every 12 hours. It is kept in a file of its own that only you can read, never in the settings file.</source>
+        <translation>Az Ön QRZ.com Logbookjának API kulcsa. Megkereséséhez jelentkezzen be a QRZ.com-ra, nyissa meg a Logbookját, kattintson jobb felül a Settings menüre, majd a(z) "QRZ Logbook API" résznél az API Key melletti "Show" gombra. Másolja ki a kulcsot, illessze be ebbe a mezőbe, és nyomja meg az OK gombot. Az API-hoz QRZ.com előfizetés kell (XML szint vagy magasabb).
+Ezzel a program indításkor és 12 óránként letölti a QRZ.com-ról az Ön LoTW visszaigazolásait. Külön fájlban tárolódik, amelyet csak Ön olvashat, soha nem a beállítási fájlban.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Download your LoTW confirmations from QRZ.com now; the program also does it at the start and every 12 hours. Only the confirmations from LoTW count, not QRZ.com's own.
+QRZ.com has only the LoTW confirmations it has imported.
+In your QRZ.com Logbook, under Settings:
+1. LoTW Settings: enter your LoTW username once.
+2. Logbook of the World Import/Export, Import: fetch the new ones now and then (QRZ.com asks for your LoTW password).
+The first download takes a few minutes; after it only what changed is fetched.</source>
+        <translation>Az Ön LoTW visszaigazolásainak letöltése most a QRZ.com-ról; a program indításkor és 12 óránként is megteszi. Csak a LoTW visszaigazolásai számítanak, a QRZ.com sajátjai nem.
+A QRZ.com-on csak azok a LoTW visszaigazolások vannak meg, amelyeket importált.
+A QRZ.com Logbookjában a Settings alatt:
+1. LoTW Settings: egyszer adja meg a LoTW felhasználónevét.
+2. Logbook of the World Import/Export, Import: időnként kérje le az újakat (a QRZ.com elkéri a LoTW jelszavát).
+Az első letöltés néhány percig tart; utána csak a változások töltődnek le.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Download LoTW confirmations from &amp;QRZ.com</source>
+        <translation>LoTW visszaigazolások letöltése a &amp;QRZ.com-ról</translation>
     </message>
 </context>
 <context>

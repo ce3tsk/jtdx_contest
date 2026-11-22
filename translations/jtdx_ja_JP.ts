@@ -633,6 +633,76 @@ Format:
         <source>Club Log is busy; the next try is at %1 UTC.</source>
         <translation>Club Log は混雑しています。次の試行は %1 UTC です。</translation>
     </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>The QRZ.com API key could not be saved</source>
+        <translation>QRZ.com の API キーを保存できませんでした</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>This is not a QRZ.com API key</source>
+        <translation>QRZ.com の API キーではありません</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>A QRZ.com Logbook API key is four groups of four letters and digits, as XXXX-XXXX-XXXX-XXXX. Copy it from your logbook's settings at QRZ.com and paste it here.</source>
+        <translation>QRZ.com Logbook の API キーは、英数字 4 文字のグループが 4 つで、XXXX-XXXX-XXXX-XXXX のような形です。QRZ.com のログブックの設定からコピーして、ここに貼り付けてください。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Download from QRZ.com failed</source>
+        <translation>QRZ.com からのダウンロードに失敗しました</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>QRZ.com refused the key. Copy your logbook's key from QRZ.com again and paste it here; the API needs a QRZ.com subscription.</source>
+        <translation>QRZ.com はキーを拒否しました。QRZ.com からログブックのキーをもう一度コピーし、ここに貼り付けてください。API には QRZ.com のサブスクリプションが必要です。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>QRZ.com downloads are switched off (JTDX_QRZ_API).</source>
+        <translation>QRZ.com からのダウンロードはオフになっています (JTDX_QRZ_API)。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>QRZ.com refused the key (%1). Copy your logbook's key from QRZ.com again and paste it here; the API needs a QRZ.com subscription.</source>
+        <translation>QRZ.com はキーを拒否しました (%1)。QRZ.com からログブックのキーをもう一度コピーし、ここに貼り付けてください。API には QRZ.com のサブスクリプションが必要です。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>QRZ.com asks to wait until %1 UTC.</source>
+        <translation>QRZ.com は %1 UTC まで待つよう求めています。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>QRZ.com is busy; the next try is at %1 UTC.</source>
+        <translation>QRZ.com は混雑しています。次の試行は %1 UTC です。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>QRZ.com answered: %1</source>
+        <translation>QRZ.com の応答：%1</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>No key: nothing is downloaded from QRZ.com.</source>
+        <translation>キーなし：QRZ.com からは何もダウンロードしません。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1 QSOs confirmed by LoTW, %2 DXCC entities; downloaded %3 UTC</source>
+        <translation>LoTW でコンファーム済み %1 QSO、DXCC エンティティ %2、%3 UTC にダウンロード</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Club Log refused %1 with this token: the call is not on the token's Club Log account, or Club Log asks to correct the request. Add the call to your Club Log account, or correct My Call on the General tab.</source>
+        <translation>Club Log はこのトークンでの %1 を拒否しました：このコールサインはトークンの Club Log アカウントにないか、Club Log がリクエストの修正を求めています。Club Log のアカウントにコールサインを追加するか、全般タブの自分のコールサインを修正してください。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Club Log refused %1 with this token (HTTP status %2): the call is not on the token's Club Log account, or Club Log asks to correct the request. Add the call to your Club Log account, or correct My Call on the General tab.</source>
+        <translation>Club Log はこのトークンでの %1 を拒否しました（HTTP ステータス %2）：このコールサインはトークンの Club Log アカウントにないか、Club Log がリクエストの修正を求めています。Club Log のアカウントにコールサインを追加するか、全般タブの自分のコールサインを修正してください。</translation>
+    </message>
 </context>
 <context>
     <name>CountryDat</name>
@@ -2604,6 +2674,221 @@ Format:
         <location filename="../displaytext.cpp"/>
         <source>No longer of low confidence: it goes to UDP clients and PSK Reporter like any other decode.</source>
         <translation>もはや信頼度の低いデコードとしては扱われません。他のデコードと同様に、UDPクライアントとPSK Reporterへ送られます。</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>%1 is a LoTW user, and you have worked %2, but none of those QSOs is LoTW-confirmed.</source>
+        <translation>%1 は LoTW ユーザーです。%2 と交信済みですが、そのどの QSO も LoTW でコンファームされていません。</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>So it counts as never worked, and the auto sequencer treats it as new.</source>
+        <translation>そのため未交信として扱われ、自動シーケンサーも新規として扱います。</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>CQ zone %1</source>
+        <translation>CQゾーン %1</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>ITU zone %1</source>
+        <translation>ITUゾーン %1</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>prefix %1</source>
+        <translation>プリフィックス %1</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>grid %1</source>
+        <translation>グリッド %1</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>US state %1</source>
+        <translation>米国の州 %1</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Confirmed in LoTW already? Club Log and QRZ.com have only the LoTW confirmations they have fetched: in Club Log, Tools &gt; LoTW Sync &gt; Download confirmations; in your QRZ.com Logbook, Settings &gt; Logbook of the World Import/Export &gt; Import. The program downloads them every 12 hours.</source>
+        <translation>LoTW ではもうコンファーム済みですか？ Club Log と QRZ.com にあるのは、それぞれが取得した LoTW のコンファームだけです。Club Log では Tools &gt; LoTW Sync &gt; Download confirmations、QRZ.com の Logbook では Settings &gt; Logbook of the World Import/Export &gt; Import で取得します。プログラムは 12 時間ごとにダウンロードします。</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>New Maidenhead field: %1</source>
+        <translation>新しいメイデンヘッド フィールド：%1</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>New CQ zone: %1</source>
+        <translation>新しい CQ ゾーン：%1</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>New CQ zone on %1: %2</source>
+        <translation>新しい CQ ゾーン（%1）：%2</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>New ITU zone: %1</source>
+        <translation>新しい ITU ゾーン：%1</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>New ITU zone on %1: %2</source>
+        <translation>新しい ITU ゾーン（%1）：%2</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>New DXCC: %1</source>
+        <translation>新しいDXCC：%1</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>New DXCC on %1: %2</source>
+        <translation>新しいDXCC（%1）：%2</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>New US state: %1</source>
+        <translation>新しい米国の州：%1</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>New US state on %1: %2</source>
+        <translation>新しい米国の州（%1）：%2</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>New grid: %1</source>
+        <translation>新しいグリッド：%1</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>New grid on %1: %2</source>
+        <translation>新しいグリッド（%1）：%2</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>New prefix: %1</source>
+        <translation>新しいプリフィックス：%1</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>New prefix on %1: %2</source>
+        <translation>新しいプリフィックス（%1）：%2</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>New call: %1</source>
+        <translation>新しいコールサイン：%1</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>New call on %1: %2</source>
+        <translation>新しいコールサイン（%1）：%2</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Hint decode: the decoder matched it to a message it expected - of the QSO in progress, or one heard before - instead of reading it bit by bit.</source>
+        <translation>ヒントデコード：デコーダーはビットごとに読むのではなく、予想していたメッセージ（進行中の QSO のもの、または以前に受信したもの）と照合しました。</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>A-priori decode: the decoder took part of the message as known - CQ, My Call, the DX call, or RRR, RR73 or 73 - and decoded the rest.</source>
+        <translation>アプリオリデコード：デコーダーはメッセージの一部（CQ、自局コール、DX コール、または RRR、RR73、73）を既知とみなし、残りをデコードしました。</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Hint decode in the TX background: found while you transmitted, by matching it to a message the decoder expected.</source>
+        <translation>TX バックグラウンドでのヒントデコード：送信中に、デコーダーが予想していたメッセージと照合して見つけました。</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Decoded in the TX background: the decoder went on with the last receive period while you transmitted. The mark does not tell a plain decode from an a-priori one.</source>
+        <translation>TX バックグラウンドでデコード：送信中もデコーダーが直前の受信期間の処理を続けました。このマークでは通常のデコードとアプリオリデコードは区別されません。</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Likely a false decode: many of its symbols had to be corrected.</source>
+        <translation>誤デコードの可能性が高い：多くのシンボルを訂正する必要がありました。</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>A DXpedition-mode message (Fox and Hound), decoded without help.</source>
+        <translation>DXペディションモードのメッセージ（Fox と Hound）、補助なしでデコード。</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Free text.</source>
+        <translation>フリーテキスト。</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>A LoTW user: uploaded to LoTW within the last year.</source>
+        <translation>LoTW ユーザー：過去 1 年以内に LoTW へアップロードしています。</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Worked before: nothing new in the notifications that are on.</source>
+        <translation>交信済：オンになっている通知に新しいものはありません。</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Calls CQ.</source>
+        <translation>CQ を出しています。</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>A message to you from your DX call.</source>
+        <translation>DX コールからあなた宛てのメッセージ。</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>A message to you.</source>
+        <translation>あなた宛てのメッセージ。</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Ends a QSO: RR73 or 73.</source>
+        <translation>QSO を終了します：RR73 または 73。</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Has the call of your DX Call box.</source>
+        <translation>DX コール欄のコールサインを含みます。</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>On your list of wanted calls.</source>
+        <translation>希望コールサインのリストにあります。</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Its prefix is on your list of wanted prefixes.</source>
+        <translation>プリフィックスが希望プリフィックスのリストにあります。</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Its grid is on your list of wanted grids.</source>
+        <translation>グリッドが希望グリッドのリストにあります。</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Its country is on your list of wanted countries.</source>
+        <translation>国が希望国のリストにあります。</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>New Maidenhead field on %1: %2</source>
+        <translation>新しいメイデンヘッド フィールド（%1）：%2</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Hint or a-priori decode: the decoder had help with this message; the window's mark does not tell which kind.</source>
+        <translation>ヒントまたはアプリオリデコード：このメッセージのデコードには補助がありましたが、ウィンドウのマークではどちらかは分かりません。</translation>
     </message>
 </context>
 <context>
@@ -11096,8 +11381,8 @@ LoTW の全記録を一度取得するには、先にそこで "Only confirmatio
     </message>
     <message>
         <location filename="../Configuration.ui"/>
-        <source>With confirmations downloaded from Club Log, a station in the LoTW users file that you have worked but that has not confirmed through LoTW counts as never worked in every tier above that is on: it is shown in its own color and the auto sequencer calls it as new. Not in a contest.</source>
-        <translation>Club Log からダウンロードしたコンファームがあると、LoTW ユーザーファイルにある局のうち、交信済みだが LoTW でコンファームしていない局は、上でオンになっている各段階で未交信として扱われます。専用の色で表示され、自動シーケンサーは新規として呼びます。コンテスト中は対象外です。</translation>
+        <source>With LoTW confirmations downloaded from Club Log or QRZ.com, a station in the LoTW users file that you have worked but that has not confirmed through LoTW counts as never worked in every tier above that is on: it is shown in its own color and the auto sequencer calls it as new. QSOs from the day of the newest confirmed QSO on, and every QSO you log, count as confirmed for now: LoTW may not have confirmed them yet. Not in a contest.</source>
+        <translation>Club Log または QRZ.com からダウンロードした LoTW のコンファームがあると、LoTW ユーザーファイルにある局のうち、交信済みだが LoTW でコンファームしていない局は、上でオンになっている各段階で未交信として扱われます。専用の色で表示され、自動シーケンサーは新規として呼びます。最新のコンファーム済み QSO の日以降の QSO と、ログに記録する各 QSO は、当面コンファーム済みとして扱われます。LoTW がまだコンファームしていない可能性があるためです。コンテスト中は対象外です。</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
@@ -11108,6 +11393,38 @@ LoTW の全記録を一度取得するには、先にそこで "Only confirmatio
         <location filename="../Configuration.ui"/>
         <source>Worked, not LoTW-confirmed</source>
         <translation>交信済み、LoTW 未コンファーム</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>QRZ.com API ke&amp;y:</source>
+        <translation>QRZ.com API キー：</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Your QRZ.com Logbook API key. To find it, log in to QRZ.com, open your Logbook, click Settings at the top right and, under "QRZ Logbook API", click "Show" beside the API Key. Copy the key, paste it into this box and press OK. The API needs a QRZ.com subscription (XML level or higher).
+With it the program downloads your LoTW confirmations from QRZ.com at the start and every 12 hours. It is kept in a file of its own that only you can read, never in the settings file.</source>
+        <translation>QRZ.com Logbook の API キー。見つけるには、QRZ.com にログインして Logbook を開き、右上の Settings をクリックし、"QRZ Logbook API" の API Key の横にある "Show" をクリックします。キーをコピーしてこの欄に貼り付け、[OK] を押します。API には QRZ.com のサブスクリプション (XML レベル以上) が必要です。
+これにより、プログラムは起動時と 12 時間ごとに、あなたの LoTW のコンファームを QRZ.com からダウンロードします。キーは設定ファイルではなく、あなただけが読める専用のファイルに保存されます。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Download your LoTW confirmations from QRZ.com now; the program also does it at the start and every 12 hours. Only the confirmations from LoTW count, not QRZ.com's own.
+QRZ.com has only the LoTW confirmations it has imported.
+In your QRZ.com Logbook, under Settings:
+1. LoTW Settings: enter your LoTW username once.
+2. Logbook of the World Import/Export, Import: fetch the new ones now and then (QRZ.com asks for your LoTW password).
+The first download takes a few minutes; after it only what changed is fetched.</source>
+        <translation>LoTW のコンファームを今すぐ QRZ.com からダウンロードします。プログラムは起動時と 12 時間ごとにもダウンロードします。数えるのは LoTW のコンファームだけで、QRZ.com 独自のコンファームは数えません。
+QRZ.com にあるのは、QRZ.com がインポートした LoTW のコンファームだけです。
+QRZ.com の Logbook の Settings で：
+1. LoTW Settings：LoTW のユーザー名を一度入力します。
+2. Logbook of the World Import/Export の Import：新しいコンファームを時々取得します (QRZ.com は LoTW のパスワードを求めます)。
+最初のダウンロードには数分かかります。その後は変更されたものだけを取得します。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Download LoTW confirmations from &amp;QRZ.com</source>
+        <translation>LoTW のコンファームを QRZ.com からダウンロード</translation>
     </message>
 </context>
 <context>

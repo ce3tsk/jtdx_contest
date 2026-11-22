@@ -67,6 +67,7 @@ public:
     bool isFin();
     bool isDebug();
     bool isDXped();
+    QString marker ();   // CE3TSK 2026-11-22: the decoder's mark column as it wrote it (^ and * apart; the window shows * for both)
     int frequencyOffset();  // hertz offset from the tuned dial or rx frequency, aka audio frequency
     int snr();
     float dt();
@@ -92,9 +93,14 @@ public:
        the UDP clients and the sequencer - so none of them can disagree. Empty until then. */
     void setVerdict (phantom_decodes::Verdict const& v) {verdict_ = v;}
     phantom_decodes::Verdict const& verdict () const {return verdict_;}
+    /* CE3TSK 2026-11-22: rebuilt from a window's line (the Rx Frequency window's copy of a picked line): its mark is the
+       window's - * or the degree sign for a hint decode and an a-priori one alike, the dot for a LoTW user */
+    void setWindowCopy (bool copy) {windowCopy_ = copy;}
+    bool windowCopy () const {return windowCopy_;}
 
 private:
     phantom_decodes::Verdict verdict_;
+    bool windowCopy_ {false};
      enum Columns { column_time    = 0,
                     column_snr     = 5,
                     column_dt      = 9,

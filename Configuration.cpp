@@ -200,6 +200,7 @@ extern "C" {
 #include "FileDownload.hpp"            /* CE3TSK */
 #include "call3file.h"   // CE3TSK 2026-10-23: CALL3.TXT's download (TODO.md 3.-199)
 #include "clublog.h"     // CE3TSK 2026-11-21: Club Log's confirmed QSOs (TODO.md 3.-280)
+#include "qrzlogbook.h"   // CE3TSK 2026-11-22: QRZ.com's LoTW confirmations (TODO.md 3.-280)
 #include "logbook/countrydat.h"       /* CE3TSK */
 #include "ownstation.h"                /* CE3TSK 2026-10-04 */
 
@@ -668,11 +669,28 @@ private:
   bool clublog_token_acceptable ();   // OK's check of the token box (review 2026-11-21: not validate ()'s)
   // the tokens Club Log refused, each by club_log::token_id; inside SettingsGroup "Configuration" (review 2026-11-21)
   bool clublog_refused (QString const& token) const;
+  // (2026-11-22) a call Club Log refused with a token (403, 422): by the SHA-256 of both (clublog_key) in the same list
+  bool clublog_call_refused (QString const& token, QString const& call) const;
+  void clublog_set_call_refused (QString const& token, QString const& call, bool refused);
   void clublog_set_refused (QString const& token, bool refused);
   Q_SLOT void clublog_check_due ();   // a slot: a test asks it by name, as the timers do
   void clublog_finished (bool ok, FileDownload::Failure failure, QString const& detail);
   void update_clublog_label ();
+  bool clublog_current () const;   // (2026-11-22) the file is what the saved token and My Call fetched: the windows read it
   QString clublog_token_file () const {return club_log::token_path (settings_->fileName ());}
+  /* CE3TSK 2026-11-22 (TODO.md 3.-280): QRZ.com's LoTW confirmations (qrzlogbook.h), added to Club Log's - at the start
+     and every qrz_logbook::refresh_hours when a key is there, or on the button */
+  Q_SLOT void on_qrz_download_push_button_clicked (bool);
+  void start_qrz_download (QString const& key, bool full, bool manual);
+  bool qrz_key_acceptable ();   // OK's check of the key box
+  bool qrz_refused (QString const& key) const;   // inside SettingsGroup "Configuration", as the next two
+  void qrz_set_refused (QString const& key, bool refused);
+  bool qrz_full_needed (QString const& key, QDateTime const& now) const;
+  Q_SLOT void qrz_check_due ();   // a slot: a test asks it by name, as the timers do
+  void qrz_finished (bool ok, FileDownload::Failure failure, QString const& detail);
+  void update_qrz_label ();
+  bool qrz_current () const;   // the file is what the saved key fetched: the windows read it
+  QString qrz_key_file () const {return qrz_logbook::key_path (settings_->fileName ());}
   Q_SLOT void on_callNotif_check_box_clicked(bool checked);
   Q_SLOT void on_otherMessagesMarker_check_box_clicked(bool checked);
   Q_SLOT void on_RR73_marker_check_box_clicked(bool checked);
@@ -779,10 +797,16 @@ private:
   QDateTime clublog_next_try_;      // after a failure, club_log::next_try (); invalid: whenever one is due
   QString clublog_download_token_;  // the token the running download asks with
   QString clublog_download_call_;   // and the call whose log it asks for
-  QString clublog_downloaded_with_; // token and call of this run's last good download (clublog_key)
-  bool clublog_ask_now_ {false};    // a token or call saved that no download has used yet: the next look asks at once
+  QString clublog_file_id_;         // (2026-11-22) what fetched the file: token_id (clublog_key (token, call)), ini ClubLogKeyId
   QString clublog_error_;           // the last attempt's failure, worded, for the status line
   club_log::Export clublog_export_; // the download being written: its validator reads it, its transform writes it
+  qrz_logbook::Fetch qrz_fetch_;    // CE3TSK 2026-11-22 (TODO.md 3.-280): QRZ.com's, page by page
+  QString qrz_key_;                 // from its own file, never in the ini (qrzlogbook.h)
+  bool qrz_manual_ {false};         // the button started it: a failure is shown in a box as well
+  QDateTime qrz_next_try_;          // after a failure, club_log::next_try (); invalid: whenever one is due
+  QString qrz_fetch_key_;           // the key the running download asks with
+  QString qrz_error_;               // the last attempt's failure, worded, for the status line
+  QString qrz_file_id_;             // what fetched the file: club_log::token_id (key), ini QrzKeyId
   QDir temp_dir_;
   QDir default_save_directory_;
   QDir save_directory_;
@@ -1597,6 +1621,13 @@ bool Configuration::countUnconfirmedAsNew () const {return m_->countUnconfirmed_
 bool Configuration::showAzimuth () const {return m_->showAzimuth_;}
 bool Configuration::usStates () const {return m_->usStates_;}
 bool Configuration::callNotif () const {return m_->callNotif_;}
+QStringList Configuration::confirmations_files () const
+{
+  QStringList files;
+  if (m_->clublog_current ()) files << club_log::file_name;
+  if (m_->qrz_current ()) files << qrz_logbook::file_name;
+  return files;
+}
 bool Configuration::gridNotif () const {return m_->gridNotif_;}
 bool Configuration::otherMessagesMarker () const {return m_->otherMessagesMarker_;}
 bool Configuration::RR73Marker () const {return m_->RR73Marker_;}
@@ -2379,6 +2410,17 @@ Configuration::impl::impl (Configuration * self, QNetworkAccessManager * network
   connect (&clublog_timer_, &QTimer::timeout, this, &Configuration::impl::clublog_check_due);
   clublog_timer_.start (30 * 60 * 1000);
   QTimer::singleShot (60 * 1000, this, [this] {clublog_check_due ();});   // a minute after the start, not in it
+  // CE3TSK 2026-11-22 (TODO.md 3.-280): QRZ.com's, on the same half-hourly look, and half a minute after Club Log's first
+  qrz_key_ = qrz_logbook::read_key (qrz_key_file ());
+  {
+    // (2026-11-22) what fetched each file: the windows read one only while it is the saved token's or key's
+    SettingsGroup g {settings_, "Configuration"};
+    clublog_file_id_ = settings_->value (contest_profile::own_key ("ClubLogKeyId")).toString ();
+    qrz_file_id_ = settings_->value (contest_profile::own_key ("QrzKeyId")).toString ();
+  }
+  connect (&qrz_fetch_, &qrz_logbook::Fetch::finished, this, &Configuration::impl::qrz_finished);
+  connect (&clublog_timer_, &QTimer::timeout, this, &Configuration::impl::qrz_check_due);
+  QTimer::singleShot (90 * 1000, this, [this] {qrz_check_due ();});
   ui_->gridNotif_check_box->setChecked(callNotif_ && gridNotif_);
   ui_->gridNotif_check_box->setEnabled(callNotif_);
   ui_->blueMarker_check_box->setChecked(redMarker_ && blueMarker_);
@@ -2656,6 +2698,8 @@ void Configuration::impl::initialize_models ()
   update_data_file_labels ();   // CE3TSK
   ui_->clublog_token_edit->setText (clublog_token_);   // CE3TSK 2026-11-21 (TODO.md 3.-280)
   update_clublog_label ();
+  ui_->qrz_key_edit->setText (qrz_key_);   // CE3TSK 2026-11-22 (TODO.md 3.-280)
+  update_qrz_label ();
 
   //
   // setup PTT port combo box drop down content
@@ -4120,6 +4164,18 @@ namespace
   }
 }
 
+/* CE3TSK 2026-11-22 (TODO.md 3.-280): the file is what the saved token and My Call fetched - not what the button fetched
+   with a token or call left unsaved, an older program's (no fingerprint), or one kept after the box was emptied */
+bool Configuration::impl::clublog_current () const
+{
+  return club_log::token_id (clublog_key (clublog_token_, my_callsign_)) == clublog_file_id_;   // no token: no file's
+}
+
+bool Configuration::impl::qrz_current () const
+{
+  return club_log::token_id (qrz_key_) == qrz_file_id_;   // no key: no file's
+}
+
 bool Configuration::impl::validate ()
 {
   if (ui_->sound_input_combo_box->currentIndex () < 0
@@ -4241,6 +4297,7 @@ void Configuration::impl::accept ()
       return;			// not accepting
     }
   if (!clublog_token_acceptable ()) return;   // CE3TSK 2026-11-21 (review): here, not in validate () - Test CAT runs that too
+  if (!qrz_key_acceptable ()) return;         // CE3TSK 2026-11-22: the same for QRZ.com's key
   if (!own_station_confirmed ()) return;   // CE3TSK 2026-10-04: the operator chose to correct the call or grid
 
   /* CE3TSK: capture the grid highlighting as committed before this dialog run, so that
@@ -4451,14 +4508,42 @@ void Configuration::impl::accept ()
       }
     if (changed)
       {
+        clublog_error_.clear ();   // (2026-11-22) the last failure was another call's or token's (a refused call named)
         // the counts of the last download stay until a download replaces them (the operator 2026-11-21: they were lost
         // when the time of that download was thrown away here); a token or call no download has used yet is asked with
         // at once, without the 12 hours - what the button has just used is not asked again, a refused token never
-        clublog_ask_now_ = !clublog_token_.isEmpty () && clublog_key (clublog_token_, my_callsign_) != clublog_downloaded_with_;
-        update_clublog_label ();
-        if (clublog_ask_now_) QTimer::singleShot (0, this, [this] {clublog_check_due ();});
+        update_clublog_label ();   // (2026-11-22) the look below asks by the file's fingerprint (clublog_current)
       }
   }
+  /* CE3TSK 2026-11-22 (TODO.md 3.-280): the QRZ.com key into its own file, never the ini. A new key is asked with at once:
+     the file was fetched with another, so qrz_check_due () finds a full download needed */
+  {
+    auto const key = ui_->qrz_key_edit->text ().trimmed ();
+    if (key != qrz_key_)
+      {
+        auto const why = club_log::write_token (qrz_key_file (), key);
+        if (!why.isEmpty ())
+          {
+            JTDXMessageBox::warning_message (this, tr ("The QRZ.com API key could not be saved"), why);
+          }
+        else
+          {
+            {
+              SettingsGroup g {settings_, "Configuration"};
+              settings_->remove (contest_profile::own_key ("QrzRetryAfter"));
+            }
+            qrz_key_ = key;
+            qrz_next_try_ = QDateTime {};
+            qrz_error_.clear ();
+            update_qrz_label ();
+          }
+      }
+  }
+  /* CE3TSK 2026-11-22 (TODO.md 3.-280, review): OK looks for both at once, changed or not, as Cancel does - a file that is
+     not the saved token's and call's or key's (the button's, an older program's, one the start's look met with Settings
+     open) is fetched again; what the button has just fetched with what is now saved is theirs, and a current file not due
+     asks nothing */
+  QTimer::singleShot (0, this, [this] {clublog_check_due (); qrz_check_due ();});
   usesched_ = ui_->UseSched_check_box->isChecked ();
   sched_hh_1_ = ui_->hhComboBox_1->currentText ();
   sched_mm_1_ = ui_->mmComboBox_1->currentText ();
@@ -4708,6 +4793,9 @@ void Configuration::impl::reject ()
 {
   on_RR73_marker_check_box_clicked(RR73Marker_);
   initialize_models ();		// reverts to settings as at exec ()
+  /* CE3TSK 2026-11-22 (TODO.md 3.-280): the button may have fetched with a token, call or key left unsaved - the saved
+     ones' at once (the looks ask only when a file is not theirs, and not for a download still running: its end asks) */
+  QTimer::singleShot (0, this, [this] {clublog_check_due (); qrz_check_due ();});
 
   // check if the Transceiver instance changed, in which case we need
   // to re open any prior Transceiver type
@@ -4867,6 +4955,9 @@ void Configuration::impl::on_clublog_download_push_button_clicked (bool)
                                          tr ("Club Log refused the token. Make a new one in Club Log under Settings > API and paste it here."));
         return;
       }
+    /* (2026-11-22) a call Club Log refused with this token (403, 422) is asked again here, once a press: the user may have
+       added it to the account - a revoked token cannot come back, a call can. The automatic looks never ask it again, and
+       a good download clears the refusal */
   }
   // (review) the call in the General tab's box, saved or not yet - as the token is taken from its box
   start_clublog_download (token, ui_->callsign_line_edit->text (), true);
@@ -4902,6 +4993,24 @@ bool Configuration::impl::clublog_refused (QString const& token) const
   return ids.contains (club_log::token_id (token)) || (ids.contains ("true") && token == clublog_token_);
 }
 
+bool Configuration::impl::clublog_call_refused (QString const& token, QString const& call) const
+{
+  if (token.isEmpty ()) return false;
+  return clublog_refused_ids (settings_->value (contest_profile::own_key ("ClubLogRefused"))).contains (club_log::token_id (clublog_key (token, call)));
+}
+
+void Configuration::impl::clublog_set_call_refused (QString const& token, QString const& call, bool refused)
+{
+  if (token.isEmpty ()) return;
+  auto ids = clublog_refused_ids (settings_->value (contest_profile::own_key ("ClubLogRefused")));
+  auto const id = club_log::token_id (clublog_key (token, call));
+  ids.removeAll (id);
+  if (refused) ids << id;
+  while (ids.size () > 8) ids.removeFirst ();
+  if (ids.isEmpty ()) settings_->remove (contest_profile::own_key ("ClubLogRefused"));
+  else settings_->setValue (contest_profile::own_key ("ClubLogRefused"), ids);
+}
+
 void Configuration::impl::clublog_set_refused (QString const& token, bool refused)
 {
   auto ids = clublog_refused_ids (settings_->value (contest_profile::own_key ("ClubLogRefused")));
@@ -4927,11 +5036,15 @@ void Configuration::impl::clublog_check_due ()
   {
     SettingsGroup g {settings_, "Configuration"};
     if (clublog_refused (clublog_token_)) return;   // the user must act
+    if (clublog_call_refused (clublog_token_, my_callsign_)) return;   // (2026-11-22) so for a call Club Log refused with it
     auto const retry = settings_->value (contest_profile::own_key ("ClubLogRetryAfter")).toDateTime ();
     if (retry.isValid () && now < retry) return;
     last = settings_->value (contest_profile::own_key ("ClubLogDownloaded")).toDateTime ();
   }
-  if (!clublog_ask_now_ && !club_log::due (last, now)) return;
+  // (2026-11-22) a file not the saved token's and call's: theirs at once - but not while Settings are open, where the button
+  // may just have fetched it; OK and Cancel look again
+  if (!clublog_current () && isVisible ()) return;
+  if (clublog_current () && !club_log::due (last, now)) return;
   start_clublog_download (clublog_token_, my_callsign_, false);
 }
 
@@ -4980,12 +5093,13 @@ void Configuration::impl::clublog_finished (bool ok, FileDownload::Failure failu
       {
         SettingsGroup g {settings_, "Configuration"};
         settings_->setValue (contest_profile::own_key ("ClubLogDownloaded"), now);
-        clublog_downloaded_with_ = clublog_key (clublog_download_token_, clublog_download_call_);
-        if (clublog_downloaded_with_ == clublog_key (clublog_token_, my_callsign_)) clublog_ask_now_ = false;
+        clublog_file_id_ = club_log::token_id (clublog_key (clublog_download_token_, clublog_download_call_));   // never the token
+        settings_->setValue (contest_profile::own_key ("ClubLogKeyId"), clublog_file_id_);
         settings_->setValue (contest_profile::own_key ("ClubLogQsos"), clublog_export_.qsos);
         settings_->setValue (contest_profile::own_key ("ClubLogConfirmed"), clublog_export_.confirmed_qsos);
         settings_->setValue (contest_profile::own_key ("ClubLogEntities"), clublog_export_.entities);
         clublog_set_refused (clublog_download_token_, false);
+        clublog_set_call_refused (clublog_download_token_, clublog_download_call_, false);
         settings_->remove (contest_profile::own_key ("ClubLogRetryAfter"));
       }
       clublog_export_ = club_log::Export {};
@@ -4993,18 +5107,24 @@ void Configuration::impl::clublog_finished (bool ok, FileDownload::Failure failu
       clublog_error_.clear ();
       update_clublog_label ();
       Q_EMIT self_->confirmations_updated ();
+      // (2026-11-22) the button's, with a token or call not saved, ending after Cancel: the saved ones' now
+      if (!isVisible ()) QTimer::singleShot (0, this, [this] {clublog_check_due ();});
       return;
     }
   clublog_export_ = club_log::Export {};
   int const status {FileDownload::Failure::HttpStatus == failure ? detail.toInt () : 0};
   auto const after = club_log::after_status (status);
   auto const retry_after = clublog_download_.retry_after ();
-  // (review) a refusal is the token's that asked: one the button tried from the box leaves the saved token's schedule
-  if (club_log::After::TokenRefused != after || clublog_download_token_ == clublog_token_)
+  // (review) a refusal is the token's that asked: one the button tried from the box leaves the saved token's schedule;
+  // (2026-11-22) a call's refusal the saved call's only when that call asked
+  bool const callAsked {clublog_key (clublog_download_token_, clublog_download_call_) == clublog_key (clublog_token_, my_callsign_)};
+  if ((club_log::After::TokenRefused != after && club_log::After::CallRefused != after)
+      || (club_log::After::TokenRefused == after && clublog_download_token_ == clublog_token_) || (club_log::After::CallRefused == after && callAsked))
     clublog_next_try_ = club_log::next_try (after, retry_after, now);
   {
     SettingsGroup g {settings_, "Configuration"};
     if (club_log::After::TokenRefused == after) clublog_set_refused (clublog_download_token_, true);
+    if (club_log::After::CallRefused == after) clublog_set_call_refused (clublog_download_token_, clublog_download_call_, true);
     if (club_log::After::WaitRetryAfter == after && retry_after.isValid ())   // as next_try () bounded it
       settings_->setValue (contest_profile::own_key ("ClubLogRetryAfter"), clublog_next_try_);
   }
@@ -5013,6 +5133,9 @@ void Configuration::impl::clublog_finished (bool ok, FileDownload::Failure failu
     case FileDownload::Failure::HttpStatus:
       if (club_log::After::TokenRefused == after)
         clublog_error_ = tr ("Club Log refused the token (HTTP status %1). Make a new one in Club Log under Settings > API and paste it here.").arg (status);
+      else if (club_log::After::CallRefused == after)   // (2026-11-22) 403, 422: that call with that token
+        clublog_error_ = tr ("Club Log refused %1 with this token (HTTP status %2): the call is not on the token's Club Log account, or Club Log asks to correct the request. Add the call to your Club Log account, or correct My Call on the General tab.")
+                         .arg (clublog_download_call_.trimmed ().toUpper ()).arg (status);
       else if (club_log::After::WaitRetryAfter == after)
         clublog_error_ = retry_after.isValid ()   // (review) "asks" only when Club Log named a time
           ? tr ("Club Log asks to wait until %1 UTC.").arg (clublog_next_try_.toUTC ().toString ("yyyy-MM-dd hh:mm"))
@@ -5043,7 +5166,7 @@ void Configuration::impl::update_clublog_label ()
     }
   QDateTime last;
   int qsos {0}, confirmed {0}, entities {0};
-  bool refused {false};
+  bool refused {false}, callRefused {false};
   {
     SettingsGroup g {settings_, "Configuration"};
     last = settings_->value (contest_profile::own_key ("ClubLogDownloaded")).toDateTime ();
@@ -5051,6 +5174,7 @@ void Configuration::impl::update_clublog_label ()
     confirmed = settings_->value (contest_profile::own_key ("ClubLogConfirmed"), 0).toInt ();
     entities = settings_->value (contest_profile::own_key ("ClubLogEntities"), 0).toInt ();
     refused = clublog_refused (clublog_token_);
+    callRefused = clublog_call_refused (clublog_token_, my_callsign_);
   }
   QString text;
   if (clublog_token_.isEmpty () && ui_->clublog_token_edit->text ().trimmed ().isEmpty ())
@@ -5063,7 +5187,217 @@ void Configuration::impl::update_clublog_label ()
     text = tr ("Not downloaded yet.");
   if (!clublog_error_.isEmpty ()) text += '\n' + clublog_error_;
   else if (refused) text += '\n' + tr ("Club Log refused the token. Make a new one in Club Log under Settings > API and paste it here.");
+  else if (callRefused)
+    text += '\n' + tr ("Club Log refused %1 with this token: the call is not on the token's Club Log account, or Club Log asks to correct the request. Add the call to your Club Log account, or correct My Call on the General tab.")
+                   .arg (my_callsign_.trimmed ().toUpper ());
   ui_->clublog_status_label->setText (text);
+}
+
+/* CE3TSK 2026-11-22 (TODO.md 3.-280): QRZ.com's LoTW confirmations (qrzlogbook.h), added to Club Log's. The button downloads
+   with the key in the box, saved or not yet; the automatic downloads with the saved one. A download is full - every
+   confirmed QSO - the first time, for a key the file was not fetched with (so a key tried from the box and then not
+   saved is followed at once by the saved key's own), and once a week; else only what changed since the last one. */
+void Configuration::impl::on_qrz_download_push_button_clicked (bool)
+{
+  auto const key = ui_->qrz_key_edit->text ().trimmed ();
+  if (!qrz_logbook::plausible_key (key))
+    {
+      JTDXMessageBox::warning_message (this, tr ("This is not a QRZ.com API key"),
+                                       tr ("A QRZ.com Logbook API key is four groups of four letters and digits, as XXXX-XXXX-XXXX-XXXX. Copy it from your logbook's settings at QRZ.com and paste it here."));
+      return;
+    }
+  bool full {true};
+  {
+    SettingsGroup g {settings_, "Configuration"};
+    if (qrz_refused (key))   // never asked again with a key QRZ.com refused
+      {
+        JTDXMessageBox::warning_message (this, tr ("Download from QRZ.com failed"),
+                                         tr ("QRZ.com refused the key. Copy your logbook's key from QRZ.com again and paste it here; the API needs a QRZ.com subscription."));
+        return;
+      }
+    full = qrz_full_needed (key, QDateTime::currentDateTimeUtc ());
+  }
+  start_qrz_download (key, full, true);
+}
+
+// OK takes a key as QRZ.com makes them, or none; only a key changed in the box is judged (as clublog_token_acceptable)
+bool Configuration::impl::qrz_key_acceptable ()
+{
+  auto const key = ui_->qrz_key_edit->text ().trimmed ();
+  if (key.isEmpty () || key == qrz_key_ || qrz_logbook::plausible_key (key)) return true;
+  JTDXMessageBox::warning_message (this, tr ("This is not a QRZ.com API key"),
+                                   tr ("A QRZ.com Logbook API key is four groups of four letters and digits, as XXXX-XXXX-XXXX-XXXX. Copy it from your logbook's settings at QRZ.com and paste it here."));
+  return false;
+}
+
+// the keys QRZ.com refused, each by its SHA-256 (club_log::token_id), never the key; inside SettingsGroup "Configuration"
+bool Configuration::impl::qrz_refused (QString const& key) const
+{
+  return !key.isEmpty () && settings_->value (contest_profile::own_key ("QrzRefused")).toStringList ().contains (club_log::token_id (key));
+}
+
+void Configuration::impl::qrz_set_refused (QString const& key, bool refused)
+{
+  if (key.isEmpty ()) return;
+  auto ids = settings_->value (contest_profile::own_key ("QrzRefused")).toStringList ();
+  auto const id = club_log::token_id (key);
+  ids.removeAll (id);
+  if (refused) ids << id;
+  while (ids.size () > 8) ids.removeFirst ();
+  if (ids.isEmpty ()) settings_->remove (contest_profile::own_key ("QrzRefused"));
+  else settings_->setValue (contest_profile::own_key ("QrzRefused"), ids);
+}
+
+// a full download: no file yet, a file another key fetched, or the last full one a week or more ago; inside SettingsGroup
+bool Configuration::impl::qrz_full_needed (QString const& key, QDateTime const& now) const
+{
+  QDir const data_dir {QStandardPaths::writableLocation (QStandardPaths::DataLocation)};
+  return !QFile::exists (data_dir.absoluteFilePath (qrz_logbook::file_name))
+    || qrz_file_id_ != club_log::token_id (key)
+    || qrz_logbook::full_due (settings_->value (contest_profile::own_key ("QrzFullDownloaded")).toDateTime (), now);
+}
+
+void Configuration::impl::qrz_check_due ()
+{
+  if (qrz_fetch_.running () || qrz_key_.isEmpty () || !network_manager_) return;
+  auto const now = QDateTime::currentDateTimeUtc ();
+  if (qrz_next_try_.isValid () && now < qrz_next_try_) return;
+  bool full {false};
+  QDateTime last;
+  {
+    SettingsGroup g {settings_, "Configuration"};
+    if (qrz_refused (qrz_key_)) return;   // the user must act
+    auto const retry = settings_->value (contest_profile::own_key ("QrzRetryAfter")).toDateTime ();
+    if (retry.isValid () && now < retry) return;
+    last = settings_->value (contest_profile::own_key ("QrzDownloaded")).toDateTime ();
+    full = qrz_full_needed (qrz_key_, now);
+  }
+  // (2026-11-22) a file not the saved key's (qrz_full_needed: a full download at once) waits while Settings are open, as
+  // Club Log's
+  if (!qrz_current () && isVisible ()) return;
+  if (!full && !qrz_logbook::due (last, now)) return;
+  start_qrz_download (qrz_key_, full, false);
+}
+
+void Configuration::impl::start_qrz_download (QString const& key, bool full, bool manual)
+{
+  if (qrz_fetch_.running () || !network_manager_ || !qrz_logbook::plausible_key (key)) return;
+  if (qrz_logbook::api_base ().isEmpty ())
+    {
+      qrz_error_ = tr ("QRZ.com downloads are switched off (JTDX_QRZ_API).");
+      update_qrz_label ();
+      if (manual) JTDXMessageBox::warning_message (this, tr ("Download from QRZ.com failed"), qrz_error_);
+      return;
+    }
+  QDate since;   // a day of overlap: MODSINCE counts in days
+  {
+    SettingsGroup g {settings_, "Configuration"};
+    auto const last = settings_->value (contest_profile::own_key ("QrzDownloaded")).toDateTime ();
+    if (last.isValid ()) since = last.toUTC ().date ().addDays (-1);
+  }
+  qrz_manual_ = manual;
+  qrz_fetch_key_ = key;
+  qrz_error_.clear ();
+  QDir const data_dir {QStandardPaths::writableLocation (QStandardPaths::DataLocation)};
+  qrz_fetch_.start (network_manager_, key, full, since, data_dir.absoluteFilePath (qrz_logbook::file_name),
+                    "JTDX_contest/" + QCoreApplication::applicationVersion () + " (https://github.com/ce3tsk/jtdx_contest)");
+  update_qrz_label ();
+}
+
+void Configuration::impl::qrz_finished (bool ok, FileDownload::Failure failure, QString const& detail)
+{
+  auto const manual = qrz_manual_;
+  qrz_manual_ = false;
+  auto const now = QDateTime::currentDateTimeUtc ();
+  if (ok)
+    {
+      {
+        SettingsGroup g {settings_, "Configuration"};
+        // the start's time: what changed after it is asked for next time
+        settings_->setValue (contest_profile::own_key ("QrzDownloaded"), qrz_fetch_.started ());
+        if (qrz_fetch_.full ()) settings_->setValue (contest_profile::own_key ("QrzFullDownloaded"), qrz_fetch_.started ());
+        qrz_file_id_ = club_log::token_id (qrz_fetch_key_);
+        settings_->setValue (contest_profile::own_key ("QrzKeyId"), qrz_file_id_);
+        settings_->setValue (contest_profile::own_key ("QrzConfirmed"), qrz_fetch_.confirmed ());
+        settings_->setValue (contest_profile::own_key ("QrzEntities"), qrz_fetch_.entities ());
+        qrz_set_refused (qrz_fetch_key_, false);
+        settings_->remove (contest_profile::own_key ("QrzRetryAfter"));
+      }
+      qrz_next_try_ = QDateTime {};
+      qrz_error_.clear ();
+      update_qrz_label ();
+      Q_EMIT self_->confirmations_updated ();
+      if (!isVisible ()) QTimer::singleShot (0, this, [this] {qrz_check_due ();});   // (2026-11-22) as Club Log's
+      return;
+    }
+  int const status {FileDownload::Failure::HttpStatus == failure ? detail.toInt () : 0};
+  auto const after = qrz_fetch_.refused () || club_log::After::CallRefused == club_log::after_status (status)   // (2026-11-22) no call
+                     ? club_log::After::TokenRefused : club_log::after_status (status);                        // asked: the key's
+  auto const retry_after = qrz_fetch_.retry_after ();
+  // a refusal is the key's that asked: one the button tried from the box leaves the saved key's schedule alone
+  if (club_log::After::TokenRefused != after || qrz_fetch_key_ == qrz_key_)
+    qrz_next_try_ = club_log::next_try (after, retry_after, now);
+  {
+    SettingsGroup g {settings_, "Configuration"};
+    if (club_log::After::TokenRefused == after) qrz_set_refused (qrz_fetch_key_, true);
+    if (club_log::After::WaitRetryAfter == after && retry_after.isValid ())   // as next_try () bounded it
+      settings_->setValue (contest_profile::own_key ("QrzRetryAfter"), qrz_next_try_);
+  }
+  if (club_log::After::TokenRefused == after)
+    qrz_error_ = tr ("QRZ.com refused the key (%1). Copy your logbook's key from QRZ.com again and paste it here; the API needs a QRZ.com subscription.").arg (detail);
+  else
+    switch (failure)
+      {
+      case FileDownload::Failure::HttpStatus:
+        if (club_log::After::WaitRetryAfter == after)
+          qrz_error_ = retry_after.isValid ()
+            ? tr ("QRZ.com asks to wait until %1 UTC.").arg (qrz_next_try_.toUTC ().toString ("yyyy-MM-dd hh:mm"))
+            : tr ("QRZ.com is busy; the next try is at %1 UTC.").arg (qrz_next_try_.toUTC ().toString ("yyyy-MM-dd hh:mm"));
+        else
+          qrz_error_ = tr ("The server answered with HTTP status %1.").arg (detail);
+        break;
+      case FileDownload::Failure::NoSsl: qrz_error_ = tr ("SSL/TLS support is not installed, so %1 cannot be fetched.").arg (detail); break;
+      case FileDownload::Failure::TooLarge: qrz_error_ = tr ("The download was stopped at %1 MB.").arg (detail); break;
+      case FileDownload::Failure::Rejected: qrz_error_ = tr ("QRZ.com answered: %1").arg (detail); break;
+      case FileDownload::Failure::Write: qrz_error_ = tr ("The file could not be saved: %1").arg (detail); break;
+      case FileDownload::Failure::Network: qrz_error_ = tr ("Network error: %1").arg (detail); break;
+      }
+  update_qrz_label ();
+  if (manual)
+    JTDXMessageBox::warning_message (this, tr ("Download from QRZ.com failed"), qrz_error_,
+                                     tr ("The copy in use has not been changed."));
+}
+
+void Configuration::impl::update_qrz_label ()
+{
+  auto const running = qrz_fetch_.running ();
+  ui_->qrz_download_push_button->setEnabled (!running);
+  if (running)
+    {
+      ui_->qrz_status_label->setText (tr ("downloading..."));
+      return;
+    }
+  QDateTime last;
+  int confirmed {0}, entities {0};
+  bool refused {false};
+  {
+    SettingsGroup g {settings_, "Configuration"};
+    last = settings_->value (contest_profile::own_key ("QrzDownloaded")).toDateTime ();
+    confirmed = settings_->value (contest_profile::own_key ("QrzConfirmed"), 0).toInt ();
+    entities = settings_->value (contest_profile::own_key ("QrzEntities"), 0).toInt ();
+    refused = qrz_refused (qrz_key_);
+  }
+  QString text;
+  if (qrz_key_.isEmpty () && ui_->qrz_key_edit->text ().trimmed ().isEmpty ())
+    text = tr ("No key: nothing is downloaded from QRZ.com.");
+  else if (last.isValid ())
+    text = tr ("%1 QSOs confirmed by LoTW, %2 DXCC entities; downloaded %3 UTC")
+      .arg (QLocale {}.toString (confirmed)).arg (entities).arg (last.toUTC ().toString ("yyyy-MM-dd hh:mm"));
+  else
+    text = tr ("Not downloaded yet.");
+  if (!qrz_error_.isEmpty ()) text += '\n' + qrz_error_;
+  else if (refused) text += '\n' + tr ("QRZ.com refused the key. Copy your logbook's key from QRZ.com again and paste it here; the API needs a QRZ.com subscription.");
+  ui_->qrz_status_label->setText (text);
 }
 
 void Configuration::impl::update_data_file_labels ()

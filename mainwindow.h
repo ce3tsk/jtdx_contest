@@ -1199,6 +1199,7 @@ private:
      Settings > Reporting), judged with m_logBook's country data; given to the two decode windows while it holds any */
   LogBook m_confirmedBook;
   bool m_confirmedInitNeeded = false;   // downloaded while monitoring: read at the next initLogIfNeeded ()
+  QString m_confirmedFrom;   // CE3TSK 2026-11-22: the day from which the log's QSOs count as confirmed for now ("" none)
   QString m_contestLogFile;   // (3.-253) the contest log session's file (contestsession.h)
   QString m_contestLogSlug;   // (3.-253) the profile it is of
   bool m_contestSessionChosen = false;   // (3.-253) a session chosen in this run: the first choice is the program's start
@@ -1404,6 +1405,7 @@ private:
   void setSpotButtonStyle ();
   void initLogIfNeeded ();
   void initConfirmedBook ();   // CE3TSK 2026-11-21 (TODO.md 3.-280)
+  QStringList m_confirmedFiles;   // CE3TSK 2026-11-22: the confirmations files read last (Configuration::confirmations_files)
   void setTxStatusColour (QString const& colour);
   void setProgressBarStyle ();
   void applyPaneFloor ();   // CE3TSK: the right pane's floor under Narrow controls

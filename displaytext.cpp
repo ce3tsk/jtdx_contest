@@ -157,6 +157,89 @@ QString DisplayText::doubtToolTip (phantom_decodes::Verdict const& v, QString co
   return tip;
 }
 
+/* CE3TSK 2026-11-22 (TODO.md 3.-280, the operator): why a line has the colour of a LoTW user worked but not LoTW-confirmed -
+   what was worked in the tier that fired, that it therefore counts as never worked (for the sequencer too), and, for a QSO
+   confirmed in LoTW already, where Club Log fetches its confirmations (Club Log's labels in English, as Club Log shows
+   them). Rich text, a paragraph a sentence, each escaped: a country name may hold an '&'. */
+QString DisplayText::unconfirmedToolTip (QString const& call, QString const& worked)
+{
+  QStringList const s {
+    tr ("%1 is a LoTW user, and you have worked %2, but none of those QSOs is LoTW-confirmed.").arg (call, worked),
+    tr ("So it counts as never worked, and the auto sequencer treats it as new."),
+    tr ("Confirmed in LoTW already? Club Log and QRZ.com have only the LoTW confirmations they have fetched: in Club Log, Tools > LoTW Sync > Download confirmations; in your QRZ.com Logbook, Settings > Logbook of the World Import/Export > Import. The program downloads them every 12 hours.")};
+  QString tip;
+  for (auto const& x : s) tip += "<p>" + x.toHtmlEscaped () + "</p>";
+  return tip;
+}
+
+/* CE3TSK 2026-11-22 (the operator: "show the caller's call sign followed by the DXCC, and then give more information in
+   the next line, e.g. coming from the notification color ... and then in the next lines also add the information that
+   comes encoded in the hint chars"; the first line bold): a paragraph a sentence, each escaped - a country name may hold
+   an '&'. Nothing to say, no tooltip. */
+QString DisplayText::lineToolTip (QString const& head, QString const& tier, QString const& unconfirmed, QStringList const& colours,
+                                  QStringList const& marks, QString const& phantom)
+{
+  QString tip;
+  if (!head.isEmpty ()) tip += "<p><b>" + head.toHtmlEscaped () + "</b></p>";
+  if (!tier.isEmpty ()) tip += "<p>" + tier.toHtmlEscaped () + "</p>";
+  tip += unconfirmed;
+  for (auto const& x : colours) tip += "<p>" + x.toHtmlEscaped () + "</p>";
+  for (auto const& x : marks) tip += "<p>" + x.toHtmlEscaped () + "</p>";
+  return tip + phantom;
+}
+
+QString DisplayText::tierSentence (int level, QString const& value, QString const& where)
+{
+  namespace dp = decode_priority;
+  bool const on {!where.isEmpty ()};
+  switch (level)
+    {
+    case dp::NewField: return on ? tr ("New Maidenhead field on %1: %2").arg (where, value) : tr ("New Maidenhead field: %1").arg (value);
+    case dp::NewCQZ: return tr ("New CQ zone: %1").arg (value);
+    case dp::NewCQZBand: return on ? tr ("New CQ zone on %1: %2").arg (where, value) : tr ("New CQ zone: %1").arg (value);
+    case dp::NewITUZ: return tr ("New ITU zone: %1").arg (value);
+    case dp::NewITUZBand: return on ? tr ("New ITU zone on %1: %2").arg (where, value) : tr ("New ITU zone: %1").arg (value);
+    case dp::NewDXCC: return tr ("New DXCC: %1").arg (value);
+    case dp::NewDXCCBand: return on ? tr ("New DXCC on %1: %2").arg (where, value) : tr ("New DXCC: %1").arg (value);
+    case dp::NewState: return tr ("New US state: %1").arg (value);
+    case dp::NewStateBand: return on ? tr ("New US state on %1: %2").arg (where, value) : tr ("New US state: %1").arg (value);
+    case dp::NewGrid: return tr ("New grid: %1").arg (value);
+    case dp::NewGridBand: return on ? tr ("New grid on %1: %2").arg (where, value) : tr ("New grid: %1").arg (value);
+    case dp::NewPx: return tr ("New prefix: %1").arg (value);
+    case dp::NewPxBand: return on ? tr ("New prefix on %1: %2").arg (where, value) : tr ("New prefix: %1").arg (value);
+    case dp::NewCall: return tr ("New call: %1").arg (value);
+    case dp::NewCallBand: return on ? tr ("New call on %1: %2").arg (where, value) : tr ("New call: %1").arg (value);
+    default: return {};
+    }
+}
+
+/* the mark the decoder wrote (lib/ft8_decode.f90, ft4b.f90, the JT decoders; BACKGROUND_DECODES_SEQUENCER.md section 2):
+   ^ a hint decode, * an a-priori one - the window draws both as * (° for a LoTW user) - | the Tx background, where an
+   a-priori decode is marked | as well, the cross a hint decode there, ? JT65's likely false one, 1 a DXpedition-mode
+   message read without help (the window underlines it), , and . free text */
+QStringList DisplayText::markSentences (QString const& mark, bool lotw, bool windowCopy, bool jt)
+{
+  QStringList s;
+  // (review) JT65 and JT9 mark their hint decodes * (lib/extract.f90, decode9.f90): no a-priori decoder there
+  if (jt && (mark == "*" || mark == QString::fromUtf8 ("°"))) s << tr ("Hint decode: the decoder matched it to a message it expected - of the QSO in progress, or one heard before - instead of reading it bit by bit.");
+  // (review) a window's copy of the line: * or the degree sign stands for both kinds - the decoder's own mark is gone
+  else if (windowCopy && (mark == "*" || mark == QString::fromUtf8 ("°"))) s << tr ("Hint or a-priori decode: the decoder had help with this message; the window's mark does not tell which kind.");
+  else if (mark == "^") s << tr ("Hint decode: the decoder matched it to a message it expected - of the QSO in progress, or one heard before - instead of reading it bit by bit.");
+  else if (mark == "*") s << tr ("A-priori decode: the decoder took part of the message as known - CQ, My Call, the DX call, or RRR, RR73 or 73 - and decoded the rest.");
+  else if (mark == QString::fromUtf8 ("┼")) s << tr ("Hint decode in the TX background: found while you transmitted, by matching it to a message the decoder expected.");
+  else if (mark == "|") s << tr ("Decoded in the TX background: the decoder went on with the last receive period while you transmitted. The mark does not tell a plain decode from an a-priori one.");
+  else if (mark == "?") s << tr ("Likely a false decode: many of its symbols had to be corrected.");
+  else if (mark == "1") s << tr ("A DXpedition-mode message (Fox and Hound), decoded without help.");
+  else if (mark == "," || mark == ".") s << tr ("Free text.");
+  if (lotw) s << tr ("A LoTW user: uploaded to LoTW within the last year.");
+  return s;
+}
+
+void DisplayText::setConfirmations (LogBook * confirmed)
+{
+  confirmed_ = confirmed && confirmed->get_qso_count () > 0 ? confirmed : nullptr;
+}
+
 DisplayText::DisplayText(QWidget *parent) :
     QTextEdit(parent)
 {
@@ -468,6 +551,10 @@ int DisplayText::displayDecodedText(DecodedText* decodedText, QString myCall, QS
     QString servis = " ";
     QString cntry = " ";
     QString checkCall;
+    QString unconfirmedTip;   // CE3TSK 2026-11-22 (TODO.md 3.-280): why the line is in the colour of a LoTW user worked, not confirmed
+    QString tierTip;          // CE3TSK 2026-11-22 (the operator): the tier the line's colour shows, for its tooltip
+    bool workedTip = false;   // and "worked before": a tier could judge it, and none fired
+    QString lineHead;         // the tooltip's first line: the caller and its DXCC
     QString checkCall2;
     QString grid;
     QString tyyp="";
@@ -679,6 +766,7 @@ int DisplayText::displayDecodedText(DecodedText* decodedText, QString myCall, QS
         bool stateB4 = true;        /* CE3TSK 2026-10-03: Worked All States */
         bool stateB4Band = true;
         bool stateJudged = false;   // a US call in a square of a single state: the tier has a state to judge
+        QString judgedState;        // CE3TSK 2026-11-22: that state (matchState), named by the unconfirmed tooltip
         /* CE3TSK 2026-10-02: the grid a US station's state is read from - the one this line carries, from its sender,
            or else the one this very call sent before. Not the window's own grid: that one comes from the history of
            the BASE call (and from the DX boxes), so VE3ABC's FN03 would put VE3ABC/W1 in New York (review). */
@@ -760,8 +848,8 @@ int DisplayText::displayDecodedText(DecodedText* decodedText, QString myCall, QS
                 if (countryName.isEmpty ()) logBook.getDXCC (checkCall, countryName);
                 QString const prefix = countryName.section (',', 1, 1).trimmed ();
                 if (us_states::usEntity (prefix))   // the state worked out once (matchState answers with it)
-                    stateJudged = !logBook.matchState (prefix, checkCall, stateGrid (), stateB4, stateB4Band, displayNewStateBand_ ? dialFreq : 0,
-                                                       displayNewStateBandMode_ ? checkMode : QString {}).isEmpty ();
+                    stateJudged = !(judgedState = logBook.matchState (prefix, checkCall, stateGrid (), stateB4, stateB4Band, displayNewStateBand_ ? dialFreq : 0,
+                                                                      displayNewStateBandMode_ ? checkMode : QString {})).isEmpty ();
             }
             /* CE3TSK: WW Digi contest - contest_.fieldMultipliers switches these lookups from the 4 character
                square to the 2 character field, which is the contest multiplier. The square
@@ -1200,11 +1288,47 @@ int DisplayText::displayDecodedText(DecodedText* decodedText, QString myCall, QS
                         new_marker = true;
                     }
                 } 
+                /* 2026-11-22 (the operator): what the tier that fired counts - the zone, the country as the column names it,
+                   the prefix, the call, the square, the state, WW Digi's field - and, for an "on band/mode" tier, the band
+                   and the mode it was asked for: the line's tooltip names it (tierTip), and the unconfirmed one's below */
+                int const level {priority - (lotw.isEmpty () ? 0 : 1)};   // a LoTW user's tier ranks one above it
+                QString worked, value;
+                bool band = false, mode = false;
+                switch (level) {
+                case dp::NewField:   // (review) one tier for never worked and new on this band: the band named for the second
+                    value = worked = grid.trimmed ().left (2);
+                    if (!(displayNewGrid_ && !gridB4)) {band = displayNewGridBand_; mode = displayNewGridBandMode_;}
+                    break;
+                case dp::NewCQZBand: band = displayNewCQZBand_; mode = displayNewCQZBandMode_; Q_FALLTHROUGH ();
+                case dp::NewCQZ: value = countryName.section (',', 3, 3).trimmed (); worked = tr ("CQ zone %1").arg (value); break;
+                case dp::NewITUZBand: band = displayNewITUZBand_; mode = displayNewITUZBandMode_; Q_FALLTHROUGH ();
+                case dp::NewITUZ: value = countryName.section (',', 4, 4).trimmed (); worked = tr ("ITU zone %1").arg (value); break;
+                case dp::NewDXCCBand: band = displayNewDXCCBand_; mode = displayNewDXCCBandMode_; Q_FALLTHROUGH ();
+                case dp::NewDXCC: value = worked = countryName.section (',', 2, 2).trimmed (); break;
+                case dp::NewPxBand: band = displayNewPxBand_; mode = displayNewPxBandMode_; Q_FALLTHROUGH ();
+                case dp::NewPx: value = Radio::striped_prefix (Radio::effective_prefix (checkCall)); worked = tr ("prefix %1").arg (value); break;
+                case dp::NewCallBand: band = displayNewCallBand_; mode = displayNewCallBandMode_; Q_FALLTHROUGH ();
+                case dp::NewCall: value = worked = checkCall; break;
+                case dp::NewGridBand: band = displayNewGridBand_; mode = displayNewGridBandMode_; Q_FALLTHROUGH ();
+                case dp::NewGrid: value = grid.trimmed ().left (4); worked = tr ("grid %1").arg (value); break;
+                case dp::NewStateBand: band = displayNewStateBand_; mode = displayNewStateBandMode_; Q_FALLTHROUGH ();
+                case dp::NewState: value = judgedState; worked = tr ("US state %1").arg (value); break;
+                }
+                QStringList where;
+                if (band) where << ADIF::bandFromFrequency (dialFreq / 1.e6);
+                if (mode) where << checkMode;
+                where.removeAll (QString {});
+                if (!value.isEmpty ()) tierTip = tierSentence (level, value, where.join (' '));
+                else workedTip = judged && dp::noNewTier (priority)   // (review) where a tier could be drawn at all: else a new
+                                 && ((displayPotential_ && std_type == 3) || std_type != 3 || otherMessagesMarker_);   // one goes unseen
                 /* CE3TSK 2026-11-21 (TODO.md 3.-280, D3): the tier that fired is new only because the LoTW user worked in it
                    has not LoTW-confirmed - the colour of its own, the tier's rank kept (a LoTW user's: the level + 1) */
                 if (priority > 0 && priority - 1 < int (sizeof unconfirmedAt) && unconfirmedAt[priority - 1]) {
                     if (new_marker) servis = servis.left (1) + color_Unconfirmed_;
                     else bgColor = color_Unconfirmed_;
+                    // 2026-11-22 (the operator): and the tooltip says why - what was worked in that tier, where it was asked
+                    if (!where.isEmpty ()) worked += " (" + where.join (' ') + ")";
+                    unconfirmedTip = unconfirmedToolTip (checkCall, worked);
                 }
                 if (judged && displayWorkedDontShow_ && std_type != 2 && ((!forceBold && ((displayPotential_ && std_type == 3) || std_type != 3)) || (!new_marker && otherMessagesMarker_ && std_type == 3))) {
                     show_line = false;
@@ -1294,6 +1418,9 @@ int DisplayText::displayDecodedText(DecodedText* decodedText, QString myCall, QS
                 } else if (doubt.reasons & phantom_decodes::Where) cntryDoubtFrom = 0;
             }
         }
+        // CE3TSK 2026-11-22 (the operator): the tooltip's first line - the caller, its DXCC by name, a US station's state
+        lineHead = checkCall + ' ' + QChar (0x2013) + ' ' + items.value (2).trimmed ();
+        if (us_states::usEntity (items.value (1))) lineHead += us_states::suffix (items[1], stateGrid (), logBook.licenseState (checkCall));
         if (!bwantedCall && !bwantedPrefix && !bwantedGrid && !bwantedCountry) {
             if (hideContinents_.contains(items[0]) && std_type != 2 && !jt65bc) {
                 show_line = false;
@@ -1468,6 +1595,7 @@ int DisplayText::displayDecodedText(DecodedText* decodedText, QString myCall, QS
             if (contest_.workedRanksLast && workedOnBand) qsoHistory.rankAsWorked (checkCall);   // CE3TSK 2026-11-04: logged since his last line
             qsoHistory.message(checkCall,step,priority,param,tyyp,countryName.left(2),mpx,c_time,decodedText->report(),decodedText->frequencyOffset(),checkMode,d,decodedText->isHint ());
         } 
+        bool const toMe {std_type == 2};   // CE3TSK 2026-11-22: for the tooltip, the red marker cell or not
         if (std_type == 2) {
             if(!redMarker_) std_type = 0;
             else if(blueMarker_ && !hisCall.isEmpty () && checkCall.contains(hisCall)) std_type = 5;
@@ -1519,8 +1647,23 @@ int DisplayText::displayDecodedText(DecodedText* decodedText, QString myCall, QS
         }
         int const fieldColumns {(displayCountryName_ ? (displayCountryPrefix_ ? (displayUSStates_ ? distance_field::prefixStateColumns : distance_field::prefixColumns)
                                                                               : distance_field::nameColumns) : 0) + tagColumns};
+        /* CE3TSK 2026-11-22 (the operator): the line's tooltip - what its colours say after the tier (the text colour, the
+           marker cell's, the wanted lists), what the decoder's mark says (lineToolTip ()) */
+        QStringList colours;
+        if (workedTip) colours << tr ("Worked before: nothing new in the notifications that are on.");
+        if (std_type == 1) colours << tr ("Calls CQ.");
+        else if (std_type == 5) colours << tr ("A message to you from your DX call.");
+        else if (toMe) colours << tr ("A message to you.");
+        else if (std_type == 4) colours << tr ("Ends a QSO: RR73 or 73.");
+        if (!toMe && !hisCall.isEmpty () && messageText.contains (Radio::base_callsign (hisCall))) colours << tr ("Has the call of your DX Call box.");
+        if (bwantedCall) colours << tr ("On your list of wanted calls.");
+        if (bwantedPrefix) colours << tr ("Its prefix is on your list of wanted prefixes.");
+        if (bwantedGrid) colours << tr ("Its grid is on your list of wanted grids.");
+        if (bwantedCountry) colours << tr ("Its country is on your list of wanted countries.");
+        QString const tip {lineToolTip (lineHead, tierTip, unconfirmedTip, colours, markSentences (decodedText->marker (), !lotw.isEmpty (), decodedText->windowCopy (),
+                                                            !lines_have_seconds (app_mode) && app_mode != "WSPR-2"), doubtTip)};
         if (drawn) {   // CE3TSK 2026-10-23: Misc > Hide clear phantom messages, above
-            appendText(messageText, bgColor, txtColor, std_type, servis, servisColor, cntry, forceBold, strikethrough, underlined, decodedText->isDXped(), false, bwantedCall||bwantedGrid||bwantedPrefix||bwantedCountry, doubtful, cntryDoubtFrom, doubtTip, field, fieldColumns, inverted);
+            appendText(messageText, bgColor, txtColor, std_type, servis, servisColor, cntry, forceBold, strikethrough, underlined, decodedText->isDXped(), false, bwantedCall||bwantedGrid||bwantedPrefix||bwantedCountry, doubtful, cntryDoubtFrom, tip, field, fieldColumns, inverted);
             wastx_ = false;
         }
     }

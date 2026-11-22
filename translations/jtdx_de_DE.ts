@@ -633,6 +633,76 @@ Format:
         <source>Club Log is busy; the next try is at %1 UTC.</source>
         <translation>Club Log ist ausgelastet; der nächste Versuch ist um %1 UTC.</translation>
     </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>The QRZ.com API key could not be saved</source>
+        <translation>Der API-Schlüssel von QRZ.com konnte nicht gespeichert werden</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>This is not a QRZ.com API key</source>
+        <translation>Das ist kein API-Schlüssel von QRZ.com</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>A QRZ.com Logbook API key is four groups of four letters and digits, as XXXX-XXXX-XXXX-XXXX. Copy it from your logbook's settings at QRZ.com and paste it here.</source>
+        <translation>Ein API-Schlüssel des QRZ.com-Logbooks besteht aus vier Gruppen von je vier Buchstaben und Ziffern, wie XXXX-XXXX-XXXX-XXXX. Kopieren Sie ihn aus den Einstellungen Ihres Logbooks bei QRZ.com und fügen Sie ihn hier ein.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Download from QRZ.com failed</source>
+        <translation>Download von QRZ.com fehlgeschlagen</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>QRZ.com refused the key. Copy your logbook's key from QRZ.com again and paste it here; the API needs a QRZ.com subscription.</source>
+        <translation>QRZ.com hat den Schlüssel abgelehnt. Kopieren Sie den Schlüssel Ihres Logbooks erneut von QRZ.com und fügen Sie ihn hier ein; die API erfordert ein Abonnement bei QRZ.com.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>QRZ.com downloads are switched off (JTDX_QRZ_API).</source>
+        <translation>Downloads von QRZ.com sind ausgeschaltet (JTDX_QRZ_API).</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>QRZ.com refused the key (%1). Copy your logbook's key from QRZ.com again and paste it here; the API needs a QRZ.com subscription.</source>
+        <translation>QRZ.com hat den Schlüssel abgelehnt (%1). Kopieren Sie den Schlüssel Ihres Logbooks erneut von QRZ.com und fügen Sie ihn hier ein; die API erfordert ein Abonnement bei QRZ.com.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>QRZ.com asks to wait until %1 UTC.</source>
+        <translation>QRZ.com bittet, bis %1 UTC zu warten.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>QRZ.com is busy; the next try is at %1 UTC.</source>
+        <translation>QRZ.com ist ausgelastet; der nächste Versuch ist um %1 UTC.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>QRZ.com answered: %1</source>
+        <translation>QRZ.com antwortete: %1</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>No key: nothing is downloaded from QRZ.com.</source>
+        <translation>Kein Schlüssel: Von QRZ.com wird nichts heruntergeladen.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1 QSOs confirmed by LoTW, %2 DXCC entities; downloaded %3 UTC</source>
+        <translation>%1 QSOs über LoTW bestätigt, %2 DXCC-Gebiete; heruntergeladen %3 UTC</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Club Log refused %1 with this token: the call is not on the token's Club Log account, or Club Log asks to correct the request. Add the call to your Club Log account, or correct My Call on the General tab.</source>
+        <translation>Club Log hat %1 mit diesem Token abgelehnt: Das Rufzeichen gehört nicht zum Club-Log-Konto des Tokens, oder Club Log verlangt eine korrigierte Anfrage. Fügen Sie das Rufzeichen Ihrem Club-Log-Konto hinzu, oder korrigieren Sie Mein Rufzeichen auf der Registerkarte Allgemein.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Club Log refused %1 with this token (HTTP status %2): the call is not on the token's Club Log account, or Club Log asks to correct the request. Add the call to your Club Log account, or correct My Call on the General tab.</source>
+        <translation>Club Log hat %1 mit diesem Token abgelehnt (HTTP-Status %2): Das Rufzeichen gehört nicht zum Club-Log-Konto des Tokens, oder Club Log verlangt eine korrigierte Anfrage. Fügen Sie das Rufzeichen Ihrem Club-Log-Konto hinzu, oder korrigieren Sie Mein Rufzeichen auf der Registerkarte Allgemein.</translation>
+    </message>
 </context>
 <context>
     <name>CountryDat</name>
@@ -2604,6 +2674,221 @@ Format:
         <location filename="../displaytext.cpp"/>
         <source>No longer of low confidence: it goes to UDP clients and PSK Reporter like any other decode.</source>
         <translation>Nicht mehr von geringer Zuverlässigkeit: Sie geht an UDP-Clients und PSK Reporter wie jede andere Dekodierung.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>%1 is a LoTW user, and you have worked %2, but none of those QSOs is LoTW-confirmed.</source>
+        <translation>%1 ist LoTW-Nutzer, und Sie haben %2 gearbeitet, aber keines dieser QSOs ist per LoTW bestätigt.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>So it counts as never worked, and the auto sequencer treats it as new.</source>
+        <translation>Sie zählt daher als nie gearbeitet, und der automatische Ablauf behandelt sie als neu.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>CQ zone %1</source>
+        <translation>CQ-Zone %1</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>ITU zone %1</source>
+        <translation>ITU-Zone %1</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>prefix %1</source>
+        <translation>Präfix %1</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>grid %1</source>
+        <translation>Locator %1</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>US state %1</source>
+        <translation>US-Bundesstaat %1</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Confirmed in LoTW already? Club Log and QRZ.com have only the LoTW confirmations they have fetched: in Club Log, Tools &gt; LoTW Sync &gt; Download confirmations; in your QRZ.com Logbook, Settings &gt; Logbook of the World Import/Export &gt; Import. The program downloads them every 12 hours.</source>
+        <translation>Schon per LoTW bestätigt? Club Log und QRZ.com haben nur die LoTW-Bestätigungen, die sie abgerufen haben: in Club Log Tools &gt; LoTW Sync &gt; Download confirmations, in Ihrem QRZ.com-Logbook Settings &gt; Logbook of the World Import/Export &gt; Import. Das Programm lädt sie alle 12 Stunden herunter.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>New Maidenhead field: %1</source>
+        <translation>Neues Maidenhead-Feld: %1</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>New CQ zone: %1</source>
+        <translation>Neue CQ-Zone: %1</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>New CQ zone on %1: %2</source>
+        <translation>Neue CQ-Zone auf %1: %2</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>New ITU zone: %1</source>
+        <translation>Neue ITU-Zone: %1</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>New ITU zone on %1: %2</source>
+        <translation>Neue ITU-Zone auf %1: %2</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>New DXCC: %1</source>
+        <translation>Neues DXCC: %1</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>New DXCC on %1: %2</source>
+        <translation>Neues DXCC auf %1: %2</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>New US state: %1</source>
+        <translation>Neuer US-Bundesstaat: %1</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>New US state on %1: %2</source>
+        <translation>Neuer US-Bundesstaat auf %1: %2</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>New grid: %1</source>
+        <translation>Neuer Locator: %1</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>New grid on %1: %2</source>
+        <translation>Neuer Locator auf %1: %2</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>New prefix: %1</source>
+        <translation>Neues Präfix: %1</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>New prefix on %1: %2</source>
+        <translation>Neues Präfix auf %1: %2</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>New call: %1</source>
+        <translation>Neues Rufzeichen: %1</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>New call on %1: %2</source>
+        <translation>Neues Rufzeichen auf %1: %2</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Hint decode: the decoder matched it to a message it expected - of the QSO in progress, or one heard before - instead of reading it bit by bit.</source>
+        <translation>Hint-Dekodierung: Der Decoder hat die Nachricht einer erwarteten zugeordnet - aus dem laufenden QSO oder einer schon gehörten - statt sie Bit für Bit zu lesen.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>A-priori decode: the decoder took part of the message as known - CQ, My Call, the DX call, or RRR, RR73 or 73 - and decoded the rest.</source>
+        <translation>A-priori-Dekodierung: Der Decoder hat einen Teil der Nachricht als bekannt angenommen - CQ, das eigene Rufzeichen, das DX-Rufzeichen oder RRR, RR73 oder 73 - und den Rest dekodiert.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Hint decode in the TX background: found while you transmitted, by matching it to a message the decoder expected.</source>
+        <translation>Hint-Dekodierung im TX-Hintergrund: während Ihrer Aussendung gefunden, indem der Decoder die Nachricht einer erwarteten zugeordnet hat.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Decoded in the TX background: the decoder went on with the last receive period while you transmitted. The mark does not tell a plain decode from an a-priori one.</source>
+        <translation>Im TX-Hintergrund dekodiert: Der Decoder hat während Ihrer Aussendung an der letzten Empfangsperiode weitergearbeitet. Die Markierung unterscheidet eine normale Dekodierung nicht von einer A-priori-Dekodierung.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Likely a false decode: many of its symbols had to be corrected.</source>
+        <translation>Wahrscheinlich eine Falschdekodierung: Viele ihrer Symbole mussten korrigiert werden.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>A DXpedition-mode message (Fox and Hound), decoded without help.</source>
+        <translation>Eine Nachricht im DXpedition-Modus (Fox und Hound), ohne Hilfe dekodiert.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Free text.</source>
+        <translation>Freitext.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>A LoTW user: uploaded to LoTW within the last year.</source>
+        <translation>LoTW-Nutzer: hat im letzten Jahr zu LoTW hochgeladen.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Worked before: nothing new in the notifications that are on.</source>
+        <translation>Bereits gearbeitet: nichts Neues in den eingeschalteten Benachrichtigungen.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Calls CQ.</source>
+        <translation>Ruft CQ.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>A message to you from your DX call.</source>
+        <translation>Eine Nachricht an Sie von Ihrem DX-Rufzeichen.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>A message to you.</source>
+        <translation>Eine Nachricht an Sie.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Ends a QSO: RR73 or 73.</source>
+        <translation>Beendet ein QSO: RR73 oder 73.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Has the call of your DX Call box.</source>
+        <translation>Enthält das Rufzeichen aus Ihrem Feld DX-Rufzeichen.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>On your list of wanted calls.</source>
+        <translation>Auf Ihrer Liste gesuchter Rufzeichen.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Its prefix is on your list of wanted prefixes.</source>
+        <translation>Das Präfix steht auf Ihrer Liste gesuchter Präfixe.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Its grid is on your list of wanted grids.</source>
+        <translation>Der Locator steht auf Ihrer Liste gesuchter Locatoren.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Its country is on your list of wanted countries.</source>
+        <translation>Das Land steht auf Ihrer Liste gesuchter Länder.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>New Maidenhead field on %1: %2</source>
+        <translation>Neues Maidenhead-Feld auf %1: %2</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Hint or a-priori decode: the decoder had help with this message; the window's mark does not tell which kind.</source>
+        <translation>Hint- oder A-priori-Dekodierung: Der Decoder hatte bei dieser Nachricht Hilfe; die Markierung im Fenster sagt nicht, welche Art.</translation>
     </message>
 </context>
 <context>
@@ -11121,8 +11406,8 @@ Um einmal den ganzen LoTW-Bestand abzurufen, dort vorher "Only confirmations sin
     </message>
     <message>
         <location filename="../Configuration.ui"/>
-        <source>With confirmations downloaded from Club Log, a station in the LoTW users file that you have worked but that has not confirmed through LoTW counts as never worked in every tier above that is on: it is shown in its own color and the auto sequencer calls it as new. Not in a contest.</source>
-        <translation>Mit von Club Log heruntergeladenen Bestätigungen zählt eine Station aus der LoTW-Nutzerdatei, die Sie gearbeitet haben, die aber nicht per LoTW bestätigt hat, in jeder eingeschalteten Stufe oben als nie gearbeitet: sie wird in einer eigenen Farbe angezeigt, und der automatische Ablauf ruft sie als neu. Nicht in einem Contest.</translation>
+        <source>With LoTW confirmations downloaded from Club Log or QRZ.com, a station in the LoTW users file that you have worked but that has not confirmed through LoTW counts as never worked in every tier above that is on: it is shown in its own color and the auto sequencer calls it as new. QSOs from the day of the newest confirmed QSO on, and every QSO you log, count as confirmed for now: LoTW may not have confirmed them yet. Not in a contest.</source>
+        <translation>Mit von Club Log oder QRZ.com heruntergeladenen LoTW-Bestätigungen zählt eine Station aus der LoTW-Nutzerdatei, die Sie gearbeitet haben, die aber nicht per LoTW bestätigt hat, in jeder eingeschalteten Stufe oben als nie gearbeitet: sie wird in einer eigenen Farbe angezeigt, und der automatische Ablauf ruft sie als neu. QSOs ab dem Tag des neuesten bestätigten QSOs und jedes QSO, das Sie loggen, zählen vorerst als bestätigt: LoTW hat sie vielleicht noch nicht bestätigt. Nicht in einem Contest.</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
@@ -11133,6 +11418,38 @@ Um einmal den ganzen LoTW-Bestand abzurufen, dort vorher "Only confirmations sin
         <location filename="../Configuration.ui"/>
         <source>Worked, not LoTW-confirmed</source>
         <translation>Gearbeitet, nicht per LoTW bestätigt</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>QRZ.com API ke&amp;y:</source>
+        <translation>API-Schlüssel von QR&amp;Z.com:</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Your QRZ.com Logbook API key. To find it, log in to QRZ.com, open your Logbook, click Settings at the top right and, under "QRZ Logbook API", click "Show" beside the API Key. Copy the key, paste it into this box and press OK. The API needs a QRZ.com subscription (XML level or higher).
+With it the program downloads your LoTW confirmations from QRZ.com at the start and every 12 hours. It is kept in a file of its own that only you can read, never in the settings file.</source>
+        <translation>Der API-Schlüssel Ihres QRZ.com-Logbooks. So finden Sie ihn: Melden Sie sich bei QRZ.com an, öffnen Sie Ihr Logbook, klicken Sie oben rechts auf Settings und unter "QRZ Logbook API" neben API Key auf "Show". Kopieren Sie den Schlüssel, fügen Sie ihn in dieses Feld ein und klicken Sie auf OK. Die API erfordert ein Abonnement bei QRZ.com (XML-Stufe oder höher).
+Damit lädt das Programm beim Start und alle 12 Stunden Ihre LoTW-Bestätigungen von QRZ.com herunter. Er wird in einer eigenen Datei gespeichert, die nur Sie lesen können, nie in der Einstellungsdatei.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Download your LoTW confirmations from QRZ.com now; the program also does it at the start and every 12 hours. Only the confirmations from LoTW count, not QRZ.com's own.
+QRZ.com has only the LoTW confirmations it has imported.
+In your QRZ.com Logbook, under Settings:
+1. LoTW Settings: enter your LoTW username once.
+2. Logbook of the World Import/Export, Import: fetch the new ones now and then (QRZ.com asks for your LoTW password).
+The first download takes a few minutes; after it only what changed is fetched.</source>
+        <translation>Ihre LoTW-Bestätigungen jetzt von QRZ.com herunterladen; das Programm tut das auch beim Start und alle 12 Stunden. Nur die Bestätigungen aus LoTW zählen, nicht die eigenen von QRZ.com.
+QRZ.com hat nur die LoTW-Bestätigungen, die es importiert hat.
+In Ihrem QRZ.com-Logbook unter Settings:
+1. LoTW Settings: einmal Ihren LoTW-Benutzernamen eintragen.
+2. Logbook of the World Import/Export, Import: die neuen von Zeit zu Zeit abrufen (QRZ.com fragt nach Ihrem LoTW-Passwort).
+Der erste Download dauert einige Minuten; danach wird nur abgerufen, was sich geändert hat.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Download LoTW confirmations from &amp;QRZ.com</source>
+        <translation>LoTW-Bestätigungen von &amp;QRZ.com herunterladen</translation>
     </message>
 </context>
 <context>

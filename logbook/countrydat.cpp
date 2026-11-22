@@ -576,14 +576,14 @@ void CountryDat::load()
        while ( !in.atEnd() )
        {
           QString line1 = in.readLine();
-          if ( !in.atEnd() )
+          /* CE3TSK 2026-11-22 (the operator: "Go"): every line - the last one too. Inherited: a line was taken only when
+             another followed it, so the file's last call was never a LoTW user (a download is checked whole before it
+             replaces the file, so no cut-off line reaches here) */
+          QStringList items = line1.split(',');
+          if (items.size() > 1)
           {
-            QStringList items = line1.split(',');
-            if (items.size() > 1)
-            {
-                last = date_from (items[1], 0, 5, 8);   /* CE3TSK: see date_from */
-                if (last > first) _data2.insert(items[0],items[1]);
-            }
+              last = date_from (items[1], 0, 5, 8);   /* CE3TSK: see date_from */
+              if (last > first) _data2.insert(items[0],items[1]);
           }
        }
 //    printf("%d active lotw users.\n",_data2.size());

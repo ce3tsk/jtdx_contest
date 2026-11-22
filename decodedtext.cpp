@@ -141,6 +141,11 @@ bool DecodedText::isDebug()
 	return string_.mid(47 + padding_,1) == "d";
 }
 
+QString DecodedText::marker ()
+{
+  return string_.mid (47 + padding_, 1);
+}
+
 bool DecodedText::isDXped()
 {
 	return string_.mid(47 + padding_,1) == "1";

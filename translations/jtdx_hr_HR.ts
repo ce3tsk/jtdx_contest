@@ -633,6 +633,76 @@ Format:
         <source>Club Log is busy; the next try is at %1 UTC.</source>
         <translation>Club Log je zauzet; sljedeći pokušaj je u %1 UTC.</translation>
     </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>The QRZ.com API key could not be saved</source>
+        <translation>API ključ QRZ.com nije bilo moguće spremiti</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>This is not a QRZ.com API key</source>
+        <translation>Ovo nije API ključ QRZ.com</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>A QRZ.com Logbook API key is four groups of four letters and digits, as XXXX-XXXX-XXXX-XXXX. Copy it from your logbook's settings at QRZ.com and paste it here.</source>
+        <translation>API ključ QRZ.com Logbooka su četiri skupine od po četiri slova i znamenke, kao XXXX-XXXX-XXXX-XXXX. Kopirajte ga iz postavki svog logbooka na QRZ.com i zalijepite ga ovdje.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Download from QRZ.com failed</source>
+        <translation>Preuzimanje s QRZ.com nije uspjelo</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>QRZ.com refused the key. Copy your logbook's key from QRZ.com again and paste it here; the API needs a QRZ.com subscription.</source>
+        <translation>QRZ.com je odbio ključ. Ponovno kopirajte ključ svog logbooka s QRZ.com i zalijepite ga ovdje; API zahtijeva pretplatu na QRZ.com.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>QRZ.com downloads are switched off (JTDX_QRZ_API).</source>
+        <translation>Preuzimanja s QRZ.com su isključena (JTDX_QRZ_API).</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>QRZ.com refused the key (%1). Copy your logbook's key from QRZ.com again and paste it here; the API needs a QRZ.com subscription.</source>
+        <translation>QRZ.com je odbio ključ (%1). Ponovno kopirajte ključ svog logbooka s QRZ.com i zalijepite ga ovdje; API zahtijeva pretplatu na QRZ.com.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>QRZ.com asks to wait until %1 UTC.</source>
+        <translation>QRZ.com traži da se pričeka do %1 UTC.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>QRZ.com is busy; the next try is at %1 UTC.</source>
+        <translation>QRZ.com je zauzet; sljedeći pokušaj je u %1 UTC.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>QRZ.com answered: %1</source>
+        <translation>QRZ.com je odgovorio: %1</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>No key: nothing is downloaded from QRZ.com.</source>
+        <translation>Nema ključa: s QRZ.com se ništa ne preuzima.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1 QSOs confirmed by LoTW, %2 DXCC entities; downloaded %3 UTC</source>
+        <translation>%1 veza potvrđeno preko LoTW-a, %2 DXCC entiteta; preuzeto %3 UTC</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Club Log refused %1 with this token: the call is not on the token's Club Log account, or Club Log asks to correct the request. Add the call to your Club Log account, or correct My Call on the General tab.</source>
+        <translation>Club Log je odbio %1 s ovim tokenom: znak nije na Club Log računu tokena ili Club Log traži da se zahtjev ispravi. Dodajte znak na svoj Club Log račun ili ispravite Moj Znak na kartici Općenito.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Club Log refused %1 with this token (HTTP status %2): the call is not on the token's Club Log account, or Club Log asks to correct the request. Add the call to your Club Log account, or correct My Call on the General tab.</source>
+        <translation>Club Log je odbio %1 s ovim tokenom (HTTP status %2): znak nije na Club Log računu tokena ili Club Log traži da se zahtjev ispravi. Dodajte znak na svoj Club Log račun ili ispravite Moj Znak na kartici Općenito.</translation>
+    </message>
 </context>
 <context>
     <name>CountryDat</name>
@@ -2604,6 +2674,221 @@ Format:
         <location filename="../displaytext.cpp"/>
         <source>No longer of low confidence: it goes to UDP clients and PSK Reporter like any other decode.</source>
         <translation>Više nije niske pouzdanosti: ide UDP klijentima i na PSK Reporter kao svako drugo dekodiranje.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>%1 is a LoTW user, and you have worked %2, but none of those QSOs is LoTW-confirmed.</source>
+        <translation>%1 je korisnik LoTW-a; odrađeno: %2, ali nijedna od tih veza nije potvrđena LoTW-om.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>So it counts as never worked, and the auto sequencer treats it as new.</source>
+        <translation>Zato se računa kao nikad odrađena, a automatski sekvencer je tretira kao novu.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>CQ zone %1</source>
+        <translation>CQ zona %1</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>ITU zone %1</source>
+        <translation>ITU zona %1</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>prefix %1</source>
+        <translation>prefiks %1</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>grid %1</source>
+        <translation>lokator %1</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>US state %1</source>
+        <translation>savezna država SAD-a %1</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Confirmed in LoTW already? Club Log and QRZ.com have only the LoTW confirmations they have fetched: in Club Log, Tools &gt; LoTW Sync &gt; Download confirmations; in your QRZ.com Logbook, Settings &gt; Logbook of the World Import/Export &gt; Import. The program downloads them every 12 hours.</source>
+        <translation>Već potvrđeno LoTW-om? Club Log i QRZ.com imaju samo LoTW potvrde koje su dohvatili: u Club Logu Tools &gt; LoTW Sync &gt; Download confirmations; u svom QRZ.com Logbooku Settings &gt; Logbook of the World Import/Export &gt; Import. Program ih preuzima svakih 12 sati.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>New Maidenhead field: %1</source>
+        <translation>Novo Maidenhead polje: %1</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>New CQ zone: %1</source>
+        <translation>Nova CQ zona: %1</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>New CQ zone on %1: %2</source>
+        <translation>Nova CQ zona na %1: %2</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>New ITU zone: %1</source>
+        <translation>Nova ITU zona: %1</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>New ITU zone on %1: %2</source>
+        <translation>Nova ITU zona na %1: %2</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>New DXCC: %1</source>
+        <translation>Novi DXCC: %1</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>New DXCC on %1: %2</source>
+        <translation>Novi DXCC na %1: %2</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>New US state: %1</source>
+        <translation>Nova savezna država SAD-a: %1</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>New US state on %1: %2</source>
+        <translation>Nova savezna država SAD-a na %1: %2</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>New grid: %1</source>
+        <translation>Novi lokator: %1</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>New grid on %1: %2</source>
+        <translation>Novi lokator na %1: %2</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>New prefix: %1</source>
+        <translation>Novi prefiks: %1</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>New prefix on %1: %2</source>
+        <translation>Novi prefiks na %1: %2</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>New call: %1</source>
+        <translation>Novi znak: %1</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>New call on %1: %2</source>
+        <translation>Novi znak na %1: %2</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Hint decode: the decoder matched it to a message it expected - of the QSO in progress, or one heard before - instead of reading it bit by bit.</source>
+        <translation>Dekodiranje uz pomoć (hint): dekoder je poruku usporedio s onom koju je očekivao - iz veze u tijeku ili već čutom - umjesto da je čita bit po bit.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>A-priori decode: the decoder took part of the message as known - CQ, My Call, the DX call, or RRR, RR73 or 73 - and decoded the rest.</source>
+        <translation>A priori dekodiranje: dekoder je dio poruke uzeo kao poznat - CQ, moj znak, DX znak ili RRR, RR73 ili 73 - i dekodirao ostatak.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Hint decode in the TX background: found while you transmitted, by matching it to a message the decoder expected.</source>
+        <translation>Dekodiranje uz pomoć (hint) u pozadini odašiljanja: pronađeno dok ste odašiljali, usporedbom s porukom koju je dekoder očekivao.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Decoded in the TX background: the decoder went on with the last receive period while you transmitted. The mark does not tell a plain decode from an a-priori one.</source>
+        <translation>Dekodirano u pozadini odašiljanja: dekoder je nastavio s posljednjim periodom prijema dok ste odašiljali. Oznaka ne razlikuje obično dekodiranje od a priori dekodiranja.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Likely a false decode: many of its symbols had to be corrected.</source>
+        <translation>Vjerojatno lažno dekodiranje: mnogi njegovi simboli morali su biti ispravljeni.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>A DXpedition-mode message (Fox and Hound), decoded without help.</source>
+        <translation>Poruka u DXpedition načinu (Fox i Hound), dekodirana bez pomoći.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Free text.</source>
+        <translation>Slobodan tekst.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>A LoTW user: uploaded to LoTW within the last year.</source>
+        <translation>Korisnik LoTW-a: u posljednjih godinu dana slao je zapise u LoTW.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Worked before: nothing new in the notifications that are on.</source>
+        <translation>Već rađen: ništa novo u uključenim obavijestima.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Calls CQ.</source>
+        <translation>Zove CQ.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>A message to you from your DX call.</source>
+        <translation>Poruka vama od vašeg DX znaka.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>A message to you.</source>
+        <translation>Poruka vama.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Ends a QSO: RR73 or 73.</source>
+        <translation>Završava vezu: RR73 ili 73.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Has the call of your DX Call box.</source>
+        <translation>Sadrži znak iz vašeg polja DX Znak.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>On your list of wanted calls.</source>
+        <translation>Na vašem popisu traženih znakova.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Its prefix is on your list of wanted prefixes.</source>
+        <translation>Prefiks je na vašem popisu traženih prefiksa.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Its grid is on your list of wanted grids.</source>
+        <translation>Lokator je na vašem popisu traženih lokatora.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Its country is on your list of wanted countries.</source>
+        <translation>Zemlja je na vašem popisu traženih zemalja.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>New Maidenhead field on %1: %2</source>
+        <translation>Novo Maidenhead polje na %1: %2</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Hint or a-priori decode: the decoder had help with this message; the window's mark does not tell which kind.</source>
+        <translation>Dekodiranje uz pomoć (hint) ili a priori: dekoder je za ovu poruku imao pomoć; oznaka u prozoru ne govori koje vrste.</translation>
     </message>
 </context>
 <context>
@@ -11126,8 +11411,8 @@ Da biste jednom dohvatili cijeli LoTW zapis, ondje prvo isključite "Only confir
     </message>
     <message>
         <location filename="../Configuration.ui"/>
-        <source>With confirmations downloaded from Club Log, a station in the LoTW users file that you have worked but that has not confirmed through LoTW counts as never worked in every tier above that is on: it is shown in its own color and the auto sequencer calls it as new. Not in a contest.</source>
-        <translation>S potvrdama preuzetima iz Club Loga, stanica iz datoteke korisnika LoTW-a koju ste odradili, ali koja nije potvrdila preko LoTW-a, računa se kao nikad odrađena u svakoj uključenoj razini iznad: prikazuje se u vlastitoj boji, a automatski sekvencer je poziva kao novu. Ne u natjecanju.</translation>
+        <source>With LoTW confirmations downloaded from Club Log or QRZ.com, a station in the LoTW users file that you have worked but that has not confirmed through LoTW counts as never worked in every tier above that is on: it is shown in its own color and the auto sequencer calls it as new. QSOs from the day of the newest confirmed QSO on, and every QSO you log, count as confirmed for now: LoTW may not have confirmed them yet. Not in a contest.</source>
+        <translation>S LoTW potvrdama preuzetima iz Club Loga ili s QRZ.com-a, stanica iz datoteke korisnika LoTW-a koju ste odradili, ali koja nije potvrdila preko LoTW-a, računa se kao nikad odrađena u svakoj uključenoj razini iznad: prikazuje se u vlastitoj boji, a automatski sekvencer je poziva kao novu. Veze od dana najnovije potvrđene veze nadalje, kao i svaka veza koju upišete u dnevnik, zasad se računaju kao potvrđene: LoTW ih možda još nije potvrdio. Ne u natjecanju.</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
@@ -11138,6 +11423,38 @@ Da biste jednom dohvatili cijeli LoTW zapis, ondje prvo isključite "Only confir
         <location filename="../Configuration.ui"/>
         <source>Worked, not LoTW-confirmed</source>
         <translation>Odrađeno, nepotvrđeno LoTW-om</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>QRZ.com API ke&amp;y:</source>
+        <translation>API ključ Q&amp;RZ.com:</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Your QRZ.com Logbook API key. To find it, log in to QRZ.com, open your Logbook, click Settings at the top right and, under "QRZ Logbook API", click "Show" beside the API Key. Copy the key, paste it into this box and press OK. The API needs a QRZ.com subscription (XML level or higher).
+With it the program downloads your LoTW confirmations from QRZ.com at the start and every 12 hours. It is kept in a file of its own that only you can read, never in the settings file.</source>
+        <translation>API ključ vašeg QRZ.com Logbooka. Da biste ga pronašli, prijavite se na QRZ.com, otvorite svoj Logbook, kliknite Settings gore desno i pod "QRZ Logbook API" kliknite "Show" pokraj API Key. Kopirajte ključ, zalijepite ga u ovo polje i pritisnite OK. API zahtijeva pretplatu na QRZ.com (razina XML ili viša).
+S njim program pri pokretanju i svakih 12 sati preuzima vaše LoTW potvrde s QRZ.com. Čuva se u zasebnoj datoteci koju samo vi možete čitati, nikada u datoteci postavki.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Download your LoTW confirmations from QRZ.com now; the program also does it at the start and every 12 hours. Only the confirmations from LoTW count, not QRZ.com's own.
+QRZ.com has only the LoTW confirmations it has imported.
+In your QRZ.com Logbook, under Settings:
+1. LoTW Settings: enter your LoTW username once.
+2. Logbook of the World Import/Export, Import: fetch the new ones now and then (QRZ.com asks for your LoTW password).
+The first download takes a few minutes; after it only what changed is fetched.</source>
+        <translation>Preuzmite sada svoje LoTW potvrde s QRZ.com; program to radi i pri pokretanju te svakih 12 sati. Računaju se samo potvrde iz LoTW-a, ne vlastite potvrde QRZ.com.
+QRZ.com ima samo LoTW potvrde koje je uvezao.
+U svom QRZ.com Logbooku pod Settings:
+1. LoTW Settings: jednom unesite svoje LoTW korisničko ime.
+2. Logbook of the World Import/Export, Import: povremeno dohvatite nove (QRZ.com traži vašu LoTW lozinku).
+Prvo preuzimanje traje nekoliko minuta; nakon toga dohvaća se samo ono što se promijenilo.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Download LoTW confirmations from &amp;QRZ.com</source>
+        <translation>Preuzmi LoTW potvrde s &amp;QRZ.com</translation>
     </message>
 </context>
 <context>

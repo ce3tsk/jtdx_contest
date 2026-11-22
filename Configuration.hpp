@@ -208,6 +208,9 @@ public:
   bool countryNameTranslated () const;   // CE3TSK: DXCC names in the UI language
   bool usStates () const;   // CE3TSK 2026-10-02: a US station's state(s) after its DXCC name or prefix (usstates.h)
   bool callNotif () const;
+  /* CE3TSK 2026-11-22 (TODO.md 3.-280): the confirmations files in the data directory the windows read - each source's
+     only while it holds what the saved token or key (for Club Log with My Call) fetched */
+  QStringList confirmations_files () const;
   bool gridNotif () const;
   bool otherMessagesMarker () const;
   bool RR73Marker () const;

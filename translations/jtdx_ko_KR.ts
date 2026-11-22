@@ -633,6 +633,76 @@ Format:
         <source>Club Log is busy; the next try is at %1 UTC.</source>
         <translation>Club Log가 바쁩니다. 다음 시도는 %1 UTC입니다.</translation>
     </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>The QRZ.com API key could not be saved</source>
+        <translation>QRZ.com API 키를 저장할 수 없습니다</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>This is not a QRZ.com API key</source>
+        <translation>QRZ.com API 키가 아닙니다</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>A QRZ.com Logbook API key is four groups of four letters and digits, as XXXX-XXXX-XXXX-XXXX. Copy it from your logbook's settings at QRZ.com and paste it here.</source>
+        <translation>QRZ.com Logbook API 키는 영문자와 숫자 네 개씩으로 된 네 묶음으로, XXXX-XXXX-XXXX-XXXX 형식입니다. QRZ.com의 로그북 설정에서 복사하여 여기에 붙여 넣으십시오.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Download from QRZ.com failed</source>
+        <translation>QRZ.com에서 다운로드 실패</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>QRZ.com refused the key. Copy your logbook's key from QRZ.com again and paste it here; the API needs a QRZ.com subscription.</source>
+        <translation>QRZ.com이 키를 거부했습니다. QRZ.com에서 로그북 키를 다시 복사하여 여기에 붙여 넣으십시오. API를 사용하려면 QRZ.com 구독이 필요합니다.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>QRZ.com downloads are switched off (JTDX_QRZ_API).</source>
+        <translation>QRZ.com 다운로드가 꺼져 있습니다(JTDX_QRZ_API).</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>QRZ.com refused the key (%1). Copy your logbook's key from QRZ.com again and paste it here; the API needs a QRZ.com subscription.</source>
+        <translation>QRZ.com이 키를 거부했습니다(%1). QRZ.com에서 로그북 키를 다시 복사하여 여기에 붙여 넣으십시오. API를 사용하려면 QRZ.com 구독이 필요합니다.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>QRZ.com asks to wait until %1 UTC.</source>
+        <translation>QRZ.com이 %1 UTC까지 기다리라고 요청합니다.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>QRZ.com is busy; the next try is at %1 UTC.</source>
+        <translation>QRZ.com이 바쁩니다. 다음 시도는 %1 UTC입니다.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>QRZ.com answered: %1</source>
+        <translation>QRZ.com 응답: %1</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>No key: nothing is downloaded from QRZ.com.</source>
+        <translation>키 없음: QRZ.com에서 아무것도 다운로드하지 않습니다.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1 QSOs confirmed by LoTW, %2 DXCC entities; downloaded %3 UTC</source>
+        <translation>LoTW 확인 QSO %1개, DXCC 엔티티 %2개; %3 UTC에 다운로드</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Club Log refused %1 with this token: the call is not on the token's Club Log account, or Club Log asks to correct the request. Add the call to your Club Log account, or correct My Call on the General tab.</source>
+        <translation>Club Log가 이 토큰으로 %1을(를) 거부했습니다: 이 호출부호가 토큰의 Club Log 계정에 없거나 Club Log가 요청 수정을 요구합니다. 호출부호를 Club Log 계정에 추가하거나 일반 탭의 내 호출부호를 고치십시오.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Club Log refused %1 with this token (HTTP status %2): the call is not on the token's Club Log account, or Club Log asks to correct the request. Add the call to your Club Log account, or correct My Call on the General tab.</source>
+        <translation>Club Log가 이 토큰으로 %1을(를) 거부했습니다 (HTTP 상태 %2): 이 호출부호가 토큰의 Club Log 계정에 없거나 Club Log가 요청 수정을 요구합니다. 호출부호를 Club Log 계정에 추가하거나 일반 탭의 내 호출부호를 고치십시오.</translation>
+    </message>
 </context>
 <context>
     <name>CountryDat</name>
@@ -2604,6 +2674,221 @@ Format:
         <location filename="../displaytext.cpp"/>
         <source>No longer of low confidence: it goes to UDP clients and PSK Reporter like any other decode.</source>
         <translation>더 이상 신뢰도가 낮은 디코드가 아닙니다. 다른 디코드와 마찬가지로 UDP 클라이언트와 PSK Reporter로 전송됩니다.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>%1 is a LoTW user, and you have worked %2, but none of those QSOs is LoTW-confirmed.</source>
+        <translation>%1은(는) LoTW 사용자입니다. %2: 교신했지만 그 QSO 중 LoTW로 확인된 것이 없습니다.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>So it counts as never worked, and the auto sequencer treats it as new.</source>
+        <translation>따라서 교신하지 않은 것으로 간주되며, 자동 시퀀서도 새 국으로 취급합니다.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>CQ zone %1</source>
+        <translation>CQ 존 %1</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>ITU zone %1</source>
+        <translation>ITU 존 %1</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>prefix %1</source>
+        <translation>접두사 %1</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>grid %1</source>
+        <translation>그리드 %1</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>US state %1</source>
+        <translation>미국 주 %1</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Confirmed in LoTW already? Club Log and QRZ.com have only the LoTW confirmations they have fetched: in Club Log, Tools &gt; LoTW Sync &gt; Download confirmations; in your QRZ.com Logbook, Settings &gt; Logbook of the World Import/Export &gt; Import. The program downloads them every 12 hours.</source>
+        <translation>이미 LoTW에서 확인되었나요? Club Log와 QRZ.com에는 각각 가져온 LoTW 확인만 있습니다. Club Log에서는 Tools &gt; LoTW Sync &gt; Download confirmations, QRZ.com Logbook에서는 Settings &gt; Logbook of the World Import/Export &gt; Import에서 가져옵니다. 프로그램은 12시간마다 다운로드합니다.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>New Maidenhead field: %1</source>
+        <translation>새 메이든헤드 필드: %1</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>New CQ zone: %1</source>
+        <translation>새 CQ 존: %1</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>New CQ zone on %1: %2</source>
+        <translation>새 CQ 존 (%1): %2</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>New ITU zone: %1</source>
+        <translation>새 ITU 존: %1</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>New ITU zone on %1: %2</source>
+        <translation>새 ITU 존 (%1): %2</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>New DXCC: %1</source>
+        <translation>새 DXCC: %1</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>New DXCC on %1: %2</source>
+        <translation>새 DXCC (%1): %2</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>New US state: %1</source>
+        <translation>새 미국 주: %1</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>New US state on %1: %2</source>
+        <translation>새 미국 주 (%1): %2</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>New grid: %1</source>
+        <translation>새 그리드: %1</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>New grid on %1: %2</source>
+        <translation>새 그리드 (%1): %2</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>New prefix: %1</source>
+        <translation>새 접두사: %1</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>New prefix on %1: %2</source>
+        <translation>새 접두사 (%1): %2</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>New call: %1</source>
+        <translation>새 호출부호: %1</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>New call on %1: %2</source>
+        <translation>새 호출부호 (%1): %2</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Hint decode: the decoder matched it to a message it expected - of the QSO in progress, or one heard before - instead of reading it bit by bit.</source>
+        <translation>힌트 디코드: 디코더가 비트 단위로 읽는 대신 예상한 메시지(진행 중인 QSO의 메시지 또는 이전에 들은 메시지)와 맞춰 보았습니다.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>A-priori decode: the decoder took part of the message as known - CQ, My Call, the DX call, or RRR, RR73 or 73 - and decoded the rest.</source>
+        <translation>선험(a priori) 디코드: 디코더가 메시지의 일부(CQ, 내 호출부호, DX 호출부호, 또는 RRR, RR73, 73)를 알려진 것으로 보고 나머지를 디코드했습니다.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Hint decode in the TX background: found while you transmitted, by matching it to a message the decoder expected.</source>
+        <translation>TX 배경 처리 중의 힌트 디코드: 송신 중에 디코더가 예상한 메시지와 맞춰 보아 찾았습니다.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Decoded in the TX background: the decoder went on with the last receive period while you transmitted. The mark does not tell a plain decode from an a-priori one.</source>
+        <translation>TX 배경 처리에서 디코드: 송신하는 동안 디코더가 마지막 수신 주기를 계속 처리했습니다. 이 표시로는 일반 디코드와 선험 디코드를 구별할 수 없습니다.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Likely a false decode: many of its symbols had to be corrected.</source>
+        <translation>잘못된 디코드일 가능성이 높음: 많은 심볼을 정정해야 했습니다.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>A DXpedition-mode message (Fox and Hound), decoded without help.</source>
+        <translation>DX페디션 모드 메시지(Fox와 Hound), 도움 없이 디코드됨.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Free text.</source>
+        <translation>자유 텍스트.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>A LoTW user: uploaded to LoTW within the last year.</source>
+        <translation>LoTW 사용자: 지난 1년 안에 LoTW에 업로드했습니다.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Worked before: nothing new in the notifications that are on.</source>
+        <translation>이미 교신함: 켜져 있는 알림에 새로운 것이 없습니다.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Calls CQ.</source>
+        <translation>CQ를 부르고 있습니다.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>A message to you from your DX call.</source>
+        <translation>DX 호출부호가 당신에게 보낸 메시지.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>A message to you.</source>
+        <translation>당신에게 온 메시지.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Ends a QSO: RR73 or 73.</source>
+        <translation>QSO를 끝냄: RR73 또는 73.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Has the call of your DX Call box.</source>
+        <translation>DX 호출부호 칸의 호출부호가 들어 있습니다.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>On your list of wanted calls.</source>
+        <translation>원하는 호출부호 목록에 있습니다.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Its prefix is on your list of wanted prefixes.</source>
+        <translation>접두사가 원하는 접두사 목록에 있습니다.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Its grid is on your list of wanted grids.</source>
+        <translation>그리드가 원하는 그리드 목록에 있습니다.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Its country is on your list of wanted countries.</source>
+        <translation>국가가 원하는 국가 목록에 있습니다.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>New Maidenhead field on %1: %2</source>
+        <translation>새 메이든헤드 필드 (%1): %2</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Hint or a-priori decode: the decoder had help with this message; the window's mark does not tell which kind.</source>
+        <translation>힌트 또는 선험 디코드: 디코더가 이 메시지에 도움을 받았습니다. 창의 표시로는 어느 쪽인지 알 수 없습니다.</translation>
     </message>
 </context>
 <context>
@@ -11118,8 +11403,8 @@ LoTW 전체 기록을 한 번 가져오려면 먼저 그곳에서 "Only confirma
     </message>
     <message>
         <location filename="../Configuration.ui"/>
-        <source>With confirmations downloaded from Club Log, a station in the LoTW users file that you have worked but that has not confirmed through LoTW counts as never worked in every tier above that is on: it is shown in its own color and the auto sequencer calls it as new. Not in a contest.</source>
-        <translation>Club Log에서 받은 확인이 있으면, LoTW 사용자 파일에 있는 국 중 교신했지만 LoTW로 확인하지 않은 국은 위에서 켜진 모든 단계에서 교신하지 않은 것으로 간주됩니다. 고유한 색으로 표시되고 자동 시퀀서가 새 국으로 호출합니다. 콘테스트에서는 적용되지 않습니다.</translation>
+        <source>With LoTW confirmations downloaded from Club Log or QRZ.com, a station in the LoTW users file that you have worked but that has not confirmed through LoTW counts as never worked in every tier above that is on: it is shown in its own color and the auto sequencer calls it as new. QSOs from the day of the newest confirmed QSO on, and every QSO you log, count as confirmed for now: LoTW may not have confirmed them yet. Not in a contest.</source>
+        <translation>Club Log 또는 QRZ.com에서 받은 LoTW 확인이 있으면, LoTW 사용자 파일에 있는 국 중 교신했지만 LoTW로 확인하지 않은 국은 위에서 켜진 모든 단계에서 교신하지 않은 것으로 간주됩니다. 고유한 색으로 표시되고 자동 시퀀서가 새 국으로 호출합니다. 가장 최근에 확인된 QSO의 날짜 이후의 QSO와 기록하는 모든 QSO는 당분간 확인된 것으로 간주됩니다. LoTW가 아직 확인하지 않았을 수 있기 때문입니다. 콘테스트에서는 적용되지 않습니다.</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
@@ -11130,6 +11415,38 @@ LoTW 전체 기록을 한 번 가져오려면 먼저 그곳에서 "Only confirma
         <location filename="../Configuration.ui"/>
         <source>Worked, not LoTW-confirmed</source>
         <translation>교신함, LoTW 미확인</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>QRZ.com API ke&amp;y:</source>
+        <translation>QRZ.com API 키(&amp;Z):</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Your QRZ.com Logbook API key. To find it, log in to QRZ.com, open your Logbook, click Settings at the top right and, under "QRZ Logbook API", click "Show" beside the API Key. Copy the key, paste it into this box and press OK. The API needs a QRZ.com subscription (XML level or higher).
+With it the program downloads your LoTW confirmations from QRZ.com at the start and every 12 hours. It is kept in a file of its own that only you can read, never in the settings file.</source>
+        <translation>QRZ.com Logbook API 키입니다. 찾으려면 QRZ.com에 로그인하여 Logbook을 열고 오른쪽 위의 Settings를 클릭한 다음, "QRZ Logbook API"에서 API Key 옆의 "Show"를 클릭합니다. 키를 복사하여 이 칸에 붙여 넣고 확인을 누릅니다. API를 사용하려면 QRZ.com 구독(XML 등급 이상)이 필요합니다.
+이 키로 프로그램은 시작할 때와 12시간마다 QRZ.com에서 LoTW 확인을 다운로드합니다. 키는 설정 파일이 아니라 본인만 읽을 수 있는 별도의 파일에 보관됩니다.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Download your LoTW confirmations from QRZ.com now; the program also does it at the start and every 12 hours. Only the confirmations from LoTW count, not QRZ.com's own.
+QRZ.com has only the LoTW confirmations it has imported.
+In your QRZ.com Logbook, under Settings:
+1. LoTW Settings: enter your LoTW username once.
+2. Logbook of the World Import/Export, Import: fetch the new ones now and then (QRZ.com asks for your LoTW password).
+The first download takes a few minutes; after it only what changed is fetched.</source>
+        <translation>지금 QRZ.com에서 LoTW 확인을 다운로드합니다. 프로그램은 시작할 때와 12시간마다도 다운로드합니다. LoTW의 확인만 세고, QRZ.com 자체 확인은 세지 않습니다.
+QRZ.com에는 QRZ.com이 가져온 LoTW 확인만 있습니다.
+QRZ.com Logbook의 Settings에서:
+1. LoTW Settings: LoTW 사용자 이름을 한 번 입력합니다.
+2. Logbook of the World Import/Export, Import: 새 확인을 가끔 가져옵니다(QRZ.com이 LoTW 암호를 묻습니다).
+첫 다운로드는 몇 분 걸리며, 그 뒤로는 바뀐 것만 가져옵니다.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Download LoTW confirmations from &amp;QRZ.com</source>
+        <translation>QRZ.com에서 LoTW 확인 다운로드(&amp;Q)</translation>
     </message>
 </context>
 <context>

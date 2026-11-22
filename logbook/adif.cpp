@@ -93,7 +93,7 @@ void ADIF::load(const QString mycall,const QString mygrid,const QString mydate)
     _counts.clear();
     
     QFile inputFile(_filename);
-    if (inputFile.open(QIODevice::ReadOnly))
+    if (!_filename.isEmpty () && inputFile.open(QIODevice::ReadOnly))   /* CE3TSK 2026-11-22: no name, an empty book */
     {
         QTextStream in(&inputFile);
         while ( !in.atEnd() )
@@ -419,6 +419,24 @@ bool ADIF::addQSOToFile(const QString hisCall, const QString hisGrid, const QStr
 }
 
 /* CE3TSK: every QSO in this log, for the contest score to tell which count (contestscore.h): oldest first for each call */
+/* CE3TSK 2026-11-22 (TODO.md 3.-280): see adif.h - a date that is not the eight digits of QSO_DATE sorts as no date */
+QString ADIF::newestDate () const
+{
+    QString newest;
+    for (auto const& q : _data)
+        if (q.date.size () == 8 && q.date > newest) newest = q.date;
+    return newest;
+}
+
+int ADIF::addFrom (ADIF const& from, QString const& date)
+{
+    QList<QSO> taken;   // taken first: `from` may be this very log
+    for (auto const& q : from._data)
+        if (q.date.size () == 8 && q.date >= date) taken << q;
+    for (auto const& q : taken) add (q.call, q.band, q.mode, q.date, q.gridsquare, q.name);
+    return taken.size ();
+}
+
 QList<contest_score::Qso> ADIF::contestQsos () const
 {
     QList<contest_score::Qso> qsos;

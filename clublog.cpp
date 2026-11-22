@@ -127,7 +127,7 @@ namespace club_log
         if (!dxcc.isEmpty () && "0" != dxcc) entities.insert (dxcc);
       }
     e.entities = entities.size ();
-    e.confirmed = "Confirmed QSOs from Club Log (QSL_RCVD Y), downloaded "
+    e.confirmed = "LoTW-confirmed QSOs from Club Log (QSL_RCVD Y), downloaded "
       + downloaded.toUTC ().toString (Qt::ISODate).toLatin1 () + "\n<PROGRAMID:12>JTDX_contest\n<EOH>\n" + records;
     return e;
   }
@@ -141,7 +141,8 @@ namespace club_log
   {
     switch (http_status)
       {
-      case 401: case 403: case 422: return After::TokenRefused;
+      case 401: return After::TokenRefused;
+      case 403: case 422: return After::CallRefused;   // 2026-11-22: "the callsign ... does not belong to the account" (403)
       case 429: case 503: return After::WaitRetryAfter;
       default: return After::Retry;
       }
@@ -151,7 +152,7 @@ namespace club_log
   {
     switch (after)
       {
-      case After::TokenRefused: return {};
+      case After::TokenRefused: case After::CallRefused: return {};
       case After::WaitRetryAfter:
         if (retry_after.isValid ()) return qMin (qMax (retry_after, now.addSecs (60)), now.addSecs (qint64 {max_wait_hours} * 3600));
         return now.addSecs (3600);
