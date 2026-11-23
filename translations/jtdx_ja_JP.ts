@@ -703,6 +703,101 @@ Format:
         <source>Club Log refused %1 with this token (HTTP status %2): the call is not on the token's Club Log account, or Club Log asks to correct the request. Add the call to your Club Log account and press the download button, or correct My Call on the General tab.</source>
         <translation>Club Log はこのトークンでの %1 を拒否しました（HTTP ステータス %2）：このコールサインはトークンの Club Log アカウントにないか、Club Log がリクエストの修正を求めています。Club Log のアカウントにコールサインを追加してダウンロードボタンを押すか、全般タブの自分のコールサインを修正してください。</translation>
     </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1 checked at %2 UTC with a test token: nothing stored.</source>
+        <translation>%1 を %2 UTC にテスト用トークンで確認しました：何も保存されていません。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1 sent at %2 UTC.</source>
+        <translation>%1 を %2 UTC に送信しました。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1 was in the log already (%2 UTC).</source>
+        <translation>%1 はすでにログにありました（%2 UTC）。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1 refused at %2 UTC: %3</source>
+        <translation>%1 は %2 UTC に拒否されました：%3</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>QRZ.com refused the upload with this key (%1): sending QSOs needs a QRZ.com subscription. Once you have one, click the box off and on and press OK, or save another key.</source>
+        <translation>QRZ.com はこのキーでのアップロードを拒否しました（%1）：QSO の送信には QRZ.com のサブスクリプションが必要です。取得したら、チェックボックスを一度外して付け直し、OK を押すか、別のキーを保存してください。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1 refused the request (%2): nothing more is sent until you press OK in Settings or start the program again.</source>
+        <translation>%1 はリクエストを拒否しました（%2）：設定で OK を押すか、プログラムを再起動するまで何も送信されません。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>asked to wait</source>
+        <translation>待機を求められました</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>HTTP status %1</source>
+        <translation>HTTP ステータス %1</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>no connection: %1</source>
+        <translation>接続なし：%1</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1 not sent at %2 UTC: %3. Kept; the next try at %4 UTC.</source>
+        <translation>%1 は %2 UTC に送信されませんでした：%3。保存済み。次の試行は %4 UTC。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>No token or key: nothing is sent.</source>
+        <translation>トークンまたはキーがありません：何も送信されません。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Uploads to %1 are switched off (%2).</source>
+        <translation>%1 へのアップロードは無効です（%2）。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>QSOs you log are sent as you log them.</source>
+        <translation>記録した QSO は記録するたびに送信されます。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>QSOs waiting to be sent: %1.</source>
+        <translation>送信待ちの QSO：%1。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1 refused the QSO with %2 - see Settings &gt; Reporting.</source>
+        <translation>%1 は %2 との QSO を拒否しました - 設定 &gt; レポーティング を参照。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1 refused the upload: the QSO with %2 is kept - see Settings &gt; Reporting.</source>
+        <translation>%1 はアップロードを拒否しました：%2 との QSO は保存済み - 設定 &gt; レポーティング を参照。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>an answer not understood: %1</source>
+        <translation>理解できない応答：%1</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1: the QSO with %2 is not sent yet, kept - see Settings &gt; Reporting.</source>
+        <translation>%1：%2 との QSO はまだ送信されていません。保存済み - 設定 &gt; レポーティング を参照。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Club Log refused %1 with this token: the call is not on the token's Club Log account. Its QSOs are kept, the others go on. Add the call to your Club Log account, then click the box off and on and press OK.</source>
+        <translation>Club Log はこのトークンでの %1 を拒否しました：このコールサインはトークンの Club Log アカウントにありません。その QSO は保存され、他の QSO は送信を続けます。Club Log のアカウントにコールサインを追加してから、チェックボックスを一度外して付け直し、OK を押してください。</translation>
+    </message>
 </context>
 <context>
     <name>CountryDat</name>
@@ -11450,6 +11545,35 @@ QRZ.com の Logbook の Settings で：
         <location filename="../Configuration.ui"/>
         <source>Worked, LoTW-confirmed</source>
         <translation>交信済み、LoTW コンファーム済み</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Send logged QSOs to:</source>
+        <translation>記録した QSO の送信先：</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Each QSO you log is sent to your Club Log log at once, with the Club Log token - in a contest too. A QSO that cannot be sent now (no connection, Club Log busy) is kept and sent later; one Club Log refuses is named below.
+Only QSOs logged from now on: upload older ones to Club Log as an ADIF file there.</source>
+        <translation>記録した QSO はすぐに、Club Log トークンで Club Log のログに送信されます（コンテスト中も）。今送信できない QSO（接続なし、Club Log が混雑）は保存され、後で送信されます。Club Log が拒否した QSO は下に表示されます。
+これから記録する QSO のみです。以前の QSO は Club Log のサイトで ADIF ファイルとしてアップロードしてください。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>&amp;Club Log</source>
+        <translation>Club Log</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Each QSO you log is sent to your QRZ.com logbook at once, with the QRZ.com API key - in a contest too. QRZ.com takes QSOs from programs only with a subscription. A QSO that cannot be sent now is kept and sent later; one QRZ.com refuses is named below.
+Only QSOs logged from now on: upload older ones to QRZ.com as an ADIF file there.</source>
+        <translation>記録した QSO はすぐに、QRZ.com API キーで QRZ.com のログブックに送信されます（コンテスト中も）。QRZ.com はプログラムからの QSO をサブスクリプションがある場合のみ受け付けます。今送信できない QSO は保存され、後で送信されます。QRZ.com が拒否した QSO は下に表示されます。
+これから記録する QSO のみです。以前の QSO は QRZ.com のサイトで ADIF ファイルとしてアップロードしてください。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>QR&amp;Z.com</source>
+        <translation>QRZ.com</translation>
     </message>
 </context>
 <context>

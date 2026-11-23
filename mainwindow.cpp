@@ -1204,6 +1204,14 @@ MainWindow::MainWindow(bool multiple, QSettings * settings, QSharedMemory *shdme
       m_confirmedInitNeeded = true;
       if (!m_monitoring && !m_transmitting) initLogIfNeeded ();
     });
+  /* CE3TSK 2026-11-23 (TODO.md 3.-282, U3): a QSO Club Log or QRZ.com could not take, or a refusal, in the status bar - never a
+     message box during operation. (review 1) For 10 s, as every other note here: a message hides the status bar's own
+     items (Tx status, mode, the period's bar, the QSO count, the contest score) while it stands, and one without an end
+     hid them for as long as a site was not taking QSOs. Configuration sends it again with each QSO logged meanwhile;
+     the whole story is on the site's line in Settings > Reporting */
+  connect (&m_config, &Configuration::upload_note, this, [this] (QString const&, QString const& text) {
+      if (!text.isEmpty ()) statusBar ()->showMessage (text, 10000);
+    });
 
 
   // set up message text validators
@@ -11975,6 +11983,9 @@ void MainWindow::acceptQSO2(QDateTime const& QSO_date_off, QString const& call, 
   if (m_config.send_to_eqsl())
       Eqsl->upload(m_config.eqsl_username(),m_config.eqsl_passwd(),m_config.eqsl_nickname(),call,mode,QSO_date_on,rpt_sent,m_config.bands ()->find (dial_freq),eqslcomments,
                    prop_mode,satellite);   // CE3TSK 2026-11-13 (TODO.md 3.-247, its review): a satellite QSO as logged
+  /* CE3TSK 2026-11-23 (TODO.md 3.-282, QSO_UPLOAD_PLAN.md): and to Club Log and QRZ.com, each when its box is ticked - the
+     record the UDP clients get, in a contest too (U2) */
+  m_config.upload_qso (myadif2);
   setDxCallEntryColour ("#7fff7f");
   m_lastloggedcall=call;
   m_lastloggedtime=m_jtdxtime->currentDateTimeUtc2();

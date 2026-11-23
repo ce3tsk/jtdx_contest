@@ -705,6 +705,101 @@ Format:
         <source>Club Log refused %1 with this token (HTTP status %2): the call is not on the token's Club Log account, or Club Log asks to correct the request. Add the call to your Club Log account and press the download button, or correct My Call on the General tab.</source>
         <translation>Club Log afviste %1 med dette token (HTTP-status %2): kaldesignalet er ikke på tokenets Club Log-konto, eller Club Log beder om at rette forespørgslen. Tilføj kaldesignalet til din Club Log-konto og tryk på download-knappen, eller ret Mit Call på fanen General.</translation>
     </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1 checked at %2 UTC with a test token: nothing stored.</source>
+        <translation>%1 kontrolleret kl. %2 UTC med et testtoken: intet gemt.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1 sent at %2 UTC.</source>
+        <translation>%1 sendt kl. %2 UTC.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1 was in the log already (%2 UTC).</source>
+        <translation>%1 var allerede i loggen (%2 UTC).</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1 refused at %2 UTC: %3</source>
+        <translation>%1 afvist kl. %2 UTC: %3</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>QRZ.com refused the upload with this key (%1): sending QSOs needs a QRZ.com subscription. Once you have one, click the box off and on and press OK, or save another key.</source>
+        <translation>QRZ.com afviste upload med denne nøgle (%1): at sende QSO'er kræver et QRZ.com-abonnement. Når du har et, så klik feltet fra og til og tryk OK, eller gem en anden nøgle.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1 refused the request (%2): nothing more is sent until you press OK in Settings or start the program again.</source>
+        <translation>%1 afviste forespørgslen (%2): intet mere sendes, før du trykker OK i indstillingerne eller starter programmet igen.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>asked to wait</source>
+        <translation>bedt om at vente</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>HTTP status %1</source>
+        <translation>HTTP-status %1</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>no connection: %1</source>
+        <translation>ingen forbindelse: %1</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1 not sent at %2 UTC: %3. Kept; the next try at %4 UTC.</source>
+        <translation>%1 ikke sendt kl. %2 UTC: %3. Gemt; næste forsøg kl. %4 UTC.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>No token or key: nothing is sent.</source>
+        <translation>Intet token eller nøgle: intet sendes.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Uploads to %1 are switched off (%2).</source>
+        <translation>Upload til %1 er slået fra (%2).</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>QSOs you log are sent as you log them.</source>
+        <translation>QSO'er, du logger, sendes, efterhånden som du logger dem.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>QSOs waiting to be sent: %1.</source>
+        <translation>QSO'er, der venter på at blive sendt: %1.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1 refused the QSO with %2 - see Settings &gt; Reporting.</source>
+        <translation>%1 afviste QSO'en med %2 - se Indstillinger &gt; Rapportering.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1 refused the upload: the QSO with %2 is kept - see Settings &gt; Reporting.</source>
+        <translation>%1 afviste upload: QSO'en med %2 er gemt - se Indstillinger &gt; Rapportering.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>an answer not understood: %1</source>
+        <translation>et svar, der ikke blev forstået: %1</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1: the QSO with %2 is not sent yet, kept - see Settings &gt; Reporting.</source>
+        <translation>%1: QSO'en med %2 er ikke sendt endnu, gemt - se Indstillinger &gt; Rapportering.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Club Log refused %1 with this token: the call is not on the token's Club Log account. Its QSOs are kept, the others go on. Add the call to your Club Log account, then click the box off and on and press OK.</source>
+        <translation>Club Log afviste %1 med dette token: kaldesignalet er ikke på tokenets Club Log-konto. Dets QSO'er gemmes, de andre sendes videre. Tilføj kaldesignalet til din Club Log-konto, klik så feltet fra og til og tryk OK.</translation>
+    </message>
 </context>
 <context>
     <name>CountryDat</name>
@@ -11479,6 +11574,35 @@ Første download tager et par minutter; derefter hentes kun det, der er ændret.
         <location filename="../Configuration.ui"/>
         <source>Worked, LoTW-confirmed</source>
         <translation>Kørt, LoTW-bekræftet</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Send logged QSOs to:</source>
+        <translation>Send loggede QSO'er til:</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Each QSO you log is sent to your Club Log log at once, with the Club Log token - in a contest too. A QSO that cannot be sent now (no connection, Club Log busy) is kept and sent later; one Club Log refuses is named below.
+Only QSOs logged from now on: upload older ones to Club Log as an ADIF file there.</source>
+        <translation>Hver QSO, du logger, sendes straks til din log på Club Log med Club Log-tokenet – også i en contest. En QSO, der ikke kan sendes nu (ingen forbindelse, Club Log optaget), gemmes og sendes senere; en, som Club Log afviser, nævnes nedenfor.
+Kun QSO'er logget fra nu af: upload ældre som en ADIF-fil på Club Log.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>&amp;Club Log</source>
+        <translation>Club L&amp;og</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Each QSO you log is sent to your QRZ.com logbook at once, with the QRZ.com API key - in a contest too. QRZ.com takes QSOs from programs only with a subscription. A QSO that cannot be sent now is kept and sent later; one QRZ.com refuses is named below.
+Only QSOs logged from now on: upload older ones to QRZ.com as an ADIF file there.</source>
+        <translation>Hver QSO, du logger, sendes straks til din logbog på QRZ.com med QRZ.com-API-nøglen – også i en contest. QRZ.com tager kun imod QSO'er fra programmer med et abonnement. En QSO, der ikke kan sendes nu, gemmes og sendes senere; en, som QRZ.com afviser, nævnes nedenfor.
+Kun QSO'er logget fra nu af: upload ældre som en ADIF-fil på QRZ.com.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>QR&amp;Z.com</source>
+        <translation>QRZ.com</translation>
     </message>
 </context>
 <context>

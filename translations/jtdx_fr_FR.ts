@@ -703,6 +703,101 @@ Format:
         <source>Club Log refused %1 with this token (HTTP status %2): the call is not on the token's Club Log account, or Club Log asks to correct the request. Add the call to your Club Log account and press the download button, or correct My Call on the General tab.</source>
         <translation>Club Log a refusé %1 avec ce jeton (statut HTTP %2) : l'indicatif n'est pas sur le compte Club Log du jeton, ou Club Log demande de corriger la requête. Ajoutez l'indicatif à votre compte Club Log et appuyez sur le bouton de téléchargement, ou corrigez Mon indicatif dans l'onglet Général.</translation>
     </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1 checked at %2 UTC with a test token: nothing stored.</source>
+        <translation>%1 vérifié à %2 UTC avec un jeton de test : rien n'est enregistré.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1 sent at %2 UTC.</source>
+        <translation>%1 envoyé à %2 UTC.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1 was in the log already (%2 UTC).</source>
+        <translation>%1 était déjà dans le log (%2 UTC).</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1 refused at %2 UTC: %3</source>
+        <translation>%1 refusé à %2 UTC : %3</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>QRZ.com refused the upload with this key (%1): sending QSOs needs a QRZ.com subscription. Once you have one, click the box off and on and press OK, or save another key.</source>
+        <translation>QRZ.com a refusé l'envoi avec cette clé (%1) : envoyer des QSO demande un abonnement QRZ.com. Une fois que vous en avez un, décochez puis recochez la case et appuyez sur OK, ou enregistrez une autre clé.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1 refused the request (%2): nothing more is sent until you press OK in Settings or start the program again.</source>
+        <translation>%1 a refusé la requête (%2) : plus rien n'est envoyé jusqu'à ce que vous appuyiez sur OK dans les paramètres ou redémarriez le programme.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>asked to wait</source>
+        <translation>prié d'attendre</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>HTTP status %1</source>
+        <translation>statut HTTP %1</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>no connection: %1</source>
+        <translation>pas de connexion : %1</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1 not sent at %2 UTC: %3. Kept; the next try at %4 UTC.</source>
+        <translation>%1 non envoyé à %2 UTC : %3. Gardé ; prochain essai à %4 UTC.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>No token or key: nothing is sent.</source>
+        <translation>Pas de jeton ni de clé : rien n'est envoyé.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Uploads to %1 are switched off (%2).</source>
+        <translation>Les envois vers %1 sont désactivés (%2).</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>QSOs you log are sent as you log them.</source>
+        <translation>Les QSO que vous enregistrez sont envoyés au fur et à mesure.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>QSOs waiting to be sent: %1.</source>
+        <translation>QSO en attente d'envoi : %1.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1 refused the QSO with %2 - see Settings &gt; Reporting.</source>
+        <translation>%1 a refusé le QSO avec %2 - voir Paramètres &gt; Report.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1 refused the upload: the QSO with %2 is kept - see Settings &gt; Reporting.</source>
+        <translation>%1 a refusé l'envoi : le QSO avec %2 est gardé - voir Paramètres &gt; Report.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>an answer not understood: %1</source>
+        <translation>une réponse non comprise : %1</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1: the QSO with %2 is not sent yet, kept - see Settings &gt; Reporting.</source>
+        <translation>%1 : le QSO avec %2 n'est pas encore envoyé, gardé - voir Paramètres &gt; Report.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Club Log refused %1 with this token: the call is not on the token's Club Log account. Its QSOs are kept, the others go on. Add the call to your Club Log account, then click the box off and on and press OK.</source>
+        <translation>Club Log a refusé %1 avec ce jeton : l'indicatif n'est pas sur le compte Club Log du jeton. Ses QSO sont gardés, les autres continuent. Ajoutez l'indicatif à votre compte Club Log, puis décochez et recochez la case et appuyez sur OK.</translation>
+    </message>
 </context>
 <context>
     <name>CountryDat</name>
@@ -11483,6 +11578,35 @@ Le premier téléchargement prend quelques minutes ; ensuite, seul ce qui a chan
         <location filename="../Configuration.ui"/>
         <source>Worked, LoTW-confirmed</source>
         <translation>Contacté, confirmé LoTW</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Send logged QSOs to:</source>
+        <translation>Envoyer les QSO enregistrés à :</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Each QSO you log is sent to your Club Log log at once, with the Club Log token - in a contest too. A QSO that cannot be sent now (no connection, Club Log busy) is kept and sent later; one Club Log refuses is named below.
+Only QSOs logged from now on: upload older ones to Club Log as an ADIF file there.</source>
+        <translation>Chaque QSO que vous enregistrez est envoyé aussitôt à votre log Club Log, avec le jeton Club Log – en concours aussi. Un QSO qui ne peut pas être envoyé maintenant (pas de connexion, Club Log occupé) est gardé et envoyé plus tard ; celui que Club Log refuse est indiqué ci-dessous.
+Seulement les QSO enregistrés à partir de maintenant : envoyez les plus anciens à Club Log sous forme de fichier ADIF, sur le site.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>&amp;Club Log</source>
+        <translation>Club Lo&amp;g</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Each QSO you log is sent to your QRZ.com logbook at once, with the QRZ.com API key - in a contest too. QRZ.com takes QSOs from programs only with a subscription. A QSO that cannot be sent now is kept and sent later; one QRZ.com refuses is named below.
+Only QSOs logged from now on: upload older ones to QRZ.com as an ADIF file there.</source>
+        <translation>Chaque QSO que vous enregistrez est envoyé aussitôt à votre carnet QRZ.com, avec la clé d'API QRZ.com – en concours aussi. QRZ.com n'accepte les QSO des programmes qu'avec un abonnement. Un QSO qui ne peut pas être envoyé maintenant est gardé et envoyé plus tard ; celui que QRZ.com refuse est indiqué ci-dessous.
+Seulement les QSO enregistrés à partir de maintenant : envoyez les plus anciens à QRZ.com sous forme de fichier ADIF, sur le site.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>QR&amp;Z.com</source>
+        <translation>QRZ.c&amp;om</translation>
     </message>
 </context>
 <context>

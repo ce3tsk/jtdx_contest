@@ -703,6 +703,101 @@ Format:
         <source>Club Log refused %1 with this token (HTTP status %2): the call is not on the token's Club Log account, or Club Log asks to correct the request. Add the call to your Club Log account and press the download button, or correct My Call on the General tab.</source>
         <translation>Club Log가 이 토큰으로 %1을(를) 거부했습니다 (HTTP 상태 %2): 이 호출부호가 토큰의 Club Log 계정에 없거나 Club Log가 요청 수정을 요구합니다. 호출부호를 Club Log 계정에 추가하고 다운로드 버튼을 누르거나 일반 탭의 내 호출부호를 고치십시오.</translation>
     </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1 checked at %2 UTC with a test token: nothing stored.</source>
+        <translation>%1: %2 UTC에 테스트 토큰으로 확인함: 아무것도 저장되지 않음.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1 sent at %2 UTC.</source>
+        <translation>%1: %2 UTC에 보냄.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1 was in the log already (%2 UTC).</source>
+        <translation>%1은(는) 이미 로그에 있었습니다(%2 UTC).</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1 refused at %2 UTC: %3</source>
+        <translation>%1: %2 UTC에 거부됨: %3</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>QRZ.com refused the upload with this key (%1): sending QSOs needs a QRZ.com subscription. Once you have one, click the box off and on and press OK, or save another key.</source>
+        <translation>QRZ.com이 이 키로 업로드를 거부했습니다(%1): QSO를 보내려면 QRZ.com 구독이 필요합니다. 구독한 후에는 확인란을 껐다가 다시 켜고 확인을 누르거나, 다른 키를 저장하십시오.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1 refused the request (%2): nothing more is sent until you press OK in Settings or start the program again.</source>
+        <translation>%1이(가) 요청을 거부했습니다(%2): 설정에서 확인을 누르거나 프로그램을 다시 시작할 때까지 아무것도 보내지 않습니다.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>asked to wait</source>
+        <translation>대기 요청을 받음</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>HTTP status %1</source>
+        <translation>HTTP 상태 %1</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>no connection: %1</source>
+        <translation>연결 없음: %1</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1 not sent at %2 UTC: %3. Kept; the next try at %4 UTC.</source>
+        <translation>%1: %2 UTC에 보내지 못함: %3. 보관함. 다음 시도 %4 UTC.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>No token or key: nothing is sent.</source>
+        <translation>토큰이나 키가 없습니다: 아무것도 보내지 않습니다.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Uploads to %1 are switched off (%2).</source>
+        <translation>%1(으)로의 업로드가 꺼져 있습니다(%2).</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>QSOs you log are sent as you log them.</source>
+        <translation>기록한 QSO는 기록할 때마다 보냅니다.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>QSOs waiting to be sent: %1.</source>
+        <translation>보내기를 기다리는 QSO: %1.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1 refused the QSO with %2 - see Settings &gt; Reporting.</source>
+        <translation>%1이(가) %2와(과)의 QSO를 거부함 - 설정 &gt; 보고 참조.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1 refused the upload: the QSO with %2 is kept - see Settings &gt; Reporting.</source>
+        <translation>%1이(가) 업로드를 거부함: %2와(과)의 QSO는 보관함 - 설정 &gt; 보고 참조.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>an answer not understood: %1</source>
+        <translation>이해할 수 없는 응답: %1</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1: the QSO with %2 is not sent yet, kept - see Settings &gt; Reporting.</source>
+        <translation>%1: %2와(과)의 QSO를 아직 보내지 못함, 보관함 - 설정 &gt; 보고 참조.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Club Log refused %1 with this token: the call is not on the token's Club Log account. Its QSOs are kept, the others go on. Add the call to your Club Log account, then click the box off and on and press OK.</source>
+        <translation>Club Log가 이 토큰으로 %1을(를) 거부했습니다: 이 호출부호가 토큰의 Club Log 계정에 없습니다. 그 QSO는 보관되고 다른 QSO는 계속 보내집니다. 호출부호를 Club Log 계정에 추가한 다음 확인란을 껐다가 다시 켜고 확인을 누르십시오.</translation>
+    </message>
 </context>
 <context>
     <name>CountryDat</name>
@@ -11472,6 +11567,35 @@ QRZ.com Logbook의 Settings에서:
         <location filename="../Configuration.ui"/>
         <source>Worked, LoTW-confirmed</source>
         <translation>교신함, LoTW 확인됨</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Send logged QSOs to:</source>
+        <translation>기록한 QSO 보내기:</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Each QSO you log is sent to your Club Log log at once, with the Club Log token - in a contest too. A QSO that cannot be sent now (no connection, Club Log busy) is kept and sent later; one Club Log refuses is named below.
+Only QSOs logged from now on: upload older ones to Club Log as an ADIF file there.</source>
+        <translation>기록한 QSO는 Club Log 토큰으로 Club Log의 로그에 즉시 보내집니다(콘테스트 중에도). 지금 보낼 수 없는 QSO(연결 없음, Club Log 혼잡)는 보관했다가 나중에 보냅니다. Club Log가 거부한 QSO는 아래에 표시됩니다.
+지금부터 기록하는 QSO만 해당됩니다. 이전 QSO는 Club Log 사이트에서 ADIF 파일로 올리십시오.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>&amp;Club Log</source>
+        <translation>Club Log(&amp;O)</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Each QSO you log is sent to your QRZ.com logbook at once, with the QRZ.com API key - in a contest too. QRZ.com takes QSOs from programs only with a subscription. A QSO that cannot be sent now is kept and sent later; one QRZ.com refuses is named below.
+Only QSOs logged from now on: upload older ones to QRZ.com as an ADIF file there.</source>
+        <translation>기록한 QSO는 QRZ.com API 키로 QRZ.com의 로그북에 즉시 보내집니다(콘테스트 중에도). QRZ.com은 구독이 있을 때만 프로그램에서 보낸 QSO를 받습니다. 지금 보낼 수 없는 QSO는 보관했다가 나중에 보냅니다. QRZ.com이 거부한 QSO는 아래에 표시됩니다.
+지금부터 기록하는 QSO만 해당됩니다. 이전 QSO는 QRZ.com 사이트에서 ADIF 파일로 올리십시오.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>QR&amp;Z.com</source>
+        <translation>QRZ.com(&amp;N)</translation>
     </message>
 </context>
 <context>

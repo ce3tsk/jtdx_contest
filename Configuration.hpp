@@ -211,6 +211,9 @@ public:
   /* CE3TSK 2026-11-22 (TODO.md 3.-280): the confirmations files in the data directory the windows read - each source's
      only while it holds what the saved token or key (for Club Log with My Call) fetched */
   QStringList confirmations_files () const;
+  /* CE3TSK 2026-11-23 (TODO.md 3.-282, QSO_UPLOAD_PLAN.md): a QSO just logged, as one ADIF record, to Club Log and to QRZ.com
+     - each only when its box under Reporting is ticked (off by default), with the token and the key of the confirmations */
+  void upload_qso (QByteArray const& adif_record);
   bool gridNotif () const;
   bool otherMessagesMarker () const;
   bool RR73Marker () const;
@@ -471,6 +474,12 @@ public:
   // club_log::file_name in the data directory
   //
   Q_SIGNAL void confirmations_updated () const;
+
+  //
+  // CE3TSK 2026-11-23 (TODO.md 3.-282, U3): a QSO a site could not take, or a refusal - a short text for the main window's
+  // status bar, shown for 10 s (review 1); sent again with each QSO logged while that site is not taking them
+  //
+  Q_SIGNAL void upload_note (QString const& site, QString const& text) const;
 
   //
   // These signals are emitted and reflect transceiver state changes

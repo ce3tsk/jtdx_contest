@@ -703,6 +703,101 @@ Format:
         <source>Club Log refused %1 with this token (HTTP status %2): the call is not on the token's Club Log account, or Club Log asks to correct the request. Add the call to your Club Log account and press the download button, or correct My Call on the General tab.</source>
         <translation>Club Log hat %1 mit diesem Token abgelehnt (HTTP-Status %2): Das Rufzeichen gehört nicht zum Club-Log-Konto des Tokens, oder Club Log verlangt eine korrigierte Anfrage. Fügen Sie das Rufzeichen Ihrem Club-Log-Konto hinzu und drücken Sie die Download-Schaltfläche, oder korrigieren Sie Mein Rufzeichen auf der Registerkarte Allgemein.</translation>
     </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1 checked at %2 UTC with a test token: nothing stored.</source>
+        <translation>%1 um %2 UTC mit einem Test-Token geprüft: nichts gespeichert.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1 sent at %2 UTC.</source>
+        <translation>%1 um %2 UTC gesendet.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1 was in the log already (%2 UTC).</source>
+        <translation>%1 war bereits im Log (%2 UTC).</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1 refused at %2 UTC: %3</source>
+        <translation>%1 um %2 UTC abgelehnt: %3</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>QRZ.com refused the upload with this key (%1): sending QSOs needs a QRZ.com subscription. Once you have one, click the box off and on and press OK, or save another key.</source>
+        <translation>QRZ.com hat das Hochladen mit diesem Schlüssel abgelehnt (%1): Zum Senden von QSOs ist ein QRZ.com-Abonnement nötig. Sobald Sie eines haben, das Kästchen aus- und wieder einschalten und OK drücken, oder einen anderen Schlüssel speichern.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1 refused the request (%2): nothing more is sent until you press OK in Settings or start the program again.</source>
+        <translation>%1 hat die Anfrage abgelehnt (%2): Es wird nichts mehr gesendet, bis Sie in den Einstellungen OK drücken oder das Programm neu starten.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>asked to wait</source>
+        <translation>zum Warten aufgefordert</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>HTTP status %1</source>
+        <translation>HTTP-Status %1</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>no connection: %1</source>
+        <translation>keine Verbindung: %1</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1 not sent at %2 UTC: %3. Kept; the next try at %4 UTC.</source>
+        <translation>%1 um %2 UTC nicht gesendet: %3. Aufbewahrt; nächster Versuch um %4 UTC.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>No token or key: nothing is sent.</source>
+        <translation>Kein Token oder Schlüssel: Es wird nichts gesendet.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Uploads to %1 are switched off (%2).</source>
+        <translation>Das Hochladen zu %1 ist abgeschaltet (%2).</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>QSOs you log are sent as you log them.</source>
+        <translation>Geloggte QSOs werden gesendet, sobald Sie sie loggen.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>QSOs waiting to be sent: %1.</source>
+        <translation>QSOs, die auf das Senden warten: %1.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1 refused the QSO with %2 - see Settings &gt; Reporting.</source>
+        <translation>%1 hat das QSO mit %2 abgelehnt - siehe Einstellungen &gt; Berichte.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1 refused the upload: the QSO with %2 is kept - see Settings &gt; Reporting.</source>
+        <translation>%1 hat das Hochladen abgelehnt: Das QSO mit %2 wird aufbewahrt - siehe Einstellungen &gt; Berichte.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>an answer not understood: %1</source>
+        <translation>eine unverständliche Antwort: %1</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1: the QSO with %2 is not sent yet, kept - see Settings &gt; Reporting.</source>
+        <translation>%1: Das QSO mit %2 ist noch nicht gesendet, aufbewahrt - siehe Einstellungen &gt; Berichte.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Club Log refused %1 with this token: the call is not on the token's Club Log account. Its QSOs are kept, the others go on. Add the call to your Club Log account, then click the box off and on and press OK.</source>
+        <translation>Club Log hat %1 mit diesem Token abgelehnt: Das Rufzeichen gehört nicht zum Club-Log-Konto des Tokens. Seine QSOs werden aufbewahrt, die anderen gehen weiter. Fügen Sie das Rufzeichen Ihrem Club-Log-Konto hinzu, dann das Kästchen aus- und wieder einschalten und OK drücken.</translation>
+    </message>
 </context>
 <context>
     <name>CountryDat</name>
@@ -11475,6 +11570,35 @@ Der erste Download dauert einige Minuten; danach wird nur abgerufen, was sich ge
         <location filename="../Configuration.ui"/>
         <source>Worked, LoTW-confirmed</source>
         <translation>Gearbeitet, per LoTW bestätigt</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Send logged QSOs to:</source>
+        <translation>Geloggte QSOs senden an:</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Each QSO you log is sent to your Club Log log at once, with the Club Log token - in a contest too. A QSO that cannot be sent now (no connection, Club Log busy) is kept and sent later; one Club Log refuses is named below.
+Only QSOs logged from now on: upload older ones to Club Log as an ADIF file there.</source>
+        <translation>Jedes QSO, das Sie loggen, wird sofort mit dem Club-Log-Token an Ihr Log bei Club Log gesendet – auch in einem Contest. Ein QSO, das gerade nicht gesendet werden kann (keine Verbindung, Club Log ausgelastet), wird aufbewahrt und später gesendet; eines, das Club Log ablehnt, wird unten genannt.
+Nur QSOs, die ab jetzt geloggt werden: ältere laden Sie als ADIF-Datei direkt bei Club Log hoch.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>&amp;Club Log</source>
+        <translation>Club Lo&amp;g</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Each QSO you log is sent to your QRZ.com logbook at once, with the QRZ.com API key - in a contest too. QRZ.com takes QSOs from programs only with a subscription. A QSO that cannot be sent now is kept and sent later; one QRZ.com refuses is named below.
+Only QSOs logged from now on: upload older ones to QRZ.com as an ADIF file there.</source>
+        <translation>Jedes QSO, das Sie loggen, wird sofort mit dem API-Schlüssel von QRZ.com an Ihr Logbuch bei QRZ.com gesendet – auch in einem Contest. QRZ.com nimmt QSOs von Programmen nur mit einem Abonnement an. Ein QSO, das gerade nicht gesendet werden kann, wird aufbewahrt und später gesendet; eines, das QRZ.com ablehnt, wird unten genannt.
+Nur QSOs, die ab jetzt geloggt werden: ältere laden Sie als ADIF-Datei direkt bei QRZ.com hoch.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>QR&amp;Z.com</source>
+        <translation>Q&amp;RZ.com</translation>
     </message>
 </context>
 <context>

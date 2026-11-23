@@ -704,6 +704,101 @@ Formatera:
         <source>Club Log refused %1 with this token (HTTP status %2): the call is not on the token's Club Log account, or Club Log asks to correct the request. Add the call to your Club Log account and press the download button, or correct My Call on the General tab.</source>
         <translation>Club Log avvisade %1 med denna token (HTTP-status %2): signalen finns inte på tokens Club Log-konto, eller så ber Club Log om en rättad begäran. Lägg till signalen på ditt Club Log-konto och tryck på nedladdningsknappen, eller rätta Min signal på fliken Allmän.</translation>
     </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1 checked at %2 UTC with a test token: nothing stored.</source>
+        <translation>%1 kontrollerad %2 UTC med en testtoken: inget sparat.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1 sent at %2 UTC.</source>
+        <translation>%1 skickad %2 UTC.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1 was in the log already (%2 UTC).</source>
+        <translation>%1 fanns redan i loggen (%2 UTC).</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1 refused at %2 UTC: %3</source>
+        <translation>%1 avvisad %2 UTC: %3</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>QRZ.com refused the upload with this key (%1): sending QSOs needs a QRZ.com subscription. Once you have one, click the box off and on and press OK, or save another key.</source>
+        <translation>QRZ.com avvisade uppladdningen med den här nyckeln (%1): att skicka QSO kräver en QRZ.com-prenumeration. När du har en, kryssa ur och i rutan igen och tryck OK, eller spara en annan nyckel.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1 refused the request (%2): nothing more is sent until you press OK in Settings or start the program again.</source>
+        <translation>%1 avvisade begäran (%2): inget mer skickas förrän du trycker OK i inställningarna eller startar programmet igen.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>asked to wait</source>
+        <translation>ombedd att vänta</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>HTTP status %1</source>
+        <translation>HTTP-status %1</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>no connection: %1</source>
+        <translation>ingen anslutning: %1</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1 not sent at %2 UTC: %3. Kept; the next try at %4 UTC.</source>
+        <translation>%1 inte skickad %2 UTC: %3. Sparad; nästa försök %4 UTC.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>No token or key: nothing is sent.</source>
+        <translation>Ingen token eller nyckel: inget skickas.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Uploads to %1 are switched off (%2).</source>
+        <translation>Uppladdningar till %1 är avstängda (%2).</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>QSOs you log are sent as you log them.</source>
+        <translation>QSO du loggar skickas allteftersom du loggar dem.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>QSOs waiting to be sent: %1.</source>
+        <translation>QSO som väntar på att skickas: %1.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1 refused the QSO with %2 - see Settings &gt; Reporting.</source>
+        <translation>%1 avvisade QSO:t med %2 - se Inställningar &gt; Rapportering.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1 refused the upload: the QSO with %2 is kept - see Settings &gt; Reporting.</source>
+        <translation>%1 avvisade uppladdningen: QSO:t med %2 är sparat - se Inställningar &gt; Rapportering.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>an answer not understood: %1</source>
+        <translation>ett svar som inte förstods: %1</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1: the QSO with %2 is not sent yet, kept - see Settings &gt; Reporting.</source>
+        <translation>%1: QSO:t med %2 är inte skickat än, sparat - se Inställningar &gt; Rapportering.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Club Log refused %1 with this token: the call is not on the token's Club Log account. Its QSOs are kept, the others go on. Add the call to your Club Log account, then click the box off and on and press OK.</source>
+        <translation>Club Log avvisade %1 med denna token: signalen finns inte på tokens Club Log-konto. Dess QSO sparas, de andra går vidare. Lägg till signalen på ditt Club Log-konto, kryssa sedan ur och i rutan igen och tryck OK.</translation>
+    </message>
 </context>
 <context>
     <name>CountryDat</name>
@@ -11478,6 +11573,35 @@ Den första hämtningen tar några minuter; sedan hämtas bara det som ändrats.
         <location filename="../Configuration.ui"/>
         <source>Worked, LoTW-confirmed</source>
         <translation>Körd, LoTW-bekräftad</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Send logged QSOs to:</source>
+        <translation>Skicka loggade QSO till:</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Each QSO you log is sent to your Club Log log at once, with the Club Log token - in a contest too. A QSO that cannot be sent now (no connection, Club Log busy) is kept and sent later; one Club Log refuses is named below.
+Only QSOs logged from now on: upload older ones to Club Log as an ADIF file there.</source>
+        <translation>Varje QSO du loggar skickas genast till din logg på Club Log med Club Log-token – även i en contest. En QSO som inte kan skickas nu (ingen anslutning, Club Log upptaget) sparas och skickas senare; en som Club Log avvisar nämns nedan.
+Bara QSO som loggas från och med nu: ladda upp äldre till Club Log som en ADIF-fil där.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>&amp;Club Log</source>
+        <translation>Cl&amp;ub Log</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Each QSO you log is sent to your QRZ.com logbook at once, with the QRZ.com API key - in a contest too. QRZ.com takes QSOs from programs only with a subscription. A QSO that cannot be sent now is kept and sent later; one QRZ.com refuses is named below.
+Only QSOs logged from now on: upload older ones to QRZ.com as an ADIF file there.</source>
+        <translation>Varje QSO du loggar skickas genast till din loggbok på QRZ.com med API-nyckeln för QRZ.com – även i en contest. QRZ.com tar emot QSO från program bara med en prenumeration. En QSO som inte kan skickas nu sparas och skickas senare; en som QRZ.com avvisar nämns nedan.
+Bara QSO som loggas från och med nu: ladda upp äldre till QRZ.com som en ADIF-fil där.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>QR&amp;Z.com</source>
+        <translation>QRZ.c&amp;om</translation>
     </message>
 </context>
 <context>

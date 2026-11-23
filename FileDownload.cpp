@@ -184,6 +184,17 @@ void FileDownload::deliver (QByteArray const& body, int http_status,
       fail (Failure::TooLarge, QString::number (request_.max_body_size / (1024 * 1024)));
       return;
     }
+  /* CE3TSK 2026-11-23 (TODO.md 3.-282): an upload's answer goes back as it came, whatever its status - only a transport
+     that got no answer at all is a failure */
+  if (request_.reply_only && (http_status || transport_detail.isNull ()))
+    {
+      if (429 == http_status || 503 == http_status)
+        retry_after_ = parse_retry_after (retry_after, QDateTime::currentDateTimeUtc ());
+      QByteArray const answer {body};   // body may be body_ itself
+      body_.clear ();
+      Q_EMIT replied (http_status, answer);
+      return;
+    }
   // a server that answered at all is reported by its status: Qt also flags a 404 as a network error
   if (http_status && 200 != http_status)
     {

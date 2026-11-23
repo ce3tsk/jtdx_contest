@@ -703,6 +703,101 @@ Format:
         <source>Club Log refused %1 with this token (HTTP status %2): the call is not on the token's Club Log account, or Club Log asks to correct the request. Add the call to your Club Log account and press the download button, or correct My Call on the General tab.</source>
         <translation>Club Log 拒绝了使用此令牌的 %1（HTTP 状态 %2）：该呼号不在此令牌的 Club Log 账户中，或 Club Log 要求更正请求。请将该呼号添加到您的 Club Log 账户并按下载按钮，或更正常规选项卡中的“我的呼号”。</translation>
     </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1 checked at %2 UTC with a test token: nothing stored.</source>
+        <translation>%1 于 %2 UTC 用测试令牌检查：未存储任何内容。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1 sent at %2 UTC.</source>
+        <translation>%1 已于 %2 UTC 发送。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1 was in the log already (%2 UTC).</source>
+        <translation>%1 已在日志中（%2 UTC）。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1 refused at %2 UTC: %3</source>
+        <translation>%1 于 %2 UTC 被拒绝：%3</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>QRZ.com refused the upload with this key (%1): sending QSOs needs a QRZ.com subscription. Once you have one, click the box off and on and press OK, or save another key.</source>
+        <translation>QRZ.com 拒绝了使用此密钥的上传（%1）：发送 QSO 需要 QRZ.com 订阅。有了订阅后，请取消勾选再重新勾选该复选框并按确定，或保存另一个密钥。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1 refused the request (%2): nothing more is sent until you press OK in Settings or start the program again.</source>
+        <translation>%1 拒绝了请求（%2）：在您于设置中按确定或重新启动程序之前，不会再发送任何内容。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>asked to wait</source>
+        <translation>被要求等待</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>HTTP status %1</source>
+        <translation>HTTP 状态 %1</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>no connection: %1</source>
+        <translation>无连接：%1</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1 not sent at %2 UTC: %3. Kept; the next try at %4 UTC.</source>
+        <translation>%1 未能于 %2 UTC 发送：%3。已保留；下次尝试于 %4 UTC。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>No token or key: nothing is sent.</source>
+        <translation>没有令牌或密钥：不发送任何内容。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Uploads to %1 are switched off (%2).</source>
+        <translation>到 %1 的上传已关闭（%2）。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>QSOs you log are sent as you log them.</source>
+        <translation>您记录的 QSO 会在记录时立即发送。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>QSOs waiting to be sent: %1.</source>
+        <translation>等待发送的 QSO：%1。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1 refused the QSO with %2 - see Settings &gt; Reporting.</source>
+        <translation>%1 拒绝了与 %2 的 QSO - 见 设置 &gt; 报告。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1 refused the upload: the QSO with %2 is kept - see Settings &gt; Reporting.</source>
+        <translation>%1 拒绝了上传：与 %2 的 QSO 已保留 - 见 设置 &gt; 报告。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>an answer not understood: %1</source>
+        <translation>无法理解的应答：%1</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1: the QSO with %2 is not sent yet, kept - see Settings &gt; Reporting.</source>
+        <translation>%1：与 %2 的 QSO 尚未发送，已保留 - 见 设置 &gt; 报告。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Club Log refused %1 with this token: the call is not on the token's Club Log account. Its QSOs are kept, the others go on. Add the call to your Club Log account, then click the box off and on and press OK.</source>
+        <translation>Club Log 拒绝了使用此令牌的 %1：该呼号不在此令牌的 Club Log 账户中。它的 QSO 已保留，其他 QSO 继续发送。请将该呼号添加到您的 Club Log 账户，然后取消勾选再重新勾选该复选框并按确定。</translation>
+    </message>
 </context>
 <context>
     <name>CountryDat</name>
@@ -11474,6 +11569,35 @@ QRZ.com 只有它已导入的 LoTW 确认。
         <location filename="../Configuration.ui"/>
         <source>Worked, LoTW-confirmed</source>
         <translation>已通联，经 LoTW 确认</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Send logged QSOs to:</source>
+        <translation>将记录的 QSO 发送到：</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Each QSO you log is sent to your Club Log log at once, with the Club Log token - in a contest too. A QSO that cannot be sent now (no connection, Club Log busy) is kept and sent later; one Club Log refuses is named below.
+Only QSOs logged from now on: upload older ones to Club Log as an ADIF file there.</source>
+        <translation>您记录的每个 QSO 都会立即用 Club Log 令牌发送到您在 Club Log 上的日志——比赛中也一样。现在无法发送的 QSO（无连接、Club Log 繁忙）会被保留，稍后再发送；Club Log 拒绝的 QSO 会在下方列出。
+只限从现在起记录的 QSO：较早的 QSO 请在 Club Log 网站上以 ADIF 文件上传。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>&amp;Club Log</source>
+        <translation>Club Log(&amp;O)</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Each QSO you log is sent to your QRZ.com logbook at once, with the QRZ.com API key - in a contest too. QRZ.com takes QSOs from programs only with a subscription. A QSO that cannot be sent now is kept and sent later; one QRZ.com refuses is named below.
+Only QSOs logged from now on: upload older ones to QRZ.com as an ADIF file there.</source>
+        <translation>您记录的每个 QSO 都会立即用 QRZ.com API 密钥发送到您在 QRZ.com 上的日志本——比赛中也一样。QRZ.com 只在有订阅时才接受程序发送的 QSO。现在无法发送的 QSO 会被保留，稍后再发送；QRZ.com 拒绝的 QSO 会在下方列出。
+只限从现在起记录的 QSO：较早的 QSO 请在 QRZ.com 网站上以 ADIF 文件上传。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>QR&amp;Z.com</source>
+        <translation>QRZ.com(&amp;N)</translation>
     </message>
 </context>
 <context>

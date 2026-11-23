@@ -703,6 +703,101 @@ Indeling:
         <source>Club Log refused %1 with this token (HTTP status %2): the call is not on the token's Club Log account, or Club Log asks to correct the request. Add the call to your Club Log account and press the download button, or correct My Call on the General tab.</source>
         <translation>Club Log heeft %1 met dit token geweigerd (HTTP-status %2): de roepnaam staat niet op het Club Log-account van het token, of Club Log vraagt het verzoek te verbeteren. Voeg de roepnaam toe aan uw Club Log-account en druk op de downloadknop, of verbeter Mijn roepnaam op het tabblad Algemeen.</translation>
     </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1 checked at %2 UTC with a test token: nothing stored.</source>
+        <translation>%1 gecontroleerd om %2 UTC met een testtoken: niets opgeslagen.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1 sent at %2 UTC.</source>
+        <translation>%1 verstuurd om %2 UTC.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1 was in the log already (%2 UTC).</source>
+        <translation>%1 stond al in het log (%2 UTC).</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1 refused at %2 UTC: %3</source>
+        <translation>%1 geweigerd om %2 UTC: %3</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>QRZ.com refused the upload with this key (%1): sending QSOs needs a QRZ.com subscription. Once you have one, click the box off and on and press OK, or save another key.</source>
+        <translation>QRZ.com weigerde de upload met deze sleutel (%1): QSO's versturen vereist een QRZ.com-abonnement. Zodra u er een hebt, zet het vakje uit en weer aan en druk op OK, of sla een andere sleutel op.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1 refused the request (%2): nothing more is sent until you press OK in Settings or start the program again.</source>
+        <translation>%1 weigerde het verzoek (%2): er wordt niets meer verstuurd totdat u in de instellingen op OK drukt of het programma opnieuw start.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>asked to wait</source>
+        <translation>gevraagd te wachten</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>HTTP status %1</source>
+        <translation>HTTP-status %1</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>no connection: %1</source>
+        <translation>geen verbinding: %1</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1 not sent at %2 UTC: %3. Kept; the next try at %4 UTC.</source>
+        <translation>%1 niet verstuurd om %2 UTC: %3. Bewaard; volgende poging om %4 UTC.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>No token or key: nothing is sent.</source>
+        <translation>Geen token of sleutel: er wordt niets verstuurd.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Uploads to %1 are switched off (%2).</source>
+        <translation>Uploads naar %1 zijn uitgeschakeld (%2).</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>QSOs you log are sent as you log them.</source>
+        <translation>QSO's die u logt, worden verstuurd zodra u ze logt.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>QSOs waiting to be sent: %1.</source>
+        <translation>QSO's die wachten om verstuurd te worden: %1.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1 refused the QSO with %2 - see Settings &gt; Reporting.</source>
+        <translation>%1 weigerde de QSO met %2 - zie Instellingen &gt; Rapportage.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1 refused the upload: the QSO with %2 is kept - see Settings &gt; Reporting.</source>
+        <translation>%1 weigerde de upload: de QSO met %2 is bewaard - zie Instellingen &gt; Rapportage.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>an answer not understood: %1</source>
+        <translation>een antwoord dat niet begrepen werd: %1</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1: the QSO with %2 is not sent yet, kept - see Settings &gt; Reporting.</source>
+        <translation>%1: de QSO met %2 is nog niet verstuurd, bewaard - zie Instellingen &gt; Rapportage.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Club Log refused %1 with this token: the call is not on the token's Club Log account. Its QSOs are kept, the others go on. Add the call to your Club Log account, then click the box off and on and press OK.</source>
+        <translation>Club Log heeft %1 met dit token geweigerd: de roepnaam staat niet op het Club Log-account van het token. Zijn QSO's worden bewaard, de andere gaan door. Voeg de roepnaam toe aan uw Club Log-account, zet dan het vakje uit en weer aan en druk op OK.</translation>
+    </message>
 </context>
 <context>
     <name>CountryDat</name>
@@ -11473,6 +11568,35 @@ De eerste download duurt een paar minuten; daarna wordt alleen opgehaald wat ver
         <location filename="../Configuration.ui"/>
         <source>Worked, LoTW-confirmed</source>
         <translation>Gewerkt, LoTW-bevestigd</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Send logged QSOs to:</source>
+        <translation>Gelogde QSO's sturen naar:</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Each QSO you log is sent to your Club Log log at once, with the Club Log token - in a contest too. A QSO that cannot be sent now (no connection, Club Log busy) is kept and sent later; one Club Log refuses is named below.
+Only QSOs logged from now on: upload older ones to Club Log as an ADIF file there.</source>
+        <translation>Elke QSO die u logt, wordt meteen met het Club Log-token naar uw log op Club Log gestuurd – ook in een contest. Een QSO die nu niet verstuurd kan worden (geen verbinding, Club Log bezet), wordt bewaard en later verstuurd; een QSO die Club Log weigert, wordt hieronder genoemd.
+Alleen QSO's die vanaf nu gelogd worden: upload oudere als ADIF-bestand op Club Log zelf.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>&amp;Club Log</source>
+        <translation>Club L&amp;og</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Each QSO you log is sent to your QRZ.com logbook at once, with the QRZ.com API key - in a contest too. QRZ.com takes QSOs from programs only with a subscription. A QSO that cannot be sent now is kept and sent later; one QRZ.com refuses is named below.
+Only QSOs logged from now on: upload older ones to QRZ.com as an ADIF file there.</source>
+        <translation>Elke QSO die u logt, wordt meteen met de API-sleutel van QRZ.com naar uw logboek op QRZ.com gestuurd – ook in een contest. QRZ.com neemt QSO's van programma's alleen aan met een abonnement. Een QSO die nu niet verstuurd kan worden, wordt bewaard en later verstuurd; een QSO die QRZ.com weigert, wordt hieronder genoemd.
+Alleen QSO's die vanaf nu gelogd worden: upload oudere als ADIF-bestand op QRZ.com zelf.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>QR&amp;Z.com</source>
+        <translation>QRZ.com</translation>
     </message>
 </context>
 <context>

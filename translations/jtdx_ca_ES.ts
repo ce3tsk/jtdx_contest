@@ -707,6 +707,101 @@ Format:
         <source>Club Log refused %1 with this token (HTTP status %2): the call is not on the token's Club Log account, or Club Log asks to correct the request. Add the call to your Club Log account and press the download button, or correct My Call on the General tab.</source>
         <translation>Club Log ha rebutjat %1 amb aquest testimoni (estat HTTP %2): l'indicatiu no és al compte de Club Log del testimoni, o Club Log demana corregir la sol·licitud. Afegiu l'indicatiu al vostre compte de Club Log i premeu el botó de descàrrega, o corregiu El meu Indicatiu a la pestanya General.</translation>
     </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1 checked at %2 UTC with a test token: nothing stored.</source>
+        <translation>%1 comprovat a les %2 UTC amb un testimoni de prova: no s'ha desat res.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1 sent at %2 UTC.</source>
+        <translation>%1 enviat a les %2 UTC.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1 was in the log already (%2 UTC).</source>
+        <translation>%1 ja era al registre (%2 UTC).</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1 refused at %2 UTC: %3</source>
+        <translation>%1 rebutjat a les %2 UTC: %3</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>QRZ.com refused the upload with this key (%1): sending QSOs needs a QRZ.com subscription. Once you have one, click the box off and on and press OK, or save another key.</source>
+        <translation>QRZ.com ha rebutjat la pujada amb aquesta clau (%1): per enviar QSO cal una subscripció de QRZ.com. Quan en tingueu una, desmarqueu i torneu a marcar la casella i premeu D'acord, o deseu una altra clau.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1 refused the request (%2): nothing more is sent until you press OK in Settings or start the program again.</source>
+        <translation>%1 ha rebutjat la sol·licitud (%2): no s'envia res més fins que premeu D'acord a la configuració o torneu a iniciar el programa.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>asked to wait</source>
+        <translation>ha demanat esperar</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>HTTP status %1</source>
+        <translation>estat HTTP %1</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>no connection: %1</source>
+        <translation>sense connexió: %1</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1 not sent at %2 UTC: %3. Kept; the next try at %4 UTC.</source>
+        <translation>%1 no enviat a les %2 UTC: %3. Es guarda; el proper intent a les %4 UTC.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>No token or key: nothing is sent.</source>
+        <translation>Sense testimoni ni clau: no s'envia res.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Uploads to %1 are switched off (%2).</source>
+        <translation>Les pujades a %1 estan desactivades (%2).</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>QSOs you log are sent as you log them.</source>
+        <translation>Els QSO que registreu s'envien a mesura que els registreu.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>QSOs waiting to be sent: %1.</source>
+        <translation>QSO pendents d'enviar: %1.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1 refused the QSO with %2 - see Settings &gt; Reporting.</source>
+        <translation>%1 ha rebutjat el QSO amb %2 - vegeu Configuracions &gt; Informes.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1 refused the upload: the QSO with %2 is kept - see Settings &gt; Reporting.</source>
+        <translation>%1 ha rebutjat la pujada: el QSO amb %2 es guarda - vegeu Configuracions &gt; Informes.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>an answer not understood: %1</source>
+        <translation>una resposta no entesa: %1</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1: the QSO with %2 is not sent yet, kept - see Settings &gt; Reporting.</source>
+        <translation>%1: el QSO amb %2 encara no s'ha enviat, es guarda - vegeu Configuracions &gt; Informes.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Club Log refused %1 with this token: the call is not on the token's Club Log account. Its QSOs are kept, the others go on. Add the call to your Club Log account, then click the box off and on and press OK.</source>
+        <translation>Club Log ha rebutjat %1 amb aquest testimoni: l'indicatiu no és al compte de Club Log del testimoni. Els seus QSO es guarden, els altres continuen. Afegiu l'indicatiu al vostre compte de Club Log, després desmarqueu i torneu a marcar la casella i premeu D'acord.</translation>
+    </message>
 </context>
 <context>
     <name>CountryDat</name>
@@ -11488,6 +11583,35 @@ La primera descàrrega triga uns minuts; després només es descarrega el que ha
         <location filename="../Configuration.ui"/>
         <source>Worked, LoTW-confirmed</source>
         <translation>Treballat, confirmat per LoTW</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Send logged QSOs to:</source>
+        <translation>Envia els QSO registrats a:</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Each QSO you log is sent to your Club Log log at once, with the Club Log token - in a contest too. A QSO that cannot be sent now (no connection, Club Log busy) is kept and sent later; one Club Log refuses is named below.
+Only QSOs logged from now on: upload older ones to Club Log as an ADIF file there.</source>
+        <translation>Cada QSO que registreu s'envia de seguida al vostre registre de Club Log, amb el testimoni de Club Log; també en un concurs. Un QSO que ara no es pot enviar (sense connexió, Club Log ocupat) es guarda i s'envia més tard; si Club Log en rebutja un, es diu a sota.
+Només els QSO registrats a partir d'ara: pugeu els més antics a Club Log com a fitxer ADIF, allà mateix.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>&amp;Club Log</source>
+        <translation>Club L&amp;og</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Each QSO you log is sent to your QRZ.com logbook at once, with the QRZ.com API key - in a contest too. QRZ.com takes QSOs from programs only with a subscription. A QSO that cannot be sent now is kept and sent later; one QRZ.com refuses is named below.
+Only QSOs logged from now on: upload older ones to QRZ.com as an ADIF file there.</source>
+        <translation>Cada QSO que registreu s'envia de seguida al vostre llibre de registre de QRZ.com, amb la clau de l'API de QRZ.com; també en un concurs. QRZ.com només accepta QSO de programes amb una subscripció. Un QSO que ara no es pot enviar es guarda i s'envia més tard; si QRZ.com en rebutja un, es diu a sota.
+Només els QSO registrats a partir d'ara: pugeu els més antics a QRZ.com com a fitxer ADIF, allà mateix.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>QR&amp;Z.com</source>
+        <translation>QRZ.com</translation>
     </message>
 </context>
 <context>

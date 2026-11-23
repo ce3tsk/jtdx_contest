@@ -201,6 +201,7 @@ extern "C" {
 #include "call3file.h"   // CE3TSK 2026-10-23: CALL3.TXT's download (TODO.md 3.-199)
 #include "clublog.h"     // CE3TSK 2026-11-21: Club Log's confirmed QSOs (TODO.md 3.-280)
 #include "qrzlogbook.h"   // CE3TSK 2026-11-22: QRZ.com's LoTW confirmations (TODO.md 3.-280)
+#include "qsoupload.h"    // CE3TSK 2026-11-23: the logged QSOs to Club Log and QRZ.com (TODO.md 3.-282)
 #include "logbook/countrydat.h"       /* CE3TSK */
 #include "ownstation.h"                /* CE3TSK 2026-10-04 */
 
@@ -694,6 +695,17 @@ private:
   void update_qrz_label ();
   bool qrz_current () const;   // the file is what the saved key fetched: the windows read it
   QString qrz_key_file () const {return qrz_logbook::key_path (settings_->fileName ());}
+  /* CE3TSK 2026-11-23 (TODO.md 3.-282, QSO_UPLOAD_PLAN.md): the logged QSOs to Club Log and QRZ.com with the token and key
+     above, off by default. Club Log's refusals are the downloads' (the same token, the same call); QRZ.com's AUTH on INSERT
+     is the upload's alone - the same key may still FETCH */
+  void configure_uploads ();   // the credentials, the boxes, the refusals and a Retry-After on record into the uploaders
+  bool qrz_upload_refused (QString const& key) const;   // inside SettingsGroup "Configuration"
+  void qrz_set_upload_refused (QString const& key, bool refused);
+  void upload_done (qso_upload::Site site, qso_upload::Result const& result, QString const& call, int waiting);
+  void upload_refused (qso_upload::Site site, qso_upload::Result const& result, QString const& station_call, QString const& call);
+  void upload_delayed (qso_upload::Site site, qso_upload::Result const& result, QString const& call, QDateTime const& next, int waiting);
+  void upload_kept (qso_upload::Site site, bool refused, QString const& call);   // (review) a QSO logged, not sent now
+  void update_upload_labels ();
   Q_SLOT void on_callNotif_check_box_clicked(bool checked);
   Q_SLOT void on_otherMessagesMarker_check_box_clicked(bool checked);
   Q_SLOT void on_RR73_marker_check_box_clicked(bool checked);
@@ -812,6 +824,23 @@ private:
   QString qrz_fetch_key_;           // the key the running download asks with
   QString qrz_error_;               // the last attempt's failure, worded, for the status line
   QString qrz_file_id_;             // what fetched the file: club_log::token_id (key), ini QrzKeyId
+  qso_upload::Uploader clublog_upload_ {qso_upload::Site::ClubLog};   // CE3TSK 2026-11-23 (TODO.md 3.-282)
+  qso_upload::Uploader qrz_upload_ {qso_upload::Site::Qrz};
+  QString clublog_upload_text_;     // the last upload's end, worded, for the status line
+  QString qrz_upload_text_;
+  // (review) what that text is: an upload's end, a refusal on record (the token, key or call - it goes once the refusal is
+  // lifted), or a refusal of this run (the request - it goes at OK, which lifts it)
+  enum class UploadText {Event, Recorded, Run};
+  UploadText clublog_upload_kind_ {UploadText::Event};
+  UploadText qrz_upload_kind_ {UploadText::Event};
+  // (review, TODO.md 3.-282 review 3) the last text a QSO's good end - sent or in the log already: nothing to report, the
+  // line stays hidden (Reporting no taller than General) and the box's tooltip tells it
+  bool clublog_upload_good_ {false};
+  bool qrz_upload_good_ {false};
+  QString clublog_upload_tip_;      // the boxes' own tooltips, the status after them
+  QString qrz_upload_tip_;
+  bool qrz_upload_toggled_ {false}; // the QRZ.com box was clicked since Settings opened: ticked at OK, a refusal is lifted
+  bool clublog_upload_toggled_ {false};   // (review) the same for Club Log: another call's refusal is lifted
   QDir temp_dir_;
   QDir default_save_directory_;
   QDir save_directory_;
@@ -1066,6 +1095,8 @@ private:
   bool showDistance_;            // CE3TSK 2026-10-20: distance and azimuth after the country (distancefield.h)
   bool countUnconfirmed_;        // CE3TSK 2026-11-21 (TODO.md 3.-280, D9): a LoTW user worked, not LoTW-confirmed, as new
   bool highlightConfirmed_;      // CE3TSK 2026-11-22 (TODO.md 3.-280, D12): a worked call LoTW-confirmed in every tier on, in its colour
+  bool clublog_upload_on_;       // CE3TSK 2026-11-23 (TODO.md 3.-282): the logged QSOs to Club Log - off by default
+  bool qrz_upload_on_;           //   and to QRZ.com
   bool showAzimuth_;
   bool usStates_;   /* CE3TSK 2026-10-02 */
   bool usStatesPending_;   /* CE3TSK: Show US states as last clicked in the open dialog - kept while the box is greyed */
@@ -2436,6 +2467,39 @@ Configuration::impl::impl (Configuration * self, QNetworkAccessManager * network
   connect (&qrz_fetch_, &qrz_logbook::Fetch::finished, this, &Configuration::impl::qrz_finished);
   connect (&clublog_timer_, &QTimer::timeout, this, &Configuration::impl::qrz_check_due);
   QTimer::singleShot (90 * 1000, this, [this] {qrz_check_due ();});
+  /* CE3TSK 2026-11-23 (TODO.md 3.-282): the logged QSOs to Club Log and QRZ.com - each queue in the data directory, and what
+     an earlier run could not send tried a little after the start, between the downloads' first looks */
+  {
+    QDir const data_dir {QStandardPaths::writableLocation (QStandardPaths::DataLocation)};
+    auto const agent = "JTDX_contest/" + QCoreApplication::applicationVersion () + " (https://github.com/ce3tsk/jtdx_contest)";
+    clublog_upload_.configure (network_manager_, data_dir.absoluteFilePath (qso_upload::clublog_queue_file), agent);
+    qrz_upload_.configure (network_manager_, data_dir.absoluteFilePath (qso_upload::qrz_queue_file), agent);
+  }
+  for (auto * uploader : {&clublog_upload_, &qrz_upload_})
+    {
+      auto const site = uploader->site ();
+      connect (uploader, &qso_upload::Uploader::done, this, [this, site] (qso_upload::Result const& r, QString const& call, int waiting) {
+          upload_done (site, r, call, waiting);
+        });
+      connect (uploader, &qso_upload::Uploader::refused, this,
+               [this, site] (qso_upload::Result const& r, QString const& station, QString const& call, int) {
+                 upload_refused (site, r, station, call);
+               });
+      connect (uploader, &qso_upload::Uploader::delayed, this,
+               [this, site] (qso_upload::Result const& r, QString const& call, QDateTime const& next, int waiting) {
+                 upload_delayed (site, r, call, next, waiting);
+               });
+      connect (uploader, &qso_upload::Uploader::kept, this, [this, site] (bool refused, QString const& call, int) {
+          upload_kept (site, refused, call);
+        });
+    }
+  // (review) the boxes' own tooltips - folded already (wrap_tooltips above) - each site's status follows its own
+  clublog_upload_tip_ = ui_->clublog_upload_check_box->toolTip ();
+  qrz_upload_tip_ = ui_->qrz_upload_check_box->toolTip ();
+  connect (ui_->clublog_upload_check_box, &QCheckBox::toggled, this, [this] {clublog_upload_toggled_ = true; update_upload_labels ();});
+  connect (ui_->qrz_upload_check_box, &QCheckBox::toggled, this, [this] {qrz_upload_toggled_ = true; update_upload_labels ();});
+  configure_uploads ();
+  QTimer::singleShot (75 * 1000, this, [this] {clublog_upload_.send_now (); qrz_upload_.send_now ();});
   ui_->gridNotif_check_box->setChecked(callNotif_ && gridNotif_);
   ui_->gridNotif_check_box->setEnabled(callNotif_);
   ui_->blueMarker_check_box->setChecked(redMarker_ && blueMarker_);
@@ -3061,6 +3125,9 @@ Radio::convert_dark("#fafbfe",useDarkStyle_),Radio::convert_dark("#dcdef1",useDa
   ui_->showDistance_check_box->setChecked (showDistance_);   // CE3TSK 2026-10-20
   ui_->count_unconfirmed_check_box->setChecked (countUnconfirmed_);   // CE3TSK 2026-11-21 (TODO.md 3.-280)
   ui_->highlight_confirmed_check_box->setChecked (highlightConfirmed_);   // CE3TSK 2026-11-22 (D12)
+  ui_->clublog_upload_check_box->setChecked (clublog_upload_on_);   // CE3TSK 2026-11-23 (TODO.md 3.-282)
+  ui_->qrz_upload_check_box->setChecked (qrz_upload_on_);
+  update_upload_labels ();
   ui_->showAzimuth_check_box->setChecked (showAzimuth_);
   ui_->scroll_check_box->setChecked (scroll_);
   ui_->tx_watchdog_spin_box->setValue (watchdog_);
@@ -3543,6 +3610,8 @@ void Configuration::impl::read_settings ()
   showDistance_ = settings_->value (contest_profile::own_key ("ShowDistance"), false).toBool ();   // CE3TSK 2026-10-20: ours
   countUnconfirmed_ = settings_->value (contest_profile::own_key ("CountUnconfirmedAsNew"), true).toBool ();   // 2026-11-21 (D9): on
   highlightConfirmed_ = settings_->value (contest_profile::own_key ("HighlightConfirmed"), false).toBool ();   // 2026-11-22 (D12): off
+  clublog_upload_on_ = settings_->value (contest_profile::own_key ("ClubLogUpload"), false).toBool ();   // 2026-11-23 (3.-282): off
+  qrz_upload_on_ = settings_->value (contest_profile::own_key ("QrzUpload"), false).toBool ();
   showAzimuth_ = settings_->value (contest_profile::own_key ("ShowAzimuth"), false).toBool ();
   usStates_ = settings_->value (contest_profile::own_key ("ShowUSStates"), true).toBool ();   /* CE3TSK */
 
@@ -3938,6 +4007,8 @@ void Configuration::impl::write_settings ()
   settings_->setValue (contest_profile::own_key ("ShowDistance"), showDistance_);   // CE3TSK 2026-10-20
   settings_->setValue (contest_profile::own_key ("CountUnconfirmedAsNew"), countUnconfirmed_);   // CE3TSK 2026-11-21
   settings_->setValue (contest_profile::own_key ("HighlightConfirmed"), highlightConfirmed_);   // CE3TSK 2026-11-22
+  settings_->setValue (contest_profile::own_key ("ClubLogUpload"), clublog_upload_on_);   // CE3TSK 2026-11-23 (3.-282)
+  settings_->setValue (contest_profile::own_key ("QrzUpload"), qrz_upload_on_);
   settings_->setValue (contest_profile::own_key ("ShowAzimuth"), showAzimuth_);
   settings_->setValue (contest_profile::own_key ("ShowUSStates"), usStates_);   /* CE3TSK */
   settings_->setValue ("callsignLogFiltering", callNotif_);
@@ -4237,6 +4308,8 @@ bool Configuration::impl::validate ()
 
 int Configuration::impl::exec ()
 {
+  qrz_upload_toggled_ = false;   // CE3TSK 2026-11-23 (TODO.md 3.-282): a click on the QRZ.com box counts from here
+  clublog_upload_toggled_ = false;   // (review) and on the Club Log box
   // macros can be modified in the main window
   next_macros_.setStringList (macros_.stringList ());
 
@@ -4564,6 +4637,35 @@ void Configuration::impl::accept ()
             update_qrz_label ();
           }
       }
+  }
+  /* CE3TSK 2026-11-23 (TODO.md 3.-282): the logged QSOs to Club Log and QRZ.com. QRZ.com's refusal of the upload is lifted
+     when its box is clicked and left ticked (a subscription bought since); Club Log's by another token or a good download.
+     What waits is tried at once, with the token, key and My Call now saved */
+  {
+    clublog_upload_on_ = ui_->clublog_upload_check_box->isChecked ();
+    qrz_upload_on_ = ui_->qrz_upload_check_box->isChecked ();
+    if (qrz_upload_on_ && qrz_upload_toggled_)
+      {
+        SettingsGroup g {settings_, "Configuration"};
+        qrz_set_upload_refused (qrz_key_, false);
+      }
+    qrz_upload_toggled_ = false;
+    /* (review) Club Log's refusal of another call than My Call (QSOs logged before My Call changed) is lifted the same way -
+       the call added to the account since; My Call's is the downloads' too, and the download button lifts it */
+    if (clublog_upload_on_ && clublog_upload_toggled_)
+      {
+        SettingsGroup g {settings_, "Configuration"};
+        auto const mine = my_callsign_.trimmed ().toUpper ();
+        for (auto const& call : clublog_upload_.station_calls ())
+          if (call != mine) clublog_set_call_refused (clublog_token_, call, false);
+      }
+    clublog_upload_toggled_ = false;
+    clublog_upload_.resume ();   // a refusal of the request in this run: OK tries again
+    qrz_upload_.resume ();
+    if (UploadText::Run == clublog_upload_kind_) {clublog_upload_text_.clear (); clublog_upload_kind_ = UploadText::Event;}
+    if (UploadText::Run == qrz_upload_kind_) {qrz_upload_text_.clear (); qrz_upload_kind_ = UploadText::Event;}
+    configure_uploads ();
+    QTimer::singleShot (0, this, [this] {clublog_upload_.send_now (); qrz_upload_.send_now ();});
   }
   /* CE3TSK 2026-11-22 (TODO.md 3.-280, review): OK looks for both at once, changed or not, as Cancel does - a file that is
      not the saved token's and call's or key's (the button's, an older program's, one the start's look met with Settings
@@ -5134,6 +5236,9 @@ void Configuration::impl::clublog_finished (bool ok, FileDownload::Failure failu
       clublog_error_.clear ();
       update_clublog_label ();
       Q_EMIT self_->confirmations_updated ();
+      clublog_upload_.resume ();   // (2026-11-23, TODO.md 3.-282) a refusal lifted: what waits for Club Log goes now
+      configure_uploads ();
+      clublog_upload_.send_now ();
       // (2026-11-22) the button's, with a token or call not saved, ending after Cancel: the saved ones' now
       if (!isVisible ()) QTimer::singleShot (0, this, [this] {clublog_check_due ();});
       return;
@@ -5177,6 +5282,7 @@ void Configuration::impl::clublog_finished (bool ok, FileDownload::Failure failu
     case FileDownload::Failure::Network: clublog_error_ = tr ("Network error: %1").arg (detail); break;
     }
   update_clublog_label ();
+  configure_uploads ();   // (2026-11-23, TODO.md 3.-282) the token or call refused for the downloads is for the uploads too
   if (manual)
     JTDXMessageBox::warning_message (this, tr ("Download from Club Log failed"), clublog_error_,
                                      tr ("The copy in use has not been changed."));
@@ -5218,6 +5324,226 @@ void Configuration::impl::update_clublog_label ()
     text += '\n' + tr ("Club Log refused %1 with this token: the call is not on the token's Club Log account, or Club Log asks to correct the request. Add the call to your Club Log account and press the download button, or correct My Call on the General tab.")
                    .arg (my_callsign_.trimmed ().toUpper ());
   ui_->clublog_status_label->setText (text);
+}
+
+/* CE3TSK 2026-11-23 (TODO.md 3.-282, QSO_UPLOAD_PLAN.md): the logged QSOs to Club Log and QRZ.com (qsoupload.h). */
+void Configuration::upload_qso (QByteArray const& adif_record)
+{
+  m_->clublog_upload_.add (adif_record);   // each only while its box is ticked (Uploader::add)
+  m_->qrz_upload_.add (adif_record);
+  m_->update_upload_labels ();
+}
+
+void Configuration::impl::configure_uploads ()
+{
+  clublog_upload_.set_own_call (my_callsign_);   // first: a record without STATION_CALLSIGN is My Call's (station_calls ())
+  qrz_upload_.set_own_call (my_callsign_);
+  bool clublog_blocked {false}, qrz_blocked {false};
+  QStringList clublog_refused_calls;
+  QDateTime clublog_wait, qrz_wait;
+  {
+    SettingsGroup g {settings_, "Configuration"};
+    // (review 2) the token's refusal holds every QSO; a call's - My Call's or another's - that call's QSOs alone
+    clublog_blocked = clublog_refused (clublog_token_);
+    for (auto const& call : clublog_upload_.station_calls ())
+      if (clublog_call_refused (clublog_token_, call)) clublog_refused_calls << call;
+    qrz_blocked = qrz_upload_refused (qrz_key_);
+    clublog_wait = settings_->value (contest_profile::own_key ("ClubLogUploadRetryAfter")).toDateTime ();
+    qrz_wait = settings_->value (contest_profile::own_key ("QrzUploadRetryAfter")).toDateTime ();
+  }
+  clublog_upload_.set_credential (clublog_token_);
+  clublog_upload_.set_enabled (clublog_upload_on_);
+  clublog_upload_.set_blocked (clublog_blocked);
+  clublog_upload_.set_refused_calls (clublog_refused_calls);
+  clublog_upload_.set_not_before (clublog_wait);
+  qrz_upload_.set_credential (qrz_key_);
+  qrz_upload_.set_enabled (qrz_upload_on_);
+  qrz_upload_.set_blocked (qrz_blocked);
+  qrz_upload_.set_not_before (qrz_wait);
+  /* (review) a refusal on record lifted (another token or key, a good download, the box ticked anew): its words go with it.
+     A call's refusal has no words of its own here: the line names it from the record while that call's QSOs wait */
+  if (!clublog_blocked && UploadText::Recorded == clublog_upload_kind_) {clublog_upload_text_.clear (); clublog_upload_kind_ = UploadText::Event;}
+  if (!qrz_blocked && UploadText::Recorded == qrz_upload_kind_) {qrz_upload_text_.clear (); qrz_upload_kind_ = UploadText::Event;}
+  update_upload_labels ();
+}
+
+bool Configuration::impl::qrz_upload_refused (QString const& key) const
+{
+  if (key.isEmpty ()) return false;
+  return settings_->value (contest_profile::own_key ("QrzUploadRefused")).toStringList ().contains (club_log::token_id (key));
+}
+
+void Configuration::impl::qrz_set_upload_refused (QString const& key, bool refused)
+{
+  if (key.isEmpty ()) return;
+  auto ids = settings_->value (contest_profile::own_key ("QrzUploadRefused")).toStringList ();
+  auto const id = club_log::token_id (key);   // the key's SHA-256, never the key
+  ids.removeAll (id);
+  if (refused) ids << id;
+  while (ids.size () > 8) ids.removeFirst ();
+  if (ids.isEmpty ()) settings_->remove (contest_profile::own_key ("QrzUploadRefused"));
+  else settings_->setValue (contest_profile::own_key ("QrzUploadRefused"), ids);
+  if (!refused) settings_->remove (contest_profile::own_key ("QrzUploadRefusedWhy"));
+}
+
+namespace
+{
+  QString utc_time (QDateTime const& t, QDateTime const& now)
+  {
+    return t.toUTC ().toString (t.toUTC ().date () == now.toUTC ().date () ? "hh:mm" : "yyyy-MM-dd hh:mm");
+  }
+}
+
+void Configuration::impl::upload_done (qso_upload::Site site, qso_upload::Result const& result, QString const& call, int)
+{
+  auto const now = QDateTime::currentDateTimeUtc ();
+  auto& text = qso_upload::Site::ClubLog == site ? clublog_upload_text_ : qrz_upload_text_;
+  switch (result.kind)
+    {
+    case qso_upload::Result::Sent:
+      text = result.test ? tr ("%1 checked at %2 UTC with a test token: nothing stored.").arg (call).arg (utc_time (now, now))
+                         : tr ("%1 sent at %2 UTC.").arg (call).arg (utc_time (now, now));
+      break;
+    case qso_upload::Result::Duplicate: text = tr ("%1 was in the log already (%2 UTC).").arg (call).arg (utc_time (now, now)); break;
+    default: text = tr ("%1 refused at %2 UTC: %3").arg (call).arg (utc_time (now, now)).arg (result.reason); break;
+    }
+  (qso_upload::Site::ClubLog == site ? clublog_upload_kind_ : qrz_upload_kind_) = UploadText::Event;
+  // (review 3) a QSO sent or in the log already is nothing to report; a test token's check is (nothing stored), a refusal is
+  (qso_upload::Site::ClubLog == site ? clublog_upload_good_ : qrz_upload_good_)
+    = (qso_upload::Result::Sent == result.kind && !result.test) || qso_upload::Result::Duplicate == result.kind;
+  {
+    SettingsGroup g {settings_, "Configuration"};   // an answer: a Retry-After on record is over
+    settings_->remove (contest_profile::own_key (qso_upload::Site::ClubLog == site ? "ClubLogUploadRetryAfter" : "QrzUploadRetryAfter"));
+  }
+  // (review 1) the main window told of a QSO refused - a short note for 10 s; a QSO sent needs none
+  auto const name = qso_upload::site_name (site);
+  if (qso_upload::Result::Rejected == result.kind)
+    Q_EMIT self_->upload_note (name, tr ("%1 refused the QSO with %2 - see Settings > Reporting.").arg (name).arg (call));
+  update_upload_labels ();
+}
+
+void Configuration::impl::upload_refused (qso_upload::Site site, qso_upload::Result const& result, QString const& station_call, QString const& call)
+{
+  auto const name = qso_upload::site_name (site);
+  // the site's own words, with the HTTP status when it is not 200 (QRZ.com answers AUTH with 200) and not named already
+  auto const why = result.http_status && 200 != result.http_status && !result.reason.startsWith ("HTTP")
+    ? QString {"HTTP %1: %2"}.arg (result.http_status).arg (result.reason) : result.reason;
+  QString text;
+  {
+    SettingsGroup g {settings_, "Configuration"};
+    if (qso_upload::Site::ClubLog == site && qso_upload::Result::Token == result.scope)
+      {
+        clublog_set_refused (clublog_token_, true);   // the downloads' refusal too: the same token
+        text = tr ("Club Log refused the token. Make a new one in Club Log under Settings > API and paste it here.");
+      }
+    else if (qso_upload::Site::ClubLog == site && qso_upload::Result::Call == result.scope)
+      /* (review 2) on record, by the token and the call's SHA-256: My Call's is the downloads' too (the download button
+         lifts it), another call's (QSOs logged before My Call changed) holds that call's QSOs alone until the call is on
+         the account and the box is clicked off and on. The line names either from the record (update_upload_labels) */
+      clublog_set_call_refused (clublog_token_, station_call, true);
+    else if (qso_upload::Site::Qrz == site && qso_upload::Result::Token == result.scope)
+      {
+        qrz_set_upload_refused (qrz_key_, true);   // the upload's alone: the key may still FETCH
+        settings_->setValue (contest_profile::own_key ("QrzUploadRefusedWhy"), why);   // QRZ.com's words, for the next start's line
+        text = tr ("QRZ.com refused the upload with this key (%1): sending QSOs needs a QRZ.com subscription. Once you have one, click the box off and on and press OK, or save another key.").arg (why);
+      }
+    else
+      text = tr ("%1 refused the request (%2): nothing more is sent until you press OK in Settings or start the program again.").arg (name).arg (why);
+  }
+  (qso_upload::Site::ClubLog == site ? clublog_upload_text_ : qrz_upload_text_) = text;
+  (qso_upload::Site::ClubLog == site ? clublog_upload_good_ : qrz_upload_good_) = false;
+  // a refusal of the request is this run's: its words go at OK, which lifts it; one on record goes when the record does
+  (qso_upload::Site::ClubLog == site ? clublog_upload_kind_ : qrz_upload_kind_)
+    = qso_upload::Result::Request == result.scope ? UploadText::Run : UploadText::Recorded;
+  if (qso_upload::Site::ClubLog == site) update_clublog_label ();
+  Q_EMIT self_->upload_note (name, tr ("%1 refused the upload: the QSO with %2 is kept - see Settings > Reporting.").arg (name).arg (call));
+  configure_uploads ();
+}
+
+void Configuration::impl::upload_delayed (qso_upload::Site site, qso_upload::Result const& result, QString const& call,
+                                          QDateTime const& next, int)
+{
+  auto const now = QDateTime::currentDateTimeUtc ();
+  // (review 5) an answer the program does not understand says so, with what it was, not "HTTP status 200"
+  auto const why = qso_upload::Result::Wait == result.kind ? tr ("asked to wait")
+    : 0 == result.http_status ? tr ("no connection: %1").arg (result.reason)
+    : result.http_status >= 200 && result.http_status < 300 ? tr ("an answer not understood: %1").arg (result.reason)
+    : tr ("HTTP status %1").arg (result.http_status);
+  auto const text = tr ("%1 not sent at %2 UTC: %3. Kept; the next try at %4 UTC.").arg (call).arg (utc_time (now, now)).arg (why).arg (utc_time (next, now));
+  if (qso_upload::Result::Wait == result.kind)
+    {
+      SettingsGroup g {settings_, "Configuration"};   // a Retry-After holds across a start too
+      settings_->setValue (contest_profile::own_key (qso_upload::Site::ClubLog == site ? "ClubLogUploadRetryAfter" : "QrzUploadRetryAfter"), next);
+    }
+  (qso_upload::Site::ClubLog == site ? clublog_upload_text_ : qrz_upload_text_) = text;
+  (qso_upload::Site::ClubLog == site ? clublog_upload_kind_ : qrz_upload_kind_) = UploadText::Event;
+  (qso_upload::Site::ClubLog == site ? clublog_upload_good_ : qrz_upload_good_) = false;
+  auto const name = qso_upload::site_name (site);
+  Q_EMIT self_->upload_note (name, tr ("%1: the QSO with %2 is not sent yet, kept - see Settings > Reporting.").arg (name).arg (call));
+  update_upload_labels ();
+}
+
+/* (review 1) a QSO just logged that the site is not taking now - a refusal holds it, or a Retry-After, no token or key,
+   the uploads switched off: the main window's note again, so that a refusal is not missed while the operator works */
+void Configuration::impl::upload_kept (qso_upload::Site site, bool refused, QString const& call)
+{
+  auto const name = qso_upload::site_name (site);
+  Q_EMIT self_->upload_note (name, refused ? tr ("%1 refused the upload: the QSO with %2 is kept - see Settings > Reporting.").arg (name).arg (call)
+                                           : tr ("%1: the QSO with %2 is not sent yet, kept - see Settings > Reporting.").arg (name).arg (call));
+}
+
+void Configuration::impl::update_upload_labels ()
+{
+  bool clublog_refused_token {false}, clublog_refused_call {false}, qrz_refused_upload {false};
+  QString qrz_why;
+  QString clublog_other;   // (review 2) another call than My Call refused with this token, its QSOs waiting
+  {
+    SettingsGroup g {settings_, "Configuration"};
+    clublog_refused_token = clublog_refused (clublog_token_);
+    clublog_refused_call = clublog_call_refused (clublog_token_, my_callsign_);
+    qrz_refused_upload = qrz_upload_refused (qrz_key_);
+    qrz_why = settings_->value (contest_profile::own_key ("QrzUploadRefusedWhy"), "RESULT=AUTH").toString ();
+    auto const mine = my_callsign_.trimmed ().toUpper ();
+    for (auto const& call : clublog_upload_.station_calls ())
+      if (call != mine && clublog_call_refused (clublog_token_, call)) {clublog_other = call; break;}
+  }
+  /* (review 3, the operator's choice (a)) the line shows only when there is something to report - no token or key, the
+     uploads switched off, a refusal, a QSO not sent or refused, a test token's check, QSOs waiting beyond the request
+     under way; a QSO sent or in the log already is told by the box's tooltip alone, so that a ticked box makes Reporting
+     no taller than General */
+  auto line = [this] (qso_upload::Uploader const& u, QString const& credential, QString const& refusal, QString const& last, bool good,
+                      char const * env, QCheckBox * box, QString const& tip, QLabel * label) {
+    QStringList text;
+    bool report {true};
+    if (credential.isEmpty ()) text << tr ("No token or key: nothing is sent.");
+    else if (u.base ().isEmpty ()) text << tr ("Uploads to %1 are switched off (%2).").arg (qso_upload::site_name (u.site ())).arg (env);
+    else if (!refusal.isEmpty () && refusal != last) text << refusal;
+    else report = false;
+    if (!last.isEmpty ()) {text << last; report = report || !good;}
+    else if (text.isEmpty ()) text << tr ("QSOs you log are sent as you log them.");
+    if (u.waiting ()) text << tr ("QSOs waiting to be sent: %1.").arg (u.waiting ());
+    report = report || u.held () > 0;
+    label->setText (text.join ('\n'));
+    label->setVisible (box->isChecked () && report);
+    box->setToolTip (tip + "\n\n" + wrap_tooltip (text.join ('\n')));
+  };
+  QString const clublog_refusal {clublog_refused_token
+      ? tr ("Club Log refused the token. Make a new one in Club Log under Settings > API and paste it here.")
+      : clublog_refused_call
+      ? tr ("Club Log refused %1 with this token: the call is not on the token's Club Log account, or Club Log asks to correct the request. Add the call to your Club Log account and press the download button, or correct My Call on the General tab.")
+        .arg (my_callsign_.trimmed ().toUpper ())
+      : !clublog_other.isEmpty ()
+      ? tr ("Club Log refused %1 with this token: the call is not on the token's Club Log account. Its QSOs are kept, the others go on. Add the call to your Club Log account, then click the box off and on and press OK.")
+        .arg (clublog_other)
+      : QString {}};
+  line (clublog_upload_, clublog_token_, clublog_refusal, clublog_upload_text_, clublog_upload_good_, club_log::api_env,
+        ui_->clublog_upload_check_box, clublog_upload_tip_, ui_->clublog_upload_status_label);
+  // (review) a refusal on record shown from the record, as Club Log's: after a start too
+  QString const qrz_refusal {qrz_refused_upload
+      ? tr ("QRZ.com refused the upload with this key (%1): sending QSOs needs a QRZ.com subscription. Once you have one, click the box off and on and press OK, or save another key.").arg (qrz_why)
+      : QString {}};
+  line (qrz_upload_, qrz_key_, qrz_refusal, qrz_upload_text_, qrz_upload_good_, qrz_logbook::api_env, ui_->qrz_upload_check_box, qrz_upload_tip_,
+        ui_->qrz_upload_status_label);
 }
 
 /* CE3TSK 2026-11-22 (TODO.md 3.-280): QRZ.com's LoTW confirmations (qrzlogbook.h), added to Club Log's. The button downloads

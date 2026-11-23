@@ -703,6 +703,101 @@ Format:
         <source>Club Log refused %1 with this token (HTTP status %2): the call is not on the token's Club Log account, or Club Log asks to correct the request. Add the call to your Club Log account and press the download button, or correct My Call on the General tab.</source>
         <translation>Club Log odrzucił %1 z tym tokenem (status HTTP %2): znaku nie ma na koncie Club Log tego tokena albo Club Log prosi o poprawienie żądania. Dodaj znak do swojego konta Club Log i naciśnij przycisk pobierania albo popraw Mój Znak na karcie Ogólne.</translation>
     </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1 checked at %2 UTC with a test token: nothing stored.</source>
+        <translation>%1 sprawdzone o %2 UTC tokenem testowym: nic nie zapisano.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1 sent at %2 UTC.</source>
+        <translation>%1 wysłane o %2 UTC.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1 was in the log already (%2 UTC).</source>
+        <translation>%1 było już w logu (%2 UTC).</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1 refused at %2 UTC: %3</source>
+        <translation>%1 odrzucone o %2 UTC: %3</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>QRZ.com refused the upload with this key (%1): sending QSOs needs a QRZ.com subscription. Once you have one, click the box off and on and press OK, or save another key.</source>
+        <translation>QRZ.com odrzucił wysyłanie z tym kluczem (%1): wysyłanie QSO wymaga subskrypcji QRZ.com. Gdy ją masz, odznacz i zaznacz ponownie pole i naciśnij OK albo zapisz inny klucz.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1 refused the request (%2): nothing more is sent until you press OK in Settings or start the program again.</source>
+        <translation>%1 odrzucił żądanie (%2): nic więcej nie zostanie wysłane, dopóki nie naciśniesz OK w ustawieniach lub nie uruchomisz programu ponownie.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>asked to wait</source>
+        <translation>poproszono o czekanie</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>HTTP status %1</source>
+        <translation>stan HTTP %1</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>no connection: %1</source>
+        <translation>brak połączenia: %1</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1 not sent at %2 UTC: %3. Kept; the next try at %4 UTC.</source>
+        <translation>%1 nie wysłane o %2 UTC: %3. Zachowane; następna próba o %4 UTC.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>No token or key: nothing is sent.</source>
+        <translation>Brak tokenu lub klucza: nic nie jest wysyłane.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Uploads to %1 are switched off (%2).</source>
+        <translation>Wysyłanie do %1 jest wyłączone (%2).</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>QSOs you log are sent as you log them.</source>
+        <translation>Zapisane QSO są wysyłane od razu przy zapisie.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>QSOs waiting to be sent: %1.</source>
+        <translation>QSO czekające na wysłanie: %1.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1 refused the QSO with %2 - see Settings &gt; Reporting.</source>
+        <translation>%1 odrzucił QSO z %2 - zobacz Ustawienia &gt; Raportowanie.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1 refused the upload: the QSO with %2 is kept - see Settings &gt; Reporting.</source>
+        <translation>%1 odrzucił wysyłanie: QSO z %2 jest zachowane - zobacz Ustawienia &gt; Raportowanie.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>an answer not understood: %1</source>
+        <translation>niezrozumiała odpowiedź: %1</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1: the QSO with %2 is not sent yet, kept - see Settings &gt; Reporting.</source>
+        <translation>%1: QSO z %2 jeszcze nie wysłane, zachowane - zobacz Ustawienia &gt; Raportowanie.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Club Log refused %1 with this token: the call is not on the token's Club Log account. Its QSOs are kept, the others go on. Add the call to your Club Log account, then click the box off and on and press OK.</source>
+        <translation>Club Log odrzucił %1 z tym tokenem: znaku nie ma na koncie Club Log tego tokena. Jego QSO są zachowane, pozostałe idą dalej. Dodaj znak do swojego konta Club Log, potem odznacz i zaznacz ponownie pole i naciśnij OK.</translation>
+    </message>
 </context>
 <context>
     <name>CountryDat</name>
@@ -11476,6 +11571,35 @@ Pierwsze pobieranie trwa kilka minut; potem pobierane jest tylko to, co się zmi
         <location filename="../Configuration.ui"/>
         <source>Worked, LoTW-confirmed</source>
         <translation>Zrobione, potwierdzone w LoTW</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Send logged QSOs to:</source>
+        <translation>Wysyłaj zapisane QSO do:</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Each QSO you log is sent to your Club Log log at once, with the Club Log token - in a contest too. A QSO that cannot be sent now (no connection, Club Log busy) is kept and sent later; one Club Log refuses is named below.
+Only QSOs logged from now on: upload older ones to Club Log as an ADIF file there.</source>
+        <translation>Każde zapisane QSO jest od razu wysyłane do Twojego logu w Club Log, z tokenem Club Log – także w zawodach. QSO, którego nie można teraz wysłać (brak połączenia, Club Log zajęty), jest zachowywane i wysyłane później; to, które Club Log odrzuci, jest podane poniżej.
+Tylko QSO zapisane od teraz: starsze wyślij do Club Log jako plik ADIF, na tej stronie.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>&amp;Club Log</source>
+        <translation>Club &amp;Log</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Each QSO you log is sent to your QRZ.com logbook at once, with the QRZ.com API key - in a contest too. QRZ.com takes QSOs from programs only with a subscription. A QSO that cannot be sent now is kept and sent later; one QRZ.com refuses is named below.
+Only QSOs logged from now on: upload older ones to QRZ.com as an ADIF file there.</source>
+        <translation>Każde zapisane QSO jest od razu wysyłane do Twojego logu w QRZ.com, z kluczem API QRZ.com – także w zawodach. QRZ.com przyjmuje QSO od programów tylko z subskrypcją. QSO, którego nie można teraz wysłać, jest zachowywane i wysyłane później; to, które QRZ.com odrzuci, jest podane poniżej.
+Tylko QSO zapisane od teraz: starsze wyślij do QRZ.com jako plik ADIF, na tej stronie.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>QR&amp;Z.com</source>
+        <translation>QRZ.com</translation>
     </message>
 </context>
 <context>

@@ -3204,6 +3204,72 @@ The first download takes a few minutes; after it only what changed is fetched.</
               </property>
              </widget>
             </item>
+            <item row="5" column="0">
+             <widget class="QLabel" name="upload_label">
+              <property name="text">
+               <string>Send logged QSOs to:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="5" column="1">
+             <layout class="QHBoxLayout" name="upload_layout">
+              <item>
+               <widget class="QCheckBox" name="clublog_upload_check_box">
+                <property name="toolTip">
+                 <string>Each QSO you log is sent to your Club Log log at once, with the Club Log token - in a contest too. A QSO that cannot be sent now (no connection, Club Log busy) is kept and sent later; one Club Log refuses is named below.
+Only QSOs logged from now on: upload older ones to Club Log as an ADIF file there.</string>
+                </property>
+                <property name="text">
+                 <string>&amp;Club Log</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QCheckBox" name="qrz_upload_check_box">
+                <property name="toolTip">
+                 <string>Each QSO you log is sent to your QRZ.com logbook at once, with the QRZ.com API key - in a contest too. QRZ.com takes QSOs from programs only with a subscription. A QSO that cannot be sent now is kept and sent later; one QRZ.com refuses is named below.
+Only QSOs logged from now on: upload older ones to QRZ.com as an ADIF file there.</string>
+                </property>
+                <property name="text">
+                 <string>QR&amp;Z.com</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <spacer name="upload_spacer">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>0</width>
+                  <height>0</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+             </layout>
+            </item>
+            <item row="6" column="0" colspan="2">
+             <widget class="QLabel" name="clublog_upload_status_label">
+              <property name="text">
+               <string notr="true"/>
+              </property>
+              <property name="wordWrap">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+            <item row="7" column="0" colspan="2">
+             <widget class="QLabel" name="qrz_upload_status_label">
+              <property name="text">
+               <string notr="true"/>
+              </property>
+              <property name="wordWrap">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
            </layout>
           </widget>
          </item>

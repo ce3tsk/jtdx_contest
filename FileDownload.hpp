@@ -65,6 +65,10 @@ public:
     QByteArray body;
     qint64 max_body_size {64 * 1024 * 1024};   // the LoTW activity file is about 6 MB
     int timeout_ms {0};   // with no byte moving; 0: the transport's own (Qt 30 s, WinHTTP 20 s a read), as before
+    /* CE3TSK 2026-11-23 (TODO.md 3.-282, QSO_UPLOAD_PLAN.md): an upload's answer, not a file - replied () with the HTTP
+       status and the body, whatever the status (Club Log's 201 is a QSO created, its 422 says why in the body); no
+       validator, no transform, nothing written. A transport failure with no answer at all is still error (). */
+    bool reply_only {false};
   };
 
   explicit FileDownload (QObject * parent = nullptr);
@@ -90,6 +94,8 @@ public:
   // detail: the network error text, the HTTP status, the URL without SSL, the validator's
   // reason or the file error - whichever the failure is about
   Q_SIGNAL void error (FileDownload::Failure failure, QString const& detail) const;
+  // (3.-282) a reply_only request answered: its status (0 when the transport gave none) and body; retry_after () set
+  Q_SIGNAL void replied (int http_status, QByteArray const& body) const;
 
 private:
   void finished ();
