@@ -5236,7 +5236,12 @@ void Configuration::impl::clublog_finished (bool ok, FileDownload::Failure failu
       clublog_error_.clear ();
       update_clublog_label ();
       Q_EMIT self_->confirmations_updated ();
-      clublog_upload_.resume ();   // (2026-11-23, TODO.md 3.-282) a refusal lifted: what waits for Club Log goes now
+      /* (2026-11-23, TODO.md 3.-282) what waits for Club Log goes now: the refused calls read anew - a call's refusal
+         lifted (My Call's: the download's own) lets its QSOs go - and the token proven good lifts the uploads' stop for
+         its refusal (a 401 to an upload while this download was under way; the record lifted above). (review) A refusal
+         of the request itself is not lifted here - no resume (): it holds until OK or the next start, as its line says,
+         and Club Log asks for a 409 not to be sent again as it was */
+      clublog_upload_.token_good ();
       configure_uploads ();
       clublog_upload_.send_now ();
       // (2026-11-22) the button's, with a token or call not saved, ending after Cancel: the saved ones' now

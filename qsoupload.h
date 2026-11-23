@@ -106,7 +106,11 @@ namespace qso_upload
     void set_blocked (bool blocked) {blocked_ = blocked;}   // a refusal on record (Configuration's): nothing sent
     // (review) the station calls refused on record (Club Log, with this token): their QSOs kept, not sent; upper case
     void set_refused_calls (QStringList const& calls);
-    void resume () {stopped_ = false;}    // a refusal of this run lifted: the user pressed OK, a download went well
+    void resume () {stopped_ = false;}    // a refusal of this run lifted: the user pressed OK
+    /* (review) the token proven good - a good Club Log download: a stop for the token's refusal lifted (a 401 to an
+       upload while that download was under way), never one for a refusal of the request (it holds until OK or the next
+       start). The token's refusal on record still holds every QSO through set_blocked () */
+    void token_good ();
     void set_not_before (QDateTime const& when) {not_before_ = when;}   // a Retry-After kept from an earlier run
     void add (QByteArray const& record);  // a QSO logged: into the queue file, and sent as soon as it may be
     void send_now ();                     // the next request now, if it may go
@@ -152,6 +156,7 @@ namespace qso_upload
     bool enabled_ {false};
     bool blocked_ {false};
     bool stopped_ {false};       // a Refused of this run
+    Result::Scope stop_scope_ {Result::Request};   // (review) what it was for: the token, or the request itself
     bool one_by_one_ {false};    // Club Log refused a batch: one record a request from then on
     QStringList refused_calls_;  // (review) station calls set aside
     QList<QByteArray> queue_;

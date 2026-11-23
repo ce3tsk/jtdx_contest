@@ -262,6 +262,11 @@ namespace qso_upload
     for (auto const& call : calls) refused_calls_ << call.trimmed ().toUpper ();
   }
 
+  void Uploader::token_good ()
+  {
+    if (stopped_ && Result::Token == stop_scope_) stopped_ = false;
+  }
+
   QString Uploader::base () const
   {
     return Site::ClubLog == site_ ? club_log::api_base () : qrz_logbook::api_base ();
@@ -452,7 +457,8 @@ namespace qso_upload
               if (first_sendable () >= 0) {next_try_ = now.addMSecs (gap_ms); timer_.start (gap_ms);}
               return;
             }
-          stopped_ = true;   // the user must act: another token or key, a good download, OK
+          stopped_ = true;   // the user must act: OK (with another token or key for the token's), or the next start -
+          stop_scope_ = next.scope;   // the token's also lifted by a good Club Log download (token_good ())
           next_try_ = QDateTime {};
           Q_EMIT refused (next, station, call, queue_.size ());
           return;
