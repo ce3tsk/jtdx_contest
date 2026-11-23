@@ -695,13 +695,13 @@ Format:
     </message>
     <message>
         <location filename="../Configuration.cpp"/>
-        <source>Club Log refused %1 with this token: the call is not on the token's Club Log account, or Club Log asks to correct the request. Add the call to your Club Log account, or correct My Call on the General tab.</source>
-        <translation>Club Log가 이 토큰으로 %1을(를) 거부했습니다: 이 호출부호가 토큰의 Club Log 계정에 없거나 Club Log가 요청 수정을 요구합니다. 호출부호를 Club Log 계정에 추가하거나 일반 탭의 내 호출부호를 고치십시오.</translation>
+        <source>Club Log refused %1 with this token: the call is not on the token's Club Log account, or Club Log asks to correct the request. Add the call to your Club Log account and press the download button, or correct My Call on the General tab.</source>
+        <translation>Club Log가 이 토큰으로 %1을(를) 거부했습니다: 이 호출부호가 토큰의 Club Log 계정에 없거나 Club Log가 요청 수정을 요구합니다. 호출부호를 Club Log 계정에 추가하고 다운로드 버튼을 누르거나 일반 탭의 내 호출부호를 고치십시오.</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp"/>
-        <source>Club Log refused %1 with this token (HTTP status %2): the call is not on the token's Club Log account, or Club Log asks to correct the request. Add the call to your Club Log account, or correct My Call on the General tab.</source>
-        <translation>Club Log가 이 토큰으로 %1을(를) 거부했습니다 (HTTP 상태 %2): 이 호출부호가 토큰의 Club Log 계정에 없거나 Club Log가 요청 수정을 요구합니다. 호출부호를 Club Log 계정에 추가하거나 일반 탭의 내 호출부호를 고치십시오.</translation>
+        <source>Club Log refused %1 with this token (HTTP status %2): the call is not on the token's Club Log account, or Club Log asks to correct the request. Add the call to your Club Log account and press the download button, or correct My Call on the General tab.</source>
+        <translation>Club Log가 이 토큰으로 %1을(를) 거부했습니다 (HTTP 상태 %2): 이 호출부호가 토큰의 Club Log 계정에 없거나 Club Log가 요청 수정을 요구합니다. 호출부호를 Club Log 계정에 추가하고 다운로드 버튼을 누르거나 일반 탭의 내 호출부호를 고치십시오.</translation>
     </message>
 </context>
 <context>

@@ -695,13 +695,13 @@ Formāts:
     </message>
     <message>
         <location filename="../Configuration.cpp"/>
-        <source>Club Log refused %1 with this token: the call is not on the token's Club Log account, or Club Log asks to correct the request. Add the call to your Club Log account, or correct My Call on the General tab.</source>
-        <translation>Club Log noraidīja %1 ar šo tokenu: izsaukuma signāls nav tokena Club Log kontā, vai Club Log lūdz labot pieprasījumu. Pievienojiet izsaukuma signālu savam Club Log kontam vai izlabojiet Mans Call cilnē Vispārīgi.</translation>
+        <source>Club Log refused %1 with this token: the call is not on the token's Club Log account, or Club Log asks to correct the request. Add the call to your Club Log account and press the download button, or correct My Call on the General tab.</source>
+        <translation>Club Log noraidīja %1 ar šo tokenu: izsaukuma signāls nav tokena Club Log kontā, vai Club Log lūdz labot pieprasījumu. Pievienojiet izsaukuma signālu savam Club Log kontam un nospiediet lejupielādes pogu vai izlabojiet Mans Call cilnē Vispārīgi.</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp"/>
-        <source>Club Log refused %1 with this token (HTTP status %2): the call is not on the token's Club Log account, or Club Log asks to correct the request. Add the call to your Club Log account, or correct My Call on the General tab.</source>
-        <translation>Club Log noraidīja %1 ar šo tokenu (HTTP statuss %2): izsaukuma signāls nav tokena Club Log kontā, vai Club Log lūdz labot pieprasījumu. Pievienojiet izsaukuma signālu savam Club Log kontam vai izlabojiet Mans Call cilnē Vispārīgi.</translation>
+        <source>Club Log refused %1 with this token (HTTP status %2): the call is not on the token's Club Log account, or Club Log asks to correct the request. Add the call to your Club Log account and press the download button, or correct My Call on the General tab.</source>
+        <translation>Club Log noraidīja %1 ar šo tokenu (HTTP statuss %2): izsaukuma signāls nav tokena Club Log kontā, vai Club Log lūdz labot pieprasījumu. Pievienojiet izsaukuma signālu savam Club Log kontam un nospiediet lejupielādes pogu vai izlabojiet Mans Call cilnē Vispārīgi.</translation>
     </message>
 </context>
 <context>

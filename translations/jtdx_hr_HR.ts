@@ -695,13 +695,13 @@ Format:
     </message>
     <message>
         <location filename="../Configuration.cpp"/>
-        <source>Club Log refused %1 with this token: the call is not on the token's Club Log account, or Club Log asks to correct the request. Add the call to your Club Log account, or correct My Call on the General tab.</source>
-        <translation>Club Log je odbio %1 s ovim tokenom: znak nije na Club Log računu tokena ili Club Log traži da se zahtjev ispravi. Dodajte znak na svoj Club Log račun ili ispravite Moj Znak na kartici Općenito.</translation>
+        <source>Club Log refused %1 with this token: the call is not on the token's Club Log account, or Club Log asks to correct the request. Add the call to your Club Log account and press the download button, or correct My Call on the General tab.</source>
+        <translation>Club Log je odbio %1 s ovim tokenom: znak nije na Club Log računu tokena ili Club Log traži da se zahtjev ispravi. Dodajte znak na svoj Club Log račun i pritisnite gumb za preuzimanje ili ispravite Moj Znak na kartici Općenito.</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp"/>
-        <source>Club Log refused %1 with this token (HTTP status %2): the call is not on the token's Club Log account, or Club Log asks to correct the request. Add the call to your Club Log account, or correct My Call on the General tab.</source>
-        <translation>Club Log je odbio %1 s ovim tokenom (HTTP status %2): znak nije na Club Log računu tokena ili Club Log traži da se zahtjev ispravi. Dodajte znak na svoj Club Log račun ili ispravite Moj Znak na kartici Općenito.</translation>
+        <source>Club Log refused %1 with this token (HTTP status %2): the call is not on the token's Club Log account, or Club Log asks to correct the request. Add the call to your Club Log account and press the download button, or correct My Call on the General tab.</source>
+        <translation>Club Log je odbio %1 s ovim tokenom (HTTP status %2): znak nije na Club Log računu tokena ili Club Log traži da se zahtjev ispravi. Dodajte znak na svoj Club Log račun i pritisnite gumb za preuzimanje ili ispravite Moj Znak na kartici Općenito.</translation>
     </message>
 </context>
 <context>

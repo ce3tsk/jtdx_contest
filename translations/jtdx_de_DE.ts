@@ -695,13 +695,13 @@ Format:
     </message>
     <message>
         <location filename="../Configuration.cpp"/>
-        <source>Club Log refused %1 with this token: the call is not on the token's Club Log account, or Club Log asks to correct the request. Add the call to your Club Log account, or correct My Call on the General tab.</source>
-        <translation>Club Log hat %1 mit diesem Token abgelehnt: Das Rufzeichen gehört nicht zum Club-Log-Konto des Tokens, oder Club Log verlangt eine korrigierte Anfrage. Fügen Sie das Rufzeichen Ihrem Club-Log-Konto hinzu, oder korrigieren Sie Mein Rufzeichen auf der Registerkarte Allgemein.</translation>
+        <source>Club Log refused %1 with this token: the call is not on the token's Club Log account, or Club Log asks to correct the request. Add the call to your Club Log account and press the download button, or correct My Call on the General tab.</source>
+        <translation>Club Log hat %1 mit diesem Token abgelehnt: Das Rufzeichen gehört nicht zum Club-Log-Konto des Tokens, oder Club Log verlangt eine korrigierte Anfrage. Fügen Sie das Rufzeichen Ihrem Club-Log-Konto hinzu und drücken Sie die Download-Schaltfläche, oder korrigieren Sie Mein Rufzeichen auf der Registerkarte Allgemein.</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp"/>
-        <source>Club Log refused %1 with this token (HTTP status %2): the call is not on the token's Club Log account, or Club Log asks to correct the request. Add the call to your Club Log account, or correct My Call on the General tab.</source>
-        <translation>Club Log hat %1 mit diesem Token abgelehnt (HTTP-Status %2): Das Rufzeichen gehört nicht zum Club-Log-Konto des Tokens, oder Club Log verlangt eine korrigierte Anfrage. Fügen Sie das Rufzeichen Ihrem Club-Log-Konto hinzu, oder korrigieren Sie Mein Rufzeichen auf der Registerkarte Allgemein.</translation>
+        <source>Club Log refused %1 with this token (HTTP status %2): the call is not on the token's Club Log account, or Club Log asks to correct the request. Add the call to your Club Log account and press the download button, or correct My Call on the General tab.</source>
+        <translation>Club Log hat %1 mit diesem Token abgelehnt (HTTP-Status %2): Das Rufzeichen gehört nicht zum Club-Log-Konto des Tokens, oder Club Log verlangt eine korrigierte Anfrage. Fügen Sie das Rufzeichen Ihrem Club-Log-Konto hinzu und drücken Sie die Download-Schaltfläche, oder korrigieren Sie Mein Rufzeichen auf der Registerkarte Allgemein.</translation>
     </message>
 </context>
 <context>
@@ -11459,7 +11459,7 @@ Der erste Download dauert einige Minuten; danach wird nur abgerufen, was sich ge
     <message>
         <location filename="../Configuration.ui"/>
         <source>With LoTW confirmations downloaded from Club Log or QRZ.com, a decode worked in every tier above that is on, and LoTW-confirmed in each of them with the band and mode those tiers count, is shown in its own color. A new tier keeps its own color, and the auto sequencer is not affected. Not in a contest.</source>
-        <translation>Mit von Club Log oder QRZ.com heruntergeladenen LoTW-Bestätigungen wird eine Dekodierung, die in jeder eingeschalteten Stufe oben gearbeitet und in jeder davon per LoTW bestätigt ist, mit dem Band und der Betriebsart, die diese Stufen zählen, in einer eigenen Farbe angezeigt. Eine neue Stufe behält ihre eigene Farbe, und der automatische Ablauf bleibt unberührt. Nicht in einem Contest.</translation>
+        <translation>Mit von Club Log oder QRZ.com heruntergeladenen LoTW-Bestätigungen wird eine Dekodierung, die in jeder eingeschalteten Stufe oben gearbeitet und in jeder davon – mit dem Band und der Betriebsart, die diese Stufen zählen – per LoTW bestätigt ist, in einer eigenen Farbe angezeigt. Eine neue Stufe behält ihre eigene Farbe, und der automatische Ablauf bleibt unberührt. Nicht in einem Contest.</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>

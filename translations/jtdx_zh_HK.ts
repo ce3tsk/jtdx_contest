@@ -695,13 +695,13 @@ Format:
     </message>
     <message>
         <location filename="../Configuration.cpp"/>
-        <source>Club Log refused %1 with this token: the call is not on the token's Club Log account, or Club Log asks to correct the request. Add the call to your Club Log account, or correct My Call on the General tab.</source>
-        <translation>Club Log 拒絕了使用此權杖的 %1：該呼號不在此權杖的 Club Log 帳戶中，或 Club Log 要求更正請求。請將該呼號加入您的 Club Log 帳戶，或更正一般分頁中的「我的呼號」。</translation>
+        <source>Club Log refused %1 with this token: the call is not on the token's Club Log account, or Club Log asks to correct the request. Add the call to your Club Log account and press the download button, or correct My Call on the General tab.</source>
+        <translation>Club Log 拒絕了使用此權杖的 %1：該呼號不在此權杖的 Club Log 帳戶中，或 Club Log 要求更正請求。請將該呼號加入您的 Club Log 帳戶並按下載按鈕，或更正一般分頁中的「我的呼號」。</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp"/>
-        <source>Club Log refused %1 with this token (HTTP status %2): the call is not on the token's Club Log account, or Club Log asks to correct the request. Add the call to your Club Log account, or correct My Call on the General tab.</source>
-        <translation>Club Log 拒絕了使用此權杖的 %1（HTTP 狀態 %2）：該呼號不在此權杖的 Club Log 帳戶中，或 Club Log 要求更正請求。請將該呼號加入您的 Club Log 帳戶，或更正一般分頁中的「我的呼號」。</translation>
+        <source>Club Log refused %1 with this token (HTTP status %2): the call is not on the token's Club Log account, or Club Log asks to correct the request. Add the call to your Club Log account and press the download button, or correct My Call on the General tab.</source>
+        <translation>Club Log 拒絕了使用此權杖的 %1（HTTP 狀態 %2）：該呼號不在此權杖的 Club Log 帳戶中，或 Club Log 要求更正請求。請將該呼號加入您的 Club Log 帳戶並按下載按鈕，或更正一般分頁中的「我的呼號」。</translation>
     </message>
 </context>
 <context>

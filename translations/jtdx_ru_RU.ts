@@ -696,13 +696,13 @@ Format:
     </message>
     <message>
         <location filename="../Configuration.cpp"/>
-        <source>Club Log refused %1 with this token: the call is not on the token's Club Log account, or Club Log asks to correct the request. Add the call to your Club Log account, or correct My Call on the General tab.</source>
-        <translation>Club Log отклонил %1 с этим токеном: позывного нет в учётной записи Club Log этого токена, или Club Log просит исправить запрос. Добавьте позывной в свою учётную запись Club Log или исправьте Мой позывной на вкладке Общие.</translation>
+        <source>Club Log refused %1 with this token: the call is not on the token's Club Log account, or Club Log asks to correct the request. Add the call to your Club Log account and press the download button, or correct My Call on the General tab.</source>
+        <translation>Club Log отклонил %1 с этим токеном: позывного нет в учётной записи Club Log этого токена, или Club Log просит исправить запрос. Добавьте позывной в свою учётную запись Club Log и нажмите кнопку загрузки или исправьте Мой позывной на вкладке Общие.</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp"/>
-        <source>Club Log refused %1 with this token (HTTP status %2): the call is not on the token's Club Log account, or Club Log asks to correct the request. Add the call to your Club Log account, or correct My Call on the General tab.</source>
-        <translation>Club Log отклонил %1 с этим токеном (HTTP-статус %2): позывного нет в учётной записи Club Log этого токена, или Club Log просит исправить запрос. Добавьте позывной в свою учётную запись Club Log или исправьте Мой позывной на вкладке Общие.</translation>
+        <source>Club Log refused %1 with this token (HTTP status %2): the call is not on the token's Club Log account, or Club Log asks to correct the request. Add the call to your Club Log account and press the download button, or correct My Call on the General tab.</source>
+        <translation>Club Log отклонил %1 с этим токеном (HTTP-статус %2): позывного нет в учётной записи Club Log этого токена, или Club Log просит исправить запрос. Добавьте позывной в свою учётную запись Club Log и нажмите кнопку загрузки или исправьте Мой позывной на вкладке Общие.</translation>
     </message>
 </context>
 <context>

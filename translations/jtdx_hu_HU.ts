@@ -695,13 +695,13 @@ Formátum:
     </message>
     <message>
         <location filename="../Configuration.cpp"/>
-        <source>Club Log refused %1 with this token: the call is not on the token's Club Log account, or Club Log asks to correct the request. Add the call to your Club Log account, or correct My Call on the General tab.</source>
-        <translation>A Club Log elutasította a(z) %1 hívójelet ezzel a tokennel: a hívójel nincs a token Club Log fiókjában, vagy a Club Log a kérés javítását kéri. Adja hozzá a hívójelet a Club Log fiókjához, vagy javítsa a hívójelet az Általános lapon.</translation>
+        <source>Club Log refused %1 with this token: the call is not on the token's Club Log account, or Club Log asks to correct the request. Add the call to your Club Log account and press the download button, or correct My Call on the General tab.</source>
+        <translation>A Club Log elutasította a(z) %1 hívójelet ezzel a tokennel: a hívójel nincs a token Club Log fiókjában, vagy a Club Log a kérés javítását kéri. Adja hozzá a hívójelet a Club Log fiókjához, és nyomja meg a letöltés gombot, vagy javítsa a hívójelet az Általános lapon.</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp"/>
-        <source>Club Log refused %1 with this token (HTTP status %2): the call is not on the token's Club Log account, or Club Log asks to correct the request. Add the call to your Club Log account, or correct My Call on the General tab.</source>
-        <translation>A Club Log elutasította a(z) %1 hívójelet ezzel a tokennel (HTTP-állapot: %2): a hívójel nincs a token Club Log fiókjában, vagy a Club Log a kérés javítását kéri. Adja hozzá a hívójelet a Club Log fiókjához, vagy javítsa a hívójelet az Általános lapon.</translation>
+        <source>Club Log refused %1 with this token (HTTP status %2): the call is not on the token's Club Log account, or Club Log asks to correct the request. Add the call to your Club Log account and press the download button, or correct My Call on the General tab.</source>
+        <translation>A Club Log elutasította a(z) %1 hívójelet ezzel a tokennel (HTTP-állapot: %2): a hívójel nincs a token Club Log fiókjában, vagy a Club Log a kérés javítását kéri. Adja hozzá a hívójelet a Club Log fiókjához, és nyomja meg a letöltés gombot, vagy javítsa a hívójelet az Általános lapon.</translation>
     </message>
 </context>
 <context>

@@ -925,7 +925,7 @@ int DisplayText::displayDecodedText(DecodedText* decodedText, QString myCall, QS
                     bool c4 = true, c4BandMode = true;
                     (confirmed_->*match) (checkCall, confirmedName, c4, c4BandMode, band ? dialFreq : 0, bandMode ? checkMode : QString {});
                     if (pending_ && (!c4 || !c4BandMode)) {   // (2026-11-22) or confirmed for now (D10)
-                        bool p4 = false, p4BandMode = false;
+                        bool p4 = false, p4BandMode = true;   // (the review) a lookup given no band leaves its band answer: as one book did
                         (pending_->*match) (checkCall, confirmedName, p4, p4BandMode, band ? dialFreq : 0, bandMode ? checkMode : QString {});
                         c4 = c4 || p4; c4BandMode = c4BandMode || p4BandMode;
                     }
@@ -940,7 +940,7 @@ int DisplayText::displayDecodedText(DecodedText* decodedText, QString myCall, QS
                     bool c4 = true, c4BandMode = true;
                     confirmed_->matchGrid (grid.trimmed (), c4, c4BandMode, (displayNewGridBand_ ? dialFreq : 0), (displayNewGridBandMode_ ? checkMode : QString {}));
                     if (pending_ && (!c4 || !c4BandMode)) {   // (2026-11-22) or confirmed for now (D10)
-                        bool p4 = false, p4BandMode = false;
+                        bool p4 = false, p4BandMode = true;   // (the review) as above
                         pending_->matchGrid (grid.trimmed (), p4, p4BandMode, (displayNewGridBand_ ? dialFreq : 0), (displayNewGridBandMode_ ? checkMode : QString {}));
                         c4 = c4 || p4; c4BandMode = c4BandMode || p4BandMode;
                     }
@@ -973,16 +973,19 @@ int DisplayText::displayDecodedText(DecodedText* decodedText, QString myCall, QS
                    report from a call never heard with a grid when only grid and state are on, a DX call when only the
                    state is - is shown plainly and never hidden by "don't show it". */
                 bool gridJudged = false;
+                QString judgedSquare;   // (the review 2026-11-22, D12) the square the grid tier judged by, for the confirmations
                 if (displayNewGrid_ && !checkCall.isEmpty ()) {
                     QString const key = checkCall + QLatin1Char ('@') + ADIF::bandFromFrequency (dialFreq / 1.e6);
                     if (!grid.trimmed ().isEmpty ()) {
                         if (gridsHeard_.size () > 20000) gridsHeard_.clear ();   // a bound a session never reaches
                         gridsHeard_.insert (key, grid.trimmed ());
                         gridJudged = true;
+                        judgedSquare = grid.trimmed ();
                     } else if (gridsHeard_.contains (key)) {
                         bool b4 = true, b4BandMode = true;
                         matchGridAt (gridsHeard_.value (key), b4, b4BandMode);
                         gridJudged = b4 && b4BandMode;
+                        if (gridJudged) judgedSquare = gridsHeard_.value (key);
                     }
                 }
                 bool const judged = callTiers_ || gridJudged || (displayNewState_ && stateJudged);
@@ -1349,29 +1352,39 @@ int DisplayText::displayDecodedText(DecodedText* decodedText, QString myCall, QS
                    Never in a contest; nothing while no confirmations were downloaded; the rank is the worked one's. */
                 if (workedTip && confirmed_ && !contest_.running) {
                     confirmedTip = true;
+                    int asked = 0;   // (the review 2026-11-22) the tiers that could judge it: none, and nothing is proved
                     QString confirmedName {countryName};
-                    auto const held = [&] (void (LogBook::* match) (QString, QString&, bool&, bool&, double, QString), bool on, bool band, bool bandMode) {
-                        if (!on || !confirmedTip) return;
+                    /* (the review) a call of no country is "worked" in the country tiers by the log's lookups (inherited) and by
+                       the confirmations' alike: they prove nothing there - left out, as a tier that cannot judge */
+                    bool const placed {countryName.section (',', 1, 1).trimmed () != "?"};
+                    auto const held = [&] (void (LogBook::* match) (QString, QString&, bool&, bool&, double, QString), bool on, bool band, bool bandMode,
+                                           bool needsCountry) {
+                        if (!on || !confirmedTip || (needsCountry && !placed)) return;
+                        ++asked;
                         bool c4 = false, c4BandMode = false;
                         (confirmed_->*match) (checkCall, confirmedName, c4, c4BandMode, band ? dialFreq : 0, bandMode ? checkMode : QString {});
                         if (!c4 || ((band || bandMode) && !c4BandMode)) confirmedTip = false;
                     };
-                    held (&LogBook::matchCQZ, displayNewCQZ_, displayNewCQZBand_, displayNewCQZBandMode_);
-                    held (&LogBook::matchITUZ, displayNewITUZ_, displayNewITUZBand_, displayNewITUZBandMode_);
-                    held (&LogBook::matchDXCC, displayNewDXCC_, displayNewDXCCBand_, displayNewDXCCBandMode_);
-                    held (&LogBook::matchPX, displayNewPx_, displayNewPxBand_, displayNewPxBandMode_);
-                    held (&LogBook::matchCall, displayNewCall_, displayNewCallBand_, displayNewCallBandMode_);
-                    if (confirmedTip && displayNewGrid_ && !grid.trimmed ().isEmpty ()) {
+                    held (&LogBook::matchCQZ, displayNewCQZ_, displayNewCQZBand_, displayNewCQZBandMode_, true);
+                    held (&LogBook::matchITUZ, displayNewITUZ_, displayNewITUZBand_, displayNewITUZBandMode_, true);
+                    held (&LogBook::matchDXCC, displayNewDXCC_, displayNewDXCCBand_, displayNewDXCCBandMode_, true);
+                    held (&LogBook::matchPX, displayNewPx_, displayNewPxBand_, displayNewPxBandMode_, false);
+                    held (&LogBook::matchCall, displayNewCall_, displayNewCallBand_, displayNewCallBandMode_, false);
+                    // the square the grid tier judged by - the decode's own, or (a report without one) the one heard before
+                    if (confirmedTip && displayNewGrid_ && !judgedSquare.isEmpty ()) {
+                        ++asked;
                         bool c4 = false, c4BandMode = false;
-                        confirmed_->matchGrid (grid.trimmed (), c4, c4BandMode, (displayNewGridBand_ ? dialFreq : 0), (displayNewGridBandMode_ ? checkMode : QString {}));
+                        confirmed_->matchGrid (judgedSquare, c4, c4BandMode, (displayNewGridBand_ ? dialFreq : 0), (displayNewGridBandMode_ ? checkMode : QString {}));
                         if (!c4 || ((displayNewGridBand_ || displayNewGridBandMode_) && !c4BandMode)) confirmedTip = false;
                     }
                     if (confirmedTip && displayNewState_ && stateJudged) {
+                        ++asked;
                         bool c4 = false, c4Band = false;
                         confirmed_->matchState (countryName.section (',', 1, 1).trimmed (), checkCall, stateGrid (), c4, c4Band,
                                                 displayNewStateBand_ ? dialFreq : 0, displayNewStateBandMode_ ? checkMode : QString {});
                         if (!c4 || ((displayNewStateBand_ || displayNewStateBandMode_) && !c4Band)) confirmedTip = false;
                     }
+                    if (0 == asked) confirmedTip = false;
                     if (confirmedTip && highlightConfirmed_) {
                         if ((displayPotential_ && std_type == 3) || std_type != 3) bgColor = color_Confirmed_;
                         else if (otherMessagesMarker_) servis = servis.left (1) + color_Confirmed_;

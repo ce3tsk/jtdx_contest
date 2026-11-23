@@ -695,13 +695,13 @@ Formato:
     </message>
     <message>
         <location filename="../Configuration.cpp"/>
-        <source>Club Log refused %1 with this token: the call is not on the token's Club Log account, or Club Log asks to correct the request. Add the call to your Club Log account, or correct My Call on the General tab.</source>
-        <translation>Club Log ha rifiutato %1 con questo token: il nominativo non è nell'account Club Log del token, oppure Club Log chiede di correggere la richiesta. Aggiungere il nominativo al proprio account Club Log, o correggere Il Mio Nominativo nella scheda Generali.</translation>
+        <source>Club Log refused %1 with this token: the call is not on the token's Club Log account, or Club Log asks to correct the request. Add the call to your Club Log account and press the download button, or correct My Call on the General tab.</source>
+        <translation>Club Log ha rifiutato %1 con questo token: il nominativo non è nell'account Club Log del token, oppure Club Log chiede di correggere la richiesta. Aggiungere il nominativo al proprio account Club Log e premere il pulsante di download, o correggere Il Mio Nominativo nella scheda Generali.</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp"/>
-        <source>Club Log refused %1 with this token (HTTP status %2): the call is not on the token's Club Log account, or Club Log asks to correct the request. Add the call to your Club Log account, or correct My Call on the General tab.</source>
-        <translation>Club Log ha rifiutato %1 con questo token (stato HTTP %2): il nominativo non è nell'account Club Log del token, oppure Club Log chiede di correggere la richiesta. Aggiungere il nominativo al proprio account Club Log, o correggere Il Mio Nominativo nella scheda Generali.</translation>
+        <source>Club Log refused %1 with this token (HTTP status %2): the call is not on the token's Club Log account, or Club Log asks to correct the request. Add the call to your Club Log account and press the download button, or correct My Call on the General tab.</source>
+        <translation>Club Log ha rifiutato %1 con questo token (stato HTTP %2): il nominativo non è nell'account Club Log del token, oppure Club Log chiede di correggere la richiesta. Aggiungere il nominativo al proprio account Club Log e premere il pulsante di download, o correggere Il Mio Nominativo nella scheda Generali.</translation>
     </message>
 </context>
 <context>

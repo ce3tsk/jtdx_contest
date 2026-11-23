@@ -695,13 +695,13 @@ Vorming:
     </message>
     <message>
         <location filename="../Configuration.cpp"/>
-        <source>Club Log refused %1 with this token: the call is not on the token's Club Log account, or Club Log asks to correct the request. Add the call to your Club Log account, or correct My Call on the General tab.</source>
-        <translation>Club Log lükkas %1 selle tokeniga tagasi: kutsungit ei ole tokeni Club Logi kontol või Club Log palub päringut parandada. Lisage kutsung oma Club Logi kontole või parandage Minu kutsung vahekaardil Üldine.</translation>
+        <source>Club Log refused %1 with this token: the call is not on the token's Club Log account, or Club Log asks to correct the request. Add the call to your Club Log account and press the download button, or correct My Call on the General tab.</source>
+        <translation>Club Log lükkas %1 selle tokeniga tagasi: kutsungit ei ole tokeni Club Logi kontol või Club Log palub päringut parandada. Lisage kutsung oma Club Logi kontole ja vajutage allalaadimisnuppu või parandage Minu kutsung vahekaardil Üldine.</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp"/>
-        <source>Club Log refused %1 with this token (HTTP status %2): the call is not on the token's Club Log account, or Club Log asks to correct the request. Add the call to your Club Log account, or correct My Call on the General tab.</source>
-        <translation>Club Log lükkas %1 selle tokeniga tagasi (HTTP olek %2): kutsungit ei ole tokeni Club Logi kontol või Club Log palub päringut parandada. Lisage kutsung oma Club Logi kontole või parandage Minu kutsung vahekaardil Üldine.</translation>
+        <source>Club Log refused %1 with this token (HTTP status %2): the call is not on the token's Club Log account, or Club Log asks to correct the request. Add the call to your Club Log account and press the download button, or correct My Call on the General tab.</source>
+        <translation>Club Log lükkas %1 selle tokeniga tagasi (HTTP olek %2): kutsungit ei ole tokeni Club Logi kontol või Club Log palub päringut parandada. Lisage kutsung oma Club Logi kontole ja vajutage allalaadimisnuppu või parandage Minu kutsung vahekaardil Üldine.</translation>
     </message>
 </context>
 <context>

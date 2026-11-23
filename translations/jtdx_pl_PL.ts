@@ -695,13 +695,13 @@ Format:
     </message>
     <message>
         <location filename="../Configuration.cpp"/>
-        <source>Club Log refused %1 with this token: the call is not on the token's Club Log account, or Club Log asks to correct the request. Add the call to your Club Log account, or correct My Call on the General tab.</source>
-        <translation>Club Log odrzucił %1 z tym tokenem: znaku nie ma na koncie Club Log tego tokena albo Club Log prosi o poprawienie żądania. Dodaj znak do swojego konta Club Log albo popraw Mój Znak na karcie Ogólne.</translation>
+        <source>Club Log refused %1 with this token: the call is not on the token's Club Log account, or Club Log asks to correct the request. Add the call to your Club Log account and press the download button, or correct My Call on the General tab.</source>
+        <translation>Club Log odrzucił %1 z tym tokenem: znaku nie ma na koncie Club Log tego tokena albo Club Log prosi o poprawienie żądania. Dodaj znak do swojego konta Club Log i naciśnij przycisk pobierania albo popraw Mój Znak na karcie Ogólne.</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp"/>
-        <source>Club Log refused %1 with this token (HTTP status %2): the call is not on the token's Club Log account, or Club Log asks to correct the request. Add the call to your Club Log account, or correct My Call on the General tab.</source>
-        <translation>Club Log odrzucił %1 z tym tokenem (status HTTP %2): znaku nie ma na koncie Club Log tego tokena albo Club Log prosi o poprawienie żądania. Dodaj znak do swojego konta Club Log albo popraw Mój Znak na karcie Ogólne.</translation>
+        <source>Club Log refused %1 with this token (HTTP status %2): the call is not on the token's Club Log account, or Club Log asks to correct the request. Add the call to your Club Log account and press the download button, or correct My Call on the General tab.</source>
+        <translation>Club Log odrzucił %1 z tym tokenem (status HTTP %2): znaku nie ma na koncie Club Log tego tokena albo Club Log prosi o poprawienie żądania. Dodaj znak do swojego konta Club Log i naciśnij przycisk pobierania albo popraw Mój Znak na karcie Ogólne.</translation>
     </message>
 </context>
 <context>

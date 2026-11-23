@@ -695,13 +695,13 @@ Format:
     </message>
     <message>
         <location filename="../Configuration.cpp"/>
-        <source>Club Log refused %1 with this token: the call is not on the token's Club Log account, or Club Log asks to correct the request. Add the call to your Club Log account, or correct My Call on the General tab.</source>
-        <translation>Club Log 拒绝了使用此令牌的 %1：该呼号不在此令牌的 Club Log 账户中，或 Club Log 要求更正请求。请将该呼号添加到您的 Club Log 账户，或更正常规选项卡中的“我的呼号”。</translation>
+        <source>Club Log refused %1 with this token: the call is not on the token's Club Log account, or Club Log asks to correct the request. Add the call to your Club Log account and press the download button, or correct My Call on the General tab.</source>
+        <translation>Club Log 拒绝了使用此令牌的 %1：该呼号不在此令牌的 Club Log 账户中，或 Club Log 要求更正请求。请将该呼号添加到您的 Club Log 账户并按下载按钮，或更正常规选项卡中的“我的呼号”。</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp"/>
-        <source>Club Log refused %1 with this token (HTTP status %2): the call is not on the token's Club Log account, or Club Log asks to correct the request. Add the call to your Club Log account, or correct My Call on the General tab.</source>
-        <translation>Club Log 拒绝了使用此令牌的 %1（HTTP 状态 %2）：该呼号不在此令牌的 Club Log 账户中，或 Club Log 要求更正请求。请将该呼号添加到您的 Club Log 账户，或更正常规选项卡中的“我的呼号”。</translation>
+        <source>Club Log refused %1 with this token (HTTP status %2): the call is not on the token's Club Log account, or Club Log asks to correct the request. Add the call to your Club Log account and press the download button, or correct My Call on the General tab.</source>
+        <translation>Club Log 拒绝了使用此令牌的 %1（HTTP 状态 %2）：该呼号不在此令牌的 Club Log 账户中，或 Club Log 要求更正请求。请将该呼号添加到您的 Club Log 账户并按下载按钮，或更正常规选项卡中的“我的呼号”。</translation>
     </message>
 </context>
 <context>

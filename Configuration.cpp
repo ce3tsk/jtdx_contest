@@ -5161,7 +5161,7 @@ void Configuration::impl::clublog_finished (bool ok, FileDownload::Failure failu
       if (club_log::After::TokenRefused == after)
         clublog_error_ = tr ("Club Log refused the token (HTTP status %1). Make a new one in Club Log under Settings > API and paste it here.").arg (status);
       else if (club_log::After::CallRefused == after)   // (2026-11-22) 403, 422: that call with that token
-        clublog_error_ = tr ("Club Log refused %1 with this token (HTTP status %2): the call is not on the token's Club Log account, or Club Log asks to correct the request. Add the call to your Club Log account, or correct My Call on the General tab.")
+        clublog_error_ = tr ("Club Log refused %1 with this token (HTTP status %2): the call is not on the token's Club Log account, or Club Log asks to correct the request. Add the call to your Club Log account and press the download button, or correct My Call on the General tab.")
                          .arg (clublog_download_call_.trimmed ().toUpper ()).arg (status);
       else if (club_log::After::WaitRetryAfter == after)
         clublog_error_ = retry_after.isValid ()   // (review) "asks" only when Club Log named a time
@@ -5215,7 +5215,7 @@ void Configuration::impl::update_clublog_label ()
   if (!clublog_error_.isEmpty ()) text += '\n' + clublog_error_;
   else if (refused) text += '\n' + tr ("Club Log refused the token. Make a new one in Club Log under Settings > API and paste it here.");
   else if (callRefused)
-    text += '\n' + tr ("Club Log refused %1 with this token: the call is not on the token's Club Log account, or Club Log asks to correct the request. Add the call to your Club Log account, or correct My Call on the General tab.")
+    text += '\n' + tr ("Club Log refused %1 with this token: the call is not on the token's Club Log account, or Club Log asks to correct the request. Add the call to your Club Log account and press the download button, or correct My Call on the General tab.")
                    .arg (my_callsign_.trimmed ().toUpper ());
   ui_->clublog_status_label->setText (text);
 }

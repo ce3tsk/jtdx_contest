@@ -696,13 +696,13 @@ Formato:
     </message>
     <message>
         <location filename="../Configuration.cpp"/>
-        <source>Club Log refused %1 with this token: the call is not on the token's Club Log account, or Club Log asks to correct the request. Add the call to your Club Log account, or correct My Call on the General tab.</source>
-        <translation>Club Log rechazó %1 con este token: el indicativo no está en la cuenta de Club Log del token, o Club Log pide corregir la solicitud. Añada el indicativo a su cuenta de Club Log, o corrija Mi Indicativo en la pestaña General.</translation>
+        <source>Club Log refused %1 with this token: the call is not on the token's Club Log account, or Club Log asks to correct the request. Add the call to your Club Log account and press the download button, or correct My Call on the General tab.</source>
+        <translation>Club Log rechazó %1 con este token: el indicativo no está en la cuenta de Club Log del token, o Club Log pide corregir la solicitud. Añada el indicativo a su cuenta de Club Log y pulse el botón de descarga, o corrija Mi Indicativo en la pestaña General.</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp"/>
-        <source>Club Log refused %1 with this token (HTTP status %2): the call is not on the token's Club Log account, or Club Log asks to correct the request. Add the call to your Club Log account, or correct My Call on the General tab.</source>
-        <translation>Club Log rechazó %1 con este token (estado HTTP %2): el indicativo no está en la cuenta de Club Log del token, o Club Log pide corregir la solicitud. Añada el indicativo a su cuenta de Club Log, o corrija Mi Indicativo en la pestaña General.</translation>
+        <source>Club Log refused %1 with this token (HTTP status %2): the call is not on the token's Club Log account, or Club Log asks to correct the request. Add the call to your Club Log account and press the download button, or correct My Call on the General tab.</source>
+        <translation>Club Log rechazó %1 con este token (estado HTTP %2): el indicativo no está en la cuenta de Club Log del token, o Club Log pide corregir la solicitud. Añada el indicativo a su cuenta de Club Log y pulse el botón de descarga, o corrija Mi Indicativo en la pestaña General.</translation>
     </message>
 </context>
 <context>

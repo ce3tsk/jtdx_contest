@@ -695,13 +695,13 @@ Format:
     </message>
     <message>
         <location filename="../Configuration.cpp"/>
-        <source>Club Log refused %1 with this token: the call is not on the token's Club Log account, or Club Log asks to correct the request. Add the call to your Club Log account, or correct My Call on the General tab.</source>
-        <translation>Club Log はこのトークンでの %1 を拒否しました：このコールサインはトークンの Club Log アカウントにないか、Club Log がリクエストの修正を求めています。Club Log のアカウントにコールサインを追加するか、全般タブの自分のコールサインを修正してください。</translation>
+        <source>Club Log refused %1 with this token: the call is not on the token's Club Log account, or Club Log asks to correct the request. Add the call to your Club Log account and press the download button, or correct My Call on the General tab.</source>
+        <translation>Club Log はこのトークンでの %1 を拒否しました：このコールサインはトークンの Club Log アカウントにないか、Club Log がリクエストの修正を求めています。Club Log のアカウントにコールサインを追加してダウンロードボタンを押すか、全般タブの自分のコールサインを修正してください。</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp"/>
-        <source>Club Log refused %1 with this token (HTTP status %2): the call is not on the token's Club Log account, or Club Log asks to correct the request. Add the call to your Club Log account, or correct My Call on the General tab.</source>
-        <translation>Club Log はこのトークンでの %1 を拒否しました（HTTP ステータス %2）：このコールサインはトークンの Club Log アカウントにないか、Club Log がリクエストの修正を求めています。Club Log のアカウントにコールサインを追加するか、全般タブの自分のコールサインを修正してください。</translation>
+        <source>Club Log refused %1 with this token (HTTP status %2): the call is not on the token's Club Log account, or Club Log asks to correct the request. Add the call to your Club Log account and press the download button, or correct My Call on the General tab.</source>
+        <translation>Club Log はこのトークンでの %1 を拒否しました（HTTP ステータス %2）：このコールサインはトークンの Club Log アカウントにないか、Club Log がリクエストの修正を求めています。Club Log のアカウントにコールサインを追加してダウンロードボタンを押すか、全般タブの自分のコールサインを修正してください。</translation>
     </message>
 </context>
 <context>

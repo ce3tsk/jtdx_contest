@@ -699,13 +699,13 @@ Format:
     </message>
     <message>
         <location filename="../Configuration.cpp"/>
-        <source>Club Log refused %1 with this token: the call is not on the token's Club Log account, or Club Log asks to correct the request. Add the call to your Club Log account, or correct My Call on the General tab.</source>
-        <translation>Club Log ha rebutjat %1 amb aquest testimoni: l'indicatiu no és al compte de Club Log del testimoni, o Club Log demana corregir la sol·licitud. Afegiu l'indicatiu al vostre compte de Club Log, o corregiu El meu Indicatiu a la pestanya General.</translation>
+        <source>Club Log refused %1 with this token: the call is not on the token's Club Log account, or Club Log asks to correct the request. Add the call to your Club Log account and press the download button, or correct My Call on the General tab.</source>
+        <translation>Club Log ha rebutjat %1 amb aquest testimoni: l'indicatiu no és al compte de Club Log del testimoni, o Club Log demana corregir la sol·licitud. Afegiu l'indicatiu al vostre compte de Club Log i premeu el botó de descàrrega, o corregiu El meu Indicatiu a la pestanya General.</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp"/>
-        <source>Club Log refused %1 with this token (HTTP status %2): the call is not on the token's Club Log account, or Club Log asks to correct the request. Add the call to your Club Log account, or correct My Call on the General tab.</source>
-        <translation>Club Log ha rebutjat %1 amb aquest testimoni (estat HTTP %2): l'indicatiu no és al compte de Club Log del testimoni, o Club Log demana corregir la sol·licitud. Afegiu l'indicatiu al vostre compte de Club Log, o corregiu El meu Indicatiu a la pestanya General.</translation>
+        <source>Club Log refused %1 with this token (HTTP status %2): the call is not on the token's Club Log account, or Club Log asks to correct the request. Add the call to your Club Log account and press the download button, or correct My Call on the General tab.</source>
+        <translation>Club Log ha rebutjat %1 amb aquest testimoni (estat HTTP %2): l'indicatiu no és al compte de Club Log del testimoni, o Club Log demana corregir la sol·licitud. Afegiu l'indicatiu al vostre compte de Club Log i premeu el botó de descàrrega, o corregiu El meu Indicatiu a la pestanya General.</translation>
     </message>
 </context>
 <context>
