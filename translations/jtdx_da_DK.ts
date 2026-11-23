@@ -7785,6 +7785,11 @@ Kontroller, at det korrekte navn blev angivet.</translation>
         <source>no feed for this band and mode</source>
         <translation>intet datafeed for dette bånd og denne mode</translation>
     </message>
+    <message>
+        <location filename="../receptionmap.cpp"/>
+        <source>Stay on top</source>
+        <translation>Altid øverst</translation>
+    </message>
 </context>
 <context>
     <name>SoundInput</name>

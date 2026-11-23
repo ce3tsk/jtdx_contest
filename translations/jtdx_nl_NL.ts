@@ -7781,6 +7781,11 @@ Controleer of de mapnaam juist is.</translation>
         <source>no feed for this band and mode</source>
         <translation>geen datastroom voor deze band en mode</translation>
     </message>
+    <message>
+        <location filename="../receptionmap.cpp"/>
+        <source>Stay on top</source>
+        <translation>Altijd op de voorgrond</translation>
+    </message>
 </context>
 <context>
     <name>SoundInput</name>

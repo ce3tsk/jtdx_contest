@@ -98,6 +98,7 @@ public:
   Q_SLOT void closeForExit ();                  // the program is closing
 
 protected:
+  bool event (QEvent *) override;               // (3.-281's review) a modal window of the program: on top no more while it is open
   void showEvent (QShowEvent *) override;
   void closeEvent (QCloseEvent *) override;
   void resizeEvent (QResizeEvent *) override;
@@ -106,6 +107,7 @@ private:
   void restoreSavedGeometry ();
   void saveSettings (bool open);
   void keep (char const * key, bool value);     // a menu entry's state into the settings, at once
+  void setStayOnTop (bool on);                  // (3.-281) the window above every other one, or not - shown or not
   void listen ();                               // the feed told what to listen to, when the window is open
   void forget ();                               // the feed stopped and what it gave let go
   void writeFeedCalls (bool closing);           // (3.-263) the feed's compound calls to their file, when they are others than it has
@@ -128,6 +130,8 @@ private:
   QAction * m_showPrefixes;
   QAction * m_show30;
   QAction * m_reducedData;
+  QAction * m_stayOnTop;                        // (3.-281) the window's own: above every other one
+  bool m_blocked {false};                       //   (3.-281's review) a modal window of the program is open: not on top meanwhile
   bool m_feedOff {false};                       // JTDX_RECEPTION_FEED says so: no feed at all
   feed_calls::Collector m_feedCalls;            // (3.-263) nonstandard calls two receivers reported, for the decoder
   QString m_feedCallsFile;

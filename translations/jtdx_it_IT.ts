@@ -7782,6 +7782,11 @@ Verificare che il nome della cartella sia corretto.</translation>
         <source>no feed for this band and mode</source>
         <translation>nessun flusso di dati per questa banda e questo modo</translation>
     </message>
+    <message>
+        <location filename="../receptionmap.cpp"/>
+        <source>Stay on top</source>
+        <translation>Sempre in primo piano</translation>
+    </message>
 </context>
 <context>
     <name>SoundInput</name>

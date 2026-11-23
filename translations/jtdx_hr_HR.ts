@@ -7785,6 +7785,11 @@ Provjerite je li dato točno ime imenika.</translation>
         <source>no feed for this band and mode</source>
         <translation>nema toka podataka za ovaj opseg i mod</translation>
     </message>
+    <message>
+        <location filename="../receptionmap.cpp"/>
+        <source>Stay on top</source>
+        <translation>Uvijek na vrhu</translation>
+    </message>
 </context>
 <context>
     <name>SoundInput</name>

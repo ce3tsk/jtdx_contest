@@ -7780,6 +7780,11 @@ Please verify the correct directory name was given.</source>
         <source>no feed for this band and mode</source>
         <translation>此波段和模式沒有數據流</translation>
     </message>
+    <message>
+        <location filename="../receptionmap.cpp"/>
+        <source>Stay on top</source>
+        <translation>視窗置頂</translation>
+    </message>
 </context>
 <context>
     <name>SoundInput</name>

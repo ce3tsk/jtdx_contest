@@ -7794,6 +7794,11 @@ Palun kontrolli kataloogi nime.</translation>
         <source>no feed for this band and mode</source>
         <translation>selle sagedusala ja tööliigi jaoks andmevoogu ei ole</translation>
     </message>
+    <message>
+        <location filename="../receptionmap.cpp"/>
+        <source>Stay on top</source>
+        <translation>Alati pealmine</translation>
+    </message>
 </context>
 <context>
     <name>SoundInput</name>

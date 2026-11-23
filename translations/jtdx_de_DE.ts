@@ -7781,6 +7781,11 @@ Bitte prüfen Sie, ob der Verzeichnisname richtig angegeben wurde.</translation>
         <source>no feed for this band and mode</source>
         <translation>kein Datenstrom für dieses Band und diese Betriebsart</translation>
     </message>
+    <message>
+        <location filename="../receptionmap.cpp"/>
+        <source>Stay on top</source>
+        <translation>Immer im Vordergrund</translation>
+    </message>
 </context>
 <context>
     <name>SoundInput</name>

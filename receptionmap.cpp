@@ -17,6 +17,7 @@
 #include <QStringList>
 #include <QTimer>
 #include <QVBoxLayout>
+#include <QWindow>
 #include "geometryrestore.h"
 #include "SettingsGroup.hpp"
 #include "spotfeed.h"
@@ -218,9 +219,15 @@ ReceptionMap::ReceptionMap (QSettings * settings, JTDXDateTime * clock, QWidget 
   m_showPrefixes = entry (tr ("Show DXCC prefixes"), "showPrefixes", true);
   m_show30 = entry (tr ("Show 30 minutes"), "show30Minutes", false);
   m_reducedData = entry (tr ("Reduced data"), "reducedData", false);
+  // (2026-11-22, TODO.md 3.-281) the window above every other one, the operator's to choose: off by default; at the menu's
+  // end, after a line of its own - it is the window's, not what the map shows or the feed asks for
+  m_stayOnTop = entry (tr ("Stay on top"), "stayOnTop", false);
   auto * line = new QAction {this};
   line->setSeparator (true);
-  m_map->setMenuActions ({m_showWeHear, m_showOthers, m_showAges, m_showPrefixes, m_show30, line, m_reducedData});
+  auto * windowLine = new QAction {this};
+  windowLine->setSeparator (true);
+  m_map->setMenuActions ({m_showWeHear, m_showOthers, m_showAges, m_showPrefixes, m_show30, line, m_reducedData, windowLine, m_stayOnTop});
+  setStayOnTop (m_stayOnTop->isChecked ());   // never shown yet: as it is made at its first show
   m_board.setWindow (m_show30->isChecked () ? reception_spots::longWindowSeconds : reception_spots::windowSeconds);
   m_map->setShowAges (m_showAges->isChecked ());
   m_map->setShowPrefixes (m_showPrefixes->isChecked ());
@@ -235,6 +242,7 @@ ReceptionMap::ReceptionMap (QSettings * settings, JTDXDateTime * clock, QWidget 
       refresh ();
     });
   connect (m_reducedData, &QAction::toggled, this, [this] (bool on) {keep ("reducedData", on); m_reduced = on; listen ();});   // the feed asks anew on the connection it has
+  connect (m_stayOnTop, &QAction::toggled, this, [this] (bool on) {keep ("stayOnTop", on); setStayOnTop (on && !m_blocked);});
 
   connect (m_feed, &SpotFeed::spot, this, [this] (reception_spots::Spot const& s) {
       long long const t {now ()};
@@ -276,6 +284,42 @@ void ReceptionMap::setDarkStyle (bool dark)
 void ReceptionMap::setOwnLocator (QString const& locator)
 {
   m_map->setOwnLocator (locator);
+}
+
+// (2026-11-22, TODO.md 3.-281) "Stay on top". A window shown once is told through its own native window, where it is:
+// QWidget::setWindowFlags hides a shown window (the second time it also made its native window anew), and on the
+// station's X11 (xfwm4, Qt 5.15.13) the window shown again at once came back neither on top nor focused, and shown
+// again 150 ms later in no window manager's list at all (a probe, 2026-11-22). QWindow::setFlags changes the one flag in place
+// on each system (Qt 5.15.2's sources: on X11 a message to the window manager for _NET_WM_STATE_ABOVE, on Windows
+// HWND_TOPMOST and HWND_NOTOPMOST, on macOS the window's level), and overrideWindowFlags gives the widget the same
+// flags without telling the window system a second time. A window never shown has no native window yet: it is made
+// with the widget's flags at its first show, so overrideWindowFlags is all it needs. Never setWindowFlags there either
+// (the review): before the first show it moved a window restored from its saved place down by its title bar - its
+// setParent moves the window to pos (), which is the client's place until the frame is known (on-screen check under
+// metacity: 0,37 -> 0,74 at the next start; a probe under metacity and xfwm4 alike).
+void ReceptionMap::setStayOnTop (bool on)
+{
+  Qt::WindowFlags flags {windowFlags ()};
+  flags.setFlag (Qt::WindowStaysOnTopHint, on);
+  if (flags == windowFlags ()) return;
+  overrideWindowFlags (flags);
+  if (QWindow * const window {windowHandle ()}) window->setFlags (flags);
+}
+
+// (3.-281's review) A modal window of the program - Settings, a message box, a file chooser - blocks this one: while it is
+// open the map is on top no more, and after it is again, as it is ticked. A window on top stood over the program's own
+// modal windows: a probe on the station's window manager (xfwm4) opened a message box of the main window UNDER the map,
+// with the main window blocked behind it. Qt tells the window when it is blocked and unblocked, once each way however
+// many modal windows open on top of one another. Not covered: Log QSO (no modal window) and the Cabrillo export's dialog
+// (modal to the main window alone) - they block nothing here.
+bool ReceptionMap::event (QEvent * e)
+{
+  if (QEvent::WindowBlocked == e->type () || QEvent::WindowUnblocked == e->type ())
+    {
+      m_blocked = QEvent::WindowBlocked == e->type ();
+      setStayOnTop (m_stayOnTop->isChecked () && !m_blocked);
+    }
+  return QWidget::event (e);
 }
 
 void ReceptionMap::keep (char const * key, bool value)

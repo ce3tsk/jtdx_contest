@@ -7791,6 +7791,11 @@ Verifica el nom del directori correcte.</translation>
         <source>no feed for this band and mode</source>
         <translation>sense flux de dades per a aquesta banda i mode</translation>
     </message>
+    <message>
+        <location filename="../receptionmap.cpp"/>
+        <source>Stay on top</source>
+        <translation>Sempre al davant</translation>
+    </message>
 </context>
 <context>
     <name>SoundInput</name>

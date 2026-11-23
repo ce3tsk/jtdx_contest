@@ -7781,6 +7781,11 @@ Ellenőrizze, hogy a helyes könyvtárnevet adta-e meg.</translation>
         <source>no feed for this band and mode</source>
         <translation>ehhez a sávhoz és üzemmódhoz nincs adatfolyam</translation>
     </message>
+    <message>
+        <location filename="../receptionmap.cpp"/>
+        <source>Stay on top</source>
+        <translation>Mindig felül</translation>
+    </message>
 </context>
 <context>
     <name>SoundInput</name>

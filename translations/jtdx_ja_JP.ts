@@ -7780,6 +7780,11 @@ Please verify the correct directory name was given.</source>
         <source>no feed for this band and mode</source>
         <translation>このバンドとモードのデータ配信はありません</translation>
     </message>
+    <message>
+        <location filename="../receptionmap.cpp"/>
+        <source>Stay on top</source>
+        <translation>常に手前に表示</translation>
+    </message>
 </context>
 <context>
     <name>SoundInput</name>

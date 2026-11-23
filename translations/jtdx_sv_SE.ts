@@ -7783,6 +7783,11 @@ Kontrollera att rätt katalognamn anges.</translation>
         <source>no feed for this band and mode</source>
         <translation>inget dataflöde för detta band och denna mod</translation>
     </message>
+    <message>
+        <location filename="../receptionmap.cpp"/>
+        <source>Stay on top</source>
+        <translation>Alltid överst</translation>
+    </message>
 </context>
 <context>
     <name>SoundInput</name>

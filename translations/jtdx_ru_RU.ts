@@ -7795,6 +7795,11 @@ Please verify the correct directory name was given.</source>
         <source>no feed for this band and mode</source>
         <translation>нет потока данных для этого диапазона и модуляции</translation>
     </message>
+    <message>
+        <location filename="../receptionmap.cpp"/>
+        <source>Stay on top</source>
+        <translation>Поверх всех окон</translation>
+    </message>
 </context>
 <context>
     <name>SoundInput</name>

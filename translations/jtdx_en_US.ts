@@ -7647,6 +7647,11 @@ Please verify the correct directory name was given.</source>
         <source>no feed for this band and mode</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../receptionmap.cpp"/>
+        <source>Stay on top</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SoundInput</name>

@@ -7785,6 +7785,11 @@ Veuillez vérifier que le nom correct du répertoire a été donné.</translatio
         <source>no feed for this band and mode</source>
         <translation>pas de flux de données pour cette bande et ce mode</translation>
     </message>
+    <message>
+        <location filename="../receptionmap.cpp"/>
+        <source>Stay on top</source>
+        <translation>Toujours au premier plan</translation>
+    </message>
 </context>
 <context>
     <name>SoundInput</name>

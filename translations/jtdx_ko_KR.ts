@@ -7781,6 +7781,11 @@ Please verify the correct directory name was given.</source>
         <source>no feed for this band and mode</source>
         <translation>이 밴드와 모드의 데이터 피드 없음</translation>
     </message>
+    <message>
+        <location filename="../receptionmap.cpp"/>
+        <source>Stay on top</source>
+        <translation>항상 위에 표시</translation>
+    </message>
 </context>
 <context>
     <name>SoundInput</name>

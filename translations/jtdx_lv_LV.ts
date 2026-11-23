@@ -7781,6 +7781,11 @@ Lūdzu, pārbaudiet, vai norādīts pareizs direktorijas nosaukums.</translation
         <source>no feed for this band and mode</source>
         <translation>šai joslai un modam nav datu plūsmas</translation>
     </message>
+    <message>
+        <location filename="../receptionmap.cpp"/>
+        <source>Stay on top</source>
+        <translation>Vienmēr virspusē</translation>
+    </message>
 </context>
 <context>
     <name>SoundInput</name>

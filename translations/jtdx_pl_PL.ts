@@ -7781,6 +7781,11 @@ Upewnić się, że podano właściwą nazwę katalogu.</translation>
         <source>no feed for this band and mode</source>
         <translation>brak strumienia danych dla tego pasma i emisji</translation>
     </message>
+    <message>
+        <location filename="../receptionmap.cpp"/>
+        <source>Stay on top</source>
+        <translation>Zawsze na wierzchu</translation>
+    </message>
 </context>
 <context>
     <name>SoundInput</name>

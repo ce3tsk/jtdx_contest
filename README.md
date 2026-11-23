@@ -314,8 +314,9 @@ whom you hear, and everyone else who is listening there.
   and `Home`; light and dark style.
 - **Right click** for the menu: *Centre on my station*; three ways to fit the view - *Zoom to stations that hear me
   or I hear*, *Zoom to stations that hear me*, *Zoom to stations I hear*; what is shown - *Show stations we
-  hear*, *Show other stations*, *Show age labels*, *Show DXCC prefixes*, *Show 30 minutes*; and *Reduced data*. Every
-  setting is kept. What the feed sent and what you heard is kept for 30 minutes whichever is shown, so the longer
+  hear*, *Show other stations*, *Show age labels*, *Show DXCC prefixes*, *Show 30 minutes*; *Reduced data*; and *Stay on
+  top*, which keeps the window above every other window (off by default). Every setting is kept. What the feed sent
+  and what you heard is kept for 30 minutes whichever is shown, so the longer
   view is complete the moment you choose it. With **Reduced data** the server is
   asked only for the reports of your own call and for its 1 % sample of the band, instead of every report of the
   band and mode - a small fraction of the traffic, for a slow or metered connection.
