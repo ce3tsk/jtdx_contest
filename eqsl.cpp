@@ -101,7 +101,7 @@ void EQSL::upload(QString const& eqsl_username, QString const& eqsl_passwd, QStr
                   , QDateTime const& QSO_date_on
                   , QString const& rpt_sent, QString const& band
                   , QString const& eqslcomments
-                  , QString const& prop_mode, QString const& sat_name)
+                  , QString const& prop_mode, QString const& sat_name, QString const& comment)
 {
     QString myadif="<ADIF_VER:5>2.1.9";
     myadif+="<EQSL_USER:" + QString::number(eqsl_username.length()) + ">" + eqsl_username;
@@ -110,7 +110,7 @@ void EQSL::upload(QString const& eqsl_username, QString const& eqsl_passwd, QStr
     /* CE3TSK 2026-11-24 (TODO.md 3.-285): the QTH nickname only when there is one - without it eQSL files the QSO by its
        date into the account whose dates cover it (ImportADIF.txt); an empty tag would name no profile at all */
     if (!eqsl_nickname.isEmpty ()) myadif+="<APP_EQSL_QTH_NICKNAME:" + QString::number(eqsl_nickname.length()) + ">" + eqsl_nickname;
-    myadif+=record (call, mode, QSO_date_on, rpt_sent, band, eqslcomments, prop_mode, sat_name);
+    myadif+=record (call, mode, QSO_date_on, rpt_sent, band, eqslcomments, prop_mode, sat_name, comment);
 
     // (3.-284) queued behind one under way - the inherited code cut that one off
     queue_ << Pending {call, eqsl::request_url (eqsl::upload_url (), myadif), eqsl_passwd};
@@ -119,7 +119,7 @@ void EQSL::upload(QString const& eqsl_username, QString const& eqsl_passwd, QStr
 
 QString EQSL::record (QString const& call, QString const& mode, QDateTime const& QSO_date_on
                       , QString const& rpt_sent, QString const& band, QString const& eqslcomments
-                      , QString const& prop_mode, QString const& sat_name)
+                      , QString const& prop_mode, QString const& sat_name, QString const& comment)
 {
     QString myadif;
     myadif+="<CALL:" + QString::number(call.length()) + ">" + call;
@@ -131,6 +131,9 @@ QString EQSL::record (QString const& call, QString const& mode, QDateTime const&
     /* CE3TSK 2026-11-13 (TODO.md 3.-247, its review): a satellite QSO as the log has it - eQSL's card names the satellite */
     myadif+=sat_log::tag ("PROP_MODE", prop_mode) + sat_log::tag ("SAT_NAME", sat_name);
     if(eqslcomments!="") myadif+="<QSLMSG:" + QString::number(eqslcomments.length()) + ">" + eqslcomments;
+    /* CE3TSK 2026-11-24 (TODO.md 3.-290): the QSO's own comment as the log has it, when there is one - private at eQSL,
+       never on the card; its length counted as the log file's and the uploads' records count theirs */
+    if (!comment.isEmpty ()) myadif+="<COMMENT:" + QString::number(comment.length()) + ">" + comment;
 //    myadif+="<QSLMSG:19>TNX For QSO TU 73!.";
     myadif+="<EOR>";
     return myadif;

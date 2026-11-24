@@ -21,6 +21,10 @@
    (3.-285, the operator: "Let's relax the requirement to what eQSL really needs") the QTH nickname optional: sent only
    when there is one; without it eQSL picks the account by the QSO's date - "less reliable", in its own words, when
    QTH profiles' dates overlap. The user and the password are what eQSL needs.
+   (3.-290, the operator: "Let's do the recommended Send Comments as COMMENT too") the QSO's own comment - the log's
+   COMMENT, the one Club Log and QRZ.com get - sent as COMMENT when there is one: eQSL's ADIF content page, "The field
+   called 'COMMENT' is normally used only for private comments and is NOT printed on the eQSLs". The card's message is
+   still Log QSO's eQSL comments field (QSLMSG).
    The address and the password are never shown: an answer's text has neither (eqsl::scrubbed). No retry, no queue
    file: a QSO not sent is named, for the operator to upload on eQSL's website. test_qsoupload has the rules and a
    stand-in on 127.0.0.1 (JTDX_EQSL_UPLOAD). */
@@ -74,11 +78,13 @@ public:
                   , QString const& rpt_sent, QString const& band
                   , QString const& eqslcomments
                   /* CE3TSK 2026-11-13 (TODO.md 3.-247, its review): a satellite QSO's PROP_MODE and SAT_NAME */
-                  , QString const& prop_mode = QString {}, QString const& sat_name = QString {});
+                  , QString const& prop_mode = QString {}, QString const& sat_name = QString {}
+                  /* (3.-290) the QSO's comment, as logged: private at eQSL, never on the card */
+                  , QString const& comment = QString {});
     /* CE3TSK 2026-11-13: the QSO's part of the upload, <CALL> to <EOR> - apart, so a test can read it (no network) */
     static QString record (QString const& call, QString const& mode, QDateTime const& QSO_date_on
                            , QString const& rpt_sent, QString const& band, QString const& eqslcomments
-                           , QString const& prop_mode, QString const& sat_name);
+                           , QString const& prop_mode, QString const& sat_name, QString const& comment = QString {});
     int waiting () const {return queue_.size ();}   // (3.-284) QSOs not answered yet, the one under way among them
 
     // (3.-284) eQSL's answer for a QSO's call, each QSO's once, in the order they were logged

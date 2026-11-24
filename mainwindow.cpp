@@ -12064,7 +12064,7 @@ void MainWindow::acceptQSO2(QDateTime const& QSO_date_off, QString const& call, 
   }
   if (m_config.send_to_eqsl())
       Eqsl->upload(m_config.eqsl_username(),m_config.eqsl_passwd(),m_config.eqsl_nickname(),call,mode,QSO_date_on,rpt_sent,m_config.bands ()->find (dial_freq),eqslcomments,
-                   prop_mode,satellite);   // CE3TSK 2026-11-13 (TODO.md 3.-247, its review): a satellite QSO as logged
+                   prop_mode,satellite,comments);   // CE3TSK 2026-11-13 (TODO.md 3.-247, its review): a satellite QSO as logged; (3.-290) and its comment
   /* CE3TSK 2026-11-23 (TODO.md 3.-282, QSO_UPLOAD_PLAN.md): and to Club Log and QRZ.com, each when its box is ticked - the
      record the UDP clients get, in a contest too (U2) */
   m_config.upload_qso (myadif2);
