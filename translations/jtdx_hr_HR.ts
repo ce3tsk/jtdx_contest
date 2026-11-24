@@ -888,6 +888,16 @@ Format:
         <source>Users file (grids): Club Log refused it to this token (HTTP status %1) - not asked again until another token is saved.</source>
         <translation>Datoteka korisnika (lokatori): Club Log ju je odbio za ovaj token (HTTP status %1) - ne traži se ponovo dok se ne spremi drugi token.</translation>
     </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1 not sent at %2 UTC: %3. Not tried again: upload it on eQSL's website.</source>
+        <translation>%1 nije poslan u %2 UTC: %3. Ne pokušava se ponovo: pošalji ga na web stranici eQSL-a.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1: the QSO with %2 was not sent - see Settings &gt; Reporting.</source>
+        <translation>%1: QSO s %2 nije poslan - vidi Postavke &gt; Izvještaji.</translation>
+    </message>
 </context>
 <context>
     <name>CountryDat</name>
@@ -9815,11 +9825,6 @@ i DX Lokatora kad je poslan 73 ili slobodna tekstualna poruka.</translation>
         <translation>Mrežni Servisi</translation>
     </message>
     <message>
-        <location filename="../Configuration.ui" line="2798"/>
-        <source>The program can send logged QSO info to the http://www.eqsl.cc web site.</source>
-        <translation>Program može poslati  podatke o vezi na http://www.eqsl.cc web mjesto.</translation>
-    </message>
-    <message>
         <location filename="../Configuration.ui" line="2821"/>
         <source>EQSL Username.</source>
         <translation>EQSL Korisničko ime.</translation>
@@ -11816,6 +11821,11 @@ Samo QSO-i upisani od sada: starije učitajte na QRZ.com kao ADIF datoteku, ondj
         <location filename="../Configuration.ui"/>
         <source>When a QSO gave no grid - neither heard nor typed - it gets one before it is logged: what this program heard the station send earlier (within a day; a /M station's within half an hour), else the locator it reports to PSK Reporter (with the Reception map open), else its grid in eQSL's member list (Settings &gt; General; a member that uploaded to eQSL within the last 12 months), in Club Log's users file (downloaded weekly with the token; a call that uploaded within the last 12 months) or in QRZ.com's XML data (with the XML login, asked as the QSO starts). Only a square inside the call's DXCC country is taken, its first four characters. Log QSO names the source in the grid field's tooltip, and the QSO's comment notes it as [grid: ...]. Never in a contest.</source>
         <translation>Kad QSO nije dao lokator – ni primljen ni upisan –, dobiva ga prije upisa u log: ono što je ovaj program ranije čuo da stanica šalje (unutar jednog dana, od /M stanice unutar pola sata), inače lokator koji stanica javlja PSK Reporteru (uz otvorenu Kartu prijema), inače njezin lokator s popisa članova eQSL-a (Postavke &gt; Općenito; član koji je u zadnjih 12 mjeseci slao na eQSL), iz datoteke korisnika Club Loga (preuzima se tjedno tokenom; pozivni znak koji je slao u zadnjih 12 mjeseci) ili iz XML podataka QRZ.com-a (uz XML prijavu, upit pri početku QSO-a). Uzima se samo polje unutar DXCC zemlje pozivnog znaka, njegova prva četiri znaka. Prozor Log QSO navodi izvor u opisu polja lokatora, a komentar QSO-a bilježi ga kao [grid: ...]. Nikad u natjecanju.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>The program can send logged QSO info to the https://www.eqsl.cc web site.</source>
+        <translation>Program može poslati  podatke o vezi na https://www.eqsl.cc web mjesto.</translation>
     </message>
 </context>
 <context>

@@ -888,6 +888,16 @@ Format:
         <source>Users file (grids): Club Log refused it to this token (HTTP status %1) - not asked again until another token is saved.</source>
         <translation>用户文件（网格）：Club Log 拒绝此令牌获取（HTTP 状态 %1）——保存其他令牌之前不再请求。</translation>
     </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1 not sent at %2 UTC: %3. Not tried again: upload it on eQSL's website.</source>
+        <translation>%1 未能于 %2 UTC 发送：%3。不再重试：请在 eQSL 网站上上传。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1: the QSO with %2 was not sent - see Settings &gt; Reporting.</source>
+        <translation>%1：与 %2 的 QSO 未能发送 - 见 设置 &gt; 报告。</translation>
+    </message>
 </context>
 <context>
     <name>CountryDat</name>
@@ -9810,11 +9820,6 @@ and DX Grid fields when a 73 or free text message is sent.</source>
         <translation>网络服务</translation>
     </message>
     <message>
-        <location filename="../Configuration.ui" line="2798"/>
-        <source>The program can send logged QSO info to the http://www.eqsl.cc web site.</source>
-        <translation>程序可以将通联日志纪录发送到 http://www.eqsl.cc 网站.</translation>
-    </message>
-    <message>
         <location filename="../Configuration.ui" line="2821"/>
         <source>EQSL Username.</source>
         <translation>EQSL用户名称.</translation>
@@ -11810,6 +11815,11 @@ Only QSOs logged from now on: upload older ones to QRZ.com as an ADIF file there
         <location filename="../Configuration.ui"/>
         <source>When a QSO gave no grid - neither heard nor typed - it gets one before it is logged: what this program heard the station send earlier (within a day; a /M station's within half an hour), else the locator it reports to PSK Reporter (with the Reception map open), else its grid in eQSL's member list (Settings &gt; General; a member that uploaded to eQSL within the last 12 months), in Club Log's users file (downloaded weekly with the token; a call that uploaded within the last 12 months) or in QRZ.com's XML data (with the XML login, asked as the QSO starts). Only a square inside the call's DXCC country is taken, its first four characters. Log QSO names the source in the grid field's tooltip, and the QSO's comment notes it as [grid: ...]. Never in a contest.</source>
         <translation>当一次通联没有得到网格（既未收到也未输入）时，记录前为其补上：本程序此前听到该电台发送的网格（一天之内；/M 电台为半小时之内），否则为该电台向 PSK Reporter 报告的定位符（接收地图打开时），再否则为 eQSL 会员名单中该电台的网格（设置 &gt; 常规；过去 12 个月内向 eQSL 上传过的会员），或 Club Log 用户文件（每周用令牌下载；过去 12 个月内上传过的呼号），或 QRZ.com 的 XML 数据（用 XML 登录，通联开始时查询）。只采用位于该呼号 DXCC 实体内的方格，取其前四个字符。记录通联窗口在网格栏的提示中注明来源，通联的注释以 [grid: ...] 记下。比赛中从不补全。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>The program can send logged QSO info to the https://www.eqsl.cc web site.</source>
+        <translation>程序可以将通联日志纪录发送到 https://www.eqsl.cc 网站.</translation>
     </message>
 </context>
 <context>

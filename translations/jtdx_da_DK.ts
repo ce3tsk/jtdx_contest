@@ -890,6 +890,16 @@ Format:
         <source>Users file (grids): Club Log refused it to this token (HTTP status %1) - not asked again until another token is saved.</source>
         <translation>Brugerfil (grids): Club Log afviste den for dette token (HTTP-status %1) - anmodes ikke igen, før et andet token er gemt.</translation>
     </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1 not sent at %2 UTC: %3. Not tried again: upload it on eQSL's website.</source>
+        <translation>%1 ikke sendt kl. %2 UTC: %3. Prøves ikke igen: upload den på eQSL's websted.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1: the QSO with %2 was not sent - see Settings &gt; Reporting.</source>
+        <translation>%1: QSO'en med %2 blev ikke sendt - se Indstillinger &gt; Rapportering.</translation>
+    </message>
 </context>
 <context>
     <name>CountryDat</name>
@@ -9855,11 +9865,6 @@ og DX Grid-felter, når der sendes en 73 eller fri tekstbesked.</translation>
         <translation>Netværks Service</translation>
     </message>
     <message>
-        <location filename="../Configuration.ui" line="2798"/>
-        <source>The program can send logged QSO info to the http://www.eqsl.cc web site.</source>
-        <translation>Programmet kan sende logget QSO info til http://www.eqsl.cc web siden.</translation>
-    </message>
-    <message>
         <location filename="../Configuration.ui" line="2821"/>
         <source>EQSL Username.</source>
         <translation>EQSL Brugernavn.</translation>
@@ -11815,6 +11820,11 @@ Kun QSO'er logget fra nu af: upload ældre som en ADIF-fil på QRZ.com.</transla
         <location filename="../Configuration.ui"/>
         <source>When a QSO gave no grid - neither heard nor typed - it gets one before it is logged: what this program heard the station send earlier (within a day; a /M station's within half an hour), else the locator it reports to PSK Reporter (with the Reception map open), else its grid in eQSL's member list (Settings &gt; General; a member that uploaded to eQSL within the last 12 months), in Club Log's users file (downloaded weekly with the token; a call that uploaded within the last 12 months) or in QRZ.com's XML data (with the XML login, asked as the QSO starts). Only a square inside the call's DXCC country is taken, its first four characters. Log QSO names the source in the grid field's tooltip, and the QSO's comment notes it as [grid: ...]. Never in a contest.</source>
         <translation>Når en QSO ikke gav noget grid - hverken modtaget eller indtastet - får den et, før den logges: det, dette program hørte stationen sende tidligere (inden for et døgn; for en /M-station inden for en halv time), ellers den locator, stationen rapporterer til PSK Reporter (med Modtagelseskort åbent), ellers dets grid i eQSL's medlemsliste (Indstillinger &gt; General; et medlem, der har uploadet til eQSL inden for de seneste 12 måneder), i Club Logs brugerfil (hentet ugentligt med tokenet; et kaldesignal, der har uploadet inden for de seneste 12 måneder) eller i QRZ.com's XML-data (med XML-login, spurgt når QSO'en begynder). Kun en firkant inden for kaldesignalets DXCC-land bruges, dens første fire tegn. Log QSO nævner kilden i grid-feltets værktøjstip, og QSO'ens kommentar noterer den som [grid: ...]. Aldrig i en contest.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>The program can send logged QSO info to the https://www.eqsl.cc web site.</source>
+        <translation>Programmet kan sende logget QSO info til https://www.eqsl.cc web siden.</translation>
     </message>
 </context>
 <context>

@@ -3082,7 +3082,7 @@ and DX Grid fields when a 73 or free text message is sent.</string>
                  <item row="3" column="0" colspan="2">
                   <widget class="QCheckBox" name="eqsl_check_box">
                    <property name="toolTip">
-                    <string>The program can send logged QSO info to the http://www.eqsl.cc web site.</string>
+                    <string>The program can send logged QSO info to the https://www.eqsl.cc web site.</string>
                    </property>
                    <property name="text">
                     <string>Send logged QSOs</string>
@@ -3090,6 +3090,16 @@ and DX Grid fields when a 73 or free text message is sent.</string>
                   </widget>
                  </item>
                  <item row="4" column="0" colspan="2">
+                  <widget class="QLabel" name="eqsl_upload_status_label">
+                   <property name="text">
+                    <string notr="true"/>
+                   </property>
+                   <property name="wordWrap">
+                    <bool>true</bool>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="5" column="0" colspan="2">
                   <widget class="QLabel" name="eqsl_members_label">
                    <property name="text">
                     <string>Its member list, for missing grids: Settings &gt; General &gt; Data files.</string>
@@ -3099,7 +3109,7 @@ and DX Grid fields when a 73 or free text message is sent.</string>
                    </property>
                   </widget>
                  </item>
-                 <item row="5" column="0" colspan="2">
+                 <item row="6" column="0" colspan="2">
                   <spacer name="eqsl_spacer">
                    <property name="orientation">
                     <enum>Qt::Vertical</enum>

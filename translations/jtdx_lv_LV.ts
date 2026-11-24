@@ -888,6 +888,16 @@ Formāts:
         <source>Users file (grids): Club Log refused it to this token (HTTP status %1) - not asked again until another token is saved.</source>
         <translation>Lietotāju fails (lokatori): Club Log to noraidīja šim žetonam (HTTP statuss %1) - netiks pieprasīts vēlreiz, kamēr netiks saglabāts cits žetons.</translation>
     </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1 not sent at %2 UTC: %3. Not tried again: upload it on eQSL's website.</source>
+        <translation>%1 nav nosūtīts %2 UTC: %3. Vēlreiz netiek mēģināts: augšupielādējiet to eQSL vietnē.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1: the QSO with %2 was not sent - see Settings &gt; Reporting.</source>
+        <translation>%1: QSO ar %2 netika nosūtīts - skatiet Iestatījumi &gt; Raportēšana.</translation>
+    </message>
 </context>
 <context>
     <name>CountryDat</name>
@@ -9899,11 +9909,6 @@ lauki DX Call un DX Grid tiktu notīrīti.</translation>
         <translation>Tīkla pakalpojumi</translation>
     </message>
     <message>
-        <location filename="../Configuration.ui" line="2798"/>
-        <source>The program can send logged QSO info to the http://www.eqsl.cc web site.</source>
-        <translation>Programma var nosūtīt ierakstītā QSO informāciju uz vietni http://www.eqsl.cc.</translation>
-    </message>
-    <message>
         <location filename="../Configuration.ui" line="2821"/>
         <source>EQSL Username.</source>
         <translation>EQSL lietotājvārds.</translation>
@@ -11809,6 +11814,11 @@ Tikai no šī brīža ierakstītie QSO: vecākos augšupielādējiet QRZ.com kā
         <location filename="../Configuration.ui"/>
         <source>When a QSO gave no grid - neither heard nor typed - it gets one before it is logged: what this program heard the station send earlier (within a day; a /M station's within half an hour), else the locator it reports to PSK Reporter (with the Reception map open), else its grid in eQSL's member list (Settings &gt; General; a member that uploaded to eQSL within the last 12 months), in Club Log's users file (downloaded weekly with the token; a call that uploaded within the last 12 months) or in QRZ.com's XML data (with the XML login, asked as the QSO starts). Only a square inside the call's DXCC country is taken, its first four characters. Log QSO names the source in the grid field's tooltip, and the QSO's comment notes it as [grid: ...]. Never in a contest.</source>
         <translation>Ja QSO nedeva lokatoru – ne uztvertu, ne ievadītu –, tas saņem lokatoru pirms ierakstīšanas: ko šī programma dzirdēja staciju agrāk sūtām (dienas laikā, /M stacijai pusstundas laikā), citādi lokatoru, ko stacija ziņo PSK Reporter (ar atvērtu Uztveršanas karti), citādi tās lokatoru eQSL dalībnieku sarakstā (Iestatījumi &gt; Vispārīgi; dalībnieks, kas pēdējo 12 mēnešu laikā ir augšupielādējis eQSL), Club Log lietotāju failā (lejupielādē katru nedēļu ar žetonu; izsaukums, kas pēdējo 12 mēnešu laikā ir augšupielādējis) vai QRZ.com XML datos (ar XML pieteikšanos, vaicā QSO sākumā). Tiek ņemts tikai kvadrāts izsaukuma DXCC valstī, tā pirmās četras rakstzīmes. Logs Ierakstīt QSO nosauc avotu lokatora lauka padomā, un QSO komentārs to atzīmē kā [grid: ...]. Nekad sacensībās.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>The program can send logged QSO info to the https://www.eqsl.cc web site.</source>
+        <translation>Programma var nosūtīt ierakstītā QSO informāciju uz vietni https://www.eqsl.cc.</translation>
     </message>
 </context>
 <context>

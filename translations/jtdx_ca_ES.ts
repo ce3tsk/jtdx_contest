@@ -892,6 +892,16 @@ Format:
         <source>Users file (grids): Club Log refused it to this token (HTTP status %1) - not asked again until another token is saved.</source>
         <translation>Fitxer d'usuaris (locators): Club Log l'ha rebutjat per a aquest testimoni (estat HTTP %1) - no es tornarà a demanar fins que es desi un altre testimoni.</translation>
     </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1 not sent at %2 UTC: %3. Not tried again: upload it on eQSL's website.</source>
+        <translation>%1 no enviat a les %2 UTC: %3. No es torna a provar: pugeu-lo al web d'eQSL.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1: the QSO with %2 was not sent - see Settings &gt; Reporting.</source>
+        <translation>%1: el QSO amb %2 no s'ha enviat - vegeu Configuracions &gt; Informes.</translation>
+    </message>
 </context>
 <context>
     <name>CountryDat</name>
@@ -9864,11 +9874,6 @@ i Locator DX quan s&apos;envia un missatge de text 73 o lliure.</translation>
         <translation>Serveis de xarxa</translation>
     </message>
     <message>
-        <location filename="../Configuration.ui" line="2798"/>
-        <source>The program can send logged QSO info to the http://www.eqsl.cc web site.</source>
-        <translation>El programa pot enviar informació dels QSO&apos;s registrats a la web http://www.eqsl.cc.</translation>
-    </message>
-    <message>
         <location filename="../Configuration.ui" line="2821"/>
         <source>EQSL Username.</source>
         <translation>Nom d&apos;usuari a eQSL.</translation>
@@ -11824,6 +11829,11 @@ Només els QSO registrats a partir d'ara: pugeu els més antics a QRZ.com com a 
         <location filename="../Configuration.ui"/>
         <source>When a QSO gave no grid - neither heard nor typed - it gets one before it is logged: what this program heard the station send earlier (within a day; a /M station's within half an hour), else the locator it reports to PSK Reporter (with the Reception map open), else its grid in eQSL's member list (Settings &gt; General; a member that uploaded to eQSL within the last 12 months), in Club Log's users file (downloaded weekly with the token; a call that uploaded within the last 12 months) or in QRZ.com's XML data (with the XML login, asked as the QSO starts). Only a square inside the call's DXCC country is taken, its first four characters. Log QSO names the source in the grid field's tooltip, and the QSO's comment notes it as [grid: ...]. Never in a contest.</source>
         <translation>Quan un QSO no ha donat cap locator (ni rebut ni escrit), en rep un abans de registrar-lo: el que aquest programa va sentir que l'estació enviava abans (en el darrer dia; d'una estació /M, en la darrera mitja hora); si no, el locator que l'estació informa a PSK Reporter (amb el Mapa de recepció obert); si no, el seu locator a la llista de membres d'eQSL (Configuracions &gt; General; un membre que hagi pujat a eQSL en els darrers 12 mesos), al fitxer d'usuaris de Club Log (descarregat cada setmana amb el testimoni; un indicatiu que hagi pujat en els darrers 12 mesos) o a les dades XML de QRZ.com (amb l'inici XML, consultades quan comença el QSO). Només s'accepta un quadrat dins del país DXCC de l'indicatiu, els seus quatre primers caràcters. La finestra Log QSO indica l'origen a l'ajuda del camp del locator, i el comentari del QSO ho anota com a [grid: ...]. Mai en un concurs.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>The program can send logged QSO info to the https://www.eqsl.cc web site.</source>
+        <translation>El programa pot enviar informació dels QSO's registrats a la web https://www.eqsl.cc.</translation>
     </message>
 </context>
 <context>

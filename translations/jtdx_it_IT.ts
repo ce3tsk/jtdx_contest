@@ -888,6 +888,16 @@ Formato:
         <source>Users file (grids): Club Log refused it to this token (HTTP status %1) - not asked again until another token is saved.</source>
         <translation>File degli utenti (griglie): Club Log l'ha rifiutato a questo token (stato HTTP %1) - non richiesto di nuovo finché non si salva un altro token.</translation>
     </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1 not sent at %2 UTC: %3. Not tried again: upload it on eQSL's website.</source>
+        <translation>%1 non inviato alle %2 UTC: %3. Nessun nuovo tentativo: caricalo sul sito web di eQSL.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1: the QSO with %2 was not sent - see Settings &gt; Reporting.</source>
+        <translation>%1: il QSO con %2 non è stato inviato - vedi Impostazioni &gt; Segnalazioni.</translation>
+    </message>
 </context>
 <context>
     <name>CountryDat</name>
@@ -9852,11 +9862,6 @@ e Griglia DX quando viene inviato un messaggio di testo o 73.</translation>
         <translation>Servizi di Rete:</translation>
     </message>
     <message>
-        <location filename="../Configuration.ui" line="2798"/>
-        <source>The program can send logged QSO info to the http://www.eqsl.cc web site.</source>
-        <translation>Il programma può inviare il QSO al sito Web http://www.eqsl.cc.</translation>
-    </message>
-    <message>
         <location filename="../Configuration.ui" line="2821"/>
         <source>EQSL Username.</source>
         <translation>Nome utente eQSL.</translation>
@@ -11812,6 +11817,11 @@ Solo i QSO registrati da ora in poi: carica quelli più vecchi su QRZ.com come f
         <location filename="../Configuration.ui"/>
         <source>When a QSO gave no grid - neither heard nor typed - it gets one before it is logged: what this program heard the station send earlier (within a day; a /M station's within half an hour), else the locator it reports to PSK Reporter (with the Reception map open), else its grid in eQSL's member list (Settings &gt; General; a member that uploaded to eQSL within the last 12 months), in Club Log's users file (downloaded weekly with the token; a call that uploaded within the last 12 months) or in QRZ.com's XML data (with the XML login, asked as the QSO starts). Only a square inside the call's DXCC country is taken, its first four characters. Log QSO names the source in the grid field's tooltip, and the QSO's comment notes it as [grid: ...]. Never in a contest.</source>
         <translation>Quando un QSO non ha dato alcuna griglia (né ricevuta né digitata), ne riceve una prima della registrazione: quella che questo programma ha sentito trasmettere prima dalla stazione (entro un giorno; da una stazione /M, entro mezz'ora), altrimenti il locatore che la stazione segnala a PSK Reporter (con la Mappa di ricezione aperta), altrimenti la sua griglia nell'elenco dei membri di eQSL (Impostazioni &gt; Generali; un membro che ha caricato su eQSL negli ultimi 12 mesi), nel file degli utenti di Club Log (scaricato ogni settimana con il token; un nominativo che ha caricato negli ultimi 12 mesi) o nei dati XML di QRZ.com (con l'accesso XML, chiesti all'inizio del QSO). Si accetta solo un quadrato entro il paese DXCC del nominativo, i suoi primi quattro caratteri. La finestra QSO a Log indica la fonte nel suggerimento del campo griglia, e il commento del QSO la annota come [grid: ...]. Mai in un contest.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>The program can send logged QSO info to the https://www.eqsl.cc web site.</source>
+        <translation>Il programma può inviare il QSO al sito Web https://www.eqsl.cc.</translation>
     </message>
 </context>
 <context>

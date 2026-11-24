@@ -888,6 +888,16 @@ Format:
         <source>Users file (grids): Club Log refused it to this token (HTTP status %1) - not asked again until another token is saved.</source>
         <translation>사용자 파일(그리드): Club Log가 이 토큰에 대해 거부했습니다(HTTP 상태 %1) - 다른 토큰을 저장할 때까지 다시 요청하지 않습니다.</translation>
     </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1 not sent at %2 UTC: %3. Not tried again: upload it on eQSL's website.</source>
+        <translation>%1: %2 UTC에 보내지 못함: %3. 다시 시도하지 않음: eQSL 웹사이트에서 업로드하십시오.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1: the QSO with %2 was not sent - see Settings &gt; Reporting.</source>
+        <translation>%1: %2와(과)의 QSO를 보내지 못함 - 설정 &gt; 보고 참조.</translation>
+    </message>
 </context>
 <context>
     <name>CountryDat</name>
@@ -9809,11 +9819,6 @@ DX 그리드 필드를 비우려면 이 옵션을 켜십시오.</translation>
         <translation>네트워크 서비스</translation>
     </message>
     <message>
-        <location filename="../Configuration.ui" line="2798"/>
-        <source>The program can send logged QSO info to the http://www.eqsl.cc web site.</source>
-        <translation>기록한 QSO 정보를 http://www.eqsl.cc 사이트로 보낼 수 있습니다.</translation>
-    </message>
-    <message>
         <location filename="../Configuration.ui" line="2821"/>
         <source>EQSL Username.</source>
         <translation>eQSL 사용자 이름.</translation>
@@ -11808,6 +11813,11 @@ Only QSOs logged from now on: upload older ones to QRZ.com as an ADIF file there
         <location filename="../Configuration.ui"/>
         <source>When a QSO gave no grid - neither heard nor typed - it gets one before it is logged: what this program heard the station send earlier (within a day; a /M station's within half an hour), else the locator it reports to PSK Reporter (with the Reception map open), else its grid in eQSL's member list (Settings &gt; General; a member that uploaded to eQSL within the last 12 months), in Club Log's users file (downloaded weekly with the token; a call that uploaded within the last 12 months) or in QRZ.com's XML data (with the XML login, asked as the QSO starts). Only a square inside the call's DXCC country is taken, its first four characters. Log QSO names the source in the grid field's tooltip, and the QSO's comment notes it as [grid: ...]. Never in a contest.</source>
         <translation>QSO에서 그리드를 얻지 못했을 때(수신도 입력도 없을 때) 기록 전에 채웁니다: 이 프로그램이 앞서 그 국이 보낸 것을 들은 그리드(하루 이내, /M 국은 30분 이내), 없으면 그 국이 PSK Reporter에 보고하는 로케이터(수신 지도가 열려 있을 때), 그래도 없으면 eQSL 회원 목록의 그 국 그리드(설정 &gt; 일반, 지난 12개월 안에 eQSL에 업로드한 회원), Club Log 사용자 파일(토큰으로 매주 다운로드, 지난 12개월 안에 업로드한 호출부호) 또는 QRZ.com XML 데이터(XML 로그인으로 QSO 시작 시 조회). 호출부호의 DXCC 국가 안에 있는 스퀘어만, 앞 네 글자를 씁니다. QSO 기록 창은 그리드 칸의 도움말에 출처를 밝히고, QSO 비고에 [grid: ...]로 적습니다. 콘테스트 중에는 하지 않습니다.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>The program can send logged QSO info to the https://www.eqsl.cc web site.</source>
+        <translation>기록한 QSO 정보를 https://www.eqsl.cc 사이트로 보낼 수 있습니다.</translation>
     </message>
 </context>
 <context>

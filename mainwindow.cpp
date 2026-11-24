@@ -1218,6 +1218,9 @@ MainWindow::MainWindow(bool multiple, QSettings * settings, QSharedMemory *shdme
   connect (&m_config, &Configuration::upload_note, this, [this] (QString const&, QString const& text) {
       if (!text.isEmpty ()) statusBar ()->showMessage (text, 10000);
     });
+  /* CE3TSK 2026-11-24 (TODO.md 3.-284, the operator: "keep eQSL's answer and show it like the others"): eQSL's answer for
+     each QSO to Settings > Reporting's eQSL line, which words it and sends the note above when there is one */
+  connect (Eqsl, &EQSL::answered, this, [this] (QString const& call, eqsl::Answer const& answer) {m_config.eqsl_answered (call, answer);});
 
 
   // set up message text validators

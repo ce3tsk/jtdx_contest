@@ -31,6 +31,7 @@ class QHostAddress;
 class CountryDat;
 namespace cabrillo {struct Contest;}
 namespace contest_score {struct Qso; struct Score;}
+namespace eqsl {struct Answer;}   // CE3TSK 2026-11-24 (TODO.md 3.-284): eqsl.h
 
 //
 // Class Configuration
@@ -217,6 +218,9 @@ public:
   /* CE3TSK 2026-11-23 (TODO.md 3.-282, QSO_UPLOAD_PLAN.md): a QSO just logged, as one ADIF record, to Club Log and to QRZ.com
      - each only when its box under Reporting is ticked (off by default), with the token and the key of the confirmations */
   void upload_qso (QByteArray const& adif_record);
+  /* CE3TSK 2026-11-24 (TODO.md 3.-284, the operator: "keep eQSL's answer and show it like the others"): eQSL's answer
+     for a QSO logged (eqsl.h) - on eQSL's line under Reporting and, refused or not sent, in the main window's note */
+  void eqsl_answered (QString const& call, eqsl::Answer const& answer);
   /* CE3TSK 2026-11-24 (TODO.md 3.-283, stage 3): QRZ.com's XML data asked for a call's grid - with the XML login saved,
      once a call while it stays (qrzxml.h); the answer comes as qrz_grid () */
   void qrz_grid_lookup (QString const& call);

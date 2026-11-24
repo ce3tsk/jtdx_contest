@@ -211,6 +211,7 @@ extern "C" {
 #include "clublog.h"     // CE3TSK 2026-11-21: Club Log's confirmed QSOs (TODO.md 3.-280)
 #include "qrzlogbook.h"   // CE3TSK 2026-11-22: QRZ.com's LoTW confirmations (TODO.md 3.-280)
 #include "qsoupload.h"    // CE3TSK 2026-11-23: the logged QSOs to Club Log and QRZ.com (TODO.md 3.-282)
+#include "eqsl.h"         // CE3TSK 2026-11-24: eQSL's answer (TODO.md 3.-284)
 #include "logbook/countrydat.h"       /* CE3TSK */
 #include "ownstation.h"                /* CE3TSK 2026-10-04 */
 
@@ -725,6 +726,9 @@ private:
   void upload_delayed (qso_upload::Site site, qso_upload::Result const& result, QString const& call, QDateTime const& next, int waiting);
   void upload_kept (qso_upload::Site site, bool refused, QString const& call);   // (review) a QSO logged, not sent now
   void update_upload_labels ();
+  // (3.-284) eQSL's answer for a QSO logged, and its line - shown, as the others', only when there is something to report
+  void eqsl_answered (QString const& call, eqsl::Answer const& answer);
+  void update_eqsl_upload_label ();
   void grey_upload_boxes (bool opening);   // (2026-11-24) Club Log's and QRZ.com's "Send logged QSOs" greyed without a token or key
   Q_SLOT void on_callNotif_check_box_clicked(bool checked);
   Q_SLOT void on_otherMessagesMarker_check_box_clicked(bool checked);
@@ -870,6 +874,10 @@ private:
   bool qrz_upload_good_ {false};
   QString clublog_upload_tip_;      // the boxes' own tooltips, the status after them
   QString qrz_upload_tip_;
+  // (3.-284) eQSL's last answer, worded; good: added or there already - nothing to report, the line hidden
+  QString eqsl_upload_text_;
+  bool eqsl_upload_good_ {true};
+  QString eqsl_upload_tip_;
   bool qrz_upload_toggled_ {false}; // the QRZ.com box was clicked since Settings opened: ticked at OK, a refusal is lifted
   bool clublog_upload_toggled_ {false};   // (review) the same for Club Log: another call's refusal is lifted
   QDir temp_dir_;
@@ -2580,6 +2588,9 @@ Configuration::impl::impl (Configuration * self, QNetworkAccessManager * network
   // (review) the boxes' own tooltips - folded already (wrap_tooltips above) - each site's status follows its own
   clublog_upload_tip_ = ui_->clublog_upload_check_box->toolTip ();
   qrz_upload_tip_ = ui_->qrz_upload_check_box->toolTip ();
+  eqsl_upload_tip_ = ui_->eqsl_check_box->toolTip ();   // (3.-284) eQSL's line follows its box as the others' do
+  connect (ui_->eqsl_check_box, &QCheckBox::toggled, this, &Configuration::impl::update_eqsl_upload_label);
+  update_eqsl_upload_label ();
   connect (ui_->clublog_upload_check_box, &QCheckBox::toggled, this, [this] {clublog_upload_toggled_ = true; update_upload_labels ();});
   connect (ui_->qrz_upload_check_box, &QCheckBox::toggled, this, [this] {qrz_upload_toggled_ = true; update_upload_labels ();});
   // (2026-11-24, the operator) a token or key typed or cleared greys or frees its site's box at once, as eQSL's fields do eQSL's
@@ -5485,6 +5496,11 @@ void Configuration::upload_qso (QByteArray const& adif_record)
   m_->update_upload_labels ();
 }
 
+void Configuration::eqsl_answered (QString const& call, eqsl::Answer const& answer)
+{
+  m_->eqsl_answered (call, answer);
+}
+
 void Configuration::impl::configure_uploads ()
 {
   clublog_upload_.set_own_call (my_callsign_);   // first: a record without STATION_CALLSIGN is My Call's (station_calls ())
@@ -5641,6 +5657,46 @@ void Configuration::impl::upload_kept (qso_upload::Site site, bool refused, QStr
   auto const name = qso_upload::site_name (site);
   Q_EMIT self_->upload_note (name, refused ? tr ("%1 refused the upload: the QSO with %2 is kept - see Settings > Reporting.").arg (name).arg (call)
                                            : tr ("%1: the QSO with %2 is not sent yet, kept - see Settings > Reporting.").arg (name).arg (call));
+}
+
+/* CE3TSK 2026-11-24 (TODO.md 3.-284, the operator: "keep eQSL's answer and show it like the others"): eQSL's answer in the
+   uploads' own words - sent, in the log already, refused with eQSL's line - and, as eQSL keeps no QSO it did not take and
+   the program tries none again, "not sent" with the operator's way out: eQSL's website. A refusal or a QSO not sent is the
+   main window's note too, for 10 s */
+void Configuration::impl::eqsl_answered (QString const& call, eqsl::Answer const& answer)
+{
+  auto const now = QDateTime::currentDateTimeUtc ();
+  auto const name = QStringLiteral ("eQSL");
+  eqsl_upload_good_ = eqsl::Answer::Added == answer.kind || eqsl::Answer::Duplicate == answer.kind;
+  switch (answer.kind)
+    {
+    case eqsl::Answer::Added: eqsl_upload_text_ = tr ("%1 sent at %2 UTC.").arg (call).arg (utc_time (now, now)); break;
+    case eqsl::Answer::Duplicate: eqsl_upload_text_ = tr ("%1 was in the log already (%2 UTC).").arg (call).arg (utc_time (now, now)); break;
+    case eqsl::Answer::Refused:
+      eqsl_upload_text_ = tr ("%1 refused at %2 UTC: %3").arg (call).arg (utc_time (now, now)).arg (answer.text);
+      Q_EMIT self_->upload_note (name, tr ("%1 refused the QSO with %2 - see Settings > Reporting.").arg (name).arg (call));
+      break;
+    default:
+      {
+        auto const why = answer.http_status && 200 != answer.http_status ? tr ("HTTP status %1").arg (answer.http_status)
+          : 0 == answer.http_status ? tr ("no connection: %1").arg (answer.text)
+          : eqsl::Answer::Unclear == answer.kind ? tr ("an answer not understood: %1").arg (answer.text)
+          : answer.text;   // eQSL's own "Error: ... down ..."
+        eqsl_upload_text_ = tr ("%1 not sent at %2 UTC: %3. Not tried again: upload it on eQSL's website.").arg (call).arg (utc_time (now, now)).arg (why);
+        Q_EMIT self_->upload_note (name, tr ("%1: the QSO with %2 was not sent - see Settings > Reporting.").arg (name).arg (call));
+      }
+    }
+  update_eqsl_upload_label ();
+}
+
+// (3.-284) eQSL's line as the others' (update_upload_labels): shown only while the box is ticked and the last answer is
+// something to report; the box's tooltip always tells it
+void Configuration::impl::update_eqsl_upload_label ()
+{
+  QString const text {eqsl_upload_text_.isEmpty () ? tr ("QSOs you log are sent as you log them.") : eqsl_upload_text_};
+  ui_->eqsl_upload_status_label->setText (text);
+  ui_->eqsl_upload_status_label->setVisible (ui_->eqsl_check_box->isChecked () && !eqsl_upload_good_ && !eqsl_upload_text_.isEmpty ());
+  ui_->eqsl_check_box->setToolTip (eqsl_upload_tip_ + "\n\n" + wrap_tooltip (text));
 }
 
 /* CE3TSK 2026-11-24 (TODO.md 3.-283's Option B, the operator: "grey Send logged QSOs for Club Log and QRZ just like eQSL,

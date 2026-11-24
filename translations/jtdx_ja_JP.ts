@@ -888,6 +888,16 @@ Format:
         <source>Users file (grids): Club Log refused it to this token (HTTP status %1) - not asked again until another token is saved.</source>
         <translation>ユーザーファイル（グリッド）：Club Log がこのトークンでの取得を拒否しました（HTTP ステータス %1）- 別のトークンを保存するまで再要求しません。</translation>
     </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1 not sent at %2 UTC: %3. Not tried again: upload it on eQSL's website.</source>
+        <translation>%1 は %2 UTC に送信されませんでした：%3。再試行しません：eQSL のウェブサイトでアップロードしてください。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1: the QSO with %2 was not sent - see Settings &gt; Reporting.</source>
+        <translation>%1：%2 との QSO は送信されませんでした - 設定 &gt; レポーティング を参照。</translation>
+    </message>
 </context>
 <context>
     <name>CountryDat</name>
@@ -9613,11 +9623,6 @@ Please verify the correct directory name was given.</source>
         <translation>ネットワークサービス</translation>
     </message>
     <message>
-        <location filename="../Configuration.ui" line="2798"/>
-        <source>The program can send logged QSO info to the http://www.eqsl.cc web site.</source>
-        <translation>プログラムは、ログに記録されたQSO情報を http://www.eqsl.cc のウェブサイトへ送信できます。</translation>
-    </message>
-    <message>
         <location filename="../Configuration.ui" line="2821"/>
         <source>EQSL Username.</source>
         <translation>eQSL ユーザー名。</translation>
@@ -11786,6 +11791,11 @@ Only QSOs logged from now on: upload older ones to QRZ.com as an ADIF file there
         <location filename="../Configuration.ui"/>
         <source>When a QSO gave no grid - neither heard nor typed - it gets one before it is logged: what this program heard the station send earlier (within a day; a /M station's within half an hour), else the locator it reports to PSK Reporter (with the Reception map open), else its grid in eQSL's member list (Settings &gt; General; a member that uploaded to eQSL within the last 12 months), in Club Log's users file (downloaded weekly with the token; a call that uploaded within the last 12 months) or in QRZ.com's XML data (with the XML login, asked as the QSO starts). Only a square inside the call's DXCC country is taken, its first four characters. Log QSO names the source in the grid field's tooltip, and the QSO's comment notes it as [grid: ...]. Never in a contest.</source>
         <translation>QSOでグリッドが得られなかった場合（受信も入力もない場合）、記録前に補います：このプログラムが以前に受信したその局の送信グリッド（1日以内、/M局は30分以内）、なければその局がPSK Reporterに報告しているロケーター（受信マップを開いているとき）、さらになければ eQSL の会員リストにあるその局のグリッド（設定 &gt; 全般。過去12か月以内に eQSL へアップロードした会員）、Club Log のユーザーファイル（トークンで毎週ダウンロード。過去12か月以内にアップロードしたコールサイン）、または QRZ.com の XML データ（XML ログインで、QSO の開始時に照会）。コールサインのDXCCエンティティ内のスクエアのみ、先頭4文字を使います。ログに記録ウィンドウはグリッド欄のツールチップに出典を示し、QSOのコメントに [grid: ...] として記します。コンテスト中は行いません。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>The program can send logged QSO info to the https://www.eqsl.cc web site.</source>
+        <translation>プログラムは、ログに記録されたQSO情報を https://www.eqsl.cc のウェブサイトへ送信できます。</translation>
     </message>
 </context>
 <context>
