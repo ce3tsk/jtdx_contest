@@ -8,6 +8,7 @@
 #include <QUrl>
 
 #include "satlog.h"   // CE3TSK 2026-11-13 (TODO.md 3.-247): the satellite's tags
+#include "gridfill.h"   // (3.-291) the fill's note, left off the card
 
 #include "moc_eqsl.cpp"
 
@@ -82,6 +83,11 @@ namespace eqsl
   {
     return base + QStringLiteral ("?ADIFdata=") + QString::fromLatin1 (QUrl::toPercentEncoding (adif));
   }
+
+  QString card_message (QString const& eqslcomments, QString const& comment)
+  {
+    return eqslcomments.trimmed ().isEmpty () ? grid_fill::without_note (comment) : eqslcomments;
+  }
 }
 
 EQSL::EQSL(QNetworkAccessManager * manager, QObject *parent)
@@ -110,7 +116,8 @@ void EQSL::upload(QString const& eqsl_username, QString const& eqsl_passwd, QStr
     /* CE3TSK 2026-11-24 (TODO.md 3.-285): the QTH nickname only when there is one - without it eQSL files the QSO by its
        date into the account whose dates cover it (ImportADIF.txt); an empty tag would name no profile at all */
     if (!eqsl_nickname.isEmpty ()) myadif+="<APP_EQSL_QTH_NICKNAME:" + QString::number(eqsl_nickname.length()) + ">" + eqsl_nickname;
-    myadif+=record (call, mode, QSO_date_on, rpt_sent, band, eqslcomments, prop_mode, sat_name, comment);
+    // (3.-291) the card's message: the eQSL comments field, else the QSO's comment without the fill's note
+    myadif+=record (call, mode, QSO_date_on, rpt_sent, band, eqsl::card_message (eqslcomments, comment), prop_mode, sat_name, comment);
 
     // (3.-284) queued behind one under way - the inherited code cut that one off
     queue_ << Pending {call, eqsl::request_url (eqsl::upload_url (), myadif), eqsl_passwd};

@@ -4023,6 +4023,11 @@ Format:
         <source>what at least two other stations received from the station, as their reports to PSK Reporter say</source>
         <translation>det, som mindst to andre stationer modtog fra stationen, ifølge deres rapporter til PSK Reporter</translation>
     </message>
+    <message>
+        <location filename="../logqso.ui"/>
+        <source>The message printed on the eQSL card. Left empty, the card gets the QSO's comment instead, without the grid fill's note [grid: ...]. The comment itself also goes to eQSL, as a private comment that is never printed.</source>
+        <translation>Beskeden, der trykkes på eQSL-kortet. Er feltet tomt, får kortet i stedet QSO'ens kommentar, uden noten om det udfyldte grid [grid: ...]. Selve kommentaren sendes også til eQSL som en privat kommentar, der aldrig trykkes.</translation>
+    </message>
 </context>
 <context>
     <name>MainWindow</name>

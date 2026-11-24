@@ -4026,6 +4026,11 @@ Vorming:
         <source>what at least two other stations received from the station, as their reports to PSK Reporter say</source>
         <translation>mida vähemalt kaks teist jaama jaamalt vastu võtsid, nende PSK Reporterile saadetud teadete järgi</translation>
     </message>
+    <message>
+        <location filename="../logqso.ui"/>
+        <source>The message printed on the eQSL card. Left empty, the card gets the QSO's comment instead, without the grid fill's note [grid: ...]. The comment itself also goes to eQSL, as a private comment that is never printed.</source>
+        <translation>Sõnum, mis trükitakse eQSL-i kaardile. Kui väli jääb tühjaks, saab kaart selle asemel QSO kommentaari, ilma täidetud ruudu märkuseta [grid: ...]. Kommentaar ise läheb ka eQSL-i, privaatse kommentaarina, mida kunagi ei trükita.</translation>
+    </message>
 </context>
 <context>
     <name>MainWindow</name>

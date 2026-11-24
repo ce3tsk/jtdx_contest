@@ -4020,6 +4020,11 @@ Formátum:
         <source>what at least two other stations received from the station, as their reports to PSK Reporter say</source>
         <translation>amit legalább két másik állomás vett az állomástól, a PSK Reporternek küldött jelentéseik szerint</translation>
     </message>
+    <message>
+        <location filename="../logqso.ui"/>
+        <source>The message printed on the eQSL card. Left empty, the card gets the QSO's comment instead, without the grid fill's note [grid: ...]. The comment itself also goes to eQSL, as a private comment that is never printed.</source>
+        <translation>Az eQSL-lapra nyomtatott üzenet. Ha üresen marad, a lap helyette a QSO megjegyzését kapja, a kiegészített QRA jegyzete [grid: ...] nélkül. Maga a megjegyzés is elmegy az eQSL-re, privát megjegyzésként, amelyet sosem nyomtatnak.</translation>
+    </message>
 </context>
 <context>
     <name>MainWindow</name>

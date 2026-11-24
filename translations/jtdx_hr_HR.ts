@@ -4020,6 +4020,11 @@ Format:
         <source>what at least two other stations received from the station, as their reports to PSK Reporter say</source>
         <translation>ono što su od stanice primile barem dvije druge stanice, prema njihovim prijavama PSK Reporteru</translation>
     </message>
+    <message>
+        <location filename="../logqso.ui"/>
+        <source>The message printed on the eQSL card. Left empty, the card gets the QSO's comment instead, without the grid fill's note [grid: ...]. The comment itself also goes to eQSL, as a private comment that is never printed.</source>
+        <translation>Poruka koja se ispisuje na eQSL kartici. Ako ostane prazno, kartica umjesto toga dobiva komentar QSO-a, bez bilješke o dopunjenom lokatoru [grid: ...]. Sam komentar šalje se i na eQSL, kao privatni komentar koji se nikad ne ispisuje.</translation>
+    </message>
 </context>
 <context>
     <name>MainWindow</name>

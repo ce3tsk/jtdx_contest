@@ -4021,6 +4021,11 @@ Formatera:
         <source>what at least two other stations received from the station, as their reports to PSK Reporter say</source>
         <translation>det som minst två andra stationer tog emot från stationen, enligt deras rapporter till PSK Reporter</translation>
     </message>
+    <message>
+        <location filename="../logqso.ui"/>
+        <source>The message printed on the eQSL card. Left empty, the card gets the QSO's comment instead, without the grid fill's note [grid: ...]. The comment itself also goes to eQSL, as a private comment that is never printed.</source>
+        <translation>Meddelandet som skrivs ut på eQSL-kortet. Lämnas fältet tomt får kortet i stället QSO:ns kommentar, utan noteringen om den ifyllda gridrutan [grid: ...]. Själva kommentaren går också till eQSL, som en privat kommentar som aldrig skrivs ut.</translation>
+    </message>
 </context>
 <context>
     <name>MainWindow</name>

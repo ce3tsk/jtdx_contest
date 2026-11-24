@@ -4020,6 +4020,11 @@ Format:
         <source>what at least two other stations received from the station, as their reports to PSK Reporter say</source>
         <translation>他の2局以上がその局から受信してPSK Reporterに報告したグリッド</translation>
     </message>
+    <message>
+        <location filename="../logqso.ui"/>
+        <source>The message printed on the eQSL card. Left empty, the card gets the QSO's comment instead, without the grid fill's note [grid: ...]. The comment itself also goes to eQSL, as a private comment that is never printed.</source>
+        <translation>eQSLカードに印刷されるメッセージです。空欄のときは、代わりにQSOのコメントがカードに入ります（グリッド補完の注記 [grid: ...] は除きます）。コメント自体も非公開のコメントとしてeQSLへ送られ、印刷されることはありません。</translation>
+    </message>
 </context>
 <context>
     <name>MainWindow</name>

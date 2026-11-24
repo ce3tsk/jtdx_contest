@@ -4019,6 +4019,11 @@ Formāts:
         <source>what at least two other stations received from the station, as their reports to PSK Reporter say</source>
         <translation>ko no stacijas uztvēra vismaz divas citas stacijas, pēc to ziņojumiem PSK Reporter</translation>
     </message>
+    <message>
+        <location filename="../logqso.ui"/>
+        <source>The message printed on the eQSL card. Left empty, the card gets the QSO's comment instead, without the grid fill's note [grid: ...]. The comment itself also goes to eQSL, as a private comment that is never printed.</source>
+        <translation>Ziņojums, ko drukā uz eQSL kartītes. Ja lauks paliek tukšs, kartīte tā vietā saņem QSO komentāru, bez papildinātā lokatora piezīmes [grid: ...]. Pats komentārs arī tiek nosūtīts uz eQSL kā privāts komentārs, kas nekad netiek drukāts.</translation>
+    </message>
 </context>
 <context>
     <name>MainWindow</name>

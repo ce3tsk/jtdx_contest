@@ -25,6 +25,9 @@
    COMMENT, the one Club Log and QRZ.com get - sent as COMMENT when there is one: eQSL's ADIF content page, "The field
    called 'COMMENT' is normally used only for private comments and is NOT printed on the eQSLs". The card's message is
    still Log QSO's eQSL comments field (QSLMSG).
+   (3.-291, the operator: eQSL's web upload "has an option for it to use the FT8 comments", then "Comment when field
+   empty") the card's message: Log QSO's eQSL comments field, else the QSO's comment without the grid fill's note - what
+   that option does for a file; the real-time interface has no such option, so the upload says it itself.
    The address and the password are never shown: an answer's text has neither (eqsl::scrubbed). No retry, no queue
    file: a QSO not sent is named, for the operator to upload on eQSL's website. test_qsoupload has the rules and a
    stand-in on 127.0.0.1 (JTDX_EQSL_UPLOAD). */
@@ -62,6 +65,8 @@ namespace eqsl
   QString scrubbed (QString text, QString const& password);
   // the request: base + "?ADIFdata=" + adif percent-encoded whole, nothing left for a server to read otherwise
   QString request_url (QString const& base, QString const& adif);
+  // (3.-291) the card's message (QSLMSG): the eQSL comments field, else the QSO's comment without the fill's note ("" none)
+  QString card_message (QString const& eqslcomments, QString const& comment);
 }
 
 Q_DECLARE_METATYPE (eqsl::Answer)

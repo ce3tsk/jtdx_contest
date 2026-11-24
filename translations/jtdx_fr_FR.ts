@@ -4024,6 +4024,11 @@ Format:
         <source>what at least two other stations received from the station, as their reports to PSK Reporter say</source>
         <translation>ce qu'au moins deux autres stations ont reçu de la station, d'après leurs rapports à PSK Reporter</translation>
     </message>
+    <message>
+        <location filename="../logqso.ui"/>
+        <source>The message printed on the eQSL card. Left empty, the card gets the QSO's comment instead, without the grid fill's note [grid: ...]. The comment itself also goes to eQSL, as a private comment that is never printed.</source>
+        <translation>Le message imprimé sur la carte eQSL. Laissé vide, la carte reçoit à la place le commentaire du QSO, sans la note du locator complété [grid: ...]. Le commentaire lui-même part aussi vers eQSL, comme commentaire privé jamais imprimé.</translation>
+    </message>
 </context>
 <context>
     <name>MainWindow</name>

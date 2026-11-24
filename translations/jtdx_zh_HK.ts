@@ -4020,6 +4020,11 @@ Format:
         <source>what at least two other stations received from the station, as their reports to PSK Reporter say</source>
         <translation>至少兩個其他電台從該電台收到、並向 PSK Reporter 報告的網格</translation>
     </message>
+    <message>
+        <location filename="../logqso.ui"/>
+        <source>The message printed on the eQSL card. Left empty, the card gets the QSO's comment instead, without the grid fill's note [grid: ...]. The comment itself also goes to eQSL, as a private comment that is never printed.</source>
+        <translation>印在 eQSL 卡片上的留言。留空時，卡片改用該通聯的註釋（不含網格補全的標註 [grid: ...]）。註釋本身也會作為私人註釋傳送到 eQSL，永不印出。</translation>
+    </message>
 </context>
 <context>
     <name>MainWindow</name>

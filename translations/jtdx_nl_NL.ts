@@ -4020,6 +4020,11 @@ Indeling:
         <source>what at least two other stations received from the station, as their reports to PSK Reporter say</source>
         <translation>wat minstens twee andere stations van het station ontvingen, volgens hun meldingen aan PSK Reporter</translation>
     </message>
+    <message>
+        <location filename="../logqso.ui"/>
+        <source>The message printed on the eQSL card. Left empty, the card gets the QSO's comment instead, without the grid fill's note [grid: ...]. The comment itself also goes to eQSL, as a private comment that is never printed.</source>
+        <translation>Het bericht dat op de eQSL-kaart wordt gedrukt. Blijft het leeg, dan krijgt de kaart in plaats daarvan de opmerking van de QSO, zonder de notitie van de aangevulde locator [grid: ...]. De opmerking zelf gaat ook naar eQSL, als privé-opmerking die nooit wordt gedrukt.</translation>
+    </message>
 </context>
 <context>
     <name>MainWindow</name>
