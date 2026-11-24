@@ -208,6 +208,7 @@ extern "C" {
 #include <QFutureWatcher>                   // (3.-283's review 2026-11-24, 4) the users file made on a worker thread
 #include <QtConcurrent/QtConcurrentRun>
 #include <QSaveFile>
+#include <QFileInfo>                       // (3.-286) the member list's age
 #include "clublog.h"     // CE3TSK 2026-11-21: Club Log's confirmed QSOs (TODO.md 3.-280)
 #include "qrzlogbook.h"   // CE3TSK 2026-11-22: QRZ.com's LoTW confirmations (TODO.md 3.-280)
 #include "qsoupload.h"    // CE3TSK 2026-11-23: the logged QSOs to Club Log and QRZ.com (TODO.md 3.-282)
@@ -713,6 +714,10 @@ private:
   void update_qrz_xml_label ();
   // (stage 4) Club Log's users file: weekly with the token while the fill is on (clublogusers.h)
   void clublog_users_check_due ();
+  // (3.-286) eQSL's member list fetched by itself while the fill is ticked: when it is missing, then weekly
+  void eqsl_members_check_due ();
+  void start_eqsl_members_download (bool automatic);
+  QString data_file_failure (FileDownload::Failure failure, QString const& detail) const;   // a failed download's reason, worded
   void clublog_users_finished (bool ok, int http_status, QString const& detail);   // (review) the status, 0 for none
   void update_clublog_users_label ();
   /* CE3TSK 2026-11-23 (TODO.md 3.-282, QSO_UPLOAD_PLAN.md): the logged QSOs to Club Log and QRZ.com with the token and key
@@ -832,6 +837,8 @@ private:
   FileDownload license_download_;   // CE3TSK 2026-10-03
   FileDownload call3_download_;     // CE3TSK 2026-10-23 (TODO.md 3.-199)
   FileDownload eqsl_download_;      // CE3TSK 2026-11-23 (TODO.md 3.-283, stage 2): eQSL's member list
+  bool eqsl_members_automatic_ {false};   // (3.-286) the last download started is the program's own (set at each start): its failure on the row, no message box
+  QString eqsl_members_error_;            // (3.-286) the last automatic download's failure, worded; "" after a good one
   FileDownload clublog_download_;   // CE3TSK 2026-11-21 (TODO.md 3.-280)
   QTimer clublog_timer_;            // looks every half hour whether a download is due
   QString clublog_token_;           // from its own file, never in the ini (clublog.h)
@@ -2474,11 +2481,32 @@ Configuration::impl::impl (Configuration * self, QNetworkAccessManager * network
               settings_->setValue (contest_profile::own_key (call3_file::downloaded_key),
                                    f.open (QIODevice::ReadOnly) ? call3_file::version (f.read (4096)) : QDate {});
             }
+          if (download == &eqsl_download_)   // (3.-286) a good list: an automatic download's failure and its wait are over
+            {
+              eqsl_members_error_.clear ();
+              SettingsGroup g {settings_, "Configuration"};
+              settings_->remove (contest_profile::own_key ("EqslMembersNextTry"));
+            }
           update_data_file_labels ();
           // (3.-199) CALL3.TXT is read where it is used - Lookup at each look-up, the decoder at its start: nothing to reload
           if (download != &call3_download_) Q_EMIT self_->data_files_updated ();
         });
       connect (download, &FileDownload::error, this, [this, download] (FileDownload::Failure failure, QString const& detail) {
+          if (download == &eqsl_download_ && eqsl_members_automatic_)
+            {
+              /* (3.-286) the program's own download of eQSL's list: never a message box during operation - the reason on
+                 the list's row, tried again after 6 hours, or at a Retry-After's time (a minute at least, a day at most) */
+              eqsl_members_error_ = data_file_failure (failure, detail);
+              auto const now = QDateTime::currentDateTimeUtc ();
+              auto const retry = eqsl_download_.retry_after ();
+              {
+                SettingsGroup g {settings_, "Configuration"};
+                settings_->setValue (contest_profile::own_key ("EqslMembersNextTry"),
+                                     retry.isValid () ? qBound (now.addSecs (60), retry, now.addDays (1)) : now.addSecs (6 * 3600));
+              }
+              update_data_file_labels ();
+              return;
+            }
           update_data_file_labels ();
           data_file_download_failed (download == &cty_download_ ? cty_file_name
                                      : download == &lotw_download_ ? lotw_file_name
@@ -2497,6 +2525,9 @@ Configuration::impl::impl (Configuration * self, QNetworkAccessManager * network
     });
   connect (&clublog_timer_, &QTimer::timeout, this, &Configuration::impl::clublog_check_due);
   clublog_timer_.start (30 * 60 * 1000);
+  // (3.-286) eQSL's member list: looked for on the same half-hourly look, and 150 s after the start, not in it
+  connect (&clublog_timer_, &QTimer::timeout, this, &Configuration::impl::eqsl_members_check_due);
+  QTimer::singleShot (150 * 1000, this, [this] {eqsl_members_check_due ();});
   QTimer::singleShot (60 * 1000, this, [this] {clublog_check_due ();});   // a minute after the start, not in it
   // CE3TSK 2026-11-22 (TODO.md 3.-280): QRZ.com's, on the same half-hourly look, and half a minute after Club Log's first
   qrz_key_ = qrz_logbook::read_key (qrz_key_file ());
@@ -3133,7 +3164,7 @@ Radio::convert_dark("#fafbfe",useDarkStyle_),Radio::convert_dark("#dcdef1",useDa
   ui_->eqsluser_edit->setText (eqsl_username_);
   ui_->eqslpasswd_edit->setText (eqsl_passwd_);
   ui_->eqslnick_edit->setText (eqsl_nickname_);
-  if(!eqsl_username_.isEmpty () && !eqsl_passwd_.isEmpty () && !eqsl_nickname_.isEmpty ()) {
+  if(!eqsl_username_.isEmpty () && !eqsl_passwd_.isEmpty ()) {   // CE3TSK 2026-11-24 (TODO.md 3.-285): the QTH nickname optional
     ui_->eqsl_check_box->setEnabled (true);
     ui_->eqsl_check_box->setChecked (send_to_eqsl_);
   }
@@ -3564,7 +3595,11 @@ void Configuration::impl::read_settings ()
     eqsl_nickname_ = login.value (2);
   }
   send_to_eqsl_ = settings_->value ("EQSLSend", false).toBool ();
-  if(eqsl_username_.isEmpty () || eqsl_passwd_.isEmpty () || eqsl_nickname_.isEmpty ()) {
+  /* CE3TSK 2026-11-24 (TODO.md 3.-285, the operator: "Let's relax the requirement to what eQSL really needs"): eQSL's
+     upload needs the user and the password ("Error: Missing eQSL_User", "Error: Missing eQSL_Pswd"); the QTH nickname
+     is optional - eQSL's ImportADIF.txt: without it eQSL files a QSO "by looking at the QSO Date and determining which
+     account has the correct Callsign Start and End Date" (eqsl.h). The inherited box wanted all three. */
+  if(eqsl_username_.isEmpty () || eqsl_passwd_.isEmpty ()) {
     ui_->eqsl_check_box->setChecked (false); ui_->eqsl_check_box->setEnabled (false); send_to_eqsl_=false; 
   }
   usesched_ = settings_->value ("UseSchedBands", false).toBool ();
@@ -4688,7 +4723,7 @@ void Configuration::impl::accept ()
   spot_to_dxsummit_ = ui_->dxsummit_check_box->isChecked ();
   prevent_spotting_false_ = ui_->preventFalseUDP_check_box->isChecked ();
   filterUDP_ =  ui_->filterUDP_check_box->isChecked ();
-  if(!ui_->eqsluser_edit->text ().isEmpty () && !ui_->eqslpasswd_edit->text ().isEmpty () && !ui_->eqslnick_edit->text ().isEmpty ()) send_to_eqsl_ = ui_->eqsl_check_box->isChecked ();
+  if(!ui_->eqsluser_edit->text ().isEmpty () && !ui_->eqslpasswd_edit->text ().isEmpty ()) send_to_eqsl_ = ui_->eqsl_check_box->isChecked ();   // (3.-285)
   else send_to_eqsl_ = false;
   /* CE3TSK 2026-11-24 (TODO.md 3.-283, stage 3): QRZ.com's XML login into its own file when changed - asked anew with it */
   {
@@ -4815,6 +4850,7 @@ void Configuration::impl::accept ()
      open) is fetched again; what the button has just fetched with what is now saved is theirs, and a current file not due
      asks nothing */
   QTimer::singleShot (0, this, [this] {clublog_check_due (); qrz_check_due (); clublog_users_check_due ();});   // (3.-283 stage 4) and the users file
+  QTimer::singleShot (0, this, [this] {eqsl_members_check_due ();});   // (3.-286) eQSL's member list, while the fill is ticked
   usesched_ = ui_->UseSched_check_box->isChecked ();
   sched_hh_1_ = ui_->hhComboBox_1->currentText ();
   sched_mm_1_ = ui_->mmComboBox_1->currentText ();
@@ -5123,22 +5159,22 @@ void Configuration::impl::message_box_critical (QString const& reason, QString c
   mb.exec ();
 }
 
+// CE3TSK 2026-11-24 (TODO.md 3.-285): the box free with the user and the password - the QTH nickname optional, as at eQSL
 void Configuration::impl::on_eqsluser_edit_textEdited(const QString &user)
 {
-  ui_->eqsl_check_box->setEnabled (!user.isEmpty () && !ui_->eqslpasswd_edit->text ().isEmpty () && !ui_->eqslnick_edit->text ().isEmpty ());  
-  ui_->eqsl_check_box->setChecked ((!ui_->eqsluser_edit->text ().isEmpty () && !ui_->eqslpasswd_edit->text ().isEmpty () && !ui_->eqslnick_edit->text ().isEmpty ()) && send_to_eqsl_);  
+  ui_->eqsl_check_box->setEnabled (!user.isEmpty () && !ui_->eqslpasswd_edit->text ().isEmpty ());
+  ui_->eqsl_check_box->setChecked (!user.isEmpty () && !ui_->eqslpasswd_edit->text ().isEmpty () && send_to_eqsl_);
 }
 
 void Configuration::impl::on_eqslpasswd_edit_textEdited(const QString &passwd)
 {
-  ui_->eqsl_check_box->setEnabled (!ui_->eqsluser_edit->text ().isEmpty () && !passwd.isEmpty () && !ui_->eqslnick_edit->text ().isEmpty ());  
-  ui_->eqsl_check_box->setChecked ((!ui_->eqsluser_edit->text ().isEmpty () && !passwd.isEmpty () && !ui_->eqslnick_edit->text ().isEmpty ()) && send_to_eqsl_);  
+  ui_->eqsl_check_box->setEnabled (!ui_->eqsluser_edit->text ().isEmpty () && !passwd.isEmpty ());
+  ui_->eqsl_check_box->setChecked (!ui_->eqsluser_edit->text ().isEmpty () && !passwd.isEmpty () && send_to_eqsl_);
 }
 
 void Configuration::impl::on_eqslnick_edit_textEdited(const QString &nick)
 {
-  ui_->eqsl_check_box->setEnabled (!ui_->eqsluser_edit->text ().isEmpty () && !ui_->eqslpasswd_edit->text ().isEmpty () && !nick.isEmpty ());  
-  ui_->eqsl_check_box->setChecked ((!ui_->eqsluser_edit->text ().isEmpty () && !ui_->eqslpasswd_edit->text ().isEmpty () && !nick.isEmpty ()) && send_to_eqsl_);  
+  Q_UNUSED (nick)   // (3.-285) the nickname, typed or cleared, frees or greys nothing
 }
 
 void Configuration::impl::on_font_push_button_clicked ()
@@ -5182,9 +5218,41 @@ void Configuration::impl::on_call3_download_push_button_clicked (bool)
    for a QSO that gave no grid (gridfill.h, eqslmembers.h). Only a file that is the list replaces the copy in use. */
 void Configuration::impl::on_eqsl_download_push_button_clicked (bool)
 {
+  start_eqsl_members_download (false);
+}
+
+void Configuration::impl::start_eqsl_members_download (bool automatic)
+{
+  if (eqsl_download_.running ()) return;
+  eqsl_members_automatic_ = automatic;   // first: a failure may come before start returns (no SSL)
   QByteArray const source {eqsl_members::source_url ()};   // eQSL's, or JTDX_EQSL_MEMBERS_URL's for a test
   start_data_file_download (eqsl_download_, source.constData (), eqsl_members::file_name, &eqsl_members::version,
                             tr ("The downloaded file is not eQSL's member list."));
+}
+
+/* CE3TSK 2026-11-24 (TODO.md 3.-286, the operator: "Let's bundle the eQSL memebers file with the application"; eQSL's
+   copyright page: "All rights reserved. No part of this web site or database may be reproduced, duplicated, printed,
+   copied, or downloaded without permission" - none is given for bundling - so "Download it automatically"): while "Fill a
+   missing grid before logging" is ticked, eQSL's list is fetched as its Programming page offers it to loggers - when the
+   log directory has none, then once a week (eQSL makes it 4 times a day; a grid is taken only from a member who uploaded
+   within 12 months, so a week changes little) - never while a download runs, never before a failure's wait is over. The
+   button in Settings > General > Data files stays; its failure is still a message box, the program's own never. */
+void Configuration::impl::eqsl_members_check_due ()
+{
+  if (!fill_missing_grid_ || eqsl_download_.running ()) return;
+  auto const now = QDateTime::currentDateTimeUtc ();
+  QFileInfo const copy {QDir {QStandardPaths::writableLocation (QStandardPaths::DataLocation)}.absoluteFilePath (eqsl_members::file_name)};
+  if (copy.exists ())
+    {
+      auto const at = copy.lastModified ().toUTC ();
+      if (at <= now && at.secsTo (now) < 7 * 86400) return;   // weekly
+    }
+  {
+    SettingsGroup g {settings_, "Configuration"};
+    auto const next = settings_->value (contest_profile::own_key ("EqslMembersNextTry")).toDateTime ();
+    if (next.isValid () && now < next) return;   // a failure's wait
+  }
+  start_eqsl_members_download (true);
 }
 
 void Configuration::impl::start_data_file_download (FileDownload& download, char const * url, char const * file_name,
@@ -5201,7 +5269,7 @@ void Configuration::impl::start_data_file_download (FileDownload& download, char
   update_data_file_labels ();
 }
 
-void Configuration::impl::data_file_download_failed (char const * file_name, FileDownload::Failure failure, QString const& detail)
+QString Configuration::impl::data_file_failure (FileDownload::Failure failure, QString const& detail) const
 {
   QString reason;
   switch (failure)
@@ -5213,7 +5281,12 @@ void Configuration::impl::data_file_download_failed (char const * file_name, Fil
     case FileDownload::Failure::Write: reason = tr ("The file could not be saved: %1").arg (detail); break;
     case FileDownload::Failure::Network: reason = tr ("Network error: %1").arg (detail); break;
     }
-  JTDXMessageBox::warning_message (this, tr ("Download of %1 failed").arg (file_name), reason,
+  return reason;
+}
+
+void Configuration::impl::data_file_download_failed (char const * file_name, FileDownload::Failure failure, QString const& detail)
+{
+  JTDXMessageBox::warning_message (this, tr ("Download of %1 failed").arg (file_name), data_file_failure (failure, detail),
                                    tr ("The copy in use has not been changed."));
 }
 
@@ -6129,15 +6202,19 @@ void Configuration::impl::update_data_file_labels ()
   show (ui_->license_file_status_label, ui_->license_download_push_button, license_download_, license_file_name, &LicenseStates::version);
 
   /* (2026-11-23, TODO.md 3.-283) eQSL's member list: the copy in the log directory alone - none is bundled - its newest
-     upload, or none yet. Before CALL3.TXT's row, which returns while its download runs. */
+     upload, or none yet. Before CALL3.TXT's row, which returns while its download runs. (3.-286) An automatic download's
+     failure after it, until a good one. */
   ui_->eqsl_download_push_button->setEnabled (!eqsl_download_.running ());
   if (eqsl_download_.running ()) ui_->eqsl_file_status_label->setText (tr ("downloading..."));
   else
     {
       QFile f {data_dir.absoluteFilePath (eqsl_members::file_name)};
       QDate const version {f.open (QIODevice::ReadOnly) ? eqsl_members::version (f.readAll ()) : QDate {}};
-      ui_->eqsl_file_status_label->setText (!f.exists () ? tr ("not downloaded yet")
-                                            : version.isValid () ? tr ("%1, downloaded").arg (version.toString (Qt::ISODate)) : tr ("version unknown"));
+      ui_->eqsl_file_status_label->setText (!f.exists () ? (eqsl_members_error_.isEmpty () ? tr ("not downloaded yet")
+                                                            : tr ("not downloaded (%1) - tried again later").arg (eqsl_members_error_))
+                                            : !version.isValid () ? tr ("version unknown")
+                                            : eqsl_members_error_.isEmpty () ? tr ("%1, downloaded").arg (version.toString (Qt::ISODate))
+                                            : tr ("%1, downloaded - the weekly update failed (%2), tried again later").arg (version.toString (Qt::ISODate)).arg (eqsl_members_error_));
     }
 
   /* (3.-199) CALL3.TXT: always the copy in the log directory - its version, "bundled with this release" when it is the

@@ -898,6 +898,16 @@ Formāts:
         <source>%1: the QSO with %2 was not sent - see Settings &gt; Reporting.</source>
         <translation>%1: QSO ar %2 netika nosūtīts - skatiet Iestatījumi &gt; Raportēšana.</translation>
     </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>not downloaded (%1) - tried again later</source>
+        <translation>nav lejupielādēts (%1) - mēģinās vēlāk vēlreiz</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1, downloaded - the weekly update failed (%2), tried again later</source>
+        <translation>%1, lejupielādēta - iknedēļas atjaunināšana neizdevās (%2), mēģinās vēlāk vēlreiz</translation>
+    </message>
 </context>
 <context>
     <name>CountryDat</name>
@@ -4003,6 +4013,11 @@ Formāts:
         <location filename="../logqso.cpp"/>
         <source>the station's grid in QRZ.com's XML data</source>
         <translation>stacijas lokators QRZ.com XML datos</translation>
+    </message>
+    <message>
+        <location filename="../logqso.cpp"/>
+        <source>what at least two other stations received from the station, as their reports to PSK Reporter say</source>
+        <translation>ko no stacijas uztvēra vismaz divas citas stacijas, pēc to ziņojumiem PSK Reporter</translation>
     </message>
 </context>
 <context>
@@ -9945,11 +9960,6 @@ propagācijas un sistēmas veiktspējas novērtēšanai.</translation>
         <translation>Iespējot &amp;PSK Reporter spotus</translation>
     </message>
     <message>
-        <location filename="../Configuration.ui" line="2871"/>
-        <source>EQSL OTH Nickname.</source>
-        <translation>EQSL QTH segvārds.</translation>
-    </message>
-    <message>
         <location filename="../Configuration.ui" line="2878"/>
         <source>Enable DXSummit Spotting </source>
         <translation>Iespējot DXSummit spotus </translation>
@@ -11710,11 +11720,6 @@ Tikai no šī brīža ierakstītie QSO: vecākos augšupielādējiet QRZ.com kā
     </message>
     <message>
         <location filename="../Configuration.ui"/>
-        <source>Download eQSL's member list from eqsl.cc: each member's grid square and last upload, no eQSL account needed. With Settings &gt; Reporting's "Fill a missing grid before logging", a QSO that gave no grid may take its member's grid, when that member uploaded to eQSL within the last 12 months.</source>
-        <translation>Lejupielādēt eQSL dalībnieku sarakstu no eqsl.cc: katra dalībnieka lokators un pēdējā augšupielāde, bez eQSL konta. Ar “Aizpildīt trūkstošo lokatoru pirms ierakstīšanas” sadaļā Iestatījumi &gt; Raportēšana QSO bez lokatora var ņemt sava dalībnieka lokatoru, ja tas pēdējo 12 mēnešu laikā ir augšupielādējis eQSL.</translation>
-    </message>
-    <message>
-        <location filename="../Configuration.ui"/>
         <source>Send logged QSOs</source>
         <translation>Sūtīt ierakstītos QSO</translation>
     </message>
@@ -11812,13 +11817,23 @@ Tikai no šī brīža ierakstītie QSO: vecākos augšupielādējiet QRZ.com kā
     </message>
     <message>
         <location filename="../Configuration.ui"/>
-        <source>When a QSO gave no grid - neither heard nor typed - it gets one before it is logged: what this program heard the station send earlier (within a day; a /M station's within half an hour), else the locator it reports to PSK Reporter (with the Reception map open), else its grid in eQSL's member list (Settings &gt; General; a member that uploaded to eQSL within the last 12 months), in Club Log's users file (downloaded weekly with the token; a call that uploaded within the last 12 months) or in QRZ.com's XML data (with the XML login, asked as the QSO starts). Only a square inside the call's DXCC country is taken, its first four characters. Log QSO names the source in the grid field's tooltip, and the QSO's comment notes it as [grid: ...]. Never in a contest.</source>
-        <translation>Ja QSO nedeva lokatoru – ne uztvertu, ne ievadītu –, tas saņem lokatoru pirms ierakstīšanas: ko šī programma dzirdēja staciju agrāk sūtām (dienas laikā, /M stacijai pusstundas laikā), citādi lokatoru, ko stacija ziņo PSK Reporter (ar atvērtu Uztveršanas karti), citādi tās lokatoru eQSL dalībnieku sarakstā (Iestatījumi &gt; Vispārīgi; dalībnieks, kas pēdējo 12 mēnešu laikā ir augšupielādējis eQSL), Club Log lietotāju failā (lejupielādē katru nedēļu ar žetonu; izsaukums, kas pēdējo 12 mēnešu laikā ir augšupielādējis) vai QRZ.com XML datos (ar XML pieteikšanos, vaicā QSO sākumā). Tiek ņemts tikai kvadrāts izsaukuma DXCC valstī, tā pirmās četras rakstzīmes. Logs Ierakstīt QSO nosauc avotu lokatora lauka padomā, un QSO komentārs to atzīmē kā [grid: ...]. Nekad sacensībās.</translation>
+        <source>The program can send logged QSO info to the https://www.eqsl.cc web site.</source>
+        <translation>Programma var nosūtīt ierakstītā QSO informāciju uz vietni https://www.eqsl.cc.</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
-        <source>The program can send logged QSO info to the https://www.eqsl.cc web site.</source>
-        <translation>Programma var nosūtīt ierakstītā QSO informāciju uz vietni https://www.eqsl.cc.</translation>
+        <source>Download eQSL's member list from eqsl.cc: each member's grid square and last upload, no eQSL account needed. With Settings &gt; Reporting's "Fill a missing grid before logging", a QSO that gave no grid may take its member's grid, when that member uploaded to eQSL within the last 12 months. While that is ticked, the program also fetches the list by itself when it is missing, and then once a week.</source>
+        <translation>Lejupielādēt eQSL dalībnieku sarakstu no eqsl.cc: katra dalībnieka lokators un pēdējā augšupielāde, bez eQSL konta. Ar “Aizpildīt trūkstošo lokatoru pirms ierakstīšanas” sadaļā Iestatījumi &gt; Raportēšana QSO bez lokatora var ņemt sava dalībnieka lokatoru, ja tas pēdējo 12 mēnešu laikā ir augšupielādējis eQSL. Kamēr tas ir atzīmēts, programma arī pati lejupielādē sarakstu, ja tā nav, un pēc tam reizi nedēļā.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Your QTH Nickname at eQSL, exactly as in your eQSL profile. Optional: without one, eQSL files each QSO by its date, into the account whose dates cover it. Give it when your eQSL account has QTH profiles whose dates overlap.</source>
+        <translation>Jūsu QTH segvārds eQSL, tieši tāds kā jūsu eQSL profilā. Nav obligāts: bez tā eQSL katru QSO pēc datuma ievieto kontā, kura datumi to aptver. Norādiet to, ja jūsu eQSL kontā ir QTH profili ar datumiem, kas pārklājas.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>When a QSO gave no grid - neither heard nor typed - it gets one before it is logged: what this program heard the station send earlier (within a day; a /M station's within half an hour), else the locator it reports to PSK Reporter (with the Reception map open), else the square at least two other stations received from it, as their reports to PSK Reporter say (the map open too), else its grid in eQSL's member list (Settings &gt; General; a member that uploaded to eQSL within the last 12 months), in Club Log's users file (downloaded weekly with the token; a call that uploaded within the last 12 months) or in QRZ.com's XML data (with the XML login, asked as the QSO starts). Only a square inside the call's DXCC country is taken, its first four characters. Log QSO names the source in the grid field's tooltip, and the QSO's comment notes it as [grid: ...]. Never in a contest.</source>
+        <translation>Ja QSO nedeva lokatoru – ne uztvertu, ne ievadītu –, tas saņem lokatoru pirms ierakstīšanas: ko šī programma dzirdēja staciju agrāk sūtām (dienas laikā, /M stacijai pusstundas laikā), citādi lokatoru, ko stacija ziņo PSK Reporter (ar atvērtu Uztveršanas karti), citādi kvadrātu, ko no stacijas uztvēra vismaz divas citas stacijas, pēc to ziņojumiem PSK Reporter (arī ar atvērtu karti), citādi tās lokatoru eQSL dalībnieku sarakstā (Iestatījumi &gt; Vispārīgi; dalībnieks, kas pēdējo 12 mēnešu laikā ir augšupielādējis eQSL), Club Log lietotāju failā (lejupielādē katru nedēļu ar žetonu; izsaukums, kas pēdējo 12 mēnešu laikā ir augšupielādējis) vai QRZ.com XML datos (ar XML pieteikšanos, vaicā QSO sākumā). Tiek ņemts tikai kvadrāts izsaukuma DXCC valstī, tā pirmās četras rakstzīmes. Logs Ierakstīt QSO nosauc avotu lokatora lauka padomā, un QSO komentārs to atzīmē kā [grid: ...]. Nekad sacensībās.</translation>
     </message>
 </context>
 <context>

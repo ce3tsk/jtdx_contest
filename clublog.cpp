@@ -1,5 +1,6 @@
 // CE3TSK 2026-11-21 (TODO.md 3.-280): see clublog.h
 #include "clublog.h"
+#include "obfuscated.h"   // (3.-288) the token's file
 
 #include <QCryptographicHash>
 #include <QDir>
@@ -50,12 +51,10 @@ namespace club_log
 
   QString read_token (QString const& path)
   {
-    QFile f {path};
-    if (!f.open (QIODevice::ReadOnly)) return {};
-    // a file made by hand, readable by others: made the user's alone before anything is taken from it
-    auto const others = QFileDevice::ReadGroup | QFileDevice::WriteGroup | QFileDevice::ReadOther | QFileDevice::WriteOther;
-    if (f.permissions () & others) f.setPermissions (QFileDevice::ReadOwner | QFileDevice::WriteOwner);
-    auto line = f.readLine (1024);
+    // (3.-288) the owner's alone first, decoded, an older program's plain file saved obfuscated (obfuscated::read)
+    QByteArray const content {obfuscated::read (path)};
+    QByteArray line {content.left (1024)};
+    if (line.indexOf ('\n') >= 0) line.truncate (line.indexOf ('\n') + 1);
     if (line.startsWith ("\xEF\xBB\xBF")) line.remove (0, 3);   // UTF-8 byte-order mark: Notepad writes one
     auto const token = QString::fromLatin1 (line).trimmed ();
     return plausible_token (token) ? token : QString {};
@@ -74,26 +73,8 @@ namespace club_log
         if (f.exists () && !f.remove ()) return f.errorString ();
         return {};
       }
-    QDir {}.mkpath (QFileInfo {path}.absolutePath ());
-    // emptied first, the permissions set, and only then the token written: it is never in a file others may read
-    if (!f.open (QIODevice::WriteOnly | QIODevice::Truncate)) return f.errorString ();
-    if (!f.setPermissions (QFileDevice::ReadOwner | QFileDevice::WriteOwner))
-      {
-        auto const why = f.errorString ();
-        f.close ();
-        f.remove ();
-        return why;
-      }
-    QByteArray const line {token.toLatin1 () + '\n'};
-    if (f.write (line) != line.size () || !f.flush ())
-      {
-        auto const why = f.errorString ();
-        f.close ();
-        f.remove ();
-        return why;
-      }
-    f.close ();
-    return {};
+    // (3.-288) the owner's alone before the token goes in, never in clear text; a failed save leaves the old file
+    return obfuscated::save (path, token.toLatin1 () + '\n');
   }
 
   Export read_export (QByteArray const& body, QDateTime const& downloaded)

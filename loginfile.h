@@ -9,13 +9,17 @@
    One value a line, UTF-8 (a password may hold any character), the file made the owner's alone before anything goes in;
    all values empty: the file removed. A file made by hand and readable by others is made the owner's before anything is
    taken from it. Used by eQSL's login (username, password, QTH nickname: JTDX_eqsl.login) and QRZ.com's XML login
-   (username, password: JTDX_qrz_xml.login). test_gridfill has the rules. */
+   (username, password: JTDX_qrz_xml.login). test_gridfill has the rules.
+
+   (2026-11-24, TODO.md 3.-288) Never in clear text: read and saved through obfuscated.h - obfuscation, not encryption (the
+   source is public); an older program's plain file read as it stands and saved obfuscated by the read. */
 
 #include <QDir>
 #include <QFile>
 #include <QFileInfo>
 #include <QString>
 #include <QStringList>
+#include "obfuscated.h"
 
 namespace login_file
 {
@@ -30,13 +34,11 @@ namespace login_file
   inline QStringList read (QString const& path, int count)
   {
     QStringList values;
-    QFile f {path};
-    if (f.open (QIODevice::ReadOnly))
-      {
-        auto const others = QFileDevice::ReadGroup | QFileDevice::WriteGroup | QFileDevice::ReadOther | QFileDevice::WriteOther;
-        if (f.permissions () & others) f.setPermissions (QFileDevice::ReadOwner | QFileDevice::WriteOwner);
-        QByteArray const all {f.read (64 * 1024)};   // a byte-order mark (Notepad writes one): QString::fromUtf8 drops a
+    // (3.-288) the owner's alone first, decoded, an older program's plain file saved obfuscated (obfuscated::read)
+    QByteArray const all {obfuscated::read (path)};   // a byte-order mark (Notepad writes one): QString::fromUtf8 drops a
                                                      // leading one (Qt 5.15) - test_gridfill's row holds it, whoever drops it
+    if (!all.isEmpty ())
+      {
         for (auto const& line : all.split ('\n'))
           {
             QByteArray l {line};
@@ -59,26 +61,9 @@ namespace login_file
         if (f.exists () && !f.remove ()) return f.errorString ();
         return {};
       }
-    QDir {}.mkpath (QFileInfo {path}.absolutePath ());
-    if (!f.open (QIODevice::WriteOnly | QIODevice::Truncate)) return f.errorString ();
-    if (!f.setPermissions (QFileDevice::ReadOwner | QFileDevice::WriteOwner))
-      {
-        auto const why = f.errorString ();
-        f.close ();
-        f.remove ();
-        return why;
-      }
     QByteArray text;
     for (auto const& v : values) text += QString {v}.remove ('\r').remove ('\n').toUtf8 () + '\n';
-    if (f.write (text) != text.size () || !f.flush ())
-      {
-        auto const why = f.errorString ();
-        f.close ();
-        f.remove ();
-        return why;
-      }
-    f.close ();
-    return {};
+    return obfuscated::save (path, text);   // (3.-288) the owner's alone, never in clear text; a failed save leaves the old file
   }
 }
 

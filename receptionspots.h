@@ -45,6 +45,10 @@ namespace reception_spots
   long long const longWindowSeconds {1800};     // or the last 30, with the menu's "Show 30 minutes" (the operator, 2026-11-16)
   long long const keptSeconds {1800};           // what is kept: the longer of the two, so that the switch has its half hour at once
   long long const futureGraceSeconds {120};     // a clock two minutes fast is still taken
+  // (2026-11-24, TODO.md 3.-289) the square others heard a call send: so many receivers must agree, and so many are kept
+  // a call - the newest - for it (a strong station is heard by hundreds; two that agree are what is asked)
+  int const spottedReceivers {2};
+  std::size_t const spottedKept {16};
   long long const gridMemorySeconds {86400};    // how long the grid a station sent is remembered for placing it
   std::size_t const maxCallLength {20};
 
@@ -163,6 +167,8 @@ namespace reception_spots
     bool hasSnr {false};
     int snr {0};
     long long time {0};            // when the transmission began (t_tx), else what the receiver reported (t); UTC seconds
+    std::string senderLocator;     // (2026-11-24, TODO.md 3.-289) the sender's, as the receiver's software gave it ("sl"): what
+                                   // it decoded from the sender's messages, as a rule; may be empty
   };
 
   // whether a spot may be kept: of our band and mode, its calls what a call may be, its receiver somewhere, a
@@ -170,7 +176,7 @@ namespace reception_spots
   inline bool sound (Spot const& s, std::string const& band, std::string const& mode, long long now)
   {
     return upper (s.band) == upper (feedBand (band)) && upper (s.mode) == upper (mode)
-           && goodCall (s.sender) && goodCall (s.receiver) && placed (s.receiverLocator)   // the sender's locator is not even read (3.-261, 3.-264): nothing here uses it
+           && goodCall (s.sender) && goodCall (s.receiver) && placed (s.receiverLocator)   // the sender's locator refuses no spot: (3.-289) only the fill's square reads it
            && s.frequency > 0 && s.frequency < 1000000000000LL
            && (!s.hasSnr || (s.snr >= -60 && s.snr <= 99))
            && s.time <= now + futureGraceSeconds && now - s.time <= keptSeconds;
@@ -347,6 +353,7 @@ namespace reception_spots
       if (c == m_ownCall && band == m_band && mode == m_mode) return false;
       m_ownCall = c; m_band = band; m_mode = mode;
       m_reporting.clear (); m_hearsUs.clear (); m_transmits.clear (); m_info.clear (); m_asked.clear ();
+      m_sightings.clear ();   // (3.-289)
       return true;
     }
 
@@ -368,6 +375,33 @@ namespace reception_spots
         ? r->second.locator : std::string {};
     }
 
+    /* (2026-11-24, TODO.md 3.-289, the operator: "build the sl source with the two-receiver rule") the square a call was
+       heard sending by other stations: the first four characters of the sender's locator ("sl") of their spots of it -
+       what their software decoded from its messages - when at least two receivers, neither we nor the call itself, gave
+       the same square in their newest spot of it within what is kept before `now`, and more of them than gave any other;
+       "" else. One receiver's phantom decode is no place, nor are two that two others contradict. */
+    std::string spottedSquare (std::string const& call, long long now) const
+    {
+      auto const seen = m_sightings.find (upper (call));
+      if (seen == m_sightings.end ()) return {};
+      std::map<std::string, int> receivers;
+      for (auto const& kv : seen->second)
+        if (now - kv.second.time <= keptSeconds && kv.second.time <= now + futureGraceSeconds) ++receivers[kv.second.square];
+      std::string best;
+      int most {0}, next {0};
+      for (auto const& kv : receivers)
+        if (kv.second > most) {next = most; most = kv.second; best = kv.first;}
+        else if (kv.second > next) next = kv.second;
+      return most >= spottedReceivers && most > next ? best : std::string {};
+    }
+    // (3.-289) how many receivers' squares are kept, of every call - for the tests: the bound, the pruning
+    std::size_t sightingsKept () const
+    {
+      std::size_t n {0};
+      for (auto const& kv : m_sightings) n += kv.second.size ();
+      return n;
+    }
+
     // a spot of the feed; false when it is not sound (and nothing is kept of it)
     bool addSpot (Spot const& s, long long now)
     {
@@ -385,6 +419,10 @@ namespace reception_spots
           Hearing& h = m_hearsUs[rx];
           if (s.time >= h.time) {h.time = s.time; h.hasSnr = s.hasSnr; h.snr = s.snr; h.frequency = s.frequency;}
         }
+      // (3.-289) the square this receiver heard the sender send - not ours (our own reports returned above: they are what
+      // we heard, the fill's first source), not its own of itself, not of our call (the fill never asks it, and the
+      // stations that hear us are many)
+      if (tx != rx && tx != m_ownCall && messageGrid (s.senderLocator)) see (tx, rx, upper (s.senderLocator.substr (0, 4)), s.time);
       return true;
     }
 
@@ -421,6 +459,12 @@ namespace reception_spots
         if (now - it->second.time > keptSeconds) it = m_hearsUs.erase (it); else ++it;
       for (auto it = m_transmits.begin (); it != m_transmits.end ();)
         if (now - it->second.time > keptSeconds) it = m_transmits.erase (it); else ++it;
+      for (auto it = m_sightings.begin (); it != m_sightings.end ();)   // (3.-289)
+        {
+          for (auto s = it->second.begin (); s != it->second.end ();)
+            if (now - s->second.time > keptSeconds) s = it->second.erase (s); else ++s;
+          if (it->second.empty ()) it = m_sightings.erase (it); else ++it;
+        }
       for (auto it = m_info.begin (); it != m_info.end ();)
         if (m_reporting.find (it->first) == m_reporting.end ()) it = m_info.erase (it); else ++it;
       std::vector<std::string> letGo;
@@ -545,6 +589,34 @@ namespace reception_spots
       long long time {0};
       long long frequency {0};
     };
+    struct Sighting                // (3.-289) a receiver's newest square of a call
+    {
+      std::string square;          // four characters, upper case
+      long long time {0};
+    };
+
+    // (3.-289) a receiver's square of a call: its newer spot replaces its older; a receiver new to the call takes the
+    // place of the oldest when spottedKept are kept, unless its spot is older than all of them
+    void see (std::string const& tx, std::string const& rx, std::string const& square, long long time)
+    {
+      auto& seen = m_sightings[tx];
+      auto const it = seen.find (rx);
+      if (it != seen.end ())
+        {
+          if (time >= it->second.time) {it->second.square = square; it->second.time = time;}
+          return;
+        }
+      if (seen.size () >= spottedKept)
+        {
+          auto oldest = seen.begin ();
+          for (auto i = seen.begin (); i != seen.end (); ++i) if (i->second.time < oldest->second.time) oldest = i;
+          if (time <= oldest->second.time) return;   // older than every one kept: nothing to learn
+          seen.erase (oldest);
+        }
+      Sighting& w = seen[rx];
+      w.square = square;
+      w.time = time;
+    }
 
     std::string m_ownCall, m_band, m_mode;
 
@@ -554,6 +626,7 @@ namespace reception_spots
     std::map<std::string, Transmit> m_transmits;
     std::map<std::string, Info> m_info;
     std::map<std::string, bool> m_asked;
+    std::map<std::string, std::map<std::string, Sighting>> m_sightings;   // (3.-289) sender -> receiver -> its square
   };
 
   // ---------------------------------------------------------------------------------------------- what is drawn

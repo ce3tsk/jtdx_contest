@@ -1487,8 +1487,10 @@ int DisplayText::displayDecodedText(DecodedText* decodedText, QString myCall, QS
                 } else if (doubt.reasons & phantom_decodes::Where) cntryDoubtFrom = 0;
             }
         }
-        // CE3TSK 2026-11-22 (the operator): the tooltip's first line - the caller, its DXCC by name, a US station's state
-        lineHead = checkCall + ' ' + QChar (0x2013) + ' ' + items.value (2).trimmed ();
+        // CE3TSK 2026-11-22 (the operator): the tooltip's first line - the caller, its DXCC by name, a US station's state;
+        // (2026-11-24, TODO.md 3.-287, the operator: "add to the message tooltips the SNR value of the call signs") the
+        // line's SNR after the call, signed as the Wide Graph's traces have it ("K1ABC -12 dB - United States")
+        lineHead = checkCall + ' ' + QString::asprintf ("%+d dB", decodedText->snr ()) + ' ' + QChar (0x2013) + ' ' + items.value (2).trimmed ();
         if (us_states::usEntity (items.value (1))) lineHead += us_states::suffix (items[1], stateGrid (), logBook.licenseState (checkCall));
         if (!bwantedCall && !bwantedPrefix && !bwantedGrid && !bwantedCountry) {
             if (hideContinents_.contains(items[0]) && std_type != 2 && !jt65bc) {

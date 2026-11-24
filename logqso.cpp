@@ -340,6 +340,8 @@ QString LogQSO::filledGridTip (grid_fill::Fill const& filled) const
 {
   QString const from {grid_fill::Source::HeardEarlier == filled.source ? tr ("what the station sent earlier, heard by this program")
                       : grid_fill::Source::PskReporter == filled.source ? tr ("the locator the station reports to PSK Reporter")
+                      : grid_fill::Source::HeardViaPskReporter == filled.source   // (3.-289)
+                        ? tr ("what at least two other stations received from the station, as their reports to PSK Reporter say")
                       : grid_fill::Source::Eqsl == filled.source ? tr ("the station's grid in eQSL's member list")   // (stage 2)
                       : grid_fill::Source::ClubLog == filled.source ? tr ("the station's grid in Club Log's users file")   // (stage 4)
                       : grid_fill::Source::Qrz == filled.source ? tr ("the station's grid in QRZ.com's XML data")   // (stage 3)

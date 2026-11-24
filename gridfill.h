@@ -30,7 +30,8 @@
 
 namespace grid_fill
 {
-  enum class Source {None, HeardEarlier, PskReporter, Eqsl, ClubLog, Qrz};
+  enum class Source {None, HeardEarlier, PskReporter, Eqsl, ClubLog, Qrz,
+                     HeardViaPskReporter};   // (3.-289) the square others heard it send, as their spots say: after PskReporter
 
   struct Fill
   {
@@ -48,6 +49,7 @@ namespace grid_fill
       {
       case Source::HeardEarlier: return QStringLiteral ("heard earlier");
       case Source::PskReporter: return QStringLiteral ("PSK Reporter");
+      case Source::HeardViaPskReporter: return QStringLiteral ("heard via PSK Reporter");   // (3.-289)
       case Source::Eqsl: return QStringLiteral ("eQSL");
       case Source::ClubLog: return QStringLiteral ("Club Log");
       case Source::Qrz: return QStringLiteral ("QRZ.com");

@@ -591,10 +591,21 @@ namespace
 
   // A tooltip as it is shown: every line escaped - a receiver's antenna is typed by strangers, an entity's name may
   // be a translation, and a tooltip that looks like HTML is rendered as HTML.
-  QString asHtml (QStringList const& lines)
+  /* (2026-11-24, TODO.md 3.-287, the operator: "make the call signs bold in the reception map tooltips") after every line
+     is escaped, a line that begins with a call of the stations shown has that call bold. Escaped first, the call matched
+     as it stands: only a call escaping leaves as it is can begin an escaped line followed by a space - a stranger's
+     "call" with a tag in it never matches, and nothing is put in that was not escaped */
+  QString asHtml (QStringList const& lines, QStringList const& calls = {})
   {
     QStringList escaped;
     for (auto const& l : lines) escaped << l.toHtmlEscaped ();
+    for (auto& l : escaped)
+      for (auto const& c : calls)
+        if (!c.isEmpty () && (l == c || l.startsWith (c + QLatin1Char (' '))))
+          {
+            l = QStringLiteral ("<b>") + l.left (c.size ()) + QStringLiteral ("</b>") + l.mid (c.size ());   // the escaped line's own text
+            break;
+          }
     return escaped.isEmpty () ? QString {} : QStringLiteral ("<p style=\"white-space:pre\">") + escaped.join (QStringLiteral ("<br>")) + QStringLiteral ("</p>");
   }
 
@@ -896,12 +907,14 @@ QString WorldMapView::tooltipAt (QPoint const& at)
 // like HTML is rendered as HTML.
 QString WorldMapView::tooltipHtml (std::vector<std::size_t> const& under) const
 {
-  return asHtml (tooltipLines (under));
+  QStringList calls;   // (3.-287) bold where their lines begin
+  for (std::size_t i : under) if (i < m_stations.size ()) calls << QString::fromStdString (m_stations[i].call);
+  return asHtml (tooltipLines (under), calls);
 }
 
 QString WorldMapView::tooltipHtmlAt (QPoint const& at)
 {
-  if (overOwn (at.x (), at.y ())) return asHtml (ownLines ());
+  if (overOwn (at.x (), at.y ())) return asHtml (ownLines (), QStringList {m_ownCall});   // (3.-287) our call bold too
   return tooltipHtml (underAt (at.x (), at.y ()));
 }
 
@@ -927,7 +940,7 @@ void WorldMapView::hover (QPoint const& at, bool moved)
   if (moved || !m_under.empty () || own) unrest ();   // what a resting mouse was told goes with its first move, and for a mark's tooltip
   if (own)   // our own station: its tooltip, and no line
     {
-      QToolTip::showText (mapToGlobal (at) + QPoint {14, 12}, asHtml (ownLines ()), this);
+      QToolTip::showText (mapToGlobal (at) + QPoint {14, 12}, asHtml (ownLines (), QStringList {m_ownCall}), this);
       if (changed)
         {
           setCursor (Qt::ArrowCursor);

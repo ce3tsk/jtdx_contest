@@ -898,6 +898,16 @@ Format:
         <source>%1: the QSO with %2 was not sent - see Settings &gt; Reporting.</source>
         <translation>%1: QSO s %2 nije poslan - vidi Postavke &gt; Izvještaji.</translation>
     </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>not downloaded (%1) - tried again later</source>
+        <translation>nije preuzeto (%1) - pokušava se ponovo kasnije</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1, downloaded - the weekly update failed (%2), tried again later</source>
+        <translation>%1, preuzeto - tjedno ažuriranje nije uspjelo (%2), pokušava se ponovo kasnije</translation>
+    </message>
 </context>
 <context>
     <name>CountryDat</name>
@@ -4004,6 +4014,11 @@ Format:
         <location filename="../logqso.cpp"/>
         <source>the station's grid in QRZ.com's XML data</source>
         <translation>lokator stanice iz XML podataka QRZ.com-a</translation>
+    </message>
+    <message>
+        <location filename="../logqso.cpp"/>
+        <source>what at least two other stations received from the station, as their reports to PSK Reporter say</source>
+        <translation>ono što su od stanice primile barem dvije druge stanice, prema njihovim prijavama PSK Reporteru</translation>
     </message>
 </context>
 <context>
@@ -9861,11 +9876,6 @@ za procjenu rasprostiranja i performansi sustava.</translation>
         <translation>Omogući &amp;PSK Reporter Spotiranje</translation>
     </message>
     <message>
-        <location filename="../Configuration.ui" line="2871"/>
-        <source>EQSL OTH Nickname.</source>
-        <translation>EQSL OTH Nadimak.</translation>
-    </message>
-    <message>
         <location filename="../Configuration.ui" line="2878"/>
         <source>Enable DXSummit Spotting </source>
         <translation>Omogući DXSummit Spotiranje </translation>
@@ -11717,11 +11727,6 @@ Samo QSO-i upisani od sada: starije učitajte na QRZ.com kao ADIF datoteku, ondj
     </message>
     <message>
         <location filename="../Configuration.ui"/>
-        <source>Download eQSL's member list from eqsl.cc: each member's grid square and last upload, no eQSL account needed. With Settings &gt; Reporting's "Fill a missing grid before logging", a QSO that gave no grid may take its member's grid, when that member uploaded to eQSL within the last 12 months.</source>
-        <translation>Preuzmi popis članova eQSL-a s eqsl.cc: lokator i zadnje slanje svakog člana, bez eQSL računa. Uz „Popuni lokator koji nedostaje prije upisa u log” u Postavke &gt; Izvještaji QSO bez lokatora može uzeti lokator svog člana, ako je taj član u zadnjih 12 mjeseci slao na eQSL.</translation>
-    </message>
-    <message>
-        <location filename="../Configuration.ui"/>
         <source>Send logged QSOs</source>
         <translation>Šalji upisane QSO-e</translation>
     </message>
@@ -11819,13 +11824,23 @@ Samo QSO-i upisani od sada: starije učitajte na QRZ.com kao ADIF datoteku, ondj
     </message>
     <message>
         <location filename="../Configuration.ui"/>
-        <source>When a QSO gave no grid - neither heard nor typed - it gets one before it is logged: what this program heard the station send earlier (within a day; a /M station's within half an hour), else the locator it reports to PSK Reporter (with the Reception map open), else its grid in eQSL's member list (Settings &gt; General; a member that uploaded to eQSL within the last 12 months), in Club Log's users file (downloaded weekly with the token; a call that uploaded within the last 12 months) or in QRZ.com's XML data (with the XML login, asked as the QSO starts). Only a square inside the call's DXCC country is taken, its first four characters. Log QSO names the source in the grid field's tooltip, and the QSO's comment notes it as [grid: ...]. Never in a contest.</source>
-        <translation>Kad QSO nije dao lokator – ni primljen ni upisan –, dobiva ga prije upisa u log: ono što je ovaj program ranije čuo da stanica šalje (unutar jednog dana, od /M stanice unutar pola sata), inače lokator koji stanica javlja PSK Reporteru (uz otvorenu Kartu prijema), inače njezin lokator s popisa članova eQSL-a (Postavke &gt; Općenito; član koji je u zadnjih 12 mjeseci slao na eQSL), iz datoteke korisnika Club Loga (preuzima se tjedno tokenom; pozivni znak koji je slao u zadnjih 12 mjeseci) ili iz XML podataka QRZ.com-a (uz XML prijavu, upit pri početku QSO-a). Uzima se samo polje unutar DXCC zemlje pozivnog znaka, njegova prva četiri znaka. Prozor Log QSO navodi izvor u opisu polja lokatora, a komentar QSO-a bilježi ga kao [grid: ...]. Nikad u natjecanju.</translation>
+        <source>The program can send logged QSO info to the https://www.eqsl.cc web site.</source>
+        <translation>Program može poslati  podatke o vezi na https://www.eqsl.cc web mjesto.</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
-        <source>The program can send logged QSO info to the https://www.eqsl.cc web site.</source>
-        <translation>Program može poslati  podatke o vezi na https://www.eqsl.cc web mjesto.</translation>
+        <source>Download eQSL's member list from eqsl.cc: each member's grid square and last upload, no eQSL account needed. With Settings &gt; Reporting's "Fill a missing grid before logging", a QSO that gave no grid may take its member's grid, when that member uploaded to eQSL within the last 12 months. While that is ticked, the program also fetches the list by itself when it is missing, and then once a week.</source>
+        <translation>Preuzmi popis članova eQSL-a s eqsl.cc: lokator i zadnje slanje svakog člana, bez eQSL računa. Uz „Popuni lokator koji nedostaje prije upisa u log” u Postavke &gt; Izvještaji QSO bez lokatora može uzeti lokator svog člana, ako je taj član u zadnjih 12 mjeseci slao na eQSL. Dok je to označeno, program i sam preuzima popis kad nedostaje, a zatim jednom tjedno.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Your QTH Nickname at eQSL, exactly as in your eQSL profile. Optional: without one, eQSL files each QSO by its date, into the account whose dates cover it. Give it when your eQSL account has QTH profiles whose dates overlap.</source>
+        <translation>Vaš QTH nadimak na eQSL-u, točno kao u vašem eQSL profilu. Nije obavezan: bez njega eQSL svaki QSO po datumu sprema na račun čiji ga datumi obuhvaćaju. Upišite ga ako vaš eQSL račun ima QTH profile s preklapajućim datumima.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>When a QSO gave no grid - neither heard nor typed - it gets one before it is logged: what this program heard the station send earlier (within a day; a /M station's within half an hour), else the locator it reports to PSK Reporter (with the Reception map open), else the square at least two other stations received from it, as their reports to PSK Reporter say (the map open too), else its grid in eQSL's member list (Settings &gt; General; a member that uploaded to eQSL within the last 12 months), in Club Log's users file (downloaded weekly with the token; a call that uploaded within the last 12 months) or in QRZ.com's XML data (with the XML login, asked as the QSO starts). Only a square inside the call's DXCC country is taken, its first four characters. Log QSO names the source in the grid field's tooltip, and the QSO's comment notes it as [grid: ...]. Never in a contest.</source>
+        <translation>Kad QSO nije dao lokator – ni primljen ni upisan –, dobiva ga prije upisa u log: ono što je ovaj program ranije čuo da stanica šalje (unutar jednog dana, od /M stanice unutar pola sata), inače lokator koji stanica javlja PSK Reporteru (uz otvorenu Kartu prijema), inače polje koje su od stanice primile barem dvije druge stanice, prema njihovim prijavama PSK Reporteru (također uz otvorenu kartu), inače njezin lokator s popisa članova eQSL-a (Postavke &gt; Općenito; član koji je u zadnjih 12 mjeseci slao na eQSL), iz datoteke korisnika Club Loga (preuzima se tjedno tokenom; pozivni znak koji je slao u zadnjih 12 mjeseci) ili iz XML podataka QRZ.com-a (uz XML prijavu, upit pri početku QSO-a). Uzima se samo polje unutar DXCC zemlje pozivnog znaka, njegova prva četiri znaka. Prozor Log QSO navodi izvor u opisu polja lokatora, a komentar QSO-a bilježi ga kao [grid: ...]. Nikad u natjecanju.</translation>
     </message>
 </context>
 <context>

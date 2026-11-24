@@ -898,6 +898,16 @@ Formato:
         <source>%1: the QSO with %2 was not sent - see Settings &gt; Reporting.</source>
         <translation>%1: il QSO con %2 non è stato inviato - vedi Impostazioni &gt; Segnalazioni.</translation>
     </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>not downloaded (%1) - tried again later</source>
+        <translation>non scaricato (%1) - nuovo tentativo più tardi</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1, downloaded - the weekly update failed (%2), tried again later</source>
+        <translation>%1, scaricata - l'aggiornamento settimanale non è riuscito (%2), nuovo tentativo più tardi</translation>
+    </message>
 </context>
 <context>
     <name>CountryDat</name>
@@ -4004,6 +4014,11 @@ Formato:
         <location filename="../logqso.cpp"/>
         <source>the station's grid in QRZ.com's XML data</source>
         <translation>la griglia della stazione nei dati XML di QRZ.com</translation>
+    </message>
+    <message>
+        <location filename="../logqso.cpp"/>
+        <source>what at least two other stations received from the station, as their reports to PSK Reporter say</source>
+        <translation>quella che almeno altre due stazioni hanno ricevuto dalla stazione, secondo le loro segnalazioni a PSK Reporter</translation>
     </message>
 </context>
 <context>
@@ -9898,11 +9913,6 @@ le prestazioni del sistema.</translation>
         <translation>Abilita lo spotting su &amp;PSK Reporter</translation>
     </message>
     <message>
-        <location filename="../Configuration.ui" line="2871"/>
-        <source>EQSL OTH Nickname.</source>
-        <translation>Nickname OTH eQSL.</translation>
-    </message>
-    <message>
         <location filename="../Configuration.ui" line="2878"/>
         <source>Enable DXSummit Spotting </source>
         <translation>Abilita lo spotting su DXSummit</translation>
@@ -11713,11 +11723,6 @@ Solo i QSO registrati da ora in poi: carica quelli più vecchi su QRZ.com come f
     </message>
     <message>
         <location filename="../Configuration.ui"/>
-        <source>Download eQSL's member list from eqsl.cc: each member's grid square and last upload, no eQSL account needed. With Settings &gt; Reporting's "Fill a missing grid before logging", a QSO that gave no grid may take its member's grid, when that member uploaded to eQSL within the last 12 months.</source>
-        <translation>Scarica l'elenco dei membri di eQSL da eqsl.cc: la griglia e l'ultimo caricamento di ogni membro, senza account eQSL. Con "Completa la griglia mancante prima di registrare" in Impostazioni &gt; Segnalazioni, un QSO senza griglia può prendere quella del suo membro, se questo ha caricato su eQSL negli ultimi 12 mesi.</translation>
-    </message>
-    <message>
-        <location filename="../Configuration.ui"/>
         <source>Send logged QSOs</source>
         <translation>Invia i QSO registrati</translation>
     </message>
@@ -11815,13 +11820,23 @@ Solo i QSO registrati da ora in poi: carica quelli più vecchi su QRZ.com come f
     </message>
     <message>
         <location filename="../Configuration.ui"/>
-        <source>When a QSO gave no grid - neither heard nor typed - it gets one before it is logged: what this program heard the station send earlier (within a day; a /M station's within half an hour), else the locator it reports to PSK Reporter (with the Reception map open), else its grid in eQSL's member list (Settings &gt; General; a member that uploaded to eQSL within the last 12 months), in Club Log's users file (downloaded weekly with the token; a call that uploaded within the last 12 months) or in QRZ.com's XML data (with the XML login, asked as the QSO starts). Only a square inside the call's DXCC country is taken, its first four characters. Log QSO names the source in the grid field's tooltip, and the QSO's comment notes it as [grid: ...]. Never in a contest.</source>
-        <translation>Quando un QSO non ha dato alcuna griglia (né ricevuta né digitata), ne riceve una prima della registrazione: quella che questo programma ha sentito trasmettere prima dalla stazione (entro un giorno; da una stazione /M, entro mezz'ora), altrimenti il locatore che la stazione segnala a PSK Reporter (con la Mappa di ricezione aperta), altrimenti la sua griglia nell'elenco dei membri di eQSL (Impostazioni &gt; Generali; un membro che ha caricato su eQSL negli ultimi 12 mesi), nel file degli utenti di Club Log (scaricato ogni settimana con il token; un nominativo che ha caricato negli ultimi 12 mesi) o nei dati XML di QRZ.com (con l'accesso XML, chiesti all'inizio del QSO). Si accetta solo un quadrato entro il paese DXCC del nominativo, i suoi primi quattro caratteri. La finestra QSO a Log indica la fonte nel suggerimento del campo griglia, e il commento del QSO la annota come [grid: ...]. Mai in un contest.</translation>
+        <source>The program can send logged QSO info to the https://www.eqsl.cc web site.</source>
+        <translation>Il programma può inviare il QSO al sito Web https://www.eqsl.cc.</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
-        <source>The program can send logged QSO info to the https://www.eqsl.cc web site.</source>
-        <translation>Il programma può inviare il QSO al sito Web https://www.eqsl.cc.</translation>
+        <source>Download eQSL's member list from eqsl.cc: each member's grid square and last upload, no eQSL account needed. With Settings &gt; Reporting's "Fill a missing grid before logging", a QSO that gave no grid may take its member's grid, when that member uploaded to eQSL within the last 12 months. While that is ticked, the program also fetches the list by itself when it is missing, and then once a week.</source>
+        <translation>Scarica l'elenco dei membri di eQSL da eqsl.cc: la griglia e l'ultimo caricamento di ogni membro, senza account eQSL. Con "Completa la griglia mancante prima di registrare" in Impostazioni &gt; Segnalazioni, un QSO senza griglia può prendere quella del suo membro, se questo ha caricato su eQSL negli ultimi 12 mesi. Finché è selezionata, il programma scarica anche da solo l'elenco quando manca, e poi una volta alla settimana.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Your QTH Nickname at eQSL, exactly as in your eQSL profile. Optional: without one, eQSL files each QSO by its date, into the account whose dates cover it. Give it when your eQSL account has QTH profiles whose dates overlap.</source>
+        <translation>Il tuo nickname QTH su eQSL, esattamente come nel tuo profilo eQSL. Facoltativo: senza di esso eQSL assegna ogni QSO, in base alla sua data, all'account le cui date lo comprendono. Indicalo se il tuo account eQSL ha profili QTH con date che si sovrappongono.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>When a QSO gave no grid - neither heard nor typed - it gets one before it is logged: what this program heard the station send earlier (within a day; a /M station's within half an hour), else the locator it reports to PSK Reporter (with the Reception map open), else the square at least two other stations received from it, as their reports to PSK Reporter say (the map open too), else its grid in eQSL's member list (Settings &gt; General; a member that uploaded to eQSL within the last 12 months), in Club Log's users file (downloaded weekly with the token; a call that uploaded within the last 12 months) or in QRZ.com's XML data (with the XML login, asked as the QSO starts). Only a square inside the call's DXCC country is taken, its first four characters. Log QSO names the source in the grid field's tooltip, and the QSO's comment notes it as [grid: ...]. Never in a contest.</source>
+        <translation>Quando un QSO non ha dato alcuna griglia (né ricevuta né digitata), ne riceve una prima della registrazione: quella che questo programma ha sentito trasmettere prima dalla stazione (entro un giorno; da una stazione /M, entro mezz'ora), altrimenti il locatore che la stazione segnala a PSK Reporter (con la Mappa di ricezione aperta), altrimenti il quadrato che almeno altre due stazioni hanno ricevuto dalla stazione, secondo le loro segnalazioni a PSK Reporter (anche qui con la mappa aperta), altrimenti la sua griglia nell'elenco dei membri di eQSL (Impostazioni &gt; Generali; un membro che ha caricato su eQSL negli ultimi 12 mesi), nel file degli utenti di Club Log (scaricato ogni settimana con il token; un nominativo che ha caricato negli ultimi 12 mesi) o nei dati XML di QRZ.com (con l'accesso XML, chiesti all'inizio del QSO). Si accetta solo un quadrato entro il paese DXCC del nominativo, i suoi primi quattro caratteri. La finestra QSO a Log indica la fonte nel suggerimento del campo griglia, e il commento del QSO la annota come [grid: ...]. Mai in un contest.</translation>
     </message>
 </context>
 <context>

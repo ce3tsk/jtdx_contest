@@ -898,6 +898,16 @@ Format:
         <source>%1: the QSO with %2 was not sent - see Settings &gt; Reporting.</source>
         <translation>%1: %2와(과)의 QSO를 보내지 못함 - 설정 &gt; 보고 참조.</translation>
     </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>not downloaded (%1) - tried again later</source>
+        <translation>다운로드되지 않음(%1) - 나중에 다시 시도합니다</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1, downloaded - the weekly update failed (%2), tried again later</source>
+        <translation>%1, 다운로드됨 - 주간 업데이트 실패(%2), 나중에 다시 시도합니다</translation>
+    </message>
 </context>
 <context>
     <name>CountryDat</name>
@@ -4004,6 +4014,11 @@ Format:
         <location filename="../logqso.cpp"/>
         <source>the station's grid in QRZ.com's XML data</source>
         <translation>QRZ.com XML 데이터에 있는 그 국의 그리드</translation>
+    </message>
+    <message>
+        <location filename="../logqso.cpp"/>
+        <source>what at least two other stations received from the station, as their reports to PSK Reporter say</source>
+        <translation>다른 두 국 이상이 그 국에서 수신해 PSK Reporter에 보고한 그리드</translation>
     </message>
 </context>
 <context>
@@ -9855,11 +9870,6 @@ http://pskreporter.info 사이트에 보낼 수 있습니다.
         <translation>PSK Reporter 스팟 사용(&amp;P)</translation>
     </message>
     <message>
-        <location filename="../Configuration.ui" line="2871"/>
-        <source>EQSL OTH Nickname.</source>
-        <translation>eQSL QTH 별칭.</translation>
-    </message>
-    <message>
         <location filename="../Configuration.ui" line="2878"/>
         <source>Enable DXSummit Spotting </source>
         <translation>DXSummit 스팟 사용 </translation>
@@ -11709,11 +11719,6 @@ Only QSOs logged from now on: upload older ones to QRZ.com as an ADIF file there
     </message>
     <message>
         <location filename="../Configuration.ui"/>
-        <source>Download eQSL's member list from eqsl.cc: each member's grid square and last upload, no eQSL account needed. With Settings &gt; Reporting's "Fill a missing grid before logging", a QSO that gave no grid may take its member's grid, when that member uploaded to eQSL within the last 12 months.</source>
-        <translation>eqsl.cc에서 eQSL 회원 목록을 다운로드합니다: 회원마다 그리드와 마지막 업로드, eQSL 계정 없이. 설정 &gt; 보고의 "기록 전에 빠진 그리드 채우기"(으)로 그리드를 얻지 못한 QSO가 그 회원의 그리드를 가져올 수 있습니다. 지난 12개월 안에 eQSL에 업로드한 회원일 때만입니다.</translation>
-    </message>
-    <message>
-        <location filename="../Configuration.ui"/>
         <source>Send logged QSOs</source>
         <translation>기록한 QSO 보내기</translation>
     </message>
@@ -11811,13 +11816,23 @@ Only QSOs logged from now on: upload older ones to QRZ.com as an ADIF file there
     </message>
     <message>
         <location filename="../Configuration.ui"/>
-        <source>When a QSO gave no grid - neither heard nor typed - it gets one before it is logged: what this program heard the station send earlier (within a day; a /M station's within half an hour), else the locator it reports to PSK Reporter (with the Reception map open), else its grid in eQSL's member list (Settings &gt; General; a member that uploaded to eQSL within the last 12 months), in Club Log's users file (downloaded weekly with the token; a call that uploaded within the last 12 months) or in QRZ.com's XML data (with the XML login, asked as the QSO starts). Only a square inside the call's DXCC country is taken, its first four characters. Log QSO names the source in the grid field's tooltip, and the QSO's comment notes it as [grid: ...]. Never in a contest.</source>
-        <translation>QSO에서 그리드를 얻지 못했을 때(수신도 입력도 없을 때) 기록 전에 채웁니다: 이 프로그램이 앞서 그 국이 보낸 것을 들은 그리드(하루 이내, /M 국은 30분 이내), 없으면 그 국이 PSK Reporter에 보고하는 로케이터(수신 지도가 열려 있을 때), 그래도 없으면 eQSL 회원 목록의 그 국 그리드(설정 &gt; 일반, 지난 12개월 안에 eQSL에 업로드한 회원), Club Log 사용자 파일(토큰으로 매주 다운로드, 지난 12개월 안에 업로드한 호출부호) 또는 QRZ.com XML 데이터(XML 로그인으로 QSO 시작 시 조회). 호출부호의 DXCC 국가 안에 있는 스퀘어만, 앞 네 글자를 씁니다. QSO 기록 창은 그리드 칸의 도움말에 출처를 밝히고, QSO 비고에 [grid: ...]로 적습니다. 콘테스트 중에는 하지 않습니다.</translation>
+        <source>The program can send logged QSO info to the https://www.eqsl.cc web site.</source>
+        <translation>기록한 QSO 정보를 https://www.eqsl.cc 사이트로 보낼 수 있습니다.</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
-        <source>The program can send logged QSO info to the https://www.eqsl.cc web site.</source>
-        <translation>기록한 QSO 정보를 https://www.eqsl.cc 사이트로 보낼 수 있습니다.</translation>
+        <source>Download eQSL's member list from eqsl.cc: each member's grid square and last upload, no eQSL account needed. With Settings &gt; Reporting's "Fill a missing grid before logging", a QSO that gave no grid may take its member's grid, when that member uploaded to eQSL within the last 12 months. While that is ticked, the program also fetches the list by itself when it is missing, and then once a week.</source>
+        <translation>eqsl.cc에서 eQSL 회원 목록을 다운로드합니다: 회원마다 그리드와 마지막 업로드, eQSL 계정 없이. 설정 &gt; 보고의 "기록 전에 빠진 그리드 채우기"(으)로 그리드를 얻지 못한 QSO가 그 회원의 그리드를 가져올 수 있습니다. 지난 12개월 안에 eQSL에 업로드한 회원일 때만입니다. 이 항목이 켜져 있는 동안 목록이 없으면 프로그램이 직접 다운로드하고, 그 후에는 일주일에 한 번 받습니다.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Your QTH Nickname at eQSL, exactly as in your eQSL profile. Optional: without one, eQSL files each QSO by its date, into the account whose dates cover it. Give it when your eQSL account has QTH profiles whose dates overlap.</source>
+        <translation>eQSL의 QTH 별칭(QTH Nickname)으로, eQSL 프로필과 똑같이 입력합니다. 선택 사항: 없으면 eQSL은 각 QSO를 날짜에 따라 그 날짜를 포함하는 계정에 넣습니다. eQSL 계정에 기간이 겹치는 QTH 프로필이 있으면 입력하십시오.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>When a QSO gave no grid - neither heard nor typed - it gets one before it is logged: what this program heard the station send earlier (within a day; a /M station's within half an hour), else the locator it reports to PSK Reporter (with the Reception map open), else the square at least two other stations received from it, as their reports to PSK Reporter say (the map open too), else its grid in eQSL's member list (Settings &gt; General; a member that uploaded to eQSL within the last 12 months), in Club Log's users file (downloaded weekly with the token; a call that uploaded within the last 12 months) or in QRZ.com's XML data (with the XML login, asked as the QSO starts). Only a square inside the call's DXCC country is taken, its first four characters. Log QSO names the source in the grid field's tooltip, and the QSO's comment notes it as [grid: ...]. Never in a contest.</source>
+        <translation>QSO에서 그리드를 얻지 못했을 때(수신도 입력도 없을 때) 기록 전에 채웁니다: 이 프로그램이 앞서 그 국이 보낸 것을 들은 그리드(하루 이내, /M 국은 30분 이내), 없으면 그 국이 PSK Reporter에 보고하는 로케이터(수신 지도가 열려 있을 때), 없으면 다른 두 국 이상이 그 국에서 수신해 PSK Reporter에 보고한 스퀘어(역시 수신 지도가 열려 있을 때), 그래도 없으면 eQSL 회원 목록의 그 국 그리드(설정 &gt; 일반, 지난 12개월 안에 eQSL에 업로드한 회원), Club Log 사용자 파일(토큰으로 매주 다운로드, 지난 12개월 안에 업로드한 호출부호) 또는 QRZ.com XML 데이터(XML 로그인으로 QSO 시작 시 조회). 호출부호의 DXCC 국가 안에 있는 스퀘어만, 앞 네 글자를 씁니다. QSO 기록 창은 그리드 칸의 도움말에 출처를 밝히고, QSO 비고에 [grid: ...]로 적습니다. 콘테스트 중에는 하지 않습니다.</translation>
     </message>
 </context>
 <context>

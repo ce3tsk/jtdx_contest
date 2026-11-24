@@ -106,7 +106,10 @@ void EQSL::upload(QString const& eqsl_username, QString const& eqsl_passwd, QStr
     QString myadif="<ADIF_VER:5>2.1.9";
     myadif+="<EQSL_USER:" + QString::number(eqsl_username.length()) + ">" + eqsl_username;
     myadif+="<EQSL_PSWD:" + QString::number(eqsl_passwd.length()) + ">" + eqsl_passwd;
-    myadif+="<PROGRAMID:4>JTDX<EOH><APP_EQSL_QTH_NICKNAME:" + QString::number(eqsl_nickname.length()) + ">" + eqsl_nickname;
+    myadif+="<PROGRAMID:4>JTDX<EOH>";
+    /* CE3TSK 2026-11-24 (TODO.md 3.-285): the QTH nickname only when there is one - without it eQSL files the QSO by its
+       date into the account whose dates cover it (ImportADIF.txt); an empty tag would name no profile at all */
+    if (!eqsl_nickname.isEmpty ()) myadif+="<APP_EQSL_QTH_NICKNAME:" + QString::number(eqsl_nickname.length()) + ">" + eqsl_nickname;
     myadif+=record (call, mode, QSO_date_on, rpt_sent, band, eqslcomments, prop_mode, sat_name);
 
     // (3.-284) queued behind one under way - the inherited code cut that one off

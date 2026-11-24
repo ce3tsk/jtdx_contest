@@ -18,6 +18,9 @@
      answer lost.
    - ADIFdata percent-encoded whole: a '+' left bare in an address is read as a space - a report "+05" reached eQSL as
      " 05".
+   (3.-285, the operator: "Let's relax the requirement to what eQSL really needs") the QTH nickname optional: sent only
+   when there is one; without it eQSL picks the account by the QSO's date - "less reliable", in its own words, when
+   QTH profiles' dates overlap. The user and the password are what eQSL needs.
    The address and the password are never shown: an answer's text has neither (eqsl::scrubbed). No retry, no queue
    file: a QSO not sent is named, for the operator to upload on eQSL's website. test_qsoupload has the rules and a
    stand-in on 127.0.0.1 (JTDX_EQSL_UPLOAD). */

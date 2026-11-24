@@ -898,6 +898,16 @@ Format:
         <source>%1: the QSO with %2 was not sent - see Settings &gt; Reporting.</source>
         <translation>%1：%2 との QSO は送信されませんでした - 設定 &gt; レポーティング を参照。</translation>
     </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>not downloaded (%1) - tried again later</source>
+        <translation>未ダウンロード（%1）- 後で再試行します</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1, downloaded - the weekly update failed (%2), tried again later</source>
+        <translation>%1、ダウンロード済み - 週ごとの更新に失敗しました（%2）。後で再試行します</translation>
+    </message>
 </context>
 <context>
     <name>CountryDat</name>
@@ -4004,6 +4014,11 @@ Format:
         <location filename="../logqso.cpp"/>
         <source>the station's grid in QRZ.com's XML data</source>
         <translation>QRZ.com の XML データにあるその局のグリッド</translation>
+    </message>
+    <message>
+        <location filename="../logqso.cpp"/>
+        <source>what at least two other stations received from the station, as their reports to PSK Reporter say</source>
+        <translation>他の2局以上がその局から受信してPSK Reporterに報告したグリッド</translation>
     </message>
 </context>
 <context>
@@ -9648,11 +9663,6 @@ Please verify the correct directory name was given.</source>
         <translation>PSKレポーターへの情報送信を有効化</translation>
     </message>
     <message>
-        <location filename="../Configuration.ui" line="2871"/>
-        <source>EQSL OTH Nickname.</source>
-        <translation>EQSL QTH ニックネーム。</translation>
-    </message>
-    <message>
         <location filename="../Configuration.ui" line="2885"/>
         <source>QTH N&amp;ickname:</source>
         <translation>QTHニックネーム(&amp;I)：</translation>
@@ -11687,11 +11697,6 @@ Only QSOs logged from now on: upload older ones to QRZ.com as an ADIF file there
     </message>
     <message>
         <location filename="../Configuration.ui"/>
-        <source>Download eQSL's member list from eqsl.cc: each member's grid square and last upload, no eQSL account needed. With Settings &gt; Reporting's "Fill a missing grid before logging", a QSO that gave no grid may take its member's grid, when that member uploaded to eQSL within the last 12 months.</source>
-        <translation>eqsl.cc から eQSL の会員リストをダウンロードします：各会員のグリッドと最終アップロード日。eQSL のアカウントは不要です。設定 &gt; レポーティングの「記録前に欠けたグリッドを補う」により、グリッドの得られなかった QSO に、過去12か月以内に eQSL へアップロードした会員のグリッドを使えます。</translation>
-    </message>
-    <message>
-        <location filename="../Configuration.ui"/>
         <source>Send logged QSOs</source>
         <translation>記録したQSOを送信</translation>
     </message>
@@ -11789,13 +11794,23 @@ Only QSOs logged from now on: upload older ones to QRZ.com as an ADIF file there
     </message>
     <message>
         <location filename="../Configuration.ui"/>
-        <source>When a QSO gave no grid - neither heard nor typed - it gets one before it is logged: what this program heard the station send earlier (within a day; a /M station's within half an hour), else the locator it reports to PSK Reporter (with the Reception map open), else its grid in eQSL's member list (Settings &gt; General; a member that uploaded to eQSL within the last 12 months), in Club Log's users file (downloaded weekly with the token; a call that uploaded within the last 12 months) or in QRZ.com's XML data (with the XML login, asked as the QSO starts). Only a square inside the call's DXCC country is taken, its first four characters. Log QSO names the source in the grid field's tooltip, and the QSO's comment notes it as [grid: ...]. Never in a contest.</source>
-        <translation>QSOでグリッドが得られなかった場合（受信も入力もない場合）、記録前に補います：このプログラムが以前に受信したその局の送信グリッド（1日以内、/M局は30分以内）、なければその局がPSK Reporterに報告しているロケーター（受信マップを開いているとき）、さらになければ eQSL の会員リストにあるその局のグリッド（設定 &gt; 全般。過去12か月以内に eQSL へアップロードした会員）、Club Log のユーザーファイル（トークンで毎週ダウンロード。過去12か月以内にアップロードしたコールサイン）、または QRZ.com の XML データ（XML ログインで、QSO の開始時に照会）。コールサインのDXCCエンティティ内のスクエアのみ、先頭4文字を使います。ログに記録ウィンドウはグリッド欄のツールチップに出典を示し、QSOのコメントに [grid: ...] として記します。コンテスト中は行いません。</translation>
+        <source>The program can send logged QSO info to the https://www.eqsl.cc web site.</source>
+        <translation>プログラムは、ログに記録されたQSO情報を https://www.eqsl.cc のウェブサイトへ送信できます。</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
-        <source>The program can send logged QSO info to the https://www.eqsl.cc web site.</source>
-        <translation>プログラムは、ログに記録されたQSO情報を https://www.eqsl.cc のウェブサイトへ送信できます。</translation>
+        <source>Download eQSL's member list from eqsl.cc: each member's grid square and last upload, no eQSL account needed. With Settings &gt; Reporting's "Fill a missing grid before logging", a QSO that gave no grid may take its member's grid, when that member uploaded to eQSL within the last 12 months. While that is ticked, the program also fetches the list by itself when it is missing, and then once a week.</source>
+        <translation>eqsl.cc から eQSL の会員リストをダウンロードします：各会員のグリッドと最終アップロード日。eQSL のアカウントは不要です。設定 &gt; レポーティングの「記録前に欠けたグリッドを補う」により、グリッドの得られなかった QSO に、過去12か月以内に eQSL へアップロードした会員のグリッドを使えます。これがオンの間、リストがなければプログラムが自動でダウンロードし、その後は週に一度更新します。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Your QTH Nickname at eQSL, exactly as in your eQSL profile. Optional: without one, eQSL files each QSO by its date, into the account whose dates cover it. Give it when your eQSL account has QTH profiles whose dates overlap.</source>
+        <translation>eQSL での QTH ニックネーム。eQSL のプロフィールのとおりに入力します。省略可：省略すると、eQSL は各 QSO をその日付に基づき、期間がその日付を含むアカウントに振り分けます。期間の重なる QTH プロフィールがある場合は入力してください。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>When a QSO gave no grid - neither heard nor typed - it gets one before it is logged: what this program heard the station send earlier (within a day; a /M station's within half an hour), else the locator it reports to PSK Reporter (with the Reception map open), else the square at least two other stations received from it, as their reports to PSK Reporter say (the map open too), else its grid in eQSL's member list (Settings &gt; General; a member that uploaded to eQSL within the last 12 months), in Club Log's users file (downloaded weekly with the token; a call that uploaded within the last 12 months) or in QRZ.com's XML data (with the XML login, asked as the QSO starts). Only a square inside the call's DXCC country is taken, its first four characters. Log QSO names the source in the grid field's tooltip, and the QSO's comment notes it as [grid: ...]. Never in a contest.</source>
+        <translation>QSOでグリッドが得られなかった場合（受信も入力もない場合）、記録前に補います：このプログラムが以前に受信したその局の送信グリッド（1日以内、/M局は30分以内）、なければその局がPSK Reporterに報告しているロケーター（受信マップを開いているとき）、なければ他の2局以上がその局から受信してPSK Reporterに報告したスクエア（同じく受信マップを開いているとき）、さらになければ eQSL の会員リストにあるその局のグリッド（設定 &gt; 全般。過去12か月以内に eQSL へアップロードした会員）、Club Log のユーザーファイル（トークンで毎週ダウンロード。過去12か月以内にアップロードしたコールサイン）、または QRZ.com の XML データ（XML ログインで、QSO の開始時に照会）。コールサインのDXCCエンティティ内のスクエアのみ、先頭4文字を使います。ログに記録ウィンドウはグリッド欄のツールチップに出典を示し、QSOのコメントに [grid: ...] として記します。コンテスト中は行いません。</translation>
     </message>
 </context>
 <context>

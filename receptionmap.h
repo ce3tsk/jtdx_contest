@@ -85,6 +85,9 @@ public:
   // (2026-11-23, TODO.md 3.-283) the locator a call reports to PSK Reporter - while the window is open, its feed
   // listening; else "" - for a QSO logged with no grid (gridfill.h)
   QString reportedLocator (QString const& call) const;
+  // (2026-11-24, TODO.md 3.-289) the square other stations heard a call send, two receivers at least (the board's
+  // spottedSquare) - while the window is open; else ""
+  QString spottedSquare (QString const& call) const;
   reception_spots::Counts counts () const {return m_counts;}
   QString statusText () const;                  // the status line's longest text
   QString statusShown () const;                 // the one it has room for, as last drawn

@@ -16,9 +16,19 @@ extern "C" {
 extern dec_data dec_data;
 
 // (2026-11-15) a tooltip's text: one line as it is, several one a line and centred
+/* (2026-11-24, TODO.md 3.-287, the operator: "make the call signs in the wide graph tooltips bold too") each line's call
+   bold - its first word, escaped first, when it has a letter: a frequency line has none; several lines centred */
 static QString tipText(QString const& calls)
 {
-  return calls.contains('\n') ? "<div align=\"center\">" + calls.toHtmlEscaped().replace('\n', "<br>") + "</div>" : calls;
+  QStringList lines {calls.toHtmlEscaped().split('\n')};
+  for(auto& l : lines) {
+    int const end {l.indexOf(' ') < 0 ? int(l.size()) : int(l.indexOf(' '))};
+    bool letter {false};
+    for(int i = 0; i < end; ++i) letter = letter || l[i].isLetter();
+    if(letter) l = "<b>" + l.left(end) + "</b>" + l.mid(end);
+  }
+  QString const html {lines.join("<br>")};
+  return calls.contains('\n') ? "<div align=\"center\">" + html + "</div>" : html;
 }
 
 CPlotter::CPlotter(QWidget *parent) :                  //CPlotter Constructor

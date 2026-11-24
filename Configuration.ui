@@ -877,7 +877,7 @@ quiet period when decoding is done.</string>
           <item row="4" column="2">
            <widget class="QPushButton" name="eqsl_download_push_button">
             <property name="toolTip">
-             <string>Download eQSL's member list from eqsl.cc: each member's grid square and last upload, no eQSL account needed. With Settings &gt; Reporting's "Fill a missing grid before logging", a QSO that gave no grid may take its member's grid, when that member uploaded to eQSL within the last 12 months.</string>
+             <string>Download eQSL's member list from eqsl.cc: each member's grid square and last upload, no eQSL account needed. With Settings &gt; Reporting's "Fill a missing grid before logging", a QSO that gave no grid may take its member's grid, when that member uploaded to eQSL within the last 12 months. While that is ticked, the program also fetches the list by itself when it is missing, and then once a week.</string>
             </property>
             <property name="text">
              <string>Download latest</string>
@@ -3075,7 +3075,7 @@ and DX Grid fields when a 73 or free text message is sent.</string>
                  <item row="2" column="1">
                   <widget class="QLineEdit" name="eqslnick_edit">
                    <property name="toolTip">
-                    <string>EQSL OTH Nickname.</string>
+                    <string>Your QTH Nickname at eQSL, exactly as in your eQSL profile. Optional: without one, eQSL files each QSO by its date, into the account whose dates cover it. Give it when your eQSL account has QTH profiles whose dates overlap.</string>
                    </property>
                   </widget>
                  </item>
@@ -3403,7 +3403,7 @@ for assessing propagation and system performance.</string>
               <item>
                <widget class="QCheckBox" name="fill_missing_grid_check_box">
                 <property name="toolTip">
-                 <string>When a QSO gave no grid - neither heard nor typed - it gets one before it is logged: what this program heard the station send earlier (within a day; a /M station's within half an hour), else the locator it reports to PSK Reporter (with the Reception map open), else its grid in eQSL's member list (Settings > General; a member that uploaded to eQSL within the last 12 months), in Club Log's users file (downloaded weekly with the token; a call that uploaded within the last 12 months) or in QRZ.com's XML data (with the XML login, asked as the QSO starts). Only a square inside the call's DXCC country is taken, its first four characters. Log QSO names the source in the grid field's tooltip, and the QSO's comment notes it as [grid: ...]. Never in a contest.</string>
+                 <string>When a QSO gave no grid - neither heard nor typed - it gets one before it is logged: what this program heard the station send earlier (within a day; a /M station's within half an hour), else the locator it reports to PSK Reporter (with the Reception map open), else the square at least two other stations received from it, as their reports to PSK Reporter say (the map open too), else its grid in eQSL's member list (Settings > General; a member that uploaded to eQSL within the last 12 months), in Club Log's users file (downloaded weekly with the token; a call that uploaded within the last 12 months) or in QRZ.com's XML data (with the XML login, asked as the QSO starts). Only a square inside the call's DXCC country is taken, its first four characters. Log QSO names the source in the grid field's tooltip, and the QSO's comment notes it as [grid: ...]. Never in a contest.</string>
                 </property>
                 <property name="text">
                  <string>Fill a missing grid before logging</string>

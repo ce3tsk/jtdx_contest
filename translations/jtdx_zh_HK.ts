@@ -898,6 +898,16 @@ Format:
         <source>%1: the QSO with %2 was not sent - see Settings &gt; Reporting.</source>
         <translation>%1：與 %2 的 QSO 未能發送 - 見 設定 &gt; 報告。</translation>
     </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>not downloaded (%1) - tried again later</source>
+        <translation>未下載（%1）——稍後重試</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1, downloaded - the weekly update failed (%2), tried again later</source>
+        <translation>%1，已下載——每週更新失敗（%2），稍後重試</translation>
+    </message>
 </context>
 <context>
     <name>CountryDat</name>
@@ -4004,6 +4014,11 @@ Format:
         <location filename="../logqso.cpp"/>
         <source>the station's grid in QRZ.com's XML data</source>
         <translation>QRZ.com 的 XML 資料中該電台的網格</translation>
+    </message>
+    <message>
+        <location filename="../logqso.cpp"/>
+        <source>what at least two other stations received from the station, as their reports to PSK Reporter say</source>
+        <translation>至少兩個其他電台從該電台收到、並向 PSK Reporter 報告的網格</translation>
     </message>
 </context>
 <context>
@@ -9856,11 +9871,6 @@ for assessing propagation and system performance.</source>
         <translation>啟用&amp;PSK Reporter Spotting</translation>
     </message>
     <message>
-        <location filename="../Configuration.ui" line="2871"/>
-        <source>EQSL OTH Nickname.</source>
-        <translation>EQSL QTH 暱稱.</translation>
-    </message>
-    <message>
         <location filename="../Configuration.ui" line="2878"/>
         <source>Enable DXSummit Spotting </source>
         <translation>啟用DXSummit Spotting </translation>
@@ -11711,11 +11721,6 @@ Only QSOs logged from now on: upload older ones to QRZ.com as an ADIF file there
     </message>
     <message>
         <location filename="../Configuration.ui"/>
-        <source>Download eQSL's member list from eqsl.cc: each member's grid square and last upload, no eQSL account needed. With Settings &gt; Reporting's "Fill a missing grid before logging", a QSO that gave no grid may take its member's grid, when that member uploaded to eQSL within the last 12 months.</source>
-        <translation>從 eqsl.cc 下載 eQSL 會員名單：每位會員的網格和最後上傳日期，無需 eQSL 帳戶。啟用 設定 &gt; 報告 中的「記錄前補全缺失的網格」後，未得到網格的通聯可採用其會員的網格——前提是該會員在過去 12 個月內向 eQSL 上傳過。</translation>
-    </message>
-    <message>
-        <location filename="../Configuration.ui"/>
         <source>Send logged QSOs</source>
         <translation>發送已記錄的通聯</translation>
     </message>
@@ -11813,13 +11818,23 @@ Only QSOs logged from now on: upload older ones to QRZ.com as an ADIF file there
     </message>
     <message>
         <location filename="../Configuration.ui"/>
-        <source>When a QSO gave no grid - neither heard nor typed - it gets one before it is logged: what this program heard the station send earlier (within a day; a /M station's within half an hour), else the locator it reports to PSK Reporter (with the Reception map open), else its grid in eQSL's member list (Settings &gt; General; a member that uploaded to eQSL within the last 12 months), in Club Log's users file (downloaded weekly with the token; a call that uploaded within the last 12 months) or in QRZ.com's XML data (with the XML login, asked as the QSO starts). Only a square inside the call's DXCC country is taken, its first four characters. Log QSO names the source in the grid field's tooltip, and the QSO's comment notes it as [grid: ...]. Never in a contest.</source>
-        <translation>當一次通聯沒有得到網格（既未收到也未輸入）時，記錄前為其補上：本程式此前聽到該電台發送的網格（一天之內；/M 電台為半小時之內），否則為該電台向 PSK Reporter 報告的定位符（接收地圖開啟時），再否則為 eQSL 會員名單中該電台的網格（設定 &gt; 一般；過去 12 個月內向 eQSL 上傳過的會員），或 Club Log 用戶檔案（每週用權杖下載；過去 12 個月內上傳過的呼號），或 QRZ.com 的 XML 資料（用 XML 登入，通聯開始時查詢）。只採用位於該呼號 DXCC 實體內的方格，取其前四個字元。記錄通聯視窗在網格欄的提示中註明來源，通聯的註釋以 [grid: ...] 記下。比賽中從不補全。</translation>
+        <source>The program can send logged QSO info to the https://www.eqsl.cc web site.</source>
+        <translation>程序可以將通聯日誌紀錄發送到 https://www.eqsl.cc 網站.</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
-        <source>The program can send logged QSO info to the https://www.eqsl.cc web site.</source>
-        <translation>程序可以將通聯日誌紀錄發送到 https://www.eqsl.cc 網站.</translation>
+        <source>Download eQSL's member list from eqsl.cc: each member's grid square and last upload, no eQSL account needed. With Settings &gt; Reporting's "Fill a missing grid before logging", a QSO that gave no grid may take its member's grid, when that member uploaded to eQSL within the last 12 months. While that is ticked, the program also fetches the list by itself when it is missing, and then once a week.</source>
+        <translation>從 eqsl.cc 下載 eQSL 會員名單：每位會員的網格和最後上傳日期，無需 eQSL 帳戶。啟用 設定 &gt; 報告 中的「記錄前補全缺失的網格」後，未得到網格的通聯可採用其會員的網格——前提是該會員在過去 12 個月內向 eQSL 上傳過。勾選期間，名單缺失時程式也會自行下載，之後每週更新一次。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Your QTH Nickname at eQSL, exactly as in your eQSL profile. Optional: without one, eQSL files each QSO by its date, into the account whose dates cover it. Give it when your eQSL account has QTH profiles whose dates overlap.</source>
+        <translation>您在 eQSL 的 QTH 暱稱，與 eQSL 個人資料中完全一致。可選：不填時，eQSL 按每個 QSO 的日期將其歸入日期範圍包含該日期的帳戶。若您的 eQSL 帳戶有日期範圍重疊的 QTH 資料，請填寫。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>When a QSO gave no grid - neither heard nor typed - it gets one before it is logged: what this program heard the station send earlier (within a day; a /M station's within half an hour), else the locator it reports to PSK Reporter (with the Reception map open), else the square at least two other stations received from it, as their reports to PSK Reporter say (the map open too), else its grid in eQSL's member list (Settings &gt; General; a member that uploaded to eQSL within the last 12 months), in Club Log's users file (downloaded weekly with the token; a call that uploaded within the last 12 months) or in QRZ.com's XML data (with the XML login, asked as the QSO starts). Only a square inside the call's DXCC country is taken, its first four characters. Log QSO names the source in the grid field's tooltip, and the QSO's comment notes it as [grid: ...]. Never in a contest.</source>
+        <translation>當一次通聯沒有得到網格（既未收到也未輸入）時，記錄前為其補上：本程式此前聽到該電台發送的網格（一天之內；/M 電台為半小時之內），否則為該電台向 PSK Reporter 報告的定位符（接收地圖開啟時），再否則為至少兩個其他電台從該電台收到、並向 PSK Reporter 報告的方格（同樣在接收地圖開啟時），再否則為 eQSL 會員名單中該電台的網格（設定 &gt; 一般；過去 12 個月內向 eQSL 上傳過的會員），或 Club Log 用戶檔案（每週用權杖下載；過去 12 個月內上傳過的呼號），或 QRZ.com 的 XML 資料（用 XML 登入，通聯開始時查詢）。只採用位於該呼號 DXCC 實體內的方格，取其前四個字元。記錄通聯視窗在網格欄的提示中註明來源，通聯的註釋以 [grid: ...] 記下。比賽中從不補全。</translation>
     </message>
 </context>
 <context>

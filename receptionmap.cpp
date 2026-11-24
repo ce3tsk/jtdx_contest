@@ -356,6 +356,13 @@ QString ReceptionMap::reportedLocator (QString const& call) const
   return QString::fromStdString (m_board.reportedLocator (call.trimmed ().toStdString (), now ()));
 }
 
+// (2026-11-24, TODO.md 3.-289) the square others heard a call send - the window's as well
+QString ReceptionMap::spottedSquare (QString const& call) const
+{
+  if (!isVisible ()) return {};
+  return QString::fromStdString (m_board.spottedSquare (call.trimmed ().toStdString (), now ()));
+}
+
 void ReceptionMap::setStation (QString const& ownCall, QString const& band, QString const& mode)
 {
   if (ownCall == m_ownCall && band == m_band && mode == m_mode) return;

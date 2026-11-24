@@ -11449,9 +11449,14 @@ grid_fill::Fill MainWindow::missingGrid (QString const& call)
   QString const heard {QString::fromStdString (m_heardLog.gridOf (call.toStdString (), now, grid_fill::heard_seconds (call)))};
   QString reported;
   if (m_receptionMap) reported = m_receptionMap->reportedLocator (call);   // the map open or not: the map's to say (reportedLocator)
+  /* (2026-11-24, TODO.md 3.-289, the operator: "build the sl source with the two-receiver rule") then the square other
+     stations heard it send - the sender's locator of their spots, two receivers at least that agree - the map's too */
+  QString spotted;
+  if (m_receptionMap) spotted = m_receptionMap->spottedSquare (call);
   // (stage 2) then the call's grid in eQSL's member list, while its last upload is within the 12 months
   QString const member {eqsl_members::grid (m_eqslMembers, call, QDateTime::currentDateTimeUtc ().date ())};
   return grid_fill::choose (call, {{grid_fill::Source::HeardEarlier, heard}, {grid_fill::Source::PskReporter, reported},
+                                   {grid_fill::Source::HeardViaPskReporter, spotted},   // (3.-289)
                                    {grid_fill::Source::Eqsl, member},
                                    {grid_fill::Source::ClubLog, club_log_users::grid (m_clublogUsers, call, QDateTime::currentDateTimeUtc ().date ())},   // (stage 4)
                                    {grid_fill::Source::Qrz, m_qrzGrids.value (call.trimmed ().toUpper ())}},   // (stage 3) QRZ.com's answer, if one came

@@ -297,6 +297,7 @@ set (wsjtx_CXXSRCS
   qsoupload.cpp      # CE3TSK 2026-11-23: the logged QSOs to Club Log and QRZ.com (TODO.md 3.-282)
   qrzxml.cpp         # CE3TSK 2026-11-24: QRZ.com's XML data, a missing grid's last source (TODO.md 3.-283, stage 3)
   clublogusers.cpp   # CE3TSK 2026-11-24: Club Log's users file, a missing grid's fourth source (TODO.md 3.-283, stage 4)
+  obfuscated.cpp     # CE3TSK 2026-11-24: the login files never in clear text - obfuscation, not encryption (TODO.md 3.-288)
   HttpFetch.cpp      # CE3TSK: one in-memory HTTP(S) GET on the same two transports (SUPERFOX_PLAN.md M2)
   FoxVerifier.cpp    # CE3TSK: checks a Fox's one-time code with the verification server
   UpdateChecker.cpp  # CE3TSK: Help > Check for updates, latest.json on ce3tsk.com

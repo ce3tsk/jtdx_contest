@@ -1,5 +1,6 @@
 // CE3TSK 2026-11-22 (TODO.md 3.-280): see qrzlogbook.h
 #include "qrzlogbook.h"
+#include "obfuscated.h"   // (3.-288) the key's file
 
 #include <QFile>
 #include <QFileInfo>
@@ -41,12 +42,10 @@ namespace qrz_logbook
 
   QString read_key (QString const& path)
   {
-    QFile f {path};
-    if (!f.open (QIODevice::ReadOnly)) return {};
-    // a file made by hand, readable by others: made the user's alone before anything is taken from it
-    auto const others = QFileDevice::ReadGroup | QFileDevice::WriteGroup | QFileDevice::ReadOther | QFileDevice::WriteOther;
-    if (f.permissions () & others) f.setPermissions (QFileDevice::ReadOwner | QFileDevice::WriteOwner);
-    auto line = f.readLine (1024);
+    // (3.-288) the owner's alone first, decoded, an older program's plain file saved obfuscated (obfuscated::read)
+    QByteArray const content {obfuscated::read (path)};
+    QByteArray line {content.left (1024)};
+    if (line.indexOf ('\n') >= 0) line.truncate (line.indexOf ('\n') + 1);
     if (line.startsWith ("\xEF\xBB\xBF")) line.remove (0, 3);   // UTF-8 byte-order mark: Notepad writes one
     auto const key = QString::fromLatin1 (line).trimmed ();
     return plausible_key (key) ? key : QString {};

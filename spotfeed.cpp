@@ -384,9 +384,11 @@ bool SpotFeed::parse (QByteArray const& json, reception_spots::Spot& spot)
     out = v.toString ().toStdString ();
     return true;
   };
-  // (3.-264) the sender's locator ("sl") is not read: nothing has used it since 3.-261
   reception_spots::Spot s;
   if (!text ("b", s.band) || !text ("md", s.mode) || !text ("sc", s.sender) || !text ("rc", s.receiver) || !text ("rl", s.receiverLocator)) return false;
+  /* (2026-11-24, TODO.md 3.-289) the sender's locator, for the fill's square others heard it send: a part of its own - a
+     spot without it, or with one that is no text, is taken all the same (3.-264), its locator none */
+  text ("sl", s.senderLocator);
   QJsonValue const f {o.value (QLatin1String ("f"))}, rp {o.value (QLatin1String ("rp"))}, t {o.value (QLatin1String ("t"))}, tx {o.value (QLatin1String ("t_tx"))};
   if (!f.isDouble () || !(t.isDouble () || tx.isDouble ())) return false;
   double const frequency {f.toDouble ()}, time {tx.isDouble () ? tx.toDouble () : t.toDouble ()};
