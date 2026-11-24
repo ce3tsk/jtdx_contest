@@ -57,6 +57,9 @@
 #include "rigreport.h"   // CE3TSK 2026-10-15 (3.-107): the rig's band reports and a QSY the PTT held back
 #include "receptionspots.h"   // CE3TSK 2026-11-16 (3.-260): what we hear, kept from the program's start for the Reception map
 #include "call3file.h"        // (3.-261) CALL3.TXT by call, for where a station we hear is
+#include "gridfill.h"         // CE3TSK 2026-11-23 (3.-283): a QSO's missing grid filled before it is logged
+#include "eqslmembers.h"      // (3.-283, stage 2) eQSL's member list, one of its sources
+#include "clublogusers.h"     // (3.-283, stage 4) Club Log's users file, another
 
 
 //--------------------------------------------------------------- MainWindow
@@ -609,6 +612,20 @@ private:
   call3_file::Index m_call3Index;                //   CALL3.TXT by call (3.-261), read when the map first asks where a call is
   bool m_call3Read {false};
   QString localGridOf (QString const& call);     //   a call's grid as the program itself knows it: its log, then CALL3.TXT
+  // CE3TSK 2026-11-23 (TODO.md 3.-283, GRID_FILL_PLAN.md): a grid for a QSO that gave none, from the sources in their
+  // order - what the call sent earlier, heard by this program; the locator it reports to PSK Reporter - or none (gridfill.h)
+  grid_fill::Fill missingGrid (QString const& call);
+  // (stage 2) eQSL's member list (eqslmembers.h): read at the first log init and after each data file download
+  void readEqslMembers ();
+  QHash<QString, eqsl_members::Member> m_eqslMembers;
+  bool m_eqslMembersRead {false};
+  // (stage 3) QRZ.com's XML data: asked as a QSO with no grid starts, once a call a run; its answers, "" for none
+  void askQrzGrid (QString const& call);
+  QHash<QString, QString> m_qrzGrids;
+  QSet<QString> m_qrzAsked;
+  // (stage 4) Club Log's users file's small file (clublogusers.h): read with eQSL's list, and after each download of it
+  void readClublogUsers ();
+  QHash<QString, club_log_users::Member> m_clublogUsers;
   QScopedPointer<LogQSO> m_logDlg;
   QPointer<ExportCabrillo> m_exportCabrillo;   // CE3TSK 2026-11-05: open or not, and one at a time
   QScopedPointer<HelpTextWindow> m_shortcuts;

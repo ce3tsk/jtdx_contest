@@ -798,6 +798,96 @@ Formátum:
         <source>Club Log refused %1 with this token: the call is not on the token's Club Log account. Its QSOs are kept, the others go on. Add the call to your Club Log account, then click the box off and on and press OK.</source>
         <translation>A Club Log elutasította a(z) %1 hívójelet ezzel a tokennel: a hívójel nincs a token Club Log fiókjában. A QSO-i megmaradnak, a többiek mennek tovább. Adja hozzá a hívójelet a Club Log fiókjához, majd kapcsolja ki és be a jelölőnégyzetet, és nyomja meg az OK gombot.</translation>
     </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>The downloaded file is not eQSL's member list.</source>
+        <translation>A letöltött fájl nem az eQSL taglistája.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>not downloaded yet</source>
+        <translation>még nincs letöltve</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>The QRZ.com XML login could not be saved</source>
+        <translation>A QRZ.com XML-bejelentkezést nem sikerült menteni</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>The eQSL login could not be saved</source>
+        <translation>Az eQSL-bejelentkezést nem sikerült menteni</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>XML data: no login - QRZ.com is not asked for missing grids.</source>
+        <translation>XML-adatok: nincs bejelentkezés - a QRZ.com-ot nem kérdezzük a hiányzó QRA-król.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>XML data: asked as a QSO that gave no grid starts.</source>
+        <translation>XML-adatok: lekérdezve, amikor egy QRA nélküli QSO elkezdődik.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>XML data: logged in at %1 UTC, subscription to %2.</source>
+        <translation>XML-adatok: bejelentkezve %1 UTC-kor, előfizetés eddig: %2.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>XML data: this account has no XML subscription - QRZ.com gives no grids.</source>
+        <translation>XML-adatok: ennek a fióknak nincs XML-előfizetése - a QRZ.com nem ad QRA-t.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>XML data: QRZ.com refused the login (%1).</source>
+        <translation>XML-adatok: a QRZ.com elutasította a bejelentkezést (%1).</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>XML data: no answer (%1) - asked again with the next QSO.</source>
+        <translation>XML-adatok: nincs válasz (%1) - a következő QSO-val újra lekérdezve.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Users file (grids): downloading...</source>
+        <translation>Felhasználói fájl (QRA-k): letöltés folyamatban...</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Users file (grids): not downloaded (%1) - tried again later.</source>
+        <translation>Felhasználói fájl (QRA-k): nincs letöltve (%1) - később újra próbálva.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Users file (grids): %1, %2 members with a locator.</source>
+        <translation>Felhasználói fájl (QRA-k): %1, %2 tag QRA-val.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Users file (grids): no token - not downloaded.</source>
+        <translation>Felhasználói fájl (QRA-k): nincs token - nincs letöltve.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Users file (grids): downloaded weekly with the token while "Fill a missing grid before logging" is on.</source>
+        <translation>Felhasználói fájl (QRA-k): hetente letöltve a tokennel, amíg „Hiányzó QRA kitöltése naplózás előtt” be van kapcsolva.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Users file (grids): reading the download...</source>
+        <translation>Felhasználói fájl (QRA-k): a letöltés beolvasása...</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Users file (grids): not asked - Club Log refused the token.</source>
+        <translation>Felhasználói fájl (QRA-k): nincs lekérve - a Club Log elutasította a tokent.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Users file (grids): Club Log refused it to this token (HTTP status %1) - not asked again until another token is saved.</source>
+        <translation>Felhasználói fájl (QRA-k): a Club Log elutasította ehhez a tokenhez (HTTP-állapot %1) - nem kéri újra, amíg másik tokent nem ment.</translation>
+    </message>
 </context>
 <context>
     <name>CountryDat</name>
@@ -3874,6 +3964,36 @@ Formátum:
         <location filename="../logqso.cpp"/>
         <source>Adds one period of the mode, %1 s, to the end of the QSO - for a closing 73 that came after this window opened.</source>
         <translation>A mód egy periódusát, %1 s-ot hozzáadja a QSO végéhez - az ablak megnyitása után érkezett záró 73 miatt.</translation>
+    </message>
+    <message>
+        <location filename="../logqso.cpp"/>
+        <source>what the station sent earlier, heard by this program</source>
+        <translation>amit az állomás korábban küldött, ez a program hallotta</translation>
+    </message>
+    <message>
+        <location filename="../logqso.cpp"/>
+        <source>the locator the station reports to PSK Reporter</source>
+        <translation>a lokátor, amelyet az állomás a PSK Reporternek jelent</translation>
+    </message>
+    <message>
+        <location filename="../logqso.cpp"/>
+        <source>Not given in this QSO: filled from %1. Correct or clear it before OK - logged as it is, the comment notes %2.</source>
+        <translation>Ebben a QSO-ban nem érkezett. Forrás: %1. OK előtt javítsa vagy törölje – így naplózva a megjegyzés rögzíti: %2.</translation>
+    </message>
+    <message>
+        <location filename="../logqso.cpp"/>
+        <source>the station's grid in eQSL's member list</source>
+        <translation>az állomás QRA-ja az eQSL taglistájában</translation>
+    </message>
+    <message>
+        <location filename="../logqso.cpp"/>
+        <source>the station's grid in Club Log's users file</source>
+        <translation>az állomás QRA-ja a Club Log felhasználói fájljában</translation>
+    </message>
+    <message>
+        <location filename="../logqso.cpp"/>
+        <source>the station's grid in QRZ.com's XML data</source>
+        <translation>az állomás QRA-ja a QRZ.com XML-adataiban</translation>
     </message>
 </context>
 <context>
@@ -9733,11 +9853,6 @@ egy 73 vagy szabad szöveges üzenet küldésekor.</translation>
         <translation>QSO adatok feltöltésének engedélyezése a http://www.eqsl.cc oldalra.</translation>
     </message>
     <message>
-        <location filename="../Configuration.ui" line="2801"/>
-        <source>Enable &amp;eQSL sending</source>
-        <translation>&amp;eQSL.cc feltöltés engedélyezése</translation>
-    </message>
-    <message>
         <location filename="../Configuration.ui" line="2821"/>
         <source>EQSL Username.</source>
         <translation>eQSL.cc felhasználónév.</translation>
@@ -11475,11 +11590,6 @@ hangkártya módosítási tevékenységet</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
-        <source>Club Log to&amp;ken:</source>
-        <translation>Club Log to&amp;ken:</translation>
-    </message>
-    <message>
-        <location filename="../Configuration.ui"/>
         <source>Your Club Log API token. To create one, log in to Club Log, go to Settings &gt; API and click the "Create token" button there. Copy the token, paste it into this box and press OK.
 With it the program downloads your LoTW confirmations from Club Log at the start and every 12 hours. It is kept in a file of its own that only you can read, never in the settings file.</source>
         <translation>Az Ön Club Log API tokenje. Létrehozásához jelentkezzen be a Club Logba, lépjen a Settings &gt; API részre, és kattintson ott a(z) "Create token" gombra. Másolja ki a tokent, illessze be ebbe a mezőbe, és nyomja meg az OK gombot.
@@ -11519,11 +11629,6 @@ A teljes LoTW nyilvántartás egyszeri lekéréséhez előbb kapcsolja ki ott a(
         <location filename="../Configuration.ui"/>
         <source>Worked, not LoTW-confirmed</source>
         <translation>Forgalmazva, LoTW-n nem igazolva</translation>
-    </message>
-    <message>
-        <location filename="../Configuration.ui"/>
-        <source>QRZ.com API ke&amp;y:</source>
-        <translation>QR&amp;Z.com API kulcs:</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
@@ -11569,20 +11674,10 @@ Az első letöltés néhány percig tart; utána csak a változások töltődnek
     </message>
     <message>
         <location filename="../Configuration.ui"/>
-        <source>Send logged QSOs to:</source>
-        <translation>A naplózott QSO-k küldése ide:</translation>
-    </message>
-    <message>
-        <location filename="../Configuration.ui"/>
         <source>Each QSO you log is sent to your Club Log log at once, with the Club Log token - in a contest too. A QSO that cannot be sent now (no connection, Club Log busy) is kept and sent later; one Club Log refuses is named below.
 Only QSOs logged from now on: upload older ones to Club Log as an ADIF file there.</source>
         <translation>Minden naplózott QSO azonnal a Club Log naplójába kerül a Club Log tokennel – versenyben is. Az éppen el nem küldhető QSO (nincs kapcsolat, a Club Log foglalt) megmarad, és később megy el; amelyet a Club Log elutasít, azt lent jelezzük.
 Csak a mostantól naplózott QSO-k: a régebbieket ADIF-fájlként töltse fel a Club Logba, ott.</translation>
-    </message>
-    <message>
-        <location filename="../Configuration.ui"/>
-        <source>&amp;Club Log</source>
-        <translation>Club Lo&amp;g</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
@@ -11593,8 +11688,125 @@ Csak a mostantól naplózott QSO-k: a régebbieket ADIF-fájlként töltse fel a
     </message>
     <message>
         <location filename="../Configuration.ui"/>
-        <source>QR&amp;Z.com</source>
-        <translation>QRZ.c&amp;om</translation>
+        <source>Fill a missing grid before logging</source>
+        <translation>Hiányzó QRA kitöltése naplózás előtt</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>eQSL members:</source>
+        <translation>eQSL-tagok:</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>The copy in the log directory is used; none is bundled with this release.</source>
+        <translation>A Log könyvtárban lévő példány van használatban; a kiadás nem tartalmaz ilyet.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Download eQSL's member list from eqsl.cc: each member's grid square and last upload, no eQSL account needed. With Settings &gt; Reporting's "Fill a missing grid before logging", a QSO that gave no grid may take its member's grid, when that member uploaded to eQSL within the last 12 months.</source>
+        <translation>Az eQSL taglistájának letöltése az eqsl.cc-ről: minden tag QRA-ja és utolsó feltöltése, eQSL-fiók nélkül. A Beállítások &gt; Riport „Hiányzó QRA kitöltése naplózás előtt” választásával egy QRA nélküli QSO átveheti a tagja QRA-ját, ha az a tag az elmúlt 12 hónapban töltött fel az eQSL-re.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Send logged QSOs</source>
+        <translation>Naplózott QSO-k küldése</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Its member list, for missing grids: Settings &gt; General &gt; Data files.</source>
+        <translation>A taglistája a hiányzó QRA-khoz: Beállítások &gt; Általános &gt; Adatfájlok.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>To&amp;ken:</source>
+        <translation>To&amp;ken:</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Your Club Log API token. To create one, log in to Club Log, go to Settings &gt; API and click the "Create token" button there. Copy the token, paste it into this box and press OK.
+                  With it the program downloads your LoTW confirmations from Club Log at the start and every 12 hours. It is kept in a file of its own that only you can read, never in the settings file.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Download your LoTW confirmations from Club Log now; the program also does it at the start and every 12 hours.
+                  Club Log has only the LoTW confirmations it has fetched.
+                  In Club Log, under Tools &gt; LoTW Sync:
+                  1. Certificates: add your LoTW certificate once.
+                  2. Download confirmations: fetch the new ones now and then.
+                  To fetch the whole LoTW record once, clear "Only confirmations since the last download" there first.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Each QSO you log is sent to your Club Log log at once, with the Club Log token - in a contest too. A QSO that cannot be sent now (no connection, Club Log busy) is kept and sent later; one Club Log refuses is named below.
+                  Only QSOs logged from now on: upload older ones to Club Log as an ADIF file there.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>API ke&amp;y:</source>
+        <translation>A&amp;PI kulcs:</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Your QRZ.com Logbook API key. To find it, log in to QRZ.com, open your Logbook, click Settings at the top right and, under "QRZ Logbook API", click "Show" beside the API Key. Copy the key, paste it into this box and press OK. The API needs a QRZ.com subscription (XML level or higher).
+                  With it the program downloads your LoTW confirmations from QRZ.com at the start and every 12 hours. It is kept in a file of its own that only you can read, never in the settings file.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>XML login:</source>
+        <translation>XML-bejelentkezés:</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Your QRZ.com username - usually your callsign - for QRZ.com's XML data: the grids of calls, with a subscription that includes XML data. Not the API key above.</source>
+        <translation>Az Ön QRZ.com-felhasználóneve - általában a hívójele - a QRZ.com XML-adataihoz: a hívójelek QRA-i, XML-adatokat is tartalmazó előfizetéssel. Nem a fenti API-kulcs.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>username</source>
+        <translation>felhasználónév</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Your QRZ.com password, for QRZ.com's XML data. It is kept in a file of its own that only you can read, never in the settings file.</source>
+        <translation>Az Ön QRZ.com-jelszava a QRZ.com XML-adataihoz. Saját fájlban tárolódik, amelyet csak Ön olvashat, sosem a beállítási fájlban.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>password</source>
+        <translation>jelszó</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Download your LoTW confirmations from QRZ.com now; the program also does it at the start and every 12 hours. Only the confirmations from LoTW count, not QRZ.com's own.
+                  QRZ.com has only the LoTW confirmations it has imported.
+                  In your QRZ.com Logbook, under Settings:
+                  1. LoTW Settings: enter your LoTW username once.
+                  2. Logbook of the World Import/Export, Import: fetch the new ones now and then (QRZ.com asks for your LoTW password).
+                  The first download takes a few minutes; after it only what changed is fetched.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Each QSO you log is sent to your QRZ.com logbook at once, with the QRZ.com API key - in a contest too. QRZ.com takes QSOs from programs only with a subscription. A QSO that cannot be sent now is kept and sent later; one QRZ.com refuses is named below.
+                  Only QSOs logged from now on: upload older ones to QRZ.com as an ADIF file there.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>The program can send your station details and all
+               decoded signals as spots to the http://pskreporter.info web site.
+               This is used for reverse beacon analysis which is very useful
+               for assessing propagation and system performance.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>When a QSO gave no grid - neither heard nor typed - it gets one before it is logged: what this program heard the station send earlier (within a day; a /M station's within half an hour), else the locator it reports to PSK Reporter (with the Reception map open), else its grid in eQSL's member list (Settings &gt; General; a member that uploaded to eQSL within the last 12 months), in Club Log's users file (downloaded weekly with the token; a call that uploaded within the last 12 months) or in QRZ.com's XML data (with the XML login, asked as the QSO starts). Only a square inside the call's DXCC country is taken, its first four characters. Log QSO names the source in the grid field's tooltip, and the QSO's comment notes it as [grid: ...]. Never in a contest.</source>
+        <translation>Ha egy QSO nem adott QRA-t – sem vett, sem beírt –, naplózás előtt kap egyet: amit ez a program korábban hallott az állomástól (egy napon belül, /M állomástól fél órán belül), különben a lokátort, amelyet az állomás a PSK Reporternek jelent (nyitott Vételi térképpel), különben a QRA-ja az eQSL taglistájában (Beállítások &gt; Általános; olyan tagé, aki az elmúlt 12 hónapban töltött fel az eQSL-re), a Club Log felhasználói fájljában (hetente letöltve a tokennel; olyan hívójelé, amely az elmúlt 12 hónapban töltött fel) vagy a QRZ.com XML-adataiban (XML-bejelentkezéssel, a QSO kezdetén lekérdezve). Csak a hívójel DXCC-országán belüli négyzet fogadható el, az első négy karaktere. A Log QSO ablak a QRA mező súgójában megnevezi a forrást, a QSO megjegyzése pedig [grid: ...] formában rögzíti. Versenyben soha.</translation>
     </message>
 </context>
 <context>

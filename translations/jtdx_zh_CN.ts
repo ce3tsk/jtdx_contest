@@ -798,6 +798,96 @@ Format:
         <source>Club Log refused %1 with this token: the call is not on the token's Club Log account. Its QSOs are kept, the others go on. Add the call to your Club Log account, then click the box off and on and press OK.</source>
         <translation>Club Log 拒绝了使用此令牌的 %1：该呼号不在此令牌的 Club Log 账户中。它的 QSO 已保留，其他 QSO 继续发送。请将该呼号添加到您的 Club Log 账户，然后取消勾选再重新勾选该复选框并按确定。</translation>
     </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>The downloaded file is not eQSL's member list.</source>
+        <translation>下载的文件不是 eQSL 会员名单。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>not downloaded yet</source>
+        <translation>尚未下载</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>The QRZ.com XML login could not be saved</source>
+        <translation>无法保存 QRZ.com 的 XML 登录信息</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>The eQSL login could not be saved</source>
+        <translation>无法保存 eQSL 登录信息</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>XML data: no login - QRZ.com is not asked for missing grids.</source>
+        <translation>XML 数据：未登录——不向 QRZ.com 查询缺失的网格。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>XML data: asked as a QSO that gave no grid starts.</source>
+        <translation>XML 数据：在未得到网格的通联开始时查询。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>XML data: logged in at %1 UTC, subscription to %2.</source>
+        <translation>XML 数据：%1 UTC 已登录，订阅至 %2。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>XML data: this account has no XML subscription - QRZ.com gives no grids.</source>
+        <translation>XML 数据：此账户没有 XML 订阅——QRZ.com 不提供网格。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>XML data: QRZ.com refused the login (%1).</source>
+        <translation>XML 数据：QRZ.com 拒绝了登录（%1）。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>XML data: no answer (%1) - asked again with the next QSO.</source>
+        <translation>XML 数据：无应答（%1）——将在下一次通联时再查询。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Users file (grids): downloading...</source>
+        <translation>用户文件（网格）：正在下载...</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Users file (grids): not downloaded (%1) - tried again later.</source>
+        <translation>用户文件（网格）：未下载（%1）——稍后重试。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Users file (grids): %1, %2 members with a locator.</source>
+        <translation>用户文件（网格）：%1，有定位符的会员 %2 个。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Users file (grids): no token - not downloaded.</source>
+        <translation>用户文件（网格）：没有令牌——未下载。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Users file (grids): downloaded weekly with the token while "Fill a missing grid before logging" is on.</source>
+        <translation>用户文件（网格）：“记录前补全缺失的网格”开启期间，每周用令牌下载。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Users file (grids): reading the download...</source>
+        <translation>用户文件（网格）：正在读取下载内容...</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Users file (grids): not asked - Club Log refused the token.</source>
+        <translation>用户文件（网格）：不再请求——Club Log 拒绝了令牌。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Users file (grids): Club Log refused it to this token (HTTP status %1) - not asked again until another token is saved.</source>
+        <translation>用户文件（网格）：Club Log 拒绝此令牌获取（HTTP 状态 %1）——保存其他令牌之前不再请求。</translation>
+    </message>
 </context>
 <context>
     <name>CountryDat</name>
@@ -3874,6 +3964,36 @@ Format:
         <location filename="../logqso.cpp"/>
         <source>Adds one period of the mode, %1 s, to the end of the QSO - for a closing 73 that came after this window opened.</source>
         <translation>在 QSO 结束时间上加上该模式的一个周期（%1 秒），用于此窗口打开后才收到的结束 73。</translation>
+    </message>
+    <message>
+        <location filename="../logqso.cpp"/>
+        <source>what the station sent earlier, heard by this program</source>
+        <translation>本程序此前听到的、该电台发送的网格</translation>
+    </message>
+    <message>
+        <location filename="../logqso.cpp"/>
+        <source>the locator the station reports to PSK Reporter</source>
+        <translation>该电台向 PSK Reporter 报告的定位符</translation>
+    </message>
+    <message>
+        <location filename="../logqso.cpp"/>
+        <source>Not given in this QSO: filled from %1. Correct or clear it before OK - logged as it is, the comment notes %2.</source>
+        <translation>本次通联未得到。来源：%1。请在确定前修改或清除——按原样记录时，注释记下 %2。</translation>
+    </message>
+    <message>
+        <location filename="../logqso.cpp"/>
+        <source>the station's grid in eQSL's member list</source>
+        <translation>eQSL 会员名单中该电台的网格</translation>
+    </message>
+    <message>
+        <location filename="../logqso.cpp"/>
+        <source>the station's grid in Club Log's users file</source>
+        <translation>Club Log 用户文件中该电台的网格</translation>
+    </message>
+    <message>
+        <location filename="../logqso.cpp"/>
+        <source>the station's grid in QRZ.com's XML data</source>
+        <translation>QRZ.com 的 XML 数据中该电台的网格</translation>
     </message>
 </context>
 <context>
@@ -9695,11 +9815,6 @@ and DX Grid fields when a 73 or free text message is sent.</source>
         <translation>程序可以将通联日志纪录发送到 http://www.eqsl.cc 网站.</translation>
     </message>
     <message>
-        <location filename="../Configuration.ui" line="2801"/>
-        <source>Enable &amp;eQSL sending</source>
-        <translation>启用上传&amp;eQSL网站(填写以下3项后才可以勾选)</translation>
-    </message>
-    <message>
         <location filename="../Configuration.ui" line="2821"/>
         <source>EQSL Username.</source>
         <translation>EQSL用户名称.</translation>
@@ -11478,11 +11593,6 @@ soundcard changes</source>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
-        <source>Club Log to&amp;ken:</source>
-        <translation>Club Log 令牌(&amp;K):</translation>
-    </message>
-    <message>
-        <location filename="../Configuration.ui"/>
         <source>Your Club Log API token. To create one, log in to Club Log, go to Settings &gt; API and click the "Create token" button there. Copy the token, paste it into this box and press OK.
 With it the program downloads your LoTW confirmations from Club Log at the start and every 12 hours. It is kept in a file of its own that only you can read, never in the settings file.</source>
         <translation>您的 Club Log API 令牌。创建方法：登录 Club Log，进入 Settings &gt; API，点击那里的 "Create token" 按钮。复制令牌，粘贴到此框中，然后按“确定”。
@@ -11522,11 +11632,6 @@ Club Log 只有它已获取的 LoTW 确认。
         <location filename="../Configuration.ui"/>
         <source>Worked, not LoTW-confirmed</source>
         <translation>已通联，未经 LoTW 确认</translation>
-    </message>
-    <message>
-        <location filename="../Configuration.ui"/>
-        <source>QRZ.com API ke&amp;y:</source>
-        <translation>QRZ.com API 密钥(&amp;Y):</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
@@ -11572,20 +11677,10 @@ QRZ.com 只有它已导入的 LoTW 确认。
     </message>
     <message>
         <location filename="../Configuration.ui"/>
-        <source>Send logged QSOs to:</source>
-        <translation>将记录的 QSO 发送到：</translation>
-    </message>
-    <message>
-        <location filename="../Configuration.ui"/>
         <source>Each QSO you log is sent to your Club Log log at once, with the Club Log token - in a contest too. A QSO that cannot be sent now (no connection, Club Log busy) is kept and sent later; one Club Log refuses is named below.
 Only QSOs logged from now on: upload older ones to Club Log as an ADIF file there.</source>
         <translation>您记录的每个 QSO 都会立即用 Club Log 令牌发送到您在 Club Log 上的日志——比赛中也一样。现在无法发送的 QSO（无连接、Club Log 繁忙）会被保留，稍后再发送；Club Log 拒绝的 QSO 会在下方列出。
 只限从现在起记录的 QSO：较早的 QSO 请在 Club Log 网站上以 ADIF 文件上传。</translation>
-    </message>
-    <message>
-        <location filename="../Configuration.ui"/>
-        <source>&amp;Club Log</source>
-        <translation>Club Log(&amp;O)</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
@@ -11596,8 +11691,125 @@ Only QSOs logged from now on: upload older ones to QRZ.com as an ADIF file there
     </message>
     <message>
         <location filename="../Configuration.ui"/>
-        <source>QR&amp;Z.com</source>
-        <translation>QRZ.com(&amp;N)</translation>
+        <source>Fill a missing grid before logging</source>
+        <translation>记录前补全缺失的网格</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>eQSL members:</source>
+        <translation>eQSL 会员：</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>The copy in the log directory is used; none is bundled with this release.</source>
+        <translation>使用日志文件目录中的副本；本版本未附带。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Download eQSL's member list from eqsl.cc: each member's grid square and last upload, no eQSL account needed. With Settings &gt; Reporting's "Fill a missing grid before logging", a QSO that gave no grid may take its member's grid, when that member uploaded to eQSL within the last 12 months.</source>
+        <translation>从 eqsl.cc 下载 eQSL 会员名单：每位会员的网格和最后上传日期，无需 eQSL 账户。启用 设置 &gt; 报告 中的“记录前补全缺失的网格”后，未得到网格的通联可采用其会员的网格——前提是该会员在过去 12 个月内向 eQSL 上传过。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Send logged QSOs</source>
+        <translation>发送已记录的通联</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Its member list, for missing grids: Settings &gt; General &gt; Data files.</source>
+        <translation>其会员名单（用于补全缺失的网格）：设置 &gt; 常规 &gt; 数据文件。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>To&amp;ken:</source>
+        <translation>令牌(&amp;K):</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Your Club Log API token. To create one, log in to Club Log, go to Settings &gt; API and click the "Create token" button there. Copy the token, paste it into this box and press OK.
+                  With it the program downloads your LoTW confirmations from Club Log at the start and every 12 hours. It is kept in a file of its own that only you can read, never in the settings file.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Download your LoTW confirmations from Club Log now; the program also does it at the start and every 12 hours.
+                  Club Log has only the LoTW confirmations it has fetched.
+                  In Club Log, under Tools &gt; LoTW Sync:
+                  1. Certificates: add your LoTW certificate once.
+                  2. Download confirmations: fetch the new ones now and then.
+                  To fetch the whole LoTW record once, clear "Only confirmations since the last download" there first.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Each QSO you log is sent to your Club Log log at once, with the Club Log token - in a contest too. A QSO that cannot be sent now (no connection, Club Log busy) is kept and sent later; one Club Log refuses is named below.
+                  Only QSOs logged from now on: upload older ones to Club Log as an ADIF file there.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>API ke&amp;y:</source>
+        <translation>API 密钥(&amp;Y):</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Your QRZ.com Logbook API key. To find it, log in to QRZ.com, open your Logbook, click Settings at the top right and, under "QRZ Logbook API", click "Show" beside the API Key. Copy the key, paste it into this box and press OK. The API needs a QRZ.com subscription (XML level or higher).
+                  With it the program downloads your LoTW confirmations from QRZ.com at the start and every 12 hours. It is kept in a file of its own that only you can read, never in the settings file.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>XML login:</source>
+        <translation>XML 登录：</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Your QRZ.com username - usually your callsign - for QRZ.com's XML data: the grids of calls, with a subscription that includes XML data. Not the API key above.</source>
+        <translation>您的 QRZ.com 用户名（通常是您的呼号），用于 QRZ.com 的 XML 数据：在包含 XML 数据的订阅下获取呼号的网格。不是上方的 API 密钥。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>username</source>
+        <translation>用户名</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Your QRZ.com password, for QRZ.com's XML data. It is kept in a file of its own that only you can read, never in the settings file.</source>
+        <translation>您的 QRZ.com 密码，用于 QRZ.com 的 XML 数据。保存在只有您能读取的单独文件中，绝不写入设置文件。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>password</source>
+        <translation>密码</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Download your LoTW confirmations from QRZ.com now; the program also does it at the start and every 12 hours. Only the confirmations from LoTW count, not QRZ.com's own.
+                  QRZ.com has only the LoTW confirmations it has imported.
+                  In your QRZ.com Logbook, under Settings:
+                  1. LoTW Settings: enter your LoTW username once.
+                  2. Logbook of the World Import/Export, Import: fetch the new ones now and then (QRZ.com asks for your LoTW password).
+                  The first download takes a few minutes; after it only what changed is fetched.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Each QSO you log is sent to your QRZ.com logbook at once, with the QRZ.com API key - in a contest too. QRZ.com takes QSOs from programs only with a subscription. A QSO that cannot be sent now is kept and sent later; one QRZ.com refuses is named below.
+                  Only QSOs logged from now on: upload older ones to QRZ.com as an ADIF file there.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>The program can send your station details and all
+               decoded signals as spots to the http://pskreporter.info web site.
+               This is used for reverse beacon analysis which is very useful
+               for assessing propagation and system performance.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>When a QSO gave no grid - neither heard nor typed - it gets one before it is logged: what this program heard the station send earlier (within a day; a /M station's within half an hour), else the locator it reports to PSK Reporter (with the Reception map open), else its grid in eQSL's member list (Settings &gt; General; a member that uploaded to eQSL within the last 12 months), in Club Log's users file (downloaded weekly with the token; a call that uploaded within the last 12 months) or in QRZ.com's XML data (with the XML login, asked as the QSO starts). Only a square inside the call's DXCC country is taken, its first four characters. Log QSO names the source in the grid field's tooltip, and the QSO's comment notes it as [grid: ...]. Never in a contest.</source>
+        <translation>当一次通联没有得到网格（既未收到也未输入）时，记录前为其补上：本程序此前听到该电台发送的网格（一天之内；/M 电台为半小时之内），否则为该电台向 PSK Reporter 报告的定位符（接收地图打开时），再否则为 eQSL 会员名单中该电台的网格（设置 &gt; 常规；过去 12 个月内向 eQSL 上传过的会员），或 Club Log 用户文件（每周用令牌下载；过去 12 个月内上传过的呼号），或 QRZ.com 的 XML 数据（用 XML 登录，通联开始时查询）。只采用位于该呼号 DXCC 实体内的方格，取其前四个字符。记录通联窗口在网格栏的提示中注明来源，通联的注释以 [grid: ...] 记下。比赛中从不补全。</translation>
     </message>
 </context>
 <context>

@@ -82,6 +82,9 @@ public:
   void setLookups (Lookup const& localGrid, Lookup const& entity, Lookup const& distance);
 
   SpotFeed * feed () const {return m_feed;}
+  // (2026-11-23, TODO.md 3.-283) the locator a call reports to PSK Reporter - while the window is open, its feed
+  // listening; else "" - for a QSO logged with no grid (gridfill.h)
+  QString reportedLocator (QString const& call) const;
   reception_spots::Counts counts () const {return m_counts;}
   QString statusText () const;                  // the status line's longest text
   QString statusShown () const;                 // the one it has room for, as last drawn

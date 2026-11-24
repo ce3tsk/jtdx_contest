@@ -151,6 +151,7 @@ extern "C" {
 #include <QMetaType>
 #include <QList>
 #include <QSettings>
+#include <QSignalBlocker>   // (2026-11-24) the sites' boxes greyed by the program, no click
 #include <QAudioDeviceInfo>
 #include <QAudioInput>
 #include <QDialog>
@@ -199,6 +200,14 @@ extern "C" {
 #include "JTDXMessageBox.hpp"
 #include "FileDownload.hpp"            /* CE3TSK */
 #include "call3file.h"   // CE3TSK 2026-10-23: CALL3.TXT's download (TODO.md 3.-199)
+#include "eqslmembers.h"   // CE3TSK 2026-11-23: eQSL's member list's download (TODO.md 3.-283, stage 2)
+#include "loginfile.h"     // CE3TSK 2026-11-24: eQSL's and QRZ.com's XML login, each in a file of its own (TODO.md 3.-283)
+#include "qrzxml.h"        // (3.-283, stage 3) QRZ.com's XML data
+#include "clublogusers.h"  // (3.-283, stage 4) Club Log's users file
+#include <memory>
+#include <QFutureWatcher>                   // (3.-283's review 2026-11-24, 4) the users file made on a worker thread
+#include <QtConcurrent/QtConcurrentRun>
+#include <QSaveFile>
 #include "clublog.h"     // CE3TSK 2026-11-21: Club Log's confirmed QSOs (TODO.md 3.-280)
 #include "qrzlogbook.h"   // CE3TSK 2026-11-22: QRZ.com's LoTW confirmations (TODO.md 3.-280)
 #include "qsoupload.h"    // CE3TSK 2026-11-23: the logged QSOs to Club Log and QRZ.com (TODO.md 3.-282)
@@ -662,6 +671,7 @@ private:
   Q_SLOT void on_lotw_download_push_button_clicked (bool);
   Q_SLOT void on_license_download_push_button_clicked (bool);   // CE3TSK 2026-10-03
   Q_SLOT void on_call3_download_push_button_clicked (bool);   // CE3TSK 2026-10-23 (TODO.md 3.-199)
+  Q_SLOT void on_eqsl_download_push_button_clicked (bool);    // CE3TSK 2026-11-23 (TODO.md 3.-283, stage 2)
   void start_data_file_download (FileDownload&, char const * url, char const * file_name,
                                  QDate (* version_of) (QByteArray const&), QString const& not_that_file);
   void data_file_download_failed (char const * file_name, FileDownload::Failure, QString const& detail);
@@ -695,6 +705,15 @@ private:
   void update_qrz_label ();
   bool qrz_current () const;   // the file is what the saved key fetched: the windows read it
   QString qrz_key_file () const {return qrz_logbook::key_path (settings_->fileName ());}
+  // CE3TSK 2026-11-24 (TODO.md 3.-283): eQSL's login - username, password, QTH nickname - beside the settings file, never in it
+  QString eqsl_login_file () const {return login_file::path (settings_->fileName (), "eqsl.login");}
+  // (stage 3) QRZ.com's XML login - username, password - the same way (not the API key, which is the logbook's)
+  QString qrz_xml_login_file () const {return login_file::path (settings_->fileName (), "qrz_xml.login");}
+  void update_qrz_xml_label ();
+  // (stage 4) Club Log's users file: weekly with the token while the fill is on (clublogusers.h)
+  void clublog_users_check_due ();
+  void clublog_users_finished (bool ok, int http_status, QString const& detail);   // (review) the status, 0 for none
+  void update_clublog_users_label ();
   /* CE3TSK 2026-11-23 (TODO.md 3.-282, QSO_UPLOAD_PLAN.md): the logged QSOs to Club Log and QRZ.com with the token and key
      above, off by default. Club Log's refusals are the downloads' (the same token, the same call); QRZ.com's AUTH on INSERT
      is the upload's alone - the same key may still FETCH */
@@ -706,6 +725,7 @@ private:
   void upload_delayed (qso_upload::Site site, qso_upload::Result const& result, QString const& call, QDateTime const& next, int waiting);
   void upload_kept (qso_upload::Site site, bool refused, QString const& call);   // (review) a QSO logged, not sent now
   void update_upload_labels ();
+  void grey_upload_boxes (bool opening);   // (2026-11-24) Club Log's and QRZ.com's "Send logged QSOs" greyed without a token or key
   Q_SLOT void on_callNotif_check_box_clicked(bool checked);
   Q_SLOT void on_otherMessagesMarker_check_box_clicked(bool checked);
   Q_SLOT void on_RR73_marker_check_box_clicked(bool checked);
@@ -807,6 +827,7 @@ private:
   FileDownload lotw_download_;
   FileDownload license_download_;   // CE3TSK 2026-10-03
   FileDownload call3_download_;     // CE3TSK 2026-10-23 (TODO.md 3.-199)
+  FileDownload eqsl_download_;      // CE3TSK 2026-11-23 (TODO.md 3.-283, stage 2): eQSL's member list
   FileDownload clublog_download_;   // CE3TSK 2026-11-21 (TODO.md 3.-280)
   QTimer clublog_timer_;            // looks every half hour whether a download is due
   QString clublog_token_;           // from its own file, never in the ini (clublog.h)
@@ -826,6 +847,16 @@ private:
   QString qrz_file_id_;             // what fetched the file: club_log::token_id (key), ini QrzKeyId
   qso_upload::Uploader clublog_upload_ {qso_upload::Site::ClubLog};   // CE3TSK 2026-11-23 (TODO.md 3.-282)
   qso_upload::Uploader qrz_upload_ {qso_upload::Site::Qrz};
+  qrz_xml::Lookup qrz_xml_;          // CE3TSK 2026-11-24 (TODO.md 3.-283, stage 3)
+  qrz_xml::Login qrz_xml_login_;
+  FileDownload clublog_users_download_;   // (stage 4) Club Log's users file: the ZIP as an answer (reply_only)
+  // (the review 2026-11-24, 4) the ZIP made the small file on a worker thread - 386 ms with the real file, once a week,
+  // held the main thread at whatever moment the download ended; the small file's text, or "" and why not
+  QFutureWatcher<QPair<QByteArray, QString>> clublog_users_convert_;
+  bool clublog_users_making_ {false};   // from the ZIP's arrival to its end here - not the watcher's isRunning (), false
+                                        // before its finished () arrives: an OK between would ask Club Log again
+  QString clublog_users_token_;           // the token it was asked with
+  QString clublog_users_error_;           // the last download's failure, worded; "" after a good one
   QString clublog_upload_text_;     // the last upload's end, worded, for the status line
   QString qrz_upload_text_;
   // (review) what that text is: an upload's end, a refusal on record (the token, key or call - it goes once the refusal is
@@ -1096,6 +1127,7 @@ private:
   bool countUnconfirmed_;        // CE3TSK 2026-11-21 (TODO.md 3.-280, D9): a LoTW user worked, not LoTW-confirmed, as new
   bool highlightConfirmed_;      // CE3TSK 2026-11-22 (TODO.md 3.-280, D12): a worked call LoTW-confirmed in every tier on, in its colour
   bool clublog_upload_on_;       // CE3TSK 2026-11-23 (TODO.md 3.-282): the logged QSOs to Club Log - off by default
+  bool fill_missing_grid_;       // CE3TSK 2026-11-23 (TODO.md 3.-283): a QSO's missing grid filled before it is logged - off by default
   bool qrz_upload_on_;           //   and to QRZ.com
   bool showAzimuth_;
   bool usStates_;   /* CE3TSK 2026-10-02 */
@@ -1653,6 +1685,7 @@ QString Configuration::sched_band_5 () const {return m_->sched_band_5_;}
 bool Configuration::sched_mix_5 () const {return m_->sched_mix_5_;}
 bool Configuration::report_in_comments () const {return m_->report_in_comments_;}
 bool Configuration::distance_in_comments () const {return m_->distance_in_comments_;}
+bool Configuration::fill_missing_grid () const {return m_->fill_missing_grid_;}
 bool Configuration::prompt_to_log () const {return m_->prompt_to_log_;}
 bool Configuration::autolog () const {return m_->autolog_;}
 bool Configuration::insert_blank () const {return m_->insert_blank_;}
@@ -2423,7 +2456,7 @@ Configuration::impl::impl (Configuration * self, QNetworkAccessManager * network
   on_countryName_check_box_clicked (countryName_);
 
   // CE3TSK: data file updates - exactly one of complete() or error() arrives per download
-  for (FileDownload * download : {&cty_download_, &lotw_download_, &license_download_, &call3_download_})
+  for (FileDownload * download : {&cty_download_, &lotw_download_, &license_download_, &call3_download_, &eqsl_download_})
     {
       connect (download, &FileDownload::complete, this, [this, download] (QString const& file) {
           if (download == &call3_download_)   // (3.-202) the version a download brought, for the label (call3file.h)
@@ -2441,7 +2474,8 @@ Configuration::impl::impl (Configuration * self, QNetworkAccessManager * network
           update_data_file_labels ();
           data_file_download_failed (download == &cty_download_ ? cty_file_name
                                      : download == &lotw_download_ ? lotw_file_name
-                                     : download == &license_download_ ? license_file_name : call3_file::file_name, failure, detail);
+                                     : download == &license_download_ ? license_file_name
+                                     : download == &eqsl_download_ ? eqsl_members::file_name : call3_file::file_name, failure, detail);
         });
     }
 
@@ -2474,6 +2508,56 @@ Configuration::impl::impl (Configuration * self, QNetworkAccessManager * network
     auto const agent = "JTDX_contest/" + QCoreApplication::applicationVersion () + " (https://github.com/ce3tsk/jtdx_contest)";
     clublog_upload_.configure (network_manager_, data_dir.absoluteFilePath (qso_upload::clublog_queue_file), agent);
     qrz_upload_.configure (network_manager_, data_dir.absoluteFilePath (qso_upload::qrz_queue_file), agent);
+    /* CE3TSK 2026-11-24 (TODO.md 3.-283, stage 3): QRZ.com's XML data, with the login of its own file; its line follows
+       its state, shown while "Fill a missing grid before logging" is ticked - the one use of it */
+    auto const login = login_file::read (qrz_xml_login_file (), 2);
+    qrz_xml_login_ = qrz_xml::Login {login.value (0), login.value (1)};
+    qrz_xml_.configure (network_manager_, agent, "JTDX_contest/" + QCoreApplication::applicationVersion ());
+    qrz_xml_.set_login (qrz_xml_login_);
+    connect (&qrz_xml_, &qrz_xml::Lookup::state_changed, this, &Configuration::impl::update_qrz_xml_label);
+    connect (&qrz_xml_, &qrz_xml::Lookup::answered, this, [this] (QString const& call, QString const& grid) {Q_EMIT self_->qrz_grid (call, grid);});
+    connect (ui_->fill_missing_grid_check_box, &QCheckBox::toggled, this, &Configuration::impl::update_qrz_xml_label);
+    /* (stage 4) Club Log's users file: looked for on Club Log's half-hourly look and two minutes after the start, downloaded
+       weekly while the fill is on; its line shown while the fill is ticked */
+    connect (&clublog_users_download_, &FileDownload::replied, this, [this] (int status, QByteArray const& zip) {
+        if (200 != status)
+          {
+            clublog_users_finished (false, status, QString {});
+            return;
+          }
+        // (the review, 4) inflated and read on a worker thread: the main thread only writes the small file
+        QDate const today {QDateTime::currentDateTimeUtc ().date ()};
+        auto const convert = [zip, today] {
+          QString why;
+          QByteArray const small {club_log_users::small_file (zip, today, &why)};
+          return qMakePair (small, small.isEmpty () && why.isEmpty () ? QStringLiteral ("not Club Log's users file") : why);
+        };
+        clublog_users_making_ = true;
+        clublog_users_convert_.setFuture (QtConcurrent::run (convert));
+        update_clublog_users_label ();
+      });
+    connect (&clublog_users_download_, &FileDownload::error, this, [this] (FileDownload::Failure, QString const& d) {clublog_users_finished (false, 0, d);});
+    connect (&clublog_users_convert_, &QFutureWatcher<QPair<QByteArray, QString>>::finished, this, [this] {
+        auto const made = clublog_users_convert_.result ();
+        clublog_users_making_ = false;
+        if (made.first.isEmpty ())   // not a users file: as a failure - the one in use stays
+          {
+            clublog_users_finished (false, 0, made.second);
+            return;
+          }
+        QDir const data_dir {QStandardPaths::writableLocation (QStandardPaths::DataLocation)};
+        data_dir.mkpath (".");
+        QSaveFile f {data_dir.absoluteFilePath (club_log_users::file_name)};   // whole or not at all
+        if (!f.open (QIODevice::WriteOnly) || f.write (made.first) != made.first.size () || !f.commit ())
+          {
+            clublog_users_finished (false, 0, f.errorString ());
+            return;
+          }
+        clublog_users_finished (true, 0, QString {});
+      });
+    connect (&clublog_timer_, &QTimer::timeout, this, &Configuration::impl::clublog_users_check_due);
+    QTimer::singleShot (120 * 1000, this, [this] {clublog_users_check_due ();});
+    connect (ui_->fill_missing_grid_check_box, &QCheckBox::toggled, this, &Configuration::impl::update_clublog_users_label);
   }
   for (auto * uploader : {&clublog_upload_, &qrz_upload_})
     {
@@ -2498,6 +2582,9 @@ Configuration::impl::impl (Configuration * self, QNetworkAccessManager * network
   qrz_upload_tip_ = ui_->qrz_upload_check_box->toolTip ();
   connect (ui_->clublog_upload_check_box, &QCheckBox::toggled, this, [this] {clublog_upload_toggled_ = true; update_upload_labels ();});
   connect (ui_->qrz_upload_check_box, &QCheckBox::toggled, this, [this] {qrz_upload_toggled_ = true; update_upload_labels ();});
+  // (2026-11-24, the operator) a token or key typed or cleared greys or frees its site's box at once, as eQSL's fields do eQSL's
+  connect (ui_->clublog_token_edit, &QLineEdit::textChanged, this, [this] {grey_upload_boxes (false);});
+  connect (ui_->qrz_key_edit, &QLineEdit::textChanged, this, [this] {grey_upload_boxes (false);});
   configure_uploads ();
   QTimer::singleShot (75 * 1000, this, [this] {clublog_upload_.send_now (); qrz_upload_.send_now ();});
   ui_->gridNotif_check_box->setChecked(callNotif_ && gridNotif_);
@@ -3125,9 +3212,12 @@ Radio::convert_dark("#fafbfe",useDarkStyle_),Radio::convert_dark("#dcdef1",useDa
   ui_->showDistance_check_box->setChecked (showDistance_);   // CE3TSK 2026-10-20
   ui_->count_unconfirmed_check_box->setChecked (countUnconfirmed_);   // CE3TSK 2026-11-21 (TODO.md 3.-280)
   ui_->highlight_confirmed_check_box->setChecked (highlightConfirmed_);   // CE3TSK 2026-11-22 (D12)
-  ui_->clublog_upload_check_box->setChecked (clublog_upload_on_);   // CE3TSK 2026-11-23 (TODO.md 3.-282)
-  ui_->qrz_upload_check_box->setChecked (qrz_upload_on_);
-  update_upload_labels ();
+  ui_->fill_missing_grid_check_box->setChecked (fill_missing_grid_);   // CE3TSK 2026-11-23 (TODO.md 3.-283)
+  grey_upload_boxes (true);   // CE3TSK 2026-11-23 (TODO.md 3.-282): the sites' boxes, as saved - greyed without a token or key (2026-11-24)
+  ui_->qrz_xml_user_edit->setText (qrz_xml_login_.user);   // CE3TSK 2026-11-24 (TODO.md 3.-283, stage 3)
+  ui_->qrz_xml_password_edit->setText (qrz_xml_login_.password);
+  update_qrz_xml_label ();
+  update_clublog_users_label ();   // (stage 4)
   ui_->showAzimuth_check_box->setChecked (showAzimuth_);
   ui_->scroll_check_box->setChecked (scroll_);
   ui_->tx_watchdog_spin_box->setValue (watchdog_);
@@ -3445,9 +3535,23 @@ void Configuration::impl::read_settings ()
     filterUDP_ = settings_->value ("ApplyFiltersToUDPmessages").toBool ();
   else filterUDP_ = false;
 
-  eqsl_username_ = settings_->value ("EQSLUser", "").toString ();
-  eqsl_passwd_ = settings_->value ("EQSLPasswd", "").toString ();
-  eqsl_nickname_ = settings_->value ("EQSLNick", "").toString ();
+  /* CE3TSK 2026-11-24 (TODO.md 3.-283, the operator: "save the eqsl data in an extra file only read by me just like the
+     new qrz.com one, and add a code that takes the existing data from the ini and saves it to the new file on first run
+     and from then on use the new file"): eQSL's login in JTDX_eqsl.login, the owner's alone (loginfile.h). The first
+     run moves the settings file's three - and only once they are safe in the file are they removed from the settings
+     file; a file that cannot be written leaves them where they are, read from there. Stock JTDX, which shares the
+     settings file, finds none of them afterwards. "EQSLSend" stays in the settings file: it is no secret. */
+  {
+    auto const file = eqsl_login_file ();
+    QStringList const in_settings {settings_->value ("EQSLUser").toString (), settings_->value ("EQSLPasswd").toString (),
+                                   settings_->value ("EQSLNick").toString ()};
+    if (!QFile::exists (file) && !in_settings.join (QString {}).isEmpty () && login_file::write (file, in_settings).isEmpty ())
+      for (auto const* key : {"EQSLUser", "EQSLPasswd", "EQSLNick"}) settings_->remove (key);
+    QStringList const login {QFile::exists (file) ? login_file::read (file, 3) : in_settings};
+    eqsl_username_ = login.value (0);
+    eqsl_passwd_ = login.value (1);
+    eqsl_nickname_ = login.value (2);
+  }
   send_to_eqsl_ = settings_->value ("EQSLSend", false).toBool ();
   if(eqsl_username_.isEmpty () || eqsl_passwd_.isEmpty () || eqsl_nickname_.isEmpty ()) {
     ui_->eqsl_check_box->setChecked (false); ui_->eqsl_check_box->setEnabled (false); send_to_eqsl_=false; 
@@ -3611,6 +3715,7 @@ void Configuration::impl::read_settings ()
   countUnconfirmed_ = settings_->value (contest_profile::own_key ("CountUnconfirmedAsNew"), true).toBool ();   // 2026-11-21 (D9): on
   highlightConfirmed_ = settings_->value (contest_profile::own_key ("HighlightConfirmed"), false).toBool ();   // 2026-11-22 (D12): off
   clublog_upload_on_ = settings_->value (contest_profile::own_key ("ClubLogUpload"), false).toBool ();   // 2026-11-23 (3.-282): off
+  fill_missing_grid_ = settings_->value (contest_profile::own_key ("FillMissingGrid"), false).toBool ();   // 2026-11-23 (3.-283): off
   qrz_upload_on_ = settings_->value (contest_profile::own_key ("QrzUpload"), false).toBool ();
   showAzimuth_ = settings_->value (contest_profile::own_key ("ShowAzimuth"), false).toBool ();
   usStates_ = settings_->value (contest_profile::own_key ("ShowUSStates"), true).toBool ();   /* CE3TSK */
@@ -3953,9 +4058,7 @@ void Configuration::impl::write_settings ()
   settings_->setValue ("preventFalseUDPspots", prevent_spotting_false_);
   settings_->setValue ("ApplyFiltersToUDPmessages", filterUDP_);
   settings_->setValue ("EQSLSend", send_to_eqsl_);
-  settings_->setValue ("EQSLUser", eqsl_username_);
-  settings_->setValue ("EQSLPasswd", eqsl_passwd_);
-  settings_->setValue ("EQSLNick", eqsl_nickname_);
+  // (2026-11-24, TODO.md 3.-283) eQSL's username, password and QTH nickname: its own file (OK writes it), never here
   settings_->setValue ("UseSchedBands", usesched_);
   settings_->setValue ("Sched_hh_1", sched_hh_1_);
   settings_->setValue ("Sched_mm_1", sched_mm_1_);
@@ -4008,6 +4111,7 @@ void Configuration::impl::write_settings ()
   settings_->setValue (contest_profile::own_key ("CountUnconfirmedAsNew"), countUnconfirmed_);   // CE3TSK 2026-11-21
   settings_->setValue (contest_profile::own_key ("HighlightConfirmed"), highlightConfirmed_);   // CE3TSK 2026-11-22
   settings_->setValue (contest_profile::own_key ("ClubLogUpload"), clublog_upload_on_);   // CE3TSK 2026-11-23 (3.-282)
+  settings_->setValue (contest_profile::own_key ("FillMissingGrid"), fill_missing_grid_);   // CE3TSK 2026-11-23 (3.-283)
   settings_->setValue (contest_profile::own_key ("QrzUpload"), qrz_upload_on_);
   settings_->setValue (contest_profile::own_key ("ShowAzimuth"), showAzimuth_);
   settings_->setValue (contest_profile::own_key ("ShowUSStates"), usStates_);   /* CE3TSK */
@@ -4575,9 +4679,36 @@ void Configuration::impl::accept ()
   filterUDP_ =  ui_->filterUDP_check_box->isChecked ();
   if(!ui_->eqsluser_edit->text ().isEmpty () && !ui_->eqslpasswd_edit->text ().isEmpty () && !ui_->eqslnick_edit->text ().isEmpty ()) send_to_eqsl_ = ui_->eqsl_check_box->isChecked ();
   else send_to_eqsl_ = false;
-  eqsl_username_ = ui_->eqsluser_edit->text ();
-  eqsl_passwd_ = ui_->eqslpasswd_edit->text ();
-  eqsl_nickname_ = ui_->eqslnick_edit->text ();
+  /* CE3TSK 2026-11-24 (TODO.md 3.-283, stage 3): QRZ.com's XML login into its own file when changed - asked anew with it */
+  {
+    qrz_xml::Login const login {ui_->qrz_xml_user_edit->text ().trimmed (), ui_->qrz_xml_password_edit->text ()};
+    if (login != qrz_xml_login_)
+      {
+        auto const why = login_file::write (qrz_xml_login_file (), QStringList {login.user, login.password});
+        if (!why.isEmpty ()) JTDXMessageBox::warning_message (this, tr ("The QRZ.com XML login could not be saved"), why);
+        else
+          {
+            qrz_xml_login_ = login;
+            qrz_xml_.set_login (login);
+          }
+      }
+  }
+  /* CE3TSK 2026-11-24 (TODO.md 3.-283): eQSL's login into its own file when changed - never the settings file; a file
+     that cannot be written is said so, and the login in use stays what it was */
+  {
+    QStringList const login {ui_->eqsluser_edit->text (), ui_->eqslpasswd_edit->text (), ui_->eqslnick_edit->text ()};
+    if (login != QStringList {eqsl_username_, eqsl_passwd_, eqsl_nickname_})
+      {
+        auto const why = login_file::write (eqsl_login_file (), login);
+        if (!why.isEmpty ()) JTDXMessageBox::warning_message (this, tr ("The eQSL login could not be saved"), why);
+        else
+          {
+            eqsl_username_ = login.value (0);
+            eqsl_passwd_ = login.value (1);
+            eqsl_nickname_ = login.value (2);
+          }
+      }
+  }
   /* CE3TSK 2026-11-21 (TODO.md 3.-280): the Club Log token into its own file (clublog.h), never the ini. A new token, or
      a new My Call (another log), is asked with at once: it may be another account's */
   {
@@ -4644,6 +4775,7 @@ void Configuration::impl::accept ()
   {
     clublog_upload_on_ = ui_->clublog_upload_check_box->isChecked ();
     qrz_upload_on_ = ui_->qrz_upload_check_box->isChecked ();
+    fill_missing_grid_ = ui_->fill_missing_grid_check_box->isChecked ();   // (2026-11-23, TODO.md 3.-283)
     if (qrz_upload_on_ && qrz_upload_toggled_)
       {
         SettingsGroup g {settings_, "Configuration"};
@@ -4671,7 +4803,7 @@ void Configuration::impl::accept ()
      not the saved token's and call's or key's (the button's, an older program's, one the start's look met with Settings
      open) is fetched again; what the button has just fetched with what is now saved is theirs, and a current file not due
      asks nothing */
-  QTimer::singleShot (0, this, [this] {clublog_check_due (); qrz_check_due ();});
+  QTimer::singleShot (0, this, [this] {clublog_check_due (); qrz_check_due (); clublog_users_check_due ();});   // (3.-283 stage 4) and the users file
   usesched_ = ui_->UseSched_check_box->isChecked ();
   sched_hh_1_ = ui_->hhComboBox_1->currentText ();
   sched_mm_1_ = ui_->mmComboBox_1->currentText ();
@@ -4924,7 +5056,7 @@ void Configuration::impl::reject ()
   initialize_models ();		// reverts to settings as at exec ()
   /* CE3TSK 2026-11-22 (TODO.md 3.-280): the button may have fetched with a token, call or key left unsaved - the saved
      ones' at once (the looks ask only when a file is not theirs, and not for a download still running: its end asks) */
-  QTimer::singleShot (0, this, [this] {clublog_check_due (); qrz_check_due ();});
+  QTimer::singleShot (0, this, [this] {clublog_check_due (); qrz_check_due (); clublog_users_check_due ();});   // (3.-283 stage 4) and the users file
 
   // check if the Transceiver instance changed, in which case we need
   // to re open any prior Transceiver type
@@ -5033,6 +5165,15 @@ void Configuration::impl::on_call3_download_push_button_clicked (bool)
   QByteArray const source {call3_file::source_url ()};   // (3.-201) url, or JTDX_CALL3_URL's for a test
   start_data_file_download (call3_download_, source.constData (), call3_file::file_name, &call3_file::checked_version,
                             tr ("The downloaded file is not a CALL3.TXT call list."));
+}
+
+/* CE3TSK 2026-11-23 (TODO.md 3.-283, GRID_FILL_PLAN.md stage 2): eQSL's member list - each member's grid and last upload,
+   for a QSO that gave no grid (gridfill.h, eqslmembers.h). Only a file that is the list replaces the copy in use. */
+void Configuration::impl::on_eqsl_download_push_button_clicked (bool)
+{
+  QByteArray const source {eqsl_members::source_url ()};   // eQSL's, or JTDX_EQSL_MEMBERS_URL's for a test
+  start_data_file_download (eqsl_download_, source.constData (), eqsl_members::file_name, &eqsl_members::version,
+                            tr ("The downloaded file is not eQSL's member list."));
 }
 
 void Configuration::impl::start_data_file_download (FileDownload& download, char const * url, char const * file_name,
@@ -5332,6 +5473,11 @@ void Configuration::impl::update_clublog_label ()
 }
 
 /* CE3TSK 2026-11-23 (TODO.md 3.-282, QSO_UPLOAD_PLAN.md): the logged QSOs to Club Log and QRZ.com (qsoupload.h). */
+void Configuration::qrz_grid_lookup (QString const& call)
+{
+  m_->qrz_xml_.ask (call);   // nothing without a login, a subscription, or for a call asked already (qrzxml.h)
+}
+
 void Configuration::upload_qso (QByteArray const& adif_record)
 {
   m_->clublog_upload_.add (adif_record);   // each only while its box is ticked (Uploader::add)
@@ -5495,6 +5641,153 @@ void Configuration::impl::upload_kept (qso_upload::Site site, bool refused, QStr
   auto const name = qso_upload::site_name (site);
   Q_EMIT self_->upload_note (name, refused ? tr ("%1 refused the upload: the QSO with %2 is kept - see Settings > Reporting.").arg (name).arg (call)
                                            : tr ("%1: the QSO with %2 is not sent yet, kept - see Settings > Reporting.").arg (name).arg (call));
+}
+
+/* CE3TSK 2026-11-24 (TODO.md 3.-283's Option B, the operator: "grey Send logged QSOs for Club Log and QRZ just like eQSL,
+   e.g. if there is no token or API key"): a site's box can be ticked only while its token or key box holds one - greyed
+   and unticked without, as eQSL's box without its username, password and nickname; OK then keeps it off. Opening, each
+   box shows what is saved; as a token or key is typed or cleared, a box that becomes usable shows what is saved again and
+   one that stays usable keeps what the operator made of it. The program's own change is no click of the operator's: the
+   box's signal is blocked, so a refusal of another call is never lifted by it (the box clicked off and on with OK lifts
+   that, 3.-282's review 2). */
+void Configuration::impl::grey_upload_boxes (bool opening)
+{
+  auto const set = [opening] (QCheckBox * box, bool can, bool saved) {
+    if (!opening && can == box->isEnabled ()) return;
+    QSignalBlocker block {box};
+    box->setEnabled (can);
+    box->setChecked (can && saved);
+  };
+  set (ui_->clublog_upload_check_box, !ui_->clublog_token_edit->text ().trimmed ().isEmpty (), clublog_upload_on_);
+  set (ui_->qrz_upload_check_box, !ui_->qrz_key_edit->text ().trimmed ().isEmpty (), qrz_upload_on_);
+  update_upload_labels ();
+}
+
+/* CE3TSK 2026-11-24 (TODO.md 3.-283, stage 3): QRZ.com's XML data's line - what asking it for a grid does now - while
+   "Fill a missing grid before logging" is ticked, its one use */
+void Configuration::impl::update_qrz_xml_label ()
+{
+  using State = qrz_xml::Lookup::State;
+  QString text;
+  switch (qrz_xml_.state ())
+    {
+    case State::NoLogin: text = tr ("XML data: no login - QRZ.com is not asked for missing grids."); break;
+    case State::Idle: text = tr ("XML data: asked as a QSO that gave no grid starts."); break;
+    case State::LoggedIn: text = tr ("XML data: logged in at %1 UTC, subscription to %2.").arg (qrz_xml_.logged_in ().toString ("hh:mm"))
+                                                                                          .arg (qrz_xml_.subscription ()); break;
+    case State::NoSubscription: text = tr ("XML data: this account has no XML subscription - QRZ.com gives no grids."); break;
+    case State::Refused: text = tr ("XML data: QRZ.com refused the login (%1).").arg (qrz_xml_.detail ()); break;
+    case State::Failed: text = tr ("XML data: no answer (%1) - asked again with the next QSO.").arg (qrz_xml_.detail ()); break;
+    }
+  ui_->qrz_xml_status_label->setText (text);
+  ui_->qrz_xml_status_label->setVisible (ui_->fill_missing_grid_check_box->isChecked ());
+}
+
+/* CE3TSK 2026-11-24 (TODO.md 3.-283, GRID_FILL_PLAN.md stage 4): Club Log's users file - one general request a week
+   with the token, and only while "Fill a missing grid before logging" is on (the one use of it; Club Log: "Download on a
+   schedule"). Never with a token Club Log refused; after a failure not before Club Log's Retry-After (a day at most) or
+   6 hours. The ZIP becomes the small file as it comes (club_log_users::small_file (), the download's transform): only a
+   users file replaces the one in use, and the ZIP itself is not kept. */
+void Configuration::impl::clublog_users_check_due ()
+{
+  if (!fill_missing_grid_ || clublog_token_.isEmpty () || clublog_users_download_.running () || clublog_users_making_) return;
+  QDir const data_dir {QStandardPaths::writableLocation (QStandardPaths::DataLocation)};
+  auto const now = QDateTime::currentDateTimeUtc ();
+  {
+    SettingsGroup g {settings_, "Configuration"};
+    if (clublog_refused (clublog_token_)) return;
+    // (the review, 1) a 403 or 422 to the users file: never asked again with that token (Club Log: never retry them)
+    if (club_log::token_id (clublog_token_) == settings_->value (contest_profile::own_key ("ClubLogUsersRefused")).toString ().section (' ', 0, 0)) return;
+    auto const last = settings_->value (contest_profile::own_key ("ClubLogUsersDownloaded")).toDateTime ();
+    auto const next = settings_->value (contest_profile::own_key ("ClubLogUsersNextTry")).toDateTime ();
+    if (data_dir.exists (club_log_users::file_name) && last.isValid () && last <= now && last.secsTo (now) < 7 * 86400) return;   // weekly
+    if (next.isValid () && now < next) return;
+  }
+  FileDownload::Request r;
+  r.headers = {{"Authorization", "Bearer " + clublog_token_.toLatin1 ()}};
+  r.timeout_ms = 120000;
+  r.reply_only = true;   // (the review, 4) the ZIP as an answer: made the small file on a worker thread (the constructor)
+  clublog_users_token_ = clublog_token_;
+  clublog_users_download_.configure (network_manager_, club_log::api_base () + club_log_users::path, QString {},
+                                     "JTDX_contest/" + QCoreApplication::applicationVersion () + " (https://github.com/ce3tsk/jtdx_contest)",
+                                     FileDownload::Validator {}, r);
+  clublog_users_download_.start_download ();
+  update_clublog_users_label ();
+}
+
+void Configuration::impl::clublog_users_finished (bool ok, int status, QString const& detail)
+{
+  auto const now = QDateTime::currentDateTimeUtc ();
+  {
+    SettingsGroup g {settings_, "Configuration"};
+    if (ok)
+      {
+        QDir const data_dir {QStandardPaths::writableLocation (QStandardPaths::DataLocation)};
+        QFile f {data_dir.absoluteFilePath (club_log_users::file_name)};
+        int const members {f.open (QIODevice::ReadOnly) ? qMax (0, f.readAll ().count ('\n') - 1) : 0};
+        settings_->setValue (contest_profile::own_key ("ClubLogUsersDownloaded"), now);
+        settings_->setValue (contest_profile::own_key ("ClubLogUsersCount"), members);
+        settings_->remove (contest_profile::own_key ("ClubLogUsersNextTry"));
+        clublog_users_error_.clear ();
+      }
+    else
+      {
+        /* (the review 2026-11-24, 1) Club Log's rules, as the confirmations' download keeps them (club_log::after_status):
+           a 401 refuses the token - the downloads' and uploads' refusal too, one token; a 403 or 422 refuses the users
+           file to this token - never asked again until another is saved (a 403 was asked again every 6 hours); a 429 or
+           503 waits for its Retry-After, a minute at least, a day at most (a 503's 12 hours were cut to 6) */
+        auto const after = club_log::after_status (status);
+        if (club_log::After::TokenRefused == after) clublog_set_refused (clublog_users_token_, true);
+        if (club_log::After::CallRefused == after)
+          settings_->setValue (contest_profile::own_key ("ClubLogUsersRefused"), club_log::token_id (clublog_users_token_) + ' ' + QString::number (status));
+        auto const retry = clublog_users_download_.retry_after ();
+        settings_->setValue (contest_profile::own_key ("ClubLogUsersNextTry"),
+                             club_log::After::WaitRetryAfter == after && retry.isValid ()
+                             ? qBound (now.addSecs (60), retry, now.addSecs (club_log::max_wait_hours * 3600)) : now.addSecs (6 * 3600));
+        clublog_users_error_ = status ? tr ("HTTP status %1").arg (status) : detail;
+      }
+  }
+  if (ok) Q_EMIT self_->clublog_users_updated ();
+  else
+    {
+      update_clublog_label ();
+      configure_uploads ();
+    }
+  update_clublog_users_label ();
+}
+
+// (stage 4) the users file's line: what it holds, or why it does not - while "Fill a missing grid before logging" is ticked
+void Configuration::impl::update_clublog_users_label ()
+{
+  QDateTime last;
+  int count {0};
+  bool token_refused {false};
+  int file_refused {0};   // (the review, 1) the 403 or 422 that refused the users file to this token
+  {
+    SettingsGroup g {settings_, "Configuration"};
+    last = settings_->value (contest_profile::own_key ("ClubLogUsersDownloaded")).toDateTime ();
+    count = settings_->value (contest_profile::own_key ("ClubLogUsersCount")).toInt ();
+    if (!clublog_token_.isEmpty ())
+      {
+        token_refused = clublog_refused (clublog_token_);
+        auto const rec = settings_->value (contest_profile::own_key ("ClubLogUsersRefused")).toString ();
+        if (club_log::token_id (clublog_token_) == rec.section (' ', 0, 0)) file_refused = rec.section (' ', 1, 1).toInt ();
+      }
+  }
+  QDir const data_dir {QStandardPaths::writableLocation (QStandardPaths::DataLocation)};
+  QString text;
+  if (clublog_users_download_.running ()) text = tr ("Users file (grids): downloading...");
+  else if (clublog_users_making_) text = tr ("Users file (grids): reading the download...");   // (the review, 4)
+  else if (token_refused) text = tr ("Users file (grids): not asked - Club Log refused the token.");   // (the review, 1)
+  else if (file_refused)
+    text = tr ("Users file (grids): Club Log refused it to this token (HTTP status %1) - not asked again until another token is saved.").arg (file_refused);
+  else if (!clublog_users_error_.isEmpty ()) text = tr ("Users file (grids): not downloaded (%1) - tried again later.").arg (clublog_users_error_);
+  else if (data_dir.exists (club_log_users::file_name) && last.isValid ())
+    text = tr ("Users file (grids): %1, %2 members with a locator.").arg (last.toString ("yyyy-MM-dd")).arg (count);
+  else if (clublog_token_.isEmpty ()) text = tr ("Users file (grids): no token - not downloaded.");
+  else text = tr ("Users file (grids): downloaded weekly with the token while \"Fill a missing grid before logging\" is on.");
+  ui_->clublog_users_status_label->setText (text);
+  ui_->clublog_users_status_label->setVisible (ui_->fill_missing_grid_check_box->isChecked ());
 }
 
 void Configuration::impl::update_upload_labels ()
@@ -5778,6 +6071,18 @@ void Configuration::impl::update_data_file_labels ()
   show (ui_->cty_file_status_label, ui_->cty_download_push_button, cty_download_, cty_file_name, &CountryDat::ctyVersion);
   show (ui_->lotw_file_status_label, ui_->lotw_download_push_button, lotw_download_, lotw_file_name, &CountryDat::lotwVersion);
   show (ui_->license_file_status_label, ui_->license_download_push_button, license_download_, license_file_name, &LicenseStates::version);
+
+  /* (2026-11-23, TODO.md 3.-283) eQSL's member list: the copy in the log directory alone - none is bundled - its newest
+     upload, or none yet. Before CALL3.TXT's row, which returns while its download runs. */
+  ui_->eqsl_download_push_button->setEnabled (!eqsl_download_.running ());
+  if (eqsl_download_.running ()) ui_->eqsl_file_status_label->setText (tr ("downloading..."));
+  else
+    {
+      QFile f {data_dir.absoluteFilePath (eqsl_members::file_name)};
+      QDate const version {f.open (QIODevice::ReadOnly) ? eqsl_members::version (f.readAll ()) : QDate {}};
+      ui_->eqsl_file_status_label->setText (!f.exists () ? tr ("not downloaded yet")
+                                            : version.isValid () ? tr ("%1, downloaded").arg (version.toString (Qt::ISODate)) : tr ("version unknown"));
+    }
 
   /* (3.-199) CALL3.TXT: always the copy in the log directory - its version, "bundled with this release" when it is the
      bundled list's; the list of 2016-2017 has no version line. (3.-202) "downloaded" when a download brought that version,

@@ -13,6 +13,7 @@
 
 #include "Radio.hpp"
 #include "JTDXDateTime.h"
+#include "gridfill.h"
 
 namespace Ui {
   class LogQSO;
@@ -37,7 +38,10 @@ public:
                   Radio::Frequency rxFreq, bool autologging,
                   /* CE3TSK: contest points, 0 outside a contest. Required rather than
                      defaulted so the compiler names every call site. */
-                  int points);
+                  int points,
+                  /* CE3TSK 2026-11-23 (TODO.md 3.-283, GRID_FILL_PLAN.md): the grid MainWindow filled for a QSO that gave
+                     none (gridfill.h) - hisGrid then - or none. Required, as the two above. */
+                  grid_fill::Fill const& filled);
 
   /* CE3TSK 2026-11-13 (TODO.md 3.-253): the file of the contest log's session (contestsession.h), which MainWindow keeps -
      every contest QSO of the session goes there, whatever its date; empty outside a contest */
@@ -71,6 +75,13 @@ private:
   QString m_txPower;
   QString m_comments;
   QString m_eqslcomments;
+  /* CE3TSK 2026-11-23 (TODO.md 3.-283): the grid filled for this QSO, if it was (initLogQSO), and the grid field's own
+     tooltip, given back when none was */
+  grid_fill::Fill m_filled;
+  QString m_filledCall;      // (the review) the call it was filled for
+  QString m_gridTip;
+  QString filledGridTip (grid_fill::Fill const& filled) const;
+  void dropFillOfAnotherCall ();   // (the review) the call corrected in the dialog: the other call's grid filled let go
   /* CE3TSK 2026-11-13 (TODO.md 3.-247): the satellite rows' retained values - the operator's own choices only, set as
      they are made (QComboBox::activated, QLineEdit::textEdited), never by a prefill (satlog.h) */
   QString m_propMode;

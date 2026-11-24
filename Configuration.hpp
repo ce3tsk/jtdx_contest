@@ -188,6 +188,9 @@ public:
   bool log_as_RTTY () const;
   bool report_in_comments () const;
   bool distance_in_comments () const;
+  /* CE3TSK 2026-11-23 (TODO.md 3.-283, GRID_FILL_PLAN.md): Settings > Reporting "Fill a missing grid before logging" - a
+     QSO that gave no grid gets one before it is logged (gridfill.h), never in a contest; off by default */
+  bool fill_missing_grid () const;
   bool prompt_to_log () const;
   bool autolog () const;
   bool insert_blank () const;
@@ -214,6 +217,9 @@ public:
   /* CE3TSK 2026-11-23 (TODO.md 3.-282, QSO_UPLOAD_PLAN.md): a QSO just logged, as one ADIF record, to Club Log and to QRZ.com
      - each only when its box under Reporting is ticked (off by default), with the token and the key of the confirmations */
   void upload_qso (QByteArray const& adif_record);
+  /* CE3TSK 2026-11-24 (TODO.md 3.-283, stage 3): QRZ.com's XML data asked for a call's grid - with the XML login saved,
+     once a call while it stays (qrzxml.h); the answer comes as qrz_grid () */
+  void qrz_grid_lookup (QString const& call);
   bool gridNotif () const;
   bool otherMessagesMarker () const;
   bool RR73Marker () const;
@@ -480,6 +486,10 @@ public:
   // status bar, shown for 10 s (review 1); sent again with each QSO logged while that site is not taking them
   //
   Q_SIGNAL void upload_note (QString const& site, QString const& text) const;
+  // (stage 3) QRZ.com's answer for a call: the grid a QSO with it may take (qrzxml.h's grid_of ()), "" when none
+  Q_SIGNAL void qrz_grid (QString const& call, QString const& grid) const;
+  // (stage 4) Club Log's users file downloaded anew: its small file in the log directory (clublogusers.h) to be read again
+  Q_SIGNAL void clublog_users_updated () const;
 
   //
   // These signals are emitted and reflect transceiver state changes

@@ -798,6 +798,96 @@ Formāts:
         <source>Club Log refused %1 with this token: the call is not on the token's Club Log account. Its QSOs are kept, the others go on. Add the call to your Club Log account, then click the box off and on and press OK.</source>
         <translation>Club Log noraidīja %1 ar šo tokenu: izsaukuma signāls nav tokena Club Log kontā. Tā QSO tiek saglabāti, pārējie turpina iet. Pievienojiet izsaukuma signālu savam Club Log kontam, tad izslēdziet un atkal ieslēdziet izvēles rūtiņu un nospiediet OK.</translation>
     </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>The downloaded file is not eQSL's member list.</source>
+        <translation>Lejupielādētais fails nav eQSL dalībnieku saraksts.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>not downloaded yet</source>
+        <translation>vēl nav lejupielādēts</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>The QRZ.com XML login could not be saved</source>
+        <translation>QRZ.com XML pieteikšanos nevarēja saglabāt</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>The eQSL login could not be saved</source>
+        <translation>eQSL pieteikšanos nevarēja saglabāt</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>XML data: no login - QRZ.com is not asked for missing grids.</source>
+        <translation>XML dati: nav pieteikšanās - QRZ.com netiek vaicāts par trūkstošiem lokatoriem.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>XML data: asked as a QSO that gave no grid starts.</source>
+        <translation>XML dati: vaicā, kad sākas QSO bez lokatora.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>XML data: logged in at %1 UTC, subscription to %2.</source>
+        <translation>XML dati: pieteikšanās %1 UTC, abonements līdz %2.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>XML data: this account has no XML subscription - QRZ.com gives no grids.</source>
+        <translation>XML dati: šim kontam nav XML abonementa - QRZ.com nedod lokatorus.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>XML data: QRZ.com refused the login (%1).</source>
+        <translation>XML dati: QRZ.com noraidīja pieteikšanos (%1).</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>XML data: no answer (%1) - asked again with the next QSO.</source>
+        <translation>XML dati: nav atbildes (%1) - vaicā vēlreiz ar nākamo QSO.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Users file (grids): downloading...</source>
+        <translation>Lietotāju fails (lokatori): notiek lejupielāde...</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Users file (grids): not downloaded (%1) - tried again later.</source>
+        <translation>Lietotāju fails (lokatori): nav lejupielādēts (%1) - mēģinās vēlāk vēlreiz.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Users file (grids): %1, %2 members with a locator.</source>
+        <translation>Lietotāju fails (lokatori): %1, %2 dalībnieki ar lokatoru.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Users file (grids): no token - not downloaded.</source>
+        <translation>Lietotāju fails (lokatori): nav žetona - nav lejupielādēts.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Users file (grids): downloaded weekly with the token while "Fill a missing grid before logging" is on.</source>
+        <translation>Lietotāju fails (lokatori): lejupielādē katru nedēļu ar žetonu, kamēr “Aizpildīt trūkstošo lokatoru pirms ierakstīšanas” ir ieslēgts.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Users file (grids): reading the download...</source>
+        <translation>Lietotāju fails (lokatori): nolasa lejupielādi...</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Users file (grids): not asked - Club Log refused the token.</source>
+        <translation>Lietotāju fails (lokatori): netiek pieprasīts - Club Log noraidīja žetonu.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Users file (grids): Club Log refused it to this token (HTTP status %1) - not asked again until another token is saved.</source>
+        <translation>Lietotāju fails (lokatori): Club Log to noraidīja šim žetonam (HTTP statuss %1) - netiks pieprasīts vēlreiz, kamēr netiks saglabāts cits žetons.</translation>
+    </message>
 </context>
 <context>
     <name>CountryDat</name>
@@ -3873,6 +3963,36 @@ Formāts:
         <location filename="../logqso.cpp"/>
         <source>Adds one period of the mode, %1 s, to the end of the QSO - for a closing 73 that came after this window opened.</source>
         <translation>Pievieno QSO beigām vienu režīma periodu, %1 s - noslēdzošajam 73, kas pienāca pēc šī loga atvēršanas.</translation>
+    </message>
+    <message>
+        <location filename="../logqso.cpp"/>
+        <source>what the station sent earlier, heard by this program</source>
+        <translation>ko stacija agrāk sūtīja, šīs programmas dzirdēts</translation>
+    </message>
+    <message>
+        <location filename="../logqso.cpp"/>
+        <source>the locator the station reports to PSK Reporter</source>
+        <translation>lokators, ko stacija ziņo PSK Reporter</translation>
+    </message>
+    <message>
+        <location filename="../logqso.cpp"/>
+        <source>Not given in this QSO: filled from %1. Correct or clear it before OK - logged as it is, the comment notes %2.</source>
+        <translation>Šajā QSO nav saņemts. Avots: %1. Izlabojiet vai izdzēsiet pirms OK – ierakstot tā, komentārs atzīmē %2.</translation>
+    </message>
+    <message>
+        <location filename="../logqso.cpp"/>
+        <source>the station's grid in eQSL's member list</source>
+        <translation>stacijas lokators eQSL dalībnieku sarakstā</translation>
+    </message>
+    <message>
+        <location filename="../logqso.cpp"/>
+        <source>the station's grid in Club Log's users file</source>
+        <translation>stacijas lokators Club Log lietotāju failā</translation>
+    </message>
+    <message>
+        <location filename="../logqso.cpp"/>
+        <source>the station's grid in QRZ.com's XML data</source>
+        <translation>stacijas lokators QRZ.com XML datos</translation>
     </message>
 </context>
 <context>
@@ -9784,11 +9904,6 @@ lauki DX Call un DX Grid tiktu notīrīti.</translation>
         <translation>Programma var nosūtīt ierakstītā QSO informāciju uz vietni http://www.eqsl.cc.</translation>
     </message>
     <message>
-        <location filename="../Configuration.ui" line="2801"/>
-        <source>Enable &amp;eQSL sending</source>
-        <translation>Iespējot &amp;eQSL sūtīšanu</translation>
-    </message>
-    <message>
         <location filename="../Configuration.ui" line="2821"/>
         <source>EQSL Username.</source>
         <translation>EQSL lietotājvārds.</translation>
@@ -11477,11 +11592,6 @@ izmaiņas</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
-        <source>Club Log to&amp;ken:</source>
-        <translation>Club Log to&amp;kens:</translation>
-    </message>
-    <message>
-        <location filename="../Configuration.ui"/>
         <source>Your Club Log API token. To create one, log in to Club Log, go to Settings &gt; API and click the "Create token" button there. Copy the token, paste it into this box and press OK.
 With it the program downloads your LoTW confirmations from Club Log at the start and every 12 hours. It is kept in a file of its own that only you can read, never in the settings file.</source>
         <translation>Jūsu Club Log API tokens. Lai to izveidotu, piesakieties Club Log, atveriet sadaļu Settings &gt; API un noklikšķiniet tur uz pogas "Create token". Nokopējiet tokenu, ielīmējiet to šajā lodziņā un nospiediet Labi.
@@ -11521,11 +11631,6 @@ Lai vienreiz iegūtu visu LoTW ierakstu, vispirms noņemiet tur atzīmi "Only co
         <location filename="../Configuration.ui"/>
         <source>Worked, not LoTW-confirmed</source>
         <translation>Strādāts, nav apstiprināts LoTW</translation>
-    </message>
-    <message>
-        <location filename="../Configuration.ui"/>
-        <source>QRZ.com API ke&amp;y:</source>
-        <translation>QR&amp;Z.com API atslēga:</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
@@ -11571,20 +11676,10 @@ Pirmā lejupielāde aizņem dažas minūtes; pēc tam tiek iegūts tikai tas, ka
     </message>
     <message>
         <location filename="../Configuration.ui"/>
-        <source>Send logged QSOs to:</source>
-        <translation>Sūtīt ierakstītos QSO uz:</translation>
-    </message>
-    <message>
-        <location filename="../Configuration.ui"/>
         <source>Each QSO you log is sent to your Club Log log at once, with the Club Log token - in a contest too. A QSO that cannot be sent now (no connection, Club Log busy) is kept and sent later; one Club Log refuses is named below.
 Only QSOs logged from now on: upload older ones to Club Log as an ADIF file there.</source>
         <translation>Katrs ierakstītais QSO tiek uzreiz nosūtīts uz jūsu Club Log žurnālu ar Club Log tokenu – arī sacensībās. QSO, ko pašlaik nevar nosūtīt (nav savienojuma, Club Log ir aizņemts), tiek saglabāts un nosūtīts vēlāk; QSO, ko Club Log noraida, ir norādīts zemāk.
 Tikai no šī brīža ierakstītie QSO: vecākos augšupielādējiet Club Log kā ADIF failu tur.</translation>
-    </message>
-    <message>
-        <location filename="../Configuration.ui"/>
-        <source>&amp;Club Log</source>
-        <translation>Club Lo&amp;g</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
@@ -11595,8 +11690,125 @@ Tikai no šī brīža ierakstītie QSO: vecākos augšupielādējiet QRZ.com kā
     </message>
     <message>
         <location filename="../Configuration.ui"/>
-        <source>QR&amp;Z.com</source>
-        <translation>QRZ.c&amp;om</translation>
+        <source>Fill a missing grid before logging</source>
+        <translation>Aizpildīt trūkstošo lokatoru pirms ierakstīšanas</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>eQSL members:</source>
+        <translation>eQSL dalībnieki:</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>The copy in the log directory is used; none is bundled with this release.</source>
+        <translation>Tiek izmantota kopija žurnāla direktorijā; šim laidienam tā nav pievienota.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Download eQSL's member list from eqsl.cc: each member's grid square and last upload, no eQSL account needed. With Settings &gt; Reporting's "Fill a missing grid before logging", a QSO that gave no grid may take its member's grid, when that member uploaded to eQSL within the last 12 months.</source>
+        <translation>Lejupielādēt eQSL dalībnieku sarakstu no eqsl.cc: katra dalībnieka lokators un pēdējā augšupielāde, bez eQSL konta. Ar “Aizpildīt trūkstošo lokatoru pirms ierakstīšanas” sadaļā Iestatījumi &gt; Raportēšana QSO bez lokatora var ņemt sava dalībnieka lokatoru, ja tas pēdējo 12 mēnešu laikā ir augšupielādējis eQSL.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Send logged QSOs</source>
+        <translation>Sūtīt ierakstītos QSO</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Its member list, for missing grids: Settings &gt; General &gt; Data files.</source>
+        <translation>Tā dalībnieku saraksts trūkstošajiem lokatoriem: Iestatījumi &gt; Vispārīgi &gt; Datu faili.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>To&amp;ken:</source>
+        <translation>To&amp;kens:</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Your Club Log API token. To create one, log in to Club Log, go to Settings &gt; API and click the "Create token" button there. Copy the token, paste it into this box and press OK.
+                  With it the program downloads your LoTW confirmations from Club Log at the start and every 12 hours. It is kept in a file of its own that only you can read, never in the settings file.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Download your LoTW confirmations from Club Log now; the program also does it at the start and every 12 hours.
+                  Club Log has only the LoTW confirmations it has fetched.
+                  In Club Log, under Tools &gt; LoTW Sync:
+                  1. Certificates: add your LoTW certificate once.
+                  2. Download confirmations: fetch the new ones now and then.
+                  To fetch the whole LoTW record once, clear "Only confirmations since the last download" there first.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Each QSO you log is sent to your Club Log log at once, with the Club Log token - in a contest too. A QSO that cannot be sent now (no connection, Club Log busy) is kept and sent later; one Club Log refuses is named below.
+                  Only QSOs logged from now on: upload older ones to Club Log as an ADIF file there.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>API ke&amp;y:</source>
+        <translation>A&amp;PI atslēga:</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Your QRZ.com Logbook API key. To find it, log in to QRZ.com, open your Logbook, click Settings at the top right and, under "QRZ Logbook API", click "Show" beside the API Key. Copy the key, paste it into this box and press OK. The API needs a QRZ.com subscription (XML level or higher).
+                  With it the program downloads your LoTW confirmations from QRZ.com at the start and every 12 hours. It is kept in a file of its own that only you can read, never in the settings file.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>XML login:</source>
+        <translation>XML pieteikšanās:</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Your QRZ.com username - usually your callsign - for QRZ.com's XML data: the grids of calls, with a subscription that includes XML data. Not the API key above.</source>
+        <translation>Jūsu QRZ.com lietotājvārds - parasti jūsu izsaukums - QRZ.com XML datiem: izsaukumu lokatori, ar abonementu, kas ietver XML datus. Nav augstāk esošā API atslēga.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>username</source>
+        <translation>lietotājvārds</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Your QRZ.com password, for QRZ.com's XML data. It is kept in a file of its own that only you can read, never in the settings file.</source>
+        <translation>Jūsu QRZ.com parole QRZ.com XML datiem. To glabā atsevišķā failā, ko varat lasīt tikai jūs, nekad iestatījumu failā.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>password</source>
+        <translation>parole</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Download your LoTW confirmations from QRZ.com now; the program also does it at the start and every 12 hours. Only the confirmations from LoTW count, not QRZ.com's own.
+                  QRZ.com has only the LoTW confirmations it has imported.
+                  In your QRZ.com Logbook, under Settings:
+                  1. LoTW Settings: enter your LoTW username once.
+                  2. Logbook of the World Import/Export, Import: fetch the new ones now and then (QRZ.com asks for your LoTW password).
+                  The first download takes a few minutes; after it only what changed is fetched.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Each QSO you log is sent to your QRZ.com logbook at once, with the QRZ.com API key - in a contest too. QRZ.com takes QSOs from programs only with a subscription. A QSO that cannot be sent now is kept and sent later; one QRZ.com refuses is named below.
+                  Only QSOs logged from now on: upload older ones to QRZ.com as an ADIF file there.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>The program can send your station details and all
+               decoded signals as spots to the http://pskreporter.info web site.
+               This is used for reverse beacon analysis which is very useful
+               for assessing propagation and system performance.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>When a QSO gave no grid - neither heard nor typed - it gets one before it is logged: what this program heard the station send earlier (within a day; a /M station's within half an hour), else the locator it reports to PSK Reporter (with the Reception map open), else its grid in eQSL's member list (Settings &gt; General; a member that uploaded to eQSL within the last 12 months), in Club Log's users file (downloaded weekly with the token; a call that uploaded within the last 12 months) or in QRZ.com's XML data (with the XML login, asked as the QSO starts). Only a square inside the call's DXCC country is taken, its first four characters. Log QSO names the source in the grid field's tooltip, and the QSO's comment notes it as [grid: ...]. Never in a contest.</source>
+        <translation>Ja QSO nedeva lokatoru – ne uztvertu, ne ievadītu –, tas saņem lokatoru pirms ierakstīšanas: ko šī programma dzirdēja staciju agrāk sūtām (dienas laikā, /M stacijai pusstundas laikā), citādi lokatoru, ko stacija ziņo PSK Reporter (ar atvērtu Uztveršanas karti), citādi tās lokatoru eQSL dalībnieku sarakstā (Iestatījumi &gt; Vispārīgi; dalībnieks, kas pēdējo 12 mēnešu laikā ir augšupielādējis eQSL), Club Log lietotāju failā (lejupielādē katru nedēļu ar žetonu; izsaukums, kas pēdējo 12 mēnešu laikā ir augšupielādējis) vai QRZ.com XML datos (ar XML pieteikšanos, vaicā QSO sākumā). Tiek ņemts tikai kvadrāts izsaukuma DXCC valstī, tā pirmās četras rakstzīmes. Logs Ierakstīt QSO nosauc avotu lokatora lauka padomā, un QSO komentārs to atzīmē kā [grid: ...]. Nekad sacensībās.</translation>
     </message>
 </context>
 <context>

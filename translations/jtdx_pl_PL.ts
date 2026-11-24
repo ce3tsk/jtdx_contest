@@ -798,6 +798,96 @@ Format:
         <source>Club Log refused %1 with this token: the call is not on the token's Club Log account. Its QSOs are kept, the others go on. Add the call to your Club Log account, then click the box off and on and press OK.</source>
         <translation>Club Log odrzucił %1 z tym tokenem: znaku nie ma na koncie Club Log tego tokena. Jego QSO są zachowane, pozostałe idą dalej. Dodaj znak do swojego konta Club Log, potem odznacz i zaznacz ponownie pole i naciśnij OK.</translation>
     </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>The downloaded file is not eQSL's member list.</source>
+        <translation>Pobrany plik nie jest listą członków eQSL.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>not downloaded yet</source>
+        <translation>jeszcze nie pobrana</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>The QRZ.com XML login could not be saved</source>
+        <translation>Nie udało się zapisać logowania XML QRZ.com</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>The eQSL login could not be saved</source>
+        <translation>Nie udało się zapisać logowania eQSL</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>XML data: no login - QRZ.com is not asked for missing grids.</source>
+        <translation>Dane XML: brak logowania - QRZ.com nie jest pytane o brakujące lokatory.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>XML data: asked as a QSO that gave no grid starts.</source>
+        <translation>Dane XML: pytane, gdy zaczyna się QSO bez lokatora.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>XML data: logged in at %1 UTC, subscription to %2.</source>
+        <translation>Dane XML: zalogowano o %1 UTC, subskrypcja do %2.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>XML data: this account has no XML subscription - QRZ.com gives no grids.</source>
+        <translation>Dane XML: to konto nie ma subskrypcji XML - QRZ.com nie podaje lokatorów.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>XML data: QRZ.com refused the login (%1).</source>
+        <translation>Dane XML: QRZ.com odrzuciło logowanie (%1).</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>XML data: no answer (%1) - asked again with the next QSO.</source>
+        <translation>Dane XML: brak odpowiedzi (%1) - zapytanie ponownie przy następnym QSO.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Users file (grids): downloading...</source>
+        <translation>Plik użytkowników (lokatory): pobieranie...</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Users file (grids): not downloaded (%1) - tried again later.</source>
+        <translation>Plik użytkowników (lokatory): nie pobrano (%1) - ponowna próba później.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Users file (grids): %1, %2 members with a locator.</source>
+        <translation>Plik użytkowników (lokatory): %1, %2 członków z lokatorem.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Users file (grids): no token - not downloaded.</source>
+        <translation>Plik użytkowników (lokatory): brak tokenu - nie pobrano.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Users file (grids): downloaded weekly with the token while "Fill a missing grid before logging" is on.</source>
+        <translation>Plik użytkowników (lokatory): pobierany co tydzień tokenem, gdy „Uzupełnij brakujący lokator przed zapisem” jest włączone.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Users file (grids): reading the download...</source>
+        <translation>Plik użytkowników (lokatory): odczytywanie pobranego pliku...</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Users file (grids): not asked - Club Log refused the token.</source>
+        <translation>Plik użytkowników (lokatory): nie pobierany - Club Log odrzucił token.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Users file (grids): Club Log refused it to this token (HTTP status %1) - not asked again until another token is saved.</source>
+        <translation>Plik użytkowników (lokatory): Club Log odmówił go dla tego tokenu (status HTTP %1) - nie będzie pobierany ponownie, dopóki nie zostanie zapisany inny token.</translation>
+    </message>
 </context>
 <context>
     <name>CountryDat</name>
@@ -3874,6 +3964,36 @@ Format:
         <location filename="../logqso.cpp"/>
         <source>Adds one period of the mode, %1 s, to the end of the QSO - for a closing 73 that came after this window opened.</source>
         <translation>Dodaje jeden okres trybu, %1 s, do końca QSO - dla końcowego 73, które przyszło po otwarciu tego okna.</translation>
+    </message>
+    <message>
+        <location filename="../logqso.cpp"/>
+        <source>what the station sent earlier, heard by this program</source>
+        <translation>to, co stacja wysłała wcześniej, usłyszane przez ten program</translation>
+    </message>
+    <message>
+        <location filename="../logqso.cpp"/>
+        <source>the locator the station reports to PSK Reporter</source>
+        <translation>lokator, który stacja zgłasza do PSK Reporter</translation>
+    </message>
+    <message>
+        <location filename="../logqso.cpp"/>
+        <source>Not given in this QSO: filled from %1. Correct or clear it before OK - logged as it is, the comment notes %2.</source>
+        <translation>Nie podano w tym QSO. Źródło: %1. Popraw lub usuń przed OK – zapisane tak, jak jest, uwagi odnotują %2.</translation>
+    </message>
+    <message>
+        <location filename="../logqso.cpp"/>
+        <source>the station's grid in eQSL's member list</source>
+        <translation>lokator stacji z listy członków eQSL</translation>
+    </message>
+    <message>
+        <location filename="../logqso.cpp"/>
+        <source>the station's grid in Club Log's users file</source>
+        <translation>lokator stacji z pliku użytkowników Club Log</translation>
+    </message>
+    <message>
+        <location filename="../logqso.cpp"/>
+        <source>the station's grid in QRZ.com's XML data</source>
+        <translation>lokator stacji z danych XML QRZ.com</translation>
     </message>
 </context>
 <context>
@@ -9697,11 +9817,6 @@ Znak DX i Lokator DX gdy zostanie wysłany 73 lub dowolny tekst.</translation>
         <translation>Program może wysyłać informacje o zalogowanym QSO do strony internetowej http://www.eqsl.cc.</translation>
     </message>
     <message>
-        <location filename="../Configuration.ui" line="2801"/>
-        <source>Enable &amp;eQSL sending</source>
-        <translation>Wysyłanie &amp;eQSL</translation>
-    </message>
-    <message>
         <location filename="../Configuration.ui" line="2821"/>
         <source>EQSL Username.</source>
         <translation>Nazwa użytkownika EQSL.</translation>
@@ -11480,11 +11595,6 @@ zmiany dla karty dźwiękowej</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
-        <source>Club Log to&amp;ken:</source>
-        <translation>Token Club Lo&amp;g:</translation>
-    </message>
-    <message>
-        <location filename="../Configuration.ui"/>
         <source>Your Club Log API token. To create one, log in to Club Log, go to Settings &gt; API and click the "Create token" button there. Copy the token, paste it into this box and press OK.
 With it the program downloads your LoTW confirmations from Club Log at the start and every 12 hours. It is kept in a file of its own that only you can read, never in the settings file.</source>
         <translation>Twój token API Club Log. Aby go utworzyć, zaloguj się do Club Log, przejdź do Settings &gt; API i kliknij tam przycisk "Create token". Skopiuj token, wklej go w to pole i naciśnij OK.
@@ -11524,11 +11634,6 @@ Aby raz pobrać cały rejestr LoTW, najpierw odznacz tam "Only confirmations sin
         <location filename="../Configuration.ui"/>
         <source>Worked, not LoTW-confirmed</source>
         <translation>Zrobione, niepotwierdzone w LoTW</translation>
-    </message>
-    <message>
-        <location filename="../Configuration.ui"/>
-        <source>QRZ.com API ke&amp;y:</source>
-        <translation>&amp;Klucz API QRZ.com:</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
@@ -11574,20 +11679,10 @@ Pierwsze pobieranie trwa kilka minut; potem pobierane jest tylko to, co się zmi
     </message>
     <message>
         <location filename="../Configuration.ui"/>
-        <source>Send logged QSOs to:</source>
-        <translation>Wysyłaj zapisane QSO do:</translation>
-    </message>
-    <message>
-        <location filename="../Configuration.ui"/>
         <source>Each QSO you log is sent to your Club Log log at once, with the Club Log token - in a contest too. A QSO that cannot be sent now (no connection, Club Log busy) is kept and sent later; one Club Log refuses is named below.
 Only QSOs logged from now on: upload older ones to Club Log as an ADIF file there.</source>
         <translation>Każde zapisane QSO jest od razu wysyłane do Twojego logu w Club Log, z tokenem Club Log – także w zawodach. QSO, którego nie można teraz wysłać (brak połączenia, Club Log zajęty), jest zachowywane i wysyłane później; to, które Club Log odrzuci, jest podane poniżej.
 Tylko QSO zapisane od teraz: starsze wyślij do Club Log jako plik ADIF, na tej stronie.</translation>
-    </message>
-    <message>
-        <location filename="../Configuration.ui"/>
-        <source>&amp;Club Log</source>
-        <translation>Club &amp;Log</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
@@ -11598,8 +11693,125 @@ Tylko QSO zapisane od teraz: starsze wyślij do QRZ.com jako plik ADIF, na tej s
     </message>
     <message>
         <location filename="../Configuration.ui"/>
-        <source>QR&amp;Z.com</source>
-        <translation>QRZ.com</translation>
+        <source>Fill a missing grid before logging</source>
+        <translation>Uzupełnij brakujący lokator przed zapisem</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>eQSL members:</source>
+        <translation>Członkowie eQSL:</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>The copy in the log directory is used; none is bundled with this release.</source>
+        <translation>Używana jest kopia z katalogu logów; to wydanie jej nie zawiera.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Download eQSL's member list from eqsl.cc: each member's grid square and last upload, no eQSL account needed. With Settings &gt; Reporting's "Fill a missing grid before logging", a QSO that gave no grid may take its member's grid, when that member uploaded to eQSL within the last 12 months.</source>
+        <translation>Pobierz listę członków eQSL z eqsl.cc: lokator i ostatnie wysłanie każdego członka, bez konta eQSL. Z opcją „Uzupełnij brakujący lokator przed zapisem” w Ustawienia &gt; Raportowanie QSO bez lokatora może przyjąć lokator swojego członka, jeśli ten wysyłał do eQSL w ciągu ostatnich 12 miesięcy.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Send logged QSOs</source>
+        <translation>Wysyłaj zapisane QSO</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Its member list, for missing grids: Settings &gt; General &gt; Data files.</source>
+        <translation>Jego lista członków, dla brakujących lokatorów: Ustawienia &gt; Ogólne &gt; Pliki danych.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>To&amp;ken:</source>
+        <translation>&amp;Token:</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Your Club Log API token. To create one, log in to Club Log, go to Settings &gt; API and click the "Create token" button there. Copy the token, paste it into this box and press OK.
+                  With it the program downloads your LoTW confirmations from Club Log at the start and every 12 hours. It is kept in a file of its own that only you can read, never in the settings file.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Download your LoTW confirmations from Club Log now; the program also does it at the start and every 12 hours.
+                  Club Log has only the LoTW confirmations it has fetched.
+                  In Club Log, under Tools &gt; LoTW Sync:
+                  1. Certificates: add your LoTW certificate once.
+                  2. Download confirmations: fetch the new ones now and then.
+                  To fetch the whole LoTW record once, clear "Only confirmations since the last download" there first.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Each QSO you log is sent to your Club Log log at once, with the Club Log token - in a contest too. A QSO that cannot be sent now (no connection, Club Log busy) is kept and sent later; one Club Log refuses is named below.
+                  Only QSOs logged from now on: upload older ones to Club Log as an ADIF file there.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>API ke&amp;y:</source>
+        <translation>&amp;Klucz API:</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Your QRZ.com Logbook API key. To find it, log in to QRZ.com, open your Logbook, click Settings at the top right and, under "QRZ Logbook API", click "Show" beside the API Key. Copy the key, paste it into this box and press OK. The API needs a QRZ.com subscription (XML level or higher).
+                  With it the program downloads your LoTW confirmations from QRZ.com at the start and every 12 hours. It is kept in a file of its own that only you can read, never in the settings file.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>XML login:</source>
+        <translation>Logowanie XML:</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Your QRZ.com username - usually your callsign - for QRZ.com's XML data: the grids of calls, with a subscription that includes XML data. Not the API key above.</source>
+        <translation>Twoja nazwa użytkownika QRZ.com - zwykle twój znak - dla danych XML QRZ.com: lokatory znaków, przy subskrypcji obejmującej dane XML. Nie klucz API powyżej.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>username</source>
+        <translation>użytkownik</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Your QRZ.com password, for QRZ.com's XML data. It is kept in a file of its own that only you can read, never in the settings file.</source>
+        <translation>Twoje hasło QRZ.com, dla danych XML QRZ.com. Jest przechowywane w osobnym pliku, który tylko ty możesz czytać, nigdy w pliku ustawień.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>password</source>
+        <translation>hasło</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Download your LoTW confirmations from QRZ.com now; the program also does it at the start and every 12 hours. Only the confirmations from LoTW count, not QRZ.com's own.
+                  QRZ.com has only the LoTW confirmations it has imported.
+                  In your QRZ.com Logbook, under Settings:
+                  1. LoTW Settings: enter your LoTW username once.
+                  2. Logbook of the World Import/Export, Import: fetch the new ones now and then (QRZ.com asks for your LoTW password).
+                  The first download takes a few minutes; after it only what changed is fetched.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Each QSO you log is sent to your QRZ.com logbook at once, with the QRZ.com API key - in a contest too. QRZ.com takes QSOs from programs only with a subscription. A QSO that cannot be sent now is kept and sent later; one QRZ.com refuses is named below.
+                  Only QSOs logged from now on: upload older ones to QRZ.com as an ADIF file there.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>The program can send your station details and all
+               decoded signals as spots to the http://pskreporter.info web site.
+               This is used for reverse beacon analysis which is very useful
+               for assessing propagation and system performance.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>When a QSO gave no grid - neither heard nor typed - it gets one before it is logged: what this program heard the station send earlier (within a day; a /M station's within half an hour), else the locator it reports to PSK Reporter (with the Reception map open), else its grid in eQSL's member list (Settings &gt; General; a member that uploaded to eQSL within the last 12 months), in Club Log's users file (downloaded weekly with the token; a call that uploaded within the last 12 months) or in QRZ.com's XML data (with the XML login, asked as the QSO starts). Only a square inside the call's DXCC country is taken, its first four characters. Log QSO names the source in the grid field's tooltip, and the QSO's comment notes it as [grid: ...]. Never in a contest.</source>
+        <translation>Gdy QSO nie dało lokatora – ani odebranego, ani wpisanego – otrzymuje go przed zapisem: to, co ten program wcześniej usłyszał od stacji (w ciągu doby, od stacji /M w ciągu pół godziny), w przeciwnym razie lokator, który stacja zgłasza do PSK Reporter (przy otwartej Mapie odbioru), a jeszcze inaczej jej lokator z listy członków eQSL (Ustawienia &gt; Ogólne; członek, który wysyłał do eQSL w ciągu ostatnich 12 miesięcy), z pliku użytkowników Club Log (pobierany co tydzień tokenem; znak, który wysyłał w ciągu ostatnich 12 miesięcy) albo z danych XML QRZ.com (z logowaniem XML, pytane na początku QSO). Przyjmowany jest tylko kwadrat w kraju DXCC znaku, jego pierwsze cztery znaki. Okno Zapisz QSO podaje źródło w podpowiedzi pola lokatora, a uwagi QSO odnotowują je jako [grid: ...]. Nigdy w zawodach.</translation>
     </message>
 </context>
 <context>

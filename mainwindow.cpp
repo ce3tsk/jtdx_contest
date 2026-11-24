@@ -1198,6 +1198,12 @@ MainWindow::MainWindow(bool multiple, QSettings * settings, QSharedMemory *shdme
   connect (&m_config, &Configuration::udp_server_changed, m_messageClient, &MessageClient::set_server);
   connect (&m_config, &Configuration::udp_server_port_changed, m_messageClient, &MessageClient::set_server_port);
   connect (&m_config, &Configuration::data_files_updated, this, &MainWindow::dataFilesUpdated);   // CE3TSK
+  // CE3TSK 2026-11-24 (TODO.md 3.-283, stage 3): QRZ.com's answer for a call - kept for its QSO's log, the run long
+  connect (&m_config, &Configuration::clublog_users_updated, this, &MainWindow::readClublogUsers);   // (3.-283, stage 4)
+  connect (&m_config, &Configuration::qrz_grid, this, [this] (QString const& call, QString const& grid) {
+      m_qrzGrids.insert (call.trimmed ().toUpper (), grid);
+      if (m_config.write_decoded_debug ()) writeToALLTXT ("QRZ.com XML: " + call + (grid.isEmpty () ? QString {" - no grid to take"} : " - " + grid));
+    });
   /* CE3TSK 2026-11-21 (TODO.md 3.-280): new confirmations downloaded - read at once when no period is to be protected, else at
      the period's end, as a changed log is */
   connect (&m_config, &Configuration::confirmations_updated, this, [this] {
@@ -9594,6 +9600,7 @@ void MainWindow::initLogIfNeeded ()
     initConfirmedBook ();   /* CE3TSK 2026-11-21: on the country data just read */
     refreshContestLog(true);   /* CE3TSK: country data has just been read */
     countQSOs ();
+    if (m_dataFilesChanged || !m_eqslMembersRead) {readEqslMembers (); readClublogUsers ();}   // CE3TSK 2026-11-23 (3.-283, stages 2, 4)
     m_logInitNeeded=false;
     m_dataFilesChanged=false;
   }
@@ -10367,6 +10374,8 @@ void MainWindow::startTx2()
       if(t.left(1)=="#") snr=t.mid(1,5).toDouble();
       if(snr>0.0 or snr < -50.0) snr=99.0;
       transmit (snr);
+      // CE3TSK 2026-11-24 (TODO.md 3.-283, stage 3, G6): a QSO under way that no source here places - QRZ.com asked now
+      if (!m_tune && !m_hisCall.isEmpty ()) askQrzGrid (m_hisCall);
 //      printf(" started %s\n",m_jtdxtime->currentDateTimeUtc2().toString("hh:mm:ss.zzz").toStdString().c_str());
       if(m_config.write_decoded_debug()) writeToALLTXT("Modulator started");
 //      QThread::currentThread()->setPriority(QThread::HighPriority);
@@ -11390,6 +11399,62 @@ void MainWindow::lookup()                                       //lookup()
 
 void MainWindow::on_lookupButton_clicked() { lookup(); }
 
+/* CE3TSK 2026-11-23 (TODO.md 3.-283, GRID_FILL_PLAN.md stage 2): eQSL's member list from the log directory - the members
+   a grid may be taken from (eqslmembers.h: a locator, an upload within the last 12 months); none while it is not there */
+void MainWindow::readEqslMembers ()
+{
+  QFile f {m_dataDir.absoluteFilePath (eqsl_members::file_name)};
+  m_eqslMembers = f.open (QIODevice::ReadOnly) ? eqsl_members::read (f.readAll (), QDateTime::currentDateTimeUtc ().date ())
+                                               : QHash<QString, eqsl_members::Member> {};
+  m_eqslMembersRead = true;
+  if (m_config.write_decoded_debug ()) writeToALLTXT (QString {"eQSL's member list: %1 members a missing grid may be taken from"}.arg (m_eqslMembers.size ()));
+}
+
+/* CE3TSK 2026-11-24 (TODO.md 3.-283, GRID_FILL_PLAN.md stage 3, G6): QRZ.com asked for a call's grid when the QSO's Tx
+   starts - with the switch on, outside a contest, for a QSO that gave no grid and that no source here places - once a
+   call a run (the Settings ask nothing without an XML login, a subscription, or again); the log takes the answer when it
+   is there, never waiting for it */
+void MainWindow::askQrzGrid (QString const& call)
+{
+  QString const c {call.trimmed ().toUpper ()};
+  if (!m_config.fill_missing_grid () || m_contest.running || m_qrzAsked.contains (c)) return;
+  QString historyGrid;
+  m_qsoHistory.status (m_hisCall, historyGrid);
+  if (log_grid (m_hisGridFromCall3 ? QString {} : m_hisGrid, historyGrid).size () >= 4) return;   // heard: nothing to fill
+  if (missingGrid (c).filled ()) return;   // a source here places it
+  m_qrzAsked.insert (c);
+  m_config.qrz_grid_lookup (c);
+}
+
+/* CE3TSK 2026-11-23 (TODO.md 3.-283, GRID_FILL_PLAN.md G2): the sources of a missing grid, in their order - the grid the
+   call sent earlier, heard by this program (m_heardLog: a day, any band, never a likely phantom decode); the locator it
+   reports to PSK Reporter, while the Reception map is open; (stage 2) the call's grid in eQSL's member list - each taken only as gridfill.h's usable () allows: inside
+   the call's DXCC entity by cty.dat, as the decode windows name it */
+/* CE3TSK 2026-11-24 (TODO.md 3.-283, GRID_FILL_PLAN.md stage 4): Club Log's users file, its small file in the log directory
+   (clublogusers.h: a locator, an upload within 24 months; 12 asked at each lookup); none while there is none */
+void MainWindow::readClublogUsers ()
+{
+  QFile f {m_dataDir.absoluteFilePath (club_log_users::file_name)};
+  m_clublogUsers = f.open (QIODevice::ReadOnly) ? club_log_users::read (f.readAll ()) : QHash<QString, club_log_users::Member> {};
+  if (m_config.write_decoded_debug ()) writeToALLTXT (QString {"Club Log's users file: %1 calls a missing grid may be taken from"}.arg (m_clublogUsers.size ()));
+}
+
+grid_fill::Fill MainWindow::missingGrid (QString const& call)
+{
+  long long const now {QDateTime::currentSecsSinceEpoch ()};   // the heard log's clock (readFromStdout)
+  // (the review) a mobile (/M) heard within the half hour alone: it moves (gridfill.h heard_seconds ())
+  QString const heard {QString::fromStdString (m_heardLog.gridOf (call.toStdString (), now, grid_fill::heard_seconds (call)))};
+  QString reported;
+  if (m_receptionMap) reported = m_receptionMap->reportedLocator (call);   // the map open or not: the map's to say (reportedLocator)
+  // (stage 2) then the call's grid in eQSL's member list, while its last upload is within the 12 months
+  QString const member {eqsl_members::grid (m_eqslMembers, call, QDateTime::currentDateTimeUtc ().date ())};
+  return grid_fill::choose (call, {{grid_fill::Source::HeardEarlier, heard}, {grid_fill::Source::PskReporter, reported},
+                                   {grid_fill::Source::Eqsl, member},
+                                   {grid_fill::Source::ClubLog, club_log_users::grid (m_clublogUsers, call, QDateTime::currentDateTimeUtc ().date ())},   // (stage 4)
+                                   {grid_fill::Source::Qrz, m_qrzGrids.value (call.trimmed ().toUpper ())}},   // (stage 3) QRZ.com's answer, if one came
+                            [this] (QString const& c) {QString entity; m_logBook.getDXCC (c, entity); return entity;});
+}
+
 void MainWindow::on_addButton_clicked()
 {
   if(m_hisGrid.isEmpty()) {
@@ -11906,7 +11971,15 @@ void MainWindow::on_logQSOButton_clicked()
      old one). The box counts only when it holds an on-air or typed grid. */
   QString historyGrid;
   m_qsoHistory.status (m_hisCall, historyGrid);
-  QString const hisGridLogged = log_grid (m_hisGridFromCall3 ? QString {} : m_hisGrid, historyGrid);
+  QString const hisGridHeard = log_grid (m_hisGridFromCall3 ? QString {} : m_hisGrid, historyGrid);
+  /* CE3TSK 2026-11-23 (TODO.md 3.-283, GRID_FILL_PLAN.md): a QSO that gave no grid - neither the box (heard or typed) nor
+     its history - gets one before it is logged, with Settings > Reporting's "Fill a missing grid before logging" and never
+     in a contest (the operator: "but only when not in contest mode"): what the station sent earlier, heard by this
+     program, else the locator it reports to PSK Reporter (the map open) - checked as gridfill.h says. Log QSO shows it and
+     names its source; the comment notes it. Never into the DX Grid box: what the decode windows judge by stays heard. */
+  grid_fill::Fill const filled {hisGridHeard.size () < 4 && m_config.fill_missing_grid () && !m_contest.running ? missingGrid (m_hisCall)
+                                                                                                                 : grid_fill::Fill {}};
+  QString const hisGridLogged = filled.filled () ? filled.grid : hisGridHeard;
   /* CE3TSK 2026-10-05 (review): the box's distance belongs to the box's grid - when another is logged (the box held
      CALL3.TXT's, or was empty), the distance is worked out for the one logged, the DX panel's own way; it was dropped */
   if (hisGridLogged != m_hisGrid) distance = grid_distance_text (m_config.my_grid (), hisGridLogged, m_contest.running, m_config.miles ());   // running: see on_dxGridEntry_textChanged
@@ -11921,7 +11994,8 @@ void MainWindow::on_logQSOButton_clicked()
     auto const shown = [] (QString const& s) { return s.isEmpty () ? QStringLiteral ("-") : s; };
     writeToALLTXT ("Log grid " + m_hisCall + ": box " + shown (m_hisGrid) + (m_hisGridFromCall3 ? " (CALL3.TXT, not logged)" : "")
                    + ", history " + shown (historyGrid) + ", sent by this call " + shown (m_qsoHistory.gridSentBy (m_hisCall))
-                   + ", logged " + shown (hisGridLogged) + ", distance " + shown (distance));
+                   + ", logged " + shown (hisGridLogged) + (filled.filled () ? " (filled from " + grid_fill::name (filled.source) + ")" : QString {})
+                   + ", distance " + shown (distance));
   }
   if (m_qsoHistory.log_data(m_hisCall,time,rrep,srep) > QsoHistory::SREPORT) {
       if (log_time_known (time)) {
@@ -11937,12 +12011,12 @@ void MainWindow::on_logQSOButton_clicked()
       if (srep.isEmpty()) srep=m_rptSent;
       m_logDlg->initLogQSO (m_hisCall, hisGridLogged, m_modeTx, srep, rrep, distance, m_name,
                         currenttime, dateTimeQSOOff, m_freqNominal + ui->TxFreqSpinBox->value(),
-                        m_freqNominal + ui->RxFreqSpinBox->value(),autolog,pointsLogged);   // CE3TSK 2026-11-13: + the Rx (satlog.h)
+                        m_freqNominal + ui->RxFreqSpinBox->value(),autolog,pointsLogged,filled);   // CE3TSK 2026-11-13: + the Rx (satlog.h)
   } else { 
       m_logDlg->initLogQSO (m_hisCall, hisGridLogged, m_modeTx, m_rptSent,
                         log_exchange (QString {}, m_rptRcvd, m_contest.running), distance, m_name,
                         m_dateTimeQSOOn, dateTimeQSOOff, m_freqNominal + ui->TxFreqSpinBox->value(),
-                        m_freqNominal + ui->RxFreqSpinBox->value(),autolog,pointsLogged);
+                        m_freqNominal + ui->RxFreqSpinBox->value(),autolog,pointsLogged,filled);   // 2026-11-23 (3.-283): + the grid filled
   }
   m_logqso73=false;
 }

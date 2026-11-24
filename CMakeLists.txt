@@ -295,6 +295,8 @@ set (wsjtx_CXXSRCS
   clublog.cpp        # CE3TSK 2026-11-21: Club Log's confirmed QSOs (TODO.md 3.-280)
   qrzlogbook.cpp     # CE3TSK 2026-11-22: QRZ.com's LoTW confirmations (TODO.md 3.-280)
   qsoupload.cpp      # CE3TSK 2026-11-23: the logged QSOs to Club Log and QRZ.com (TODO.md 3.-282)
+  qrzxml.cpp         # CE3TSK 2026-11-24: QRZ.com's XML data, a missing grid's last source (TODO.md 3.-283, stage 3)
+  clublogusers.cpp   # CE3TSK 2026-11-24: Club Log's users file, a missing grid's fourth source (TODO.md 3.-283, stage 4)
   HttpFetch.cpp      # CE3TSK: one in-memory HTTP(S) GET on the same two transports (SUPERFOX_PLAN.md M2)
   FoxVerifier.cpp    # CE3TSK: checks a Fox's one-time code with the verification server
   UpdateChecker.cpp  # CE3TSK: Help > Check for updates, latest.json on ce3tsk.com
@@ -970,6 +972,15 @@ find_package (Usb REQUIRED)
 
 # Widgets finds its own dependencies.
 find_package (Qt5 COMPONENTS Widgets SerialPort Multimedia LinguistTools WebSockets REQUIRED)
+# CE3TSK 2026-11-24 (TODO.md 3.-283, stage 4): Club Log's users file comes as a ZIP - inflated with zlib (clublogusers.cpp).
+# zlib 1.4 built in (the operator: "Build it in"), in contrib/zlib/ beside the other third-party code: the release's files
+# unaltered, contrib/zlib/JTDX_CONTEST.txt says which and from where. The same zlib on every system, nothing to install
+# for it. Z_PREFIX makes every name z_... - PUBLIC, so what links it (jtdx, the harness through jtdx's flags) asks for
+# those names: this copy never meets the zlib Qt itself is linked with.
+add_library (jtdx_zlib STATIC
+  contrib/zlib/adler32.c contrib/zlib/crc32.c contrib/zlib/deflate.c contrib/zlib/inffast.c
+  contrib/zlib/inflate.c contrib/zlib/inftrees.c contrib/zlib/trees.c contrib/zlib/zutil.c)
+target_compile_definitions (jtdx_zlib PUBLIC Z_PREFIX)
 
 if (WIN32)
   add_definitions (-DQT_NEEDS_QTMAIN)
@@ -1607,6 +1618,7 @@ target_include_directories (jtdx PRIVATE ${FFTW3_INCLUDE_DIRS})
 if (WIN32)
   target_link_libraries (jtdx winhttp)   # CE3TSK: WinHttpFetch, FileDownload's Windows transport
 endif ()
+target_link_libraries (jtdx jtdx_zlib)   # CE3TSK 2026-11-24 (TODO.md 3.-283, stage 4): the users file's ZIP - every system
 if (APPLE)
   target_link_libraries (jtdx Qt5::SerialPort wsjt_fort wsjt_cxx wsjt_qt wsjt_qtmm ${FFTW3_LIBRARIES})
 else (APPLE)

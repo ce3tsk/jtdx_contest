@@ -349,6 +349,13 @@ long long ReceptionMap::now () const
   return m_now ? m_now () : QDateTime::currentSecsSinceEpoch ();
 }
 
+// (2026-11-23, TODO.md 3.-283, GRID_FILL_PLAN.md) what the feed gave is the window's: a window closed has let it go
+QString ReceptionMap::reportedLocator (QString const& call) const
+{
+  if (!isVisible ()) return {};
+  return QString::fromStdString (m_board.reportedLocator (call.trimmed ().toStdString (), now ()));
+}
+
 void ReceptionMap::setStation (QString const& ownCall, QString const& band, QString const& mode)
 {
   if (ownCall == m_ownCall && band == m_band && mode == m_mode) return;

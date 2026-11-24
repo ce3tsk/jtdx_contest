@@ -242,6 +242,16 @@ namespace reception_spots
       return out;
     }
 
+    // (2026-11-23, TODO.md 3.-283, GRID_FILL_PLAN.md) the grid a call last sent, heard by this program within the day
+    // before `now` - or within less, `within` seconds (the review: a mobile's half hour) - for a QSO logged with none
+    // (gridfill.h); or ""
+    std::string gridOf (std::string const& call, long long now, long long within = gridMemorySeconds) const
+    {
+      auto const g = m_grids.find (upper (call));
+      return g != m_grids.end () && now - g->second.time <= std::min (within, gridMemorySeconds) && g->second.time <= now + futureGraceSeconds
+        ? g->second.grid : std::string {};
+    }
+
     // what is too old to be shown again is let go
     void prune (long long now)
     {
@@ -348,6 +358,15 @@ namespace reception_spots
     std::string const& ownCall () const {return m_ownCall;}
     std::string const& band () const {return m_band;}
     std::string const& mode () const {return m_mode;}
+
+    // (2026-11-23, TODO.md 3.-283, GRID_FILL_PLAN.md) the locator a call reports to PSK Reporter as a receiver - its own
+    // software's - from its newest report within what is kept before `now`; "" when it reports none here
+    std::string reportedLocator (std::string const& call, long long now) const
+    {
+      auto const r = m_reporting.find (upper (call));
+      return r != m_reporting.end () && now - r->second.lastReport <= keptSeconds && r->second.lastReport <= now + futureGraceSeconds
+        ? r->second.locator : std::string {};
+    }
 
     // a spot of the feed; false when it is not sound (and nothing is kept of it)
     bool addSpot (Spot const& s, long long now)

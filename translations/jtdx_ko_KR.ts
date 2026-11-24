@@ -798,6 +798,96 @@ Format:
         <source>Club Log refused %1 with this token: the call is not on the token's Club Log account. Its QSOs are kept, the others go on. Add the call to your Club Log account, then click the box off and on and press OK.</source>
         <translation>Club Log가 이 토큰으로 %1을(를) 거부했습니다: 이 호출부호가 토큰의 Club Log 계정에 없습니다. 그 QSO는 보관되고 다른 QSO는 계속 보내집니다. 호출부호를 Club Log 계정에 추가한 다음 확인란을 껐다가 다시 켜고 확인을 누르십시오.</translation>
     </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>The downloaded file is not eQSL's member list.</source>
+        <translation>다운로드한 파일은 eQSL 회원 목록이 아닙니다.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>not downloaded yet</source>
+        <translation>아직 다운로드되지 않음</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>The QRZ.com XML login could not be saved</source>
+        <translation>QRZ.com XML 로그인을 저장할 수 없습니다</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>The eQSL login could not be saved</source>
+        <translation>eQSL 로그인을 저장할 수 없습니다</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>XML data: no login - QRZ.com is not asked for missing grids.</source>
+        <translation>XML 데이터: 로그인 없음 - 빠진 그리드를 QRZ.com에 묻지 않습니다.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>XML data: asked as a QSO that gave no grid starts.</source>
+        <translation>XML 데이터: 그리드를 얻지 못한 QSO가 시작될 때 묻습니다.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>XML data: logged in at %1 UTC, subscription to %2.</source>
+        <translation>XML 데이터: %1 UTC에 로그인, 구독 기한 %2.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>XML data: this account has no XML subscription - QRZ.com gives no grids.</source>
+        <translation>XML 데이터: 이 계정에는 XML 구독이 없습니다 - QRZ.com은 그리드를 주지 않습니다.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>XML data: QRZ.com refused the login (%1).</source>
+        <translation>XML 데이터: QRZ.com이 로그인을 거부했습니다(%1).</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>XML data: no answer (%1) - asked again with the next QSO.</source>
+        <translation>XML 데이터: 응답 없음(%1) - 다음 QSO 때 다시 묻습니다.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Users file (grids): downloading...</source>
+        <translation>사용자 파일(그리드): 다운로드 중...</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Users file (grids): not downloaded (%1) - tried again later.</source>
+        <translation>사용자 파일(그리드): 다운로드되지 않음(%1) - 나중에 다시 시도합니다.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Users file (grids): %1, %2 members with a locator.</source>
+        <translation>사용자 파일(그리드): %1, 로케이터가 있는 회원 %2명.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Users file (grids): no token - not downloaded.</source>
+        <translation>사용자 파일(그리드): 토큰 없음 - 다운로드되지 않음.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Users file (grids): downloaded weekly with the token while "Fill a missing grid before logging" is on.</source>
+        <translation>사용자 파일(그리드): "기록 전에 빠진 그리드 채우기"이(가) 켜져 있는 동안 토큰으로 매주 다운로드합니다.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Users file (grids): reading the download...</source>
+        <translation>사용자 파일(그리드): 다운로드를 읽는 중...</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Users file (grids): not asked - Club Log refused the token.</source>
+        <translation>사용자 파일(그리드): 요청하지 않음 - Club Log가 토큰을 거부했습니다.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Users file (grids): Club Log refused it to this token (HTTP status %1) - not asked again until another token is saved.</source>
+        <translation>사용자 파일(그리드): Club Log가 이 토큰에 대해 거부했습니다(HTTP 상태 %1) - 다른 토큰을 저장할 때까지 다시 요청하지 않습니다.</translation>
+    </message>
 </context>
 <context>
     <name>CountryDat</name>
@@ -3874,6 +3964,36 @@ Format:
         <location filename="../logqso.cpp"/>
         <source>Adds one period of the mode, %1 s, to the end of the QSO - for a closing 73 that came after this window opened.</source>
         <translation>QSO 종료 시각에 모드의 한 주기(%1초)를 더합니다. 이 창이 열린 뒤에 온 마지막 73을 위한 것입니다.</translation>
+    </message>
+    <message>
+        <location filename="../logqso.cpp"/>
+        <source>what the station sent earlier, heard by this program</source>
+        <translation>이 프로그램이 앞서 들은, 그 국이 보낸 그리드</translation>
+    </message>
+    <message>
+        <location filename="../logqso.cpp"/>
+        <source>the locator the station reports to PSK Reporter</source>
+        <translation>그 국이 PSK Reporter에 보고하는 로케이터</translation>
+    </message>
+    <message>
+        <location filename="../logqso.cpp"/>
+        <source>Not given in this QSO: filled from %1. Correct or clear it before OK - logged as it is, the comment notes %2.</source>
+        <translation>이 QSO에서 얻지 못했습니다. 출처: %1. 확인 전에 고치거나 지우십시오. 그대로 기록하면 비고에 %2(으)로 적습니다.</translation>
+    </message>
+    <message>
+        <location filename="../logqso.cpp"/>
+        <source>the station's grid in eQSL's member list</source>
+        <translation>eQSL 회원 목록에 있는 그 국의 그리드</translation>
+    </message>
+    <message>
+        <location filename="../logqso.cpp"/>
+        <source>the station's grid in Club Log's users file</source>
+        <translation>Club Log 사용자 파일에 있는 그 국의 그리드</translation>
+    </message>
+    <message>
+        <location filename="../logqso.cpp"/>
+        <source>the station's grid in QRZ.com's XML data</source>
+        <translation>QRZ.com XML 데이터에 있는 그 국의 그리드</translation>
     </message>
 </context>
 <context>
@@ -9694,11 +9814,6 @@ DX 그리드 필드를 비우려면 이 옵션을 켜십시오.</translation>
         <translation>기록한 QSO 정보를 http://www.eqsl.cc 사이트로 보낼 수 있습니다.</translation>
     </message>
     <message>
-        <location filename="../Configuration.ui" line="2801"/>
-        <source>Enable &amp;eQSL sending</source>
-        <translation>eQSL 전송 사용(&amp;E)</translation>
-    </message>
-    <message>
         <location filename="../Configuration.ui" line="2821"/>
         <source>EQSL Username.</source>
         <translation>eQSL 사용자 이름.</translation>
@@ -11476,11 +11591,6 @@ soundcard changes</source>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
-        <source>Club Log to&amp;ken:</source>
-        <translation>Club Log 토큰(&amp;K):</translation>
-    </message>
-    <message>
-        <location filename="../Configuration.ui"/>
         <source>Your Club Log API token. To create one, log in to Club Log, go to Settings &gt; API and click the "Create token" button there. Copy the token, paste it into this box and press OK.
 With it the program downloads your LoTW confirmations from Club Log at the start and every 12 hours. It is kept in a file of its own that only you can read, never in the settings file.</source>
         <translation>Club Log API 토큰입니다. 만들려면 Club Log에 로그인하여 Settings &gt; API로 이동한 다음 "Create token" 버튼을 클릭합니다. 토큰을 복사하여 이 칸에 붙여 넣고 확인을 누릅니다.
@@ -11520,11 +11630,6 @@ LoTW 전체 기록을 한 번 가져오려면 먼저 그곳에서 "Only confirma
         <location filename="../Configuration.ui"/>
         <source>Worked, not LoTW-confirmed</source>
         <translation>교신함, LoTW 미확인</translation>
-    </message>
-    <message>
-        <location filename="../Configuration.ui"/>
-        <source>QRZ.com API ke&amp;y:</source>
-        <translation>QRZ.com API 키(&amp;Z):</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
@@ -11570,20 +11675,10 @@ QRZ.com Logbook의 Settings에서:
     </message>
     <message>
         <location filename="../Configuration.ui"/>
-        <source>Send logged QSOs to:</source>
-        <translation>기록한 QSO 보내기:</translation>
-    </message>
-    <message>
-        <location filename="../Configuration.ui"/>
         <source>Each QSO you log is sent to your Club Log log at once, with the Club Log token - in a contest too. A QSO that cannot be sent now (no connection, Club Log busy) is kept and sent later; one Club Log refuses is named below.
 Only QSOs logged from now on: upload older ones to Club Log as an ADIF file there.</source>
         <translation>기록한 QSO는 Club Log 토큰으로 Club Log의 로그에 즉시 보내집니다(콘테스트 중에도). 지금 보낼 수 없는 QSO(연결 없음, Club Log 혼잡)는 보관했다가 나중에 보냅니다. Club Log가 거부한 QSO는 아래에 표시됩니다.
 지금부터 기록하는 QSO만 해당됩니다. 이전 QSO는 Club Log 사이트에서 ADIF 파일로 올리십시오.</translation>
-    </message>
-    <message>
-        <location filename="../Configuration.ui"/>
-        <source>&amp;Club Log</source>
-        <translation>Club Log(&amp;O)</translation>
     </message>
     <message>
         <location filename="../Configuration.ui"/>
@@ -11594,8 +11689,125 @@ Only QSOs logged from now on: upload older ones to QRZ.com as an ADIF file there
     </message>
     <message>
         <location filename="../Configuration.ui"/>
-        <source>QR&amp;Z.com</source>
-        <translation>QRZ.com(&amp;N)</translation>
+        <source>Fill a missing grid before logging</source>
+        <translation>기록 전에 빠진 그리드 채우기</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>eQSL members:</source>
+        <translation>eQSL 회원:</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>The copy in the log directory is used; none is bundled with this release.</source>
+        <translation>로그 디렉터리의 사본이 사용됩니다. 이 릴리스에는 포함되어 있지 않습니다.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Download eQSL's member list from eqsl.cc: each member's grid square and last upload, no eQSL account needed. With Settings &gt; Reporting's "Fill a missing grid before logging", a QSO that gave no grid may take its member's grid, when that member uploaded to eQSL within the last 12 months.</source>
+        <translation>eqsl.cc에서 eQSL 회원 목록을 다운로드합니다: 회원마다 그리드와 마지막 업로드, eQSL 계정 없이. 설정 &gt; 보고의 "기록 전에 빠진 그리드 채우기"(으)로 그리드를 얻지 못한 QSO가 그 회원의 그리드를 가져올 수 있습니다. 지난 12개월 안에 eQSL에 업로드한 회원일 때만입니다.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Send logged QSOs</source>
+        <translation>기록한 QSO 보내기</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Its member list, for missing grids: Settings &gt; General &gt; Data files.</source>
+        <translation>회원 목록(빠진 그리드용): 설정 &gt; 일반 &gt; 데이터 파일.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>To&amp;ken:</source>
+        <translation>토큰(&amp;K):</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Your Club Log API token. To create one, log in to Club Log, go to Settings &gt; API and click the "Create token" button there. Copy the token, paste it into this box and press OK.
+                  With it the program downloads your LoTW confirmations from Club Log at the start and every 12 hours. It is kept in a file of its own that only you can read, never in the settings file.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Download your LoTW confirmations from Club Log now; the program also does it at the start and every 12 hours.
+                  Club Log has only the LoTW confirmations it has fetched.
+                  In Club Log, under Tools &gt; LoTW Sync:
+                  1. Certificates: add your LoTW certificate once.
+                  2. Download confirmations: fetch the new ones now and then.
+                  To fetch the whole LoTW record once, clear "Only confirmations since the last download" there first.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Each QSO you log is sent to your Club Log log at once, with the Club Log token - in a contest too. A QSO that cannot be sent now (no connection, Club Log busy) is kept and sent later; one Club Log refuses is named below.
+                  Only QSOs logged from now on: upload older ones to Club Log as an ADIF file there.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>API ke&amp;y:</source>
+        <translation>API 키(&amp;Z):</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Your QRZ.com Logbook API key. To find it, log in to QRZ.com, open your Logbook, click Settings at the top right and, under "QRZ Logbook API", click "Show" beside the API Key. Copy the key, paste it into this box and press OK. The API needs a QRZ.com subscription (XML level or higher).
+                  With it the program downloads your LoTW confirmations from QRZ.com at the start and every 12 hours. It is kept in a file of its own that only you can read, never in the settings file.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>XML login:</source>
+        <translation>XML 로그인:</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Your QRZ.com username - usually your callsign - for QRZ.com's XML data: the grids of calls, with a subscription that includes XML data. Not the API key above.</source>
+        <translation>QRZ.com XML 데이터용 QRZ.com 사용자 이름(보통 호출부호): XML 데이터를 포함한 구독으로 호출부호의 그리드를 얻습니다. 위의 API 키가 아닙니다.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>username</source>
+        <translation>사용자 이름</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Your QRZ.com password, for QRZ.com's XML data. It is kept in a file of its own that only you can read, never in the settings file.</source>
+        <translation>QRZ.com XML 데이터용 QRZ.com 비밀번호. 당신만 읽을 수 있는 별도 파일에 보관되며 설정 파일에는 저장되지 않습니다.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>password</source>
+        <translation>비밀번호</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Download your LoTW confirmations from QRZ.com now; the program also does it at the start and every 12 hours. Only the confirmations from LoTW count, not QRZ.com's own.
+                  QRZ.com has only the LoTW confirmations it has imported.
+                  In your QRZ.com Logbook, under Settings:
+                  1. LoTW Settings: enter your LoTW username once.
+                  2. Logbook of the World Import/Export, Import: fetch the new ones now and then (QRZ.com asks for your LoTW password).
+                  The first download takes a few minutes; after it only what changed is fetched.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Each QSO you log is sent to your QRZ.com logbook at once, with the QRZ.com API key - in a contest too. QRZ.com takes QSOs from programs only with a subscription. A QSO that cannot be sent now is kept and sent later; one QRZ.com refuses is named below.
+                  Only QSOs logged from now on: upload older ones to QRZ.com as an ADIF file there.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>The program can send your station details and all
+               decoded signals as spots to the http://pskreporter.info web site.
+               This is used for reverse beacon analysis which is very useful
+               for assessing propagation and system performance.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>When a QSO gave no grid - neither heard nor typed - it gets one before it is logged: what this program heard the station send earlier (within a day; a /M station's within half an hour), else the locator it reports to PSK Reporter (with the Reception map open), else its grid in eQSL's member list (Settings &gt; General; a member that uploaded to eQSL within the last 12 months), in Club Log's users file (downloaded weekly with the token; a call that uploaded within the last 12 months) or in QRZ.com's XML data (with the XML login, asked as the QSO starts). Only a square inside the call's DXCC country is taken, its first four characters. Log QSO names the source in the grid field's tooltip, and the QSO's comment notes it as [grid: ...]. Never in a contest.</source>
+        <translation>QSO에서 그리드를 얻지 못했을 때(수신도 입력도 없을 때) 기록 전에 채웁니다: 이 프로그램이 앞서 그 국이 보낸 것을 들은 그리드(하루 이내, /M 국은 30분 이내), 없으면 그 국이 PSK Reporter에 보고하는 로케이터(수신 지도가 열려 있을 때), 그래도 없으면 eQSL 회원 목록의 그 국 그리드(설정 &gt; 일반, 지난 12개월 안에 eQSL에 업로드한 회원), Club Log 사용자 파일(토큰으로 매주 다운로드, 지난 12개월 안에 업로드한 호출부호) 또는 QRZ.com XML 데이터(XML 로그인으로 QSO 시작 시 조회). 호출부호의 DXCC 국가 안에 있는 스퀘어만, 앞 네 글자를 씁니다. QSO 기록 창은 그리드 칸의 도움말에 출처를 밝히고, QSO 비고에 [grid: ...]로 적습니다. 콘테스트 중에는 하지 않습니다.</translation>
     </message>
 </context>
 <context>

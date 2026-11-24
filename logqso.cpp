@@ -70,6 +70,8 @@ LogQSO::LogQSO(QSettings * settings, Configuration const * config, JTDXDateTime 
   , m_jtdxtime {jtdxtime}
 {
   ui->setupUi(this);
+  m_gridTip = ui->grid->toolTip ();   // CE3TSK 2026-11-23 (TODO.md 3.-283)
+  connect (ui->call, &QLineEdit::textEdited, this, [this] {dropFillOfAnotherCall ();});   // (3.-283's review)
   ui->buttonBox->button(QDialogButtonBox::Ok)->setText(tr("&OK"));
   ui->buttonBox->button(QDialogButtonBox::Cancel)->setText(tr("&Cancel"));
 //  setWindowTitle("JTDX " + versnumber.simplified () + " - Log QSO");
@@ -232,11 +234,18 @@ void LogQSO::storeSettings () const
 void LogQSO::initLogQSO(QString const& hisCall, QString const& hisGrid, QString mode,
                         QString const& rptSent, QString const& rptRcvd, QString const& distance,
                         QString const& name, QDateTime const& dateTimeOn, QDateTime const& dateTimeOff,
-                        Radio::Frequency dialFreq, Radio::Frequency rxFreq, bool autologging, int points)
+                        Radio::Frequency dialFreq, Radio::Frequency rxFreq, bool autologging, int points,
+                        grid_fill::Fill const& filled)
 {
   m_send_to_eqsl=m_config->send_to_eqsl();
   ui->call->setText(hisCall);
   ui->grid->setText(hisGrid);
+  /* CE3TSK 2026-11-23 (TODO.md 3.-283, GRID_FILL_PLAN.md G1): a grid the QSO did not give, filled by MainWindow - shown
+     here before OK, where it came from in the field's tooltip; at OK the comment notes it while it is still the one
+     logged (gridfill.h). With no prompt it is logged as filled. */
+  m_filled = filled.filled () && filled.grid == hisGrid.trimmed ().toUpper () ? filled : grid_fill::Fill {};
+  m_filledCall = m_filled.filled () ? hisCall.trimmed ().toUpper () : QString {};
+  ui->grid->setToolTip (m_filled.filled () ? filledGridTip (m_filled) : m_gridTip);
   ui->name->setText(name);
   ui->txPower->setText("");
   ui->comments->setText("");
@@ -326,10 +335,36 @@ void LogQSO::initLogQSO(QString const& hisCall, QString const& hisGrid, QString 
   }
 }
 
+// CE3TSK 2026-11-23 (TODO.md 3.-283): the grid field's tooltip for a grid filled - its source, and what OK does with it
+QString LogQSO::filledGridTip (grid_fill::Fill const& filled) const
+{
+  QString const from {grid_fill::Source::HeardEarlier == filled.source ? tr ("what the station sent earlier, heard by this program")
+                      : grid_fill::Source::PskReporter == filled.source ? tr ("the locator the station reports to PSK Reporter")
+                      : grid_fill::Source::Eqsl == filled.source ? tr ("the station's grid in eQSL's member list")   // (stage 2)
+                      : grid_fill::Source::ClubLog == filled.source ? tr ("the station's grid in Club Log's users file")   // (stage 4)
+                      : grid_fill::Source::Qrz == filled.source ? tr ("the station's grid in QRZ.com's XML data")   // (stage 3)
+                      : grid_fill::name (filled.source)};
+  return tr ("Not given in this QSO: filled from %1. Correct or clear it before OK - logged as it is, the comment notes %2.")
+    .arg (from).arg (grid_fill::note (filled.source));
+}
+
+/* CE3TSK 2026-11-23 (TODO.md 3.-283's review): the call corrected in the dialog - a busted call put right - makes a grid
+   filled for the other call no grid of this one: the field cleared while it still holds that grid (one typed by hand is
+   the operator's own and stays), its own tooltip back, and no note. As the call is typed, so that what the field shows is
+   what is logged, and at OK. */
+void LogQSO::dropFillOfAnotherCall ()
+{
+  if (!m_filled.filled () || ui->call->text ().trimmed ().toUpper () == m_filledCall) return;
+  if (ui->grid->text ().trimmed ().toUpper () == m_filled.grid) ui->grid->clear ();
+  m_filled = grid_fill::Fill {};
+  ui->grid->setToolTip (m_gridTip);
+}
+
 void LogQSO::accept()
 {
   QString hisCall,hisGrid,mode,rptSent,rptRcvd,time,band;
   QString comments,eqslcomments,name;
+  dropFillOfAnotherCall ();   // (3.-283's review) a call changed however it was
   hisCall=ui->call->text();
   hisGrid=ui->grid->text();
   mode=ui->mode->text();
@@ -342,6 +377,10 @@ void LogQSO::accept()
   m_txPower=ui->txPower->text();
   comments=ui->comments->text();
   m_comments=comments;
+  /* CE3TSK 2026-11-23 (TODO.md 3.-283, G5): a grid filled and logged as it was: the comment logged says where it came
+     from - after the one retained for the next QSO was taken, so the note never carries over */
+  comments = grid_fill::commented (comments, m_filled, hisGrid);
+  m_filled = grid_fill::Fill {};
   eqslcomments=ui->eqslcomments->text();
   m_eqslcomments=eqslcomments;
   QString strDialFreq(QString::number(m_dialFreq / 1.e6,'f',6));

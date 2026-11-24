@@ -1,0 +1,15 @@
+zlib 1.4 (4 November 2026), built into JTDX_contest
+====================================================
+
+CE3TSK 2026-11-24 (TODO.md 3.-283, stage 4): the files of zlib-1.4.tar.gz (https://zlib.net/, sha256
+02dd159783677a749c04adbdd02b55b8a2bcc7e054f51b76b549199a916ad584) that the program needs, UNALTERED:
+inflate and crc32 to read Club Log's users file, a ZIP (clublogusers.cpp), and deflate for the test
+that makes one. The same zlib on Linux, macOS and Windows - nothing to install for it.
+
+Compiled with Z_PREFIX (CMakeLists.txt, target jtdx_zlib): every name is z_..., so this copy never
+meets the zlib that Qt itself is linked with.
+
+Licence: LICENSE (the zlib licence) - by Jean-loup Gailly and Mark Adler.
+
+To update: copy the same files from a newer zlib release, unaltered, and change the version and the
+checksum above.
