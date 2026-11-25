@@ -775,23 +775,8 @@ Format:
     </message>
     <message>
         <location filename="../Configuration.cpp"/>
-        <source>%1 refused the QSO with %2 - see Settings &gt; Reporting.</source>
-        <translation>%1 je odbio QSO s %2 - vidi Postavke &gt; Izvještaji.</translation>
-    </message>
-    <message>
-        <location filename="../Configuration.cpp"/>
-        <source>%1 refused the upload: the QSO with %2 is kept - see Settings &gt; Reporting.</source>
-        <translation>%1 je odbio slanje: QSO s %2 se čuva - vidi Postavke &gt; Izvještaji.</translation>
-    </message>
-    <message>
-        <location filename="../Configuration.cpp"/>
         <source>an answer not understood: %1</source>
         <translation>nerazumljiv odgovor: %1</translation>
-    </message>
-    <message>
-        <location filename="../Configuration.cpp"/>
-        <source>%1: the QSO with %2 is not sent yet, kept - see Settings &gt; Reporting.</source>
-        <translation>%1: QSO s %2 još nije poslan, čuva se - vidi Postavke &gt; Izvještaji.</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp"/>
@@ -912,6 +897,81 @@ Format:
         <location filename="../Configuration.cpp"/>
         <source>%1: the QSOs waiting could not be written to their file - they are lost if the program is closed before they are sent.</source>
         <translation>%1: QSO-i koji čekaju nisu se mogli zapisati u svoju datoteku - gube se ako se program zatvori prije nego što budu poslani.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1 refused the QSO with %2 - see Settings &gt; Logbooks.</source>
+        <translation>%1 je odbio QSO s %2 - vidi Postavke &gt; Dnevnici rada.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1 refused the upload: the QSO with %2 is kept - see Settings &gt; Logbooks.</source>
+        <translation>%1 je odbio slanje: QSO s %2 se čuva - vidi Postavke &gt; Dnevnici rada.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1: the QSO with %2 is not sent yet, kept - see Settings &gt; Logbooks.</source>
+        <translation>%1: QSO s %2 još nije poslan, čuva se - vidi Postavke &gt; Dnevnici rada.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>LoTW downloads are switched off (JTDX_LOTW_API).</source>
+        <translation>Preuzimanja s LoTW-a su isključena (JTDX_LOTW_API).</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Download from LoTW failed</source>
+        <translation>Preuzimanje s LoTW-a nije uspjelo</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>LoTW sent no report: the username or the password may be wrong, or LoTW is busy.</source>
+        <translation>LoTW nije poslao izvješće: korisničko ime ili lozinka možda su pogrešni, ili je LoTW zauzet.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>LoTW's answer was not a whole report (%1).</source>
+        <translation>Odgovor LoTW-a nije bio cijelo izvješće (%1).</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>The next try is at %1 UTC.</source>
+        <translation>Sljedeći pokušaj je u %1 UTC.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>No login: nothing is downloaded from LoTW.</source>
+        <translation>Nema prijave: s LoTW-a se ništa ne preuzima.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>The LoTW login could not be saved</source>
+        <translation>Prijava za LoTW nije se mogla spremiti</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Sending the QSOs you log to %1, in this run: the last answer, the QSOs waiting, a refusal. Green: the last QSO went. Red: the last try failed, or %1 refused - the line says why. Grey: nothing sent yet, or sending is off.</source>
+        <translation>Slanje QSO-a koje upisujete na %1, u ovom pokretanju: zadnji odgovor, QSO-i koji čekaju, odbijanje. Zeleno: zadnji QSO je prošao. Crveno: zadnji pokušaj nije uspio, ili je %1 odbio - redak kaže zašto. Sivo: još ništa nije poslano, ili je slanje isključeno.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Downloading your LoTW confirmations from %1: the last download and what it brought. Green: the last download worked. Red: it failed, or %1 refused - the line says why. Grey: nothing downloaded yet, or nothing to download with.</source>
+        <translation>Preuzimanje vaših LoTW potvrda s %1: zadnje preuzimanje i što je donijelo. Zeleno: zadnje preuzimanje je uspjelo. Crveno: nije uspjelo, ili je %1 odbio - redak kaže zašto. Sivo: još ništa nije preuzeto, ili nema s čime preuzeti.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Off: the QSOs you log are not sent to %1.</source>
+        <translation>Isključeno: QSO-i koje upisujete ne šalju se na %1.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>QRZ.com's XML data: a grid square asked of QRZ.com for a QSO logged without one ("Fill a missing grid before logging", on the Reporting tab), with the XML login. It needs a QRZ.com XML subscription.</source>
+        <translation>XML podaci QRZ.com-a: lokator zatražen od QRZ.com-a za QSO upisan bez lokatora („Popuni lokator koji nedostaje prije upisa u log“, na kartici Izvještaji), s XML prijavom. Potrebna je XML pretplata na QRZ.com.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Club Log's users file: the grid squares Club Log knows of its users, for a QSO logged without one ("Fill a missing grid before logging", on the Reporting tab). Downloaded once a week with the token.</source>
+        <translation>Datoteka korisnika Club Loga: lokatori koje Club Log zna za svoje korisnike, za QSO upisan bez lokatora („Popuni lokator koji nedostaje prije upisa u log“, na kartici Izvještaji). Preuzima se jednom tjedno s tokenom.</translation>
     </message>
 </context>
 <context>
@@ -3104,6 +3164,11 @@ Format:
         <location filename="../displaytext.cpp"/>
         <source>Worked before and LoTW-confirmed: nothing new in the notifications that are on.</source>
         <translation>Već rađen i potvrđen LoTW-om: ništa novo u uključenim obavijestima.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Confirmed in LoTW already? The program downloads your confirmations from LoTW itself every 12 hours: a QSL received since the last download shows after the next one.</source>
+        <translation>Već potvrđeno u LoTW-u? Program svakih 12 sati preuzima vaše potvrde izravno s LoTW-a: QSL primljen nakon zadnjeg preuzimanja pojavit će se nakon sljedećeg.</translation>
     </message>
 </context>
 <context>
@@ -9845,11 +9910,6 @@ i DX Lokatora kad je poslan 73 ili slobodna tekstualna poruka.</translation>
         <translation>dekodirane i ispravljene poruke</translation>
     </message>
     <message>
-        <location filename="../Configuration.ui" line="2777"/>
-        <source>Network Services</source>
-        <translation>Mrežni Servisi</translation>
-    </message>
-    <message>
         <location filename="../Configuration.ui" line="2821"/>
         <source>EQSL Username.</source>
         <translation>EQSL Korisničko ime.</translation>
@@ -11851,6 +11911,61 @@ Samo QSO-i upisani od sada: starije učitajte na QRZ.com kao ADIF datoteku, ondj
         <location filename="../Configuration.ui"/>
         <source>When a QSO gave no grid - neither heard nor typed - it gets one before it is logged: what this program heard the station send earlier (within a day; a /M station's within half an hour), else the locator it reports to PSK Reporter (with the Reception map open), else the square at least two other stations received from it, as their reports to PSK Reporter say (the map open too), else its grid in eQSL's member list (Settings &gt; General; a member that uploaded to eQSL within the last 12 months), in Club Log's users file (downloaded weekly with the token; a call that uploaded within the last 12 months) or in QRZ.com's XML data (with the XML login, asked as the QSO starts). Only a square inside the call's DXCC country is taken, its first four characters. Log QSO names the source in the grid field's tooltip, and the QSO's comment notes it as [grid: ...]. Never in a contest.</source>
         <translation>Kad QSO nije dao lokator – ni primljen ni upisan –, dobiva ga prije upisa u log: ono što je ovaj program ranije čuo da stanica šalje (unutar jednog dana, od /M stanice unutar pola sata), inače lokator koji stanica javlja PSK Reporteru (uz otvorenu Kartu prijema), inače polje koje su od stanice primile barem dvije druge stanice, prema njihovim prijavama PSK Reporteru (također uz otvorenu kartu), inače njezin lokator s popisa članova eQSL-a (Postavke &gt; Općenito; član koji je u zadnjih 12 mjeseci slao na eQSL), iz datoteke korisnika Club Loga (preuzima se tjedno tokenom; pozivni znak koji je slao u zadnjih 12 mjeseci) ili iz XML podataka QRZ.com-a (uz XML prijavu, upit pri početku QSO-a). Uzima se samo polje unutar DXCC zemlje pozivnog znaka, njegova prva četiri znaka. Prozor Log QSO navodi izvor u opisu polja lokatora, a komentar QSO-a bilježi ga kao [grid: ...]. Nikad u natjecanju.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Spotting</source>
+        <translation>Spotiranje</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Other programs</source>
+        <translation>Drugi programi</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Logbooks</source>
+        <translation>Dnevnici rada</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Your accounts at online logbooks: the QSOs you log sent to them, confirmations downloaded from them</source>
+        <translation>Vaši računi u online dnevnicima rada: QSO-i koje upišete šalju se njima, a potvrde se preuzimaju od njih</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Username:</source>
+        <translation>Korisnik:</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Your username at LoTW's website (lotw.arrl.org) - usually your call sign, but not always.</source>
+        <translation>Vaše korisničko ime na LoTW web-stranici (lotw.arrl.org) - obično vaš pozivni znak, ali ne uvijek.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Password:</source>
+        <translation>Lozinka:</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Your password at LoTW's website. It is kept in a file of its own beside the settings file, readable by you alone, and sent only to lotw.arrl.org.</source>
+        <translation>Vaša lozinka na LoTW web-stranici. Čuva se u zasebnoj datoteci pokraj datoteke postavki, koju možete čitati samo vi, i šalje se samo na lotw.arrl.org.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Download your confirmations from LoTW itself now; the program also does it three minutes after the start and every 12 hours while a username and password are saved. Only the QSLs for My Call. The first download fetches all of them, later ones only what came since - a whole report again once a month. LoTW does not say when a password is wrong: after a failure the next try waits 6 hours.</source>
+        <translation>Preuzmite svoje potvrde sada izravno s LoTW-a; program to radi i tri minute nakon pokretanja te svakih 12 sati dok su korisničko ime i lozinka spremljeni. Samo QSL-ovi za Moj Znak. Prvo preuzimanje dohvaća sve, sljedeća samo ono što je stiglo u međuvremenu - jednom mjesečno ponovno cijelo izvješće. LoTW ne kaže kada je lozinka pogrešna: nakon neuspjeha sljedeći pokušaj čeka 6 sati.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Download confirmations from LoTW</source>
+        <translation>Preuzmi potvrde s LoTW-a</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>eQSL's member list: the grid squares of eQSL's members, for a QSO logged without one ("Fill a missing grid before logging", on the Reporting tab). It is downloaded on the General tab, under Data files.</source>
+        <translation>Popis članova eQSL-a: lokatori članova eQSL-a, za QSO upisan bez lokatora („Popuni lokator koji nedostaje prije upisa u log“, na kartici Izvještaji). Preuzima se na kartici Općenito, pod Datoteke podataka.</translation>
     </message>
 </context>
 <context>

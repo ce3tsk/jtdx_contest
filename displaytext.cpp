@@ -161,12 +161,14 @@ QString DisplayText::doubtToolTip (phantom_decodes::Verdict const& v, QString co
    what was worked in the tier that fired, that it therefore counts as never worked (for the sequencer too), and, for a QSO
    confirmed in LoTW already, where Club Log fetches its confirmations (Club Log's labels in English, as Club Log shows
    them). Rich text, a paragraph a sentence, each escaped: a country name may hold an '&'. */
-QString DisplayText::unconfirmedToolTip (QString const& call, QString const& worked)
+QString DisplayText::unconfirmedToolTip (QString const& call, QString const& worked, bool lotw_direct)
 {
   QStringList const s {
     tr ("%1 is a LoTW user, and you have worked %2, but none of those QSOs is LoTW-confirmed.").arg (call, worked),
     tr ("So it counts as never worked, and the auto sequencer treats it as new."),
-    tr ("Confirmed in LoTW already? Club Log and QRZ.com have only the LoTW confirmations they have fetched: in Club Log, Tools > LoTW Sync > Download confirmations; in your QRZ.com Logbook, Settings > Logbook of the World Import/Export > Import. The program downloads them every 12 hours.")};
+    lotw_direct   // (3.-299, LD5) with a LoTW login saved the program asks LoTW itself
+      ? tr ("Confirmed in LoTW already? The program downloads your confirmations from LoTW itself every 12 hours: a QSL received since the last download shows after the next one.")
+      : tr ("Confirmed in LoTW already? Club Log and QRZ.com have only the LoTW confirmations they have fetched: in Club Log, Tools > LoTW Sync > Download confirmations; in your QRZ.com Logbook, Settings > Logbook of the World Import/Export > Import. The program downloads them every 12 hours.")};
   QString tip;
   for (auto const& x : s) tip += "<p>" + x.toHtmlEscaped () + "</p>";
   return tip;
@@ -339,6 +341,7 @@ void DisplayText::setConfiguration(Configuration const * config)
   countUnconfirmed_ = config->countUnconfirmedAsNew ();
   color_Confirmed_ = config->color_Confirmed ().name ();   /* CE3TSK 2026-11-22 (TODO.md 3.-280, D12) */
   highlightConfirmed_ = config->highlightConfirmed ();
+  lotwDirect_ = config->lotw_direct ();   // CE3TSK 2026-11-25 (TODO.md 3.-299, LD5)
   color_NewCallBand_ = config->color_NewCallBand().name();
   hideContinents_ = config->hideContinents();
   countries_ = config->countries();
@@ -386,7 +389,7 @@ void DisplayText::insertLineSpacer(QString const& line)
     appendText (line, Radio::convert_dark("#d3d3d3",useDarkStyle_), Radio::convert_dark("#000000",useDarkStyle_), 0, " ", Radio::convert_dark("#000000",useDarkStyle_), " ", true);
 }
 
-void DisplayText::appendText(QString const& text, QString const& bg, QString const& color, int std_type, QString const& servis, QString const& servis_color, QString const& cntry, bool forceBold, bool strikethrough, bool underlined, bool DXped, bool overwrite, bool wanted, QList<QPair<int, int>> const& doubtful, int cntryDoubtFrom, QString const& toolTip, QString const& field, int fieldColumns, bool inverted)
+void DisplayText::appendText(QString const& text, QString const& bg, QString const& color, int std_type, QString const& servis, QString const& servis_color, QString const& cntry, bool forceBold, bool strikethrough, bool underlined, bool DXped, bool overwrite, bool wanted, QList<QPair<int, int>> const& doubtful, int cntryDoubtFrom, QString const& toolTip, QString const& field, int fieldColumns, bool inverted, QString const& tier)
 {
     QString servbg, s;
     if (std_type == 2) servbg = Radio::convert_dark("#ff0000",useDarkStyle_);
@@ -439,6 +442,14 @@ void DisplayText::appendText(QString const& text, QString const& bg, QString con
         int ft = 23; 
         if (text.mid(4,1) == " ") ft = 21;
         cursor.insertText (text.left(ft),m_charFormat);
+        /* CE3TSK 2026-11-25 (TODO.md 3.-301, the operator: "the line would start purple, then "CQ CE3TSK FF46" would be colored
+           in the new notification color, and the rest of the line would be again purple or the previous color"): a violet
+           line whose tier is new keeps that tier's colour for its message - its background, or with Inverse text/background
+           color its text, as the tier's own line shows it. The servis column below sets both colours again: the message alone */
+        if (!tier.isEmpty ()) {
+            if (inverted) m_charFormat.setForeground (QColor (tier));
+            else m_charFormat.setBackground (QColor (tier));
+        }
         m_charFormat.setFontStrikeOut(strikethrough);
         if (DXped) {
             if (underlined)  m_charFormat.setUnderlineStyle(QTextCharFormat::WaveUnderline);
@@ -528,6 +539,7 @@ int DisplayText::displayDecodedText(DecodedText* decodedText, QString myCall, QS
     QString bgColor = Radio::convert_dark("#ffffff",useDarkStyle_);
     QString txtColor = Radio::convert_dark("#000000",useDarkStyle_);
     QString swpColor = "";
+    QString tierColor;   // CE3TSK 2026-11-25 (TODO.md 3.-301): a violet line's tier colour, for its message
     QString servisColor = Radio::convert_dark("#000000",useDarkStyle_);
     QString messageText;
     bool forceBold = false;
@@ -1394,10 +1406,15 @@ int DisplayText::displayDecodedText(DecodedText* decodedText, QString myCall, QS
                    has not LoTW-confirmed - the colour of its own, the tier's rank kept (a LoTW user's: the level + 1) */
                 if (priority > 0 && priority - 1 < int (sizeof unconfirmedAt) && unconfirmedAt[priority - 1]) {
                     if (new_marker) servis = servis.left (1) + color_Unconfirmed_;
-                    else bgColor = color_Unconfirmed_;
+                    else {
+                        /* (3.-301) the tier's colour kept for the message: the line says "not LoTW-confirmed", its message
+                           what is new - none when the line had no tier colour of its own (then all of it violet) */
+                        if (bgColor != Radio::convert_dark ("#ffffff", useDarkStyle_) && bgColor != color_WorkedCall_) tierColor = bgColor;
+                        bgColor = color_Unconfirmed_;
+                    }
                     // 2026-11-22 (the operator): and the tooltip says why - what was worked in that tier, where it was asked
                     if (!where.isEmpty ()) worked += " (" + where.join (' ') + ")";
-                    unconfirmedTip = unconfirmedToolTip (checkCall, worked);
+                    unconfirmedTip = unconfirmedToolTip (checkCall, worked, lotwDirect_);
                 }
                 if (judged && displayWorkedDontShow_ && std_type != 2 && ((!forceBold && ((displayPotential_ && std_type == 3) || std_type != 3)) || (!new_marker && otherMessagesMarker_ && std_type == 3))) {
                     show_line = false;
@@ -1735,7 +1752,7 @@ int DisplayText::displayDecodedText(DecodedText* decodedText, QString myCall, QS
         QString const tip {lineToolTip (lineHead, tierTip, unconfirmedTip, colours, markSentences (decodedText->marker (), !lotw.isEmpty (), decodedText->windowCopy (),
                                                             !lines_have_seconds (app_mode) && app_mode != "WSPR-2"), doubtTip)};
         if (drawn) {   // CE3TSK 2026-10-23: Misc > Hide clear phantom messages, above
-            appendText(messageText, bgColor, txtColor, std_type, servis, servisColor, cntry, forceBold, strikethrough, underlined, decodedText->isDXped(), false, bwantedCall||bwantedGrid||bwantedPrefix||bwantedCountry, doubtful, cntryDoubtFrom, tip, field, fieldColumns, inverted);
+            appendText(messageText, bgColor, txtColor, std_type, servis, servisColor, cntry, forceBold, strikethrough, underlined, decodedText->isDXped(), false, bwantedCall||bwantedGrid||bwantedPrefix||bwantedCountry, doubtful, cntryDoubtFrom, tip, field, fieldColumns, inverted, tierColor);
             wastx_ = false;
         }
     }

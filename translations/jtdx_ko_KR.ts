@@ -775,23 +775,8 @@ Format:
     </message>
     <message>
         <location filename="../Configuration.cpp"/>
-        <source>%1 refused the QSO with %2 - see Settings &gt; Reporting.</source>
-        <translation>%1이(가) %2와(과)의 QSO를 거부함 - 설정 &gt; 보고 참조.</translation>
-    </message>
-    <message>
-        <location filename="../Configuration.cpp"/>
-        <source>%1 refused the upload: the QSO with %2 is kept - see Settings &gt; Reporting.</source>
-        <translation>%1이(가) 업로드를 거부함: %2와(과)의 QSO는 보관함 - 설정 &gt; 보고 참조.</translation>
-    </message>
-    <message>
-        <location filename="../Configuration.cpp"/>
         <source>an answer not understood: %1</source>
         <translation>이해할 수 없는 응답: %1</translation>
-    </message>
-    <message>
-        <location filename="../Configuration.cpp"/>
-        <source>%1: the QSO with %2 is not sent yet, kept - see Settings &gt; Reporting.</source>
-        <translation>%1: %2와(과)의 QSO를 아직 보내지 못함, 보관함 - 설정 &gt; 보고 참조.</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp"/>
@@ -912,6 +897,81 @@ Format:
         <location filename="../Configuration.cpp"/>
         <source>%1: the QSOs waiting could not be written to their file - they are lost if the program is closed before they are sent.</source>
         <translation>%1: 대기 중인 QSO를 파일에 쓰지 못했습니다 - 보내기 전에 프로그램을 닫으면 잃게 됩니다.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1 refused the QSO with %2 - see Settings &gt; Logbooks.</source>
+        <translation>%1이(가) %2와(과)의 QSO를 거부함 - 설정 &gt; 로그북 참조.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1 refused the upload: the QSO with %2 is kept - see Settings &gt; Logbooks.</source>
+        <translation>%1이(가) 업로드를 거부함: %2와(과)의 QSO는 보관함 - 설정 &gt; 로그북 참조.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1: the QSO with %2 is not sent yet, kept - see Settings &gt; Logbooks.</source>
+        <translation>%1: %2와(과)의 QSO를 아직 보내지 못함, 보관함 - 설정 &gt; 로그북 참조.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>LoTW downloads are switched off (JTDX_LOTW_API).</source>
+        <translation>LoTW 다운로드가 꺼져 있습니다(JTDX_LOTW_API).</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Download from LoTW failed</source>
+        <translation>LoTW에서 내려받기 실패</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>LoTW sent no report: the username or the password may be wrong, or LoTW is busy.</source>
+        <translation>LoTW가 보고서를 보내지 않았습니다. 사용자 이름이나 비밀번호가 틀렸거나 LoTW가 바쁠 수 있습니다.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>LoTW's answer was not a whole report (%1).</source>
+        <translation>LoTW의 응답이 온전한 보고서가 아니었습니다(%1).</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>The next try is at %1 UTC.</source>
+        <translation>다음 시도는 %1 UTC입니다.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>No login: nothing is downloaded from LoTW.</source>
+        <translation>로그인 정보 없음: LoTW에서 아무것도 내려받지 않습니다.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>The LoTW login could not be saved</source>
+        <translation>LoTW 로그인 정보를 저장하지 못했습니다</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Sending the QSOs you log to %1, in this run: the last answer, the QSOs waiting, a refusal. Green: the last QSO went. Red: the last try failed, or %1 refused - the line says why. Grey: nothing sent yet, or sending is off.</source>
+        <translation>기록한 QSO를 %1(으)로 보내기(이번 실행): 마지막 응답, 대기 중인 QSO, 거부. 초록: 마지막 QSO가 전송됨. 빨강: 마지막 시도가 실패했거나 %1이(가) 거부함 - 이유는 줄에 표시됨. 회색: 아직 보낸 것이 없거나 보내기가 꺼져 있음.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Downloading your LoTW confirmations from %1: the last download and what it brought. Green: the last download worked. Red: it failed, or %1 refused - the line says why. Grey: nothing downloaded yet, or nothing to download with.</source>
+        <translation>%1에서 LoTW 확인 내려받기: 마지막 다운로드와 그 결과. 초록: 마지막 다운로드가 성공함. 빨강: 실패했거나 %1이(가) 거부함 - 이유는 줄에 표시됨. 회색: 아직 내려받은 것이 없거나 내려받을 정보가 없음.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Off: the QSOs you log are not sent to %1.</source>
+        <translation>꺼짐: 기록한 QSO를 %1(으)로 보내지 않습니다.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>QRZ.com's XML data: a grid square asked of QRZ.com for a QSO logged without one ("Fill a missing grid before logging", on the Reporting tab), with the XML login. It needs a QRZ.com XML subscription.</source>
+        <translation>QRZ.com의 XML 데이터: 그리드 없이 기록된 QSO를 위해 QRZ.com에 묻는 그리드("기록 전에 빠진 그리드 채우기", 보고 탭), XML 로그인 사용. QRZ.com XML 구독이 필요합니다.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Club Log's users file: the grid squares Club Log knows of its users, for a QSO logged without one ("Fill a missing grid before logging", on the Reporting tab). Downloaded once a week with the token.</source>
+        <translation>Club Log의 사용자 파일: Club Log가 아는 사용자들의 그리드, 그리드 없이 기록된 QSO용("기록 전에 빠진 그리드 채우기", 보고 탭). 토큰으로 일주일에 한 번 내려받습니다.</translation>
     </message>
 </context>
 <context>
@@ -3104,6 +3164,11 @@ Format:
         <location filename="../displaytext.cpp"/>
         <source>Worked before and LoTW-confirmed: nothing new in the notifications that are on.</source>
         <translation>이미 교신했고 LoTW 확인됨: 켜져 있는 알림에 새로운 것이 없습니다.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Confirmed in LoTW already? The program downloads your confirmations from LoTW itself every 12 hours: a QSL received since the last download shows after the next one.</source>
+        <translation>이미 LoTW에서 확인되었나요? 프로그램은 12시간마다 LoTW 자체에서 확인을 내려받습니다. 마지막 다운로드 이후에 받은 QSL은 다음 다운로드 후에 나타납니다.</translation>
     </message>
 </context>
 <context>
@@ -9839,11 +9904,6 @@ DX 그리드 필드를 비우려면 이 옵션을 켜십시오.</translation>
         <translation>디코드 및 디버그 메시지</translation>
     </message>
     <message>
-        <location filename="../Configuration.ui" line="2777"/>
-        <source>Network Services</source>
-        <translation>네트워크 서비스</translation>
-    </message>
-    <message>
         <location filename="../Configuration.ui" line="2821"/>
         <source>EQSL Username.</source>
         <translation>eQSL 사용자 이름.</translation>
@@ -11843,6 +11903,61 @@ Only QSOs logged from now on: upload older ones to QRZ.com as an ADIF file there
         <location filename="../Configuration.ui"/>
         <source>When a QSO gave no grid - neither heard nor typed - it gets one before it is logged: what this program heard the station send earlier (within a day; a /M station's within half an hour), else the locator it reports to PSK Reporter (with the Reception map open), else the square at least two other stations received from it, as their reports to PSK Reporter say (the map open too), else its grid in eQSL's member list (Settings &gt; General; a member that uploaded to eQSL within the last 12 months), in Club Log's users file (downloaded weekly with the token; a call that uploaded within the last 12 months) or in QRZ.com's XML data (with the XML login, asked as the QSO starts). Only a square inside the call's DXCC country is taken, its first four characters. Log QSO names the source in the grid field's tooltip, and the QSO's comment notes it as [grid: ...]. Never in a contest.</source>
         <translation>QSO에서 그리드를 얻지 못했을 때(수신도 입력도 없을 때) 기록 전에 채웁니다: 이 프로그램이 앞서 그 국이 보낸 것을 들은 그리드(하루 이내, /M 국은 30분 이내), 없으면 그 국이 PSK Reporter에 보고하는 로케이터(수신 지도가 열려 있을 때), 없으면 다른 두 국 이상이 그 국에서 수신해 PSK Reporter에 보고한 스퀘어(역시 수신 지도가 열려 있을 때), 그래도 없으면 eQSL 회원 목록의 그 국 그리드(설정 &gt; 일반, 지난 12개월 안에 eQSL에 업로드한 회원), Club Log 사용자 파일(토큰으로 매주 다운로드, 지난 12개월 안에 업로드한 호출부호) 또는 QRZ.com XML 데이터(XML 로그인으로 QSO 시작 시 조회). 호출부호의 DXCC 국가 안에 있는 스퀘어만, 앞 네 글자를 씁니다. QSO 기록 창은 그리드 칸의 도움말에 출처를 밝히고, QSO 비고에 [grid: ...]로 적습니다. 콘테스트 중에는 하지 않습니다.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Spotting</source>
+        <translation>스팟</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Other programs</source>
+        <translation>다른 프로그램</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Logbooks</source>
+        <translation>로그북</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Your accounts at online logbooks: the QSOs you log sent to them, confirmations downloaded from them</source>
+        <translation>온라인 로그북 계정: 기록한 QSO를 그곳으로 보내고, 그곳에서 확인을 내려받습니다</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Username:</source>
+        <translation>사용자 이름:</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Your username at LoTW's website (lotw.arrl.org) - usually your call sign, but not always.</source>
+        <translation>LoTW 웹사이트(lotw.arrl.org)의 사용자 이름입니다. 보통 호출부호이지만 항상 그렇지는 않습니다.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Password:</source>
+        <translation>비밀번호:</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Your password at LoTW's website. It is kept in a file of its own beside the settings file, readable by you alone, and sent only to lotw.arrl.org.</source>
+        <translation>LoTW 웹사이트의 비밀번호입니다. 설정 파일 옆의 별도 파일에 저장되어 본인만 읽을 수 있으며, lotw.arrl.org로만 보내집니다.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Download your confirmations from LoTW itself now; the program also does it three minutes after the start and every 12 hours while a username and password are saved. Only the QSLs for My Call. The first download fetches all of them, later ones only what came since - a whole report again once a month. LoTW does not say when a password is wrong: after a failure the next try waits 6 hours.</source>
+        <translation>LoTW 자체에서 확인을 지금 내려받습니다. 사용자 이름과 비밀번호가 저장되어 있는 동안 프로그램은 시작 3분 후와 12시간마다 이 작업을 합니다. 내 호출부호에 대한 QSL만 받습니다. 첫 다운로드는 모두 가져오고, 이후에는 그 사이에 온 것만 가져옵니다(한 달에 한 번은 다시 전체 보고서). LoTW는 비밀번호가 틀려도 알려 주지 않습니다. 실패한 뒤 다음 시도는 6시간을 기다립니다.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Download confirmations from LoTW</source>
+        <translation>LoTW에서 확인 내려받기</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>eQSL's member list: the grid squares of eQSL's members, for a QSO logged without one ("Fill a missing grid before logging", on the Reporting tab). It is downloaded on the General tab, under Data files.</source>
+        <translation>eQSL의 회원 목록: 그리드 없이 기록된 QSO를 위한 eQSL 회원들의 그리드("기록 전에 빠진 그리드 채우기", 보고 탭). 일반 탭의 데이터 파일에서 내려받습니다.</translation>
     </message>
 </context>
 <context>

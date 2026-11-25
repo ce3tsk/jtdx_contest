@@ -2635,13 +2635,13 @@ QListView::item:hover {
       </attribute>
       <layout class="QGridLayout" name="gridLayout_18">
        <item row="0" column="0">
-        <layout class="QVBoxLayout" name="verticalLayout_17">
+        <layout class="QVBoxLayout" name="verticalLayout_17" stretch="0,0,1">
          <property name="spacing">
           <number>3</number>
          </property>
          <item>
           <layout class="QHBoxLayout" name="horizontalLayout_21">
-           <item>
+           <item alignment="Qt::AlignTop">
             <widget class="QGroupBox" name="logging_group_box">
              <property name="title">
               <string>Logging</string>
@@ -2738,23 +2738,20 @@ and DX Grid fields when a 73 or free text message is sent.</string>
                   </property>
                  </widget>
                 </item>
+                <item row="7" column="0">
+                 <widget class="QCheckBox" name="fill_missing_grid_check_box">
+                  <property name="toolTip">
+                   <string>When a QSO gave no grid - neither heard nor typed - it gets one before it is logged: what this program heard the station send earlier (within a day; a /M station's within half an hour), else the locator it reports to PSK Reporter (with the Reception map open), else the square at least two other stations received from it, as their reports to PSK Reporter say (the map open too), else its grid in eQSL's member list (Settings > General; a member that uploaded to eQSL within the last 12 months), in Club Log's users file (downloaded weekly with the token; a call that uploaded within the last 12 months) or in QRZ.com's XML data (with the XML login, asked as the QSO starts). Only a square inside the call's DXCC country is taken, its first four characters. Log QSO names the source in the grid field's tooltip, and the QSO's comment notes it as [grid: ...]. Never in a contest.</string>
+                  </property>
+                  <property name="text">
+                   <string>Fill a missing grid before logging</string>
+                  </property>
+                 </widget>
+                </item>
                </layout>
               </item>
              </layout>
             </widget>
-           </item>
-           <item>
-            <spacer name="horizontalSpacer_16">
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>5</width>
-               <height>20</height>
-              </size>
-             </property>
-            </spacer>
            </item>
            <item>
             <layout class="QVBoxLayout" name="verticalLayout_26">
@@ -2762,14 +2759,20 @@ and DX Grid fields when a 73 or free text message is sent.</string>
               <number>2</number>
              </property>
              <item>
-              <widget class="QGroupBox" name="groupBox_7">
+              <widget class="QGroupBox" name="groupBox_12">
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>16777215</height>
+                </size>
+               </property>
                <property name="toolTip">
-                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Connection to external logbook software.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Allows to configure data for recording into the ALL.TXT file. Recording of TX messages can not be switched off.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                </property>
                <property name="title">
-                <string>Send logged QSO ADIF data</string>
+                <string>Recording to ALL.TXT</string>
                </property>
-               <layout class="QGridLayout" name="gridLayout_32">
+               <layout class="QVBoxLayout" name="verticalLayout_21">
                 <property name="leftMargin">
                  <number>2</number>
                 </property>
@@ -2782,219 +2785,74 @@ and DX Grid fields when a 73 or free text message is sent.</string>
                 <property name="bottomMargin">
                  <number>2</number>
                 </property>
-                <property name="spacing">
-                 <number>2</number>
-                </property>
-                <item row="0" column="0">
-                 <layout class="QVBoxLayout" name="verticalLayout_14">
-                  <property name="spacing">
-                   <number>2</number>
-                  </property>
+                <item>
+                 <layout class="QVBoxLayout" name="verticalLayout_20">
                   <item>
-                   <layout class="QFormLayout" name="formLayout_2">
-                    <property name="horizontalSpacing">
-                     <number>2</number>
-                    </property>
-                    <property name="verticalSpacing">
-                     <number>2</number>
-                    </property>
-                    <item row="0" column="0">
-                     <widget class="QLabel" name="label_21">
-                      <property name="toolTip">
-                       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;TCP server name or address&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-                      </property>
+                   <layout class="QVBoxLayout" name="verticalLayout_19">
+                    <item>
+                     <widget class="QCheckBox" name="write_decoded_check_box">
                       <property name="text">
-                       <string>TCP server:</string>
+                       <string>decoded messages</string>
                       </property>
                      </widget>
                     </item>
-                    <item row="0" column="1">
-                     <widget class="QLineEdit" name="tcp_server_line_edit">
-                      <property name="sizePolicy">
-                       <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                        <horstretch>0</horstretch>
-                        <verstretch>0</verstretch>
-                       </sizepolicy>
-                      </property>
-                      <property name="toolTip">
-                       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;TCP server name or address&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="3" column="0">
-                     <widget class="QLabel" name="label_22">
-                      <property name="toolTip">
-                       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;TCP server port number&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-                      </property>
+                    <item>
+                     <widget class="QCheckBox" name="write_decoded_debug_check_box">
                       <property name="text">
-                       <string>TCP port:</string>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="3" column="1">
-                     <widget class="QSpinBox" name="tcp_server_port_spin_box">
-                      <property name="toolTip">
-                       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;TCP server port number&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-                      </property>
-                      <property name="maximum">
-                       <number>65534</number>
+                       <string>decoded and debug messages</string>
                       </property>
                      </widget>
                     </item>
                    </layout>
-                  </item>
-                  <item>
-                   <widget class="QCheckBox" name="TCP_checkBox">
-                    <property name="toolTip">
-                     <string/>
-                    </property>
-                    <property name="text">
-                     <string>Enable sending to TCP server</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item>
-                   <widget class="Line" name="line_5">
-                    <property name="orientation">
-                     <enum>Qt::Horizontal</enum>
-                    </property>
-                   </widget>
-                  </item>
-                  <item>
-                   <layout class="QFormLayout" name="formLayout_3">
-                    <property name="horizontalSpacing">
-                     <number>2</number>
-                    </property>
-                    <property name="verticalSpacing">
-                     <number>2</number>
-                    </property>
-                    <item row="0" column="0">
-                     <widget class="QLabel" name="label_33">
-                      <property name="toolTip">
-                       <string comment="&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;secondary UDP server name or address&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;"/>
-                      </property>
-                      <property name="text">
-                       <string>2nd UDP server</string>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="0" column="1">
-                     <widget class="QLineEdit" name="udp2_server_line_edit">
-                      <property name="toolTip">
-                       <string comment="&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;secondary UDP server name or address&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;"/>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="1" column="0">
-                     <widget class="QLabel" name="label_34">
-                      <property name="toolTip">
-                       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;secondary UDP server port number&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-                      </property>
-                      <property name="text">
-                       <string>UDP port:</string>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="1" column="1">
-                     <widget class="QSpinBox" name="udp2_server_port_spin_box">
-                      <property name="toolTip">
-                       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;secondary UDP server port number&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-                      </property>
-                     </widget>
-                    </item>
-                   </layout>
-                  </item>
-                  <item>
-                   <widget class="QCheckBox" name="udp2_enable_check_box">
-                    <property name="text">
-                     <string>Enable sending to secondary UDP server</string>
-                    </property>
-                   </widget>
                   </item>
                  </layout>
                 </item>
                </layout>
               </widget>
              </item>
-            </layout>
-           </item>
-           <item>
-            <spacer name="horizontalSpacer_31">
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>5</width>
-               <height>20</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
-           <item>
-            <widget class="QGroupBox" name="groupBox_12">
-             <property name="maximumSize">
-              <size>
-               <width>16777215</width>
-               <height>16777215</height>
-              </size>
-             </property>
-             <property name="toolTip">
-              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Allows to configure data for recording into the ALL.TXT file. Recording of TX messages can not be switched off.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-             </property>
-             <property name="title">
-              <string>Recording to ALL.TXT</string>
-             </property>
-             <layout class="QVBoxLayout" name="verticalLayout_21">
-              <property name="leftMargin">
-               <number>2</number>
-              </property>
-              <property name="topMargin">
-               <number>2</number>
-              </property>
-              <property name="rightMargin">
-               <number>2</number>
-              </property>
-              <property name="bottomMargin">
-               <number>2</number>
-              </property>
-              <item>
-               <layout class="QVBoxLayout" name="verticalLayout_20">
+             <item>
+              <widget class="QGroupBox" name="spotting_group_box">
+               <property name="title">
+                <string>Spotting</string>
+               </property>
+               <layout class="QVBoxLayout" name="spotting_layout">
                 <item>
-                 <layout class="QVBoxLayout" name="verticalLayout_19">
-                  <item>
-                   <widget class="QCheckBox" name="write_decoded_check_box">
-                    <property name="text">
-                     <string>decoded messages</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item>
-                   <widget class="QCheckBox" name="write_decoded_debug_check_box">
-                    <property name="text">
-                     <string>decoded and debug messages</string>
-                    </property>
-                   </widget>
-                  </item>
-                 </layout>
+                 <widget class="QCheckBox" name="psk_reporter_check_box">
+                  <property name="toolTip">
+                   <string>The program can send your station details and all
+decoded signals as spots to the http://pskreporter.info web site.
+This is used for reverse beacon analysis which is very useful
+for assessing propagation and system performance.</string>
+                  </property>
+                  <property name="text">
+                   <string>Enable &amp;PSK Reporter Spotting</string>
+                  </property>
+                 </widget>
                 </item>
                 <item>
-                 <spacer name="verticalSpacer_19">
-                  <property name="orientation">
-                   <enum>Qt::Vertical</enum>
+                 <widget class="QCheckBox" name="dxsummit_check_box">
+                  <property name="text">
+                   <string>Enable DXSummit Spotting </string>
                   </property>
-                  <property name="sizeHint" stdset="0">
-                   <size>
-                    <width>20</width>
-                    <height>40</height>
-                   </size>
-                  </property>
-                 </spacer>
+                 </widget>
                 </item>
                </layout>
-              </item>
-             </layout>
-            </widget>
+              </widget>
+             </item>
+             <item>
+              <spacer name="column_spacer">
+               <property name="orientation">
+                <enum>Qt::Vertical</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>20</width>
+                 <height>0</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+            </layout>
            </item>
            <item>
             <spacer name="horizontalSpacer_15">
@@ -3012,560 +2870,320 @@ and DX Grid fields when a 73 or free text message is sent.</string>
           </layout>
          </item>
          <item>
-          <widget class="QGroupBox" name="network_group_box">
+          <widget class="QGroupBox" name="others_group_box">
            <property name="title">
-                      <string>Network Services</string>
-                     </property>
-           <layout class="QVBoxLayout" name="network_layout">
+            <string>Other programs</string>
+           </property>
+           <layout class="QHBoxLayout" name="others_layout">
             <item>
-             <layout class="QHBoxLayout" name="services_layout" stretch="1,1,1">
-              <item>
-               <widget class="QGroupBox" name="eqsl_group_box">
-                <property name="title">
-                 <string notr="true">eQSL</string>
-                </property>
-                <layout class="QGridLayout" name="eqsl_grid_layout">
-                 <item row="0" column="0">
-                  <widget class="QLabel" name="eqsluser_label">
-                   <property name="text">
-                    <string>U&amp;sername:</string>
-                   </property>
-                   <property name="buddy">
-                    <cstring>eqsluser_edit</cstring>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="0" column="1">
-                  <widget class="QLineEdit" name="eqsluser_edit">
-                   <property name="toolTip">
-                    <string>EQSL Username.</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="1" column="0">
-                  <widget class="QLabel" name="eqslpasswd_label">
-                   <property name="text">
-                    <string>P&amp;assword:</string>
-                   </property>
-                   <property name="buddy">
-                    <cstring>eqslpasswd_edit</cstring>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="1" column="1">
-                  <widget class="QLineEdit" name="eqslpasswd_edit">
-                   <property name="toolTip">
-                    <string>EQSL Password.</string>
-                   </property>
-                   <property name="echoMode">
-                    <enum>QLineEdit::Password</enum>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="2" column="0">
-                  <widget class="QLabel" name="eqslnick_label">
-                   <property name="text">
-                    <string>QTH N&amp;ickname:</string>
-                   </property>
-                   <property name="buddy">
-                    <cstring>eqslnick_edit</cstring>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="2" column="1">
-                  <widget class="QLineEdit" name="eqslnick_edit">
-                   <property name="toolTip">
-                    <string>Your QTH Nickname at eQSL, exactly as in your eQSL profile. Optional: without one, eQSL files each QSO by its date, into the account whose dates cover it. Give it when your eQSL account has QTH profiles whose dates overlap.</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="3" column="0" colspan="2">
-                  <widget class="QCheckBox" name="eqsl_check_box">
-                   <property name="toolTip">
-                    <string>The program can send logged QSO info to the https://www.eqsl.cc web site.</string>
-                   </property>
-                   <property name="text">
-                    <string>Send logged QSOs</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="4" column="0" colspan="2">
-                  <widget class="QLabel" name="eqsl_upload_status_label">
-                   <property name="text">
-                    <string notr="true"/>
-                   </property>
-                   <property name="wordWrap">
-                    <bool>true</bool>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="5" column="0" colspan="2">
-                  <widget class="QLabel" name="eqsl_members_label">
-                   <property name="text">
-                    <string>Its member list, for missing grids: Settings &gt; General &gt; Data files.</string>
-                   </property>
-                   <property name="wordWrap">
-                    <bool>true</bool>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="6" column="0" colspan="2">
-                  <spacer name="eqsl_spacer">
-                   <property name="orientation">
-                    <enum>Qt::Vertical</enum>
-                   </property>
-                   <property name="sizeHint" stdset="0">
-                    <size>
-                     <width>0</width>
-                     <height>0</height>
-                    </size>
-                   </property>
-                  </spacer>
-                 </item>
-                </layout>
-               </widget>
-              </item>
-              <item>
-               <widget class="QGroupBox" name="clublog_group_box">
-                <property name="title">
-                 <string notr="true">Club Log</string>
-                </property>
-                <layout class="QGridLayout" name="clublog_grid_layout">
-                 <item row="0" column="0">
-                  <widget class="QLabel" name="clublog_token_label">
-                   <property name="text">
-                    <string>To&amp;ken:</string>
-                   </property>
-                   <property name="buddy">
-                    <cstring>clublog_token_edit</cstring>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="0" column="1">
-                  <widget class="QLineEdit" name="clublog_token_edit">
-                   <property name="toolTip">
-                    <string>Your Club Log API token. To create one, log in to Club Log, go to Settings &gt; API and click the &quot;Create token&quot; button there. Copy the token, paste it into this box and press OK.
-With it the program downloads your LoTW confirmations from Club Log at the start and every 12 hours. It is kept in a file of its own that only you can read, never in the settings file.</string>
-                   </property>
-                   <property name="echoMode">
-                    <enum>QLineEdit::Password</enum>
-                   </property>
-                   <property name="placeholderText">
-                    <string notr="true">cl_...</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="1" column="0" colspan="2">
-                  <widget class="QPushButton" name="clublog_download_push_button">
-                   <property name="toolTip">
-                    <string>Download your LoTW confirmations from Club Log now; the program also does it at the start and every 12 hours.
-Club Log has only the LoTW confirmations it has fetched.
-In Club Log, under Tools &gt; LoTW Sync:
-1. Certificates: add your LoTW certificate once.
-2. Download confirmations: fetch the new ones now and then.
-To fetch the whole LoTW record once, clear &quot;Only confirmations since the last download&quot; there first.</string>
-                   </property>
-                   <property name="text">
-                    <string>Do&amp;wnload LoTW confirmations from Club Log</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="2" column="0" colspan="2">
-                  <widget class="QLabel" name="clublog_status_label">
-                   <property name="text">
-                    <string notr="true"/>
-                   </property>
-                   <property name="wordWrap">
-                    <bool>true</bool>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="3" column="0" colspan="2">
-                  <widget class="QCheckBox" name="clublog_upload_check_box">
-                   <property name="toolTip">
-                    <string>Each QSO you log is sent to your Club Log log at once, with the Club Log token - in a contest too. A QSO that cannot be sent now (no connection, Club Log busy) is kept and sent later; one Club Log refuses is named below.
-Only QSOs logged from now on: upload older ones to Club Log as an ADIF file there.</string>
-                   </property>
-                   <property name="text">
-                    <string>Send logged QSOs</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="4" column="0" colspan="2">
-                  <widget class="QLabel" name="clublog_upload_status_label">
-                   <property name="text">
-                    <string notr="true"/>
-                   </property>
-                   <property name="wordWrap">
-                    <bool>true</bool>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="5" column="0" colspan="2">
-                  <widget class="QLabel" name="clublog_users_status_label">
-                   <property name="text">
-                    <string></string>
-                   </property>
-                   <property name="wordWrap">
-                    <bool>true</bool>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="6" column="0" colspan="2">
-                  <spacer name="clublog_spacer">
-                   <property name="orientation">
-                    <enum>Qt::Vertical</enum>
-                   </property>
-                   <property name="sizeHint" stdset="0">
-                    <size>
-                     <width>0</width>
-                     <height>0</height>
-                    </size>
-                   </property>
-                  </spacer>
-                 </item>
-                </layout>
-               </widget>
-              </item>
-              <item>
-               <widget class="QGroupBox" name="qrz_group_box">
-                <property name="title">
-                 <string notr="true">QRZ.com</string>
-                </property>
-                <layout class="QGridLayout" name="qrz_grid_layout">
-                 <item row="0" column="0">
-                  <widget class="QLabel" name="qrz_key_label">
-                   <property name="text">
-                    <string>API ke&amp;y:</string>
-                   </property>
-                   <property name="buddy">
-                    <cstring>qrz_key_edit</cstring>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="0" column="1">
-                  <widget class="QLineEdit" name="qrz_key_edit">
-                   <property name="toolTip">
-                    <string>Your QRZ.com Logbook API key. To find it, log in to QRZ.com, open your Logbook, click Settings at the top right and, under &quot;QRZ Logbook API&quot;, click &quot;Show&quot; beside the API Key. Copy the key, paste it into this box and press OK. The API needs a QRZ.com subscription (XML level or higher).
-With it the program downloads your LoTW confirmations from QRZ.com at the start and every 12 hours. It is kept in a file of its own that only you can read, never in the settings file.</string>
-                   </property>
-                   <property name="echoMode">
-                    <enum>QLineEdit::Password</enum>
-                   </property>
-                   <property name="placeholderText">
-                    <string notr="true">XXXX-XXXX-XXXX-XXXX</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="1" column="0">
-                  <widget class="QLabel" name="qrz_xml_label">
-                   <property name="text">
-                    <string>XML login:</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="1" column="1">
-                  <layout class="QHBoxLayout" name="qrz_xml_layout">
+             <widget class="QGroupBox" name="groupBox_4">
+              <property name="toolTip">
+               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Primary UDP connection to external software.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              </property>
+              <property name="title">
+               <string>Primary UDP Server</string>
+              </property>
+              <layout class="QGridLayout" name="gridLayout_16">
+               <property name="leftMargin">
+                <number>2</number>
+               </property>
+               <property name="topMargin">
+                <number>2</number>
+               </property>
+               <property name="rightMargin">
+                <number>2</number>
+               </property>
+               <property name="bottomMargin">
+                <number>2</number>
+               </property>
+               <property name="spacing">
+                <number>2</number>
+               </property>
+               <item row="0" column="0">
+                <layout class="QVBoxLayout" name="verticalLayout_5">
+                 <item>
+                  <layout class="QHBoxLayout" name="horizontalLayout_26">
                    <item>
-                    <widget class="QLineEdit" name="qrz_xml_user_edit">
-                     <property name="toolTip">
-                      <string>Your QRZ.com username - usually your callsign - for QRZ.com's XML data: the grids of calls, with a subscription that includes XML data. Not the API key above.</string>
+                    <layout class="QFormLayout" name="formLayout_6">
+                     <property name="fieldGrowthPolicy">
+                      <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
                      </property>
-                     <property name="placeholderText">
-                      <string>username</string>
+                     <item row="0" column="0">
+                      <widget class="QLabel" name="udp_server_label">
+                       <property name="text">
+                        <string>UDP Server:</string>
+                       </property>
+                       <property name="buddy">
+                        <cstring>udp_server_line_edit</cstring>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="0" column="1">
+                      <widget class="QLineEdit" name="udp_server_line_edit">
+                       <property name="sizePolicy">
+                        <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                         <horstretch>0</horstretch>
+                         <verstretch>0</verstretch>
+                        </sizepolicy>
+                       </property>
+                       <property name="toolTip">
+                        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Optional hostname of network service to receive decodes.&lt;/p&gt;&lt;p&gt;Formats:&lt;/p&gt;&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;hostname&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;IPv4 address&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;IPv6 address&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;IPv4 multicast group address&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;IPv6 multicast group address&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;Clearing this field will disable the broadcasting of UDP status updates.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                       </property>
+                       <property name="inputMethodHints">
+                        <set>Qt::ImhDigitsOnly</set>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="1" column="0">
+                      <widget class="QLabel" name="label_6">
+                       <property name="text">
+                        <string>UDP Server port number:</string>
+                       </property>
+                       <property name="buddy">
+                        <cstring>udp_server_port_spin_box</cstring>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="1" column="1">
+                      <widget class="QSpinBox" name="udp_server_port_spin_box">
+                       <property name="toolTip">
+                        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enter the service port number of the UDP server that JTDX should send updates to. If this is zero no updates will be broadcast.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                       </property>
+                       <property name="minimum">
+                        <number>0</number>
+                       </property>
+                       <property name="maximum">
+                        <number>65534</number>
+                       </property>
+                      </widget>
+                     </item>
+                    </layout>
+                   </item>
+                   <item>
+                    <layout class="QVBoxLayout" name="verticalLayout_11">
+                     <item>
+                      <widget class="QCheckBox" name="accept_udp_requests_check_box">
+                       <property name="toolTip">
+                        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;With this enabled JTDX will accept certain requests back from a UDP server that receives decode messages.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                       </property>
+                       <property name="text">
+                        <string>Accept UDP requests</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item>
+                      <widget class="QCheckBox" name="udpWindowToFront">
+                       <property name="toolTip">
+                        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Indicate acceptance of an incoming UDP request. The effect of this option varies depending on the operating system and window manager, its intent is to notify the acceptance of an incoming UDP request even if this application is minimized or hidden.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                       </property>
+                       <property name="text">
+                        <string>Notify on accepted UDP request</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item>
+                      <widget class="QCheckBox" name="udpWindowRestore">
+                       <property name="toolTip">
+                        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Restore the window from minimized if an UDP request is accepted.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                       </property>
+                       <property name="text">
+                        <string>Accepted UDP request restores window</string>
+                       </property>
+                      </widget>
+                     </item>
+                    </layout>
+                   </item>
+                  </layout>
+                 </item>
+                 <item>
+                  <widget class="QCheckBox" name="udp1_adif_enable_check_box">
+                   <property name="text">
+                    <string>Enable sending logged QSO ADIF data</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QCheckBox" name="preventFalseUDP_check_box">
+                   <property name="enabled">
+                    <bool>true</bool>
+                   </property>
+                   <property name="toolTip">
+                    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Messages marked by questionmark will not be passed to JTAlert and other UDP based software.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                   </property>
+                   <property name="text">
+                    <string>Prevent spotting messages with the unconfirmed callsigns via UDP</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QCheckBox" name="filterUDP_check_box">
+                   <property name="toolTip">
+                    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Selected text filters will be applied to limit transmission of the UDP messages from JTDX, for instance messages from some continents can be blocked.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                   </property>
+                   <property name="text">
+                    <string>Apply text filters to transmission of the UDP messages</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+              </layout>
+             </widget>
+            </item>
+            <item>
+             <widget class="QGroupBox" name="groupBox_7">
+              <property name="toolTip">
+               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Connection to external logbook software.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              </property>
+              <property name="title">
+               <string>Send logged QSO ADIF data</string>
+              </property>
+              <layout class="QGridLayout" name="gridLayout_32">
+               <property name="leftMargin">
+                <number>2</number>
+               </property>
+               <property name="topMargin">
+                <number>2</number>
+               </property>
+               <property name="rightMargin">
+                <number>2</number>
+               </property>
+               <property name="bottomMargin">
+                <number>2</number>
+               </property>
+               <property name="spacing">
+                <number>2</number>
+               </property>
+               <item row="0" column="0">
+                <layout class="QVBoxLayout" name="verticalLayout_14">
+                 <property name="spacing">
+                  <number>2</number>
+                 </property>
+                 <item>
+                  <layout class="QFormLayout" name="formLayout_2">
+                   <property name="horizontalSpacing">
+                    <number>2</number>
+                   </property>
+                   <property name="verticalSpacing">
+                    <number>2</number>
+                   </property>
+                   <item row="0" column="0">
+                    <widget class="QLabel" name="label_21">
+                     <property name="toolTip">
+                      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;TCP server name or address&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                     </property>
+                     <property name="text">
+                      <string>TCP server:</string>
                      </property>
                     </widget>
                    </item>
-                   <item>
-                    <widget class="QLineEdit" name="qrz_xml_password_edit">
+                   <item row="0" column="1">
+                    <widget class="QLineEdit" name="tcp_server_line_edit">
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
+                     </property>
                      <property name="toolTip">
-                      <string>Your QRZ.com password, for QRZ.com's XML data. It is kept in a file of its own that only you can read, never in the settings file.</string>
+                      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;TCP server name or address&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                      </property>
-                     <property name="echoMode">
-                      <enum>QLineEdit::Password</enum>
+                    </widget>
+                   </item>
+                   <item row="3" column="0">
+                    <widget class="QLabel" name="label_22">
+                     <property name="toolTip">
+                      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;TCP server port number&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                      </property>
-                     <property name="placeholderText">
-                      <string>password</string>
+                     <property name="text">
+                      <string>TCP port:</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="3" column="1">
+                    <widget class="QSpinBox" name="tcp_server_port_spin_box">
+                     <property name="toolTip">
+                      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;TCP server port number&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                     </property>
+                     <property name="maximum">
+                      <number>65534</number>
                      </property>
                     </widget>
                    </item>
                   </layout>
                  </item>
-                 <item row="2" column="0" colspan="2">
-                  <widget class="QPushButton" name="qrz_download_push_button">
+                 <item>
+                  <widget class="QCheckBox" name="TCP_checkBox">
                    <property name="toolTip">
-                    <string>Download your LoTW confirmations from QRZ.com now; the program also does it at the start and every 12 hours. Only the confirmations from LoTW count, not QRZ.com's own.
-QRZ.com has only the LoTW confirmations it has imported.
-In your QRZ.com Logbook, under Settings:
-1. LoTW Settings: enter your LoTW username once.
-2. Logbook of the World Import/Export, Import: fetch the new ones now and then (QRZ.com asks for your LoTW password).
-The first download takes a few minutes; after it only what changed is fetched.</string>
+                    <string/>
                    </property>
                    <property name="text">
-                    <string>Download LoTW confirmations from &amp;QRZ.com</string>
+                    <string>Enable sending to TCP server</string>
                    </property>
                   </widget>
                  </item>
-                 <item row="3" column="0" colspan="2">
-                  <widget class="QLabel" name="qrz_status_label">
-                   <property name="text">
-                    <string notr="true"/>
-                   </property>
-                   <property name="wordWrap">
-                    <bool>true</bool>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="4" column="0" colspan="2">
-                  <widget class="QCheckBox" name="qrz_upload_check_box">
-                   <property name="toolTip">
-                    <string>Each QSO you log is sent to your QRZ.com logbook at once, with the QRZ.com API key - in a contest too. QRZ.com takes QSOs from programs only with a subscription. A QSO that cannot be sent now is kept and sent later; one QRZ.com refuses is named below.
-Only QSOs logged from now on: upload older ones to QRZ.com as an ADIF file there.</string>
-                   </property>
-                   <property name="text">
-                    <string>Send logged QSOs</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="5" column="0" colspan="2">
-                  <widget class="QLabel" name="qrz_upload_status_label">
-                   <property name="text">
-                    <string notr="true"/>
-                   </property>
-                   <property name="wordWrap">
-                    <bool>true</bool>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="6" column="0" colspan="2">
-                  <widget class="QLabel" name="qrz_xml_status_label">
-                   <property name="text">
-                    <string></string>
-                   </property>
-                   <property name="wordWrap">
-                    <bool>true</bool>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="7" column="0" colspan="2">
-                  <spacer name="qrz_spacer">
+                 <item>
+                  <widget class="Line" name="line_5">
                    <property name="orientation">
-                    <enum>Qt::Vertical</enum>
+                    <enum>Qt::Horizontal</enum>
                    </property>
-                   <property name="sizeHint" stdset="0">
-                    <size>
-                     <width>0</width>
-                     <height>0</height>
-                    </size>
+                  </widget>
+                 </item>
+                 <item>
+                  <layout class="QFormLayout" name="formLayout_3">
+                   <property name="horizontalSpacing">
+                    <number>2</number>
                    </property>
-                  </spacer>
+                   <property name="verticalSpacing">
+                    <number>2</number>
+                   </property>
+                   <item row="0" column="0">
+                    <widget class="QLabel" name="label_33">
+                     <property name="toolTip">
+                      <string comment="&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;secondary UDP server name or address&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;"/>
+                     </property>
+                     <property name="text">
+                      <string>2nd UDP server</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="0" column="1">
+                    <widget class="QLineEdit" name="udp2_server_line_edit">
+                     <property name="toolTip">
+                      <string comment="&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;secondary UDP server name or address&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;"/>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="1" column="0">
+                    <widget class="QLabel" name="label_34">
+                     <property name="toolTip">
+                      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;secondary UDP server port number&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                     </property>
+                     <property name="text">
+                      <string>UDP port:</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="1" column="1">
+                    <widget class="QSpinBox" name="udp2_server_port_spin_box">
+                     <property name="toolTip">
+                      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;secondary UDP server port number&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                 <item>
+                  <widget class="QCheckBox" name="udp2_enable_check_box">
+                   <property name="text">
+                    <string>Enable sending to secondary UDP server</string>
+                   </property>
+                  </widget>
                  </item>
                 </layout>
-               </widget>
-              </item>
-             </layout>
-            </item>
-            <item>
-             <layout class="QHBoxLayout" name="spotting_layout">
-              <item>
-               <widget class="QCheckBox" name="psk_reporter_check_box">
-                <property name="toolTip">
-                 <string>The program can send your station details and all
-decoded signals as spots to the http://pskreporter.info web site.
-This is used for reverse beacon analysis which is very useful
-for assessing propagation and system performance.</string>
-                </property>
-                <property name="text">
-                 <string>Enable &amp;PSK Reporter Spotting</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QCheckBox" name="dxsummit_check_box">
-                <property name="text">
-                 <string>Enable DXSummit Spotting </string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <spacer name="spotting_spacer">
-                <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
-                </property>
-                <property name="sizeHint" stdset="0">
-                 <size>
-                  <width>0</width>
-                  <height>0</height>
-                 </size>
-                </property>
-               </spacer>
-              </item>
-              <item>
-               <widget class="QCheckBox" name="fill_missing_grid_check_box">
-                <property name="toolTip">
-                 <string>When a QSO gave no grid - neither heard nor typed - it gets one before it is logged: what this program heard the station send earlier (within a day; a /M station's within half an hour), else the locator it reports to PSK Reporter (with the Reception map open), else the square at least two other stations received from it, as their reports to PSK Reporter say (the map open too), else its grid in eQSL's member list (Settings > General; a member that uploaded to eQSL within the last 12 months), in Club Log's users file (downloaded weekly with the token; a call that uploaded within the last 12 months) or in QRZ.com's XML data (with the XML login, asked as the QSO starts). Only a square inside the call's DXCC country is taken, its first four characters. Log QSO names the source in the grid field's tooltip, and the QSO's comment notes it as [grid: ...]. Never in a contest.</string>
-                </property>
-                <property name="text">
-                 <string>Fill a missing grid before logging</string>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-           </layout>
-          </widget>
-         </item>
-         <item>
-          <widget class="QGroupBox" name="groupBox_4">
-           <property name="toolTip">
-            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Primary UDP connection to external software.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-           </property>
-           <property name="title">
-            <string>Primary UDP Server</string>
-           </property>
-           <layout class="QGridLayout" name="gridLayout_16">
-            <property name="leftMargin">
-             <number>2</number>
-            </property>
-            <property name="topMargin">
-             <number>2</number>
-            </property>
-            <property name="rightMargin">
-             <number>2</number>
-            </property>
-            <property name="bottomMargin">
-             <number>2</number>
-            </property>
-            <property name="spacing">
-             <number>2</number>
-            </property>
-            <item row="0" column="0">
-             <layout class="QVBoxLayout" name="verticalLayout_5">
-              <item>
-               <layout class="QHBoxLayout" name="horizontalLayout_26">
-                <item>
-                 <layout class="QFormLayout" name="formLayout_6">
-                  <property name="fieldGrowthPolicy">
-                   <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
-                  </property>
-                  <item row="0" column="0">
-                   <widget class="QLabel" name="udp_server_label">
-                    <property name="text">
-                     <string>UDP Server:</string>
-                    </property>
-                    <property name="buddy">
-                     <cstring>udp_server_line_edit</cstring>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="0" column="1">
-                   <widget class="QLineEdit" name="udp_server_line_edit">
-                    <property name="sizePolicy">
-                     <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                      <horstretch>0</horstretch>
-                      <verstretch>0</verstretch>
-                     </sizepolicy>
-                    </property>
-                    <property name="toolTip">
-                     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Optional hostname of network service to receive decodes.&lt;/p&gt;&lt;p&gt;Formats:&lt;/p&gt;&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;hostname&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;IPv4 address&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;IPv6 address&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;IPv4 multicast group address&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;IPv6 multicast group address&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;Clearing this field will disable the broadcasting of UDP status updates.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-                    </property>
-                    <property name="inputMethodHints">
-                     <set>Qt::ImhDigitsOnly</set>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="1" column="0">
-                   <widget class="QLabel" name="label_6">
-                    <property name="text">
-                     <string>UDP Server port number:</string>
-                    </property>
-                    <property name="buddy">
-                     <cstring>udp_server_port_spin_box</cstring>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="1" column="1">
-                   <widget class="QSpinBox" name="udp_server_port_spin_box">
-                    <property name="toolTip">
-                     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enter the service port number of the UDP server that JTDX should send updates to. If this is zero no updates will be broadcast.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-                    </property>
-                    <property name="minimum">
-                     <number>0</number>
-                    </property>
-                    <property name="maximum">
-                     <number>65534</number>
-                    </property>
-                   </widget>
-                  </item>
-                 </layout>
-                </item>
-                <item>
-                 <layout class="QVBoxLayout" name="verticalLayout_11">
-                  <item>
-                   <widget class="QCheckBox" name="accept_udp_requests_check_box">
-                    <property name="toolTip">
-                     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;With this enabled JTDX will accept certain requests back from a UDP server that receives decode messages.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-                    </property>
-                    <property name="text">
-                     <string>Accept UDP requests</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item>
-                   <widget class="QCheckBox" name="udpWindowToFront">
-                    <property name="toolTip">
-                     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Indicate acceptance of an incoming UDP request. The effect of this option varies depending on the operating system and window manager, its intent is to notify the acceptance of an incoming UDP request even if this application is minimized or hidden.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-                    </property>
-                    <property name="text">
-                     <string>Notify on accepted UDP request</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item>
-                   <widget class="QCheckBox" name="udpWindowRestore">
-                    <property name="toolTip">
-                     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Restore the window from minimized if an UDP request is accepted.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-                    </property>
-                    <property name="text">
-                     <string>Accepted UDP request restores window</string>
-                    </property>
-                   </widget>
-                  </item>
-                 </layout>
-                </item>
-               </layout>
-              </item>
-              <item>
-               <widget class="QCheckBox" name="udp1_adif_enable_check_box">
-                <property name="text">
-                 <string>Enable sending logged QSO ADIF data</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QCheckBox" name="preventFalseUDP_check_box">
-                <property name="enabled">
-                 <bool>true</bool>
-                </property>
-                <property name="toolTip">
-                 <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Messages marked by questionmark will not be passed to JTAlert and other UDP based software.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-                </property>
-                <property name="text">
-                 <string>Prevent spotting messages with the unconfirmed callsigns via UDP</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QCheckBox" name="filterUDP_check_box">
-                <property name="toolTip">
-                 <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Selected text filters will be applied to limit transmission of the UDP messages from JTDX, for instance messages from some continents can be blocked.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-                </property>
-                <property name="text">
-                 <string>Apply text filters to transmission of the UDP messages</string>
-                </property>
-               </widget>
-              </item>
-             </layout>
+               </item>
+              </layout>
+             </widget>
             </item>
            </layout>
           </widget>
@@ -3591,6 +3209,622 @@ for assessing propagation and system performance.</string>
           <enum>Qt::Horizontal</enum>
          </property>
         </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="logbooks_tab">
+      <attribute name="title">
+       <string>Logbooks</string>
+      </attribute>
+      <attribute name="toolTip">
+       <string>Your accounts at online logbooks: the QSOs you log sent to them, confirmations downloaded from them</string>
+      </attribute>
+      <property name="toolTip">
+       <string>Your accounts at online logbooks: the QSOs you log sent to them, confirmations downloaded from them</string>
+      </property>
+      <layout class="QGridLayout" name="logbooks_layout" rowstretch="0,0,1" columnstretch="1,1">
+       <item row="0" column="0">
+        <widget class="QGroupBox" name="eqsl_group_box">
+         <property name="title">
+          <string notr="true">eQSL</string>
+         </property>
+         <layout class="QGridLayout" name="eqsl_grid_layout">
+          <item row="0" column="0">
+           <widget class="QLabel" name="eqsluser_label">
+            <property name="toolTip">
+             <string>EQSL Username.</string>
+            </property>
+            <property name="text">
+             <string>U&amp;sername:</string>
+            </property>
+            <property name="buddy">
+             <cstring>eqsluser_edit</cstring>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QLineEdit" name="eqsluser_edit">
+            <property name="toolTip">
+             <string>EQSL Username.</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="eqslpasswd_label">
+            <property name="toolTip">
+             <string>EQSL Password.</string>
+            </property>
+            <property name="text">
+             <string>P&amp;assword:</string>
+            </property>
+            <property name="buddy">
+             <cstring>eqslpasswd_edit</cstring>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QLineEdit" name="eqslpasswd_edit">
+            <property name="toolTip">
+             <string>EQSL Password.</string>
+            </property>
+            <property name="echoMode">
+             <enum>QLineEdit::Password</enum>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="eqslnick_label">
+            <property name="toolTip">
+             <string>Your QTH Nickname at eQSL, exactly as in your eQSL profile. Optional: without one, eQSL files each QSO by its date, into the account whose dates cover it. Give it when your eQSL account has QTH profiles whose dates overlap.</string>
+            </property>
+            <property name="text">
+             <string>QTH N&amp;ickname:</string>
+            </property>
+            <property name="buddy">
+             <cstring>eqslnick_edit</cstring>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QLineEdit" name="eqslnick_edit">
+            <property name="toolTip">
+             <string>Your QTH Nickname at eQSL, exactly as in your eQSL profile. Optional: without one, eQSL files each QSO by its date, into the account whose dates cover it. Give it when your eQSL account has QTH profiles whose dates overlap.</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0" colspan="2">
+           <widget class="QCheckBox" name="eqsl_check_box">
+            <property name="toolTip">
+             <string>The program can send logged QSO info to the https://www.eqsl.cc web site.</string>
+            </property>
+            <property name="text">
+             <string>Send logged QSOs</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="0" colspan="2">
+           <layout class="QHBoxLayout" name="eqsl_upload_lamp_row">
+            <item alignment="Qt::AlignTop">
+             <widget class="QLabel" name="eqsl_upload_lamp">
+              <property name="minimumSize">
+               <size>
+                <width>12</width>
+                <height>12</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>12</width>
+                <height>12</height>
+               </size>
+              </property>
+              <property name="text">
+               <string notr="true"/>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="eqsl_upload_status_label">
+              <property name="text">
+               <string notr="true"/>
+              </property>
+              <property name="wordWrap">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item row="5" column="0" colspan="2">
+           <widget class="QLabel" name="eqsl_members_label">
+            <property name="toolTip">
+             <string>eQSL's member list: the grid squares of eQSL's members, for a QSO logged without one (&quot;Fill a missing grid before logging&quot;, on the Reporting tab). It is downloaded on the General tab, under Data files.</string>
+            </property>
+            <property name="text">
+             <string>Its member list, for missing grids: Settings &gt; General &gt; Data files.</string>
+            </property>
+            <property name="wordWrap">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="6" column="0" colspan="2">
+           <spacer name="eqsl_spacer">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>0</width>
+              <height>0</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QGroupBox" name="lotwqsl_group_box">
+         <property name="title">
+          <string notr="true">LoTW</string>
+         </property>
+         <layout class="QGridLayout" name="lotwqsl_grid_layout">
+          <item row="0" column="0">
+           <widget class="QLabel" name="lotwqsl_user_label">
+            <property name="toolTip">
+             <string>Your username at LoTW's website (lotw.arrl.org) - usually your call sign, but not always.</string>
+            </property>
+            <property name="text">
+             <string>Username:</string>
+            </property>
+            <property name="buddy">
+             <cstring>lotwqsl_user_edit</cstring>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QLineEdit" name="lotwqsl_user_edit">
+            <property name="toolTip">
+             <string>Your username at LoTW's website (lotw.arrl.org) - usually your call sign, but not always.</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="lotwqsl_password_label">
+            <property name="toolTip">
+             <string>Your password at LoTW's website. It is kept in a file of its own beside the settings file, readable by you alone, and sent only to lotw.arrl.org.</string>
+            </property>
+            <property name="text">
+             <string>Password:</string>
+            </property>
+            <property name="buddy">
+             <cstring>lotwqsl_password_edit</cstring>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QLineEdit" name="lotwqsl_password_edit">
+            <property name="toolTip">
+             <string>Your password at LoTW's website. It is kept in a file of its own beside the settings file, readable by you alone, and sent only to lotw.arrl.org.</string>
+            </property>
+            <property name="echoMode">
+             <enum>QLineEdit::Password</enum>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0" colspan="2">
+           <widget class="QPushButton" name="lotwqsl_download_push_button">
+            <property name="toolTip">
+             <string>Download your confirmations from LoTW itself now; the program also does it three minutes after the start and every 12 hours while a username and password are saved. Only the QSLs for My Call. The first download fetches all of them, later ones only what came since - a whole report again once a month. LoTW does not say when a password is wrong: after a failure the next try waits 6 hours.</string>
+            </property>
+            <property name="text">
+             <string>Download confirmations from LoTW</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0" colspan="2">
+           <layout class="QHBoxLayout" name="lotwqsl_download_lamp_row">
+            <item alignment="Qt::AlignTop">
+             <widget class="QLabel" name="lotwqsl_download_lamp">
+              <property name="minimumSize">
+               <size>
+                <width>12</width>
+                <height>12</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>12</width>
+                <height>12</height>
+               </size>
+              </property>
+              <property name="text">
+               <string notr="true"/>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="lotwqsl_status_label">
+              <property name="text">
+               <string notr="true"/>
+              </property>
+              <property name="wordWrap">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item row="4" column="0" colspan="2">
+           <spacer name="lotwqsl_spacer">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>0</width>
+              <height>0</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QGroupBox" name="clublog_group_box">
+         <property name="title">
+          <string notr="true">Club Log</string>
+         </property>
+         <layout class="QGridLayout" name="clublog_grid_layout">
+          <item row="0" column="0">
+           <widget class="QLabel" name="clublog_token_label">
+            <property name="toolTip">
+             <string>Your Club Log API token. To create one, log in to Club Log, go to Settings &gt; API and click the &quot;Create token&quot; button there. Copy the token, paste it into this box and press OK.
+With it the program downloads your LoTW confirmations from Club Log at the start and every 12 hours. It is kept in a file of its own that only you can read, never in the settings file.</string>
+            </property>
+            <property name="text">
+             <string>To&amp;ken:</string>
+            </property>
+            <property name="buddy">
+             <cstring>clublog_token_edit</cstring>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QLineEdit" name="clublog_token_edit">
+            <property name="toolTip">
+             <string>Your Club Log API token. To create one, log in to Club Log, go to Settings &gt; API and click the &quot;Create token&quot; button there. Copy the token, paste it into this box and press OK.
+With it the program downloads your LoTW confirmations from Club Log at the start and every 12 hours. It is kept in a file of its own that only you can read, never in the settings file.</string>
+            </property>
+            <property name="echoMode">
+             <enum>QLineEdit::Password</enum>
+            </property>
+            <property name="placeholderText">
+             <string notr="true">cl_...</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0" colspan="2">
+           <widget class="QCheckBox" name="clublog_upload_check_box">
+            <property name="toolTip">
+             <string>Each QSO you log is sent to your Club Log log at once, with the Club Log token - in a contest too. A QSO that cannot be sent now (no connection, Club Log busy) is kept and sent later; one Club Log refuses is named below.
+Only QSOs logged from now on: upload older ones to Club Log as an ADIF file there.</string>
+            </property>
+            <property name="text">
+             <string>Send logged QSOs</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0" colspan="2">
+           <layout class="QHBoxLayout" name="clublog_upload_lamp_row">
+            <item alignment="Qt::AlignTop">
+             <widget class="QLabel" name="clublog_upload_lamp">
+              <property name="minimumSize">
+               <size>
+                <width>12</width>
+                <height>12</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>12</width>
+                <height>12</height>
+               </size>
+              </property>
+              <property name="text">
+               <string notr="true"/>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="clublog_upload_status_label">
+              <property name="text">
+               <string notr="true"/>
+              </property>
+              <property name="wordWrap">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item row="3" column="0" colspan="2">
+           <widget class="QPushButton" name="clublog_download_push_button">
+            <property name="toolTip">
+             <string>Download your LoTW confirmations from Club Log now; the program also does it at the start and every 12 hours.
+Club Log has only the LoTW confirmations it has fetched.
+In Club Log, under Tools &gt; LoTW Sync:
+1. Certificates: add your LoTW certificate once.
+2. Download confirmations: fetch the new ones now and then.
+To fetch the whole LoTW record once, clear &quot;Only confirmations since the last download&quot; there first.</string>
+            </property>
+            <property name="text">
+             <string>Do&amp;wnload LoTW confirmations from Club Log</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="0" colspan="2">
+           <layout class="QHBoxLayout" name="clublog_download_lamp_row">
+            <item alignment="Qt::AlignTop">
+             <widget class="QLabel" name="clublog_download_lamp">
+              <property name="minimumSize">
+               <size>
+                <width>12</width>
+                <height>12</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>12</width>
+                <height>12</height>
+               </size>
+              </property>
+              <property name="text">
+               <string notr="true"/>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="clublog_status_label">
+              <property name="text">
+               <string notr="true"/>
+              </property>
+              <property name="wordWrap">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item row="5" column="0" colspan="2">
+           <widget class="QLabel" name="clublog_users_status_label">
+            <property name="text">
+             <string></string>
+            </property>
+            <property name="wordWrap">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="6" column="0" colspan="2">
+           <spacer name="clublog_spacer">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>0</width>
+              <height>0</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QGroupBox" name="qrz_group_box">
+         <property name="title">
+          <string notr="true">QRZ.com</string>
+         </property>
+         <layout class="QGridLayout" name="qrz_grid_layout">
+          <item row="0" column="0">
+           <widget class="QLabel" name="qrz_key_label">
+            <property name="toolTip">
+             <string>Your QRZ.com Logbook API key. To find it, log in to QRZ.com, open your Logbook, click Settings at the top right and, under &quot;QRZ Logbook API&quot;, click &quot;Show&quot; beside the API Key. Copy the key, paste it into this box and press OK. The API needs a QRZ.com subscription (XML level or higher).
+With it the program downloads your LoTW confirmations from QRZ.com at the start and every 12 hours. It is kept in a file of its own that only you can read, never in the settings file.</string>
+            </property>
+            <property name="text">
+             <string>API ke&amp;y:</string>
+            </property>
+            <property name="buddy">
+             <cstring>qrz_key_edit</cstring>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QLineEdit" name="qrz_key_edit">
+            <property name="toolTip">
+             <string>Your QRZ.com Logbook API key. To find it, log in to QRZ.com, open your Logbook, click Settings at the top right and, under &quot;QRZ Logbook API&quot;, click &quot;Show&quot; beside the API Key. Copy the key, paste it into this box and press OK. The API needs a QRZ.com subscription (XML level or higher).
+With it the program downloads your LoTW confirmations from QRZ.com at the start and every 12 hours. It is kept in a file of its own that only you can read, never in the settings file.</string>
+            </property>
+            <property name="echoMode">
+             <enum>QLineEdit::Password</enum>
+            </property>
+            <property name="placeholderText">
+             <string notr="true">XXXX-XXXX-XXXX-XXXX</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0" colspan="2">
+           <widget class="QCheckBox" name="qrz_upload_check_box">
+            <property name="toolTip">
+             <string>Each QSO you log is sent to your QRZ.com logbook at once, with the QRZ.com API key - in a contest too. QRZ.com takes QSOs from programs only with a subscription. A QSO that cannot be sent now is kept and sent later; one QRZ.com refuses is named below.
+Only QSOs logged from now on: upload older ones to QRZ.com as an ADIF file there.</string>
+            </property>
+            <property name="text">
+             <string>Send logged QSOs</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0" colspan="2">
+           <layout class="QHBoxLayout" name="qrz_upload_lamp_row">
+            <item alignment="Qt::AlignTop">
+             <widget class="QLabel" name="qrz_upload_lamp">
+              <property name="minimumSize">
+               <size>
+                <width>12</width>
+                <height>12</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>12</width>
+                <height>12</height>
+               </size>
+              </property>
+              <property name="text">
+               <string notr="true"/>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="qrz_upload_status_label">
+              <property name="text">
+               <string notr="true"/>
+              </property>
+              <property name="wordWrap">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item row="3" column="0" colspan="2">
+           <widget class="QPushButton" name="qrz_download_push_button">
+            <property name="toolTip">
+             <string>Download your LoTW confirmations from QRZ.com now; the program also does it at the start and every 12 hours. Only the confirmations from LoTW count, not QRZ.com's own.
+QRZ.com has only the LoTW confirmations it has imported.
+In your QRZ.com Logbook, under Settings:
+1. LoTW Settings: enter your LoTW username once.
+2. Logbook of the World Import/Export, Import: fetch the new ones now and then (QRZ.com asks for your LoTW password).
+The first download takes a few minutes; after it only what changed is fetched.</string>
+            </property>
+            <property name="text">
+             <string>Download LoTW confirmations from &amp;QRZ.com</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="0" colspan="2">
+           <layout class="QHBoxLayout" name="qrz_download_lamp_row">
+            <item alignment="Qt::AlignTop">
+             <widget class="QLabel" name="qrz_download_lamp">
+              <property name="minimumSize">
+               <size>
+                <width>12</width>
+                <height>12</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>12</width>
+                <height>12</height>
+               </size>
+              </property>
+              <property name="text">
+               <string notr="true"/>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="qrz_status_label">
+              <property name="text">
+               <string notr="true"/>
+              </property>
+              <property name="wordWrap">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item row="5" column="0">
+           <widget class="QLabel" name="qrz_xml_label">
+            <property name="toolTip">
+             <string>Your QRZ.com username - usually your callsign - for QRZ.com's XML data: the grids of calls, with a subscription that includes XML data. Not the API key above.</string>
+            </property>
+            <property name="text">
+             <string>XML login:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="1">
+           <layout class="QHBoxLayout" name="qrz_xml_layout">
+            <item>
+             <widget class="QLineEdit" name="qrz_xml_user_edit">
+              <property name="toolTip">
+               <string>Your QRZ.com username - usually your callsign - for QRZ.com's XML data: the grids of calls, with a subscription that includes XML data. Not the API key above.</string>
+              </property>
+              <property name="placeholderText">
+               <string>username</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLineEdit" name="qrz_xml_password_edit">
+              <property name="toolTip">
+               <string>Your QRZ.com password, for QRZ.com's XML data. It is kept in a file of its own that only you can read, never in the settings file.</string>
+              </property>
+              <property name="echoMode">
+               <enum>QLineEdit::Password</enum>
+              </property>
+              <property name="placeholderText">
+               <string>password</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item row="6" column="0" colspan="2">
+           <widget class="QLabel" name="qrz_xml_status_label">
+            <property name="text">
+             <string></string>
+            </property>
+            <property name="wordWrap">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="7" column="0" colspan="2">
+           <spacer name="qrz_spacer">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>0</width>
+              <height>0</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="2" column="0" colspan="2">
+        <spacer name="logbooks_spacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>0</height>
+          </size>
+         </property>
+        </spacer>
        </item>
       </layout>
      </widget>

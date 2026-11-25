@@ -45,7 +45,8 @@ public:
     static QString doubtToolTip (phantom_decodes::Verdict const&, QString const& country, int snr);
     /* CE3TSK 2026-11-22 (TODO.md 3.-280): the tooltip of a line in the colour of a LoTW user worked but not LoTW-confirmed -
        `worked` names what was worked in the tier that fired, as that tier counts it ("Germany (40m FT8)") */
-    static QString unconfirmedToolTip (QString const& call, QString const& worked);
+    // (3.-299, LD5) lotw_direct: a LoTW login saved - the last sentence names LoTW's own download, not Club Log's and QRZ.com's steps
+    static QString unconfirmedToolTip (QString const& call, QString const& worked, bool lotw_direct = false);
     /* CE3TSK 2026-11-22 (the operator): every decode line's tooltip - the caller and its DXCC in bold, what the line's
        colours say (the tier, then the unconfirmed LoTW user's why, then the rest), what its mark says, then why it is a
        likely phantom decode. The plain sentences are escaped here; `unconfirmed` and `phantom` are paragraphs already */
@@ -77,7 +78,8 @@ public slots:
      where the doubtful part of `cntry` starts (-1: none); both get the red wave underline of a
      likely phantom decode (phantomdecodes.h); 2026-10-19 toolTip - the line's, on every part of it (doubtToolTip);
      2026-11-12 inverted - the line's text and background swapped: a wanted call's colour is then its background */
-  void appendText(QString const& text, QString const& bg = "#ffffff", QString const& color = "#000000", int std_type = 0, QString const& servis = " ", QString const& servis_color = "#000000", QString const& cntry = " ", bool forceBold = false, bool strikethrough = false, bool underline = false, bool DXped = false, bool overwrite = false, bool wanted = false, QList<QPair<int, int>> const& doubtful = QList<QPair<int, int>> (), int cntryDoubtFrom = -1, QString const& toolTip = QString (), QString const& field = QString (), int fieldColumns = 0, bool inverted = false);
+  void appendText(QString const& text, QString const& bg = "#ffffff", QString const& color = "#000000", int std_type = 0, QString const& servis = " ", QString const& servis_color = "#000000", QString const& cntry = " ", bool forceBold = false, bool strikethrough = false, bool underline = false, bool DXped = false, bool overwrite = false, bool wanted = false, QList<QPair<int, int>> const& doubtful = QList<QPair<int, int>> (), int cntryDoubtFrom = -1, QString const& toolTip = QString (), QString const& field = QString (), int fieldColumns = 0, bool inverted = false,
+                  QString const& tier = QString ());   // (3.-301) a violet line's message: its tier's colour
 
 protected:
     void mouseDoubleClickEvent(QMouseEvent *e);
@@ -189,6 +191,7 @@ private:
     QString color_Confirmed_;              // CE3TSK 2026-11-22 (3.-280, D12): a worked call LoTW-confirmed in every tier on
     LogBook * pending_ {nullptr};          // CE3TSK 2026-11-22 (D10, D12): the log's QSOs confirmed for now (setConfirmations)
     bool highlightConfirmed_ = false;      //   ... in its colour (Settings > Notifications, off by default)
+    bool lotwDirect_ = false;              //   (3.-299) a LoTW login saved: the tooltip names LoTW's own download
     LogBook * confirmed_ = nullptr;        //   ... by these confirmations (setConfirmations)
     QString hideContinents_;
     QString countries_;

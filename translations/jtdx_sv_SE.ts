@@ -776,23 +776,8 @@ Formatera:
     </message>
     <message>
         <location filename="../Configuration.cpp"/>
-        <source>%1 refused the QSO with %2 - see Settings &gt; Reporting.</source>
-        <translation>%1 avvisade QSO:t med %2 - se Inställningar &gt; Rapportering.</translation>
-    </message>
-    <message>
-        <location filename="../Configuration.cpp"/>
-        <source>%1 refused the upload: the QSO with %2 is kept - see Settings &gt; Reporting.</source>
-        <translation>%1 avvisade uppladdningen: QSO:t med %2 är sparat - se Inställningar &gt; Rapportering.</translation>
-    </message>
-    <message>
-        <location filename="../Configuration.cpp"/>
         <source>an answer not understood: %1</source>
         <translation>ett svar som inte förstods: %1</translation>
-    </message>
-    <message>
-        <location filename="../Configuration.cpp"/>
-        <source>%1: the QSO with %2 is not sent yet, kept - see Settings &gt; Reporting.</source>
-        <translation>%1: QSO:t med %2 är inte skickat än, sparat - se Inställningar &gt; Rapportering.</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp"/>
@@ -913,6 +898,81 @@ Formatera:
         <location filename="../Configuration.cpp"/>
         <source>%1: the QSOs waiting could not be written to their file - they are lost if the program is closed before they are sent.</source>
         <translation>%1: De väntande QSO:erna kunde inte skrivas till sin fil - de går förlorade om programmet stängs innan de skickats.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1 refused the QSO with %2 - see Settings &gt; Logbooks.</source>
+        <translation>%1 avvisade QSO:t med %2 - se Inställningar &gt; Loggböcker.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1 refused the upload: the QSO with %2 is kept - see Settings &gt; Logbooks.</source>
+        <translation>%1 avvisade uppladdningen: QSO:t med %2 är sparat - se Inställningar &gt; Loggböcker.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1: the QSO with %2 is not sent yet, kept - see Settings &gt; Logbooks.</source>
+        <translation>%1: QSO:t med %2 är inte skickat än, sparat - se Inställningar &gt; Loggböcker.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>LoTW downloads are switched off (JTDX_LOTW_API).</source>
+        <translation>Hämtningar från LoTW är avstängda (JTDX_LOTW_API).</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Download from LoTW failed</source>
+        <translation>Hämtningen från LoTW misslyckades</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>LoTW sent no report: the username or the password may be wrong, or LoTW is busy.</source>
+        <translation>LoTW skickade ingen rapport: användarnamnet eller lösenordet kan vara fel, eller så är LoTW upptaget.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>LoTW's answer was not a whole report (%1).</source>
+        <translation>LoTW:s svar var inte en hel rapport (%1).</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>The next try is at %1 UTC.</source>
+        <translation>Nästa försök är %1 UTC.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>No login: nothing is downloaded from LoTW.</source>
+        <translation>Ingen inloggning: inget hämtas från LoTW.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>The LoTW login could not be saved</source>
+        <translation>LoTW-inloggningen kunde inte sparas</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Sending the QSOs you log to %1, in this run: the last answer, the QSOs waiting, a refusal. Green: the last QSO went. Red: the last try failed, or %1 refused - the line says why. Grey: nothing sent yet, or sending is off.</source>
+        <translation>Sändningen av QSO:erna du loggar till %1, i den här körningen: det senaste svaret, de väntande QSO:erna, en vägran. Grön: den senaste QSO:n gick fram. Röd: det senaste försöket misslyckades, eller %1 vägrade - raden säger varför. Grå: inget skickat ännu, eller sändningen är avstängd.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Downloading your LoTW confirmations from %1: the last download and what it brought. Green: the last download worked. Red: it failed, or %1 refused - the line says why. Grey: nothing downloaded yet, or nothing to download with.</source>
+        <translation>Hämtningen av dina LoTW-bekräftelser från %1: den senaste hämtningen och vad den gav. Grön: den senaste hämtningen lyckades. Röd: den misslyckades, eller %1 vägrade - raden säger varför. Grå: inget hämtat ännu, eller inget att hämta med.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Off: the QSOs you log are not sent to %1.</source>
+        <translation>Av: QSO:erna du loggar skickas inte till %1.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>QRZ.com's XML data: a grid square asked of QRZ.com for a QSO logged without one ("Fill a missing grid before logging", on the Reporting tab), with the XML login. It needs a QRZ.com XML subscription.</source>
+        <translation>QRZ.com:s XML-data: en grid som frågas efter hos QRZ.com för en QSO loggad utan grid (”Fyll i saknad grid före loggning”, på fliken Rapportering), med XML-inloggningen. Det kräver ett XML-abonnemang hos QRZ.com.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Club Log's users file: the grid squares Club Log knows of its users, for a QSO logged without one ("Fill a missing grid before logging", on the Reporting tab). Downloaded once a week with the token.</source>
+        <translation>Club Logs användarfil: de grid som Club Log känner till för sina användare, för en QSO loggad utan grid (”Fyll i saknad grid före loggning”, på fliken Rapportering). Hämtas en gång i veckan med token.</translation>
     </message>
 </context>
 <context>
@@ -3105,6 +3165,11 @@ Formatera:
         <location filename="../displaytext.cpp"/>
         <source>Worked before and LoTW-confirmed: nothing new in the notifications that are on.</source>
         <translation>Körd tidigare och LoTW-bekräftad: inget nytt i de aviseringar som är påslagna.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Confirmed in LoTW already? The program downloads your confirmations from LoTW itself every 12 hours: a QSL received since the last download shows after the next one.</source>
+        <translation>Redan bekräftat i LoTW? Programmet hämtar dina bekräftelser direkt från LoTW var 12:e timme: en QSL som kommit sedan senaste hämtningen syns efter nästa.</translation>
     </message>
 </context>
 <context>
@@ -9689,7 +9754,7 @@ båda här.</translation>
     <message>
         <location filename="../Configuration.ui" line="2391"/>
         <source>Reportin&amp;g</source>
-        <translation>Rapporteri&amp;g</translation>
+        <translation>Rapporterin&amp;g</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="2394"/>
@@ -9881,11 +9946,6 @@ och DX-rutnätfält när ett 73 eller fritextmeddelande skickas.</translation>
         <location filename="../Configuration.ui" line="2735"/>
         <source>decoded and debug messages</source>
         <translation>avkodade och felsökta meddelanden</translation>
-    </message>
-    <message>
-        <location filename="../Configuration.ui" line="2777"/>
-        <source>Network Services</source>
-        <translation>Nätverkstjänster</translation>
     </message>
     <message>
         <location filename="../Configuration.ui" line="2821"/>
@@ -11849,6 +11909,61 @@ Bara QSO som loggas från och med nu: ladda upp äldre till QRZ.com som en ADIF-
         <location filename="../Configuration.ui"/>
         <source>When a QSO gave no grid - neither heard nor typed - it gets one before it is logged: what this program heard the station send earlier (within a day; a /M station's within half an hour), else the locator it reports to PSK Reporter (with the Reception map open), else the square at least two other stations received from it, as their reports to PSK Reporter say (the map open too), else its grid in eQSL's member list (Settings &gt; General; a member that uploaded to eQSL within the last 12 months), in Club Log's users file (downloaded weekly with the token; a call that uploaded within the last 12 months) or in QRZ.com's XML data (with the XML login, asked as the QSO starts). Only a square inside the call's DXCC country is taken, its first four characters. Log QSO names the source in the grid field's tooltip, and the QSO's comment notes it as [grid: ...]. Never in a contest.</source>
         <translation>När en QSO inte gav någon grid – varken mottagen eller inskriven – får den en före loggningen: det som detta program hörde stationen sända tidigare (inom ett dygn, från en /M-station inom en halvtimme), annars den locator stationen rapporterar till PSK Reporter (med Mottagningskarta öppen), annars den ruta som minst två andra stationer tog emot från stationen, enligt deras rapporter till PSK Reporter (också med kartan öppen), annars dess grid i eQSL:s medlemslista (Inställningar &gt; Allmän; en medlem som laddat upp till eQSL de senaste 12 månaderna), i Club Logs användarfil (hämtas varje vecka med token; en anropssignal som laddat upp de senaste 12 månaderna) eller i QRZ.com:s XML-data (med XML-inloggningen, frågas när QSO:n börjar). Bara en ruta inom anropssignalens DXCC-land tas, dess fyra första tecken. Fönstret Logga QSO nämner källan i grid-fältets verktygstips, och QSO:ns kommentar noterar den som [grid: ...]. Aldrig i en contest.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Spotting</source>
+        <translation>Spotting</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Other programs</source>
+        <translation>Andra program</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Logbooks</source>
+        <translation>Loggböcker</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Your accounts at online logbooks: the QSOs you log sent to them, confirmations downloaded from them</source>
+        <translation>Dina konton hos loggböcker online: QSO:erna du loggar skickas dit, bekräftelser hämtas därifrån</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Username:</source>
+        <translation>Användarnamn:</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Your username at LoTW's website (lotw.arrl.org) - usually your call sign, but not always.</source>
+        <translation>Ditt användarnamn på LoTW:s webbplats (lotw.arrl.org) - oftast din signal, men inte alltid.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Password:</source>
+        <translation>Lösenord:</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Your password at LoTW's website. It is kept in a file of its own beside the settings file, readable by you alone, and sent only to lotw.arrl.org.</source>
+        <translation>Ditt lösenord på LoTW:s webbplats. Det sparas i en egen fil bredvid inställningsfilen, som bara du kan läsa, och skickas bara till lotw.arrl.org.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Download your confirmations from LoTW itself now; the program also does it three minutes after the start and every 12 hours while a username and password are saved. Only the QSLs for My Call. The first download fetches all of them, later ones only what came since - a whole report again once a month. LoTW does not say when a password is wrong: after a failure the next try waits 6 hours.</source>
+        <translation>Hämta dina bekräftelser direkt från LoTW nu; programmet gör det också tre minuter efter starten och var 12:e timme så länge ett användarnamn och ett lösenord är sparade. Bara QSL:erna för Min signal. Första hämtningen tar alla, senare bara det som kommit sedan dess - en hel rapport igen en gång i månaden. LoTW säger inte när ett lösenord är fel: efter ett misslyckande väntar nästa försök 6 timmar.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Download confirmations from LoTW</source>
+        <translation>Hämta bekräftelser från LoTW</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>eQSL's member list: the grid squares of eQSL's members, for a QSO logged without one ("Fill a missing grid before logging", on the Reporting tab). It is downloaded on the General tab, under Data files.</source>
+        <translation>eQSL:s medlemslista: eQSL-medlemmarnas grid, för en QSO loggad utan grid (”Fyll i saknad grid före loggning”, på fliken Rapportering). Den hämtas på fliken Allmän, under Datafiler.</translation>
     </message>
 </context>
 <context>

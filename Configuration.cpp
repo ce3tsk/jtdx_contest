@@ -211,6 +211,8 @@ extern "C" {
 #include <QFileInfo>                       // (3.-286) the member list's age
 #include "clublog.h"     // CE3TSK 2026-11-21: Club Log's confirmed QSOs (TODO.md 3.-280)
 #include "qrzlogbook.h"   // CE3TSK 2026-11-22: QRZ.com's LoTW confirmations (TODO.md 3.-280)
+#include "lotw.h"        // CE3TSK 2026-11-25: LoTW's own confirmations (TODO.md 3.-299)
+#include "statuslamp.h"  // CE3TSK 2026-11-25: the Logbooks tab's lamps (TODO.md 3.-300)
 #include "qsoupload.h"    // CE3TSK 2026-11-23: the logged QSOs to Club Log and QRZ.com (TODO.md 3.-282)
 #include "eqsl.h"         // CE3TSK 2026-11-24: eQSL's answer (TODO.md 3.-284)
 #include "logbook/countrydat.h"       /* CE3TSK */
@@ -707,6 +709,22 @@ private:
   void update_qrz_label ();
   bool qrz_current () const;   // the file is what the saved key fetched: the windows read it
   QString qrz_key_file () const {return qrz_logbook::key_path (settings_->fileName ());}
+  /* CE3TSK 2026-11-25 (TODO.md 3.-299): LoTW's own confirmations (lotw.h), added to Club Log's and QRZ.com's - three
+     minutes after the start and every lotw::refresh_hours while a login is saved, or on the button */
+  Q_SLOT void on_lotwqsl_download_push_button_clicked (bool);
+  void start_lotwqsl_download (QString const& user, QString const& password, bool full, bool manual);
+  bool lotwqsl_full_needed (QString const& id, QDateTime const& now) const;   // inside SettingsGroup "Configuration"
+  Q_SLOT void lotwqsl_check_due ();   // a slot: a test asks it by name, as the timers do
+  void lotwqsl_finished (bool ok, FileDownload::Failure failure, QString const& detail);
+  void update_lotwqsl_label ();
+  // whose the file is: SHA-256 of the username and the call - never of the password (a changed one is the same account)
+  QString lotwqsl_id (QString const& user, QString const& call) const;
+  bool lotwqsl_current () const;   // the file is what the saved username and My Call fetched: the windows read it
+  QString lotwqsl_login_file () const {return lotw::login_path (settings_->fileName ());}
+  /* CE3TSK 2026-11-25 (TODO.md 3.-300): a status line's tooltip - what the line tells and what its lamp's colours mean -
+     above the line itself; one for sending, one for the LoTW confirmations, each naming its site */
+  QString send_tip (QString const& site) const;
+  QString download_tip (QString const& site) const;
   // CE3TSK 2026-11-24 (TODO.md 3.-283): eQSL's login - username, password, QTH nickname - beside the settings file, never in it
   QString eqsl_login_file () const {return login_file::path (settings_->fileName (), "eqsl.login");}
   // (stage 3) QRZ.com's XML login - username, password - the same way (not the API key, which is the logbook's)
@@ -859,6 +877,14 @@ private:
   QString qrz_fetch_key_;           // the key the running download asks with
   QString qrz_error_;               // the last attempt's failure, worded, for the status line
   QString qrz_file_id_;             // what fetched the file: club_log::token_id (key), ini QrzKeyId
+  lotw::Download lotwqsl_download_;    // CE3TSK 2026-11-25 (TODO.md 3.-299): LoTW's own report
+  QString lotwqsl_user_;               // from its own file, never in the ini (lotw.h, loginfile.h)
+  QString lotwqsl_password_;
+  bool lotwqsl_manual_ {false};        // the button started it: a failure is shown in a box as well
+  QDateTime lotwqsl_next_try_;         // after a failure of the saved login's, lotw::retry_hours on (ini LotwNextTry)
+  QString lotwqsl_fetch_id_;           // lotwqsl_id () of the running download's username and call
+  QString lotwqsl_error_;              // the last attempt's failure, worded, for the status line
+  QString lotwqsl_file_id_;            // what fetched the file: lotwqsl_id (), ini LotwKeyId
   qso_upload::Uploader clublog_upload_ {qso_upload::Site::ClubLog};   // CE3TSK 2026-11-23 (TODO.md 3.-282)
   qso_upload::Uploader qrz_upload_ {qso_upload::Site::Qrz};
   qrz_xml::Lookup qrz_xml_;          // CE3TSK 2026-11-24 (TODO.md 3.-283, stage 3)
@@ -1148,7 +1174,7 @@ private:
   bool countUnconfirmed_;        // CE3TSK 2026-11-21 (TODO.md 3.-280, D9): a LoTW user worked, not LoTW-confirmed, as new
   bool highlightConfirmed_;      // CE3TSK 2026-11-22 (TODO.md 3.-280, D12): a worked call LoTW-confirmed in every tier on, in its colour
   bool clublog_upload_on_;       // CE3TSK 2026-11-23 (TODO.md 3.-282): the logged QSOs to Club Log - off by default
-  bool fill_missing_grid_;       // CE3TSK 2026-11-23 (TODO.md 3.-283): a QSO's missing grid filled before it is logged - off by default
+  bool fill_missing_grid_;       // CE3TSK 2026-11-23 (TODO.md 3.-283): a QSO's missing grid filled before it is logged - (3.-298) on by default
   bool qrz_upload_on_;           //   and to QRZ.com
   bool showAzimuth_;
   bool usStates_;   /* CE3TSK 2026-10-02 */
@@ -1720,11 +1746,14 @@ bool Configuration::highlightConfirmed () const {return m_->highlightConfirmed_;
 bool Configuration::showAzimuth () const {return m_->showAzimuth_;}
 bool Configuration::usStates () const {return m_->usStates_;}
 bool Configuration::callNotif () const {return m_->callNotif_;}
+// CE3TSK 2026-11-25 (TODO.md 3.-299, LD5): a LoTW login saved - the violet line's tooltip then names LoTW's own download
+bool Configuration::lotw_direct () const {return !m_->lotwqsl_user_.isEmpty () && !m_->lotwqsl_password_.isEmpty ();}
 QStringList Configuration::confirmations_files () const
 {
   QStringList files;
   if (m_->clublog_current ()) files << club_log::file_name;
   if (m_->qrz_current ()) files << qrz_logbook::file_name;
+  if (m_->lotwqsl_current ()) files << lotw::file_name;   // CE3TSK 2026-11-25 (TODO.md 3.-299)
   return files;
 }
 bool Configuration::gridNotif () const {return m_->gridNotif_;}
@@ -2549,6 +2578,19 @@ Configuration::impl::impl (Configuration * self, QNetworkAccessManager * network
   connect (&qrz_fetch_, &qrz_logbook::Fetch::finished, this, &Configuration::impl::qrz_finished);
   connect (&clublog_timer_, &QTimer::timeout, this, &Configuration::impl::qrz_check_due);
   QTimer::singleShot (90 * 1000, this, [this] {qrz_check_due ();});
+  /* CE3TSK 2026-11-25 (TODO.md 3.-299): LoTW's own, on the same half-hourly look, three minutes after the start; a
+     failure's wait kept over a restart, so LoTW is never asked more often than retry_hours by itself */
+  {
+    auto const login = login_file::read (lotwqsl_login_file (), 2);
+    lotwqsl_user_ = login.value (0).trimmed ();
+    lotwqsl_password_ = login.value (1);
+    SettingsGroup g {settings_, "Configuration"};
+    lotwqsl_file_id_ = settings_->value (contest_profile::own_key ("LotwKeyId")).toString ();
+    lotwqsl_next_try_ = settings_->value (contest_profile::own_key ("LotwNextTry")).toDateTime ();
+  }
+  connect (&lotwqsl_download_, &lotw::Download::finished, this, &Configuration::impl::lotwqsl_finished);
+  connect (&clublog_timer_, &QTimer::timeout, this, &Configuration::impl::lotwqsl_check_due);
+  QTimer::singleShot (180 * 1000, this, [this] {lotwqsl_check_due ();});
   /* CE3TSK 2026-11-23 (TODO.md 3.-282): the logged QSOs to Club Log and QRZ.com - each queue in the data directory, and what
      an earlier run could not send tried a little after the start, between the downloads' first looks */
   {
@@ -2634,8 +2676,11 @@ Configuration::impl::impl (Configuration * self, QNetworkAccessManager * network
   connect (ui_->clublog_upload_check_box, &QCheckBox::toggled, this, [this] {clublog_upload_toggled_ = true; update_upload_labels ();});
   connect (ui_->qrz_upload_check_box, &QCheckBox::toggled, this, [this] {qrz_upload_toggled_ = true; update_upload_labels ();});
   // (2026-11-24, the operator) a token or key typed or cleared greys or frees its site's box at once, as eQSL's fields do eQSL's
-  connect (ui_->clublog_token_edit, &QLineEdit::textChanged, this, [this] {grey_upload_boxes (false);});
-  connect (ui_->qrz_key_edit, &QLineEdit::textChanged, this, [this] {grey_upload_boxes (false);});
+  connect (ui_->clublog_token_edit, &QLineEdit::textChanged, this, [this] {grey_upload_boxes (false); update_clublog_label ();});   // (3.-300) and its button
+  connect (ui_->qrz_key_edit, &QLineEdit::textChanged, this, [this] {grey_upload_boxes (false); update_qrz_label ();});   // (3.-300) and its button
+  // CE3TSK 2026-11-25 (TODO.md 3.-299): LoTW's button greyed without a username and a password in the boxes
+  connect (ui_->lotwqsl_user_edit, &QLineEdit::textChanged, this, [this] {update_lotwqsl_label ();});
+  connect (ui_->lotwqsl_password_edit, &QLineEdit::textChanged, this, [this] {update_lotwqsl_label ();});
   configure_uploads ();
   QTimer::singleShot (75 * 1000, this, [this] {clublog_upload_.send_now (); qrz_upload_.send_now ();});
   ui_->gridNotif_check_box->setChecked(callNotif_ && gridNotif_);
@@ -2917,6 +2962,9 @@ void Configuration::impl::initialize_models ()
   update_clublog_label ();
   ui_->qrz_key_edit->setText (qrz_key_);   // CE3TSK 2026-11-22 (TODO.md 3.-280)
   update_qrz_label ();
+  ui_->lotwqsl_user_edit->setText (lotwqsl_user_);   // CE3TSK 2026-11-25 (TODO.md 3.-299)
+  ui_->lotwqsl_password_edit->setText (lotwqsl_password_);
+  update_lotwqsl_label ();
 
   //
   // setup PTT port combo box drop down content
@@ -3770,7 +3818,7 @@ void Configuration::impl::read_settings ()
   countUnconfirmed_ = settings_->value (contest_profile::own_key ("CountUnconfirmedAsNew"), true).toBool ();   // 2026-11-21 (D9): on
   highlightConfirmed_ = settings_->value (contest_profile::own_key ("HighlightConfirmed"), false).toBool ();   // 2026-11-22 (D12): off
   clublog_upload_on_ = settings_->value (contest_profile::own_key ("ClubLogUpload"), false).toBool ();   // 2026-11-23 (3.-282): off
-  fill_missing_grid_ = settings_->value (contest_profile::own_key ("FillMissingGrid"), false).toBool ();   // 2026-11-23 (3.-283): off
+  fill_missing_grid_ = settings_->value (contest_profile::own_key ("FillMissingGrid"), true).toBool ();   // 2026-11-23 (3.-283); (3.-298) on by default
   qrz_upload_on_ = settings_->value (contest_profile::own_key ("QrzUpload"), false).toBool ();
   showAzimuth_ = settings_->value (contest_profile::own_key ("ShowAzimuth"), false).toBool ();
   usStates_ = settings_->value (contest_profile::own_key ("ShowUSStates"), true).toBool ();   /* CE3TSK */
@@ -4430,6 +4478,183 @@ bool Configuration::impl::qrz_current () const
   return club_log::token_id (qrz_key_) == qrz_file_id_;   // no key: no file's
 }
 
+/* CE3TSK 2026-11-25 (TODO.md 3.-299): LoTW's own confirmations (lotw.h). The button downloads with the login in the boxes,
+   saved or not yet; the automatic downloads with the saved one. A download is full - every QSL since lotw::first_day - the
+   first time, for a username or My Call the file was not fetched with, a missing file, no newest QSL known, and every
+   lotw::full_days; else the QSLs since the last report's newest, merged into the file. A failure of the saved login's
+   waits lotw::retry_hours: LoTW does not tell a wrong password from being busy, so it is asked at most four times a day by
+   itself (LD4). Only My Call's QSLs (LD3). */
+QString Configuration::impl::send_tip (QString const& site) const
+{
+  return tr ("Sending the QSOs you log to %1, in this run: the last answer, the QSOs waiting, a refusal. Green: the last QSO went. Red: the last try failed, or %1 refused - the line says why. Grey: nothing sent yet, or sending is off.").arg (site);
+}
+
+QString Configuration::impl::download_tip (QString const& site) const
+{
+  return tr ("Downloading your LoTW confirmations from %1: the last download and what it brought. Green: the last download worked. Red: it failed, or %1 refused - the line says why. Grey: nothing downloaded yet, or nothing to download with.").arg (site);
+}
+
+QString Configuration::impl::lotwqsl_id (QString const& user, QString const& call) const
+{
+  return user.isEmpty () ? QString {} : club_log::token_id (user.toLower () + '\n' + call.trimmed ().toUpper ());
+}
+
+bool Configuration::impl::lotwqsl_current () const
+{
+  return !lotwqsl_user_.isEmpty () && !lotwqsl_password_.isEmpty () && lotwqsl_id (lotwqsl_user_, my_callsign_) == lotwqsl_file_id_;
+}
+
+bool Configuration::impl::lotwqsl_full_needed (QString const& id, QDateTime const& now) const
+{
+  QDir const data_dir {QStandardPaths::writableLocation (QStandardPaths::DataLocation)};
+  return !QFile::exists (data_dir.absoluteFilePath (lotw::file_name)) || lotwqsl_file_id_ != id
+    || settings_->value (contest_profile::own_key ("LotwLastQsl")).toString ().isEmpty ()
+    || lotw::full_due (settings_->value (contest_profile::own_key ("LotwFullDownloaded")).toDateTime (), now);
+}
+
+void Configuration::impl::on_lotwqsl_download_push_button_clicked (bool)
+{
+  auto const user = ui_->lotwqsl_user_edit->text ().trimmed ();
+  auto const password = ui_->lotwqsl_password_edit->text ();
+  if (user.isEmpty () || password.isEmpty ()) return;   // the button is greyed then
+  bool full {true};
+  {
+    SettingsGroup g {settings_, "Configuration"};
+    full = lotwqsl_full_needed (lotwqsl_id (user, my_callsign_), QDateTime::currentDateTimeUtc ());
+  }
+  start_lotwqsl_download (user, password, full, true);
+}
+
+void Configuration::impl::lotwqsl_check_due ()
+{
+  if (lotwqsl_download_.running () || lotwqsl_user_.isEmpty () || lotwqsl_password_.isEmpty () || !network_manager_) return;
+  auto const now = QDateTime::currentDateTimeUtc ();
+  if (lotwqsl_next_try_.isValid () && now < lotwqsl_next_try_) return;
+  bool full {false};
+  QDateTime last;
+  {
+    SettingsGroup g {settings_, "Configuration"};
+    last = settings_->value (contest_profile::own_key ("LotwDownloaded")).toDateTime ();
+    full = lotwqsl_full_needed (lotwqsl_id (lotwqsl_user_, my_callsign_), now);
+  }
+  if (!lotwqsl_current () && isVisible ()) return;   // a file not the saved login's waits while Settings are open, as the others'
+  if (!full && !lotw::due (last, now)) return;
+  start_lotwqsl_download (lotwqsl_user_, lotwqsl_password_, full, false);
+}
+
+void Configuration::impl::start_lotwqsl_download (QString const& user, QString const& password, bool full, bool manual)
+{
+  if (lotwqsl_download_.running () || !network_manager_ || user.isEmpty () || password.isEmpty ()) return;
+  if (lotw::api_base ().isEmpty ())
+    {
+      lotwqsl_error_ = tr ("LoTW downloads are switched off (JTDX_LOTW_API).");
+      update_lotwqsl_label ();
+      if (manual) JTDXMessageBox::warning_message (this, tr ("Download from LoTW failed"), lotwqsl_error_);
+      return;
+    }
+  QString since;   // empty: a full report
+  if (!full)
+    {
+      SettingsGroup g {settings_, "Configuration"};
+      since = settings_->value (contest_profile::own_key ("LotwLastQsl")).toString ();
+    }
+  lotwqsl_manual_ = manual;
+  lotwqsl_fetch_id_ = lotwqsl_id (user, my_callsign_);
+  lotwqsl_error_.clear ();
+  QDir const data_dir {QStandardPaths::writableLocation (QStandardPaths::DataLocation)};
+  lotwqsl_download_.start (network_manager_, user, password, my_callsign_.trimmed ().toUpper (), since,
+                        data_dir.absoluteFilePath (lotw::file_name),
+                        "JTDX_contest/" + QCoreApplication::applicationVersion () + " (https://github.com/ce3tsk/jtdx_contest)");
+  update_lotwqsl_label ();
+}
+
+void Configuration::impl::lotwqsl_finished (bool ok, FileDownload::Failure failure, QString const& detail)
+{
+  auto const manual = lotwqsl_manual_;
+  lotwqsl_manual_ = false;
+  auto const now = QDateTime::currentDateTimeUtc ();
+  if (ok)
+    {
+      {
+        SettingsGroup g {settings_, "Configuration"};
+        settings_->setValue (contest_profile::own_key ("LotwDownloaded"), lotwqsl_download_.started ());
+        if (lotwqsl_download_.full ()) settings_->setValue (contest_profile::own_key ("LotwFullDownloaded"), lotwqsl_download_.started ());
+        settings_->setValue (contest_profile::own_key ("LotwLastQsl"), lotwqsl_download_.last_qsl ());
+        lotwqsl_file_id_ = lotwqsl_fetch_id_;
+        settings_->setValue (contest_profile::own_key ("LotwKeyId"), lotwqsl_file_id_);
+        settings_->setValue (contest_profile::own_key ("LotwConfirmed"), lotwqsl_download_.confirmed ());
+        settings_->setValue (contest_profile::own_key ("LotwEntities"), lotwqsl_download_.entities ());
+        settings_->remove (contest_profile::own_key ("LotwNextTry"));
+      }
+      lotwqsl_next_try_ = QDateTime {};
+      lotwqsl_error_.clear ();
+      update_lotwqsl_label ();
+      Q_EMIT self_->confirmations_updated ();
+      // the button's with a login not saved: the saved one's at once (its look asks only when the file is not its own)
+      if (!isVisible ()) QTimer::singleShot (0, this, [this] {lotwqsl_check_due ();});
+      return;
+    }
+  if (lotwqsl_fetch_id_ == lotwqsl_id (lotwqsl_user_, my_callsign_))   // the saved login's: its schedule waits; another's leaves it alone
+    {
+      lotwqsl_next_try_ = now.addSecs (qint64 {lotw::retry_hours} * 3600);
+      SettingsGroup g {settings_, "Configuration"};
+      settings_->setValue (contest_profile::own_key ("LotwNextTry"), lotwqsl_next_try_);
+    }
+  switch (failure)
+    {
+    case FileDownload::Failure::Rejected:
+      lotwqsl_error_ = "no LoTW report" == detail ? tr ("LoTW sent no report: the username or the password may be wrong, or LoTW is busy.")
+                                               : tr ("LoTW's answer was not a whole report (%1).").arg (detail);
+      break;
+    case FileDownload::Failure::HttpStatus: lotwqsl_error_ = tr ("The server answered with HTTP status %1.").arg (detail); break;
+    case FileDownload::Failure::NoSsl: lotwqsl_error_ = tr ("SSL/TLS support is not installed, so %1 cannot be fetched.").arg ("LoTW"); break;
+    case FileDownload::Failure::TooLarge: lotwqsl_error_ = tr ("The download was stopped at %1 MB.").arg (detail); break;
+    case FileDownload::Failure::Write: lotwqsl_error_ = tr ("The file could not be saved: %1").arg (detail); break;
+    case FileDownload::Failure::Network: lotwqsl_error_ = tr ("Network error: %1").arg (detail); break;
+    }
+  if (lotwqsl_next_try_.isValid () && now < lotwqsl_next_try_)
+    lotwqsl_error_ += ' ' + tr ("The next try is at %1 UTC.").arg (lotwqsl_next_try_.toUTC ().toString ("yyyy-MM-dd hh:mm"));
+  update_lotwqsl_label ();
+  if (manual)
+    JTDXMessageBox::warning_message (this, tr ("Download from LoTW failed"), lotwqsl_error_, tr ("The copy in use has not been changed."));
+}
+
+void Configuration::impl::update_lotwqsl_label ()
+{
+  auto const running = lotwqsl_download_.running ();
+  auto const typed = !ui_->lotwqsl_user_edit->text ().trimmed ().isEmpty () && !ui_->lotwqsl_password_edit->text ().isEmpty ();
+  ui_->lotwqsl_download_push_button->setEnabled (!running && typed);
+  if (running)
+    {
+      ui_->lotwqsl_status_label->setText (tr ("downloading..."));
+      return;
+    }
+  QDateTime last;
+  int confirmed {0}, entities {0};
+  {
+    SettingsGroup g {settings_, "Configuration"};
+    last = settings_->value (contest_profile::own_key ("LotwDownloaded")).toDateTime ();
+    confirmed = settings_->value (contest_profile::own_key ("LotwConfirmed"), 0).toInt ();
+    entities = settings_->value (contest_profile::own_key ("LotwEntities"), 0).toInt ();
+  }
+  QString text;
+  if (!typed && (lotwqsl_user_.isEmpty () || lotwqsl_password_.isEmpty ()))
+    text = tr ("No login: nothing is downloaded from LoTW.");
+  else if (last.isValid ())
+    text = tr ("%1 QSOs confirmed by LoTW, %2 DXCC entities; downloaded %3 UTC")
+      .arg (QLocale {}.toString (confirmed)).arg (entities).arg (last.toUTC ().toString ("yyyy-MM-dd hh:mm"));
+  else
+    text = tr ("Not downloaded yet.");
+  if (!lotwqsl_error_.isEmpty ()) text += '\n' + lotwqsl_error_;
+  ui_->lotwqsl_status_label->setText (text);
+  // (3.-300) its lamp, as Club Log's and QRZ.com's
+  auto const state = !lotwqsl_error_.isEmpty () ? status_lamp::Bad
+                     : last.isValid () && !lotwqsl_user_.isEmpty () && !lotwqsl_password_.isEmpty () ? status_lamp::Good : status_lamp::Idle;
+  auto const why = wrap_tooltip (download_tip ("LoTW") + "\n\n" + text);
+  ui_->lotwqsl_status_label->setToolTip (why);
+  status_lamp::show (ui_->lotwqsl_download_lamp, state, why);
+}
+
 bool Configuration::impl::validate ()
 {
   if (ui_->sound_input_combo_box->currentIndex () < 0
@@ -4764,6 +4989,24 @@ void Configuration::impl::accept ()
           }
       }
   }
+  /* CE3TSK 2026-11-25 (TODO.md 3.-299): LoTW's login into its own file when changed - never the settings file; a new one is
+     asked with at once (a failure's wait was the old one's) */
+  {
+    QStringList const login {ui_->lotwqsl_user_edit->text ().trimmed (), ui_->lotwqsl_password_edit->text ()};
+    if (login != QStringList {lotwqsl_user_, lotwqsl_password_})
+      {
+        auto const why = login_file::write (lotwqsl_login_file (), login);
+        if (!why.isEmpty ()) JTDXMessageBox::warning_message (this, tr ("The LoTW login could not be saved"), why);
+        else
+          {
+            lotwqsl_user_ = login.value (0);
+            lotwqsl_password_ = login.value (1);
+            lotwqsl_next_try_ = QDateTime {};
+            lotwqsl_error_.clear ();
+            update_lotwqsl_label ();
+          }
+      }
+  }
   /* CE3TSK 2026-11-21 (TODO.md 3.-280): the Club Log token into its own file (clublog.h), never the ini. A new token, or
      a new My Call (another log), is asked with at once: it may be another account's */
   {
@@ -4859,7 +5102,7 @@ void Configuration::impl::accept ()
      not the saved token's and call's or key's (the button's, an older program's, one the start's look met with Settings
      open) is fetched again; what the button has just fetched with what is now saved is theirs, and a current file not due
      asks nothing */
-  QTimer::singleShot (0, this, [this] {clublog_check_due (); qrz_check_due (); clublog_users_check_due ();});   // (3.-283 stage 4) and the users file
+  QTimer::singleShot (0, this, [this] {clublog_check_due (); qrz_check_due (); clublog_users_check_due (); lotwqsl_check_due ();});   // (3.-283 stage 4) the users file; (3.-299) and LoTW
   QTimer::singleShot (0, this, [this] {eqsl_members_check_due ();});   // (3.-286) eQSL's member list, while the fill is ticked
   usesched_ = ui_->UseSched_check_box->isChecked ();
   sched_hh_1_ = ui_->hhComboBox_1->currentText ();
@@ -5113,7 +5356,7 @@ void Configuration::impl::reject ()
   initialize_models ();		// reverts to settings as at exec ()
   /* CE3TSK 2026-11-22 (TODO.md 3.-280): the button may have fetched with a token, call or key left unsaved - the saved
      ones' at once (the looks ask only when a file is not theirs, and not for a download still running: its end asks) */
-  QTimer::singleShot (0, this, [this] {clublog_check_due (); qrz_check_due (); clublog_users_check_due ();});   // (3.-283 stage 4) and the users file
+  QTimer::singleShot (0, this, [this] {clublog_check_due (); qrz_check_due (); clublog_users_check_due (); lotwqsl_check_due ();});   // (3.-283 stage 4) the users file; (3.-299) and LoTW
 
   // check if the Transceiver instance changed, in which case we need
   // to re open any prior Transceiver type
@@ -5531,7 +5774,8 @@ void Configuration::impl::clublog_finished (bool ok, FileDownload::Failure failu
 void Configuration::impl::update_clublog_label ()
 {
   auto const running = clublog_download_.running ();
-  ui_->clublog_download_push_button->setEnabled (!running);
+  // (3.-300) greyed without a token in the box, as LoTW's without a login
+  ui_->clublog_download_push_button->setEnabled (!running && !ui_->clublog_token_edit->text ().trimmed ().isEmpty ());
   if (running)
     {
       ui_->clublog_status_label->setText (tr ("downloading..."));
@@ -5564,6 +5808,12 @@ void Configuration::impl::update_clublog_label ()
     text += '\n' + tr ("Club Log refused %1 with this token: the call is not on the token's Club Log account, or Club Log asks to correct the request. Add the call to your Club Log account and press the download button, or correct My Call on the General tab.")
                    .arg (my_callsign_.trimmed ().toUpper ());
   ui_->clublog_status_label->setText (text);
+  // (3.-300) its lamp: green the last download worked, red it failed or a refusal holds, grey nothing yet or no token
+  auto const state = !clublog_error_.isEmpty () || refused || callRefused ? status_lamp::Bad
+                     : last.isValid () && !clublog_token_.isEmpty () ? status_lamp::Good : status_lamp::Idle;
+  auto const why = wrap_tooltip (download_tip ("Club Log") + "\n\n" + text);
+  ui_->clublog_status_label->setToolTip (why);
+  status_lamp::show (ui_->clublog_download_lamp, state, why);
 }
 
 /* CE3TSK 2026-11-23 (TODO.md 3.-282, QSO_UPLOAD_PLAN.md): the logged QSOs to Club Log and QRZ.com (qsoupload.h). */
@@ -5678,7 +5928,7 @@ void Configuration::impl::upload_done (qso_upload::Site site, qso_upload::Result
   // (review 1) the main window told of a QSO refused - a short note for 10 s; a QSO sent needs none
   auto const name = qso_upload::site_name (site);
   if (qso_upload::Result::Rejected == result.kind)
-    Q_EMIT self_->upload_note (name, tr ("%1 refused the QSO with %2 - see Settings > Reporting.").arg (name).arg (call));
+    Q_EMIT self_->upload_note (name, tr ("%1 refused the QSO with %2 - see Settings > Logbooks.").arg (name).arg (call));
   update_upload_labels ();
 }
 
@@ -5716,7 +5966,7 @@ void Configuration::impl::upload_refused (qso_upload::Site site, qso_upload::Res
   (qso_upload::Site::ClubLog == site ? clublog_upload_kind_ : qrz_upload_kind_)
     = qso_upload::Result::Request == result.scope ? UploadText::Run : UploadText::Recorded;
   if (qso_upload::Site::ClubLog == site) update_clublog_label ();
-  Q_EMIT self_->upload_note (name, tr ("%1 refused the upload: the QSO with %2 is kept - see Settings > Reporting.").arg (name).arg (call));
+  Q_EMIT self_->upload_note (name, tr ("%1 refused the upload: the QSO with %2 is kept - see Settings > Logbooks.").arg (name).arg (call));
   configure_uploads ();
 }
 
@@ -5740,7 +5990,7 @@ void Configuration::impl::upload_delayed (qso_upload::Site site, qso_upload::Res
   (qso_upload::Site::ClubLog == site ? clublog_upload_kind_ : qrz_upload_kind_) = UploadText::Event;
   (qso_upload::Site::ClubLog == site ? clublog_upload_good_ : qrz_upload_good_) = false;
   auto const name = qso_upload::site_name (site);
-  Q_EMIT self_->upload_note (name, tr ("%1: the QSO with %2 is not sent yet, kept - see Settings > Reporting.").arg (name).arg (call));
+  Q_EMIT self_->upload_note (name, tr ("%1: the QSO with %2 is not sent yet, kept - see Settings > Logbooks.").arg (name).arg (call));
   update_upload_labels ();
 }
 
@@ -5753,8 +6003,8 @@ void Configuration::impl::upload_kept (qso_upload::Site site, bool refused, QStr
 
 void Configuration::impl::kept_note (QString const& name, bool refused, QString const& call)
 {
-  Q_EMIT self_->upload_note (name, refused ? tr ("%1 refused the upload: the QSO with %2 is kept - see Settings > Reporting.").arg (name).arg (call)
-                                           : tr ("%1: the QSO with %2 is not sent yet, kept - see Settings > Reporting.").arg (name).arg (call));
+  Q_EMIT self_->upload_note (name, refused ? tr ("%1 refused the upload: the QSO with %2 is kept - see Settings > Logbooks.").arg (name).arg (call)
+                                           : tr ("%1: the QSO with %2 is not sent yet, kept - see Settings > Logbooks.").arg (name).arg (call));
 }
 
 /* CE3TSK 2026-11-24 (TODO.md 3.-284, the operator: "keep eQSL's answer and show it like the others"): eQSL's answer in the
@@ -5774,12 +6024,12 @@ void Configuration::impl::eqsl_answered (QString const& call, eqsl::Answer const
     case eqsl::Answer::Duplicate: eqsl_upload_text_ = tr ("%1 was in the log already (%2 UTC).").arg (call).arg (utc_time (now, now)); break;
     case eqsl::Answer::Refused:
       eqsl_upload_text_ = tr ("%1 refused at %2 UTC: %3").arg (call, utc_time (now, now), answer.text);   // (3.-295) one arg ()
-      Q_EMIT self_->upload_note (name, tr ("%1 refused the QSO with %2 - see Settings > Reporting.").arg (name).arg (call));
+      Q_EMIT self_->upload_note (name, tr ("%1 refused the QSO with %2 - see Settings > Logbooks.").arg (name).arg (call));
       break;
     case eqsl::Answer::LoginRefused:   // (3.-294) kept: nothing more until the login is corrected and OK pressed
       eqsl_upload_text_ = tr ("%1 refused at %2 UTC: %3").arg (call, utc_time (now, now), answer.text) + ' '
         + tr ("eQSL refused the login or the QTH nickname: the QSOs are kept, and nothing more is sent until you correct them here and press OK.");
-      Q_EMIT self_->upload_note (name, tr ("%1 refused the upload: the QSO with %2 is kept - see Settings > Reporting.").arg (name).arg (call));
+      Q_EMIT self_->upload_note (name, tr ("%1 refused the upload: the QSO with %2 is kept - see Settings > Logbooks.").arg (name).arg (call));
       break;
     default:
       {
@@ -5791,7 +6041,7 @@ void Configuration::impl::eqsl_answered (QString const& call, eqsl::Answer const
         // (3.-295, the review 9) the four in one arg (): a %2 in eQSL's words never takes the next try's time
         eqsl_upload_text_ = tr ("%1 not sent at %2 UTC: %3. Kept, tried again at %4 UTC.").arg (call, utc_time (now, now), why,
                                                                                                utc_time (next.isValid () ? next : now, now));
-        Q_EMIT self_->upload_note (name, tr ("%1: the QSO with %2 is not sent yet, kept - see Settings > Reporting.").arg (name).arg (call));
+        Q_EMIT self_->upload_note (name, tr ("%1: the QSO with %2 is not sent yet, kept - see Settings > Logbooks.").arg (name).arg (call));
       }
     }
   update_eqsl_upload_label ();
@@ -5801,12 +6051,18 @@ void Configuration::impl::eqsl_answered (QString const& call, eqsl::Answer const
 // something to report; the box's tooltip always tells it
 void Configuration::impl::update_eqsl_upload_label ()
 {
-  QString text {eqsl_upload_text_.isEmpty () ? tr ("QSOs you log are sent as you log them.") : eqsl_upload_text_};
+  auto const on = ui_->eqsl_check_box->isChecked ();
+  QString text {!on ? tr ("Off: the QSOs you log are not sent to %1.").arg ("eQSL")   // (3.-300) the line always shown
+                : eqsl_upload_text_.isEmpty () ? tr ("QSOs you log are sent as you log them.") : eqsl_upload_text_};
   if (eqsl_waiting_ > 0) text += '\n' + tr ("QSOs waiting to be sent: %1.").arg (eqsl_waiting_);   // (3.-294) as the others'
   if (eqsl_unsaved_) text += '\n' + tr ("%1: the QSOs waiting could not be written to their file - they are lost if the program is closed before they are sent.").arg ("eQSL");
   ui_->eqsl_upload_status_label->setText (text);
-  ui_->eqsl_upload_status_label->setVisible (ui_->eqsl_check_box->isChecked ()
-                                             && ((!eqsl_upload_good_ && !eqsl_upload_text_.isEmpty ()) || eqsl_waiting_ > 0 || eqsl_unsaved_));
+  // (3.-300) its lamp: green the last QSO went, red a failure or a refusal or a file not written, grey nothing yet or off
+  auto const state = (on && !eqsl_upload_good_ && !eqsl_upload_text_.isEmpty ()) || eqsl_unsaved_ ? status_lamp::Bad
+                     : on && eqsl_upload_good_ && !eqsl_upload_text_.isEmpty () ? status_lamp::Good : status_lamp::Idle;
+  auto const why = wrap_tooltip (send_tip ("eQSL") + "\n\n" + text);
+  ui_->eqsl_upload_status_label->setToolTip (why);
+  status_lamp::show (ui_->eqsl_upload_lamp, state, why);
   ui_->eqsl_check_box->setToolTip (eqsl_upload_tip_ + "\n\n" + wrap_tooltip (text));
 }
 
@@ -5864,6 +6120,8 @@ void Configuration::impl::update_qrz_xml_label ()
     }
   ui_->qrz_xml_status_label->setText (text);
   ui_->qrz_xml_status_label->setVisible (ui_->fill_missing_grid_check_box->isChecked ());
+  // (3.-300) a tooltip of its own: what the line is about, then the line
+  ui_->qrz_xml_status_label->setToolTip (wrap_tooltip (tr ("QRZ.com's XML data: a grid square asked of QRZ.com for a QSO logged without one (\"Fill a missing grid before logging\", on the Reporting tab), with the XML login. It needs a QRZ.com XML subscription.") + "\n\n" + text));
 }
 
 /* CE3TSK 2026-11-24 (TODO.md 3.-283, GRID_FILL_PLAN.md stage 4): Club Log's users file - one general request a week
@@ -5971,6 +6229,8 @@ void Configuration::impl::update_clublog_users_label ()
   else text = tr ("Users file (grids): downloaded weekly with the token while \"Fill a missing grid before logging\" is on.");
   ui_->clublog_users_status_label->setText (text);
   ui_->clublog_users_status_label->setVisible (ui_->fill_missing_grid_check_box->isChecked ());
+  // (3.-300) a tooltip of its own: what the line is about, then the line
+  ui_->clublog_users_status_label->setToolTip (wrap_tooltip (tr ("Club Log's users file: the grid squares Club Log knows of its users, for a QSO logged without one (\"Fill a missing grid before logging\", on the Reporting tab). Downloaded once a week with the token.") + "\n\n" + text));
 }
 
 void Configuration::impl::update_upload_labels ()
@@ -5988,26 +6248,30 @@ void Configuration::impl::update_upload_labels ()
     for (auto const& call : clublog_upload_.station_calls ())
       if (call != mine && clublog_call_refused (clublog_token_, call)) {clublog_other = call; break;}
   }
-  /* (review 3, the operator's choice (a)) the line shows only when there is something to report - no token or key, the
-     uploads switched off, a refusal, a QSO not sent or refused, a test token's check, QSOs waiting beyond the request
-     under way; a QSO sent or in the log already is told by the box's tooltip alone, so that a ticked box makes Reporting
-     no taller than General */
+  /* (review 3, the operator's choice (a)) the line showed only when there was something to report, so that a ticked box
+     made Reporting no taller than General; (3.-300, the operator: "status lamps ... (Success: green) or not (Error: red) or
+     nothing happened (grey)", on a page of their own since 3.-297) always shown, headed by its lamp - off, nothing sent
+     yet, the last answer - and with a tooltip of its own */
   auto line = [this] (qso_upload::Uploader const& u, QString const& credential, QString const& refusal, QString const& last, bool good,
-                      char const * env, QCheckBox * box, QString const& tip, QLabel * label) {
+                      char const * env, QCheckBox * box, QString const& tip, QLabel * label, QLabel * lamp) {
+    auto const site = qso_upload::site_name (u.site ());
+    auto const on = box->isChecked ();
     QStringList text;
-    bool report {true};
-    if (credential.isEmpty ()) text << tr ("No token or key: nothing is sent.");
-    else if (u.base ().isEmpty ()) text << tr ("Uploads to %1 are switched off (%2).").arg (qso_upload::site_name (u.site ())).arg (env);
-    else if (!refusal.isEmpty () && refusal != last) text << refusal;
-    else report = false;
-    if (!last.isEmpty ()) {text << last; report = report || !good;}
+    bool bad {false};
+    if (!on) text << tr ("Off: the QSOs you log are not sent to %1.").arg (site);
+    else if (credential.isEmpty ()) text << tr ("No token or key: nothing is sent.");
+    else if (u.base ().isEmpty ()) {text << tr ("Uploads to %1 are switched off (%2).").arg (site).arg (env); bad = true;}
+    else if (!refusal.isEmpty ()) {if (refusal != last) text << refusal; bad = true;}
+    if (on && !last.isEmpty ()) {text << last; bad = bad || !good;}
     else if (text.isEmpty ()) text << tr ("QSOs you log are sent as you log them.");
     if (u.waiting ()) text << tr ("QSOs waiting to be sent: %1.").arg (u.waiting ());
     // (3.-295, the review 7) a queue file that could not be written: said - the QSOs live in memory alone
-    if (u.unsaved ()) text << tr ("%1: the QSOs waiting could not be written to their file - they are lost if the program is closed before they are sent.").arg (qso_upload::site_name (u.site ()));
-    report = report || u.held () > 0 || u.unsaved ();
+    if (u.unsaved ()) {text << tr ("%1: the QSOs waiting could not be written to their file - they are lost if the program is closed before they are sent.").arg (site); bad = true;}
     label->setText (text.join ('\n'));
-    label->setVisible (box->isChecked () && report);
+    auto const state = bad ? status_lamp::Bad : on && good && !last.isEmpty () ? status_lamp::Good : status_lamp::Idle;
+    auto const why = wrap_tooltip (send_tip (site) + "\n\n" + text.join ('\n'));
+    label->setToolTip (why);
+    status_lamp::show (lamp, state, why);
     box->setToolTip (tip + "\n\n" + wrap_tooltip (text.join ('\n')));
   };
   QString const clublog_refusal {clublog_refused_token
@@ -6020,13 +6284,13 @@ void Configuration::impl::update_upload_labels ()
         .arg (clublog_other)
       : QString {}};
   line (clublog_upload_, clublog_token_, clublog_refusal, clublog_upload_text_, clublog_upload_good_, club_log::api_env,
-        ui_->clublog_upload_check_box, clublog_upload_tip_, ui_->clublog_upload_status_label);
+        ui_->clublog_upload_check_box, clublog_upload_tip_, ui_->clublog_upload_status_label, ui_->clublog_upload_lamp);
   // (review) a refusal on record shown from the record, as Club Log's: after a start too
   QString const qrz_refusal {qrz_refused_upload
       ? tr ("QRZ.com refused the upload with this key (%1): sending QSOs needs a QRZ.com subscription. Once you have one, click the box off and on and press OK, or save another key.").arg (qrz_why)
       : QString {}};
   line (qrz_upload_, qrz_key_, qrz_refusal, qrz_upload_text_, qrz_upload_good_, qrz_logbook::api_env, ui_->qrz_upload_check_box, qrz_upload_tip_,
-        ui_->qrz_upload_status_label);
+        ui_->qrz_upload_status_label, ui_->qrz_upload_lamp);
 }
 
 /* CE3TSK 2026-11-22 (TODO.md 3.-280): QRZ.com's LoTW confirmations (qrzlogbook.h), added to Club Log's. The button downloads
@@ -6207,7 +6471,8 @@ void Configuration::impl::qrz_finished (bool ok, FileDownload::Failure failure, 
 void Configuration::impl::update_qrz_label ()
 {
   auto const running = qrz_fetch_.running ();
-  ui_->qrz_download_push_button->setEnabled (!running);
+  // (3.-300) greyed without a key in the box, as LoTW's without a login
+  ui_->qrz_download_push_button->setEnabled (!running && !ui_->qrz_key_edit->text ().trimmed ().isEmpty ());
   if (running)
     {
       ui_->qrz_status_label->setText (tr ("downloading..."));
@@ -6234,6 +6499,12 @@ void Configuration::impl::update_qrz_label ()
   if (!qrz_error_.isEmpty ()) text += '\n' + qrz_error_;
   else if (refused) text += '\n' + tr ("QRZ.com refused the key. Copy your logbook's key from QRZ.com again and paste it here; the API needs a QRZ.com subscription.");
   ui_->qrz_status_label->setText (text);
+  // (3.-300) its lamp, as Club Log's
+  auto const state = !qrz_error_.isEmpty () || refused ? status_lamp::Bad
+                     : last.isValid () && !qrz_key_.isEmpty () ? status_lamp::Good : status_lamp::Idle;
+  auto const why = wrap_tooltip (download_tip ("QRZ.com") + "\n\n" + text);
+  ui_->qrz_status_label->setToolTip (why);
+  status_lamp::show (ui_->qrz_download_lamp, state, why);
 }
 
 void Configuration::impl::update_data_file_labels ()

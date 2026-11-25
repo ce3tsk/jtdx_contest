@@ -1215,12 +1215,12 @@ MainWindow::MainWindow(bool multiple, QSettings * settings, QSharedMemory *shdme
      message box during operation. (review 1) For 10 s, as every other note here: a message hides the status bar's own
      items (Tx status, mode, the period's bar, the QSO count, the contest score) while it stands, and one without an end
      hid them for as long as a site was not taking QSOs. Configuration sends it again with each QSO logged meanwhile;
-     the whole story is on the site's line in Settings > Reporting */
+     the whole story is on the site's line in Settings > Logbooks (3.-297) */
   connect (&m_config, &Configuration::upload_note, this, [this] (QString const&, QString const& text) {
       if (!text.isEmpty ()) statusBar ()->showMessage (text, 10000);
     });
   /* CE3TSK 2026-11-24 (TODO.md 3.-284, the operator: "keep eQSL's answer and show it like the others"): eQSL's answer for
-     each QSO to Settings > Reporting's eQSL line, which words it and sends the note above when there is one */
+     each QSO to Settings > Logbooks' eQSL line (3.-297), which words it and sends the note above when there is one */
   connect (Eqsl, &EQSL::answered, this, [this] (QString const& call, eqsl::Answer const& answer) {m_config.eqsl_answered (call, answer, Eqsl->waiting (), Eqsl->next_try ());});
   /* CE3TSK 2026-11-24 (TODO.md 3.-294, the operator: "yes, give eQSL the same queue and retries"): eQSL's queue - its file in
      the data directory, the login and the box read from the Settings at each request; what waits goes 75 s after the start

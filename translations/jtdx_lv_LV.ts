@@ -775,23 +775,8 @@ Formāts:
     </message>
     <message>
         <location filename="../Configuration.cpp"/>
-        <source>%1 refused the QSO with %2 - see Settings &gt; Reporting.</source>
-        <translation>%1 noraidīja QSO ar %2 - skatiet Iestatījumi &gt; Raportēšana.</translation>
-    </message>
-    <message>
-        <location filename="../Configuration.cpp"/>
-        <source>%1 refused the upload: the QSO with %2 is kept - see Settings &gt; Reporting.</source>
-        <translation>%1 noraidīja augšupielādi: QSO ar %2 ir saglabāts - skatiet Iestatījumi &gt; Raportēšana.</translation>
-    </message>
-    <message>
-        <location filename="../Configuration.cpp"/>
         <source>an answer not understood: %1</source>
         <translation>nesaprasta atbilde: %1</translation>
-    </message>
-    <message>
-        <location filename="../Configuration.cpp"/>
-        <source>%1: the QSO with %2 is not sent yet, kept - see Settings &gt; Reporting.</source>
-        <translation>%1: QSO ar %2 vēl nav nosūtīts, saglabāts - skatiet Iestatījumi &gt; Raportēšana.</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp"/>
@@ -912,6 +897,81 @@ Formāts:
         <location filename="../Configuration.cpp"/>
         <source>%1: the QSOs waiting could not be written to their file - they are lost if the program is closed before they are sent.</source>
         <translation>%1: gaidošos QSO nevarēja ierakstīt to failā - tie tiks zaudēti, ja programma tiks aizvērta, pirms tie nosūtīti.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1 refused the QSO with %2 - see Settings &gt; Logbooks.</source>
+        <translation>%1 noraidīja QSO ar %2 - skatiet Iestatījumi &gt; Žurnāli.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1 refused the upload: the QSO with %2 is kept - see Settings &gt; Logbooks.</source>
+        <translation>%1 noraidīja augšupielādi: QSO ar %2 ir saglabāts - skatiet Iestatījumi &gt; Žurnāli.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1: the QSO with %2 is not sent yet, kept - see Settings &gt; Logbooks.</source>
+        <translation>%1: QSO ar %2 vēl nav nosūtīts, saglabāts - skatiet Iestatījumi &gt; Žurnāli.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>LoTW downloads are switched off (JTDX_LOTW_API).</source>
+        <translation>Lejupielādes no LoTW ir izslēgtas (JTDX_LOTW_API).</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Download from LoTW failed</source>
+        <translation>Lejupielāde no LoTW neizdevās</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>LoTW sent no report: the username or the password may be wrong, or LoTW is busy.</source>
+        <translation>LoTW neatsūtīja atskaiti: iespējams, lietotājvārds vai parole ir nepareiza, vai LoTW ir aizņemts.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>LoTW's answer was not a whole report (%1).</source>
+        <translation>LoTW atbilde nebija pilna atskaite (%1).</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>The next try is at %1 UTC.</source>
+        <translation>Nākamais mēģinājums ir %1 UTC.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>No login: nothing is downloaded from LoTW.</source>
+        <translation>Nav pieteikšanās datu: no LoTW nekas netiek lejupielādēts.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>The LoTW login could not be saved</source>
+        <translation>LoTW pieteikšanās datus nevarēja saglabāt</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Sending the QSOs you log to %1, in this run: the last answer, the QSOs waiting, a refusal. Green: the last QSO went. Red: the last try failed, or %1 refused - the line says why. Grey: nothing sent yet, or sending is off.</source>
+        <translation>Ierakstīto QSO sūtīšana uz %1 šajā palaišanā: pēdējā atbilde, gaidošie QSO, atteikums. Zaļš: pēdējais QSO aizgāja. Sarkans: pēdējais mēģinājums neizdevās, vai %1 atteica - rinda saka, kāpēc. Pelēks: vēl nekas nav nosūtīts, vai sūtīšana ir izslēgta.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Downloading your LoTW confirmations from %1: the last download and what it brought. Green: the last download worked. Red: it failed, or %1 refused - the line says why. Grey: nothing downloaded yet, or nothing to download with.</source>
+        <translation>Jūsu LoTW apstiprinājumu lejupielāde no %1: pēdējā lejupielāde un ko tā atnesa. Zaļš: pēdējā lejupielāde izdevās. Sarkans: tā neizdevās, vai %1 atteica - rinda saka, kāpēc. Pelēks: vēl nekas nav lejupielādēts, vai nav ar ko lejupielādēt.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Off: the QSOs you log are not sent to %1.</source>
+        <translation>Izslēgts: ierakstītie QSO netiek sūtīti uz %1.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>QRZ.com's XML data: a grid square asked of QRZ.com for a QSO logged without one ("Fill a missing grid before logging", on the Reporting tab), with the XML login. It needs a QRZ.com XML subscription.</source>
+        <translation>QRZ.com XML dati: lokators, ko jautā QRZ.com QSO, kas ierakstīts bez lokatora (“Aizpildīt trūkstošo lokatoru pirms ierakstīšanas”, cilnē Raportēšana), ar XML pieteikšanos. Vajag QRZ.com XML abonementu.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Club Log's users file: the grid squares Club Log knows of its users, for a QSO logged without one ("Fill a missing grid before logging", on the Reporting tab). Downloaded once a week with the token.</source>
+        <translation>Club Log lietotāju fails: lokatori, ko Club Log zina par saviem lietotājiem, QSO, kas ierakstīts bez lokatora (“Aizpildīt trūkstošo lokatoru pirms ierakstīšanas”, cilnē Raportēšana). Lejupielādē reizi nedēļā ar žetonu.</translation>
     </message>
 </context>
 <context>
@@ -3103,6 +3163,11 @@ Formāts:
         <location filename="../displaytext.cpp"/>
         <source>Worked before and LoTW-confirmed: nothing new in the notifications that are on.</source>
         <translation>Jau strādāts un apstiprināts LoTW: ieslēgtajos paziņojumos nekā jauna.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Confirmed in LoTW already? The program downloads your confirmations from LoTW itself every 12 hours: a QSL received since the last download shows after the next one.</source>
+        <translation>Jau apstiprināts LoTW? Programma ik pēc 12 stundām lejupielādē apstiprinājumus tieši no LoTW: QSL, kas saņemts pēc pēdējās lejupielādes, parādās pēc nākamās.</translation>
     </message>
 </context>
 <context>
@@ -9929,11 +9994,6 @@ lauki DX Call un DX Grid tiktu notīrīti.</translation>
         <translation>dekodētie un atkļūdošanas ziņojumi</translation>
     </message>
     <message>
-        <location filename="../Configuration.ui" line="2777"/>
-        <source>Network Services</source>
-        <translation>Tīkla pakalpojumi</translation>
-    </message>
-    <message>
         <location filename="../Configuration.ui" line="2821"/>
         <source>EQSL Username.</source>
         <translation>EQSL lietotājvārds.</translation>
@@ -11844,6 +11904,61 @@ Tikai no šī brīža ierakstītie QSO: vecākos augšupielādējiet QRZ.com kā
         <location filename="../Configuration.ui"/>
         <source>When a QSO gave no grid - neither heard nor typed - it gets one before it is logged: what this program heard the station send earlier (within a day; a /M station's within half an hour), else the locator it reports to PSK Reporter (with the Reception map open), else the square at least two other stations received from it, as their reports to PSK Reporter say (the map open too), else its grid in eQSL's member list (Settings &gt; General; a member that uploaded to eQSL within the last 12 months), in Club Log's users file (downloaded weekly with the token; a call that uploaded within the last 12 months) or in QRZ.com's XML data (with the XML login, asked as the QSO starts). Only a square inside the call's DXCC country is taken, its first four characters. Log QSO names the source in the grid field's tooltip, and the QSO's comment notes it as [grid: ...]. Never in a contest.</source>
         <translation>Ja QSO nedeva lokatoru – ne uztvertu, ne ievadītu –, tas saņem lokatoru pirms ierakstīšanas: ko šī programma dzirdēja staciju agrāk sūtām (dienas laikā, /M stacijai pusstundas laikā), citādi lokatoru, ko stacija ziņo PSK Reporter (ar atvērtu Uztveršanas karti), citādi kvadrātu, ko no stacijas uztvēra vismaz divas citas stacijas, pēc to ziņojumiem PSK Reporter (arī ar atvērtu karti), citādi tās lokatoru eQSL dalībnieku sarakstā (Iestatījumi &gt; Vispārīgi; dalībnieks, kas pēdējo 12 mēnešu laikā ir augšupielādējis eQSL), Club Log lietotāju failā (lejupielādē katru nedēļu ar žetonu; izsaukums, kas pēdējo 12 mēnešu laikā ir augšupielādējis) vai QRZ.com XML datos (ar XML pieteikšanos, vaicā QSO sākumā). Tiek ņemts tikai kvadrāts izsaukuma DXCC valstī, tā pirmās četras rakstzīmes. Logs Ierakstīt QSO nosauc avotu lokatora lauka padomā, un QSO komentārs to atzīmē kā [grid: ...]. Nekad sacensībās.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Spotting</source>
+        <translation>Spoti</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Other programs</source>
+        <translation>Citas programmas</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Logbooks</source>
+        <translation>Žurnāli</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Your accounts at online logbooks: the QSOs you log sent to them, confirmations downloaded from them</source>
+        <translation>Jūsu konti tiešsaistes žurnālos: ierakstītie QSO tiek nosūtīti uz tiem, apstiprinājumi tiek lejupielādēti no tiem</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Username:</source>
+        <translation>Lietotājvārds:</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Your username at LoTW's website (lotw.arrl.org) - usually your call sign, but not always.</source>
+        <translation>Jūsu lietotājvārds LoTW vietnē (lotw.arrl.org) - parasti jūsu izsaukuma signāls, bet ne vienmēr.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Password:</source>
+        <translation>Parole:</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Your password at LoTW's website. It is kept in a file of its own beside the settings file, readable by you alone, and sent only to lotw.arrl.org.</source>
+        <translation>Jūsu parole LoTW vietnē. Tā tiek glabāta atsevišķā failā blakus iestatījumu failam, ko varat lasīt tikai jūs, un tiek nosūtīta tikai uz lotw.arrl.org.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Download your confirmations from LoTW itself now; the program also does it three minutes after the start and every 12 hours while a username and password are saved. Only the QSLs for My Call. The first download fetches all of them, later ones only what came since - a whole report again once a month. LoTW does not say when a password is wrong: after a failure the next try waits 6 hours.</source>
+        <translation>Lejupielādēt apstiprinājumus tagad tieši no LoTW; programma to dara arī trīs minūtes pēc palaišanas un ik pēc 12 stundām, kamēr ir saglabāts lietotājvārds un parole. Tikai QSL priekš Mans Call. Pirmā lejupielāde iegūst visus, nākamās tikai to, kas pienācis kopš tam - reizi mēnesī atkal pilnu atskaiti. LoTW nepasaka, ja parole ir nepareiza: pēc neveiksmes nākamais mēģinājums gaida 6 stundas.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Download confirmations from LoTW</source>
+        <translation>Lejupielādēt apstiprinājumus no LoTW</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>eQSL's member list: the grid squares of eQSL's members, for a QSO logged without one ("Fill a missing grid before logging", on the Reporting tab). It is downloaded on the General tab, under Data files.</source>
+        <translation>eQSL dalībnieku saraksts: eQSL dalībnieku lokatori QSO, kas ierakstīts bez lokatora (“Aizpildīt trūkstošo lokatoru pirms ierakstīšanas”, cilnē Raportēšana). To lejupielādē cilnē Vispārīgi, sadaļā Datu faili.</translation>
     </message>
 </context>
 <context>

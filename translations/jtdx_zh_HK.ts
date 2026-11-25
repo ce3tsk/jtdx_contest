@@ -775,23 +775,8 @@ Format:
     </message>
     <message>
         <location filename="../Configuration.cpp"/>
-        <source>%1 refused the QSO with %2 - see Settings &gt; Reporting.</source>
-        <translation>%1 拒絕了與 %2 的 QSO - 見 設定 &gt; 報告。</translation>
-    </message>
-    <message>
-        <location filename="../Configuration.cpp"/>
-        <source>%1 refused the upload: the QSO with %2 is kept - see Settings &gt; Reporting.</source>
-        <translation>%1 拒絕了上載：與 %2 的 QSO 已保留 - 見 設定 &gt; 報告。</translation>
-    </message>
-    <message>
-        <location filename="../Configuration.cpp"/>
         <source>an answer not understood: %1</source>
         <translation>無法理解的回應：%1</translation>
-    </message>
-    <message>
-        <location filename="../Configuration.cpp"/>
-        <source>%1: the QSO with %2 is not sent yet, kept - see Settings &gt; Reporting.</source>
-        <translation>%1：與 %2 的 QSO 尚未發送，已保留 - 見 設定 &gt; 報告。</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp"/>
@@ -912,6 +897,81 @@ Format:
         <location filename="../Configuration.cpp"/>
         <source>%1: the QSOs waiting could not be written to their file - they are lost if the program is closed before they are sent.</source>
         <translation>%1：等待中的通聯無法寫入其檔案——若在傳送前關閉程式，它們將遺失。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1 refused the QSO with %2 - see Settings &gt; Logbooks.</source>
+        <translation>%1 拒絕了與 %2 的 QSO - 見 設定 &gt; 通聯日誌。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1 refused the upload: the QSO with %2 is kept - see Settings &gt; Logbooks.</source>
+        <translation>%1 拒絕了上載：與 %2 的 QSO 已保留 - 見 設定 &gt; 通聯日誌。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1: the QSO with %2 is not sent yet, kept - see Settings &gt; Logbooks.</source>
+        <translation>%1：與 %2 的 QSO 尚未發送，已保留 - 見 設定 &gt; 通聯日誌。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>LoTW downloads are switched off (JTDX_LOTW_API).</source>
+        <translation>LoTW 下載已關閉 (JTDX_LOTW_API)。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Download from LoTW failed</source>
+        <translation>從 LoTW 下載失敗</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>LoTW sent no report: the username or the password may be wrong, or LoTW is busy.</source>
+        <translation>LoTW 沒有傳送報告：可能用戶名稱或密碼有誤，或者 LoTW 正忙。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>LoTW's answer was not a whole report (%1).</source>
+        <translation>LoTW 的回應不是完整的報告 (%1)。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>The next try is at %1 UTC.</source>
+        <translation>下一次嘗試在 %1 UTC。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>No login: nothing is downloaded from LoTW.</source>
+        <translation>沒有登入資料：不從 LoTW 下載任何內容。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>The LoTW login could not be saved</source>
+        <translation>無法儲存 LoTW 登入資料</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Sending the QSOs you log to %1, in this run: the last answer, the QSOs waiting, a refusal. Green: the last QSO went. Red: the last try failed, or %1 refused - the line says why. Grey: nothing sent yet, or sending is off.</source>
+        <translation>將記錄的通聯傳送到 %1 (本次執行)：最後的回應、等待中的通聯、拒絕。綠色：最後一次通聯已傳送。紅色：最後一次嘗試失敗，或 %1 拒絕 - 該行說明原因。灰色：尚未傳送任何內容，或傳送已關閉。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Downloading your LoTW confirmations from %1: the last download and what it brought. Green: the last download worked. Red: it failed, or %1 refused - the line says why. Grey: nothing downloaded yet, or nothing to download with.</source>
+        <translation>從 %1 下載您的 LoTW 確認：最後一次下載及其內容。綠色：最後一次下載成功。紅色：下載失敗，或 %1 拒絕 - 該行說明原因。灰色：尚未下載任何內容，或沒有可用於下載的資料。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Off: the QSOs you log are not sent to %1.</source>
+        <translation>關閉：記錄的通聯不傳送到 %1。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>QRZ.com's XML data: a grid square asked of QRZ.com for a QSO logged without one ("Fill a missing grid before logging", on the Reporting tab), with the XML login. It needs a QRZ.com XML subscription.</source>
+        <translation>QRZ.com 的 XML 數據：為記錄時沒有網格的通聯向 QRZ.com 查詢的網格 (「記錄前補全缺失的網格」，在報告分頁)，使用 XML 登入。需要 QRZ.com 的 XML 訂閱。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Club Log's users file: the grid squares Club Log knows of its users, for a QSO logged without one ("Fill a missing grid before logging", on the Reporting tab). Downloaded once a week with the token.</source>
+        <translation>Club Log 的用戶檔案：Club Log 所知的其用戶的網格，用於記錄時沒有網格的通聯 (「記錄前補全缺失的網格」，在報告分頁)。使用權杖每週下載一次。</translation>
     </message>
 </context>
 <context>
@@ -3104,6 +3164,11 @@ Format:
         <location filename="../displaytext.cpp"/>
         <source>Worked before and LoTW-confirmed: nothing new in the notifications that are on.</source>
         <translation>曾經通聯且經 LoTW 確認：已開啟的通知中沒有新內容。</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Confirmed in LoTW already? The program downloads your confirmations from LoTW itself every 12 hours: a QSL received since the last download shows after the next one.</source>
+        <translation>已在 LoTW 中確認？程式每 12 小時直接從 LoTW 下載您的確認：上次下載之後收到的 QSL 會在下一次下載後顯示。</translation>
     </message>
 </context>
 <context>
@@ -9840,11 +9905,6 @@ and DX Grid fields when a 73 or free text message is sent.</source>
         <translation>已解碼及除錯訊息</translation>
     </message>
     <message>
-        <location filename="../Configuration.ui" line="2777"/>
-        <source>Network Services</source>
-        <translation>網路服務</translation>
-    </message>
-    <message>
         <location filename="../Configuration.ui" line="2821"/>
         <source>EQSL Username.</source>
         <translation>EQSL用戶名稱.</translation>
@@ -11845,6 +11905,61 @@ Only QSOs logged from now on: upload older ones to QRZ.com as an ADIF file there
         <location filename="../Configuration.ui"/>
         <source>When a QSO gave no grid - neither heard nor typed - it gets one before it is logged: what this program heard the station send earlier (within a day; a /M station's within half an hour), else the locator it reports to PSK Reporter (with the Reception map open), else the square at least two other stations received from it, as their reports to PSK Reporter say (the map open too), else its grid in eQSL's member list (Settings &gt; General; a member that uploaded to eQSL within the last 12 months), in Club Log's users file (downloaded weekly with the token; a call that uploaded within the last 12 months) or in QRZ.com's XML data (with the XML login, asked as the QSO starts). Only a square inside the call's DXCC country is taken, its first four characters. Log QSO names the source in the grid field's tooltip, and the QSO's comment notes it as [grid: ...]. Never in a contest.</source>
         <translation>當一次通聯沒有得到網格（既未收到也未輸入）時，記錄前為其補上：本程式此前聽到該電台發送的網格（一天之內；/M 電台為半小時之內），否則為該電台向 PSK Reporter 報告的定位符（接收地圖開啟時），再否則為至少兩個其他電台從該電台收到、並向 PSK Reporter 報告的方格（同樣在接收地圖開啟時），再否則為 eQSL 會員名單中該電台的網格（設定 &gt; 一般；過去 12 個月內向 eQSL 上傳過的會員），或 Club Log 用戶檔案（每週用權杖下載；過去 12 個月內上傳過的呼號），或 QRZ.com 的 XML 資料（用 XML 登入，通聯開始時查詢）。只採用位於該呼號 DXCC 實體內的方格，取其前四個字元。記錄通聯視窗在網格欄的提示中註明來源，通聯的註釋以 [grid: ...] 記下。比賽中從不補全。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Spotting</source>
+        <translation>Spotting</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Other programs</source>
+        <translation>其他程式</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Logbooks</source>
+        <translation>通聯日誌</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Your accounts at online logbooks: the QSOs you log sent to them, confirmations downloaded from them</source>
+        <translation>您在線上通聯日誌網站的帳戶：記錄的通聯傳送到那裡，確認從那裡下載</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Username:</source>
+        <translation>用戶名稱:</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Your username at LoTW's website (lotw.arrl.org) - usually your call sign, but not always.</source>
+        <translation>您在 LoTW 網站 (lotw.arrl.org) 的用戶名稱——通常是您的呼號，但並非總是如此。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Password:</source>
+        <translation>密碼:</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Your password at LoTW's website. It is kept in a file of its own beside the settings file, readable by you alone, and sent only to lotw.arrl.org.</source>
+        <translation>您在 LoTW 網站的密碼。它儲存在設定檔旁的一個獨立檔案中，只有您能讀取，並且只傳送到 lotw.arrl.org。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Download your confirmations from LoTW itself now; the program also does it three minutes after the start and every 12 hours while a username and password are saved. Only the QSLs for My Call. The first download fetches all of them, later ones only what came since - a whole report again once a month. LoTW does not say when a password is wrong: after a failure the next try waits 6 hours.</source>
+        <translation>立即從 LoTW 本身下載您的確認；只要儲存了用戶名稱和密碼，程式也會在啟動三分鐘後以及每 12 小時下載一次。只下載我的呼號的 QSL。第一次下載取得全部，之後只取得新到的部分 (每月一次重新取得完整報告)。密碼錯誤時 LoTW 不會提示：失敗後，下一次嘗試等待 6 小時。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Download confirmations from LoTW</source>
+        <translation>從 LoTW 下載確認</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>eQSL's member list: the grid squares of eQSL's members, for a QSO logged without one ("Fill a missing grid before logging", on the Reporting tab). It is downloaded on the General tab, under Data files.</source>
+        <translation>eQSL 的成員列表：eQSL 成員的網格，用於記錄時沒有網格的通聯 (「記錄前補全缺失的網格」，在報告分頁)。它在一般分頁的數據檔案中下載。</translation>
     </message>
 </context>
 <context>

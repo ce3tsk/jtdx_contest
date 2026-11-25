@@ -1215,7 +1215,7 @@ private:
      earlier year does not suppress this year's multiplier. Shares m_logBook's country data. */
   LogBook m_contestLog;
   /* CE3TSK 2026-11-21 (TODO.md 3.-280): the confirmations Club Log has (clublog_qsl.adi, from the Club Log download in
-     Settings > Reporting), judged with m_logBook's country data; given to the two decode windows while it holds any */
+     Settings > Logbooks since 3.-297), judged with m_logBook's country data; given to the two decode windows while it holds any */
   LogBook m_confirmedBook;
   bool m_confirmedInitNeeded = false;   // downloaded while monitoring: read at the next initLogIfNeeded ()
   QString m_confirmedFrom;   // CE3TSK 2026-11-22: the day from which the log's QSOs count as confirmed for now ("" none)

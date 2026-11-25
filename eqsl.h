@@ -6,7 +6,7 @@
 /* CE3TSK 2026-11-24 (TODO.md 3.-284, the operator: "keep eQSL's answer and show it like the others", then "Switch to
    https"): each QSO logged to eQSL.cc as before - one GET to importADIF.cfm with the record and the login in ADIFdata -
    and now:
-   - eQSL's answer read (eqsl::answer) and given as answered (): Settings > Reporting's line and the main window's note
+   - eQSL's answer read (eqsl::answer) and given as answered (): Settings > Logbooks' line (3.-297) and the main window's note
      show it, as the Club Log and QRZ.com uploads' (Configuration::eqsl_answered). The inherited class read the answer
      page and dropped it: a refusal - a QTH nickname that is no profile's (2026-11-24, 9A6T) - left no trace at all.
    - over https, through FileDownload (WinHTTP on Windows, where Qt has no OpenSSL): eQSL's interface description

@@ -775,23 +775,8 @@ Format:
     </message>
     <message>
         <location filename="../Configuration.cpp"/>
-        <source>%1 refused the QSO with %2 - see Settings &gt; Reporting.</source>
-        <translation>%1 は %2 との QSO を拒否しました - 設定 &gt; レポーティング を参照。</translation>
-    </message>
-    <message>
-        <location filename="../Configuration.cpp"/>
-        <source>%1 refused the upload: the QSO with %2 is kept - see Settings &gt; Reporting.</source>
-        <translation>%1 はアップロードを拒否しました：%2 との QSO は保存済み - 設定 &gt; レポーティング を参照。</translation>
-    </message>
-    <message>
-        <location filename="../Configuration.cpp"/>
         <source>an answer not understood: %1</source>
         <translation>理解できない応答：%1</translation>
-    </message>
-    <message>
-        <location filename="../Configuration.cpp"/>
-        <source>%1: the QSO with %2 is not sent yet, kept - see Settings &gt; Reporting.</source>
-        <translation>%1：%2 との QSO はまだ送信されていません。保存済み - 設定 &gt; レポーティング を参照。</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp"/>
@@ -912,6 +897,81 @@ Format:
         <location filename="../Configuration.cpp"/>
         <source>%1: the QSOs waiting could not be written to their file - they are lost if the program is closed before they are sent.</source>
         <translation>%1：待機中の QSO をファイルに書き込めませんでした - 送信前にプログラムを閉じると失われます。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1 refused the QSO with %2 - see Settings &gt; Logbooks.</source>
+        <translation>%1 は %2 との QSO を拒否しました - 設定 &gt; ログブック を参照。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1 refused the upload: the QSO with %2 is kept - see Settings &gt; Logbooks.</source>
+        <translation>%1 はアップロードを拒否しました：%2 との QSO は保存済み - 設定 &gt; ログブック を参照。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1: the QSO with %2 is not sent yet, kept - see Settings &gt; Logbooks.</source>
+        <translation>%1：%2 との QSO はまだ送信されていません。保存済み - 設定 &gt; ログブック を参照。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>LoTW downloads are switched off (JTDX_LOTW_API).</source>
+        <translation>LoTW からのダウンロードはオフになっています (JTDX_LOTW_API)。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Download from LoTW failed</source>
+        <translation>LoTW からのダウンロードに失敗しました</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>LoTW sent no report: the username or the password may be wrong, or LoTW is busy.</source>
+        <translation>LoTW からレポートが届きませんでした。ユーザー名かパスワードが違うか、LoTW が混雑している可能性があります。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>LoTW's answer was not a whole report (%1).</source>
+        <translation>LoTW の応答は完全なレポートではありませんでした (%1)。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>The next try is at %1 UTC.</source>
+        <translation>次の試行は %1 UTC です。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>No login: nothing is downloaded from LoTW.</source>
+        <translation>ログイン情報なし：LoTW からは何もダウンロードしません。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>The LoTW login could not be saved</source>
+        <translation>LoTW のログイン情報を保存できませんでした</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Sending the QSOs you log to %1, in this run: the last answer, the QSOs waiting, a refusal. Green: the last QSO went. Red: the last try failed, or %1 refused - the line says why. Grey: nothing sent yet, or sending is off.</source>
+        <translation>記録した QSO の %1 への送信 (この実行中)：最後の応答、待機中の QSO、拒否。緑：最後の QSO が送られました。赤：最後の試行が失敗したか、%1 が拒否しました (理由は行に表示)。灰色：まだ何も送っていないか、送信がオフです。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Downloading your LoTW confirmations from %1: the last download and what it brought. Green: the last download worked. Red: it failed, or %1 refused - the line says why. Grey: nothing downloaded yet, or nothing to download with.</source>
+        <translation>%1 からの LoTW 確認のダウンロード：最後のダウンロードとその内容。緑：最後のダウンロードは成功しました。赤：失敗したか、%1 が拒否しました (理由は行に表示)。灰色：まだ何もダウンロードしていないか、ダウンロードに必要なものがありません。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Off: the QSOs you log are not sent to %1.</source>
+        <translation>オフ：記録した QSO は %1 へ送られません。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>QRZ.com's XML data: a grid square asked of QRZ.com for a QSO logged without one ("Fill a missing grid before logging", on the Reporting tab), with the XML login. It needs a QRZ.com XML subscription.</source>
+        <translation>QRZ.com の XML データ：グリッドなしで記録された QSO のために QRZ.com に問い合わせるグリッド (「記録前に欠けたグリッドを補う」、レポーティング タブ)。XML ログインを使います。QRZ.com の XML サブスクリプションが必要です。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Club Log's users file: the grid squares Club Log knows of its users, for a QSO logged without one ("Fill a missing grid before logging", on the Reporting tab). Downloaded once a week with the token.</source>
+        <translation>Club Log のユーザーファイル：Club Log が把握しているユーザーのグリッド。グリッドなしで記録された QSO のためのものです (「記録前に欠けたグリッドを補う」、レポーティング タブ)。トークンで週に一度ダウンロードします。</translation>
     </message>
 </context>
 <context>
@@ -3104,6 +3164,11 @@ Format:
         <location filename="../displaytext.cpp"/>
         <source>Worked before and LoTW-confirmed: nothing new in the notifications that are on.</source>
         <translation>交信済みで LoTW コンファーム済み：オンになっている通知に新しいものはありません。</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Confirmed in LoTW already? The program downloads your confirmations from LoTW itself every 12 hours: a QSL received since the last download shows after the next one.</source>
+        <translation>LoTW ですでに確認済み？プログラムは 12 時間ごとに LoTW 自体から確認をダウンロードします。前回のダウンロード以降に届いた QSL は次回の後に表示されます。</translation>
     </message>
 </context>
 <context>
@@ -9643,11 +9708,6 @@ Please verify the correct directory name was given.</source>
         <translation>デコード済とデバッグメッセージ</translation>
     </message>
     <message>
-        <location filename="../Configuration.ui" line="2777"/>
-        <source>Network Services</source>
-        <translation>ネットワークサービス</translation>
-    </message>
-    <message>
         <location filename="../Configuration.ui" line="2821"/>
         <source>EQSL Username.</source>
         <translation>eQSL ユーザー名。</translation>
@@ -11821,6 +11881,61 @@ Only QSOs logged from now on: upload older ones to QRZ.com as an ADIF file there
         <location filename="../Configuration.ui"/>
         <source>When a QSO gave no grid - neither heard nor typed - it gets one before it is logged: what this program heard the station send earlier (within a day; a /M station's within half an hour), else the locator it reports to PSK Reporter (with the Reception map open), else the square at least two other stations received from it, as their reports to PSK Reporter say (the map open too), else its grid in eQSL's member list (Settings &gt; General; a member that uploaded to eQSL within the last 12 months), in Club Log's users file (downloaded weekly with the token; a call that uploaded within the last 12 months) or in QRZ.com's XML data (with the XML login, asked as the QSO starts). Only a square inside the call's DXCC country is taken, its first four characters. Log QSO names the source in the grid field's tooltip, and the QSO's comment notes it as [grid: ...]. Never in a contest.</source>
         <translation>QSOでグリッドが得られなかった場合（受信も入力もない場合）、記録前に補います：このプログラムが以前に受信したその局の送信グリッド（1日以内、/M局は30分以内）、なければその局がPSK Reporterに報告しているロケーター（受信マップを開いているとき）、なければ他の2局以上がその局から受信してPSK Reporterに報告したスクエア（同じく受信マップを開いているとき）、さらになければ eQSL の会員リストにあるその局のグリッド（設定 &gt; 全般。過去12か月以内に eQSL へアップロードした会員）、Club Log のユーザーファイル（トークンで毎週ダウンロード。過去12か月以内にアップロードしたコールサイン）、または QRZ.com の XML データ（XML ログインで、QSO の開始時に照会）。コールサインのDXCCエンティティ内のスクエアのみ、先頭4文字を使います。ログに記録ウィンドウはグリッド欄のツールチップに出典を示し、QSOのコメントに [grid: ...] として記します。コンテスト中は行いません。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Spotting</source>
+        <translation>スポット</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Other programs</source>
+        <translation>他のプログラム</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Logbooks</source>
+        <translation>ログブック</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Your accounts at online logbooks: the QSOs you log sent to them, confirmations downloaded from them</source>
+        <translation>オンラインログブックのアカウント：記録したQSOをそこへ送り、そこから確認をダウンロードします</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Username:</source>
+        <translation>ユーザー名：</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Your username at LoTW's website (lotw.arrl.org) - usually your call sign, but not always.</source>
+        <translation>LoTW のウェブサイト (lotw.arrl.org) でのユーザー名です。たいていはコールサインですが、そうでないこともあります。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Password:</source>
+        <translation>パスワード：</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Your password at LoTW's website. It is kept in a file of its own beside the settings file, readable by you alone, and sent only to lotw.arrl.org.</source>
+        <translation>LoTW のウェブサイトのパスワードです。設定ファイルの隣にある専用のファイルに保存され、あなただけが読めます。送信先は lotw.arrl.org だけです。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Download your confirmations from LoTW itself now; the program also does it three minutes after the start and every 12 hours while a username and password are saved. Only the QSLs for My Call. The first download fetches all of them, later ones only what came since - a whole report again once a month. LoTW does not say when a password is wrong: after a failure the next try waits 6 hours.</source>
+        <translation>LoTW 自体から確認を今すぐダウンロードします。ユーザー名とパスワードが保存されている間は、起動の 3 分後と 12 時間ごとにもプログラムが行います。自分のコールサイン宛ての QSL だけです。最初のダウンロードですべてを取得し、その後は新しく届いた分だけを取得します (月に一度はまた全体のレポート)。LoTW はパスワードが違っていても知らせません。失敗の後、次の試行は 6 時間待ちます。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Download confirmations from LoTW</source>
+        <translation>LoTW から確認をダウンロード</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>eQSL's member list: the grid squares of eQSL's members, for a QSO logged without one ("Fill a missing grid before logging", on the Reporting tab). It is downloaded on the General tab, under Data files.</source>
+        <translation>eQSL のメンバーリスト：グリッドなしで記録された QSO のための、eQSL メンバーのグリッド (「記録前に欠けたグリッドを補う」、レポーティング タブ)。全般 タブの データファイル でダウンロードします。</translation>
     </message>
 </context>
 <context>

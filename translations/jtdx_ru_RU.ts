@@ -776,23 +776,8 @@ Format:
     </message>
     <message>
         <location filename="../Configuration.cpp"/>
-        <source>%1 refused the QSO with %2 - see Settings &gt; Reporting.</source>
-        <translation>%1 отклонил QSO с %2 - см. Настройки &gt; Лог.</translation>
-    </message>
-    <message>
-        <location filename="../Configuration.cpp"/>
-        <source>%1 refused the upload: the QSO with %2 is kept - see Settings &gt; Reporting.</source>
-        <translation>%1 отклонил загрузку: QSO с %2 сохранено - см. Настройки &gt; Лог.</translation>
-    </message>
-    <message>
-        <location filename="../Configuration.cpp"/>
         <source>an answer not understood: %1</source>
         <translation>непонятный ответ: %1</translation>
-    </message>
-    <message>
-        <location filename="../Configuration.cpp"/>
-        <source>%1: the QSO with %2 is not sent yet, kept - see Settings &gt; Reporting.</source>
-        <translation>%1: QSO с %2 ещё не отправлено, сохранено - см. Настройки &gt; Лог.</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp"/>
@@ -913,6 +898,81 @@ Format:
         <location filename="../Configuration.cpp"/>
         <source>%1: the QSOs waiting could not be written to their file - they are lost if the program is closed before they are sent.</source>
         <translation>%1: ожидающие QSO не удалось записать в их файл - они пропадут, если закрыть программу до их отправки.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1 refused the QSO with %2 - see Settings &gt; Logbooks.</source>
+        <translation>%1 отклонил QSO с %2 - см. Настройки &gt; Журналы.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1 refused the upload: the QSO with %2 is kept - see Settings &gt; Logbooks.</source>
+        <translation>%1 отклонил загрузку: QSO с %2 сохранено - см. Настройки &gt; Журналы.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1: the QSO with %2 is not sent yet, kept - see Settings &gt; Logbooks.</source>
+        <translation>%1: QSO с %2 ещё не отправлено, сохранено - см. Настройки &gt; Журналы.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>LoTW downloads are switched off (JTDX_LOTW_API).</source>
+        <translation>Загрузка из LoTW отключена (JTDX_LOTW_API).</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Download from LoTW failed</source>
+        <translation>Не удалось загрузить из LoTW</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>LoTW sent no report: the username or the password may be wrong, or LoTW is busy.</source>
+        <translation>LoTW не прислал отчёт: возможно, неверны имя пользователя или пароль, или LoTW занят.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>LoTW's answer was not a whole report (%1).</source>
+        <translation>Ответ LoTW не был полным отчётом (%1).</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>The next try is at %1 UTC.</source>
+        <translation>Следующая попытка в %1 UTC.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>No login: nothing is downloaded from LoTW.</source>
+        <translation>Нет данных входа: из LoTW ничего не загружается.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>The LoTW login could not be saved</source>
+        <translation>Не удалось сохранить данные входа в LoTW</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Sending the QSOs you log to %1, in this run: the last answer, the QSOs waiting, a refusal. Green: the last QSO went. Red: the last try failed, or %1 refused - the line says why. Grey: nothing sent yet, or sending is off.</source>
+        <translation>Отправка записанных QSO на %1 в этом запуске: последний ответ, ожидающие QSO, отказ. Зелёный: последнее QSO прошло. Красный: последняя попытка не удалась или %1 отказал - строка говорит почему. Серый: ещё ничего не отправлено или отправка выключена.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Downloading your LoTW confirmations from %1: the last download and what it brought. Green: the last download worked. Red: it failed, or %1 refused - the line says why. Grey: nothing downloaded yet, or nothing to download with.</source>
+        <translation>Загрузка ваших подтверждений LoTW с %1: последняя загрузка и что она принесла. Зелёный: последняя загрузка удалась. Красный: не удалась или %1 отказал - строка говорит почему. Серый: ещё ничего не загружено или нечем загружать.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Off: the QSOs you log are not sent to %1.</source>
+        <translation>Выключено: записанные QSO не отправляются на %1.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>QRZ.com's XML data: a grid square asked of QRZ.com for a QSO logged without one ("Fill a missing grid before logging", on the Reporting tab), with the XML login. It needs a QRZ.com XML subscription.</source>
+        <translation>XML-данные QRZ.com: локатор, запрашиваемый у QRZ.com для QSO, записанного без локатора («Дополнять недостающий локатор перед записью в лог», вкладка Лог), с XML-входом. Нужна XML-подписка QRZ.com.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Club Log's users file: the grid squares Club Log knows of its users, for a QSO logged without one ("Fill a missing grid before logging", on the Reporting tab). Downloaded once a week with the token.</source>
+        <translation>Файл пользователей Club Log: локаторы, которые Club Log знает о своих пользователях, для QSO, записанного без локатора («Дополнять недостающий локатор перед записью в лог», вкладка Лог). Загружается раз в неделю с токеном.</translation>
     </message>
 </context>
 <context>
@@ -3105,6 +3165,11 @@ Format:
         <location filename="../displaytext.cpp"/>
         <source>Worked before and LoTW-confirmed: nothing new in the notifications that are on.</source>
         <translation>Уже сработано и подтверждено в LoTW: ничего нового во включённых уведомлениях.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Confirmed in LoTW already? The program downloads your confirmations from LoTW itself every 12 hours: a QSL received since the last download shows after the next one.</source>
+        <translation>Уже подтверждено в LoTW? Программа каждые 12 часов загружает ваши подтверждения прямо из LoTW: QSL, полученная после последней загрузки, появится после следующей.</translation>
     </message>
 </context>
 <context>
@@ -9879,11 +9944,6 @@ and DX Grid fields when a 73 or free text message is sent.</source>
 и диагностика</translation>
     </message>
     <message>
-        <location filename="../Configuration.ui" line="2777"/>
-        <source>Network Services</source>
-        <translation>Сетевой сервис</translation>
-    </message>
-    <message>
         <location filename="../Configuration.ui" line="2821"/>
         <source>EQSL Username.</source>
         <translation>Имя пользователя eQSL аккаунта.</translation>
@@ -11908,6 +11968,61 @@ Only QSOs logged from now on: upload older ones to QRZ.com as an ADIF file there
         <location filename="../Configuration.ui"/>
         <source>When a QSO gave no grid - neither heard nor typed - it gets one before it is logged: what this program heard the station send earlier (within a day; a /M station's within half an hour), else the locator it reports to PSK Reporter (with the Reception map open), else the square at least two other stations received from it, as their reports to PSK Reporter say (the map open too), else its grid in eQSL's member list (Settings &gt; General; a member that uploaded to eQSL within the last 12 months), in Club Log's users file (downloaded weekly with the token; a call that uploaded within the last 12 months) or in QRZ.com's XML data (with the XML login, asked as the QSO starts). Only a square inside the call's DXCC country is taken, its first four characters. Log QSO names the source in the grid field's tooltip, and the QSO's comment notes it as [grid: ...]. Never in a contest.</source>
         <translation>Если QSO не дало локатора – ни принятого, ни введённого, – он подставляется перед записью: тот, что эта программа ранее слышала от станции (в течение суток, от станции /M — в течение получаса), иначе локатор, который станция сообщает в PSK Reporter (при открытой Карте приёма), иначе квадрат, который не менее двух других станций приняли от неё, по их сообщениям в PSK Reporter (тоже при открытой карте), иначе её локатор из списка участников eQSL (Настройки &gt; Общие; участник, загружавший в eQSL за последние 12 месяцев), в файле пользователей Club Log (загружается еженедельно с токеном; позывной, загружавший за последние 12 месяцев) или в XML-данных QRZ.com (с входом XML, запрос в начале QSO). Берётся только квадрат внутри страны DXCC позывного, его первые четыре знака. Окно «QSO в лог» указывает источник в подсказке поля локатора, а комментарий QSO отмечает его как [grid: ...]. Никогда в контесте.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Spotting</source>
+        <translation>Споты</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Other programs</source>
+        <translation>Другие программы</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Logbooks</source>
+        <translation>Журналы</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Your accounts at online logbooks: the QSOs you log sent to them, confirmations downloaded from them</source>
+        <translation>Ваши учётные записи в онлайн-журналах: записанные QSO отправляются туда, подтверждения загружаются оттуда</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Username:</source>
+        <translation>Имя пользователя:</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Your username at LoTW's website (lotw.arrl.org) - usually your call sign, but not always.</source>
+        <translation>Ваше имя пользователя на сайте LoTW (lotw.arrl.org) - обычно ваш позывной, но не всегда.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Password:</source>
+        <translation>Пароль:</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Your password at LoTW's website. It is kept in a file of its own beside the settings file, readable by you alone, and sent only to lotw.arrl.org.</source>
+        <translation>Ваш пароль на сайте LoTW. Он хранится в отдельном файле рядом с файлом настроек, доступном для чтения только вам, и отправляется только на lotw.arrl.org.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Download your confirmations from LoTW itself now; the program also does it three minutes after the start and every 12 hours while a username and password are saved. Only the QSLs for My Call. The first download fetches all of them, later ones only what came since - a whole report again once a month. LoTW does not say when a password is wrong: after a failure the next try waits 6 hours.</source>
+        <translation>Загрузить подтверждения прямо из LoTW сейчас; программа делает это также через три минуты после запуска и каждые 12 часов, пока сохранены имя пользователя и пароль. Только QSL для «Мой позывной». Первая загрузка получает все, следующие только пришедшее с тех пор - раз в месяц снова полный отчёт. LoTW не сообщает, что пароль неверен: после неудачи следующая попытка ждёт 6 часов.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Download confirmations from LoTW</source>
+        <translation>Загрузить подтверждения из LoTW</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>eQSL's member list: the grid squares of eQSL's members, for a QSO logged without one ("Fill a missing grid before logging", on the Reporting tab). It is downloaded on the General tab, under Data files.</source>
+        <translation>Список участников eQSL: локаторы участников eQSL для QSO, записанного без локатора («Дополнять недостающий локатор перед записью в лог», вкладка Лог). Он загружается на вкладке Общие, в разделе Файлы данных.</translation>
     </message>
 </context>
 <context>

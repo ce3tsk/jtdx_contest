@@ -775,23 +775,8 @@ Indeling:
     </message>
     <message>
         <location filename="../Configuration.cpp"/>
-        <source>%1 refused the QSO with %2 - see Settings &gt; Reporting.</source>
-        <translation>%1 weigerde de QSO met %2 - zie Instellingen &gt; Rapportage.</translation>
-    </message>
-    <message>
-        <location filename="../Configuration.cpp"/>
-        <source>%1 refused the upload: the QSO with %2 is kept - see Settings &gt; Reporting.</source>
-        <translation>%1 weigerde de upload: de QSO met %2 is bewaard - zie Instellingen &gt; Rapportage.</translation>
-    </message>
-    <message>
-        <location filename="../Configuration.cpp"/>
         <source>an answer not understood: %1</source>
         <translation>een antwoord dat niet begrepen werd: %1</translation>
-    </message>
-    <message>
-        <location filename="../Configuration.cpp"/>
-        <source>%1: the QSO with %2 is not sent yet, kept - see Settings &gt; Reporting.</source>
-        <translation>%1: de QSO met %2 is nog niet verstuurd, bewaard - zie Instellingen &gt; Rapportage.</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp"/>
@@ -912,6 +897,81 @@ Indeling:
         <location filename="../Configuration.cpp"/>
         <source>%1: the QSOs waiting could not be written to their file - they are lost if the program is closed before they are sent.</source>
         <translation>%1: de wachtende QSO's konden niet naar hun bestand worden geschreven - ze gaan verloren als het programma wordt gesloten voordat ze verstuurd zijn.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1 refused the QSO with %2 - see Settings &gt; Logbooks.</source>
+        <translation>%1 weigerde de QSO met %2 - zie Instellingen &gt; Logboeken.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1 refused the upload: the QSO with %2 is kept - see Settings &gt; Logbooks.</source>
+        <translation>%1 weigerde de upload: de QSO met %2 is bewaard - zie Instellingen &gt; Logboeken.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1: the QSO with %2 is not sent yet, kept - see Settings &gt; Logbooks.</source>
+        <translation>%1: de QSO met %2 is nog niet verstuurd, bewaard - zie Instellingen &gt; Logboeken.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>LoTW downloads are switched off (JTDX_LOTW_API).</source>
+        <translation>Downloads van LoTW zijn uitgeschakeld (JTDX_LOTW_API).</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Download from LoTW failed</source>
+        <translation>Download van LoTW mislukt</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>LoTW sent no report: the username or the password may be wrong, or LoTW is busy.</source>
+        <translation>LoTW stuurde geen rapport: de gebruikersnaam of het wachtwoord is misschien fout, of LoTW is bezet.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>LoTW's answer was not a whole report (%1).</source>
+        <translation>Het antwoord van LoTW was geen volledig rapport (%1).</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>The next try is at %1 UTC.</source>
+        <translation>De volgende poging is om %1 UTC.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>No login: nothing is downloaded from LoTW.</source>
+        <translation>Geen aanmelding: er wordt niets van LoTW gedownload.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>The LoTW login could not be saved</source>
+        <translation>De LoTW-aanmelding kon niet worden opgeslagen</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Sending the QSOs you log to %1, in this run: the last answer, the QSOs waiting, a refusal. Green: the last QSO went. Red: the last try failed, or %1 refused - the line says why. Grey: nothing sent yet, or sending is off.</source>
+        <translation>Het versturen van de QSO's die u logt naar %1, in deze sessie: het laatste antwoord, de wachtende QSO's, een weigering. Groen: de laatste QSO ging door. Rood: de laatste poging mislukte, of %1 weigerde - de regel zegt waarom. Grijs: nog niets verstuurd, of versturen staat uit.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Downloading your LoTW confirmations from %1: the last download and what it brought. Green: the last download worked. Red: it failed, or %1 refused - the line says why. Grey: nothing downloaded yet, or nothing to download with.</source>
+        <translation>Het downloaden van uw LoTW-bevestigingen van %1: de laatste download en wat die bracht. Groen: de laatste download lukte. Rood: die mislukte, of %1 weigerde - de regel zegt waarom. Grijs: nog niets gedownload, of niets om mee te downloaden.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Off: the QSOs you log are not sent to %1.</source>
+        <translation>Uit: de QSO's die u logt worden niet naar %1 verstuurd.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>QRZ.com's XML data: a grid square asked of QRZ.com for a QSO logged without one ("Fill a missing grid before logging", on the Reporting tab), with the XML login. It needs a QRZ.com XML subscription.</source>
+        <translation>De XML-gegevens van QRZ.com: een locator gevraagd aan QRZ.com voor een QSO gelogd zonder locator (‘Ontbrekende locator invullen vóór het loggen’, op het tabblad Rapportage), met de XML-aanmelding. Er is een XML-abonnement bij QRZ.com voor nodig.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Club Log's users file: the grid squares Club Log knows of its users, for a QSO logged without one ("Fill a missing grid before logging", on the Reporting tab). Downloaded once a week with the token.</source>
+        <translation>Het gebruikersbestand van Club Log: de locators die Club Log van zijn gebruikers kent, voor een QSO gelogd zonder locator (‘Ontbrekende locator invullen vóór het loggen’, op het tabblad Rapportage). Eens per week gedownload met het token.</translation>
     </message>
 </context>
 <context>
@@ -3104,6 +3164,11 @@ Indeling:
         <location filename="../displaytext.cpp"/>
         <source>Worked before and LoTW-confirmed: nothing new in the notifications that are on.</source>
         <translation>Al gewerkt en LoTW-bevestigd: niets nieuws in de meldingen die aan staan.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Confirmed in LoTW already? The program downloads your confirmations from LoTW itself every 12 hours: a QSL received since the last download shows after the next one.</source>
+        <translation>Al bevestigd in LoTW? Het programma downloadt uw bevestigingen elke 12 uur rechtstreeks van LoTW: een QSL die sinds de laatste download binnenkwam, verschijnt na de volgende.</translation>
     </message>
 </context>
 <context>
@@ -9929,11 +9994,6 @@ zodra een 73- of vrijetekstbericht wordt gezonden.</translation>
         <translation>gedecodeerde en debugberichten</translation>
     </message>
     <message>
-        <location filename="../Configuration.ui" line="2777"/>
-        <source>Network Services</source>
-        <translation>Netwerkdiensten</translation>
-    </message>
-    <message>
         <location filename="../Configuration.ui" line="2821"/>
         <source>EQSL Username.</source>
         <translation>eQSL-gebruikersnaam.</translation>
@@ -11844,6 +11904,61 @@ Alleen QSO's die vanaf nu gelogd worden: upload oudere als ADIF-bestand op QRZ.c
         <location filename="../Configuration.ui"/>
         <source>When a QSO gave no grid - neither heard nor typed - it gets one before it is logged: what this program heard the station send earlier (within a day; a /M station's within half an hour), else the locator it reports to PSK Reporter (with the Reception map open), else the square at least two other stations received from it, as their reports to PSK Reporter say (the map open too), else its grid in eQSL's member list (Settings &gt; General; a member that uploaded to eQSL within the last 12 months), in Club Log's users file (downloaded weekly with the token; a call that uploaded within the last 12 months) or in QRZ.com's XML data (with the XML login, asked as the QSO starts). Only a square inside the call's DXCC country is taken, its first four characters. Log QSO names the source in the grid field's tooltip, and the QSO's comment notes it as [grid: ...]. Never in a contest.</source>
         <translation>Gaf een QSO geen locator – niet ontvangen en niet ingetypt –, dan krijgt het er een vóór het loggen: wat dit programma het station eerder hoorde zenden (binnen een dag, van een /M-station binnen een half uur), anders de locator die het station aan PSK Reporter meldt (met de Ontvangstkaart open), anders het vak dat minstens twee andere stations van het station ontvingen, volgens hun meldingen aan PSK Reporter (ook met de kaart open), anders zijn locator in de ledenlijst van eQSL (Instellingen &gt; Algemeen; een lid dat in de laatste 12 maanden naar eQSL uploadde), in het gebruikersbestand van Club Log (wekelijks met het token gedownload; een roepnaam die in de laatste 12 maanden uploadde) of in de XML-gegevens van QRZ.com (met de XML-login, gevraagd als de QSO begint). Alleen een vak binnen het DXCC-land van de roepnaam wordt genomen, de eerste vier tekens. Het venster QSO loggen noemt de bron in de tooltip van het locatorveld, en de opmerking van de QSO vermeldt die als [grid: ...]. Nooit in een contest.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Spotting</source>
+        <translation>Spotting</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Other programs</source>
+        <translation>Andere programma's</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Logbooks</source>
+        <translation>Logboeken</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Your accounts at online logbooks: the QSOs you log sent to them, confirmations downloaded from them</source>
+        <translation>Uw accounts bij online logboeken: de QSO's die u logt worden erheen gestuurd, bevestigingen worden ervan gedownload</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Username:</source>
+        <translation>Gebruikersnaam:</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Your username at LoTW's website (lotw.arrl.org) - usually your call sign, but not always.</source>
+        <translation>Uw gebruikersnaam op de website van LoTW (lotw.arrl.org) - meestal uw roepnaam, maar niet altijd.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Password:</source>
+        <translation>Wachtwoord:</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Your password at LoTW's website. It is kept in a file of its own beside the settings file, readable by you alone, and sent only to lotw.arrl.org.</source>
+        <translation>Uw wachtwoord op de website van LoTW. Het wordt bewaard in een eigen bestand naast het instellingenbestand, dat alleen u kunt lezen, en alleen naar lotw.arrl.org gestuurd.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Download your confirmations from LoTW itself now; the program also does it three minutes after the start and every 12 hours while a username and password are saved. Only the QSLs for My Call. The first download fetches all of them, later ones only what came since - a whole report again once a month. LoTW does not say when a password is wrong: after a failure the next try waits 6 hours.</source>
+        <translation>Uw bevestigingen nu rechtstreeks van LoTW downloaden; het programma doet het ook drie minuten na de start en elke 12 uur zolang een gebruikersnaam en wachtwoord zijn opgeslagen. Alleen de QSL's voor Mijn roepnaam. De eerste download haalt ze allemaal op, latere alleen wat er sindsdien bij kwam - eens per maand weer een volledig rapport. LoTW meldt niet wanneer een wachtwoord fout is: na een mislukking wacht de volgende poging 6 uur.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Download confirmations from LoTW</source>
+        <translation>Bevestigingen downloaden van LoTW</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>eQSL's member list: the grid squares of eQSL's members, for a QSO logged without one ("Fill a missing grid before logging", on the Reporting tab). It is downloaded on the General tab, under Data files.</source>
+        <translation>De ledenlijst van eQSL: de locators van eQSL-leden, voor een QSO gelogd zonder locator (‘Ontbrekende locator invullen vóór het loggen’, op het tabblad Rapportage). Hij wordt gedownload op het tabblad Algemeen, onder Gegevensbestanden.</translation>
     </message>
 </context>
 <context>

@@ -776,23 +776,8 @@ Formato:
     </message>
     <message>
         <location filename="../Configuration.cpp"/>
-        <source>%1 refused the QSO with %2 - see Settings &gt; Reporting.</source>
-        <translation>%1 rechazó el QSO con %2 - vea Configuraciones &gt; Informes.</translation>
-    </message>
-    <message>
-        <location filename="../Configuration.cpp"/>
-        <source>%1 refused the upload: the QSO with %2 is kept - see Settings &gt; Reporting.</source>
-        <translation>%1 rechazó la subida: el QSO con %2 se guarda - vea Configuraciones &gt; Informes.</translation>
-    </message>
-    <message>
-        <location filename="../Configuration.cpp"/>
         <source>an answer not understood: %1</source>
         <translation>una respuesta no entendida: %1</translation>
-    </message>
-    <message>
-        <location filename="../Configuration.cpp"/>
-        <source>%1: the QSO with %2 is not sent yet, kept - see Settings &gt; Reporting.</source>
-        <translation>%1: el QSO con %2 aún no se ha enviado, se guarda - vea Configuraciones &gt; Informes.</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp"/>
@@ -913,6 +898,81 @@ Formato:
         <location filename="../Configuration.cpp"/>
         <source>%1: the QSOs waiting could not be written to their file - they are lost if the program is closed before they are sent.</source>
         <translation>%1: los QSO en espera no se pudieron escribir en su archivo - se pierden si el programa se cierra antes de enviarlos.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1 refused the QSO with %2 - see Settings &gt; Logbooks.</source>
+        <translation>%1 rechazó el QSO con %2 - vea Configuraciones &gt; Libros de guardia.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1 refused the upload: the QSO with %2 is kept - see Settings &gt; Logbooks.</source>
+        <translation>%1 rechazó la subida: el QSO con %2 se guarda - vea Configuraciones &gt; Libros de guardia.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1: the QSO with %2 is not sent yet, kept - see Settings &gt; Logbooks.</source>
+        <translation>%1: el QSO con %2 aún no se ha enviado, se guarda - vea Configuraciones &gt; Libros de guardia.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>LoTW downloads are switched off (JTDX_LOTW_API).</source>
+        <translation>Las descargas de LoTW están desactivadas (JTDX_LOTW_API).</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Download from LoTW failed</source>
+        <translation>Falló la descarga de LoTW</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>LoTW sent no report: the username or the password may be wrong, or LoTW is busy.</source>
+        <translation>LoTW no envió ningún informe: puede que el nombre de usuario o la contraseña sean incorrectos, o que LoTW esté ocupado.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>LoTW's answer was not a whole report (%1).</source>
+        <translation>La respuesta de LoTW no era un informe completo (%1).</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>The next try is at %1 UTC.</source>
+        <translation>El próximo intento es a las %1 UTC.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>No login: nothing is downloaded from LoTW.</source>
+        <translation>Sin acceso: no se descarga nada de LoTW.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>The LoTW login could not be saved</source>
+        <translation>No se pudo guardar el acceso a LoTW</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Sending the QSOs you log to %1, in this run: the last answer, the QSOs waiting, a refusal. Green: the last QSO went. Red: the last try failed, or %1 refused - the line says why. Grey: nothing sent yet, or sending is off.</source>
+        <translation>El envío de los QSO que registra a %1, en esta sesión: la última respuesta, los QSO en espera, un rechazo. Verde: el último QSO llegó. Rojo: el último intento falló, o %1 lo rechazó - la línea dice por qué. Gris: aún no se envió nada, o el envío está desactivado.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Downloading your LoTW confirmations from %1: the last download and what it brought. Green: the last download worked. Red: it failed, or %1 refused - the line says why. Grey: nothing downloaded yet, or nothing to download with.</source>
+        <translation>La descarga de sus confirmaciones de LoTW desde %1: la última descarga y lo que trajo. Verde: la última descarga funcionó. Rojo: falló, o %1 la rechazó - la línea dice por qué. Gris: aún no se descargó nada, o no hay con qué descargar.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Off: the QSOs you log are not sent to %1.</source>
+        <translation>Desactivado: los QSO que registra no se envían a %1.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>QRZ.com's XML data: a grid square asked of QRZ.com for a QSO logged without one ("Fill a missing grid before logging", on the Reporting tab), with the XML login. It needs a QRZ.com XML subscription.</source>
+        <translation>Los datos XML de QRZ.com: un locator pedido a QRZ.com para un QSO registrado sin él («Completar el locator que falte antes de registrar», en la pestaña Informes), con el acceso XML. Requiere una suscripción XML de QRZ.com.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Club Log's users file: the grid squares Club Log knows of its users, for a QSO logged without one ("Fill a missing grid before logging", on the Reporting tab). Downloaded once a week with the token.</source>
+        <translation>El archivo de usuarios de Club Log: los locators que Club Log conoce de sus usuarios, para un QSO registrado sin él («Completar el locator que falte antes de registrar», en la pestaña Informes). Se descarga una vez por semana con el token.</translation>
     </message>
 </context>
 <context>
@@ -3106,6 +3166,11 @@ Formato:
         <location filename="../displaytext.cpp"/>
         <source>Worked before and LoTW-confirmed: nothing new in the notifications that are on.</source>
         <translation>Trabajado antes y confirmado por LoTW: nada nuevo en las notificaciones activadas.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Confirmed in LoTW already? The program downloads your confirmations from LoTW itself every 12 hours: a QSL received since the last download shows after the next one.</source>
+        <translation>¿Ya confirmado en LoTW? El programa descarga sus confirmaciones del propio LoTW cada 12 horas: un QSL recibido después de la última descarga aparece tras la siguiente.</translation>
     </message>
 </context>
 <context>
@@ -9893,11 +9958,6 @@ y campos DX Grid cuando se envía un mensaje de texto 73 o libre.</translation>
         <translation>mensajes decodificados y depuración</translation>
     </message>
     <message>
-        <location filename="../Configuration.ui" line="2777"/>
-        <source>Network Services</source>
-        <translation>Servicios de red</translation>
-    </message>
-    <message>
         <location filename="../Configuration.ui" line="2821"/>
         <source>EQSL Username.</source>
         <translation>Nombre de usuario eQSL.</translation>
@@ -11859,6 +11919,61 @@ Solo los QSO registrados a partir de ahora: suba los más antiguos a QRZ.com com
         <location filename="../Configuration.ui"/>
         <source>When a QSO gave no grid - neither heard nor typed - it gets one before it is logged: what this program heard the station send earlier (within a day; a /M station's within half an hour), else the locator it reports to PSK Reporter (with the Reception map open), else the square at least two other stations received from it, as their reports to PSK Reporter say (the map open too), else its grid in eQSL's member list (Settings &gt; General; a member that uploaded to eQSL within the last 12 months), in Club Log's users file (downloaded weekly with the token; a call that uploaded within the last 12 months) or in QRZ.com's XML data (with the XML login, asked as the QSO starts). Only a square inside the call's DXCC country is taken, its first four characters. Log QSO names the source in the grid field's tooltip, and the QSO's comment notes it as [grid: ...]. Never in a contest.</source>
         <translation>Cuando un QSO no dio ningún locator (ni recibido ni escrito), recibe uno antes de registrarse: lo que este programa oyó enviar antes a la estación (en el último día; de una estación /M, en la última media hora); si no, el locator que la estación informa a PSK Reporter (con el Mapa de recepción abierto); si no, el cuadro que al menos otras dos estaciones recibieron de la estación, según sus informes a PSK Reporter (también con el mapa abierto); si no, su locator en la lista de miembros de eQSL (Configuraciones &gt; General; un miembro que haya subido a eQSL en los últimos 12 meses), en el archivo de usuarios de Club Log (descargado cada semana con el token; un indicativo que haya subido en los últimos 12 meses) o en los datos XML de QRZ.com (con el inicio XML, consultados al empezar el QSO). Solo se toma un cuadro dentro del país DXCC del indicativo, sus cuatro primeros caracteres. La ventana Log QSO indica el origen en la ayuda del campo del locator, y el comentario del QSO lo anota como [grid: ...]. Nunca en un concurso.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Spotting</source>
+        <translation>Avisos</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Other programs</source>
+        <translation>Otros programas</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Logbooks</source>
+        <translation>Libros de guardia</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Your accounts at online logbooks: the QSOs you log sent to them, confirmations downloaded from them</source>
+        <translation>Sus cuentas en libros de guardia en línea: los QSO que registra se envían a ellos, y de ellos se descargan las confirmaciones</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Username:</source>
+        <translation>Nombre de usuario:</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Your username at LoTW's website (lotw.arrl.org) - usually your call sign, but not always.</source>
+        <translation>Su nombre de usuario en el sitio web de LoTW (lotw.arrl.org) - normalmente su indicativo, pero no siempre.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Password:</source>
+        <translation>Contraseña:</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Your password at LoTW's website. It is kept in a file of its own beside the settings file, readable by you alone, and sent only to lotw.arrl.org.</source>
+        <translation>Su contraseña en el sitio web de LoTW. Se guarda en un archivo propio junto al archivo de configuración, que solo usted puede leer, y solo se envía a lotw.arrl.org.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Download your confirmations from LoTW itself now; the program also does it three minutes after the start and every 12 hours while a username and password are saved. Only the QSLs for My Call. The first download fetches all of them, later ones only what came since - a whole report again once a month. LoTW does not say when a password is wrong: after a failure the next try waits 6 hours.</source>
+        <translation>Descargar ahora sus confirmaciones del propio LoTW; el programa también lo hace tres minutos después de iniciarse y cada 12 horas mientras haya un nombre de usuario y una contraseña guardados. Solo los QSL de Mi Indicativo. La primera descarga los trae todos, las siguientes solo lo llegado desde entonces - un informe completo de nuevo una vez al mes. LoTW no avisa cuando una contraseña es incorrecta: tras un fallo, el siguiente intento espera 6 horas.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Download confirmations from LoTW</source>
+        <translation>Descargar confirmaciones de LoTW</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>eQSL's member list: the grid squares of eQSL's members, for a QSO logged without one ("Fill a missing grid before logging", on the Reporting tab). It is downloaded on the General tab, under Data files.</source>
+        <translation>La lista de miembros de eQSL: los locators de los miembros de eQSL, para un QSO registrado sin él («Completar el locator que falte antes de registrar», en la pestaña Informes). Se descarga en la pestaña General, en Archivos de datos.</translation>
     </message>
 </context>
 <context>

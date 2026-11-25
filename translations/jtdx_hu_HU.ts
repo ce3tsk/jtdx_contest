@@ -775,23 +775,8 @@ Formátum:
     </message>
     <message>
         <location filename="../Configuration.cpp"/>
-        <source>%1 refused the QSO with %2 - see Settings &gt; Reporting.</source>
-        <translation>A(z) %1 elutasította a(z) %2 állomással létesített QSO-t - lásd Beállítások &gt; Riport.</translation>
-    </message>
-    <message>
-        <location filename="../Configuration.cpp"/>
-        <source>%1 refused the upload: the QSO with %2 is kept - see Settings &gt; Reporting.</source>
-        <translation>A(z) %1 elutasította a feltöltést: a(z) %2 állomással létesített QSO megmarad - lásd Beállítások &gt; Riport.</translation>
-    </message>
-    <message>
-        <location filename="../Configuration.cpp"/>
         <source>an answer not understood: %1</source>
         <translation>nem értelmezhető válasz: %1</translation>
-    </message>
-    <message>
-        <location filename="../Configuration.cpp"/>
-        <source>%1: the QSO with %2 is not sent yet, kept - see Settings &gt; Reporting.</source>
-        <translation>%1: a(z) %2 állomással létesített QSO még nincs elküldve, megmarad - lásd Beállítások &gt; Riport.</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp"/>
@@ -912,6 +897,81 @@ Formátum:
         <location filename="../Configuration.cpp"/>
         <source>%1: the QSOs waiting could not be written to their file - they are lost if the program is closed before they are sent.</source>
         <translation>%1: a várakozó QSO-kat nem sikerült a fájljukba írni - elvesznek, ha a programot a küldésük előtt bezárják.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1 refused the QSO with %2 - see Settings &gt; Logbooks.</source>
+        <translation>A(z) %1 elutasította a(z) %2 állomással létesített QSO-t - lásd Beállítások &gt; Naplók.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1 refused the upload: the QSO with %2 is kept - see Settings &gt; Logbooks.</source>
+        <translation>A(z) %1 elutasította a feltöltést: a(z) %2 állomással létesített QSO megmarad - lásd Beállítások &gt; Naplók.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1: the QSO with %2 is not sent yet, kept - see Settings &gt; Logbooks.</source>
+        <translation>%1: a(z) %2 állomással létesített QSO még nincs elküldve, megmarad - lásd Beállítások &gt; Naplók.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>LoTW downloads are switched off (JTDX_LOTW_API).</source>
+        <translation>A LoTW-letöltések ki vannak kapcsolva (JTDX_LOTW_API).</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Download from LoTW failed</source>
+        <translation>A letöltés a LoTW-ről nem sikerült</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>LoTW sent no report: the username or the password may be wrong, or LoTW is busy.</source>
+        <translation>A LoTW nem küldött jelentést: lehet, hogy hibás a felhasználónév vagy a jelszó, vagy a LoTW foglalt.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>LoTW's answer was not a whole report (%1).</source>
+        <translation>A LoTW válasza nem teljes jelentés volt (%1).</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>The next try is at %1 UTC.</source>
+        <translation>A következő próbálkozás: %1 UTC.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>No login: nothing is downloaded from LoTW.</source>
+        <translation>Nincs bejelentkezés: a LoTW-ről semmi nem töltődik le.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>The LoTW login could not be saved</source>
+        <translation>A LoTW bejelentkezési adatait nem sikerült menteni</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Sending the QSOs you log to %1, in this run: the last answer, the QSOs waiting, a refusal. Green: the last QSO went. Red: the last try failed, or %1 refused - the line says why. Grey: nothing sent yet, or sending is off.</source>
+        <translation>A naplózott QSO-k küldése ide: %1, ebben a futásban: az utolsó válasz, a várakozó QSO-k, egy elutasítás. Zöld: az utolsó QSO átment. Piros: az utolsó próbálkozás nem sikerült, vagy %1 elutasította - a sor megmondja, miért. Szürke: még semmi nem ment el, vagy a küldés ki van kapcsolva.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Downloading your LoTW confirmations from %1: the last download and what it brought. Green: the last download worked. Red: it failed, or %1 refused - the line says why. Grey: nothing downloaded yet, or nothing to download with.</source>
+        <translation>A LoTW-visszaigazolások letöltése innen: %1: az utolsó letöltés és amit hozott. Zöld: az utolsó letöltés sikerült. Piros: nem sikerült, vagy %1 elutasította - a sor megmondja, miért. Szürke: még semmi nem töltődött le, vagy nincs mivel letölteni.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Off: the QSOs you log are not sent to %1.</source>
+        <translation>Ki: a naplózott QSO-k nem mennek ide: %1.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>QRZ.com's XML data: a grid square asked of QRZ.com for a QSO logged without one ("Fill a missing grid before logging", on the Reporting tab), with the XML login. It needs a QRZ.com XML subscription.</source>
+        <translation>A QRZ.com XML-adatai: QRA, amelyet a QRZ.com-tól kér a program egy QRA nélkül naplózott QSO-hoz („Hiányzó QRA kitöltése naplózás előtt”, a(z) Riport lapon), az XML-bejelentkezéssel. QRZ.com XML-előfizetés kell hozzá.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Club Log's users file: the grid squares Club Log knows of its users, for a QSO logged without one ("Fill a missing grid before logging", on the Reporting tab). Downloaded once a week with the token.</source>
+        <translation>A Club Log felhasználói fájlja: a Club Log által ismert felhasználói QRA-k, QRA nélkül naplózott QSO-hoz („Hiányzó QRA kitöltése naplózás előtt”, a(z) Riport lapon). Hetente egyszer töltődik le a tokennel.</translation>
     </message>
 </context>
 <context>
@@ -3104,6 +3164,11 @@ Formátum:
         <location filename="../displaytext.cpp"/>
         <source>Worked before and LoTW-confirmed: nothing new in the notifications that are on.</source>
         <translation>Volt már QSO, LoTW-n igazolva: semmi új a bekapcsolt értesítésekben.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Confirmed in LoTW already? The program downloads your confirmations from LoTW itself every 12 hours: a QSL received since the last download shows after the next one.</source>
+        <translation>Már visszaigazolva a LoTW-ben? A program 12 óránként közvetlenül a LoTW-ről tölti le a visszaigazolásokat: az utolsó letöltés óta érkezett QSL a következő után jelenik meg.</translation>
     </message>
 </context>
 <context>
@@ -9878,11 +9943,6 @@ egy 73 vagy szabad szöveges üzenet küldésekor.</translation>
         <translation>Dekódolt és hibakeresési üzenetek</translation>
     </message>
     <message>
-        <location filename="../Configuration.ui" line="2777"/>
-        <source>Network Services</source>
-        <translation>Hálózati szolgáltatások</translation>
-    </message>
-    <message>
         <location filename="../Configuration.ui" line="2821"/>
         <source>EQSL Username.</source>
         <translation>eQSL.cc felhasználónév.</translation>
@@ -11842,6 +11902,61 @@ Csak a mostantól naplózott QSO-k: a régebbieket ADIF-fájlként töltse fel a
         <location filename="../Configuration.ui"/>
         <source>When a QSO gave no grid - neither heard nor typed - it gets one before it is logged: what this program heard the station send earlier (within a day; a /M station's within half an hour), else the locator it reports to PSK Reporter (with the Reception map open), else the square at least two other stations received from it, as their reports to PSK Reporter say (the map open too), else its grid in eQSL's member list (Settings &gt; General; a member that uploaded to eQSL within the last 12 months), in Club Log's users file (downloaded weekly with the token; a call that uploaded within the last 12 months) or in QRZ.com's XML data (with the XML login, asked as the QSO starts). Only a square inside the call's DXCC country is taken, its first four characters. Log QSO names the source in the grid field's tooltip, and the QSO's comment notes it as [grid: ...]. Never in a contest.</source>
         <translation>Ha egy QSO nem adott QRA-t – sem vett, sem beírt –, naplózás előtt kap egyet: amit ez a program korábban hallott az állomástól (egy napon belül, /M állomástól fél órán belül), különben a lokátort, amelyet az állomás a PSK Reporternek jelent (nyitott Vételi térképpel), különben a négyzetet, amelyet legalább két másik állomás vett tőle, a PSK Reporternek küldött jelentéseik szerint (szintén nyitott térképpel), különben a QRA-ja az eQSL taglistájában (Beállítások &gt; Általános; olyan tagé, aki az elmúlt 12 hónapban töltött fel az eQSL-re), a Club Log felhasználói fájljában (hetente letöltve a tokennel; olyan hívójelé, amely az elmúlt 12 hónapban töltött fel) vagy a QRZ.com XML-adataiban (XML-bejelentkezéssel, a QSO kezdetén lekérdezve). Csak a hívójel DXCC-országán belüli négyzet fogadható el, az első négy karaktere. A Log QSO ablak a QRA mező súgójában megnevezi a forrást, a QSO megjegyzése pedig [grid: ...] formában rögzíti. Versenyben soha.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Spotting</source>
+        <translation>DX jelentés</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Other programs</source>
+        <translation>Más programok</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Logbooks</source>
+        <translation>Naplók</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Your accounts at online logbooks: the QSOs you log sent to them, confirmations downloaded from them</source>
+        <translation>Az Ön fiókjai az online naplókban: a naplózott QSO-k oda kerülnek, a visszaigazolások onnan töltődnek le</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Username:</source>
+        <translation>Felhasználónév:</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Your username at LoTW's website (lotw.arrl.org) - usually your call sign, but not always.</source>
+        <translation>Az Ön felhasználóneve a LoTW webhelyén (lotw.arrl.org) - általában a hívójele, de nem mindig.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Password:</source>
+        <translation>Jelszó:</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Your password at LoTW's website. It is kept in a file of its own beside the settings file, readable by you alone, and sent only to lotw.arrl.org.</source>
+        <translation>Az Ön jelszava a LoTW webhelyén. Külön fájlban tárolódik a beállítási fájl mellett, amelyet csak Ön olvashat, és csak a lotw.arrl.org kapja meg.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Download your confirmations from LoTW itself now; the program also does it three minutes after the start and every 12 hours while a username and password are saved. Only the QSLs for My Call. The first download fetches all of them, later ones only what came since - a whole report again once a month. LoTW does not say when a password is wrong: after a failure the next try waits 6 hours.</source>
+        <translation>A visszaigazolások letöltése most közvetlenül a LoTW-ről; a program ezt az indulás után három perccel és 12 óránként is megteszi, amíg felhasználónév és jelszó van mentve. Csak a Hívójel QSL-jei. Az első letöltés mindet lehozza, a későbbiek csak az azóta érkezetteket - havonta egyszer ismét egy teljes jelentést. A LoTW nem jelzi, ha a jelszó hibás: hiba után a következő próbálkozás 6 órát vár.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Download confirmations from LoTW</source>
+        <translation>Visszaigazolások letöltése a LoTW-ről</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>eQSL's member list: the grid squares of eQSL's members, for a QSO logged without one ("Fill a missing grid before logging", on the Reporting tab). It is downloaded on the General tab, under Data files.</source>
+        <translation>Az eQSL taglistája: az eQSL-tagok QRA-i, QRA nélkül naplózott QSO-hoz („Hiányzó QRA kitöltése naplózás előtt”, a(z) Riport lapon). A(z) Általános lapon, a(z) Adatfájlok alatt töltődik le.</translation>
     </message>
 </context>
 <context>

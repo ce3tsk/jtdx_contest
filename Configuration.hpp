@@ -215,6 +215,7 @@ public:
   /* CE3TSK 2026-11-22 (TODO.md 3.-280): the confirmations files in the data directory the windows read - each source's
      only while it holds what the saved token or key (for Club Log with My Call) fetched */
   QStringList confirmations_files () const;
+  bool lotw_direct () const;   // CE3TSK 2026-11-25 (TODO.md 3.-299, LD5): a LoTW login saved - LoTW's own confirmations downloaded
   /* CE3TSK 2026-11-23 (TODO.md 3.-282, QSO_UPLOAD_PLAN.md): a QSO just logged, as one ADIF record, to Club Log and to QRZ.com
      - each only when its box under Reporting is ticked (off by default), with the token and the key of the confirmations */
   void upload_qso (QByteArray const& adif_record);

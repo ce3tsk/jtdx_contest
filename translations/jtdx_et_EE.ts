@@ -775,23 +775,8 @@ Vorming:
     </message>
     <message>
         <location filename="../Configuration.cpp"/>
-        <source>%1 refused the QSO with %2 - see Settings &gt; Reporting.</source>
-        <translation>%1 lükkas QSO jaamaga %2 tagasi - vt Seaded &gt; Raport.</translation>
-    </message>
-    <message>
-        <location filename="../Configuration.cpp"/>
-        <source>%1 refused the upload: the QSO with %2 is kept - see Settings &gt; Reporting.</source>
-        <translation>%1 lükkas üleslaadimise tagasi: QSO jaamaga %2 hoitakse alles - vt Seaded &gt; Raport.</translation>
-    </message>
-    <message>
-        <location filename="../Configuration.cpp"/>
         <source>an answer not understood: %1</source>
         <translation>vastus, millest aru ei saadud: %1</translation>
-    </message>
-    <message>
-        <location filename="../Configuration.cpp"/>
-        <source>%1: the QSO with %2 is not sent yet, kept - see Settings &gt; Reporting.</source>
-        <translation>%1: QSO jaamaga %2 on veel saatmata, hoitakse alles - vt Seaded &gt; Raport.</translation>
     </message>
     <message>
         <location filename="../Configuration.cpp"/>
@@ -912,6 +897,81 @@ Vorming:
         <location filename="../Configuration.cpp"/>
         <source>%1: the QSOs waiting could not be written to their file - they are lost if the program is closed before they are sent.</source>
         <translation>%1: ootel QSO-sid ei õnnestunud nende faili kirjutada - need lähevad kaotsi, kui programm suletakse enne nende saatmist.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1 refused the QSO with %2 - see Settings &gt; Logbooks.</source>
+        <translation>%1 lükkas QSO jaamaga %2 tagasi - vt Seaded &gt; Logiraamatud.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1 refused the upload: the QSO with %2 is kept - see Settings &gt; Logbooks.</source>
+        <translation>%1 lükkas üleslaadimise tagasi: QSO jaamaga %2 hoitakse alles - vt Seaded &gt; Logiraamatud.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1: the QSO with %2 is not sent yet, kept - see Settings &gt; Logbooks.</source>
+        <translation>%1: QSO jaamaga %2 on veel saatmata, hoitakse alles - vt Seaded &gt; Logiraamatud.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>LoTW downloads are switched off (JTDX_LOTW_API).</source>
+        <translation>LoTW allalaadimised on välja lülitatud (JTDX_LOTW_API).</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Download from LoTW failed</source>
+        <translation>Allalaadimine LoTW-st ebaõnnestus</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>LoTW sent no report: the username or the password may be wrong, or LoTW is busy.</source>
+        <translation>LoTW ei saatnud aruannet: kasutajanimi või parool võib olla vale või LoTW on hõivatud.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>LoTW's answer was not a whole report (%1).</source>
+        <translation>LoTW vastus ei olnud terve aruanne (%1).</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>The next try is at %1 UTC.</source>
+        <translation>Järgmine katse on kell %1 UTC.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>No login: nothing is downloaded from LoTW.</source>
+        <translation>Sisselogimiseta: LoTW-st ei laadita midagi alla.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>The LoTW login could not be saved</source>
+        <translation>LoTW sisselogimisandmeid ei õnnestunud salvestada</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Sending the QSOs you log to %1, in this run: the last answer, the QSOs waiting, a refusal. Green: the last QSO went. Red: the last try failed, or %1 refused - the line says why. Grey: nothing sent yet, or sending is off.</source>
+        <translation>Logitud QSO-de saatmine sihtkohta %1 selles käivituses: viimane vastus, ootel QSO-d, keeldumine. Roheline: viimane QSO läks läbi. Punane: viimane katse nurjus või %1 keeldus - rida ütleb miks. Hall: veel midagi ei saadetud või saatmine on väljas.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Downloading your LoTW confirmations from %1: the last download and what it brought. Green: the last download worked. Red: it failed, or %1 refused - the line says why. Grey: nothing downloaded yet, or nothing to download with.</source>
+        <translation>Teie LoTW kinnituste allalaadimine sihtkohast %1: viimane allalaadimine ja mida see tõi. Roheline: viimane allalaadimine õnnestus. Punane: see nurjus või %1 keeldus - rida ütleb miks. Hall: veel midagi ei laaditud või pole millega alla laadida.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Off: the QSOs you log are not sent to %1.</source>
+        <translation>Väljas: logitud QSO-sid ei saadeta sihtkohta %1.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>QRZ.com's XML data: a grid square asked of QRZ.com for a QSO logged without one ("Fill a missing grid before logging", on the Reporting tab), with the XML login. It needs a QRZ.com XML subscription.</source>
+        <translation>QRZ.com-i XML-andmed: ruut, mida küsitakse QRZ.com-ilt ruuduta logitud QSO jaoks („Täida puuduv ruut enne logimist“, vahekaardil Raport), XML-sisselogimisega. Selleks on vaja QRZ.com-i XML-tellimust.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Club Log's users file: the grid squares Club Log knows of its users, for a QSO logged without one ("Fill a missing grid before logging", on the Reporting tab). Downloaded once a week with the token.</source>
+        <translation>Club Logi kasutajafail: ruudud, mida Club Log oma kasutajatest teab, ruuduta logitud QSO jaoks („Täida puuduv ruut enne logimist“, vahekaardil Raport). Laaditakse alla kord nädalas tokeniga.</translation>
     </message>
 </context>
 <context>
@@ -3105,6 +3165,11 @@ Vorming:
         <location filename="../displaytext.cpp"/>
         <source>Worked before and LoTW-confirmed: nothing new in the notifications that are on.</source>
         <translation>Varem töötatud ja LoTW-s kinnitatud: sisse lülitatud teavitustes pole midagi uut.</translation>
+    </message>
+    <message>
+        <location filename="../displaytext.cpp"/>
+        <source>Confirmed in LoTW already? The program downloads your confirmations from LoTW itself every 12 hours: a QSL received since the last download shows after the next one.</source>
+        <translation>Juba LoTW-s kinnitatud? Programm laadib teie kinnitused otse LoTW-st alla iga 12 tunni järel: pärast viimast allalaadimist saabunud QSL ilmub pärast järgmist.</translation>
     </message>
 </context>
 <context>
@@ -9844,11 +9909,6 @@ and DX Grid fields when a 73 or free text message is sent.</source>
         <translation>dekodeeritud ja valeteated</translation>
     </message>
     <message>
-        <location filename="../Configuration.ui" line="2777"/>
-        <source>Network Services</source>
-        <translation>Võrguteenused</translation>
-    </message>
-    <message>
         <location filename="../Configuration.ui" line="2821"/>
         <source>EQSL Username.</source>
         <translation>EQSL kasutajanimi.</translation>
@@ -11841,6 +11901,61 @@ Ainult nüüdsest logitud QSO-d: vanemad laadige QRZ.com-i üles ADIF-failina se
         <location filename="../Configuration.ui"/>
         <source>When a QSO gave no grid - neither heard nor typed - it gets one before it is logged: what this program heard the station send earlier (within a day; a /M station's within half an hour), else the locator it reports to PSK Reporter (with the Reception map open), else the square at least two other stations received from it, as their reports to PSK Reporter say (the map open too), else its grid in eQSL's member list (Settings &gt; General; a member that uploaded to eQSL within the last 12 months), in Club Log's users file (downloaded weekly with the token; a call that uploaded within the last 12 months) or in QRZ.com's XML data (with the XML login, asked as the QSO starts). Only a square inside the call's DXCC country is taken, its first four characters. Log QSO names the source in the grid field's tooltip, and the QSO's comment notes it as [grid: ...]. Never in a contest.</source>
         <translation>Kui QSO ei andnud ruutu – ei vastu võetud ega sisestatud –, saab see enne logimist ühe: mida see programm kuulis jaama varem saatvat (ööpäeva jooksul, /M-jaamalt poole tunni jooksul), muidu lokaatori, mille jaam PSK Reporterile teatab (kui Vastuvõtukaart on avatud), muidu ruudu, mille vähemalt kaks teist jaama jaamalt vastu võtsid, nende PSK Reporterile saadetud teadete järgi (samuti avatud kaardiga), muidu selle ruut eQSL-i liikmete nimekirjas (Seaded &gt; Üldine; liige, kes on viimase 12 kuu jooksul eQSL-i üles laadinud), Club Logi kasutajate failis (laaditakse tokeniga kord nädalas; kutsung, mis on viimase 12 kuu jooksul üles laadinud) või QRZ.com-i XML-andmetes (XML-sisselogimisega, küsitakse QSO alguses). Võetakse ainult kutsungi DXCC-maa sisse jääv ruut, selle neli esimest märki. Aken Logi QSO nimetab allika ruudu välja vihjes ja QSO kommentaar märgib selle kui [grid: ...]. Mitte kunagi võistlusel.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Spotting</source>
+        <translation>Spottimine</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Other programs</source>
+        <translation>Muud programmid</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Logbooks</source>
+        <translation>Logiraamatud</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Your accounts at online logbooks: the QSOs you log sent to them, confirmations downloaded from them</source>
+        <translation>Teie kontod veebipõhistes logiraamatutes: logitud QSO-d saadetakse sinna, kinnitused laaditakse sealt alla</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Username:</source>
+        <translation>Kasutajanimi:</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Your username at LoTW's website (lotw.arrl.org) - usually your call sign, but not always.</source>
+        <translation>Teie kasutajanimi LoTW veebisaidil (lotw.arrl.org) - tavaliselt teie kutsung, kuid mitte alati.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Password:</source>
+        <translation>Parool:</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Your password at LoTW's website. It is kept in a file of its own beside the settings file, readable by you alone, and sent only to lotw.arrl.org.</source>
+        <translation>Teie parool LoTW veebisaidil. Seda hoitakse eraldi failis seadete faili kõrval, mida saate lugeda ainult teie, ja see saadetakse ainult aadressile lotw.arrl.org.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Download your confirmations from LoTW itself now; the program also does it three minutes after the start and every 12 hours while a username and password are saved. Only the QSLs for My Call. The first download fetches all of them, later ones only what came since - a whole report again once a month. LoTW does not say when a password is wrong: after a failure the next try waits 6 hours.</source>
+        <translation>Laadi oma kinnitused kohe otse LoTW-st alla; programm teeb seda ka kolm minutit pärast käivitamist ja iga 12 tunni järel, kui kasutajanimi ja parool on salvestatud. Ainult Minu kutsungi QSL-id. Esimene allalaadimine toob need kõik, järgmised ainult vahepeal lisandunu - kord kuus jälle terve aruanne. LoTW ei ütle, kui parool on vale: pärast nurjumist ootab järgmine katse 6 tundi.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Download confirmations from LoTW</source>
+        <translation>Laadi LoTW-st kinnitused alla</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>eQSL's member list: the grid squares of eQSL's members, for a QSO logged without one ("Fill a missing grid before logging", on the Reporting tab). It is downloaded on the General tab, under Data files.</source>
+        <translation>eQSL-i liikmete nimekiri: eQSL-i liikmete ruudud, ruuduta logitud QSO jaoks („Täida puuduv ruut enne logimist“, vahekaardil Raport). See laaditakse alla vahekaardil Üldine, jaotises Andmefailid.</translation>
     </message>
 </context>
 <context>
