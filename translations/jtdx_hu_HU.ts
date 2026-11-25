@@ -890,16 +890,6 @@ Formátum:
     </message>
     <message>
         <location filename="../Configuration.cpp"/>
-        <source>%1 not sent at %2 UTC: %3. Not tried again: upload it on eQSL's website.</source>
-        <translation>%1 nem ment el %2 UTC-kor: %3. Nincs újabb próbálkozás: töltse fel az eQSL weboldalán.</translation>
-    </message>
-    <message>
-        <location filename="../Configuration.cpp"/>
-        <source>%1: the QSO with %2 was not sent - see Settings &gt; Reporting.</source>
-        <translation>%1: a(z) %2 állomással létesített QSO nem lett elküldve - lásd Beállítások &gt; Riport.</translation>
-    </message>
-    <message>
-        <location filename="../Configuration.cpp"/>
         <source>not downloaded (%1) - tried again later</source>
         <translation>nincs letöltve (%1) - később újra próbálva</translation>
     </message>
@@ -907,6 +897,21 @@ Formátum:
         <location filename="../Configuration.cpp"/>
         <source>%1, downloaded - the weekly update failed (%2), tried again later</source>
         <translation>%1, letöltve - a heti frissítés nem sikerült (%2), később újra próbálva</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>eQSL refused the login or the QTH nickname: the QSOs are kept, and nothing more is sent until you correct them here and press OK.</source>
+        <translation>Az eQSL elutasította a bejelentkezést vagy a QTH nevet: a QSO-k megmaradnak, és semmi több nem megy el, amíg itt ki nem javítja őket és meg nem nyomja az OK-t.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1 not sent at %2 UTC: %3. Kept, tried again at %4 UTC.</source>
+        <translation>%1 nem ment el %2 UTC-kor: %3. Megmarad, újabb próbálkozás %4 UTC-kor.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1: the QSOs waiting could not be written to their file - they are lost if the program is closed before they are sent.</source>
+        <translation>%1: a várakozó QSO-kat nem sikerült a fájljukba írni - elvesznek, ha a programot a küldésük előtt bezárják.</translation>
     </message>
 </context>
 <context>
@@ -4022,8 +4027,8 @@ Formátum:
     </message>
     <message>
         <location filename="../logqso.ui"/>
-        <source>The message printed on the eQSL card. Left empty, the card gets the QSO's comment instead, without the grid fill's note [grid: ...]. The comment itself also goes to eQSL, as a private comment that is never printed.</source>
-        <translation>Az eQSL-lapra nyomtatott üzenet. Ha üresen marad, a lap helyette a QSO megjegyzését kapja, a kiegészített QRA jegyzete [grid: ...] nélkül. Maga a megjegyzés is elmegy az eQSL-re, privát megjegyzésként, amelyet sosem nyomtatnak.</translation>
+        <source>The message printed on the eQSL card, followed there by the QSO's comment without the grid fill's note [grid: ...]. Left empty, the card gets the comment alone. The comment is sent to eQSL only on the card.</source>
+        <translation>Az eQSL-lapra nyomtatott üzenet, utána ott a QSO megjegyzése a kiegészített QRA jegyzete [grid: ...] nélkül. Ha üresen marad, a lap csak a megjegyzést kapja. A megjegyzés csak a lapon kerül az eQSL-re.</translation>
     </message>
 </context>
 <context>

@@ -220,7 +220,11 @@ public:
   void upload_qso (QByteArray const& adif_record);
   /* CE3TSK 2026-11-24 (TODO.md 3.-284, the operator: "keep eQSL's answer and show it like the others"): eQSL's answer
      for a QSO logged (eqsl.h) - on eQSL's line under Reporting and, refused or not sent, in the main window's note */
-  void eqsl_answered (QString const& call, eqsl::Answer const& answer);
+  // (3.-294) waiting: the QSOs eQSL's queue holds after this answer; next: its next try, when a failure kept the QSO
+  void eqsl_answered (QString const& call, eqsl::Answer const& answer, int waiting = 0, QDateTime const& next = QDateTime {});
+  void eqsl_kept (bool refused, QString const& call, int waiting);   // (3.-294) a QSO logged, not sent now
+  // (3.-295, the review 6, 7) eQSL's queue as it is - QSOs waiting from an earlier run counted at the start; its file unwritten
+  void eqsl_waiting (int waiting, bool unsaved);
   /* CE3TSK 2026-11-24 (TODO.md 3.-283, stage 3): QRZ.com's XML data asked for a call's grid - with the XML login saved,
      once a call while it stays (qrzxml.h); the answer comes as qrz_grid () */
   void qrz_grid_lookup (QString const& call);
@@ -494,6 +498,8 @@ public:
   Q_SIGNAL void qrz_grid (QString const& call, QString const& grid) const;
   // (stage 4) Club Log's users file downloaded anew: its small file in the log directory (clublogusers.h) to be read again
   Q_SIGNAL void clublog_users_updated () const;
+  // (3.-293) eQSL's member list downloaded: to be read again, and nothing else (no data file of the log's)
+  Q_SIGNAL void eqsl_members_updated () const;
 
   //
   // These signals are emitted and reflect transceiver state changes

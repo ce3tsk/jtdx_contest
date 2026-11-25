@@ -12,6 +12,7 @@
 #include <algorithm>
 #include <atomic>
 #include <string>
+#include <vector>
 
 #include <QThread>
 
@@ -168,18 +169,21 @@ void WinHttpFetch::Worker::run ()
   // and freeze the policy in a release of JTDX rather than in Windows
 
   URL_COMPONENTS parts {};
-  wchar_t host[256] {}, path[2048] {}, extra[2048] {};
+  /* (2026-11-24, TODO.md 3.-293, the review) the path and the query as long as the address itself: a fixed 2048 refused
+     eQSL's request - the whole record in its query, a comment twice - and the QSO went as "no connection" */
+  wchar_t host[256] {};
+  std::vector<wchar_t> path (std::size_t (url_.size ()) + 1), extra (std::size_t (url_.size ()) + 1);
   parts.dwStructSize = sizeof parts;
   parts.lpszHostName = host;    parts.dwHostNameLength = sizeof host / sizeof host[0];
-  parts.lpszUrlPath = path;     parts.dwUrlPathLength = sizeof path / sizeof path[0];
-  parts.lpszExtraInfo = extra;  parts.dwExtraInfoLength = sizeof extra / sizeof extra[0];
+  parts.lpszUrlPath = path.data ();     parts.dwUrlPathLength = DWORD (path.size ());
+  parts.lpszExtraInfo = extra.data ();  parts.dwExtraInfoLength = DWORD (extra.size ());
   if (!WinHttpCrackUrl (as_wide (url_), 0, 0, &parts)) { fail_with_last_error ("WinHttpCrackUrl"); return; }
 
   connection.h = WinHttpConnect (session.h, host, parts.nPort, 0);
   if (!connection.h) { fail_with_last_error ("WinHttpConnect"); return; }
 
-  std::wstring target {path};
-  target += extra;
+  std::wstring target {path.data ()};
+  target += extra.data ();
   // WINHTTP_DEFAULT_ACCEPT_TYPES sends no Accept header at all, so name it as the Qt transport does
   LPCWSTR accept_types[] {L"*/*", nullptr};
   HINTERNET const request_h = WinHttpOpenRequest (connection.h, as_wide (method_), target.c_str (), nullptr, WINHTTP_NO_REFERER,

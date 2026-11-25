@@ -1200,6 +1200,7 @@ MainWindow::MainWindow(bool multiple, QSettings * settings, QSharedMemory *shdme
   connect (&m_config, &Configuration::data_files_updated, this, &MainWindow::dataFilesUpdated);   // CE3TSK
   // CE3TSK 2026-11-24 (TODO.md 3.-283, stage 3): QRZ.com's answer for a call - kept for its QSO's log, the run long
   connect (&m_config, &Configuration::clublog_users_updated, this, &MainWindow::readClublogUsers);   // (3.-283, stage 4)
+  connect (&m_config, &Configuration::eqsl_members_updated, this, &MainWindow::eqslMembersUpdated);   // (3.-293)
   connect (&m_config, &Configuration::qrz_grid, this, [this] (QString const& call, QString const& grid) {
       m_qrzGrids.insert (call.trimmed ().toUpper (), grid);
       if (m_config.write_decoded_debug ()) writeToALLTXT ("QRZ.com XML: " + call + (grid.isEmpty () ? QString {" - no grid to take"} : " - " + grid));
@@ -1220,7 +1221,19 @@ MainWindow::MainWindow(bool multiple, QSettings * settings, QSharedMemory *shdme
     });
   /* CE3TSK 2026-11-24 (TODO.md 3.-284, the operator: "keep eQSL's answer and show it like the others"): eQSL's answer for
      each QSO to Settings > Reporting's eQSL line, which words it and sends the note above when there is one */
-  connect (Eqsl, &EQSL::answered, this, [this] (QString const& call, eqsl::Answer const& answer) {m_config.eqsl_answered (call, answer);});
+  connect (Eqsl, &EQSL::answered, this, [this] (QString const& call, eqsl::Answer const& answer) {m_config.eqsl_answered (call, answer, Eqsl->waiting (), Eqsl->next_try ());});
+  /* CE3TSK 2026-11-24 (TODO.md 3.-294, the operator: "yes, give eQSL the same queue and retries"): eQSL's queue - its file in
+     the data directory, the login and the box read from the Settings at each request; what waits goes 75 s after the start
+     (as Club Log's and QRZ.com's) and at OK; a QSO kept told in the status bar */
+  Eqsl->configure (m_dataDir.absoluteFilePath (eqsl::queue_file),
+                   [this] {return eqsl::Login {m_config.eqsl_username (), m_config.eqsl_passwd (), m_config.eqsl_nickname ()};},
+                   [this] {return m_config.send_to_eqsl ();});
+  connect (Eqsl, &EQSL::kept, this, [this] (bool refused, QString const& call, int waiting) {m_config.eqsl_kept (refused, call, waiting);});
+  QTimer::singleShot (75 * 1000, this, [this] {Eqsl->send_now ();});
+  // (3.-295, the review 6, 7) the Settings' line follows the queue: what an earlier run left counted now, after each answer
+  m_config.eqsl_waiting (Eqsl->waiting (), Eqsl->unsaved ());
+  connect (Eqsl, &EQSL::answered, this, [this] {m_config.eqsl_waiting (Eqsl->waiting (), Eqsl->unsaved ());});
+  connect (Eqsl, &EQSL::kept, this, [this] {m_config.eqsl_waiting (Eqsl->waiting (), Eqsl->unsaved ());});
 
 
   // set up message text validators
@@ -2960,6 +2973,7 @@ void MainWindow::on_actionSettings_triggered()               //Setup Dialog
          its next due minute asks whether it still may (a scheduler switched on, the rig gone) */
       band_hopping::OwnChange const own {m_ownChange};
       if(m_config.write_decoded_debug()) writeToALLTXT("Configuration settings change accepted");
+      Eqsl->resume (); Eqsl->send_now ();   // (3.-294) a login corrected, the box ticked: what waits for eQSL goes
       ui->decodedTextBrowser->setConfiguration (&m_config);
       ui->decodedTextBrowser2->setConfiguration (&m_config);
       refreshSpecialOp (); /* CE3TSK: before anything below reads m_contest */
@@ -9607,6 +9621,7 @@ void MainWindow::initLogIfNeeded ()
     m_logInitNeeded=false;
     m_dataFilesChanged=false;
   }
+  if (m_eqslMembersDue) {m_eqslMembersDue = false; readEqslMembers ();}   // (3.-293) the list alone
   if (m_confirmedInitNeeded) initConfirmedBook ();   // CE3TSK 2026-11-21 (TODO.md 3.-280): confirmations downloaded
 }
 
@@ -10332,6 +10347,15 @@ void MainWindow::initConfirmedBook ()
   if (m_config.write_decoded_debug ()) writeToALLTXT (QString {"Confirmations: %1 QSOs from %2, the log's QSOs from %3 on pending (%4)"}
                                                       .arg (confirmed).arg (m_confirmedFiles.isEmpty () ? QString {"none"} : m_confirmedFiles.join (" and "), m_confirmedFrom)
                                                       .arg (m_pendingBook.get_qso_count ()));
+}
+
+/* CE3TSK 2026-11-24 (TODO.md 3.-293, the review): eQSL's member list downloaded - read at the next quiet moment, as the data
+   files are, and alone: the log and the contest log are not read again for it (its weekly download read them all,
+   three quarters into a period) */
+void MainWindow::eqslMembersUpdated ()
+{
+  m_eqslMembersDue = true;
+  if (!m_monitoring && !m_transmitting) initLogIfNeeded ();
 }
 
 void MainWindow::dataFilesUpdated ()
@@ -12064,7 +12088,7 @@ void MainWindow::acceptQSO2(QDateTime const& QSO_date_off, QString const& call, 
   }
   if (m_config.send_to_eqsl())
       Eqsl->upload(m_config.eqsl_username(),m_config.eqsl_passwd(),m_config.eqsl_nickname(),call,mode,QSO_date_on,rpt_sent,m_config.bands ()->find (dial_freq),eqslcomments,
-                   prop_mode,satellite,comments);   // CE3TSK 2026-11-13 (TODO.md 3.-247, its review): a satellite QSO as logged; (3.-290) and its comment
+                   prop_mode,satellite,comments);   // CE3TSK 2026-11-13 (TODO.md 3.-247, its review): a satellite QSO as logged; (3.-296) its comment, for the card
   /* CE3TSK 2026-11-23 (TODO.md 3.-282, QSO_UPLOAD_PLAN.md): and to Club Log and QRZ.com, each when its box is ticked - the
      record the UDP clients get, in a contest too (U2) */
   m_config.upload_qso (myadif2);

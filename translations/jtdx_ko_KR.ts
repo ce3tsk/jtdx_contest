@@ -890,16 +890,6 @@ Format:
     </message>
     <message>
         <location filename="../Configuration.cpp"/>
-        <source>%1 not sent at %2 UTC: %3. Not tried again: upload it on eQSL's website.</source>
-        <translation>%1: %2 UTC에 보내지 못함: %3. 다시 시도하지 않음: eQSL 웹사이트에서 업로드하십시오.</translation>
-    </message>
-    <message>
-        <location filename="../Configuration.cpp"/>
-        <source>%1: the QSO with %2 was not sent - see Settings &gt; Reporting.</source>
-        <translation>%1: %2와(과)의 QSO를 보내지 못함 - 설정 &gt; 보고 참조.</translation>
-    </message>
-    <message>
-        <location filename="../Configuration.cpp"/>
         <source>not downloaded (%1) - tried again later</source>
         <translation>다운로드되지 않음(%1) - 나중에 다시 시도합니다</translation>
     </message>
@@ -907,6 +897,21 @@ Format:
         <location filename="../Configuration.cpp"/>
         <source>%1, downloaded - the weekly update failed (%2), tried again later</source>
         <translation>%1, 다운로드됨 - 주간 업데이트 실패(%2), 나중에 다시 시도합니다</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>eQSL refused the login or the QTH nickname: the QSOs are kept, and nothing more is sent until you correct them here and press OK.</source>
+        <translation>eQSL이 로그인 또는 QTH 별명을 거부함: QSO는 보관되며, 여기서 고치고 확인을 누를 때까지 더 이상 보내지 않습니다.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1 not sent at %2 UTC: %3. Kept, tried again at %4 UTC.</source>
+        <translation>%1: %2 UTC에 보내지 못함: %3. 보관함, %4 UTC에 다시 시도함.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1: the QSOs waiting could not be written to their file - they are lost if the program is closed before they are sent.</source>
+        <translation>%1: 대기 중인 QSO를 파일에 쓰지 못했습니다 - 보내기 전에 프로그램을 닫으면 잃게 됩니다.</translation>
     </message>
 </context>
 <context>
@@ -4022,8 +4027,8 @@ Format:
     </message>
     <message>
         <location filename="../logqso.ui"/>
-        <source>The message printed on the eQSL card. Left empty, the card gets the QSO's comment instead, without the grid fill's note [grid: ...]. The comment itself also goes to eQSL, as a private comment that is never printed.</source>
-        <translation>eQSL 카드에 인쇄되는 메시지입니다. 비워 두면 대신 QSO의 비고가 카드에 들어갑니다(그리드 보충 메모 [grid: ...]는 빼고). 비고 자체도 비공개 비고로 eQSL에 보내지며, 인쇄되지 않습니다.</translation>
+        <source>The message printed on the eQSL card, followed there by the QSO's comment without the grid fill's note [grid: ...]. Left empty, the card gets the comment alone. The comment is sent to eQSL only on the card.</source>
+        <translation>eQSL 카드에 인쇄되는 메시지이며, 카드에서는 그 뒤에 QSO의 비고가 이어집니다(그리드 보충 메모 [grid: ...]는 빼고). 비워 두면 카드에는 비고만 들어갑니다. 비고는 카드에만 실려 eQSL로 보내집니다.</translation>
     </message>
 </context>
 <context>

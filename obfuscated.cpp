@@ -81,8 +81,11 @@ namespace obfuscated
     // a file made by hand, readable by others: made the user's alone before anything is taken from it
     auto const others = QFileDevice::ReadGroup | QFileDevice::WriteGroup | QFileDevice::ReadOther | QFileDevice::WriteOther;
     if (f.permissions () & others) f.setPermissions (QFileDevice::ReadOwner | QFileDevice::WriteOwner);
-    QByteArray const content {f.read (max)};
+    QByteArray content {f.read (max)};
     f.close ();
+    /* (2026-11-24, TODO.md 3.-293, the review) an editor's byte-order mark (Notepad's) dropped before the header is looked
+       for: an obfuscated file saved so was taken for a plain one, saved over, and its header and text became the login */
+    if (content.startsWith ("\xEF\xBB\xBF")) content.remove (0, 3);
     if (!content.startsWith (magic))   // an older program's, or one made by hand: as it stands, and from now on ours
       {
         if (!content.trimmed ().isEmpty ()) save (path, content);

@@ -113,8 +113,8 @@ namespace grid_fill
     return comment.trimmed ().isEmpty () ? n : comment + QLatin1Char (' ') + n;
   }
 
-  /* CE3TSK 2026-11-24 (TODO.md 3.-291) a comment without the fill's note: eQSL's card takes the QSO's comment when Log
-     QSO's eQSL message is empty, and "[grid: <source>]" is the log's bookkeeping, not a word to the other station */
+  /* CE3TSK 2026-11-24 (TODO.md 3.-291) a comment without the fill's note: eQSL's card takes the QSO's comment - (3.-296)
+     after Log QSO's eQSL message - and "[grid: <source>]" is the log's bookkeeping, not a word to the other station */
   inline QString without_note (QString comment)
   {
     static QRegularExpression const fillNote {QStringLiteral ("\\s*\\[grid: [^\\]]*\\]")};

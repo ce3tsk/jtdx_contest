@@ -891,16 +891,6 @@ Format:
     </message>
     <message>
         <location filename="../Configuration.cpp"/>
-        <source>%1 not sent at %2 UTC: %3. Not tried again: upload it on eQSL's website.</source>
-        <translation>%1 не отправлено в %2 UTC: %3. Повторной попытки не будет: загрузите его на сайте eQSL.</translation>
-    </message>
-    <message>
-        <location filename="../Configuration.cpp"/>
-        <source>%1: the QSO with %2 was not sent - see Settings &gt; Reporting.</source>
-        <translation>%1: QSO с %2 не отправлено - см. Настройки &gt; Лог.</translation>
-    </message>
-    <message>
-        <location filename="../Configuration.cpp"/>
         <source>not downloaded (%1) - tried again later</source>
         <translation>не загружен (%1) - повтор позже</translation>
     </message>
@@ -908,6 +898,21 @@ Format:
         <location filename="../Configuration.cpp"/>
         <source>%1, downloaded - the weekly update failed (%2), tried again later</source>
         <translation>%1, загружена - еженедельное обновление не удалось (%2), повтор позже</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>eQSL refused the login or the QTH nickname: the QSOs are kept, and nothing more is sent until you correct them here and press OK.</source>
+        <translation>eQSL отклонил вход или псевдоним QTH: QSO сохранены, и больше ничего не отправляется, пока вы не исправите их здесь и не нажмёте ОК.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1 not sent at %2 UTC: %3. Kept, tried again at %4 UTC.</source>
+        <translation>%1 не отправлено в %2 UTC: %3. Сохранено, повторная попытка в %4 UTC.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1: the QSOs waiting could not be written to their file - they are lost if the program is closed before they are sent.</source>
+        <translation>%1: ожидающие QSO не удалось записать в их файл - они пропадут, если закрыть программу до их отправки.</translation>
     </message>
 </context>
 <context>
@@ -4025,8 +4030,8 @@ Format:
     </message>
     <message>
         <location filename="../logqso.ui"/>
-        <source>The message printed on the eQSL card. Left empty, the card gets the QSO's comment instead, without the grid fill's note [grid: ...]. The comment itself also goes to eQSL, as a private comment that is never printed.</source>
-        <translation>Сообщение, печатаемое на карточке eQSL. Если поле пустое, на карточку вместо него идёт комментарий QSO, без отметки о подставленном локаторе [grid: ...]. Сам комментарий тоже отправляется в eQSL как личный комментарий, который никогда не печатается.</translation>
+        <source>The message printed on the eQSL card, followed there by the QSO's comment without the grid fill's note [grid: ...]. Left empty, the card gets the comment alone. The comment is sent to eQSL only on the card.</source>
+        <translation>Сообщение, печатаемое на карточке eQSL, а за ним там комментарий QSO без отметки о подставленном локаторе [grid: ...]. Если поле пустое, на карточку идёт только комментарий. Комментарий отправляется в eQSL только на карточке.</translation>
     </message>
 </context>
 <context>

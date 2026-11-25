@@ -890,16 +890,6 @@ Formāts:
     </message>
     <message>
         <location filename="../Configuration.cpp"/>
-        <source>%1 not sent at %2 UTC: %3. Not tried again: upload it on eQSL's website.</source>
-        <translation>%1 nav nosūtīts %2 UTC: %3. Vēlreiz netiek mēģināts: augšupielādējiet to eQSL vietnē.</translation>
-    </message>
-    <message>
-        <location filename="../Configuration.cpp"/>
-        <source>%1: the QSO with %2 was not sent - see Settings &gt; Reporting.</source>
-        <translation>%1: QSO ar %2 netika nosūtīts - skatiet Iestatījumi &gt; Raportēšana.</translation>
-    </message>
-    <message>
-        <location filename="../Configuration.cpp"/>
         <source>not downloaded (%1) - tried again later</source>
         <translation>nav lejupielādēts (%1) - mēģinās vēlāk vēlreiz</translation>
     </message>
@@ -907,6 +897,21 @@ Formāts:
         <location filename="../Configuration.cpp"/>
         <source>%1, downloaded - the weekly update failed (%2), tried again later</source>
         <translation>%1, lejupielādēta - iknedēļas atjaunināšana neizdevās (%2), mēģinās vēlāk vēlreiz</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>eQSL refused the login or the QTH nickname: the QSOs are kept, and nothing more is sent until you correct them here and press OK.</source>
+        <translation>eQSL noraidīja pieteikšanos vai QTH segvārdu: QSO tiek saglabāti, un nekas vairs netiek sūtīts, kamēr jūs tos šeit neizlabojat un nenospiežat OK.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1 not sent at %2 UTC: %3. Kept, tried again at %4 UTC.</source>
+        <translation>%1 nav nosūtīts %2 UTC: %3. Saglabāts, vēlreiz mēģinās %4 UTC.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1: the QSOs waiting could not be written to their file - they are lost if the program is closed before they are sent.</source>
+        <translation>%1: gaidošos QSO nevarēja ierakstīt to failā - tie tiks zaudēti, ja programma tiks aizvērta, pirms tie nosūtīti.</translation>
     </message>
 </context>
 <context>
@@ -4021,8 +4026,8 @@ Formāts:
     </message>
     <message>
         <location filename="../logqso.ui"/>
-        <source>The message printed on the eQSL card. Left empty, the card gets the QSO's comment instead, without the grid fill's note [grid: ...]. The comment itself also goes to eQSL, as a private comment that is never printed.</source>
-        <translation>Ziņojums, ko drukā uz eQSL kartītes. Ja lauks paliek tukšs, kartīte tā vietā saņem QSO komentāru, bez papildinātā lokatora piezīmes [grid: ...]. Pats komentārs arī tiek nosūtīts uz eQSL kā privāts komentārs, kas nekad netiek drukāts.</translation>
+        <source>The message printed on the eQSL card, followed there by the QSO's comment without the grid fill's note [grid: ...]. Left empty, the card gets the comment alone. The comment is sent to eQSL only on the card.</source>
+        <translation>Ziņojums, ko drukā uz eQSL kartītes, un aiz tā tur QSO komentārs bez papildinātā lokatora piezīmes [grid: ...]. Ja lauks paliek tukšs, kartīte saņem tikai komentāru. Komentārs uz eQSL tiek nosūtīts tikai uz kartītes.</translation>
     </message>
 </context>
 <context>

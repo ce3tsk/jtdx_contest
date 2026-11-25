@@ -40,6 +40,25 @@ namespace qso_upload
     return {};
   }
 
+  QByteArray without_field (QByteArray const& record, QString const& name)
+  {
+    QString text {QString::fromUtf8 (record)};
+    bool removed {false};
+    int at {0};
+    while ((at = text.indexOf ('<', at)) >= 0)
+      {
+        int const close {text.indexOf ('>', at)};
+        if (close < 0) break;
+        auto const parts = text.mid (at + 1, close - at - 1).split (':');
+        bool ok {false};
+        int const length {parts.size () < 2 ? -1 : parts[1].trimmed ().toInt (&ok)};
+        if (!ok || length < 0) {at = close + 1; continue;}   // <EOR>, <EOH>
+        if (0 == parts[0].trimmed ().compare (name, Qt::CaseInsensitive)) {text.remove (at, close + 1 + length - at); removed = true; continue;}
+        at = close + 1 + length;   // past the value: it may hold a '<'
+      }
+    return removed ? text.toUtf8 () : record;
+  }
+
   QByteArray one_line (QByteArray const& record)
   {
     QByteArray line {record};
@@ -207,8 +226,13 @@ namespace qso_upload
 
   bool write_queue (QString const& path, QList<QByteArray> const& records, Site site)
   {
+    return write_queue (path, records, site_name (site));
+  }
+
+  bool write_queue (QString const& path, QList<QByteArray> const& records, QString const& name)
+  {
     if (records.isEmpty ()) return !QFile::exists (path) || QFile::remove (path);
-    QByteArray text {"JTDX: QSOs logged and not sent to " + site_name (site).toUtf8 ()
+    QByteArray text {"JTDX: QSOs logged and not sent to " + name.toUtf8 ()
                      + " yet - one record a line; each is taken out once the site has it (QSO_UPLOAD_PLAN.md)\n<EOH>\n"};
     for (auto const& record : records) text += one_line (record) + '\n';
     QSaveFile f {path};
@@ -483,6 +507,7 @@ namespace qso_upload
 
   void Uploader::save ()
   {
-    if (!queue_file_.isEmpty ()) write_queue (queue_file_, queue_, site_);
+    // (3.-295, the review 7) a file that could not be written is said on the site's line: the QSOs live in memory alone
+    if (!queue_file_.isEmpty ()) unsaved_ = !write_queue (queue_file_, queue_, site_);
   }
 }

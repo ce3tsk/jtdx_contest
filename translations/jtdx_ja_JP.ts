@@ -890,16 +890,6 @@ Format:
     </message>
     <message>
         <location filename="../Configuration.cpp"/>
-        <source>%1 not sent at %2 UTC: %3. Not tried again: upload it on eQSL's website.</source>
-        <translation>%1 は %2 UTC に送信されませんでした：%3。再試行しません：eQSL のウェブサイトでアップロードしてください。</translation>
-    </message>
-    <message>
-        <location filename="../Configuration.cpp"/>
-        <source>%1: the QSO with %2 was not sent - see Settings &gt; Reporting.</source>
-        <translation>%1：%2 との QSO は送信されませんでした - 設定 &gt; レポーティング を参照。</translation>
-    </message>
-    <message>
-        <location filename="../Configuration.cpp"/>
         <source>not downloaded (%1) - tried again later</source>
         <translation>未ダウンロード（%1）- 後で再試行します</translation>
     </message>
@@ -907,6 +897,21 @@ Format:
         <location filename="../Configuration.cpp"/>
         <source>%1, downloaded - the weekly update failed (%2), tried again later</source>
         <translation>%1、ダウンロード済み - 週ごとの更新に失敗しました（%2）。後で再試行します</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>eQSL refused the login or the QTH nickname: the QSOs are kept, and nothing more is sent until you correct them here and press OK.</source>
+        <translation>eQSL がログインまたは QTH ニックネームを拒否しました：QSO は保存され、ここで修正して OK を押すまで、これ以上送信しません。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1 not sent at %2 UTC: %3. Kept, tried again at %4 UTC.</source>
+        <translation>%1 は %2 UTC に送信されませんでした：%3。保存済み、%4 UTC に再試行します。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1: the QSOs waiting could not be written to their file - they are lost if the program is closed before they are sent.</source>
+        <translation>%1：待機中の QSO をファイルに書き込めませんでした - 送信前にプログラムを閉じると失われます。</translation>
     </message>
 </context>
 <context>
@@ -4022,8 +4027,8 @@ Format:
     </message>
     <message>
         <location filename="../logqso.ui"/>
-        <source>The message printed on the eQSL card. Left empty, the card gets the QSO's comment instead, without the grid fill's note [grid: ...]. The comment itself also goes to eQSL, as a private comment that is never printed.</source>
-        <translation>eQSLカードに印刷されるメッセージです。空欄のときは、代わりにQSOのコメントがカードに入ります（グリッド補完の注記 [grid: ...] は除きます）。コメント自体も非公開のコメントとしてeQSLへ送られ、印刷されることはありません。</translation>
+        <source>The message printed on the eQSL card, followed there by the QSO's comment without the grid fill's note [grid: ...]. Left empty, the card gets the comment alone. The comment is sent to eQSL only on the card.</source>
+        <translation>eQSLカードに印刷されるメッセージです。カードではその後にQSOのコメントが続きます（グリッド補完の注記 [grid: ...] は除きます）。空欄のときは、カードにはコメントだけが入ります。コメントはカードの上でのみeQSLへ送られます。</translation>
     </message>
 </context>
 <context>

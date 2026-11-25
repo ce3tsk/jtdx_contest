@@ -890,16 +890,6 @@ Format:
     </message>
     <message>
         <location filename="../Configuration.cpp"/>
-        <source>%1 not sent at %2 UTC: %3. Not tried again: upload it on eQSL's website.</source>
-        <translation>%1 未能于 %2 UTC 发送：%3。不再重试：请在 eQSL 网站上上传。</translation>
-    </message>
-    <message>
-        <location filename="../Configuration.cpp"/>
-        <source>%1: the QSO with %2 was not sent - see Settings &gt; Reporting.</source>
-        <translation>%1：与 %2 的 QSO 未能发送 - 见 设置 &gt; 报告。</translation>
-    </message>
-    <message>
-        <location filename="../Configuration.cpp"/>
         <source>not downloaded (%1) - tried again later</source>
         <translation>未下载（%1）——稍后重试</translation>
     </message>
@@ -907,6 +897,21 @@ Format:
         <location filename="../Configuration.cpp"/>
         <source>%1, downloaded - the weekly update failed (%2), tried again later</source>
         <translation>%1，已下载——每周更新失败（%2），稍后重试</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>eQSL refused the login or the QTH nickname: the QSOs are kept, and nothing more is sent until you correct them here and press OK.</source>
+        <translation>eQSL 拒绝了登录或 QTH 昵称：通联已保留，在此处改正并按下确定之前不再发送。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1 not sent at %2 UTC: %3. Kept, tried again at %4 UTC.</source>
+        <translation>%1 未能于 %2 UTC 发送：%3。已保留，将于 %4 UTC 重试。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1: the QSOs waiting could not be written to their file - they are lost if the program is closed before they are sent.</source>
+        <translation>%1：等待中的通联无法写入其文件——若在发送前关闭程序，它们将丢失。</translation>
     </message>
 </context>
 <context>
@@ -4022,8 +4027,8 @@ Format:
     </message>
     <message>
         <location filename="../logqso.ui"/>
-        <source>The message printed on the eQSL card. Left empty, the card gets the QSO's comment instead, without the grid fill's note [grid: ...]. The comment itself also goes to eQSL, as a private comment that is never printed.</source>
-        <translation>印在 eQSL 卡片上的留言。留空时，卡片改用该通联的注释（不含网格补全的标注 [grid: ...]）。注释本身也会作为私人注释发送到 eQSL，永不印出。</translation>
+        <source>The message printed on the eQSL card, followed there by the QSO's comment without the grid fill's note [grid: ...]. Left empty, the card gets the comment alone. The comment is sent to eQSL only on the card.</source>
+        <translation>印在 eQSL 卡片上的留言，卡片上其后接该通联的注释（不含网格补全的标注 [grid: ...]）。留空时，卡片只印注释。注释只以卡片的形式发送到 eQSL。</translation>
     </message>
 </context>
 <context>

@@ -617,6 +617,8 @@ private:
   grid_fill::Fill missingGrid (QString const& call);
   // (stage 2) eQSL's member list (eqslmembers.h): read at the first log init and after each data file download
   void readEqslMembers ();
+  void eqslMembersUpdated ();     // (3.-293) the list downloaded: read alone, at the next quiet moment
+  bool m_eqslMembersDue {false};
   QHash<QString, eqsl_members::Member> m_eqslMembers;
   bool m_eqslMembersRead {false};
   // (stage 3) QRZ.com's XML data: asked as a QSO with no grid starts, once a call a run; its answers, "" for none

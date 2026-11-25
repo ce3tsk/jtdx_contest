@@ -890,16 +890,6 @@ Formato:
     </message>
     <message>
         <location filename="../Configuration.cpp"/>
-        <source>%1 not sent at %2 UTC: %3. Not tried again: upload it on eQSL's website.</source>
-        <translation>%1 non inviato alle %2 UTC: %3. Nessun nuovo tentativo: caricalo sul sito web di eQSL.</translation>
-    </message>
-    <message>
-        <location filename="../Configuration.cpp"/>
-        <source>%1: the QSO with %2 was not sent - see Settings &gt; Reporting.</source>
-        <translation>%1: il QSO con %2 non è stato inviato - vedi Impostazioni &gt; Segnalazioni.</translation>
-    </message>
-    <message>
-        <location filename="../Configuration.cpp"/>
         <source>not downloaded (%1) - tried again later</source>
         <translation>non scaricato (%1) - nuovo tentativo più tardi</translation>
     </message>
@@ -907,6 +897,21 @@ Formato:
         <location filename="../Configuration.cpp"/>
         <source>%1, downloaded - the weekly update failed (%2), tried again later</source>
         <translation>%1, scaricata - l'aggiornamento settimanale non è riuscito (%2), nuovo tentativo più tardi</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>eQSL refused the login or the QTH nickname: the QSOs are kept, and nothing more is sent until you correct them here and press OK.</source>
+        <translation>eQSL ha rifiutato l'accesso o il soprannome QTH: i QSO sono conservati e non si invia altro finché non li correggi qui e premi OK.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1 not sent at %2 UTC: %3. Kept, tried again at %4 UTC.</source>
+        <translation>%1 non inviato alle %2 UTC: %3. Conservato, nuovo tentativo alle %4 UTC.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1: the QSOs waiting could not be written to their file - they are lost if the program is closed before they are sent.</source>
+        <translation>%1: i QSO in attesa non si sono potuti scrivere nel loro file - vanno persi se il programma viene chiuso prima che siano inviati.</translation>
     </message>
 </context>
 <context>
@@ -4022,8 +4027,8 @@ Formato:
     </message>
     <message>
         <location filename="../logqso.ui"/>
-        <source>The message printed on the eQSL card. Left empty, the card gets the QSO's comment instead, without the grid fill's note [grid: ...]. The comment itself also goes to eQSL, as a private comment that is never printed.</source>
-        <translation>Il messaggio stampato sulla cartolina eQSL. Se resta vuoto, la cartolina riceve invece il commento del QSO, senza la nota della griglia completata [grid: ...]. Il commento stesso va anche a eQSL, come commento privato che non viene mai stampato.</translation>
+        <source>The message printed on the eQSL card, followed there by the QSO's comment without the grid fill's note [grid: ...]. Left empty, the card gets the comment alone. The comment is sent to eQSL only on the card.</source>
+        <translation>Il messaggio stampato sulla cartolina eQSL, seguito lì dal commento del QSO senza la nota della griglia completata [grid: ...]. Se resta vuoto, la cartolina riceve solo il commento. Il commento va a eQSL solo sulla cartolina.</translation>
     </message>
 </context>
 <context>

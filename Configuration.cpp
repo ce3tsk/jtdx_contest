@@ -732,7 +732,10 @@ private:
   void upload_kept (qso_upload::Site site, bool refused, QString const& call);   // (review) a QSO logged, not sent now
   void update_upload_labels ();
   // (3.-284) eQSL's answer for a QSO logged, and its line - shown, as the others', only when there is something to report
-  void eqsl_answered (QString const& call, eqsl::Answer const& answer);
+  void eqsl_answered (QString const& call, eqsl::Answer const& answer, int waiting, QDateTime const& next);
+  void eqsl_kept (bool refused, QString const& call, int waiting);
+  void eqsl_waiting (int waiting, bool unsaved);
+  void kept_note (QString const& name, bool refused, QString const& call);   // (3.-295) a QSO kept: the note, every site's
   void update_eqsl_upload_label ();
   void grey_upload_boxes (bool opening);   // (2026-11-24) Club Log's and QRZ.com's "Send logged QSOs" greyed without a token or key
   Q_SLOT void on_callNotif_check_box_clicked(bool checked);
@@ -884,6 +887,9 @@ private:
   // (3.-284) eQSL's last answer, worded; good: added or there already - nothing to report, the line hidden
   QString eqsl_upload_text_;
   bool eqsl_upload_good_ {true};
+  int eqsl_waiting_ {0};   // (3.-294) the QSOs eQSL's queue holds
+  bool eqsl_unsaved_ {false};        // (3.-295) its file could not be written
+  bool eqsl_refused_login_ {false};  // (3.-295) the line's text is a refused login's: gone at OK, as the others' this-run refusals
   QString eqsl_upload_tip_;
   bool qrz_upload_toggled_ {false}; // the QRZ.com box was clicked since Settings opened: ticked at OK, a refusal is lifted
   bool clublog_upload_toggled_ {false};   // (review) the same for Club Log: another call's refusal is lifted
@@ -2489,7 +2495,10 @@ Configuration::impl::impl (Configuration * self, QNetworkAccessManager * network
             }
           update_data_file_labels ();
           // (3.-199) CALL3.TXT is read where it is used - Lookup at each look-up, the decoder at its start: nothing to reload
-          if (download != &call3_download_) Q_EMIT self_->data_files_updated ();
+          // (3.-293, the review) eQSL's member list its own news: the log is not read again for it - its weekly download did,
+          // three quarters into a period
+          if (download == &eqsl_download_) Q_EMIT self_->eqsl_members_updated ();
+          else if (download != &call3_download_) Q_EMIT self_->data_files_updated ();
         });
       connect (download, &FileDownload::error, this, [this, download] (FileDownload::Failure failure, QString const& detail) {
           if (download == &eqsl_download_ && eqsl_members_automatic_)
@@ -4842,6 +4851,7 @@ void Configuration::impl::accept ()
     qrz_upload_.resume ();
     if (UploadText::Run == clublog_upload_kind_) {clublog_upload_text_.clear (); clublog_upload_kind_ = UploadText::Event;}
     if (UploadText::Run == qrz_upload_kind_) {qrz_upload_text_.clear (); qrz_upload_kind_ = UploadText::Event;}
+    if (eqsl_refused_login_) {eqsl_upload_text_.clear (); eqsl_refused_login_ = false; update_eqsl_upload_label ();}   // (3.-295, the review 8) eQSL's as theirs
     configure_uploads ();
     QTimer::singleShot (0, this, [this] {clublog_upload_.send_now (); qrz_upload_.send_now ();});
   }
@@ -5569,9 +5579,19 @@ void Configuration::upload_qso (QByteArray const& adif_record)
   m_->update_upload_labels ();
 }
 
-void Configuration::eqsl_answered (QString const& call, eqsl::Answer const& answer)
+void Configuration::eqsl_answered (QString const& call, eqsl::Answer const& answer, int waiting, QDateTime const& next)
 {
-  m_->eqsl_answered (call, answer);
+  m_->eqsl_answered (call, answer, waiting, next);
+}
+
+void Configuration::eqsl_kept (bool refused, QString const& call, int waiting)
+{
+  m_->eqsl_kept (refused, call, waiting);
+}
+
+void Configuration::eqsl_waiting (int waiting, bool unsaved)
+{
+  m_->eqsl_waiting (waiting, unsaved);
 }
 
 void Configuration::impl::configure_uploads ()
@@ -5709,7 +5729,8 @@ void Configuration::impl::upload_delayed (qso_upload::Site site, qso_upload::Res
     : 0 == result.http_status ? tr ("no connection: %1").arg (result.reason)
     : result.http_status >= 200 && result.http_status < 300 ? tr ("an answer not understood: %1").arg (result.reason)
     : tr ("HTTP status %1").arg (result.http_status);
-  auto const text = tr ("%1 not sent at %2 UTC: %3. Kept; the next try at %4 UTC.").arg (call).arg (utc_time (now, now)).arg (why).arg (utc_time (next, now));
+  // (3.-295, the review 9) the four in one arg (): a %2 in a site's or the transport's words never takes the next try's time
+  auto const text = tr ("%1 not sent at %2 UTC: %3. Kept; the next try at %4 UTC.").arg (call, utc_time (now, now), why, utc_time (next, now));
   if (qso_upload::Result::Wait == result.kind)
     {
       SettingsGroup g {settings_, "Configuration"};   // a Retry-After holds across a start too
@@ -5727,27 +5748,38 @@ void Configuration::impl::upload_delayed (qso_upload::Site site, qso_upload::Res
    the uploads switched off: the main window's note again, so that a refusal is not missed while the operator works */
 void Configuration::impl::upload_kept (qso_upload::Site site, bool refused, QString const& call)
 {
-  auto const name = qso_upload::site_name (site);
+  kept_note (qso_upload::site_name (site), refused, call);
+}
+
+void Configuration::impl::kept_note (QString const& name, bool refused, QString const& call)
+{
   Q_EMIT self_->upload_note (name, refused ? tr ("%1 refused the upload: the QSO with %2 is kept - see Settings > Reporting.").arg (name).arg (call)
                                            : tr ("%1: the QSO with %2 is not sent yet, kept - see Settings > Reporting.").arg (name).arg (call));
 }
 
 /* CE3TSK 2026-11-24 (TODO.md 3.-284, the operator: "keep eQSL's answer and show it like the others"): eQSL's answer in the
-   uploads' own words - sent, in the log already, refused with eQSL's line - and, as eQSL keeps no QSO it did not take and
-   the program tries none again, "not sent" with the operator's way out: eQSL's website. A refusal or a QSO not sent is the
-   main window's note too, for 10 s */
-void Configuration::impl::eqsl_answered (QString const& call, eqsl::Answer const& answer)
+   uploads' own words - sent, in the log already, refused with eQSL's line - and (3.-294) a QSO not sent kept and tried
+   again, as Club Log's and QRZ.com's, a refused login holding them all until OK. A refusal or a QSO kept is the main
+   window's note too, for 10 s */
+void Configuration::impl::eqsl_answered (QString const& call, eqsl::Answer const& answer, int waiting, QDateTime const& next)
 {
   auto const now = QDateTime::currentDateTimeUtc ();
   auto const name = QStringLiteral ("eQSL");
+  eqsl_waiting_ = waiting;
   eqsl_upload_good_ = eqsl::Answer::Added == answer.kind || eqsl::Answer::Duplicate == answer.kind;
+  eqsl_refused_login_ = eqsl::Answer::LoginRefused == answer.kind;   // (3.-295) its text goes at OK
   switch (answer.kind)
     {
     case eqsl::Answer::Added: eqsl_upload_text_ = tr ("%1 sent at %2 UTC.").arg (call).arg (utc_time (now, now)); break;
     case eqsl::Answer::Duplicate: eqsl_upload_text_ = tr ("%1 was in the log already (%2 UTC).").arg (call).arg (utc_time (now, now)); break;
     case eqsl::Answer::Refused:
-      eqsl_upload_text_ = tr ("%1 refused at %2 UTC: %3").arg (call).arg (utc_time (now, now)).arg (answer.text);
+      eqsl_upload_text_ = tr ("%1 refused at %2 UTC: %3").arg (call, utc_time (now, now), answer.text);   // (3.-295) one arg ()
       Q_EMIT self_->upload_note (name, tr ("%1 refused the QSO with %2 - see Settings > Reporting.").arg (name).arg (call));
+      break;
+    case eqsl::Answer::LoginRefused:   // (3.-294) kept: nothing more until the login is corrected and OK pressed
+      eqsl_upload_text_ = tr ("%1 refused at %2 UTC: %3").arg (call, utc_time (now, now), answer.text) + ' '
+        + tr ("eQSL refused the login or the QTH nickname: the QSOs are kept, and nothing more is sent until you correct them here and press OK.");
+      Q_EMIT self_->upload_note (name, tr ("%1 refused the upload: the QSO with %2 is kept - see Settings > Reporting.").arg (name).arg (call));
       break;
     default:
       {
@@ -5755,8 +5787,11 @@ void Configuration::impl::eqsl_answered (QString const& call, eqsl::Answer const
           : 0 == answer.http_status ? tr ("no connection: %1").arg (answer.text)
           : eqsl::Answer::Unclear == answer.kind ? tr ("an answer not understood: %1").arg (answer.text)
           : answer.text;   // eQSL's own "Error: ... down ..."
-        eqsl_upload_text_ = tr ("%1 not sent at %2 UTC: %3. Not tried again: upload it on eQSL's website.").arg (call).arg (utc_time (now, now)).arg (why);
-        Q_EMIT self_->upload_note (name, tr ("%1: the QSO with %2 was not sent - see Settings > Reporting.").arg (name).arg (call));
+        // (3.-294) kept and tried again, as Club Log's and QRZ.com's
+        // (3.-295, the review 9) the four in one arg (): a %2 in eQSL's words never takes the next try's time
+        eqsl_upload_text_ = tr ("%1 not sent at %2 UTC: %3. Kept, tried again at %4 UTC.").arg (call, utc_time (now, now), why,
+                                                                                               utc_time (next.isValid () ? next : now, now));
+        Q_EMIT self_->upload_note (name, tr ("%1: the QSO with %2 is not sent yet, kept - see Settings > Reporting.").arg (name).arg (call));
       }
     }
   update_eqsl_upload_label ();
@@ -5766,10 +5801,29 @@ void Configuration::impl::eqsl_answered (QString const& call, eqsl::Answer const
 // something to report; the box's tooltip always tells it
 void Configuration::impl::update_eqsl_upload_label ()
 {
-  QString const text {eqsl_upload_text_.isEmpty () ? tr ("QSOs you log are sent as you log them.") : eqsl_upload_text_};
+  QString text {eqsl_upload_text_.isEmpty () ? tr ("QSOs you log are sent as you log them.") : eqsl_upload_text_};
+  if (eqsl_waiting_ > 0) text += '\n' + tr ("QSOs waiting to be sent: %1.").arg (eqsl_waiting_);   // (3.-294) as the others'
+  if (eqsl_unsaved_) text += '\n' + tr ("%1: the QSOs waiting could not be written to their file - they are lost if the program is closed before they are sent.").arg ("eQSL");
   ui_->eqsl_upload_status_label->setText (text);
-  ui_->eqsl_upload_status_label->setVisible (ui_->eqsl_check_box->isChecked () && !eqsl_upload_good_ && !eqsl_upload_text_.isEmpty ());
+  ui_->eqsl_upload_status_label->setVisible (ui_->eqsl_check_box->isChecked ()
+                                             && ((!eqsl_upload_good_ && !eqsl_upload_text_.isEmpty ()) || eqsl_waiting_ > 0 || eqsl_unsaved_));
   ui_->eqsl_check_box->setToolTip (eqsl_upload_tip_ + "\n\n" + wrap_tooltip (text));
+}
+
+// (3.-294) a QSO logged and not sent now: the note, as the others' (upload_kept), and the line's count
+void Configuration::impl::eqsl_kept (bool refused, QString const& call, int waiting)
+{
+  eqsl_waiting_ = waiting;
+  kept_note (QStringLiteral ("eQSL"), refused, call);   // (3.-295) the others' note, eQSL's name - no Site of theirs
+  update_eqsl_upload_label ();
+}
+
+// (3.-295, the review 6, 7) eQSL's queue as it is: what an earlier run left counted from the start, a file not written said
+void Configuration::impl::eqsl_waiting (int waiting, bool unsaved)
+{
+  eqsl_waiting_ = waiting;
+  eqsl_unsaved_ = unsaved;
+  update_eqsl_upload_label ();
 }
 
 /* CE3TSK 2026-11-24 (TODO.md 3.-283's Option B, the operator: "grey Send logged QSOs for Club Log and QRZ just like eQSL,
@@ -5949,7 +6003,9 @@ void Configuration::impl::update_upload_labels ()
     if (!last.isEmpty ()) {text << last; report = report || !good;}
     else if (text.isEmpty ()) text << tr ("QSOs you log are sent as you log them.");
     if (u.waiting ()) text << tr ("QSOs waiting to be sent: %1.").arg (u.waiting ());
-    report = report || u.held () > 0;
+    // (3.-295, the review 7) a queue file that could not be written: said - the QSOs live in memory alone
+    if (u.unsaved ()) text << tr ("%1: the QSOs waiting could not be written to their file - they are lost if the program is closed before they are sent.").arg (qso_upload::site_name (u.site ()));
+    report = report || u.held () > 0 || u.unsaved ();
     label->setText (text.join ('\n'));
     label->setVisible (box->isChecked () && report);
     box->setToolTip (tip + "\n\n" + wrap_tooltip (text.join ('\n')));

@@ -890,16 +890,6 @@ Format:
     </message>
     <message>
         <location filename="../Configuration.cpp"/>
-        <source>%1 not sent at %2 UTC: %3. Not tried again: upload it on eQSL's website.</source>
-        <translation>%1 nije poslan u %2 UTC: %3. Ne pokušava se ponovo: pošalji ga na web stranici eQSL-a.</translation>
-    </message>
-    <message>
-        <location filename="../Configuration.cpp"/>
-        <source>%1: the QSO with %2 was not sent - see Settings &gt; Reporting.</source>
-        <translation>%1: QSO s %2 nije poslan - vidi Postavke &gt; Izvještaji.</translation>
-    </message>
-    <message>
-        <location filename="../Configuration.cpp"/>
         <source>not downloaded (%1) - tried again later</source>
         <translation>nije preuzeto (%1) - pokušava se ponovo kasnije</translation>
     </message>
@@ -907,6 +897,21 @@ Format:
         <location filename="../Configuration.cpp"/>
         <source>%1, downloaded - the weekly update failed (%2), tried again later</source>
         <translation>%1, preuzeto - tjedno ažuriranje nije uspjelo (%2), pokušava se ponovo kasnije</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>eQSL refused the login or the QTH nickname: the QSOs are kept, and nothing more is sent until you correct them here and press OK.</source>
+        <translation>eQSL je odbio prijavu ili QTH nadimak: QSO-i se čuvaju i ništa se više ne šalje dok ih ovdje ne ispravite i pritisnete OK.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1 not sent at %2 UTC: %3. Kept, tried again at %4 UTC.</source>
+        <translation>%1 nije poslan u %2 UTC: %3. Čuva se, ponovni pokušaj u %4 UTC.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1: the QSOs waiting could not be written to their file - they are lost if the program is closed before they are sent.</source>
+        <translation>%1: QSO-i koji čekaju nisu se mogli zapisati u svoju datoteku - gube se ako se program zatvori prije nego što budu poslani.</translation>
     </message>
 </context>
 <context>
@@ -4022,8 +4027,8 @@ Format:
     </message>
     <message>
         <location filename="../logqso.ui"/>
-        <source>The message printed on the eQSL card. Left empty, the card gets the QSO's comment instead, without the grid fill's note [grid: ...]. The comment itself also goes to eQSL, as a private comment that is never printed.</source>
-        <translation>Poruka koja se ispisuje na eQSL kartici. Ako ostane prazno, kartica umjesto toga dobiva komentar QSO-a, bez bilješke o dopunjenom lokatoru [grid: ...]. Sam komentar šalje se i na eQSL, kao privatni komentar koji se nikad ne ispisuje.</translation>
+        <source>The message printed on the eQSL card, followed there by the QSO's comment without the grid fill's note [grid: ...]. Left empty, the card gets the comment alone. The comment is sent to eQSL only on the card.</source>
+        <translation>Poruka koja se ispisuje na eQSL kartici, a iza nje ondje komentar QSO-a bez bilješke o dopunjenom lokatoru [grid: ...]. Ako ostane prazno, kartica dobiva samo komentar. Komentar se šalje na eQSL samo na kartici.</translation>
     </message>
 </context>
 <context>

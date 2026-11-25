@@ -33,7 +33,7 @@ class QNetworkAccessManager;
 
 namespace qso_upload
 {
-  enum class Site {ClubLog, Qrz};
+  enum class Site {ClubLog, Qrz};   // (3.-295, the review 12) eQSL is none of them: its queue file names it by write_queue (name)
   constexpr char const * clublog_queue_file {"clublog_upload.adi"};
   constexpr char const * qrz_queue_file {"qrz_upload.adi"};
   constexpr int clublog_batch_max {100};      // Club Log: "One to 100 items"
@@ -45,6 +45,9 @@ namespace qso_upload
   QString site_name (Site site);              // "Club Log", "QRZ.com" - names, not translated
   // an ADIF field's value in one record ("" when it has none): STATION_CALLSIGN, CALL ...
   QString field (QByteArray const& record, QString const& name);
+  // (3.-296) the record without that field, its tag and its value; walked as field () walks it, so a value holding '<' is
+  // passed over whole - the record as it was when it has none
+  QByteArray without_field (QByteArray const& record, QString const& name);
   // one line: a line break inside the record (none should be there) becomes a space, so that the queue keeps a record a line
   QByteArray one_line (QByteArray const& record);
 
@@ -81,6 +84,8 @@ namespace qso_upload
   // the queue file: a header naming it, then one record a line; written whole, removed when nothing waits
   QList<QByteArray> read_queue (QString const& path);
   bool write_queue (QString const& path, QList<QByteArray> const& records, Site site);
+  // (3.-295) the same, the header naming `name` - eQSL's queue (eqsl.h), which is no Site of the uploaders here
+  bool write_queue (QString const& path, QList<QByteArray> const& records, QString const& name);
 
   int retry_minutes (int failures);   // after the n-th failure in a row: 2, 5, 10, 30, then 60 minutes
   // a Retry-After honoured: never sooner than a minute, never later than max_wait_hours; none named: five minutes
@@ -116,6 +121,7 @@ namespace qso_upload
     void send_now ();                     // the next request now, if it may go
     int waiting () const {return queue_.size ();}
     int held () const {return queue_.size () - in_flight_;}   // (review) waiting, and not in the request now asked
+    bool unsaved () const {return unsaved_;}   // (3.-295, the review 7) the queue's file could not be written: kept in memory alone
     bool running () const {return in_flight_ > 0;}
     bool enabled () const {return enabled_;}
     bool stopped () const {return blocked_ || stopped_;}      // a refusal holds every QSO (the token or key, the request)
@@ -164,6 +170,7 @@ namespace qso_upload
     int in_flight_ {0};
     int answers_ {0};            // answers taken (apply), counted: add () tells whether one came at once
     int failures_ {0};
+    bool unsaved_ {false};       // (3.-295) the last save failed
     QDateTime not_before_;       // Retry-After: nothing before it
     QDateTime next_try_;
     QTimer timer_;

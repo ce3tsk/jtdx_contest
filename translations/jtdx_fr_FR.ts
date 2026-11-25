@@ -890,16 +890,6 @@ Format:
     </message>
     <message>
         <location filename="../Configuration.cpp"/>
-        <source>%1 not sent at %2 UTC: %3. Not tried again: upload it on eQSL's website.</source>
-        <translation>%1 non envoyé à %2 UTC : %3. Pas de nouvel essai : envoyez-le sur le site web d'eQSL.</translation>
-    </message>
-    <message>
-        <location filename="../Configuration.cpp"/>
-        <source>%1: the QSO with %2 was not sent - see Settings &gt; Reporting.</source>
-        <translation>%1 : le QSO avec %2 n'a pas été envoyé - voir Paramètres &gt; Report.</translation>
-    </message>
-    <message>
-        <location filename="../Configuration.cpp"/>
         <source>not downloaded (%1) - tried again later</source>
         <translation>non téléchargée (%1) - nouvel essai plus tard</translation>
     </message>
@@ -907,6 +897,21 @@ Format:
         <location filename="../Configuration.cpp"/>
         <source>%1, downloaded - the weekly update failed (%2), tried again later</source>
         <translation>%1, téléchargée - la mise à jour hebdomadaire a échoué (%2), nouvel essai plus tard</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>eQSL refused the login or the QTH nickname: the QSOs are kept, and nothing more is sent until you correct them here and press OK.</source>
+        <translation>eQSL a refusé la connexion ou le surnom de QTH : les QSO sont gardés, et plus rien n'est envoyé tant que vous ne les corrigez pas ici avant d'appuyer sur OK.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1 not sent at %2 UTC: %3. Kept, tried again at %4 UTC.</source>
+        <translation>%1 non envoyé à %2 UTC : %3. Gardé, nouvel essai à %4 UTC.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1: the QSOs waiting could not be written to their file - they are lost if the program is closed before they are sent.</source>
+        <translation>%1 : les QSO en attente n'ont pas pu être écrits dans leur fichier - ils sont perdus si le programme est fermé avant leur envoi.</translation>
     </message>
 </context>
 <context>
@@ -4026,8 +4031,8 @@ Format:
     </message>
     <message>
         <location filename="../logqso.ui"/>
-        <source>The message printed on the eQSL card. Left empty, the card gets the QSO's comment instead, without the grid fill's note [grid: ...]. The comment itself also goes to eQSL, as a private comment that is never printed.</source>
-        <translation>Le message imprimé sur la carte eQSL. Laissé vide, la carte reçoit à la place le commentaire du QSO, sans la note du locator complété [grid: ...]. Le commentaire lui-même part aussi vers eQSL, comme commentaire privé jamais imprimé.</translation>
+        <source>The message printed on the eQSL card, followed there by the QSO's comment without the grid fill's note [grid: ...]. Left empty, the card gets the comment alone. The comment is sent to eQSL only on the card.</source>
+        <translation>Le message imprimé sur la carte eQSL, suivi sur la carte du commentaire du QSO sans la note du locator complété [grid: ...]. Laissé vide, la carte reçoit le commentaire seul. Le commentaire n'est envoyé à eQSL que sur la carte.</translation>
     </message>
 </context>
 <context>
