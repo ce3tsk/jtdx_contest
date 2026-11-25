@@ -143,7 +143,13 @@ namespace lotw
         ++records;
         if (confirmed (f)) r.records.insert (key_of (f), kept_record (f));
       }
-    if (records != r.numrec)
+    /* CE3TSK 2026-11-25 (TODO.md 3.-302, the operator: "32225 is more than 32222"): the first real report of the station
+       held three QSLs more than its APP_LoTW_NUMREC - the count LoTW writes first is not exact (QSLs arriving while it
+       writes the report, it seems). A cut report has fewer, never more: whole with at least as many, or ending with
+       the end mark LoTW still writes (APP_LoTW_EOF, deprecated on its page) - it can be in no cut report */
+    static QRegularExpression const end_mark {R"(<app_lotw_eof>\s*$)", QRegularExpression::CaseInsensitiveOption};
+    bool const ended = end_mark.match (QString::fromLatin1 (body.right (64))).hasMatch ();
+    if (records < r.numrec && !ended)
       {
         r.reason = QString {"a LoTW report cut short: %1 of %2 QSOs"}.arg (records).arg (r.numrec);
         r.records.clear ();

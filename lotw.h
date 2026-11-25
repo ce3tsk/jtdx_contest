@@ -59,7 +59,8 @@ namespace lotw
   // a text for the user with the password - as typed and percent-encoded - and any address in it taken out
   QString scrubbed (QString text, QString const& password);
 
-  /* One report. Good: the end of header, PROGRAMID LoTW, APP_LoTW_NUMREC there and as many records; then last_qsl is its
+  /* One report. Good: the end of header, PROGRAMID LoTW, APP_LoTW_NUMREC there and at least as many records - or the end
+     mark of LoTW (APP_LoTW_EOF) last, 3.-302: its count is not exact, a cut report has fewer; then last_qsl is its
      APP_LoTW_LASTQSL (empty when it has none: no QSL in it) and records the QSLs as kept, by key. Else reason says why. */
   struct Report
   {
