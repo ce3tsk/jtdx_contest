@@ -973,6 +973,51 @@ Format:
         <source>Club Log's users file: the grid squares Club Log knows of its users, for a QSO logged without one ("Fill a missing grid before logging", on the Reporting tab). Downloaded once a week with the token.</source>
         <translation>Club Log 的用戶檔案：Club Log 所知的其用戶的網格，用於記錄時沒有網格的通聯 (「記錄前補全缺失的網格」，在報告分頁)。使用權杖每週下載一次。</translation>
     </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>TQSL was not found: install TQSL from the ARRL, or choose its program with Browse.</source>
+        <translation>找不到 TQSL：請從 ARRL 安裝 TQSL，或用「瀏覽」選擇它的程式。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>TQSL has no Station Location: add one in TQSL (Station Location, Add Station Location), then open Settings again.</source>
+        <translation>TQSL 沒有電台位置：請在 TQSL 中加入一個（電台位置，增加電台位置），然後重新開啟設定。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>TQSL did not sign or upload the QSOs (%1): they are kept, and nothing more is sent until you press OK in Settings or start the program again.</source>
+        <translation>TQSL 沒有簽署或上載這些 QSO（%1）：它們會被保留，在您於設定中按確定或重新啟動程式之前，不會再發送任何內容。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Choose the TQSL program</source>
+        <translation>選擇 TQSL 程式</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1 is not a program that can be run.</source>
+        <translation>%1 不是可以執行的程式。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>TQSL answered: %1</source>
+        <translation>TQSL 回覆：%1</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>TQSL could not be started: %1</source>
+        <translation>無法啟動 TQSL：%1</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>no answer</source>
+        <translation>沒有回應</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>TQSL gave no answer within %1 seconds and was stopped.</source>
+        <translation>TQSL 在 %1 秒內沒有回應，已被停止。</translation>
+    </message>
 </context>
 <context>
     <name>CountryDat</name>
@@ -11960,6 +12005,58 @@ Only QSOs logged from now on: upload older ones to QRZ.com as an ADIF file there
         <location filename="../Configuration.ui"/>
         <source>eQSL's member list: the grid squares of eQSL's members, for a QSO logged without one ("Fill a missing grid before logging", on the Reporting tab). It is downloaded on the General tab, under Data files.</source>
         <translation>eQSL 的成員列表：eQSL 成員的網格，用於記錄時沒有網格的通聯 (「記錄前補全缺失的網格」，在報告分頁)。它在一般分頁的數據檔案中下載。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Each QSO you log is signed by TQSL with your callsign certificate and uploaded to LoTW at once - in a contest too. A QSO that cannot be sent now (no connection, LoTW busy) is kept and sent later. If your certificate has a password, TQSL asks for it in its own window: this program never asks for it or keeps it.
+Only QSOs logged from now on: sign older ones in TQSL with its Sign a log.</source>
+        <translation>您記錄的每個 QSO 都會即時由 TQSL 用您的呼號證書簽署並上載到 LoTW——比賽中也一樣。現在無法發送的 QSO（無連線、LoTW 繁忙）會被保留，稍後再發送。如果您的證書有密碼，TQSL 會在它自己的視窗中詢問：本程式從不詢問也不儲存密碼。
+只限從現在起記錄的 QSO：較早的 QSO 請在 TQSL 中用「簽署日誌」簽署。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>The TQSL program that signs the QSOs: found by itself where TQSL is installed, or the one chosen with Browse.</source>
+        <translation>為 QSO 簽署的 TQSL 程式：在 TQSL 的安裝位置自動找到的，或用「瀏覽」選擇的。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>TQSL:</source>
+        <translation>TQSL：</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>not found</source>
+        <translation>未找到</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Choose the TQSL program yourself when it was not found, or to use another one.</source>
+        <translation>找不到 TQSL 程式時，或要使用另一個時，自行選擇 TQSL 程式。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Browse...</source>
+        <translation>瀏覽...</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Runs TQSL to show its version: that it is found and starts. It signs and sends nothing.</source>
+        <translation>執行 TQSL 以顯示其版本：由此可知它能被找到並能啟動。它不簽署也不發送任何內容。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Test</source>
+        <translation>測試</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>The TQSL Station Location the QSOs are signed with - its call is the certificate's. The list is TQSL's own: add or change one in TQSL's Station Location menu.</source>
+        <translation>為 QSO 簽署所用的 TQSL 電台位置——其呼號就是證書的呼號。列表是 TQSL 自己的：請在 TQSL 的「電台位置」選單中加入或更改。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Station Location:</source>
+        <translation>電台位置：</translation>
     </message>
 </context>
 <context>

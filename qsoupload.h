@@ -27,15 +27,21 @@
 #include <QString>
 #include <QStringList>
 #include <QTimer>
+#include <QProcess>
 #include "FileDownload.hpp"
+#include "tqsl.h"   // CE3TSK 2026-11-25 (TODO.md 3.-303)
 
 class QNetworkAccessManager;
 
 namespace qso_upload
 {
-  enum class Site {ClubLog, Qrz};   // (3.-295, the review 12) eQSL is none of them: its queue file names it by write_queue (name)
+  enum class Site {ClubLog, Qrz, Lotw};   // (3.-295, the review 12) eQSL is none of them: its queue file names it by write_queue (name)
+  // (3.-303) Lotw: TQSL signs the QSOs and uploads them - a program run where the others send a request (LOTW_PLAN.md 5)
   constexpr char const * clublog_queue_file {"clublog_upload.adi"};
   constexpr char const * qrz_queue_file {"qrz_upload.adi"};
+  constexpr char const * lotw_queue_file {"lotw_upload.adi"};      // (3.-303)
+  constexpr char const * lotw_signing_file {"lotw_signing.adi"};  // (3.-303) the QSOs of one run, for TQSL - removed after it
+  constexpr int lotw_batch_max {100};                            // (3.-303) QSOs a TQSL run
   constexpr int clublog_batch_max {100};      // Club Log: "One to 100 items"
   constexpr int timeout_ms {60000};
   constexpr qint64 max_reply_size {1024 * 1024};
@@ -76,10 +82,18 @@ namespace qso_upload
     QString reason;
     QString id;
     bool test {false};
+    int code {-1};   // (3.-304) LoTW: TQSL's final status (or its exit code); -1 none
   };
   // a request's answer, one Result a record sent (records: how many the request carried)
   QList<Result> clublog_results (int http_status, QByteArray const& body, int records);
   Result qrz_result (int http_status, QByteArray const& body);
+  /* (3.-303) a TQSL run (started: it ran; finished: it ended by itself, not killed or crashed): its final status - (3.-304)
+     or its exit code, the same (TQSL's exitNow) - 0 Sent; (3.-304) 8 Rejected (none signed: -a all skips a QSO TQSL cannot
+     sign - a call or grid not the Station Location's), 9 Sent (some skipped - its words on the line), 14 Duplicate (signed
+     before); 1 (cancelled - its password window closed), 2 (rejected by LoTW), 4, 5 (TQSL errors: the Station Location,
+     the certificate), 10, or not started: Refused - kept, nothing more until OK; else (3, 6, 7, 11, 13 its database busy,
+     a crash, killed) Retry. The reason: TQSL's own words; code: the status */
+  Result tqsl_result (bool started, bool finished, int exit_code, QByteArray const& output);
 
   // the queue file: a header naming it, then one record a line; written whole, removed when nothing waits
   QList<QByteArray> read_queue (QString const& path);
@@ -104,6 +118,7 @@ namespace qso_upload
     Q_OBJECT
   public:
     explicit Uploader (Site site, QObject * parent = nullptr);
+    ~Uploader () override;   // (3.-304) a TQSL run under way killed, its end never answered into members going away
     void configure (QNetworkAccessManager * manager, QString const& queue_file, QString const& user_agent);
     void set_credential (QString const& credential);   // the token or the key; none: nothing sent, the queue kept
     void set_own_call (QString const& call) {own_call_ = call;}   // Club Log's call for a record without STATION_CALLSIGN
@@ -117,6 +132,8 @@ namespace qso_upload
        start). The token's refusal on record still holds every QSO through set_blocked () */
     void token_good ();
     void set_not_before (QDateTime const& when) {not_before_ = when;}   // a Retry-After kept from an earlier run
+    void set_program (QString const& program) {program_ = program;}    // (3.-303) LoTW: the TQSL program; none: nothing sent
+    void set_process_timeout (int ms) {process_timeout_ms_ = ms;}      // (3.-303) a TQSL run killed after it (tests: shorter)
     void add (QByteArray const& record);  // a QSO logged: into the queue file, and sent as soon as it may be
     void send_now ();                     // the next request now, if it may go
     int waiting () const {return queue_.size ();}
@@ -151,6 +168,7 @@ namespace qso_upload
     void failed (FileDownload::Failure failure, QString const& detail);
     void apply (QList<Result> const& results);
     void save ();
+    void tqsl_ended (bool started, bool finished, int exit_code);   // (3.-303)
 
     Site site_;
     QNetworkAccessManager * manager_ {nullptr};
@@ -175,6 +193,12 @@ namespace qso_upload
     QDateTime next_try_;
     QTimer timer_;
     FileDownload request_;
+    QProcess process_;            // (3.-303) LoTW: the TQSL run under way
+    QTimer process_timer_;
+    QString program_;
+    QString signing_file_;
+    int process_timeout_ms_ {tqsl::timeout_ms};
+    bool timed_out_ {false};
   };
 }
 

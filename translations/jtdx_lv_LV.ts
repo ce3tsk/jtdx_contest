@@ -973,6 +973,51 @@ Formāts:
         <source>Club Log's users file: the grid squares Club Log knows of its users, for a QSO logged without one ("Fill a missing grid before logging", on the Reporting tab). Downloaded once a week with the token.</source>
         <translation>Club Log lietotāju fails: lokatori, ko Club Log zina par saviem lietotājiem, QSO, kas ierakstīts bez lokatora (“Aizpildīt trūkstošo lokatoru pirms ierakstīšanas”, cilnē Raportēšana). Lejupielādē reizi nedēļā ar žetonu.</translation>
     </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>TQSL was not found: install TQSL from the ARRL, or choose its program with Browse.</source>
+        <translation>TQSL netika atrasts: instalējiet TQSL no ARRL vai izvēlieties tā programmu ar Pārlūkot.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>TQSL has no Station Location: add one in TQSL (Station Location, Add Station Location), then open Settings again.</source>
+        <translation>TQSL nav nevienas stacijas atrašanās vietas: pievienojiet to TQSL (Station Location, Add Station Location), pēc tam vēlreiz atveriet iestatījumus.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>TQSL did not sign or upload the QSOs (%1): they are kept, and nothing more is sent until you press OK in Settings or start the program again.</source>
+        <translation>TQSL neparakstīja vai neaugšupielādēja QSO (%1): tie tiek saglabāti, un nekas vairs netiek sūtīts, līdz iestatījumos nospiedīsiet OK vai restartēsiet programmu.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Choose the TQSL program</source>
+        <translation>Izvēlēties TQSL programmu</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1 is not a program that can be run.</source>
+        <translation>%1 nav programma, ko var palaist.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>TQSL answered: %1</source>
+        <translation>TQSL atbildēja: %1</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>TQSL could not be started: %1</source>
+        <translation>TQSL nevarēja palaist: %1</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>no answer</source>
+        <translation>nav atbildes</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>TQSL gave no answer within %1 seconds and was stopped.</source>
+        <translation>TQSL neatbildēja %1 sekunžu laikā un tika apturēts.</translation>
+    </message>
 </context>
 <context>
     <name>CountryDat</name>
@@ -11959,6 +12004,58 @@ Tikai no šī brīža ierakstītie QSO: vecākos augšupielādējiet QRZ.com kā
         <location filename="../Configuration.ui"/>
         <source>eQSL's member list: the grid squares of eQSL's members, for a QSO logged without one ("Fill a missing grid before logging", on the Reporting tab). It is downloaded on the General tab, under Data files.</source>
         <translation>eQSL dalībnieku saraksts: eQSL dalībnieku lokatori QSO, kas ierakstīts bez lokatora (“Aizpildīt trūkstošo lokatoru pirms ierakstīšanas”, cilnē Raportēšana). To lejupielādē cilnē Vispārīgi, sadaļā Datu faili.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Each QSO you log is signed by TQSL with your callsign certificate and uploaded to LoTW at once - in a contest too. A QSO that cannot be sent now (no connection, LoTW busy) is kept and sent later. If your certificate has a password, TQSL asks for it in its own window: this program never asks for it or keeps it.
+Only QSOs logged from now on: sign older ones in TQSL with its Sign a log.</source>
+        <translation>Katru ierakstīto QSO TQSL paraksta ar jūsu izsaukuma signāla sertifikātu un uzreiz augšupielādē LoTW – arī sacensībās. QSO, ko pašlaik nevar nosūtīt (nav savienojuma, LoTW ir aizņemts), tiek saglabāts un nosūtīts vēlāk. Ja jūsu sertifikātam ir parole, TQSL to prasa savā logā: šī programma to nekad neprasa un neglabā.
+Tikai no šī brīža ierakstītie QSO: vecākos parakstiet pašā TQSL ar “Sign a log”.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>The TQSL program that signs the QSOs: found by itself where TQSL is installed, or the one chosen with Browse.</source>
+        <translation>TQSL programma, kas paraksta QSO: atrasta automātiski tur, kur instalēts TQSL, vai izvēlēta ar Pārlūkot.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>TQSL:</source>
+        <translation>TQSL:</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>not found</source>
+        <translation>nav atrasts</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Choose the TQSL program yourself when it was not found, or to use another one.</source>
+        <translation>Izvēlieties TQSL programmu paši, ja tā netika atrasta, vai lai izmantotu citu.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Browse...</source>
+        <translation>Pārlūkot...</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Runs TQSL to show its version: that it is found and starts. It signs and sends nothing.</source>
+        <translation>Palaiž TQSL, lai parādītu tā versiju: ka tas ir atrasts un startē. Tas neko neparaksta un nesūta.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Test</source>
+        <translation>Pārbaudīt</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>The TQSL Station Location the QSOs are signed with - its call is the certificate's. The list is TQSL's own: add or change one in TQSL's Station Location menu.</source>
+        <translation>TQSL stacijas atrašanās vieta, ar kuru tiek parakstīti QSO - tās izsaukuma signāls ir sertifikāta signāls. Saraksts ir paša TQSL: pievienojiet vai mainiet to TQSL izvēlnē Station Location.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Station Location:</source>
+        <translation>Stacijas atrašanās vieta:</translation>
     </message>
 </context>
 <context>

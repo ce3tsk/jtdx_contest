@@ -963,6 +963,51 @@ Format:
         <source>Club Log's users file: the grid squares Club Log knows of its users, for a QSO logged without one ("Fill a missing grid before logging", on the Reporting tab). Downloaded once a week with the token.</source>
         <translation>O ficheiro de utilizadores do Club Log: os grids que o Club Log conhece dos seus utilizadores, para um QSO registado sem grid ("Preencher o grid em falta antes de registar", no separador Reportagem). Descarregado uma vez por semana com o token.</translation>
     </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>TQSL was not found: install TQSL from the ARRL, or choose its program with Browse.</source>
+        <translation>O TQSL não foi encontrado: instale o TQSL da ARRL, ou escolha o seu programa com Procurar.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>TQSL has no Station Location: add one in TQSL (Station Location, Add Station Location), then open Settings again.</source>
+        <translation>O TQSL não tem nenhuma localização da estação: adicione uma no TQSL (Localização da Estação, Adicionar uma Localização da Estação) e depois volte a abrir as definições.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>TQSL did not sign or upload the QSOs (%1): they are kept, and nothing more is sent until you press OK in Settings or start the program again.</source>
+        <translation>O TQSL não assinou nem enviou os QSO (%1): ficam guardados, e nada mais é enviado até premir OK nas definições ou voltar a iniciar o programa.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Choose the TQSL program</source>
+        <translation>Escolher o programa TQSL</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1 is not a program that can be run.</source>
+        <translation>%1 não é um programa que possa ser executado.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>TQSL answered: %1</source>
+        <translation>O TQSL respondeu: %1</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>TQSL could not be started: %1</source>
+        <translation>Não foi possível iniciar o TQSL: %1</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>no answer</source>
+        <translation>sem resposta</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>TQSL gave no answer within %1 seconds and was stopped.</source>
+        <translation>O TQSL não respondeu em %1 segundos e foi interrompido.</translation>
+    </message>
 </context>
 <context>
     <name>CountryDat</name>
@@ -11949,6 +11994,58 @@ Só os QSO registados a partir de agora: envie os mais antigos para o QRZ.com co
         <location filename="../Configuration.ui"/>
         <source>eQSL's member list: the grid squares of eQSL's members, for a QSO logged without one ("Fill a missing grid before logging", on the Reporting tab). It is downloaded on the General tab, under Data files.</source>
         <translation>A lista de membros do eQSL: os grids dos membros do eQSL, para um QSO registado sem grid ("Preencher o grid em falta antes de registar", no separador Reportagem). É descarregada no separador Geral, em Ficheiros de dados.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Each QSO you log is signed by TQSL with your callsign certificate and uploaded to LoTW at once - in a contest too. A QSO that cannot be sent now (no connection, LoTW busy) is kept and sent later. If your certificate has a password, TQSL asks for it in its own window: this program never asks for it or keeps it.
+Only QSOs logged from now on: sign older ones in TQSL with its Sign a log.</source>
+        <translation>Cada QSO que registar é assinado pelo TQSL com o seu certificado de indicativo e enviado de imediato para o LoTW – também em concursos. Um QSO que não possa ser enviado agora (sem ligação, LoTW ocupado) é guardado e enviado mais tarde. Se o seu certificado tiver palavra-passe, o TQSL pede-a numa janela própria: este programa nunca a pede nem a guarda.
+Só os QSO registados a partir de agora: assine os mais antigos no próprio TQSL com "Assinar um log".</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>The TQSL program that signs the QSOs: found by itself where TQSL is installed, or the one chosen with Browse.</source>
+        <translation>O programa TQSL que assina os QSO: encontrado automaticamente onde o TQSL está instalado, ou o escolhido com Procurar.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>TQSL:</source>
+        <translation>TQSL:</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>not found</source>
+        <translation>não encontrado</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Choose the TQSL program yourself when it was not found, or to use another one.</source>
+        <translation>Escolha manualmente o programa TQSL quando não foi encontrado, ou para usar outro.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Browse...</source>
+        <translation>Procurar...</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Runs TQSL to show its version: that it is found and starts. It signs and sends nothing.</source>
+        <translation>Executa o TQSL para mostrar a sua versão: que é encontrado e arranca. Não assina nem envia nada.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Test</source>
+        <translation>Testar</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>The TQSL Station Location the QSOs are signed with - its call is the certificate's. The list is TQSL's own: add or change one in TQSL's Station Location menu.</source>
+        <translation>A localização da estação do TQSL com que os QSO são assinados - o seu indicativo é o do certificado. A lista é a do próprio TQSL: adicione ou altere uma no menu Localização da Estação do TQSL.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Station Location:</source>
+        <translation>Localização da estação:</translation>
     </message>
 </context>
 <context>

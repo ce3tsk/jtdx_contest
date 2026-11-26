@@ -973,6 +973,51 @@ Format:
         <source>Club Log's users file: the grid squares Club Log knows of its users, for a QSO logged without one ("Fill a missing grid before logging", on the Reporting tab). Downloaded once a week with the token.</source>
         <translation>Club Log のユーザーファイル：Club Log が把握しているユーザーのグリッド。グリッドなしで記録された QSO のためのものです (「記録前に欠けたグリッドを補う」、レポーティング タブ)。トークンで週に一度ダウンロードします。</translation>
     </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>TQSL was not found: install TQSL from the ARRL, or choose its program with Browse.</source>
+        <translation>TQSL が見つかりません：ARRL から TQSL をインストールするか、「参照」でそのプログラムを選んでください。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>TQSL has no Station Location: add one in TQSL (Station Location, Add Station Location), then open Settings again.</source>
+        <translation>TQSL に局の所在地がありません：TQSL で追加してから（局の所在地、局の所在地を追加）、設定をもう一度開いてください。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>TQSL did not sign or upload the QSOs (%1): they are kept, and nothing more is sent until you press OK in Settings or start the program again.</source>
+        <translation>TQSL は QSO に署名またはアップロードしませんでした（%1）：QSO は保存され、設定で OK を押すか、プログラムを再起動するまで何も送信されません。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Choose the TQSL program</source>
+        <translation>TQSL のプログラムを選択</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1 is not a program that can be run.</source>
+        <translation>%1 は実行できるプログラムではありません。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>TQSL answered: %1</source>
+        <translation>TQSL の応答：%1</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>TQSL could not be started: %1</source>
+        <translation>TQSL を起動できませんでした：%1</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>no answer</source>
+        <translation>応答なし</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>TQSL gave no answer within %1 seconds and was stopped.</source>
+        <translation>TQSL が %1 秒以内に応答しなかったため停止しました。</translation>
+    </message>
 </context>
 <context>
     <name>CountryDat</name>
@@ -11936,6 +11981,58 @@ Only QSOs logged from now on: upload older ones to QRZ.com as an ADIF file there
         <location filename="../Configuration.ui"/>
         <source>eQSL's member list: the grid squares of eQSL's members, for a QSO logged without one ("Fill a missing grid before logging", on the Reporting tab). It is downloaded on the General tab, under Data files.</source>
         <translation>eQSL のメンバーリスト：グリッドなしで記録された QSO のための、eQSL メンバーのグリッド (「記録前に欠けたグリッドを補う」、レポーティング タブ)。全般 タブの データファイル でダウンロードします。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Each QSO you log is signed by TQSL with your callsign certificate and uploaded to LoTW at once - in a contest too. A QSO that cannot be sent now (no connection, LoTW busy) is kept and sent later. If your certificate has a password, TQSL asks for it in its own window: this program never asks for it or keeps it.
+Only QSOs logged from now on: sign older ones in TQSL with its Sign a log.</source>
+        <translation>記録した QSO は、TQSL がすぐにコールサイン証明書で署名し、LoTW にアップロードします（コンテスト中も）。今送信できない QSO（接続なし、LoTW が混雑）は保存され、後で送信されます。証明書にパスワードがある場合は、TQSL が独自のウィンドウでパスワードを尋ねます。このプログラムがパスワードを尋ねたり保存したりすることはありません。
+これから記録する QSO のみです。以前の QSO は TQSL の「ログに署名し、LoTW に自動的にアップロード」で署名してください。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>The TQSL program that signs the QSOs: found by itself where TQSL is installed, or the one chosen with Browse.</source>
+        <translation>QSO に署名する TQSL のプログラムです：TQSL がインストールされている場所で自動的に見つけたもの、または「参照」で選んだものです。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>TQSL:</source>
+        <translation>TQSL：</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>not found</source>
+        <translation>見つかりません</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Choose the TQSL program yourself when it was not found, or to use another one.</source>
+        <translation>TQSL のプログラムが見つからなかったとき、または別のものを使うときに、自分で選びます。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Browse...</source>
+        <translation>参照...</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Runs TQSL to show its version: that it is found and starts. It signs and sends nothing.</source>
+        <translation>TQSL を起動してバージョンを表示します：見つかって起動できることがわかります。署名も送信もしません。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Test</source>
+        <translation>テスト</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>The TQSL Station Location the QSOs are signed with - its call is the certificate's. The list is TQSL's own: add or change one in TQSL's Station Location menu.</source>
+        <translation>QSO の署名に使う TQSL の局の所在地です。そのコールサインは証明書のものです。一覧は TQSL 自身のものです：追加や変更は TQSL の「局の所在地」メニューで行います。</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Station Location:</source>
+        <translation>局の所在地：</translation>
     </message>
 </context>
 <context>

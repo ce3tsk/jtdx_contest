@@ -973,6 +973,51 @@ Formátum:
         <source>Club Log's users file: the grid squares Club Log knows of its users, for a QSO logged without one ("Fill a missing grid before logging", on the Reporting tab). Downloaded once a week with the token.</source>
         <translation>A Club Log felhasználói fájlja: a Club Log által ismert felhasználói QRA-k, QRA nélkül naplózott QSO-hoz („Hiányzó QRA kitöltése naplózás előtt”, a(z) Riport lapon). Hetente egyszer töltődik le a tokennel.</translation>
     </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>TQSL was not found: install TQSL from the ARRL, or choose its program with Browse.</source>
+        <translation>A TQSL nem található: telepítse a TQSL-t az ARRL-től, vagy válassza ki a programját a Tallózás gombbal.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>TQSL has no Station Location: add one in TQSL (Station Location, Add Station Location), then open Settings again.</source>
+        <translation>A TQSL-ben nincs állomáshely: adjon hozzá egyet a TQSL-ben (Station Location, Add Station Location), majd nyissa meg újra a beállításokat.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>TQSL did not sign or upload the QSOs (%1): they are kept, and nothing more is sent until you press OK in Settings or start the program again.</source>
+        <translation>A TQSL nem írta alá vagy nem töltötte fel a QSO-kat (%1): megmaradnak, és semmi több nem megy el, amíg meg nem nyomja az OK gombot a beállításokban, vagy újra nem indítja a programot.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Choose the TQSL program</source>
+        <translation>A TQSL program kiválasztása</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1 is not a program that can be run.</source>
+        <translation>A(z) %1 nem futtatható program.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>TQSL answered: %1</source>
+        <translation>A TQSL válasza: %1</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>TQSL could not be started: %1</source>
+        <translation>A TQSL nem indítható el: %1</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>no answer</source>
+        <translation>nincs válasz</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>TQSL gave no answer within %1 seconds and was stopped.</source>
+        <translation>A TQSL %1 másodpercen belül nem válaszolt, ezért leállt.</translation>
+    </message>
 </context>
 <context>
     <name>CountryDat</name>
@@ -11957,6 +12002,58 @@ Csak a mostantól naplózott QSO-k: a régebbieket ADIF-fájlként töltse fel a
         <location filename="../Configuration.ui"/>
         <source>eQSL's member list: the grid squares of eQSL's members, for a QSO logged without one ("Fill a missing grid before logging", on the Reporting tab). It is downloaded on the General tab, under Data files.</source>
         <translation>Az eQSL taglistája: az eQSL-tagok QRA-i, QRA nélkül naplózott QSO-hoz („Hiányzó QRA kitöltése naplózás előtt”, a(z) Riport lapon). A(z) Általános lapon, a(z) Adatfájlok alatt töltődik le.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Each QSO you log is signed by TQSL with your callsign certificate and uploaded to LoTW at once - in a contest too. A QSO that cannot be sent now (no connection, LoTW busy) is kept and sent later. If your certificate has a password, TQSL asks for it in its own window: this program never asks for it or keeps it.
+Only QSOs logged from now on: sign older ones in TQSL with its Sign a log.</source>
+        <translation>Minden naplózott QSO-t a TQSL azonnal aláír az Ön hívójel-tanúsítványával, és feltölti a LoTW-be – versenyben is. Az éppen el nem küldhető QSO (nincs kapcsolat, a LoTW foglalt) megmarad, és később megy el. Ha a tanúsítványának jelszava van, a TQSL a saját ablakában kéri: ez a program soha nem kéri és nem tárolja.
+Csak a mostantól naplózott QSO-k: a régebbieket magában a TQSL-ben írja alá a „Sign a log” gombbal.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>The TQSL program that signs the QSOs: found by itself where TQSL is installed, or the one chosen with Browse.</source>
+        <translation>A QSO-kat aláíró TQSL program: magától megtalálva ott, ahová a TQSL telepítve van, vagy a Tallózás gombbal kiválasztott.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>TQSL:</source>
+        <translation>TQSL:</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>not found</source>
+        <translation>nem található</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Choose the TQSL program yourself when it was not found, or to use another one.</source>
+        <translation>Válassza ki saját maga a TQSL programot, ha nem található, vagy ha egy másikat szeretne használni.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Browse...</source>
+        <translation>Tallózás...</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Runs TQSL to show its version: that it is found and starts. It signs and sends nothing.</source>
+        <translation>Elindítja a TQSL-t, hogy megmutassa a verzióját: hogy megtalálható és elindul. Semmit nem ír alá és nem küld el.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Test</source>
+        <translation>Ellenőrzés</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>The TQSL Station Location the QSOs are signed with - its call is the certificate's. The list is TQSL's own: add or change one in TQSL's Station Location menu.</source>
+        <translation>A TQSL állomáshely, amellyel a QSO-k aláírásra kerülnek - a hívójele a tanúsítványé. A lista a TQSL sajátja: a TQSL Station Location menüjében adhat hozzá vagy módosíthat egyet.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Station Location:</source>
+        <translation>Állomáshely:</translation>
     </message>
 </context>
 <context>

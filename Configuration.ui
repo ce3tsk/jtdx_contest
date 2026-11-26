@@ -3370,50 +3370,121 @@ for assessing propagation and system performance.</string>
           <string notr="true">LoTW</string>
          </property>
          <layout class="QGridLayout" name="lotwqsl_grid_layout">
-          <item row="0" column="0">
-           <widget class="QLabel" name="lotwqsl_user_label">
+          <item row="0" column="0" colspan="2">
+           <widget class="QCheckBox" name="lotw_upload_check_box">
             <property name="toolTip">
-             <string>Your username at LoTW's website (lotw.arrl.org) - usually your call sign, but not always.</string>
+             <string>Each QSO you log is signed by TQSL with your callsign certificate and uploaded to LoTW at once - in a contest too. A QSO that cannot be sent now (no connection, LoTW busy) is kept and sent later. If your certificate has a password, TQSL asks for it in its own window: this program never asks for it or keeps it.
+Only QSOs logged from now on: sign older ones in TQSL with its Sign a log.</string>
             </property>
             <property name="text">
-             <string>Username:</string>
-            </property>
-            <property name="buddy">
-             <cstring>lotwqsl_user_edit</cstring>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="1">
-           <widget class="QLineEdit" name="lotwqsl_user_edit">
-            <property name="toolTip">
-             <string>Your username at LoTW's website (lotw.arrl.org) - usually your call sign, but not always.</string>
+             <string>Send logged QSOs</string>
             </property>
            </widget>
           </item>
           <item row="1" column="0">
-           <widget class="QLabel" name="lotwqsl_password_label">
+           <widget class="QLabel" name="tqsl_label">
             <property name="toolTip">
-             <string>Your password at LoTW's website. It is kept in a file of its own beside the settings file, readable by you alone, and sent only to lotw.arrl.org.</string>
+             <string>The TQSL program that signs the QSOs: found by itself where TQSL is installed, or the one chosen with Browse.</string>
             </property>
             <property name="text">
-             <string>Password:</string>
+             <string>TQSL:</string>
             </property>
             <property name="buddy">
-             <cstring>lotwqsl_password_edit</cstring>
+             <cstring>tqsl_path_edit</cstring>
             </property>
            </widget>
           </item>
           <item row="1" column="1">
-           <widget class="QLineEdit" name="lotwqsl_password_edit">
+           <layout class="QHBoxLayout" name="tqsl_path_row">
+            <item>
+             <widget class="QLineEdit" name="tqsl_path_edit">
             <property name="toolTip">
-             <string>Your password at LoTW's website. It is kept in a file of its own beside the settings file, readable by you alone, and sent only to lotw.arrl.org.</string>
+             <string>The TQSL program that signs the QSOs: found by itself where TQSL is installed, or the one chosen with Browse.</string>
             </property>
-            <property name="echoMode">
-             <enum>QLineEdit::Password</enum>
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+            <property name="placeholderText">
+             <string>not found</string>
+            </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="tqsl_browse_push_button">
+            <property name="toolTip">
+             <string>Choose the TQSL program yourself when it was not found, or to use another one.</string>
+            </property>
+            <property name="text">
+             <string>Browse...</string>
+            </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="tqsl_test_push_button">
+            <property name="toolTip">
+             <string>Runs TQSL to show its version: that it is found and starts. It signs and sends nothing.</string>
+            </property>
+            <property name="text">
+             <string>Test</string>
+            </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="tqsl_station_label">
+            <property name="toolTip">
+             <string>The TQSL Station Location the QSOs are signed with - its call is the certificate's. The list is TQSL's own: add or change one in TQSL's Station Location menu.</string>
+            </property>
+            <property name="text">
+             <string>Station Location:</string>
+            </property>
+            <property name="buddy">
+             <cstring>tqsl_station_combo_box</cstring>
             </property>
            </widget>
           </item>
-          <item row="2" column="0" colspan="2">
+          <item row="2" column="1">
+           <widget class="QComboBox" name="tqsl_station_combo_box">
+            <property name="toolTip">
+             <string>The TQSL Station Location the QSOs are signed with - its call is the certificate's. The list is TQSL's own: add or change one in TQSL's Station Location menu.</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0" colspan="2">
+           <layout class="QHBoxLayout" name="lotw_upload_lamp_row">
+            <item alignment="Qt::AlignTop">
+             <widget class="QLabel" name="lotw_upload_lamp">
+              <property name="minimumSize">
+               <size>
+                <width>12</width>
+                <height>12</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>12</width>
+                <height>12</height>
+               </size>
+              </property>
+              <property name="text">
+               <string notr="true"/>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="lotw_upload_status_label">
+              <property name="text">
+               <string notr="true"/>
+              </property>
+              <property name="wordWrap">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item row="4" column="0" colspan="2">
            <widget class="QPushButton" name="lotwqsl_download_push_button">
             <property name="toolTip">
              <string>Download your confirmations from LoTW itself now; the program also does it three minutes after the start and every 12 hours while a username and password are saved. Only the QSLs for My Call. The first download fetches all of them, later ones only what came since - a whole report again once a month. LoTW does not say when a password is wrong: after a failure the next try waits 6 hours.</string>
@@ -3423,7 +3494,7 @@ for assessing propagation and system performance.</string>
             </property>
            </widget>
           </item>
-          <item row="3" column="0" colspan="2">
+          <item row="5" column="0" colspan="2">
            <layout class="QHBoxLayout" name="lotwqsl_download_lamp_row">
             <item alignment="Qt::AlignTop">
              <widget class="QLabel" name="lotwqsl_download_lamp">
@@ -3456,7 +3527,50 @@ for assessing propagation and system performance.</string>
             </item>
            </layout>
           </item>
-          <item row="4" column="0" colspan="2">
+          <item row="6" column="0">
+           <widget class="QLabel" name="lotwqsl_user_label">
+            <property name="toolTip">
+             <string>Your username at LoTW's website (lotw.arrl.org) - usually your call sign, but not always.</string>
+            </property>
+            <property name="text">
+             <string>Username:</string>
+            </property>
+            <property name="buddy">
+             <cstring>lotwqsl_user_edit</cstring>
+            </property>
+           </widget>
+          </item>
+          <item row="6" column="1">
+           <widget class="QLineEdit" name="lotwqsl_user_edit">
+            <property name="toolTip">
+             <string>Your username at LoTW's website (lotw.arrl.org) - usually your call sign, but not always.</string>
+            </property>
+           </widget>
+          </item>
+          <item row="7" column="0">
+           <widget class="QLabel" name="lotwqsl_password_label">
+            <property name="toolTip">
+             <string>Your password at LoTW's website. It is kept in a file of its own beside the settings file, readable by you alone, and sent only to lotw.arrl.org.</string>
+            </property>
+            <property name="text">
+             <string>Password:</string>
+            </property>
+            <property name="buddy">
+             <cstring>lotwqsl_password_edit</cstring>
+            </property>
+           </widget>
+          </item>
+          <item row="7" column="1">
+           <widget class="QLineEdit" name="lotwqsl_password_edit">
+            <property name="toolTip">
+             <string>Your password at LoTW's website. It is kept in a file of its own beside the settings file, readable by you alone, and sent only to lotw.arrl.org.</string>
+            </property>
+            <property name="echoMode">
+             <enum>QLineEdit::Password</enum>
+            </property>
+           </widget>
+          </item>
+          <item row="8" column="0" colspan="2">
            <spacer name="lotwqsl_spacer">
             <property name="orientation">
              <enum>Qt::Vertical</enum>

@@ -973,6 +973,51 @@ Format:
         <source>Club Log's users file: the grid squares Club Log knows of its users, for a QSO logged without one ("Fill a missing grid before logging", on the Reporting tab). Downloaded once a week with the token.</source>
         <translation>Club Log의 사용자 파일: Club Log가 아는 사용자들의 그리드, 그리드 없이 기록된 QSO용("기록 전에 빠진 그리드 채우기", 보고 탭). 토큰으로 일주일에 한 번 내려받습니다.</translation>
     </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>TQSL was not found: install TQSL from the ARRL, or choose its program with Browse.</source>
+        <translation>TQSL을 찾을 수 없습니다: ARRL에서 TQSL을 설치하거나, 찾아보기로 그 프로그램을 고르십시오.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>TQSL has no Station Location: add one in TQSL (Station Location, Add Station Location), then open Settings again.</source>
+        <translation>TQSL에 국 위치가 없습니다: TQSL에서 하나 추가한 뒤(Station Location, Add Station Location) 설정을 다시 여십시오.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>TQSL did not sign or upload the QSOs (%1): they are kept, and nothing more is sent until you press OK in Settings or start the program again.</source>
+        <translation>TQSL이 QSO를 서명하거나 올리지 못했습니다(%1): QSO는 보관되며, 설정에서 확인을 누르거나 프로그램을 다시 시작할 때까지 아무것도 보내지 않습니다.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Choose the TQSL program</source>
+        <translation>TQSL 프로그램 선택</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1 is not a program that can be run.</source>
+        <translation>%1은(는) 실행할 수 있는 프로그램이 아닙니다.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>TQSL answered: %1</source>
+        <translation>TQSL 응답: %1</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>TQSL could not be started: %1</source>
+        <translation>TQSL을 시작할 수 없습니다: %1</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>no answer</source>
+        <translation>응답 없음</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>TQSL gave no answer within %1 seconds and was stopped.</source>
+        <translation>TQSL이 %1초 안에 응답하지 않아 중지했습니다.</translation>
+    </message>
 </context>
 <context>
     <name>CountryDat</name>
@@ -11958,6 +12003,58 @@ Only QSOs logged from now on: upload older ones to QRZ.com as an ADIF file there
         <location filename="../Configuration.ui"/>
         <source>eQSL's member list: the grid squares of eQSL's members, for a QSO logged without one ("Fill a missing grid before logging", on the Reporting tab). It is downloaded on the General tab, under Data files.</source>
         <translation>eQSL의 회원 목록: 그리드 없이 기록된 QSO를 위한 eQSL 회원들의 그리드("기록 전에 빠진 그리드 채우기", 보고 탭). 일반 탭의 데이터 파일에서 내려받습니다.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Each QSO you log is signed by TQSL with your callsign certificate and uploaded to LoTW at once - in a contest too. A QSO that cannot be sent now (no connection, LoTW busy) is kept and sent later. If your certificate has a password, TQSL asks for it in its own window: this program never asks for it or keeps it.
+Only QSOs logged from now on: sign older ones in TQSL with its Sign a log.</source>
+        <translation>기록한 QSO는 TQSL이 호출부호 인증서로 서명하여 LoTW에 즉시 올립니다(콘테스트 중에도). 지금 보낼 수 없는 QSO(연결 없음, LoTW 혼잡)는 보관했다가 나중에 보냅니다. 인증서에 비밀번호가 있으면 TQSL이 자체 창에서 묻습니다. 이 프로그램은 비밀번호를 묻거나 보관하지 않습니다.
+지금부터 기록하는 QSO만 해당됩니다. 이전 QSO는 TQSL 자체에서 "Sign a log"로 서명하십시오.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>The TQSL program that signs the QSOs: found by itself where TQSL is installed, or the one chosen with Browse.</source>
+        <translation>QSO에 서명하는 TQSL 프로그램입니다. TQSL이 설치된 곳에서 자동으로 찾은 것이거나, 찾아보기로 고른 것입니다.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>TQSL:</source>
+        <translation>TQSL:</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>not found</source>
+        <translation>찾을 수 없음</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Choose the TQSL program yourself when it was not found, or to use another one.</source>
+        <translation>TQSL 프로그램을 찾지 못했을 때나 다른 것을 쓰려고 할 때 직접 고릅니다.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Browse...</source>
+        <translation>찾아보기...</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Runs TQSL to show its version: that it is found and starts. It signs and sends nothing.</source>
+        <translation>TQSL을 실행해 버전을 표시합니다. 찾을 수 있고 실행되는지 알 수 있습니다. 아무것도 서명하거나 보내지 않습니다.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Test</source>
+        <translation>시험</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>The TQSL Station Location the QSOs are signed with - its call is the certificate's. The list is TQSL's own: add or change one in TQSL's Station Location menu.</source>
+        <translation>QSO 서명에 쓰는 TQSL의 국 위치입니다. 그 호출부호는 인증서의 것입니다. 목록은 TQSL 자체의 것입니다. 추가하거나 바꾸려면 TQSL의 Station Location 메뉴를 쓰십시오.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Station Location:</source>
+        <translation>국 위치:</translation>
     </message>
 </context>
 <context>

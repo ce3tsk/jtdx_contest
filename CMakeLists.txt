@@ -295,6 +295,7 @@ set (wsjtx_CXXSRCS
   clublog.cpp        # CE3TSK 2026-11-21: Club Log's confirmed QSOs (TODO.md 3.-280)
   qrzlogbook.cpp     # CE3TSK 2026-11-22: QRZ.com's LoTW confirmations (TODO.md 3.-280)
   lotw.cpp           # CE3TSK 2026-11-25: LoTW's own confirmations (TODO.md 3.-299)
+  tqsl.cpp           # CE3TSK 2026-11-25: TQSL signs the QSOs sent to LoTW (TODO.md 3.-303)
   qsoupload.cpp      # CE3TSK 2026-11-23: the logged QSOs to Club Log and QRZ.com (TODO.md 3.-282)
   qrzxml.cpp         # CE3TSK 2026-11-24: QRZ.com's XML data, a missing grid's last source (TODO.md 3.-283, stage 3)
   clublogusers.cpp   # CE3TSK 2026-11-24: Club Log's users file, a missing grid's fourth source (TODO.md 3.-283, stage 4)

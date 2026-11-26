@@ -973,6 +973,51 @@ Format:
         <source>Club Log's users file: the grid squares Club Log knows of its users, for a QSO logged without one ("Fill a missing grid before logging", on the Reporting tab). Downloaded once a week with the token.</source>
         <translation>Datoteka korisnika Club Loga: lokatori koje Club Log zna za svoje korisnike, za QSO upisan bez lokatora („Popuni lokator koji nedostaje prije upisa u log“, na kartici Izvještaji). Preuzima se jednom tjedno s tokenom.</translation>
     </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>TQSL was not found: install TQSL from the ARRL, or choose its program with Browse.</source>
+        <translation>TQSL nije pronađen: instalirajte TQSL od ARRL-a ili odaberite njegov program gumbom Pregledaj.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>TQSL has no Station Location: add one in TQSL (Station Location, Add Station Location), then open Settings again.</source>
+        <translation>TQSL nema nijednu lokaciju postaje: dodajte je u TQSL-u (Station Location, Add Station Location), zatim ponovno otvorite postavke.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>TQSL did not sign or upload the QSOs (%1): they are kept, and nothing more is sent until you press OK in Settings or start the program again.</source>
+        <translation>TQSL nije potpisao ni učitao QSO-e (%1): čuvaju se, i ništa se više ne šalje dok ne pritisnete OK u postavkama ili ponovno ne pokrenete program.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>Choose the TQSL program</source>
+        <translation>Odaberi TQSL program</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>%1 is not a program that can be run.</source>
+        <translation>%1 nije program koji se može pokrenuti.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>TQSL answered: %1</source>
+        <translation>TQSL je odgovorio: %1</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>TQSL could not be started: %1</source>
+        <translation>TQSL se nije mogao pokrenuti: %1</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>no answer</source>
+        <translation>nema odgovora</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.cpp"/>
+        <source>TQSL gave no answer within %1 seconds and was stopped.</source>
+        <translation>TQSL nije odgovorio unutar %1 sekundi i zaustavljen je.</translation>
+    </message>
 </context>
 <context>
     <name>CountryDat</name>
@@ -11966,6 +12011,58 @@ Samo QSO-i upisani od sada: starije učitajte na QRZ.com kao ADIF datoteku, ondj
         <location filename="../Configuration.ui"/>
         <source>eQSL's member list: the grid squares of eQSL's members, for a QSO logged without one ("Fill a missing grid before logging", on the Reporting tab). It is downloaded on the General tab, under Data files.</source>
         <translation>Popis članova eQSL-a: lokatori članova eQSL-a, za QSO upisan bez lokatora („Popuni lokator koji nedostaje prije upisa u log“, na kartici Izvještaji). Preuzima se na kartici Općenito, pod Datoteke podataka.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Each QSO you log is signed by TQSL with your callsign certificate and uploaded to LoTW at once - in a contest too. A QSO that cannot be sent now (no connection, LoTW busy) is kept and sent later. If your certificate has a password, TQSL asks for it in its own window: this program never asks for it or keeps it.
+Only QSOs logged from now on: sign older ones in TQSL with its Sign a log.</source>
+        <translation>Svaki QSO koji upišete TQSL potpisuje vašim certifikatom pozivnog znaka i odmah ga učitava na LoTW – i u natjecanju. QSO koji se sada ne može poslati (nema veze, LoTW je zauzet) čuva se i šalje kasnije. Ako vaš certifikat ima lozinku, TQSL je traži u vlastitom prozoru: ovaj program je nikad ne traži niti je čuva.
+Samo QSO-i upisani od sada: starije potpišite u samom TQSL-u s „Sign a log“.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>The TQSL program that signs the QSOs: found by itself where TQSL is installed, or the one chosen with Browse.</source>
+        <translation>TQSL program koji potpisuje QSO-e: pronađen automatski ondje gdje je TQSL instaliran, ili onaj odabran gumbom Pregledaj.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>TQSL:</source>
+        <translation>TQSL:</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>not found</source>
+        <translation>nije pronađen</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Choose the TQSL program yourself when it was not found, or to use another one.</source>
+        <translation>Sami odaberite TQSL program kad nije pronađen, ili da biste koristili neki drugi.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Browse...</source>
+        <translation>Pregledaj...</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Runs TQSL to show its version: that it is found and starts. It signs and sends nothing.</source>
+        <translation>Pokreće TQSL da prikaže njegovu verziju: da je pronađen i da se pokreće. Ništa ne potpisuje i ne šalje.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Test</source>
+        <translation>Isprobaj</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>The TQSL Station Location the QSOs are signed with - its call is the certificate's. The list is TQSL's own: add or change one in TQSL's Station Location menu.</source>
+        <translation>TQSL lokacija postaje kojom se potpisuju QSO-i - njezin pozivni znak je onaj iz certifikata. Popis je TQSL-ov: dodajte ili promijenite lokaciju u TQSL-ovom izborniku Station Location.</translation>
+    </message>
+    <message>
+        <location filename="../Configuration.ui"/>
+        <source>Station Location:</source>
+        <translation>Lokacija postaje:</translation>
     </message>
 </context>
 <context>

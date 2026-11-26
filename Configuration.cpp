@@ -213,6 +213,8 @@ extern "C" {
 #include "qrzlogbook.h"   // CE3TSK 2026-11-22: QRZ.com's LoTW confirmations (TODO.md 3.-280)
 #include "lotw.h"        // CE3TSK 2026-11-25: LoTW's own confirmations (TODO.md 3.-299)
 #include "statuslamp.h"  // CE3TSK 2026-11-25: the Logbooks tab's lamps (TODO.md 3.-300)
+#include "tqsl.h"        // CE3TSK 2026-11-25: TQSL signs the QSOs sent to LoTW (TODO.md 3.-303)
+#include <QProcess>
 #include "qsoupload.h"    // CE3TSK 2026-11-23: the logged QSOs to Club Log and QRZ.com (TODO.md 3.-282)
 #include "eqsl.h"         // CE3TSK 2026-11-24: eQSL's answer (TODO.md 3.-284)
 #include "logbook/countrydat.h"       /* CE3TSK */
@@ -756,6 +758,19 @@ private:
   void kept_note (QString const& name, bool refused, QString const& call);   // (3.-295) a QSO kept: the note, every site's
   void update_eqsl_upload_label ();
   void grey_upload_boxes (bool opening);   // (2026-11-24) Club Log's and QRZ.com's "Send logged QSOs" greyed without a token or key
+  /* CE3TSK 2026-11-25 (TODO.md 3.-303, LOTW_PLAN.md section 5): the logged QSOs to LoTW, signed by TQSL - the program
+     found by itself or chosen with Browse, the Station Location from TQSL's own file; its line, handlers and Test as the
+     others' (their texts where the same words fit) */
+  void configure_lotw_upload ();   // the saved choices into the uploader
+  void refresh_tqsl_rows (bool opening);   // the program in use, the Station Locations, the box greyed without either
+  void update_lotw_upload_label ();
+  void lotw_upload_done (qso_upload::Result const& result, QString const& call);
+  void lotw_upload_refused (qso_upload::Result const& result, QString const& call);
+  void lotw_upload_delayed (qso_upload::Result const& result, QString const& call, QDateTime const& next);
+  Q_SLOT void on_tqsl_browse_push_button_clicked (bool);
+  Q_SLOT void tqsl_choose (QString const& path);   // a slot: a test chooses by name (Browse's file window)
+  Q_SLOT void on_tqsl_test_push_button_clicked (bool);
+  void tqsl_tested (bool started, QByteArray const& output);
   Q_SLOT void on_callNotif_check_box_clicked(bool checked);
   Q_SLOT void on_otherMessagesMarker_check_box_clicked(bool checked);
   Q_SLOT void on_RR73_marker_check_box_clicked(bool checked);
@@ -887,6 +902,12 @@ private:
   QString lotwqsl_file_id_;            // what fetched the file: lotwqsl_id (), ini LotwKeyId
   qso_upload::Uploader clublog_upload_ {qso_upload::Site::ClubLog};   // CE3TSK 2026-11-23 (TODO.md 3.-282)
   qso_upload::Uploader qrz_upload_ {qso_upload::Site::Qrz};
+  qso_upload::Uploader lotw_upload_ {qso_upload::Site::Lotw};   // CE3TSK 2026-11-25 (TODO.md 3.-303): TQSL signs, LoTW takes
+  QProcess tqsl_test_;               // (3.-303) the Test button's `tqsl -q -v`
+  QTimer tqsl_test_timer_;           // (3.-304) its limit - one timer, restarted at each Test
+  bool tqsl_test_killed_ {false};    // (3.-304) the limit stopped it
+  QString tqsl_program_;             // (3.-304) the program the rows show - found when they are refreshed, not at each line
+  QString lotw_refused_by_ {"TQSL"}; // (3.-304) who refused: TQSL, or LoTW (2) - the kept QSOs' notes name it
   qrz_xml::Lookup qrz_xml_;          // CE3TSK 2026-11-24 (TODO.md 3.-283, stage 3)
   qrz_xml::Login qrz_xml_login_;
   FileDownload clublog_users_download_;   // (stage 4) Club Log's users file: the ZIP as an answer (reply_only)
@@ -919,6 +940,14 @@ private:
   QString eqsl_upload_tip_;
   bool qrz_upload_toggled_ {false}; // the QRZ.com box was clicked since Settings opened: ticked at OK, a refusal is lifted
   bool clublog_upload_toggled_ {false};   // (review) the same for Club Log: another call's refusal is lifted
+  bool lotw_upload_on_ {false};     // CE3TSK 2026-11-25 (TODO.md 3.-303): the logged QSOs to LoTW through TQSL - off
+  QString tqsl_chosen_;             //   the TQSL program chosen with Browse, saved ("": found by itself)
+  QString tqsl_pending_;            //   the same in the open dialog
+  QString tqsl_station_;            //   the Station Location TQSL signs with, saved
+  QString lotw_upload_text_;        //   the last run's end, worded
+  bool lotw_upload_good_ {false};   //   sent, or in LoTW already
+  bool lotw_upload_run_ {false};    //   the text is a refusal of this run: gone at OK, which lifts it
+  QString lotw_upload_tip_;
   QDir temp_dir_;
   QDir default_save_directory_;
   QDir save_directory_;
@@ -2598,6 +2627,7 @@ Configuration::impl::impl (Configuration * self, QNetworkAccessManager * network
     auto const agent = "JTDX_contest/" + QCoreApplication::applicationVersion () + " (https://github.com/ce3tsk/jtdx_contest)";
     clublog_upload_.configure (network_manager_, data_dir.absoluteFilePath (qso_upload::clublog_queue_file), agent);
     qrz_upload_.configure (network_manager_, data_dir.absoluteFilePath (qso_upload::qrz_queue_file), agent);
+    lotw_upload_.configure (network_manager_, data_dir.absoluteFilePath (qso_upload::lotw_queue_file), agent);   // (3.-303)
     /* CE3TSK 2026-11-24 (TODO.md 3.-283, stage 3): QRZ.com's XML data, with the login of its own file; its line follows
        its state, shown while "Fill a missing grid before logging" is ticked - the one use of it */
     auto const login = login_file::read (qrz_xml_login_file (), 2);
@@ -2671,6 +2701,33 @@ Configuration::impl::impl (Configuration * self, QNetworkAccessManager * network
   clublog_upload_tip_ = ui_->clublog_upload_check_box->toolTip ();
   qrz_upload_tip_ = ui_->qrz_upload_check_box->toolTip ();
   eqsl_upload_tip_ = ui_->eqsl_check_box->toolTip ();   // (3.-284) eQSL's line follows its box as the others' do
+  // CE3TSK 2026-11-25 (TODO.md 3.-303): LoTW's through TQSL - its own handlers, the others' words where they fit
+  lotw_upload_tip_ = ui_->lotw_upload_check_box->toolTip ();
+  connect (&lotw_upload_, &qso_upload::Uploader::done, this, [this] (qso_upload::Result const& r, QString const& call, int) {
+      lotw_upload_done (r, call);
+    });
+  connect (&lotw_upload_, &qso_upload::Uploader::refused, this, [this] (qso_upload::Result const& r, QString const&, QString const& call, int) {
+      lotw_upload_refused (r, call);
+    });
+  connect (&lotw_upload_, &qso_upload::Uploader::delayed, this, [this] (qso_upload::Result const& r, QString const& call, QDateTime const& next, int) {
+      lotw_upload_delayed (r, call, next);
+    });
+  connect (&lotw_upload_, &qso_upload::Uploader::kept, this, [this] (bool refused, QString const& call, int) {
+      kept_note (refused ? lotw_refused_by_ : QStringLiteral ("LoTW"), refused, call);   // (3.-304) the refusal's own
+      update_lotw_upload_label ();
+    });
+  connect (ui_->lotw_upload_check_box, &QCheckBox::toggled, this, &Configuration::impl::update_lotw_upload_label);
+  connect (ui_->tqsl_station_combo_box, static_cast<void (QComboBox::*) (int)> (&QComboBox::currentIndexChanged), this,
+           [this] {update_lotw_upload_label ();});
+  tqsl_test_timer_.setSingleShot (true);   // (3.-304) one limit, restarted at each Test
+  connect (&tqsl_test_timer_, &QTimer::timeout, this, [this] {
+      if (QProcess::NotRunning != tqsl_test_.state ()) {tqsl_test_killed_ = true; tqsl_test_.kill ();}
+    });
+  connect (&tqsl_test_, static_cast<void (QProcess::*) (int, QProcess::ExitStatus)> (&QProcess::finished), this,
+           [this] (int, QProcess::ExitStatus) {tqsl_tested (true, tqsl_test_.readAll ());});
+  connect (&tqsl_test_, &QProcess::errorOccurred, this, [this] (QProcess::ProcessError e) {
+      if (QProcess::FailedToStart == e) tqsl_tested (false, tqsl_test_.errorString ().toUtf8 ());
+    });
   connect (ui_->eqsl_check_box, &QCheckBox::toggled, this, &Configuration::impl::update_eqsl_upload_label);
   update_eqsl_upload_label ();
   connect (ui_->clublog_upload_check_box, &QCheckBox::toggled, this, [this] {clublog_upload_toggled_ = true; update_upload_labels ();});
@@ -2683,6 +2740,8 @@ Configuration::impl::impl (Configuration * self, QNetworkAccessManager * network
   connect (ui_->lotwqsl_password_edit, &QLineEdit::textChanged, this, [this] {update_lotwqsl_label ();});
   configure_uploads ();
   QTimer::singleShot (75 * 1000, this, [this] {clublog_upload_.send_now (); qrz_upload_.send_now ();});
+  configure_lotw_upload ();   // CE3TSK 2026-11-25 (TODO.md 3.-303): and LoTW's, what an earlier run left with them
+  QTimer::singleShot (75 * 1000, this, [this] {lotw_upload_.send_now ();});
   ui_->gridNotif_check_box->setChecked(callNotif_ && gridNotif_);
   ui_->gridNotif_check_box->setEnabled(callNotif_);
   ui_->blueMarker_check_box->setChecked(redMarker_ && blueMarker_);
@@ -2941,6 +3000,15 @@ Configuration::impl::impl (Configuration * self, QNetworkAccessManager * network
 
 Configuration::impl::~impl ()
 {
+  // CE3TSK 2026-11-25 (TODO.md 3.-304, the review): the Test button's TQSL still running - stopped, its end never answered
+  // (a box from a dialog going away); LoTW's upload stops its own run (qso_upload::Uploader's destructor)
+  tqsl_test_timer_.stop ();
+  tqsl_test_.disconnect (this);
+  if (QProcess::NotRunning != tqsl_test_.state ())
+    {
+      tqsl_test_.kill ();
+      tqsl_test_.waitForFinished (3000);
+    }
   // CE3TSK 2026-09-26: bounded (thread_shutdown.hpp). Hamlib's rig_open against an FLRig that
   // accepted the connection but never answered sat in read timeouts and retries for minutes, and
   // the unbounded wait here left the program unable to quit. The limit leaves the shutdown that
@@ -3313,6 +3381,8 @@ Radio::convert_dark("#fafbfe",useDarkStyle_),Radio::convert_dark("#dcdef1",useDa
   ui_->highlight_confirmed_check_box->setChecked (highlightConfirmed_);   // CE3TSK 2026-11-22 (D12)
   ui_->fill_missing_grid_check_box->setChecked (fill_missing_grid_);   // CE3TSK 2026-11-23 (TODO.md 3.-283)
   grey_upload_boxes (true);   // CE3TSK 2026-11-23 (TODO.md 3.-282): the sites' boxes, as saved - greyed without a token or key (2026-11-24)
+  tqsl_pending_ = tqsl_chosen_;   // CE3TSK 2026-11-25 (TODO.md 3.-303): TQSL's rows as saved
+  refresh_tqsl_rows (true);
   ui_->qrz_xml_user_edit->setText (qrz_xml_login_.user);   // CE3TSK 2026-11-24 (TODO.md 3.-283, stage 3)
   ui_->qrz_xml_password_edit->setText (qrz_xml_login_.password);
   update_qrz_xml_label ();
@@ -3820,6 +3890,9 @@ void Configuration::impl::read_settings ()
   clublog_upload_on_ = settings_->value (contest_profile::own_key ("ClubLogUpload"), false).toBool ();   // 2026-11-23 (3.-282): off
   fill_missing_grid_ = settings_->value (contest_profile::own_key ("FillMissingGrid"), true).toBool ();   // 2026-11-23 (3.-283); (3.-298) on by default
   qrz_upload_on_ = settings_->value (contest_profile::own_key ("QrzUpload"), false).toBool ();
+  lotw_upload_on_ = settings_->value (contest_profile::own_key ("LotwUpload"), false).toBool ();   // 2026-11-25 (3.-303): off
+  tqsl_chosen_ = settings_->value (contest_profile::own_key ("TqslPath")).toString ();
+  tqsl_station_ = settings_->value (contest_profile::own_key ("TqslStation")).toString ();
   showAzimuth_ = settings_->value (contest_profile::own_key ("ShowAzimuth"), false).toBool ();
   usStates_ = settings_->value (contest_profile::own_key ("ShowUSStates"), true).toBool ();   /* CE3TSK */
 
@@ -4216,6 +4289,9 @@ void Configuration::impl::write_settings ()
   settings_->setValue (contest_profile::own_key ("ClubLogUpload"), clublog_upload_on_);   // CE3TSK 2026-11-23 (3.-282)
   settings_->setValue (contest_profile::own_key ("FillMissingGrid"), fill_missing_grid_);   // CE3TSK 2026-11-23 (3.-283)
   settings_->setValue (contest_profile::own_key ("QrzUpload"), qrz_upload_on_);
+  settings_->setValue (contest_profile::own_key ("LotwUpload"), lotw_upload_on_);   // CE3TSK 2026-11-25 (3.-303)
+  settings_->setValue (contest_profile::own_key ("TqslPath"), tqsl_chosen_);
+  settings_->setValue (contest_profile::own_key ("TqslStation"), tqsl_station_);
   settings_->setValue (contest_profile::own_key ("ShowAzimuth"), showAzimuth_);
   settings_->setValue (contest_profile::own_key ("ShowUSStates"), usStates_);   /* CE3TSK */
   settings_->setValue ("callsignLogFiltering", callNotif_);
@@ -5098,6 +5174,18 @@ void Configuration::impl::accept ()
     configure_uploads ();
     QTimer::singleShot (0, this, [this] {clublog_upload_.send_now (); qrz_upload_.send_now ();});
   }
+  // CE3TSK 2026-11-25 (TODO.md 3.-303): LoTW's - the box, the program and the Station Location as chosen; a refusal of this
+  // run lifted, what waits tried at once
+  {
+    // (3.-304, the review) a box greyed - TQSL or its Station Locations not found just now - keeps the saved choice
+    if (ui_->lotw_upload_check_box->isEnabled ()) lotw_upload_on_ = ui_->lotw_upload_check_box->isChecked ();
+    tqsl_chosen_ = tqsl_pending_;
+    if (ui_->tqsl_station_combo_box->count ()) tqsl_station_ = ui_->tqsl_station_combo_box->currentText ();
+    lotw_upload_.resume ();
+    if (lotw_upload_run_) {lotw_upload_text_.clear (); lotw_upload_run_ = false;}
+    configure_lotw_upload ();
+    QTimer::singleShot (0, this, [this] {lotw_upload_.send_now ();});
+  }
   /* CE3TSK 2026-11-22 (TODO.md 3.-280, review): OK looks for both at once, changed or not, as Cancel does - a file that is
      not the saved token's and call's or key's (the button's, an older program's, one the start's look met with Settings
      open) is fetched again; what the button has just fetched with what is now saved is theirs, and a current file not due
@@ -5826,7 +5914,9 @@ void Configuration::upload_qso (QByteArray const& adif_record)
 {
   m_->clublog_upload_.add (adif_record);   // each only while its box is ticked (Uploader::add)
   m_->qrz_upload_.add (adif_record);
+  m_->lotw_upload_.add (adif_record);   // CE3TSK 2026-11-25 (TODO.md 3.-303): and to LoTW, signed by TQSL
   m_->update_upload_labels ();
+  m_->update_lotw_upload_label ();
 }
 
 void Configuration::eqsl_answered (QString const& call, eqsl::Answer const& answer, int waiting, QDateTime const& next)
@@ -6291,6 +6381,186 @@ void Configuration::impl::update_upload_labels ()
       : QString {}};
   line (qrz_upload_, qrz_key_, qrz_refusal, qrz_upload_text_, qrz_upload_good_, qrz_logbook::api_env, ui_->qrz_upload_check_box, qrz_upload_tip_,
         ui_->qrz_upload_status_label, ui_->qrz_upload_lamp);
+}
+
+/* CE3TSK 2026-11-25 (TODO.md 3.-303, LOTW_PLAN.md section 5, the operator: "Let's add the LotW QSO log upload via TQSL, so we
+   would need a way to select automatically the tqsl executable, and if not found there should be a way to select it
+   similar to what GridTracker does", "with the same queue and features as the other logbooks"): each QSO logged signed by
+   TQSL with the user's certificate and uploaded to LoTW - qso_upload's queue (Site::Lotw), TQSL found by itself or chosen
+   with Browse, the Station Location from TQSL's own file. The certificate's password is TQSL's alone: it asks in its own
+   window when the certificate has one (the operator's choice) - never asked, kept or passed here */
+void Configuration::impl::configure_lotw_upload ()
+{
+  lotw_upload_.set_own_call (my_callsign_);   // a record without STATION_CALLSIGN is My Call's
+  lotw_upload_.set_program (tqsl::program (tqsl_chosen_));
+  lotw_upload_.set_credential (tqsl_station_);
+  lotw_upload_.set_enabled (lotw_upload_on_);
+  update_lotw_upload_label ();
+}
+
+void Configuration::impl::refresh_tqsl_rows (bool opening)
+{
+  tqsl_program_ = tqsl::program (tqsl_pending_);   // (3.-304) found here, read by the line and the buttons
+  auto const& program = tqsl_program_;
+  ui_->tqsl_path_edit->setText (QDir::toNativeSeparators (program));
+  ui_->tqsl_test_push_button->setEnabled (!program.isEmpty ());
+  {
+    // the Station Locations TQSL has; the saved one kept even when TQSL no longer has it (TQSL then says so); else the
+    // one whose call is My Call, else the first
+    QSignalBlocker block {ui_->tqsl_station_combo_box};
+    auto const keep = opening ? tqsl_station_ : ui_->tqsl_station_combo_box->currentText ();
+    auto const locations = tqsl::station_locations (tqsl::station_file ());
+    ui_->tqsl_station_combo_box->clear ();
+    for (auto const& l : locations) ui_->tqsl_station_combo_box->addItem (l.first);
+    int pick {keep.isEmpty () ? -1 : ui_->tqsl_station_combo_box->findText (keep)};
+    if (pick < 0 && !keep.isEmpty ())
+      {
+        ui_->tqsl_station_combo_box->addItem (keep);
+        pick = ui_->tqsl_station_combo_box->count () - 1;
+      }
+    auto const mine = my_callsign_.trimmed ().toUpper ();
+    for (int i = 0; pick < 0 && i < locations.size (); ++i) if (locations[i].second == mine) pick = i;
+    if (pick < 0 && ui_->tqsl_station_combo_box->count ()) pick = 0;
+    ui_->tqsl_station_combo_box->setCurrentIndex (pick);
+  }
+  {
+    // the box usable only with a program and a Station Location - as Club Log's without a token (grey_upload_boxes)
+    bool const can {!program.isEmpty () && ui_->tqsl_station_combo_box->count () > 0};
+    auto * send_box = ui_->lotw_upload_check_box;
+    if (opening || can != send_box->isEnabled ())
+      {
+        QSignalBlocker block {send_box};
+        send_box->setEnabled (can);
+        send_box->setChecked (lotw_upload_on_);   // (3.-304) greyed: the saved choice shown, the line says what is missing
+      }
+  }
+  update_lotw_upload_label ();
+}
+
+void Configuration::impl::update_lotw_upload_label ()
+{
+  auto const site = QStringLiteral ("LoTW");
+  auto const on = ui_->lotw_upload_check_box->isChecked ();
+  auto const& program = tqsl_program_;   // (3.-304) as the rows found it
+  QStringList text;
+  bool bad {false};
+  if (!on) text << tr ("Off: the QSOs you log are not sent to %1.").arg (site);
+  if (program.isEmpty ())
+    {
+      text << (tqsl::switched_off () ? tr ("Uploads to %1 are switched off (%2).").arg (site).arg (tqsl::program_env)
+                                     : tr ("TQSL was not found: install TQSL from the ARRL, or choose its program with Browse."));
+      bad = on || tqsl::switched_off ();
+    }
+  else if (!ui_->tqsl_station_combo_box->count ())
+    {
+      text << tr ("TQSL has no Station Location: add one in TQSL (Station Location, Add Station Location), then open Settings again.");
+      bad = on;
+    }
+  if (on && !lotw_upload_text_.isEmpty ()) {text << lotw_upload_text_; bad = bad || !lotw_upload_good_;}
+  else if (text.isEmpty ()) text << tr ("QSOs you log are sent as you log them.");
+  if (lotw_upload_.waiting ()) text << tr ("QSOs waiting to be sent: %1.").arg (lotw_upload_.waiting ());
+  if (lotw_upload_.unsaved ()) {text << tr ("%1: the QSOs waiting could not be written to their file - they are lost if the program is closed before they are sent.").arg (site); bad = true;}
+  ui_->lotw_upload_status_label->setText (text.join ('\n'));
+  auto const state = bad ? status_lamp::Bad : on && lotw_upload_good_ && !lotw_upload_text_.isEmpty () ? status_lamp::Good : status_lamp::Idle;
+  auto const why = wrap_tooltip (send_tip (site) + "\n\n" + text.join ('\n'));
+  ui_->lotw_upload_status_label->setToolTip (why);
+  status_lamp::show (ui_->lotw_upload_lamp, state, why);
+  ui_->lotw_upload_check_box->setToolTip (lotw_upload_tip_ + "\n\n" + wrap_tooltip (text.join ('\n')));
+}
+
+void Configuration::impl::lotw_upload_done (qso_upload::Result const& result, QString const& call)
+{
+  auto const now = QDateTime::currentDateTimeUtc ();
+  switch (result.kind)
+    {
+    case qso_upload::Result::Duplicate:
+      lotw_upload_text_ = tr ("%1 was in the log already (%2 UTC).").arg (call).arg (utc_time (now, now));
+      lotw_upload_good_ = true;
+      break;
+    case qso_upload::Result::Rejected:
+      // (3.-304, the review) TQSL signed none (8): dropped - in TQSL's words, the lamp red, the main window told
+      lotw_upload_text_ = tr ("%1 refused at %2 UTC: %3").arg (call, utc_time (now, now), "TQSL: " + result.reason);
+      lotw_upload_good_ = false;
+      Q_EMIT self_->upload_note (QStringLiteral ("TQSL"), tr ("%1 refused the QSO with %2 - see Settings > Logbooks.").arg ("TQSL").arg (call));
+      break;
+    default:
+      lotw_upload_text_ = tr ("%1 sent at %2 UTC.").arg (call).arg (utc_time (now, now));
+      lotw_upload_good_ = 9 != result.code;   // (3.-304) 9: TQSL skipped some - its words, the lamp red
+      if (9 == result.code) lotw_upload_text_ += "\nTQSL: " + result.reason;
+      break;
+    }
+  lotw_upload_run_ = false;
+  update_lotw_upload_label ();
+}
+
+void Configuration::impl::lotw_upload_refused (qso_upload::Result const& result, QString const& call)
+{
+  // TQSL's own words: its password window closed, the Station Location or the certificate - the user acts, then OK
+  lotw_upload_text_ = tr ("TQSL did not sign or upload the QSOs (%1): they are kept, and nothing more is sent until you press OK in Settings or start the program again.").arg (result.reason);
+  lotw_upload_good_ = false;
+  lotw_upload_run_ = true;
+  // (3.-304, the review) TQSL's refusal named TQSL's - its password window closed, its Station Location, its certificate;
+  // LoTW's (2) LoTW's
+  lotw_refused_by_ = 2 == result.code ? QStringLiteral ("LoTW") : QStringLiteral ("TQSL");
+  Q_EMIT self_->upload_note (lotw_refused_by_, tr ("%1 refused the upload: the QSO with %2 is kept - see Settings > Logbooks.").arg (lotw_refused_by_).arg (call));
+  update_lotw_upload_label ();
+}
+
+void Configuration::impl::lotw_upload_delayed (qso_upload::Result const& result, QString const& call, QDateTime const& next)
+{
+  auto const now = QDateTime::currentDateTimeUtc ();
+  lotw_upload_text_ = tr ("%1 not sent at %2 UTC: %3. Kept; the next try at %4 UTC.").arg (call, utc_time (now, now), "TQSL: " + result.reason, utc_time (next, now));
+  lotw_upload_good_ = false;
+  lotw_upload_run_ = false;
+  Q_EMIT self_->upload_note (QStringLiteral ("LoTW"), tr ("%1: the QSO with %2 is not sent yet, kept - see Settings > Logbooks.").arg ("LoTW").arg (call));
+  update_lotw_upload_label ();
+}
+
+// Browse: TQSL's program chosen in a file window, as GridTracker2's "TQSL Path"
+void Configuration::impl::on_tqsl_browse_push_button_clicked (bool)
+{
+  auto const& now = tqsl_program_;
+  auto const path = QFileDialog::getOpenFileName (this, tr ("Choose the TQSL program"), now.isEmpty () ? QDir::homePath () : QFileInfo {now}.absolutePath ());
+  if (!path.isEmpty ()) tqsl_choose (path);
+}
+
+void Configuration::impl::tqsl_choose (QString const& path)
+{
+  auto const program = tqsl::program_in (path);   // (3.-304, the review) macOS: a bundle chosen - its program inside
+  if (!tqsl::runnable (program))
+    {
+      JTDXMessageBox::warning_message (this, tr ("Choose the TQSL program"), tr ("%1 is not a program that can be run.").arg (QDir::toNativeSeparators (path)));
+      return;
+    }
+  tqsl_pending_ = program;
+  refresh_tqsl_rows (false);
+}
+
+// Test: `tqsl -q -v`, as GridTracker2's "Test TQSL" - that it is found and starts; its version in a box. The user's click only
+void Configuration::impl::on_tqsl_test_push_button_clicked (bool)
+{
+  auto const& program = tqsl_program_;
+  if (program.isEmpty () || QProcess::NotRunning != tqsl_test_.state ()) return;
+  ui_->tqsl_test_push_button->setEnabled (false);
+  tqsl_test_.setProgram (program);
+  tqsl_test_.setArguments ({"-q", "-v"});
+  tqsl_test_.setProcessChannelMode (QProcess::MergedChannels);
+  tqsl_test_.start ();
+  tqsl_test_killed_ = false;
+  tqsl_test_timer_.start (tqsl::test_timeout_ms ());   // (3.-304, the review) this run's own limit
+}
+
+void Configuration::impl::tqsl_tested (bool started, QByteArray const& output)
+{
+  tqsl_test_timer_.stop ();
+  ui_->tqsl_test_push_button->setEnabled (!tqsl_program_.isEmpty ());
+  auto const answer = started ? tqsl::version (output) : QString::fromUtf8 (output);
+  if (tqsl_test_killed_)   // (3.-304, the review) stopped by its limit: it started, and said nothing in time
+    JTDXMessageBox::warning_message (this, "TQSL", tr ("TQSL gave no answer within %1 seconds and was stopped.").arg (tqsl::test_timeout_ms () / 1000));
+  else if (started && !answer.isEmpty ())
+    JTDXMessageBox::information_message (this, "TQSL", tr ("TQSL answered: %1").arg (answer));
+  else
+    JTDXMessageBox::warning_message (this, "TQSL", tr ("TQSL could not be started: %1").arg (answer.isEmpty () ? tr ("no answer") : answer));
 }
 
 /* CE3TSK 2026-11-22 (TODO.md 3.-280): QRZ.com's LoTW confirmations (qrzlogbook.h), added to Club Log's. The button downloads

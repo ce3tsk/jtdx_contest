@@ -8,6 +8,8 @@
 #include <QJsonValue>
 #include <QSaveFile>
 #include <QUrl>
+#include <QDir>
+#include <QFileInfo>
 #include "clublog.h"
 #include "qrzlogbook.h"
 
@@ -17,6 +19,7 @@ namespace qso_upload
 {
   QString site_name (Site site)
   {
+    if (Site::Lotw == site) return QStringLiteral ("LoTW");   // (3.-303)
     return Site::ClubLog == site ? QStringLiteral ("Club Log") : QStringLiteral ("QRZ.com");
   }
 
@@ -207,6 +210,33 @@ namespace qso_upload
     return made (Result::Retry, http_status, QStringLiteral ("the answer was not QRZ.com's"));
   }
 
+  Result tqsl_result (bool started, bool finished, int exit_code, QByteArray const& output)
+  {
+    if (!started) return made (Result::Refused, 0, QStringLiteral ("TQSL could not be started"));
+    if (!finished) return made (Result::Retry, 0, QStringLiteral ("TQSL did not end (stopped or killed)"));
+    auto const s = tqsl::final_status (output);
+    // (3.-304, the review) no status line read: TQSL ends with the same code (exitNow), so a QSO sent is never sent again
+    int const code {s.code >= 0 ? s.code : exit_code};
+    QString const why {s.code < 0 ? QString {"exit code %1, no final status line from TQSL"}.arg (exit_code)
+                       : s.detail.isEmpty () ? QString {"%1 (%2)"}.arg (s.text).arg (s.code)
+                       : QString {"%1 (%2): %3"}.arg (s.text).arg (s.code).arg (s.detail)};
+    Result r;
+    switch (code)
+      {
+      case 0: r = made (Result::Sent, 0, why); break;
+      /* (3.-304, the review, TQSL's source) -a all signs a QSO uploaded before again and skips one TQSL cannot sign: 8 none
+         signed - refused and dropped in TQSL's words (asking again changes nothing); 9 some skipped - sent, TQSL's words on
+         the line; 14 signed before - LoTW has it */
+      case 8: r = made (Result::Rejected, 0, why); break;
+      case 9: r = made (Result::Sent, 0, why); break;
+      case 14: r = made (Result::Duplicate, 0, why); break;
+      case 1: case 2: case 4: case 5: case 10: r = made (Result::Refused, 0, why); break;
+      default: r = made (Result::Retry, 0, why); break;
+      }
+    r.code = code;
+    return r;
+  }
+
   QList<QByteArray> read_queue (QString const& path)
   {
     QFile f {path};
@@ -260,6 +290,31 @@ namespace qso_upload
     connect (&timer_, &QTimer::timeout, this, &Uploader::send_now);
     connect (&request_, &FileDownload::replied, this, &Uploader::answered);
     connect (&request_, &FileDownload::error, this, &Uploader::failed);
+    // (3.-303) LoTW: TQSL's run ends by itself, is killed after process_timeout_ms_, or never starts
+    process_timer_.setSingleShot (true);
+    connect (&process_timer_, &QTimer::timeout, this, [this] {
+        if (QProcess::NotRunning != process_.state ()) {timed_out_ = true; process_.kill ();}
+      });
+    connect (&process_, static_cast<void (QProcess::*) (int, QProcess::ExitStatus)> (&QProcess::finished), this,
+             [this] (int exit_code, QProcess::ExitStatus status) {tqsl_ended (true, QProcess::NormalExit == status && !timed_out_, exit_code);});
+    connect (&process_, &QProcess::errorOccurred, this, [this] (QProcess::ProcessError e) {
+        if (QProcess::FailedToStart == e) tqsl_ended (false, false, -1);
+      });
+  }
+
+  /* (3.-304, the review) a TQSL run under way when the program closes: killed, and its end never answered - QProcess's own
+     destructor would kill it and report the end into members already destroyed (a crash at quit while TQSL's password
+     window waits). Its QSOs stay in the queue file for the next start */
+  Uploader::~Uploader ()
+  {
+    process_timer_.stop ();
+    process_.disconnect (this);
+    if (QProcess::NotRunning != process_.state ())
+      {
+        process_.kill ();
+        process_.waitForFinished (3000);
+      }
+    if (!signing_file_.isEmpty ()) QFile::remove (signing_file_);   // the run's copy, cut short
   }
 
   void Uploader::configure (QNetworkAccessManager * manager, QString const& queue_file, QString const& user_agent)
@@ -293,6 +348,7 @@ namespace qso_upload
 
   QString Uploader::base () const
   {
+    if (Site::Lotw == site_) return program_;   // (3.-303) the TQSL program; none: nothing sent
     return Site::ClubLog == site_ ? club_log::api_base () : qrz_logbook::api_base ();
   }
 
@@ -357,6 +413,44 @@ namespace qso_upload
         return;
       }
     timer_.stop ();
+    if (Site::Lotw == site_)
+      {
+        /* (3.-303) TQSL signs and uploads the QSOs of one station call, up to lotw_batch_max, the oldest first, from a
+           signing copy beside the queue - its Station Location the credential; never the certificate's password */
+        auto const station = station_of (queue_[first]);
+        QList<int> at;
+        QList<QByteArray> records;
+        for (int i = first; i < queue_.size () && at.size () < lotw_batch_max; ++i)
+          if (station == station_of (queue_[i])) {at << i; records << queue_[i];}
+        in_flight_ = records.size ();
+        in_flight_at_ = at;
+        request_credential_ = credential_;   // the Station Location this run signs with
+        next_try_ = QDateTime {};
+        signing_file_ = QFileInfo {queue_file_}.absolutePath () + '/' + lotw_signing_file;
+        QByteArray adif {"QSOs for TQSL to sign and upload to LoTW\n<PROGRAMID:12>JTDX_contest\n<EOH>\n"};
+        for (auto const& r : records) adif += r + '\n';
+        QFile f {signing_file_};
+        if (!f.open (QIODevice::WriteOnly | QIODevice::Truncate) || f.write (adif) != adif.size () || !f.flush ())
+          {
+            auto const why = f.errorString ();
+            f.close ();
+            QFile::remove (signing_file_);
+            in_flight_ = 0;
+            ++answers_;
+            QList<Result> results;
+            for (int i = 0; i < records.size (); ++i) results << made (Result::Retry, 0, "the file for TQSL could not be written: " + why);
+            apply (results);
+            return;
+          }
+        f.close ();
+        timed_out_ = false;
+        process_.setProgram (program_);
+        process_.setArguments (tqsl::arguments (credential_, QDir::toNativeSeparators (signing_file_)));
+        process_.setProcessChannelMode (QProcess::MergedChannels);
+        process_.start ();
+        process_timer_.start (process_timeout_ms_);
+        return;
+      }
     /* (review) the oldest QSO that may go and, for a Club Log batch, the next ones of the same station call - a request
        is one call's, so that a refusal of a call is that call's (Club Log keeps a log a call) */
     int const most {Site::ClubLog == site_ && !one_by_one_ ? clublog_batch_max : 1};
@@ -503,6 +597,23 @@ namespace qso_upload
       }
     timer_.start (static_cast<int> (qMax<qint64> (0, now.msecsTo (next_try_))));
     Q_EMIT delayed (next, call, next_try_, queue_.size ());
+  }
+
+  // (3.-303) LoTW: TQSL's run over - its signing copy removed, its final status the answer for each QSO it carried
+  void Uploader::tqsl_ended (bool started, bool finished, int exit_code)
+  {
+    process_timer_.stop ();
+    timed_out_ = false;
+    auto const output = process_.readAll ();
+    if (!signing_file_.isEmpty ()) QFile::remove (signing_file_);
+    int const n {in_flight_};
+    in_flight_ = 0;
+    if (n < 1) return;
+    ++answers_;
+    auto const r = tqsl_result (started, finished, exit_code, output);
+    QList<Result> results;
+    for (int i = 0; i < n; ++i) results << r;
+    apply (results);
   }
 
   void Uploader::save ()
